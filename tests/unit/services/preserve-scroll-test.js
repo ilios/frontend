@@ -8,11 +8,11 @@ module('Unit | Service | preserve-scroll', function (hooks) {
     const service = this.owner.lookup('service:preserve-scroll');
     assert.ok(service);
     service.savePosition('foo', 93);
-    assert.equal(service.getPosition('foo'), 93);
+    assert.strictEqual(service.getPosition('foo'), 93);
     service.clearPosition('foo');
-    assert.equal(service.getPosition('foo'), 0);
+    assert.strictEqual(service.getPosition('foo'), 0);
     service.clearPosition('foo');
     service.clearPosition('foo');
-    assert.equal(service.getPosition('foo'), 0);
+    assert.strictEqual(service.getPosition('foo'), 0);
   });
 });

@@ -44,7 +44,7 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       @isSaving={{false}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.text, 'None');
+    assert.strictEqual(component.text, 'None');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -69,9 +69,9 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       @isSaving={{false}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.list.length, 2);
-    assert.equal(component.list[0].title, 'descriptor 0');
-    assert.equal(component.list[1].title, 'descriptor 1');
+    assert.strictEqual(component.list.length, 2);
+    assert.strictEqual(component.list[0].title, 'descriptor 0');
+    assert.strictEqual(component.list[1].title, 'descriptor 1');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -96,9 +96,9 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       @isSaving={{false}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.list.length, 2);
-    assert.equal(component.list[0].title, 'descriptor 0');
-    assert.equal(component.list[1].title, 'descriptor 1');
+    assert.strictEqual(component.list.length, 2);
+    assert.strictEqual(component.list[0].title, 'descriptor 0');
+    assert.strictEqual(component.list[1].title, 'descriptor 1');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

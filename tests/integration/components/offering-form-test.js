@@ -125,17 +125,17 @@ module('Integration | Component | offering form', function (hooks) {
       @courseEndDate={{this.courseEndDate}}
     />`);
     const selectedDate = new Date(component.startDate.datePicker.value);
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getFullYear(),
       courseStartDate.year(),
       'Selected year initialized to course start date year.'
     );
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getMonth(),
       courseStartDate.month(),
       'Selected month initialized to course start date month.'
     );
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getDate(),
       courseStartDate.date(),
       'Selected day initialized to course start date day.'
@@ -153,17 +153,17 @@ module('Integration | Component | offering form', function (hooks) {
       @courseEndDate={{this.courseEndDate}}
     />`);
     const selectedDate = new Date(component.startDate.datePicker.value);
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getFullYear(),
       courseEndDate.year(),
       'Selected year initialized to course start date year.'
     );
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getMonth(),
       courseEndDate.month(),
       'Selected month initialized to course start date month.'
     );
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getDate(),
       courseEndDate.date(),
       'Selected day initialized to course start date day.'
@@ -182,17 +182,17 @@ module('Integration | Component | offering form', function (hooks) {
       @courseEndDate={{this.courseEndDate}}
     />`);
     const selectedDate = new Date(component.startDate.datePicker.value);
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getFullYear(),
       today.year(),
       'Selected year initialized to course start date year.'
     );
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getMonth(),
       today.month(),
       'Selected month initialized to course start date month.'
     );
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getDate(),
       today.date(),
       'Selected day initialized to course start date day.'
@@ -222,14 +222,14 @@ module('Integration | Component | offering form', function (hooks) {
         instructorGroups,
         instructors
       ) => {
-        assert.equal(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-        assert.equal(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-        assert.equal(room, null);
-        assert.equal(url, null);
-        assert.equal(learnerGroups.length, 0);
-        assert.equal(learners.length, 0);
-        assert.equal(instructorGroups.length, 0);
-        assert.equal(instructors.length, 0);
+        assert.strictEqual(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+        assert.strictEqual(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+        assert.strictEqual(room, null);
+        assert.strictEqual(url, null);
+        assert.strictEqual(learnerGroups.length, 0);
+        assert.strictEqual(learners.length, 0);
+        assert.strictEqual(instructorGroups.length, 0);
+        assert.strictEqual(instructors.length, 0);
       }
     );
     await render(hbs`<OfferingForm @close={{(noop)}} @save={{this.save}} />`);
@@ -254,7 +254,10 @@ module('Integration | Component | offering form', function (hooks) {
           expectedStartDate = wednesday.clone().day(thursday);
           break;
       }
-      assert.equal(moment(startDate).format('YYYY-MM-DD'), expectedStartDate.format('YYYY-MM-DD'));
+      assert.strictEqual(
+        moment(startDate).format('YYYY-MM-DD'),
+        expectedStartDate.format('YYYY-MM-DD')
+      );
 
       savedCount++;
     });
@@ -312,7 +315,10 @@ module('Integration | Component | offering form', function (hooks) {
           expectedStartDate = wednesday.clone().add(1, 'day').add(2, 'weeks');
           break;
       }
-      assert.equal(expectedStartDate.format('YYYY-MM-DD'), moment(startDate).format('YYYY-MM-DD'));
+      assert.strictEqual(
+        expectedStartDate.format('YYYY-MM-DD'),
+        moment(startDate).format('YYYY-MM-DD')
+      );
 
       savedCount++;
     });
@@ -333,41 +339,44 @@ module('Integration | Component | offering form', function (hooks) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const format = 'M/D/YYYY, h:mm A';
     const newStartDate = moment().add(1, 'day').toDate();
-    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
+    assert.strictEqual(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startDate.datePicker.set(newStartDate);
-    assert.equal(moment(newStartDate).hour(9).minute(0).format(format), component.endDate.value);
+    assert.strictEqual(
+      moment(newStartDate).hour(9).minute(0).format(format),
+      component.endDate.value
+    );
   });
 
   test('changing start time changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const format = 'M/D/YYYY, h:mm A';
-    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
+    assert.strictEqual(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startTime.timePicker.hour.select('2');
     await component.startTime.timePicker.minute.select('15');
     await component.startTime.timePicker.ampm.select('pm');
-    assert.equal(moment().hour(15).minute(15).format(format), component.endDate.value);
+    assert.strictEqual(moment().hour(15).minute(15).format(format), component.endDate.value);
   });
 
   test('changing duration changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const format = 'M/D/YYYY, h:mm A';
-    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
+    assert.strictEqual(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.duration.hours.set('2');
     await component.duration.minutes.set('15');
-    assert.equal(moment().hour(10).minute(15).format(format), component.endDate.value);
+    assert.strictEqual(moment().hour(10).minute(15).format(format), component.endDate.value);
   });
 
   // @see https://github.com/ilios/frontend/issues/1903
   test('changing duration and start time changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const format = 'M/D/YYYY, h:mm A';
-    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
+    assert.strictEqual(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startTime.timePicker.hour.select('2');
     await component.startTime.timePicker.minute.select('10');
     await component.startTime.timePicker.ampm.select('pm');
     await component.duration.hours.set('2');
     await component.duration.minutes.set('50');
-    assert.equal(moment().hour(17).minute(0).format(format), component.endDate.value);
+    assert.strictEqual(moment().hour(17).minute(0).format(format), component.endDate.value);
   });
 
   test('learner manager is not present in small-group mode', async function (assert) {
@@ -408,21 +417,21 @@ module('Integration | Component | offering form', function (hooks) {
       @showMakeRecurring={{true}}
       @showInstructors={{true}}
     />`);
-    assert.equal(component.location.value, 'emerald bay');
-    assert.equal(component.duration.hours.value, '1');
-    assert.equal(component.duration.minutes.value, '0');
+    assert.strictEqual(component.location.value, 'emerald bay');
+    assert.strictEqual(component.duration.hours.value, '1');
+    assert.strictEqual(component.duration.minutes.value, '0');
     const selectedDate = new Date(component.startDate.datePicker.value);
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getFullYear(),
       offeringModel.startDate.getFullYear(),
       'Selected year initialized to offering start date year.'
     );
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getMonth(),
       offeringModel.startDate.getMonth(),
       'Selected month initialized to offering start date month.'
     );
-    assert.equal(
+    assert.strictEqual(
       selectedDate.getDate(),
       offeringModel.startDate.getDate(),
       'Selected day initialized to offering start date day.'
@@ -433,7 +442,7 @@ module('Integration | Component | offering form', function (hooks) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const timezoneService = this.owner.lookup('service:timezone');
     const currentTimezone = moment.tz.guess();
-    assert.equal(
+    assert.strictEqual(
       component.timezoneEditor.currentTimezone.text,
       timezoneService.formatTimezone(currentTimezone)
     );
@@ -452,8 +461,8 @@ module('Integration | Component | offering form', function (hooks) {
     const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', async (startDate, endDate) => {
-      assert.equal(moment(startDate).tz(utc).format('Y-MM-DD HH:mm'), '2005-06-25 05:24');
-      assert.equal(moment(endDate).tz(utc).format('Y-MM-DD HH:mm'), '2005-06-25 06:24');
+      assert.strictEqual(moment(startDate).tz(utc).format('Y-MM-DD HH:mm'), '2005-06-25 05:24');
+      assert.strictEqual(moment(endDate).tz(utc).format('Y-MM-DD HH:mm'), '2005-06-25 06:24');
     });
     const timezoneService = this.owner.lookup('service:timezone');
     await render(
@@ -463,10 +472,10 @@ module('Integration | Component | offering form', function (hooks) {
     assert.notOk(component.timezoneEditor.picker.isPresent);
     await component.timezoneEditor.currentTimezone.edit();
     assert.ok(component.timezoneEditor.picker.isPresent);
-    assert.equal(component.timezoneEditor.picker.value, currentTimezone);
+    assert.strictEqual(component.timezoneEditor.picker.value, currentTimezone);
     await component.timezoneEditor.picker.select(newTimezone);
     assert.notOk(component.timezoneEditor.picker.isPresent);
-    assert.equal(
+    assert.strictEqual(
       component.timezoneEditor.currentTimezone.text,
       timezoneService.formatTimezone(newTimezone)
     );
@@ -476,15 +485,15 @@ module('Integration | Component | offering form', function (hooks) {
   test('removes double https from start of URL when input', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     await component.url.set('https://http://example.com');
-    assert.equal(component.url.value, 'http://example.com');
+    assert.strictEqual(component.url.value, 'http://example.com');
     await component.url.set('https://https://example.edu');
-    assert.equal(component.url.value, 'https://example.edu');
+    assert.strictEqual(component.url.value, 'https://example.edu');
   });
 
   test('trims whitespace from URL input #1500', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     await component.url.set('  http://example.com  ');
-    assert.equal(component.url.value, 'http://example.com');
+    assert.strictEqual(component.url.value, 'http://example.com');
   });
 
   todo('rejects query param with trailing slash ilios/ilios#3050', async function (assert) {
@@ -507,15 +516,15 @@ module('Integration | Component | offering form', function (hooks) {
     this.set('cohorts', [cohortModel]);
     await render(hbs`<OfferingForm @cohorts={{this.cohorts}} @close={{(noop)}} />`);
 
-    assert.equal(
+    assert.strictEqual(
       component.learnerManager.availableLearnerGroups.cohorts[0].trees[0].title,
       'Learner Group 1'
     );
-    assert.equal(
+    assert.strictEqual(
       component.learnerManager.availableLearnerGroups.cohorts[0].trees[1].title,
       'Learner Group 2'
     );
-    assert.equal(
+    assert.strictEqual(
       component.learnerManager.availableLearnerGroups.cohorts[0].trees[2].title,
       'Learner Group 10'
     );

@@ -35,49 +35,52 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
-    assert.equal(
+    assert.strictEqual(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
-    assert.equal(
+    assert.strictEqual(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
       'Vocabulary 1 (school 0)'
     );
-    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length, 1);
-    assert.equal(
+    assert.strictEqual(
+      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      1
+    );
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 0'
     );
     assert.notOk(page.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
     await page.objectives.objectiveList.objectives[0].selectedTerms.list[0].manage();
     assert.ok(page.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms.length,
       1
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].title,
       'Vocabulary 1 (school 0)'
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms.length,
       1
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].name,
       'term 0'
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options.length,
       1
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].value,
       '1'
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].text,
       'Vocabulary 1 (school 0)'
     );
@@ -85,11 +88,11 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
       page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].isSelected
     );
 
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms.length,
       4
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[0].name,
       'term 0'
     );
@@ -108,8 +111,11 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
     await page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].remove();
     await page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3].toggle();
     await page.objectives.objectiveList.objectives[0].selectedTerms.save();
-    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length, 1);
-    assert.equal(
+    assert.strictEqual(
+      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      1
+    );
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 3'
     );
@@ -123,49 +129,52 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
-    assert.equal(
+    assert.strictEqual(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
-    assert.equal(
+    assert.strictEqual(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
       'Vocabulary 1 (school 0)'
     );
-    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length, 1);
-    assert.equal(
+    assert.strictEqual(
+      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      1
+    );
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 0'
     );
     assert.notOk(page.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
     await page.objectives.objectiveList.objectives[0].selectedTerms.list[0].manage();
     assert.ok(page.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms.length,
       1
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].title,
       'Vocabulary 1 (school 0)'
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms.length,
       1
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].name,
       'term 0'
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options.length,
       1
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].value,
       '1'
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].text,
       'Vocabulary 1 (school 0)'
     );
@@ -173,11 +182,11 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
       page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].isSelected
     );
 
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms.length,
       4
     );
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[0].name,
       'term 0'
     );
@@ -196,8 +205,11 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
     await page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].remove();
     await page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3].toggle();
     await page.objectives.objectiveList.objectives[0].selectedTerms.cancel();
-    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length, 1);
-    assert.equal(
+    assert.strictEqual(
+      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      1
+    );
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 0'
     );

@@ -106,9 +106,9 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       lastModified: today.clone().subtract(1, 'year'),
     });
     await visit('/dashboard?show=calendar&view=month');
-    assert.equal(currentRouteName(), 'dashboard');
+    assert.strictEqual(currentRouteName(), 'dashboard');
     const events = findAll('[data-test-ilios-calendar-event]');
-    assert.equal(events.length, 2);
+    assert.strictEqual(events.length, 2);
     const startOfMonthStartFormat = startOfMonth
       .toDate()
       .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
@@ -159,20 +159,20 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       lastModified: today.clone().subtract(1, 'year'),
     });
     await page.visit({ show: 'calendar' });
-    assert.equal(currentRouteName(), 'dashboard');
+    assert.strictEqual(currentRouteName(), 'dashboard');
 
-    assert.equal(page.weeklyCalendar.dayHeadings.length, 7);
+    assert.strictEqual(page.weeklyCalendar.dayHeadings.length, 7);
     assert.ok(page.weeklyCalendar.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(
+    assert.strictEqual(
       page.weeklyCalendar.dayHeadings[0].text,
       `Sunday Sun ${longDayHeading} ${shortDayHeading}`
     );
 
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
     assert.ok(page.weeklyCalendar.events[0].isFirstDayOfWeek);
-    assert.equal(page.weeklyCalendar.events[0].name, 'start of week');
+    assert.strictEqual(page.weeklyCalendar.events[0].name, 'start of week');
     assert.ok(page.weeklyCalendar.events[1].isSeventhDayOfWeek);
-    assert.equal(page.weeklyCalendar.events[1].name, 'end of week');
+    assert.strictEqual(page.weeklyCalendar.events[1].name, 'end of week');
   });
 
   test('load day calendar', async function (assert) {
@@ -201,10 +201,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       lastModified: today.clone().subtract(1, 'year'),
     });
     await visit('/dashboard?show=calendar&view=day');
-    assert.equal(currentRouteName(), 'dashboard');
+    assert.strictEqual(currentRouteName(), 'dashboard');
 
-    assert.equal(page.dailyCalendar.events.length, 1);
-    assert.equal(page.dailyCalendar.events[0].name, 'today');
+    assert.strictEqual(page.dailyCalendar.events.length, 1);
+    assert.strictEqual(page.dailyCalendar.events[0].name, 'today');
   });
 
   test('click month day number and go to day', async function (assert) {
@@ -218,7 +218,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await visit('/dashboard?show=calendar&view=month');
     const dayOfMonth = aDayInTheMonth.date();
     await click(`[data-test-day-button="${dayOfMonth}"]`);
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day'
     );
@@ -234,9 +234,9 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await page.visit({ show: 'calendar', view: 'week' });
     const dayOfWeek = today.day();
-    assert.equal(page.weeklyCalendar.dayHeadings.length, 7);
+    assert.strictEqual(page.weeklyCalendar.dayHeadings.length, 7);
     await page.weeklyCalendar.dayHeadings[dayOfWeek].selectDay();
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?date=' + today.format('YYYY-MM-DD') + '&show=calendar&view=day'
     );
@@ -252,7 +252,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await visit('/dashboard?show=calendar&view=day');
     await click('.calendar-time-picker li:nth-of-type(3) a');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?date=' + today.add(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day'
     );
@@ -268,7 +268,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await visit('/dashboard?show=calendar&view=week');
     await click('.calendar-time-picker li:nth-of-type(3) a');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?date=' + today.add(1, 'week').format('YYYY-MM-DD') + '&show=calendar'
     );
@@ -284,7 +284,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await visit('/dashboard?show=calendar&view=month');
     await click('.calendar-time-picker li:nth-of-type(3) a');
-    assert.equal(
+    await click(findAll('.calendar-time-picker li')[2]);
+    assert.strictEqual(
       currentURL(),
       '/dashboard?date=' + today.add(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month'
     );
@@ -300,7 +301,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await visit('/dashboard?show=calendar&view=day');
     await click('.calendar-time-picker li:nth-of-type(1) a');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?date=' + today.subtract(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day'
     );
@@ -316,7 +317,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await visit('/dashboard?show=calendar&view=week');
     await click('.calendar-time-picker li:nth-of-type(1) a');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?date=' + today.subtract(1, 'week').format('YYYY-MM-DD') + '&show=calendar'
     );
@@ -332,7 +333,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await visit('/dashboard?show=calendar&view=month');
     await click('.calendar-time-picker li:nth-of-type(1) a');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?date=' +
         today.subtract(1, 'month').format('YYYY-MM-DD') +
@@ -355,7 +356,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       offering: 2,
     });
     await page.visit({ show: 'calendar' });
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
   });
 
   const chooseSchoolEvents = async function () {
@@ -377,7 +378,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await page.visit({ show: 'calendar' });
     await chooseSchoolEvents();
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
   });
 
   const showFilters = async function () {
@@ -404,16 +405,16 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
     await pickSessionType(1);
-    assert.equal(page.weeklyCalendar.events.length, 1);
+    assert.strictEqual(page.weeklyCalendar.events.length, 1);
     await pickSessionType(2);
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
 
     await pickSessionType(1);
     await pickSessionType(2);
     await pickSessionType(3);
-    assert.equal(page.weeklyCalendar.events.length, 0);
+    assert.strictEqual(page.weeklyCalendar.events.length, 0);
   });
 
   const pickCourseLevel = async function (i) {
@@ -441,12 +442,12 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
     await chooseDetailFilter();
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
     await pickCourseLevel(1);
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
     await clearCourseLevels();
     await pickCourseLevel(3);
-    assert.equal(page.weeklyCalendar.events.length, 0);
+    assert.strictEqual(page.weeklyCalendar.events.length, 0);
   });
 
   const pickCohort = async function (i) {
@@ -472,13 +473,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
     await chooseDetailFilter();
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
     await pickCohort(2);
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
 
     await pickCohort(1);
     await pickCohort(2);
-    assert.equal(page.weeklyCalendar.events.length, 0);
+    assert.strictEqual(page.weeklyCalendar.events.length, 0);
   });
 
   const chooseDetailFilter = async function () {
@@ -517,12 +518,12 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
-    assert.equal(page.weeklyCalendar.events.length, 3);
+    assert.strictEqual(page.weeklyCalendar.events.length, 3);
     await pickCourse(1);
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
     await clearCourses();
     await pickCourse(2);
-    assert.equal(page.weeklyCalendar.events.length, 1);
+    assert.strictEqual(page.weeklyCalendar.events.length, 1);
   });
 
   test('test course and session type filter together', async function (assert) {
@@ -551,13 +552,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
 
-    assert.equal(page.weeklyCalendar.events.length, 3);
+    assert.strictEqual(page.weeklyCalendar.events.length, 3);
     await pickCourse(1);
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
     await clearCourses();
     await pickCourse(1);
     await pickSessionType(1);
-    assert.equal(page.weeklyCalendar.events.length, 1);
+    assert.strictEqual(page.weeklyCalendar.events.length, 1);
   });
 
   test('agenda show next seven days of events', async function (assert) {
@@ -587,7 +588,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await visit('/dashboard?show=agenda');
     const events = findAll('tr');
-    assert.equal(events.length, 2);
+    assert.strictEqual(events.length, 2);
     const options = {
       weekday: 'long',
       month: 'long',
@@ -684,17 +685,17 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(sessiontype);
     await click(courselevel);
     await click(cohort);
-    assert.equal(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
-    assert.equal(getTagText(1), 'Course Level 1', 'filter tag is active');
-    assert.equal(getTagText(2), 'session type 0', 'filter tag is active');
+    assert.strictEqual(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
+    assert.strictEqual(getTagText(1), 'Course Level 1', 'filter tag is active');
+    assert.strictEqual(getTagText(2), 'session type 0', 'filter tag is active');
 
     await clickTag(1);
     assert.notOk(find(courselevel).checked, 'filter is unchecked');
-    assert.equal(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
-    assert.equal(getTagText(1), 'session type 0', 'filter tag is active');
+    assert.strictEqual(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
+    assert.strictEqual(getTagText(1), 'session type 0', 'filter tag is active');
 
     await clickTag(0);
-    assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
+    assert.strictEqual(getTagText(0), 'session type 0', 'filter tag is active');
 
     await click(clearFilter);
     assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
@@ -710,111 +711,111 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
     await visit('/dashboard');
     await click(calendarPicker);
-    assert.equal(currentURL(), '/dashboard?show=calendar');
+    assert.strictEqual(currentURL(), '/dashboard?show=calendar');
 
     await click(schoolEvents);
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
+    assert.strictEqual(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 
     await click(showFiltersButton);
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
+    assert.strictEqual(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
     await chooseDetailFilter();
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click(hideFiltersButton);
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
+    assert.strictEqual(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 
     await click(showFiltersButton);
     await click('[data-test-courses-calendar-filter] ul li:nth-child(1) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click('[data-test-courses-calendar-filter] ul li:nth-child(2) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?courses=1-2&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click('[data-test-courses-calendar-filter] ul li:nth-child(2) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click('[data-test-courses-calendar-filter] ul li:nth-child(1) input');
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
+    assert.strictEqual(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
     await click('.sessiontypefilter ul li:nth-child(1) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?mySchedule=false&sessionTypes=1&show=calendar&showFilters=true'
     );
 
     await click('.sessiontypefilter ul li:nth-child(2) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?mySchedule=false&sessionTypes=1-2&show=calendar&showFilters=true'
     );
 
     await click('.sessiontypefilter ul li:nth-child(2) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?mySchedule=false&sessionTypes=1&show=calendar&showFilters=true'
     );
 
     await click('.sessiontypefilter ul li:nth-child(1) input');
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
+    assert.strictEqual(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
     await click('.togglecoursefilters label:nth-of-type(2)');
     await click('.courselevelfilter ul li:nth-child(1) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?courseFilters=false&courseLevels=1&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click('.courselevelfilter ul li:nth-child(2) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?courseFilters=false&courseLevels=1-2&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click('.courselevelfilter ul li:nth-child(2) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?courseFilters=false&courseLevels=1&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click('.courselevelfilter ul li:nth-child(1) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click('[data-test-cohort-calendar-filter] ul li:nth-child(2) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click('[data-test-cohort-calendar-filter] ul li:nth-child(1) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?cohorts=1-2&courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click('[data-test-cohort-calendar-filter] ul li:nth-child(1) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
     );
 
     await click('[data-test-cohort-calendar-filter] ul li:nth-child(2) input');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
     );
@@ -843,7 +844,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await visit('/dashboard?show=week');
 
     const eventBLocks = findAll(events);
-    assert.equal(eventBLocks.length, 2);
+    assert.strictEqual(eventBLocks.length, 2);
     const options = {
       weekday: 'long',
       hour: 'numeric',
@@ -887,13 +888,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
     await pickTerm(1);
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
 
     await pickTerm(1);
     await pickTerm(2);
-    assert.equal(page.weeklyCalendar.events.length, 0);
+    assert.strictEqual(page.weeklyCalendar.events.length, 0);
   });
 
   test('clear vocab filter #3450', async function (assert) {
@@ -922,14 +923,14 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
     await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
     await pickTerm(1);
-    assert.equal(page.weeklyCalendar.events.length, 1);
+    assert.strictEqual(page.weeklyCalendar.events.length, 1);
 
     assert.dom(filters).exists({ count: 1 });
     await click(filter);
     assert.dom(filters).doesNotExist();
-    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.weeklyCalendar.events.length, 2);
   });
 
   test('test tooltip', async function (assert) {
@@ -959,7 +960,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       showFilters: 'true',
       courseFilters: 'true',
     });
-    assert.equal(page.weeklyCalendar.events.length, 1);
+    assert.strictEqual(page.weeklyCalendar.events.length, 1);
   });
 
   test('visit with detail filters open #5098', async function (assert) {
@@ -976,6 +977,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       showFilters: 'true',
       courseFilters: 'false',
     });
-    assert.equal(page.weeklyCalendar.events.length, 1);
+    assert.strictEqual(page.weeklyCalendar.events.length, 1);
   });
 });

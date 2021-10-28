@@ -24,9 +24,9 @@ module('Integration | Component | session/manage-objective-parents', function (h
       @remove={{(noop)}}
     />`);
 
-    assert.equal(component.courseTitle, course.title);
-    assert.equal(component.objectives.length, 1);
-    assert.equal(component.objectives[0].title, 'course objective 0');
+    assert.strictEqual(component.courseTitle, course.title);
+    assert.strictEqual(component.objectives.length, 1);
+    assert.strictEqual(component.objectives[0].title, 'course objective 0');
     assert.ok(component.objectives[0].notSelected);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -60,9 +60,9 @@ module('Integration | Component | session/manage-objective-parents', function (h
       @remove={{(noop)}}
     />`);
 
-    assert.equal(component.objectives.length, 3);
-    assert.equal(component.objectives[0].title, 'Oscar');
-    assert.equal(component.objectives[1].title, 'Zeppelin');
-    assert.equal(component.objectives[2].title, 'Aardvark');
+    assert.strictEqual(component.objectives.length, 3);
+    assert.strictEqual(component.objectives[0].title, 'Oscar');
+    assert.strictEqual(component.objectives[1].title, 'Zeppelin');
+    assert.strictEqual(component.objectives[2].title, 'Aardvark');
   });
 });

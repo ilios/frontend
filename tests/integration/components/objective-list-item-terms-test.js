@@ -61,11 +61,11 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       @isSaving={{false}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.list.length, 2);
-    assert.equal(component.list[0].title, 'Vocabulary 1 (school 0)');
-    assert.equal(component.list[0].terms.length, 2);
-    assert.equal(component.list[1].title, 'Vocabulary 2 (school 1)');
-    assert.equal(component.list[1].terms.length, 1);
+    assert.strictEqual(component.list.length, 2);
+    assert.strictEqual(component.list[0].title, 'Vocabulary 1 (school 0)');
+    assert.strictEqual(component.list[0].terms.length, 2);
+    assert.strictEqual(component.list[1].title, 'Vocabulary 2 (school 1)');
+    assert.strictEqual(component.list[1].terms.length, 1);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -74,7 +74,7 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
     assert.expect(1);
     this.set('subject', this.subject);
     this.set('manage', (vocabulary) => {
-      assert.equal(vocabulary, this.vocabularyModel1);
+      assert.strictEqual(vocabulary, this.vocabularyModel1);
     });
     await render(hbs`<ObjectiveListItemTerms
       @subject={{this.subject}}
@@ -93,7 +93,7 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
     this.subject.set('terms', []);
     this.set('subject', this.subject);
     this.set('manage', (vocabulary) => {
-      assert.equal(vocabulary, null);
+      assert.strictEqual(vocabulary, null);
     });
     await render(hbs`<ObjectiveListItemTerms
       @subject={{this.subject}}

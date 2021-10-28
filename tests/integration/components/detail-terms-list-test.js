@@ -53,11 +53,11 @@ module('Integration | Component | detail terms list', function (hooks) {
       @terms={{terms}}
       @canEdit={{false}}
     />`);
-    assert.equal(component.title, 'Topics (Medicine)');
-    assert.equal(component.vocabularyName, 'Topics');
-    assert.equal(component.terms.length, 2);
-    assert.equal(component.terms[0].name, 'bar');
-    assert.equal(component.terms[1].name, 'foo');
+    assert.strictEqual(component.title, 'Topics (Medicine)');
+    assert.strictEqual(component.vocabularyName, 'Topics');
+    assert.strictEqual(component.terms.length, 2);
+    assert.strictEqual(component.terms[0].name, 'bar');
+    assert.strictEqual(component.terms[1].name, 'foo');
   });
 
   test('empty list', async function (assert) {
@@ -105,8 +105,8 @@ module('Integration | Component | detail terms list', function (hooks) {
       @terms={{terms}}
       @canEdit={{false}}
     />`);
-    assert.equal(component.title, 'Topics (Medicine)');
-    assert.equal(component.terms.length, 0);
+    assert.strictEqual(component.title, 'Topics (Medicine)');
+    assert.strictEqual(component.terms.length, 0);
   });
 
   test('remove term', async function (assert) {
@@ -133,7 +133,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     this.set('terms', terms);
 
     this.set('remove', (val) => {
-      assert.equal(val.id, term1.id);
+      assert.strictEqual(val.id, term1.id);
     });
     await render(hbs`<DetailTermsList
       @vocabulary={{vocabulary}}
@@ -181,7 +181,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     this.set('vocabulary', vocabularyModel);
     this.set('terms', []);
     this.set('manage', (vocabulary) => {
-      assert.equal(vocabulary, vocabularyModel);
+      assert.strictEqual(vocabulary, vocabularyModel);
     });
     await render(hbs`<DetailTermsList
       @vocabulary={{this.vocabulary}}

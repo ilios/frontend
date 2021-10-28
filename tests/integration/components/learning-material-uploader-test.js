@@ -25,7 +25,7 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
       '/upload',
       upload(function (db, request) {
         const { name } = request.requestBody.file;
-        assert.equal(name, 'blob');
+        assert.strictEqual(name, 'blob');
         return new Response(
           200,
           {},
@@ -53,8 +53,8 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
     />`);
     const file = new Blob(['test'], { type: 'text/plain' });
     await selectFiles('[data-test-learning-material-uploader] input', file);
-    assert.equal(filename, 'test.file');
-    assert.equal(fileHash, '1234');
+    assert.strictEqual(filename, 'test.file');
+    assert.strictEqual(fileHash, '1234');
     assert.dom('[data-test-learning-material-uploader]').containsText('test.file');
   });
 

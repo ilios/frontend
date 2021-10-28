@@ -14,14 +14,14 @@ module('Unit | Model | User', function (hooks) {
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
-    assert.equal(model.get('fullName'), 'first m. last');
+    assert.strictEqual(model.get('fullName'), 'first m. last');
   });
 
   test('full name no middle name', function (assert) {
     const model = this.owner.lookup('service:store').createRecord('user');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
-    assert.equal(model.get('fullName'), 'first last');
+    assert.strictEqual(model.get('fullName'), 'first last');
   });
 
   test('fullNameFromFirstMiddleLastName', function (assert) {
@@ -29,7 +29,7 @@ module('Unit | Model | User', function (hooks) {
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
-    assert.equal(model.get('fullNameFromFirstMiddleLastName'), 'first middle last');
+    assert.strictEqual(model.get('fullNameFromFirstMiddleLastName'), 'first middle last');
   });
 
   test('fullNameFromFirstMiddleInitialLastName', function (assert) {
@@ -37,7 +37,7 @@ module('Unit | Model | User', function (hooks) {
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
-    assert.equal(model.get('fullNameFromFirstMiddleInitialLastName'), 'first m. last');
+    assert.strictEqual(model.get('fullNameFromFirstMiddleInitialLastName'), 'first m. last');
   });
 
   test('fullNameFromFirstLastName', function (assert) {
@@ -45,7 +45,7 @@ module('Unit | Model | User', function (hooks) {
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
-    assert.equal(model.get('fullNameFromFirstLastName'), 'first last');
+    assert.strictEqual(model.get('fullNameFromFirstLastName'), 'first last');
   });
 
   test('does not have different display name', function (assert) {
@@ -133,7 +133,7 @@ module('Unit | Model | User', function (hooks) {
     model.set('displayName', 'something else');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
-    assert.equal(model.get('fullName'), 'something else');
+    assert.strictEqual(model.get('fullName'), 'something else');
   });
 
   test('gets all directed courses', async function (assert) {
@@ -154,7 +154,7 @@ module('Unit | Model | User', function (hooks) {
       })
     );
     const allRelatedCourses = await model.get('allRelatedCourses');
-    assert.equal(allRelatedCourses.length, courses.length);
+    assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
     });
@@ -178,7 +178,7 @@ module('Unit | Model | User', function (hooks) {
       })
     );
     const allRelatedCourses = await model.get('allRelatedCourses');
-    assert.equal(allRelatedCourses.length, courses.length);
+    assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
     });
@@ -216,7 +216,7 @@ module('Unit | Model | User', function (hooks) {
 
     const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
-    assert.equal(allRelatedCourses.length, courses.length);
+    assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
     });
@@ -254,7 +254,7 @@ module('Unit | Model | User', function (hooks) {
 
     const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
-    assert.equal(allRelatedCourses.length, courses.length);
+    assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
     });
@@ -287,7 +287,7 @@ module('Unit | Model | User', function (hooks) {
 
     const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
-    assert.equal(allRelatedCourses.length, courses.length);
+    assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
     });
@@ -320,7 +320,7 @@ module('Unit | Model | User', function (hooks) {
 
     const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
-    assert.equal(allRelatedCourses.length, courses.length);
+    assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
     });
@@ -358,7 +358,7 @@ module('Unit | Model | User', function (hooks) {
 
     const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
-    assert.equal(allRelatedCourses.length, courses.length);
+    assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
     });
@@ -402,7 +402,7 @@ module('Unit | Model | User', function (hooks) {
 
     const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
-    assert.equal(allRelatedCourses.length, courses.length);
+    assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
     });
@@ -431,7 +431,7 @@ module('Unit | Model | User', function (hooks) {
 
     const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
-    assert.equal(allRelatedCourses.length, courses.length);
+    assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
     });
@@ -623,7 +623,7 @@ module('Unit | Model | User', function (hooks) {
 
     const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
-    assert.equal(allRelatedCourses.length, courses.length);
+    assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
     });
@@ -651,7 +651,7 @@ module('Unit | Model | User', function (hooks) {
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
-    assert.equal(lowestGroup.get('id'), learnerGroup.get('id'));
+    assert.strictEqual(lowestGroup.get('id'), learnerGroup.get('id'));
   });
 
   test('find lowest group in middle of tree', async function (assert) {
@@ -677,7 +677,7 @@ module('Unit | Model | User', function (hooks) {
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
-    assert.equal(lowestGroup.get('id'), learnerGroup2.get('id'));
+    assert.strictEqual(lowestGroup.get('id'), learnerGroup2.get('id'));
   });
 
   test('find lowest group in bottom of tree', async function (assert) {
@@ -704,7 +704,7 @@ module('Unit | Model | User', function (hooks) {
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
-    assert.equal(lowestGroup.get('id'), learnerGroup3.get('id'));
+    assert.strictEqual(lowestGroup.get('id'), learnerGroup3.get('id'));
   });
 
   test('return null when there is no group in the tree', async function (assert) {
@@ -743,7 +743,7 @@ module('Unit | Model | User', function (hooks) {
     model.get('cohorts').pushObjects([primaryCohort, secondaryCohort, anotherCohort]);
 
     const cohorts = await model.get('secondaryCohorts');
-    assert.equal(cohorts.length, 2);
+    assert.strictEqual(cohorts.length, 2);
     assert.ok(cohorts.includes(secondaryCohort));
     assert.ok(cohorts.includes(anotherCohort));
     assert.notOk(cohorts.includes(primaryCohort));
@@ -788,7 +788,7 @@ module('Unit | Model | User', function (hooks) {
 
     const course = [course1, course2, course3, course4];
     const allInstructedCourses = await model.get('allInstructedCourses');
-    assert.equal(allInstructedCourses.length, course.length);
+    assert.strictEqual(allInstructedCourses.length, course.length);
     course.forEach((session) => {
       assert.ok(allInstructedCourses.includes(session));
     });
@@ -829,7 +829,7 @@ module('Unit | Model | User', function (hooks) {
 
     const sessions = [session1, session2, session3, session4];
     const allInstructedSessions = await model.get('allInstructedSessions');
-    assert.equal(allInstructedSessions.length, sessions.length);
+    assert.strictEqual(allInstructedSessions.length, sessions.length);
     sessions.forEach((session) => {
       assert.ok(allInstructedSessions.includes(session));
     });

@@ -20,7 +20,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
 
     await render(hbs`<IliosCalendarWeek @date={{this.date}} @calendarEvents={{array}} />`);
     assert.dom().containsText('Week of September 27, 2015');
-    assert.equal(weeklyCalendarComponent.events.length, 0);
+    assert.strictEqual(weeklyCalendarComponent.events.length, 0);
   });
 
   test('clicking on a day header fires the correct events', async function (assert) {
@@ -32,7 +32,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       assert.strictEqual(newDate.toString().search(/Sun Sep 27/), 0);
     };
     this.actions.changeView = (newView) => {
-      assert.equal(newView, 'day');
+      assert.strictEqual(newView, 'day');
     };
 
     await render(hbs`<IliosCalendarWeek
@@ -148,7 +148,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
     />`);
     const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
     const preworkElements = this.element.querySelectorAll(preworkSelector);
-    assert.equal(preworkElements.length, 2);
+    assert.strictEqual(preworkElements.length, 2);
     assert.ok(preworkElements[0].textContent.includes('prework 1'));
     assert.ok(preworkElements[1].textContent.includes('prework 2'));
   });
@@ -203,7 +203,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
     />`);
     const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
     const preworkElements = this.element.querySelectorAll(preworkSelector);
-    assert.equal(preworkElements.length, 0);
+    assert.strictEqual(preworkElements.length, 0);
   });
 
   const createUserEventObject = function () {

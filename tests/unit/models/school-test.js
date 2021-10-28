@@ -22,7 +22,7 @@ module('Unit | Model | School', function (hooks) {
 
     const programYears = await model.getProgramYearsForYear(2017);
 
-    assert.equal(programYears.length, 2);
+    assert.strictEqual(programYears.length, 2);
     assert.ok(programYears.includes(programYear1));
     assert.ok(programYears.includes(programYear2));
   });

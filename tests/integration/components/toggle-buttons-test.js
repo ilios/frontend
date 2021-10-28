@@ -48,7 +48,7 @@ module('Integration | Component | toggle buttons', function (hooks) {
     let called = 0;
     this.set('toggle', (newValue) => {
       const hasBeenCalled = Boolean(called);
-      assert.equal(newValue, hasBeenCalled);
+      assert.strictEqual(newValue, hasBeenCalled);
       this.set('firstOptionSelected', newValue);
       called++;
     });
@@ -70,7 +70,7 @@ module('Integration | Component | toggle buttons', function (hooks) {
     let called = 0;
     this.set('toggle', (newValue) => {
       const hasBeenCalled = Boolean(called);
-      assert.equal(newValue, hasBeenCalled);
+      assert.strictEqual(newValue, hasBeenCalled);
       this.set('firstOptionSelected', newValue);
       called++;
     });

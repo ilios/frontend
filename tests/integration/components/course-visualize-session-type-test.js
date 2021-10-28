@@ -25,7 +25,7 @@ module('Integration | Component | course-visualize-session-type', function (hook
 
     await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />`);
 
-    assert.equal(component.title, 'course 0 2021');
+    assert.strictEqual(component.title, 'course 0 2021');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
@@ -40,7 +40,7 @@ module('Integration | Component | course-visualize-session-type', function (hook
 
     await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />`);
 
-    assert.equal(component.title, 'course 0 2021 - 2022');
+    assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
 
   test('breadcrumb', async function (assert) {
@@ -48,13 +48,13 @@ module('Integration | Component | course-visualize-session-type', function (hook
 
     await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />`);
 
-    assert.equal(component.breadcrumb.crumbs.length, 4);
-    assert.equal(component.breadcrumb.crumbs[0].text, 'course 0');
-    assert.equal(component.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.equal(component.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.equal(component.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.equal(component.breadcrumb.crumbs[2].text, 'Session Types');
-    assert.equal(component.breadcrumb.crumbs[2].link, '/data/courses/1/session-types');
-    assert.equal(component.breadcrumb.crumbs[3].text, 'session type 0');
+    assert.strictEqual(component.breadcrumb.crumbs.length, 4);
+    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
+    assert.strictEqual(component.breadcrumb.crumbs[0].link, '/courses/1');
+    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(component.breadcrumb.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(component.breadcrumb.crumbs[2].text, 'Session Types');
+    assert.strictEqual(component.breadcrumb.crumbs[2].link, '/data/courses/1/session-types');
+    assert.strictEqual(component.breadcrumb.crumbs[3].text, 'session type 0');
   });
 });

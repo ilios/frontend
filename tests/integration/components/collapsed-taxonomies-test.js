@@ -40,16 +40,16 @@ module('Integration | Component | collapsed taxonomies', function (hooks) {
     this.set('subject', sessionModel);
     this.set('click', () => {});
     await render(hbs`<CollapsedTaxonomies @subject={{subject}} @expand={{this.click}} />`);
-    assert.equal(component.title, 'Terms (1)');
-    assert.equal(component.headers.length, 3);
-    assert.equal(component.headers[0].title, 'Vocabulary');
-    assert.equal(component.headers[1].title, 'School');
-    assert.equal(component.headers[2].title, 'Assigned Terms');
+    assert.strictEqual(component.title, 'Terms (1)');
+    assert.strictEqual(component.headers.length, 3);
+    assert.strictEqual(component.headers[0].title, 'Vocabulary');
+    assert.strictEqual(component.headers[1].title, 'School');
+    assert.strictEqual(component.headers[2].title, 'Assigned Terms');
 
-    assert.equal(component.vocabularies.length, 1);
-    assert.equal(component.vocabularies[0].name, 'Vocabulary 1');
-    assert.equal(component.vocabularies[0].school, 'school 0');
-    assert.equal(component.vocabularies[0].terms, 1);
+    assert.strictEqual(component.vocabularies.length, 1);
+    assert.strictEqual(component.vocabularies[0].name, 'Vocabulary 1');
+    assert.strictEqual(component.vocabularies[0].school, 'school 0');
+    assert.strictEqual(component.vocabularies[0].terms, 1);
   });
 
   test('click expands', async function (assert) {
@@ -61,7 +61,7 @@ module('Integration | Component | collapsed taxonomies', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<CollapsedTaxonomies @subject={{subject}} @expand={{this.click}} />`);
-    assert.equal(component.title, 'Terms (1)');
+    assert.strictEqual(component.title, 'Terms (1)');
     await component.expand();
   });
 });

@@ -16,7 +16,7 @@ module('Integration | Component | learningmaterial search', function (hooks) {
     this.server.createList('learning-material', 2);
     await render(hbs`<LearningmaterialSearch />`);
     await component.search('material');
-    assert.equal(component.searchResults.length, 2);
+    assert.strictEqual(component.searchResults.length, 2);
   });
 
   test('empty search clears results', async function (assert) {
@@ -24,8 +24,8 @@ module('Integration | Component | learningmaterial search', function (hooks) {
     this.server.createList('learning-material', 2);
     await render(hbs`<LearningmaterialSearch />`);
     await component.search('    material    ');
-    assert.equal(component.searchResults.length, 2);
+    assert.strictEqual(component.searchResults.length, 2);
     await component.search('        ');
-    assert.equal(component.searchResults.length, 0);
+    assert.strictEqual(component.searchResults.length, 0);
   });
 });

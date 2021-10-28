@@ -32,7 +32,7 @@ module('Integration | Component | course rollover', function (hooks) {
       assert.dom(`${yearSelect} option:nth-of-type(${i + 1})`).hasText(`${lastYear + i}`);
     }
     assert.dom(title).exists({ count: 1 });
-    assert.equal(find(title).value.trim(), course.title);
+    assert.strictEqual(find(title).value.trim(), course.title);
   });
 
   test('academic year options are labeled with year ranges as applicable by configuration', async function (assert) {
@@ -77,8 +77,8 @@ module('Integration | Component | course rollover', function (hooks) {
       const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
       const data = queryString.parse(request.requestBody);
       assert.ok('year' in data);
-      assert.equal(data.year, lastYear);
-      assert.equal(data.newCourseTitle, course.title);
+      assert.strictEqual(data.year, lastYear);
+      assert.strictEqual(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
       return this.serialize(
         schema.courses.create({
@@ -90,7 +90,7 @@ module('Integration | Component | course rollover', function (hooks) {
       );
     });
     this.set('visit', (newCourse) => {
-      assert.equal(newCourse.id, 14);
+      assert.strictEqual(newCourse.id, 14);
     });
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -114,7 +114,7 @@ module('Integration | Component | course rollover', function (hooks) {
 
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
       const data = queryString.parse(request.requestBody);
-      assert.equal(data.newCourseTitle, newTitle, 'The new title gets passed.');
+      assert.strictEqual(data.newCourseTitle, newTitle, 'The new title gets passed.');
 
       return this.serialize(
         schema.courses.create({
@@ -146,8 +146,8 @@ module('Integration | Component | course rollover', function (hooks) {
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
       const data = queryString.parse(request.requestBody);
       assert.ok('year' in data);
-      assert.equal(data.year, selectedYear);
-      assert.equal(data.newCourseTitle, course.title);
+      assert.strictEqual(data.year, selectedYear);
+      assert.strictEqual(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
       return this.serialize(
         schema.courses.create({
@@ -159,7 +159,7 @@ module('Integration | Component | course rollover', function (hooks) {
       );
     });
     this.set('visit', (newCourse) => {
-      assert.equal(newCourse.id, 14);
+      assert.strictEqual(newCourse.id, 14);
     });
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -252,7 +252,7 @@ module('Integration | Component | course rollover', function (hooks) {
       const data = queryString.parse(request.requestBody);
       assert.ok('newStartDate' in data, 'A new start date was passed.');
       const newStartDate = moment(data.newStartDate);
-      assert.equal(
+      assert.strictEqual(
         newStartDate.format('YYYY-MM-DD'),
         rolloverDate.format('YYYY-MM-DD'),
         'New start date is rollover date.'
@@ -273,28 +273,28 @@ module('Integration | Component | course rollover', function (hooks) {
 
     await click(startDate);
     const picker = find('[data-test-course-rollover-picker]')._flatpickr;
-    assert.equal(
+    assert.strictEqual(
       picker.currentYear,
       courseStartDate.year(),
       'Selected year initialized to course start date year.'
     );
-    assert.equal(
+    assert.strictEqual(
       picker.currentMonth,
       courseStartDate.month(),
       'Selected month initialized to course start date month.'
     );
     picker.setDate(rolloverDate.toDate(), true);
-    assert.equal(
+    assert.strictEqual(
       picker.currentYear,
       rolloverDate.year(),
       'Selected year changed to rollover date year.'
     );
-    assert.equal(
+    assert.strictEqual(
       picker.currentMonth,
       rolloverDate.month(),
       'Selected month changed to rollover date month.'
     );
-    assert.equal(
+    assert.strictEqual(
       picker.selectedDates[0].getDate(),
       rolloverDate.date(),
       'Selected day changed to rollover date day.'
@@ -326,7 +326,7 @@ module('Integration | Component | course rollover', function (hooks) {
       const data = queryString.parse(request.requestBody);
       assert.ok('newStartDate' in data, 'A new start date was passed.');
       const newStartDate = moment(data.newStartDate);
-      assert.equal(
+      assert.strictEqual(
         newStartDate.format('YYYY-MM-DD'),
         courseStartDate.format('YYYY-MM-DD'),
         'New start date is course start date.'
@@ -352,12 +352,12 @@ module('Integration | Component | course rollover', function (hooks) {
     await click(startDate);
     const picker = find('[data-test-course-rollover-picker]')._flatpickr;
     picker.setDate(rolloverDate.toDate(), true);
-    assert.equal(
+    assert.strictEqual(
       picker.currentYear,
       courseStartDate.year(),
       'Selected year initialized to course start date year.'
     );
-    assert.equal(
+    assert.strictEqual(
       picker.currentMonth,
       courseStartDate.month(),
       'Selected month initialized to course start date month.'
@@ -400,12 +400,12 @@ module('Integration | Component | course rollover', function (hooks) {
 
     await click(startDate);
     const picker = find('[data-test-course-rollover-picker]')._flatpickr;
-    assert.equal(
+    assert.strictEqual(
       picker.currentYear,
       rolloverDate.year(),
       'Selected year initialized to this year.'
     );
-    assert.equal(
+    assert.strictEqual(
       picker.currentMonth,
       rolloverDate.month(),
       "Selected month initialized to this year's equivalent of course's start month."

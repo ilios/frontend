@@ -8,47 +8,47 @@ module('Unit | Model | Session', function (hooks) {
   test('check required publication items', function (assert) {
     const model = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
-    assert.equal(model.get('requiredPublicationIssues').length, 2);
+    assert.strictEqual(model.get('requiredPublicationIssues').length, 2);
     model.set('title', 'nothing');
-    assert.equal(model.get('requiredPublicationIssues').length, 1);
+    assert.strictEqual(model.get('requiredPublicationIssues').length, 1);
     model.get('offerings').addObject(store.createRecord('offering'));
-    assert.equal(model.get('requiredPublicationIssues').length, 0);
+    assert.strictEqual(model.get('requiredPublicationIssues').length, 0);
   });
 
   test('check required ILM publication items', function (assert) {
     const model = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     model.set('title', 'nothing');
-    assert.equal(model.get('requiredPublicationIssues').length, 1);
+    assert.strictEqual(model.get('requiredPublicationIssues').length, 1);
     const ilmSession = store.createRecord('ilmSession');
     model.set('ilmSession', ilmSession);
-    assert.equal(model.get('requiredPublicationIssues').length, 1);
+    assert.strictEqual(model.get('requiredPublicationIssues').length, 1);
   });
 
   test('check optional publication items', function (assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('session');
-    assert.equal(model.optionalPublicationIssues.length, 3);
+    assert.strictEqual(model.optionalPublicationIssues.length, 3);
     assert.deepEqual(model.optionalPublicationIssues, [
       'terms',
       'sessionObjectives',
       'meshDescriptors',
     ]);
     model.get('terms').addObject(store.createRecord('term'));
-    assert.equal(model.optionalPublicationIssues.length, 2);
+    assert.strictEqual(model.optionalPublicationIssues.length, 2);
     assert.deepEqual(model.optionalPublicationIssues, ['sessionObjectives', 'meshDescriptors']);
     model.get('sessionObjectives').addObject(store.createRecord('session-objective'));
-    assert.equal(model.optionalPublicationIssues.length, 1);
+    assert.strictEqual(model.optionalPublicationIssues.length, 1);
     assert.deepEqual(model.optionalPublicationIssues, ['meshDescriptors']);
     model.get('meshDescriptors').addObject(store.createRecord('meshDescriptor'));
-    assert.equal(model.optionalPublicationIssues.length, 0);
+    assert.strictEqual(model.optionalPublicationIssues.length, 0);
   });
 
   test('check empty associatedOfferingLearnerGroups', async function (assert) {
     assert.expect(1);
     const session = this.owner.lookup('service:store').createRecord('session');
     const groups = await session.get('associatedOfferingLearnerGroups');
-    assert.equal(groups.length, 0);
+    assert.strictEqual(groups.length, 0);
   });
 
   test('check first level associatedOfferingLearnerGroups', async function (assert) {
@@ -69,7 +69,7 @@ module('Unit | Model | Session', function (hooks) {
     session.get('offerings').pushObjects([offering1, offering2]);
 
     const groups = await session.get('associatedOfferingLearnerGroups');
-    assert.equal(groups.length, 3);
+    assert.strictEqual(groups.length, 3);
     assert.ok(groups.includes(learnerGroup1));
     assert.ok(groups.includes(learnerGroup2));
     assert.ok(groups.includes(learnerGroup3));
@@ -97,7 +97,7 @@ module('Unit | Model | Session', function (hooks) {
     session.get('offerings').pushObjects([offering1, offering2, offering3]);
 
     const groups = await session.get('associatedOfferingLearnerGroups');
-    assert.equal(groups.length, 5);
+    assert.strictEqual(groups.length, 5);
     assert.ok(groups.includes(learnerGroup1));
     assert.ok(groups.includes(learnerGroup2));
     assert.ok(groups.includes(learnerGroup3));
@@ -110,7 +110,7 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.owner.lookup('service:store').createRecord('session');
 
     const groups = await session.get('associatedIlmLearnerGroups');
-    assert.equal(groups.length, 0);
+    assert.strictEqual(groups.length, 0);
   });
 
   test('check associatedIlmLearnerGroups', async function (assert) {
@@ -128,7 +128,7 @@ module('Unit | Model | Session', function (hooks) {
     session.set('ilmSession', ilm);
 
     const groups = await session.get('associatedIlmLearnerGroups');
-    assert.equal(groups.length, 3);
+    assert.strictEqual(groups.length, 3);
     assert.ok(groups.includes(learnerGroup1));
     assert.ok(groups.includes(learnerGroup2));
     assert.ok(groups.includes(learnerGroup3));
@@ -138,7 +138,7 @@ module('Unit | Model | Session', function (hooks) {
     assert.expect(1);
     const session = this.owner.lookup('service:store').createRecord('session');
     const groups = await session.get('associatedLearnerGroups');
-    assert.equal(groups.length, 0);
+    assert.strictEqual(groups.length, 0);
   });
 
   test('check associatedLearnerGroups', async function (assert) {
@@ -166,7 +166,7 @@ module('Unit | Model | Session', function (hooks) {
     session.get('offerings').pushObjects([offering1, offering2]);
 
     const groups = await session.get('associatedLearnerGroups');
-    assert.equal(groups.length, 5);
+    assert.strictEqual(groups.length, 5);
     assert.ok(groups.includes(learnerGroup1));
     assert.ok(groups.includes(learnerGroup2));
     assert.ok(groups.includes(learnerGroup3));
@@ -191,7 +191,7 @@ module('Unit | Model | Session', function (hooks) {
 
     session.get('offerings').pushObjects([offering1, offering2]);
 
-    assert.equal(session.get('learnerGroupCount'), 3);
+    assert.strictEqual(session.get('learnerGroupCount'), 3);
 
     const learnerGroup4 = store.createRecord('learner-group');
     const offering3 = store.createRecord('offering', {
@@ -201,7 +201,7 @@ module('Unit | Model | Session', function (hooks) {
     const learnerGroup5 = store.createRecord('learner-group');
     offering1.get('learnerGroups').pushObject(learnerGroup5);
 
-    assert.equal(session.get('learnerGroupCount'), 5);
+    assert.strictEqual(session.get('learnerGroupCount'), 5);
   });
 
   test('isIndependentLearning', async function (assert) {
@@ -224,9 +224,9 @@ module('Unit | Model | Session', function (hooks) {
     const term3 = store.createRecord('term', { vocabulary: vocab2 });
     subject.get('terms').pushObjects([term1, term2, term3]);
     const vocabularies = await subject.get('associatedVocabularies');
-    assert.equal(vocabularies.length, 2);
-    assert.equal(vocabularies[0], vocab2);
-    assert.equal(vocabularies[1], vocab1);
+    assert.strictEqual(vocabularies.length, 2);
+    assert.strictEqual(vocabularies[0], vocab2);
+    assert.strictEqual(vocabularies[1], vocab1);
   });
 
   test('termsWithAllParents', async function (assert) {
@@ -241,7 +241,7 @@ module('Unit | Model | Session', function (hooks) {
     const term6 = store.createRecord('term');
     subject.get('terms').pushObjects([term4, term5, term6]);
     const terms = await subject.get('termsWithAllParents');
-    assert.equal(terms.length, 6);
+    assert.strictEqual(terms.length, 6);
     assert.ok(terms.includes(term1));
     assert.ok(terms.includes(term2));
     assert.ok(terms.includes(term3));
@@ -254,11 +254,11 @@ module('Unit | Model | Session', function (hooks) {
     assert.expect(2);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
-    assert.equal(subject.get('termCount'), 0);
+    assert.strictEqual(subject.get('termCount'), 0);
     const term1 = store.createRecord('term');
     const term2 = store.createRecord('term');
     subject.get('terms').pushObjects([term1, term2]);
-    assert.equal(subject.get('termCount'), 2);
+    assert.strictEqual(subject.get('termCount'), 2);
   });
 
   test('sortedSessionObjectives', async function (assert) {
@@ -286,11 +286,11 @@ module('Unit | Model | Session', function (hooks) {
       session,
     });
     const sortedObjectives = await session.get('sortedSessionObjectives');
-    assert.equal(sortedObjectives.length, 4);
-    assert.equal(sortedObjectives[0], sessionObjective4);
-    assert.equal(sortedObjectives[1], sessionObjective3);
-    assert.equal(sortedObjectives[2], sessionObjective2);
-    assert.equal(sortedObjectives[3], sessionObjective1);
+    assert.strictEqual(sortedObjectives.length, 4);
+    assert.strictEqual(sortedObjectives[0], sessionObjective4);
+    assert.strictEqual(sortedObjectives[1], sessionObjective3);
+    assert.strictEqual(sortedObjectives[2], sessionObjective2);
+    assert.strictEqual(sortedObjectives[3], sessionObjective1);
   });
 
   test('totalSumOfferingsDuration', async function (assert) {
@@ -298,7 +298,7 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     let total = await subject.get('totalSumOfferingsDuration');
-    assert.equal(total, 0);
+    assert.strictEqual(total, 0);
 
     const allDayOffering = store.createRecord('offering', {
       startDate: moment('2017-01-01'),
@@ -310,7 +310,7 @@ module('Unit | Model | Session', function (hooks) {
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
     total = await subject.get('totalSumOfferingsDuration');
-    assert.equal(total, 24.5);
+    assert.strictEqual(total, 24.5);
   });
 
   test('maxSingleOfferingDuration', async function (assert) {
@@ -318,7 +318,7 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     let max = await subject.get('maxSingleOfferingDuration');
-    assert.equal(max, 0);
+    assert.strictEqual(max, 0);
 
     const allDayOffering = store.createRecord('offering', {
       startDate: moment('2017-01-01'),
@@ -330,14 +330,14 @@ module('Unit | Model | Session', function (hooks) {
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
     max = await subject.get('maxSingleOfferingDuration');
-    assert.equal(max, 24.0);
+    assert.strictEqual(max, 24.0);
   });
 
   test('firstOfferingDate - no offerings, and no ILM', async function (assert) {
     assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const firstDate = await subject.get('firstOfferingDate');
-    assert.equal(firstDate, null);
+    assert.strictEqual(firstDate, null);
   });
 
   test('firstOfferingDate - ILM', async function (assert) {
@@ -349,7 +349,7 @@ module('Unit | Model | Session', function (hooks) {
     });
     subject.set('ilmSession', ilm);
     const firstDate = await subject.get('firstOfferingDate');
-    assert.equal(firstDate, ilm.get('dueDate'));
+    assert.strictEqual(firstDate, ilm.get('dueDate'));
   });
 
   test('firstOfferingDate - offerings', async function (assert) {
@@ -364,7 +364,7 @@ module('Unit | Model | Session', function (hooks) {
     });
     subject.get('offerings').pushObjects([offering1, offering2]);
     const firstDate = await subject.get('firstOfferingDate');
-    assert.equal(offering2.get('startDate'), firstDate);
+    assert.strictEqual(offering2.get('startDate'), firstDate);
   });
 
   test('sortedOfferingsByDate', async function (assert) {
@@ -385,10 +385,10 @@ module('Unit | Model | Session', function (hooks) {
       .get('offerings')
       .pushObjects([offering1, offering2, offering3, offeringWithNoStartDate]);
     const sortedDates = await subject.get('sortedOfferingsByDate');
-    assert.equal(sortedDates.length, 3);
-    assert.equal(sortedDates[0], offering3);
-    assert.equal(sortedDates[1], offering2);
-    assert.equal(sortedDates[2], offering1);
+    assert.strictEqual(sortedDates.length, 3);
+    assert.strictEqual(sortedDates[0], offering3);
+    assert.strictEqual(sortedDates[1], offering2);
+    assert.strictEqual(sortedDates[2], offering1);
   });
 
   test('maxDuration with ILM', async function (assert) {
@@ -409,7 +409,7 @@ module('Unit | Model | Session', function (hooks) {
     subject.set('ilmSession', ilmSession);
 
     const max = await subject.get('maxDuration');
-    assert.equal(max, 26.6);
+    assert.strictEqual(max, 26.6);
   });
 
   test('maxDuration without ILM', async function (assert) {
@@ -428,7 +428,7 @@ module('Unit | Model | Session', function (hooks) {
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
 
     const max = await subject.get('maxDuration');
-    assert.equal(max, 24.0);
+    assert.strictEqual(max, 24.0);
   });
 
   test('maxDuration only ILM', async function (assert) {
@@ -440,7 +440,7 @@ module('Unit | Model | Session', function (hooks) {
     subject.set('ilmSession', ilmSession);
 
     const max = await subject.get('maxDuration');
-    assert.equal(max, 2.0);
+    assert.strictEqual(max, 2.0);
   });
 
   test('totalSumDuration with ILM', async function (assert) {
@@ -461,7 +461,7 @@ module('Unit | Model | Session', function (hooks) {
     subject.set('ilmSession', ilmSession);
 
     const max = await subject.get('totalSumDuration');
-    assert.equal(max, 27.1);
+    assert.strictEqual(max, 27.1);
   });
 
   test('totalSumDuration without ILM', async function (assert) {
@@ -480,7 +480,7 @@ module('Unit | Model | Session', function (hooks) {
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
 
     const max = await subject.get('totalSumDuration');
-    assert.equal(max, 24.5);
+    assert.strictEqual(max, 24.5);
   });
 
   test('totalSumDuration only ILM', async function (assert) {
@@ -492,7 +492,7 @@ module('Unit | Model | Session', function (hooks) {
     subject.set('ilmSession', ilmSession);
 
     const max = await subject.get('totalSumDuration');
-    assert.equal(max, 2.0);
+    assert.strictEqual(max, 2.0);
   });
 
   test('allInstructors gets offerings data', async function (assert) {
@@ -513,7 +513,7 @@ module('Unit | Model | Session', function (hooks) {
     subject.set('offerings', [offering]);
 
     const allInstructors = await subject.get('allInstructors');
-    assert.equal(allInstructors.length, 2);
+    assert.strictEqual(allInstructors.length, 2);
     assert.ok(allInstructors.includes(user1));
     assert.ok(allInstructors.includes(user2));
   });
@@ -536,7 +536,7 @@ module('Unit | Model | Session', function (hooks) {
     subject.set('ilmSession', ilmSession);
 
     const allInstructors = await subject.get('allInstructors');
-    assert.equal(allInstructors.length, 2);
+    assert.strictEqual(allInstructors.length, 2);
     assert.ok(allInstructors.includes(user1));
     assert.ok(allInstructors.includes(user2));
   });
@@ -544,6 +544,6 @@ module('Unit | Model | Session', function (hooks) {
   test('text only empty description', async function (assert) {
     assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
-    assert.equal(subject.textDescription, '');
+    assert.strictEqual(subject.textDescription, '');
   });
 });

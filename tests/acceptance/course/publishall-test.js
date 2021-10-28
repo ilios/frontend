@@ -61,43 +61,43 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     });
     assert.ok(page.publishAll.isVisible);
     assert.notOk(page.publishAll.hasUnlinkedWarning);
-    assert.equal(
+    assert.strictEqual(
       page.publishAll.unpublishableSessions.text,
       'Sessions Incomplete: cannot publish (0)'
     );
     assert.notOk(page.publishAll.unpublishableSessions.isExpanded);
     assert.ok(page.publishAll.unpublishableSessions.canExpandCollapse);
 
-    assert.equal(
+    assert.strictEqual(
       page.publishAll.publishableSessions.text,
       'Sessions Complete: ready to publish (3)'
     );
     assert.notOk(page.publishAll.publishableSessions.isExpanded);
-    assert.equal(page.publishAll.publishableSessions.sessions.length, 0);
+    assert.strictEqual(page.publishAll.publishableSessions.sessions.length, 0);
     assert.ok(page.publishAll.publishableSessions.canExpandCollapse);
     await page.publishAll.publishableSessions.toggle();
     assert.ok(page.publishAll.publishableSessions.isExpanded);
-    assert.equal(page.publishAll.publishableSessions.sessions.length, 3);
-    assert.equal(page.publishAll.publishableSessions.sessions[0].title, 'session 0');
-    assert.equal(page.publishAll.publishableSessions.sessions[0].offerings, 'Yes (1)');
-    assert.equal(page.publishAll.publishableSessions.sessions[0].terms, 'Yes (1)');
-    assert.equal(page.publishAll.publishableSessions.sessions[0].objectives.text, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions.length, 3);
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[0].title, 'session 0');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[0].offerings, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[0].terms, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[0].objectives.text, 'Yes (1)');
     assert.ok(page.publishAll.publishableSessions.sessions[0].objectives.isLinked);
-    assert.equal(page.publishAll.publishableSessions.sessions[0].meshDescriptors, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[0].meshDescriptors, 'Yes (1)');
 
-    assert.equal(page.publishAll.publishableSessions.sessions[1].title, 'session 1');
-    assert.equal(page.publishAll.publishableSessions.sessions[1].offerings, 'Yes (1)');
-    assert.equal(page.publishAll.publishableSessions.sessions[1].terms, 'Yes (1)');
-    assert.equal(page.publishAll.publishableSessions.sessions[1].objectives.text, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[1].title, 'session 1');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[1].offerings, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[1].terms, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[1].objectives.text, 'Yes (1)');
     assert.ok(page.publishAll.publishableSessions.sessions[1].objectives.isLinked);
-    assert.equal(page.publishAll.publishableSessions.sessions[1].meshDescriptors, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[1].meshDescriptors, 'Yes (1)');
 
-    assert.equal(page.publishAll.publishableSessions.sessions[2].title, 'session 2');
-    assert.equal(page.publishAll.publishableSessions.sessions[2].offerings, 'Yes (1)');
-    assert.equal(page.publishAll.publishableSessions.sessions[2].terms, 'Yes (1)');
-    assert.equal(page.publishAll.publishableSessions.sessions[2].objectives.text, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[2].title, 'session 2');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[2].offerings, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[2].terms, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[2].objectives.text, 'Yes (1)');
     assert.ok(page.publishAll.publishableSessions.sessions[2].objectives.isLinked);
-    assert.equal(page.publishAll.publishableSessions.sessions[2].meshDescriptors, 'Yes (1)');
+    assert.strictEqual(page.publishAll.publishableSessions.sessions[2].meshDescriptors, 'Yes (1)');
   });
 
   test('After publishing user is returned to the courses route #4099', async function (assert) {
@@ -128,7 +128,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     });
     assert.ok(page.publishAll.isVisible);
     await page.publishAll.review.save();
-    assert.equal(currentURL(), '/courses/1');
+    assert.strictEqual(currentURL(), '/courses/1');
     assert.ok(session.published);
   });
 

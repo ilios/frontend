@@ -33,7 +33,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     this.set('selectedTerms', [this.termModel]);
     this.set('term', this.termModel);
     this.set('remove', (term) => {
-      assert.equal(term, this.termModel);
+      assert.strictEqual(term, this.termModel);
       this.selectedTerms.removeObject(term);
     });
 
@@ -55,7 +55,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     this.set('selectedTerms', []);
     this.set('term', this.termModel);
     this.set('add', (term) => {
-      assert.equal(term, this.termModel);
+      assert.strictEqual(term, this.termModel);
       this.selectedTerms.pushObject(term);
     });
 

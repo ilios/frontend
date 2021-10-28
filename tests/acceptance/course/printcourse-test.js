@@ -125,7 +125,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     await visit('/course/1/print?unpublished=true');
 
     const sessionHeaders = await findAll('[data-test-session-header] h2');
-    assert.equal(sessionHeaders.length, 3);
+    assert.strictEqual(sessionHeaders.length, 3);
     assert.dom(sessionHeaders[0]).hasText('session 0');
     assert.dom(sessionHeaders[1]).hasText('session 1');
     assert.dom(sessionHeaders[2]).hasText('session 2');
@@ -151,7 +151,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     await visit('/course/1/print?unpublished=true');
 
     const sessionHeaders = await findAll('[data-test-session-header] h2');
-    assert.equal(sessionHeaders.length, 2);
+    assert.strictEqual(sessionHeaders.length, 2);
     assert.dom(sessionHeaders[0]).hasText('session 1');
     assert.dom(sessionHeaders[1]).hasText('session 2');
   });
@@ -179,7 +179,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     const labels = await findAll('[data-test-session-ilm-section] th');
     const values = await findAll('[data-test-session-ilm-section] td');
 
-    assert.equal(ilmSection.length, 1);
+    assert.strictEqual(ilmSection.length, 1);
     assert.dom(title).hasText('Independent Learning');
     assert.dom(labels[0]).hasText('Hours');
     assert.dom(labels[1]).hasText('Due By');

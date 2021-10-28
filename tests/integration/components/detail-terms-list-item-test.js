@@ -45,7 +45,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
 
     this.set('term', term);
     this.set('remove', (val) => {
-      assert.equal(term, val);
+      assert.strictEqual(term, val);
     });
     await render(hbs`<DetailTermsListItem
       @term={{term}}

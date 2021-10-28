@@ -30,37 +30,37 @@ module('Integration | Component | ilios calendar single event objective list', f
       @isExpandedByDefault={{true}}
     />`);
 
-    assert.equal(component.title.expandCollapseSwitcher.text, title);
+    assert.strictEqual(component.title.expandCollapseSwitcher.text, title);
     assert.ok(component.title.expandCollapseSwitcher.isExpanded);
-    assert.equal(component.title.displayModeSwitcher.text, listByPriorityPhrase);
+    assert.strictEqual(component.title.displayModeSwitcher.text, listByPriorityPhrase);
     assert.ok(component.title.displayModeSwitcher.isListMode);
     assert.ok(component.tree.isVisible);
     assert.notOk(component.list.isVisible);
-    assert.equal(component.tree.domains.length, 2);
-    assert.equal(component.tree.domains[0].title, 'annoying things');
-    assert.equal(component.tree.domains[0].objectives.length, 2);
-    assert.equal(component.tree.domains[0].objectives[0].text, 'buying gas');
-    assert.equal(component.tree.domains[0].objectives[1].text, 'traffic');
-    assert.equal(component.tree.domains[1].title, 'great things');
-    assert.equal(component.tree.domains[1].objectives[0].text, 'cheese');
-    assert.equal(component.tree.domains[1].objectives[1].text, 'ice cream');
+    assert.strictEqual(component.tree.domains.length, 2);
+    assert.strictEqual(component.tree.domains[0].title, 'annoying things');
+    assert.strictEqual(component.tree.domains[0].objectives.length, 2);
+    assert.strictEqual(component.tree.domains[0].objectives[0].text, 'buying gas');
+    assert.strictEqual(component.tree.domains[0].objectives[1].text, 'traffic');
+    assert.strictEqual(component.tree.domains[1].title, 'great things');
+    assert.strictEqual(component.tree.domains[1].objectives[0].text, 'cheese');
+    assert.strictEqual(component.tree.domains[1].objectives[1].text, 'ice cream');
     assert.notOk(component.noContent.isVisible);
 
     await component.title.displayModeSwitcher.toggle();
 
-    assert.equal(component.title.displayModeSwitcher.text, groupByCompetenciesPhrase);
+    assert.strictEqual(component.title.displayModeSwitcher.text, groupByCompetenciesPhrase);
     assert.notOk(component.title.displayModeSwitcher.isListMode);
     assert.notOk(component.tree.isVisible);
     assert.ok(component.list.isVisible);
-    assert.equal(component.list.objectives.length, 4);
-    assert.equal(component.list.objectives[0].title, 'cheese');
-    assert.equal(component.list.objectives[0].domain, 'great things');
-    assert.equal(component.list.objectives[1].title, 'ice cream');
-    assert.equal(component.list.objectives[1].domain, 'great things');
-    assert.equal(component.list.objectives[2].title, 'buying gas');
-    assert.equal(component.list.objectives[2].domain, 'annoying things');
-    assert.equal(component.list.objectives[3].title, 'traffic');
-    assert.equal(component.list.objectives[3].domain, 'annoying things');
+    assert.strictEqual(component.list.objectives.length, 4);
+    assert.strictEqual(component.list.objectives[0].title, 'cheese');
+    assert.strictEqual(component.list.objectives[0].domain, 'great things');
+    assert.strictEqual(component.list.objectives[1].title, 'ice cream');
+    assert.strictEqual(component.list.objectives[1].domain, 'great things');
+    assert.strictEqual(component.list.objectives[2].title, 'buying gas');
+    assert.strictEqual(component.list.objectives[2].domain, 'annoying things');
+    assert.strictEqual(component.list.objectives[3].title, 'traffic');
+    assert.strictEqual(component.list.objectives[3].domain, 'annoying things');
     assert.notOk(component.list.noContent.isVisible);
   });
 
@@ -71,7 +71,7 @@ module('Integration | Component | ilios calendar single event objective list', f
       @objectives={{this.objectives}}
       @isExpandedByDefault={{true}}
     />`);
-    assert.equal(component.noContent.text, 'None');
+    assert.strictEqual(component.noContent.text, 'None');
   });
 
   test('no display mode toggle if none of the objectives are prioritized', async function (assert) {

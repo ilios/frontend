@@ -35,7 +35,7 @@ module('Unit | Service | fetch', function (hooks) {
     });
     this.server.get('/ourPath', (schema, { requestHeaders }) => {
       assert.ok('X-JWT-Authorization' in requestHeaders);
-      assert.equal(requestHeaders['X-JWT-Authorization'], 'Token aAbBcC');
+      assert.strictEqual(requestHeaders['X-JWT-Authorization'], 'Token aAbBcC');
       return {
         a: 11,
       };

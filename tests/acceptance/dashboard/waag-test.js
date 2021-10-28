@@ -40,11 +40,11 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       offering: 2,
     });
     await page.visit({ show: 'week' });
-    assert.equal(currentRouteName(), 'dashboard');
+    assert.strictEqual(currentRouteName(), 'dashboard');
 
-    assert.equal(page.weekGlance.offeringEvents.length, 2);
-    assert.equal(page.weekGlance.offeringEvents[0].title, 'start of week');
-    assert.equal(page.weekGlance.offeringEvents[1].title, 'end of week');
+    assert.strictEqual(page.weekGlance.offeringEvents.length, 2);
+    assert.strictEqual(page.weekGlance.offeringEvents[0].title, 'start of week');
+    assert.strictEqual(page.weekGlance.offeringEvents[1].title, 'end of week');
   });
 
   test('shows all pre work', async function (assert) {
@@ -69,13 +69,13 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       prerequisites,
     });
     await page.visit({ show: 'week' });
-    assert.equal(currentRouteName(), 'dashboard');
+    assert.strictEqual(currentRouteName(), 'dashboard');
 
-    assert.equal(page.weekGlance.offeringEvents.length, 1);
-    assert.equal(page.weekGlance.preWork.length, 3);
-    assert.equal(page.weekGlance.preWork[0].title, 'pre 1');
-    assert.equal(page.weekGlance.preWork[1].title, 'pre 2');
-    assert.equal(page.weekGlance.preWork[2].title, 'pre 3');
+    assert.strictEqual(page.weekGlance.offeringEvents.length, 1);
+    assert.strictEqual(page.weekGlance.preWork.length, 3);
+    assert.strictEqual(page.weekGlance.preWork[0].title, 'pre 1');
+    assert.strictEqual(page.weekGlance.preWork[1].title, 'pre 2');
+    assert.strictEqual(page.weekGlance.preWork[2].title, 'pre 3');
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');

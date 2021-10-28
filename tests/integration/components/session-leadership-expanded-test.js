@@ -29,12 +29,12 @@ module('Integration | Component | session leadership expanded', function (hooks)
       @setIsManaging={{(noop)}}
     />`);
 
-    assert.equal(component.title, 'Session Leadership');
-    assert.equal(component.leadershipList.administrators.length, 2);
-    assert.equal(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
-    assert.equal(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
-    assert.equal(component.leadershipList.studentAdvisors.length, 1);
-    assert.equal(component.leadershipList.studentAdvisors[0].text, '0 guy M. Mc0son');
+    assert.strictEqual(component.title, 'Session Leadership');
+    assert.strictEqual(component.leadershipList.administrators.length, 2);
+    assert.strictEqual(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
+    assert.strictEqual(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
+    assert.strictEqual(component.leadershipList.studentAdvisors.length, 1);
+    assert.strictEqual(component.leadershipList.studentAdvisors[0].text, '0 guy M. Mc0son');
   });
 
   test('clicking the header collapses when there are administrators', async function (assert) {

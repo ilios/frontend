@@ -48,17 +48,26 @@ module('Integration | Component | leadership search', function (hooks) {
 
     await fillIn(search, 'test person');
     assert.dom(resultsCount).hasText('1 result');
-    assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ''), 'testM.persontestemail');
+    assert.strictEqual(
+      find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
+      'testM.persontestemail'
+    );
 
     // Check that special characters do not mess things up.
     await fillIn(search, 'test?person');
     assert.dom(resultsCount).hasText('1 result');
-    assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ''), 'testM.persontestemail');
+    assert.strictEqual(
+      find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
+      'testM.persontestemail'
+    );
 
     // Check that multiple special characters do not mess things up.
     await fillIn(search, 'test"person"');
     assert.dom(resultsCount).hasText('1 result');
-    assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ''), 'testM.persontestemail');
+    assert.strictEqual(
+      find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
+      'testM.persontestemail'
+    );
   });
 
   test('no results displays messages', async function (assert) {
@@ -82,7 +91,7 @@ module('Integration | Component | leadership search', function (hooks) {
       email: 'testemail',
     });
     this.set('select', (user) => {
-      assert.equal(user.id, 1);
+      assert.strictEqual(user.id, 1);
     });
     await render(hbs`<LeadershipSearch
       @existingUsers={{array}}
@@ -93,7 +102,10 @@ module('Integration | Component | leadership search', function (hooks) {
     const firstResult = `${results}:nth-of-type(2)`;
 
     await fillIn(search, 'test');
-    assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ''), 'testM.persontestemail');
+    assert.strictEqual(
+      find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
+      'testM.persontestemail'
+    );
     await click(firstResult);
   });
 
@@ -110,7 +122,7 @@ module('Integration | Component | leadership search', function (hooks) {
       email: 'testemail2',
     });
     this.set('select', (user) => {
-      assert.equal(user.id, 2, 'only user2 should be sent here');
+      assert.strictEqual(user.id, 2, 'only user2 should be sent here');
     });
     const user1 = this.owner.lookup('service:store').find('user', 1);
 
@@ -128,10 +140,13 @@ module('Integration | Component | leadership search', function (hooks) {
     await fillIn(search, 'test');
 
     assert.dom(resultsCount).hasText('2 results');
-    assert.equal(find(firstResult).textContent.replace(/[\t\n\s]+/g, ''), 'testM.persontestemail');
+    assert.strictEqual(
+      find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
+      'testM.persontestemail'
+    );
     assert.dom(firstResult).hasNoClass('clickable');
     assert.dom(firstResult).hasClass('inactive');
-    assert.equal(
+    assert.strictEqual(
       find(secondResult).textContent.replace(/[\t\n\s]+/g, ''),
       'testM.person2testemail2'
     );

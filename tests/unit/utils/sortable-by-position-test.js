@@ -11,9 +11,9 @@ module('Unit | Utility | sortable-by-position', function () {
 
     arr.sort(sortableByPosition);
 
-    assert.equal(arr[0].title, 'first');
-    assert.equal(arr[1].title, 'second');
-    assert.equal(arr[2].title, 'third');
+    assert.strictEqual(arr[0].title, 'first');
+    assert.strictEqual(arr[1].title, 'second');
+    assert.strictEqual(arr[2].title, 'third');
   });
   test('sorts by id descending when positions are equal', function (assert) {
     const arr = [
@@ -24,8 +24,8 @@ module('Unit | Utility | sortable-by-position', function () {
 
     arr.sort(sortableByPosition);
 
-    assert.equal(arr[0].title, 'first');
-    assert.equal(arr[1].title, 'second');
-    assert.equal(arr[2].title, 'third');
+    assert.strictEqual(arr[0].title, 'first');
+    assert.strictEqual(arr[1].title, 'second');
+    assert.strictEqual(arr[2].title, 'third');
   });
 });

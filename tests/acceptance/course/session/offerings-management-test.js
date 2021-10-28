@@ -38,7 +38,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
 
     const { offeringForm: form } = page.offerings;
     await form.instructorManager.search('guy 3');
-    assert.equal(form.instructorManager.searchResults.length, 1);
+    assert.strictEqual(form.instructorManager.searchResults.length, 1);
   });
 
   test('searching for course directors as instructors does not remove existing instructors #3479', async function (assert) {
@@ -63,30 +63,30 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     await page.offerings.dateBlocks[0].offerings[0].edit();
 
     const { offeringForm: form } = page.offerings;
-    assert.equal(form.instructorManager.selectedInstructors.length, 0);
+    assert.strictEqual(form.instructorManager.selectedInstructors.length, 0);
     await form.instructorManager.search('guy 2');
-    assert.equal(form.instructorManager.searchResults.length, 1);
+    assert.strictEqual(form.instructorManager.searchResults.length, 1);
     await form.instructorManager.searchResults[0].add();
-    assert.equal(form.instructorManager.selectedInstructors.length, 1);
-    assert.equal(
+    assert.strictEqual(form.instructorManager.selectedInstructors.length, 1);
+    assert.strictEqual(
       form.instructorManager.selectedInstructors[0].userNameInfo.fullName,
       '2 guy M. Mc2son'
     );
 
     await form.instructorManager.search('guy 3');
-    assert.equal(form.instructorManager.selectedInstructors.length, 1);
-    assert.equal(
+    assert.strictEqual(form.instructorManager.selectedInstructors.length, 1);
+    assert.strictEqual(
       form.instructorManager.selectedInstructors[0].userNameInfo.fullName,
       '2 guy M. Mc2son'
     );
-    assert.equal(form.instructorManager.searchResults.length, 1);
+    assert.strictEqual(form.instructorManager.searchResults.length, 1);
     await form.instructorManager.searchResults[0].add();
-    assert.equal(form.instructorManager.selectedInstructors.length, 2);
-    assert.equal(
+    assert.strictEqual(form.instructorManager.selectedInstructors.length, 2);
+    assert.strictEqual(
       form.instructorManager.selectedInstructors[0].userNameInfo.fullName,
       '2 guy M. Mc2son'
     );
-    assert.equal(
+    assert.strictEqual(
       form.instructorManager.selectedInstructors[1].userNameInfo.fullName,
       '3 guy M. Mc3son'
     );
@@ -104,15 +104,15 @@ module('Acceptance | Session - Offering Management', function (hooks) {
       instructors: [instructor1, instructor2],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.equal(page.offerings.dateBlocks[0].offerings[0].instructors.length, 2);
-    assert.equal(
+    assert.strictEqual(page.offerings.dateBlocks[0].offerings[0].instructors.length, 2);
+    assert.strictEqual(
       page.offerings.dateBlocks[0].offerings[0].instructors[0].userNameInfo.fullName,
       '1 guy M. Mc1son'
     );
     assert.notOk(
       page.offerings.dateBlocks[0].offerings[0].instructors[0].userNameInfo.hasAdditionalInfo
     );
-    assert.equal(
+    assert.strictEqual(
       page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.fullName,
       'Clem Chowder'
     );
@@ -126,7 +126,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     assert.ok(
       page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible
     );
-    assert.equal(
+    assert.strictEqual(
       page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.tooltipContents,
       'Campus name of record: 2 guy M, Mc2son'
     );
@@ -162,27 +162,33 @@ module('Acceptance | Session - Offering Management', function (hooks) {
       learnerGroups: [subSubLearnerGroup, subLearnerGroup2, learnerGroup2],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.equal(page.offerings.dateBlocks[0].offerings[0].learnerGroups.length, 3);
-    assert.equal(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].title, 'Sub-sub Group');
+    assert.strictEqual(page.offerings.dateBlocks[0].offerings[0].learnerGroups.length, 3);
+    assert.strictEqual(
+      page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].title,
+      'Sub-sub Group'
+    );
     assert.notOk(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible);
     await page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].expandTooltip();
     assert.ok(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible);
-    assert.equal(
+    assert.strictEqual(
       page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].tooltipContents,
       'Parent groups: Top Group » Sub-Group'
     );
     await page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].closeTooltip();
-    assert.equal(page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].title, 'Sub-Group 2');
+    assert.strictEqual(
+      page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].title,
+      'Sub-Group 2'
+    );
     assert.notOk(page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].isTooltipVisible);
     await page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].expandTooltip();
     assert.ok(page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].isTooltipVisible);
-    assert.equal(
+    assert.strictEqual(
       page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].tooltipContents,
       'Parent group: Top Group'
     );
     await page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].closeTooltip();
     assert.notOk(page.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible);
-    assert.equal(
+    assert.strictEqual(
       page.offerings.dateBlocks[0].offerings[0].learnerGroups[2].title,
       'Other Top Group'
     );

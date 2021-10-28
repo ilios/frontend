@@ -29,7 +29,7 @@ module('Integration | Component | course summary header', function (hooks) {
 
     class PermissionCheckerStub extends Service {
       async canCreateCourse(inSchool) {
-        assert.equal(school.id, inSchool.id);
+        assert.strictEqual(school.id, inSchool.id);
         return true;
       }
     }

@@ -10,7 +10,7 @@ module('Integration | Helper | has-error-for', function (hooks) {
     assert.expect(2);
     const obj = {
       hasErrorFor(what) {
-        assert.equal(what, 'test');
+        assert.strictEqual(what, 'test');
         return true;
       },
     };
@@ -25,7 +25,7 @@ module('Integration | Helper | has-error-for', function (hooks) {
     assert.expect(2);
     const obj = {
       hasErrorFor(what) {
-        assert.equal(what, 'test');
+        assert.strictEqual(what, 'test');
         return true;
       },
     };

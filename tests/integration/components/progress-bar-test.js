@@ -17,10 +17,10 @@ module('Integration | Component | progress bar', function (hooks) {
 
     await render(hbs`<ProgressBar @percentage={{passedValue}} />`);
 
-    assert.equal(find('.meter').getAttribute('style').trim(), 'width: 42%');
+    assert.strictEqual(find('.meter').getAttribute('style').trim(), 'width: 42%');
 
     this.set('passedValue', 12);
-    assert.equal(find('.meter').getAttribute('style').trim(), 'width: 12%');
+    assert.strictEqual(find('.meter').getAttribute('style').trim(), 'width: 12%');
   });
 
   test('changing percentage changes the displayvalue', async function (assert) {

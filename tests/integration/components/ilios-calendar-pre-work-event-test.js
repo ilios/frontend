@@ -64,10 +64,10 @@ module('Integration | Component | ilios-calendar-pre-work-event', function (hook
       @event={{event}}
       @areEventsSelectable={{selectable}}
     />`);
-    assert.equal(component.title, 'Learn to Learn');
-    assert.equal(component.titleUrl, '/events/abc');
-    assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
-    assert.equal(component.url, '/events/123');
+    assert.strictEqual(component.title, 'Learn to Learn');
+    assert.strictEqual(component.titleUrl, '/events/abc');
+    assert.strictEqual(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.strictEqual(component.url, '/events/123');
   });
 
   test('it renders without links enabled', async function (assert) {
@@ -76,9 +76,9 @@ module('Integration | Component | ilios-calendar-pre-work-event', function (hook
       @event={{event}}
       @areEventsSelectable={{selectable}}
     />`);
-    assert.equal(component.title, 'Learn to Learn');
+    assert.strictEqual(component.title, 'Learn to Learn');
     assert.notOk(component.titleUrlIsPresent);
-    assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.strictEqual(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
     assert.notOk(component.urlIsPresent);
   });
 });

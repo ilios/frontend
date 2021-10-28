@@ -30,9 +30,9 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       ]);
 
     const courses = await model.get('courses');
-    assert.equal(courses.length, 2);
-    assert.equal(courses.objectAt(0).get('title'), 'course1');
-    assert.equal(courses.objectAt(1).get('title'), 'course2');
+    assert.strictEqual(courses.length, 2);
+    assert.strictEqual(courses.objectAt(0).get('title'), 'course1');
+    assert.strictEqual(courses.objectAt(1).get('title'), 'course2');
   });
 
   test('list sessions', async function (assert) {
@@ -61,7 +61,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
         store.createRecord('ilmSession', { session: session4 }),
       ]);
     const sessions = await model.get('sessions');
-    assert.equal(sessions.length, 4);
+    assert.strictEqual(sessions.length, 4);
     assert.ok(sessions.includes(session1));
     assert.ok(sessions.includes(session2));
     assert.ok(sessions.includes(session3));
@@ -72,7 +72,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     assert.expect(1);
     const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
     const allDescendantUsers = await learnerGroup.get('allDescendantUsers');
-    assert.equal(allDescendantUsers.length, 0);
+    assert.strictEqual(allDescendantUsers.length, 0);
   });
 
   test('check allDescendantUsers on populated group with sub-groups', async function (assert) {
@@ -97,7 +97,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
 
     const allDescendantUsers = await learnerGroup.get('allDescendantUsers');
-    assert.equal(allDescendantUsers.length, 5);
+    assert.strictEqual(allDescendantUsers.length, 5);
     assert.ok(allDescendantUsers.includes(user1));
     assert.ok(allDescendantUsers.includes(user2));
     assert.ok(allDescendantUsers.includes(user3));
@@ -110,7 +110,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
 
     const groups = await learnerGroup.get('allDescendants');
-    assert.equal(groups.length, 0);
+    assert.strictEqual(groups.length, 0);
   });
 
   test('check allDescendants', async function (assert) {
@@ -132,7 +132,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     });
 
     const groups = await learnerGroup.get('allDescendants');
-    assert.equal(groups.length, 4);
+    assert.strictEqual(groups.length, 4);
     assert.ok(groups.includes(subGroup1));
     assert.ok(groups.includes(subGroup2));
     assert.ok(groups.includes(subGroup3));
@@ -145,7 +145,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
     learnerGroup.set('title', groupTitle);
     const offset = await learnerGroup.get('subgroupNumberingOffset');
-    assert.equal(offset, 1, 'no subgroups. offset is 1.');
+    assert.strictEqual(offset, 1, 'no subgroups. offset is 1.');
   });
 
   test('check subgroupNumberingOffset on group with sub-groups', async function (assert) {
@@ -163,7 +163,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       title: groupTitle + ' 3',
     });
     const offset = await learnerGroup.get('subgroupNumberingOffset');
-    assert.equal(offset, 4, 'highest number is 3. 3 + 1 = 4. offset is 4.');
+    assert.strictEqual(offset, 4, 'highest number is 3. 3 + 1 = 4. offset is 4.');
   });
 
   test('check subgroupNumberingOffset on group with sub-groups and mis-matched sub-group title', async function (assert) {
@@ -185,7 +185,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       title: 'not the parent title 4',
     });
     const offset = await learnerGroup.get('subgroupNumberingOffset');
-    assert.equal(offset, 4, 'subgroup with title-mismatch is ignored, offset is 4 not 5.');
+    assert.strictEqual(offset, 4, 'subgroup with title-mismatch is ignored, offset is 4 not 5.');
   });
 
   test('check allinstructors', async function (assert) {
@@ -194,7 +194,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const learnerGroup = store.createRecord('learner-group');
 
     let allInstructors = await learnerGroup.get('allInstructors');
-    assert.equal(allInstructors.length, 0);
+    assert.strictEqual(allInstructors.length, 0);
 
     const user1 = store.createRecord('user');
     const user2 = store.createRecord('user');
@@ -209,7 +209,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     learnerGroup.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
 
     allInstructors = await learnerGroup.get('allInstructors');
-    assert.equal(allInstructors.length, 3);
+    assert.strictEqual(allInstructors.length, 3);
     assert.ok(allInstructors.includes(user1));
     assert.ok(allInstructors.includes(user2));
     assert.ok(allInstructors.includes(user3));
@@ -223,7 +223,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     learnerGroup.get('instructorGroups').pushObject(instructorGroup3);
 
     allInstructors = await learnerGroup.get('allInstructors');
-    assert.equal(allInstructors.length, 5);
+    assert.strictEqual(allInstructors.length, 5);
     assert.ok(allInstructors.includes(user4));
     assert.ok(allInstructors.includes(user5));
   });
@@ -241,9 +241,9 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     });
 
     const allParents = await subGroup3.get('allParents');
-    assert.equal(allParents.length, 2);
-    assert.equal(allParents[0], subGroup2);
-    assert.equal(allParents[1], subGroup1);
+    assert.strictEqual(allParents.length, 2);
+    assert.strictEqual(allParents[0], subGroup2);
+    assert.strictEqual(allParents[1], subGroup1);
   });
 
   test('check filterTitle on top group', async function (assert) {
@@ -267,9 +267,9 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     });
 
     const groups = await learnerGroup.get('allDescendants');
-    assert.equal(groups.length, 3);
+    assert.strictEqual(groups.length, 3);
     const filterTitle = await learnerGroup.get('filterTitle');
-    assert.equal(filterTitle, 'subGroup1subGroup2subGroup3top group');
+    assert.strictEqual(filterTitle, 'subGroup1subGroup2subGroup3top group');
   });
 
   test('check filterTitle on sub group', async function (assert) {
@@ -291,9 +291,9 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       title: 'subGroup3',
     });
     const groups = await learnerGroup.get('allDescendants');
-    assert.equal(groups.length, 3);
+    assert.strictEqual(groups.length, 3);
     const filterTitle = await subGroup3.get('filterTitle');
-    assert.equal(filterTitle, 'subGroup2subGroup1top groupsubGroup3');
+    assert.strictEqual(filterTitle, 'subGroup2subGroup1top groupsubGroup3');
   });
 
   test('check sortTitle on top group', async function (assert) {
@@ -303,14 +303,14 @@ module('Unit | Model | LearnerGroup', function (hooks) {
 
     learnerGroup.set('title', 'top group');
     const groups = await learnerGroup.get('allDescendants');
-    assert.equal(groups.length, 0);
+    assert.strictEqual(groups.length, 0);
 
     store.createRecord('learner-group', {
       parent: learnerGroup,
       title: 'subGroup1',
     });
     const sortTitle = await learnerGroup.get('sortTitle');
-    assert.equal(sortTitle, 'topgroup');
+    assert.strictEqual(sortTitle, 'topgroup');
   });
 
   test('check sortTitle on sub group', async function (assert) {
@@ -321,7 +321,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       title: 'top group',
     });
     let groups = await learnerGroup.get('allDescendants');
-    assert.equal(groups.length, 0);
+    assert.strictEqual(groups.length, 0);
 
     const subGroup1 = store.createRecord('learner-group', {
       id: 2,
@@ -340,10 +340,10 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     });
 
     groups = await learnerGroup.get('allDescendants');
-    assert.equal(groups.length, 3);
+    assert.strictEqual(groups.length, 3);
 
     const sortTitle = await subGroup3.get('sortTitle');
-    assert.equal(sortTitle, 'topgroupsubGroup1subGroup2subGroup3');
+    assert.strictEqual(sortTitle, 'topgroupsubGroup1subGroup2subGroup3');
   });
 
   test('check removeUserFromGroupAndAllDescendants', async function (assert) {
@@ -352,7 +352,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const learnerGroup = store.createRecord('learner-group');
 
     const groups = await learnerGroup.get('allParents');
-    assert.equal(groups.length, 0);
+    assert.strictEqual(groups.length, 0);
 
     const user1 = store.createRecord('user', { id: 99 });
     const subGroup1 = store.createRecord('learner-group', {
@@ -372,7 +372,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     });
 
     const groupsToRemove = await subGroup1.removeUserFromGroupAndAllDescendants(user1);
-    assert.equal(groupsToRemove.length, 3);
+    assert.strictEqual(groupsToRemove.length, 3);
     assert.notOk(groupsToRemove.includes(learnerGroup));
     assert.ok(groupsToRemove.includes(subGroup1));
     assert.ok(groupsToRemove.includes(subGroup2));
@@ -385,7 +385,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const groups = await learnerGroup.get('allParents');
-    assert.equal(groups.length, 0);
+    assert.strictEqual(groups.length, 0);
 
     const user1 = store.createRecord('user');
     const subGroup1 = store.createRecord('learner-group', {
@@ -404,7 +404,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
 
     const groupsToAdd = await subGroup3.addUserToGroupAndAllParents(user1);
 
-    assert.equal(groupsToAdd.length, 3);
+    assert.strictEqual(groupsToAdd.length, 3);
     assert.ok(groupsToAdd.includes(learnerGroup));
     assert.notOk(groupsToAdd.includes(subGroup1));
     assert.ok(groupsToAdd.includes(subGroup2));
@@ -504,7 +504,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     learnerGroup.get('users').pushObjects([user1, user2, user3, user4]);
     learnerGroup.get('children').pushObject(subgroup);
     const users = await learnerGroup.get('usersOnlyAtThisLevel');
-    assert.equal(users.length, 1);
+    assert.strictEqual(users.length, 1);
     assert.ok(users.includes(user2));
   });
 
@@ -513,7 +513,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', { title: 'Foo' });
     let titles = await learnerGroup.get('allParentTitles');
-    assert.equal(titles.length, 0);
+    assert.strictEqual(titles.length, 0);
 
     const subGroup = store.createRecord('learner-group', {
       title: 'Bar',
@@ -524,9 +524,9 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: subGroup,
     });
     titles = await subSubGroup.get('allParentTitles');
-    assert.equal(titles.length, 2);
-    assert.equal(titles[0], 'Foo');
-    assert.equal(titles[1], 'Bar');
+    assert.strictEqual(titles.length, 2);
+    assert.strictEqual(titles[0], 'Foo');
+    assert.strictEqual(titles[1], 'Bar');
   });
 
   test('allParentsTitle', async function (assert) {
@@ -535,7 +535,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', { title: 'Foo' });
     let titles = await learnerGroup.get('allParentsTitle');
-    assert.equal(titles.length, '');
+    assert.strictEqual(titles.length, '');
 
     const subGroup = store.createRecord('learner-group', {
       title: 'Bar',
@@ -546,7 +546,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: subGroup,
     });
     titles = await subSubGroup.get('allParentsTitle');
-    assert.equal(titles, 'Foo > Bar > ');
+    assert.strictEqual(titles, 'Foo > Bar > ');
   });
 
   test('sortTitle', async function (assert) {
@@ -554,7 +554,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', { title: 'Foo' });
     let title = await learnerGroup.get('sortTitle');
-    assert.equal(title, 'Foo');
+    assert.strictEqual(title, 'Foo');
 
     const subGroup = store.createRecord('learner-group', {
       title: 'Bar',
@@ -565,7 +565,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: subGroup,
     });
     title = await subSubGroup.get('sortTitle');
-    assert.equal(title, 'FooBarBaz');
+    assert.strictEqual(title, 'FooBarBaz');
   });
 
   test('topLevelGroup', async function (assert) {
@@ -573,7 +573,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     let topLevelGroup = await learnerGroup.get('topLevelGroup');
-    assert.equal(topLevelGroup, learnerGroup);
+    assert.strictEqual(topLevelGroup, learnerGroup);
     const subGroup = store.createRecord('learner-group', {
       parent: learnerGroup,
     });
@@ -581,7 +581,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: subGroup,
     });
     topLevelGroup = await subSubGroup.get('topLevelGroup');
-    assert.equal(topLevelGroup, learnerGroup);
+    assert.strictEqual(topLevelGroup, learnerGroup);
   });
 
   test('isTopLevelGroup', async function (assert) {
@@ -606,31 +606,31 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const cohort = store.createRecord('cohort', { programYear });
     learnerGroup.set('cohort', cohort);
     const owningSchool = await learnerGroup.get('school');
-    assert.equal(owningSchool, school);
+    assert.strictEqual(owningSchool, school);
   });
 
   test('usersCount', async function (assert) {
     assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
-    assert.equal(learnerGroup.get('usersCount'), 0);
+    assert.strictEqual(learnerGroup.get('usersCount'), 0);
     const user1 = store.createRecord('user');
     const user2 = store.createRecord('user');
 
     learnerGroup.get('users').pushObjects([user1, user2]);
-    assert.equal(learnerGroup.get('usersCount'), 2);
+    assert.strictEqual(learnerGroup.get('usersCount'), 2);
   });
 
   test('childrenCount', async function (assert) {
     assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
-    assert.equal(learnerGroup.get('childrenCount'), 0);
+    assert.strictEqual(learnerGroup.get('childrenCount'), 0);
     const group1 = store.createRecord('learner-group');
     const group2 = store.createRecord('learner-group');
 
     learnerGroup.get('children').pushObjects([group1, group2]);
-    assert.equal(learnerGroup.get('childrenCount'), 2);
+    assert.strictEqual(learnerGroup.get('childrenCount'), 2);
   });
 
   test('has no needs in group without subgroups', async function (assert) {

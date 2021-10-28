@@ -38,7 +38,7 @@ module('Integration | Component | sessions-grid-offering-table', function (hooks
 
       await render(hbs`<SessionsGridOfferingTable @offerings={{offerings}} />`);
 
-      assert.equal(page.table.dates.length, 2);
-      assert.equal(page.table.offerings.length, 9);
+      assert.strictEqual(page.table.dates.length, 2);
+      assert.strictEqual(page.table.offerings.length, 9);
     });
 });

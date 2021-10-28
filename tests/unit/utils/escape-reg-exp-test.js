@@ -3,10 +3,13 @@ import { module, test } from 'qunit';
 
 module('Unit | Utility | escape Regular Expressions special characters', function () {
   test('escapes special chars', function (assert) {
-    assert.equal(escapeRegExp('\\^$*+?.()|{}[]'), '\\\\\\^\\$\\*\\+\\?\\.\\(\\)\\|\\{\\}\\[\\]');
-    assert.equal(escapeRegExp('abc'), 'abc');
-    assert.equal(escapeRegExp('MoneyBag$$$ +1'), 'MoneyBag\\$\\$\\$ \\+1');
-    assert.equal(escapeRegExp(null), null);
-    assert.equal(escapeRegExp(''), '');
+    assert.strictEqual(
+      escapeRegExp('\\^$*+?.()|{}[]'),
+      '\\\\\\^\\$\\*\\+\\?\\.\\(\\)\\|\\{\\}\\[\\]'
+    );
+    assert.strictEqual(escapeRegExp('abc'), 'abc');
+    assert.strictEqual(escapeRegExp('MoneyBag$$$ +1'), 'MoneyBag\\$\\$\\$ \\+1');
+    assert.strictEqual(escapeRegExp(null), null);
+    assert.strictEqual(escapeRegExp(''), '');
   });
 });

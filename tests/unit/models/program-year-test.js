@@ -16,11 +16,11 @@ module('Unit | Model | ProgramYear', function (hooks) {
     const program = store.createRecord('program', { id: 99, duration: 1 });
     model.set('program', program);
     model.set('startYear', 2000);
-    assert.equal(await model.get('classOfYear'), '2001');
+    assert.strictEqual(await model.get('classOfYear'), '2001');
     program.set('duration', 5);
-    assert.equal(await model.get('classOfYear'), '2005');
+    assert.strictEqual(await model.get('classOfYear'), '2005');
     model.set('startYear', 2001);
-    assert.equal(await model.get('classOfYear'), '2006');
+    assert.strictEqual(await model.get('classOfYear'), '2006');
   });
 
   test('sortedProgramYearObjectives', async function (assert) {
@@ -46,9 +46,9 @@ module('Unit | Model | ProgramYear', function (hooks) {
       position: 2,
     });
     const objectives = await programYear.get('sortedProgramYearObjectives');
-    assert.equal(objectives.length, 3);
-    assert.equal(objectives[0], programYearObjective3);
-    assert.equal(objectives[1], programYearObjective2);
-    assert.equal(objectives[2], programYearObjective1);
+    assert.strictEqual(objectives.length, 3);
+    assert.strictEqual(objectives[0], programYearObjective3);
+    assert.strictEqual(objectives[1], programYearObjective2);
+    assert.strictEqual(objectives[2], programYearObjective1);
   });
 });

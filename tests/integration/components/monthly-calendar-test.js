@@ -32,7 +32,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />`);
 
-    assert.equal(component.days.length, 31);
+    assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[0].isThirdDayOfWeek);
     assert.ok(component.days[0].isFirstWeek);
 
@@ -55,10 +55,10 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />`);
 
-    assert.equal(component.days.length, 31);
+    assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[8].isFourthDayOfWeek);
     assert.ok(component.days[8].isSecondWeek);
-    assert.equal(component.days[8].events.length, 2);
+    assert.strictEqual(component.days[8].events.length, 2);
     assert.notOk(component.days[8].hasShowMore);
 
     await a11yAudit(this.element);
@@ -80,10 +80,10 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />`);
 
-    assert.equal(component.days.length, 31);
+    assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[8].isFourthDayOfWeek);
     assert.ok(component.days[8].isSecondWeek);
-    assert.equal(component.days[8].events.length, 2);
+    assert.strictEqual(component.days[8].events.length, 2);
     assert.ok(component.days[8].hasShowMore);
 
     await a11yAudit(this.element);
@@ -191,19 +191,19 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />`);
 
-    assert.equal(component.days.length, 31);
+    assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[10].isSecondDayOfWeek);
     assert.ok(component.days[10].isThirdWeek);
-    assert.equal(component.days[10].events.length, 1);
+    assert.strictEqual(component.days[10].events.length, 1);
 
     this.owner.lookup('service:intl').setLocale('es');
     this.owner.lookup('service:moment').setLocale('es');
     await settled();
 
-    assert.equal(component.days.length, 31);
+    assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[10].isFirstDayOfWeek);
     assert.ok(component.days[10].isThirdWeek);
-    assert.equal(component.days[10].events.length, 1);
+    assert.strictEqual(component.days[10].events.length, 1);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -224,18 +224,18 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />`);
 
-    assert.equal(component.days.length, 29);
+    assert.strictEqual(component.days.length, 29);
     assert.ok(component.days[0].isSeventhDayOfWeek);
     assert.ok(component.days[0].isFirstWeek);
-    assert.equal(component.days[0].events.length, 1);
+    assert.strictEqual(component.days[0].events.length, 1);
     this.owner.lookup('service:intl').setLocale('es');
     this.owner.lookup('service:moment').setLocale('es');
     await settled();
 
-    assert.equal(component.days.length, 29);
+    assert.strictEqual(component.days.length, 29);
     assert.ok(component.days[0].isSixthDayOfWeek);
     assert.ok(component.days[0].isFirstWeek);
-    assert.equal(component.days[0].events.length, 1);
+    assert.strictEqual(component.days[0].events.length, 1);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

@@ -19,10 +19,10 @@ module('Unit | Serializer | curriculum inventory export', function (hooks) {
     record.set('createdAt', now);
     record.set('document', doc);
     record.set('createdBy', user);
-    assert.equal(record.get('createdAt'), now);
-    assert.equal(record.get('document'), doc);
+    assert.strictEqual(record.get('createdAt'), now);
+    assert.strictEqual(record.get('document'), doc);
     const creator = await record.get('createdBy');
-    assert.equal(user, creator);
+    assert.strictEqual(user, creator);
     var serializedRecord = record.serialize();
     assert.notOk('createdAt' in serializedRecord.data.attributes);
     assert.notOk('createdBy' in serializedRecord.data.attributes);

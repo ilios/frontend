@@ -29,7 +29,7 @@ module('Acceptance | Course - Publish', function (hooks) {
     await click(selector);
     await click(findAll(choices)[0]);
 
-    assert.equal(await getElementText(selector), getText('Published'));
+    assert.strictEqual(await getElementText(selector), getText('Published'));
   });
 
   test('check schedule draft course', async function (assert) {
@@ -46,7 +46,7 @@ module('Acceptance | Course - Publish', function (hooks) {
     await click(selector);
     await click(findAll(choices)[2]);
 
-    assert.equal(await getElementText(selector), getText('Scheduled'));
+    assert.strictEqual(await getElementText(selector), getText('Scheduled'));
   });
 
   test('check publish scheduled course', async function (assert) {
@@ -65,7 +65,7 @@ module('Acceptance | Course - Publish', function (hooks) {
     await click(selector);
     await click(findAll(choices)[0]);
 
-    assert.equal(await getElementText(selector), getText('Published'));
+    assert.strictEqual(await getElementText(selector), getText('Published'));
   });
 
   test('check unpublish scheduled course', async function (assert) {
@@ -84,7 +84,7 @@ module('Acceptance | Course - Publish', function (hooks) {
     await click(selector);
     await click(findAll(choices)[2]);
 
-    assert.equal(await getElementText(selector), getText('Not Published'));
+    assert.strictEqual(await getElementText(selector), getText('Not Published'));
   });
 
   test('check schedule published course', async function (assert) {
@@ -102,7 +102,7 @@ module('Acceptance | Course - Publish', function (hooks) {
     await click(selector);
     await click(findAll(choices)[1]);
 
-    assert.equal(await getElementText(selector), getText('Scheduled'));
+    assert.strictEqual(await getElementText(selector), getText('Scheduled'));
   });
 
   test('check unpublish published course', async function (assert) {
@@ -120,6 +120,6 @@ module('Acceptance | Course - Publish', function (hooks) {
     await click(selector);
     await click(findAll(choices)[2]);
 
-    assert.equal(await getElementText(selector), getText('Not Published'));
+    assert.strictEqual(await getElementText(selector), getText('Not Published'));
   });
 });

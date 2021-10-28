@@ -14,7 +14,7 @@ module('Unit | Serializer | curriculum inventory report', function (hooks) {
     const record = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const uri = '/abandon/all/hope/ye/who/enter/here';
     record.set('absoluteFileUri', uri);
-    assert.equal(record.get('absoluteFileUri'), uri);
+    assert.strictEqual(record.get('absoluteFileUri'), uri);
     const serializedRecord = record.serialize();
     assert.notOk('absoluteFileUri' in serializedRecord.data.attributes);
   });

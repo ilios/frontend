@@ -65,7 +65,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
     const week = '[data-test-glance]';
 
     this.set('click', (what) => {
-      assert.equal(what, 'week');
+      assert.strictEqual(what, 'week');
     });
     this.set('show', 'agenda');
     await render(hbs`<DashboardViewPicker @show={{show}} @onChange={{action click}} />`);
@@ -79,7 +79,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
     const activities = '[data-test-activities';
 
     this.set('click', (what) => {
-      assert.equal(what, 'agenda');
+      assert.strictEqual(what, 'agenda');
     });
     this.set('show', 'materials');
     await render(hbs`<DashboardViewPicker @show={{show}} @onChange={{action click}} />`);
@@ -93,7 +93,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
     const materials = '[data-test-materials]';
 
     this.set('click', (what) => {
-      assert.equal(what, 'materials');
+      assert.strictEqual(what, 'materials');
     });
     this.set('show', 'agenda');
     await render(hbs`<DashboardViewPicker @show={{show}} @onChange={{action click}} />`);
@@ -107,7 +107,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
     const calendar = '[data-test-calendar]';
 
     this.set('click', (what) => {
-      assert.equal(what, 'calendar');
+      assert.strictEqual(what, 'calendar');
     });
     this.set('show', 'agenda');
     await render(hbs`<DashboardViewPicker @show={{show}} @onChange={{action click}} />`);

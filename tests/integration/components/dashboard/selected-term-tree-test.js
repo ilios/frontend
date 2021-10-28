@@ -55,7 +55,7 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
     assert.expect(1);
     this.set('tree', tree);
     this.set('add', (id) => {
-      assert.equal(id, 1);
+      assert.strictEqual(id, 1);
     });
     await render(hbs`<Dashboard::SelectedTermTree
       @terms={{this.tree}}
@@ -71,7 +71,7 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
     this.set('tree', tree);
     this.set('selectedTermIds', [1]);
     this.set('remove', (id) => {
-      assert.equal(id, 1);
+      assert.strictEqual(id, 1);
     });
     await render(hbs`<Dashboard::SelectedTermTree
       @terms={{this.tree}}

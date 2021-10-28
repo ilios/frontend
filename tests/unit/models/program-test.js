@@ -43,7 +43,7 @@ module('Unit | Model | Program', function (hooks) {
     });
     model.get('programYears').pushObjects([programYear1, programYear2]);
     const cohorts = await model.get('cohorts');
-    assert.equal(cohorts.length, 2);
+    assert.strictEqual(cohorts.length, 2);
     assert.ok(cohorts.includes(cohort1));
     assert.ok(cohorts.includes(cohort2));
   });
@@ -69,7 +69,7 @@ module('Unit | Model | Program', function (hooks) {
     });
     model.get('programYears').pushObjects([programYear1, programYear2]);
     const courses = await model.get('courses');
-    assert.equal(courses.length, 3);
+    assert.strictEqual(courses.length, 3);
     assert.ok(courses.includes(course1));
     assert.ok(courses.includes(course2));
     assert.ok(courses.includes(course3));
@@ -95,7 +95,7 @@ module('Unit | Model | Program', function (hooks) {
     cohort1.get('courses').pushObjects([course1, course2]);
     cohort2.get('courses').pushObject(course3);
 
-    assert.equal(program.get('courseCount'), 3);
+    assert.strictEqual(program.get('courseCount'), 3);
 
     let course4 = store.createRecord('course', { cohort: cohort2 });
     cohort2.get('courses').pushObject(course4);
@@ -107,6 +107,6 @@ module('Unit | Model | Program', function (hooks) {
     cohort3.get('courses').pushObject(course5);
     program.get('programYears').pushObject(py3);
 
-    assert.equal(program.get('courseCount'), 5);
+    assert.strictEqual(program.get('courseCount'), 5);
   });
 });

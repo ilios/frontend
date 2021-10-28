@@ -48,13 +48,13 @@ module('Integration | Component | collapsed competencies', function (hooks) {
     assert.expect(7);
     this.set('subject', this.course);
     await render(hbs`<CollapsedCompetencies @subject={{this.subject}} @expand={{(noop)}} />`);
-    assert.equal(component.title, 'Competencies (3)');
-    assert.equal(component.headers[0].text, 'School');
-    assert.equal(component.headers[1].text, 'Competencies');
-    assert.equal(component.competencies[0].school, 'Medicine');
-    assert.equal(component.competencies[0].count, '1');
-    assert.equal(component.competencies[1].school, 'Pharmacy');
-    assert.equal(component.competencies[1].count, '2');
+    assert.strictEqual(component.title, 'Competencies (3)');
+    assert.strictEqual(component.headers[0].text, 'School');
+    assert.strictEqual(component.headers[1].text, 'Competencies');
+    assert.strictEqual(component.competencies[0].school, 'Medicine');
+    assert.strictEqual(component.competencies[0].count, '1');
+    assert.strictEqual(component.competencies[1].school, 'Pharmacy');
+    assert.strictEqual(component.competencies[1].count, '2');
   });
 
   test('clicking the header expands the list', async function (assert) {
@@ -64,7 +64,7 @@ module('Integration | Component | collapsed competencies', function (hooks) {
       assert.ok(true, 'Action was fired');
     });
     await render(hbs`<CollapsedCompetencies @subject={{this.subject}} @expand={{this.click}} />`);
-    assert.equal(component.title, 'Competencies (3)');
+    assert.strictEqual(component.title, 'Competencies (3)');
     await component.expand();
   });
 });

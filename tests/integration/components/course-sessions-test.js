@@ -36,7 +36,7 @@ module('Integration | Component | course sessions', function (hooks) {
       @setFilterBy={{(noop)}}
     />`);
 
-    assert.equal(component.header.title, 'Sessions (0)');
+    assert.strictEqual(component.header.title, 'Sessions (0)');
     assert.notOk(component.sessionsGridHeader.expandCollapse.toggle.isVisible);
   });
 
@@ -55,7 +55,7 @@ module('Integration | Component | course sessions', function (hooks) {
       @setFilterBy={{(noop)}}
     />`);
 
-    assert.equal(component.header.title, 'Sessions (2)');
+    assert.strictEqual(component.header.title, 'Sessions (2)');
     assert.notOk(component.sessionsGridHeader.expandCollapse.toggle.isVisible);
   });
 
@@ -77,7 +77,7 @@ module('Integration | Component | course sessions', function (hooks) {
       @setFilterBy={{(noop)}}
     />`);
 
-    assert.equal(component.header.title, 'Sessions (2)');
+    assert.strictEqual(component.header.title, 'Sessions (2)');
     assert.ok(component.sessionsGridHeader.expandCollapse.toggle.isVisible);
   });
 });

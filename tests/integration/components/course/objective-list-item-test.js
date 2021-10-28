@@ -26,9 +26,9 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
-    assert.equal(component.description.text, 'course objective 0');
-    assert.equal(component.parents.text, 'Add New');
-    assert.equal(component.meshDescriptors.text, 'Add New');
+    assert.strictEqual(component.description.text, 'course objective 0');
+    assert.strictEqual(component.parents.text, 'Add New');
+    assert.strictEqual(component.meshDescriptors.text, 'Add New');
     assert.ok(component.hasTrashCan);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -49,11 +49,11 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
       />`
     );
     const newDescription = 'Pluto Visits Earth';
-    assert.equal(component.description.text, 'course objective 0');
+    assert.strictEqual(component.description.text, 'course objective 0');
     await component.description.openEditor();
     await component.description.edit(newDescription);
     await component.description.save();
-    assert.equal(component.description.text, newDescription);
+    assert.strictEqual(component.description.text, newDescription);
   });
 
   test('can manage parents', async function (assert) {

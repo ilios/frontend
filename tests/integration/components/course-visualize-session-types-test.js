@@ -51,7 +51,7 @@ module('Integration | Component | course-visualize-session-types', function (hoo
   test('it renders', async function (assert) {
     this.set('course', this.courseModel);
     await render(hbs`<CourseVisualizeSessionTypes @model={{this.course}} />`);
-    assert.equal(component.title, 'course 0 2021');
+    assert.strictEqual(component.title, 'course 0 2021');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
@@ -64,18 +64,18 @@ module('Integration | Component | course-visualize-session-types', function (hoo
     });
     this.set('course', this.courseModel);
     await render(hbs`<CourseVisualizeSessionTypes @model={{this.course}} />`);
-    assert.equal(component.title, 'course 0 2021 - 2022');
+    assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
 
   test('filter works', async function (assert) {
     this.set('course', this.courseModel);
     await render(hbs`<CourseVisualizeSessionTypes @model={{this.course}} />`);
-    assert.equal(component.title, 'course 0 2021');
-    assert.equal(component.chart.bars.length, 2);
-    assert.equal(component.chart.labels.length, 2);
+    assert.strictEqual(component.title, 'course 0 2021');
+    assert.strictEqual(component.chart.bars.length, 2);
+    assert.strictEqual(component.chart.labels.length, 2);
     await component.filter.set('Campaign');
-    assert.equal(component.chart.bars.length, 1);
-    assert.equal(component.chart.labels.length, 1);
+    assert.strictEqual(component.chart.bars.length, 1);
+    assert.strictEqual(component.chart.labels.length, 1);
   });
 
   test('breadcrumb', async function (assert) {
@@ -83,11 +83,11 @@ module('Integration | Component | course-visualize-session-types', function (hoo
 
     await render(hbs`<CourseVisualizeSessionTypes @model={{this.course}} />`);
 
-    assert.equal(component.breadcrumb.crumbs.length, 3);
-    assert.equal(component.breadcrumb.crumbs[0].text, 'course 0');
-    assert.equal(component.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.equal(component.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.equal(component.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.equal(component.breadcrumb.crumbs[2].text, 'Session Types');
+    assert.strictEqual(component.breadcrumb.crumbs.length, 3);
+    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
+    assert.strictEqual(component.breadcrumb.crumbs[0].link, '/courses/1');
+    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(component.breadcrumb.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(component.breadcrumb.crumbs[2].text, 'Session Types');
   });
 });

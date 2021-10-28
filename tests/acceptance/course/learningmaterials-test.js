@@ -110,64 +110,67 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     test('list learning materials', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(currentRouteName(), 'course.index');
+      assert.strictEqual(currentRouteName(), 'course.index');
 
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
 
-      assert.equal(page.learningMaterials.current[0].title, 'learning material 0');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.current[0].title, 'learning material 0');
+      assert.strictEqual(
         page.learningMaterials.current[0].owner.userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
       assert.notOk(page.learningMaterials.current[0].owner.userNameInfo.hasAdditionalInfo);
-      assert.equal(page.learningMaterials.current[0].required, 'No');
-      assert.equal(page.learningMaterials.current[0].notes, 'No');
+      assert.strictEqual(page.learningMaterials.current[0].required, 'No');
+      assert.strictEqual(page.learningMaterials.current[0].notes, 'No');
       assert.notOk(page.learningMaterials.current[0].isNotePublic);
-      assert.equal(page.learningMaterials.current[0].mesh, 'descriptor 1 descriptor 2');
-      assert.equal(page.learningMaterials.current[0].status, 'status 0');
+      assert.strictEqual(page.learningMaterials.current[0].mesh, 'descriptor 1 descriptor 2');
+      assert.strictEqual(page.learningMaterials.current[0].status, 'status 0');
 
-      assert.equal(page.learningMaterials.current[1].title, 'learning material 1');
-      assert.equal(page.learningMaterials.current[1].owner.userNameInfo.fullName, 'Clem Chowder');
+      assert.strictEqual(page.learningMaterials.current[1].title, 'learning material 1');
+      assert.strictEqual(
+        page.learningMaterials.current[1].owner.userNameInfo.fullName,
+        'Clem Chowder'
+      );
       assert.ok(page.learningMaterials.current[1].owner.userNameInfo.hasAdditionalInfo);
       assert.notOk(page.learningMaterials.current[1].owner.userNameInfo.isTooltipVisible);
       await page.learningMaterials.current[1].owner.userNameInfo.expandTooltip();
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.current[1].owner.userNameInfo.tooltipContents,
         'Campus name of record: 1 guy M, Mc1son'
       );
       await page.learningMaterials.current[1].owner.userNameInfo.closeTooltip();
       assert.notOk(page.learningMaterials.current[1].owner.userNameInfo.isTooltipVisible);
-      assert.equal(page.learningMaterials.current[1].required, 'No');
-      assert.equal(page.learningMaterials.current[1].notes, 'No');
+      assert.strictEqual(page.learningMaterials.current[1].required, 'No');
+      assert.strictEqual(page.learningMaterials.current[1].notes, 'No');
       assert.notOk(page.learningMaterials.current[1].isNotePublic);
-      assert.equal(page.learningMaterials.current[1].mesh, 'None');
-      assert.equal(page.learningMaterials.current[1].status, 'status 0');
-      assert.equal(page.learningMaterials.current[1].status, 'status 0');
+      assert.strictEqual(page.learningMaterials.current[1].mesh, 'None');
+      assert.strictEqual(page.learningMaterials.current[1].status, 'status 0');
+      assert.strictEqual(page.learningMaterials.current[1].status, 'status 0');
 
-      assert.equal(page.learningMaterials.current[2].title, 'learning material 2');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.current[2].title, 'learning material 2');
+      assert.strictEqual(
         page.learningMaterials.current[2].owner.userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
       assert.notOk(page.learningMaterials.current[2].owner.userNameInfo.hasAdditionalInfo);
-      assert.equal(page.learningMaterials.current[2].required, 'Yes');
-      assert.equal(page.learningMaterials.current[2].notes, 'No');
+      assert.strictEqual(page.learningMaterials.current[2].required, 'Yes');
+      assert.strictEqual(page.learningMaterials.current[2].notes, 'No');
       assert.notOk(page.learningMaterials.current[2].isNotePublic);
-      assert.equal(page.learningMaterials.current[2].mesh, 'None');
-      assert.equal(page.learningMaterials.current[2].status, 'status 0');
-      assert.equal(page.learningMaterials.current[2].status, 'status 0');
+      assert.strictEqual(page.learningMaterials.current[2].mesh, 'None');
+      assert.strictEqual(page.learningMaterials.current[2].status, 'status 0');
+      assert.strictEqual(page.learningMaterials.current[2].status, 'status 0');
 
-      assert.equal(page.learningMaterials.current[3].title, 'learning material 3');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.current[3].title, 'learning material 3');
+      assert.strictEqual(
         page.learningMaterials.current[3].owner.userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
       assert.notOk(page.learningMaterials.current[3].owner.userNameInfo.hasAdditionalInfo);
-      assert.equal(page.learningMaterials.current[3].required, 'Yes');
-      assert.equal(page.learningMaterials.current[3].notes, 'Yes');
+      assert.strictEqual(page.learningMaterials.current[3].required, 'Yes');
+      assert.strictEqual(page.learningMaterials.current[3].notes, 'Yes');
       assert.ok(page.learningMaterials.current[3].isNotePublic);
-      assert.equal(page.learningMaterials.current[3].mesh, 'None');
-      assert.equal(page.learningMaterials.current[3].status, 'status 0');
+      assert.strictEqual(page.learningMaterials.current[3].mesh, 'None');
+      assert.strictEqual(page.learningMaterials.current[3].status, 'status 0');
     });
 
     test('create new link learning material', async function (assert) {
@@ -177,9 +180,9 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       const testDescription = 'testsome description';
       const testUrl = 'http://www.ucsf.edu/';
 
-      assert.equal(this.server.db.learningMaterials.length, 5);
+      assert.strictEqual(this.server.db.learningMaterials.length, 5);
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       assert.ok(page.learningMaterials.search.isVisible);
       await page.learningMaterials.createNew();
       await page.learningMaterials.pickNew('Web Link');
@@ -189,7 +192,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       );
 
       await page.learningMaterials.newLearningMaterial.name(testTitle);
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.newLearningMaterial.owningUser.userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
@@ -200,10 +203,10 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       await page.learningMaterials.newLearningMaterial.description(testDescription);
       await page.learningMaterials.newLearningMaterial.save();
 
-      assert.equal(this.server.db.learningMaterials.length, 6);
-      assert.equal(this.server.db.learningMaterials[5].link, testUrl);
-      assert.equal(page.learningMaterials.current.length, 5);
-      assert.equal(page.learningMaterials.current[4].title, testTitle);
+      assert.strictEqual(this.server.db.learningMaterials.length, 6);
+      assert.strictEqual(this.server.db.learningMaterials[5].link, testUrl);
+      assert.strictEqual(page.learningMaterials.current.length, 5);
+      assert.strictEqual(page.learningMaterials.current[4].title, testTitle);
     });
 
     test('create new citation learning material', async function (assert) {
@@ -213,9 +216,9 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       const testDescription = 'testsome description';
       const testCitation = 'testsome citation';
 
-      assert.equal(this.server.db.learningMaterials.length, 5);
+      assert.strictEqual(this.server.db.learningMaterials.length, 5);
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       assert.ok(page.learningMaterials.search.isVisible);
       await page.learningMaterials.createNew();
       await page.learningMaterials.pickNew('Citation');
@@ -225,7 +228,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       );
 
       await page.learningMaterials.newLearningMaterial.name(testTitle);
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.newLearningMaterial.owningUser.userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
@@ -236,17 +239,17 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       await page.learningMaterials.newLearningMaterial.description(testDescription);
       await page.learningMaterials.newLearningMaterial.save();
 
-      assert.equal(this.server.db.learningMaterials.length, 6);
-      assert.equal(this.server.db.learningMaterials[5].citation, testCitation);
+      assert.strictEqual(this.server.db.learningMaterials.length, 6);
+      assert.strictEqual(this.server.db.learningMaterials[5].citation, testCitation);
 
-      assert.equal(page.learningMaterials.current.length, 5);
-      assert.equal(page.learningMaterials.current[4].title, testTitle);
+      assert.strictEqual(page.learningMaterials.current.length, 5);
+      assert.strictEqual(page.learningMaterials.current[4].title, testTitle);
     });
 
     test('can only add one learning-material at a time', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       assert.ok(page.learningMaterials.canCreateNew);
       assert.notOk(page.learningMaterials.canCollapse);
       await page.learningMaterials.createNew();
@@ -258,30 +261,30 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     test('cancel new learning material', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       assert.ok(page.learningMaterials.search.isVisible);
       await page.learningMaterials.createNew();
       await page.learningMaterials.pickNew('Citation');
       await page.learningMaterials.newLearningMaterial.cancel();
 
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
     });
 
     test('view copyright file learning material details', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[0].details();
 
-      assert.equal(page.learningMaterials.manager.name.value, 'learning material 0');
-      assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.manager.name.value, 'learning material 0');
+      assert.strictEqual(page.learningMaterials.manager.author, 'Jennifer Johnson');
+      assert.strictEqual(
         await page.learningMaterials.manager.description.editorValue(),
         '<p>0 lm description</p>'
       );
       assert.ok(page.learningMaterials.manager.hasFile);
       assert.ok(page.learningMaterials.manager.hasCopyrightPermission);
-      assert.equal(page.learningMaterials.manager.copyrightPermission, 'Yes');
+      assert.strictEqual(page.learningMaterials.manager.copyrightPermission, 'Yes');
       assert.notOk(page.learningMaterials.manager.hasCopyrightRationale);
       assert.notOk(page.learningMaterials.manager.hasLink);
       assert.notOk(page.learningMaterials.manager.hasCitation);
@@ -290,19 +293,19 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     test('view rationale file learning material details', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[1].details();
 
-      assert.equal(page.learningMaterials.manager.name.value, 'learning material 1');
-      assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.manager.name.value, 'learning material 1');
+      assert.strictEqual(page.learningMaterials.manager.author, 'Jennifer Johnson');
+      assert.strictEqual(
         await page.learningMaterials.manager.description.editorValue(),
         '<p>1 lm description</p>'
       );
       assert.ok(page.learningMaterials.manager.hasFile);
       assert.notOk(page.learningMaterials.manager.hasCopyrightPermission);
       assert.ok(page.learningMaterials.manager.hasCopyrightRationale);
-      assert.equal(page.learningMaterials.manager.copyrightRationale, 'reason is thus');
+      assert.strictEqual(page.learningMaterials.manager.copyrightRationale, 'reason is thus');
       assert.notOk(page.learningMaterials.manager.hasLink);
       assert.notOk(page.learningMaterials.manager.hasCitation);
     });
@@ -310,19 +313,19 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     test('view url file learning material details', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[1].details();
 
-      assert.equal(page.learningMaterials.manager.name.value, 'learning material 1');
-      assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.manager.name.value, 'learning material 1');
+      assert.strictEqual(page.learningMaterials.manager.author, 'Jennifer Johnson');
+      assert.strictEqual(
         await page.learningMaterials.manager.description.editorValue(),
         '<p>1 lm description</p>'
       );
-      assert.equal(page.learningMaterials.manager.uploadDate, '3/14/2011');
+      assert.strictEqual(page.learningMaterials.manager.uploadDate, '3/14/2011');
       assert.ok(page.learningMaterials.manager.hasFile);
-      assert.equal(page.learningMaterials.manager.downloadText, 'filename');
-      assert.equal(page.learningMaterials.manager.downloadUrl, 'http://example.com/file');
+      assert.strictEqual(page.learningMaterials.manager.downloadText, 'filename');
+      assert.strictEqual(page.learningMaterials.manager.downloadUrl, 'http://example.com/file');
       assert.notOk(page.learningMaterials.manager.hasLink);
       assert.notOk(page.learningMaterials.manager.hasCitation);
     });
@@ -330,18 +333,21 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     test('view link learning material details', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[2].details();
 
-      assert.equal(page.learningMaterials.manager.name.value, 'learning material 2');
-      assert.equal(page.learningMaterials.manager.author, 'Hunter Pence');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.manager.name.value, 'learning material 2');
+      assert.strictEqual(page.learningMaterials.manager.author, 'Hunter Pence');
+      assert.strictEqual(
         await page.learningMaterials.manager.description.editorValue(),
         '<p>2 lm description</p>'
       );
-      assert.equal(page.learningMaterials.manager.uploadDate, today.toDate().toLocaleDateString());
+      assert.strictEqual(
+        page.learningMaterials.manager.uploadDate,
+        today.toDate().toLocaleDateString()
+      );
       assert.ok(page.learningMaterials.manager.hasLink);
-      assert.equal(page.learningMaterials.manager.link, 'www.example.com');
+      assert.strictEqual(page.learningMaterials.manager.link, 'www.example.com');
 
       assert.notOk(page.learningMaterials.manager.hasCopyrightPermission);
       assert.notOk(page.learningMaterials.manager.hasCopyrightRationale);
@@ -352,18 +358,18 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     test('view citation learning material details', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[3].details();
 
-      assert.equal(page.learningMaterials.manager.name.value, 'learning material 3');
-      assert.equal(page.learningMaterials.manager.author, 'Willie Mays');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.manager.name.value, 'learning material 3');
+      assert.strictEqual(page.learningMaterials.manager.author, 'Willie Mays');
+      assert.strictEqual(
         await page.learningMaterials.manager.description.editorValue(),
         '<p>3 lm description</p>'
       );
-      assert.equal(page.learningMaterials.manager.uploadDate, '12/12/2016');
+      assert.strictEqual(page.learningMaterials.manager.uploadDate, '12/12/2016');
       assert.ok(page.learningMaterials.manager.hasCitation);
-      assert.equal(page.learningMaterials.manager.citation, 'a citation');
+      assert.strictEqual(page.learningMaterials.manager.citation, 'a citation');
 
       assert.notOk(page.learningMaterials.manager.hasCopyrightPermission);
       assert.notOk(page.learningMaterials.manager.hasCopyrightRationale);
@@ -377,7 +383,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       const newDescription = "i'll sleep when i'm dead.";
 
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[0].details();
       await page.learningMaterials.manager.required();
       await page.learningMaterials.manager.publicNotes();
@@ -387,37 +393,37 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
       await page.learningMaterials.manager.save();
 
-      assert.equal(page.learningMaterials.current[0].title, 'learning material 0');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.current[0].title, 'learning material 0');
+      assert.strictEqual(
         page.learningMaterials.current[0].owner.userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
-      assert.equal(page.learningMaterials.current[0].required, 'Yes');
+      assert.strictEqual(page.learningMaterials.current[0].required, 'Yes');
       assert.notOk(page.learningMaterials.current[0].isNotePublic);
-      assert.equal(page.learningMaterials.current[0].notes, 'Yes');
-      assert.equal(page.learningMaterials.current[0].status, 'status 2');
+      assert.strictEqual(page.learningMaterials.current[0].notes, 'Yes');
+      assert.strictEqual(page.learningMaterials.current[0].status, 'status 2');
 
       await page.learningMaterials.current[0].details();
-      assert.equal(await page.learningMaterials.manager.notes.value(), `<p>${newNote}</p>`);
-      assert.equal(
+      assert.strictEqual(await page.learningMaterials.manager.notes.value(), `<p>${newNote}</p>`);
+      assert.strictEqual(
         await page.learningMaterials.manager.description.editorValue(),
         `<p>${newDescription}</p>`
       );
-      assert.equal(page.learningMaterials.manager.statusValue, 3);
+      assert.strictEqual(page.learningMaterials.manager.statusValue, 3);
     });
 
     test('change from required to not required #1249', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
 
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[2].details();
       await page.learningMaterials.manager.required();
 
       await page.learningMaterials.manager.save();
 
-      assert.equal(page.learningMaterials.current[2].title, 'learning material 2');
-      assert.equal(page.learningMaterials.current[2].required, 'No');
+      assert.strictEqual(page.learningMaterials.current[2].title, 'learning material 2');
+      assert.strictEqual(page.learningMaterials.current[2].required, 'No');
     });
 
     test('cancel editing learning material', async function (assert) {
@@ -426,7 +432,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       const newDescription = 'counting sheep';
 
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[0].details();
       await page.learningMaterials.manager.required();
       await page.learningMaterials.manager.publicNotes();
@@ -436,47 +442,47 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
       await page.learningMaterials.manager.cancel();
 
-      assert.equal(page.learningMaterials.current[0].title, 'learning material 0');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.current[0].title, 'learning material 0');
+      assert.strictEqual(
         page.learningMaterials.current[0].owner.userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
-      assert.equal(page.learningMaterials.current[0].required, 'No');
-      assert.equal(page.learningMaterials.current[0].notes, 'No');
+      assert.strictEqual(page.learningMaterials.current[0].required, 'No');
+      assert.strictEqual(page.learningMaterials.current[0].notes, 'No');
       assert.notOk(page.learningMaterials.current[0].isNotePublic);
-      assert.equal(page.learningMaterials.current[0].mesh, 'descriptor 1 descriptor 2');
-      assert.equal(page.learningMaterials.current[0].status, 'status 0');
+      assert.strictEqual(page.learningMaterials.current[0].mesh, 'descriptor 1 descriptor 2');
+      assert.strictEqual(page.learningMaterials.current[0].status, 'status 0');
 
       await page.learningMaterials.current[0].details();
-      assert.equal(await page.learningMaterials.manager.notes.value(), '');
-      assert.equal(
+      assert.strictEqual(await page.learningMaterials.manager.notes.value(), '');
+      assert.strictEqual(
         await page.learningMaterials.manager.description.editorValue(),
         '<p>0 lm description</p>'
       );
-      assert.equal(page.learningMaterials.manager.statusValue, 1);
+      assert.strictEqual(page.learningMaterials.manager.statusValue, 1);
     });
 
     test('manage terms', async function (assert) {
       assert.expect(22);
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[0].details();
-      assert.equal(page.learningMaterials.manager.meshManager.selectedTerms.length, 2);
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.manager.meshManager.selectedTerms.length, 2);
+      assert.strictEqual(
         page.learningMaterials.manager.meshManager.selectedTerms[0].title,
         'descriptor 1'
       );
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.meshManager.selectedTerms[1].title,
         'descriptor 2'
       );
       await page.learningMaterials.manager.meshManager.search('descriptor');
       await page.learningMaterials.manager.meshManager.runSearch();
 
-      assert.equal(page.learningMaterials.manager.meshManager.searchResults.length, 6);
+      assert.strictEqual(page.learningMaterials.manager.meshManager.searchResults.length, 6);
       for (let i = 0; i < 6; i++) {
-        assert.equal(
+        assert.strictEqual(
           page.learningMaterials.manager.meshManager.searchResults[i].title,
           `descriptor ${i}`
         );
@@ -492,13 +498,13 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       await page.learningMaterials.manager.meshManager.searchResults[0].add();
       assert.ok(page.learningMaterials.manager.meshManager.searchResults[0].isDisabled);
       assert.notOk(page.learningMaterials.manager.meshManager.searchResults[1].isDisabled);
-      assert.equal(page.learningMaterials.manager.meshManager.selectedTerms.length, 2);
+      assert.strictEqual(page.learningMaterials.manager.meshManager.selectedTerms.length, 2);
 
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.meshManager.selectedTerms[0].title,
         'descriptor 0'
       );
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.meshManager.selectedTerms[1].title,
         'descriptor 2'
       );
@@ -508,78 +514,81 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[0].details();
-      assert.equal(page.learningMaterials.manager.meshManager.selectedTerms.length, 2);
+      assert.strictEqual(page.learningMaterials.manager.meshManager.selectedTerms.length, 2);
       await page.learningMaterials.manager.meshManager.search('descriptor');
       await page.learningMaterials.manager.meshManager.runSearch();
 
       await page.learningMaterials.manager.meshManager.selectedTerms[0].remove();
       await page.learningMaterials.manager.meshManager.searchResults[0].add();
 
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.meshManager.selectedTerms[0].title,
         'descriptor 0'
       );
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.meshManager.selectedTerms[1].title,
         'descriptor 2'
       );
 
       await page.learningMaterials.manager.save();
-      assert.equal(page.learningMaterials.current[0].mesh, 'descriptor 0 descriptor 2');
+      assert.strictEqual(page.learningMaterials.current[0].mesh, 'descriptor 0 descriptor 2');
     });
 
     test('cancel term changes', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[0].details();
-      assert.equal(page.learningMaterials.manager.meshManager.selectedTerms.length, 2);
+      assert.strictEqual(page.learningMaterials.manager.meshManager.selectedTerms.length, 2);
       await page.learningMaterials.manager.meshManager.search('descriptor');
       await page.learningMaterials.manager.meshManager.runSearch();
 
       await page.learningMaterials.manager.meshManager.selectedTerms[0].remove();
       await page.learningMaterials.manager.meshManager.searchResults[0].add();
 
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.meshManager.selectedTerms[0].title,
         'descriptor 0'
       );
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.meshManager.selectedTerms[1].title,
         'descriptor 2'
       );
 
       await page.learningMaterials.manager.cancel();
-      assert.equal(page.learningMaterials.current[0].mesh, 'descriptor 1 descriptor 2');
+      assert.strictEqual(page.learningMaterials.current[0].mesh, 'descriptor 1 descriptor 2');
     });
 
     test('find and add learning material', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.search.search('doc');
-      assert.equal(page.learningMaterials.search.searchResults.length, 1);
+      assert.strictEqual(page.learningMaterials.search.searchResults.length, 1);
 
-      assert.equal(page.learningMaterials.search.searchResults[0].title, 'Letter to Doc Brown');
+      assert.strictEqual(
+        page.learningMaterials.search.searchResults[0].title,
+        'Letter to Doc Brown'
+      );
       assert.ok(page.learningMaterials.search.searchResults[0].hasFileIcon);
-      assert.equal(page.learningMaterials.search.searchResults[0].properties.length, 3);
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.search.searchResults[0].properties.length, 3);
+      assert.strictEqual(
         page.learningMaterials.search.searchResults[0].properties[0].value,
         'Owner: 0 guy M. Mc0son'
       );
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.search.searchResults[0].properties[1].value,
         'Content Author: ' + 'Marty McFly'
       );
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.search.searchResults[0].properties[2].value,
         'Upload date: 3/3/2016'
       );
       await page.learningMaterials.search.searchResults[0].add();
-      assert.equal(page.learningMaterials.current.length, 5);
+      assert.strictEqual(page.learningMaterials.current.length, 5);
     });
 
     test('add timed release start date', async function (assert) {
@@ -604,7 +613,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
         hour: 'numeric',
         minute: 'numeric',
       });
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.timedReleaseSummary,
         `(Available: ${formattedNewDate})`
       );
@@ -648,7 +657,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
         hour: 'numeric',
         minute: 'numeric',
       });
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.timedReleaseSummary,
         `(Available: ${formattedStartDate} and available until ${formattedEndDate})`
       );
@@ -676,7 +685,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
         hour: 'numeric',
         minute: 'numeric',
       });
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.timedReleaseSummary,
         `(Available until ${formattedNewDate})`
       );
@@ -712,7 +721,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
         hour: 'numeric',
         minute: 'numeric',
       });
-      assert.equal(
+      assert.strictEqual(
         page.learningMaterials.manager.timedReleaseSummary,
         `(Available: ${formattedDate} and available until ${formattedDate})`
       );
@@ -723,17 +732,17 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       const newTitle = 'text text. Woo hoo!';
 
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 4);
+      assert.strictEqual(page.learningMaterials.current.length, 4);
       await page.learningMaterials.current[0].details();
       assert.ok(page.learningMaterials.manager.name.isPresent);
       await page.learningMaterials.manager.name.fillIn(newTitle);
 
       await page.learningMaterials.manager.save();
 
-      assert.equal(page.learningMaterials.current[0].title, newTitle);
+      assert.strictEqual(page.learningMaterials.current[0].title, newTitle);
 
       await page.learningMaterials.current[0].details();
-      assert.equal(page.learningMaterials.manager.name.value, newTitle);
+      assert.strictEqual(page.learningMaterials.manager.name.value, newTitle);
     });
 
     test('title too short', async function (assert) {
@@ -814,36 +823,36 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     test('list learning materials', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(currentRouteName(), 'course.index');
+      assert.strictEqual(currentRouteName(), 'course.index');
 
-      assert.equal(page.learningMaterials.current.length, 1);
+      assert.strictEqual(page.learningMaterials.current.length, 1);
 
-      assert.equal(page.learningMaterials.current[0].title, 'learning material 0');
-      assert.equal(
+      assert.strictEqual(page.learningMaterials.current[0].title, 'learning material 0');
+      assert.strictEqual(
         page.learningMaterials.current[0].owner.userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
       assert.notOk(page.learningMaterials.current[0].owner.userNameInfo.hasAdditionalInfo);
-      assert.equal(page.learningMaterials.current[0].required, 'No');
-      assert.equal(page.learningMaterials.current[0].notes, 'No');
+      assert.strictEqual(page.learningMaterials.current[0].required, 'No');
+      assert.strictEqual(page.learningMaterials.current[0].notes, 'No');
       assert.notOk(page.learningMaterials.current[0].isNotePublic);
-      assert.equal(page.learningMaterials.current[0].mesh, 'descriptor 1 descriptor 2');
-      assert.equal(page.learningMaterials.current[0].status, 'status 0');
+      assert.strictEqual(page.learningMaterials.current[0].mesh, 'descriptor 1 descriptor 2');
+      assert.strictEqual(page.learningMaterials.current[0].status, 'status 0');
     });
 
     test('view learning material details', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.learningMaterials.current.length, 1);
+      assert.strictEqual(page.learningMaterials.current.length, 1);
       await page.learningMaterials.current[0].details();
 
-      assert.equal(page.learningMaterials.manager.nameValue, 'learning material 0');
+      assert.strictEqual(page.learningMaterials.manager.nameValue, 'learning material 0');
       assert.notOk(page.learningMaterials.manager.name.isPresent);
-      assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
-      assert.equal(page.learningMaterials.manager.description.value, '0 lm description');
+      assert.strictEqual(page.learningMaterials.manager.author, 'Jennifer Johnson');
+      assert.strictEqual(page.learningMaterials.manager.description.value, '0 lm description');
       assert.ok(page.learningMaterials.manager.hasFile);
       assert.ok(page.learningMaterials.manager.hasCopyrightPermission);
-      assert.equal(page.learningMaterials.manager.copyrightPermission, 'Yes');
+      assert.strictEqual(page.learningMaterials.manager.copyrightPermission, 'Yes');
       assert.notOk(page.learningMaterials.manager.hasCopyrightRationale);
       assert.notOk(page.learningMaterials.manager.hasLink);
       assert.notOk(page.learningMaterials.manager.hasCitation);

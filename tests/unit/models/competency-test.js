@@ -19,23 +19,23 @@ module('Unit | Model | Competency', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('competency');
     let domain = await model.domain;
-    assert.equal(domain, model);
+    assert.strictEqual(domain, model);
     const competency = store.createRecord('competency', { children: [model] });
     domain = await model.domain;
-    assert.equal(domain, competency);
+    assert.strictEqual(domain, competency);
   });
 
   test('treeChildren', async function (assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('competency');
     let treeChildren = await model.treeChildren;
-    assert.equal(treeChildren.length, 0);
+    assert.strictEqual(treeChildren.length, 0);
 
     const child1 = store.createRecord('competency');
     const child2 = store.createRecord('competency');
     model.set('children', [child1, child2]);
     treeChildren = await model.treeChildren;
-    assert.equal(treeChildren.length, 2);
+    assert.strictEqual(treeChildren.length, 5);
     assert.ok(treeChildren.includes(child1));
     assert.ok(treeChildren.includes(child2));
   });
@@ -44,10 +44,10 @@ module('Unit | Model | Competency', function (hooks) {
     assert.expect(2);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('competency');
-    assert.equal(model.childCount, 0);
+    assert.strictEqual(model.childCount, 0);
     const child1 = store.createRecord('competency');
     const child2 = store.createRecord('competency');
     model.set('children', [child1, child2]);
-    assert.equal(model.childCount, 2);
+    assert.strictEqual(model.childCount, 2);
   });
 });

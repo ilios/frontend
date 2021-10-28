@@ -35,8 +35,8 @@ module('Acceptance | Session - Objective Create', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(
+    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
@@ -44,14 +44,14 @@ module('Acceptance | Session - Objective Create', function (hooks) {
     await page.objectives.newObjective.description(newObjectiveDescription);
     await page.objectives.newObjective.save();
 
-    assert.equal(page.objectives.objectiveList.objectives.length, 2);
-    assert.equal(
+    assert.strictEqual(page.objectives.objectiveList.objectives.length, 2);
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
     assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
     assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
-    assert.equal(
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[1].description.text,
       newObjectiveDescription
     );
@@ -67,8 +67,8 @@ module('Acceptance | Session - Objective Create', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(
+    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
@@ -76,8 +76,8 @@ module('Acceptance | Session - Objective Create', function (hooks) {
     await page.objectives.newObjective.description('junk');
     await page.objectives.newObjective.cancel();
 
-    assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(
+    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
@@ -93,8 +93,8 @@ module('Acceptance | Session - Objective Create', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(
+    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
@@ -103,6 +103,6 @@ module('Acceptance | Session - Objective Create', function (hooks) {
     await page.objectives.newObjective.description('<p>&nbsp</p><div></div><span>  </span>');
     await page.objectives.newObjective.save();
     assert.ok(page.objectives.newObjective.hasValidationError);
-    assert.equal(page.objectives.newObjective.validationError, 'This field can not be blank');
+    assert.strictEqual(page.objectives.newObjective.validationError, 'This field can not be blank');
   });
 });

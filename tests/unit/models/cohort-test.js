@@ -44,9 +44,9 @@ module('Unit | Model | Cohort', function (hooks) {
 
     const topLevelGroups = await model.get('rootLevelLearnerGroups');
 
-    assert.equal(topLevelGroups.length, 2);
-    assert.equal(topLevelGroups.objectAt(0).get('title'), 'Top Group 1');
-    assert.equal(topLevelGroups.objectAt(1).get('title'), 'Top Group 2');
+    assert.strictEqual(topLevelGroups.length, 2);
+    assert.strictEqual(topLevelGroups.objectAt(0).get('title'), 'Top Group 1');
+    assert.strictEqual(topLevelGroups.objectAt(1).get('title'), 'Top Group 2');
   });
 
   test('competencies', async function (assert) {
@@ -60,7 +60,7 @@ module('Unit | Model | Cohort', function (hooks) {
     });
     model.set('programYear', programYear);
     const competencies = await model.get('competencies');
-    assert.equal(competencies.length, 2);
+    assert.strictEqual(competencies.length, 2);
     assert.ok(competencies.includes(competency1));
     assert.ok(competencies.includes(competency2));
   });
@@ -75,7 +75,7 @@ module('Unit | Model | Cohort', function (hooks) {
     });
     model.set('programYear', programYear);
     const program = await model.get('program');
-    assert.equal(program, program1);
+    assert.strictEqual(program, program1);
   });
 
   test('school', async function (assert) {
@@ -87,7 +87,7 @@ module('Unit | Model | Cohort', function (hooks) {
     const programYear = store.createRecord('program-year', { program });
     model.set('programYear', programYear);
     const school = await model.get('school');
-    assert.equal(school, school1);
+    assert.strictEqual(school, school1);
   });
 
   test('classOfYear', async function (assert) {
@@ -101,6 +101,6 @@ module('Unit | Model | Cohort', function (hooks) {
     });
     model.set('programYear', programYear);
     const classOfYear = await model.get('classOfYear');
-    assert.equal(classOfYear, 2016);
+    assert.strictEqual(classOfYear, 2016);
   });
 });

@@ -27,6 +27,6 @@ module('Unit | Serializer | learning material', function (hooks) {
     var serializedRecord = record.serialize();
 
     assert.ok('fileHash' in serializedRecord.data.attributes);
-    assert.equal(serializedRecord.data.attributes.fileHash, 'BigPhatBass');
+    assert.strictEqual(serializedRecord.data.attributes.fileHash, 'BigPhatBass');
   });
 });

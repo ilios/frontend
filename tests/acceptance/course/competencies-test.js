@@ -54,11 +54,11 @@ module('Acceptance | Course - Competencies', function (hooks) {
   test('collapsed competencies renders', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, details: true });
-    assert.equal(page.collapsedCompetencies.title, 'Competencies (1)');
-    assert.equal(page.collapsedCompetencies.headers[0].text, 'School');
-    assert.equal(page.collapsedCompetencies.headers[1].text, 'Competencies');
-    assert.equal(page.collapsedCompetencies.competencies[0].school, 'school 0');
-    assert.equal(page.collapsedCompetencies.competencies[0].count, '1');
+    assert.strictEqual(page.collapsedCompetencies.title, 'Competencies (1)');
+    assert.strictEqual(page.collapsedCompetencies.headers[0].text, 'School');
+    assert.strictEqual(page.collapsedCompetencies.headers[1].text, 'Competencies');
+    assert.strictEqual(page.collapsedCompetencies.competencies[0].school, 'school 0');
+    assert.strictEqual(page.collapsedCompetencies.competencies[0].count, '1');
   });
 
   test('changing objective parent changes summary', async function (assert) {
@@ -75,10 +75,10 @@ module('Acceptance | Course - Competencies', function (hooks) {
     assert.ok(m.competencies[1].objectives[0].selected);
     await page.objectives.objectiveList.objectives[1].parents.save();
 
-    assert.equal(page.collapsedCompetencies.title, 'Competencies (2)');
-    assert.equal(page.collapsedCompetencies.headers[0].text, 'School');
-    assert.equal(page.collapsedCompetencies.headers[1].text, 'Competencies');
-    assert.equal(page.collapsedCompetencies.competencies[0].school, 'school 0');
-    assert.equal(page.collapsedCompetencies.competencies[0].count, '2');
+    assert.strictEqual(page.collapsedCompetencies.title, 'Competencies (2)');
+    assert.strictEqual(page.collapsedCompetencies.headers[0].text, 'School');
+    assert.strictEqual(page.collapsedCompetencies.headers[1].text, 'Competencies');
+    assert.strictEqual(page.collapsedCompetencies.competencies[0].school, 'school 0');
+    assert.strictEqual(page.collapsedCompetencies.competencies[0].count, '2');
   });
 });

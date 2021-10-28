@@ -224,9 +224,9 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
-    assert.equal(
+    assert.strictEqual(
       component.summary.offeredAt,
       today.toDate().toLocaleString([], {
         weekday: 'long',
@@ -268,7 +268,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
     const formatedDate = tomorrow.toDate().toLocaleString([], {
       weekday: 'long',
@@ -278,8 +278,11 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       hour: 'numeric',
       minute: 'numeric',
     });
-    assert.equal(component.summary.offeredAt, `Due Before postrequisite session (${formatedDate})`);
-    assert.equal(component.summary.offeredAtLink, `/events/1234`);
+    assert.strictEqual(
+      component.summary.offeredAt,
+      `Due Before postrequisite session (${formatedDate})`
+    );
+    assert.strictEqual(component.summary.offeredAtLink, `/events/1234`);
   });
 
   test('prequisites are displayed', async function (assert) {
@@ -316,11 +319,11 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
     assert.notOk(component.summary.title.hasLink);
-    assert.equal(component.summary.title.text, 'course - Learn to Learn');
-    assert.equal(component.summary.preWork.length, 2);
-    assert.equal(component.summary.preWork[0].title, 'prework 1');
+    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
+    assert.strictEqual(component.summary.preWork.length, 2);
+    assert.strictEqual(component.summary.preWork[0].title, 'prework 1');
     assert.ok(component.summary.preWork[0].hasLink);
-    assert.equal(component.summary.preWork[1].title, 'prework 2');
+    assert.strictEqual(component.summary.preWork[1].title, 'prework 2');
     assert.ok(component.summary.preWork[1].hasLink);
   });
 
@@ -354,7 +357,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
     const formattedTomorrow = tomorrow.toDate().toLocaleString([], {
       weekday: 'long',
@@ -372,11 +375,11 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       hour: 'numeric',
       minute: 'numeric',
     });
-    assert.equal(
+    assert.strictEqual(
       component.summary.offeredAt,
       `Due Before postrequisite session (${formattedTomorrow}) ${formattedToday}`
     );
-    assert.equal(component.summary.offeredAtLink, `/events/1234`);
+    assert.strictEqual(component.summary.offeredAtLink, `/events/1234`);
   });
 
   test('link to all materials if user is student and event is user-event', async function (assert) {
@@ -428,9 +431,9 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
-    assert.equal(
+    assert.strictEqual(
       component.summary.offeredAt,
       today.toDate().toLocaleString([], {
         weekday: 'long',
@@ -460,9 +463,9 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
-    assert.equal(
+    assert.strictEqual(
       component.summary.offeredAt,
       today.toDate().toLocaleString([], {
         weekday: 'long',
@@ -497,9 +500,9 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
-    assert.equal(
+    assert.strictEqual(
       component.summary.offeredAt,
       today.toDate().toLocaleString([], {
         weekday: 'long',
@@ -546,7 +549,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.ok(component.summary.title.hasLink);
   });
 });

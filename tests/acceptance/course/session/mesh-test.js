@@ -41,28 +41,28 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   test('list mesh', async function (assert) {
     assert.expect(4);
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.equal(page.meshTerms.current.length, 3);
-    assert.equal(page.meshTerms.current[0].title, 'descriptor 0');
-    assert.equal(page.meshTerms.current[1].title, 'descriptor 1');
-    assert.equal(page.meshTerms.current[2].title, 'descriptor 2');
+    assert.strictEqual(page.meshTerms.current.length, 3);
+    assert.strictEqual(page.meshTerms.current[0].title, 'descriptor 0');
+    assert.strictEqual(page.meshTerms.current[1].title, 'descriptor 1');
+    assert.strictEqual(page.meshTerms.current[2].title, 'descriptor 2');
   });
 
   test('manage terms', async function (assert) {
     assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.equal(page.meshTerms.current.length, 3);
+    assert.strictEqual(page.meshTerms.current.length, 3);
     await page.meshTerms.manage();
-    assert.equal(page.meshTerms.meshManager.selectedTerms.length, 3);
-    assert.equal(page.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 0');
-    assert.equal(page.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 1');
-    assert.equal(page.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 2');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms.length, 3);
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 0');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 1');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 2');
     await page.meshTerms.meshManager.search('descriptor');
     await page.meshTerms.meshManager.runSearch();
 
-    assert.equal(page.meshTerms.meshManager.searchResults.length, 6);
+    assert.strictEqual(page.meshTerms.meshManager.searchResults.length, 6);
     for (let i = 0; i < 6; i++) {
-      assert.equal(page.meshTerms.meshManager.searchResults[i].title, `descriptor ${i}`);
+      assert.strictEqual(page.meshTerms.meshManager.searchResults[i].title, `descriptor ${i}`);
     }
     assert.ok(page.meshTerms.meshManager.searchResults[0].isDisabled);
     assert.ok(page.meshTerms.meshManager.searchResults[1].isDisabled);
@@ -75,49 +75,49 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     await page.meshTerms.meshManager.searchResults[3].add();
     assert.ok(page.meshTerms.meshManager.searchResults[3].isDisabled);
     assert.ok(page.meshTerms.meshManager.searchResults[0].isEnabled);
-    assert.equal(page.meshTerms.meshManager.selectedTerms.length, 3);
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms.length, 3);
 
-    assert.equal(page.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 1');
-    assert.equal(page.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 2');
-    assert.equal(page.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 3');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 1');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 2');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 3');
   });
 
   test('save terms', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(9);
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.equal(page.meshTerms.current.length, 3);
+    assert.strictEqual(page.meshTerms.current.length, 3);
     await page.meshTerms.manage();
 
-    assert.equal(page.meshTerms.meshManager.selectedTerms.length, 3);
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms.length, 3);
     await page.meshTerms.meshManager.search('descriptor');
     await page.meshTerms.meshManager.runSearch();
 
     await page.meshTerms.meshManager.selectedTerms[0].remove();
     await page.meshTerms.meshManager.searchResults[3].add();
 
-    assert.equal(page.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 1');
-    assert.equal(page.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 2');
-    assert.equal(page.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 3');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 1');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 2');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 3');
 
     await page.meshTerms.save();
-    assert.equal(page.meshTerms.current.length, 3);
-    assert.equal(page.meshTerms.current[0].title, 'descriptor 1');
-    assert.equal(page.meshTerms.current[1].title, 'descriptor 2');
-    assert.equal(page.meshTerms.current[2].title, 'descriptor 3');
+    assert.strictEqual(page.meshTerms.current.length, 3);
+    assert.strictEqual(page.meshTerms.current[0].title, 'descriptor 1');
+    assert.strictEqual(page.meshTerms.current[1].title, 'descriptor 2');
+    assert.strictEqual(page.meshTerms.current[2].title, 'descriptor 3');
   });
 
   test('cancel term changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.equal(page.meshTerms.current.length, 3);
-    assert.equal(page.meshTerms.current[0].title, 'descriptor 0');
-    assert.equal(page.meshTerms.current[1].title, 'descriptor 1');
-    assert.equal(page.meshTerms.current[2].title, 'descriptor 2');
+    assert.strictEqual(page.meshTerms.current.length, 3);
+    assert.strictEqual(page.meshTerms.current[0].title, 'descriptor 0');
+    assert.strictEqual(page.meshTerms.current[1].title, 'descriptor 1');
+    assert.strictEqual(page.meshTerms.current[2].title, 'descriptor 2');
 
     await page.meshTerms.manage();
-    assert.equal(page.meshTerms.meshManager.selectedTerms.length, 3);
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms.length, 3);
 
     await page.meshTerms.meshManager.search('descriptor');
     await page.meshTerms.meshManager.runSearch();
@@ -125,13 +125,13 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     await page.meshTerms.meshManager.selectedTerms[0].remove();
     await page.meshTerms.meshManager.searchResults[3].add();
 
-    assert.equal(page.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 1');
-    assert.equal(page.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 2');
-    assert.equal(page.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 3');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 1');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 2');
+    assert.strictEqual(page.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 3');
 
     await page.meshTerms.cancel();
-    assert.equal(page.meshTerms.current[0].title, 'descriptor 0');
-    assert.equal(page.meshTerms.current[1].title, 'descriptor 1');
-    assert.equal(page.meshTerms.current[2].title, 'descriptor 2');
+    assert.strictEqual(page.meshTerms.current[0].title, 'descriptor 0');
+    assert.strictEqual(page.meshTerms.current[1].title, 'descriptor 1');
+    assert.strictEqual(page.meshTerms.current[2].title, 'descriptor 2');
   });
 });

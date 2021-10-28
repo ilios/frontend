@@ -22,9 +22,9 @@ module('Unit | Model | session objective', function (hooks) {
     const term3 = store.createRecord('term', { vocabulary: vocab2 });
     subject.get('terms').pushObjects([term1, term2, term3]);
     const vocabularies = await subject.get('associatedVocabularies');
-    assert.equal(vocabularies.length, 2);
-    assert.equal(vocabularies[0], vocab2);
-    assert.equal(vocabularies[1], vocab1);
+    assert.strictEqual(vocabularies.length, 2);
+    assert.strictEqual(vocabularies[0], vocab2);
+    assert.strictEqual(vocabularies[1], vocab1);
   });
 
   test('termsWithAllParents', async function (assert) {
@@ -39,7 +39,7 @@ module('Unit | Model | session objective', function (hooks) {
     const term6 = store.createRecord('term');
     subject.get('terms').pushObjects([term4, term5, term6]);
     const terms = await subject.get('termsWithAllParents');
-    assert.equal(terms.length, 6);
+    assert.strictEqual(terms.length, 6);
     assert.ok(terms.includes(term1));
     assert.ok(terms.includes(term2));
     assert.ok(terms.includes(term3));

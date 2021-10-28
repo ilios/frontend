@@ -35,7 +35,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
     this.set('sortBy', 'title');
     this.set('setSortBy', () => {});
     this.set('expandSession', (s) => {
-      assert.equal(s, session);
+      assert.strictEqual(s, session);
     });
     await render(hbs`<SessionsGrid
       @sessions={{sessions}}

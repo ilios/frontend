@@ -10,15 +10,15 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{(noop)}} />`);
-    assert.equal(component.title.text, 'Title');
-    assert.equal(component.sessionType.text, 'Type');
-    assert.equal(component.learnerGroupCount.text, 'Groups');
-    assert.equal(component.objectiveCount.text, 'Objectives');
-    assert.equal(component.termCount.text, 'Terms');
-    assert.equal(component.firstOffering.text, 'First Offering');
-    assert.equal(component.offeringCount.text, 'Offerings');
-    assert.equal(component.status.text, 'Status');
+    await render(hbs`<SessionsGridHeader @toggleExpandAll={{noop}} @setSortBy={{(noop)}} />`);
+    assert.strictEqual(component.title.text, 'Title');
+    assert.strictEqual(component.sessionType.text, 'Type');
+    assert.strictEqual(component.learnerGroupCount.text, 'Groups');
+    assert.strictEqual(component.objectiveCount.text, 'Objectives');
+    assert.strictEqual(component.termCount.text, 'Terms');
+    assert.strictEqual(component.firstOffering.text, 'First Offering');
+    assert.strictEqual(component.offeringCount.text, 'Offerings');
+    assert.strictEqual(component.status.text, 'Status');
   });
 
   test('expand all', async function (assert) {
@@ -35,7 +35,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
   test('sort by title', async function (assert) {
     assert.expect(1);
     this.set('setSortBy', (value) => {
-      assert.equal(value, 'title');
+      assert.strictEqual(value, 'title');
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
@@ -46,7 +46,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
   test('sort by session type', async function (assert) {
     assert.expect(1);
     this.set('setSortBy', (value) => {
-      assert.equal(value, 'sessionTypeTitle');
+      assert.strictEqual(value, 'sessionTypeTitle');
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
@@ -57,7 +57,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
   test('sort by learner group count', async function (assert) {
     assert.expect(1);
     this.set('setSortBy', (value) => {
-      assert.equal(value, 'learnerGroupCount');
+      assert.strictEqual(value, 'learnerGroupCount');
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
@@ -68,7 +68,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
   test('sort by objective count', async function (assert) {
     assert.expect(1);
     this.set('setSortBy', (value) => {
-      assert.equal(value, 'objectiveCount');
+      assert.strictEqual(value, 'objectiveCount');
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
@@ -79,7 +79,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
   test('sort by term count', async function (assert) {
     assert.expect(1);
     this.set('setSortBy', (value) => {
-      assert.equal(value, 'termCount');
+      assert.strictEqual(value, 'termCount');
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
@@ -90,7 +90,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
   test('sort by first offering', async function (assert) {
     assert.expect(1);
     this.set('setSortBy', (value) => {
-      assert.equal(value, 'firstOfferingDate');
+      assert.strictEqual(value, 'firstOfferingDate');
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
@@ -101,7 +101,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
   test('sort by offering count', async function (assert) {
     assert.expect(1);
     this.set('setSortBy', (value) => {
-      assert.equal(value, 'offeringCount');
+      assert.strictEqual(value, 'offeringCount');
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`

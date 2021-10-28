@@ -60,23 +60,23 @@ module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
       courseObjectiveDetails: true,
     });
     const { objectives } = page.objectives.objectiveList;
-    assert.equal(objectives.length, 1);
+    assert.strictEqual(objectives.length, 1);
 
-    assert.equal(objectives[0].description.text, 'course objective 0');
-    assert.equal(objectives[0].parents.list.length, 1);
-    assert.equal(objectives[0].parents.list[0].text, 'inactive selected');
+    assert.strictEqual(objectives[0].description.text, 'course objective 0');
+    assert.strictEqual(objectives[0].parents.list.length, 1);
+    assert.strictEqual(objectives[0].parents.list[0].text, 'inactive selected');
 
     await objectives[0].parents.list[0].manage();
     const m = objectives[0].parentManager;
 
-    assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
-    assert.equal(m.competencies.length, 1);
-    assert.equal(m.competencies[0].title, 'competency 0');
+    assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
+    assert.strictEqual(m.competencies.length, 1);
+    assert.strictEqual(m.competencies[0].title, 'competency 0');
     assert.ok(m.competencies[0].selected);
-    assert.equal(m.competencies[0].objectives.length, 2);
-    assert.equal(m.competencies[0].objectives[0].title, 'active');
+    assert.strictEqual(m.competencies[0].objectives.length, 2);
+    assert.strictEqual(m.competencies[0].objectives[0].title, 'active');
     assert.ok(m.competencies[0].objectives[0].notSelected);
-    assert.equal(m.competencies[0].objectives[1].title, 'inactive selected');
+    assert.strictEqual(m.competencies[0].objectives[1].title, 'inactive selected');
     assert.ok(m.competencies[0].objectives[1].selected);
   });
 });

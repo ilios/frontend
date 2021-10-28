@@ -23,7 +23,7 @@ module('Unit | Serializer | curriculum inventory sequence block', function (hook
     record.set('startDate', null);
     record.set('endDate', null);
     const serializedRecord = record.serialize();
-    assert.equal(serializedRecord.data.attributes.startDate, null);
-    assert.equal(serializedRecord.data.attributes.endDate, null);
+    assert.strictEqual(serializedRecord.data.attributes.startDate, null);
+    assert.strictEqual(serializedRecord.data.attributes.endDate, null);
   });
 });

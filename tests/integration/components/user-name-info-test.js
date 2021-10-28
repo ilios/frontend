@@ -15,7 +15,7 @@ module('Integration | Component | user-name-info', function (hooks) {
     this.set('user', userModel);
     await render(hbs`<UserNameInfo @user={{this.user}} />`);
     assert.notOk(component.hasAdditionalInfo);
-    assert.equal(component.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.fullName, '0 guy M. Mc0son');
   });
 
   test('it renders with additional info', async function (assert) {
@@ -24,12 +24,12 @@ module('Integration | Component | user-name-info', function (hooks) {
     this.set('user', userModel);
     await render(hbs`<UserNameInfo @user={{this.user}} />`);
     assert.ok(component.hasAdditionalInfo);
-    assert.equal(component.fullName, 'Clem Chowder');
-    assert.equal(component.infoIconLabel, 'Campus name of record');
+    assert.strictEqual(component.fullName, 'Clem Chowder');
+    assert.strictEqual(component.infoIconLabel, 'Campus name of record');
     assert.notOk(component.isTooltipVisible);
     await component.expandTooltip();
     assert.ok(component.isTooltipVisible);
-    assert.equal(component.tooltipContents, 'Campus name of record: 0 guy M, Mc0son');
+    assert.strictEqual(component.tooltipContents, 'Campus name of record: 0 guy M, Mc0son');
     await component.closeTooltip();
     assert.notOk(component.isTooltipVisible);
   });
@@ -39,6 +39,6 @@ module('Integration | Component | user-name-info', function (hooks) {
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserNameInfo id="test-id" @user={{this.user}} />`);
-    assert.equal(component.id, 'test-id');
+    assert.strictEqual(component.id, 'test-id');
   });
 });

@@ -28,7 +28,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     });
     model.get('sequenceBlocks').pushObjects([block1, block2, block3]);
     const blocks = await model.get('topLevelSequenceBlocks');
-    assert.equal(blocks.length, 2);
+    assert.strictEqual(blocks.length, 2);
     assert.ok(blocks.includes(block1));
     assert.ok(blocks.includes(block2));
   });
