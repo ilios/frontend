@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { typeOf } from '@ember/utils';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { action } from '@ember/object';
 
 export default class TruncateTextComponent extends Component {

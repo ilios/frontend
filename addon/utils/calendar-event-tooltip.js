@@ -1,6 +1,6 @@
 import { isBlank } from '@ember/utils';
 import moment from 'moment';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 
 export default function calendarEventTooltip(event, intl, timeFormat) {
   const addLocationToContents = function (contents, eventLocation) {
