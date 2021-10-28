@@ -206,7 +206,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     this.userEvents = this.owner.lookup('service:user-events');
 
     await render(hbs`<DashboardAgenda />`);
-    const title = 'h3';
+    const title = '[data-test-title]';
 
     assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
     assert.equal(this.element.querySelectorAll('table tr').length, 6);
@@ -285,7 +285,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     this.userEvents = this.owner.lookup('service:user-events');
 
     await render(hbs`<DashboardAgenda />`);
-    const title = 'h3';
+    const title = '[data-test-title]';
     const body = 'p';
 
     assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');

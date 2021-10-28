@@ -1,7 +1,7 @@
 <div class="dashboard-agenda">
-  <h3>
+  <h2 class="title" data-test-title>
     {{t "general.upcomingActivities" days=this.daysInAdvance}}
-  </h3>
+  </h2>
   {{#if (is-array this.weeksEvents)}}
     {{#if (gt this.ilmPreWorkEvents.length 0)}}
       <div class="pre-work">

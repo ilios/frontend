@@ -1,7 +1,7 @@
 .dashboard-agenda {
 
-  h3 {
-    @include ilios-heading-h5;
+  .title {
+    @include ilios-heading-h4;
   }
 
   .activities {

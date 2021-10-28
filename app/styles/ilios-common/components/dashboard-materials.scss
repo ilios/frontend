@@ -3,8 +3,8 @@
   overflow-y: scroll;
   padding: 0 1em 1em;
 
-  h3 {
-    @include ilios-heading-h5;
+  .title {
+    @include ilios-heading-h4;
   }
 
   a {
