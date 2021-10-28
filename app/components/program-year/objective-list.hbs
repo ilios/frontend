@@ -39,12 +39,12 @@
       <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
       <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
     </div>
-    {{#if (and (is-array this.programYearObjectives) (is-array this.programYearDomains))}}
+    {{#if (and (is-array this.programYearObjectives) (is-array this.domainTrees))}}
       {{#each this.programYearObjectives as |programYearObjective|}}
         <ProgramYear::ObjectiveListItem
           @programYearObjective={{programYearObjective}}
           @editable={{@editable}}
-          @programYearDomains={{this.programYearDomains}}
+          @domainTrees={{this.domainTrees}}
           @programYearCompetencies={{this.programYearCompetencies}}
         />
       {{/each}}

@@ -2,9 +2,9 @@
   class="program-year-manage-objective-competency"
   data-test-program-year-manage-objective-competency
 >
-  {{#if @domains.length}}
+  {{#if @domainTrees.length}}
     <ul class="parent-picker" data-test-parent-picker>
-      {{#each @domains as |domain|}}
+      {{#each (sort-by "title" @domainTrees) as |domain|}}
         <li class="domain {{if
               (or
                 (eq @selected.id domain.id)
@@ -15,26 +15,44 @@
             data-test-domain
         >
           {{#if (eq @selected.id domain.id)}}
-            <label class="domain-title selected">
-              <input type="radio" checked="checked" {{on "click" @remove}}>
+            <label class="domain-title">
+              <input type="radio" checked="checked" {{on "click" @remove}} data-test-select-domain>
+              {{domain.title}}
+            </label>
+          {{else if (includes domain.id (map-by "id" @programYearCompetencies))}}
+            <label class="domain-title">
+              <input type="radio" {{on "click" (fn @add domain.id)}} data-test-select-domain>
               {{domain.title}}
             </label>
           {{else}}
             <label class="domain-title">
-              <input type="radio" {{on "click" (fn @add domain.id)}}>
               {{domain.title}}
             </label>
           {{/if}}
           <ul>
             {{#each (sort-by "title" domain.competencies) as |competency|}}
-              <li>
-                <ProgramYear::ManageObjectiveCompetencyItem
-                  @title={{competency.title}}
-                  @isSelected={{eq competency.id @selected.id}}
-                  @add={{fn @add competency.id}}
-                  @remove={{@remove}}
-                />
-              </li>
+              {{#if (eq competency.id @selected.id)}}
+                <li>
+                  <label class="selected">
+                    <input
+                      type="radio"
+                      checked="checked"
+                      {{on "click" @remove}}
+                    >
+                    {{competency.title}}
+                  </label>
+                </li>
+              {{else if (includes competency.id (map-by "id" @programYearCompetencies))}}
+                <li>
+                  <label>
+                    <input
+                      type="radio"
+                      {{on "click" (fn @add competency.id)}}
+                    >
+                    {{competency.title}}
+                  </label>
+                </li>
+              {{/if}}
             {{/each}}
           </ul>
         </li>
