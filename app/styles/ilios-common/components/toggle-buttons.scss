@@ -6,17 +6,15 @@
   }
 
   label {
-    background-color: $grey;
+    background-color: $white;
+    color: $ilios-green;
     border: 1px solid rgba($black, .2);
-    box-shadow: inset 0 1px 3px $dark-grey, 0 1px $light-grey;
-    color: $dark-grey;
     display: inline-block;
     font-size: .8rem;
     min-width: 3em;
     padding: .25em .5em;
     text-align: center;
     text-shadow: none;
-    transition: all .1s ease-in-out;
 
     &:hover {
       cursor: pointer;
@@ -33,7 +31,6 @@
 
   input:checked + label {
     background-color: $ilios-green;
-    box-shadow: none;
     color: $white;
   }
 
