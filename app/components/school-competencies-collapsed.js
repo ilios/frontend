@@ -9,6 +9,18 @@ export default class SchoolCompetenciesCollapsedComponent extends Component {
     return this.competenciesRelationship ? this.competenciesRelationship.toArray() : [];
   }
 
+  get domains() {
+    return this.competencies.filter((competency) => {
+      return !competency.belongsTo('parent').id();
+    });
+  }
+
+  get notDomains() {
+    return this.competencies.filter((competency) => {
+      return competency.belongsTo('parent').id();
+    });
+  }
+
   @restartableTask
   *load() {
     this.competenciesRelationship = yield this.args.school.competencies;

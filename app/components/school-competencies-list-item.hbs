@@ -4,7 +4,7 @@
   data-test-school-competencies-list-item
   ...attributes
 >
-  <div class="grid-item {{if @isDomain "domain" "competency"}}" data-test-title>
+  <div class="grid-item {{if this.isDomain "domain" "competency"}}" data-test-title>
     {{@competency.title}}
   </div>
   <SchoolCompetenciesListItemPcrs

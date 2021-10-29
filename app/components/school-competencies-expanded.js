@@ -26,11 +26,15 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
   }
 
   get domains() {
-    return this.competencies.filterBy('isDomain');
+    return this.competencies.filter((competency) => {
+      return !competency.belongsTo('parent').id();
+    });
   }
 
   get childCompetencies() {
-    return this.competencies.filterBy('isNotDomain');
+    return this.competencies.filter((competency) => {
+      return competency.belongsTo('parent').id();
+    });
   }
 
   get showCollapsible() {
@@ -76,10 +80,10 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
   @dropTask
   *save() {
     const domainsToRemove = this.schoolCompetencies.filter((competency) => {
-      return competency.isDomain && !this.competencies.includes(competency);
+      return !competency.belongsTo('parent').id() && !this.competencies.includes(competency);
     });
     const competenciesToRemove = this.schoolCompetencies.filter((competency) => {
-      return !competency.isDomain && !this.competencies.includes(competency);
+      return competency.belongsTo('parent').id() && !this.competencies.includes(competency);
     });
 
     // delete all removed competencies first, then all removed domains

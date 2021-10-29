@@ -7,8 +7,8 @@
 >
   <div class="title clickable" role="button" {{on "click" @expand}} data-test-expand-competencies>
     {{t "general.competencies"}}
-    ({{get (filter-by "isDomain" this.competencies) "length"~}}/
-    {{~get (filter-by "isNotDomain" this.competencies) "length"}})
+    ({{ this.domains.length ~}}/
+    {{~ this.notDomains.length }})
   </div>
   {{#if this.load.isRunning}}
     <LoadingSpinner @tagName="h3" />
@@ -26,7 +26,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (sort-by "title" (filter-by "isDomain" this.competencies)) as |domain|}}
+          {{#each (sort-by "title" this.domains) as |domain|}}
             <tr data-test-domain>
               <td data-test-domain-title>
                 {{domain.title}}
