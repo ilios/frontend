@@ -61,7 +61,7 @@
     "ember-template-lint": "^3.3.1",
     "ember-web-app": "^5.0.0",
     "eslint": "^7.19.0",
-    "ilios-common": "^61.0.0",
+    "ilios-common": "^61.1.0",
     "loader.js": "^4.7.0",
     "normalize.css": "8.0.1",
     "npm-run-all": "^4.1.5",
