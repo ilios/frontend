@@ -12,29 +12,29 @@ module('Unit | Model | Course', function (hooks) {
   test('check required publication items', function (assert) {
     const model = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
-    assert.equal(model.get('requiredPublicationIssues').length, 3);
+    assert.strictEqual(model.get('requiredPublicationIssues').length, 3);
     var cohort = store.createRecord('cohort');
     model.get('cohorts').addObject(cohort);
-    assert.equal(model.get('requiredPublicationIssues').length, 2);
+    assert.strictEqual(model.get('requiredPublicationIssues').length, 2);
     model.set('startDate', 'nothing');
-    assert.equal(model.get('requiredPublicationIssues').length, 1);
+    assert.strictEqual(model.get('requiredPublicationIssues').length, 1);
     model.set('endDate', 'nothing');
-    assert.equal(model.get('requiredPublicationIssues').length, 0);
+    assert.strictEqual(model.get('requiredPublicationIssues').length, 0);
   });
 
   test('check optional publication items', function (assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('course');
-    assert.equal(model.get('optionalPublicationIssues').length, 3);
+    assert.strictEqual(model.get('optionalPublicationIssues').length, 3);
     model.get('terms').addObject(store.createRecord('term'));
-    assert.equal(model.get('optionalPublicationIssues').length, 2);
+    assert.strictEqual(model.get('optionalPublicationIssues').length, 2);
     const courseObjective = store.createRecord('course-objective', {
       course: model,
     });
     model.get('courseObjectives').addObject(courseObjective);
-    assert.equal(model.get('optionalPublicationIssues').length, 1);
+    assert.strictEqual(model.get('optionalPublicationIssues').length, 1);
     model.get('meshDescriptors').addObject(store.createRecord('meshDescriptor'));
-    assert.equal(model.get('optionalPublicationIssues').length, 0);
+    assert.strictEqual(model.get('optionalPublicationIssues').length, 0);
   });
 
   test('check empty competencies', async function (assert) {
@@ -42,7 +42,7 @@ module('Unit | Model | Course', function (hooks) {
     const course = this.owner.lookup('service:store').createRecord('course');
 
     const competencies = await course.get('competencies');
-    assert.equal(competencies.length, 0);
+    assert.strictEqual(competencies.length, 0);
   });
 
   test('check competencies', async function (assert) {
@@ -73,7 +73,7 @@ module('Unit | Model | Course', function (hooks) {
 
     const competencies = await course.get('competencies');
 
-    assert.equal(competencies.length, 3);
+    assert.strictEqual(competencies.length, 3);
     assert.ok(competencies.includes(competency1));
     assert.ok(competencies.includes(competency2));
     assert.ok(competencies.includes(competency3));
@@ -104,12 +104,12 @@ module('Unit | Model | Course', function (hooks) {
 
     course.get('sessions').pushObjects([session1, session2, session3]);
 
-    assert.equal(course.get('publishedOfferingCount'), 3);
+    assert.strictEqual(course.get('publishedOfferingCount'), 3);
     const offering5 = store.createRecord('offering');
     session1.get('offerings').pushObject(offering5);
     session3.set('published', true);
 
-    assert.equal(course.get('publishedOfferingCount'), 5);
+    assert.strictEqual(course.get('publishedOfferingCount'), 5);
   });
 
   test('domains', async function (assert) {
@@ -177,22 +177,22 @@ module('Unit | Model | Course', function (hooks) {
     });
 
     const domainProxies = await course.get('domains');
-    assert.equal(domainProxies.length, 3);
+    assert.strictEqual(domainProxies.length, 3);
 
     const domainProxy1 = domainProxies[0];
-    assert.equal(domainProxy1.get('content'), domain2);
-    assert.equal(domainProxy1.get('subCompetencies').length, 1);
+    assert.strictEqual(domainProxy1.get('content'), domain2);
+    assert.strictEqual(domainProxy1.get('subCompetencies').length, 1);
     assert.ok(domainProxy1.get('subCompetencies').includes(competency3));
 
     const domainProxy2 = domainProxies[1];
-    assert.equal(domainProxy2.get('content'), domain3);
-    assert.equal(domainProxy2.get('subCompetencies').length, 0);
+    assert.strictEqual(domainProxy2.get('content'), domain3);
+    assert.strictEqual(domainProxy2.get('subCompetencies').length, 0);
 
     const domainProxy3 = domainProxies[2];
-    assert.equal(domainProxy3.get('content'), domain1);
-    assert.equal(domainProxy3.get('subCompetencies').length, 2);
-    assert.equal(domainProxy3.get('subCompetencies')[0], competency2);
-    assert.equal(domainProxy3.get('subCompetencies')[1], competency1);
+    assert.strictEqual(domainProxy3.get('content'), domain1);
+    assert.strictEqual(domainProxy3.get('subCompetencies').length, 2);
+    assert.strictEqual(domainProxy3.get('subCompetencies')[0], competency2);
+    assert.strictEqual(domainProxy3.get('subCompetencies')[1], competency1);
   });
 
   test('schools', async function (assert) {
@@ -223,7 +223,7 @@ module('Unit | Model | Course', function (hooks) {
 
     const schools = await course.get('schools');
 
-    assert.equal(schools.length, 3);
+    assert.strictEqual(schools.length, 3);
     assert.ok(schools.includes(school1));
     assert.ok(schools.includes(school2));
     assert.ok(schools.includes(school3));
@@ -258,11 +258,11 @@ module('Unit | Model | Course', function (hooks) {
     course.set('school', school2);
 
     const vocabularies = await course.get('assignableVocabularies');
-    assert.equal(vocabularies.length, 4);
-    assert.equal(vocabularies[0], vocabulary4);
-    assert.equal(vocabularies[1], vocabulary3);
-    assert.equal(vocabularies[2], vocabulary2);
-    assert.equal(vocabularies[3], vocabulary1);
+    assert.strictEqual(vocabularies.length, 4);
+    assert.strictEqual(vocabularies[0], vocabulary4);
+    assert.strictEqual(vocabularies[1], vocabulary3);
+    assert.strictEqual(vocabularies[2], vocabulary2);
+    assert.strictEqual(vocabularies[3], vocabulary1);
   });
 
   test('sortedCourseObjectives', async function (assert) {
@@ -288,9 +288,9 @@ module('Unit | Model | Course', function (hooks) {
       position: 2,
     });
     const objectives = await course.get('sortedCourseObjectives');
-    assert.equal(objectives.length, 3);
-    assert.equal(objectives[0], sessionObjective3);
-    assert.equal(objectives[1], sessionObjective2);
-    assert.equal(objectives[2], sessionObjective1);
+    assert.strictEqual(objectives.length, 3);
+    assert.strictEqual(objectives[0], sessionObjective3);
+    assert.strictEqual(objectives[1], sessionObjective2);
+    assert.strictEqual(objectives[2], sessionObjective1);
   });
 });

@@ -29,20 +29,20 @@ module('Integration | Component | detail learner list', function (hooks) {
   test('it renders', async function (assert) {
     this.set('learners', [this.learnerModel1, this.learnerModel2, this.learnerModel3]);
     await render(hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{false}} />`);
-    assert.equal(component.learners.length, 3);
-    assert.equal(component.learners[0].userNameInfo.fullName, 'Aardvark');
+    assert.strictEqual(component.learners.length, 3);
+    assert.strictEqual(component.learners[0].userNameInfo.fullName, 'Aardvark');
     assert.notOk(component.learners[0].isRemovable);
     assert.notOk(component.learners[0].userNameInfo.isTooltipVisible);
     await component.learners[0].userNameInfo.expandTooltip();
     assert.ok(component.learners[0].userNameInfo.isTooltipVisible);
-    assert.equal(
+    assert.strictEqual(
       component.learners[0].userNameInfo.tooltipContents,
       'Campus name of record: 2 guy M, Mc2son'
     );
     await component.learners[0].userNameInfo.closeTooltip();
-    assert.equal(component.learners[1].userNameInfo.fullName, 'Jane A. Doe');
+    assert.strictEqual(component.learners[1].userNameInfo.fullName, 'Jane A. Doe');
     assert.notOk(component.learners[1].isRemovable);
-    assert.equal(component.learners[2].userNameInfo.fullName, 'Joe M. Doe');
+    assert.strictEqual(component.learners[2].userNameInfo.fullName, 'Joe M. Doe');
     assert.notOk(component.learners[2].isRemovable);
   });
 
@@ -51,20 +51,20 @@ module('Integration | Component | detail learner list', function (hooks) {
     await render(
       hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{true}} @remove={{(noop)}} />`
     );
-    assert.equal(component.learners.length, 3);
-    assert.equal(component.learners[0].userNameInfo.fullName, 'Aardvark');
+    assert.strictEqual(component.learners.length, 3);
+    assert.strictEqual(component.learners[0].userNameInfo.fullName, 'Aardvark');
     assert.ok(component.learners[0].isRemovable);
     assert.notOk(component.learners[0].userNameInfo.isTooltipVisible);
     await component.learners[0].userNameInfo.expandTooltip();
     assert.ok(component.learners[0].userNameInfo.isTooltipVisible);
-    assert.equal(
+    assert.strictEqual(
       component.learners[0].userNameInfo.tooltipContents,
       'Campus name of record: 2 guy M, Mc2son'
     );
     await component.learners[0].userNameInfo.closeTooltip();
-    assert.equal(component.learners[1].userNameInfo.fullName, 'Jane A. Doe');
+    assert.strictEqual(component.learners[1].userNameInfo.fullName, 'Jane A. Doe');
     assert.ok(component.learners[1].isRemovable);
-    assert.equal(component.learners[2].userNameInfo.fullName, 'Joe M. Doe');
+    assert.strictEqual(component.learners[2].userNameInfo.fullName, 'Joe M. Doe');
     assert.ok(component.learners[2].isRemovable);
   });
 
@@ -72,13 +72,13 @@ module('Integration | Component | detail learner list', function (hooks) {
     assert.expect(3);
     this.set('learners', [this.learnerModel1, this.learnerModel2]);
     this.set('remove', (user) => {
-      assert.equal(user.id, this.learnerModel2.id);
+      assert.strictEqual(user.id, this.learnerModel2.id);
     });
     await render(
       hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{true}} @remove={{this.remove}}/>`
     );
-    assert.equal(component.learners.length, 2);
-    assert.equal(component.learners[0].userNameInfo.fullName, 'Jane A. Doe');
+    assert.strictEqual(component.learners.length, 2);
+    assert.strictEqual(component.learners[0].userNameInfo.fullName, 'Jane A. Doe');
     await component.learners[0].remove();
   });
 });

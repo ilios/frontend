@@ -29,7 +29,7 @@ module('Integration | Component | course/rollover-date-picker', function (hooks)
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
     this.set('change', (changedDate) => {
-      assert.equal(newDate.getTime(), changedDate.getTime());
+      assert.strictEqual(newDate.getTime(), changedDate.getTime());
     });
     await render(
       hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{this.change}} />`

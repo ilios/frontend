@@ -34,9 +34,9 @@ module('Integration | Component | learner selection manager', function (hooks) {
     await render(
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{(noop)}}/>`
     );
-    assert.equal(component.selectedLearners.heading, 'Selected Learners');
-    assert.equal(component.selectedLearners.detailLearnerList.learners.length, 3);
-    assert.equal(
+    assert.strictEqual(component.selectedLearners.heading, 'Selected Learners');
+    assert.strictEqual(component.selectedLearners.detailLearnerList.learners.length, 3);
+    assert.strictEqual(
       component.selectedLearners.detailLearnerList.learners[0].userNameInfo.fullName,
       'Clem Chowder'
     );
@@ -50,7 +50,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
     assert.ok(
       component.selectedLearners.detailLearnerList.learners[0].userNameInfo.isTooltipVisible
     );
-    assert.equal(
+    assert.strictEqual(
       component.selectedLearners.detailLearnerList.learners[0].userNameInfo.tooltipContents,
       'Campus name of record: 2 guy M, Mc2son'
     );
@@ -58,14 +58,14 @@ module('Integration | Component | learner selection manager', function (hooks) {
     assert.notOk(
       component.selectedLearners.detailLearnerList.learners[0].userNameInfo.isTooltipVisible
     );
-    assert.equal(
+    assert.strictEqual(
       component.selectedLearners.detailLearnerList.learners[1].userNameInfo.fullName,
       'Jane A. Doe'
     );
     assert.notOk(
       component.selectedLearners.detailLearnerList.learners[1].userNameInfo.hasAdditionalInfo
     );
-    assert.equal(
+    assert.strictEqual(
       component.selectedLearners.detailLearnerList.learners[2].userNameInfo.fullName,
       'Joe M. Doe'
     );
@@ -80,23 +80,23 @@ module('Integration | Component | learner selection manager', function (hooks) {
     await render(
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{(noop)}}/>`
     );
-    assert.equal(component.selectedLearners.heading, 'Selected Learners');
+    assert.strictEqual(component.selectedLearners.heading, 'Selected Learners');
     assert.notOk(component.selectedLearners.detailLearnerList.isVisible);
-    assert.equal(component.selectedLearners.noLearners.text, 'None');
+    assert.strictEqual(component.selectedLearners.noLearners.text, 'None');
   });
 
   test('remove selected learner', async function (assert) {
     assert.expect(4);
     this.set('learners', [this.learnerModel1, this.learnerModel2]);
     this.set('remove', (user) => {
-      assert.equal(user.id, this.learnerModel1.id);
+      assert.strictEqual(user.id, this.learnerModel1.id);
     });
     await render(
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{remove}}/>`
     );
-    assert.equal(component.selectedLearners.heading, 'Selected Learners');
-    assert.equal(component.selectedLearners.detailLearnerList.learners.length, 2);
-    assert.equal(
+    assert.strictEqual(component.selectedLearners.heading, 'Selected Learners');
+    assert.strictEqual(component.selectedLearners.detailLearnerList.learners.length, 2);
+    assert.strictEqual(
       component.selectedLearners.detailLearnerList.learners[1].userNameInfo.fullName,
       'Joe M. Doe'
     );
@@ -114,14 +114,14 @@ module('Integration | Component | learner selection manager', function (hooks) {
 
     this.set('learners', []);
     this.set('add', (user) => {
-      assert.equal(user.id, learnerModel3.id);
+      assert.strictEqual(user.id, learnerModel3.id);
     });
     await render(
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{this.add}} @remove={{(noop)}}/>`
     );
     await component.search('Schmitt');
-    assert.equal(component.searchResults.length, 1);
-    assert.equal(component.searchResults[0].fullName, 'Jim R. Schmitt');
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.strictEqual(component.searchResults[0].fullName, 'Jim R. Schmitt');
     await component.searchResults[0].add();
   });
 });

@@ -15,11 +15,11 @@ module('Integration | Helper | set', function (hooks) {
       </button>
     `);
 
-    assert.equal(find('[data-test-greeting]').textContent.trim(), '');
+    assert.strictEqual(find('[data-test-greeting]').textContent.trim(), '');
 
     await click('button');
 
-    assert.equal(find('[data-test-greeting]').textContent.trim(), 'Hello!');
+    assert.strictEqual(find('[data-test-greeting]').textContent.trim(), 'Hello!');
   });
 
   test('it works when called directly', async function (assert) {
@@ -31,10 +31,10 @@ module('Integration | Helper | set', function (hooks) {
       </button>
     `);
 
-    assert.equal(find('[data-test-greeting]').textContent.trim(), '');
+    assert.strictEqual(find('[data-test-greeting]').textContent.trim(), '');
 
     await click('button');
 
-    assert.equal(find('[data-test-greeting]').textContent.trim(), 'Hello!');
+    assert.strictEqual(find('[data-test-greeting]').textContent.trim(), 'Hello!');
   });
 });

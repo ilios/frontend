@@ -22,7 +22,7 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
       this.intl,
       'hh'
     );
-    assert.equal(result, 'TBD<br />08 - 08<br />test');
+    assert.strictEqual(result.string, 'TBD<br />08 - 08<br />test');
   });
   test('offering-based event', function (assert) {
     const today = moment().hour(8);
@@ -41,8 +41,8 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
       this.intl,
       'hh'
     );
-    assert.equal(
-      result,
+    assert.strictEqual(
+      result.string,
       'room 101<br />08 - 08<br />test<br /> Taught By Larry, Curly et al.<br />Course: Intro 101<br />Session Type: lecture'
     );
   });
@@ -64,8 +64,8 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
       this.intl,
       'hh'
     );
-    assert.equal(
-      result,
+    assert.strictEqual(
+      result.string,
       'room 101<br />ILM - Due By 08<br />test<br /> Taught By Larry, Curly et al.<br />Course: Intro 101<br />Session Type: lecture'
     );
   });

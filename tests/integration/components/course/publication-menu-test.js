@@ -23,7 +23,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
         },
       },
     });
-    assert.equal(component.text, 'Not Published');
+    assert.strictEqual(component.text, 'Not Published');
     await component.toggle.click();
     await a11yAudit(this.element, {
       rules: {
@@ -45,7 +45,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
     await a11yAudit(this.element);
-    assert.equal(component.text, 'Scheduled');
+    assert.strictEqual(component.text, 'Scheduled');
     await component.toggle.click();
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -61,7 +61,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
     await a11yAudit(this.element);
-    assert.equal(component.text, 'Published');
+    assert.strictEqual(component.text, 'Published');
     await component.toggle.click();
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

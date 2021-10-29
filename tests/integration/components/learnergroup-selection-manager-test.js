@@ -69,45 +69,66 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       @add={{(noop)}}
       @remove={{(noop)}}
     />`);
-    assert.equal(component.selectedGroups.title, 'Selected Learner Groups');
-    assert.equal(component.selectedGroups.list.trees.length, 2);
-    assert.equal(component.selectedGroups.list.trees[0].title, 'Top Group 1 (program 0 cohort 0)');
-    assert.equal(component.selectedGroups.list.trees[0].subgroups.length, 2);
-    assert.equal(component.selectedGroups.list.trees[0].subgroups[0].title, 'Top Group 1 (0)');
+    assert.strictEqual(component.selectedGroups.title, 'Selected Learner Groups');
+    assert.strictEqual(component.selectedGroups.list.trees.length, 2);
+    assert.strictEqual(
+      component.selectedGroups.list.trees[0].title,
+      'Top Group 1 (program 0 cohort 0)'
+    );
+    assert.strictEqual(component.selectedGroups.list.trees[0].subgroups.length, 2);
+    assert.strictEqual(
+      component.selectedGroups.list.trees[0].subgroups[0].title,
+      'Top Group 1 (0)'
+    );
     assert.ok(component.selectedGroups.list.trees[0].subgroups[0].needsAccommodation);
-    assert.equal(component.selectedGroups.list.trees[0].subgroups[1].title, 'Second 1 (0)');
+    assert.strictEqual(component.selectedGroups.list.trees[0].subgroups[1].title, 'Second 1 (0)');
     assert.notOk(component.selectedGroups.list.trees[0].subgroups[1].needsAccommodation);
-    assert.equal(component.selectedGroups.list.trees[1].title, 'Top Group 2 (program 0 cohort 1)');
-    assert.equal(component.selectedGroups.list.trees[1].subgroups.length, 2);
-    assert.equal(component.selectedGroups.list.trees[1].subgroups[0].title, 'Top Group 2 (0)');
+    assert.strictEqual(
+      component.selectedGroups.list.trees[1].title,
+      'Top Group 2 (program 0 cohort 1)'
+    );
+    assert.strictEqual(component.selectedGroups.list.trees[1].subgroups.length, 2);
+    assert.strictEqual(
+      component.selectedGroups.list.trees[1].subgroups[0].title,
+      'Top Group 2 (0)'
+    );
     assert.notOk(component.selectedGroups.list.trees[1].subgroups[0].needsAccommodation);
-    assert.equal(component.selectedGroups.list.trees[1].subgroups[1].title, 'Second 10 (0)');
+    assert.strictEqual(component.selectedGroups.list.trees[1].subgroups[1].title, 'Second 10 (0)');
     assert.ok(component.selectedGroups.list.trees[1].subgroups[1].needsAccommodation);
-    assert.equal(component.availableGroups.title, 'Available Learner Groups');
-    assert.equal(component.availableGroups.cohorts.length, 2);
-    assert.equal(component.availableGroups.cohorts[0].title, 'program 0 cohort 0');
-    assert.equal(component.availableGroups.cohorts[0].trees.length, 1);
-    assert.equal(component.availableGroups.cohorts[0].trees[0].title, 'Top Group 1');
+    assert.strictEqual(component.availableGroups.title, 'Available Learner Groups');
+    assert.strictEqual(component.availableGroups.cohorts.length, 2);
+    assert.strictEqual(component.availableGroups.cohorts[0].title, 'program 0 cohort 0');
+    assert.strictEqual(component.availableGroups.cohorts[0].trees.length, 1);
+    assert.strictEqual(component.availableGroups.cohorts[0].trees[0].title, 'Top Group 1');
     assert.ok(component.availableGroups.cohorts[0].trees[0].needsAccommodation);
     assert.notOk(component.availableGroups.cohorts[0].trees[0].isHidden);
-    assert.equal(component.availableGroups.cohorts[0].trees[0].subgroups.length, 2);
-    assert.equal(component.availableGroups.cohorts[0].trees[0].subgroups[0].title, 'Second 1');
+    assert.strictEqual(component.availableGroups.cohorts[0].trees[0].subgroups.length, 2);
+    assert.strictEqual(
+      component.availableGroups.cohorts[0].trees[0].subgroups[0].title,
+      'Second 1'
+    );
     assert.ok(component.availableGroups.cohorts[0].trees[0].subgroups[0].isHidden);
-    assert.equal(component.availableGroups.cohorts[0].trees[0].subgroups[1].title, 'Second 2');
+    assert.strictEqual(
+      component.availableGroups.cohorts[0].trees[0].subgroups[1].title,
+      'Second 2'
+    );
     assert.ok(component.availableGroups.cohorts[0].trees[0].subgroups[1].needsAccommodation);
     assert.notOk(component.availableGroups.cohorts[0].trees[0].subgroups[1].isHidden);
-    assert.equal(component.availableGroups.cohorts[1].title, 'program 0 cohort 1');
-    assert.equal(component.availableGroups.cohorts[1].trees.length, 2);
-    assert.equal(component.availableGroups.cohorts[1].trees[0].title, 'Top Group 2');
+    assert.strictEqual(component.availableGroups.cohorts[1].title, 'program 0 cohort 1');
+    assert.strictEqual(component.availableGroups.cohorts[1].trees.length, 2);
+    assert.strictEqual(component.availableGroups.cohorts[1].trees[0].title, 'Top Group 2');
     assert.notOk(component.availableGroups.cohorts[1].trees[0].needsAccommodation);
     assert.notOk(component.availableGroups.cohorts[1].trees[0].isHidden);
-    assert.equal(component.availableGroups.cohorts[1].trees[0].subgroups.length, 1);
-    assert.equal(component.availableGroups.cohorts[1].trees[0].subgroups[0].title, 'Second 10');
+    assert.strictEqual(component.availableGroups.cohorts[1].trees[0].subgroups.length, 1);
+    assert.strictEqual(
+      component.availableGroups.cohorts[1].trees[0].subgroups[0].title,
+      'Second 10'
+    );
     assert.ok(component.availableGroups.cohorts[1].trees[0].subgroups[0].isHidden);
-    assert.equal(component.availableGroups.cohorts[1].trees[1].title, 'Top Group 10');
+    assert.strictEqual(component.availableGroups.cohorts[1].trees[1].title, 'Top Group 10');
     assert.notOk(component.availableGroups.cohorts[1].trees[1].needsAccommodation);
     assert.notOk(component.availableGroups.cohorts[1].trees[1].isHidden);
-    assert.equal(component.availableGroups.cohorts[1].trees[1].subgroups.length, 0);
+    assert.strictEqual(component.availableGroups.cohorts[1].trees[1].subgroups.length, 0);
   });
 
   test('remove selected group', async function (assert) {

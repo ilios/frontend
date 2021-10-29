@@ -37,15 +37,15 @@ module('Integration | Component | mesh-manager', function (hooks) {
       @add={{(noop)}}
       @remove={{(noop)}}
     />`);
-    assert.equal(component.selectedTerms.length, 2);
-    assert.equal(component.selectedTerms[0].title, 'descriptor 2');
-    assert.equal(component.selectedTerms[1].title, 'descriptor 4');
+    assert.strictEqual(component.selectedTerms.length, 2);
+    assert.strictEqual(component.selectedTerms[0].title, 'descriptor 2');
+    assert.strictEqual(component.selectedTerms[1].title, 'descriptor 4');
     await component.search('descriptor');
     await component.runSearch();
 
-    assert.equal(component.searchResults.length, 5);
+    assert.strictEqual(component.searchResults.length, 5);
     for (let i = 0; i < 5; i++) {
-      assert.equal(component.searchResults[i].title, `descriptor ${i}`);
+      assert.strictEqual(component.searchResults[i].title, `descriptor ${i}`);
     }
     assert.ok(component.searchResults[0].isEnabled);
     assert.ok(component.searchResults[1].isEnabled);
@@ -61,22 +61,22 @@ module('Integration | Component | mesh-manager', function (hooks) {
     this.server.createList('meshDescriptor', 200);
     await render(hbs`<MeshManager
       @editable={{true}}
-      @terms={{array}}
+      @terms={{(array)}}
       @add={{(noop)}}
       @remove={{(noop)}}
     />`);
     await component.search('descriptor');
     await component.runSearch();
 
-    assert.equal(component.searchResults.length, 50);
+    assert.strictEqual(component.searchResults.length, 50);
     for (let i = 0; i < 50; i++) {
-      assert.equal(component.searchResults[i].title, `descriptor ${i}`);
+      assert.strictEqual(component.searchResults[i].title, `descriptor ${i}`);
     }
     assert.ok(component.showMoreIsVisible);
     await component.showMore();
-    assert.equal(component.searchResults.length, 100);
+    assert.strictEqual(component.searchResults.length, 100);
     for (let i = 0; i < 100; i++) {
-      assert.equal(component.searchResults[i].title, `descriptor ${i}`);
+      assert.strictEqual(component.searchResults[i].title, `descriptor ${i}`);
     }
   });
 
@@ -84,7 +84,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
     assert.expect(3);
     const descriptors = this.server.createList('meshDescriptor', 3);
     this.set('add', (term) => {
-      assert.equal(term.name, 'descriptor 1');
+      assert.strictEqual(term.name, 'descriptor 1');
     });
     this.set('terms', [descriptors[0], descriptors[2]]);
     await render(hbs`<MeshManager
@@ -96,7 +96,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
     await component.search('descriptor');
     await component.runSearch();
     assert.ok(component.searchResults[1].isEnabled);
-    assert.equal(component.searchResults[1].title, 'descriptor 1');
+    assert.strictEqual(component.searchResults[1].title, 'descriptor 1');
     await component.searchResults[1].add();
   });
 
@@ -126,7 +126,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
     await component.search('descriptor');
     await component.runSearch();
     assert.ok(component.searchResults[1].isEnabled);
-    assert.equal(component.searchResults[1].title, 'descriptor 1');
+    assert.strictEqual(component.searchResults[1].title, 'descriptor 1');
     await component.searchResults[1].add();
   });
 });

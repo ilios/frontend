@@ -33,7 +33,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
         store.createRecord('ilmSession', { session: session4 }),
       ]);
     const courses = await model.get('courses');
-    assert.equal(courses.length, 3);
+    assert.strictEqual(courses.length, 3);
     assert.ok(courses.includes(course1));
     assert.ok(courses.includes(course2));
     assert.ok(courses.includes(course3));
@@ -64,7 +64,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
         store.createRecord('ilmSession', { session: session4 }),
       ]);
     const sessions = await model.get('sessions');
-    assert.equal(sessions.length, 4);
+    assert.strictEqual(sessions.length, 4);
     assert.ok(sessions.includes(session1));
     assert.ok(sessions.includes(session2));
     assert.ok(sessions.includes(session3));
@@ -75,11 +75,11 @@ module('Unit | Model | InstructorGroup', function (hooks) {
     assert.expect(2);
     const store = this.owner.lookup('service:store');
     const instructorGroup = store.createRecord('instructor-group');
-    assert.equal(instructorGroup.get('usersCount'), 0);
+    assert.strictEqual(instructorGroup.get('usersCount'), 0);
     const user1 = store.createRecord('user');
     const user2 = store.createRecord('user');
 
     instructorGroup.get('users').pushObjects([user1, user2]);
-    assert.equal(instructorGroup.get('usersCount'), 2);
+    assert.strictEqual(instructorGroup.get('usersCount'), 2);
   });
 });

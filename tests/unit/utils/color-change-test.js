@@ -7,7 +7,7 @@ module('Unit | Utility | color change', function () {
     const diff = '0.5';
     const result = colorChange(hex, diff);
     assert.ok(result);
-    assert.equal(result, '#333333');
+    assert.strictEqual(result, '#333333');
   });
 
   test('it darkens', function (assert) {
@@ -15,6 +15,6 @@ module('Unit | Utility | color change', function () {
     const diff = '-0.5';
     const result = colorChange(hex, diff);
     assert.ok(result);
-    assert.equal(result, '#555555');
+    assert.strictEqual(result, '#555555');
   });
 });

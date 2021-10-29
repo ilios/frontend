@@ -32,13 +32,13 @@ module('Acceptance | Session - Publication Check', function (hooks) {
     this.server.create('sessionObjective', { session });
     this.server.create('offering', { session });
     await visit(url);
-    assert.equal(currentRouteName(), 'session.publication_check');
+    assert.strictEqual(currentRouteName(), 'session.publication_check');
     const items = findAll('.session-publicationcheck table tbody td');
-    assert.equal(await getElementText(items[0]), getText('session 0'));
-    assert.equal(await getElementText(items[1]), getText('Yes (1)'));
-    assert.equal(await getElementText(items[2]), getText('Yes (1)'));
-    assert.equal(await getElementText(items[3]), getText('Yes (1)'));
-    assert.equal(await getElementText(items[4]), getText('Yes (1)'));
+    assert.strictEqual(await getElementText(items[0]), getText('session 0'));
+    assert.strictEqual(await getElementText(items[1]), getText('Yes (1)'));
+    assert.strictEqual(await getElementText(items[2]), getText('Yes (1)'));
+    assert.strictEqual(await getElementText(items[3]), getText('Yes (1)'));
+    assert.strictEqual(await getElementText(items[4]), getText('Yes (1)'));
   });
 
   test('empty session count', async function (assert) {
@@ -48,13 +48,13 @@ module('Acceptance | Session - Publication Check', function (hooks) {
     });
     this.server.db.courses.update(1, { sessionIds: [1, 2] });
     await visit('/courses/1/sessions/2/publicationcheck');
-    assert.equal(currentRouteName(), 'session.publication_check');
+    assert.strictEqual(currentRouteName(), 'session.publication_check');
     const items = findAll('.session-publicationcheck table tbody td');
-    assert.equal(await getElementText(items[0]), getText('session 1'));
-    assert.equal(await getElementText(items[1]), getText('No'));
-    assert.equal(await getElementText(items[2]), getText('No'));
-    assert.equal(await getElementText(items[3]), getText('No'));
-    assert.equal(await getElementText(items[4]), getText('No'));
+    assert.strictEqual(await getElementText(items[0]), getText('session 1'));
+    assert.strictEqual(await getElementText(items[1]), getText('No'));
+    assert.strictEqual(await getElementText(items[2]), getText('No'));
+    assert.strictEqual(await getElementText(items[3]), getText('No'));
+    assert.strictEqual(await getElementText(items[4]), getText('No'));
   });
 
   test('unlink icon transitions properly', async function (assert) {
@@ -62,7 +62,7 @@ module('Acceptance | Session - Publication Check', function (hooks) {
     this.server.create('sessionObjective', { session });
     await visit(url);
     await click('.fa-unlink');
-    assert.equal(
+    assert.strictEqual(
       currentURL(),
       '/courses/1/sessions/1?addOffering=false&courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=false&courseTaxonomyDetails=false&details=false&sessionLeadershipDetails=false&sessionManageLeadership=false&sessionObjectiveDetails=true&sessionTaxonomyDetails=false'
     );

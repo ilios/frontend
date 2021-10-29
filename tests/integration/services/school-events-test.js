@@ -29,32 +29,32 @@ module('Integration | Service | school events', function (hooks) {
 
     this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.equal(params.id, 7);
+      assert.strictEqual(parseInt(params.id, 10), 7);
       assert.ok('from' in queryParams);
       assert.ok('to' in queryParams);
-      assert.equal(queryParams.from, from.unix());
-      assert.equal(queryParams.to, to.unix());
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
 
       return { events: [event1, event2] };
     });
     const schoolId = 7;
     const subject = this.owner.lookup('service:school-events');
     const events = await subject.getEvents(schoolId, from.unix(), to.unix());
-    assert.equal(events.length, 2);
-    assert.equal(events[0].ilmSession, event2.ilmSession);
-    assert.equal(events[0].startDate, event2.startDate);
-    assert.equal(events[0].school, event2.school);
+    assert.strictEqual(events.length, 2);
+    assert.strictEqual(events[0].ilmSession, event2.ilmSession);
+    assert.strictEqual(events[0].startDate, event2.startDate);
+    assert.strictEqual(events[0].school, event2.school);
     assert.deepEqual(events[0].prerequisites, event2.prerequisites);
     assert.deepEqual(events[0].postrequisites, event2.postrequisites);
-    assert.equal(events[0].slug, 'S0720080902I3');
+    assert.strictEqual(events[0].slug, 'S0720080902I3');
     assert.notOk(events[0].isBlanked);
 
-    assert.equal(events[1].offering, event1.offering);
-    assert.equal(events[1].startDate, event1.startDate);
-    assert.equal(events[1].school, event1.school);
+    assert.strictEqual(events[1].offering, event1.offering);
+    assert.strictEqual(events[1].startDate, event1.startDate);
+    assert.strictEqual(events[1].school, event1.school);
     assert.deepEqual(events[1].prerequisites, event1.prerequisites);
     assert.deepEqual(events[1].postrequisites, event1.postrequisites);
-    assert.equal(events[1].slug, 'S0720110421O1');
+    assert.strictEqual(events[1].slug, 'S0720110421O1');
     assert.notOk(events[1].isBlanked);
   });
 
@@ -68,16 +68,15 @@ module('Integration | Service | school events', function (hooks) {
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
     this.server.get(`/geflarknik/schoolevents/:id`, (scheme, { params, queryParams }) => {
-      assert.equal(params.id, 3);
-      assert.equal(queryParams.from, from.unix());
-      assert.equal(queryParams.to, to.unix());
-
+      assert.strictEqual(parseInt(params.id, 10), 3);
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
       return { events: [] };
     });
     const subject = this.owner.lookup('service:school-events');
     const schoolId = 3;
     const events = await subject.getEvents(schoolId, from.unix(), to.unix());
-    assert.equal(events.length, 0);
+    assert.strictEqual(events.length, 0);
   });
 
   test('getEventForSlug - offering', async function (assert) {
@@ -99,21 +98,21 @@ module('Integration | Service | school events', function (hooks) {
     this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
       const from = moment('20110421', 'YYYYMMDD').hour(0);
       const to = from.clone().hour(24);
-      assert.equal(params.id, 7);
-      assert.equal(queryParams.from, from.unix());
-      assert.equal(queryParams.to, to.unix());
+      assert.strictEqual(parseInt(params.id, 10), 7);
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
 
       return { events: [event1, event2] };
     });
 
     const subject = this.owner.lookup('service:school-events');
     const event = await subject.getEventForSlug('S0720110421O1');
-    assert.equal(event.offering, event1.offering);
-    assert.equal(event.startDate, event1.startDate);
-    assert.equal(event.school, event1.school);
+    assert.strictEqual(event.offering, event1.offering);
+    assert.strictEqual(event.startDate, event1.startDate);
+    assert.strictEqual(event.school, event1.school);
     assert.deepEqual(event.prerequisites, event1.prerequisites);
     assert.deepEqual(event.postrequisites, event1.postrequisites);
-    assert.equal(event.slug, 'S0720110421O1');
+    assert.strictEqual(event.slug, 'S0720110421O1');
     assert.notOk(event.isBlanked);
   });
 
@@ -136,21 +135,21 @@ module('Integration | Service | school events', function (hooks) {
     this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
       const from = moment('20080902', 'YYYYMMDD').hour(0);
       const to = from.clone().hour(24);
-      assert.equal(params.id, 7);
-      assert.equal(queryParams.from, from.unix());
-      assert.equal(queryParams.to, to.unix());
+      assert.strictEqual(parseInt(params.id, 10), 7);
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
 
       return { events: [event1, event2] };
     });
 
     const subject = this.owner.lookup('service:school-events');
     const event = await subject.getEventForSlug('S0720080902I3');
-    assert.equal(event.ilmSession, event2.ilmSession);
-    assert.equal(event.startDate, event2.startDate);
-    assert.equal(event.school, event2.school);
+    assert.strictEqual(event.ilmSession, event2.ilmSession);
+    assert.strictEqual(event.startDate, event2.startDate);
+    assert.strictEqual(event.school, event2.school);
     assert.deepEqual(event.prerequisites, event2.prerequisites);
     assert.deepEqual(event.postrequisites, event2.postrequisites);
-    assert.equal(event.slug, 'S0720080902I3');
+    assert.strictEqual(event.slug, 'S0720080902I3');
     assert.notOk(event.isBlanked);
   });
 });

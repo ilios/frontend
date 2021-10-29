@@ -34,21 +34,21 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
       @cohortObjectives={{this.cohortObjectives}}
-      @selected={{array}}
+      @selected={{(array)}}
       @add={{(noop)}}
       @remove={{(noop)}}
       @removeFromCohort={{(noop)}}
     />`);
 
     assert.notOk(component.hasMultipleCohorts);
-    assert.equal(component.selectedCohortTitle, 'cohort 0');
+    assert.strictEqual(component.selectedCohortTitle, 'cohort 0');
 
-    assert.equal(component.competencies.length, 1);
-    assert.equal(component.competencies[0].title, 'competency 0');
+    assert.strictEqual(component.competencies.length, 1);
+    assert.strictEqual(component.competencies[0].title, 'competency 0');
     assert.ok(component.competencies[0].notSelected);
 
-    assert.equal(component.competencies[0].objectives.length, 1);
-    assert.equal(component.competencies[0].objectives[0].title, programYearObjective.title);
+    assert.strictEqual(component.competencies[0].objectives.length, 1);
+    assert.strictEqual(component.competencies[0].objectives[0].title, programYearObjective.title);
     assert.ok(component.competencies[0].objectives[0].notSelected);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -95,21 +95,21 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
       @cohortObjectives={{this.cohortObjectives}}
-      @selected={{array}}
+      @selected={{(array)}}
       @add={{(noop)}}
       @remove={{(noop)}}
       @removeFromCohort={{(noop)}}
     />`);
 
     assert.ok(component.hasMultipleCohorts);
-    assert.equal(component.selectedCohortTitle, 'cohort 0 cohort 1');
+    assert.strictEqual(component.selectedCohortTitle, 'cohort 0 cohort 1');
 
-    assert.equal(component.competencies.length, 1);
-    assert.equal(component.competencies[0].title, 'competency 0');
+    assert.strictEqual(component.competencies.length, 1);
+    assert.strictEqual(component.competencies[0].title, 'competency 0');
     assert.ok(component.competencies[0].notSelected);
 
-    assert.equal(component.competencies[0].objectives.length, 1);
-    assert.equal(component.competencies[0].objectives[0].title, programYearObjective.title);
+    assert.strictEqual(component.competencies[0].objectives.length, 1);
+    assert.strictEqual(component.competencies[0].objectives[0].title, programYearObjective.title);
     assert.ok(component.competencies[0].objectives[0].notSelected);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -165,14 +165,14 @@ module('Integration | Component | course/manage-objective-parents', function (ho
       @removeFromCohort={{(noop)}}
     />`);
 
-    assert.equal(component.competencies.length, 1);
-    assert.equal(component.competencies[0].title, 'competency 0');
+    assert.strictEqual(component.competencies.length, 1);
+    assert.strictEqual(component.competencies[0].title, 'competency 0');
     assert.ok(component.competencies[0].selected);
 
-    assert.equal(component.competencies[0].objectives.length, 2);
-    assert.equal(component.competencies[0].objectives[0].title, 'program-year objective 0');
+    assert.strictEqual(component.competencies[0].objectives.length, 2);
+    assert.strictEqual(component.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(component.competencies[0].objectives[0].notSelected);
-    assert.equal(component.competencies[0].objectives[1].title, 'program-year objective 2');
+    assert.strictEqual(component.competencies[0].objectives[1].title, 'program-year objective 2');
     assert.ok(component.competencies[0].objectives[1].selected);
 
     await a11yAudit(this.element);

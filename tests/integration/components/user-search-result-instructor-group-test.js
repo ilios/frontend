@@ -39,12 +39,12 @@ module('Integration | Component | user-search-result-instructor-group', function
     const group = await this.owner.lookup('service:store').find('instructor-group', 1);
     this.set('group', group);
     this.set('add', (add) => {
-      assert.equal(add, group);
+      assert.strictEqual(add, group);
     });
     await render(hbs`<UserSearchResultInstructorGroup
       @group={{this.group}}
       @addInstructorGroup={{this.add}}
-      @currentlyActiveInstructorGroups={{array}}
+      @currentlyActiveInstructorGroups={{(array)}}
     />`);
     assert.dom('[data-test-result]').includesText('instructor group 0');
     assert.dom('[data-test-result]').hasClass('active');

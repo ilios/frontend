@@ -127,46 +127,46 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.equal(newSession.id, 2);
+      assert.strictEqual(parseInt(newSession.id, 10), 2);
     });
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     await click('.done');
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
-    assert.equal(sessions.length, 2);
+    assert.strictEqual(sessions.length, 2);
     const newSession = sessions.findBy('id', '2');
-    assert.equal(session.attireRequired, newSession.attireRequired);
-    assert.equal(session.equipmentRequired, newSession.equipmentRequired);
-    assert.equal(session.supplemental, newSession.supplemental);
-    assert.equal(session.attendanceRequired, newSession.attendanceRequired);
-    assert.equal(session.title, newSession.title);
-    assert.equal(session.description, newSession.description);
-    assert.equal(session.instructionalNotes, newSession.instructionalNotes);
+    assert.strictEqual(session.attireRequired, newSession.attireRequired);
+    assert.strictEqual(session.equipmentRequired, newSession.equipmentRequired);
+    assert.strictEqual(session.supplemental, newSession.supplemental);
+    assert.strictEqual(session.attendanceRequired, newSession.attendanceRequired);
+    assert.strictEqual(session.title, newSession.title);
+    assert.strictEqual(session.description, newSession.description);
+    assert.strictEqual(session.instructionalNotes, newSession.instructionalNotes);
 
     const sessionLearningMaterials = await this.owner
       .lookup('service:store')
       .findAll('session-learning-material');
-    assert.equal(sessionLearningMaterials.length, 2);
+    assert.strictEqual(sessionLearningMaterials.length, 2);
     const newSessionLm = sessionLearningMaterials.findBy('id', '2');
-    assert.equal(sessionLearningMaterial.notes, newSessionLm.notes);
-    assert.equal(sessionLearningMaterial.required, newSessionLm.required);
-    assert.equal(sessionLearningMaterial.publicNotes, newSessionLm.publicNotes);
-    assert.equal(sessionLearningMaterial.position, newSessionLm.position);
-    assert.equal(newSessionLm.belongsTo('session').id(), newSession.id);
-    assert.equal(newSessionLm.belongsTo('learningMaterial').id(), learningMaterial.id);
+    assert.strictEqual(sessionLearningMaterial.notes, newSessionLm.notes);
+    assert.strictEqual(sessionLearningMaterial.required, newSessionLm.required);
+    assert.strictEqual(sessionLearningMaterial.publicNotes, newSessionLm.publicNotes);
+    assert.strictEqual(sessionLearningMaterial.position, newSessionLm.position);
+    assert.strictEqual(newSessionLm.belongsTo('session').id(), newSession.id);
+    assert.strictEqual(newSessionLm.belongsTo('learningMaterial').id(), learningMaterial.id);
 
     const sessionObjectives = await this.owner.lookup('service:store').findAll('session-objective');
-    assert.equal(sessionObjectives.length, 2);
+    assert.strictEqual(sessionObjectives.length, 2);
     const newSessionObjective = sessionObjectives.findBy('id', '2');
-    assert.equal(newSessionObjective.title, sessionObjective.title);
-    assert.equal(sessionObjective.position, newSessionObjective.position);
-    assert.equal(newSessionObjective.belongsTo('session').id(), newSession.id);
+    assert.strictEqual(newSessionObjective.title, sessionObjective.title);
+    assert.strictEqual(sessionObjective.position, newSessionObjective.position);
+    assert.strictEqual(newSessionObjective.belongsTo('session').id(), newSession.id);
     const objectiveTermModel = await this.owner
       .lookup('service:store')
       .find('term', objectiveTerm.id);
     const copiedSessionObjectiveTerms = await newSessionObjective.terms;
-    assert.equal(copiedSessionObjectiveTerms.length, 1);
+    assert.strictEqual(copiedSessionObjectiveTerms.length, 1);
     assert.ok(copiedSessionObjectiveTerms.includes(objectiveTermModel));
   });
 
@@ -298,7 +298,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.equal(newSession.id, 2);
+      assert.strictEqual(parseInt(newSession.id, 10), 2);
     });
 
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
@@ -310,9 +310,9 @@ module('Integration | Component | session copy', function (hooks) {
     await click('.done');
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
-    assert.equal(sessions.length, 2);
+    assert.strictEqual(sessions.length, 2);
     const newSession = sessions.findBy('id', '2');
-    assert.equal(newSession.belongsTo('course').id(), course3.id);
+    assert.strictEqual(newSession.belongsTo('course').id(), course3.id);
   });
 
   test('copy session into same course saves postrequisites', async function (assert) {
@@ -351,7 +351,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.equal(newSession.id, 3);
+      assert.strictEqual(parseInt(newSession.id, 10), 3);
     });
 
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
@@ -359,12 +359,12 @@ module('Integration | Component | session copy', function (hooks) {
     await click('.done');
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
-    assert.equal(sessions.length, 3);
+    assert.strictEqual(sessions.length, 3);
     const newSession = sessions.findBy('id', '3');
-    assert.equal(session.title, newSession.title);
+    assert.strictEqual(session.title, newSession.title);
 
     const newPostRequisite = await newSession.postrequisite;
-    assert.equal(postrequisite.id, newPostRequisite.id);
+    assert.strictEqual(postrequisite.id, newPostRequisite.id);
   });
 
   test('copy session into different course does not save postrequisites', async function (assert) {
@@ -407,7 +407,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.equal(newSession.id, 3);
+      assert.strictEqual(parseInt(newSession.id, 10), 3);
     });
 
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
@@ -416,12 +416,12 @@ module('Integration | Component | session copy', function (hooks) {
     await click('.done');
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
-    assert.equal(sessions.length, 3);
+    assert.strictEqual(sessions.length, 3);
     const newSession = sessions.findBy('id', '3');
-    assert.equal(session.title, newSession.title);
+    assert.strictEqual(session.title, newSession.title);
 
     const newPostRequisite = await newSession.postrequisite;
-    assert.equal(newPostRequisite, null);
+    assert.strictEqual(newPostRequisite, null);
   });
 
   test('copy session into same course does not save prerequisites', async function (assert) {
@@ -464,7 +464,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.equal(newSession.id, 4);
+      assert.strictEqual(parseInt(newSession.id, 10), 4);
     });
 
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
@@ -472,12 +472,12 @@ module('Integration | Component | session copy', function (hooks) {
     await click('.done');
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
-    assert.equal(sessions.length, 4);
+    assert.strictEqual(sessions.length, 4);
     const newSession = sessions.findBy('id', '4');
-    assert.equal(session.title, newSession.title);
+    assert.strictEqual(session.title, newSession.title);
 
     const newPostRequisites = await newSession.prerequisites;
-    assert.equal(newPostRequisites.length, 0);
+    assert.strictEqual(newPostRequisites.length, 0);
   });
 
   test('copy session into different course does not save prerequisites', async function (assert) {
@@ -524,7 +524,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.equal(newSession.id, 4);
+      assert.strictEqual(parseInt(newSession.id, 10), 4);
     });
 
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
@@ -534,11 +534,11 @@ module('Integration | Component | session copy', function (hooks) {
     await click('.done');
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
-    assert.equal(sessions.length, 4);
+    assert.strictEqual(sessions.length, 4);
     const newSession = sessions.findBy('id', '4');
-    assert.equal(session.title, newSession.title);
+    assert.strictEqual(session.title, newSession.title);
 
     const newPostRequisites = await newSession.prerequisites;
-    assert.equal(newPostRequisites.length, 0);
+    assert.strictEqual(newPostRequisites.length, 0);
   });
 });

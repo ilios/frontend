@@ -209,7 +209,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     const title = '[data-test-title]';
 
     assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
-    assert.equal(this.element.querySelectorAll('table tr').length, 6);
+    assert.strictEqual(this.element.querySelectorAll('table tr').length, 6);
     for (let i = 0; i < 6; i++) {
       const tds = this.element.querySelectorAll(`table tr:nth-of-type(${i + 1}) td`);
       assert.dom(tds[0]).hasText(
@@ -226,7 +226,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
       assert.dom(tds[1]).hasText(mockEvents[i].name);
     }
     const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
-    assert.equal(this.element.querySelectorAll(preworkSelector).length, 2);
+    assert.strictEqual(this.element.querySelectorAll(preworkSelector).length, 2);
     assert
       .dom(this.element.querySelector(`${preworkSelector}:nth-of-type(1)`))
       .hasText(
@@ -249,30 +249,30 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     this.userEvents = this.owner.lookup('service:user-events');
 
     await render(hbs`<DashboardAgenda />`);
-    assert.equal(
+    assert.strictEqual(
       this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-black-tie')
         .length,
       1
     );
-    assert.equal(
+    assert.strictEqual(
       this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-flask').length,
       1
     );
-    assert.equal(
+    assert.strictEqual(
       this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-calendar-check')
         .length,
       1
     );
-    assert.equal(
+    assert.strictEqual(
       this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-black-tie')
         .length,
       0
     );
-    assert.equal(
+    assert.strictEqual(
       this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-flask').length,
       0
     );
-    assert.equal(
+    assert.strictEqual(
       this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-calendar-check')
         .length,
       0

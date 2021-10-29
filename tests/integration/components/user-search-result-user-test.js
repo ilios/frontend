@@ -39,12 +39,12 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     const user = await this.owner.lookup('service:store').find('user', 1);
     this.set('user', user);
     this.set('add', (add) => {
-      assert.equal(add, user);
+      assert.strictEqual(add, user);
     });
     await render(hbs`<UserSearchResultUser
       @user={{this.user}}
       @addUser={{this.add}}
-      @currentlyActiveUsers={{array}}
+      @currentlyActiveUsers={{(array)}}
     />`);
     assert.dom('[data-test-result]').includesText('0 guy M. Mc0son user@example.edu');
     assert.dom('[data-test-result]').hasClass('active');

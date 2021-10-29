@@ -136,11 +136,11 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('selectedTerms', []);
     this.set('terms', resolve([this.termModel4, this.termModel5]));
     this.set('add', (term) => {
-      assert.equal(term, this.termModel4);
+      assert.strictEqual(term, this.termModel4);
       this.selectedTerms.pushObject(term);
     });
     this.set('remove', (term) => {
-      assert.equal(term, this.termModel4);
+      assert.strictEqual(term, this.termModel4);
       this.selectedTerms.removeObject(term);
     });
     await render(hbs`<SelectableTermsList

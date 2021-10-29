@@ -81,7 +81,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('administrators', []);
     this.set('studentAdvisors', []);
     this.set('remove', (who) => {
-      assert.equal(who, user);
+      assert.strictEqual(who, user);
     });
 
     await render(hbs`<LeadershipManager
@@ -114,7 +114,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('administrators', [user]);
     this.set('studentAdvisors', []);
     this.set('remove', (who) => {
-      assert.equal(who, user);
+      assert.strictEqual(who, user);
     });
 
     await render(hbs`<LeadershipManager
@@ -147,7 +147,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('administrators', []);
     this.set('studentAdvisors', [user]);
     this.set('remove', (who) => {
-      assert.equal(who, user);
+      assert.strictEqual(who, user);
     });
 
     await render(hbs`<LeadershipManager
@@ -180,7 +180,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('administrators', [user]);
     this.set('studentAdvisors', [user]);
     this.set('add', (who) => {
-      assert.equal(who, user, 'user passed correctly from action');
+      assert.strictEqual(who, user, 'user passed correctly from action');
       this.set('directors', [who]);
     });
 
@@ -224,7 +224,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('administrators', []);
     this.set('studentAdvisors', [user]);
     this.set('add', (who) => {
-      assert.equal(who, user, 'user passed correctly from action');
+      assert.strictEqual(who, user, 'user passed correctly from action');
       this.set('administrators', [who]);
     });
 
@@ -269,7 +269,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('administrators', [user]);
     this.set('studentAdvisors', []);
     this.set('add', (who) => {
-      assert.equal(who, user, 'user passed correctly from action');
+      assert.strictEqual(who, user, 'user passed correctly from action');
       this.set('studentAdvisors', [who]);
     });
 

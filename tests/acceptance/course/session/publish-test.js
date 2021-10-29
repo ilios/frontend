@@ -54,19 +54,19 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.expect(6);
     await visit('/courses/1/sessions/' + this.publishedSession.id);
 
-    assert.equal(currentRouteName(), 'session.index');
+    assert.strictEqual(currentRouteName(), 'session.index');
     const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
-    assert.equal(await getElementText(selector), getText('Published'));
+    assert.strictEqual(await getElementText(selector), getText('Published'));
     //we have to click the button to create the options
     await click(selector);
 
     const items = findAll(choices);
-    assert.equal(items.length, 3);
+    assert.strictEqual(items.length, 3);
     const expectedItems = ['Review 3 Missing Items', 'Mark as Scheduled', 'UnPublish Session'];
     for (let i = 0; i < items.length; i++) {
-      assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
+      assert.strictEqual(await getElementText(items[i]), getText(expectedItems[i]));
     }
   });
 
@@ -74,18 +74,18 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.expect(6);
     await visit('/courses/1/sessions/' + this.scheduledSession.id);
 
-    assert.equal(currentRouteName(), 'session.index');
+    assert.strictEqual(currentRouteName(), 'session.index');
     const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
-    assert.equal(await getElementText(selector), getText('Scheduled'));
+    assert.strictEqual(await getElementText(selector), getText('Scheduled'));
     //we have to click the button to create the options
     await click(selector);
     const items = findAll(choices);
-    assert.equal(items.length, 3);
+    assert.strictEqual(items.length, 3);
     const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'UnPublish Session'];
     for (let i = 0; i < items.length; i++) {
-      assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
+      assert.strictEqual(await getElementText(items[i]), getText(expectedItems[i]));
     }
   });
 
@@ -93,18 +93,18 @@ module('Acceptance | Session - Publish', function (hooks) {
     assert.expect(6);
     await visit('/courses/1/sessions/' + this.draftSession.id);
 
-    assert.equal(currentRouteName(), 'session.index');
+    assert.strictEqual(currentRouteName(), 'session.index');
     const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
-    assert.equal(await getElementText(selector), getText('Not Published'));
+    assert.strictEqual(await getElementText(selector), getText('Not Published'));
     //we have to click the button to create the options
     await click(selector);
     const items = findAll(choices);
-    assert.equal(items.length, 3);
+    assert.strictEqual(items.length, 3);
     const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'Mark as Scheduled'];
     for (let i = 0; i < items.length; i++) {
-      assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
+      assert.strictEqual(await getElementText(items[i]), getText(expectedItems[i]));
     }
   });
 
@@ -117,7 +117,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     await click(selector);
     await click(publish);
 
-    assert.equal(await getElementText(selector), getText('Published'));
+    assert.strictEqual(await getElementText(selector), getText('Published'));
   });
 
   test('check schedule draft session', async function (assert) {
@@ -128,7 +128,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     const schedule = `${choices}:nth-of-type(3)`;
     await click(selector);
     await click(schedule);
-    assert.equal(await getElementText(selector), getText('Scheduled'));
+    assert.strictEqual(await getElementText(selector), getText('Scheduled'));
   });
 
   test('check publish scheduled session', async function (assert) {
@@ -140,7 +140,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     await click(selector);
     await click(publish);
 
-    assert.equal(await getElementText(selector), getText('Published'));
+    assert.strictEqual(await getElementText(selector), getText('Published'));
   });
 
   test('check unpublish scheduled session', async function (assert) {
@@ -151,7 +151,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     const unPublish = `${choices}:nth-of-type(3)`;
     await click(selector);
     await click(unPublish);
-    assert.equal(await getElementText(selector), getText('Not Published'));
+    assert.strictEqual(await getElementText(selector), getText('Not Published'));
   });
 
   test('check schedule published session', async function (assert) {
@@ -162,7 +162,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     const schedule = `${choices}:nth-of-type(2)`;
     await click(selector);
     await click(schedule);
-    assert.equal(await getElementText(selector), getText('Scheduled'));
+    assert.strictEqual(await getElementText(selector), getText('Scheduled'));
   });
 
   test('check unpublish published session', async function (assert) {
@@ -173,7 +173,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     const unPublish = `${choices}:nth-of-type(3)`;
     await click(selector);
     await click(unPublish);
-    assert.equal(await getElementText(selector), getText('Not Published'));
+    assert.strictEqual(await getElementText(selector), getText('Not Published'));
   });
 
   test('check publish requirements for ilm session', async function (assert) {
@@ -185,8 +185,8 @@ module('Acceptance | Session - Publish', function (hooks) {
     const secondChoice = `${choices}:nth-of-type(2)`;
     const thirdChoice = `${choices}:nth-of-type(3)`;
     await click(selector);
-    assert.equal(await getElementText(firstChoice), getText('Publish As-is'));
-    assert.equal(await getElementText(secondChoice), getText('Review 3 Missing Items'));
-    assert.equal(await getElementText(thirdChoice), getText('Mark as Scheduled'));
+    assert.strictEqual(await getElementText(firstChoice), getText('Publish As-is'));
+    assert.strictEqual(await getElementText(secondChoice), getText('Review 3 Missing Items'));
+    assert.strictEqual(await getElementText(thirdChoice), getText('Mark as Scheduled'));
   });
 });

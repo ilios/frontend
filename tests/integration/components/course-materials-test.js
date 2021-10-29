@@ -39,10 +39,10 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{this.sessionSort}}
     />`);
 
-    assert.equal(component.courses.length, 1);
-    assert.equal(component.courses[0].title, 'title1');
-    assert.equal(component.courses[0].type, 'Link');
-    assert.equal(component.courses[0].author, 'author1');
+    assert.strictEqual(component.courses.length, 1);
+    assert.strictEqual(component.courses[0].title, 'title1');
+    assert.strictEqual(component.courses[0].type, 'Link');
+    assert.strictEqual(component.courses[0].author, 'author1');
   });
 
   const setupPage = async function (context) {
@@ -120,38 +120,38 @@ module('Integration | Component | course materials', function (hooks) {
       @onSessionSort={{(noop)}}
     />`);
 
-    assert.equal(component.courses.length, 3);
-    assert.equal(component.courses[0].title, 'title1');
+    assert.strictEqual(component.courses.length, 3);
+    assert.strictEqual(component.courses[0].title, 'title1');
     assert.ok(component.courses[0].hasLink);
-    assert.equal(component.courses[0].link, 'http://myhost.com/url1');
-    assert.equal(component.courses[0].type, 'Link');
-    assert.equal(component.courses[0].author, 'author1');
+    assert.strictEqual(component.courses[0].link, 'http://myhost.com/url1');
+    assert.strictEqual(component.courses[0].type, 'Link');
+    assert.strictEqual(component.courses[0].author, 'author1');
 
-    assert.equal(component.sessions.length, 3);
-    assert.equal(component.sessions[0].title, 'title1');
+    assert.strictEqual(component.sessions.length, 3);
+    assert.strictEqual(component.sessions[0].title, 'title1');
     assert.ok(component.sessions[0].hasLink);
-    assert.equal(component.sessions[0].link, 'http://myhost.com/url1');
-    assert.equal(component.sessions[0].type, 'Link');
-    assert.equal(component.sessions[0].author, 'author1');
-    assert.equal(component.sessions[0].sessionTitle, 'session1title');
-    assert.equal(component.sessions[0].firstOffering, '2/2/2020');
+    assert.strictEqual(component.sessions[0].link, 'http://myhost.com/url1');
+    assert.strictEqual(component.sessions[0].type, 'Link');
+    assert.strictEqual(component.sessions[0].author, 'author1');
+    assert.strictEqual(component.sessions[0].sessionTitle, 'session1title');
+    assert.strictEqual(component.sessions[0].firstOffering, '2/2/2020');
 
-    assert.equal(component.sessions.length, 3);
-    assert.equal(component.sessions[1].title, 'title2');
+    assert.strictEqual(component.sessions.length, 3);
+    assert.strictEqual(component.sessions[1].title, 'title2');
     assert.ok(component.sessions[1].hasLink);
-    assert.equal(component.sessions[1].link, 'http://myhost.com/url2');
-    assert.equal(component.sessions[1].type, 'File');
-    assert.equal(component.sessions[1].author, 'author2');
-    assert.equal(component.sessions[1].sessionTitle, 'session1title');
-    assert.equal(component.sessions[1].firstOffering, '2/2/2020');
+    assert.strictEqual(component.sessions[1].link, 'http://myhost.com/url2');
+    assert.strictEqual(component.sessions[1].type, 'File');
+    assert.strictEqual(component.sessions[1].author, 'author2');
+    assert.strictEqual(component.sessions[1].sessionTitle, 'session1title');
+    assert.strictEqual(component.sessions[1].firstOffering, '2/2/2020');
 
-    assert.equal(component.sessions.length, 3);
-    assert.equal(component.sessions[2].title, 'title3 citationtext');
+    assert.strictEqual(component.sessions.length, 3);
+    assert.strictEqual(component.sessions[2].title, 'title3 citationtext');
     assert.notOk(component.sessions[2].hasLink);
-    assert.equal(component.sessions[2].type, 'Citation');
-    assert.equal(component.sessions[2].author, 'author3');
-    assert.equal(component.sessions[2].sessionTitle, 'session1title');
-    assert.equal(component.sessions[2].firstOffering, '2/2/2020');
+    assert.strictEqual(component.sessions[2].type, 'Citation');
+    assert.strictEqual(component.sessions[2].author, 'author3');
+    assert.strictEqual(component.sessions[2].sessionTitle, 'session1title');
+    assert.strictEqual(component.sessions[2].firstOffering, '2/2/2020');
   });
 
   test('clicking sort fires action', async function (assert) {
@@ -174,12 +174,12 @@ module('Integration | Component | course materials', function (hooks) {
       'firstOfferingDate:desc',
     ];
     this.set('cSortBy', (prop) => {
-      assert.equal(prop, cSortList[cCount]);
+      assert.strictEqual(prop, cSortList[cCount]);
       this.set('courseSort', prop);
       cCount++;
     });
     this.set('sSortBy', (prop) => {
-      assert.equal(prop, sSortList[sCount]);
+      assert.strictEqual(prop, sSortList[sCount]);
       this.set('sessionSort', prop);
       sCount++;
     });
@@ -231,10 +231,10 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{this.sessionSort}}
     />`);
 
-    assert.equal(component.courses.length, 3);
+    assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('title1');
-    assert.equal(component.courses.length, 1);
-    assert.equal(component.courses[0].title, 'title1');
+    assert.strictEqual(component.courses.length, 1);
+    assert.strictEqual(component.courses[0].title, 'title1');
   });
 
   test('filter course lms by type', async function (assert) {
@@ -253,10 +253,10 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{this.sessionSort}}
     />`);
 
-    assert.equal(component.courses.length, 3);
+    assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('file');
-    assert.equal(component.courses.length, 1);
-    assert.equal(component.courses[0].title, 'title2');
+    assert.strictEqual(component.courses.length, 1);
+    assert.strictEqual(component.courses[0].title, 'title2');
   });
 
   test('filter course lms by author', async function (assert) {
@@ -275,10 +275,10 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{this.sessionSort}}
     />`);
 
-    assert.equal(component.courses.length, 3);
+    assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('author2');
-    assert.equal(component.courses.length, 1);
-    assert.equal(component.courses[0].title, 'title2');
+    assert.strictEqual(component.courses.length, 1);
+    assert.strictEqual(component.courses[0].title, 'title2');
   });
 
   test('filter course lms by citation', async function (assert) {
@@ -297,10 +297,10 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{this.sessionSort}}
     />`);
 
-    assert.equal(component.courses.length, 3);
+    assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('citationtext');
-    assert.equal(component.courses.length, 1);
-    assert.equal(component.courses[0].title, 'title3 citationtext');
+    assert.strictEqual(component.courses.length, 1);
+    assert.strictEqual(component.courses[0].title, 'title3 citationtext');
   });
 
   test('filter session lms by title', async function (assert) {
@@ -319,10 +319,10 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{this.sessionSort}}
     />`);
 
-    assert.equal(component.sessions.length, 3);
+    assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('title1');
-    assert.equal(component.sessions.length, 1);
-    assert.equal(component.sessions[0].title, 'title1');
+    assert.strictEqual(component.sessions.length, 1);
+    assert.strictEqual(component.sessions[0].title, 'title1');
   });
 
   test('filter session lms by type', async function (assert) {
@@ -341,10 +341,10 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{this.sessionSort}}
     />`);
 
-    assert.equal(component.sessions.length, 3);
+    assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('file');
-    assert.equal(component.sessions.length, 1);
-    assert.equal(component.sessions[0].title, 'title2');
+    assert.strictEqual(component.sessions.length, 1);
+    assert.strictEqual(component.sessions[0].title, 'title2');
   });
 
   test('filter session lms by author', async function (assert) {
@@ -363,10 +363,10 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{this.sessionSort}}
     />`);
 
-    assert.equal(component.sessions.length, 3);
+    assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('author2');
-    assert.equal(component.sessions.length, 1);
-    assert.equal(component.sessions[0].title, 'title2');
+    assert.strictEqual(component.sessions.length, 1);
+    assert.strictEqual(component.sessions[0].title, 'title2');
   });
 
   test('filter session lms by citation', async function (assert) {
@@ -385,10 +385,10 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{this.sessionSort}}
     />`);
 
-    assert.equal(component.sessions.length, 3);
+    assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('citationtext');
-    assert.equal(component.sessions.length, 1);
-    assert.equal(component.sessions[0].title, 'title3 citationtext');
+    assert.strictEqual(component.sessions.length, 1);
+    assert.strictEqual(component.sessions[0].title, 'title3 citationtext');
   });
 
   test('no materials', async function (assert) {
@@ -402,9 +402,9 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{(noop)}}
     />`);
 
-    assert.equal(component.courses.length, 1);
-    assert.equal(component.courses[0].title, 'No Course Learning Materials Available');
-    assert.equal(component.sessions.length, 1);
-    assert.equal(component.sessions[0].title, 'No Session Learning Materials Available');
+    assert.strictEqual(component.courses.length, 1);
+    assert.strictEqual(component.courses[0].title, 'No Course Learning Materials Available');
+    assert.strictEqual(component.sessions.length, 1);
+    assert.strictEqual(component.sessions[0].title, 'No Session Learning Materials Available');
   });
 });

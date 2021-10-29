@@ -20,7 +20,7 @@ module('Integration | Component | course-visualize-vocabularies', function (hook
 
     await render(hbs`<CourseVisualizeVocabularies @model={{this.course}} />`);
 
-    assert.equal(component.title, 'course 0 2021');
+    assert.strictEqual(component.title, 'course 0 2021');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
@@ -35,7 +35,7 @@ module('Integration | Component | course-visualize-vocabularies', function (hook
 
     await render(hbs`<CourseVisualizeVocabularies @model={{this.course}} />`);
 
-    assert.equal(component.title, 'course 0 2021 - 2022');
+    assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
 
   test('breadcrumb', async function (assert) {
@@ -43,11 +43,11 @@ module('Integration | Component | course-visualize-vocabularies', function (hook
 
     await render(hbs`<CourseVisualizeVocabularies @model={{this.course}} />`);
 
-    assert.equal(component.breadcrumb.crumbs.length, 3);
-    assert.equal(component.breadcrumb.crumbs[0].text, 'course 0');
-    assert.equal(component.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.equal(component.breadcrumb.crumbs[1].text, 'Visualizations');
-    assert.equal(component.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.equal(component.breadcrumb.crumbs[2].text, 'Vocabularies');
+    assert.strictEqual(component.breadcrumb.crumbs.length, 3);
+    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
+    assert.strictEqual(component.breadcrumb.crumbs[0].link, '/courses/1');
+    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
+    assert.strictEqual(component.breadcrumb.crumbs[1].link, '/data/courses/1');
+    assert.strictEqual(component.breadcrumb.crumbs[2].text, 'Vocabularies');
   });
 });

@@ -16,7 +16,7 @@ module('Integration | Component | choose-material-type', function (hooks) {
     />`);
 
     await a11yAudit(this.element);
-    assert.equal(component.text, 'Add');
+    assert.strictEqual(component.text, 'Add');
 
     await component.toggle.click();
     await a11yAudit(this.element);
@@ -30,18 +30,18 @@ module('Integration | Component | choose-material-type', function (hooks) {
       @types={{array "file" "link" "citation"}}
     />`);
 
-    assert.equal(component.types.length, 0);
+    assert.strictEqual(component.types.length, 0);
     await component.toggle.click();
-    assert.equal(component.types.length, 3);
-    assert.equal(component.types[0].text, 'File');
-    assert.equal(component.types[1].text, 'Web Link');
-    assert.equal(component.types[2].text, 'Citation');
+    assert.strictEqual(component.types.length, 3);
+    assert.strictEqual(component.types[0].text, 'File');
+    assert.strictEqual(component.types[1].text, 'Web Link');
+    assert.strictEqual(component.types[2].text, 'Citation');
   });
 
   test('clicking type fires action', async function (assert) {
     assert.expect(1);
     this.set('choose', (type) => {
-      assert.equal(type, 'link');
+      assert.strictEqual(type, 'link');
     });
     await render(hbs`<ChooseMaterialType
       @choose={{action this.choose}}
@@ -58,9 +58,9 @@ module('Integration | Component | choose-material-type', function (hooks) {
       @types={{array "file" "link" "citation"}}
     />`);
 
-    assert.equal(component.types.length, 0);
+    assert.strictEqual(component.types.length, 0);
     await component.toggle.down();
-    assert.equal(component.types.length, 3);
+    assert.strictEqual(component.types.length, 3);
   });
 
   test('escape closes menu', async function (assert) {
@@ -71,8 +71,8 @@ module('Integration | Component | choose-material-type', function (hooks) {
     />`);
 
     await component.toggle.down();
-    assert.equal(component.types.length, 3);
+    assert.strictEqual(component.types.length, 3);
     await component.toggle.esc();
-    assert.equal(component.types.length, 0);
+    assert.strictEqual(component.types.length, 0);
   });
 });

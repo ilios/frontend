@@ -67,22 +67,22 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{(noop)}} />`
     );
-    assert.equal(component.title, 'Top Group');
+    assert.strictEqual(component.title, 'Top Group');
     assert.ok(component.needsAccommodation);
-    assert.equal(component.subgroups.length, 3);
-    assert.equal(component.subgroups[0].title, 'Second 1');
+    assert.strictEqual(component.subgroups.length, 3);
+    assert.strictEqual(component.subgroups[0].title, 'Second 1');
     assert.notOk(component.subgroups[0].needsAccommodation);
-    assert.equal(component.subgroups[0].subgroups.length, 2);
-    assert.equal(component.subgroups[0].subgroups[0].title, 'Third 1');
+    assert.strictEqual(component.subgroups[0].subgroups.length, 2);
+    assert.strictEqual(component.subgroups[0].subgroups[0].title, 'Third 1');
     assert.notOk(component.subgroups[0].subgroups[0].needsAccommodation);
-    assert.equal(component.subgroups[0].subgroups[1].title, 'Third 2');
+    assert.strictEqual(component.subgroups[0].subgroups[1].title, 'Third 2');
     assert.notOk(component.subgroups[0].subgroups[1].needsAccommodation);
-    assert.equal(component.subgroups[0].subgroups.length, 2);
-    assert.equal(component.subgroups[1].subgroups[0].title, 'Third 10');
+    assert.strictEqual(component.subgroups[0].subgroups.length, 2);
+    assert.strictEqual(component.subgroups[1].subgroups[0].title, 'Third 10');
     assert.ok(component.subgroups[1].subgroups[0].needsAccommodation);
-    assert.equal(component.subgroups[1].title, 'Second 2');
+    assert.strictEqual(component.subgroups[1].title, 'Second 2');
     assert.notOk(component.subgroups[1].needsAccommodation);
-    assert.equal(component.subgroups[2].title, 'Second 10');
+    assert.strictEqual(component.subgroups[2].title, 'Second 10');
     assert.notOk(component.subgroups[2].needsAccommodation);
   });
 
@@ -142,7 +142,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     this.set('add', (learnerGroup) => {
-      assert.equal(learnerGroup, this.thirdLevelLearnerGroup2);
+      assert.strictEqual(learnerGroup, this.thirdLevelLearnerGroup2);
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />`

@@ -25,7 +25,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     const currentUserMock = Service.extend({
       isRoot: false,
       async getRolesInSchool(sch) {
-        assert.equal(sch, school);
+        assert.strictEqual(sch, school);
         return ['ADMIN'];
       },
     });
@@ -33,14 +33,14 @@ module('Unit | Service | permission-checker', function (hooks) {
 
     const permissionMatrixMock = Service.extend({
       getPermittedRoles(sch, cap) {
-        assert.equal(sch, school);
-        assert.equal(cap, 'GO_FORTH');
+        assert.strictEqual(sch, school);
+        assert.strictEqual(cap, 'GO_FORTH');
 
         return ['ADMIN'];
       },
       hasPermission(sch, cap, roles) {
-        assert.equal(sch, school);
-        assert.equal(cap, 'GO_FORTH');
+        assert.strictEqual(sch, school);
+        assert.strictEqual(cap, 'GO_FORTH');
         assert.deepEqual(roles, ['ADMIN']);
 
         return ['ADMIN'];

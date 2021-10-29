@@ -7,7 +7,7 @@ module('Integration | Component | validation-error', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders with no errors', async function (assert) {
-    await render(hbs`<ValidationError @errors={{array}} />`);
+    await render(hbs`<ValidationError @errors={{(array)}} />`);
 
     assert.dom(this.element).hasText('');
   });

@@ -22,9 +22,9 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.selectedPostrequisiteLabel, 'Due prior to:');
-    assert.equal(component.selectedPostrequisiteTitle, 'None');
-    assert.equal(component.postRequisites.length, 4);
+    assert.strictEqual(component.selectedPostrequisiteLabel, 'Due prior to:');
+    assert.strictEqual(component.selectedPostrequisiteTitle, 'None');
+    assert.strictEqual(component.postRequisites.length, 4);
     assert.false(component.postRequisites[0].isSelected);
     assert.false(component.postRequisites[1].isSelected);
     assert.false(component.postRequisites[2].isSelected);
@@ -48,8 +48,8 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.selectedPostrequisiteTitle, 'session 1');
-    assert.equal(component.postRequisites.length, 4);
+    assert.strictEqual(component.selectedPostrequisiteTitle, 'session 1');
+    assert.strictEqual(component.postRequisites.length, 4);
     assert.false(component.postRequisites[0].isSelected);
     assert.true(component.postRequisites[1].isSelected);
     assert.false(component.postRequisites[2].isSelected);
@@ -73,15 +73,15 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.selectedPostrequisiteTitle, 'session 1');
-    assert.equal(component.postRequisites.length, 4);
+    assert.strictEqual(component.selectedPostrequisiteTitle, 'session 1');
+    assert.strictEqual(component.postRequisites.length, 4);
     assert.false(component.postRequisites[0].isSelected);
     assert.true(component.postRequisites[1].isSelected);
     assert.false(component.postRequisites[2].isSelected);
     assert.false(component.postRequisites[3].isSelected);
 
     await component.removeSelectedPostrequisite();
-    assert.equal(component.selectedPostrequisiteTitle, 'None');
+    assert.strictEqual(component.selectedPostrequisiteTitle, 'None');
     assert.false(component.postRequisites[0].isSelected);
     assert.false(component.postRequisites[1].isSelected);
     assert.false(component.postRequisites[2].isSelected);
@@ -105,15 +105,15 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.selectedPostrequisiteTitle, 'session 1');
-    assert.equal(component.postRequisites.length, 4);
+    assert.strictEqual(component.selectedPostrequisiteTitle, 'session 1');
+    assert.strictEqual(component.postRequisites.length, 4);
     assert.false(component.postRequisites[0].isSelected);
     assert.true(component.postRequisites[1].isSelected);
     assert.false(component.postRequisites[2].isSelected);
     assert.false(component.postRequisites[3].isSelected);
 
     await component.postRequisites[1].click();
-    assert.equal(component.selectedPostrequisiteTitle, 'None');
+    assert.strictEqual(component.selectedPostrequisiteTitle, 'None');
     assert.false(component.postRequisites[0].isSelected);
     assert.false(component.postRequisites[1].isSelected);
     assert.false(component.postRequisites[2].isSelected);
@@ -133,15 +133,15 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.selectedPostrequisiteTitle, 'None');
-    assert.equal(component.postRequisites.length, 4);
+    assert.strictEqual(component.selectedPostrequisiteTitle, 'None');
+    assert.strictEqual(component.postRequisites.length, 4);
     assert.false(component.postRequisites[0].isSelected);
     assert.false(component.postRequisites[1].isSelected);
     assert.false(component.postRequisites[2].isSelected);
     assert.false(component.postRequisites[3].isSelected);
 
     await component.postRequisites[1].click();
-    assert.equal(component.selectedPostrequisiteTitle, 'session 2');
+    assert.strictEqual(component.selectedPostrequisiteTitle, 'session 2');
     assert.false(component.postRequisites[0].isSelected);
     assert.true(component.postRequisites[1].isSelected);
     assert.false(component.postRequisites[2].isSelected);
@@ -211,21 +211,21 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.postRequisites.length, 3);
-    assert.equal(component.postRequisites[0].title, 'fuzzy the cat');
-    assert.equal(component.postRequisites[1].title, 'jackson dog');
-    assert.equal(component.postRequisites[2].title, 'jasper dog');
+    assert.strictEqual(component.postRequisites.length, 3);
+    assert.strictEqual(component.postRequisites[0].title, 'fuzzy the cat');
+    assert.strictEqual(component.postRequisites[1].title, 'jackson dog');
+    assert.strictEqual(component.postRequisites[2].title, 'jasper dog');
     await component.filterBy('dog');
-    assert.equal(component.postRequisites.length, 2);
-    assert.equal(component.postRequisites[0].title, 'jackson dog');
-    assert.equal(component.postRequisites[1].title, 'jasper dog');
+    assert.strictEqual(component.postRequisites.length, 2);
+    assert.strictEqual(component.postRequisites[0].title, 'jackson dog');
+    assert.strictEqual(component.postRequisites[1].title, 'jasper dog');
 
     await component.filterBy('cat');
-    assert.equal(component.postRequisites.length, 1);
-    assert.equal(component.postRequisites[0].title, 'fuzzy the cat');
+    assert.strictEqual(component.postRequisites.length, 1);
+    assert.strictEqual(component.postRequisites[0].title, 'fuzzy the cat');
 
     await component.filterBy('jasper');
-    assert.equal(component.postRequisites.length, 1);
-    assert.equal(component.postRequisites[0].title, 'jasper dog');
+    assert.strictEqual(component.postRequisites.length, 1);
+    assert.strictEqual(component.postRequisites[0].title, 'jasper dog');
   });
 });

@@ -59,38 +59,38 @@ module('Integration | Component | week-glance-event', function (hooks) {
     });
     await render(hbs`<WeekGlanceEvent @event={{event}} />`);
 
-    assert.equal(component.title, 'Learn to Learn');
-    assert.equal(component.sessionType, 'Lecture');
-    assert.equal(component.location, '- Room 123');
-    assert.equal(component.link, 'Virtual Session Link');
-    assert.equal(component.url, 'https://zoom.example.com/123?p=456');
+    assert.strictEqual(component.title, 'Learn to Learn');
+    assert.strictEqual(component.sessionType, 'Lecture');
+    assert.strictEqual(component.location, '- Room 123');
+    assert.strictEqual(component.link, 'Virtual Session Link');
+    assert.strictEqual(component.url, 'https://zoom.example.com/123?p=456');
     assert.ok(component.hasDescription);
-    assert.equal(component.description, 'Best Session For SureLorem ipsum dolor sit amet, c');
-    assert.equal(component.learningMaterials.length, 3);
-    assert.equal(component.learningMaterials[0].title, 'Citation LM');
+    assert.strictEqual(component.description, 'Best Session For SureLorem ipsum dolor sit amet, c');
+    assert.strictEqual(component.learningMaterials.length, 3);
+    assert.strictEqual(component.learningMaterials[0].title, 'Citation LM');
     assert.ok(component.learningMaterials[0].hasTypeIcon);
-    assert.equal(component.learningMaterials[0].typeIconTitle, 'Citation');
+    assert.strictEqual(component.learningMaterials[0].typeIconTitle, 'Citation');
     assert.ok(component.learningMaterials[0].hasCitation);
-    assert.equal(component.learningMaterials[0].citation, 'citationtext');
+    assert.strictEqual(component.learningMaterials[0].citation, 'citationtext');
     assert.ok(component.learningMaterials[0].hasPublicNotes);
-    assert.equal(component.learningMaterials[0].publicNotes, 'This is cool.');
+    assert.strictEqual(component.learningMaterials[0].publicNotes, 'This is cool.');
 
-    assert.equal(component.learningMaterials[1].title, 'Link LM');
+    assert.strictEqual(component.learningMaterials[1].title, 'Link LM');
     assert.ok(component.learningMaterials[1].hasTypeIcon);
-    assert.equal(component.learningMaterials[1].typeIconTitle, 'Web Link');
+    assert.strictEqual(component.learningMaterials[1].typeIconTitle, 'Web Link');
     assert.notOk(component.learningMaterials[1].hasCitation);
     assert.notOk(component.learningMaterials[1].hasPublicNotes);
-    assert.equal(component.learningMaterials[1].url, 'http://myhost.com/url2');
+    assert.strictEqual(component.learningMaterials[1].url, 'http://myhost.com/url2');
 
-    assert.equal(component.learningMaterials[2].title, 'File LM');
+    assert.strictEqual(component.learningMaterials[2].title, 'File LM');
     assert.ok(component.learningMaterials[2].hasTypeIcon);
-    assert.equal(component.learningMaterials[2].typeIconTitle, 'File');
+    assert.strictEqual(component.learningMaterials[2].typeIconTitle, 'File');
     assert.notOk(component.learningMaterials[2].hasCitation);
     assert.notOk(component.learningMaterials[2].hasPublicNotes);
-    assert.equal(component.learningMaterials[2].url, 'http://myhost.com/url1?inline');
+    assert.strictEqual(component.learningMaterials[2].url, 'http://myhost.com/url1?inline');
 
     assert.notOk(component.hasInstructors);
-    assert.equal(component.sessionAttributes.length, 4);
+    assert.strictEqual(component.sessionAttributes.length, 4);
     assert.ok(component.sessionAttributes[0].attire);
     assert.ok(component.sessionAttributes[1].equipment);
     assert.ok(component.sessionAttributes[2].attendance);
@@ -128,22 +128,22 @@ module('Integration | Component | week-glance-event', function (hooks) {
     });
     await render(hbs`<WeekGlanceEvent @event={{event}} />`);
 
-    assert.equal(component.title, 'Finding the Point in Life');
-    assert.equal(component.sessionType, 'Independent Learning');
-    assert.equal(component.location, '- Room 456');
+    assert.strictEqual(component.title, 'Finding the Point in Life');
+    assert.strictEqual(component.sessionType, 'Independent Learning');
+    assert.strictEqual(component.location, '- Room 456');
     assert.notOk(component.hasDescription);
-    assert.equal(component.learningMaterials.length, 1);
-    assert.equal(component.learningMaterials[0].title, 'Great Slides');
+    assert.strictEqual(component.learningMaterials.length, 1);
+    assert.strictEqual(component.learningMaterials[0].title, 'Great Slides');
     assert.ok(component.learningMaterials[0].hasTypeIcon);
-    assert.equal(component.learningMaterials[0].typeIconTitle, 'File');
+    assert.strictEqual(component.learningMaterials[0].typeIconTitle, 'File');
     assert.notOk(component.learningMaterials[0].hasCitation);
     assert.ok(component.learningMaterials[0].hasPublicNotes);
-    assert.equal(component.learningMaterials[0].publicNotes, 'slide notes');
-    assert.equal(component.learningMaterials[0].url, 'http://myhost.com/url1?inline');
+    assert.strictEqual(component.learningMaterials[0].publicNotes, 'slide notes');
+    assert.strictEqual(component.learningMaterials[0].url, 'http://myhost.com/url1?inline');
 
     assert.ok(component.hasInstructors);
-    assert.equal(component.instructors, 'Instructors: First Person, Second Person');
-    assert.equal(component.sessionAttributes.length, 0);
+    assert.strictEqual(component.instructors, 'Instructors: First Person, Second Person');
+    assert.strictEqual(component.sessionAttributes.length, 0);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -197,21 +197,24 @@ module('Integration | Component | week-glance-event', function (hooks) {
     });
     await render(hbs`<WeekGlanceEvent @event={{event}} />`);
 
-    assert.equal(component.title, 'Schedule some materials');
-    assert.equal(component.sessionType, 'Lecture');
-    assert.equal(component.location, '- Room 123');
+    assert.strictEqual(component.title, 'Schedule some materials');
+    assert.strictEqual(component.sessionType, 'Lecture');
+    assert.strictEqual(component.location, '- Room 123');
     assert.ok(component.hasDescription);
-    assert.equal(component.description, 'Best Session For Sure' + 'Lorem ipsum dolor sit amet, c');
-    assert.equal(component.learningMaterials.length, 3);
-    assert.equal(component.learningMaterials[0].title, 'In the window');
+    assert.strictEqual(
+      component.description,
+      'Best Session For Sure' + 'Lorem ipsum dolor sit amet, c'
+    );
+    assert.strictEqual(component.learningMaterials.length, 3);
+    assert.strictEqual(component.learningMaterials[0].title, 'In the window');
     assert.ok(component.learningMaterials[0].timedReleaseInfo.length > 0);
-    assert.equal(component.learningMaterials[1].title, 'Too Early');
+    assert.strictEqual(component.learningMaterials[1].title, 'Too Early');
     assert.strictEqual(component.learningMaterials[1].timedReleaseInfo.length, 0);
-    assert.equal(component.learningMaterials[2].title, 'Too Late');
+    assert.strictEqual(component.learningMaterials[2].title, 'Too Late');
     assert.ok(component.learningMaterials[2].timedReleaseInfo.length > 0);
 
     assert.notOk(component.hasInstructors);
-    assert.equal(component.sessionAttributes.length, 4);
+    assert.strictEqual(component.sessionAttributes.length, 4);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -236,11 +239,11 @@ module('Integration | Component | week-glance-event', function (hooks) {
     });
     await render(hbs`<WeekGlanceEvent @event={{event}} />`);
 
-    assert.equal(component.title, 'Learn to Learn');
-    assert.equal(component.preWork.length, 2);
-    assert.equal(component.preWork[0].title, 'prework 1');
+    assert.strictEqual(component.title, 'Learn to Learn');
+    assert.strictEqual(component.preWork.length, 2);
+    assert.strictEqual(component.preWork[0].title, 'prework 1');
     assert.ok(component.preWork[0].hasLink);
-    assert.equal(component.preWork[1].title, 'prework 2');
+    assert.strictEqual(component.preWork[1].title, 'prework 2');
     assert.ok(component.preWork[1].hasLink);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -292,22 +295,22 @@ module('Integration | Component | week-glance-event', function (hooks) {
     });
     await render(hbs`<WeekGlanceEvent @event={{event}} />`);
 
-    assert.equal(component.title, 'Learn to Learn');
-    assert.equal(component.learningMaterials.length, 2);
+    assert.strictEqual(component.title, 'Learn to Learn');
+    assert.strictEqual(component.learningMaterials.length, 2);
 
-    assert.equal(component.learningMaterials[0].title, 'Link LM');
+    assert.strictEqual(component.learningMaterials[0].title, 'Link LM');
     assert.ok(component.learningMaterials[0].hasTypeIcon);
-    assert.equal(component.learningMaterials[0].typeIconTitle, 'Web Link');
+    assert.strictEqual(component.learningMaterials[0].typeIconTitle, 'Web Link');
     assert.notOk(component.learningMaterials[0].hasCitation);
     assert.notOk(component.learningMaterials[0].hasPublicNotes);
-    assert.equal(component.learningMaterials[0].url, 'http://myhost.com/url2');
+    assert.strictEqual(component.learningMaterials[0].url, 'http://myhost.com/url2');
 
-    assert.equal(component.learningMaterials[1].title, 'File LM');
+    assert.strictEqual(component.learningMaterials[1].title, 'File LM');
     assert.ok(component.learningMaterials[1].hasTypeIcon);
-    assert.equal(component.learningMaterials[1].typeIconTitle, 'File');
+    assert.strictEqual(component.learningMaterials[1].typeIconTitle, 'File');
     assert.notOk(component.learningMaterials[1].hasCitation);
     assert.notOk(component.learningMaterials[1].hasPublicNotes);
-    assert.equal(component.learningMaterials[1].url, 'http://myhost.com/url1?inline');
+    assert.strictEqual(component.learningMaterials[1].url, 'http://myhost.com/url1?inline');
   });
 
   test('it does not render materials if there are only course materials', async function (assert) {
@@ -341,7 +344,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
 
     await a11yAudit(this.element);
-    assert.equal(component.title, 'Learn to Learn');
+    assert.strictEqual(component.title, 'Learn to Learn');
     assert.notOk(component.hasLearningMaterials);
   });
 
@@ -367,7 +370,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
 
     await a11yAudit(this.element);
-    assert.equal(component.title, 'Learn to Learn');
+    assert.strictEqual(component.title, 'Learn to Learn');
     assert.notOk(component.hasLearningMaterials);
   });
 });

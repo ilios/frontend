@@ -11,7 +11,7 @@ module('Unit | Model | vocabulary', function (hooks) {
   });
 
   test('pluralization', function (assert) {
-    assert.equal(pluralize('vocabulary'), 'vocabularies');
+    assert.strictEqual(pluralize('vocabulary'), 'vocabularies');
   });
 
   test('getTopLevelTerms', async function (assert) {
@@ -23,7 +23,7 @@ module('Unit | Model | vocabulary', function (hooks) {
     const term3 = store.createRecord('term', { id: 3, parent: term2 });
     model.get('terms').pushObjects([term1, term2, term3]);
     const topLevelTerms = await model.get('topLevelTerms');
-    assert.equal(topLevelTerms.length, 2);
+    assert.strictEqual(topLevelTerms.length, 2);
     assert.ok(topLevelTerms.includes(term1));
     assert.ok(topLevelTerms.includes(term2));
   });

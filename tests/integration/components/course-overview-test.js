@@ -31,7 +31,7 @@ module('Integration | Component | course overview', function (hooks) {
     await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.externalId.isVisible);
-    assert.equal(component.externalId.text, 'Course ID: Click to edit');
+    assert.strictEqual(component.externalId.text, 'Course ID: Click to edit');
     await component.externalId.edit();
     assert.notOk(component.externalId.hasError);
     await component.externalId.set('a');
@@ -49,7 +49,7 @@ module('Integration | Component | course overview', function (hooks) {
     await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.externalId.isVisible);
-    assert.equal(component.externalId.text, 'Course ID: Click to edit');
+    assert.strictEqual(component.externalId.text, 'Course ID: Click to edit');
     await component.externalId.edit();
     assert.notOk(component.externalId.hasError);
     await component.externalId.set('tooLong'.repeat(50));

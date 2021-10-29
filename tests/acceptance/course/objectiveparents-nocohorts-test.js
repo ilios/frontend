@@ -36,10 +36,10 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
     const firstObjective = page.objectives.objectiveList.objectives[0];
 
-    assert.equal(firstObjective.description.text, 'course objective 0');
+    assert.strictEqual(firstObjective.description.text, 'course objective 0');
     assert.ok(firstObjective.parents.empty);
     await firstObjective.parents.list[0].manage();
     const m = firstObjective.parentManager;
@@ -49,21 +49,21 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
     await page.cohorts.manage();
     await page.cohorts.selectable[0].add();
     await page.cohorts.save();
-    assert.equal(page.cohorts.current.length, 1);
+    assert.strictEqual(page.cohorts.current.length, 1);
     await firstObjective.parents.list[0].manage();
 
-    assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
-    assert.equal(m.competencies.length, 1);
-    assert.equal(m.competencies[0].title, 'competency 0');
+    assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
+    assert.strictEqual(m.competencies.length, 1);
+    assert.strictEqual(m.competencies[0].title, 'competency 0');
     assert.ok(m.competencies[0].notSelected);
-    assert.equal(m.competencies[0].objectives.length, 1);
-    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 0');
+    assert.strictEqual(m.competencies[0].objectives.length, 1);
+    assert.strictEqual(m.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(m.competencies[0].objectives[0].notSelected);
 
     await page.cohorts.manage();
     await page.cohorts.selected[0].remove();
     await page.cohorts.save();
-    assert.equal(page.cohorts.current.length, 0);
+    assert.strictEqual(page.cohorts.current.length, 0);
     await firstObjective.parents.list[0].manage();
     assert.ok(m.hasNoCohortWarning);
   });

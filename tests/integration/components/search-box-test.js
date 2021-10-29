@@ -15,7 +15,7 @@ module('Integration | Component | search box', function (hooks) {
   test('clicking search calls search', async function (assert) {
     assert.expect(1);
     this.set('search', (value) => {
-      assert.equal(value, '');
+      assert.strictEqual(value, '');
     });
     await render(hbs`<SearchBox @search={{action search}} />`);
     const searchBoxIcon = '.search-icon';
@@ -25,7 +25,7 @@ module('Integration | Component | search box', function (hooks) {
   test('typing calls search', async function (assert) {
     assert.expect(1);
     this.set('search', (value) => {
-      assert.equal(value, 'typed it');
+      assert.strictEqual(value, 'typed it');
     });
     await render(hbs`<SearchBox @search={{action search}} />`);
     await fillIn('input', 'typed it');

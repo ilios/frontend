@@ -11,7 +11,7 @@ module('Unit | Model | Offering', function (hooks) {
     const store = this.owner.lookup('service:store');
 
     let allInstructors = await offering.get('allInstructors');
-    assert.equal(allInstructors.length, 0);
+    assert.strictEqual(allInstructors.length, 0);
 
     const user1 = store.createRecord('user', { displayName: 'Beta' });
     const user2 = store.createRecord('user', { displayName: 'Alpha' });
@@ -27,7 +27,7 @@ module('Unit | Model | Offering', function (hooks) {
 
     allInstructors = await offering.get('allInstructors');
 
-    assert.equal(allInstructors.length, 3);
+    assert.strictEqual(allInstructors.length, 3);
     assert.ok(allInstructors.includes(user1));
     assert.ok(allInstructors.includes(user2));
     assert.ok(allInstructors.includes(user3));
@@ -45,36 +45,36 @@ module('Unit | Model | Offering', function (hooks) {
 
     allInstructors = await offering.get('allInstructors');
 
-    assert.equal(allInstructors.length, 5);
-    assert.equal(allInstructors[0].fullName, 'Alpha');
-    assert.equal(allInstructors[1].fullName, 'Beta');
-    assert.equal(allInstructors[2].fullName, 'Gamma');
-    assert.equal(allInstructors[3].fullName, 'Larry Lazy');
-    assert.equal(allInstructors[4].fullName, 'Omega');
+    assert.strictEqual(allInstructors.length, 5);
+    assert.strictEqual(allInstructors[0].fullName, 'Alpha');
+    assert.strictEqual(allInstructors[1].fullName, 'Beta');
+    assert.strictEqual(allInstructors[2].fullName, 'Gamma');
+    assert.strictEqual(allInstructors[3].fullName, 'Larry Lazy');
+    assert.strictEqual(allInstructors[4].fullName, 'Omega');
   });
 
   test('duration', function (assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('offering', {});
-    assert.equal(model.get('durationHours'), 0);
-    assert.equal(model.get('durationMinutes'), 0);
+    assert.strictEqual(model.get('durationHours'), 0);
+    assert.strictEqual(model.get('durationMinutes'), 0);
     model.set('startDate', moment().toDate());
     model.set('endDate', moment().add(90, 'minutes').toDate());
 
-    assert.equal(model.get('durationHours'), 1);
-    assert.equal(model.get('durationMinutes'), 30);
+    assert.strictEqual(model.get('durationHours'), 1);
+    assert.strictEqual(model.get('durationMinutes'), 30);
 
     model.set('startDate', moment().toDate());
     model.set('endDate', moment().add(30, 'minutes').toDate());
 
-    assert.equal(model.get('durationHours'), 0);
-    assert.equal(model.get('durationMinutes'), 30);
+    assert.strictEqual(model.get('durationHours'), 0);
+    assert.strictEqual(model.get('durationMinutes'), 30);
 
     model.set('startDate', moment().toDate());
     model.set('endDate', moment().add(60, 'minutes').toDate());
 
-    assert.equal(model.get('durationHours'), 1);
-    assert.equal(model.get('durationMinutes'), 0);
+    assert.strictEqual(model.get('durationHours'), 1);
+    assert.strictEqual(model.get('durationMinutes'), 0);
   });
 
   test('check allLearners', async function (assert) {
@@ -83,7 +83,7 @@ module('Unit | Model | Offering', function (hooks) {
     const store = this.owner.lookup('service:store');
 
     let allLearners = await offering.get('allLearners');
-    assert.equal(allLearners.length, 0);
+    assert.strictEqual(allLearners.length, 0);
 
     const user1 = store.createRecord('user', { displayName: 'Beta' });
     const user2 = store.createRecord('user', { displayName: 'Alpha' });
@@ -99,7 +99,7 @@ module('Unit | Model | Offering', function (hooks) {
 
     allLearners = await offering.get('allLearners');
 
-    assert.equal(allLearners.length, 3);
+    assert.strictEqual(allLearners.length, 3);
     assert.ok(allLearners.includes(user1));
     assert.ok(allLearners.includes(user2));
     assert.ok(allLearners.includes(user3));
@@ -117,11 +117,11 @@ module('Unit | Model | Offering', function (hooks) {
 
     allLearners = await offering.get('allLearners');
 
-    assert.equal(allLearners.length, 5);
-    assert.equal(allLearners[0].fullName, 'Alpha');
-    assert.equal(allLearners[1].fullName, 'Beta');
-    assert.equal(allLearners[2].fullName, 'Gamma');
-    assert.equal(allLearners[3].fullName, 'Larry Lazy');
-    assert.equal(allLearners[4].fullName, 'Omega');
+    assert.strictEqual(allLearners.length, 5);
+    assert.strictEqual(allLearners[0].fullName, 'Alpha');
+    assert.strictEqual(allLearners[1].fullName, 'Beta');
+    assert.strictEqual(allLearners[2].fullName, 'Gamma');
+    assert.strictEqual(allLearners[3].fullName, 'Larry Lazy');
+    assert.strictEqual(allLearners[4].fullName, 'Omega');
   });
 });

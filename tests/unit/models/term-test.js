@@ -30,9 +30,9 @@ module('Unit | Model | term', function (hooks) {
     const parent = store.createRecord('term', { children: [model] });
     const parentsParent = store.createRecord('term', { children: [parent] });
     const allParents = await model.get('allParents');
-    assert.equal(allParents.length, 2);
-    assert.equal(allParents[0], parentsParent);
-    assert.equal(allParents[1], parent);
+    assert.strictEqual(allParents.length, 2);
+    assert.strictEqual(allParents[0], parentsParent);
+    assert.strictEqual(allParents[1], parent);
   });
 
   test('termWithAllParents', async function (assert) {
@@ -42,10 +42,10 @@ module('Unit | Model | term', function (hooks) {
     const parent = store.createRecord('term', { children: [model] });
     const parentsParent = store.createRecord('term', { children: [parent] });
     const allParents = await model.get('termWithAllParents');
-    assert.equal(allParents.length, 3);
-    assert.equal(allParents[0], parentsParent);
-    assert.equal(allParents[1], parent);
-    assert.equal(allParents[2], model);
+    assert.strictEqual(allParents.length, 3);
+    assert.strictEqual(allParents[0], parentsParent);
+    assert.strictEqual(allParents[1], parent);
+    assert.strictEqual(allParents[2], model);
   });
 
   test('allParentTitles', async function (assert) {
@@ -58,9 +58,9 @@ module('Unit | Model | term', function (hooks) {
     });
     store.createRecord('term', { children: [parent], title: 'Grandparent' });
     const titles = await model.get('allParentTitles');
-    assert.equal(titles.length, 2);
-    assert.equal(titles[0], 'Grandparent');
-    assert.equal(titles[1], 'Parent');
+    assert.strictEqual(titles.length, 2);
+    assert.strictEqual(titles[0], 'Grandparent');
+    assert.strictEqual(titles[1], 'Parent');
   });
 
   test('titleWithParentTitles', async function (assert) {
@@ -74,7 +74,7 @@ module('Unit | Model | term', function (hooks) {
     });
     store.createRecord('term', { children: [parent], title: 'ein' });
     const title = await model.get('titleWithParentTitles');
-    assert.equal(title, 'ein > bier > bitte');
+    assert.strictEqual(title, 'ein > bier > bitte');
   });
 
   test('isActiveInTree - top level term', async function (assert) {
@@ -136,10 +136,10 @@ module('Unit | Model | term', function (hooks) {
     const child2 = store.createRecord('term', { parent: model });
     const child3 = store.createRecord('term', { parent: child1 });
     const allDescendants = await model.get('allDescendants');
-    assert.equal(allDescendants.length, 3);
-    assert.equal(allDescendants[0], child1);
-    assert.equal(allDescendants[1], child2);
-    assert.equal(allDescendants[2], child3);
+    assert.strictEqual(allDescendants.length, 3);
+    assert.strictEqual(allDescendants[0], child1);
+    assert.strictEqual(allDescendants[1], child2);
+    assert.strictEqual(allDescendants[2], child3);
   });
 
   test('titleWithDescendantTitles', async function (assert) {
@@ -153,7 +153,7 @@ module('Unit | Model | term', function (hooks) {
     store.createRecord('term', { title: 'second', parent: model });
     store.createRecord('term', { title: 'third', parent: child1 });
     const titleWithDescendantTitles = await model.get('titleWithDescendantTitles');
-    assert.equal(titleWithDescendantTitles, 'first > second > third > top');
+    assert.strictEqual(titleWithDescendantTitles, 'first > second > third > top');
   });
 
   test('no associations', async function (assert) {
@@ -161,10 +161,10 @@ module('Unit | Model | term', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('term');
     assert.notOk(model.hasAssociations);
-    assert.equal(model.totalAssociations, 0);
-    assert.equal(model.associatedLengths.length, 6);
+    assert.strictEqual(model.totalAssociations, 0);
+    assert.strictEqual(model.associatedLengths.length, 6);
     model.associatedLengths.forEach((length) => {
-      assert.equal(length, 0);
+      assert.strictEqual(length, 0);
     });
   });
 
@@ -186,10 +186,10 @@ module('Unit | Model | term', function (hooks) {
       sessionObjectives: [sessionObjective],
     });
     assert.ok(model.hasAssociations);
-    assert.equal(model.totalAssociations, 6);
-    assert.equal(model.associatedLengths.length, 6);
+    assert.strictEqual(model.totalAssociations, 6);
+    assert.strictEqual(model.associatedLengths.length, 6);
     model.associatedLengths.forEach((length) => {
-      assert.equal(length, 1);
+      assert.strictEqual(length, 1);
     });
   });
 
@@ -197,7 +197,7 @@ module('Unit | Model | term', function (hooks) {
     assert.expect(2);
     const model = this.owner.lookup('service:store').createRecord('term');
     const store = model.store;
-    assert.equal(model.get('childCount'), 0);
+    assert.strictEqual(model.get('childCount'), 0);
     const child = store.createRecord('term', { id: 1 });
     model.get('children').pushObject(child);
     assert.ok(model.get('childCount'), 1);

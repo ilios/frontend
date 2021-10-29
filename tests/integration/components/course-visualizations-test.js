@@ -21,7 +21,7 @@ module('Integration | Component | course-visualizations', function (hooks) {
     assert.ok(component.sessionTypes.isVisible);
     assert.ok(component.vocabularies.isVisible);
     assert.ok(component.instructors.isVisible);
-    assert.equal(component.title, 'course 0 2021');
+    assert.strictEqual(component.title, 'course 0 2021');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
@@ -39,6 +39,6 @@ module('Integration | Component | course-visualizations', function (hooks) {
 
     await render(hbs`<CourseVisualizations @model={{this.course}} />`);
 
-    assert.equal(component.title, 'course 0 2021 - 2022');
+    assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
 });

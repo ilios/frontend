@@ -82,7 +82,7 @@ module('Integration | Component | dashboard materials', function (hooks) {
 
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.equal(params.id, 11);
+      assert.strictEqual(parseInt(params.id, 10), 11);
       assert.ok('before' in queryParams);
       assert.ok('after' in queryParams);
       const before = moment(queryParams.before, 'X');
@@ -147,15 +147,15 @@ module('Integration | Component | dashboard materials', function (hooks) {
     assert.dom('[data-test-all-materials-link]').hasText('View: All Materials');
 
     assert.ok(find(firstLmTitle).textContent.includes('title1'));
-    assert.equal(find(firstLmLink).href, 'http://myhost.com/url1?inline');
+    assert.strictEqual(find(firstLmLink).href, 'http://myhost.com/url1?inline');
     assert.dom(firstLmTypeIcon).exists({ count: 1 }, 'LM type icon is present');
     assert.dom(firstLmSessionTitle).hasText('session1title');
     assert.dom(firstLmCourseTitle).hasText('course1title');
     assert.dom(firstLmInstructor).hasText('Instructor1name, Instructor2name');
     assert.dom(firstLmFirstOffering).hasText(today.format('M/D/YYYY'));
-    assert.equal(find(firstLmDownloadLink).href.trim(), 'http://myhost.com/url1');
+    assert.strictEqual(find(firstLmDownloadLink).href.trim(), 'http://myhost.com/url1');
 
-    assert.equal(
+    assert.strictEqual(
       find(secondLmTitle).textContent.replace(/[\t\n\s]+/g, ''),
       'Citationtitle3citationtext'
     );
@@ -167,14 +167,14 @@ module('Integration | Component | dashboard materials', function (hooks) {
     assert.dom(secondLmFirstOffering).hasText(today.format('M/D/YYYY'));
 
     assert.ok(find(thirdLmTitle).textContent.includes('title2'));
-    assert.equal(find(thirdLmLink).href.trim(), 'http://myhost.com/url2');
+    assert.strictEqual(find(thirdLmLink).href.trim(), 'http://myhost.com/url2');
     assert.dom(thirdLmTypeIcon).exists({ count: 1 }, 'LM type icon is present');
     assert.dom(thirdLmSessionTitle).hasText('session2title');
     assert.dom(thirdLmCourseTitle).hasText('course2title');
     assert.dom(thirdLmInstructor).hasText('Instructor1name, Instructor2name');
     assert.dom(thirdLmFirstOffering).hasText(tomorrow.format('M/D/YYYY'));
 
-    assert.equal(find(fourthLmLink).href.trim(), 'http://myhost.com/document.txt');
+    assert.strictEqual(find(fourthLmLink).href.trim(), 'http://myhost.com/document.txt');
     assert.dom(fourthLmTypeIcon).exists({ count: 1 }, 'LM type icon is present');
     assert.dom(fourthLmSessionTitle).hasText('session4title');
     assert.dom(fourthLmCourseTitle).hasText('course4title');
@@ -202,7 +202,7 @@ module('Integration | Component | dashboard materials', function (hooks) {
 
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.equal(params.id, 11);
+      assert.strictEqual(parseInt(params.id, 10), 11);
       assert.ok('before' in queryParams);
       assert.ok('after' in queryParams);
       const before = moment(queryParams.before, 'X');

@@ -22,7 +22,7 @@ module('Unit | Initializer | custom-inflector-rules', function (hooks) {
   test('it works', async function (assert) {
     await this.application.boot();
 
-    assert.equal(pluralize('aamc-pcrs'), 'aamc-pcrses');
-    assert.equal(singularize('aamc-pcrses'), 'aamc-pcrs');
+    assert.strictEqual(pluralize('aamc-pcrs'), 'aamc-pcrses');
+    assert.strictEqual(singularize('aamc-pcrses'), 'aamc-pcrs');
   });
 });

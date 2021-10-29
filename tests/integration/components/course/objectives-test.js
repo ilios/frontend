@@ -40,16 +40,22 @@ module('Integration | Component | course/objectives', function (hooks) {
       @expand={{(noop)}}
     />`);
 
-    assert.equal(component.objectiveList.objectives.length, 2);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'course objective 0');
-    assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
-    assert.equal(
+    assert.strictEqual(component.objectiveList.objectives.length, 2);
+    assert.strictEqual(
+      component.objectiveList.objectives[0].description.text,
+      'course objective 0'
+    );
+    assert.strictEqual(component.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(
       component.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
     );
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.empty);
 
-    assert.equal(component.objectiveList.objectives[1].description.text, 'course objective 1');
+    assert.strictEqual(
+      component.objectiveList.objectives[1].description.text,
+      'course objective 1'
+    );
     assert.ok(component.objectiveList.objectives[1].parents.empty);
     assert.ok(component.objectiveList.objectives[1].meshDescriptors.empty);
 
@@ -86,33 +92,36 @@ module('Integration | Component | course/objectives', function (hooks) {
       @expand={{(noop)}}
     />`);
 
-    assert.equal(component.objectiveList.objectives.length, 1);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'course objective 0');
-    assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(component.objectiveList.objectives.length, 1);
+    assert.strictEqual(
+      component.objectiveList.objectives[0].description.text,
+      'course objective 0'
+    );
+    assert.strictEqual(component.objectiveList.objectives[0].parents.list.length, 1);
     await component.objectiveList.objectives[0].parents.list[0].manage();
 
     const m = component.objectiveList.objectives[0].parentManager;
     assert.notOk(m.hasMultipleCohorts);
-    assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
-    assert.equal(m.competencies.length, 2);
-    assert.equal(m.competencies[0].title, 'competency 0');
+    assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
+    assert.strictEqual(m.competencies.length, 2);
+    assert.strictEqual(m.competencies[0].title, 'competency 0');
     assert.ok(m.competencies[0].selected);
 
-    assert.equal(m.competencies[0].objectives.length, 3);
-    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 0');
+    assert.strictEqual(m.competencies[0].objectives.length, 3);
+    assert.strictEqual(m.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(m.competencies[0].objectives[0].selected);
-    assert.equal(m.competencies[0].objectives[1].title, 'program-year objective 1');
+    assert.strictEqual(m.competencies[0].objectives[1].title, 'program-year objective 1');
     assert.ok(m.competencies[0].objectives[1].notSelected);
-    assert.equal(m.competencies[0].objectives[2].title, 'program-year objective 2');
+    assert.strictEqual(m.competencies[0].objectives[2].title, 'program-year objective 2');
     assert.ok(m.competencies[0].objectives[2].notSelected);
 
-    assert.equal(m.competencies[1].title, 'competency 1');
+    assert.strictEqual(m.competencies[1].title, 'competency 1');
     assert.ok(m.competencies[1].notSelected);
 
-    assert.equal(m.competencies[1].objectives.length, 2);
-    assert.equal(m.competencies[1].objectives[0].title, 'program-year objective 3');
+    assert.strictEqual(m.competencies[1].objectives.length, 2);
+    assert.strictEqual(m.competencies[1].objectives[0].title, 'program-year objective 3');
     assert.ok(m.competencies[1].objectives[0].notSelected);
-    assert.equal(m.competencies[1].objectives[1].title, 'program-year objective 4');
+    assert.strictEqual(m.competencies[1].objectives[1].title, 'program-year objective 4');
     assert.ok(m.competencies[1].objectives[1].notSelected);
 
     await a11yAudit(this.element);
@@ -158,35 +167,38 @@ module('Integration | Component | course/objectives', function (hooks) {
       @expand={{(noop)}}
     />`);
 
-    assert.equal(component.objectiveList.objectives.length, 1);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'course objective 0');
-    assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(component.objectiveList.objectives.length, 1);
+    assert.strictEqual(
+      component.objectiveList.objectives[0].description.text,
+      'course objective 0'
+    );
+    assert.strictEqual(component.objectiveList.objectives[0].parents.list.length, 1);
     await component.objectiveList.objectives[0].parents.list[0].manage();
 
     const m = component.objectiveList.objectives[0].parentManager;
     assert.ok(m.hasMultipleCohorts);
-    assert.equal(m.selectedCohortTitle, 'program 0 cohort 0 program 0 cohort 1');
-    assert.equal(m.selectedCohortId, '1');
+    assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0 program 0 cohort 1');
+    assert.strictEqual(m.selectedCohortId, '1');
 
-    assert.equal(m.competencies.length, 1);
-    assert.equal(m.competencies[0].title, 'competency 0');
+    assert.strictEqual(m.competencies.length, 1);
+    assert.strictEqual(m.competencies[0].title, 'competency 0');
     assert.ok(m.competencies[0].selected);
 
-    assert.equal(m.competencies[0].objectives.length, 2);
-    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 0');
+    assert.strictEqual(m.competencies[0].objectives.length, 2);
+    assert.strictEqual(m.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(m.competencies[0].objectives[0].selected);
-    assert.equal(m.competencies[0].objectives[1].title, 'program-year objective 1');
+    assert.strictEqual(m.competencies[0].objectives[1].title, 'program-year objective 1');
     assert.ok(m.competencies[0].objectives[1].notSelected);
 
     await m.selectCohort(2);
-    assert.equal(m.selectedCohortId, '2');
-    assert.equal(m.competencies[0].title, 'competency 1');
+    assert.strictEqual(m.selectedCohortId, '2');
+    assert.strictEqual(m.competencies[0].title, 'competency 1');
     assert.ok(m.competencies[0].notSelected);
 
-    assert.equal(m.competencies[0].objectives.length, 2);
-    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 2');
+    assert.strictEqual(m.competencies[0].objectives.length, 2);
+    assert.strictEqual(m.competencies[0].objectives[0].title, 'program-year objective 2');
     assert.ok(m.competencies[0].objectives[0].notSelected);
-    assert.equal(m.competencies[0].objectives[1].title, 'program-year objective 3');
+    assert.strictEqual(m.competencies[0].objectives[1].title, 'program-year objective 3');
     assert.ok(m.competencies[0].objectives[1].notSelected);
 
     await a11yAudit(this.element);
@@ -206,12 +218,12 @@ module('Integration | Component | course/objectives', function (hooks) {
       @expand={{(noop)}}
     />`);
 
-    assert.equal(component.objectiveList.objectives.length, 1);
-    assert.equal(component.title, 'Objectives (1)');
+    assert.strictEqual(component.objectiveList.objectives.length, 1);
+    assert.strictEqual(component.title, 'Objectives (1)');
     await component.objectiveList.objectives[0].remove();
     await component.objectiveList.objectives[0].confirmRemoval.confirm();
-    assert.equal(component.objectiveList.objectives.length, 0);
-    assert.equal(component.title, 'Objectives (0)');
+    assert.strictEqual(component.objectiveList.objectives.length, 0);
+    assert.strictEqual(component.title, 'Objectives (0)');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

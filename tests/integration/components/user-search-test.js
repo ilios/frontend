@@ -30,7 +30,7 @@ module('Integration | Component | user search', function (hooks) {
     assert.expect(4);
     this.server.create('user');
     this.server.get('api/users', (schema, { queryParams }) => {
-      assert.equal(queryParams['q'], 'search words');
+      assert.strictEqual(queryParams['q'], 'search words');
       return schema.users.all();
     });
     await render(hbs`<UserSearch />`);
@@ -66,7 +66,7 @@ module('Integration | Component | user search', function (hooks) {
     const user = this.server.create('user');
 
     this.set('action', (passedUser) => {
-      assert.equal(user.id, passedUser.id);
+      assert.strictEqual(user.id, passedUser.id);
     });
     await render(hbs`<UserSearch @addUser={{fn this.action}} />`);
 
@@ -80,7 +80,7 @@ module('Integration | Component | user search', function (hooks) {
   test('click group fires add group', async function (assert) {
     assert.expect(5);
     this.set('action', (group) => {
-      assert.equal(group.id, 1);
+      assert.strictEqual(parseInt(group.id, 10), 1);
     });
     this.server.createList('instructor-group', 2);
     const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');

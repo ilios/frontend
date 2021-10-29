@@ -17,7 +17,7 @@ module('Integration | Service | Current User', function (hooks) {
   test('currentUserId', function (assert) {
     const subject = this.owner.lookup('service:current-user');
     const userId = subject.currentUserId;
-    assert.equal(userId, 100);
+    assert.strictEqual(parseInt(userId, 10), 100);
   });
 
   test('no token - no currentUserId', async function (assert) {
@@ -25,7 +25,7 @@ module('Integration | Service | Current User', function (hooks) {
     await invalidateSession();
     const subject = this.owner.lookup('service:current-user');
     const userId = subject.currentUserId;
-    assert.equal(userId, null);
+    assert.strictEqual(userId, null);
   });
 
   test('model', async function (assert) {
@@ -33,7 +33,7 @@ module('Integration | Service | Current User', function (hooks) {
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
     const model = await subject.getModel();
-    assert.equal(model.id, 100);
+    assert.strictEqual(parseInt(model.id, 10), 100);
   });
 
   test('no token - no model', async function (assert) {
@@ -41,7 +41,7 @@ module('Integration | Service | Current User', function (hooks) {
     await invalidateSession();
     const subject = this.owner.lookup('service:current-user');
     const model = await subject.getModel();
-    assert.equal(model, null);
+    assert.strictEqual(model, null);
   });
 
   test('model only loaded once', async function (assert) {
@@ -51,7 +51,7 @@ module('Integration | Service | Current User', function (hooks) {
 
     this.server.get('api/users/:id', (schema, request) => {
       const id = request.params.id;
-      assert.equal(id, 100);
+      assert.strictEqual(parseInt(id, 10), 100);
       assert.notOk(calledAlready);
       calledAlready = true;
       return schema.users.find(id);
@@ -71,7 +71,7 @@ module('Integration | Service | Current User', function (hooks) {
 
     const subject = this.owner.lookup('service:current-user');
     const titles = await subject.getUserRoleTitles();
-    assert.equal(titles.length, 2);
+    assert.strictEqual(titles.length, 2);
     assert.ok(titles.includes('user role 0'));
     assert.ok(titles.includes('user role 1'));
   });
@@ -121,12 +121,12 @@ module('Integration | Service | Current User', function (hooks) {
 
     this.server.get('/api/courses', (schema, { queryParams }) => {
       assert.ok('my' in queryParams);
-      assert.equal(queryParams.my, 'true');
+      assert.strictEqual(queryParams.my, 'true');
       assert.ok('filters[year]' in queryParams);
       assert.ok('filters[locked]' in queryParams);
       assert.ok('filters[archived]' in queryParams);
-      assert.equal(queryParams['filters[locked]'], 'false');
-      assert.equal(queryParams['filters[archived]'], 'false');
+      assert.strictEqual(queryParams['filters[locked]'], 'false');
+      assert.strictEqual(queryParams['filters[archived]'], 'false');
       assert.ok(queryParams['filters[year]'].length, 3);
 
       return schema.courses.all();

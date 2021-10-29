@@ -44,11 +44,11 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
       />
     `);
 
-    assert.equal(component.title, 'Objectives (4)');
-    assert.equal(component.objectiveCount, 'There are 4 objectives');
-    assert.equal(component.parentCount, '1 has a parent');
-    assert.equal(component.meshCount, '1 has MeSH');
-    assert.equal(component.termCount, '1 has vocabulary terms');
+    assert.strictEqual(component.title, 'Objectives (4)');
+    assert.strictEqual(component.objectiveCount, 'There are 4 objectives');
+    assert.strictEqual(component.parentCount, '1 has a parent');
+    assert.strictEqual(component.meshCount, '1 has MeSH');
+    assert.strictEqual(component.termCount, '1 has vocabulary terms');
 
     assert.ok(component.parentStatus.partial);
     assert.ok(component.meshStatus.partial);
@@ -69,7 +69,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
       hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{this.click}} />`
     );
 
-    assert.equal(component.title, 'Objectives (0)');
+    assert.strictEqual(component.title, 'Objectives (0)');
     await component.expand();
   });
 
@@ -86,7 +86,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
         @expand={{(noop)}}
       />
     `);
-    assert.equal(component.title, 'Objectives (1)');
+    assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.complete);
   });
 
@@ -103,7 +103,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
         @expand={{(noop)}}
       />
     `);
-    assert.equal(component.title, 'Objectives (1)');
+    assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.none);
   });
 
@@ -120,7 +120,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
         @expand={{(noop)}}
       />
     `);
-    assert.equal(component.title, 'Objectives (1)');
+    assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.complete);
   });
 
@@ -137,7 +137,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
         @expand={{(noop)}}
       />
     `);
-    assert.equal(component.title, 'Objectives (1)');
+    assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.none);
   });
 
@@ -154,7 +154,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
         @expand={{(noop)}}
       />
     `);
-    assert.equal(component.title, 'Objectives (1)');
+    assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.complete);
   });
 
@@ -171,7 +171,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
         @expand={{(noop)}}
       />
     `);
-    assert.equal(component.title, 'Objectives (1)');
+    assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.none);
   });
 });

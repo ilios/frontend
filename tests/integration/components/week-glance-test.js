@@ -105,12 +105,12 @@ module('Integration | Component | week glance', function (hooks) {
       @week={{moment-format this.today "W"}}
     />`);
 
-    assert.equal(component.title, this.getTitle(true));
+    assert.strictEqual(component.title, this.getTitle(true));
 
-    assert.equal(component.offeringEvents.length, 3);
-    assert.equal(component.offeringEvents[0].title, 'Learn to Learn');
-    assert.equal(component.offeringEvents[1].title, 'Finding the Point in Life');
-    assert.equal(component.offeringEvents[2].title, 'Schedule some materials');
+    assert.strictEqual(component.offeringEvents.length, 3);
+    assert.strictEqual(component.offeringEvents[0].title, 'Learn to Learn');
+    assert.strictEqual(component.offeringEvents[1].title, 'Finding the Point in Life');
+    assert.strictEqual(component.offeringEvents[2].title, 'Schedule some materials');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -135,7 +135,7 @@ module('Integration | Component | week glance', function (hooks) {
 
     await settled();
 
-    assert.equal(
+    assert.strictEqual(
       this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ''),
       expectedTitle.replace(/[\t\n\s]+/g, '')
     );
@@ -159,7 +159,7 @@ module('Integration | Component | week glance', function (hooks) {
     const expectedTitle = this.getTitle(false);
     await settled();
 
-    assert.equal(
+    assert.strictEqual(
       this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ''),
       expectedTitle.replace(/[\t\n\s]+/g, '')
     );
@@ -184,11 +184,11 @@ module('Integration | Component | week glance', function (hooks) {
 
     await settled();
 
-    assert.equal(
+    assert.strictEqual(
       this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ''),
       expectedTitle.replace(/[\t\n\s]+/g, '')
     );
-    assert.equal(this.element.querySelectorAll(body).length, 0);
+    assert.strictEqual(this.element.querySelectorAll(body).length, 0);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -292,7 +292,7 @@ module('Integration | Component | week glance', function (hooks) {
 
     await settled();
 
-    assert.equal(
+    assert.strictEqual(
       this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ''),
       expectedTitle.replace(/[\t\n\s]+/g, '')
     );

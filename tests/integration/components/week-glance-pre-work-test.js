@@ -59,9 +59,9 @@ module('Integration | Component | week-glance-pre-work', function (hooks) {
     ]);
     await render(hbs`<WeekGlancePreWork @events={{events}} />`);
 
-    assert.equal(component.title, 'Learn to Learn');
-    assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
-    assert.equal(component.url, '#event123');
+    assert.strictEqual(component.title, 'Learn to Learn');
+    assert.strictEqual(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.strictEqual(component.url, '#event123');
     assert.notOk(component.hasMoreInfo);
   });
 
@@ -78,10 +78,10 @@ module('Integration | Component | week-glance-pre-work', function (hooks) {
     ]);
     await render(hbs`<WeekGlancePreWork @events={{events}} />`);
 
-    assert.equal(component.title, 'Learn to Learn');
-    assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
-    assert.equal(component.url, '#event123');
-    assert.equal(component.moreInfo, 'with one more offering');
+    assert.strictEqual(component.title, 'Learn to Learn');
+    assert.strictEqual(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.strictEqual(component.url, '#event123');
+    assert.strictEqual(component.moreInfo, 'with one more offering');
   });
 
   test('more than two items', async function (assert) {
@@ -98,9 +98,9 @@ module('Integration | Component | week-glance-pre-work', function (hooks) {
     ]);
     await render(hbs`<WeekGlancePreWork @events={{events}} />`);
 
-    assert.equal(component.title, 'Learn to Learn');
-    assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
-    assert.equal(component.url, '#event123');
-    assert.equal(component.moreInfo, 'with 2 more offerings');
+    assert.strictEqual(component.title, 'Learn to Learn');
+    assert.strictEqual(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.strictEqual(component.url, '#event123');
+    assert.strictEqual(component.moreInfo, 'with 2 more offerings');
   });
 });

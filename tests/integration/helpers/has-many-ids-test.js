@@ -11,7 +11,7 @@ module('Integration | Helper | has-many-ids', function (hooks) {
     assert.expect(2);
     this.set('model', {
       hasMany(type) {
-        assert.equal(type, 'foo');
+        assert.strictEqual(type, 'foo');
         return {
           ids() {
             return [1, 2];
@@ -22,6 +22,6 @@ module('Integration | Helper | has-many-ids', function (hooks) {
 
     await render(hbs`{{has-many-ids this.model "foo"}}`);
 
-    assert.equal(this.element.textContent.trim(), '1,2');
+    assert.strictEqual(this.element.textContent.trim(), '1,2');
   });
 });

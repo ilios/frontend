@@ -44,14 +44,14 @@ module('Integration | Component | detail learning materials', function (hooks) {
       @isCourse={{true}}
       @editable={{true}}
     />`);
-    assert.equal(component.current.length, 1);
-    assert.equal(component.current[0].type, 'Citation');
-    assert.equal(component.current[0].title, 'test title');
-    assert.equal(component.current[0].owner.userNameInfo.fullName, '0 guy M. Mc0son');
-    assert.equal(component.current[0].required, 'Yes');
-    assert.equal(component.current[0].notes, 'Yes');
-    assert.equal(component.current[0].mesh, 'None');
-    assert.equal(component.current[0].status, 'status 1');
+    assert.strictEqual(component.current.length, 1);
+    assert.strictEqual(component.current[0].type, 'Citation');
+    assert.strictEqual(component.current[0].title, 'test title');
+    assert.strictEqual(component.current[0].owner.userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.current[0].required, 'Yes');
+    assert.strictEqual(component.current[0].notes, 'Yes');
+    assert.strictEqual(component.current[0].mesh, 'None');
+    assert.strictEqual(component.current[0].status, 'status 1');
     assert.ok(component.current[0].isNotePublic);
     assert.notOk(component.current[0].isTimedRelease);
   });
@@ -86,11 +86,11 @@ module('Integration | Component | detail learning materials', function (hooks) {
       @isCourse={{true}}
       @editable={{true}}
     />`);
-    assert.equal(component.current[0].owner.userNameInfo.fullName, 'Clem Chowder');
+    assert.strictEqual(component.current[0].owner.userNameInfo.fullName, 'Clem Chowder');
     assert.notOk(component.current[0].owner.userNameInfo.isTooltipVisible);
     await component.current[0].owner.userNameInfo.expandTooltip();
     assert.ok(component.current[0].owner.userNameInfo.isTooltipVisible);
-    assert.equal(
+    assert.strictEqual(
       component.current[0].owner.userNameInfo.tooltipContents,
       'Campus name of record: 1 guy M, Mc1son'
     );

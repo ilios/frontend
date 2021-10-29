@@ -12,7 +12,7 @@ module('Integration | Component | ilios calendar day', function (hooks) {
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
     await render(
-      hbs`<IliosCalendarDay @date={{date}} @selectEvent={{(noop)}} @calendarEvents={{array}} />`
+      hbs`<IliosCalendarDay @date={{date}} @selectEvent={{(noop)}} @calendarEvents={{(array)}} />`
     );
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
     assert.dom().containsText('Wednesday');
@@ -102,7 +102,7 @@ module('Integration | Component | ilios calendar day', function (hooks) {
     />`);
     const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
     const preworkElements = this.element.querySelectorAll(preworkSelector);
-    assert.equal(preworkElements.length, 2);
+    assert.strictEqual(preworkElements.length, 2);
     assert.ok(preworkElements[0].textContent.includes('prework 1'));
     assert.ok(preworkElements[1].textContent.includes('prework 2'));
   });
@@ -155,7 +155,7 @@ module('Integration | Component | ilios calendar day', function (hooks) {
     />`);
     const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
     const preworkElements = this.element.querySelectorAll(preworkSelector);
-    assert.equal(preworkElements.length, 0);
+    assert.strictEqual(preworkElements.length, 0);
   });
 
   const createUserEventObject = function () {

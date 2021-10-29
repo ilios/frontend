@@ -41,11 +41,11 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
       @remove={{(noop)}}
     />`);
 
-    assert.equal(component.cohorts.length, 4);
-    assert.equal(component.cohorts[3].title, 'name 2 program 2');
-    assert.equal(component.cohorts[2].title, 'name 1 program 1');
-    assert.equal(component.cohorts[1].title, 'name 3 program 3');
-    assert.equal(component.cohorts[0].title, 'name 4 program 4');
+    assert.strictEqual(component.cohorts.length, 4);
+    assert.strictEqual(component.cohorts[3].title, 'name 2 program 2');
+    assert.strictEqual(component.cohorts[2].title, 'name 1 program 1');
+    assert.strictEqual(component.cohorts[1].title, 'name 3 program 3');
+    assert.strictEqual(component.cohorts[0].title, 'name 4 program 4');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -85,14 +85,14 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
       @remove={{(noop)}}
     />`);
 
-    assert.equal(component.cohorts.length, 4);
-    assert.equal(component.cohorts[0].title, 'name 1 program 1');
+    assert.strictEqual(component.cohorts.length, 4);
+    assert.strictEqual(component.cohorts[0].title, 'name 1 program 1');
     assert.notOk(component.cohorts[0].isChecked);
-    assert.equal(component.cohorts[1].title, 'name 2 program 2');
+    assert.strictEqual(component.cohorts[1].title, 'name 2 program 2');
     assert.ok(component.cohorts[1].isChecked);
-    assert.equal(component.cohorts[2].title, 'name 3 program 3');
+    assert.strictEqual(component.cohorts[2].title, 'name 3 program 3');
     assert.ok(component.cohorts[2].isChecked);
-    assert.equal(component.cohorts[3].title, 'name 4 program 4');
+    assert.strictEqual(component.cohorts[3].title, 'name 4 program 4');
     assert.notOk(component.cohorts[3].isChecked);
   });
 
@@ -107,7 +107,7 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
       },
     ]);
     this.set('remove', (id) => {
-      assert.equal(id, 1);
+      assert.strictEqual(id, 1);
     });
     await render(hbs`<Dashboard::CohortCalendarFilter
       @cohortProxies={{this.cohortProxies}}
@@ -130,7 +130,7 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
       },
     ]);
     this.set('add', (id) => {
-      assert.equal(id, 1);
+      assert.strictEqual(id, 1);
     });
     await render(hbs`<Dashboard::CohortCalendarFilter
       @cohortProxies={{this.cohortProxies}}

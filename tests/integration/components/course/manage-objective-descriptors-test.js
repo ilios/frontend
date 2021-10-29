@@ -23,18 +23,18 @@ module('Integration | Component | course/manage-objective-descriptors', function
     />`);
     const m = component.meshManager;
 
-    assert.equal(m.selectedTerms.length, 1);
-    assert.equal(m.selectedTerms[0].title, 'descriptor 0');
+    assert.strictEqual(m.selectedTerms.length, 1);
+    assert.strictEqual(m.selectedTerms[0].title, 'descriptor 0');
     await m.search('descriptor');
     await m.runSearch();
-    assert.equal(m.searchResults.length, 4);
-    assert.equal(m.searchResults[0].title, `descriptor 0`);
+    assert.strictEqual(m.searchResults.length, 4);
+    assert.strictEqual(m.searchResults[0].title, `descriptor 0`);
     assert.ok(m.searchResults[0].isDisabled);
-    assert.equal(m.searchResults[1].title, `descriptor 1`);
+    assert.strictEqual(m.searchResults[1].title, `descriptor 1`);
     assert.ok(m.searchResults[1].isEnabled);
-    assert.equal(m.searchResults[2].title, `descriptor 2`);
+    assert.strictEqual(m.searchResults[2].title, `descriptor 2`);
     assert.ok(m.searchResults[2].isEnabled);
-    assert.equal(m.searchResults[3].title, `descriptor 3`);
+    assert.strictEqual(m.searchResults[3].title, `descriptor 3`);
     assert.ok(m.searchResults[3].isEnabled);
   });
 
@@ -57,24 +57,24 @@ module('Integration | Component | course/manage-objective-descriptors', function
     />`);
     const m = component.meshManager;
 
-    assert.equal(m.selectedTerms.length, 1);
-    assert.equal(m.selectedTerms[0].title, 'descriptor 0');
+    assert.strictEqual(m.selectedTerms.length, 1);
+    assert.strictEqual(m.selectedTerms[0].title, 'descriptor 0');
     await m.search('descriptor');
     await m.runSearch();
-    assert.equal(m.searchResults.length, 2);
-    assert.equal(m.searchResults[0].title, `descriptor 0`);
+    assert.strictEqual(m.searchResults.length, 2);
+    assert.strictEqual(m.searchResults[0].title, `descriptor 0`);
     assert.ok(m.searchResults[0].isDisabled);
-    assert.equal(m.searchResults[1].title, `descriptor 1`);
+    assert.strictEqual(m.searchResults[1].title, `descriptor 1`);
     assert.ok(m.searchResults[1].isEnabled);
     await m.searchResults[1].add();
 
-    assert.equal(m.selectedTerms.length, 2);
-    assert.equal(m.selectedTerms[0].title, 'descriptor 0');
-    assert.equal(m.selectedTerms[1].title, 'descriptor 1');
-    assert.equal(m.searchResults.length, 2);
-    assert.equal(m.searchResults[0].title, `descriptor 0`);
+    assert.strictEqual(m.selectedTerms.length, 2);
+    assert.strictEqual(m.selectedTerms[0].title, 'descriptor 0');
+    assert.strictEqual(m.selectedTerms[1].title, 'descriptor 1');
+    assert.strictEqual(m.searchResults.length, 2);
+    assert.strictEqual(m.searchResults[0].title, `descriptor 0`);
     assert.ok(m.searchResults[0].isDisabled);
-    assert.equal(m.searchResults[1].title, `descriptor 1`);
+    assert.strictEqual(m.searchResults[1].title, `descriptor 1`);
     assert.ok(m.searchResults[1].isDisabled);
   });
 
@@ -86,7 +86,7 @@ module('Integration | Component | course/manage-objective-descriptors', function
       .find('meshDescriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     this.set('remove', (descriptor) => {
-      assert.equal(descriptor.id, descriptorModel.id);
+      assert.strictEqual(descriptor.id, descriptorModel.id);
       this.set('selected', []);
       assert.ok(true);
     });
@@ -98,22 +98,22 @@ module('Integration | Component | course/manage-objective-descriptors', function
     />`);
     const m = component.meshManager;
 
-    assert.equal(m.selectedTerms.length, 1);
-    assert.equal(m.selectedTerms[0].title, 'descriptor 0');
+    assert.strictEqual(m.selectedTerms.length, 1);
+    assert.strictEqual(m.selectedTerms[0].title, 'descriptor 0');
     await m.search('descriptor');
     await m.runSearch();
-    assert.equal(m.searchResults.length, 2);
-    assert.equal(m.searchResults[0].title, `descriptor 0`);
+    assert.strictEqual(m.searchResults.length, 2);
+    assert.strictEqual(m.searchResults[0].title, `descriptor 0`);
     assert.ok(m.searchResults[0].isDisabled);
-    assert.equal(m.searchResults[1].title, `descriptor 1`);
+    assert.strictEqual(m.searchResults[1].title, `descriptor 1`);
     assert.ok(m.searchResults[1].isEnabled);
     await m.selectedTerms[0].remove();
 
-    assert.equal(m.selectedTerms.length, 0);
-    assert.equal(m.searchResults.length, 2);
-    assert.equal(m.searchResults[0].title, `descriptor 0`);
+    assert.strictEqual(m.selectedTerms.length, 0);
+    assert.strictEqual(m.searchResults.length, 2);
+    assert.strictEqual(m.searchResults[0].title, `descriptor 0`);
     assert.ok(m.searchResults[0].isEnabled);
-    assert.equal(m.searchResults[1].title, `descriptor 1`);
+    assert.strictEqual(m.searchResults[1].title, `descriptor 1`);
     assert.ok(m.searchResults[1].isEnabled);
   });
 });

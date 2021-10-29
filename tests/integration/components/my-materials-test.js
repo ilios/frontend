@@ -139,23 +139,23 @@ module('Integration | Component | my-materials', function (hooks) {
     const fifthCourse = `${courseListOptions}:nth-of-type(6)`;
 
     assert.dom(firstLmLink).hasText('title1');
-    assert.equal(find(firstLmLink).href.trim(), 'http://myhost.com/url1?inline');
+    assert.strictEqual(find(firstLmLink).href.trim(), 'http://myhost.com/url1?inline');
     assert.dom(firstLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
     assert.dom(firstLmSessionTitle).hasText('session1title');
     assert.dom(firstLmCourseTitle).hasText('course1title');
     assert.dom(firstLmInstructor).hasText('Instructor1name, Instructor2name');
     assert.dom(firstLmFirstOffering).hasText('2/2/2003');
-    assert.equal(find(firstLmDownloadLink).href.trim(), 'http://myhost.com/url1');
+    assert.strictEqual(find(firstLmDownloadLink).href.trim(), 'http://myhost.com/url1');
 
     assert.dom(secondLmLink).hasText('title2');
-    assert.equal(find(secondLmLink).href.trim(), 'http://myhost.com/url2');
+    assert.strictEqual(find(secondLmLink).href.trim(), 'http://myhost.com/url2');
     assert.dom(secondLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
     assert.dom(secondLmSessionTitle).hasText('session2title');
     assert.dom(secondLmCourseTitle).hasText('course2title');
     assert.dom(secondLmInstructor).hasText('Instructor1name, Instructor2name');
     assert.dom(secondLmFirstOffering).hasText('2/2/2016');
 
-    assert.equal(
+    assert.strictEqual(
       find(thirdLmTitle).textContent.replace(/[\t\n\s]+/g, ''),
       'Citationtitle3citationtext'
     );
@@ -167,7 +167,7 @@ module('Integration | Component | my-materials', function (hooks) {
     assert.dom(thirdLmFirstOffering).hasText('2/2/2020');
 
     assert.dom(fourthLmLink).hasText('title4');
-    assert.equal(find(fourthLmLink).href.trim(), 'http://myhost.com/document.txt');
+    assert.strictEqual(find(fourthLmLink).href.trim(), 'http://myhost.com/document.txt');
     assert.dom(fourthLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
     assert.dom(fourthLmSessionTitle).hasText('session4title');
     assert.dom(fourthLmCourseTitle).hasText('course4title');
@@ -328,7 +328,7 @@ module('Integration | Component | my-materials', function (hooks) {
       'firstOfferingDate:desc',
     ];
     this.set('setSortBy', (what) => {
-      assert.equal(what, sortBys[count]);
+      assert.strictEqual(what, sortBys[count]);
       this.set('sortBy', what);
       count++;
     });
@@ -365,7 +365,7 @@ module('Integration | Component | my-materials', function (hooks) {
     let count = 0;
     const courses = ['1', '3', ''];
     this.set('setCourseIdFilter', (what) => {
-      assert.equal(what, courses[count]);
+      assert.strictEqual(what, courses[count]);
       this.set('courseIdFilter', what);
       count++;
     });

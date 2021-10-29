@@ -11,7 +11,7 @@ module('Unit | Model | AamcPcrs', function (hooks) {
   });
 
   test('pluralization', function (assert) {
-    assert.equal(pluralize('aamc-pcrs'), 'aamc-pcrses');
-    assert.equal(singularize('aamc-pcrses'), 'aamc-pcrs');
+    assert.strictEqual(pluralize('aamc-pcrs'), 'aamc-pcrses');
+    assert.strictEqual(singularize('aamc-pcrses'), 'aamc-pcrs');
   });
 });

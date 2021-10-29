@@ -41,6 +41,6 @@ module('Unit | Service | api-version', function (hooks) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
     const service = this.owner.lookup('service:api-version');
-    assert.equal(apiVersion, await service.version);
+    assert.strictEqual(apiVersion, await service.version);
   });
 });

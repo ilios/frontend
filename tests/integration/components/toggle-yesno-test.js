@@ -15,9 +15,9 @@ module('Integration | Component | toggle yesno', function (hooks) {
     await render(hbs`<ToggleYesno @yes={{this.value}} @action={{(noop)}} />`);
     await a11yAudit(this.element);
     assert.ok(true, 'not a11y violations');
-    assert.equal(component.checked, 'true');
+    assert.strictEqual(component.checked, 'true');
     this.set('value', false);
-    assert.equal(component.checked, 'false');
+    assert.strictEqual(component.checked, 'false');
   });
 
   test('click', async function (assert) {
@@ -25,18 +25,18 @@ module('Integration | Component | toggle yesno', function (hooks) {
     this.set('value', true);
     this.set('toggle', (val) => {
       const value = this.value;
-      assert.equal(!value, val);
+      assert.strictEqual(!value, val);
       this.set('value', val);
     });
     await render(hbs`<ToggleYesno @yes={{this.value}} @toggle={{this.toggle}} />`);
-    assert.equal(component.checked, 'true');
+    assert.strictEqual(component.checked, 'true');
     await component.handle.click();
-    assert.equal(component.checked, 'false');
+    assert.strictEqual(component.checked, 'false');
     await component.handle.click();
-    assert.equal(component.checked, 'true');
+    assert.strictEqual(component.checked, 'true');
     await component.label.click();
-    assert.equal(component.checked, 'false');
+    assert.strictEqual(component.checked, 'false');
     await component.label.click();
-    assert.equal(component.checked, 'true');
+    assert.strictEqual(component.checked, 'true');
   });
 });

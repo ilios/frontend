@@ -16,8 +16,8 @@ module('Unit | Service | search', function (hooks) {
     const courses = [{ id: 1, title: 'Sweet', sessions: [] }];
     const autocomplete = ['one', 'two'];
     this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
-      assert.equal(queryParams.q, 'codejam');
-      assert.equal(queryParams.size, 1000);
+      assert.strictEqual(queryParams.q, 'codejam');
+      assert.strictEqual(parseInt(queryParams.size, 10), 1000);
       return {
         results: {
           courses,
@@ -33,8 +33,8 @@ module('Unit | Service | search', function (hooks) {
   test('test search for users', async function (assert) {
     assert.expect(9);
     this.server.get('api/search/v1/users', (schema, { queryParams }) => {
-      assert.equal(queryParams.q, 'codejam');
-      assert.equal(queryParams.size, 100);
+      assert.strictEqual(queryParams.q, 'codejam');
+      assert.strictEqual(parseInt(queryParams.size, 10), 100);
       return {
         results: {
           users: [
@@ -61,18 +61,18 @@ module('Unit | Service | search', function (hooks) {
     assert.ok('users' in results);
     assert.ok('autocomplete' in results);
     const { users, autocomplete } = results;
-    assert.equal(users[0].fullName, 'Stefan A. Dude');
-    assert.equal(users[1].fullName, 'IliosMan');
-    assert.equal(users[2].fullName, 'Dave Lombard');
-    assert.equal(autocomplete[0], 'one');
-    assert.equal(autocomplete[1], 'two');
+    assert.strictEqual(users[0].fullName, 'Stefan A. Dude');
+    assert.strictEqual(users[1].fullName, 'IliosMan');
+    assert.strictEqual(users[2].fullName, 'Dave Lombard');
+    assert.strictEqual(autocomplete[0], 'one');
+    assert.strictEqual(autocomplete[1], 'two');
   });
 
   test('test search for users with size parameters', async function (assert) {
     assert.expect(2);
     this.server.get('api/search/v1/users', (schema, { queryParams }) => {
-      assert.equal(queryParams.q, 'codejam');
-      assert.equal(queryParams.size, 9);
+      assert.strictEqual(queryParams.q, 'codejam');
+      assert.strictEqual(parseInt(queryParams.size, 10), 9);
       return {
         results: {
           users: [],
@@ -87,9 +87,9 @@ module('Unit | Service | search', function (hooks) {
   test('test search for users with onlySuggest parameters', async function (assert) {
     assert.expect(3);
     this.server.get('api/search/v1/users', (schema, { queryParams }) => {
-      assert.equal(queryParams.q, 'codejam');
-      assert.equal(queryParams.size, 19);
-      assert.equal(queryParams.onlySuggest, 'true');
+      assert.strictEqual(queryParams.q, 'codejam');
+      assert.strictEqual(parseInt(queryParams.size, 10), 19);
+      assert.strictEqual(queryParams.onlySuggest, 'true');
       return {
         results: {
           users: [],
@@ -104,9 +104,9 @@ module('Unit | Service | search', function (hooks) {
   test('test search for curriculum with onlySuggest parameters', async function (assert) {
     assert.expect(3);
     this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
-      assert.equal(queryParams.q, 'codejam');
-      assert.equal(queryParams.size, 1000);
-      assert.equal(queryParams.onlySuggest, 'true');
+      assert.strictEqual(queryParams.q, 'codejam');
+      assert.strictEqual(parseInt(queryParams.size, 10), 1000);
+      assert.strictEqual(queryParams.onlySuggest, 'true');
       return {
         results: {
           courses: [],

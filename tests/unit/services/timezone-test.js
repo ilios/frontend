@@ -7,7 +7,7 @@ module('Unit | Service | timezone', function (hooks) {
 
   test('getCurrentTimezone', function (assert) {
     const service = this.owner.lookup('service:timezone');
-    assert.equal(moment.tz.guess(), service.getCurrentTimezone());
+    assert.strictEqual(moment.tz.guess(), service.getCurrentTimezone());
   });
 
   test('getTimezoneNames', function (assert) {
@@ -18,15 +18,15 @@ module('Unit | Service | timezone', function (hooks) {
     assert.notOk(names.includes('Etc/GMT-13'));
     assert.notOk(names.includes('Canada/Newfoundland'));
     assert.notOk(names.includes('UTC'));
-    assert.equal(names[0], 'Africa/Abidjan');
-    assert.equal(names[names.length - 1], 'Pacific/Yap');
+    assert.strictEqual(names[0], 'Africa/Abidjan');
+    assert.strictEqual(names[names.length - 1], 'Pacific/Yap');
   });
 
   test('formatTimezone', function (assert) {
     const service = this.owner.lookup('service:timezone');
     const timezone = 'America/Los_Angeles';
     const offset = moment.tz(timezone).format('Z');
-    assert.equal(`(${offset}) America - Los Angeles`, service.formatTimezone(timezone));
+    assert.strictEqual(`(${offset}) America - Los Angeles`, service.formatTimezone(timezone));
   });
 
   test('getTimezones', function (assert) {
@@ -34,9 +34,9 @@ module('Unit | Service | timezone', function (hooks) {
     const timezones = service.getTimezones();
     // fortunately, those are not expected to change, and they don't observe DST.
     // so it's safe to hardwire them into the test.
-    assert.equal(timezones[0].label, '(-11:00) Pacific - Midway');
-    assert.equal(timezones[0].value, 'Pacific/Midway');
-    assert.equal(timezones[timezones.length - 1].label, '(+14:00) Pacific - Kiritimati');
-    assert.equal(timezones[timezones.length - 1].value, 'Pacific/Kiritimati');
+    assert.strictEqual(timezones[0].label, '(-11:00) Pacific - Midway');
+    assert.strictEqual(timezones[0].value, 'Pacific/Midway');
+    assert.strictEqual(timezones[timezones.length - 1].label, '(+14:00) Pacific - Kiritimati');
+    assert.strictEqual(timezones[timezones.length - 1].value, 'Pacific/Kiritimati');
   });
 });

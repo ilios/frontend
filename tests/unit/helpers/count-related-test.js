@@ -6,7 +6,7 @@ module('Unit | Helper | count related', function () {
     assert.expect(2);
     const object = {
       hasMany(what) {
-        assert.equal(what, 'stuff');
+        assert.strictEqual(what, 'stuff');
 
         return {
           ids() {
@@ -16,7 +16,7 @@ module('Unit | Helper | count related', function () {
       },
     };
     const result = countRelated([object, 'stuff']);
-    assert.equal(result, 2);
+    assert.strictEqual(result, 2);
   });
 
   test('missing what returns false', function (assert) {

@@ -40,19 +40,25 @@ module('Integration | Component | session/objective-list', function (hooks) {
       />`
     );
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
-    assert.equal(component.headers[0].text, 'Description');
-    assert.equal(component.headers[1].text, 'Parent Objectives');
-    assert.equal(component.headers[2].text, 'Vocabulary Terms');
-    assert.equal(component.headers[3].text, 'MeSH Terms');
-    assert.equal(component.headers[4].text, 'Actions');
+    assert.strictEqual(component.headers[0].text, 'Description');
+    assert.strictEqual(component.headers[1].text, 'Parent Objectives');
+    assert.strictEqual(component.headers[2].text, 'Vocabulary Terms');
+    assert.strictEqual(component.headers[3].text, 'MeSH Terms');
+    assert.strictEqual(component.headers[4].text, 'Actions');
 
-    assert.equal(component.objectives.length, 2);
-    assert.equal(component.objectives[0].description.text, 'Objective B');
-    assert.equal(component.objectives[0].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
-    assert.equal(component.objectives[0].selectedTerms.list[0].terms[0].name, 'term 1');
-    assert.equal(component.objectives[1].description.text, 'Objective A');
-    assert.equal(component.objectives[1].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
-    assert.equal(component.objectives[1].selectedTerms.list[0].terms[0].name, 'term 0');
+    assert.strictEqual(component.objectives.length, 2);
+    assert.strictEqual(component.objectives[0].description.text, 'Objective B');
+    assert.strictEqual(
+      component.objectives[0].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)'
+    );
+    assert.strictEqual(component.objectives[0].selectedTerms.list[0].terms[0].name, 'term 1');
+    assert.strictEqual(component.objectives[1].description.text, 'Objective A');
+    assert.strictEqual(
+      component.objectives[1].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)'
+    );
+    assert.strictEqual(component.objectives[1].selectedTerms.list[0].terms[0].name, 'term 0');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -72,7 +78,7 @@ module('Integration | Component | session/objective-list', function (hooks) {
       />`
     );
     assert.notOk(component.sortIsVisible);
-    assert.equal(component.text, '');
+    assert.strictEqual(component.text, '');
   });
 
   test('no "sort objectives" button in list with one item', async function (assert) {
@@ -90,7 +96,7 @@ module('Integration | Component | session/objective-list', function (hooks) {
       />`
     );
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');
-    assert.equal(component.objectives.length, 1);
+    assert.strictEqual(component.objectives.length, 1);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

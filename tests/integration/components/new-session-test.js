@@ -25,9 +25,9 @@ module('Integration | Component | new session', function (hooks) {
     await render(
       hbs`<NewSession @save={{(noop)}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />`
     );
-    assert.equal(component.sessionTypes.length, 2);
-    assert.equal(component.sessionTypes[0].title, 'session type 0');
-    assert.equal(component.sessionTypes[1].title, 'session type 1');
+    assert.strictEqual(component.sessionTypes.length, 2);
+    assert.strictEqual(component.sessionTypes[0].title, 'session type 0');
+    assert.strictEqual(component.sessionTypes[1].title, 'session type 1');
   });
 
   test('cancel', async function (assert) {
@@ -36,7 +36,7 @@ module('Integration | Component | new session', function (hooks) {
       assert.ok(true);
     });
     await render(
-      hbs`<NewSession @save={{(noop)}} @cancel={{this.cancel}} @sessionTypes={{array}} />`
+      hbs`<NewSession @save={{(noop)}} @cancel={{this.cancel}} @sessionTypes={{(array)}} />`
     );
     await component.cancel();
   });
@@ -46,8 +46,8 @@ module('Integration | Component | new session', function (hooks) {
     const newTitle = 'foobar';
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     this.set('save', (session) => {
-      assert.equal(session.get('title'), newTitle);
-      assert.equal(session.get('sessionType').get('title'), this.sessionType2.title);
+      assert.strictEqual(session.get('title'), newTitle);
+      assert.strictEqual(session.get('sessionType').get('title'), this.sessionType2.title);
     });
     await render(
       hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />`
@@ -62,8 +62,8 @@ module('Integration | Component | new session', function (hooks) {
     const newTitle = 'foobar';
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     this.set('save', (session) => {
-      assert.equal(session.get('title'), newTitle);
-      assert.equal(session.get('sessionType').get('title'), this.sessionType2.title);
+      assert.strictEqual(session.get('title'), newTitle);
+      assert.strictEqual(session.get('sessionType').get('title'), this.sessionType2.title);
     });
     await render(
       hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />`

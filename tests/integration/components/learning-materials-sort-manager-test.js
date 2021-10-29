@@ -83,7 +83,7 @@ module('Integration | Component | learning materials sort manager', function (ho
         .dom('.draggable-object:nth-of-type(1) .lm-type-icon .fa-paragraph')
         .exists({ count: 1 }, 'Shows LM type icon.');
 
-      assert.equal(
+      assert.strictEqual(
         find('.draggable-object:nth-of-type(1) .details').textContent.replace(/[\s\n\t]+/g, ''),
         `${capitalize(lm2.type)}, owned by ${owner2.fullName}, Status: ${status2.title}`.replace(
           /[\s\n\t]+/g,
@@ -96,7 +96,7 @@ module('Integration | Component | learning materials sort manager', function (ho
         .dom('.draggable-object:nth-of-type(2) .lm-type-icon .fa-file-pdf')
         .exists({ count: 1 }, 'Shows LM type icon.');
 
-      assert.equal(
+      assert.strictEqual(
         find('.draggable-object:nth-of-type(2) .details').textContent.replace(/[\s\n\t]+/g, ''),
         `${capitalize(lm1.type)}, owned by ${owner1.fullName}, Status: ${status1.title}`.replace(
           /[\s\n\t]+/g,
@@ -178,7 +178,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     this.set('cancel', () => {});
 
     this.set('save', (data) => {
-      assert.equal(data.length, clms.length);
+      assert.strictEqual(data.length, clms.length);
       assert.ok(data.includes(clm1));
       assert.ok(data.includes(clm2));
     });

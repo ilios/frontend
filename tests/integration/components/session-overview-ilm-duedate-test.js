@@ -28,8 +28,8 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
     />`);
 
     assert.ok(component.isVisible);
-    assert.equal(component.label, 'Due By:');
-    assert.equal(component.value, '5/19/21, 11:55 PM');
+    assert.strictEqual(component.label, 'Due By:');
+    assert.strictEqual(component.value, '5/19/21, 11:55 PM');
     assert.ok(component.isEditable);
     await a11yAudit(this.element);
     assert.ok(true, 'not a11y violations');
@@ -58,8 +58,8 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
       @editable={{this.editable}}
     />`);
 
-    assert.equal(component.label, 'Due By:');
-    assert.equal(component.value, '5/19/21, 11:55 PM');
+    assert.strictEqual(component.label, 'Due By:');
+    assert.strictEqual(component.value, '5/19/21, 11:55 PM');
     assert.notOk(component.isEditable);
     await a11yAudit(this.element);
     assert.ok(true, 'not a11y violations');
@@ -75,18 +75,18 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
       @editable={{this.editable}}
     />`);
 
-    assert.equal(component.value, '5/19/21, 11:55 PM');
+    assert.strictEqual(component.value, '5/19/21, 11:55 PM');
     await component.edit();
-    assert.equal(component.datePicker.value, '5/19/2021');
-    assert.equal(component.timePicker.hour.value, '11');
-    assert.equal(component.timePicker.minute.value, '55');
-    assert.equal(component.timePicker.ampm.value, 'pm');
+    assert.strictEqual(component.datePicker.value, '5/19/2021');
+    assert.strictEqual(component.timePicker.hour.value, '11');
+    assert.strictEqual(component.timePicker.minute.value, '55');
+    assert.strictEqual(component.timePicker.ampm.value, 'pm');
     await component.datePicker.set('1/1/1999');
     await component.timePicker.hour.select('5');
     await component.timePicker.minute.select('23');
     await component.timePicker.ampm.select('am');
     await component.save();
-    assert.equal(component.value, '1/1/99, 5:23 AM');
+    assert.strictEqual(component.value, '1/1/99, 5:23 AM');
   });
 
   test('change date and time, then cancel', async function (assert) {
@@ -99,17 +99,17 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
       @editable={{this.editable}}
     />`);
 
-    assert.equal(component.value, '5/19/21, 11:55 PM');
+    assert.strictEqual(component.value, '5/19/21, 11:55 PM');
     await component.edit();
-    assert.equal(component.datePicker.value, '5/19/2021');
-    assert.equal(component.timePicker.hour.value, '11');
-    assert.equal(component.timePicker.minute.value, '55');
-    assert.equal(component.timePicker.ampm.value, 'pm');
+    assert.strictEqual(component.datePicker.value, '5/19/2021');
+    assert.strictEqual(component.timePicker.hour.value, '11');
+    assert.strictEqual(component.timePicker.minute.value, '55');
+    assert.strictEqual(component.timePicker.ampm.value, 'pm');
     await component.datePicker.set('1/1/1999');
     await component.timePicker.hour.select('5');
     await component.timePicker.minute.select('23');
     await component.timePicker.ampm.select('am');
     await component.cancel();
-    assert.equal(component.value, '5/19/21, 11:55 PM');
+    assert.strictEqual(component.value, '5/19/21, 11:55 PM');
   });
 });

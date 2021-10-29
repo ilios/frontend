@@ -85,28 +85,28 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       @remove={{action this.nothing}}
     />`);
 
-    assert.equal(component.selectedTerms.length, 2);
-    assert.equal(component.selectedTerms[0].title, 'Foo (Medicine)');
-    assert.equal(component.selectedTerms[0].terms[0].name, 'Alpha');
-    assert.equal(component.selectedTerms[0].terms[1].name, 'Beta');
-    assert.equal(component.selectedTerms[1].title, 'Bar (Medicine) (inactive)');
-    assert.equal(component.selectedTerms[1].terms[0].name, 'Gamma');
+    assert.strictEqual(component.selectedTerms.length, 2);
+    assert.strictEqual(component.selectedTerms[0].title, 'Foo (Medicine)');
+    assert.strictEqual(component.selectedTerms[0].terms[0].name, 'Alpha');
+    assert.strictEqual(component.selectedTerms[0].terms[1].name, 'Beta');
+    assert.strictEqual(component.selectedTerms[1].title, 'Bar (Medicine) (inactive)');
+    assert.strictEqual(component.selectedTerms[1].terms[0].name, 'Gamma');
 
-    assert.equal(component.vocabulary.options.length, 1);
-    assert.equal(component.vocabulary.options[0].value, '1');
-    assert.equal(component.vocabulary.options[0].text, 'Foo (Medicine)');
+    assert.strictEqual(component.vocabulary.options.length, 1);
+    assert.strictEqual(component.vocabulary.options[0].value, '1');
+    assert.strictEqual(component.vocabulary.options[0].text, 'Foo (Medicine)');
     assert.ok(component.vocabulary.options[0].isSelected);
 
-    assert.equal(component.availableTerms.length, 2);
-    assert.equal(component.availableTerms[0].name, 'Alpha');
+    assert.strictEqual(component.availableTerms.length, 2);
+    assert.strictEqual(component.availableTerms[0].name, 'Alpha');
     assert.ok(component.availableTerms[0].isSelected);
-    assert.equal(component.availableTerms[0].children.length, 1);
-    assert.equal(component.availableTerms[0].children[0].name, 'Schnitzelwirt');
-    assert.equal(component.availableTerms[1].name, 'Beta');
+    assert.strictEqual(component.availableTerms[0].children.length, 1);
+    assert.strictEqual(component.availableTerms[0].children[0].name, 'Schnitzelwirt');
+    assert.strictEqual(component.availableTerms[1].name, 'Beta');
     assert.ok(component.availableTerms[1].isSelected);
-    assert.equal(component.availableTerms[1].children.length, 2);
-    assert.equal(component.availableTerms[1].children[0].name, 'Palo Alto');
-    assert.equal(component.availableTerms[1].children[1].name, 'Rainjacket');
+    assert.strictEqual(component.availableTerms[1].children.length, 2);
+    assert.strictEqual(component.availableTerms[1].children[0].name, 'Palo Alto');
+    assert.strictEqual(component.availableTerms[1].children[1].name, 'Rainjacket');
   });
 
   test('select/deselect term', async function (assert) {
@@ -114,11 +114,11 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     this.set('assignableVocabularies', resolve([this.vocabModel1]));
     this.set('selectedTerms', [this.termModel1]);
     this.set('add', (term) => {
-      assert.equal(term, this.termModel2);
+      assert.strictEqual(term, this.termModel2);
       this.selectedTerms.pushObject(term);
     });
     this.set('remove', (term) => {
-      assert.equal(term, this.termModel2);
+      assert.strictEqual(term, this.termModel2);
       this.selectedTerms.removeObject(term);
     });
 
@@ -167,20 +167,20 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       @remove={{action this.nothing}}
     />`);
 
-    assert.equal(component.vocabulary.options.length, 2);
-    assert.equal(component.vocabulary.options[0].value, '1');
-    assert.equal(component.vocabulary.options[0].text, 'Foo (Medicine)');
-    assert.equal(component.vocabulary.options[1].value, '2');
-    assert.equal(component.vocabulary.options[1].text, 'Bar (Medicine)');
+    assert.strictEqual(component.vocabulary.options.length, 2);
+    assert.strictEqual(component.vocabulary.options[0].value, '1');
+    assert.strictEqual(component.vocabulary.options[0].text, 'Foo (Medicine)');
+    assert.strictEqual(component.vocabulary.options[1].value, '2');
+    assert.strictEqual(component.vocabulary.options[1].text, 'Bar (Medicine)');
 
     assert.ok(component.availableTerms.length, 2);
-    assert.equal(component.availableTerms[0].name, 'Alpha');
-    assert.equal(component.availableTerms[1].name, 'Beta');
+    assert.strictEqual(component.availableTerms[0].name, 'Alpha');
+    assert.strictEqual(component.availableTerms[1].name, 'Beta');
 
     await component.vocabulary.set('2');
 
     assert.ok(component.availableTerms.length, 1);
-    assert.equal(component.availableTerms[0].name, 'Gamma');
+    assert.strictEqual(component.availableTerms[0].name, 'Gamma');
   });
 
   test('filter terms', async function (assert) {
@@ -195,23 +195,23 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       @remove={{(noop)}}
     />`);
 
-    assert.equal(component.availableTerms.length, 2);
-    assert.equal(component.availableTerms[0].name, 'Alpha');
-    assert.equal(component.availableTerms[0].children.length, 1);
-    assert.equal(component.availableTerms[0].children[0].name, 'Schnitzelwirt');
-    assert.equal(component.availableTerms[1].name, 'Beta');
-    assert.equal(component.availableTerms[1].children.length, 2);
-    assert.equal(component.availableTerms[1].children[0].name, 'Palo Alto');
-    assert.equal(component.availableTerms[1].children[1].name, 'Rainjacket');
+    assert.strictEqual(component.availableTerms.length, 2);
+    assert.strictEqual(component.availableTerms[0].name, 'Alpha');
+    assert.strictEqual(component.availableTerms[0].children.length, 1);
+    assert.strictEqual(component.availableTerms[0].children[0].name, 'Schnitzelwirt');
+    assert.strictEqual(component.availableTerms[1].name, 'Beta');
+    assert.strictEqual(component.availableTerms[1].children.length, 2);
+    assert.strictEqual(component.availableTerms[1].children[0].name, 'Palo Alto');
+    assert.strictEqual(component.availableTerms[1].children[1].name, 'Rainjacket');
 
     await component.filter.set('Al');
 
-    assert.equal(component.availableTerms.length, 2);
-    assert.equal(component.availableTerms[0].name, 'Alpha');
-    assert.equal(component.availableTerms[0].children.length, 0);
-    assert.equal(component.availableTerms[1].name, 'Beta');
-    assert.equal(component.availableTerms[1].children.length, 1);
-    assert.equal(component.availableTerms[1].children[0].name, 'Palo Alto');
+    assert.strictEqual(component.availableTerms.length, 2);
+    assert.strictEqual(component.availableTerms[0].name, 'Alpha');
+    assert.strictEqual(component.availableTerms[0].children.length, 0);
+    assert.strictEqual(component.availableTerms[1].name, 'Beta');
+    assert.strictEqual(component.availableTerms[1].children.length, 1);
+    assert.strictEqual(component.availableTerms[1].children[0].name, 'Palo Alto');
   });
 
   test('given vocabulary is selected', async function (assert) {
@@ -234,10 +234,10 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       @remove={{action this.nothing}}
     />`);
 
-    assert.equal(component.vocabulary.options.length, 2);
+    assert.strictEqual(component.vocabulary.options.length, 2);
     assert.notOk(component.vocabulary.options[0].isSelected);
     assert.ok(component.vocabulary.options[1].isSelected);
     assert.ok(component.availableTerms.length, 1);
-    assert.equal(component.availableTerms[0].name, 'Gamma');
+    assert.strictEqual(component.availableTerms[0].name, 'Gamma');
   });
 });

@@ -19,9 +19,9 @@ module('Unit | Model | CurriculumInventorySequenceBlock ', function (hooks) {
     parentBlock.set('parent', grandParent);
     model.set('parent', parentBlock);
     const ancestors = await model.get('allParents');
-    assert.equal(ancestors.length, 2);
-    assert.equal(ancestors[0], parentBlock);
-    assert.equal(ancestors[1], grandParent);
+    assert.strictEqual(ancestors.length, 2);
+    assert.strictEqual(ancestors[0], parentBlock);
+    assert.strictEqual(ancestors[1], grandParent);
   });
 
   test('list of ancestors is empty for top-level sequence block', async function (assert) {
@@ -30,6 +30,6 @@ module('Unit | Model | CurriculumInventorySequenceBlock ', function (hooks) {
       .lookup('service:store')
       .createRecord('curriculum-inventory-sequence-block');
     const ancestors = await model.get('allParents');
-    assert.equal(ancestors.length, 0);
+    assert.strictEqual(ancestors.length, 0);
   });
 });

@@ -24,13 +24,13 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
-    assert.equal(component.description.text, 'session objective 0');
-    assert.equal(component.parents.text, 'Add New');
-    assert.equal(component.meshDescriptors.text, 'Add New');
+    assert.strictEqual(component.description.text, 'session objective 0');
+    assert.strictEqual(component.parents.text, 'Add New');
+    assert.strictEqual(component.meshDescriptors.text, 'Add New');
     assert.ok(component.hasTrashCan);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -49,15 +49,15 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     const newDescription = 'Pluto Visits Earth';
-    assert.equal(component.description.text, 'session objective 0');
+    assert.strictEqual(component.description.text, 'session objective 0');
     await component.description.openEditor();
     await component.description.edit(newDescription);
     await component.description.save();
-    assert.equal(component.description.text, newDescription);
+    assert.strictEqual(component.description.text, newDescription);
   });
 
   test('can manage parents', async function (assert) {
@@ -74,7 +74,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     await component.parents.list[0].manage();
@@ -94,7 +94,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     await component.meshDescriptors.list[0].manage();
@@ -115,7 +115,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     assert.notOk(component.taxonomyManager.isPresent);
@@ -136,7 +136,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     await component.remove();

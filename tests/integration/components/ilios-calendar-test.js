@@ -14,7 +14,7 @@ module('Integration | Component | ilios calendar', function (hooks) {
     await render(hbs`<IliosCalendar
       @selectedDate={{this.date}}
       @selectedView="day"
-      @calendarEvents={{array}}
+      @calendarEvents={{(array)}}
       @changeDate={{(noop)}}
       @changeView={{(noop)}}
       @selectEvent={{(noop)}}
