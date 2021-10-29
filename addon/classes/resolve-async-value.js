@@ -13,6 +13,11 @@ export default class ResolveAsyncValueResource extends Resource {
       this.data = this.args.positional[1];
     }
 
-    this.data = await this.args.positional[0];
+    const val = this.args.positional[0];
+    if (Array.isArray(this.args.positional[0])) {
+      this.data = await Promise.all(val);
+    } else {
+      this.data = await val;
+    }
   }
 }
