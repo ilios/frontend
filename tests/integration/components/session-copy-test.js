@@ -127,7 +127,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.strictEqual(newSession.id, 2);
+      assert.strictEqual(parseInt(newSession.id, 10), 2);
     });
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
@@ -298,7 +298,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.strictEqual(newSession.id, 2);
+      assert.strictEqual(parseInt(newSession.id, 10), 2);
     });
 
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
@@ -351,7 +351,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.strictEqual(newSession.id, 3);
+      assert.strictEqual(parseInt(newSession.id, 10), 3);
     });
 
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
@@ -407,7 +407,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.strictEqual(newSession.id, 3);
+      assert.strictEqual(parseInt(newSession.id, 10), 3);
     });
 
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
@@ -464,7 +464,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.strictEqual(newSession.id, 4);
+      assert.strictEqual(parseInt(newSession.id, 10), 4);
     });
 
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
@@ -524,7 +524,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
-      assert.strictEqual(newSession.id, 4);
+      assert.strictEqual(parseInt(newSession.id, 10), 4);
     });
 
     await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);

@@ -10,7 +10,7 @@ module('Integration | Component | leadership search', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<LeadershipSearch
-      @existingUsers={{array}}
+      @existingUsers={{(array)}}
       @selectUser={{(noop)}}
     />`);
 
@@ -19,9 +19,9 @@ module('Integration | Component | leadership search', function (hooks) {
     assert.dom(search).exists({ count: 1 });
   });
 
-  test('less than 3 charecters triggers warning', async function (assert) {
+  test('less than 3 characters triggers warning', async function (assert) {
     await render(hbs`<LeadershipSearch
-      @existingUsers={{array}}
+      @existingUsers={{(array)}}
       @selectUser={{(noop)}}
     />`);
     const search = 'input[type="search"]';
@@ -38,7 +38,7 @@ module('Integration | Component | leadership search', function (hooks) {
       email: 'testemail',
     });
     await render(hbs`<LeadershipSearch
-      @existingUsers={{array}}
+      @existingUsers={{(array)}}
       @selectUser={{(noop)}}
     />`);
     const search = 'input[type="search"]';
@@ -72,7 +72,7 @@ module('Integration | Component | leadership search', function (hooks) {
 
   test('no results displays messages', async function (assert) {
     await render(hbs`<LeadershipSearch
-      @existingUsers={{array}}
+      @existingUsers={{(array)}}
       @selectUser={{(noop)}}
     />`);
     const search = 'input[type="search"]';
@@ -91,10 +91,10 @@ module('Integration | Component | leadership search', function (hooks) {
       email: 'testemail',
     });
     this.set('select', (user) => {
-      assert.strictEqual(user.id, 1);
+      assert.strictEqual(parseInt(user.id, 10), 1);
     });
     await render(hbs`<LeadershipSearch
-      @existingUsers={{array}}
+      @existingUsers={{(array)}}
       @selectUser={{this.select}}
     />`);
     const search = 'input[type="search"]';
@@ -122,7 +122,7 @@ module('Integration | Component | leadership search', function (hooks) {
       email: 'testemail2',
     });
     this.set('select', (user) => {
-      assert.strictEqual(user.id, 2, 'only user2 should be sent here');
+      assert.strictEqual(parseInt(user.id, 10), 2, 'only user2 should be sent here');
     });
     const user1 = this.owner.lookup('service:store').find('user', 1);
 

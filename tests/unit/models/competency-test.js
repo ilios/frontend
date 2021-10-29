@@ -35,7 +35,7 @@ module('Unit | Model | Competency', function (hooks) {
     const child2 = store.createRecord('competency');
     model.set('children', [child1, child2]);
     treeChildren = await model.treeChildren;
-    assert.strictEqual(treeChildren.length, 5);
+    assert.strictEqual(treeChildren.length, 2);
     assert.ok(treeChildren.includes(child1));
     assert.ok(treeChildren.includes(child2));
   });

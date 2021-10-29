@@ -36,7 +36,7 @@ module('Integration | Component | new session', function (hooks) {
       assert.ok(true);
     });
     await render(
-      hbs`<NewSession @save={{(noop)}} @cancel={{this.cancel}} @sessionTypes={{array}} />`
+      hbs`<NewSession @save={{(noop)}} @cancel={{this.cancel}} @sessionTypes={{(array)}} />`
     );
     await component.cancel();
   });

@@ -24,8 +24,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     await render(hbs`
       <NewLearningmaterial
         @type={{this.type}}
-        @learningMaterialStatuses={{array}}
-        @learningMaterialUserRoles={{array}}
+        @learningMaterialStatuses={{(array)}}
+        @learningMaterialUserRoles={{(array)}}
         @save={{(noop)}}
         @cancel={{(noop)}}
       />
@@ -48,8 +48,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     await render(hbs`
       <NewLearningmaterial
         @type={{this.type}}
-        @learningMaterialStatuses={{array}}
-        @learningMaterialUserRoles={{array}}
+        @learningMaterialStatuses={{(array)}}
+        @learningMaterialUserRoles={{(array)}}
         @save={{(noop)}}
         @cancel={{(noop)}}
       />

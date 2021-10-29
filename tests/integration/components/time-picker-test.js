@@ -30,7 +30,7 @@ module('Integration | Component | time-picker', function (hooks) {
     const newHour = '7';
     this.set('action', (value, unit) => {
       assert.strictEqual(unit, 'hour');
-      assert.strictEqual(value, '19');
+      assert.strictEqual(value, 19);
     });
     await render(hbs`<TimePicker @date={{this.date}} @action={{this.action}} />`);
     assert.strictEqual(component.hour.value, '11');
@@ -43,7 +43,7 @@ module('Integration | Component | time-picker', function (hooks) {
     const newMinute = '22';
     this.set('action', (value, unit) => {
       assert.strictEqual(unit, 'minute');
-      assert.strictEqual(value, '22');
+      assert.strictEqual(value, 22);
     });
     await render(hbs`<TimePicker @date={{this.date}} @action={{this.action}} />`);
     assert.strictEqual(component.minute.value, '58');
@@ -55,7 +55,7 @@ module('Integration | Component | time-picker', function (hooks) {
     assert.expect(6);
     this.set('action', (value, unit) => {
       assert.strictEqual(unit, 'hour');
-      assert.strictEqual(value, '11');
+      assert.strictEqual(value, 11);
     });
     await render(hbs`<TimePicker @date={{this.date}} @action={{this.action}} />`);
     assert.strictEqual(component.hour.value, '11');

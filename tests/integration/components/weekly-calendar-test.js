@@ -36,7 +36,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     this.set('date', january9th2018.toDate());
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
-      @events={{array}}
+      @events={{(array)}}
       @changeToDayView={{(noop)}}
     />`);
 
@@ -128,7 +128,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     });
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
-      @events={{array}}
+      @events={{(array)}}
       @changeToDayView={{this.changeToDayView}}
       @selectEvent={{(noop)}}
     />`);

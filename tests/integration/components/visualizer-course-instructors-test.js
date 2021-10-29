@@ -90,8 +90,8 @@ module('Integration | Component | visualizer-course-instructors', function (hook
     class RouterMock extends Service {
       transitionTo(route, courseId, termId) {
         assert.strictEqual(route, 'course-visualize-instructor');
-        assert.strictEqual(courseId, 1);
-        assert.strictEqual(termId, 2);
+        assert.strictEqual(parseInt(courseId, 10), 1);
+        assert.strictEqual(parseInt(termId, 10), 2);
       }
     }
     this.owner.register('service:router', RouterMock);

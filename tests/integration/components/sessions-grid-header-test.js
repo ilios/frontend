@@ -10,7 +10,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<SessionsGridHeader @toggleExpandAll={{noop}} @setSortBy={{(noop)}} />`);
+    await render(hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{(noop)}} />`);
     assert.strictEqual(component.title.text, 'Title');
     assert.strictEqual(component.sessionType.text, 'Type');
     assert.strictEqual(component.learnerGroupCount.text, 'Groups');

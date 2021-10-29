@@ -18,7 +18,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
 
-    await render(hbs`<IliosCalendarWeek @date={{this.date}} @calendarEvents={{array}} />`);
+    await render(hbs`<IliosCalendarWeek @date={{this.date}} @calendarEvents={{(array)}} />`);
     assert.dom().containsText('Week of September 27, 2015');
     assert.strictEqual(weeklyCalendarComponent.events.length, 0);
   });
@@ -37,7 +37,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
 
     await render(hbs`<IliosCalendarWeek
       @date={{this.date}}
-      @calendarEvents={{array}}
+      @calendarEvents={{(array)}}
       @areDaysSelectable={{true}}
       @changeDate={{action "changeDate"}}
       @changeView={{action "changeView"}}
@@ -55,7 +55,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
 
     await render(hbs`<IliosCalendarWeek
       @date={{this.date}}
-      @calendarEvents={{array}}
+      @calendarEvents={{(array)}}
       @areDaysSelectable={{false}}
       @changeDate={{this.nothing}}
       @changeView={{this.nothing}}

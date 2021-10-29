@@ -44,11 +44,11 @@ module('Integration | Service | user events', function (hooks) {
     const to = from.clone().hour(24);
     this.server.get(`/api/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.strictEqual(params.id, 1);
+      assert.strictEqual(parseInt(params.id, 10), 1);
       assert.ok('from' in queryParams);
       assert.ok('to' in queryParams);
-      assert.strictEqual(queryParams.from, from.unix());
-      assert.strictEqual(queryParams.to, to.unix());
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
 
       return { userEvents: [event1, event2, event3] };
     });
@@ -93,7 +93,7 @@ module('Integration | Service | user events', function (hooks) {
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
     this.server.get(`/geflarknik/userevents/:id`, (scheme, { params }) => {
-      assert.strictEqual(params.id, 1);
+      assert.strictEqual(parseInt(params.id, 10), 1);
       return { userEvents: [] };
     });
     const subject = this.owner.lookup('service:user-events');
@@ -122,7 +122,7 @@ module('Integration | Service | user events', function (hooks) {
     const from = moment('20110421', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
     this.server.get(`/api/userevents/:id`, (scheme, { params }) => {
-      assert.strictEqual(params.id, 1);
+      assert.strictEqual(parseInt(params.id, 10), 1);
       return { userEvents: [event1, event2] };
     });
 
@@ -149,11 +149,11 @@ module('Integration | Service | user events', function (hooks) {
     };
 
     this.server.get(`/api/userevents/:id`, (scheme, { params, queryParams }) => {
-      assert.strictEqual(params.id, 1);
+      assert.strictEqual(parseInt(params.id, 10), 1);
       const from = moment('20130121', 'YYYYMMDD').hour(0);
       const to = from.clone().hour(24);
-      assert.strictEqual(queryParams.from, from.unix());
-      assert.strictEqual(queryParams.to, to.unix());
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
 
       return { userEvents: [event1, event2] };
     });
@@ -179,12 +179,11 @@ module('Integration | Service | user events', function (hooks) {
     };
 
     this.server.get(`/api/userevents/:id`, (scheme, { params, queryParams }) => {
-      assert.strictEqual(params.id, 1);
+      assert.strictEqual(parseInt(params.id, 10), 1);
       const from = moment('20130121', 'YYYYMMDD').hour(0);
       const to = from.clone().hour(24);
-      assert.strictEqual(queryParams.from, from.unix());
-      assert.strictEqual(queryParams.to, to.unix());
-
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
       return { userEvents: [event1, event2] };
     });
 

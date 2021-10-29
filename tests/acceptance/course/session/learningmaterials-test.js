@@ -391,7 +391,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         `<p>${newDescription}</p>`
       );
 
-      assert.strictEqual(page.learningMaterials.manager.statusValue, 3);
+      assert.strictEqual(page.learningMaterials.manager.statusValue, '3');
     });
 
     test('change from required to not required #1249', async function (assert) {
@@ -437,7 +437,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
 
       await page.learningMaterials.current[0].details();
       assert.strictEqual(await page.learningMaterials.manager.notes.value(), '');
-      assert.strictEqual(page.learningMaterials.manager.statusValue, 1);
+      assert.strictEqual(page.learningMaterials.manager.statusValue, '1');
       assert.strictEqual(
         await page.learningMaterials.manager.description.editorValue(),
         '<p>0 lm description</p>'

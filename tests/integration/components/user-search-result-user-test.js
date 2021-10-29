@@ -44,7 +44,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     await render(hbs`<UserSearchResultUser
       @user={{this.user}}
       @addUser={{this.add}}
-      @currentlyActiveUsers={{array}}
+      @currentlyActiveUsers={{(array)}}
     />`);
     assert.dom('[data-test-result]').includesText('0 guy M. Mc0son user@example.edu');
     assert.dom('[data-test-result]').hasClass('active');

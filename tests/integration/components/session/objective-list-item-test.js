@@ -24,7 +24,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
@@ -49,7 +49,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     const newDescription = 'Pluto Visits Earth';
@@ -74,7 +74,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     await component.parents.list[0].manage();
@@ -94,7 +94,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     await component.meshDescriptors.list[0].manage();
@@ -115,7 +115,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     assert.notOk(component.taxonomyManager.isPresent);
@@ -136,7 +136,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
-        @courseObjectives={{array}}
+        @courseObjectives={{(array)}}
       />`
     );
     await component.remove();

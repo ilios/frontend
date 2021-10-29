@@ -139,7 +139,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
   test('it renders empty', async function (assert) {
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @sessions={{array}} @course={{this.course}} />`);
+    await render(hbs`<PublishAllSessions @sessions={{(array)}} @course={{this.course}} />`);
 
     assert.strictEqual(
       component.unpublishableSessions.text,

@@ -17,7 +17,7 @@ module('Integration | Service | Current User', function (hooks) {
   test('currentUserId', function (assert) {
     const subject = this.owner.lookup('service:current-user');
     const userId = subject.currentUserId;
-    assert.strictEqual(userId, 100);
+    assert.strictEqual(parseInt(userId, 10), 100);
   });
 
   test('no token - no currentUserId', async function (assert) {
@@ -33,7 +33,7 @@ module('Integration | Service | Current User', function (hooks) {
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
     const model = await subject.getModel();
-    assert.strictEqual(model.id, 100);
+    assert.strictEqual(parseInt(model.id, 10), 100);
   });
 
   test('no token - no model', async function (assert) {
@@ -51,7 +51,7 @@ module('Integration | Service | Current User', function (hooks) {
 
     this.server.get('api/users/:id', (schema, request) => {
       const id = request.params.id;
-      assert.strictEqual(id, 100);
+      assert.strictEqual(parseInt(id, 10), 100);
       assert.notOk(calledAlready);
       calledAlready = true;
       return schema.users.find(id);

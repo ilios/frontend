@@ -61,7 +61,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
     this.server.createList('meshDescriptor', 200);
     await render(hbs`<MeshManager
       @editable={{true}}
-      @terms={{array}}
+      @terms={{(array)}}
       @add={{(noop)}}
       @remove={{(noop)}}
     />`);

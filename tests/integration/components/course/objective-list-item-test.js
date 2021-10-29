@@ -22,7 +22,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
       hbs`<Course::ObjectiveListItem
         @courseObjective={{this.courseObjective}}
         @editable={{true}}
-        @cohortObjectives={{array}}
+        @cohortObjectives={{(array)}}
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
@@ -45,7 +45,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
       hbs`<Course::ObjectiveListItem
         @courseObjective={{this.courseObjective}}
         @editable={{true}}
-        @cohortObjectives={{array}}
+        @cohortObjectives={{(array)}}
       />`
     );
     const newDescription = 'Pluto Visits Earth';
@@ -68,7 +68,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
       hbs`<Course::ObjectiveListItem
         @courseObjective={{this.courseObjective}}
         @editable={{true}}
-        @cohortObjectives={{array}}
+        @cohortObjectives={{(array)}}
         @manageParents={{this.manageParents}}
       />`
     );
@@ -87,7 +87,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
       hbs`<Course::ObjectiveListItem
         @courseObjective={{this.courseObjective}}
         @editable={{true}}
-        @cohortObjectives={{array}}
+        @cohortObjectives={{(array)}}
       />`
     );
     await component.meshDescriptors.list[0].manage();
@@ -106,7 +106,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
       hbs`<Course::ObjectiveListItem
         @courseObjective={{this.courseObjective}}
         @editable={{true}}
-        @cohortObjectives={{array}}
+        @cohortObjectives={{(array)}}
       />`
     );
     assert.notOk(component.taxonomyManager.isPresent);
@@ -125,7 +125,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
       hbs`<Course::ObjectiveListItem
         @courseObjective={{this.courseObjective}}
         @editable={{true}}
-        @cohortObjectives={{array}}
+        @cohortObjectives={{(array)}}
       />`
     );
     await component.remove();

@@ -17,7 +17,7 @@ module('Unit | Service | search', function (hooks) {
     const autocomplete = ['one', 'two'];
     this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
       assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(queryParams.size, 1000);
+      assert.strictEqual(parseInt(queryParams.size, 10), 1000);
       return {
         results: {
           courses,
@@ -34,7 +34,7 @@ module('Unit | Service | search', function (hooks) {
     assert.expect(9);
     this.server.get('api/search/v1/users', (schema, { queryParams }) => {
       assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(queryParams.size, 100);
+      assert.strictEqual(parseInt(queryParams.size, 10), 100);
       return {
         results: {
           users: [
@@ -72,7 +72,7 @@ module('Unit | Service | search', function (hooks) {
     assert.expect(2);
     this.server.get('api/search/v1/users', (schema, { queryParams }) => {
       assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(queryParams.size, 9);
+      assert.strictEqual(parseInt(queryParams.size, 10), 9);
       return {
         results: {
           users: [],
@@ -88,7 +88,7 @@ module('Unit | Service | search', function (hooks) {
     assert.expect(3);
     this.server.get('api/search/v1/users', (schema, { queryParams }) => {
       assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(queryParams.size, 19);
+      assert.strictEqual(parseInt(queryParams.size, 10), 19);
       assert.strictEqual(queryParams.onlySuggest, 'true');
       return {
         results: {
@@ -105,7 +105,7 @@ module('Unit | Service | search', function (hooks) {
     assert.expect(3);
     this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
       assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(queryParams.size, 1000);
+      assert.strictEqual(parseInt(queryParams.size, 10), 1000);
       assert.strictEqual(queryParams.onlySuggest, 'true');
       return {
         results: {

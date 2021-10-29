@@ -48,7 +48,7 @@ module('Acceptance | Session - Terms', function (hooks) {
     assert.strictEqual(page.collapsedTaxonomies.vocabularies.length, 1);
     assert.strictEqual(page.collapsedTaxonomies.vocabularies[0].name, 'Vocabulary 1');
     assert.strictEqual(page.collapsedTaxonomies.vocabularies[0].school, 'school 0');
-    assert.strictEqual(page.collapsedTaxonomies.vocabularies[0].terms, 1);
+    assert.strictEqual(page.collapsedTaxonomies.vocabularies[0].terms.length, 1);
   });
 
   test('list terms', async function (assert) {

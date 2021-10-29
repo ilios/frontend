@@ -77,7 +77,7 @@ module('Integration | Component | course rollover', function (hooks) {
       const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
       const data = queryString.parse(request.requestBody);
       assert.ok('year' in data);
-      assert.strictEqual(data.year, lastYear);
+      assert.strictEqual(parseInt(data.year, 10), lastYear);
       assert.strictEqual(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
       return this.serialize(
@@ -90,7 +90,7 @@ module('Integration | Component | course rollover', function (hooks) {
       );
     });
     this.set('visit', (newCourse) => {
-      assert.strictEqual(newCourse.id, 14);
+      assert.strictEqual(parseInt(newCourse.id, 10), 14);
     });
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -146,7 +146,7 @@ module('Integration | Component | course rollover', function (hooks) {
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
       const data = queryString.parse(request.requestBody);
       assert.ok('year' in data);
-      assert.strictEqual(data.year, selectedYear);
+      assert.strictEqual(parseInt(data.year, 10), selectedYear);
       assert.strictEqual(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
       return this.serialize(
@@ -159,7 +159,7 @@ module('Integration | Component | course rollover', function (hooks) {
       );
     });
     this.set('visit', (newCourse) => {
-      assert.strictEqual(newCourse.id, 14);
+      assert.strictEqual(parseInt(newCourse.id, 10), 14);
     });
     await render(hbs`<CourseRollover
       @course={{this.course}}

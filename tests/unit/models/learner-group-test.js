@@ -535,7 +535,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', { title: 'Foo' });
     let titles = await learnerGroup.get('allParentsTitle');
-    assert.strictEqual(titles.length, '');
+    assert.strictEqual(titles, '');
 
     const subGroup = store.createRecord('learner-group', {
       title: 'Bar',

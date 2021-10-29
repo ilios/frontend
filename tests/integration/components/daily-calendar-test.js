@@ -36,7 +36,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.set('date', january9th2018.toDate());
     await render(hbs`<DailyCalendar
       @date={{this.date}}
-      @events={{array}}
+      @events={{(array)}}
       @selectEvent={{(noop)}}
     />`);
 

@@ -82,7 +82,7 @@ module('Integration | Component | dashboard materials', function (hooks) {
 
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.strictEqual(params.id, 11);
+      assert.strictEqual(parseInt(params.id, 10), 11);
       assert.ok('before' in queryParams);
       assert.ok('after' in queryParams);
       const before = moment(queryParams.before, 'X');
@@ -202,7 +202,7 @@ module('Integration | Component | dashboard materials', function (hooks) {
 
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.strictEqual(params.id, 11);
+      assert.strictEqual(parseInt(params.id, 10), 11);
       assert.ok('before' in queryParams);
       assert.ok('after' in queryParams);
       const before = moment(queryParams.before, 'X');

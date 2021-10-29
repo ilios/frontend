@@ -294,7 +294,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('totalSumOfferingsDuration', async function (assert) {
-    assert.expect(2);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     let total = await subject.get('totalSumOfferingsDuration');
@@ -310,7 +309,7 @@ module('Unit | Model | Session', function (hooks) {
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
     total = await subject.get('totalSumOfferingsDuration');
-    assert.strictEqual(total, 24.5);
+    assert.strictEqual(total, '24.50');
   });
 
   test('maxSingleOfferingDuration', async function (assert) {
@@ -330,7 +329,7 @@ module('Unit | Model | Session', function (hooks) {
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
     max = await subject.get('maxSingleOfferingDuration');
-    assert.strictEqual(max, 24.0);
+    assert.strictEqual(max, '24.00');
   });
 
   test('firstOfferingDate - no offerings, and no ILM', async function (assert) {
@@ -428,7 +427,7 @@ module('Unit | Model | Session', function (hooks) {
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
 
     const max = await subject.get('maxDuration');
-    assert.strictEqual(max, 24.0);
+    assert.strictEqual(max, '24.00');
   });
 
   test('maxDuration only ILM', async function (assert) {
@@ -480,7 +479,7 @@ module('Unit | Model | Session', function (hooks) {
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
 
     const max = await subject.get('totalSumDuration');
-    assert.strictEqual(max, 24.5);
+    assert.strictEqual(max, '24.50');
   });
 
   test('totalSumDuration only ILM', async function (assert) {

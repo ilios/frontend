@@ -80,7 +80,7 @@ module('Integration | Component | user search', function (hooks) {
   test('click group fires add group', async function (assert) {
     assert.expect(5);
     this.set('action', (group) => {
-      assert.strictEqual(group.id, 1);
+      assert.strictEqual(parseInt(group.id, 10), 1);
     });
     this.server.createList('instructor-group', 2);
     const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');

@@ -425,7 +425,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
-      @cohorts={{array}}
+      @cohorts={{(array)}}
     />`);
     assert.strictEqual(component.title, 'Learners and Learner Groups (3/3)');
     assert.strictEqual(component.detailLearnerList.learners.length, 3);

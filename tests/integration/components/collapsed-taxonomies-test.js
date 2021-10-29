@@ -49,7 +49,7 @@ module('Integration | Component | collapsed taxonomies', function (hooks) {
     assert.strictEqual(component.vocabularies.length, 1);
     assert.strictEqual(component.vocabularies[0].name, 'Vocabulary 1');
     assert.strictEqual(component.vocabularies[0].school, 'school 0');
-    assert.strictEqual(component.vocabularies[0].terms, 1);
+    assert.strictEqual(component.vocabularies[0].terms.length, 1);
   });
 
   test('click expands', async function (assert) {

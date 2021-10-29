@@ -44,7 +44,7 @@ module('Integration | Component | user-search-result-instructor-group', function
     await render(hbs`<UserSearchResultInstructorGroup
       @group={{this.group}}
       @addInstructorGroup={{this.add}}
-      @currentlyActiveInstructorGroups={{array}}
+      @currentlyActiveInstructorGroups={{(array)}}
     />`);
     assert.dom('[data-test-result]').includesText('instructor group 0');
     assert.dom('[data-test-result]').hasClass('active');

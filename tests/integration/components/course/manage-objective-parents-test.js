@@ -34,7 +34,7 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
       @cohortObjectives={{this.cohortObjectives}}
-      @selected={{array}}
+      @selected={{(array)}}
       @add={{(noop)}}
       @remove={{(noop)}}
       @removeFromCohort={{(noop)}}
@@ -95,7 +95,7 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
       @cohortObjectives={{this.cohortObjectives}}
-      @selected={{array}}
+      @selected={{(array)}}
       @add={{(noop)}}
       @remove={{(noop)}}
       @removeFromCohort={{(noop)}}

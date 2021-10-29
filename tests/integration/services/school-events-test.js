@@ -29,11 +29,11 @@ module('Integration | Service | school events', function (hooks) {
 
     this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.strictEqual(params.id, 7);
+      assert.strictEqual(parseInt(params.id, 10), 7);
       assert.ok('from' in queryParams);
       assert.ok('to' in queryParams);
-      assert.strictEqual(queryParams.from, from.unix());
-      assert.strictEqual(queryParams.to, to.unix());
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
 
       return { events: [event1, event2] };
     });
@@ -68,10 +68,9 @@ module('Integration | Service | school events', function (hooks) {
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
     this.server.get(`/geflarknik/schoolevents/:id`, (scheme, { params, queryParams }) => {
-      assert.strictEqual(params.id, 3);
-      assert.strictEqual(queryParams.from, from.unix());
-      assert.strictEqual(queryParams.to, to.unix());
-
+      assert.strictEqual(parseInt(params.id, 10), 3);
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
       return { events: [] };
     });
     const subject = this.owner.lookup('service:school-events');
@@ -99,9 +98,9 @@ module('Integration | Service | school events', function (hooks) {
     this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
       const from = moment('20110421', 'YYYYMMDD').hour(0);
       const to = from.clone().hour(24);
-      assert.strictEqual(params.id, 7);
-      assert.strictEqual(queryParams.from, from.unix());
-      assert.strictEqual(queryParams.to, to.unix());
+      assert.strictEqual(parseInt(params.id, 10), 7);
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
 
       return { events: [event1, event2] };
     });
@@ -136,9 +135,9 @@ module('Integration | Service | school events', function (hooks) {
     this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
       const from = moment('20080902', 'YYYYMMDD').hour(0);
       const to = from.clone().hour(24);
-      assert.strictEqual(params.id, 7);
-      assert.strictEqual(queryParams.from, from.unix());
-      assert.strictEqual(queryParams.to, to.unix());
+      assert.strictEqual(parseInt(params.id, 10), 7);
+      assert.strictEqual(parseInt(queryParams.from, 10), from.unix());
+      assert.strictEqual(parseInt(queryParams.to, 10), to.unix());
 
       return { events: [event1, event2] };
     });

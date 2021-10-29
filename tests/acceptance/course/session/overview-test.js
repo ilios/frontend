@@ -54,7 +54,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.overview.ilmHours.isVisible);
     assert.ok(page.overview.ilmDueDateAndTime.isVisible);
-    assert.strictEqual(page.overview.ilmHours.value, ilmSession.hours);
+    assert.strictEqual(parseInt(page.overview.ilmHours.value, 10), ilmSession.hours);
     assert.strictEqual(
       page.overview.ilmDueDateAndTime.value,
       new Date(ilmSession.dueDate).toLocaleDateString('en', {
@@ -91,7 +91,7 @@ module('Acceptance | Session - Overview', function (hooks) {
 
     assert.ok(page.overview.ilmHours.isVisible);
     assert.ok(page.overview.ilmDueDateAndTime.isVisible);
-    assert.strictEqual(page.overview.ilmHours.value, 1);
+    assert.strictEqual(parseInt(page.overview.ilmHours.value, 10), 1);
     assert.strictEqual(
       page.overview.ilmDueDateAndTime.value,
       moment().add(6, 'weeks').set('hour', 17).set('minute', 0).toDate().toLocaleDateString('en', {
@@ -120,11 +120,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.overview.ilmHours.value, 3);
+    assert.strictEqual(parseInt(page.overview.ilmHours.value, 10), 3);
     await page.overview.ilmHours.edit();
     await page.overview.ilmHours.set(23);
     await page.overview.ilmHours.save();
-    assert.strictEqual(page.overview.ilmHours.value, 23);
+    assert.strictEqual(parseInt(page.overview.ilmHours.value, 10), 23);
   });
 
   test('change ilm due date and time', async function (assert) {

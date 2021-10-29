@@ -11,7 +11,7 @@ module('Integration | Component | weekly events', function (hooks) {
     this.set('year', 2017);
     await render(hbs`<WeeklyEvents
       @year={{this.year}}
-      @expandedWeeks={{array}}
+      @expandedWeeks={{(array)}}
       @setYear={{(noop)}}
       @toggleOpenWeek={{(noop)}}
     />`);
@@ -33,7 +33,7 @@ module('Integration | Component | weekly events', function (hooks) {
     });
     await render(hbs`<WeeklyEvents
       @year={{this.year}}
-      @expandedWeeks={{array}}
+      @expandedWeeks={{(array)}}
       @setYear={{this.setYear}}
       @toggleOpenWeek={{(noop)}}
     />`);
@@ -53,7 +53,7 @@ module('Integration | Component | weekly events', function (hooks) {
     });
     await render(hbs`<WeeklyEvents
       @year={{this.year}}
-      @expandedWeeks={{array}}
+      @expandedWeeks={{(array)}}
       @setYear={{this.setYear}}
       @toggleOpenWeek={{(noop)}}
     />`);
@@ -73,7 +73,7 @@ module('Integration | Component | weekly events', function (hooks) {
     });
     await render(hbs`<WeeklyEvents
       @year={{this.year}}
-      @expandedWeeks={{array}}
+      @expandedWeeks={{(array)}}
       @setYear={{this.setYear}}
       @toggleOpenWeek={{(noop)}}
     />`);
@@ -93,7 +93,7 @@ module('Integration | Component | weekly events', function (hooks) {
     });
     await render(hbs`<WeeklyEvents
       @year={{this.year}}
-      @expandedWeeks={{array}}
+      @expandedWeeks={{(array)}}
       @setYear={{this.setYear}}
       @toggleOpenWeek={{(noop)}}
     />`);

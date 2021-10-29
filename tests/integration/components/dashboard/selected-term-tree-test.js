@@ -59,7 +59,7 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
     });
     await render(hbs`<Dashboard::SelectedTermTree
       @terms={{this.tree}}
-      @selectedTermIds={{array}}
+      @selectedTermIds={{(array)}}
       @add={{this.add}}
       @remove={{(noop)}}
     />`);

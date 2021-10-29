@@ -27,7 +27,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.set('date', january9th2018);
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
-      @events={{array}}
+      @events={{(array)}}
       @changeToDayView={{(noop)}}
       @selectEvent={{(noop)}}
     />`);
@@ -99,7 +99,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     });
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
-      @events={{array}}
+      @events={{(array)}}
       @changeToDayView={{this.changeToDayView}}
       @selectEvent={{(noop)}}
     />`);

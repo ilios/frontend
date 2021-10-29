@@ -19,7 +19,7 @@ module('Integration | Component | session/manage-objective-parents', function (h
     await render(hbs`<Session::ManageObjectiveParents
       @courseTitle={{this.courseTitle}}
       @courseObjectives={{this.courseObjectives}}
-      @selected={{array}}
+      @selected={{(array)}}
       @add={{(noop)}}
       @remove={{(noop)}}
     />`);
@@ -55,7 +55,7 @@ module('Integration | Component | session/manage-objective-parents', function (h
     await render(hbs`<Session::ManageObjectiveParents
       @courseTitle={{this.courseTitle}}
       @courseObjectives={{this.courseObjectives}}
-      @selected={{array}}
+      @selected={{(array)}}
       @add={{(noop)}}
       @remove={{(noop)}}
     />`);
