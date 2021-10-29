@@ -1,7 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
-import { deprecate } from '@ember/debug';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class CompetencyModel extends Model {
   @attr('boolean')
@@ -32,44 +32,24 @@ export default class CompetencyModel extends Model {
   }
 
   get isNotDomain() {
-    deprecate(`competency.isNotDomain called, check parent attribute directly instead.`, false, {
-      id: 'common.competency-is-not-domain',
-      for: 'ilios-common',
-      until: '62',
-      since: '61.0.0',
-    });
-    return !this.isDomain();
+    return !this.isDomain;
   }
 
   get isDomain() {
-    deprecate(`competency.isDomain called, check parent attribute directly instead.`, false, {
-      id: 'common.competency-is-domain',
-      for: 'ilios-common',
-      until: '62',
-      since: '61.0.0',
-    });
-    return !this.belongsTo('parent').id();
+    return !this.resolvedParent;
   }
 
-  @use domain = new DeprecatedAsyncCP(() => [
-    this._getDomain.bind(this),
-    'competency.domain',
-    this.parent,
-  ]);
+  @use resolvedParent = new ResolveAsyncValue(() => [this.parent]);
+
+  get domain() {
+    return this.resolvedParent ?? this;
+  }
 
   @use treeChildren = new DeprecatedAsyncCP(() => [
     this._treeChildren.bind(this),
     'competency.treeChildren',
     this.children,
   ]);
-
-  async _getDomain() {
-    const parent = await this.parent;
-    if (!parent) {
-      return this;
-    }
-    return parent;
-  }
 
   async _treeChildren() {
     const children = await this.children;
