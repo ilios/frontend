@@ -79,7 +79,7 @@
         {{#if (is-fulfilled @course.competencies)}}
           {{#if (get (await @course.competencies) "length")}}
             <ul class="static-list">
-              {{#each (await @course.domains) as |domain|}}
+              {{#each @course.domainsWithSubcompetencies as |domain|}}
                 <li>
                   {{domain.title}}
                   <ul>

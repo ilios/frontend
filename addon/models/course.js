@@ -1,271 +1,274 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
-import ObjectProxy from '@ember/object/proxy';
-import { all, map } from 'rsvp';
-import { isEmpty } from '@ember/utils';
-import moment from 'moment';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
+import { map } from 'rsvp';
+import moment from 'moment';
 
-const { alias, filterBy, mapBy, sum, oneWay, not, collect } = computed;
+export default class Course extends Model {
+  @attr('string')
+  title;
 
-export default Model.extend({
-  title: attr('string'),
-  level: attr('number'),
-  year: attr('number'),
-  startDate: attr('date'),
-  endDate: attr('date'),
-  externalId: attr('string'),
-  locked: attr('boolean'),
-  archived: attr('boolean'),
-  publishedAsTbd: attr('boolean'),
-  published: attr('boolean'),
-  clerkshipType: belongsTo('course-clerkship-type', { async: true }),
-  school: belongsTo('school', { async: true }),
-  directors: hasMany('user', {
+  @attr('number')
+  level;
+
+  @attr('number')
+  year;
+
+  @attr('date')
+  startDate;
+
+  @attr('date')
+  endDate;
+
+  @attr('string')
+  externalId;
+
+  @attr('boolean')
+  locked;
+
+  @attr('boolean')
+  archived;
+
+  @attr('boolean')
+  publishedAsTbd;
+
+  @attr('boolean')
+  published;
+
+  @belongsTo('course-clerkship-type', { async: true })
+  clerkshipType;
+
+  @belongsTo('school', { async: true })
+  school;
+
+  @hasMany('user', {
     async: true,
     inverse: 'directedCourses',
-  }),
-  administrators: hasMany('user', {
+  })
+  directors;
+
+  @hasMany('user', {
     async: true,
     inverse: 'administeredCourses',
-  }),
-  studentAdvisors: hasMany('user', {
+  })
+  administrators;
+
+  @hasMany('user', {
     async: true,
     inverse: 'studentAdvisedCourses',
-  }),
-  cohorts: hasMany('cohort', { async: true }),
-  courseObjectives: hasMany('course-objective', { async: true }),
-  meshDescriptors: hasMany('mesh-descriptor', { async: true }),
-  learningMaterials: hasMany('course-learning-material', { async: true }),
-  sessions: hasMany('session', { async: true }),
-  ancestor: belongsTo('course', {
+  })
+  studentAdvisors;
+
+  @hasMany('cohort', { async: true })
+  cohorts;
+
+  @hasMany('course-objective', { async: true })
+  courseObjectives;
+
+  @hasMany('mesh-descriptor', { async: true })
+  meshDescriptors;
+
+  @hasMany('course-learning-material', { async: true })
+  learningMaterials;
+
+  @hasMany('session', { async: true })
+  sessions;
+
+  @belongsTo('course', {
     inverse: 'descendants',
     async: true,
-  }),
-  descendants: hasMany('course', {
+  })
+  ancestor;
+
+  @hasMany('course', {
     inverse: 'ancestor',
     async: true,
-  }),
-  terms: hasMany('term', { async: true }),
+  })
+  descendants;
 
-  publishedSessions: filterBy('sessions', 'isPublished'),
-  publishedSessionOfferings: mapBy('publishedSessions', 'offerings'),
-  publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
-  publishedOfferingCount: sum('publishedSessionOfferingCounts'),
+  @hasMany('term', { async: true })
+  terms;
 
-  /**
-   * All competencies linked to this course via its objectives.
-   * @property competencies
-   * @type {Ember.computed}
-   * @public
-   */
-  competencies: computed('courseObjectives.@each.treeCompetencies', async function () {
-    const courseObjectives = await this.courseObjectives;
-    const trees = await all(courseObjectives.mapBy('treeCompetencies'));
-    const competencies = trees.reduce((array, set) => {
-      return array.pushObjects(set);
-    }, []);
-    return competencies.uniq().filter((item) => {
-      return !isEmpty(item);
-    });
-  }),
+  get publishedSessions() {
+    return this.sessions.filterBy('isPublished');
+  }
 
-  /**
-   * A list of competency and their domains linked to this course via its objectives.
-   * Each item in this list is a proxy object, containing the domain and all competencies of this domain that are linked.
-   *
-   * @property domains
-   * @type {Ember.computed}
-   * @public
-   */
-  domains: computed('competencies.@each.domain', async function () {
-    const competencies = await this.competencies;
-    const domains = await all(competencies.mapBy('domain'));
+  @use publishedSessionOfferings = new ResolveAsyncValue(() => [
+    Promise.all(this.publishedSessions?.mapBy('offerings')),
+  ]);
+
+  get publishedOfferingCount() {
+    if (!this.publishedSessionOfferings) {
+      return 0;
+    }
+
+    return this.publishedSessionOfferings.reduce((acc, curr) => {
+      return acc + curr.length;
+    }, 0);
+  }
+
+  @use allTreeCompetencies = new ResolveAsyncValue(() => [
+    Promise.all(this.courseObjectives.mapBy('treeCompetencies')),
+  ]);
+
+  get competencies() {
+    return this.allTreeCompetencies?.flat().uniq().filter(Boolean);
+  }
+
+  @use competencyDomains = new ResolveAsyncValue(() => [
+    Promise.all(this.competencies?.mapBy('domain') ?? []),
+  ]);
+
+  @use domainsWithSubcompetencies = new AsyncProcess(() => [
+    this._getDomainProxies.bind(this),
+    this.competencyDomains,
+    this.competencies,
+  ]);
+
+  async _getDomainProxies(domains, courseCompetencies) {
+    if (!domains) {
+      return;
+    }
     const domainProxies = await map(domains.uniq(), async (domain) => {
-      let subCompetencies = await domain.get('treeChildren');
-
-      // filter out any competencies of this domain that are not linked to this course.
-      subCompetencies = subCompetencies
+      let subCompetencies = (await domain.children)
         .filter((competency) => {
-          return competencies.includes(competency);
+          return courseCompetencies.includes(competency);
         })
         .sortBy('title');
 
-      return ObjectProxy.create({
-        content: domain,
+      return {
+        title: domain.title,
+        id: domain.id,
         subCompetencies,
-      });
+      };
     });
 
     return domainProxies.sortBy('title');
-  }),
+  }
 
-  requiredPublicationIssues: computed('startDate', 'endDate', 'cohorts.length', function () {
-    return this.getRequiredPublicationIssues();
-  }),
-  optionalPublicationIssues: computed(
-    'terms.length',
-    'courseObjectives.length',
-    'meshDescriptors.length',
-    function () {
-      return this.getOptionalPublicationIssues();
+  get requiredPublicationIssues() {
+    const issues = [];
+    if (!this.startDate) {
+      issues.push('startDate');
     }
-  ),
+    if (!this.endDate) {
+      issues.push('endDate');
+    }
 
-  /**
-   * All schools associated with this course.
-   * This includes the course-owning school, as well as schools owning associated cohorts.
-   * @property schools
-   * @type {Ember.computed}
-   * @public
-   */
-  schools: computed('school', 'cohorts.[]', async function () {
-    const courseOwningSchool = await this.school;
+    if (!this.cohorts.length) {
+      issues.push('cohorts');
+    }
 
-    const cohorts = await this.cohorts;
-    const programYears = await all(cohorts.mapBy('programYear'));
-    const programs = await all(programYears.mapBy('program'));
-    const schools = await all(programs.mapBy('school'));
+    return issues;
+  }
 
-    schools.pushObject(courseOwningSchool);
-    return schools.uniq();
-  }),
+  get optionalPublicationIssues() {
+    const issues = [];
+    if (!this.terms.length) {
+      issues.push('terms');
+    }
+    if (!this.courseObjectives.length) {
+      issues.push('courseObjectives');
+    }
+    if (!this.meshDescriptors.length) {
+      issues.push('meshDescriptors');
+    }
 
-  /**
-   * All vocabularies that are eligible for assignment to this course.
-   * @property assignableVocabularies
-   * @type {Ember.computed}
-   * @public
-   */
-  assignableVocabularies: computed('schools.@each.vocabularies', async function () {
-    const schools = await this.schools;
-    const vocabularies = await all(schools.mapBy('vocabularies'));
-    return vocabularies
-      .reduce((array, set) => {
-        array.pushObjects(set.toArray());
-        return array;
+    return issues;
+  }
+
+  @use _programYears = new ResolveAsyncValue(() => [this.cohorts.mapBy('programYear')]);
+  @use _programs = new ResolveAsyncValue(() => [this._programYears?.mapBy('program')]);
+  @use _programSchools = new ResolveAsyncValue(() => [this._programs?.mapBy('school'), []]);
+  @use allSchools = new ResolveAsyncValue(() => [
+    Promise.all([...this._programSchools, this.school]),
+  ]);
+  get schools() {
+    return this.allSchools?.uniq();
+  }
+
+  @use _schoolVocabularies = new ResolveAsyncValue(() => [this.schools?.mapBy('vocabularies')]);
+
+  get assignableVocabularies() {
+    return this._schoolVocabularies
+      ?.reduce((acc, curr) => {
+        return acc.pushObjects(curr.toArray());
       }, [])
       .sortBy('school.title', 'title');
-  }),
+  }
 
+  @use _courseObjectives = new ResolveAsyncValue(() => [this.courseObjectives]);
   /**
    * A list of course objectives, sorted by position (asc) and then id (desc).
-   * @property sortedCourseObjectives
-   * @type {Ember.computed}
    */
-  sortedCourseObjectives: computed('courseObjectives.@each.position', async function () {
-    const objectives = await this.courseObjectives;
-    return objectives.toArray().sort(sortableByPosition);
-  }),
+  get sortedCourseObjectives() {
+    return this._courseObjectives?.toArray().sort(sortableByPosition);
+  }
 
-  hasMultipleCohorts: computed('cohorts.[]', function () {
-    const meta = this.hasMany('cohorts');
-    const ids = meta.ids();
+  get hasMultipleCohorts() {
+    return this.cohorts.length > 1;
+  }
 
-    return ids.length > 1;
-  }),
+  @use _allTermVocabularies = new ResolveAsyncValue(() => [
+    Promise.all(this.terms.mapBy('vocabulary')),
+  ]);
 
   /**
    * A list of all vocabularies that are associated via terms.
-   * @property associatedVocabularies
-   * @type {Ember.computed}
-   * @public
    */
-  associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.terms;
-    const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
-    return vocabularies.uniq().sortBy('title');
-  }),
+  get associatedVocabularies() {
+    return this._allTermVocabularies?.uniq().sortBy('title');
+  }
+
+  @use _allTermParents = new ResolveAsyncValue(() => [Promise.all(this.terms.mapBy('allParents'))]);
+  @use _resolvedTerms = new ResolveAsyncValue(() => [this.terms]);
 
   /**
    * A list containing all associated terms and their parent terms.
-   * @property termsWithAllParents
-   * @type {Ember.computed}
-   * @public
    */
-  termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.terms;
-    const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return allTerms
-      .reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, [])
-      .uniq();
-  }),
+  get termsWithAllParents() {
+    if (!this._allTermParents || !this._resolvedTerms) {
+      return undefined;
+    }
+    return [...this._allTermParents.flat(), ...this._resolvedTerms.toArray()].uniq();
+  }
 
-  /**
-   * The number of terms attached to this model
-   * @property termCount
-   * @type {Ember.computed}
-   * @public
-   */
-  termCount: computed('terms.[]', function () {
-    const termIds = this.hasMany('terms').ids();
-    return termIds.length;
-  }),
+  get termCount() {
+    return this.terms.length;
+  }
 
-  init() {
-    this._super(...arguments);
-    this.set('requiredPublicationSetFields', ['startDate', 'endDate']);
-    this.set('requiredPublicationLengthFields', ['cohorts']);
-    this.set('optionalPublicationSetFields', []);
-    this.set('optionalPublicationLengthFields', ['terms', 'courseObjectives', 'meshDescriptors']);
-  },
-
-  setDatesBasedOnYear: function () {
+  setDatesBasedOnYear() {
     const today = moment();
     const firstDayOfYear = moment(this.year + '-7-1', 'YYYY-MM-DD');
     const startDate = today < firstDayOfYear ? firstDayOfYear : today;
     const endDate = moment(startDate).add('8', 'weeks');
-    this.set('startDate', startDate.toDate());
-    this.set('endDate', endDate.toDate());
-  },
+    this.tartDate = startDate.toDate();
+    this.endDate = endDate.toDate();
+  }
 
-  xObjectives: alias('courseObjectives'),
-  isPublished: alias('published'),
-  isNotPublished: not('isPublished'),
-  isScheduled: oneWay('publishedAsTbd'),
-  isPublishedOrScheduled: computed.or('publishedAsTbd', 'isPublished'),
-  allPublicationIssuesCollection: collect(
-    'requiredPublicationIssues.length',
-    'optionalPublicationIssues.length'
-  ),
-  allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
-  requiredPublicationSetFields: null,
-  requiredPublicationLengthFields: null,
-  optionalPublicationSetFields: null,
-  optionalPublicationLengthFields: null,
-  getRequiredPublicationIssues() {
-    const issues = [];
-    this.requiredPublicationSetFields.forEach((val) => {
-      if (!this.get(val)) {
-        issues.push(val);
-      }
-    });
+  get xObjectives() {
+    return this.courseObjectives;
+  }
 
-    this.requiredPublicationLengthFields.forEach((val) => {
-      if (this.get(val + '.length') === 0) {
-        issues.push(val);
-      }
-    });
+  get isPublished() {
+    return this.published;
+  }
 
-    return issues;
-  },
-  getOptionalPublicationIssues() {
-    const issues = [];
-    this.optionalPublicationSetFields.forEach((val) => {
-      if (!this.get(val)) {
-        issues.push(val);
-      }
-    });
+  get isNotPublished() {
+    return !this.isPublished;
+  }
 
-    this.optionalPublicationLengthFields.forEach((val) => {
-      if (this.get(val + '.length') === 0) {
-        issues.push(val);
-      }
-    });
+  get isScheduled() {
+    return this.publishedAsTbd;
+  }
 
-    return issues;
-  },
-});
+  get isPublishedOrScheduled() {
+    return this.publishedAsTbd || this.isPublished;
+  }
+
+  get allPublicationIssuesLength() {
+    return this.requiredPublicationIssues.length + this.optionalPublicationIssues.length;
+  }
+}

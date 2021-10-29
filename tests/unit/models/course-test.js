@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { waitForResource } from 'ilios-common';
 
 module('Unit | Model | Course', function (hooks) {
   setupTest(hooks);
@@ -41,7 +42,7 @@ module('Unit | Model | Course', function (hooks) {
     assert.expect(1);
     const course = this.owner.lookup('service:store').createRecord('course');
 
-    const competencies = await course.get('competencies');
+    const competencies = await waitForResource(course, 'competencies');
     assert.strictEqual(competencies.length, 0);
   });
 
@@ -71,7 +72,7 @@ module('Unit | Model | Course', function (hooks) {
       programYearObjectives: [programYearObjective2, programYearObjective3],
     });
 
-    const competencies = await course.get('competencies');
+    const competencies = await waitForResource(course, 'competencies');
 
     assert.strictEqual(competencies.length, 3);
     assert.ok(competencies.includes(competency1));
@@ -79,7 +80,7 @@ module('Unit | Model | Course', function (hooks) {
     assert.ok(competencies.includes(competency3));
   });
 
-  test('check publishedSessionOfferingCounts count', function (assert) {
+  test('check publishedSessionOfferingCounts count', async function (assert) {
     assert.expect(2);
     const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
@@ -104,16 +105,16 @@ module('Unit | Model | Course', function (hooks) {
 
     course.get('sessions').pushObjects([session1, session2, session3]);
 
-    assert.strictEqual(course.get('publishedOfferingCount'), 3);
+    assert.strictEqual(await waitForResource(course, 'publishedOfferingCount'), 3);
     const offering5 = store.createRecord('offering');
     session1.get('offerings').pushObject(offering5);
     session3.set('published', true);
 
-    assert.strictEqual(course.get('publishedOfferingCount'), 5);
+    assert.strictEqual(await waitForResource(course, 'publishedOfferingCount'), 5);
   });
 
   test('domains', async function (assert) {
-    assert.expect(10);
+    assert.expect(13);
     const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
     const domain1 = store.createRecord('competency', {
@@ -176,23 +177,23 @@ module('Unit | Model | Course', function (hooks) {
       programYearObjectives: [programYearObjective4],
     });
 
-    const domainProxies = await course.get('domains');
-    assert.strictEqual(domainProxies.length, 3);
+    const domainObjects = await waitForResource(course, 'domainsWithSubcompetencies');
+    assert.strictEqual(domainObjects.length, 3);
 
-    const domainProxy1 = domainProxies[0];
-    assert.strictEqual(domainProxy1.get('content'), domain2);
-    assert.strictEqual(domainProxy1.get('subCompetencies').length, 1);
-    assert.ok(domainProxy1.get('subCompetencies').includes(competency3));
+    assert.strictEqual(domainObjects[0].id, domain2.id);
+    assert.strictEqual(domainObjects[0].title, domain2.title);
+    assert.strictEqual(domainObjects[0].subCompetencies.length, 1);
+    assert.ok(domainObjects[0].subCompetencies.includes(competency3));
 
-    const domainProxy2 = domainProxies[1];
-    assert.strictEqual(domainProxy2.get('content'), domain3);
-    assert.strictEqual(domainProxy2.get('subCompetencies').length, 0);
+    assert.strictEqual(domainObjects[1].id, domain3.id);
+    assert.strictEqual(domainObjects[1].title, domain3.title);
+    assert.strictEqual(domainObjects[1].subCompetencies.length, 0);
 
-    const domainProxy3 = domainProxies[2];
-    assert.strictEqual(domainProxy3.get('content'), domain1);
-    assert.strictEqual(domainProxy3.get('subCompetencies').length, 2);
-    assert.strictEqual(domainProxy3.get('subCompetencies')[0], competency2);
-    assert.strictEqual(domainProxy3.get('subCompetencies')[1], competency1);
+    assert.strictEqual(domainObjects[2].id, domain1.id);
+    assert.strictEqual(domainObjects[2].title, domain1.title);
+    assert.strictEqual(domainObjects[2].subCompetencies.length, 2);
+    assert.strictEqual(domainObjects[2].subCompetencies[0], competency2);
+    assert.strictEqual(domainObjects[2].subCompetencies[1], competency1);
   });
 
   test('schools', async function (assert) {
@@ -221,7 +222,7 @@ module('Unit | Model | Course', function (hooks) {
     course.get('cohorts').pushObjects([cohort1, cohort2, cohort3]);
     course.set('school', school1);
 
-    const schools = await course.get('schools');
+    const schools = await waitForResource(course, 'schools');
 
     assert.strictEqual(schools.length, 3);
     assert.ok(schools.includes(school1));
@@ -257,7 +258,7 @@ module('Unit | Model | Course', function (hooks) {
     course.get('cohorts').pushObject(cohort);
     course.set('school', school2);
 
-    const vocabularies = await course.get('assignableVocabularies');
+    const vocabularies = await waitForResource(course, 'assignableVocabularies');
     assert.strictEqual(vocabularies.length, 4);
     assert.strictEqual(vocabularies[0], vocabulary4);
     assert.strictEqual(vocabularies[1], vocabulary3);
@@ -287,10 +288,54 @@ module('Unit | Model | Course', function (hooks) {
       title: 'Foo',
       position: 2,
     });
-    const objectives = await course.get('sortedCourseObjectives');
+    const objectives = await waitForResource(course, 'sortedCourseObjectives');
     assert.strictEqual(objectives.length, 3);
     assert.strictEqual(objectives[0], sessionObjective3);
     assert.strictEqual(objectives[1], sessionObjective2);
     assert.strictEqual(objectives[2], sessionObjective1);
+  });
+
+  test('associatedVocabularies', async function (assert) {
+    assert.expect(3);
+    const course = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
+    const vocabulary1 = store.createRecord('vocabulary');
+    const vocabulary2 = store.createRecord('vocabulary');
+    store.createRecord('vocabulary');
+
+    const term1 = store.createRecord('term', { vocabulary: vocabulary1 });
+    const term2 = store.createRecord('term', { vocabulary: vocabulary1 });
+    const term3 = store.createRecord('term', { vocabulary: vocabulary1 });
+    const term4 = store.createRecord('term', { vocabulary: vocabulary2 });
+    course.terms.pushObjects([term1, term2, term3, term4]);
+
+    const vocabularies = await waitForResource(course, 'associatedVocabularies');
+    assert.strictEqual(vocabularies.length, 2);
+    assert.strictEqual(vocabularies[0], vocabulary1);
+    assert.strictEqual(vocabularies[1], vocabulary2);
+  });
+
+  test('termsWithAllParents', async function (assert) {
+    assert.expect(7);
+    const course = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
+    const vocabulary = store.createRecord('vocabulary');
+
+    const term1 = store.createRecord('term', { vocabulary });
+    const term2 = store.createRecord('term', { vocabulary });
+    const term3 = store.createRecord('term', { vocabulary });
+    const term4 = store.createRecord('term', { vocabulary, parent: term1 });
+    const term5 = store.createRecord('term', { vocabulary, parent: term1 });
+    const term6 = store.createRecord('term', { vocabulary, parent: term2 });
+    course.terms.pushObjects([term3, term4, term5, term6]);
+
+    const termsWithAllParents = await waitForResource(course, 'termsWithAllParents');
+    assert.strictEqual(termsWithAllParents.length, 6);
+    assert.ok(termsWithAllParents.includes(term1));
+    assert.ok(termsWithAllParents.includes(term2));
+    assert.ok(termsWithAllParents.includes(term3));
+    assert.ok(termsWithAllParents.includes(term4));
+    assert.ok(termsWithAllParents.includes(term5));
+    assert.ok(termsWithAllParents.includes(term6));
   });
 });
