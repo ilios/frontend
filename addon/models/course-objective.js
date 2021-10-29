@@ -46,24 +46,20 @@ export default class CourseObjective extends Model {
   })
   programYearObjectives;
 
-  @use allTermVocabularies = new ResolveAsyncValue(() => [
-    Promise.all(this.terms.mapBy('vocabulary')),
-  ]);
+  @use allTermVocabularies = new ResolveAsyncValue(() => [this.terms.mapBy('vocabulary')]);
 
   get associatedVocabularies() {
     return this.allTermVocabularies?.uniq().sortBy('title');
   }
 
-  @use allTerms = new ResolveAsyncValue(() => [
-    Promise.all(this.terms.mapBy('termWithAllParents')),
-  ]);
+  @use allTerms = new ResolveAsyncValue(() => [this.terms.mapBy('termWithAllParents')]);
 
   get termsWithAllParents() {
     return this.allTerms?.flat().uniq();
   }
 
   @use allTermCompetencies = new ResolveAsyncValue(() => [
-    Promise.all(this.programYearObjectives.mapBy('competency')),
+    this.programYearObjectives.mapBy('competency'),
   ]);
 
   /**

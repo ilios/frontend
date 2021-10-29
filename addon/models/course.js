@@ -96,7 +96,7 @@ export default class Course extends Model {
   }
 
   @use publishedSessionOfferings = new ResolveAsyncValue(() => [
-    Promise.all(this.publishedSessions?.mapBy('offerings')),
+    this.publishedSessions?.mapBy('offerings'),
   ]);
 
   get publishedOfferingCount() {
@@ -110,16 +110,14 @@ export default class Course extends Model {
   }
 
   @use allTreeCompetencies = new ResolveAsyncValue(() => [
-    Promise.all(this.courseObjectives.mapBy('treeCompetencies')),
+    this.courseObjectives.mapBy('treeCompetencies'),
   ]);
 
   get competencies() {
     return this.allTreeCompetencies?.flat().uniq().filter(Boolean);
   }
 
-  @use competencyDomains = new ResolveAsyncValue(() => [
-    Promise.all(this.competencies?.mapBy('domain') ?? []),
-  ]);
+  @use competencyDomains = new ResolveAsyncValue(() => [this.competencies?.mapBy('domain')]);
 
   @use domainsWithSubcompetencies = new AsyncProcess(() => [
     this._getDomainProxies.bind(this),
@@ -181,12 +179,14 @@ export default class Course extends Model {
 
   @use _programYears = new ResolveAsyncValue(() => [this.cohorts.mapBy('programYear')]);
   @use _programs = new ResolveAsyncValue(() => [this._programYears?.mapBy('program')]);
-  @use _programSchools = new ResolveAsyncValue(() => [this._programs?.mapBy('school'), []]);
-  @use allSchools = new ResolveAsyncValue(() => [
-    Promise.all([...this._programSchools, this.school]),
-  ]);
+  @use _programSchools = new ResolveAsyncValue(() => [this._programs?.mapBy('school')]);
+  @use _resolvedSchool = new ResolveAsyncValue(() => [this.school]);
   get schools() {
-    return this.allSchools?.uniq();
+    if (!this._programSchools || !this._resolvedSchool) {
+      return undefined;
+    }
+
+    return [...this._programSchools, this._resolvedSchool].uniq();
   }
 
   @use _schoolVocabularies = new ResolveAsyncValue(() => [this.schools?.mapBy('vocabularies')]);
@@ -211,9 +211,7 @@ export default class Course extends Model {
     return this.cohorts.length > 1;
   }
 
-  @use _allTermVocabularies = new ResolveAsyncValue(() => [
-    Promise.all(this.terms.mapBy('vocabulary')),
-  ]);
+  @use _allTermVocabularies = new ResolveAsyncValue(() => [this.terms.mapBy('vocabulary')]);
 
   /**
    * A list of all vocabularies that are associated via terms.
@@ -222,7 +220,7 @@ export default class Course extends Model {
     return this._allTermVocabularies?.uniq().sortBy('title');
   }
 
-  @use _allTermParents = new ResolveAsyncValue(() => [Promise.all(this.terms.mapBy('allParents'))]);
+  @use _allTermParents = new ResolveAsyncValue(() => [this.terms.mapBy('allParents')]);
   @use _resolvedTerms = new ResolveAsyncValue(() => [this.terms]);
 
   /**

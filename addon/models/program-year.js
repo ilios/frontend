@@ -59,9 +59,7 @@ export default class ProgramYear extends Model {
     return this._programYearObjectives?.toArray().sort(sortableByPosition);
   }
 
-  @use _allTermVocabularies = new ResolveAsyncValue(() => [
-    Promise.all(this.terms.mapBy('vocabulary')),
-  ]);
+  @use _allTermVocabularies = new ResolveAsyncValue(() => [this.terms.mapBy('vocabulary')]);
 
   /**
    * A list of all vocabularies that are associated via terms.
