@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import moment from 'moment';
 import hbs from 'htmlbars-inline-precompile';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 const getEvent = function () {
   return {
@@ -26,19 +27,22 @@ module('Integration | Component | ilios calendar multiday event', function (hook
     const event = getEvent();
     this.set('event', event);
     await render(hbs`
-      <IliosCalendarMultidayEvent
-        @event={{this.event}}
-        @isEventSelectable={{true}}
-        @selectEvent={{(noop)}}
-      />
+      <ul>
+        <IliosCalendarMultidayEvent
+          @event={{this.event}}
+          @isEventSelectable={{true}}
+          @selectEvent={{(noop)}}
+        />
+      </ul>
     `);
     assert.dom(this.element).containsText('11/11/84');
     assert.dom(this.element).containsText('Cheramie is born');
     assert.dom(this.element).containsText('Lancaster, CA');
+    await a11yAudit(this.element);
   });
 
   test('action fires on click', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
     const event = getEvent();
     event.offering = 1;
 
@@ -54,18 +58,14 @@ module('Integration | Component | ilios calendar multiday event', function (hook
       />
     `);
     assert.dom(this.element).containsText('Cheramie is born');
-    await click('[data-test-ilios-calendar-multiday-event]');
+    assert.dom('[data-test-ilios-calendar-multiday-event] button').isEnabled();
+    await click('[data-test-ilios-calendar-multiday-event] button');
   });
 
   test('action does not fire for scheduled events', async function (assert) {
     const event = getEvent();
 
     this.set('event', event);
-    assert.expect(1);
-    this.set('selectEvent', () => {
-      //this should never get called
-      assert.ok(false);
-    });
     await render(hbs`
       <IliosCalendarMultidayEvent
         @event={{this.event}}
@@ -74,7 +74,7 @@ module('Integration | Component | ilios calendar multiday event', function (hook
       />
     `);
     assert.dom(this.element).containsText('Cheramie is born');
-    await click('[data-test-ilios-calendar-multiday-event]');
+    assert.dom('[data-test-ilios-calendar-multiday-event] button').isDisabled();
   });
 
   test('action does not fire for unselectableEvents events', async function (assert) {
@@ -82,11 +82,6 @@ module('Integration | Component | ilios calendar multiday event', function (hook
     event.offering = 1;
 
     this.set('event', event);
-    assert.expect(1);
-    this.set('selectEvent', () => {
-      //this should never get called
-      assert.ok(false);
-    });
     await render(hbs`
       <IliosCalendarMultidayEvent
         @event={{this.event}}
@@ -94,6 +89,6 @@ module('Integration | Component | ilios calendar multiday event', function (hook
       />
     `);
     assert.dom(this.element).containsText('Cheramie is born');
-    await click('[data-test-ilios-calendar-multiday-event]');
+    assert.dom('[data-test-ilios-calendar-multiday-event] button').isDisabled();
   });
 });
