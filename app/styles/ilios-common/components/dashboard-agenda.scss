@@ -9,10 +9,6 @@
     overflow-y: scroll;
     padding: 0 1em 1em;
 
-    a {
-      @include ilios-link;
-    }
-
     table {
       @include ilios-table-structure;
       @include ilios-table-colors;

@@ -1,4 +1,8 @@
 .offering-url-display {
+  a {
+    text-decoration: none;
+  }
+  
   .copy-btn {
     @include ilios-link-button;
     margin-left: .25em;

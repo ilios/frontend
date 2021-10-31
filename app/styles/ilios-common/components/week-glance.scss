@@ -1,8 +1,4 @@
 .week-glance {
-  a {
-    @include ilios-link;
-  }
-
   .title {
     @include ilios-heading-h3;
     margin-bottom: 1em;
