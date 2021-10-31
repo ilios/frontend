@@ -93,6 +93,8 @@ module.exports = {
       const rootUrl = env.rootUrl ? env.rootUrl : '';
       const fonts = [
         'nunito/nunito-latin-400.woff2',
+        'nunito/nunito-latin-400italic.woff2',
+        'nunito/nunito-latin-600.woff2',
         'nunito/nunito-latin-700.woff2',
         'nunito-sans/nunito-sans-latin-400.woff2',
         'nunito-sans/nunito-sans-latin-600.woff2',
