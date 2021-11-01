@@ -7,10 +7,6 @@
     @include ilios-heading-h4;
   }
 
-  a {
-    @include ilios-link;
-  }
-
   table {
     @include ilios-table-structure;
     @include ilios-table-colors;
@@ -25,7 +21,6 @@
     }
 
     a {
-      @include ilios-link;
       margin-left: .25rem;
     }
   }
