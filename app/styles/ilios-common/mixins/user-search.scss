@@ -50,7 +50,7 @@
     }
 
     .name i {
-      font-size: .8rem;
+      @include font-size('small');
     }
 
     .email {

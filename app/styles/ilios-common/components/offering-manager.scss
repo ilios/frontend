@@ -1,7 +1,7 @@
 .offering-manager {
   border-bottom: 1px dotted $dark-grey;
   display: grid;
-  font-size: .9rem;
+  @include font-size('small');
   grid-column: 1 / -1;
   grid-template-columns: repeat(5, 1fr);
   margin-bottom: .5rem;

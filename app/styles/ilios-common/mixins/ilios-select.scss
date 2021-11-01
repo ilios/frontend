@@ -1,7 +1,6 @@
 @mixin ilios-select () {
   box-sizing: border-box;
-  font-size: 1em;
+  @include font-size('base');
   height: 2em;
-  line-height: 1.1em;
   padding: 4px 4px 4px 8px;
 }

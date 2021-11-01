@@ -32,7 +32,7 @@
   h2 {
     @include ilios-heading;
     color: $text-grey;
-    font-size: 1rem;
+    @include font-size('base');
     font-weight: bold;
   }
 

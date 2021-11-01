@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: start;
   color: $text-grey;
-  font-size: .8rem;
+  @include font-size('small');
   border: 1px solid $white;
   margin: 1px;
   padding: .25rem;
@@ -21,7 +21,7 @@
   .ilios-calendar-event-time {
     color: $maroon;
     display: block;
-    font-size: .7rem;
+    @include font-size('small');
     font-weight: bold;
     padding-bottom: .5em;
   }

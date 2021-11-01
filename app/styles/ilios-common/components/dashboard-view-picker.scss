@@ -25,6 +25,7 @@
     padding: .25rem .5rem;
 
     @include for-phone-only {
+      /* stylelint-disable property-disallowed-list */
       font-size: 3vw;
     }
 

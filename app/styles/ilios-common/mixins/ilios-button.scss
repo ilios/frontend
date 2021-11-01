@@ -7,7 +7,7 @@
   color: $white;
   cursor: pointer;
   display: inline-block;
-  font-size: 1rem;
+  @include font-size('base');
   padding: .3em 1em;
   vertical-align: middle;
   white-space: nowrap;
@@ -21,7 +21,6 @@
   color: inherit;
   background-color: transparent;
   cursor: pointer;
-  line-height: $base-line-height;
   white-space: normal;
 }
 

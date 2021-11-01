@@ -1,19 +1,17 @@
-@use "sass:math";
-
 @mixin ilios-table-structure () {
   border-collapse: collapse;
-  margin: ($base-line-height * .5em) 0;
+  margin: .7rem 0;
   table-layout: fixed;
   width: 100%;
 
   th {
-    padding: math.div($base-line-height * .5em, 2) 0;
+    padding: .25rem 0;
     text-align: left;
   }
 
   td {
     border: 0;
-    padding: math.div($base-line-height * .5em, 2) 0;
+    padding: .25rem 0;
   }
 
   th,
@@ -54,7 +52,7 @@
   }
 
   &.condensed {
-    font-size: .8em;
+    @include font-size('small');
 
     tr,
     td,

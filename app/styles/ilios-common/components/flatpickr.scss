@@ -12,7 +12,7 @@
 
   .flatpickr-current-month {
     display: flex;
-    font-size: 1.2rem;
+    @include font-size('medium');
     justify-content: center;
     .flatpickr-monthDropdown-months {
       appearance: none;

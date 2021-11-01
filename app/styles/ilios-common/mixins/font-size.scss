@@ -1,0 +1,47 @@
+/* stylelint-disable property-disallowed-list */
+:root {
+  --fs-smallest: 0.5rem;
+  --calc-line-height-smallest: 2.8ex;
+
+  --fs-small: 0.833rem;
+  --calc-line-height-small: 2.8ex;
+
+  --fs-base: 1rem;
+  --calc-line-height-base: 2.8ex;
+
+  --fs-medium: 1.2rem;
+  --calc-line-height-medium: 2.8ex;
+
+  --fs-large: 1.44rem;
+  --calc-line-height-large: 2.8ex;
+
+  --fs-xl: 1.728rem;
+  --calc-line-height-xl: 2.2ex;
+
+  --fs-xxl: 2.074rem;
+  --calc-line-height-xxl: 2.2ex;
+
+  --fs-xxxl: 2.488rem;
+  --calc-line-height-xxxl: 2.2ex;
+
+
+  --fs-huge: 15rem;
+  --calc-line-height-huge: 1;
+  @include for-tablet-and-up {
+    --fs-huge: 25rem;
+  }
+  @include for-laptop-and-up {
+    --fs-huge: 30rem;
+  }
+
+  font-size: 16px;
+  line-height: calc(4px + 2.8ex);
+  @include for-desktop-and-up {
+    font-size: 20px;
+  }
+}
+
+@mixin font-size($step) {
+  font-size: var(--fs-#{$step});
+  line-height: calc(4px + var(--calc-line-height-#{$step}));
+}

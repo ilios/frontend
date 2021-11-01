@@ -8,22 +8,8 @@
       margin-top: .5rem;
     }
 
-    @media phone {
-      .meh {
-        font-size: 15rem;
-      }
-    }
-
-    @include for-tablet-and-up {
-      .meh {
-        font-size: 25rem;
-      }
-    }
-
-    @include for-laptop-and-up {
-      .meh {
-        font-size: 30rem;
-      }
+    .meh {
+      @include font-size("huge");
     }
   }
 

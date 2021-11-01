@@ -34,19 +34,19 @@
   .publish-all-sessions-review {
     border: 1px solid $ilios-green;
     clear: both;
-    font-size: 1.5rem;
+    @include font-size('large');
     margin: 1rem;
     padding: 1rem;
     text-align: center;
 
     .unlinked-warning {
       color: $ilios-yellow;
-      font-size: 1rem;
+      @include font-size('base');
     }
 
     .fa-chart-bar {
       color: $ilios-blue;
-      font-size: .8rem;
+      @include font-size('small');
     }
 
     p {
@@ -64,6 +64,6 @@
 
   .fa-unlink {
     color: $black;
-    font-size: .75rem;
+    @include font-size('small');
   }
 }

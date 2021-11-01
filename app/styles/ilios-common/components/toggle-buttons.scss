@@ -10,7 +10,7 @@
     color: $ilios-green;
     border: 1px solid rgba($black, .2);
     display: inline-block;
-    font-size: .8rem;
+    @include font-size('small');
     min-width: 3em;
     padding: .25em .5em;
     text-align: center;

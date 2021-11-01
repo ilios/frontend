@@ -101,7 +101,7 @@
   font-weight: bold;
 
   .label-description {
-    font-size: smaller;
+    @include font-size('small');
     font-weight: normal;
 
   }
@@ -110,7 +110,7 @@
 @mixin ilios-form-error {
   .validation-error-message {
     color: $ilios-red;
-    font-size: .8rem;
+    @include font-size('small');
   }
 
   input {

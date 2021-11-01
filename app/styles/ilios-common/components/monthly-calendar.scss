@@ -79,7 +79,7 @@
 
         span {
           background-color: transparent;
-          font-size: .5em;
+          @include font-size('smallest');
           font-weight: normal;
         }
 
@@ -98,7 +98,7 @@
         @include ilios-link-button;
         display: block;
         width: 100%;
-        font-size: .8rem;
+        @include font-size('small');
         text-align: right;
         margin-top: .5rem;
 

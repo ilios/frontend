@@ -15,7 +15,7 @@
       .offering-block-date-dayofweek {
         color: $ilios-orange;
         display: block;
-        font-size: 1.2rem;
+        @include font-size('medium');
         font-weight: bold;
         width: 100%;
       }
