@@ -12,9 +12,13 @@ export default class IliosCalendarMultidayEventComponent extends Component {
     return this.isIlm || this.isOffering;
   }
 
+  get enabled() {
+    return this.clickable && this.args.isEventSelectable;
+  }
+
   @action
   selectEvent(selectedEvent) {
-    if (this.clickable && this.args.isEventSelectable) {
+    if (this.enabled) {
       this.args.selectEvent(selectedEvent);
     }
   }
