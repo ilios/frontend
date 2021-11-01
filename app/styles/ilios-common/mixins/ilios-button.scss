@@ -7,10 +7,17 @@
   color: $white;
   cursor: pointer;
   display: inline-block;
-  @include font-size('base');
   padding: .3em 1em;
   vertical-align: middle;
   white-space: nowrap;
+
+  @include font-size('base');
+  //at small sizes scale to keep button text in the button
+  @include for-phone-only {
+    /* stylelint-disable property-disallowed-list */
+    font-size: 3vw;
+  }
+
 }
 
 @mixin ilios-button-reset {
