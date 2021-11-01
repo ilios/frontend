@@ -24,7 +24,6 @@
   --fs-xxxl: 2.488rem;
   --calc-line-height-xxxl: 2.2ex;
 
-
   --fs-huge: 15rem;
   --calc-line-height-huge: 1;
   @include for-tablet-and-up {
@@ -34,9 +33,14 @@
     --fs-huge: 30rem;
   }
 
-  font-size: 16px;
   line-height: calc(4px + 2.8ex);
-  @include for-desktop-and-up {
+  
+  font-size: 16px;
+  //scale based on viewport width between 16px and 20px
+  @include for-phone-and-up {
+    font-size: calc(14px + .5vw);
+  }
+  @include for-laptop-and-up {
     font-size: 20px;
   }
 }
