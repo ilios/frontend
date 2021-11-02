@@ -19,13 +19,13 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
       program,
       administrators: [users[2], users[3]],
     });
+    this.reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculumInventoryReport', this.report.id);
   });
 
   test('collapsed leadership', async function (assert) {
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('curriculumInventoryReport', this.report.id);
-    await page.visit({ reportId: reportModel.id });
+    await page.visit({ reportId: this.reportModel.id });
     assert.equal(page.details.leadershipCollapsed.title, 'Curriculum Inventory Report Leadership');
     assert.equal(page.details.leadershipCollapsed.headers.length, 1);
     assert.equal(page.details.leadershipCollapsed.headers[0].title, 'Summary');
@@ -35,10 +35,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
   });
 
   test('list leadership', async function (assert) {
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('curriculumInventoryReport', this.report.id);
-    await page.visit({ reportId: reportModel.id, leadershipDetails: true });
+    await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
     assert.equal(
       page.details.leadershipExpanded.collapse.text,
       'Curriculum Inventory Report Leadership'
@@ -50,10 +47,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
   });
 
   test('search administrators', async function (assert) {
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('curriculumInventoryReport', this.report.id);
-    await page.visit({ reportId: reportModel.id, leadershipDetails: true });
+    await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
     await page.details.leadershipExpanded.manage.click();
     const manager = page.details.leadershipExpanded.leadershipManager;
     await manager.administratorSearch.search('guy');
@@ -71,10 +65,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
   });
 
   test('manage leadership', async function (assert) {
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('curriculumInventoryReport', this.report.id);
-    await page.visit({ reportId: reportModel.id, leadershipDetails: true });
+    await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
     await page.details.leadershipExpanded.manage.click();
     const manager = page.details.leadershipExpanded.leadershipManager;
     const { selectedAdministrators } = manager;
@@ -90,10 +81,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
   });
 
   test('cancel leadership changes', async function (assert) {
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('curriculumInventoryReport', this.report.id);
-    await page.visit({ reportId: reportModel.id, leadershipDetails: true });
+    await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
     await page.details.leadershipExpanded.manage.click();
     const manager = page.details.leadershipExpanded.leadershipManager;
     const { selectedAdministrators } = manager;
@@ -108,10 +96,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
   });
 
   test('save leadership changes', async function (assert) {
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('curriculumInventoryReport', this.report.id);
-    await page.visit({ reportId: reportModel.id, leadershipDetails: true });
+    await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
     await page.details.leadershipExpanded.manage.click();
     const manager = page.details.leadershipExpanded.leadershipManager;
     const { selectedAdministrators } = manager;
