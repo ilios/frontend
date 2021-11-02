@@ -1,5 +1,6 @@
 import { clickable, collection, create, text } from 'ember-cli-page-object';
 import listItem from './sequence-block-list-item';
+import newSequenceBlock from './new-sequence-block';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-sequence-block-list]',
@@ -24,6 +25,10 @@ const definition = {
       actions: text('th:eq(6)'),
     },
     items: collection('[data-test-curriculum-inventory-sequence-block-list-item]', listItem),
+  },
+  newBlock: {
+    scope: '[data-test-new]',
+    form: newSequenceBlock,
   },
   noSubSequenceBlocks: {
     scope: '[data-test-no-sub-sequence-blocks]',

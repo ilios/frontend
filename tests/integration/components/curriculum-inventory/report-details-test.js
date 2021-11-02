@@ -5,6 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import Service from '@ember/service';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory/report-details';
 
 module('Integration | Component | curriculum-inventory/report-details', function (hooks) {
   setupRenderingTest(hooks);
@@ -20,13 +21,12 @@ module('Integration | Component | curriculum-inventory/report-details', function
   });
 
   test('it renders', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
     const program = this.server.create('program', {
       school,
     });
-    this.server.create('curriculum-inventory-report', {
+    const report = this.server.create('curriculum-inventory-report', {
       academicLevels,
       year: '2016',
       program,
@@ -36,33 +36,27 @@ module('Integration | Component | curriculum-inventory/report-details', function
       endDate: moment('2016-04-11').toDate(),
       description: 'Lorem Ipsum',
     });
-    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', report.id);
     this.set('report', report);
-
     await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
       @canUpdate={{true}}
       @setLeadershipDetails={{(noop)}}
       @setManageLeadership={{(noop)}}
     />`);
-
-    assert
-      .dom('.curriculum-inventory-report-header .title')
-      .hasText(report.get('name'), 'Report name is visible in header.');
-    assert
-      .dom('.curriculum-inventory-report-overview .description .editable')
-      .hasText(report.get('description'), 'Report description is visible in overview.');
+    assert.equal(component.header.name.text, reportModel.name);
+    assert.equal(component.overview.description.text, reportModel.description);
   });
 
   test('finalize report', async function (assert) {
-    assert.expect(6);
     const school = this.server.create('school');
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
     const program = this.server.create('program', {
       school,
     });
-    this.server.create('curriculum-inventory-report', {
+    const report = this.server.create('curriculum-inventory-report', {
       academicLevels,
       year: '2016',
       program,
@@ -72,10 +66,11 @@ module('Integration | Component | curriculum-inventory/report-details', function
       endDate: moment('2016-04-11').toDate(),
       description: 'Lorem Ipsum',
     });
-    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    this.set('report', report);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', report.id);
+    this.set('report', reportModel);
     this.set('canUpdate', true);
-
     await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
       @canUpdate={{this.canUpdate}}
@@ -83,9 +78,12 @@ module('Integration | Component | curriculum-inventory/report-details', function
       @setManageLeadership={{(noop)}}
     />`);
 
-    assert.dom('.confirm-finalize').doesNotExist('Confirmation dialog is initially not visible.');
-    await click('.curriculum-inventory-report-header .finalize');
-    assert.dom('.confirm-finalize').exists({ count: 1 }, 'Confirmation dialog is visible.');
+    assert.notOk(
+      component.finalizeConfirmation.isVisible,
+      'Confirmation dialog is initially not visible.'
+    );
+    await component.header.finalize();
+    assert.ok(component.finalizeConfirmation.isVisible, 'Confirmation dialog is visible.');
     assert.strictEqual(
       find('.confirm-finalize .confirm-message')
         .textContent.trim()

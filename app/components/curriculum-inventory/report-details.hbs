@@ -6,8 +6,8 @@
     @isFinalizing={{this.isFinalizing}}
   />
   {{#if this.showFinalizeConfirmation}}
-    <div class="confirm-finalize">
-      <div class="confirm-message">
+    <div class="confirm-finalize" data-test-confirm-finalize>
+      <div class="confirm-message" data-test-message>
         {{t "general.finalizeReportConfirmation"}}
         <br>
         <div class="confirm-buttons">
@@ -15,6 +15,7 @@
             type="button"
             class="finalize text"
             {{on "click" (perform this.finalize)}}
+            data-test-finalize
           >
             {{t "general.yes"}}
           </button>
@@ -22,6 +23,7 @@
             type="button"
             class="done text"
             {{on "click" (set this.showFinalizeConfirmation false)}}
+            data-test-cancel
           >
             {{t "general.cancel"}}
           </button>
