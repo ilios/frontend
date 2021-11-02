@@ -1,31 +1,14 @@
 /* stylelint-disable property-disallowed-list */
 :root {
   --fs-smallest: 0.5rem;
-  --calc-line-height-smallest: 2.8ex;
-
   --fs-small: 0.833rem;
-  --calc-line-height-small: 2.8ex;
-
   --fs-base: 1rem;
-  --calc-line-height-base: 2.8ex;
-
   --fs-medium: 1.2rem;
-  --calc-line-height-medium: 2.8ex;
-
   --fs-large: 1.44rem;
-  --calc-line-height-large: 2.8ex;
-
   --fs-xl: 1.728rem;
-  --calc-line-height-xl: 2.2ex;
-
   --fs-xxl: 2.074rem;
-  --calc-line-height-xxl: 2.2ex;
-
   --fs-xxxl: 2.488rem;
-  --calc-line-height-xxxl: 2.2ex;
-
   --fs-huge: 15rem;
-  --calc-line-height-huge: 1;
   @include for-tablet-and-up {
     --fs-huge: 25rem;
   }
@@ -33,7 +16,7 @@
     --fs-huge: 30rem;
   }
 
-  line-height: calc(4px + 2.8ex);
+  line-height: calc(4px + 2ex);
   
   font-size: 16px;
   //scale based on viewport width between 16px and 20px
@@ -47,5 +30,9 @@
 
 @mixin font-size($step) {
   font-size: var(--fs-#{$step});
-  line-height: calc(4px + var(--calc-line-height-#{$step}));
+  line-height: calc(4px + 2ex);
+}
+
+@mixin paragraph-line-height() {
+  line-height: calc(1px + 3ex);
 }

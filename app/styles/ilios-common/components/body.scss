@@ -54,12 +54,19 @@ select {
   font-family: 'Nunito Sans', sans-serif;
 }
 
-ul li {
-  margin-bottom: 1rem;
+ul {
+  li {
+    margin-bottom: 1rem;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
 }
 
 p {
   margin-bottom: 1rem;
+  @include paragraph-line-height;
   
   a {
     text-decoration: underline;
