@@ -262,7 +262,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     const course = this.server.create('course');
     const sequenceBlock = this.server.create('curriculumInventorySequenceBlock', {
       course,
-      reportId: this.report.id,
+      report: this.report,
     });
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
