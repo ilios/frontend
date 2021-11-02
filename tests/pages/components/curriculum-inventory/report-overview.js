@@ -3,6 +3,7 @@ import {
   collection,
   create,
   fillable,
+  isPresent,
   isVisible,
   property,
   text,
@@ -29,6 +30,7 @@ const definition = {
     save: clickable('.done'),
     hasError: isVisible('.validation-error-message'),
     readOnlyText: text('span'),
+    isEditable: isPresent('.editinplace'),
   },
   endDate: {
     scope: '[data-test-end-date]',
@@ -40,6 +42,7 @@ const definition = {
     save: clickable('.done'),
     hasError: isVisible('.validation-error-message'),
     readOnlyText: text('span'),
+    isEditable: isPresent('.editinplace'),
   },
   academicYear: {
     scope: '[data-test-academic-year]',
@@ -53,6 +56,7 @@ const definition = {
     value: value('select'),
     save: clickable('.done'),
     readOnlyText: text('span'),
+    isEditable: isPresent('.editinplace'),
   },
   program: {
     scope: '[data-test-program]',
@@ -69,6 +73,7 @@ const definition = {
     save: clickable('.done'),
     hasError: isVisible('.validation-error-message'),
     readOnlyText: text('span'),
+    isEditable: isPresent('.editinplace'),
   },
 };
 

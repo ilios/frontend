@@ -64,8 +64,46 @@ module('Acceptance | curriculum inventory report', function (hooks) {
       .lookup('service:store')
       .find('curriculumInventoryReport', report.id);
     await page.visit({ reportId: reportModel.id });
-    await page.visit({ reportId: reportModel.id });
     assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
     assert.ok(page.details.overview.rolloverLink.isVisible);
+  });
+
+  test('finalizing report locks things down', async function (assert) {
+    this.user.update({ directedSchools: [this.school] });
+    const program = this.server.create('program', {
+      school: this.school,
+      title: 'Doctor of Medicine',
+    });
+    const report = this.server.create('curriculumInventoryReport', {
+      year: 2013,
+      name: 'foo bar',
+      description: 'lorem ipsum',
+      program,
+    });
+    this.server.create('curriculumInventorySequenceBlock', {
+      report,
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculumInventoryReport', report.id);
+    await page.visit({ reportId: reportModel.id });
+    assert.ok(page.details.overview.rolloverLink.isVisible);
+    assert.equal(page.blocks.list.items.length, 1);
+    assert.ok(page.blocks.list.items[0].isDeletable);
+    assert.ok(page.blocks.header.expandCollapse.isVisible);
+    assert.notOk(page.details.header.finalizeButtonIsDisabled);
+    assert.ok(page.details.overview.startDate.isEditable);
+    assert.ok(page.details.overview.endDate.isEditable);
+    assert.ok(page.details.overview.academicYear.isEditable);
+    assert.ok(page.details.overview.description.isEditable);
+    await page.details.header.finalize();
+    await page.details.finalizeConfirmation.confirm();
+    assert.notOk(page.blocks.header.expandCollapse.isVisible);
+    assert.ok(page.details.header.finalizeButtonIsDisabled);
+    assert.notOk(page.blocks.list.items[0].isDeletable);
+    assert.notOk(page.details.overview.startDate.isEditable);
+    assert.notOk(page.details.overview.endDate.isEditable);
+    assert.notOk(page.details.overview.academicYear.isEditable);
+    assert.notOk(page.details.overview.description.isEditable);
   });
 });
