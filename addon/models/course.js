@@ -3,6 +3,7 @@ import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { map } from 'rsvp';
 import moment from 'moment';
 
@@ -109,12 +110,13 @@ export default class Course extends Model {
     }, 0);
   }
 
-  @use allTreeCompetencies = new ResolveAsyncValue(() => [
-    this.courseObjectives.mapBy('treeCompetencies'),
+  @use allTreeCompetencies = new ResolveFlatMapBy(() => [
+    this.courseObjectives,
+    'treeCompetencies',
   ]);
 
   get competencies() {
-    return this.allTreeCompetencies?.flat().uniq().filter(Boolean);
+    return this.allTreeCompetencies?.uniq().filter(Boolean);
   }
 
   @use competencyDomains = new ResolveAsyncValue(() => [this.competencies?.mapBy('domain')]);
@@ -126,7 +128,7 @@ export default class Course extends Model {
   ]);
 
   async _getDomainProxies(domains, courseCompetencies) {
-    if (!domains) {
+    if (!domains || !courseCompetencies) {
       return;
     }
     const domainProxies = await map(domains.uniq(), async (domain) => {
@@ -220,7 +222,7 @@ export default class Course extends Model {
     return this._allTermVocabularies?.uniq().sortBy('title');
   }
 
-  @use _allTermParents = new ResolveAsyncValue(() => [this.terms.mapBy('allParents')]);
+  @use _allTermParents = new ResolveFlatMapBy(() => [this.terms, 'allParents']);
   @use _resolvedTerms = new ResolveAsyncValue(() => [this.terms]);
 
   /**
@@ -230,7 +232,7 @@ export default class Course extends Model {
     if (!this._allTermParents || !this._resolvedTerms) {
       return undefined;
     }
-    return [...this._allTermParents.flat(), ...this._resolvedTerms.toArray()].uniq();
+    return [...this._allTermParents, ...this._resolvedTerms.toArray()].uniq();
   }
 
   get termCount() {

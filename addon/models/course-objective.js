@@ -2,6 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 
 export default class CourseObjective extends Model {
   @attr('string')
@@ -52,10 +53,10 @@ export default class CourseObjective extends Model {
     return this.allTermVocabularies?.uniq().sortBy('title');
   }
 
-  @use allTerms = new ResolveAsyncValue(() => [this.terms.mapBy('termWithAllParents')]);
+  @use allTerms = new ResolveFlatMapBy(() => [this.terms, 'termWithAllParents']);
 
   get termsWithAllParents() {
-    return this.allTerms?.flat().uniq();
+    return this.allTerms?.uniq();
   }
 
   @use allTermCompetencies = new ResolveAsyncValue(() => [
