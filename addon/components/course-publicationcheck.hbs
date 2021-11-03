@@ -1,10 +1,5 @@
-<div
-  class="course-publicationcheck"
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @course.courseObjectives}}
-  data-test-course-publicationcheck
->
-  <div class="title" data-test-title>
+<div class="course-publicationcheck" data-test-course-publicationcheck>
+  <div class="title">
     {{t "general.missingItems"}} ({{@course.allPublicationIssuesLength}})
   </div>
   <div class="course-publicationcheck-content">
