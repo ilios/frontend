@@ -1,12 +1,9 @@
-import { click, currentRouteName, visit } from '@ember/test-helpers';
+import { currentRouteName } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
-
-const url = '/curriculum-inventory-reports/1';
+import page from 'ilios/tests/pages/curriculum-inventory-report';
 
 module('Acceptance | curriculum inventory report', function (hooks) {
   setupApplicationTest(hooks);
@@ -22,80 +19,91 @@ module('Acceptance | curriculum inventory report', function (hooks) {
     const program = this.server.create('program', { school: this.school });
     const report = this.server.create('curriculumInventoryReport', { program });
     this.server.create('curriculumInventorySequence', { report });
-
-    const sequenceBlockList = '.curriculum-inventory-sequence-block-list';
-    const addSequenceBlock = `${sequenceBlockList} .expand-button`;
-    const newBlockForm = '.curriculum-inventory-new-sequence-block';
-    const newFormTitle = `${newBlockForm} h2.title`;
-
-    await visit(url);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculumInventoryReport', report.id);
+    await page.visit({ reportId: reportModel.id });
     assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
-    assert.dom(newBlockForm).doesNotExist();
-    assert.dom(newFormTitle).doesNotExist();
-    await click(addSequenceBlock);
-    assert.dom(newBlockForm).exists({ count: 1 });
-    assert.dom(newFormTitle).exists({ count: 1 });
-    assert.equal(await getElementText(newFormTitle), getText('New Sequence Block'));
+    assert.notOk(page.blocks.newBlock.form.isVisible);
+    await page.blocks.header.expandCollapse.toggle();
+    assert.ok(page.blocks.newBlock.form.isVisible);
   });
 
-  test('rollover hidden from unprivileged users', async function (assert) {
-    this.server.create('program', {
-      id: 1,
+  test('rollover button hidden from unprivileged users', async function (assert) {
+    const program = this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    this.server.create('curriculumInventoryReport', {
+    const report = this.server.create('curriculumInventoryReport', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
-      programId: 1,
+      program,
     });
-    await visit(url);
-    const container = '.curriculum-inventory-report-overview';
-    const rollover = `${container} a.rollover`;
-
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculumInventoryReport', report.id);
+    await page.visit({ reportId: reportModel.id });
     assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
-    assert.dom(rollover).doesNotExist();
+    assert.notOk(page.details.overview.rolloverLink.isVisible);
   });
 
-  test('rollover visible to privileged users', async function (assert) {
+  test('rollover button visible to privileged users', async function (assert) {
     this.user.update({ directedSchools: [this.school] });
-    this.server.create('program', {
-      id: 1,
+    const program = this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    this.server.create('curriculumInventoryReport', {
+    const report = this.server.create('curriculumInventoryReport', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
-      programId: 1,
+      program,
     });
-    await visit(url);
-    const container = '.curriculum-inventory-report-overview';
-    const rollover = `${container} span.rollover`;
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculumInventoryReport', report.id);
+    await page.visit({ reportId: reportModel.id });
     assert.equal(currentRouteName(), 'curriculumInventoryReport.index');
-    assert.dom(rollover).exists({ count: 1 });
+    assert.ok(page.details.overview.rolloverLink.isVisible);
   });
 
-  test('rollover hidden on rollover route', async function (assert) {
+  test('finalizing report locks things down', async function (assert) {
     this.user.update({ directedSchools: [this.school] });
-    this.server.create('program', {
-      id: 1,
+    const program = this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    this.server.create('curriculumInventoryReport', {
+    const report = this.server.create('curriculumInventoryReport', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
-      programId: 1,
+      program,
     });
-    await visit(`${url}/rollover`);
-    const container = '.curriculum-inventory-report-overview';
-    const rollover = `${container} a.rollover`;
-
-    assert.equal(currentRouteName(), 'curriculumInventoryReport.rollover');
-    assert.dom(rollover).doesNotExist();
+    this.server.create('curriculumInventorySequenceBlock', {
+      report,
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculumInventoryReport', report.id);
+    await page.visit({ reportId: reportModel.id });
+    assert.ok(page.details.overview.rolloverLink.isVisible);
+    assert.equal(page.blocks.list.items.length, 1);
+    assert.ok(page.blocks.list.items[0].isDeletable);
+    assert.ok(page.blocks.header.expandCollapse.isVisible);
+    assert.notOk(page.details.header.finalizeButtonIsDisabled);
+    assert.ok(page.details.overview.startDate.isEditable);
+    assert.ok(page.details.overview.endDate.isEditable);
+    assert.ok(page.details.overview.academicYear.isEditable);
+    assert.ok(page.details.overview.description.isEditable);
+    await page.details.header.finalize();
+    await page.details.finalizeConfirmation.confirm();
+    assert.notOk(page.blocks.header.expandCollapse.isVisible);
+    assert.ok(page.details.header.finalizeButtonIsDisabled);
+    assert.notOk(page.blocks.list.items[0].isDeletable);
+    assert.notOk(page.details.overview.startDate.isEditable);
+    assert.notOk(page.details.overview.endDate.isEditable);
+    assert.notOk(page.details.overview.academicYear.isEditable);
+    assert.notOk(page.details.overview.description.isEditable);
   });
 });

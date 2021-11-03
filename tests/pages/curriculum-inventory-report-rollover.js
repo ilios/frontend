@@ -1,9 +1,9 @@
 import { create, visitable } from 'ember-cli-page-object';
 import details from 'ilios/tests/pages/components/curriculum-inventory/report-details';
-import blocks from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-list';
+import rollover from 'ilios/tests/pages/components/curriculum-inventory/report-rollover';
 
 export default create({
-  visit: visitable('/curriculum-inventory-reports/:reportId'),
+  visit: visitable('/curriculum-inventory-reports/:reportId/rollover'),
   details,
-  blocks,
+  rollover,
 });

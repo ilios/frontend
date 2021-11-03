@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory/publication-status';
 
 module('Integration | Component | curriculum-inventory/publication-status', function (hooks) {
   setupRenderingTest(hooks);
@@ -12,8 +13,8 @@ module('Integration | Component | curriculum-inventory/publication-status', func
     await render(hbs`<CurriculumInventory::PublicationStatus
       @item={{this.item}}
     />`);
-    assert.dom().hasTextContaining('Finalized');
-
+    assert.ok(component.isFinalized);
+    assert.equal(component.text, 'Finalized');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -22,8 +23,8 @@ module('Integration | Component | curriculum-inventory/publication-status', func
     await render(hbs`<CurriculumInventory::PublicationStatus
       @item={{this.item}}
     />`);
-    assert.dom().hasTextContaining('Draft');
-
+    assert.notOk(component.isFinalized);
+    assert.equal(component.text, 'Draft');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

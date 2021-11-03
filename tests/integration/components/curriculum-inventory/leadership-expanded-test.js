@@ -1,23 +1,22 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory/leadership-expanded';
 
 module('Integration | Component | curriculum-inventory/leadership-expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(4);
-    const users = this.server.createList('user', 2);
+    const administrators = this.server.createList('user', 2);
     const report = this.server.create('curriculum-inventory-report', {
-      administrators: users,
+      administrators,
     });
     const reportModel = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-report', report.id);
-
     this.set('report', reportModel);
     await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
@@ -27,16 +26,10 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
     />`);
-    const title = '.title';
-    const table = 'table';
-    const administrators = `${table} tbody tr:nth-of-type(1) td:nth-of-type(1) li`;
-    const firstAdministrator = `${administrators}:nth-of-type(1)`;
-    const secondAdministrator = `${administrators}:nth-of-type(2)`;
-
-    assert.dom(title).hasText('Curriculum Inventory Report Leadership');
-    assert.dom(administrators).exists({ count: 2 });
-    assert.dom(firstAdministrator).hasText('0 guy M. Mc0son');
-    assert.dom(secondAdministrator).hasText('1 guy M. Mc1son');
+    assert.ok(component.collapse.text, 'Curriculum Inventory Report Leadership');
+    assert.equal(component.leadershipList.administrators.length, 2);
+    assert.equal(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
+    assert.equal(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
   });
 
   test('clicking the header collapses', async function (assert) {
@@ -47,20 +40,18 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
       .find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
-    this.set('click', () => {
+    this.set('collapse', () => {
       assert.ok(true, 'Action was fired');
     });
     await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
       @canUpdate={{true}}
-      @collapse={{action click}}
+      @collapse={{this.collapse}}
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
     />`);
-    const title = '.title';
-
-    await click(title);
+    await component.collapse.click();
   });
 
   test('clicking manage fires action', async function (assert) {
@@ -71,7 +62,7 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
       .find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
-    this.set('click', () => {
+    this.set('manage', () => {
       assert.ok(true, 'Action was fired');
     });
     await render(hbs`<CurriculumInventory::LeadershipExpanded
@@ -80,10 +71,8 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{action click}}
+      @setIsManaging={{this.manage}}
     />`);
-    const manage = '.actions button';
-
-    await click(manage);
+    await component.manage.click();
   });
 });

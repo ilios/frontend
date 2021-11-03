@@ -4,8 +4,8 @@
     @sequenceBlock={{@sequenceBlock}}
   />
   {{#if (is-fulfilled @sequenceBlock.allParents)}}
-    <div class="breadcrumbs">
-      <span>
+    <div class="breadcrumbs" data-test-breadcrumbs>
+      <span data-test-report-crumb>
         <LinkTo
           @route="curriculumInventoryReport"
           @model={{@sequenceBlock.report}}
@@ -14,13 +14,13 @@
         </LinkTo>
       </span>
       {{#each (reverse (await @sequenceBlock.allParents)) as |parent|}}
-        <span>
+        <span data-test-block-crumb>
           <LinkTo @route="curriculumInventorySequenceBlock" @model={{parent}}>
             {{parent.title}}
           </LinkTo>
         </span>
       {{/each}}
-      <span>
+      <span data-test-block-crumb>
         {{@sequenceBlock.title}}
       </span>
     </div>
