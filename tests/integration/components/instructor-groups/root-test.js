@@ -44,15 +44,15 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     await render(hbs`<InstructorGroups::Root @schools={{this.schools}} />`);
-    assert.equal(component.list.items.length, 3);
-    assert.equal(component.list.items[0].title, 'instructor group 3');
-    assert.equal(component.list.items[1].title, 'instructor group 4');
-    assert.equal(component.list.items[2].title, 'instructor group 5');
+    assert.strictEqual(component.list.items.length, 3);
+    assert.strictEqual(component.list.items[0].title, 'instructor group 3');
+    assert.strictEqual(component.list.items[1].title, 'instructor group 4');
+    assert.strictEqual(component.list.items[2].title, 'instructor group 5');
 
-    assert.equal(component.schoolFilter.schools.length, 4);
-    assert.equal(component.schoolFilter.schools[0].text, 'school 0');
-    assert.equal(component.schoolFilter.schools[1].text, 'school 1');
-    assert.equal(component.schoolFilter.selectedSchool, '2');
+    assert.strictEqual(component.schoolFilter.schools.length, 4);
+    assert.strictEqual(component.schoolFilter.schools[0].text, 'school 0');
+    assert.strictEqual(component.schoolFilter.schools[1].text, 'school 1');
+    assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     await a11yAudit(this.element);
   });
 
@@ -61,7 +61,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
-      assert.equal(schoolId, '3');
+      assert.strictEqual(schoolId, '3');
       this.set('schoolId', schoolId);
     });
 
@@ -70,17 +70,17 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @setSchoolId={{this.setSchoolId}}
       @schoolId={{this.schoolId}}
     />`);
-    assert.equal(component.schoolFilter.selectedSchool, '2');
-    assert.equal(component.list.items.length, 3);
-    assert.equal(component.list.items[0].title, 'instructor group 3');
-    assert.equal(component.list.items[1].title, 'instructor group 4');
-    assert.equal(component.list.items[2].title, 'instructor group 5');
+    assert.strictEqual(component.schoolFilter.selectedSchool, '2');
+    assert.strictEqual(component.list.items.length, 3);
+    assert.strictEqual(component.list.items[0].title, 'instructor group 3');
+    assert.strictEqual(component.list.items[1].title, 'instructor group 4');
+    assert.strictEqual(component.list.items[2].title, 'instructor group 5');
 
     await component.schoolFilter.select(3);
-    assert.equal(component.list.items.length, 3);
-    assert.equal(component.list.items[0].title, 'instructor group 6');
-    assert.equal(component.list.items[1].title, 'instructor group 7');
-    assert.equal(component.list.items[2].title, 'instructor group 8');
+    assert.strictEqual(component.list.items.length, 3);
+    assert.strictEqual(component.list.items[0].title, 'instructor group 6');
+    assert.strictEqual(component.list.items[1].title, 'instructor group 7');
+    assert.strictEqual(component.list.items[2].title, 'instructor group 8');
   });
 
   test('title filter works', async function (assert) {
@@ -97,13 +97,13 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @setTitleFilter={{this.setTitleFilter}}
       @titleFilter={{this.titleFilter}}
     />`);
-    assert.equal(component.list.items.length, 3);
-    assert.equal(component.list.items[0].title, 'instructor group 3');
-    assert.equal(component.list.items[1].title, 'instructor group 4');
-    assert.equal(component.list.items[2].title, 'instructor group 5');
+    assert.strictEqual(component.list.items.length, 3);
+    assert.strictEqual(component.list.items[0].title, 'instructor group 3');
+    assert.strictEqual(component.list.items[1].title, 'instructor group 4');
+    assert.strictEqual(component.list.items[2].title, 'instructor group 5');
 
     await component.setTitleFilter('4');
-    assert.equal(component.list.items.length, 1);
-    assert.equal(component.list.items[0].title, 'instructor group 4');
+    assert.strictEqual(component.list.items.length, 1);
+    assert.strictEqual(component.list.items[0].title, 'instructor group 4');
   });
 });

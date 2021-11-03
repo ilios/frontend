@@ -30,7 +30,7 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
       .lookup('service:store')
       .find('curriculumInventoryReport', report.id);
     await page.visit({ reportId: reportModel.id });
-    assert.equal(currentRouteName(), 'curriculumInventoryReport.rollover');
+    assert.strictEqual(currentRouteName(), 'curriculumInventoryReport.rollover');
     assert.notOk(page.details.overview.rolloverLink.isVisible);
   });
 });

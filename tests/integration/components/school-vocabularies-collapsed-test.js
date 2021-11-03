@@ -30,12 +30,12 @@ module('Integration | Component | school vocabularies collapsed', function (hook
 
     await render(hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
 
-    assert.equal(component.title, 'Vocabularies (2)');
-    assert.equal(component.vocabularies.length, 2);
-    assert.equal(component.vocabularies[0].title, 'Vocabulary 1');
-    assert.equal(component.vocabularies[0].summary, 'There are 2 terms');
-    assert.equal(component.vocabularies[1].title, 'Vocabulary 2');
-    assert.equal(component.vocabularies[1].summary, 'There is 1 term');
+    assert.strictEqual(component.title, 'Vocabularies (2)');
+    assert.strictEqual(component.vocabularies.length, 2);
+    assert.strictEqual(component.vocabularies[0].title, 'Vocabulary 1');
+    assert.strictEqual(component.vocabularies[0].summary, 'There are 2 terms');
+    assert.strictEqual(component.vocabularies[1].title, 'Vocabulary 2');
+    assert.strictEqual(component.vocabularies[1].summary, 'There is 1 term');
   });
 
   test('expand', async function (assert) {

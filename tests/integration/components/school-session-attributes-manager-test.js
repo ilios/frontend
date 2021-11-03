@@ -21,13 +21,13 @@ module('Integration | Component | school session attributes manager', function (
       @disable={{(noop)}}
     />`);
 
-    assert.equal(component.attendanceRequired.label, 'Attendance Required');
+    assert.strictEqual(component.attendanceRequired.label, 'Attendance Required');
     assert.notOk(component.attendanceRequired.isChecked);
-    assert.equal(component.supplemental.label, 'Supplemental Curriculum');
+    assert.strictEqual(component.supplemental.label, 'Supplemental Curriculum');
     assert.ok(component.supplemental.isChecked);
-    assert.equal(component.specialAttireRequired.label, 'Special Attire Required');
+    assert.strictEqual(component.specialAttireRequired.label, 'Special Attire Required');
     assert.notOk(component.specialAttireRequired.isChecked);
-    assert.equal(component.specialEquipmentRequired.label, 'Special Equipment Required');
+    assert.strictEqual(component.specialEquipmentRequired.label, 'Special Equipment Required');
     assert.notOk(component.specialEquipmentRequired.isChecked);
   });
 
@@ -37,7 +37,7 @@ module('Integration | Component | school session attributes manager', function (
     context.set('showSessionSpecialAttireRequired', false);
     context.set('showSessionSpecialEquipmentRequired', false);
     context.set('enable', (sentName) => {
-      assert.equal(sentName, name);
+      assert.strictEqual(sentName, name);
       context.set(sentName, true);
     });
     await context.render(hbs`<SchoolSessionAttributesManager
@@ -90,7 +90,7 @@ module('Integration | Component | school session attributes manager', function (
     context.set('showSessionSpecialAttireRequired', true);
     context.set('showSessionSpecialEquipmentRequired', true);
     await context.set('disable', (sentName) => {
-      assert.equal(sentName, name);
+      assert.strictEqual(sentName, name);
       context.set(sentName, false);
     });
     await context.render(hbs`<SchoolSessionAttributesManager

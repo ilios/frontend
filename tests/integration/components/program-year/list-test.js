@@ -64,10 +64,10 @@ module('Integration | Component | program-year/list', function (hooks) {
     this.set('program', this.programModel);
     await render(hbs`<ProgramYear::List @canUpdate={{false}} @program={{this.program}} />`);
 
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].link.text, '2001');
-    assert.equal(component.items[1].link.text, '2002');
-    assert.equal(component.items[2].link.text, '2003');
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].link.text, '2001');
+    assert.strictEqual(component.items[1].link.text, '2002');
+    assert.strictEqual(component.items[2].link.text, '2003');
   });
 
   test('it renders long year', async function (assert) {
@@ -81,10 +81,10 @@ module('Integration | Component | program-year/list', function (hooks) {
     this.set('program', this.programModel);
     await render(hbs`<ProgramYear::List @canUpdate={{false}} @program={{this.program}} />`);
 
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].link.text, '2001 - 2002');
-    assert.equal(component.items[1].link.text, '2002 - 2003');
-    assert.equal(component.items[2].link.text, '2003 - 2004');
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].link.text, '2001 - 2002');
+    assert.strictEqual(component.items[1].link.text, '2002 - 2003');
+    assert.strictEqual(component.items[2].link.text, '2003 - 2004');
   });
 
   test('create new program year', async function (assert) {
@@ -99,51 +99,51 @@ module('Integration | Component | program-year/list', function (hooks) {
     );
     const newProgramYear = programYears.sortBy('id').lastObject;
     const originalProgramYear = programYears[programYears.length - 2];
-    assert.equal(newProgramYear.startYear, thisYear);
+    assert.strictEqual(newProgramYear.startYear, thisYear);
     const terms = (await newProgramYear.terms).toArray();
     const originalTerms = (await originalProgramYear.terms).toArray();
-    assert.equal(terms.length, 4);
-    assert.equal(terms[0], originalTerms[0]);
-    assert.equal(terms[1], originalTerms[1]);
-    assert.equal(terms[2], originalTerms[2]);
-    assert.equal(terms[3], originalTerms[3]);
+    assert.strictEqual(terms.length, 4);
+    assert.strictEqual(terms[0], originalTerms[0]);
+    assert.strictEqual(terms[1], originalTerms[1]);
+    assert.strictEqual(terms[2], originalTerms[2]);
+    assert.strictEqual(terms[3], originalTerms[3]);
     const competencies = (await newProgramYear.competencies).toArray();
     const originalCompetencies = (await originalProgramYear.competencies).toArray();
-    assert.equal(competencies.length, 2);
-    assert.equal(competencies[0], originalCompetencies[0]);
-    assert.equal(competencies[1], originalCompetencies[1]);
+    assert.strictEqual(competencies.length, 2);
+    assert.strictEqual(competencies[0], originalCompetencies[0]);
+    assert.strictEqual(competencies[1], originalCompetencies[1]);
     const directors = (await newProgramYear.directors).toArray();
     const originalDirectors = (await originalProgramYear.directors).toArray();
-    assert.equal(directors.length, 2);
-    assert.equal(directors[0], originalDirectors[0]);
-    assert.equal(directors[1], originalDirectors[1]);
+    assert.strictEqual(directors.length, 2);
+    assert.strictEqual(directors[0], originalDirectors[0]);
+    assert.strictEqual(directors[1], originalDirectors[1]);
     const objectives = (await newProgramYear.programYearObjectives).toArray();
     const originalObjectives = (await originalProgramYear.programYearObjectives).toArray();
-    assert.equal(objectives.length, 3);
-    assert.equal(objectives[0].description, originalObjectives[0].description);
-    assert.equal(objectives[1].description, originalObjectives[1].description);
-    assert.equal(objectives[2].description, originalObjectives[2].description);
+    assert.strictEqual(objectives.length, 3);
+    assert.strictEqual(objectives[0].description, originalObjectives[0].description);
+    assert.strictEqual(objectives[1].description, originalObjectives[1].description);
+    assert.strictEqual(objectives[2].description, originalObjectives[2].description);
     const ancestorObjective1 = await objectives[0].ancestor;
     const ancestorObjective2 = await objectives[1].ancestor;
     const ancestorObjective3 = await objectives[2].ancestor;
     const originalObjectivesAncestor = await originalObjectives[2].ancestor;
-    assert.equal(ancestorObjective1, originalObjectives[0]);
-    assert.equal(ancestorObjective2, originalObjectives[1]);
-    assert.equal(ancestorObjective3, originalObjectivesAncestor);
+    assert.strictEqual(ancestorObjective1, originalObjectives[0]);
+    assert.strictEqual(ancestorObjective2, originalObjectives[1]);
+    assert.strictEqual(ancestorObjective3, originalObjectivesAncestor);
     const objectiveMeshDescriptors = (await objectives[0].meshDescriptors).toArray();
     const originalObjectiveMeshDescriptors = (
       await originalObjectives[0].meshDescriptors
     ).toArray();
-    assert.equal(objectiveMeshDescriptors.length, 3);
-    assert.equal(objectiveMeshDescriptors[0], originalObjectiveMeshDescriptors[0]);
-    assert.equal(objectiveMeshDescriptors[1], originalObjectiveMeshDescriptors[1]);
-    assert.equal(objectiveMeshDescriptors[2], originalObjectiveMeshDescriptors[2]);
+    assert.strictEqual(objectiveMeshDescriptors.length, 3);
+    assert.strictEqual(objectiveMeshDescriptors[0], originalObjectiveMeshDescriptors[0]);
+    assert.strictEqual(objectiveMeshDescriptors[1], originalObjectiveMeshDescriptors[1]);
+    assert.strictEqual(objectiveMeshDescriptors[2], originalObjectiveMeshDescriptors[2]);
     const objectiveTerms = (await objectives[0].terms).toArray();
     const originalObjectiveTerms = (await originalObjectives[0].terms).toArray();
-    assert.equal(objectiveTerms.length, 4);
-    assert.equal(objectiveTerms[0], originalObjectiveTerms[0]);
-    assert.equal(objectiveTerms[1], originalObjectiveTerms[1]);
-    assert.equal(objectiveTerms[2], originalObjectiveTerms[2]);
-    assert.equal(objectiveTerms[3], originalObjectiveTerms[3]);
+    assert.strictEqual(objectiveTerms.length, 4);
+    assert.strictEqual(objectiveTerms[0], originalObjectiveTerms[0]);
+    assert.strictEqual(objectiveTerms[1], originalObjectiveTerms[1]);
+    assert.strictEqual(objectiveTerms[2], originalObjectiveTerms[2]);
+    assert.strictEqual(objectiveTerms[3], originalObjectiveTerms[3]);
   });
 });

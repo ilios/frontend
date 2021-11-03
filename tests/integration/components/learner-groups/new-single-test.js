@@ -32,7 +32,7 @@ module('Integration | Component | learner-groups/new-single', function (hooks) {
   test('save', async function (assert) {
     assert.expect(2);
     this.set('save', (title, fill) => {
-      assert.equal(title, 'new group');
+      assert.strictEqual(title, 'new group');
       assert.false(fill);
     });
     await render(hbs`<LearnerGroups::NewSingle
@@ -47,7 +47,7 @@ module('Integration | Component | learner-groups/new-single', function (hooks) {
   test('save filled', async function (assert) {
     assert.expect(3);
     this.set('save', (title, fill) => {
-      assert.equal(title, 'new group');
+      assert.strictEqual(title, 'new group');
       assert.true(fill);
     });
     await render(hbs`<LearnerGroups::NewSingle

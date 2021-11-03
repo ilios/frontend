@@ -48,19 +48,19 @@ module('Integration | Component | dashboard myreports', function (hooks) {
       @onReportSelect={{action this.setReport}}
       @onReportYearSelect={{action this.setReportYear}}
     />`);
-    assert.equal(component.title, 'My Reports');
-    assert.equal(component.reports.length, 2);
-    assert.equal(component.reports[0].title, 'report 0');
-    assert.equal(component.reports[1].title, 'report 1');
+    assert.strictEqual(component.title, 'My Reports');
+    assert.strictEqual(component.reports.length, 2);
+    assert.strictEqual(component.reports[0].title, 'report 0');
+    assert.strictEqual(component.reports[1].title, 'report 1');
     a11yAudit(this.element);
   });
 
   test('display none when no reports', async function (assert) {
     assert.expect(3);
     await render(hbs`<DashboardMyreports />`);
-    assert.equal(component.title, 'My Reports');
-    assert.equal(component.reports.length, 1);
-    assert.equal(component.reports[0].text, 'None');
+    assert.strictEqual(component.title, 'My Reports');
+    assert.strictEqual(component.reports.length, 1);
+    assert.strictEqual(component.reports[0].text, 'None');
     a11yAudit(this.element);
   });
 
@@ -97,11 +97,11 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     this.setProperties({ selectedReport: null, selectedYear: '' });
     this.set('setReport', (reportId) => {
       this.set('selectedReport', report);
-      assert.equal(reportId, '1', 'report id bubbles up for query params');
+      assert.strictEqual(reportId, '1', 'report id bubbles up for query params');
     });
     this.set('setReportYear', (year) => {
       this.set('selectedYear', year);
-      assert.equal(year, '2016', 'report year bubbles up for query params');
+      assert.strictEqual(year, '2016', 'report year bubbles up for query params');
     });
     await render(hbs`<DashboardMyreports
       @selectedReport={{this.selectedReport}}
@@ -109,15 +109,15 @@ module('Integration | Component | dashboard myreports', function (hooks) {
       @onReportSelect={{action this.setReport}}
       @onReportYearSelect={{action this.setReportYear}}
     />`);
-    assert.equal(component.title, 'My Reports');
-    assert.equal(component.reports.length, 1);
-    assert.equal(component.reports[0].title, 'my report 0');
+    assert.strictEqual(component.title, 'My Reports');
+    assert.strictEqual(component.reports.length, 1);
+    assert.strictEqual(component.reports[0].title, 'my report 0');
     await component.reports[0].select();
     assert.ok(component.selectedReport.yearsFilterExists);
-    assert.equal(component.selectedReport.results.length, 2);
+    assert.strictEqual(component.selectedReport.results.length, 2);
     await component.selectedReport.chooseYear('2016');
-    assert.equal(component.selectedReport.results.length, 1);
-    assert.equal(component.selectedReport.results[0].text, '2016 course 1');
+    assert.strictEqual(component.selectedReport.results.length, 1);
+    assert.strictEqual(component.selectedReport.results[0].text, '2016 course 1');
   });
 
   test('report results show academic year as range if applicable by configuration', async function (assert) {
@@ -153,7 +153,7 @@ module('Integration | Component | dashboard myreports', function (hooks) {
       @onReportSelect={{(noop)}}
       @onReportYearSelect={{(noop)}}
     />`);
-    assert.equal(component.selectedReport.results[0].text, '2016 - 2017 course 0');
+    assert.strictEqual(component.selectedReport.results[0].text, '2016 - 2017 course 0');
   });
 
   test('changing year changes select #3839', async function (assert) {
@@ -188,10 +188,10 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     />`);
     await component.reports[0].select();
     assert.ok(component.selectedReport.yearsFilterExists);
-    assert.equal(component.selectedReport.currentYear, '');
-    assert.equal(component.selectedReport.results.length, 1);
+    assert.strictEqual(component.selectedReport.currentYear, '');
+    assert.strictEqual(component.selectedReport.results.length, 1);
     await component.selectedReport.chooseYear('2015');
-    assert.equal(component.selectedReport.results.length, 1);
-    assert.equal(component.selectedReport.currentYear, '2015');
+    assert.strictEqual(component.selectedReport.results.length, 1);
+    assert.strictEqual(component.selectedReport.currentYear, '2015');
   });
 });

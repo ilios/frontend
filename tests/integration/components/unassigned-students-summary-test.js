@@ -35,22 +35,25 @@ module('Integration | Component | unassigned students summary', function (hooks)
     });
 
     this.server.get('api/users', (schema, { queryParams }) => {
-      assert.equal(queryParams['filters[school]'], 1);
+      assert.strictEqual(queryParams['filters[school]'], 1);
       assert.deepEqual(queryParams['filters[roles]'], ['4']);
-      assert.equal(queryParams['filters[cohorts]'], '');
+      assert.strictEqual(queryParams['filters[cohorts]'], '');
       return schema.users.find([2, 3, 4, 5, 6]);
     });
 
     this.set('schools', schoolModels);
     await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />`);
 
-    assert.equal(component.title, 'Students Requiring Cohort Assignment');
-    assert.equal(component.schools.length, 2);
+    assert.strictEqual(component.title, 'Students Requiring Cohort Assignment');
+    assert.strictEqual(component.schools.length, 2);
     assert.ok(component.hasMultipleSchools);
-    assert.equal(component.schools[0].text, 'school 0');
-    assert.equal(component.schools[1].text, 'school 1');
-    assert.equal(component.selectedSchool, '1');
-    assert.equal(component.summaryText, 'There are 5 students needing assignment to a cohort');
+    assert.strictEqual(component.schools[0].text, 'school 0');
+    assert.strictEqual(component.schools[1].text, 'school 1');
+    assert.strictEqual(component.selectedSchool, '1');
+    assert.strictEqual(
+      component.summaryText,
+      'There are 5 students needing assignment to a cohort'
+    );
     assert.ok(component.hasManageLink);
     assert.ok(component.hasAlert);
   });
@@ -67,10 +70,13 @@ module('Integration | Component | unassigned students summary', function (hooks)
     this.set('schools', schoolModels);
     await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />`);
 
-    assert.equal(component.title, 'Students Requiring Cohort Assignment');
-    assert.equal(component.singleSelectedSchool, 'school 0');
+    assert.strictEqual(component.title, 'Students Requiring Cohort Assignment');
+    assert.strictEqual(component.singleSelectedSchool, 'school 0');
     assert.notOk(component.hasMultipleSchools);
-    assert.equal(component.summaryText, 'There are 0 students needing assignment to a cohort');
+    assert.strictEqual(
+      component.summaryText,
+      'There are 0 students needing assignment to a cohort'
+    );
 
     assert.notOk(component.hasManageLink);
     assert.notOk(component.hasAlert);

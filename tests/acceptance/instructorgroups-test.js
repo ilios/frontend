@@ -18,7 +18,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
     test('visiting /instructorgroups', async function (assert) {
       await page.visit();
-      assert.equal(currentRouteName(), 'instructorGroups');
+      assert.strictEqual(currentRouteName(), 'instructorGroups');
     });
 
     test('list groups', async function (assert) {
@@ -48,13 +48,13 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
       assert.expect(7);
       await page.visit();
-      assert.equal(page.list.items.length, 2);
-      assert.equal(page.list.items[0].title, firstInstructorGroup.title);
-      assert.equal(page.list.items[0].users, 5);
-      assert.equal(page.list.items[0].courses, 2);
-      assert.equal(page.list.items[1].title, secondInstructorGroup.title);
-      assert.equal(page.list.items[1].users, 0);
-      assert.equal(page.list.items[1].courses, 0);
+      assert.strictEqual(page.list.items.length, 2);
+      assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
+      assert.strictEqual(page.list.items[0].users, 5);
+      assert.strictEqual(page.list.items[0].courses, 2);
+      assert.strictEqual(page.list.items[1].title, secondInstructorGroup.title);
+      assert.strictEqual(page.list.items[1].users, 0);
+      assert.strictEqual(page.list.items[1].courses, 0);
     });
 
     test('filters by title', async function (assert) {
@@ -76,39 +76,39 @@ module('Acceptance | Instructor Groups', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      assert.equal(page.list.items.length, 4);
-      assert.equal(page.list.items[0].title, regexInstructorGroup.title);
-      assert.equal(page.list.items[1].title, regularInstructorGroup.title);
-      assert.equal(page.list.items[2].title, firstInstructorGroup.title);
-      assert.equal(page.list.items[3].title, secondInstructorGroup.title);
+      assert.strictEqual(page.list.items.length, 4);
+      assert.strictEqual(page.list.items[0].title, regexInstructorGroup.title);
+      assert.strictEqual(page.list.items[1].title, regularInstructorGroup.title);
+      assert.strictEqual(page.list.items[2].title, firstInstructorGroup.title);
+      assert.strictEqual(page.list.items[3].title, secondInstructorGroup.title);
 
       await page.setTitleFilter('first');
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, firstInstructorGroup.title);
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
 
       await page.setTitleFilter('  first   ');
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, firstInstructorGroup.title);
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
 
       await page.setTitleFilter('second');
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, secondInstructorGroup.title);
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, secondInstructorGroup.title);
 
       await page.setTitleFilter('special');
-      assert.equal(page.list.items.length, 2);
-      assert.equal(page.list.items[0].title, firstInstructorGroup.title);
-      assert.equal(page.list.items[1].title, secondInstructorGroup.title);
+      assert.strictEqual(page.list.items.length, 2);
+      assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
+      assert.strictEqual(page.list.items[1].title, secondInstructorGroup.title);
 
       await page.setTitleFilter('\\');
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, regexInstructorGroup.title);
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, regexInstructorGroup.title);
 
       await page.setTitleFilter('');
-      assert.equal(page.list.items.length, 4);
-      assert.equal(page.list.items[0].title, regexInstructorGroup.title);
-      assert.equal(page.list.items[1].title, regularInstructorGroup.title);
-      assert.equal(page.list.items[2].title, firstInstructorGroup.title);
-      assert.equal(page.list.items[3].title, secondInstructorGroup.title);
+      assert.strictEqual(page.list.items.length, 4);
+      assert.strictEqual(page.list.items[0].title, regexInstructorGroup.title);
+      assert.strictEqual(page.list.items[1].title, regularInstructorGroup.title);
+      assert.strictEqual(page.list.items[2].title, firstInstructorGroup.title);
+      assert.strictEqual(page.list.items[3].title, secondInstructorGroup.title);
     });
 
     test('add new instructorgroup', async function (assert) {
@@ -119,11 +119,11 @@ module('Acceptance | Instructor Groups', function (hooks) {
       await page.toggleNewInstructorGroupForm();
       await page.newInstructorGroupForm.title.set(newTitle);
       await page.newInstructorGroupForm.done.click();
-      assert.equal(page.savedResult, newTitle + ' Saved Successfully');
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, newTitle);
-      assert.equal(page.list.items[0].users, 0);
-      assert.equal(page.list.items[0].courses, 0);
+      assert.strictEqual(page.savedResult, newTitle + ' Saved Successfully');
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, newTitle);
+      assert.strictEqual(page.list.items[0].users, 0);
+      assert.strictEqual(page.list.items[0].courses, 0);
     });
 
     test('cancel adding new instructor group', async function (assert) {
@@ -133,14 +133,14 @@ module('Acceptance | Instructor Groups', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, 'instructor group 0');
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, 'instructor group 0');
       await page.toggleNewInstructorGroupForm();
       assert.ok(page.newInstructorGroupForm.isVisible);
       await page.newInstructorGroupForm.cancel.click();
       assert.notOk(page.newInstructorGroupForm.isVisible);
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, 'instructor group 0');
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, 'instructor group 0');
     });
 
     test('remove instructor group', async function (assert) {
@@ -150,11 +150,11 @@ module('Acceptance | Instructor Groups', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, 'instructor group 0');
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, 'instructor group 0');
       await page.list.items[0].remove();
       await page.list.confirmRemoval.confirm();
-      assert.equal(page.list.items.length, 0);
+      assert.strictEqual(page.list.items.length, 0);
       assert.ok(page.emptyListRowIsVisible);
     });
 
@@ -165,12 +165,12 @@ module('Acceptance | Instructor Groups', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, 'instructor group 0');
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, 'instructor group 0');
       await page.list.items[0].remove();
       await page.list.confirmRemoval.cancel();
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, 'instructor group 0');
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, 'instructor group 0');
     });
 
     test('confirmation of remove message', async function (assert) {
@@ -183,10 +183,10 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
       assert.expect(3);
       await page.visit();
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, 'instructor group 0');
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, 'instructor group 0');
       await page.list.items[0].remove();
-      assert.equal(
+      assert.strictEqual(
         page.list.removalConfirmationMessage,
         'Are you sure you want to delete this instructor group, with 5 instructors? This action cannot be undone. Yes Cancel'
       );
@@ -199,7 +199,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
       });
       await page.visit();
       await page.list.items[0].clickTitle();
-      assert.equal(currentURL(), '/instructorgroups/1');
+      assert.strictEqual(currentURL(), '/instructorgroups/1');
     });
 
     test('title filter escapes regex', async function (assert) {
@@ -209,11 +209,11 @@ module('Acceptance | Instructor Groups', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, 'yes\\no');
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, 'yes\\no');
       await page.setTitleFilter('\\');
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, 'yes\\no');
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, 'yes\\no');
     });
 
     test('cannot delete instructor group with attached courses #3767', async function (assert) {
@@ -231,9 +231,9 @@ module('Acceptance | Instructor Groups', function (hooks) {
       this.server.create('ilm-session', { session: session1, instructorGroups: [group1] });
       this.server.create('offering', { session: session2, instructorGroups: [group2] });
       await page.visit();
-      assert.equal(page.list.items.length, 2);
-      assert.equal(page.list.items[0].title, 'instructor group 0');
-      assert.equal(page.list.items[1].title, 'instructor group 1');
+      assert.strictEqual(page.list.items.length, 2);
+      assert.strictEqual(page.list.items[0].title, 'instructor group 0');
+      assert.strictEqual(page.list.items[1].title, 'instructor group 1');
       assert.notOk(page.list.items[0].canBeDeleted);
       assert.notOk(page.list.items[1].canBeDeleted);
     });
@@ -247,9 +247,9 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     await page.visit();
-    assert.equal(page.schoolFilter.schools.length, 2);
-    assert.equal(page.schoolFilter.schools[0].text, 'school 0');
-    assert.equal(page.schoolFilter.schools[1].text, 'school 1');
-    assert.equal(page.schoolFilter.selectedSchool, 2);
+    assert.strictEqual(page.schoolFilter.schools.length, 2);
+    assert.strictEqual(page.schoolFilter.schools[0].text, 'school 0');
+    assert.strictEqual(page.schoolFilter.schools[1].text, 'school 1');
+    assert.strictEqual(page.schoolFilter.selectedSchool, 2);
   });
 });

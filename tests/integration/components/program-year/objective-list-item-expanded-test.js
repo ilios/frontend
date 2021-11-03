@@ -31,20 +31,20 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
     this.set('objective', model);
 
     await render(hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`);
-    assert.equal(component.headers[0].text, 'Courses');
-    assert.equal(component.headers[1].text, 'Objectives');
+    assert.strictEqual(component.headers[0].text, 'Courses');
+    assert.strictEqual(component.headers[1].text, 'Objectives');
 
-    assert.equal(component.courses.length, 2);
-    assert.equal(component.courses[0].title, 'course 0');
-    assert.equal(component.courses[0].objectives.length, 3);
-    assert.equal(component.courses[0].objectives[0].text, 'course objective 0');
-    assert.equal(component.courses[0].objectives[1].text, 'course objective 1');
-    assert.equal(component.courses[0].objectives[2].text, 'course objective 2');
-    assert.equal(component.courses[1].title, 'course 1');
-    assert.equal(component.courses[1].objectives.length, 3);
-    assert.equal(component.courses[1].objectives[0].text, 'course objective 3');
-    assert.equal(component.courses[1].objectives[1].text, 'course objective 4');
-    assert.equal(component.courses[1].objectives[2].text, 'course objective 5');
+    assert.strictEqual(component.courses.length, 2);
+    assert.strictEqual(component.courses[0].title, 'course 0');
+    assert.strictEqual(component.courses[0].objectives.length, 3);
+    assert.strictEqual(component.courses[0].objectives[0].text, 'course objective 0');
+    assert.strictEqual(component.courses[0].objectives[1].text, 'course objective 1');
+    assert.strictEqual(component.courses[0].objectives[2].text, 'course objective 2');
+    assert.strictEqual(component.courses[1].title, 'course 1');
+    assert.strictEqual(component.courses[1].objectives.length, 3);
+    assert.strictEqual(component.courses[1].objectives[0].text, 'course objective 3');
+    assert.strictEqual(component.courses[1].objectives[1].text, 'course objective 4');
+    assert.strictEqual(component.courses[1].objectives[2].text, 'course objective 5');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -59,8 +59,8 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
       .find('program-year-objective', programYearObjective.id);
     this.set('objective', model);
     await render(hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`);
-    assert.equal(component.headers[0].text, 'Courses');
-    assert.equal(component.headers[1].text, 'Objectives');
+    assert.strictEqual(component.headers[0].text, 'Courses');
+    assert.strictEqual(component.headers[1].text, 'Objectives');
     assert.ok(component.hasNone);
 
     await a11yAudit(this.element);

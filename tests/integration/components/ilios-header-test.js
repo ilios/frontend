@@ -14,7 +14,7 @@ module('Integration | Component | ilios-header', function (hooks) {
     this.set('title', 'Some Title');
     await render(hbs`<IliosHeader @title={{this.title}} />`);
     assert.ok(component.hasTitle);
-    assert.equal(component.title, 'Some Title');
+    assert.strictEqual(component.title, 'Some Title');
 
     await a11yAudit(this.element);
   });

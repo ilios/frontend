@@ -18,8 +18,8 @@ module('Integration | Component | school session types collapsed', function (hoo
 
     await render(hbs`<SchoolSessionTypesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
 
-    assert.equal(component.assessmentCount, 1);
-    assert.equal(component.instructionalCount, 1);
+    assert.strictEqual(component.assessmentCount, 1);
+    assert.strictEqual(component.instructionalCount, 1);
   });
 
   test('expand', async function (assert) {

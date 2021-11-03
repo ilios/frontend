@@ -38,12 +38,12 @@ module('Integration | Component | school-competencies-list-item', function (hook
       @isDomain={{true}}
       @canUpdate={{true}}
     />`);
-    assert.equal(component.title.text, 'competency 0');
+    assert.strictEqual(component.title.text, 'competency 0');
     assert.notOk(component.title.isCompetency);
     assert.ok(component.title.isDomain);
-    assert.equal(component.pcrs.items.length, 2);
-    assert.equal(component.pcrs.items[0].text, '1 Zylinder');
-    assert.equal(component.pcrs.items[1].text, '2 Alfons');
+    assert.strictEqual(component.pcrs.items.length, 2);
+    assert.strictEqual(component.pcrs.items[0].text, '1 Zylinder');
+    assert.strictEqual(component.pcrs.items[1].text, '2 Alfons');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -55,11 +55,11 @@ module('Integration | Component | school-competencies-list-item', function (hook
       @isDomain={{false}}
       @canUpdate={{true}}
     />`);
-    assert.equal(component.title.text, 'competency 1');
+    assert.strictEqual(component.title.text, 'competency 1');
     assert.ok(component.title.isCompetency);
     assert.notOk(component.title.isDomain);
-    assert.equal(component.pcrs.items.length, 1);
-    assert.equal(component.pcrs.items[0].text, 'Click to edit');
+    assert.strictEqual(component.pcrs.items.length, 1);
+    assert.strictEqual(component.pcrs.items[0].text, 'Click to edit');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

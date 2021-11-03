@@ -20,7 +20,7 @@ module('Acceptance | Admin', function (hooks) {
 
     await visit(url);
     await click(button);
-    assert.equal(currentURL(), '/users', 'transition occurred');
+    assert.strictEqual(currentURL(), '/users', 'transition occurred');
   });
 
   test('can search for users', async function (assert) {
@@ -41,7 +41,7 @@ module('Acceptance | Admin', function (hooks) {
 
     await click(secondResultUsername);
     await waitFor('[data-test-user-profile]');
-    assert.equal(currentURL(), '/users/2', 'new user profile is shown');
+    assert.strictEqual(currentURL(), '/users/2', 'new user profile is shown');
     assert.dom(name).hasText('1 guy M. Mc1son', 'user name is shown');
   });
 
@@ -66,8 +66,8 @@ module('Acceptance | Admin', function (hooks) {
     this.server.get('api/users', (schema, { queryParams }) => {
       assert.ok('order_by[lastName]' in queryParams);
       assert.ok('order_by[firstName]' in queryParams);
-      assert.equal(queryParams['order_by[lastName]'], 'ASC');
-      assert.equal(queryParams['order_by[firstName]'], 'ASC');
+      assert.strictEqual(queryParams['order_by[lastName]'], 'ASC');
+      assert.strictEqual(queryParams['order_by[firstName]'], 'ASC');
 
       return schema.users.all();
     });
@@ -96,9 +96,9 @@ module('Acceptance | Admin', function (hooks) {
 
     this.server.get('api/search/v1/users', ({ db }, { queryParams }) => {
       assert.ok('q' in queryParams);
-      assert.equal(queryParams.q, 'son');
+      assert.strictEqual(queryParams.q, 'son');
       assert.ok('size' in queryParams);
-      assert.equal(queryParams.size, 100);
+      assert.strictEqual(queryParams.size, 100);
       assert.notOk('order_by[firstName]' in queryParams);
       assert.notOk('order_by[firstName]' in queryParams);
 

@@ -41,15 +41,15 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @addUsersToGroup={{(noop)}}
     />`);
 
-    assert.equal(component.title, 'Cohort Members NOT assigned to top level group (2)');
-    assert.equal(component.users.length, 2);
-    assert.equal(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
-    assert.equal(component.users[0].campusId, '1234');
-    assert.equal(component.users[0].email, 'testemail');
+    assert.strictEqual(component.title, 'Cohort Members NOT assigned to top level group (2)');
+    assert.strictEqual(component.users.length, 2);
+    assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.strictEqual(component.users[0].campusId, '1234');
+    assert.strictEqual(component.users[0].email, 'testemail');
     assert.notOk(component.users[0].isDisabled);
-    assert.equal(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
-    assert.equal(component.users[1].campusId, '123');
-    assert.equal(component.users[1].email, 'testemail2');
+    assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
+    assert.strictEqual(component.users[1].campusId, '123');
+    assert.strictEqual(component.users[1].email, 'testemail2');
     assert.ok(component.users[1].isDisabled);
   });
 
@@ -74,10 +74,10 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @addUsersToGroup={{(noop)}}
     />`);
 
-    assert.equal(component.users.length, 3);
-    assert.equal(component.users[0].name.userNameInfo.fullName, 'Captain J');
-    assert.equal(component.users[1].name.userNameInfo.fullName, 'Jackson M. Mc1son');
-    assert.equal(component.users[2].name.userNameInfo.fullName, 'Jasper M. Mc0son');
+    assert.strictEqual(component.users.length, 3);
+    assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Captain J');
+    assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Jackson M. Mc1son');
+    assert.strictEqual(component.users[2].name.userNameInfo.fullName, 'Jasper M. Mc0son');
   });
 
   test('add multiple users', async function (assert) {
@@ -88,7 +88,7 @@ module('Integration | Component | learnergroup cohort user manager', function (h
 
     this.set('users', [userModel]);
     this.set('addMany', ([user]) => {
-      assert.equal(userModel, user);
+      assert.strictEqual(userModel, user);
     });
 
     await render(hbs`<LearnergroupCohortUserManager
@@ -105,7 +105,7 @@ module('Integration | Component | learnergroup cohort user manager', function (h
     assert.notOk(component.membersCanBeAdded);
     await component.users[0].select();
     assert.ok(component.membersCanBeAdded);
-    assert.equal(component.addButtonText, 'Move learner to this group');
+    assert.strictEqual(component.addButtonText, 'Move learner to this group');
     await component.add();
     assert.notOk(component.membersCanBeAdded);
   });
@@ -118,7 +118,7 @@ module('Integration | Component | learnergroup cohort user manager', function (h
 
     this.set('users', [userModel]);
     this.set('addOne', (user) => {
-      assert.equal(userModel, user);
+      assert.strictEqual(userModel, user);
     });
 
     await render(hbs`<LearnergroupCohortUserManager
@@ -169,8 +169,8 @@ module('Integration | Component | learnergroup cohort user manager', function (h
 
     this.set('users', [userModel1, userModel2]);
     this.set('addMany', ([userA, userB]) => {
-      assert.equal(userModel1, userA);
-      assert.equal(userModel2, userB);
+      assert.strictEqual(userModel1, userA);
+      assert.strictEqual(userModel2, userB);
     });
 
     await render(hbs`<LearnergroupCohortUserManager
@@ -189,7 +189,7 @@ module('Integration | Component | learnergroup cohort user manager', function (h
     await component.selectAll.toggle();
     assert.ok(component.users[0].isSelected);
     assert.ok(component.users[0].isSelected);
-    assert.equal(component.addButtonText, 'Move 2 learners to this group');
+    assert.strictEqual(component.addButtonText, 'Move 2 learners to this group');
     await component.add();
   });
 
@@ -250,10 +250,10 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @addUsersToGroup={{(noop)}}
     />`);
 
-    assert.equal(component.users.length, 3);
-    assert.equal(component.users[0].name.userNameInfo.fullName, 'Alpha');
-    assert.equal(component.users[1].name.userNameInfo.fullName, 'Beta');
-    assert.equal(component.users[2].name.userNameInfo.fullName, 'Gamma');
+    assert.strictEqual(component.users.length, 3);
+    assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Alpha');
+    assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Beta');
+    assert.strictEqual(component.users[2].name.userNameInfo.fullName, 'Gamma');
     assert.notOk(component.users[0].isSelected);
     assert.notOk(component.users[1].isSelected);
     assert.notOk(component.users[2].isSelected);
@@ -261,12 +261,12 @@ module('Integration | Component | learnergroup cohort user manager', function (h
     assert.notOk(component.selectAll.isIndeterminate);
 
     await component.filter('Zzzz');
-    assert.equal(component.users.length, 0);
+    assert.strictEqual(component.users.length, 0);
     assert.notOk(component.selectAll.isChecked);
     assert.notOk(component.selectAll.isIndeterminate);
 
     await component.filter('');
-    assert.equal(component.users.length, 3);
+    assert.strictEqual(component.users.length, 3);
     assert.notOk(component.selectAll.isChecked);
     assert.notOk(component.selectAll.isIndeterminate);
 
@@ -277,8 +277,8 @@ module('Integration | Component | learnergroup cohort user manager', function (h
     await component.filter('Alpha');
     assert.notOk(component.selectAll.isChecked);
     assert.ok(component.selectAll.isIndeterminate);
-    assert.equal(component.users.length, 1);
-    assert.equal(component.users[0].name.userNameInfo.fullName, 'Alpha');
+    assert.strictEqual(component.users.length, 1);
+    assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Alpha');
     assert.notOk(component.users[0].isSelected);
 
     await component.selectAll.toggle();
@@ -287,7 +287,7 @@ module('Integration | Component | learnergroup cohort user manager', function (h
     assert.ok(component.users[0].isSelected);
 
     await component.filter('');
-    assert.equal(component.users.length, 3);
+    assert.strictEqual(component.users.length, 3);
     assert.ok(component.selectAll.isChecked);
     assert.ok(component.selectAll.isIndeterminate);
     assert.ok(component.users[0].isSelected);
@@ -397,17 +397,17 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @addUsersToGroup={{(noop)}}
     />`);
 
-    assert.equal(component.users.length, 3);
-    assert.equal(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
-    assert.equal(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
-    assert.equal(component.users[2].name.userNameInfo.fullName, 'Just Jayden');
+    assert.strictEqual(component.users.length, 3);
+    assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
+    assert.strictEqual(component.users[2].name.userNameInfo.fullName, 'Just Jayden');
     await component.filter('Just');
-    assert.equal(component.users[0].name.userNameInfo.fullName, 'Just Jayden');
+    assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Just Jayden');
     await component.filter(' Just     ');
-    assert.equal(component.users[0].name.userNameInfo.fullName, 'Just Jayden');
+    assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Just Jayden');
     await component.filter('JASPER.DOG@EXAMPLE.EDU');
-    assert.equal(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
     await component.filter('jasper d');
-    assert.equal(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
   });
 });

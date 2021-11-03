@@ -21,13 +21,16 @@ module('Integration | Component | school session attributes expanded', function 
       @manage={{(noop)}}
     />`);
 
-    assert.equal(component.attributes.attendanceRequired.label, 'Attendance Required');
+    assert.strictEqual(component.attributes.attendanceRequired.label, 'Attendance Required');
     assert.ok(component.attributes.attendanceRequired.isDisabled);
-    assert.equal(component.attributes.supplemental.label, 'Supplemental Curriculum');
+    assert.strictEqual(component.attributes.supplemental.label, 'Supplemental Curriculum');
     assert.ok(component.attributes.supplemental.isEnabled);
-    assert.equal(component.attributes.specialAttireRequired.label, 'Special Attire Required');
+    assert.strictEqual(component.attributes.specialAttireRequired.label, 'Special Attire Required');
     assert.ok(component.attributes.specialAttireRequired.isDisabled);
-    assert.equal(component.attributes.specialEquipmentRequired.label, 'Special Equipment Required');
+    assert.strictEqual(
+      component.attributes.specialEquipmentRequired.label,
+      'Special Equipment Required'
+    );
     assert.ok(component.attributes.specialEquipmentRequired.isDisabled);
     assert.notOk(component.manager.isVisible);
   });

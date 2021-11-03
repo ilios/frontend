@@ -29,11 +29,11 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
 
     await render(hbs`<DashboardMycourses />`);
 
-    assert.equal(component.title, 'My Courses');
-    assert.equal(component.courses.length, 3);
-    assert.equal(component.courses[0].text, '2013 course 0 (ABC123)');
-    assert.equal(component.courses[1].text, '2013 course 1');
-    assert.equal(component.courses[2].text, '2013 course 2');
+    assert.strictEqual(component.title, 'My Courses');
+    assert.strictEqual(component.courses.length, 3);
+    assert.strictEqual(component.courses[0].text, '2013 course 0 (ABC123)');
+    assert.strictEqual(component.courses[1].text, '2013 course 1');
+    assert.strictEqual(component.courses[2].text, '2013 course 2');
     assert.ok(component.courses[0].isLinked);
     assert.ok(component.courses[1].isLinked);
     assert.ok(component.courses[2].isLinked);
@@ -58,10 +58,10 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
 
     await render(hbs`<DashboardMycourses />`);
 
-    assert.equal(component.courses.length, 3);
-    assert.equal(component.courses[0].text, '2013 course 0');
-    assert.equal(component.courses[1].text, '2013 course 1');
-    assert.equal(component.courses[2].text, '2013 course 2');
+    assert.strictEqual(component.courses.length, 3);
+    assert.strictEqual(component.courses[0].text, '2013 course 0');
+    assert.strictEqual(component.courses[1].text, '2013 course 1');
+    assert.strictEqual(component.courses[2].text, '2013 course 2');
     assert.notOk(component.courses[0].isLinked);
     assert.notOk(component.courses[1].isLinked);
     assert.notOk(component.courses[2].isLinked);
@@ -78,8 +78,8 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
 
     await render(hbs`<DashboardMycourses />`);
 
-    assert.equal(component.courses.length, 1);
-    assert.equal(component.courses[0].text, 'None');
+    assert.strictEqual(component.courses.length, 1);
+    assert.strictEqual(component.courses[0].text, 'None');
     a11yAudit(this.element);
   });
 
@@ -108,9 +108,9 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
 
     await render(hbs`<DashboardMycourses />`);
 
-    assert.equal(component.courses[0].text, '2013 - 2014 course 0 (ABC123)');
-    assert.equal(component.courses[1].text, '2013 - 2014 course 1');
-    assert.equal(component.courses[2].text, '2013 - 2014 course 2');
+    assert.strictEqual(component.courses[0].text, '2013 - 2014 course 0 (ABC123)');
+    assert.strictEqual(component.courses[1].text, '2013 - 2014 course 1');
+    assert.strictEqual(component.courses[2].text, '2013 - 2014 course 2');
   });
 
   test('show academic-year range for un-privileged users', async function (assert) {
@@ -138,8 +138,8 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
 
     await render(hbs`<DashboardMycourses />`);
 
-    assert.equal(component.courses[0].text, '2013 - 2014 course 0');
-    assert.equal(component.courses[1].text, '2013 - 2014 course 1');
-    assert.equal(component.courses[2].text, '2013 - 2014 course 2');
+    assert.strictEqual(component.courses[0].text, '2013 - 2014 course 0');
+    assert.strictEqual(component.courses[1].text, '2013 - 2014 course 1');
+    assert.strictEqual(component.courses[2].text, '2013 - 2014 course 2');
   });
 });

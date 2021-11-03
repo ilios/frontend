@@ -74,56 +74,67 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @remove={{(noop)}}
     />`);
 
-    assert.equal(
+    assert.strictEqual(
       component.header.title,
       'Sequence Blocks (2)',
       'Component title is correct, and show the correct number of blocks.'
     );
     assert.ok(component.header.expandCollapse.isVisible, 'Add new button is visible.');
-    assert.equal(
+    assert.strictEqual(
       component.list.headers.sequenceBlock,
       'Sequence Block',
       'Table column header has correct label.'
     );
-    assert.equal(component.list.headers.level, 'Level', 'Table column header has correct label.');
-    assert.equal(
+    assert.strictEqual(
+      component.list.headers.level,
+      'Level',
+      'Table column header has correct label.'
+    );
+    assert.strictEqual(
       component.list.headers.sequenceNumber,
       'Sequence #',
       'Table column header has correct label.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.list.headers.startDate,
       'Start Date',
       'Table column header has correct label.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.list.headers.endDate,
       'End Date',
       'Table column header has correct label.'
     );
-    assert.equal(component.list.headers.course, 'Course', 'Table column header has correct label.');
-    assert.equal(
+    assert.strictEqual(
+      component.list.headers.course,
+      'Course',
+      'Table column header has correct label.'
+    );
+    assert.strictEqual(
       component.list.headers.actions,
       'Actions',
       'Table column header has correct label.'
     );
 
-    assert.equal(component.list.items[0].title, this.sequenceBlock2.title);
-    assert.equal(component.list.items[0].academicLevel, this.academicLevel2.level);
-    assert.equal(component.list.items[0].orderInSequence, 'n/a');
-    assert.equal(component.list.items[0].startDate, 'n/a');
-    assert.equal(component.list.items[0].endDate, 'n/a');
-    assert.equal(component.list.items[0].course, 'n/a');
+    assert.strictEqual(component.list.items[0].title, this.sequenceBlock2.title);
+    assert.strictEqual(component.list.items[0].academicLevel, this.academicLevel2.level);
+    assert.strictEqual(component.list.items[0].orderInSequence, 'n/a');
+    assert.strictEqual(component.list.items[0].startDate, 'n/a');
+    assert.strictEqual(component.list.items[0].endDate, 'n/a');
+    assert.strictEqual(component.list.items[0].course, 'n/a');
     assert.ok(component.list.items[0].isDeletable);
-    assert.equal(component.list.items[1].title, this.sequenceBlock1.title);
-    assert.equal(component.list.items[1].academicLevel, this.academicLevel1.level);
-    assert.equal(component.list.items[1].orderInSequence, 'n/a');
-    assert.equal(
+    assert.strictEqual(component.list.items[1].title, this.sequenceBlock1.title);
+    assert.strictEqual(component.list.items[1].academicLevel, this.academicLevel1.level);
+    assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
+    assert.strictEqual(
       component.list.items[1].startDate,
       moment(this.sequenceBlock1.startDate).format('L')
     );
-    assert.equal(component.list.items[1].endDate, moment(this.sequenceBlock1.endDate).format('L'));
-    assert.equal(component.list.items[1].course, this.course.title);
+    assert.strictEqual(
+      component.list.items[1].endDate,
+      moment(this.sequenceBlock1.endDate).format('L')
+    );
+    assert.strictEqual(component.list.items[1].course, this.course.title);
     assert.ok(component.list.items[1].isDeletable);
   });
 
@@ -144,27 +155,30 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @remove={{(noop)}}
     />`);
 
-    assert.equal(
+    assert.strictEqual(
       component.header.title,
       'Sequence Blocks (2)',
       'Component title is correct, and show the correct number of blocks.'
     );
-    assert.equal(component.list.items[0].title, this.sequenceBlock2.title);
-    assert.equal(component.list.items[0].academicLevel, this.academicLevel2.level);
-    assert.equal(component.list.items[0].orderInSequence, 'n/a');
-    assert.equal(component.list.items[0].startDate, 'n/a');
-    assert.equal(component.list.items[0].endDate, 'n/a');
-    assert.equal(component.list.items[0].course, 'n/a');
+    assert.strictEqual(component.list.items[0].title, this.sequenceBlock2.title);
+    assert.strictEqual(component.list.items[0].academicLevel, this.academicLevel2.level);
+    assert.strictEqual(component.list.items[0].orderInSequence, 'n/a');
+    assert.strictEqual(component.list.items[0].startDate, 'n/a');
+    assert.strictEqual(component.list.items[0].endDate, 'n/a');
+    assert.strictEqual(component.list.items[0].course, 'n/a');
     assert.ok(component.list.items[0].isDeletable);
-    assert.equal(component.list.items[1].title, this.sequenceBlock1.title);
-    assert.equal(component.list.items[1].academicLevel, this.academicLevel1.level);
-    assert.equal(component.list.items[1].orderInSequence, 'n/a');
-    assert.equal(
+    assert.strictEqual(component.list.items[1].title, this.sequenceBlock1.title);
+    assert.strictEqual(component.list.items[1].academicLevel, this.academicLevel1.level);
+    assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
+    assert.strictEqual(
       component.list.items[1].startDate,
       moment(this.sequenceBlock1.startDate).format('L')
     );
-    assert.equal(component.list.items[1].endDate, moment(this.sequenceBlock1.endDate).format('L'));
-    assert.equal(component.list.items[1].course, this.course.title);
+    assert.strictEqual(
+      component.list.items[1].endDate,
+      moment(this.sequenceBlock1.endDate).format('L')
+    );
+    assert.strictEqual(component.list.items[1].course, this.course.title);
     assert.ok(component.list.items[1].isDeletable);
   });
 
@@ -184,7 +198,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
   test('delete', async function (assert) {
     assert.expect(3);
     this.set('remove', (block) => {
-      assert.equal(block, this.sequenceBlock2);
+      assert.strictEqual(block, this.sequenceBlock2);
     });
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @report={{this.report}}
@@ -220,12 +234,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @canUpdate={{true}}
       @sequenceBlocks={{(array)}}
     />`);
-    assert.equal(
+    assert.strictEqual(
       component.header.title,
       'Sequence Blocks (0)',
       'Component title is correct, and show the correct number of blocks.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.noSequenceBlocks.text,
       'There are no sequence blocks in this report.',
       'No blocks message is visible.'
@@ -243,12 +257,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @report={{await parent.report}}
       @sequenceBlocks={{(array)}}
     />`);
-    assert.equal(
+    assert.strictEqual(
       component.header.title,
       'Sequence Blocks (0)',
       'Component title is correct, and show the correct number of blocks.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.noSubSequenceBlocks.text,
       'This sequence block has no nested sequence blocks.',
       'No blocks message is visible.'

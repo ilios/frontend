@@ -46,12 +46,12 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @add={{(noop)}}
       @remove={{(noop)}}
     />`);
-    assert.equal(component.domains.length, 1);
-    assert.equal(component.domains[0].title, this.domainModel1.title);
+    assert.strictEqual(component.domains.length, 1);
+    assert.strictEqual(component.domains[0].title, this.domainModel1.title);
     assert.ok(component.domains[0].notSelected);
 
-    assert.equal(component.domains[0].competencies.length, 1);
-    assert.equal(component.domains[0].competencies[0].title, this.competencyModel1.title);
+    assert.strictEqual(component.domains[0].competencies.length, 1);
+    assert.strictEqual(component.domains[0].competencies[0].title, this.competencyModel1.title);
     assert.ok(component.domains[0].competencies[0].notSelected);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -95,7 +95,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     this.set('domainTrees', domainTrees);
     this.set('programYearCompetencies', [this.domainModel1]);
     this.set('add', (id) => {
-      assert.equal(id, this.domainModel1.id);
+      assert.strictEqual(id, this.domainModel1.id);
     });
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
       @domainTrees={{this.domainTrees}}
@@ -130,8 +130,8 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @add={{noop}}
       @remove={{(noop)}}
     />`);
-    assert.equal(component.domains[0].title, this.domainModel2.title);
-    assert.equal(component.domains[1].title, this.domainModel1.title);
+    assert.strictEqual(component.domains[0].title, this.domainModel2.title);
+    assert.strictEqual(component.domains[1].title, this.domainModel1.title);
   });
 
   test('unlinked, but selected domain can be unassigned but not assigned again', async function (assert) {

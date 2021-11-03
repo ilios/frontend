@@ -11,12 +11,12 @@ module('Integration | Component | login-form', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<LoginForm />`);
-    assert.equal(component.errors.length, 0);
+    assert.strictEqual(component.errors.length, 0);
     assert.ok(component.form.isPresent);
-    assert.equal(component.form.username.label, 'Username:');
-    assert.equal(component.form.username.value, '');
-    assert.equal(component.form.password.label, 'Password:');
-    assert.equal(component.form.password.value, '');
+    assert.strictEqual(component.form.username.label, 'Username:');
+    assert.strictEqual(component.form.username.value, '');
+    assert.strictEqual(component.form.password.label, 'Password:');
+    assert.strictEqual(component.form.password.value, '');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -28,8 +28,8 @@ module('Integration | Component | login-form', function (hooks) {
     await render(
       hbs`<LoginForm @noAccountExistsError={{this.error}} @noAccountExistsAccount={{this.account}} />`
     );
-    assert.equal(component.errors.length, 1);
-    assert.equal(
+    assert.strictEqual(component.errors.length, 1);
+    assert.strictEqual(
       component.errors[0].text,
       `Your account ${accountName} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator.`
     );
@@ -50,12 +50,12 @@ module('Integration | Component | login-form', function (hooks) {
     };
     this.owner.register('service:session', sessionMock);
     await render(hbs`<LoginForm />`);
-    assert.equal(component.errors.length, 0);
+    assert.strictEqual(component.errors.length, 0);
     await component.form.username.set(username);
     await component.form.password.set(password);
     await component.form.submit();
-    assert.equal(component.errors.length, 1);
-    assert.equal(component.errors[0].text, 'Incorrect username or password');
+    assert.strictEqual(component.errors.length, 1);
+    assert.strictEqual(component.errors[0].text, 'Incorrect username or password');
   });
 
   test('submit and succeed', async function (assert) {
@@ -64,17 +64,17 @@ module('Integration | Component | login-form', function (hooks) {
     const password = 'Bar';
     const sessionMock = class extends Service {
       authenticate() {
-        assert.equal(arguments[1].username, username);
-        assert.equal(arguments[1].password, password);
+        assert.strictEqual(arguments[1].username, username);
+        assert.strictEqual(arguments[1].password, password);
       }
     };
     this.owner.register('service:session', sessionMock);
     await render(hbs`<LoginForm />`);
-    assert.equal(component.errors.length, 0);
+    assert.strictEqual(component.errors.length, 0);
     await component.form.username.set(username);
     await component.form.password.set(password);
     await component.form.submit();
-    assert.equal(component.errors.length, 0);
+    assert.strictEqual(component.errors.length, 0);
   });
 
   test('submit by pressing enter in username field', async function (assert) {
@@ -83,8 +83,8 @@ module('Integration | Component | login-form', function (hooks) {
     const password = 'Bar';
     const sessionMock = class extends Service {
       authenticate() {
-        assert.equal(arguments[1].username, username);
-        assert.equal(arguments[1].password, password);
+        assert.strictEqual(arguments[1].username, username);
+        assert.strictEqual(arguments[1].password, password);
       }
     };
     this.owner.register('service:session', sessionMock);
@@ -100,8 +100,8 @@ module('Integration | Component | login-form', function (hooks) {
     const password = 'Bar';
     const sessionMock = class extends Service {
       authenticate() {
-        assert.equal(arguments[1].username, username);
-        assert.equal(arguments[1].password, password);
+        assert.strictEqual(arguments[1].username, username);
+        assert.strictEqual(arguments[1].password, password);
       }
     };
     this.owner.register('service:session', sessionMock);

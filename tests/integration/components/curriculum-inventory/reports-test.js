@@ -58,8 +58,8 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
     />`);
     assert.notOk(component.newReport.isVisible);
     assert.ok(component.reports.isVisible);
-    assert.equal(component.schools.options.length, 3);
-    assert.equal(component.programs.options.length, 2);
+    assert.strictEqual(component.schools.options.length, 3);
+    assert.strictEqual(component.programs.options.length, 2);
   });
 
   test('selected school with multiple programs', async function (assert) {
@@ -73,9 +73,9 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
       @setSchoolId={{(noop)}}
       @setProgramId={{(noop)}}
     />`);
-    assert.equal(component.schools.options.length, 3);
+    assert.strictEqual(component.schools.options.length, 3);
     assert.ok(component.schools.options[0].isSelected);
-    assert.equal(component.programs.options.length, 2);
+    assert.strictEqual(component.programs.options.length, 2);
     assert.ok(component.programs.options[0].isSelected);
   });
 
@@ -90,9 +90,9 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
       @setSchoolId={{(noop)}}
       @setProgramId={{(noop)}}
     />`);
-    assert.equal(component.schools.options.length, 3);
+    assert.strictEqual(component.schools.options.length, 3);
     assert.ok(component.schools.options[1].isSelected);
-    assert.equal(component.programs.options.length, 1);
+    assert.strictEqual(component.programs.options.length, 1);
     assert.ok(component.programs.options[0].isSelected);
   });
 
@@ -106,16 +106,16 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
       @setSchoolId={{(noop)}}
       @setProgramId={{(noop)}}
     />`);
-    assert.equal(component.schools.options.length, 3);
+    assert.strictEqual(component.schools.options.length, 3);
     assert.ok(component.schools.options[2].isSelected);
-    assert.equal(component.programs.options.length, 0);
-    assert.equal(component.programs.text, 'None');
+    assert.strictEqual(component.programs.options.length, 0);
+    assert.strictEqual(component.programs.text, 'None');
   });
 
   test('changing school', async function (assert) {
     assert.expect(1);
     this.set('setSchoolId', (id) => {
-      assert.equal(id, this.schoolWithOneProgram.id);
+      assert.strictEqual(id, this.schoolWithOneProgram.id);
     });
     await render(hbs`<CurriculumInventory::Reports
       @editCurriculumInventoryReport={{(noop)}}
@@ -131,7 +131,7 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
   test('changing program', async function (assert) {
     assert.expect(1);
     this.set('setProgramId', (programId) => {
-      assert.equal(programId, this.program2.id);
+      assert.strictEqual(programId, this.program2.id);
     });
     await render(hbs`<CurriculumInventory::Reports
       @editCurriculumInventoryReport={{(noop)}}

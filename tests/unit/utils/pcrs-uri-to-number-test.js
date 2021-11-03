@@ -3,13 +3,13 @@ import { module, test } from 'qunit';
 
 module('Unit | Utility | pcrs-uri-to-number', function () {
   test('extracts number from PCRS uri', function (assert) {
-    assert.equal(pcrsUriToNumber('aamc-pcrs-comp-c0101'), '1.1');
-    assert.equal(pcrsUriToNumber('aamc-pcrs-comp-c0899'), '8.99');
+    assert.strictEqual(pcrsUriToNumber('aamc-pcrs-comp-c0101'), '1.1');
+    assert.strictEqual(pcrsUriToNumber('aamc-pcrs-comp-c0899'), '8.99');
   });
 
   test('returns input if pattern matching failed', function (assert) {
-    assert.equal(pcrsUriToNumber(''), '');
-    assert.equal('foo bar', 'foo bar');
+    assert.strictEqual(pcrsUriToNumber(''), '');
+    assert.strictEqual('foo bar', 'foo bar');
   });
 
   test('throws type error on invalid input', function (assert) {

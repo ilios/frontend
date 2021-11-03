@@ -31,9 +31,9 @@ module('Integration | Component | instructor-groups/list-item', function (hooks)
       .find('instructor-group', this.instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroups::ListItem @instructorGroup={{this.instructorGroup}} />`);
-    assert.equal(component.title, 'instructor group 0');
-    assert.equal(component.users, '3');
-    assert.equal(component.courses, '0');
+    assert.strictEqual(component.title, 'instructor group 0');
+    assert.strictEqual(component.users, '3');
+    assert.strictEqual(component.courses, '0');
     assert.ok(component.canBeDeleted);
     await a11yAudit(this.element);
   });
@@ -49,7 +49,7 @@ module('Integration | Component | instructor-groups/list-item', function (hooks)
       .find('instructor-group', this.instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroups::ListItem @instructorGroup={{this.instructorGroup}} />`);
-    assert.equal(component.title, 'instructor group 0');
+    assert.strictEqual(component.title, 'instructor group 0');
     assert.notOk(component.canBeDeleted);
     await a11yAudit(this.element);
   });
@@ -82,8 +82,8 @@ module('Integration | Component | instructor-groups/list-item', function (hooks)
       .find('instructor-group', this.instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroups::ListItem @instructorGroup={{this.instructorGroup}} />`);
-    assert.equal(component.title, 'instructor group 0');
-    assert.equal(component.courses, '3');
+    assert.strictEqual(component.title, 'instructor group 0');
+    assert.strictEqual(component.courses, '3');
     assert.notOk(component.canBeDeleted);
   });
 });

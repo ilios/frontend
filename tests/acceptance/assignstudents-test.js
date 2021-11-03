@@ -21,8 +21,8 @@ module('Acceptance | assign students', function (hooks) {
 
   test('visiting /admin/assignstudents', async function (assert) {
     await visit('/admin/assignstudents');
-    assert.equal(await getElementText('.schoolsfilter'), getText('school 0'));
-    assert.equal(currentURL(), '/admin/assignstudents');
+    assert.strictEqual(await getElementText('.schoolsfilter'), getText('school 0'));
+    assert.strictEqual(currentURL(), '/admin/assignstudents');
   });
 
   test('users are listed in full name by default', async function (assert) {

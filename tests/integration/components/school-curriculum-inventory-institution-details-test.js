@@ -35,22 +35,25 @@ module(
       @manage={{manage}}
     />`);
 
-      assert.equal(component.header.title, 'Curriculum Inventory Institutional Information');
-      assert.equal(component.header.manageTitle, 'Manage CIR Institutional Info');
-      assert.equal(component.content.nameLabel, 'School Name:');
-      assert.equal(component.content.name, 'School of Rocket Surgery');
-      assert.equal(component.content.aamcCodeLabel, 'AAMC School ID (e.g. "Institution ID"):');
-      assert.equal(component.content.aamcCode, '12345');
-      assert.equal(component.content.addressStreetLabel, 'Street:');
-      assert.equal(component.content.addressStreet, '123 Main Street');
-      assert.equal(component.content.addressCityLabel, 'City:');
-      assert.equal(component.content.addressCity, 'Browntown');
-      assert.equal(component.content.addressStateOrProvinceLabel, 'State or Province:');
-      assert.equal(component.content.addressStateOrProvince, 'XY');
-      assert.equal(component.content.addressZipCodeLabel, 'ZIP Code:');
-      assert.equal(component.content.addressZipCode, '99999');
-      assert.equal(component.content.addressCountryCodeLabel, 'Country:');
-      assert.equal(component.content.addressCountryCode, 'US');
+      assert.strictEqual(component.header.title, 'Curriculum Inventory Institutional Information');
+      assert.strictEqual(component.header.manageTitle, 'Manage CIR Institutional Info');
+      assert.strictEqual(component.content.nameLabel, 'School Name:');
+      assert.strictEqual(component.content.name, 'School of Rocket Surgery');
+      assert.strictEqual(
+        component.content.aamcCodeLabel,
+        'AAMC School ID (e.g. "Institution ID"):'
+      );
+      assert.strictEqual(component.content.aamcCode, '12345');
+      assert.strictEqual(component.content.addressStreetLabel, 'Street:');
+      assert.strictEqual(component.content.addressStreet, '123 Main Street');
+      assert.strictEqual(component.content.addressCityLabel, 'City:');
+      assert.strictEqual(component.content.addressCity, 'Browntown');
+      assert.strictEqual(component.content.addressStateOrProvinceLabel, 'State or Province:');
+      assert.strictEqual(component.content.addressStateOrProvince, 'XY');
+      assert.strictEqual(component.content.addressZipCodeLabel, 'ZIP Code:');
+      assert.strictEqual(component.content.addressZipCode, '99999');
+      assert.strictEqual(component.content.addressCountryCodeLabel, 'Country:');
+      assert.strictEqual(component.content.addressCountryCode, 'US');
     });
 
     test('no manage button in read-only mode', async function (assert) {
@@ -107,7 +110,7 @@ module(
       @canUpdate={{canUpdate}}
       @manage={{manage}}
     />`);
-      await assert.equal(
+      await assert.strictEqual(
         component.content.noInfo,
         'No institutional information has been configured for this school.'
       );

@@ -39,12 +39,12 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
       hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @edit={{(noop)}} @remove={{(noop)}}/>`
     );
 
-    assert.equal(component.name, 'CI Report');
-    assert.equal(component.program, 'program 0');
-    assert.equal(component.year, '2017');
-    assert.equal(component.startDate, moment(this.report.startDate).format('L'));
-    assert.equal(component.endDate, moment(this.report.endDate).format('L'));
-    assert.equal(component.status, 'Draft');
+    assert.strictEqual(component.name, 'CI Report');
+    assert.strictEqual(component.program, 'program 0');
+    assert.strictEqual(component.year, '2017');
+    assert.strictEqual(component.startDate, moment(this.report.startDate).format('L'));
+    assert.strictEqual(component.endDate, moment(this.report.endDate).format('L'));
+    assert.strictEqual(component.status, 'Draft');
     assert.ok(component.isDeletable);
     assert.notOk(component.confirmRemoval.isVisible);
   });
@@ -53,7 +53,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     assert.expect(3);
     this.set('report', this.report);
     this.set('remove', (r) => {
-      assert.equal(r, this.report);
+      assert.strictEqual(r, this.report);
     });
     await render(
       hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @edit={{(noop)}} @remove={{this.remove}}/>`
@@ -83,7 +83,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     assert.expect(1);
     this.set('report', this.report);
     this.set('edit', (r) => {
-      assert.equal(r, this.report);
+      assert.strictEqual(r, this.report);
     });
     await render(
       hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @edit={{this.edit}} @remove={{(noop)}}/>`
@@ -102,7 +102,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
       hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @edit={{(noop)}} @remove={{(noop)}}/>`
     );
 
-    assert.equal(component.status, 'Finalized');
+    assert.strictEqual(component.status, 'Finalized');
   });
 
   test('academic year shows as range depending on application config', async function (assert) {
@@ -119,6 +119,6 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
       hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @edit={{(noop)}} @remove={{(noop)}}/>`
     );
 
-    assert.equal(component.year, '2017 - 2018');
+    assert.strictEqual(component.year, '2017 - 2018');
   });
 });

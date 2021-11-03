@@ -49,7 +49,7 @@ module('Acceptance | User', function (hooks) {
     assert.dom(secondResultEmail).hasText('user@example.edu', 'user email is correct');
 
     await click(secondResultUsername);
-    assert.equal(currentURL(), '/users/2', 'new user profile is shown');
+    assert.strictEqual(currentURL(), '/users/2', 'new user profile is shown');
     assert.dom(name).hasText('1 guy M. Mc1son', 'user name is shown');
   });
 
@@ -72,28 +72,28 @@ module('Acceptance | User', function (hooks) {
       school: this.school,
     });
     await page.visit({ userId: user1.id });
-    assert.equal(page.roles.student.value, 'Yes');
-    assert.equal(page.roles.student.label, 'Student:');
-    assert.equal(page.roles.formerStudent.value, 'Yes');
-    assert.equal(page.roles.formerStudent.label, 'Former Student:');
-    assert.equal(page.roles.enabled.value, 'Yes');
-    assert.equal(page.roles.enabled.label, 'Account Enabled:');
-    assert.equal(page.roles.excludeFromSync.value, 'Yes');
-    assert.equal(page.roles.excludeFromSync.label, 'Exclude From Sync:');
+    assert.strictEqual(page.roles.student.value, 'Yes');
+    assert.strictEqual(page.roles.student.label, 'Student:');
+    assert.strictEqual(page.roles.formerStudent.value, 'Yes');
+    assert.strictEqual(page.roles.formerStudent.label, 'Former Student:');
+    assert.strictEqual(page.roles.enabled.value, 'Yes');
+    assert.strictEqual(page.roles.enabled.label, 'Account Enabled:');
+    assert.strictEqual(page.roles.excludeFromSync.value, 'Yes');
+    assert.strictEqual(page.roles.excludeFromSync.label, 'Exclude From Sync:');
     await page.roles.manage();
     assert.ok(page.roles.formerStudent.selected);
     assert.ok(page.roles.enabled.selected);
     assert.ok(page.roles.excludeFromSync.selected);
 
     await page.visit({ userId: user2.id });
-    assert.equal(page.roles.student.value, 'No');
-    assert.equal(page.roles.student.label, 'Student:');
-    assert.equal(page.roles.formerStudent.value, 'No');
-    assert.equal(page.roles.formerStudent.label, 'Former Student:');
-    assert.equal(page.roles.enabled.value, 'No');
-    assert.equal(page.roles.enabled.label, 'Account Enabled:');
-    assert.equal(page.roles.excludeFromSync.value, 'No');
-    assert.equal(page.roles.excludeFromSync.label, 'Exclude From Sync:');
+    assert.strictEqual(page.roles.student.value, 'No');
+    assert.strictEqual(page.roles.student.label, 'Student:');
+    assert.strictEqual(page.roles.formerStudent.value, 'No');
+    assert.strictEqual(page.roles.formerStudent.label, 'Former Student:');
+    assert.strictEqual(page.roles.enabled.value, 'No');
+    assert.strictEqual(page.roles.enabled.label, 'Account Enabled:');
+    assert.strictEqual(page.roles.excludeFromSync.value, 'No');
+    assert.strictEqual(page.roles.excludeFromSync.label, 'Exclude From Sync:');
     await page.roles.manage();
     assert.notOk(page.roles.formerStudent.selected);
     assert.notOk(page.roles.enabled.selected);
@@ -114,10 +114,10 @@ module('Acceptance | User', function (hooks) {
       school: this.school,
     });
     await page.visit({ userId: user.id });
-    assert.equal(page.roles.student.value, 'Yes');
-    assert.equal(page.roles.formerStudent.value, 'Yes');
-    assert.equal(page.roles.enabled.value, 'Yes');
-    assert.equal(page.roles.excludeFromSync.value, 'Yes');
+    assert.strictEqual(page.roles.student.value, 'Yes');
+    assert.strictEqual(page.roles.formerStudent.value, 'Yes');
+    assert.strictEqual(page.roles.enabled.value, 'Yes');
+    assert.strictEqual(page.roles.excludeFromSync.value, 'Yes');
     await page.roles.manage();
     assert.ok(page.roles.formerStudent.selected);
     assert.ok(page.roles.enabled.selected);
@@ -130,14 +130,14 @@ module('Acceptance | User', function (hooks) {
     assert.notOk(page.roles.excludeFromSync.selected);
 
     await page.roles.save();
-    assert.equal(page.roles.student.value, 'Yes');
-    assert.equal(page.roles.formerStudent.value, 'No');
-    assert.equal(page.roles.enabled.value, 'No');
-    assert.equal(page.roles.excludeFromSync.value, 'No');
+    assert.strictEqual(page.roles.student.value, 'Yes');
+    assert.strictEqual(page.roles.formerStudent.value, 'No');
+    assert.strictEqual(page.roles.enabled.value, 'No');
+    assert.strictEqual(page.roles.excludeFromSync.value, 'No');
     await page.visit({ userId: user.id });
-    assert.equal(page.roles.student.value, 'Yes');
-    assert.equal(page.roles.formerStudent.value, 'No');
-    assert.equal(page.roles.enabled.value, 'No');
-    assert.equal(page.roles.excludeFromSync.value, 'No');
+    assert.strictEqual(page.roles.student.value, 'Yes');
+    assert.strictEqual(page.roles.formerStudent.value, 'No');
+    assert.strictEqual(page.roles.enabled.value, 'No');
+    assert.strictEqual(page.roles.excludeFromSync.value, 'No');
   });
 });

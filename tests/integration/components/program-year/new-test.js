@@ -23,19 +23,19 @@ module('Integration | Component | program-year/new', function (hooks) {
       @academicYearCrossesCalendarYearBoundaries={{false}}
     />`);
 
-    assert.equal(component.title, 'New Program Year');
+    assert.strictEqual(component.title, 'New Program Year');
     const { options } = component.years;
-    assert.equal(options.length, 10);
-    assert.equal(options[0].text, String(this.currentYear - 5));
-    assert.equal(options[1].text, String(this.currentYear - 4));
-    assert.equal(options[2].text, String(this.currentYear - 3));
-    assert.equal(options[3].text, String(this.currentYear - 2));
-    assert.equal(options[4].text, String(this.currentYear - 1));
-    assert.equal(options[5].text, String(this.currentYear));
-    assert.equal(options[6].text, String(this.currentYear + 1));
-    assert.equal(options[7].text, String(this.currentYear + 2));
-    assert.equal(options[8].text, String(this.currentYear + 3));
-    assert.equal(options[9].text, String(this.currentYear + 4));
+    assert.strictEqual(options.length, 10);
+    assert.strictEqual(options[0].text, String(this.currentYear - 5));
+    assert.strictEqual(options[1].text, String(this.currentYear - 4));
+    assert.strictEqual(options[2].text, String(this.currentYear - 3));
+    assert.strictEqual(options[3].text, String(this.currentYear - 2));
+    assert.strictEqual(options[4].text, String(this.currentYear - 1));
+    assert.strictEqual(options[5].text, String(this.currentYear));
+    assert.strictEqual(options[6].text, String(this.currentYear + 1));
+    assert.strictEqual(options[7].text, String(this.currentYear + 2));
+    assert.strictEqual(options[8].text, String(this.currentYear + 3));
+    assert.strictEqual(options[9].text, String(this.currentYear + 4));
     assert.ok(component.done.isVisible);
     assert.ok(component.cancel.isVisible);
   });
@@ -58,7 +58,7 @@ module('Integration | Component | program-year/new', function (hooks) {
   test('save', async function (assert) {
     assert.expect(1);
     this.set('save', async (startYear) => {
-      assert.equal(startYear, (this.currentYear - 5).toString());
+      assert.strictEqual(startYear, (this.currentYear - 5).toString());
     });
     await render(hbs`<ProgramYear::New
       @programYears={{(array)}}
@@ -73,7 +73,7 @@ module('Integration | Component | program-year/new', function (hooks) {
     assert.expect(3);
     const year = this.currentYear.toString();
     this.set('save', async (startYear) => {
-      assert.equal(startYear, year);
+      assert.strictEqual(startYear, year);
     });
     await render(hbs`<ProgramYear::New
       @programYears={{(array)}}
@@ -95,26 +95,26 @@ module('Integration | Component | program-year/new', function (hooks) {
       @academicYearCrossesCalendarYearBoundaries={{true}}
     />`);
     const { options } = component.years;
-    assert.equal(options.length, 10);
-    assert.equal(options[0].text, `${this.currentYear - 5} - ${this.currentYear - 4}`);
-    assert.equal(options[0].value, String(this.currentYear - 5));
-    assert.equal(options[1].text, `${this.currentYear - 4} - ${this.currentYear - 3}`);
-    assert.equal(options[1].value, String(this.currentYear - 4));
-    assert.equal(options[2].text, `${this.currentYear - 3} - ${this.currentYear - 2}`);
-    assert.equal(options[2].value, String(this.currentYear - 3));
-    assert.equal(options[3].text, `${this.currentYear - 2} - ${this.currentYear - 1}`);
-    assert.equal(options[3].value, String(this.currentYear - 2));
-    assert.equal(options[4].text, `${this.currentYear - 1} - ${this.currentYear - 0}`);
-    assert.equal(options[4].value, String(this.currentYear - 1));
-    assert.equal(options[5].text, `${this.currentYear} - ${this.currentYear + 1}`);
-    assert.equal(options[5].value, String(this.currentYear));
-    assert.equal(options[6].text, `${this.currentYear + 1} - ${this.currentYear + 2}`);
-    assert.equal(options[6].value, String(this.currentYear + 1));
-    assert.equal(options[7].text, `${this.currentYear + 2} - ${this.currentYear + 3}`);
-    assert.equal(options[7].value, String(this.currentYear + 2));
-    assert.equal(options[8].text, `${this.currentYear + 3} - ${this.currentYear + 4}`);
-    assert.equal(options[8].value, String(this.currentYear + 3));
-    assert.equal(options[9].text, `${this.currentYear + 4} - ${this.currentYear + 5}`);
-    assert.equal(options[9].value, String(this.currentYear + 4));
+    assert.strictEqual(options.length, 10);
+    assert.strictEqual(options[0].text, `${this.currentYear - 5} - ${this.currentYear - 4}`);
+    assert.strictEqual(options[0].value, String(this.currentYear - 5));
+    assert.strictEqual(options[1].text, `${this.currentYear - 4} - ${this.currentYear - 3}`);
+    assert.strictEqual(options[1].value, String(this.currentYear - 4));
+    assert.strictEqual(options[2].text, `${this.currentYear - 3} - ${this.currentYear - 2}`);
+    assert.strictEqual(options[2].value, String(this.currentYear - 3));
+    assert.strictEqual(options[3].text, `${this.currentYear - 2} - ${this.currentYear - 1}`);
+    assert.strictEqual(options[3].value, String(this.currentYear - 2));
+    assert.strictEqual(options[4].text, `${this.currentYear - 1} - ${this.currentYear - 0}`);
+    assert.strictEqual(options[4].value, String(this.currentYear - 1));
+    assert.strictEqual(options[5].text, `${this.currentYear} - ${this.currentYear + 1}`);
+    assert.strictEqual(options[5].value, String(this.currentYear));
+    assert.strictEqual(options[6].text, `${this.currentYear + 1} - ${this.currentYear + 2}`);
+    assert.strictEqual(options[6].value, String(this.currentYear + 1));
+    assert.strictEqual(options[7].text, `${this.currentYear + 2} - ${this.currentYear + 3}`);
+    assert.strictEqual(options[7].value, String(this.currentYear + 2));
+    assert.strictEqual(options[8].text, `${this.currentYear + 3} - ${this.currentYear + 4}`);
+    assert.strictEqual(options[8].value, String(this.currentYear + 3));
+    assert.strictEqual(options[9].text, `${this.currentYear + 4} - ${this.currentYear + 5}`);
+    assert.strictEqual(options[9].value, String(this.currentYear + 4));
   });
 });

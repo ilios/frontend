@@ -34,17 +34,23 @@ module('Integration | Component | program-year/objectives', function (hooks) {
       @expand={{(noop)}}
     />`);
 
-    assert.equal(component.objectiveList.objectives.length, 2);
-    assert.equal(
+    assert.strictEqual(component.objectiveList.objectives.length, 2);
+    assert.strictEqual(
       component.objectiveList.objectives[0].description.text,
       'program-year objective 0'
     );
     assert.ok(component.objectiveList.objectives[0].competency.hasCompetency);
-    assert.equal(component.objectiveList.objectives[0].competency.competencyTitle, 'competency 2');
-    assert.equal(component.objectiveList.objectives[0].competency.domainTitle, '(competency 0)');
+    assert.strictEqual(
+      component.objectiveList.objectives[0].competency.competencyTitle,
+      'competency 2'
+    );
+    assert.strictEqual(
+      component.objectiveList.objectives[0].competency.domainTitle,
+      '(competency 0)'
+    );
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.isEmpty);
 
-    assert.equal(
+    assert.strictEqual(
       component.objectiveList.objectives[1].description.text,
       'program-year objective 1'
     );
@@ -99,32 +105,32 @@ module('Integration | Component | program-year/objectives', function (hooks) {
       @expand={{(noop)}}
     />`);
 
-    assert.equal(component.objectiveList.objectives.length, 1);
-    assert.equal(
+    assert.strictEqual(component.objectiveList.objectives.length, 1);
+    assert.strictEqual(
       component.objectiveList.objectives[0].description.text,
       'program-year objective 0'
     );
     assert.ok(component.objectiveList.objectives[0].competency.hasCompetency);
     await component.objectiveList.objectives[0].competency.manage();
     const m = component.objectiveList.objectives[0].competencyManager;
-    assert.equal(m.domains.length, 2);
+    assert.strictEqual(m.domains.length, 2);
 
-    assert.equal(m.domains[0].title, 'competency 0');
+    assert.strictEqual(m.domains[0].title, 'competency 0');
     assert.ok(m.domains[0].selected);
-    assert.equal(m.domains[0].competencies.length, 3);
-    assert.equal(m.domains[0].competencies[0].title, 'competency 2');
+    assert.strictEqual(m.domains[0].competencies.length, 3);
+    assert.strictEqual(m.domains[0].competencies[0].title, 'competency 2');
     assert.ok(m.domains[0].competencies[0].selected);
-    assert.equal(m.domains[0].competencies[1].title, 'competency 3');
+    assert.strictEqual(m.domains[0].competencies[1].title, 'competency 3');
     assert.ok(m.domains[0].competencies[1].notSelected);
-    assert.equal(m.domains[0].competencies[2].title, 'competency 4');
+    assert.strictEqual(m.domains[0].competencies[2].title, 'competency 4');
     assert.ok(m.domains[0].competencies[2].notSelected);
 
-    assert.equal(m.domains[1].title, 'competency 1');
+    assert.strictEqual(m.domains[1].title, 'competency 1');
     assert.ok(m.domains[1].notSelected);
-    assert.equal(m.domains[1].competencies.length, 2);
-    assert.equal(m.domains[1].competencies[0].title, 'competency 5');
+    assert.strictEqual(m.domains[1].competencies.length, 2);
+    assert.strictEqual(m.domains[1].competencies[0].title, 'competency 5');
     assert.ok(m.domains[1].competencies[0].notSelected);
-    assert.equal(m.domains[1].competencies[1].title, 'competency 6');
+    assert.strictEqual(m.domains[1].competencies[1].title, 'competency 6');
     assert.ok(m.domains[1].competencies[1].notSelected);
 
     await a11yAudit(this.element);

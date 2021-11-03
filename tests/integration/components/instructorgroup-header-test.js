@@ -31,13 +31,13 @@ module('Integration | Component | instructorgroup header', function (hooks) {
       hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.title.text, 'lorem ipsum');
+    assert.strictEqual(component.title.text, 'lorem ipsum');
     assert.ok(component.title.isEditable);
     assert.ok(component.members, 'Members: 3');
-    assert.equal(component.breadcrumb.crumbs.length, 3);
-    assert.equal(component.breadcrumb.crumbs[0].text, 'Instructor Groups');
-    assert.equal(component.breadcrumb.crumbs[1].text, 'Medicine');
-    assert.equal(component.breadcrumb.crumbs[2].text, 'lorem ipsum');
+    assert.strictEqual(component.breadcrumb.crumbs.length, 3);
+    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'Instructor Groups');
+    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Medicine');
+    assert.strictEqual(component.breadcrumb.crumbs[2].text, 'lorem ipsum');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -50,7 +50,7 @@ module('Integration | Component | instructorgroup header', function (hooks) {
       hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.title.text, 'lorem ipsum');
+    assert.strictEqual(component.title.text, 'lorem ipsum');
     assert.notOk(component.title.isEditable);
     assert.ok(component.members, 'Members: 3');
     await a11yAudit(this.element);
@@ -66,12 +66,12 @@ module('Integration | Component | instructorgroup header', function (hooks) {
       hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.title.text, 'lorem ipsum');
+    assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.equal(component.title.value, 'lorem ipsum');
+    assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set(newTitle);
     await component.title.save();
-    assert.equal(component.title.text, 'foo bar');
+    assert.strictEqual(component.title.text, 'foo bar');
   });
 
   test('changing title fails if new title is too long', async function (assert) {
@@ -82,13 +82,13 @@ module('Integration | Component | instructorgroup header', function (hooks) {
       hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.title.text, 'lorem ipsum');
+    assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.equal(component.title.errors.length, 0);
-    assert.equal(component.title.value, 'lorem ipsum');
+    assert.strictEqual(component.title.errors.length, 0);
+    assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('01234567890'.repeat(1000));
     await component.title.save();
-    assert.equal(component.title.errors.length, 1);
+    assert.strictEqual(component.title.errors.length, 1);
   });
 
   test('changing title fails if new title is too short', async function (assert) {
@@ -99,13 +99,13 @@ module('Integration | Component | instructorgroup header', function (hooks) {
       hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.title.text, 'lorem ipsum');
+    assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.equal(component.title.errors.length, 0);
-    assert.equal(component.title.value, 'lorem ipsum');
+    assert.strictEqual(component.title.errors.length, 0);
+    assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('AB');
     await component.title.save();
-    assert.equal(component.title.errors.length, 1);
+    assert.strictEqual(component.title.errors.length, 1);
   });
 
   test('changing title fails if title is blank', async function (assert) {
@@ -116,13 +116,13 @@ module('Integration | Component | instructorgroup header', function (hooks) {
       hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.title.text, 'lorem ipsum');
+    assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.equal(component.title.errors.length, 0);
-    assert.equal(component.title.value, 'lorem ipsum');
+    assert.strictEqual(component.title.errors.length, 0);
+    assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('');
     await component.title.save();
-    assert.equal(component.title.errors.length, 1);
+    assert.strictEqual(component.title.errors.length, 1);
   });
 
   test('cancel title changes', async function (assert) {
@@ -133,12 +133,12 @@ module('Integration | Component | instructorgroup header', function (hooks) {
       hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.title.text, 'lorem ipsum');
+    assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.equal(component.title.errors.length, 0);
-    assert.equal(component.title.value, 'lorem ipsum');
+    assert.strictEqual(component.title.errors.length, 0);
+    assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('foo bar');
     await component.title.cancel();
-    assert.equal(component.title.text, 'lorem ipsum');
+    assert.strictEqual(component.title.text, 'lorem ipsum');
   });
 });

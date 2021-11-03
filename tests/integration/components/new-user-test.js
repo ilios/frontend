@@ -44,10 +44,10 @@ module('Integration | Component | new user', function (hooks) {
     await render(hbs`<NewUser @close={{(noop)}} />`);
 
     await component.clickChoiceButtons.firstButton.isActive;
-    assert.equal(component.school.options.length, 3);
-    assert.equal(component.school.options[0].text, 'school 0');
-    assert.equal(component.school.options[1].text, 'school 1');
-    assert.equal(component.school.options[2].text, 'school 2');
+    assert.strictEqual(component.school.options.length, 3);
+    assert.strictEqual(component.school.options[0].text, 'school 0');
+    assert.strictEqual(component.school.options[1].text, 'school 1');
+    assert.strictEqual(component.school.options[2].text, 'school 2');
   });
 
   test('errors do not show up initially', async function (assert) {
@@ -87,7 +87,7 @@ module('Integration | Component | new user', function (hooks) {
     });
 
     this.set('transitionToUser', (userId) => {
-      assert.equal(userId, 2);
+      assert.strictEqual(userId, 2);
     });
     await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />`);
 
@@ -103,19 +103,19 @@ module('Integration | Component | new user', function (hooks) {
     await component.submit();
 
     const newUser = await this.owner.lookup('service:store').find('user', 2);
-    assert.equal(newUser.firstName, 'first', 'with the correct firstName');
-    assert.equal(newUser.middleName, 'middle', 'with the correct middleName');
-    assert.equal(newUser.lastName, 'last', 'with the correct lastName');
-    assert.equal(newUser.campusId, 'campusid', 'with the correct campusId');
-    assert.equal(newUser.otherId, 'otherid', 'with the correct otherId');
-    assert.equal(newUser.phone, 'phone', 'with the correct phone');
-    assert.equal(newUser.email, 'test@test.com', 'with the correct email');
+    assert.strictEqual(newUser.firstName, 'first', 'with the correct firstName');
+    assert.strictEqual(newUser.middleName, 'middle', 'with the correct middleName');
+    assert.strictEqual(newUser.lastName, 'last', 'with the correct lastName');
+    assert.strictEqual(newUser.campusId, 'campusid', 'with the correct campusId');
+    assert.strictEqual(newUser.otherId, 'otherid', 'with the correct otherId');
+    assert.strictEqual(newUser.phone, 'phone', 'with the correct phone');
+    assert.strictEqual(newUser.email, 'test@test.com', 'with the correct email');
     const roles = await newUser.roles;
     assert.notOk(roles.mapBy('id').includes(studentRole.id));
 
     const authentication = await newUser.authentication;
-    assert.equal(authentication.username, 'user123', 'with the correct username');
-    assert.equal(authentication.password, 'password123', 'with the correct password');
+    assert.strictEqual(authentication.username, 'user123', 'with the correct username');
+    assert.strictEqual(authentication.password, 'password123', 'with the correct password');
   });
 
   test('create new student user', async function (assert) {
@@ -132,7 +132,7 @@ module('Integration | Component | new user', function (hooks) {
     const cohort = this.server.create('cohort', { programYear });
 
     this.set('transitionToUser', (userId) => {
-      assert.equal(userId, 2);
+      assert.strictEqual(userId, 2);
     });
     await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />`);
     await component.clickChoiceButtons.secondButton.click();
@@ -148,22 +148,22 @@ module('Integration | Component | new user', function (hooks) {
     await component.submit();
 
     const newUser = await this.owner.lookup('service:store').find('user', 2);
-    assert.equal(newUser.firstName, 'first', 'with the correct firstName');
-    assert.equal(newUser.middleName, 'middle', 'with the correct middleName');
-    assert.equal(newUser.lastName, 'last', 'with the correct lastName');
-    assert.equal(newUser.campusId, 'campusid', 'with the correct campusId');
-    assert.equal(newUser.otherId, 'otherid', 'with the correct otherId');
-    assert.equal(newUser.phone, 'phone', 'with the correct phone');
-    assert.equal(newUser.email, 'test@test.com', 'with the correct email');
+    assert.strictEqual(newUser.firstName, 'first', 'with the correct firstName');
+    assert.strictEqual(newUser.middleName, 'middle', 'with the correct middleName');
+    assert.strictEqual(newUser.lastName, 'last', 'with the correct lastName');
+    assert.strictEqual(newUser.campusId, 'campusid', 'with the correct campusId');
+    assert.strictEqual(newUser.otherId, 'otherid', 'with the correct otherId');
+    assert.strictEqual(newUser.phone, 'phone', 'with the correct phone');
+    assert.strictEqual(newUser.email, 'test@test.com', 'with the correct email');
     const roles = await newUser.roles;
     assert.ok(roles.mapBy('id').includes(studentRole.id));
 
     const authentication = await newUser.authentication;
-    assert.equal(authentication.username, 'user123', 'with the correct username');
-    assert.equal(authentication.password, 'password123', 'with the correct password');
+    assert.strictEqual(authentication.username, 'user123', 'with the correct username');
+    assert.strictEqual(authentication.password, 'password123', 'with the correct password');
 
     const primaryCohort = await newUser.primaryCohort;
-    assert.equal(primaryCohort.id, cohort.id);
+    assert.strictEqual(primaryCohort.id, cohort.id);
   });
 
   test('cancel', async function (assert) {
@@ -202,15 +202,15 @@ module('Integration | Component | new user', function (hooks) {
     await component.clickChoiceButtons.secondButton.click();
 
     assert.ok(component.school.options[0].selected);
-    assert.equal(component.cohort.options.length, 1);
-    assert.equal(component.cohort.options[0].text, 'program 0 cohort 0');
+    assert.strictEqual(component.cohort.options.length, 1);
+    assert.strictEqual(component.cohort.options[0].text, 'program 0 cohort 0');
     assert.ok(component.cohort.options[0].selected);
 
     await component.school.select(2);
 
     assert.ok(component.school.options[1].selected);
-    assert.equal(component.cohort.options.length, 1);
-    assert.equal(component.cohort.options[0].text, 'program 1 cohort 1');
+    assert.strictEqual(component.cohort.options.length, 1);
+    assert.strictEqual(component.cohort.options[0].text, 'program 1 cohort 1');
     assert.ok(component.cohort.options[0].selected);
   });
 

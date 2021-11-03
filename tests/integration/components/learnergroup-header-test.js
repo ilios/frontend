@@ -30,12 +30,12 @@ module('Integration | Component | learnergroup header', function (hooks) {
     await render(hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} />`);
 
     assert.dom('.title').hasText('our group');
-    assert.equal(
+    assert.strictEqual(
       find('.breadcrumbs').textContent.replace(/\s/g, ''),
       'LearnerGroupsparentgroupourgroup'
     );
     const breadcrumbRootLinkUrl = new URL(find('.breadcrumbs > span a').href);
-    assert.equal(breadcrumbRootLinkUrl.search, '?program=1&programYear=1&school=1');
+    assert.strictEqual(breadcrumbRootLinkUrl.search, '?program=1&programYear=1&school=1');
   });
 
   test('can change title', async function (assert) {
@@ -43,7 +43,7 @@ module('Integration | Component | learnergroup header', function (hooks) {
     const learnerGroup = EmberObject.create({
       title: 'our group',
       save() {
-        assert.equal(this.title, 'new title');
+        assert.strictEqual(this.title, 'new title');
       },
     });
 

@@ -39,8 +39,8 @@ module('Acceptance | Program Year - Terms', function (hooks) {
     assert.expect(2);
     await visit(url);
     var items = findAll('.detail-taxonomies ul.selected-taxonomy-terms li');
-    assert.equal(items.length, 1);
-    assert.equal(await getElementText(items[0]), getText('term 0'));
+    assert.strictEqual(items.length, 1);
+    assert.strictEqual(await getElementText(items[0]), getText('term 0'));
   });
 
   test('manage terms', async function (assert) {
@@ -48,15 +48,15 @@ module('Acceptance | Program Year - Terms', function (hooks) {
     assert.expect(3);
     await visit(url);
     await click(find('.taxonomy-manager .actions button'));
-    assert.equal(
+    assert.strictEqual(
       await getElementText(find('.taxonomy-manager .removable-list li')),
       getText('term 0')
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(find('.taxonomy-manager .selectable-terms-list li')),
       getText('term 0')
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(findAll('.taxonomy-manager .selectable-terms-list li')[1]),
       getText('term 1')
     );
@@ -70,7 +70,7 @@ module('Acceptance | Program Year - Terms', function (hooks) {
     await click(find('.taxonomy-manager .removable-list li'));
     await click(find('.taxonomy-manager .selectable-terms-list li:nth-of-type(2) > div'));
     await click('.taxonomy-manager button.bigadd');
-    assert.equal(
+    assert.strictEqual(
       await getElementText(find('.taxonomy-manager ul.selected-taxonomy-terms li')),
       getText('term 1')
     );
@@ -84,7 +84,7 @@ module('Acceptance | Program Year - Terms', function (hooks) {
     await click('.taxonomy-manager .removable-list li');
     await click(find('.taxonomy-manager .selectable-terms-list li:nth-of-type(2) > div'));
     await click('.taxonomy-manager button.bigcancel');
-    assert.equal(
+    assert.strictEqual(
       await getElementText(find('.taxonomy-manager ul.selected-taxonomy-terms li')),
       getText('term 0')
     );

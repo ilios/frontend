@@ -27,23 +27,23 @@ module('Integration | Component | learner group list', function (hooks) {
     this.set('learnerGroups', [firstGroupModel, secondGroupModel]);
     await render(hbs`<LearnergroupList @learnerGroups={{this.learnerGroups}} />`);
 
-    assert.equal(component.headings[0].text, 'Learner Group Title');
-    assert.equal(component.headings[1].text, 'Members');
-    assert.equal(component.headings[2].text, 'Subgroups');
-    assert.equal(component.headings[3].text, 'Actions');
+    assert.strictEqual(component.headings[0].text, 'Learner Group Title');
+    assert.strictEqual(component.headings[1].text, 'Members');
+    assert.strictEqual(component.headings[2].text, 'Subgroups');
+    assert.strictEqual(component.headings[3].text, 'Actions');
 
-    assert.equal(component.groups.length, 2);
+    assert.strictEqual(component.groups.length, 2);
 
-    assert.equal(component.groups[0].title, 'learner group 0');
+    assert.strictEqual(component.groups[0].title, 'learner group 0');
     assert.ok(component.groups[0].needsAccommodation);
-    assert.equal(component.groups[0].members, '0');
-    assert.equal(component.groups[0].subgroups, '2');
+    assert.strictEqual(component.groups[0].members, '0');
+    assert.strictEqual(component.groups[0].subgroups, '2');
     assert.ok(component.groups[0].hasSubgroupsInNeedOfAccommodation);
 
-    assert.equal(component.groups[1].title, 'learner group 1');
+    assert.strictEqual(component.groups[1].title, 'learner group 1');
     assert.notOk(component.groups[1].needsAccommodation);
-    assert.equal(component.groups[1].members, '2');
-    assert.equal(component.groups[1].subgroups, '0');
+    assert.strictEqual(component.groups[1].members, '2');
+    assert.strictEqual(component.groups[1].subgroups, '0');
     assert.notOk(component.groups[1].hasSubgroupsInNeedOfAccommodation);
   });
 
@@ -55,7 +55,7 @@ module('Integration | Component | learner group list', function (hooks) {
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
 
     this.set('remove', ({ id }) => {
-      assert.equal(id, model.id);
+      assert.strictEqual(id, model.id);
     });
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
@@ -64,7 +64,7 @@ module('Integration | Component | learner group list', function (hooks) {
       @canDelete={{true}}
     />`);
 
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canRemove);
     await component.groups[0].actions.remove();
     assert.ok(component.confirmRemoval.confirmation.includes('Are you sure'));
@@ -84,7 +84,7 @@ module('Integration | Component | learner group list', function (hooks) {
       @canDelete={{true}}
     />`);
 
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
     assert.notOk(component.groups[0].actions.canRemove);
   });
 
@@ -101,7 +101,7 @@ module('Integration | Component | learner group list', function (hooks) {
       @canDelete={{true}}
     />`);
 
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
     assert.notOk(component.groups[0].actions.canRemove);
   });
 
@@ -129,17 +129,17 @@ module('Integration | Component | learner group list', function (hooks) {
       @canDelete={{true}}
     />`);
 
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canRemove);
     await component.groups[0].actions.remove();
-    assert.equal(
+    assert.strictEqual(
       component.confirmRemoval.confirmation,
       'This group is attached to 3 courses and cannot be deleted. 2013 course 0 2013 course 1 2013 course 2 OK'
     );
     assert.notOk(component.confirmRemoval.canConfirm);
     assert.ok(component.confirmRemoval.canCancel);
     await component.confirmRemoval.cancel();
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
   });
 
   test('course academic year shows range if applicable by configuration', async function (assert) {
@@ -173,7 +173,7 @@ module('Integration | Component | learner group list', function (hooks) {
     />`);
 
     await component.groups[0].actions.remove();
-    assert.equal(
+    assert.strictEqual(
       component.confirmRemoval.confirmation,
       'This group is attached to 3 courses and cannot be deleted. 2013 - 2014 course 0 2013 - 2014 course 1 2013 - 2014 course 2 OK'
     );
@@ -186,7 +186,7 @@ module('Integration | Component | learner group list', function (hooks) {
 
     this.set('copy', (withLearners, { id }) => {
       assert.ok(withLearners);
-      assert.equal(id, model.id);
+      assert.strictEqual(id, model.id);
     });
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
@@ -196,7 +196,7 @@ module('Integration | Component | learner group list', function (hooks) {
       @canCopyWithLearners={{true}}
     />`);
 
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canCopy);
     await component.groups[0].actions.copy();
     assert.ok(component.confirmCopy.canCopyWithLearners);
@@ -210,7 +210,7 @@ module('Integration | Component | learner group list', function (hooks) {
 
     this.set('copy', (withLearners, { id }) => {
       assert.notOk(withLearners);
-      assert.equal(id, model.id);
+      assert.strictEqual(id, model.id);
     });
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
@@ -219,7 +219,7 @@ module('Integration | Component | learner group list', function (hooks) {
       @canCreate={{true}}
     />`);
 
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canCopy);
     await component.groups[0].actions.copy();
     assert.ok(component.confirmCopy.canCopyWithoutLearners);
@@ -238,7 +238,7 @@ module('Integration | Component | learner group list', function (hooks) {
       @canCopyWithLearners={{false}}
     />`);
 
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canCopy);
     await component.groups[0].actions.copy();
     assert.ok(component.confirmCopy.canCopyWithoutLearners);
@@ -258,7 +258,7 @@ module('Integration | Component | learner group list', function (hooks) {
       @canCopyWithLearners={{false}}
     />`);
 
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canCopy);
     await component.groups[0].actions.copy();
     assert.notOk(component.confirmCopy.canCopyWithLearners);
@@ -277,37 +277,37 @@ module('Integration | Component | learner group list', function (hooks) {
     assert.ok(component.isSortedByTitleAscending, 'Default sort order is by title ascending');
     assert.ok(component.isNotSortedByMembers);
     assert.ok(component.isNotSortedBySubgroups);
-    assert.equal(component.groups[0].title, 'Group 2');
-    assert.equal(component.groups[1].title, 'Group 10');
+    assert.strictEqual(component.groups[0].title, 'Group 2');
+    assert.strictEqual(component.groups[1].title, 'Group 10');
     await component.sortByTitle();
     assert.ok(component.isSortedByTitleDescending);
     assert.ok(component.isNotSortedByMembers);
     assert.ok(component.isNotSortedBySubgroups);
-    assert.equal(component.groups[0].title, 'Group 10');
-    assert.equal(component.groups[1].title, 'Group 2');
+    assert.strictEqual(component.groups[0].title, 'Group 10');
+    assert.strictEqual(component.groups[1].title, 'Group 2');
     await component.sortByMembers();
     assert.ok(component.isSortedByMembersAscending);
     assert.ok(component.isNotSortedByTitle);
     assert.ok(component.isNotSortedBySubgroups);
-    assert.equal(component.groups[0].members, '0');
-    assert.equal(component.groups[1].members, '2');
+    assert.strictEqual(component.groups[0].members, '0');
+    assert.strictEqual(component.groups[1].members, '2');
     await component.sortByMembers();
     assert.ok(component.isSortedByMembersDescending);
     assert.ok(component.isNotSortedByTitle);
     assert.ok(component.isNotSortedBySubgroups);
-    assert.equal(component.groups[0].members, '2');
-    assert.equal(component.groups[1].members, '0');
+    assert.strictEqual(component.groups[0].members, '2');
+    assert.strictEqual(component.groups[1].members, '0');
     await component.sortBySubgroups();
     assert.ok(component.isSortedBySubgroupsAscending);
     assert.ok(component.isNotSortedByTitle);
     assert.ok(component.isNotSortedByMembers);
-    assert.equal(component.groups[0].subgroups, '0');
-    assert.equal(component.groups[1].subgroups, '1');
+    assert.strictEqual(component.groups[0].subgroups, '0');
+    assert.strictEqual(component.groups[1].subgroups, '1');
     await component.sortBySubgroups();
     assert.ok(component.isSortedBySubgroupsDescending);
     assert.ok(component.isNotSortedByTitle);
     assert.ok(component.isNotSortedByMembers);
-    assert.equal(component.groups[0].subgroups, '1');
-    assert.equal(component.groups[1].subgroups, '0');
+    assert.strictEqual(component.groups[0].subgroups, '1');
+    assert.strictEqual(component.groups[1].subgroups, '0');
   });
 });

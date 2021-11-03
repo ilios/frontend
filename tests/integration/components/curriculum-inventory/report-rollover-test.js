@@ -28,14 +28,14 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
     await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
 
-    assert.equal(component.years.options.length, 4);
-    assert.equal(component.years.options[0].text, `${thisYear + 1}`);
-    assert.equal(component.years.options[1].text, `${thisYear + 2}`);
-    assert.equal(component.years.options[2].text, `${thisYear + 3}`);
-    assert.equal(component.years.options[3].text, `${thisYear + 4}`);
-    assert.equal(component.name.value, reportModel.name);
-    assert.equal(component.description.value, reportModel.description);
-    assert.equal(component.programs.text, 'Program: program 0');
+    assert.strictEqual(component.years.options.length, 4);
+    assert.strictEqual(component.years.options[0].text, `${thisYear + 1}`);
+    assert.strictEqual(component.years.options[1].text, `${thisYear + 2}`);
+    assert.strictEqual(component.years.options[2].text, `${thisYear + 3}`);
+    assert.strictEqual(component.years.options[3].text, `${thisYear + 4}`);
+    assert.strictEqual(component.name.value, reportModel.name);
+    assert.strictEqual(component.description.value, reportModel.description);
+    assert.strictEqual(component.programs.text, 'Program: program 0');
   });
 
   test('academic years labeled as range if configured accordingly', async function (assert) {
@@ -62,11 +62,11 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
     await render(hbs`<CurriculumInventory::ReportRollover @report={{report}} />`);
 
-    assert.equal(component.years.options.length, 4);
-    assert.equal(component.years.options[0].text, `${thisYear + 1} - ${thisYear + 2}`);
-    assert.equal(component.years.options[1].text, `${thisYear + 2} - ${thisYear + 3}`);
-    assert.equal(component.years.options[2].text, `${thisYear + 3} - ${thisYear + 4}`);
-    assert.equal(component.years.options[3].text, `${thisYear + 4} - ${thisYear + 5}`);
+    assert.strictEqual(component.years.options.length, 4);
+    assert.strictEqual(component.years.options[0].text, `${thisYear + 1} - ${thisYear + 2}`);
+    assert.strictEqual(component.years.options[1].text, `${thisYear + 2} - ${thisYear + 3}`);
+    assert.strictEqual(component.years.options[2].text, `${thisYear + 3} - ${thisYear + 4}`);
+    assert.strictEqual(component.years.options[3].text, `${thisYear + 4} - ${thisYear + 5}`);
   });
 
   test('rollover report', async function (assert) {
@@ -88,11 +88,11 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       `/api/curriculuminventoryreports/:id/rollover`,
       function (schema, { params, requestBody }) {
         assert.ok('id' in params);
-        assert.equal(params.id, reportModel.id);
+        assert.strictEqual(params.id, reportModel.id);
         const data = queryString.parse(requestBody);
-        assert.equal(data.year, thisYear + 1);
-        assert.equal(data.name, reportModel.name);
-        assert.equal(data.description, reportModel.description);
+        assert.strictEqual(data.year, thisYear + 1);
+        assert.strictEqual(data.name, reportModel.name);
+        assert.strictEqual(data.description, reportModel.description);
 
         return this.serialize(
           schema.curriculumInventoryReports.create({
@@ -103,7 +103,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     );
     this.set('report', reportModel);
     this.set('visit', (newReport) => {
-      assert.equal(newReport.id, 14);
+      assert.strictEqual(newReport.id, 14);
     });
     await render(
       hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />`
@@ -135,7 +135,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     });
     this.set('report', reportModel);
     this.set('visit', (newReport) => {
-      assert.equal(newReport.id, 14);
+      assert.strictEqual(newReport.id, 14);
     });
     await render(
       hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />`
@@ -166,12 +166,12 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       `/api/curriculuminventoryreports/:id/rollover`,
       function (schema, { params, requestBody }) {
         assert.ok('id' in params);
-        assert.equal(params.id, report.id);
+        assert.strictEqual(params.id, report.id);
         const data = queryString.parse(requestBody);
-        assert.equal(data.name, newName, 'The new name gets passed.');
-        assert.equal(data.description, newDescription, 'The new description gets passed.');
-        assert.equal(data.year, newYear, 'The new year gets passed.');
-        assert.equal(data.program, otherProgram.id);
+        assert.strictEqual(data.name, newName, 'The new name gets passed.');
+        assert.strictEqual(data.description, newDescription, 'The new description gets passed.');
+        assert.strictEqual(data.year, newYear, 'The new year gets passed.');
+        assert.strictEqual(data.program, otherProgram.id);
 
         return this.serialize(
           schema.curriculumInventoryReports.create({
@@ -189,10 +189,10 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     await component.name.set(newName);
     await component.description.set(newDescription);
     await component.years.select(newYear);
-    assert.equal(component.programs.options.length, 2);
-    assert.equal(component.programs.options[0].text, program.title);
+    assert.strictEqual(component.programs.options.length, 2);
+    assert.strictEqual(component.programs.options[0].text, program.title);
     assert.ok(component.programs.options[0].isSelected);
-    assert.equal(component.programs.options[1].text, otherProgram.title);
+    assert.strictEqual(component.programs.options[1].text, otherProgram.title);
     assert.notOk(component.programs.options[1].isSelected);
     await component.programs.select(otherProgram.id);
     await component.save();

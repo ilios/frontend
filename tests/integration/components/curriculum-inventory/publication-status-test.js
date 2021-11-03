@@ -14,7 +14,7 @@ module('Integration | Component | curriculum-inventory/publication-status', func
       @item={{this.item}}
     />`);
     assert.ok(component.isFinalized);
-    assert.equal(component.text, 'Finalized');
+    assert.strictEqual(component.text, 'Finalized');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -24,7 +24,7 @@ module('Integration | Component | curriculum-inventory/publication-status', func
       @item={{this.item}}
     />`);
     assert.notOk(component.isFinalized);
-    assert.equal(component.text, 'Draft');
+    assert.strictEqual(component.text, 'Draft');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

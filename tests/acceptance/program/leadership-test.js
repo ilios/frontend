@@ -25,25 +25,25 @@ module('Acceptance | Program - Leadership', function (hooks) {
     assert.expect(6);
     await page.visit({ programId: 1 });
 
-    assert.equal(page.leadershipCollapsed.title, 'Program Leadership');
-    assert.equal(page.leadershipCollapsed.headers.length, 1);
-    assert.equal(page.leadershipCollapsed.headers[0].title, 'Summary');
+    assert.strictEqual(page.leadershipCollapsed.title, 'Program Leadership');
+    assert.strictEqual(page.leadershipCollapsed.headers.length, 1);
+    assert.strictEqual(page.leadershipCollapsed.headers[0].title, 'Summary');
 
-    assert.equal(page.leadershipCollapsed.summary.length, 1);
-    assert.equal(page.leadershipCollapsed.summary[0].name, 'Directors');
-    assert.equal(page.leadershipCollapsed.summary[0].value, 'There are 2 directors');
+    assert.strictEqual(page.leadershipCollapsed.summary.length, 1);
+    assert.strictEqual(page.leadershipCollapsed.summary[0].name, 'Directors');
+    assert.strictEqual(page.leadershipCollapsed.summary[0].value, 'There are 2 directors');
   });
 
   test('list leadership', async function (assert) {
     assert.expect(4);
     await page.visit({ programId: 1, leadershipDetails: true });
 
-    assert.equal(page.leadershipExpanded.title, 'Program Leadership');
+    assert.strictEqual(page.leadershipExpanded.title, 'Program Leadership');
     const { directors } = page.leadershipExpanded.leadershipList;
 
-    assert.equal(directors.length, 2);
-    assert.equal(directors[0].text, '3 guy M. Mc3son');
-    assert.equal(directors[1].text, '4 guy M. Mc4son');
+    assert.strictEqual(directors.length, 2);
+    assert.strictEqual(directors[0].text, '3 guy M. Mc3son');
+    assert.strictEqual(directors[1].text, '4 guy M. Mc4son');
   });
 
   test('search directors', async function (assert) {
@@ -52,16 +52,16 @@ module('Acceptance | Program - Leadership', function (hooks) {
     await page.leadershipExpanded.manage();
     const manager = page.leadershipExpanded.leadershipManager;
     await manager.directorSearch.search('guy');
-    assert.equal(manager.directorSearch.results.length, 5);
-    assert.equal(manager.directorSearch.results[0].text, '0 guy M. Mc0son user@example.edu');
+    assert.strictEqual(manager.directorSearch.results.length, 5);
+    assert.strictEqual(manager.directorSearch.results[0].text, '0 guy M. Mc0son user@example.edu');
     assert.ok(manager.directorSearch.results[0].isSelectable);
-    assert.equal(manager.directorSearch.results[1].text, '1 guy M. Mc1son user@example.edu');
+    assert.strictEqual(manager.directorSearch.results[1].text, '1 guy M. Mc1son user@example.edu');
     assert.ok(manager.directorSearch.results[1].isSelectable);
-    assert.equal(manager.directorSearch.results[2].text, '2 guy M. Mc2son user@example.edu');
+    assert.strictEqual(manager.directorSearch.results[2].text, '2 guy M. Mc2son user@example.edu');
     assert.ok(manager.directorSearch.results[2].isSelectable);
-    assert.equal(manager.directorSearch.results[3].text, '3 guy M. Mc3son user@example.edu');
+    assert.strictEqual(manager.directorSearch.results[3].text, '3 guy M. Mc3son user@example.edu');
     assert.ok(manager.directorSearch.results[3].isSelected);
-    assert.equal(manager.directorSearch.results[4].text, '4 guy M. Mc4son user@example.edu');
+    assert.strictEqual(manager.directorSearch.results[4].text, '4 guy M. Mc4son user@example.edu');
     assert.ok(manager.directorSearch.results[4].isSelected);
   });
 
@@ -73,18 +73,18 @@ module('Acceptance | Program - Leadership', function (hooks) {
 
     const { selectedDirectors } = manager;
 
-    assert.equal(selectedDirectors.length, 2);
-    assert.equal(selectedDirectors[0].text, '3 guy M. Mc3son');
-    assert.equal(selectedDirectors[1].text, '4 guy M. Mc4son');
+    assert.strictEqual(selectedDirectors.length, 2);
+    assert.strictEqual(selectedDirectors[0].text, '3 guy M. Mc3son');
+    assert.strictEqual(selectedDirectors[1].text, '4 guy M. Mc4son');
 
     await selectedDirectors[1].remove();
 
     await manager.directorSearch.search('guy');
     await manager.directorSearch.results[0].add();
 
-    assert.equal(selectedDirectors.length, 2);
-    assert.equal(selectedDirectors[0].text, '0 guy M. Mc0son');
-    assert.equal(selectedDirectors[1].text, '3 guy M. Mc3son');
+    assert.strictEqual(selectedDirectors.length, 2);
+    assert.strictEqual(selectedDirectors[0].text, '0 guy M. Mc0son');
+    assert.strictEqual(selectedDirectors[1].text, '3 guy M. Mc3son');
   });
 
   test('cancel leadership changes', async function (assert) {
@@ -101,9 +101,9 @@ module('Acceptance | Program - Leadership', function (hooks) {
     await page.leadershipExpanded.cancel();
     const { directors } = page.leadershipExpanded.leadershipList;
 
-    assert.equal(directors.length, 2);
-    assert.equal(directors[0].text, '3 guy M. Mc3son');
-    assert.equal(directors[1].text, '4 guy M. Mc4son');
+    assert.strictEqual(directors.length, 2);
+    assert.strictEqual(directors[0].text, '3 guy M. Mc3son');
+    assert.strictEqual(directors[1].text, '4 guy M. Mc4son');
   });
 
   test('save leadership changes', async function (assert) {
@@ -119,8 +119,8 @@ module('Acceptance | Program - Leadership', function (hooks) {
     await page.leadershipExpanded.save();
     const { directors } = page.leadershipExpanded.leadershipList;
 
-    assert.equal(directors.length, 2);
-    assert.equal(directors[0].text, '1 guy M. Mc1son');
-    assert.equal(directors[1].text, '3 guy M. Mc3son');
+    assert.strictEqual(directors.length, 2);
+    assert.strictEqual(directors[0].text, '1 guy M. Mc1son');
+    assert.strictEqual(directors[1].text, '3 guy M. Mc3son');
   });
 });

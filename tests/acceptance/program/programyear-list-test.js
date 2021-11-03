@@ -49,38 +49,38 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     const rows = findAll('[data-test-program-year-list] tbody tr');
     const expandButton = '.expand-collapse-button button';
     const yearOptions = '.startyear-select option';
-    assert.equal(rows.length, 3);
-    assert.equal(
+    assert.strictEqual(rows.length, 3);
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(1) td:nth-of-type(1)'
       ),
       `${thisYear - 2}`
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(1) td:nth-of-type(2)'
       ),
       'cohort1'
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(2) td:nth-of-type(1)'
       ),
       `${thisYear - 1}`
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(2) td:nth-of-type(2)'
       ),
       'cohort2'
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(3) td:nth-of-type(1)'
       ),
       `${thisYear}`
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(3) td:nth-of-type(2)'
       ),
@@ -102,7 +102,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     });
     this.server.create('cohort', { programYearId: 1 });
     await visit(url);
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         find(findAll('[data-test-program-year-list] tbody tr:nth-of-type(1) td')[2])
       ),
@@ -116,7 +116,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     this.server.createList('programYearObjective', 5, { programYear });
     this.server.create('cohort', { programYear });
     await visit(url);
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         find(findAll('[data-test-program-year-list] tbody tr:nth-of-type(1) td')[3])
       ),
@@ -136,7 +136,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     });
     this.server.create('cohort', { programYearId: 1 });
     await visit(url);
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         find(findAll('[data-test-program-year-list] tbody tr:nth-of-type(1) td')[4])
       ),
@@ -163,7 +163,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     });
     this.server.create('cohort', { programYearId: 1 });
     await visit(url);
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         find(findAll('[data-test-program-year-list] tbody tr:nth-of-type(1) td')[5])
       ),
@@ -200,7 +200,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     this.server.create('cohort', { programYearId: 1 });
     await visit(url);
     await click('[data-test-program-year-list] tbody tr:nth-of-type(1) td:nth-of-type(1) a');
-    assert.equal(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'programYear.index');
   });
 
   test('can delete a program-year', async function (assert) {

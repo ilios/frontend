@@ -29,7 +29,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
 
   test('list directors', async function (assert) {
     await visit(url);
-    assert.equal(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'programYear.index');
     const directors = '.programyear-overview .directors li';
     assert.dom(directors).exists({ count: 3 });
     assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
@@ -44,7 +44,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
-    assert.equal(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'programYear.index');
     const directors = '.programyear-overview .removable-directors li';
     assert.dom(directors).exists({ count: 3 });
     assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
@@ -56,37 +56,40 @@ module('Acceptance | Program Year - Overview', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
-    assert.equal(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'programYear.index');
     await fillIn(find('.programyear-overview .search-box input'), 'guy');
     const searchResults = findAll('.programyear-overview .results li');
-    assert.equal(searchResults.length, 7);
-    assert.equal(await getElementText(searchResults[0]), getText('6 Results'));
-    assert.equal(
+    assert.strictEqual(searchResults.length, 7);
+    assert.strictEqual(await getElementText(searchResults[0]), getText('6 Results'));
+    assert.strictEqual(
       await getElementText(searchResults[1]),
       getText('0 guy M. Mc0son user@example.edu')
     );
     assert.dom(searchResults[1]).hasClass('active');
-    assert.equal(
+    assert.strictEqual(
       await getElementText(searchResults[2]),
       getText('1 guy M. Mc1son user@example.edu')
     );
     assert.dom(searchResults[2]).hasClass('inactive');
-    assert.equal(
+    assert.strictEqual(
       await getElementText(searchResults[3]),
       getText('3 guy M. Mc3son user@example.edu')
     );
     assert.dom(searchResults[3]).hasClass('inactive');
-    assert.equal(
+    assert.strictEqual(
       await getElementText(searchResults[4]),
       getText('4 guy M. Mc4son user@example.edu')
     );
     assert.dom(searchResults[4]).hasClass('active');
-    assert.equal(
+    assert.strictEqual(
       await getElementText(searchResults[5]),
       getText('5 guy M. Mc5son user@example.edu')
     );
     assert.dom(searchResults[5]).hasClass('active');
-    assert.equal(await getElementText(searchResults[6]), getText('Zeppelin user@example.edu'));
+    assert.strictEqual(
+      await getElementText(searchResults[6]),
+      getText('Zeppelin user@example.edu')
+    );
     assert.dom(searchResults[6]).hasClass('inactive');
   });
 
@@ -94,7 +97,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
-    assert.equal(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'programYear.index');
     const directors = '.programyear-overview .removable-directors li';
     assert.dom(directors).exists({ count: 3 });
     assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
@@ -115,7 +118,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
-    assert.equal(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'programYear.index');
     await click(find('.programyear-overview .removable-directors li'));
     const directors = '.programyear-overview .removable-directors li';
     assert.dom(directors).exists({ count: 2 });
@@ -142,7 +145,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
 
     await visit('/programs/1/programyears/2');
 
-    assert.equal(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'programYear.index');
     assert.dom(directors).doesNotExist('no directors initially');
     await fillIn(input, 'guy');
     assert.dom(firstResult).hasNoClass('inactive', 'the first user is active now');

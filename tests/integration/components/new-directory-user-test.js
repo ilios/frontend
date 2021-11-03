@@ -43,7 +43,7 @@ module('Integration | Component | new directory user', function (hooks) {
     assert.expect(1);
     const searchTerm = 'search for me!';
     this.set('setSearchTerms', (val) => {
-      assert.equal(val, searchTerm, 'changes to search get sent as action');
+      assert.strictEqual(val, searchTerm, 'changes to search get sent as action');
     });
     await render(hbs`<NewDirectoryUser
       @close={{(noop)}}
@@ -59,9 +59,9 @@ module('Integration | Component | new directory user', function (hooks) {
     const startingSearchTerms = 'start here';
     this.server.get(`/application/directory/search`, (scheme, { queryParams }) => {
       assert.ok('limit' in queryParams);
-      assert.equal(queryParams.limit, 51);
+      assert.strictEqual(queryParams.limit, 51);
       assert.ok('searchTerms' in queryParams);
-      assert.equal(queryParams.searchTerms, startingSearchTerms);
+      assert.strictEqual(queryParams.searchTerms, startingSearchTerms);
       return {
         results: [],
       };
@@ -72,7 +72,7 @@ module('Integration | Component | new directory user', function (hooks) {
       @setSearchTerms={{(noop)}}
       @searchTerms={{this.startingSearchTerms}}
     />`);
-    assert.equal(component.search.value, startingSearchTerms);
+    assert.strictEqual(component.search.value, startingSearchTerms);
   });
 
   test('create new user', async function (assert) {
@@ -145,14 +145,14 @@ module('Integration | Component | new directory user', function (hooks) {
     this.server.get('/application/directory/search', (scheme, { queryParams }) => {
       assert.ok('limit' in queryParams);
       assert.ok('searchTerms' in queryParams);
-      assert.equal(queryParams.limit, 51);
-      assert.equal(queryParams.searchTerms, 'searchterm');
+      assert.strictEqual(queryParams.limit, 51);
+      assert.strictEqual(queryParams.searchTerms, 'searchterm');
       return {
         results: [searchResult1, searchResult2, searchResult3],
       };
     });
     this.set('transitionToUser', (userId) => {
-      assert.equal(userId, 5, 'after saving we transition to the right user');
+      assert.strictEqual(userId, 5, 'after saving we transition to the right user');
     });
     await render(hbs`<NewDirectoryUser
       @close={{(noop)}}
@@ -161,52 +161,52 @@ module('Integration | Component | new directory user', function (hooks) {
       @searchTerms="searchterm"
     />`);
 
-    assert.equal(component.searchResults.length, 3);
+    assert.strictEqual(component.searchResults.length, 3);
     assert.ok(component.searchResults[0].userCanBeAdded);
-    assert.equal(
+    assert.strictEqual(
       component.searchResults[0].name,
       `${searchResult1.firstName} ${searchResult1.lastName}`
     );
-    assert.equal(component.searchResults[0].campusId, searchResult1.campusId);
-    assert.equal(component.searchResults[0].email, searchResult1.email);
+    assert.strictEqual(component.searchResults[0].campusId, searchResult1.campusId);
+    assert.strictEqual(component.searchResults[0].email, searchResult1.email);
     assert.ok(component.searchResults[1].userAlreadyExists);
-    assert.equal(
+    assert.strictEqual(
       component.searchResults[1].name,
       `${searchResult2.firstName} ${searchResult2.lastName}`
     );
-    assert.equal(component.searchResults[1].campusId, searchResult2.campusId);
-    assert.equal(component.searchResults[1].email, searchResult2.email);
+    assert.strictEqual(component.searchResults[1].campusId, searchResult2.campusId);
+    assert.strictEqual(component.searchResults[1].email, searchResult2.email);
     assert.ok(component.searchResults[2].userCannotBeAdded);
-    assert.equal(
+    assert.strictEqual(
       component.searchResults[2].name,
       `${searchResult3.firstName} ${searchResult3.lastName}`
     );
-    assert.equal(component.searchResults[2].campusId, '');
-    assert.equal(component.searchResults[2].email, '');
+    assert.strictEqual(component.searchResults[2].campusId, '');
+    assert.strictEqual(component.searchResults[2].email, '');
 
     await component.searchResults[0].addUser();
 
-    assert.equal(component.form.firstName, `First Name: ${searchResult1.firstName}`);
-    assert.equal(component.form.lastName, `Last Name: ${searchResult1.lastName}`);
-    assert.equal(component.form.campusId, `Campus ID: ${searchResult1.campusId}`);
-    assert.equal(component.form.email, `Email: ${searchResult1.email}`);
-    assert.equal(component.form.phone, `Phone: ${searchResult1.telephoneNumber}`);
-    assert.equal(component.form.otherId, `Other ID:`);
-    assert.equal(component.form.username.text, `Username: ${searchResult1.username}`);
+    assert.strictEqual(component.form.firstName, `First Name: ${searchResult1.firstName}`);
+    assert.strictEqual(component.form.lastName, `Last Name: ${searchResult1.lastName}`);
+    assert.strictEqual(component.form.campusId, `Campus ID: ${searchResult1.campusId}`);
+    assert.strictEqual(component.form.email, `Email: ${searchResult1.email}`);
+    assert.strictEqual(component.form.phone, `Phone: ${searchResult1.telephoneNumber}`);
+    assert.strictEqual(component.form.otherId, `Other ID:`);
+    assert.strictEqual(component.form.username.text, `Username: ${searchResult1.username}`);
 
     await component.form.submit();
 
     const userModel = await this.owner.lookup('service:store').find('user', 5);
     const authenticationModel = await userModel.get('authentication');
-    assert.equal(userModel.firstName, searchResult1.firstName);
-    assert.equal(userModel.middleName, null);
-    assert.equal(userModel.lastName, searchResult1.lastName);
-    assert.equal(userModel.campusId, searchResult1.campusId);
-    assert.equal(userModel.otherId, null);
-    assert.equal(userModel.phone, searchResult1.telephoneNumber);
-    assert.equal(userModel.email, searchResult1.email);
-    assert.equal(userModel.id, 5);
-    assert.equal(authenticationModel.username, searchResult1.username);
-    assert.equal(authenticationModel.password, null);
+    assert.strictEqual(userModel.firstName, searchResult1.firstName);
+    assert.strictEqual(userModel.middleName, null);
+    assert.strictEqual(userModel.lastName, searchResult1.lastName);
+    assert.strictEqual(userModel.campusId, searchResult1.campusId);
+    assert.strictEqual(userModel.otherId, null);
+    assert.strictEqual(userModel.phone, searchResult1.telephoneNumber);
+    assert.strictEqual(userModel.email, searchResult1.email);
+    assert.strictEqual(userModel.id, 5);
+    assert.strictEqual(authenticationModel.username, searchResult1.username);
+    assert.strictEqual(authenticationModel.password, null);
   });
 });

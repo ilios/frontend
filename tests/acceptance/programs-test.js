@@ -18,7 +18,7 @@ module('Acceptance | Programs', function (hooks) {
 
     test('visiting /programs', async function (assert) {
       await page.visit();
-      assert.equal(currentRouteName(), 'programs');
+      assert.strictEqual(currentRouteName(), 'programs');
     });
 
     test('add new program', async function (assert) {
@@ -39,8 +39,8 @@ module('Acceptance | Programs', function (hooks) {
       }
 
       assert.dom(savedLink).hasText('Test Title', 'link is visisble');
-      assert.equal(getContent(0), 'Test Title', 'program is correct');
-      assert.equal(getContent(1), 'school 0', 'school is correct');
+      assert.strictEqual(getContent(0), 'Test Title', 'program is correct');
+      assert.strictEqual(getContent(1), 'school 0', 'school is correct');
     });
 
     test('remove program', async function (assert) {
@@ -50,13 +50,13 @@ module('Acceptance | Programs', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      assert.equal(this.server.db.programs.length, 1);
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, 'program 0');
+      assert.strictEqual(this.server.db.programs.length, 1);
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, 'program 0');
       await page.list.items[0].remove();
       await page.list.confirmRemoval.confirm();
-      assert.equal(this.server.db.programs.length, 0);
-      assert.equal(page.list.items.length, 0);
+      assert.strictEqual(this.server.db.programs.length, 0);
+      assert.strictEqual(page.list.items.length, 0);
       assert.dom('.flash-messages').exists({ count: 1 });
     });
 
@@ -67,13 +67,13 @@ module('Acceptance | Programs', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      assert.equal(this.server.db.programs.length, 1);
-      assert.equal(page.list.items.length, 1);
-      assert.equal(page.list.items[0].title, 'program 0');
+      assert.strictEqual(this.server.db.programs.length, 1);
+      assert.strictEqual(page.list.items.length, 1);
+      assert.strictEqual(page.list.items[0].title, 'program 0');
       await page.list.items[0].remove();
       await page.list.confirmRemoval.cancel();
-      assert.equal(this.server.db.programs.length, 1);
-      assert.equal(page.list.items.length, 1);
+      assert.strictEqual(this.server.db.programs.length, 1);
+      assert.strictEqual(page.list.items.length, 1);
     });
 
     test('click edit takes you to program route', async function (assert) {
@@ -83,7 +83,7 @@ module('Acceptance | Programs', function (hooks) {
       });
       await page.visit();
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(3) .edit');
-      assert.equal(currentURL(), '/programs/1');
+      assert.strictEqual(currentURL(), '/programs/1');
     });
 
     test('click title takes you to program route', async function (assert) {
@@ -93,7 +93,7 @@ module('Acceptance | Programs', function (hooks) {
       });
       await page.visit();
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(1) a');
-      assert.equal(currentURL(), '/programs/1');
+      assert.strictEqual(currentURL(), '/programs/1');
     });
   });
 
@@ -102,9 +102,9 @@ module('Acceptance | Programs', function (hooks) {
     const schools = this.server.createList('school', 2);
     await setupAuthentication({ school: schools[1] });
     await page.visit();
-    assert.equal(page.schoolFilter.schools.length, 2);
-    assert.equal(page.schoolFilter.schools[0].text, 'school 0');
-    assert.equal(page.schoolFilter.schools[1].text, 'school 1');
-    assert.equal(page.schoolFilter.selectedSchool, '2');
+    assert.strictEqual(page.schoolFilter.schools.length, 2);
+    assert.strictEqual(page.schoolFilter.schools[0].text, 'school 0');
+    assert.strictEqual(page.schoolFilter.schools[1].text, 'school 1');
+    assert.strictEqual(page.schoolFilter.selectedSchool, '2');
   });
 });

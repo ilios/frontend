@@ -61,15 +61,21 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
     />`);
-    assert.equal(component.title, 'Members (2)');
-    assert.equal(component.usersInCurrentGroup.length, 2);
-    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
-    assert.equal(component.usersInCurrentGroup[0].campusId, '1234');
-    assert.equal(component.usersInCurrentGroup[0].email, 'testemail');
+    assert.strictEqual(component.title, 'Members (2)');
+    assert.strictEqual(component.usersInCurrentGroup.length, 2);
+    assert.strictEqual(
+      component.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      'Jasper M. Dog'
+    );
+    assert.strictEqual(component.usersInCurrentGroup[0].campusId, '1234');
+    assert.strictEqual(component.usersInCurrentGroup[0].email, 'testemail');
     assert.notOk(component.usersInCurrentGroup[0].isDisabled);
-    assert.equal(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
-    assert.equal(component.usersInCurrentGroup[1].campusId, '123');
-    assert.equal(component.usersInCurrentGroup[1].email, 'testemail2');
+    assert.strictEqual(
+      component.usersInCurrentGroup[1].name.userNameInfo.fullName,
+      'Jackson M. Doggy'
+    );
+    assert.strictEqual(component.usersInCurrentGroup[1].campusId, '123');
+    assert.strictEqual(component.usersInCurrentGroup[1].email, 'testemail2');
     assert.ok(component.usersInCurrentGroup[1].isDisabled);
   });
 
@@ -124,18 +130,24 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @removeUsersFromGroup={{(noop)}}
     />`);
 
-    assert.equal(component.groupMembers, 'Members of current group (2)');
-    assert.equal(component.allOtherMembers, 'All other members of top group (0)');
-    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.strictEqual(component.groupMembers, 'Members of current group (2)');
+    assert.strictEqual(component.allOtherMembers, 'All other members of top group (0)');
+    assert.strictEqual(
+      component.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      'Jasper M. Dog'
+    );
     assert.ok(component.usersInCurrentGroup[0].canBeSelected);
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
-    assert.equal(component.usersInCurrentGroup[0].campusId, '1234');
-    assert.equal(component.usersInCurrentGroup[0].email, 'testemail');
+    assert.strictEqual(component.usersInCurrentGroup[0].campusId, '1234');
+    assert.strictEqual(component.usersInCurrentGroup[0].email, 'testemail');
     assert.notOk(component.usersInCurrentGroup[0].isDisabled);
-    assert.equal(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
+    assert.strictEqual(
+      component.usersInCurrentGroup[1].name.userNameInfo.fullName,
+      'Jackson M. Doggy'
+    );
     assert.notOk(component.usersInCurrentGroup[1].canBeSelected);
-    assert.equal(component.usersInCurrentGroup[1].campusId, '123');
-    assert.equal(component.usersInCurrentGroup[1].email, 'testemail2');
+    assert.strictEqual(component.usersInCurrentGroup[1].campusId, '123');
+    assert.strictEqual(component.usersInCurrentGroup[1].email, 'testemail2');
     assert.ok(component.usersInCurrentGroup[1].isDisabled);
   });
 
@@ -193,13 +205,13 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @removeUsersFromGroup={{(noop)}}
     />`);
 
-    assert.equal(component.usersNotInCurrentGroup.length, 3);
-    assert.equal(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Captain J');
-    assert.equal(
+    assert.strictEqual(component.usersNotInCurrentGroup.length, 3);
+    assert.strictEqual(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Captain J');
+    assert.strictEqual(
       component.usersNotInCurrentGroup[1].name.userNameInfo.fullName,
       'Jackson M. Mc1son'
     );
-    assert.equal(
+    assert.strictEqual(
       component.usersNotInCurrentGroup[2].name.userNameInfo.fullName,
       'Jasper M. Mc0son'
     );
@@ -222,7 +234,7 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
     this.set('users', [userModelProxy]);
     this.set('learnerGroup', learnerGroupModel);
     this.set('addMany', ([user]) => {
-      assert.equal(userModel, user);
+      assert.strictEqual(userModel, user);
     });
     await render(hbs`<LearnergroupUserManager
       @learnerGroupId={{this.learnerGroup.id}}
@@ -242,7 +254,7 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
     assert.notOk(component.membersCanBeAdded);
     await component.usersInCurrentGroup[0].select();
     assert.ok(component.membersCanBeAdded);
-    assert.equal(component.addButtonText, 'Move learner to this group');
+    assert.strictEqual(component.addButtonText, 'Move learner to this group');
     await component.add();
     assert.notOk(component.membersCanBeAdded);
   });
@@ -264,7 +276,7 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
     this.set('users', [userModelProxy]);
     this.set('learnerGroup', learnerGroupModel);
     this.set('removeMany', ([user]) => {
-      assert.equal(userModel, user);
+      assert.strictEqual(userModel, user);
     });
     await render(hbs`<LearnergroupUserManager
       @learnerGroupId={{this.learnerGroup.id}}
@@ -284,7 +296,7 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
     assert.notOk(component.membersCanBeRemoved);
     await component.usersInCurrentGroup[0].select();
     assert.ok(component.membersCanBeRemoved);
-    assert.equal(component.removeButtonText, 'Remove learner to this cohort');
+    assert.strictEqual(component.removeButtonText, 'Remove learner to this cohort');
     await component.remove();
     assert.notOk(component.membersCanBeRemoved);
   });
@@ -307,7 +319,7 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
     this.set('users', [userModelProxy]);
     this.set('learnerGroup', learnerGroupModel);
     this.set('removeOne', (user) => {
-      assert.equal(userModel, user);
+      assert.strictEqual(userModel, user);
     });
 
     await render(hbs`<LearnergroupUserManager
@@ -350,7 +362,7 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
     this.set('users', [userModelProxy]);
     this.set('learnerGroup', learnerGroupModel);
     this.set('addOne', (user) => {
-      assert.equal(userModel, user);
+      assert.strictEqual(userModel, user);
     });
 
     await render(hbs`<LearnergroupUserManager
@@ -441,8 +453,8 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
 
     this.set('users', [userModelProxy, userModelProxy2]);
     this.set('addMany', ([userA, userB]) => {
-      assert.equal(userModel, userA);
-      assert.equal(userModel2, userB);
+      assert.strictEqual(userModel, userA);
+      assert.strictEqual(userModel2, userB);
     });
     this.set('learnerGroup', learnerGroupModel);
 
@@ -465,7 +477,7 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
     await component.selectAll.toggle();
     assert.ok(component.usersInCurrentGroup[0].isSelected);
     assert.ok(component.usersInCurrentGroup[0].isSelected);
-    assert.equal(component.addButtonText, 'Move 2 learners to this group');
+    assert.strictEqual(component.addButtonText, 'Move 2 learners to this group');
     await component.add();
   });
 
@@ -571,10 +583,10 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @removeUsersFromGroup={{(noop)}}
     />`);
 
-    assert.equal(component.usersInCurrentGroup.length, 3);
-    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
-    assert.equal(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Beta');
-    assert.equal(component.usersInCurrentGroup[2].name.userNameInfo.fullName, 'Gamma');
+    assert.strictEqual(component.usersInCurrentGroup.length, 3);
+    assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
+    assert.strictEqual(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Beta');
+    assert.strictEqual(component.usersInCurrentGroup[2].name.userNameInfo.fullName, 'Gamma');
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
     assert.notOk(component.usersInCurrentGroup[2].isSelected);
@@ -582,12 +594,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
     assert.notOk(component.selectAll.isIndeterminate);
 
     await component.filter('Zzzz');
-    assert.equal(component.usersInCurrentGroup.length, 0);
+    assert.strictEqual(component.usersInCurrentGroup.length, 0);
     assert.notOk(component.selectAll.isChecked);
     assert.notOk(component.selectAll.isIndeterminate);
 
     await component.filter('');
-    assert.equal(component.usersInCurrentGroup.length, 3);
+    assert.strictEqual(component.usersInCurrentGroup.length, 3);
     assert.notOk(component.selectAll.isChecked);
     assert.notOk(component.selectAll.isIndeterminate);
 
@@ -598,8 +610,8 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
     await component.filter('Alpha');
     assert.notOk(component.selectAll.isChecked);
     assert.ok(component.selectAll.isIndeterminate);
-    assert.equal(component.usersInCurrentGroup.length, 1);
-    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
+    assert.strictEqual(component.usersInCurrentGroup.length, 1);
+    assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
 
     await component.selectAll.toggle();
@@ -608,7 +620,7 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
     assert.ok(component.usersInCurrentGroup[0].isSelected);
 
     await component.filter('');
-    assert.equal(component.usersInCurrentGroup.length, 3);
+    assert.strictEqual(component.usersInCurrentGroup.length, 3);
     assert.ok(component.selectAll.isChecked);
     assert.ok(component.selectAll.isIndeterminate);
     assert.ok(component.usersInCurrentGroup[0].isSelected);
@@ -768,17 +780,29 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @removeUsersFromGroup={{(noop)}}
     />`);
 
-    assert.equal(component.usersInCurrentGroup.length, 3);
-    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
-    assert.equal(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
-    assert.equal(component.usersInCurrentGroup[2].name.userNameInfo.fullName, 'Just Jayden');
+    assert.strictEqual(component.usersInCurrentGroup.length, 3);
+    assert.strictEqual(
+      component.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      'Jasper M. Dog'
+    );
+    assert.strictEqual(
+      component.usersInCurrentGroup[1].name.userNameInfo.fullName,
+      'Jackson M. Doggy'
+    );
+    assert.strictEqual(component.usersInCurrentGroup[2].name.userNameInfo.fullName, 'Just Jayden');
     await component.filter('Just');
-    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Just Jayden');
+    assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Just Jayden');
     await component.filter(' Just     ');
-    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Just Jayden');
+    assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Just Jayden');
     await component.filter('JASPER.DOG@EXAMPLE.EDU');
-    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.strictEqual(
+      component.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      'Jasper M. Dog'
+    );
     await component.filter('jasper d');
-    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.strictEqual(
+      component.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      'Jasper M. Dog'
+    );
   });
 });

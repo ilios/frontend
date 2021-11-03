@@ -50,24 +50,24 @@ module('Integration | Component | school session type form', function (hooks) {
       @close={{(noop)}}
     />`);
 
-    assert.equal(component.title.value, 'one');
-    assert.equal(component.aamcMethod.value, '');
-    assert.equal(component.aamcMethod.options.length, 2);
-    assert.equal(component.aamcMethod.options[0].value, '');
+    assert.strictEqual(component.title.value, 'one');
+    assert.strictEqual(component.aamcMethod.value, '');
+    assert.strictEqual(component.aamcMethod.options.length, 2);
+    assert.strictEqual(component.aamcMethod.options[0].value, '');
     assert.ok(component.aamcMethod.options[0].selected);
-    assert.equal(component.aamcMethod.options[1].value, 'AM001');
-    assert.equal(component.aamcMethod.options[1].text, 'lorem ipsum');
+    assert.strictEqual(component.aamcMethod.options[1].value, 'AM001');
+    assert.strictEqual(component.aamcMethod.options[1].text, 'lorem ipsum');
     assert.notOk(component.aamcMethod.options[1].selected);
-    assert.equal(component.calendarColor.value, '#ffffff');
-    assert.equal(component.assessment.yesNoToggle.checked, 'true');
-    assert.equal(component.active.yesNoToggle.checked, 'true');
-    assert.equal(component.assessmentSelector.value, '2');
-    assert.equal(component.assessmentSelector.options.length, 2);
-    assert.equal(component.assessmentSelector.options[0].value, '1');
-    assert.equal(component.assessmentSelector.options[0].text, 'formative');
+    assert.strictEqual(component.calendarColor.value, '#ffffff');
+    assert.strictEqual(component.assessment.yesNoToggle.checked, 'true');
+    assert.strictEqual(component.active.yesNoToggle.checked, 'true');
+    assert.strictEqual(component.assessmentSelector.value, '2');
+    assert.strictEqual(component.assessmentSelector.options.length, 2);
+    assert.strictEqual(component.assessmentSelector.options[0].value, '1');
+    assert.strictEqual(component.assessmentSelector.options[0].text, 'formative');
     assert.notOk(component.assessmentSelector.options[0].selected);
-    assert.equal(component.assessmentSelector.options[1].value, '2');
-    assert.equal(component.assessmentSelector.options[1].text, 'summative');
+    assert.strictEqual(component.assessmentSelector.options[1].value, '2');
+    assert.strictEqual(component.assessmentSelector.options[1].text, 'summative');
     assert.ok(component.assessmentSelector.options[1].selected);
   });
 
@@ -104,22 +104,22 @@ module('Integration | Component | school session type form', function (hooks) {
       @close={{(noop)}}
     />`);
 
-    assert.equal(component.aamcMethod.value, '');
-    assert.equal(component.aamcMethod.options.length, 2);
-    assert.equal(component.aamcMethod.options[0].value, '');
+    assert.strictEqual(component.aamcMethod.value, '');
+    assert.strictEqual(component.aamcMethod.options.length, 2);
+    assert.strictEqual(component.aamcMethod.options[0].value, '');
     assert.ok(component.aamcMethod.options[0].selected);
-    assert.equal(component.aamcMethod.options[1].value, 'AM001');
-    assert.equal(component.aamcMethod.options[1].text, 'lorem ipsum');
+    assert.strictEqual(component.aamcMethod.options[1].value, 'AM001');
+    assert.strictEqual(component.aamcMethod.options[1].text, 'lorem ipsum');
     assert.notOk(component.aamcMethod.options[1].selected);
 
     await component.assessment.yesNoToggle.click();
 
-    assert.equal(component.aamcMethod.value, '');
-    assert.equal(component.aamcMethod.options.length, 2);
-    assert.equal(component.aamcMethod.options[0].value, '');
+    assert.strictEqual(component.aamcMethod.value, '');
+    assert.strictEqual(component.aamcMethod.options.length, 2);
+    assert.strictEqual(component.aamcMethod.options[0].value, '');
     assert.ok(component.aamcMethod.options[0].selected);
-    assert.equal(component.aamcMethod.options[1].value, 'IM001');
-    assert.equal(component.aamcMethod.options[1].text, 'dolor sit');
+    assert.strictEqual(component.aamcMethod.options[1].value, 'IM001');
+    assert.strictEqual(component.aamcMethod.options[1].text, 'dolor sit');
     assert.notOk(component.aamcMethod.options[1].selected);
   });
 
@@ -182,11 +182,15 @@ module('Integration | Component | school session type form', function (hooks) {
       .find('assessment-option', formative.id);
 
     this.set('save', (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
-      assert.equal(title, 'new title', 'title is correct');
-      assert.equal(calendarColor, '#a1b2c3', 'color is correct');
+      assert.strictEqual(title, 'new title', 'title is correct');
+      assert.strictEqual(calendarColor, '#a1b2c3', 'color is correct');
       assert.true(assessment, 'assessment is picked');
-      assert.equal(assessmentOption, assessmentOptionModel, 'correct assessmentOption is sent');
-      assert.equal(aamcMethod, aamcMethodModel, 'correct aamcMethod is sent');
+      assert.strictEqual(
+        assessmentOption,
+        assessmentOptionModel,
+        'correct assessmentOption is sent'
+      );
+      assert.strictEqual(aamcMethod, aamcMethodModel, 'correct aamcMethod is sent');
       assert.false(isActive, 'correct isActive value is sent');
     });
     await render(hbs`<SchoolSessionTypeForm
@@ -205,13 +209,13 @@ module('Integration | Component | school session type form', function (hooks) {
       @close={{(noop)}}
     />`);
 
-    assert.equal(component.active.yesNoToggle.checked, 'true');
+    assert.strictEqual(component.active.yesNoToggle.checked, 'true');
     await component.title.set('new title');
     await component.aamcMethod.select(aamcMethodModel.id);
     await component.calendarColor.set('#a1b2c3');
     await component.assessmentSelector.select(assessmentOptionModel.id);
     await component.active.yesNoToggle.click();
-    assert.equal(component.active.yesNoToggle.checked, 'false');
+    assert.strictEqual(component.active.yesNoToggle.checked, 'false');
     await component.submit.click();
   });
 
@@ -250,13 +254,13 @@ module('Integration | Component | school session type form', function (hooks) {
     assert.notOk(component.assessmentSelector.inputControlIsVisible);
     assert.notOk(component.active.yesNoToggle.isVisible);
 
-    assert.equal(component.title.readonlyValue, 'one');
-    assert.equal(component.aamcMethod.readonlyValue, 'lorem ipsum');
-    assert.equal(component.calendarColor.readonlyValue, '#ffffff');
-    assert.equal(component.calendarColor.colorboxStyle, 'background-color: #ffffff');
-    assert.equal(component.assessment.readonlyValue, 'Yes');
-    assert.equal(component.assessmentSelector.readonlyValue, 'formative');
-    assert.equal(component.active.readonlyValue, 'Yes');
+    assert.strictEqual(component.title.readonlyValue, 'one');
+    assert.strictEqual(component.aamcMethod.readonlyValue, 'lorem ipsum');
+    assert.strictEqual(component.calendarColor.readonlyValue, '#ffffff');
+    assert.strictEqual(component.calendarColor.colorboxStyle, 'background-color: #ffffff');
+    assert.strictEqual(component.assessment.readonlyValue, 'Yes');
+    assert.strictEqual(component.assessmentSelector.readonlyValue, 'formative');
+    assert.strictEqual(component.active.readonlyValue, 'Yes');
   });
 
   test('inactive method is labeled as such in dropdown', async function (assert) {
@@ -278,8 +282,8 @@ module('Integration | Component | school session type form', function (hooks) {
       @close={{(noop)}}
     />`);
 
-    assert.equal(component.aamcMethod.value, 'AM001');
-    assert.equal(component.aamcMethod.options[1].text, 'lorem ipsum (inactive)');
+    assert.strictEqual(component.aamcMethod.value, 'AM001');
+    assert.strictEqual(component.aamcMethod.options[1].text, 'lorem ipsum (inactive)');
   });
 
   test('inactive method is labeled as such in read-only mode', async function (assert) {
@@ -305,7 +309,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @close={{(noop)}}
     />`);
 
-    assert.equal(component.aamcMethod.readonlyValue, 'lorem ipsum (inactive)');
+    assert.strictEqual(component.aamcMethod.readonlyValue, 'lorem ipsum (inactive)');
   });
 
   // Skipped as it appears impossible to provide invalid input to color input fields.
@@ -322,15 +326,15 @@ module('Integration | Component | school session type form', function (hooks) {
       @close={{(noop)}}
     />`);
 
-    assert.equal(component.calendarColor.value, '#ffffff');
+    assert.strictEqual(component.calendarColor.value, '#ffffff');
     assert.notOk(component.calendarColor.hasError);
     // blank the input
     //  blanking the input seems to be impossible, FF and Chrome fill it with Black '#000000'
-    assert.equal(component.calendarColor.value, '');
+    assert.strictEqual(component.calendarColor.value, '');
     assert.ok(component.calendarColor.hasError);
 
     // reset to valid input
-    assert.equal(component.calendarColor.value, '#ffffff');
+    assert.strictEqual(component.calendarColor.value, '#ffffff');
     assert.notOk(component.calendarColor.hasError);
 
     // provide invalid input

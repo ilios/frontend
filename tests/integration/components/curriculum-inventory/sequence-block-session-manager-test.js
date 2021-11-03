@@ -74,28 +74,32 @@ module(
         @setSortBy={{(noop)}}
       />`);
 
-      assert.equal(
+      assert.strictEqual(
         component.header.countAsOneOffering.text,
         'Count as one offering',
         'Column header is labeled correctly.'
       );
-      assert.equal(component.header.exclude.text, 'Exclude', 'Column header is labeled correctly.');
-      assert.equal(
+      assert.strictEqual(
+        component.header.exclude.text,
+        'Exclude',
+        'Column header is labeled correctly.'
+      );
+      assert.strictEqual(
         component.header.title.text,
         'Session Title',
         'Column header is labeled correctly.'
       );
-      assert.equal(
+      assert.strictEqual(
         component.header.sessionType.text,
         'Session Type',
         'Column header is labeled correctly.'
       );
-      assert.equal(
+      assert.strictEqual(
         component.header.totalTime.text,
         'Total time',
         'Column header is labeled correctly.'
       );
-      assert.equal(
+      assert.strictEqual(
         component.header.offeringsCount.text,
         'Offerings',
         'Column header is labeled correctly.'
@@ -110,50 +114,74 @@ module(
       );
       assert.notOk(component.header.exclude.isChecked, 'Not all sessions are excluded.');
       assert.ok(component.header.exclude.isPartiallyChecked, 'Some sessions are excluded.');
-      assert.equal(component.sessions.length, 4);
-      assert.equal(component.sessions[0].title.text, 'Aardvark', 'Session title is shown.');
-      assert.equal(component.sessions[0].sessionType.text, 'Lecture', 'Session type is shown.');
-      assert.equal(component.sessions[0].totalTime.text, '30.00', 'Total time is shown.');
-      assert.equal(component.sessions[0].offeringsCount.text, '1', 'Number of offerings is shown.');
+      assert.strictEqual(component.sessions.length, 4);
+      assert.strictEqual(component.sessions[0].title.text, 'Aardvark', 'Session title is shown.');
+      assert.strictEqual(
+        component.sessions[0].sessionType.text,
+        'Lecture',
+        'Session type is shown.'
+      );
+      assert.strictEqual(component.sessions[0].totalTime.text, '30.00', 'Total time is shown.');
+      assert.strictEqual(
+        component.sessions[0].offeringsCount.text,
+        '1',
+        'Number of offerings is shown.'
+      );
       assert.ok(
         component.sessions[0].countAsOneOffering.isChecked,
         'Session offerings are counted as one.'
       );
       assert.notOk(component.sessions[0].exclude.isChecked, 'Session is not excluded.');
-      assert.equal(component.sessions[1].title.text, 'Bluebird', 'Session title is shown.');
-      assert.equal(component.sessions[1].sessionType.text, 'Ceremony', 'Session type is shown.');
-      assert.equal(component.sessions[1].totalTime.text, '30.00', 'Total time is shown.');
-      assert.equal(component.sessions[1].offeringsCount.text, '2', 'Number of offerings is shown.');
+      assert.strictEqual(component.sessions[1].title.text, 'Bluebird', 'Session title is shown.');
+      assert.strictEqual(
+        component.sessions[1].sessionType.text,
+        'Ceremony',
+        'Session type is shown.'
+      );
+      assert.strictEqual(component.sessions[1].totalTime.text, '30.00', 'Total time is shown.');
+      assert.strictEqual(
+        component.sessions[1].offeringsCount.text,
+        '2',
+        'Number of offerings is shown.'
+      );
       assert.notOk(
         component.sessions[1].countAsOneOffering.isChecked,
         'Session offerings are not counted as one.'
       );
       assert.ok(component.sessions[1].exclude.isChecked, 'Session is excluded.');
-      assert.equal(component.sessions[2].title.text, 'Zeppelin', 'Session title is shown.');
-      assert.equal(
+      assert.strictEqual(component.sessions[2].title.text, 'Zeppelin', 'Session title is shown.');
+      assert.strictEqual(
         component.sessions[2].sessionType.text,
         'Small Groups',
         'Session type is shown.'
       );
-      assert.equal(component.sessions[2].totalTime.text, '0', 'Total time is shown.');
-      assert.equal(component.sessions[2].offeringsCount.text, '0', 'Number of offerings is shown.');
+      assert.strictEqual(component.sessions[2].totalTime.text, '0', 'Total time is shown.');
+      assert.strictEqual(
+        component.sessions[2].offeringsCount.text,
+        '0',
+        'Number of offerings is shown.'
+      );
       assert.ok(
         component.sessions[2].countAsOneOffering.isChecked,
         'Session offerings are counted as one.'
       );
       assert.notOk(component.sessions[2].exclude.isChecked, 'Session are not excluded.');
-      assert.equal(
+      assert.strictEqual(
         component.sessions[3].title.text,
         '(ILM) Zwickzange',
         'Session title is shown, ILM indicated as such.'
       );
-      assert.equal(
+      assert.strictEqual(
         component.sessions[3].sessionType.text,
         'Rocket Surgery',
         'Session type is shown.'
       );
-      assert.equal(component.sessions[3].totalTime.text, '0', 'Total time is shown.');
-      assert.equal(component.sessions[3].offeringsCount.text, '0', 'Number of offerings is shown.');
+      assert.strictEqual(component.sessions[3].totalTime.text, '0', 'Total time is shown.');
+      assert.strictEqual(
+        component.sessions[3].offeringsCount.text,
+        '0',
+        'Number of offerings is shown.'
+      );
       assert.notOk(
         component.sessions[3].countAsOneOffering.isChecked,
         'Session offerings not counted as one.'
@@ -177,7 +205,7 @@ module(
       />`);
 
       assert.ok(component.header.isVisible);
-      assert.equal(component.sessions.length, 0);
+      assert.strictEqual(component.sessions.length, 0);
     });
 
     test('sort by title', async function (assert) {
@@ -199,7 +227,7 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
-        assert.equal(what, 'title', 'Sorting callback gets called for session titles.');
+        assert.strictEqual(what, 'title', 'Sorting callback gets called for session titles.');
       });
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
@@ -231,7 +259,11 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
-        assert.equal(what, 'sessionType.title', 'Sorting callback gets called for session types.');
+        assert.strictEqual(
+          what,
+          'sessionType.title',
+          'Sorting callback gets called for session types.'
+        );
       });
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
@@ -263,7 +295,11 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
-        assert.equal(what, 'offerings.length', 'Sorting callback gets called for offerings count.');
+        assert.strictEqual(
+          what,
+          'offerings.length',
+          'Sorting callback gets called for offerings count.'
+        );
       });
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
@@ -312,12 +348,12 @@ module(
         @setSortBy={{(noop)}}
       />`);
 
-      assert.equal(component.sessions[0].totalTime.text, '30.00');
+      assert.strictEqual(component.sessions[0].totalTime.text, '30.00');
       assert.ok(component.header.countAsOneOffering.isChecked);
       assert.notOk(component.header.countAsOneOffering.isPartiallyChecked);
       assert.ok(component.sessions[0].countAsOneOffering.isChecked);
       await component.sessions[0].countAsOneOffering.toggle();
-      assert.equal(component.sessions[0].totalTime.text, '45.00');
+      assert.strictEqual(component.sessions[0].totalTime.text, '45.00');
       assert.notOk(component.header.countAsOneOffering.isChecked);
       assert.notOk(component.header.countAsOneOffering.isPartiallyChecked);
       assert.notOk(component.sessions[0].countAsOneOffering.isChecked);
@@ -375,23 +411,23 @@ module(
       assert.notOk(component.header.countAsOneOffering.isChecked);
       assert.ok(component.header.countAsOneOffering.isPartiallyChecked);
       assert.ok(component.sessions[0].countAsOneOffering.isChecked);
-      assert.equal(component.sessions[0].totalTime.text, '30.00');
+      assert.strictEqual(component.sessions[0].totalTime.text, '30.00');
       assert.notOk(component.sessions[1].countAsOneOffering.isChecked);
-      assert.equal(component.sessions[1].totalTime.text, '60.00');
+      assert.strictEqual(component.sessions[1].totalTime.text, '60.00');
       await component.header.countAsOneOffering.toggle();
       assert.ok(component.header.countAsOneOffering.isChecked);
       assert.notOk(component.header.countAsOneOffering.isPartiallyChecked);
       assert.ok(component.sessions[0].countAsOneOffering.isChecked);
-      assert.equal(component.sessions[0].totalTime.text, '30.00');
+      assert.strictEqual(component.sessions[0].totalTime.text, '30.00');
       assert.ok(component.sessions[1].countAsOneOffering.isChecked);
-      assert.equal(component.sessions[1].totalTime.text, '30.00');
+      assert.strictEqual(component.sessions[1].totalTime.text, '30.00');
       await component.header.countAsOneOffering.toggle();
       assert.notOk(component.header.countAsOneOffering.isChecked);
       assert.notOk(component.header.countAsOneOffering.isPartiallyChecked);
       assert.notOk(component.sessions[0].countAsOneOffering.isChecked);
-      assert.equal(component.sessions[0].totalTime.text, '45.00');
+      assert.strictEqual(component.sessions[0].totalTime.text, '45.00');
       assert.notOk(component.sessions[1].countAsOneOffering.isChecked);
-      assert.equal(component.sessions[1].totalTime.text, '60.00');
+      assert.strictEqual(component.sessions[1].totalTime.text, '60.00');
     });
 
     test('check all/uncheck all excluded', async function (assert) {
@@ -463,10 +499,10 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
       this.set('save', (countAsOneOfferingSessions, excludedSessions) => {
-        assert.equal(countAsOneOfferingSessions.length, 1);
-        assert.equal(countAsOneOfferingSessions[0].title, 'Omega');
-        assert.equal(excludedSessions.length, 1);
-        assert.equal(excludedSessions[0].title, 'Alpha');
+        assert.strictEqual(countAsOneOfferingSessions.length, 1);
+        assert.strictEqual(countAsOneOfferingSessions[0].title, 'Omega');
+        assert.strictEqual(excludedSessions.length, 1);
+        assert.strictEqual(excludedSessions[0].title, 'Alpha');
       });
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager

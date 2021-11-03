@@ -37,9 +37,9 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @save={{(noop)}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.items.length, 2);
-    assert.equal(component.items[0].text, '1 Zylinder');
-    assert.equal(component.items[1].text, '2 Alfons');
+    assert.strictEqual(component.items.length, 2);
+    assert.strictEqual(component.items[0].text, '1 Zylinder');
+    assert.strictEqual(component.items[1].text, '2 Alfons');
     assert.notOk(component.save.isVisible);
     assert.notOk(component.cancel.isVisible);
     await a11yAudit(this.element);
@@ -56,7 +56,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @save={{(noop)}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.items.length, 0);
+    assert.strictEqual(component.items.length, 0);
     assert.ok(component.save.isVisible);
     assert.ok(component.cancel.isVisible);
     await a11yAudit(this.element);
@@ -128,8 +128,8 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @save={{(noop)}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.items.length, 1);
-    assert.equal(component.items[0].text, 'Click to edit');
+    assert.strictEqual(component.items.length, 1);
+    assert.strictEqual(component.items[0].text, 'Click to edit');
   });
 
   test('no pcrs in read-only mode', async function (assert) {
@@ -143,7 +143,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @save={{(noop)}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.items.length, 1);
-    assert.equal(component.items[0].text, 'None');
+    assert.strictEqual(component.items.length, 1);
+    assert.strictEqual(component.items[0].text, 'None');
   });
 });

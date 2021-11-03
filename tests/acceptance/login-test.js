@@ -12,7 +12,7 @@ module('Acceptance | login', function (hooks) {
     assert.expect(2);
     await visit('/login');
 
-    assert.equal(currentURL(), '/login');
+    assert.strictEqual(currentURL(), '/login');
     await a11yAudit();
     assert.ok(true);
   });

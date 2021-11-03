@@ -48,7 +48,7 @@ module('Integration | Component | school session types expanded', function (hook
     />`);
 
     assert.notOk(component.list.sessionTypes.isVisible);
-    assert.equal(component.title, 'Session Types (0)');
+    assert.strictEqual(component.title, 'Session Types (0)');
   });
 
   test('it renders', async function (assert) {
@@ -65,8 +65,8 @@ module('Integration | Component | school session types expanded', function (hook
       @setSchoolNewSessionType={{(noop)}}
     />`);
 
-    assert.equal(component.list.sessionTypes.length, 1);
-    assert.equal(component.title, 'Session Types (1)');
+    assert.strictEqual(component.list.sessionTypes.length, 1);
+    assert.strictEqual(component.title, 'Session Types (1)');
   });
 
   test('it renders as manager', async function (assert) {
@@ -91,7 +91,7 @@ module('Integration | Component | school session types expanded', function (hook
     assert.expect(1);
     this.set('school', this.school);
     this.set('click', (id) => {
-      assert.equal(id, 1);
+      assert.strictEqual(id, 1);
     });
     await render(hbs`<SchoolSessionTypesExpanded
       @school={{this.school}}
@@ -134,7 +134,7 @@ module('Integration | Component | school session types expanded', function (hook
     this.set('school', this.school);
     this.set('sessionType', this.sessionType);
     this.set('click', (id) => {
-      assert.equal(id, null);
+      assert.strictEqual(id, null);
     });
     await render(hbs`<SchoolSessionTypesExpanded
       @school={{this.school}}

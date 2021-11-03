@@ -44,17 +44,17 @@ module('Integration | Component | program-year/competencies', function (hooks) {
       @setIsManaging={{(noop)}}
     />`);
 
-    assert.equal(component.title, 'Competencies (3)');
+    assert.strictEqual(component.title, 'Competencies (3)');
     assert.ok(component.canManage);
-    assert.equal(component.list.domains.length, 2);
-    assert.equal(component.list.domains[0].title, 'competency 0');
+    assert.strictEqual(component.list.domains.length, 2);
+    assert.strictEqual(component.list.domains[0].title, 'competency 0');
     assert.notOk(component.list.domains[0].isActive);
-    assert.equal(component.list.domains[0].competencies.length, 2);
-    assert.equal(component.list.domains[0].competencies[0].text, 'competency 1');
-    assert.equal(component.list.domains[0].competencies[1].text, 'competency 2');
-    assert.equal(component.list.domains[1].title, 'competency 3');
+    assert.strictEqual(component.list.domains[0].competencies.length, 2);
+    assert.strictEqual(component.list.domains[0].competencies[0].text, 'competency 1');
+    assert.strictEqual(component.list.domains[0].competencies[1].text, 'competency 2');
+    assert.strictEqual(component.list.domains[1].title, 'competency 3');
     assert.ok(component.list.domains[1].isActive);
-    assert.equal(component.list.domains[1].competencies.length, 0);
+    assert.strictEqual(component.list.domains[1].competencies.length, 0);
   });
 
   test('clicking manage fires action', async function (assert) {

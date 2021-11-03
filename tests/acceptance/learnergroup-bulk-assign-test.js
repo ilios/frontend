@@ -80,17 +80,17 @@ module('Acceptance | learner group bulk assign', function (hooks) {
     await triggerUpload(users);
     await waitFor('[data-test-upload-data-valid-users]');
 
-    assert.equal(page.bulkAssign.validUploadedUsers.length, 2);
+    assert.strictEqual(page.bulkAssign.validUploadedUsers.length, 2);
     assert.ok(page.bulkAssign.validUploadedUsers[0].isValid);
-    assert.equal(page.bulkAssign.validUploadedUsers[0].firstName, 'jasper');
-    assert.equal(page.bulkAssign.validUploadedUsers[0].lastName, 'johnson');
-    assert.equal(page.bulkAssign.validUploadedUsers[0].campusId, '1234567890');
-    assert.equal(page.bulkAssign.validUploadedUsers[0].smallGroupName, '123Test');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[0].firstName, 'jasper');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[0].lastName, 'johnson');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[0].campusId, '1234567890');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[0].smallGroupName, '123Test');
     assert.ok(page.bulkAssign.validUploadedUsers[1].isValid);
-    assert.equal(page.bulkAssign.validUploadedUsers[1].firstName, 'jackson');
-    assert.equal(page.bulkAssign.validUploadedUsers[1].lastName, 'johnson');
-    assert.equal(page.bulkAssign.validUploadedUsers[1].campusId, '12345');
-    assert.equal(page.bulkAssign.validUploadedUsers[1].smallGroupName, '');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[1].firstName, 'jackson');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[1].lastName, 'johnson');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[1].campusId, '12345');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[1].smallGroupName, '');
 
     assert.ok(page.bulkAssign.showConfirmUploadButton);
   });
@@ -117,17 +117,20 @@ module('Acceptance | learner group bulk assign', function (hooks) {
     await triggerUpload(users);
     await waitFor('[data-test-upload-data-valid-users]');
 
-    assert.equal(page.bulkAssign.validUploadedUsers.length, 2);
+    assert.strictEqual(page.bulkAssign.validUploadedUsers.length, 2);
     assert.ok(page.bulkAssign.validUploadedUsers[0].hasWarning);
-    assert.equal(page.bulkAssign.validUploadedUsers[0].firstName, 'jasper (jasper J)');
-    assert.equal(page.bulkAssign.validUploadedUsers[0].lastName, 'johnson');
-    assert.equal(page.bulkAssign.validUploadedUsers[0].campusId, '1234567890');
-    assert.equal(page.bulkAssign.validUploadedUsers[0].smallGroupName, '123Test');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[0].firstName, 'jasper (jasper J)');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[0].lastName, 'johnson');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[0].campusId, '1234567890');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[0].smallGroupName, '123Test');
     assert.ok(page.bulkAssign.validUploadedUsers[1].hasWarning);
-    assert.equal(page.bulkAssign.validUploadedUsers[1].firstName, 'jackson');
-    assert.equal(page.bulkAssign.validUploadedUsers[1].lastName, 'johnson (johnson the seconds)');
-    assert.equal(page.bulkAssign.validUploadedUsers[1].campusId, '12345');
-    assert.equal(page.bulkAssign.validUploadedUsers[1].smallGroupName, '');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[1].firstName, 'jackson');
+    assert.strictEqual(
+      page.bulkAssign.validUploadedUsers[1].lastName,
+      'johnson (johnson the seconds)'
+    );
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[1].campusId, '12345');
+    assert.strictEqual(page.bulkAssign.validUploadedUsers[1].smallGroupName, '');
 
     assert.ok(page.bulkAssign.showConfirmUploadButton);
   });
@@ -184,22 +187,22 @@ module('Acceptance | learner group bulk assign', function (hooks) {
     await triggerUpload(users);
     await waitFor('[data-test-upload-data-invalid-users]');
 
-    assert.equal(page.bulkAssign.invalidUploadedUsers.length, 6);
-    assert.equal(page.bulkAssign.invalidUploadedUsers[0].errors, 'First Name is required');
-    assert.equal(page.bulkAssign.invalidUploadedUsers[1].errors, 'Last Name is required');
-    assert.equal(
+    assert.strictEqual(page.bulkAssign.invalidUploadedUsers.length, 6);
+    assert.strictEqual(page.bulkAssign.invalidUploadedUsers[0].errors, 'First Name is required');
+    assert.strictEqual(page.bulkAssign.invalidUploadedUsers[1].errors, 'Last Name is required');
+    assert.strictEqual(
       page.bulkAssign.invalidUploadedUsers[2].errors,
       'Could not find a user with the campusId abcd'
     );
-    assert.equal(
+    assert.strictEqual(
       page.bulkAssign.invalidUploadedUsers[3].errors,
       "User is not in this group's cohort: class of this year"
     );
-    assert.equal(
+    assert.strictEqual(
       page.bulkAssign.invalidUploadedUsers[4].errors,
       'This user already exists in the upload.'
     );
-    assert.equal(
+    assert.strictEqual(
       page.bulkAssign.invalidUploadedUsers[5].errors,
       'User already exists in top-level group group 1 or one of its subgroups.'
     );
@@ -227,13 +230,13 @@ module('Acceptance | learner group bulk assign', function (hooks) {
     ];
     await triggerUpload(users);
     await waitFor('[data-test-upload-data-valid-users]');
-    assert.equal(page.bulkAssign.validUploadedUsers.length, 2);
+    assert.strictEqual(page.bulkAssign.validUploadedUsers.length, 2);
     await page.bulkAssign.confirmUploadedUsers();
-    assert.equal(page.bulkAssign.groupsToMatch.length, 1);
+    assert.strictEqual(page.bulkAssign.groupsToMatch.length, 1);
     await page.bulkAssign.groupsToMatch[0].chooseGroup('3');
-    assert.equal(page.bulkAssign.groupsToMatch[0].selected, 'group 1 child 1');
+    assert.strictEqual(page.bulkAssign.groupsToMatch[0].selected, 'group 1 child 1');
     await page.bulkAssign.groupsToMatch[0].chooseGroup('2');
-    assert.equal(page.bulkAssign.groupsToMatch[0].selected, 'group 1 child 0');
+    assert.strictEqual(page.bulkAssign.groupsToMatch[0].selected, 'group 1 child 0');
   });
 
   test('finalize and save', async function (assert) {
@@ -259,24 +262,27 @@ module('Acceptance | learner group bulk assign', function (hooks) {
 
     await triggerUpload(users);
     await waitFor('[data-test-upload-data-valid-users]');
-    assert.equal(page.bulkAssign.validUploadedUsers.length, 2);
+    assert.strictEqual(page.bulkAssign.validUploadedUsers.length, 2);
     await page.bulkAssign.confirmUploadedUsers();
-    assert.equal(page.bulkAssign.groupsToMatch.length, 1);
+    assert.strictEqual(page.bulkAssign.groupsToMatch.length, 1);
     await page.bulkAssign.groupsToMatch[0].chooseGroup('3');
 
-    assert.equal(page.bulkAssign.finalData.length, 2);
-    assert.equal(page.bulkAssign.finalData[0].user.userNameInfo.fullName, 'jasper M. johnson');
+    assert.strictEqual(page.bulkAssign.finalData.length, 2);
+    assert.strictEqual(
+      page.bulkAssign.finalData[0].user.userNameInfo.fullName,
+      'jasper M. johnson'
+    );
     assert.notOk(page.bulkAssign.finalData[0].user.userNameInfo.hasAdditionalInfo);
-    assert.equal(page.bulkAssign.finalData[0].campusId, '1234567890');
-    assert.equal(page.bulkAssign.finalData[0].groupName, 'group 1');
-    assert.equal(page.bulkAssign.finalData[1].user.userNameInfo.fullName, 'Jackson McFly');
+    assert.strictEqual(page.bulkAssign.finalData[0].campusId, '1234567890');
+    assert.strictEqual(page.bulkAssign.finalData[0].groupName, 'group 1');
+    assert.strictEqual(page.bulkAssign.finalData[1].user.userNameInfo.fullName, 'Jackson McFly');
     assert.ok(page.bulkAssign.finalData[1].user.userNameInfo.hasAdditionalInfo);
-    assert.equal(page.bulkAssign.finalData[1].campusId, '12345');
-    assert.equal(page.bulkAssign.finalData[1].groupName, 'group 1 child 1');
+    assert.strictEqual(page.bulkAssign.finalData[1].campusId, '12345');
+    assert.strictEqual(page.bulkAssign.finalData[1].groupName, 'group 1 child 1');
     assert.ok(page.bulkAssign.canSubmitFinalData);
-    assert.equal(this.server.db.learnerGroups[0].userIds, null);
-    assert.equal(this.server.db.learnerGroups[1].userIds, null);
-    assert.equal(this.server.db.learnerGroups[2].userIds, null);
+    assert.strictEqual(this.server.db.learnerGroups[0].userIds, null);
+    assert.strictEqual(this.server.db.learnerGroups[1].userIds, null);
+    assert.strictEqual(this.server.db.learnerGroups[2].userIds, null);
 
     await page.bulkAssign.submitFinalData();
     assert.deepEqual(this.server.db.learnerGroups[0].userIds, ['2', '3']);
@@ -298,24 +304,24 @@ module('Acceptance | learner group bulk assign', function (hooks) {
 
     await triggerUpload(users);
     await waitFor('[data-test-upload-data-valid-users]');
-    assert.equal(page.bulkAssign.validUploadedUsers.length, 1);
+    assert.strictEqual(page.bulkAssign.validUploadedUsers.length, 1);
     await page.bulkAssign.confirmUploadedUsers();
-    assert.equal(page.bulkAssign.groupsToMatch.length, 1);
-    assert.equal(this.server.db.learnerGroups.length, 3);
-    assert.equal(this.server.db.learnerGroups[0].userIds, null);
+    assert.strictEqual(page.bulkAssign.groupsToMatch.length, 1);
+    assert.strictEqual(this.server.db.learnerGroups.length, 3);
+    assert.strictEqual(this.server.db.learnerGroups[0].userIds, null);
     await page.bulkAssign.groupsToMatch[0].createNewGroup();
-    assert.equal(this.server.db.learnerGroups.length, 4);
-    assert.equal(this.server.db.learnerGroups[3].userIds, null);
+    assert.strictEqual(this.server.db.learnerGroups.length, 4);
+    assert.strictEqual(this.server.db.learnerGroups[3].userIds, null);
 
-    assert.equal(page.bulkAssign.finalData.length, 1);
-    assert.equal(page.bulkAssign.finalData[0].groupName, '123Test');
+    assert.strictEqual(page.bulkAssign.finalData.length, 1);
+    assert.strictEqual(page.bulkAssign.finalData[0].groupName, '123Test');
     assert.ok(page.bulkAssign.canSubmitFinalData);
 
     await page.bulkAssign.submitFinalData();
     assert.deepEqual(this.server.db.learnerGroups[0].userIds, ['2']);
-    assert.equal(this.server.db.learnerGroups[1].userIds, null);
-    assert.equal(this.server.db.learnerGroups[2].userIds, null);
-    assert.equal(this.server.db.learnerGroups[3].title, '123Test');
+    assert.strictEqual(this.server.db.learnerGroups[1].userIds, null);
+    assert.strictEqual(this.server.db.learnerGroups[2].userIds, null);
+    assert.strictEqual(this.server.db.learnerGroups[3].title, '123Test');
     assert.deepEqual(this.server.db.learnerGroups[3].userIds, ['2']);
   });
 
@@ -335,7 +341,7 @@ module('Acceptance | learner group bulk assign', function (hooks) {
     await triggerUpload(data);
     await waitFor('[data-test-upload-data-valid-users]');
     await page.bulkAssign.confirmUploadedUsers();
-    assert.equal(page.bulkAssign.groupsToMatch.length, 2);
+    assert.strictEqual(page.bulkAssign.groupsToMatch.length, 2);
   });
 
   test('ignore blank lines #3684', async function (assert) {
@@ -357,9 +363,9 @@ module('Acceptance | learner group bulk assign', function (hooks) {
     await triggerUpload(users);
     await waitFor('[data-test-upload-data-valid-users]');
 
-    assert.equal(page.bulkAssign.validUploadedUsers.length, 1);
+    assert.strictEqual(page.bulkAssign.validUploadedUsers.length, 1);
     assert.ok(page.bulkAssign.validUploadedUsers[0].isValid);
-    assert.equal(page.bulkAssign.invalidUploadedUsers.length, 0);
+    assert.strictEqual(page.bulkAssign.invalidUploadedUsers.length, 0);
     assert.ok(page.bulkAssign.showConfirmUploadButton);
   });
 });

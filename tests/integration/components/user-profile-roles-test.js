@@ -103,7 +103,7 @@ module('Integration | Component | user profile roles', function (hooks) {
     const enabled = '[data-test-enabled] input';
     const syncIgnored = '[data-test-exclude-from-sync] input';
 
-    assert.equal(inputs.length, 3);
+    assert.strictEqual(inputs.length, 3);
     assert.dom(formerStudent).isNotChecked();
     assert.dom(enabled).isChecked();
     assert.dom(syncIgnored).isNotChecked();

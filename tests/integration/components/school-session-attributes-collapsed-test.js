@@ -20,13 +20,13 @@ module('Integration | Component | school session attributes collapsed', function
       @expand={{(noop)}}
     />`);
 
-    assert.equal(component.attendanceRequired.label, 'Attendance Required');
+    assert.strictEqual(component.attendanceRequired.label, 'Attendance Required');
     assert.ok(component.attendanceRequired.isDisabled);
-    assert.equal(component.supplemental.label, 'Supplemental Curriculum');
+    assert.strictEqual(component.supplemental.label, 'Supplemental Curriculum');
     assert.ok(component.supplemental.isEnabled);
-    assert.equal(component.specialAttireRequired.label, 'Special Attire Required');
+    assert.strictEqual(component.specialAttireRequired.label, 'Special Attire Required');
     assert.ok(component.specialAttireRequired.isDisabled);
-    assert.equal(component.specialEquipmentRequired.label, 'Special Equipment Required');
+    assert.strictEqual(component.specialEquipmentRequired.label, 'Special Equipment Required');
     assert.ok(component.specialEquipmentRequired.isDisabled);
   });
 

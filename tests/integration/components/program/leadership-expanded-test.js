@@ -34,10 +34,10 @@ module('Integration | Component | program/leadership expanded', function (hooks)
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
     />`);
-    assert.equal(component.title, 'Program Leadership');
-    assert.equal(component.leadershipList.directors.length, 2);
-    assert.equal(component.leadershipList.directors[0].text, 'a M. person');
-    assert.equal(component.leadershipList.directors[1].text, 'b M. person');
+    assert.strictEqual(component.title, 'Program Leadership');
+    assert.strictEqual(component.leadershipList.directors.length, 2);
+    assert.strictEqual(component.leadershipList.directors[0].text, 'a M. person');
+    assert.strictEqual(component.leadershipList.directors[1].text, 'b M. person');
   });
 
   test('clicking the header collapses', async function (assert) {

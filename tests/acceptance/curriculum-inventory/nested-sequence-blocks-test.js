@@ -61,9 +61,9 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
 
     await page.visit({ blockId: 1 });
 
-    assert.equal(page.blocks.list.items.length, 2);
+    assert.strictEqual(page.blocks.list.items.length, 2);
     await page.blocks.list.items[0].remove();
     await page.blocks.list.items[0].confirmRemoval.confirm();
-    assert.equal(page.blocks.list.items.length, 1);
+    assert.strictEqual(page.blocks.list.items.length, 1);
   });
 });

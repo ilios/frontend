@@ -13,14 +13,14 @@ module('Acceptance | pending user updates', function (hooks) {
     const school = this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
-    assert.equal(currentURL(), '/admin/userupdates');
+    assert.strictEqual(currentURL(), '/admin/userupdates');
   });
 
   test('one school', async function (assert) {
     const school = this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
-    assert.equal(page.schoolFilter.text, 'school 0');
+    assert.strictEqual(page.schoolFilter.text, 'school 0');
     assert.notOk(page.schoolFilter.isSelectable);
   });
 
@@ -40,13 +40,13 @@ module('Acceptance | pending user updates', function (hooks) {
     await setupAuthentication({ school: schools[0], administeredSchools: schools });
     await page.visit();
     assert.ok(page.schoolFilter.isSelectable);
-    assert.equal(page.schoolFilter.options.length, 3);
+    assert.strictEqual(page.schoolFilter.options.length, 3);
     assert.ok(page.schoolFilter.options[0].selected);
     assert.notOk(page.schoolFilter.options[1].selected);
     assert.notOk(page.schoolFilter.options[2].selected);
-    assert.equal(page.updates.length, 2);
-    assert.equal(page.updates[0].userNameInfo.fullName, '0 guy M. Mc0son');
-    assert.equal(page.updates[1].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(page.updates.length, 2);
+    assert.strictEqual(page.updates[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(page.updates[1].userNameInfo.fullName, '1 guy M. Mc1son');
   });
 
   test('multiple schools, explicit school selection', async function (assert) {
@@ -67,8 +67,8 @@ module('Acceptance | pending user updates', function (hooks) {
     assert.notOk(page.schoolFilter.options[0].selected);
     assert.ok(page.schoolFilter.options[1].selected);
     assert.notOk(page.schoolFilter.options[2].selected);
-    assert.equal(page.updates.length, 1);
-    assert.equal(page.updates[0].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.strictEqual(page.updates.length, 1);
+    assert.strictEqual(page.updates[0].userNameInfo.fullName, '2 guy M. Mc2son');
   });
 
   test('pending update types', async function (assert) {
@@ -85,13 +85,13 @@ module('Acceptance | pending user updates', function (hooks) {
     });
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
-    assert.equal(page.updates.length, 2);
-    assert.equal(
+    assert.strictEqual(page.updates.length, 2);
+    assert.strictEqual(
       page.updates[0].updateType,
       'The email address in the directory (dev@null.com) does not match the email in ilios (user@example.edu).'
     );
     assert.ok(page.updates[0].canUpdateEmailAddress);
-    assert.equal(
+    assert.strictEqual(
       page.updates[1].updateType,
       'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.'
     );
@@ -110,15 +110,15 @@ module('Acceptance | pending user updates', function (hooks) {
     await page.visit();
 
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
-    assert.equal(userModel.email, 'user@example.edu');
-    assert.equal(page.updates.length, 1);
-    assert.equal(
+    assert.strictEqual(userModel.email, 'user@example.edu');
+    assert.strictEqual(page.updates.length, 1);
+    assert.strictEqual(
       page.updates[0].updateType,
       'The email address in the directory (dev@null.com) does not match the email in ilios (user@example.edu).'
     );
     await page.updates[0].updateEmailAddress();
-    assert.equal(page.updates.length, 0);
-    assert.equal(userModel.email, 'dev@null.com');
+    assert.strictEqual(page.updates.length, 0);
+    assert.strictEqual(userModel.email, 'dev@null.com');
   });
 
   test('exclude from sync', async function (assert) {
@@ -136,13 +136,13 @@ module('Acceptance | pending user updates', function (hooks) {
 
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     assert.notOk(userModel.userSyncIgnore);
-    assert.equal(page.updates.length, 1);
-    assert.equal(
+    assert.strictEqual(page.updates.length, 1);
+    assert.strictEqual(
       page.updates[0].updateType,
       'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.'
     );
     await page.updates[0].excludeFromSync();
-    assert.equal(page.updates.length, 0);
+    assert.strictEqual(page.updates.length, 0);
     assert.ok(userModel.userSyncIgnore);
   });
 
@@ -161,13 +161,13 @@ module('Acceptance | pending user updates', function (hooks) {
 
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     assert.ok(userModel.enabled);
-    assert.equal(page.updates.length, 1);
-    assert.equal(
+    assert.strictEqual(page.updates.length, 1);
+    assert.strictEqual(
       page.updates[0].updateType,
       'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.'
     );
     await page.updates[0].disableUser();
-    assert.equal(page.updates.length, 0);
+    assert.strictEqual(page.updates.length, 0);
     assert.notOk(userModel.enabled);
   });
 });

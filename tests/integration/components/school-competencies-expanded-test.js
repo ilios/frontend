@@ -38,11 +38,11 @@ module('Integration | Component | school competencies expanded', function (hooks
       @isManaging={{false}}
       @setSchoolManageCompetencies={{(noop)}}
     />`);
-    assert.equal(component.collapser.text, 'Competencies (1/2)');
-    assert.equal(component.competenciesList.items.length, 3);
-    assert.equal(component.competenciesList.items[0].title.text, 'domain 0');
-    assert.equal(component.competenciesList.items[1].title.text, 'competency 0');
-    assert.equal(component.competenciesList.items[2].title.text, 'competency 1');
+    assert.strictEqual(component.collapser.text, 'Competencies (1/2)');
+    assert.strictEqual(component.competenciesList.items.length, 3);
+    assert.strictEqual(component.competenciesList.items[0].title.text, 'domain 0');
+    assert.strictEqual(component.competenciesList.items[1].title.text, 'competency 0');
+    assert.strictEqual(component.competenciesList.items[2].title.text, 'competency 1');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

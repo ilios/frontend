@@ -46,7 +46,7 @@ module('Integration | Component | new myreport', function (hooks) {
     assert.ok(schoolSelect.options[2].textContent.includes('second'));
     assert.ok(schoolSelect.options[3].value, '3');
     assert.ok(schoolSelect.options[3].textContent.includes('third'));
-    assert.equal(
+    assert.strictEqual(
       schoolSelect.options[schoolSelect.selectedIndex].value,
       2,
       'primary school is selected'
@@ -75,7 +75,7 @@ module('Integration | Component | new myreport', function (hooks) {
     assert.ok(subjectSelect.options[9].textContent.includes('Terms'));
     assert.ok(subjectSelect.options[10].value, 'session type');
     assert.ok(subjectSelect.options[10].textContent.includes('Session Types'));
-    assert.equal(
+    assert.strictEqual(
       subjectSelect.options[subjectSelect.selectedIndex].value,
       'course',
       'courses is selected'
@@ -101,13 +101,13 @@ module('Integration | Component | new myreport', function (hooks) {
     const object = `[data-test-object] select`;
     await fillIn('[data-test-school] select', 'null');
     const subjectSelect = find(subject);
-    assert.equal(subjectSelect.options[subjectNum].value, subjectVal);
+    assert.strictEqual(subjectSelect.options[subjectNum].value, subjectVal);
     await fillIn(subjectSelect, subjectVal);
 
     const objectSelect = find(object);
-    assert.equal(objectSelect.options[0].value, '');
+    assert.strictEqual(objectSelect.options[0].value, '');
     expectedObjects.forEach((val, i) => {
-      assert.equal(objectSelect.options[i + 1].value, val, `${val} is object option`);
+      assert.strictEqual(objectSelect.options[i + 1].value, val, `${val} is object option`);
     });
   };
 
@@ -257,7 +257,7 @@ module('Integration | Component | new myreport', function (hooks) {
     await render(hbs`<NewMyreport @close={{action close}} />`);
     await fillIn(schoolSelect, 'null');
     const subjectSelect = find(subject);
-    assert.equal(subjectSelect.options[subjectSelect.selectedIndex].value, 'course');
+    assert.strictEqual(subjectSelect.options[subjectSelect.selectedIndex].value, 'course');
     await fillIn(object, 'instructor');
     assert.dom(userSearch).exists({ count: 1 });
     await fillIn(input, 'test');

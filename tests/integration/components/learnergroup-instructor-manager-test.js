@@ -54,27 +54,27 @@ module('Integration | Component | learnergroup instructor manager', function (ho
       @canUpdate={{true}}
     />`);
 
-    assert.equal(component.title, 'Default Instructors');
-    assert.equal(component.assignedInstructors.length, 3);
-    assert.equal(component.assignedInstructors[0].userNameInfo.fullName, 'aardvark');
+    assert.strictEqual(component.title, 'Default Instructors');
+    assert.strictEqual(component.assignedInstructors.length, 3);
+    assert.strictEqual(component.assignedInstructors[0].userNameInfo.fullName, 'aardvark');
     assert.dom(component.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
-    assert.equal(component.assignedInstructors[1].userNameInfo.fullName, 'test person');
+    assert.strictEqual(component.assignedInstructors[1].userNameInfo.fullName, 'test person');
     assert.notOk(component.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
-    assert.equal(component.assignedInstructors[2].userNameInfo.fullName, 'test person2');
+    assert.strictEqual(component.assignedInstructors[2].userNameInfo.fullName, 'test person2');
     assert.notOk(component.assignedInstructors[2].userNameInfo.hasAdditionalInfo);
     assert.notOk(component.saveButton.isVisible);
     assert.notOk(component.cancelButton.isVisible);
-    assert.equal(component.manageButton.text, 'Manage Instructors');
+    assert.strictEqual(component.manageButton.text, 'Manage Instructors');
     await component.manage();
-    assert.equal(component.selectedInstructors.length, 2);
-    assert.equal(component.selectedInstructors[0].userNameInfo.fullName, 'aardvark');
+    assert.strictEqual(component.selectedInstructors.length, 2);
+    assert.strictEqual(component.selectedInstructors[0].userNameInfo.fullName, 'aardvark');
     assert.dom(component.selectedInstructors[0].userNameInfo.hasAdditionalInfo);
-    assert.equal(component.selectedInstructors[1].userNameInfo.fullName, 'test person');
+    assert.strictEqual(component.selectedInstructors[1].userNameInfo.fullName, 'test person');
     assert.notOk(component.selectedInstructors[1].userNameInfo.hasAdditionalInfo);
-    assert.equal(component.selectedInstructorGroups.length, 1);
-    assert.equal(component.selectedInstructorGroups[0].title, 'test group');
-    assert.equal(component.selectedInstructorGroups[0].members.length, 1);
-    assert.equal(
+    assert.strictEqual(component.selectedInstructorGroups.length, 1);
+    assert.strictEqual(component.selectedInstructorGroups[0].title, 'test group');
+    assert.strictEqual(component.selectedInstructorGroups[0].members.length, 1);
+    assert.strictEqual(
       component.selectedInstructorGroups[0].members[0].userNameInfo.fullName,
       'test person2'
     );
@@ -98,7 +98,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
       @save={{(noop)}}
       @canUpdate={{true}}
     />`);
-    assert.equal(component.selectedInstructors.length, 0);
+    assert.strictEqual(component.selectedInstructors.length, 0);
     assert.ok(component.hasNoAssignedInstructors);
   });
 
@@ -128,7 +128,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
       @save={{(noop)}}
       @canUpdate={{false}}
     />`);
-    assert.equal(component.assignedInstructors.length, 2);
+    assert.strictEqual(component.assignedInstructors.length, 2);
     assert.notOk(component.manageButton.isVisible);
   });
 
@@ -159,13 +159,13 @@ module('Integration | Component | learnergroup instructor manager', function (ho
       @save={{(noop)}}
       @canUpdate={{true}}
     />`);
-    assert.equal(component.assignedInstructors.length, 2);
+    assert.strictEqual(component.assignedInstructors.length, 2);
     await component.manage();
-    assert.equal(component.selectedInstructors.length, 2);
+    assert.strictEqual(component.selectedInstructors.length, 2);
     await component.selectedInstructors[0].remove();
-    assert.equal(component.selectedInstructors.length, 1);
+    assert.strictEqual(component.selectedInstructors.length, 1);
     await component.cancel();
-    assert.equal(component.assignedInstructors.length, 2);
+    assert.strictEqual(component.assignedInstructors.length, 2);
   });
 
   test('edit and save', async function (assert) {
@@ -201,10 +201,10 @@ module('Integration | Component | learnergroup instructor manager', function (ho
       .find('learnerGroup', learnerGroup.id);
 
     this.set('save', (users, groups) => {
-      assert.equal(users.length, 1);
-      assert.equal(groups.length, 1);
-      assert.equal(users[0].get('fullName'), 'test person');
-      assert.equal(groups[0].get('title'), 'test group 2');
+      assert.strictEqual(users.length, 1);
+      assert.strictEqual(groups.length, 1);
+      assert.strictEqual(users[0].get('fullName'), 'test person');
+      assert.strictEqual(groups[0].get('title'), 'test group 2');
     });
     this.set('learnerGroup', learnerGroupModel);
 
@@ -214,14 +214,14 @@ module('Integration | Component | learnergroup instructor manager', function (ho
       @canUpdate={{true}}
     />`);
 
-    assert.equal(component.assignedInstructors.length, 3);
+    assert.strictEqual(component.assignedInstructors.length, 3);
     await component.manage();
-    assert.equal(component.selectedInstructors.length, 2);
+    assert.strictEqual(component.selectedInstructors.length, 2);
     await component.selectedInstructors[0].remove();
-    assert.equal(component.selectedInstructorGroups.length, 2);
+    assert.strictEqual(component.selectedInstructorGroups.length, 2);
     await component.selectedInstructorGroups[0].remove();
-    assert.equal(component.selectedInstructors.length, 1);
-    assert.equal(component.selectedInstructorGroups.length, 1);
+    assert.strictEqual(component.selectedInstructors.length, 1);
+    assert.strictEqual(component.selectedInstructorGroups.length, 1);
     await component.save();
   });
 
@@ -242,11 +242,11 @@ module('Integration | Component | learnergroup instructor manager', function (ho
       @canUpdate={{true}}
     />`);
     await component.manage();
-    assert.equal(component.selectedInstructorGroups.length, 0);
+    assert.strictEqual(component.selectedInstructorGroups.length, 0);
     await component.search('test group');
     await component.searchResults[0].add();
-    assert.equal(component.selectedInstructorGroups.length, 1);
-    assert.equal(component.selectedInstructorGroups[0].text, 'test group');
+    assert.strictEqual(component.selectedInstructorGroups.length, 1);
+    assert.strictEqual(component.selectedInstructorGroups[0].text, 'test group');
   });
 
   test('search and add instructor', async function (assert) {
@@ -270,10 +270,10 @@ module('Integration | Component | learnergroup instructor manager', function (ho
       @canUpdate={{true}}
     />`);
     await component.manage();
-    assert.equal(component.selectedInstructors.length, 0);
+    assert.strictEqual(component.selectedInstructors.length, 0);
     await component.search('test group');
     await component.searchResults[0].add();
-    assert.equal(component.selectedInstructors.length, 1);
-    assert.equal(component.selectedInstructors[0].userNameInfo.fullName, 'test person');
+    assert.strictEqual(component.selectedInstructors.length, 1);
+    assert.strictEqual(component.selectedInstructors[0].userNameInfo.fullName, 'test person');
   });
 });

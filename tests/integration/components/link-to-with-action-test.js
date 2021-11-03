@@ -11,13 +11,13 @@ module('Integration | Component | link-to-with-action', function (hooks) {
     assert.expect(7);
     class RouterMock extends Service {
       urlFor(route, obj) {
-        assert.equal(route, 'somewhere');
+        assert.strictEqual(route, 'somewhere');
         assert.ok('queryParams' in obj);
         assert.deepEqual(obj.queryParams, {});
         return '/here/somewhere';
       }
       isActive(route) {
-        assert.equal(route, 'somewhere');
+        assert.strictEqual(route, 'somewhere');
         return false;
       }
     }
@@ -29,8 +29,8 @@ module('Integration | Component | link-to-with-action', function (hooks) {
       </LinkToWithAction>
     `);
 
-    assert.equal(this.element.textContent.trim(), 'Link Text');
-    assert.equal(this.element.querySelector('a').getAttribute('href'), '/here/somewhere');
+    assert.strictEqual(this.element.textContent.trim(), 'Link Text');
+    assert.strictEqual(this.element.querySelector('a').getAttribute('href'), '/here/somewhere');
     assert.notOk(this.element.querySelector('a').classList.contains('active'));
   });
 
@@ -52,7 +52,7 @@ module('Integration | Component | link-to-with-action', function (hooks) {
       </LinkToWithAction>
     `);
 
-    assert.equal(this.element.textContent.trim(), 'More Link Text');
+    assert.strictEqual(this.element.textContent.trim(), 'More Link Text');
     assert.ok(this.element.querySelector('a').classList.contains('active'));
   });
 });

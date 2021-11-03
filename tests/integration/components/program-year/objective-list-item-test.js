@@ -31,9 +31,9 @@ module('Integration | Component | program-year/objective-list-item', function (h
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
-    assert.equal(component.description.text, 'program-year objective 0');
-    assert.equal(component.competency.text, 'Add New');
-    assert.equal(component.meshDescriptors.text, 'Add New');
+    assert.strictEqual(component.description.text, 'program-year objective 0');
+    assert.strictEqual(component.competency.text, 'Add New');
+    assert.strictEqual(component.meshDescriptors.text, 'Add New');
     assert.ok(component.isActive);
     assert.ok(component.hasTrashCan);
     await a11yAudit(this.element);
@@ -49,11 +49,11 @@ module('Integration | Component | program-year/objective-list-item', function (h
       />`
     );
     const newDescription = 'Pluto Visits Earth';
-    assert.equal(component.description.text, 'program-year objective 0');
+    assert.strictEqual(component.description.text, 'program-year objective 0');
     await component.description.openEditor();
     await component.description.edit(newDescription);
     await component.description.save();
-    assert.equal(component.description.text, newDescription);
+    assert.strictEqual(component.description.text, newDescription);
   });
 
   test('can manage competency', async function (assert) {

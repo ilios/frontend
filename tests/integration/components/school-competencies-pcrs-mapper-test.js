@@ -51,17 +51,17 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
       @remove={{(noop)}}
     />`);
 
-    assert.equal(component.pcrs.length, 5);
+    assert.strictEqual(component.pcrs.length, 5);
     assert.notOk(component.pcrs[0].isChecked);
-    assert.equal(component.pcrs[0].text, '0.33 Fiz');
+    assert.strictEqual(component.pcrs[0].text, '0.33 Fiz');
     assert.notOk(component.pcrs[1].isChecked);
-    assert.equal(component.pcrs[1].text, '1.25 Baz');
+    assert.strictEqual(component.pcrs[1].text, '1.25 Baz');
     assert.ok(component.pcrs[2].isChecked);
-    assert.equal(component.pcrs[2].text, '2.1 Foo');
+    assert.strictEqual(component.pcrs[2].text, '2.1 Foo');
     assert.notOk(component.pcrs[3].isChecked);
-    assert.equal(component.pcrs[3].text, '5.55 Bar');
+    assert.strictEqual(component.pcrs[3].text, '5.55 Bar');
     assert.ok(component.pcrs[4].isChecked);
-    assert.equal(component.pcrs[4].text, '15.22 Far');
+    assert.strictEqual(component.pcrs[4].text, '15.22 Far');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -70,7 +70,7 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
     assert.expect(3);
     this.set('allPcrses', this.allPcrses);
     this.set('add', (pcrs) => {
-      assert.equal(pcrs, this.pcrs4);
+      assert.strictEqual(pcrs, this.pcrs4);
     });
     await render(hbs`<SchoolCompetenciesPcrsMapper
       @allPcrses={{this.allPcrses}}
@@ -88,7 +88,7 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
     this.set('selectedPcrses', selectedPcrses);
     this.set('allPcrses', this.allPcrses);
     this.set('remove', (pcrs) => {
-      assert.equal(pcrs, this.pcrs4);
+      assert.strictEqual(pcrs, this.pcrs4);
     });
     await render(hbs`<SchoolCompetenciesPcrsMapper
       @allPcrses={{this.allPcrses}}

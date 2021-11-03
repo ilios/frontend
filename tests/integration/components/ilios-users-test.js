@@ -24,7 +24,7 @@ module('Integration | Component | ilios users', function (hooks) {
       @setSearchTerms={{(noop)}}
       @transitionToUser={{(noop)}}
     />`);
-    assert.equal(component.title.text, 'Users');
+    assert.strictEqual(component.title.text, 'Users');
   });
 
   test('param passing', async function (assert) {
@@ -34,7 +34,7 @@ module('Integration | Component | ilios users', function (hooks) {
     const newValue = 'test';
     this.set('value', value);
     this.set('setQuery', (query) => {
-      assert.equal(query, newValue);
+      assert.strictEqual(query, newValue);
     });
     await render(hbs`<IliosUsers
       @limit=25
@@ -50,7 +50,7 @@ module('Integration | Component | ilios users', function (hooks) {
       @transitionToUser={{(noop)}}
     />`);
 
-    assert.equal(component.search.value, value);
+    assert.strictEqual(component.search.value, value);
     await component.search.set(newValue);
   });
 

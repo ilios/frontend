@@ -9,6 +9,6 @@ module('Integration | Helper | pcrs-uri-to-number', function (hooks) {
   test('it renders', async function (assert) {
     this.set('inputValue', 'aamc-pcrs-comp-c0103');
     await render(hbs`{{pcrs-uri-to-number inputValue}}`);
-    assert.equal(this.element.textContent.trim(), '1.3');
+    assert.strictEqual(this.element.textContent.trim(), '1.3');
   });
 });

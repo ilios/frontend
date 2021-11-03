@@ -49,31 +49,43 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
-    assert.equal(component.title, 'Overview', 'Component title is visible.');
+    assert.strictEqual(component.title, 'Overview', 'Component title is visible.');
     assert.ok(component.rolloverLink.isVisible, 'Rollover course button is visible.');
     assert.ok(component.verificationPreviewLink.isVisible, 'Verification preview link is visible.');
-    assert.equal(component.startDate.label, 'Start:', 'Start date label is correct.');
-    assert.equal(
+    assert.strictEqual(component.startDate.label, 'Start:', 'Start date label is correct.');
+    assert.strictEqual(
       component.startDate.text,
       this.intl.formatDate(reportModel.startDate),
       'Start date is visible.'
     );
-    assert.equal(component.endDate.label, 'End:', 'End date label is correct.');
-    assert.equal(
+    assert.strictEqual(component.endDate.label, 'End:', 'End date label is correct.');
+    assert.strictEqual(
       component.endDate.text,
       this.intl.formatDate(reportModel.endDate),
       'End date is visible.'
     );
-    assert.equal(component.academicYear.label, 'Academic Year:', 'Academic year label is correct.');
-    assert.equal(component.academicYear.text, reportModel.year, 'Academic year is visible.');
-    assert.equal(component.program.label, 'Program:', 'Program label is correct.');
-    assert.equal(
+    assert.strictEqual(
+      component.academicYear.label,
+      'Academic Year:',
+      'Academic year label is correct.'
+    );
+    assert.strictEqual(component.academicYear.text, reportModel.year, 'Academic year is visible.');
+    assert.strictEqual(component.program.label, 'Program:', 'Program label is correct.');
+    assert.strictEqual(
       component.program.text,
       `${programModel.title} (${programModel.shortTitle})`,
       'Program is visible.'
     );
-    assert.equal(component.description.label, 'Description:', 'Description label is correct.');
-    assert.equal(component.description.text, reportModel.description, 'Description is visible.');
+    assert.strictEqual(
+      component.description.label,
+      'Description:',
+      'Description label is correct.'
+    );
+    assert.strictEqual(
+      component.description.text,
+      reportModel.description,
+      'Description is visible.'
+    );
   });
 
   test('read-only', async function (assert) {
@@ -85,27 +97,27 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{false}} />`
     );
-    assert.equal(
+    assert.strictEqual(
       component.startDate.readOnlyText,
       this.intl.formatDate(reportModel.startDate),
       'Start date is visible.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.endDate.readOnlyText,
       this.intl.formatDate(reportModel.endDate),
       'End date is visible.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.readOnlyText,
       reportModel.year,
       'Academic year is visible.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.program.text,
       `${programModel.title} (${programModel.shortTitle})`,
       'Program is visible.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.description.readOnlyText,
       reportModel.description,
       'Description is visible.'
@@ -127,7 +139,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.text,
       `${reportModel.year} - ` + (parseInt(reportModel.year, 10) + 1)
     );
@@ -148,7 +160,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{false}} />`
     );
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.readOnlyText,
       `${reportModel.year} - ` + (parseInt(reportModel.year, 10) + 1)
     );
@@ -179,7 +191,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
     await component.startDate.edit();
-    assert.equal(
+    assert.strictEqual(
       component.startDate.value,
       this.intl.formatDate(reportModel.startDate),
       "The report's current start date is pre-selected in date picker."
@@ -187,12 +199,12 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     const newVal = moment(reportModel.startDate).add(1, 'day');
     await component.startDate.set(newVal.toDate());
     await component.startDate.save();
-    assert.equal(
+    assert.strictEqual(
       component.startDate.text,
       this.intl.formatDate(newVal),
       'Edit link shown new start date post-update.'
     );
-    assert.equal(
+    assert.strictEqual(
       this.intl.formatDate(reportModel.startDate),
       this.intl.formatDate(newVal),
       "The report's start date was updated."
@@ -224,7 +236,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
     await component.endDate.edit();
-    assert.equal(
+    assert.strictEqual(
       component.endDate.value,
       this.intl.formatDate(reportModel.endDate),
       "The report's current end date is pre-selected in date picker."
@@ -232,12 +244,12 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     const newVal = moment(reportModel.endDate).add(1, 'day');
     await component.endDate.set(newVal.toDate());
     await component.endDate.save();
-    assert.equal(
+    assert.strictEqual(
       component.endDate.text,
       this.intl.formatDate(newVal),
       'Edit link shown new end date post-update.'
     );
-    assert.equal(
+    assert.strictEqual(
       this.intl.formatDate(reportModel.endDate),
       this.intl.formatDate(newVal),
       "The report's end date was updated."
@@ -269,12 +281,12 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
     await component.academicYear.edit();
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.options.length,
       11,
       'There should be ten options in year dropdown.'
     );
-    assert.equal(component.academicYear.options[5].text, reportModel.year);
+    assert.strictEqual(component.academicYear.options[5].text, reportModel.year);
     assert.ok(
       component.academicYear.options[5].isSelected,
       "The report's year should be selected."
@@ -282,8 +294,8 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     const newVal = (parseInt(reportModel.year, 10) + 1).toString();
     await component.academicYear.select(newVal);
     await component.academicYear.save();
-    assert.equal(component.academicYear.text, newVal, 'New year is visible on edit-link.');
-    assert.equal(reportModel.year, newVal, 'Report year got updated with new value.');
+    assert.strictEqual(component.academicYear.text, newVal, 'New year is visible on edit-link.');
+    assert.strictEqual(reportModel.year, newVal, 'Report year got updated with new value.');
   });
 
   test('academic year unchangeable if course has been linked', async function (assert) {
@@ -299,7 +311,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.readOnlyText,
       reportModel.year,
       'Academic year is in not editable.'
@@ -315,13 +327,13 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
-    assert.equal(component.description.text, 'Click to edit');
+    assert.strictEqual(component.description.text, 'Click to edit');
     await component.description.edit();
     const newDescription = 'Quidquid luce fuit, tenebris agit.';
     await component.description.set(newDescription);
     await component.description.save();
-    assert.equal(component.description.text, newDescription);
-    assert.equal(reportModel.description, newDescription);
+    assert.strictEqual(component.description.text, newDescription);
+    assert.strictEqual(reportModel.description, newDescription);
   });
 
   test('description validation fails if text is too long', async function (assert) {
@@ -333,7 +345,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
-    assert.equal(component.description.text, 'Click to edit');
+    assert.strictEqual(component.description.text, 'Click to edit');
     await component.description.edit();
     assert.notOk(component.description.hasError, 'Validation error is initially not shown.');
     const newDescription = '0123456789'.repeat(5000);
@@ -350,7 +362,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
-    assert.equal(component.description.text, 'Lorem Ipsum');
+    assert.strictEqual(component.description.text, 'Lorem Ipsum');
     await component.description.edit();
     assert.notOk(component.description.hasError, 'Validation error is initially not shown.');
     await component.description.set('');
@@ -367,6 +379,6 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
-    assert.equal(component.program.text, 'Doctor of Rocket Surgery');
+    assert.strictEqual(component.program.text, 'Doctor of Rocket Surgery');
   });
 });

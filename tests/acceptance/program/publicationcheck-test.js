@@ -26,21 +26,21 @@ module('Acceptance | Program - Publication Check', function (hooks) {
 
   test('full program count', async function (assert) {
     await visit('/programs/' + this.fullProgram.id + '/publicationcheck');
-    assert.equal(currentRouteName(), 'program.publicationCheck');
+    assert.strictEqual(currentRouteName(), 'program.publicationCheck');
     var items = findAll('.program-publication-check .detail-content table tbody td');
-    assert.equal(await getElementText(items[0]), getText('program 0'));
-    assert.equal(await getElementText(items[1]), getText('short_0'));
-    assert.equal(await getElementText(items[2]), 4);
-    assert.equal(await getElementText(items[3]), getText('Yes (1)'));
+    assert.strictEqual(await getElementText(items[0]), getText('program 0'));
+    assert.strictEqual(await getElementText(items[1]), getText('short_0'));
+    assert.strictEqual(await getElementText(items[2]), 4);
+    assert.strictEqual(await getElementText(items[3]), getText('Yes (1)'));
   });
 
   test('empty program count', async function (assert) {
     await visit('/programs/' + this.emptyProgram.id + '/publicationcheck');
-    assert.equal(currentRouteName(), 'program.publicationCheck');
+    assert.strictEqual(currentRouteName(), 'program.publicationCheck');
     var items = findAll('.program-publication-check .detail-content table tbody td');
-    assert.equal(await getElementText(items[0]), getText('program 1'));
-    assert.equal(await getElementText(items[1]), getText('short_1'));
-    assert.equal(await getElementText(items[2]), 4);
-    assert.equal(await getElementText(items[3]), getText('No'));
+    assert.strictEqual(await getElementText(items[0]), getText('program 1'));
+    assert.strictEqual(await getElementText(items[1]), getText('short_1'));
+    assert.strictEqual(await getElementText(items[2]), 4);
+    assert.strictEqual(await getElementText(items[3]), getText('No'));
   });
 });

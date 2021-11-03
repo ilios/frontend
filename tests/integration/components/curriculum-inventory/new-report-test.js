@@ -20,47 +20,55 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
       hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}} />`
     );
 
-    assert.equal(component.programTitle.label, 'Program:', 'program title is labeled correctly.');
-    assert.equal(component.programTitle.title, program.title, 'Program title is displayed.');
-    assert.equal(
+    assert.strictEqual(
+      component.programTitle.label,
+      'Program:',
+      'program title is labeled correctly.'
+    );
+    assert.strictEqual(component.programTitle.title, program.title, 'Program title is displayed.');
+    assert.strictEqual(
       component.academicYear.label,
       'Academic Year:',
       'Academic year input is labeled correctly.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.options.length,
       11,
       'Academic year dropdown has eleven options.'
     );
-    assert.equal(component.academicYear.value, currentYear, 'Current year is selected by default.');
-    assert.equal(
+    assert.strictEqual(
+      component.academicYear.value,
+      currentYear,
+      'Current year is selected by default.'
+    );
+    assert.strictEqual(
       component.academicYear.options[0].value,
       currentYear - 5,
       'First year in dropdown is five years prior to current year.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.options[0].text,
       currentYear - 5,
       'First year label is correct.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.options[10].value,
       currentYear + 5,
       'Last year in dropdown is five years ahead of current year.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.options[10].text,
       currentYear + 5,
       'Last year label is correct.'
     );
-    assert.equal(component.description.value, 'Curriculum Inventory Report');
-    assert.equal(
+    assert.strictEqual(component.description.value, 'Curriculum Inventory Report');
+    assert.strictEqual(
       component.description.label,
       'Description:',
       'Description input is labeled correctly.'
     );
-    assert.equal(component.name.value, '', 'Name input is initially empty.');
-    assert.equal(component.name.label, 'Name:', 'Name input is labeled correctly.');
+    assert.strictEqual(component.name.value, '', 'Name input is initially empty.');
+    assert.strictEqual(component.name.label, 'Name:', 'Name input is labeled correctly.');
   });
 
   test('academic year options labeled as range when app configuration is set to cross calendar-year boundaries', async function (assert) {
@@ -81,12 +89,12 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
       hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}} />`
     );
 
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.options[0].text,
       `${currentYear - 5} - ${currentYear - 4}`,
       'First year label is correct.'
     );
-    assert.equal(
+    assert.strictEqual(
       component.academicYear.options[10].text,
       `${currentYear + 5} - ${currentYear + 6}`,
       'Last year label is correct.'
@@ -102,15 +110,19 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
 
     this.set('program', programModel);
     this.set('save', (report) => {
-      assert.equal(report.get('name'), 'new report', 'Name gets passed.');
-      assert.equal(report.get('description'), 'lorem ipsum', 'Description gets passed.');
-      assert.equal(report.get('year'), expectedSelectedYear, 'Selected academic year gets passed.');
-      assert.equal(
+      assert.strictEqual(report.get('name'), 'new report', 'Name gets passed.');
+      assert.strictEqual(report.get('description'), 'lorem ipsum', 'Description gets passed.');
+      assert.strictEqual(
+        report.get('year'),
+        expectedSelectedYear,
+        'Selected academic year gets passed.'
+      );
+      assert.strictEqual(
         moment(report.get('startDate')).format('YYYY-MM-DD'),
         `${expectedSelectedYear}-01-01`,
         'Start date gets calculated and passed.'
       );
-      assert.equal(
+      assert.strictEqual(
         moment(report.get('endDate')).format('YYYY-MM-DD'),
         `${expectedSelectedYear}-12-31`,
         'End date gets calculated and passed.'
@@ -144,12 +156,12 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     });
     this.set('program', programModel);
     this.set('save', (report) => {
-      assert.equal(
+      assert.strictEqual(
         moment(report.get('startDate')).format('YYYY-MM-DD'),
         `${expectedSelectedYear}-07-01`,
         'Start date gets calculated and passed.'
       );
-      assert.equal(
+      assert.strictEqual(
         moment(report.get('endDate')).format('YYYY-MM-DD'),
         `${expectedSelectedYear + 1}-06-30`,
         'End date gets calculated and passed.'
