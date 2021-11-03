@@ -42,7 +42,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.years[0].text, `${this.thisYear - 1} - ${this.thisYear}`);
     assert.strictEqual(component.years[1].text, `${this.thisYear} - ${this.thisYear + 1}`);
     assert.strictEqual(component.years[2].text, `${this.thisYear + 1} - ${this.thisYear + 2}`);
-    assert.strictEqual(component.selectedYear, this.currentAcademicYear);
+    assert.strictEqual(parseInt(component.selectedYear, 10), this.currentAcademicYear);
 
     assert.strictEqual(component.school.title, 'School (school 1)');
     assert.strictEqual(component.school.director, 'No');
@@ -74,7 +74,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     this.set('setSchool', (schoolId) => {
-      assert.strictEqual(schoolId, 1);
+      assert.strictEqual(parseInt(schoolId, 10), 1);
     });
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
@@ -107,14 +107,14 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     this.set('setYear', (year) => {
-      assert.strictEqual(year, this.currentAcademicYear + 1);
+      assert.strictEqual(parseInt(year, 10), this.currentAcademicYear + 1);
     });
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
       @setSchool={{(noop)}}
       @setYear={{this.setYear}}
     />`);
-    assert.strictEqual(component.selectedYear, this.currentAcademicYear);
+    assert.strictEqual(parseInt(component.selectedYear, 10), this.currentAcademicYear);
     await component.courses.toggle();
     assert.strictEqual(component.courses.directors.length, 1);
     assert.ok(component.courses.notAdministrating);
@@ -352,7 +352,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @setYear={{(noop)}}
     />`);
 
-    assert.strictEqual(component.selectedYear, this.currentAcademicYear);
+    assert.strictEqual(parseInt(component.selectedYear, 10), this.currentAcademicYear);
     unfreezeDate();
   });
 
@@ -439,6 +439,6 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     />`);
 
     assert.strictEqual(component.selectedSchool, this.schools[1].id);
-    assert.strictEqual(component.selectedYear, this.thisYear + 1);
+    assert.strictEqual(parseInt(component.selectedYear, 10), this.thisYear + 1);
   });
 });

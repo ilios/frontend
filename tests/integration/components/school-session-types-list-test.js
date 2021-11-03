@@ -97,7 +97,7 @@ module('Integration | Component | school session types list', function (hooks) {
 
     this.set('sessionTypes', sessionTypeModels);
     this.set('manageSessionType', (sessionTypeId) => {
-      assert.strictEqual(sessionTypeId, 1);
+      assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(hbs`<SchoolSessionTypesList
       @sessionTypes={{this.sessionTypes}}
@@ -120,7 +120,7 @@ module('Integration | Component | school session types list', function (hooks) {
 
     this.set('sessionTypes', sessionTypeModels);
     this.set('manageSessionType', (sessionTypeId) => {
-      assert.strictEqual(sessionTypeId, 1);
+      assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(hbs`<SchoolSessionTypesList
       @sessionTypes={{this.sessionTypes}}

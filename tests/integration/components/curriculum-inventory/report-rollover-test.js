@@ -90,7 +90,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
         assert.ok('id' in params);
         assert.strictEqual(params.id, reportModel.id);
         const data = queryString.parse(requestBody);
-        assert.strictEqual(data.year, thisYear + 1);
+        assert.strictEqual(parseInt(data.year, 10), thisYear + 1);
         assert.strictEqual(data.name, reportModel.name);
         assert.strictEqual(data.description, reportModel.description);
 
@@ -103,7 +103,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     );
     this.set('report', reportModel);
     this.set('visit', (newReport) => {
-      assert.strictEqual(newReport.id, 14);
+      assert.strictEqual(parseInt(newReport.id, 10), 14);
     });
     await render(
       hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />`
@@ -135,7 +135,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     });
     this.set('report', reportModel);
     this.set('visit', (newReport) => {
-      assert.strictEqual(newReport.id, 14);
+      assert.strictEqual(parseInt(newReport.id, 10), 14);
     });
     await render(
       hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />`
@@ -170,7 +170,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
         const data = queryString.parse(requestBody);
         assert.strictEqual(data.name, newName, 'The new name gets passed.');
         assert.strictEqual(data.description, newDescription, 'The new description gets passed.');
-        assert.strictEqual(data.year, newYear, 'The new year gets passed.');
+        assert.strictEqual(parseInt(data.year, 10), newYear, 'The new year gets passed.');
         assert.strictEqual(data.program, otherProgram.id);
 
         return this.serialize(

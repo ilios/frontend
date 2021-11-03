@@ -20,7 +20,7 @@ module('Integration | Component | learner-groups/new-multiple', function (hooks)
   test('save', async function (assert) {
     assert.expect(1);
     this.set('save', (num) => {
-      assert.strictEqual(num, 13);
+      assert.strictEqual(parseInt(num, 10), 13);
     });
     await render(hbs`<LearnerGroups::NewMultiple
       @generateNewLearnerGroups={{this.save}}

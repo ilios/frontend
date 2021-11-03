@@ -98,7 +98,7 @@ module('Acceptance | Admin', function (hooks) {
       assert.ok('q' in queryParams);
       assert.strictEqual(queryParams.q, 'son');
       assert.ok('size' in queryParams);
-      assert.strictEqual(queryParams.size, 100);
+      assert.strictEqual(parseInt(queryParams.size, 10), 100);
       assert.notOk('order_by[firstName]' in queryParams);
       assert.notOk('order_by[firstName]' in queryParams);
 

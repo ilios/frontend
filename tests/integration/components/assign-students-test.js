@@ -213,6 +213,6 @@ module('Integration | Component | assign students', function (hooks) {
     assert.strictEqual(this.server.db.users[0].primaryCohortId, null);
     await component.toggleAll();
     await component.save();
-    assert.strictEqual(this.server.db.users[0].primaryCohortId, 1);
+    assert.strictEqual(parseInt(this.server.db.users[0].primaryCohortId, 10), 1);
   });
 });

@@ -117,14 +117,20 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     );
 
     assert.strictEqual(component.list.items[0].title, this.sequenceBlock2.title);
-    assert.strictEqual(component.list.items[0].academicLevel, this.academicLevel2.level);
+    assert.strictEqual(
+      parseInt(component.list.items[0].academicLevel, 10),
+      this.academicLevel2.level
+    );
     assert.strictEqual(component.list.items[0].orderInSequence, 'n/a');
     assert.strictEqual(component.list.items[0].startDate, 'n/a');
     assert.strictEqual(component.list.items[0].endDate, 'n/a');
     assert.strictEqual(component.list.items[0].course, 'n/a');
     assert.ok(component.list.items[0].isDeletable);
     assert.strictEqual(component.list.items[1].title, this.sequenceBlock1.title);
-    assert.strictEqual(component.list.items[1].academicLevel, this.academicLevel1.level);
+    assert.strictEqual(
+      parseInt(component.list.items[1].academicLevel, 10),
+      this.academicLevel1.level
+    );
     assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
     assert.strictEqual(
       component.list.items[1].startDate,
@@ -161,14 +167,20 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       'Component title is correct, and show the correct number of blocks.'
     );
     assert.strictEqual(component.list.items[0].title, this.sequenceBlock2.title);
-    assert.strictEqual(component.list.items[0].academicLevel, this.academicLevel2.level);
+    assert.strictEqual(
+      parseInt(component.list.items[0].academicLevel, 10),
+      this.academicLevel2.level
+    );
     assert.strictEqual(component.list.items[0].orderInSequence, 'n/a');
     assert.strictEqual(component.list.items[0].startDate, 'n/a');
     assert.strictEqual(component.list.items[0].endDate, 'n/a');
     assert.strictEqual(component.list.items[0].course, 'n/a');
     assert.ok(component.list.items[0].isDeletable);
     assert.strictEqual(component.list.items[1].title, this.sequenceBlock1.title);
-    assert.strictEqual(component.list.items[1].academicLevel, this.academicLevel1.level);
+    assert.strictEqual(
+      parseInt(component.list.items[1].academicLevel, 10),
+      this.academicLevel1.level
+    );
     assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
     assert.strictEqual(
       component.list.items[1].startDate,

@@ -35,7 +35,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
     });
 
     this.server.get('api/users', (schema, { queryParams }) => {
-      assert.strictEqual(queryParams['filters[school]'], 1);
+      assert.strictEqual(parseInt(queryParams['filters[school]'], 10), 1);
       assert.deepEqual(queryParams['filters[roles]'], ['4']);
       assert.strictEqual(queryParams['filters[cohorts]'], '');
       return schema.users.find([2, 3, 4, 5, 6]);

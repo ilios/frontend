@@ -23,7 +23,7 @@ module('Integration | Component | user profile calendar', function (hooks) {
 
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.strictEqual(params.id, 13);
+      assert.strictEqual(parseInt(params.id, 10), 13);
 
       const today = moment();
       const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
@@ -88,7 +88,7 @@ module('Integration | Component | user profile calendar', function (hooks) {
     let called = 0;
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.strictEqual(params.id, 13);
+      assert.strictEqual(parseInt(params.id, 10), 13);
       assert.ok('from' in queryParams);
       assert.ok('to' in queryParams);
       let to, from;
@@ -122,7 +122,7 @@ module('Integration | Component | user profile calendar', function (hooks) {
     let called = 0;
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.strictEqual(params.id, 13);
+      assert.strictEqual(parseInt(params.id, 10), 13);
       assert.ok('from' in queryParams);
       assert.ok('to' in queryParams);
 

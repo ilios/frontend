@@ -99,7 +99,7 @@ module('Integration | Component | program-year/list', function (hooks) {
     );
     const newProgramYear = programYears.sortBy('id').lastObject;
     const originalProgramYear = programYears[programYears.length - 2];
-    assert.strictEqual(newProgramYear.startYear, thisYear);
+    assert.strictEqual(parseInt(newProgramYear.startYear, 10), thisYear);
     const terms = (await newProgramYear.terms).toArray();
     const originalTerms = (await originalProgramYear.terms).toArray();
     assert.strictEqual(terms.length, 4);

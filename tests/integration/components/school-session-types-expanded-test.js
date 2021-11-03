@@ -91,7 +91,7 @@ module('Integration | Component | school session types expanded', function (hook
     assert.expect(1);
     this.set('school', this.school);
     this.set('click', (id) => {
-      assert.strictEqual(id, 1);
+      assert.strictEqual(parseInt(id, 10), 1);
     });
     await render(hbs`<SchoolSessionTypesExpanded
       @school={{this.school}}

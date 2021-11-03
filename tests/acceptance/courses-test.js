@@ -287,19 +287,16 @@ module('Acceptance | Courses', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     const year = moment().year();
     this.server.create('academicYear', { id: year });
-    assert.expect(5);
-
     await page.visit({ year });
     await page.toggleNewCourseForm();
     await page.newCourse.title('Course 1');
     await page.newCourse.chooseYear(year);
     await page.newCourse.save();
-
     assert.strictEqual(page.courses.courses.length, 1);
     assert.strictEqual(page.newCourseLink, 'Course 1', 'new course link');
     assert.strictEqual(page.courses.courses[0].title, 'Course 1', 'course title is correct');
     assert.strictEqual(page.courses.courses[0].school, 'school 0', 'school is correct');
-    assert.strictEqual(page.courses.courses[0].year, year, 'year is correct');
+    assert.strictEqual(parseInt(page.courses.courses[0].year, 10), year, 'year is correct');
   });
 
   test('new course toggle does not show up for unprivileged users', async function (assert) {
@@ -416,7 +413,7 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(page.newCourse.years.length, years.length + 1);
     assert.strictEqual(page.newCourse.years[0].text, 'Select Academic Year');
     for (let i = 0; i < years.length; i++) {
-      assert.strictEqual(page.newCourse.years[i + 1].text.substring(0, 4), years[i]);
+      assert.strictEqual(parseInt(page.newCourse.years[i + 1].text.substring(0, 4), 10), years[i]);
     }
   });
 

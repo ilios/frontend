@@ -37,27 +37,27 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
       'Academic year dropdown has eleven options.'
     );
     assert.strictEqual(
-      component.academicYear.value,
+      parseInt(component.academicYear.value, 10),
       currentYear,
       'Current year is selected by default.'
     );
     assert.strictEqual(
-      component.academicYear.options[0].value,
+      parseInt(component.academicYear.options[0].value, 10),
       currentYear - 5,
       'First year in dropdown is five years prior to current year.'
     );
     assert.strictEqual(
-      component.academicYear.options[0].text,
+      parseInt(component.academicYear.options[0].text, 10),
       currentYear - 5,
       'First year label is correct.'
     );
     assert.strictEqual(
-      component.academicYear.options[10].value,
+      parseInt(component.academicYear.options[10].value, 10),
       currentYear + 5,
       'Last year in dropdown is five years ahead of current year.'
     );
     assert.strictEqual(
-      component.academicYear.options[10].text,
+      parseInt(component.academicYear.options[10].text, 10),
       currentYear + 5,
       'Last year label is correct.'
     );

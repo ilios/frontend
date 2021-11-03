@@ -87,7 +87,7 @@ module('Integration | Component | new user', function (hooks) {
     });
 
     this.set('transitionToUser', (userId) => {
-      assert.strictEqual(userId, 2);
+      assert.strictEqual(parseInt(userId, 10), 2);
     });
     await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />`);
 
@@ -132,7 +132,7 @@ module('Integration | Component | new user', function (hooks) {
     const cohort = this.server.create('cohort', { programYear });
 
     this.set('transitionToUser', (userId) => {
-      assert.strictEqual(userId, 2);
+      assert.strictEqual(parseInt(userId, 10), 2);
     });
     await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />`);
     await component.clickChoiceButtons.secondButton.click();

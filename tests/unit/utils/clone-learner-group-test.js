@@ -34,6 +34,6 @@ module('Unit | Utility | clone learner group', function () {
     assert.strictEqual(result.get('cohort'), cohort, 'cohort was copied');
     assert.strictEqual(result.get('instructors').length, 1);
     assert.deepEqual(result.get('instructors'), [instructor], 'instructors were copied');
-    assert.strictEqual(result.get('parent'), null, 'there was no parent');
+    assert.strictEqual(result.get('parent'), undefined, 'there was no parent');
   });
 });

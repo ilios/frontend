@@ -46,15 +46,14 @@ module('Acceptance | Instructor Groups', function (hooks) {
         sessionId: 2,
       });
 
-      assert.expect(7);
       await page.visit();
       assert.strictEqual(page.list.items.length, 2);
       assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
-      assert.strictEqual(page.list.items[0].users, 5);
-      assert.strictEqual(page.list.items[0].courses, 2);
+      assert.strictEqual(parseInt(page.list.items[0].users, 10), 5);
+      assert.strictEqual(parseInt(page.list.items[0].courses, 10), 2);
       assert.strictEqual(page.list.items[1].title, secondInstructorGroup.title);
-      assert.strictEqual(page.list.items[1].users, 0);
-      assert.strictEqual(page.list.items[1].courses, 0);
+      assert.strictEqual(parseInt(page.list.items[1].users, 10), 0);
+      assert.strictEqual(parseInt(page.list.items[1].courses, 10), 0);
     });
 
     test('filters by title', async function (assert) {
@@ -122,8 +121,8 @@ module('Acceptance | Instructor Groups', function (hooks) {
       assert.strictEqual(page.savedResult, newTitle + ' Saved Successfully');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, newTitle);
-      assert.strictEqual(page.list.items[0].users, 0);
-      assert.strictEqual(page.list.items[0].courses, 0);
+      assert.strictEqual(parseInt(page.list.items[0].users, 10), 0);
+      assert.strictEqual(parseInt(page.list.items[0].courses, 10), 0);
     });
 
     test('cancel adding new instructor group', async function (assert) {
@@ -250,6 +249,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
     assert.strictEqual(page.schoolFilter.schools.length, 2);
     assert.strictEqual(page.schoolFilter.schools[0].text, 'school 0');
     assert.strictEqual(page.schoolFilter.schools[1].text, 'school 1');
-    assert.strictEqual(page.schoolFilter.selectedSchool, 2);
+    assert.strictEqual(parseInt(page.schoolFilter.selectedSchool, 10), 2);
   });
 });

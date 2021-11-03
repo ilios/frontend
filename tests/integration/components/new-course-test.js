@@ -21,11 +21,11 @@ module('Integration | Component | new course', function (hooks) {
     );
     assert.strictEqual(component.years.length, 6);
     assert.strictEqual(component.years[0].text, 'Select Academic Year');
-    assert.strictEqual(component.years[1].text, thisYear - 2);
-    assert.strictEqual(component.years[2].text, thisYear - 1);
-    assert.strictEqual(component.years[3].text, thisYear);
-    assert.strictEqual(component.years[4].text, thisYear + 1);
-    assert.strictEqual(component.years[5].text, thisYear + 2);
+    assert.strictEqual(parseInt(component.years[1].text, 10), thisYear - 2);
+    assert.strictEqual(parseInt(component.years[2].text, 10), thisYear - 1);
+    assert.strictEqual(parseInt(component.years[3].text, 10), thisYear);
+    assert.strictEqual(parseInt(component.years[4].text, 10), thisYear + 1);
+    assert.strictEqual(parseInt(component.years[5].text, 10), thisYear + 2);
     assert.ok(component.years[0].selected);
     assert.notOk(component.years[1].selected);
     assert.notOk(component.years[2].selected);
@@ -111,8 +111,8 @@ module('Integration | Component | new course', function (hooks) {
     this.set('year', academicYearModel);
     this.set('save', async (course) => {
       assert.strictEqual(course.title, 'test course');
-      assert.strictEqual(course.year, academicYear.id);
-      assert.strictEqual(course.level, 1);
+      assert.strictEqual(course.year, parseInt(academicYear.id, 10));
+      assert.strictEqual(parseInt(course.level, 10), 1);
       const school = await course.school;
       assert.strictEqual(school.id, this.school.id);
     });
@@ -133,8 +133,8 @@ module('Integration | Component | new course', function (hooks) {
     this.set('year', academicYearModel);
     this.set('save', async (course) => {
       assert.strictEqual(course.title, 'test course');
-      assert.strictEqual(course.year, academicYear.id);
-      assert.strictEqual(course.level, 1);
+      assert.strictEqual(course.year, parseInt(academicYear.id, 10));
+      assert.strictEqual(parseInt(course.level, 10), 1);
       const school = await course.school;
       assert.strictEqual(school.id, this.school.id);
     });

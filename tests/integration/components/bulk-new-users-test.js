@@ -237,7 +237,7 @@ module('Integration | Component | bulk new users', function (hooks) {
 
     assert.strictEqual(this.server.db.authentications[2].username, 'jck');
     assert.strictEqual(this.server.db.authentications[2].password, '1234Test');
-    assert.strictEqual(this.server.db.authentications[2].userId, 3);
+    assert.strictEqual(parseInt(this.server.db.authentications[2].userId, 10), 3);
   });
 
   test('saves valid student users', async function (assert) {
@@ -305,7 +305,7 @@ module('Integration | Component | bulk new users', function (hooks) {
 
     assert.strictEqual(this.server.db.authentications[2].username, 'jck');
     assert.strictEqual(this.server.db.authentications[2].password, '1234Test');
-    assert.strictEqual(this.server.db.authentications[2].userId, 3);
+    assert.strictEqual(parseInt(this.server.db.authentications[2].userId, 10), 3);
   });
 
   test('cancel fires close', async function (assert) {

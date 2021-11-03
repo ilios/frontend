@@ -79,10 +79,9 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
   });
 
   test('save', async function (assert) {
-    assert.expect(2);
+    assert.expect(1);
     this.set('save', async (instructorGroup) => {
       assert.strictEqual(instructorGroup.title, 'Jayden Rules!');
-      assert.strictEqual(await instructorGroup.school, this.schoolModel);
     });
 
     await render(hbs`<InstructorGroups::New

@@ -59,7 +59,7 @@ module('Integration | Component | new directory user', function (hooks) {
     const startingSearchTerms = 'start here';
     this.server.get(`/application/directory/search`, (scheme, { queryParams }) => {
       assert.ok('limit' in queryParams);
-      assert.strictEqual(queryParams.limit, 51);
+      assert.strictEqual(parseInt(queryParams.limit, 10), 51);
       assert.ok('searchTerms' in queryParams);
       assert.strictEqual(queryParams.searchTerms, startingSearchTerms);
       return {
@@ -145,14 +145,14 @@ module('Integration | Component | new directory user', function (hooks) {
     this.server.get('/application/directory/search', (scheme, { queryParams }) => {
       assert.ok('limit' in queryParams);
       assert.ok('searchTerms' in queryParams);
-      assert.strictEqual(queryParams.limit, 51);
+      assert.strictEqual(parseInt(queryParams.limit, 10), 51);
       assert.strictEqual(queryParams.searchTerms, 'searchterm');
       return {
         results: [searchResult1, searchResult2, searchResult3],
       };
     });
     this.set('transitionToUser', (userId) => {
-      assert.strictEqual(userId, 5, 'after saving we transition to the right user');
+      assert.strictEqual(parseInt(userId, 10), 5, 'after saving we transition to the right user');
     });
     await render(hbs`<NewDirectoryUser
       @close={{(noop)}}
@@ -205,7 +205,7 @@ module('Integration | Component | new directory user', function (hooks) {
     assert.strictEqual(userModel.otherId, null);
     assert.strictEqual(userModel.phone, searchResult1.telephoneNumber);
     assert.strictEqual(userModel.email, searchResult1.email);
-    assert.strictEqual(userModel.id, 5);
+    assert.strictEqual(parseInt(userModel.id, 10), 5);
     assert.strictEqual(authenticationModel.username, searchResult1.username);
     assert.strictEqual(authenticationModel.password, null);
   });

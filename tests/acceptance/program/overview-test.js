@@ -74,7 +74,7 @@ module('Acceptance | Program - Overview', function (hooks) {
     await page.overview.duration.edit();
     assert.strictEqual(page.overview.duration.options.length, 10);
     for (let i = 0; i < 10; i++) {
-      assert.strictEqual(page.overview.duration.options[i].text, i + 1);
+      assert.strictEqual(parseInt(page.overview.duration.options[i].text), i + 1);
     }
     await page.overview.duration.set(9);
     await page.overview.duration.save();

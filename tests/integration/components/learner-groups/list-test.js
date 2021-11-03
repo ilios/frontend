@@ -97,7 +97,7 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
       assert.ok(withLearners);
-      assert.strictEqual(group.id, 1);
+      assert.strictEqual(parseInt(group.id, 10), 1);
     });
     await render(hbs`<LearnerGroups::List
       @learnerGroups={{this.learnerGroups}}
@@ -116,7 +116,7 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
       assert.notOk(withLearners);
-      assert.strictEqual(group.id, 1);
+      assert.strictEqual(parseInt(group.id, 10), 1);
     });
     await render(hbs`<LearnerGroups::List
       @learnerGroups={{this.learnerGroups}}
@@ -135,7 +135,7 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
       assert.notOk(withLearners);
-      assert.strictEqual(group.id, 1);
+      assert.strictEqual(parseInt(group.id, 10), 1);
     });
     await render(hbs`<LearnerGroups::List
       @learnerGroups={{this.learnerGroups}}

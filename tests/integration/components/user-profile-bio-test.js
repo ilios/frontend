@@ -387,7 +387,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
     this.server.get(`application/directory/find/:id`, (scheme, { params }) => {
       assert.ok('id' in params);
-      assert.strictEqual(params.id, 13);
+      assert.strictEqual(parseInt(params.id, 10), 13);
       return {
         result: {
           firstName: 'new-first-name',

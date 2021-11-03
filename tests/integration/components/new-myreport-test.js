@@ -47,7 +47,7 @@ module('Integration | Component | new myreport', function (hooks) {
     assert.ok(schoolSelect.options[3].value, '3');
     assert.ok(schoolSelect.options[3].textContent.includes('third'));
     assert.strictEqual(
-      schoolSelect.options[schoolSelect.selectedIndex].value,
+      parseInt(schoolSelect.options[schoolSelect.selectedIndex].value, 10),
       2,
       'primary school is selected'
     );

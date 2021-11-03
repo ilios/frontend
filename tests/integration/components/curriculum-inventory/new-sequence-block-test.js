@@ -195,16 +195,16 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       assert.strictEqual(block.description, newDescription);
       assert.strictEqual(block.belongsTo('parent').id(), null);
       assert.strictEqual(block.belongsTo('academicLevel').id(), this.academicLevels[0].id);
-      assert.strictEqual(block.required, 1);
+      assert.strictEqual(parseInt(block.required, 10), 1);
       assert.false(block.track);
-      assert.strictEqual(block.orderInSequence, 0);
-      assert.strictEqual(block.childSequenceOrder, 1);
+      assert.strictEqual(parseInt(block.orderInSequence, 10), 0);
+      assert.strictEqual(parseInt(block.childSequenceOrder, 10), 1);
       assert.strictEqual(block.startDate.getTime(), newStartDate.getTime());
       assert.strictEqual(block.endDate.getTime(), newEndDate.getTime());
-      assert.strictEqual(block.minimum, 0);
-      assert.strictEqual(block.minimum, 0);
+      assert.strictEqual(parseInt(block.minimum, 10), 0);
+      assert.strictEqual(parseInt(block.minimum, 10), 0);
       assert.strictEqual(block.belongsTo('course').id(), null);
-      assert.strictEqual(block.duration, 0);
+      assert.strictEqual(parseInt(block.duration, 10), 0);
       assert.strictEqual(block.belongsTo('report').id(), reportModel.id);
     });
 
@@ -235,14 +235,14 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
-      assert.strictEqual(block.belongsTo('academicLevel').id(), 2);
-      assert.strictEqual(block.required, 3);
+      assert.strictEqual(parseInt(block.belongsTo('academicLevel').id(), 10), 2);
+      assert.strictEqual(parseInt(block.required, 10), 3);
       assert.true(block.track);
-      assert.strictEqual(block.childSequenceOrder, 2);
-      assert.strictEqual(block.minimum, minimum);
-      assert.strictEqual(block.maximum, maximum);
+      assert.strictEqual(parseInt(block.childSequenceOrder, 10), 2);
+      assert.strictEqual(parseInt(block.minimum, 10), minimum);
+      assert.strictEqual(parseInt(block.maximum, 10), maximum);
       assert.strictEqual(block.belongsTo('course').id(), courseModel.id);
-      assert.strictEqual(block.duration, duration);
+      assert.strictEqual(parseInt(block.duration, 10), duration);
     });
 
     await render(
@@ -416,7 +416,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('save', (block) => {
       assert.strictEqual(block.startDate.getTime(), newStartDate.getTime());
       assert.strictEqual(block.endDate.getTime(), newEndDate.getTime());
-      assert.strictEqual(block.duration, newDuration);
+      assert.strictEqual(parseInt(block.duration, 10), newDuration);
     });
 
     await render(
@@ -438,9 +438,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       .find('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
-      assert.strictEqual(block.startDate, null);
-      assert.strictEqual(block.endDate, null);
-      assert.strictEqual(block.duration, newDuration);
+      assert.strictEqual(block.startDate, undefined);
+      assert.strictEqual(block.endDate, undefined);
+      assert.strictEqual(parseInt(block.duration, 10), newDuration);
     });
 
     await render(
