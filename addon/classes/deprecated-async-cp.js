@@ -9,7 +9,7 @@ export default class DeprecatedAsyncCP extends Resource {
 
   get value() {
     deprecate(`${this.deprecatedName} Computed Called`, false, {
-      id: 'common.async-cohort-computed',
+      id: 'common.async-computed',
       for: 'ilios-common',
       until: '61',
       since: '59.4.0',
