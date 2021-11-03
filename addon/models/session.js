@@ -1,418 +1,378 @@
-/* eslint-disable ember/no-side-effects */
-
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
-import { isPresent, isEmpty } from '@ember/utils';
-import { all } from 'rsvp';
 import moment from 'moment';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import striptags from 'striptags';
 
-const { alias, collect, mapBy, sum, oneWay, not } = computed;
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 
-export default Model.extend({
-  title: attr('string'),
-  description: attr('string'),
-  attireRequired: attr('boolean'),
-  equipmentRequired: attr('boolean'),
-  supplemental: attr('boolean'),
-  attendanceRequired: attr('boolean'),
-  instructionalNotes: attr('string'),
-  updatedAt: attr('date'),
-  publishedAsTbd: attr('boolean'),
-  published: attr('boolean'),
-  sessionType: belongsTo('session-type', { async: true }),
-  course: belongsTo('course', { async: true }),
-  ilmSession: belongsTo('ilm-session', { async: true }),
-  sessionObjectives: hasMany('session-objective', { async: true }),
-  meshDescriptors: hasMany('mesh-descriptor', { async: true }),
-  learningMaterials: hasMany('session-learning-material', { async: true }),
-  offerings: hasMany('offering', { async: true }),
-  administrators: hasMany('user', {
+export default class SessionModel extends Model {
+  @attr('string')
+  title;
+
+  @attr('string')
+  description;
+
+  @attr('boolean')
+  attireRequired;
+
+  @attr('boolean')
+  equipmentRequired;
+
+  @attr('boolean')
+  supplemental;
+
+  @attr('boolean')
+  attendanceRequired;
+
+  @attr('string')
+  instructionalNotes;
+
+  @attr('date')
+  updatedAt;
+
+  @attr('boolean')
+  publishedAsTbd;
+
+  @attr('boolean')
+  published;
+
+  @belongsTo('session-type', { async: true })
+  sessionType;
+
+  @belongsTo('course', { async: true })
+  course;
+
+  @belongsTo('ilm-session', { async: true })
+  ilmSession;
+
+  @hasMany('session-objective', { async: true })
+  sessionObjectives;
+
+  @hasMany('mesh-descriptor', { async: true })
+  meshDescriptors;
+
+  @hasMany('session-learning-material', { async: true })
+  learningMaterials;
+
+  @hasMany('offering', { async: true })
+  offerings;
+
+  @hasMany('user', {
     async: true,
     inverse: 'administeredSessions',
-  }),
-  studentAdvisors: hasMany('user', {
+  })
+  administrators;
+
+  @hasMany('user', {
     async: true,
     inverse: 'studentAdvisedSessions',
-  }),
-  postrequisite: belongsTo('session', {
+  })
+  studentAdvisors;
+
+  @belongsTo('session', {
     inverse: 'prerequisites',
     async: true,
-  }),
-  prerequisites: hasMany('session', {
+  })
+  postrequisite;
+
+  @hasMany('session', {
     inverse: 'postrequisite',
     async: true,
-  }),
-  terms: hasMany('term', { async: true }),
-  offeringLearnerGroups: mapBy('offerings', 'learnerGroups'),
-  offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
-  learnerGroupCount: sum('offeringLearnerGroupsLength'),
-  assignableVocabularies: alias('course.assignableVocabularies'),
-  xObjectives: alias('sessionObjectives'),
+  })
+  prerequisites;
 
-  isIndependentLearning: computed('ilmSession.id', function () {
-    return !!this.belongsTo('ilmSession').id();
-  }),
+  @hasMany('term', { async: true })
+  terms;
+
+  @use _offerings = new ResolveAsyncValue(() => [this.offerings]);
+  @use offeringLearnerGroups = new ResolveFlatMapBy(() => [this.offerings, 'learnerGroups']);
+
+  get learnerGroupCount() {
+    return this.offeringLearnerGroups?.length ?? 0;
+  }
+
+  @use _course = new ResolveAsyncValue(() => [this.course]);
+  get assignableVocabularies() {
+    return this._course?.assignableVocabularies;
+  }
+
+  get xObjectives() {
+    return this.sessionObjectives;
+  }
+
+  @use _ilmSession = new ResolveAsyncValue(() => [this.ilmSession]);
+  get isIndependentLearning() {
+    return Boolean(this.belongsTo('ilmSession').id() || this._ilmSession);
+  }
 
   /**
    * All offerings for this session, sorted by offering start date in ascending order.
-   * @property sortedOfferingsByDate
-   * @type {Ember.computed}
    */
-  sortedOfferingsByDate: computed('offerings.@each.startDate', async function () {
-    const offerings = await this.offerings;
-    const filteredOfferings = offerings.filter((offering) => isPresent(offering.get('startDate')));
+  get sortedOfferingsByDate() {
+    if (!this._offerings) {
+      return undefined;
+    }
+    const filteredOfferings = this._offerings.filter((offering) => offering.startDate);
     return filteredOfferings.sort((a, b) => {
-      const aDate = moment(a.get('startDate'));
-      const bDate = moment(b.get('startDate'));
+      const aDate = moment(a.startDate);
+      const bDate = moment(b.startDate);
       if (aDate === bDate) {
         return 0;
       }
       return aDate > bDate ? 1 : -1;
     });
-  }),
+  }
 
   /**
    * The earliest start date of all offerings in this session, or, if this is an ILM session, the ILM's due date.
-   *
-   * @property firstOfferingDate
-   * @type {Ember.computed}
    */
-  firstOfferingDate: computed(
-    'sortedOfferingsByDate.@each.startDate',
-    'ilmSession.dueDate',
-    async function () {
-      const ilmSession = await this.ilmSession;
-      if (ilmSession) {
-        return ilmSession.get('dueDate');
-      }
-
-      const offerings = await this.sortedOfferingsByDate;
-      if (isEmpty(offerings)) {
-        return null;
-      }
-
-      return offerings.get('firstObject.startDate');
+  get firstOfferingDate() {
+    if (this._ilmSession) {
+      return this._ilmSession.dueDate;
     }
-  ),
+
+    if (!this._offerings?.length) {
+      return null;
+    }
+
+    return this.sortedOfferingsByDate[0]?.startDate;
+  }
 
   /**
    * The maximum duration in hours (incl. fractions) of any session offerings.
-   * @property maxSingleOfferingDuration
-   * @type {Ember.computed}
    */
-  maxSingleOfferingDuration: computed(
-    'offerings.@each.startDate',
-    'offerings.@each.endDate',
-    async function () {
-      const offerings = await this.offerings;
-      if (isEmpty(offerings)) {
-        return 0;
-      }
-      const sortedOfferings = offerings.toArray().sort(function (a, b) {
-        const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
-        const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
-        if (diffA > diffB) {
-          return -1;
-        } else if (diffA < diffB) {
-          return 1;
-        }
-        return 0;
-      });
-
-      const offering = sortedOfferings[0];
-      const duration = moment(offering.get('endDate')).diff(
-        moment(offering.get('startDate')),
-        'hours',
-        true
-      );
-
-      return duration.toFixed(2);
+  get maxSingleOfferingDuration() {
+    if (!this._offerings?.length) {
+      return 0;
     }
-  ),
+    const sortedOfferings = this._offerings.toArray().sort(function (a, b) {
+      const diffA = moment(a.endDate).diff(moment(a.startDate), 'minutes');
+      const diffB = moment(b.endDate).diff(moment(b.startDate), 'minutes');
+      if (diffA > diffB) {
+        return -1;
+      } else if (diffA < diffB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    const offering = sortedOfferings[0];
+    const duration = moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
+
+    return duration.toFixed(2);
+  }
 
   /**
    * The total duration in hours (incl. fractions) of all session offerings.
-   * @property totalSumOfferingsDuration
-   * @type {Ember.computed}
    */
-  totalSumOfferingsDuration: computed(
-    'offerings.@each.startDate',
-    'offerings.@each.endDate',
-    async function () {
-      const offerings = await this.offerings;
-      if (isEmpty(offerings)) {
-        return 0;
-      }
-
-      return offerings
-        .reduce((total, offering) => {
-          return (
-            total +
-            moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true)
-          );
-        }, 0)
-        .toFixed(2);
+  get totalSumOfferingsDuration() {
+    if (!this._offerings?.length) {
+      return 0;
     }
-  ),
+
+    return this._offerings
+      .reduce((total, offering) => {
+        return total + moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
+      }, 0)
+      .toFixed(2);
+  }
 
   /**
    * Total duration in hours for offerings and ILM Sessions
    * If both ILM and offerings are present sum them
-   * @property totalSumDuration
-   * @type {Ember.computed}
    */
-  totalSumDuration: computed('totalSumOfferingsDuration', 'ilmSession.hours', async function () {
-    const totalSumOfferingsDuration = await this.totalSumOfferingsDuration;
-    const ilmSession = await this.ilmSession;
-    if (!ilmSession) {
-      return totalSumOfferingsDuration;
+  get totalSumDuration() {
+    if (!this._ilmSession) {
+      return this.totalSumOfferingsDuration;
     }
 
-    const ilmHours = ilmSession.get('hours');
+    const ilmHours = this._ilmSession.hours;
 
-    return parseFloat(ilmHours) + parseFloat(totalSumOfferingsDuration);
-  }),
+    return parseFloat(ilmHours) + parseFloat(this.totalSumOfferingsDuration);
+  }
 
   /**
    * The maximum duration in hours (incl. fractions) of any session offerings, plus any ILM hours.
    * If both ILM and offerings are present sum them
-   * @property totalSumDuration
-   * @type {Ember.computed}
    */
-  maxDuration: computed('maxSingleOfferingDuration', 'ilmSession.hours', async function () {
-    const maxSingleOfferingDuration = await this.maxSingleOfferingDuration;
-    const ilmSession = await this.ilmSession;
-    if (!ilmSession) {
-      return maxSingleOfferingDuration;
+  get maxDuration() {
+    if (!this._ilmSession) {
+      return this.maxSingleOfferingDuration;
     }
 
-    const ilmHours = ilmSession.get('hours');
+    const ilmHours = this._ilmSession.hours;
 
-    return parseFloat(ilmHours) + parseFloat(maxSingleOfferingDuration);
-  }),
+    return parseFloat(ilmHours) + parseFloat(this.maxSingleOfferingDuration);
+  }
 
+  @use _allTermVocabularies = new ResolveAsyncValue(() => [this.terms.mapBy('vocabulary')]);
   /**
    * A list of all vocabularies that are associated via terms.
-   * @property associatedVocabularies
-   * @type {Ember.computed}
-   * @public
    */
-  associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.terms;
-    const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
-    return vocabularies.uniq().sortBy('title');
-  }),
+  get associatedVocabularies() {
+    return this._allTermVocabularies?.uniq().sortBy('title');
+  }
+
+  @use _allTermParents = new ResolveAsyncValue(() => [this.terms.mapBy('allParents')]);
+  @use _terms = new ResolveAsyncValue(() => [this.terms]);
 
   /**
    * A list containing all associated terms and their parent terms.
-   * @property termsWithAllParents
-   * @type {Ember.computed}
-   * @public
    */
-  termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.terms;
-    const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return allTerms
-      .reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, [])
-      .uniq();
-  }),
+  get termsWithAllParents() {
+    if (!this._allTermParents || !this._terms) {
+      return undefined;
+    }
+    return [...this._allTermParents.flat(), ...this._terms.toArray()].uniq();
+  }
 
-  /**
-   * The number of terms attached to this model
-   * @property termCount
-   * @type {Ember.computed}
-   * @public
-   */
-  termCount: computed('terms.[]', function () {
-    const termIds = this.hasMany('terms').ids();
-    return termIds.length;
-  }),
+  get termCount() {
+    return this.terms.length;
+  }
 
-  /**
-   * Learner-groups associated with this session via its offerings.
-   *
-   * @property associatedOfferingLearnerGroups
-   * @type {Ember.computed}
-   */
-  associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', async function () {
-    const offerings = await this.offerings;
-    const offeringLearnerGroups = await all(offerings.mapBy('learnerGroups'));
-    return offeringLearnerGroups
-      .reduce((array, set) => {
-        array.pushObjects(set.toArray());
-        return array;
-      }, [])
-      .uniq()
-      .sortBy('title');
-  }),
+  get associatedOfferingLearnerGroups() {
+    return this.offeringLearnerGroups;
+  }
+  @use _ilmLearnerGroups = new ResolveAsyncValue(() => [this._ilmSession?.learnerGroups]);
+  get associatedIlmLearnerGroups() {
+    return this.isIndependentLearning ? this._ilmLearnerGroups?.toArray() : [];
+  }
 
-  /**
-   * Learner-groups associated with this session via its ILM.
-   * @property associatedIlmLearnerGroups
-   * @type {Ember.computed}
-   */
-  associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', async function () {
-    const ilmSession = await this.ilmSession;
-    if (!isPresent(ilmSession)) {
+  get associatedLearnerGroups() {
+    const ilmLearnerGroups = this.isIndependentLearning ? this.associatedIlmLearnerGroups : [];
+    if (!this.offeringLearnerGroups || !ilmLearnerGroups) {
+      return undefined;
+    }
+    return [...this.offeringLearnerGroups, ...ilmLearnerGroups.toArray()].uniq().sortBy('title');
+  }
+
+  @use _sessionObjectives = new ResolveAsyncValue(() => [this.sessionObjectives]);
+  get sortedSessionObjectives() {
+    return this._sessionObjectives?.toArray().sort(sortableByPosition);
+  }
+
+  @use _offeringInstructors = new ResolveFlatMapBy(() => [this._offerings, 'instructors']);
+  @use _offeringInstructorGroups = new ResolveFlatMapBy(() => [
+    this._offerings,
+    'instructorGroups',
+  ]);
+  @use _offeringInstructorGroupInstructors = new ResolveFlatMapBy(() => [
+    this._offeringInstructorGroups,
+    'users',
+  ]);
+  @use _ilmSessionInstructors = new ResolveAsyncValue(() => [this._ilmSession?.instructors]);
+  @use _ilmSessionInstructorGroups = new ResolveAsyncValue(() => [
+    this._ilmSession?.instructorGroups,
+  ]);
+  @use _ilmSessionInstructorGroupInstructors = new ResolveFlatMapBy(() => [
+    this._ilmSessionInstructorGroups,
+    'users',
+  ]);
+
+  get _ilmSessionInstructorsIfIlmSession() {
+    if (!this.isIndependentLearning) {
       return [];
     }
 
-    const learnerGroups = await ilmSession.get('learnerGroups');
-    return learnerGroups.sortBy('title');
-  }),
-
-  /**
-   * Learner-groups associated with this session via its ILM and offerings.
-   * @property associatedLearnerGroups
-   * @type {Ember.computed}
-   */
-  associatedLearnerGroups: computed(
-    'associatedIlmLearnerGroups.[]',
-    'associatedOfferingLearnerGroups.[]',
-    async function () {
-      const ilmLearnerGroups = await this.associatedIlmLearnerGroups;
-      const offeringLearnerGroups = await this.associatedOfferingLearnerGroups;
-      const allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups);
-      return allGroups.uniq().sortBy('title');
+    if (!this._ilmSessionInstructors || !this._ilmSessionInstructorGroupInstructors) {
+      return undefined;
     }
-  ),
 
-  /**
-   * A list of session objectives, sorted by position (asc) and then id (desc).
-   * @property sortedSessionObjectives
-   * @type {Ember.computed}
-   */
-  sortedSessionObjectives: computed('sessionObjectives.@each.position', async function () {
-    const objectives = await this.sessionObjectives;
-    return objectives.toArray().sort(sortableByPosition);
-  }),
+    return [
+      ...this._ilmSessionInstructors.toArray(),
+      ...this._ilmSessionInstructorGroupInstructors,
+    ];
+  }
 
-  /**
-   * Every instructor associated with the session
-   * @property allInstructors
-   * @type {Ember.computed}
-   */
-  allInstructors: computed(
-    'offerings.[]',
-    'offerings.@each.{instructors,instructorGroups}',
-    'ilmSession.{instructors.[],instructorGroups.[]}',
-    async function () {
-      const offerings = await this.offerings;
-      const offeringInstructors = await all(offerings.mapBy('instructors'));
-      const offeringInstructorGroupsArr = await all(offerings.mapBy('instructorGroups'));
-      const flatten = (flattened, obj) => {
-        return flattened.pushObjects(obj.toArray());
-      };
-
-      const offeringInstructorGroups = offeringInstructorGroupsArr.reduce(flatten, []);
-
-      let ilmInstructorGroups = [];
-      let ilmInstructors = [];
-      const ilmSession = await this.ilmSession;
-      if (ilmSession) {
-        ilmInstructors = await ilmSession.get('instructors');
-        ilmInstructorGroups = await ilmSession.get('instructorGroups');
-      }
-
-      const groupInstructors = await all(
-        [].concat(offeringInstructorGroups.toArray(), ilmInstructorGroups.toArray()).mapBy('users')
-      );
-
-      const flat = []
-        .concat(offeringInstructors, ilmInstructors, groupInstructors)
-        .reduce(flatten, []);
-
-      return flat.uniq();
+  get allInstructors() {
+    if (
+      !this._offeringInstructors ||
+      !this._offeringInstructorGroupInstructors ||
+      !this._ilmSessionInstructorsIfIlmSession
+    ) {
+      return undefined;
     }
-  ),
 
-  /**
-   * Computes if this session has any prerequisites.
-   * @property hasPrerequisites
-   * @type {Ember.computed}
-   */
-  hasPrerequisites: computed('prerequisites.[]', function () {
-    const ids = this.hasMany('prerequisites').ids();
-    return ids.length > 0;
-  }),
+    return [
+      ...this._offeringInstructors,
+      ...this._offeringInstructorGroupInstructors,
+      ...this._ilmSessionInstructorsIfIlmSession,
+    ].uniq();
+  }
 
-  /**
-   * Computes if this session has a postrequisite.
-   * @property hasPostrequisite
-   * @type {Ember.computed}
-   */
-  hasPostrequisite: computed('postrequisite', function () {
-    return !!this.belongsTo('postrequisite').id();
-  }),
+  get hasPrerequisites() {
+    return this.prerequisites.length > 0;
+  }
 
-  showUnlinkIcon: computed('sessionObjectives.[]', async function () {
-    const sessionObjectives = await this.sessionObjectives;
-    const collectionOfCourseObjectives = await all(sessionObjectives.mapBy('courseObjectives'));
-    return collectionOfCourseObjectives.any((courseObjectives) =>
-      isEmpty(courseObjectives.toArray())
-    );
-  }),
+  @use _postrequisite = new ResolveAsyncValue(() => [this.postrequisite]);
 
-  requiredPublicationIssues: computed(
-    'title',
-    'offerings.length',
-    'ilmSession.dueDate',
-    'isIndependentLearning',
-    function () {
-      const issues = [];
-      if (this.isIndependentLearning) {
-        if (!this.ilmSession.get('dueDate')) {
-          issues.push('dueDate');
-        }
-      } else {
-        if (this.hasMany('offerings').ids().length === 0) {
-          issues.push('offerings');
-        }
+  hasPostrequisite() {
+    return !!this._postrequisite;
+  }
+
+  @use _courseObjectives = new ResolveFlatMapBy(() => [this.courses, 'courseObjectives']);
+
+  get showUnlinkIcon() {
+    return this._courseObjectives?.length === 0;
+  }
+
+  get requiredPublicationIssues() {
+    const issues = [];
+    if (this.isIndependentLearning) {
+      if (!this._ilmSession?.dueDate) {
+        issues.push('dueDate');
       }
-      if (!this.title) {
-        issues.push('title');
+    } else {
+      if (this.offerings.length === 0) {
+        issues.push('offerings');
       }
-
-      return issues;
     }
-  ),
-  optionalPublicationIssues: computed(
-    'terms.length',
-    'sessionObjectives.length',
-    'meshDescriptors.length',
-    function () {
-      const issues = [];
-      if (this.hasMany('terms').ids().length === 0) {
-        issues.push('terms');
-      }
-
-      if (this.hasMany('sessionObjectives').ids().length === 0) {
-        issues.push('sessionObjectives');
-      }
-
-      if (this.hasMany('meshDescriptors').ids().length === 0) {
-        issues.push('meshDescriptors');
-      }
-
-      return issues;
+    if (!this.title) {
+      issues.push('title');
     }
-  ),
-  isPublished: alias('published'),
-  isNotPublished: not('isPublished'),
-  isScheduled: oneWay('publishedAsTbd'),
-  isPublishedOrScheduled: computed.or('publishedAsTbd', 'isPublished'),
-  allPublicationIssuesCollection: collect(
-    'requiredPublicationIssues.length',
-    'optionalPublicationIssues.length'
-  ),
-  allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
 
-  textDescription: computed('description', function () {
+    return issues;
+  }
+  get optionalPublicationIssues() {
+    const issues = [];
+    if (this.terms.length === 0) {
+      issues.push('terms');
+    }
+
+    if (this.sessionObjectives.length === 0) {
+      issues.push('sessionObjectives');
+    }
+
+    if (this.meshDescriptors.length === 0) {
+      issues.push('meshDescriptors');
+    }
+
+    return issues;
+  }
+
+  get isPublished() {
+    return this.published;
+  }
+
+  get isNotPublished() {
+    return !this.isPublished;
+  }
+
+  get isScheduled() {
+    return this.publishedAsTbd;
+  }
+
+  get isPublishedOrScheduled() {
+    return this.publishedAsTbd || this.isPublished;
+  }
+
+  get allPublicationIssuesLength() {
+    return this.requiredPublicationIssues.length + this.optionalPublicationIssues.length;
+  }
+
+  get textDescription() {
     return striptags(this.description);
-  }),
-});
+  }
+}
