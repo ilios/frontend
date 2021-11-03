@@ -22,7 +22,7 @@
 
     .highlight {
       color: $ilios-orange;
-      font-size: 1.25em;
+      @include font-size('medium');
     }
 
     .on {

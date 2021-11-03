@@ -30,6 +30,6 @@
   }
 
   .timed-release-info {
-    font-size: smaller;
+    @include font-size('small');
   }
 }

@@ -8,30 +8,30 @@
 
 @mixin ilios-heading-h1() {
   @include ilios-heading;
-  font-size: 2.25rem;
+  @include font-size('xxxl');
 }
 
 @mixin ilios-heading-h2() {
   @include ilios-heading;
-  font-size: 2rem;
+  @include font-size('xxl');
 }
 
 @mixin ilios-heading-h3() {
   @include ilios-heading;
-  font-size: 1.75rem;
+  @include font-size('xl');
 }
 
 @mixin ilios-heading-h4() {
   @include ilios-heading;
-  font-size: 1.5rem;
+  @include font-size('large');
 }
 
 @mixin ilios-heading-h5() {
   @include ilios-heading;
-  font-size: 1.25rem;
+  @include font-size('medium');
 }
 
 @mixin ilios-heading-h6() {
   @include ilios-heading;
-  font-size: 1rem;
+  @include font-size('base');
 }

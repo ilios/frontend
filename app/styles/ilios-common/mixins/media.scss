@@ -4,6 +4,12 @@
   }
 }
 
+@mixin for-phone-and-up {
+  @media screen and (min-width: 400px) {
+    @content;
+  }
+}
+
 @mixin for-tablet-and-up {
   @media screen and (min-width: 768px) {
     @content;

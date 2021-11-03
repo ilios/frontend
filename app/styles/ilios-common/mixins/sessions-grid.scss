@@ -8,7 +8,7 @@
   .session-grid-terms,
   .session-grid-first-offering,
   .session-grid-offerings,
-   {
+  {
     display: none;
   }
 
@@ -48,7 +48,7 @@
   }
 
   .expand-collapse-control {
-    font-size: 1.2rem;
+    @include font-size('medium');
     margin-left: .25rem;
 
     &>.active {
@@ -62,6 +62,6 @@
   }
 
   .fa-user-clock {
-    font-size: .875rem;
+    @include font-size('small');
   }
 }

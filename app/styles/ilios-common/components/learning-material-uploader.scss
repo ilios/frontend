@@ -6,7 +6,7 @@
     color: $text-grey;
     cursor: pointer;
     display: inline-block;
-    font-size: 1rem;
+    @include font-size('base');
     padding: .3em 1em;
     &:hover {
       background-color: $dark-grey;

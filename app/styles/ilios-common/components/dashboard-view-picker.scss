@@ -24,10 +24,6 @@
     @include ilios-button;
     padding: .25rem .5rem;
 
-    @include for-phone-only {
-      font-size: 3vw;
-    }
-
     &.active {
       background-color: $ilios-green;
     }

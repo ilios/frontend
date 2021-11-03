@@ -19,7 +19,6 @@
     ul {
       @include ilios-list-reset;
       height: auto;
-      line-height: 1.3rem;
     }
 
     li {
@@ -38,7 +37,7 @@
   }
 
   h5 {
-    font-size: .9rem;
+    @include font-size('small');
     font-weight: bold;
     margin: .8rem;
     padding: .2rem .5rem;

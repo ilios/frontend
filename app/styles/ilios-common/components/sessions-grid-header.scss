@@ -3,7 +3,7 @@
   background-color: $dark-blue;
   border-bottom: 1px solid $dark-grey;
   color: $white;
-  font-size: .8rem;
+  @include font-size('small');
   font-weight: normal;
   position: sticky;
   top: 0;

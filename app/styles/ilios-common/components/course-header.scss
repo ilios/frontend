@@ -37,7 +37,7 @@
       @include for-laptop-and-up {
         display: inline;
       }
-      font-size: 1.5rem;
+      @include font-size('large');
     }
 
     .editinplace.is-editing {

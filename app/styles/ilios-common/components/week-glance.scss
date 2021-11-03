@@ -5,18 +5,18 @@
 
     &.collapsible {
       @include ilios-button-reset;
-      font-size: 1.75rem;
+      @include font-size('xl');
       &.collapsed {
         &::after {
           content: '\25BA';
-          font-size: 1.25rem;
+          @include font-size('medium');
         }
       }
 
       &.expanded {
         &::after {
           content: '\25BC';
-          font-size: 1.25rem;
+          @include font-size('medium');
         }
       }
     }
@@ -25,7 +25,6 @@
 
 
   .event {
-    line-height: 1.5;
     margin-bottom: 1em;
 
     p {
@@ -69,7 +68,7 @@
 
       .fa-external-link-square {
         color: $ilios-orange;
-        font-size: .8rem;
+        @include font-size('small');
       }
 
       .public-notes {
@@ -77,7 +76,7 @@
       }
 
       .timed-release-info {
-        font-size: smaller;
+        @include font-size('small');
       }
     }
 

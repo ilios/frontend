@@ -44,7 +44,7 @@
     display: inline-block;
 
     .details {
-      font-size: smaller;
+      @include font-size('small');
     }
 
     .title {

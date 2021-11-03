@@ -1,0 +1,38 @@
+/* stylelint-disable property-disallowed-list */
+:root {
+  --fs-smallest: 0.5rem;
+  --fs-small: 0.833rem;
+  --fs-base: 1rem;
+  --fs-medium: 1.2rem;
+  --fs-large: 1.44rem;
+  --fs-xl: 1.728rem;
+  --fs-xxl: 2.074rem;
+  --fs-xxxl: 2.488rem;
+  --fs-huge: 15rem;
+  @include for-tablet-and-up {
+    --fs-huge: 25rem;
+  }
+  @include for-laptop-and-up {
+    --fs-huge: 30rem;
+  }
+
+  line-height: calc(4px + 2ex);
+  
+  font-size: 16px;
+  //scale based on viewport width between 16px and 20px
+  @include for-phone-and-up {
+    font-size: calc(14px + .5vw);
+  }
+  @include for-laptop-and-up {
+    font-size: 20px;
+  }
+}
+
+@mixin font-size($step) {
+  font-size: var(--fs-#{$step});
+  line-height: calc(4px + 2ex);
+}
+
+@mixin paragraph-line-height() {
+  line-height: calc(1px + 3ex);
+}

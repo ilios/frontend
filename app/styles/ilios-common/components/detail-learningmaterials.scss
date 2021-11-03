@@ -58,12 +58,12 @@
       .learning-material-description {
         color: $dark-grey;
         display: block;
-        font-size: .75rem;
+        @include font-size('small');
       }
 
       .learning-material-status {
         color: $ilios-red;
-        font-size: .75rem;
+        @include font-size('small');
         position: absolute;
         right: 5px;
         top: 0;
@@ -76,7 +76,7 @@
           color: $darker-grey;
           cursor: inherit;
           display: list-item;
-          font-size: .75rem;
+          @include font-size('small');
           margin: 0;
           min-height: 0;
           padding: 0 0 0 .75rem;

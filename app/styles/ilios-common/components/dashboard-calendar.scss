@@ -31,7 +31,7 @@
     .calendar-filter-list {
       border: 1px solid $ilios-blue;
       float: left;
-      font-size: .8rem;
+      @include font-size('small');
       margin-bottom: 1em;
       width: 33%;
 
@@ -97,7 +97,7 @@
 
     .filters-header {
       border-bottom: 1px solid $dark-grey;
-      font-size: 10px;
+      @include font-size('small');
     }
 
     .filter-tags {
@@ -105,7 +105,7 @@
         border-radius: 3px;
         cursor: pointer;
         display: inline-block;
-        font-size: 10px;
+        @include font-size('small');
         padding: 2px 5px;
       }
 
@@ -136,7 +136,7 @@
       .filters-clear-filters {
         color: $ilios-blue;
         cursor: pointer;
-        font-size: 10px;
+        @include font-size('small');
       }
     }
   }

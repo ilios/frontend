@@ -7,7 +7,7 @@
     margin: 1em 0;
 
     .fa-archive {
-      font-size: 1rem;
+      @include font-size('base');
     }
   }
 
@@ -85,7 +85,7 @@
   }
 
   .single-event-learningmaterial-filesize {
-    font-size: .8em;
+    @include font-size('small');
     font-style: italic;
   }
 }

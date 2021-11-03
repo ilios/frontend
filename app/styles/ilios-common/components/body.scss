@@ -1,10 +1,5 @@
 html {
   box-sizing: border-box;
-  font-size: 16px;
-  line-height: $base-line-height;
-  @include for-desktop-and-up {
-    font-size: 20px;
-  }
 }
 
 *,
@@ -59,7 +54,20 @@ select {
   font-family: 'Nunito Sans', sans-serif;
 }
 
+ul {
+  li {
+    margin-bottom: .5rem;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}
+
 p {
+  margin-bottom: 1rem;
+  @include paragraph-line-height;
+  
   a {
     text-decoration: underline;
   }

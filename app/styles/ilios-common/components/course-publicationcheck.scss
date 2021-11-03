@@ -11,6 +11,6 @@
 
   .fa-unlink {
     color: $black;
-    font-size: .75rem;
+    @include font-size('small');
   }
 }
