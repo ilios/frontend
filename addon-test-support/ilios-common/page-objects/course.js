@@ -1,12 +1,4 @@
-import {
-  clickable,
-  count,
-  create,
-  collection,
-  fillable,
-  text,
-  visitable,
-} from 'ember-cli-page-object';
+import { clickable, count, create, collection, text, visitable } from 'ember-cli-page-object';
 
 import objectives from './components/course/objectives';
 import learningMaterials from './components/learning-materials';
@@ -17,6 +9,7 @@ import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipExpanded from './components/course-leadership-expanded';
 import collapsedCompetencies from './components/collapsed-competencies';
 import courseOverview from './components/course-overview';
+import header from './components/course-header';
 
 export default create({
   scope: '[data-test-ilios-course-details]',
@@ -24,13 +17,14 @@ export default create({
   collapseControl: clickable('.detail-collapsed-control'),
   titles: count('.title'),
 
-  header: {
-    scope: '[data-test-course-header]',
-    title: text('[data-test-edit]'),
-    edit: clickable('[data-test-edit]'),
-    set: fillable('input'),
-    save: clickable('.done'),
-  },
+  // header: {
+  //   scope: '[data-test-course-header]',
+  //   title: text('[data-test-edit]'),
+  //   edit: clickable('[data-test-edit]'),
+  //   set: fillable('input'),
+  //   save: clickable('.done'),
+  // },
+  header,
 
   overview: courseOverview,
 

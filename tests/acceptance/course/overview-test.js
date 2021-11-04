@@ -143,11 +143,11 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    assert.strictEqual(page.header.title, 'course 0');
-    await page.header.edit();
-    await page.header.set('test new title');
-    await page.header.save();
-    assert.strictEqual(page.header.title, 'test new title');
+    assert.strictEqual(page.header.title.value, 'course 0');
+    await page.header.title.edit();
+    await page.header.title.set('test new title');
+    await page.header.title.save();
+    assert.strictEqual(page.header.title.value, 'test new title');
   });
 
   test('change start date', async function (assert) {
