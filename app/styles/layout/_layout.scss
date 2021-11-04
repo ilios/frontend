@@ -46,7 +46,7 @@
       'nav  loading'
       'nav main'
       'footer footer';
-      grid-template-columns: 200px 1fr;
+      grid-template-columns: auto 1fr;
       grid-template-rows: auto 10px 1fr 20px;
     }
 
