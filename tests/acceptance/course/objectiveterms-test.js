@@ -29,93 +29,108 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
   test('manage and save terms', async function (assert) {
     assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
-    await page.visit({
+    await page.details.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
+      1
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
+      1
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
       'Vocabulary 1 (school 0)'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 0'
     );
-    assert.notOk(page.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
-    await page.objectives.objectiveList.objectives[0].selectedTerms.list[0].manage();
-    assert.ok(page.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
+    assert.notOk(page.details.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
+    await page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].manage();
+    assert.ok(page.details.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms.length,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms.length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].title,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].title,
       'Vocabulary 1 (school 0)'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms.length,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms
+        .length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].name,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0]
+        .name,
       'term 0'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options.length,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options.length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].value,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0]
+        .value,
       '1'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].text,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0]
+        .text,
       'Vocabulary 1 (school 0)'
     );
     assert.ok(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].isSelected
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0]
+        .isSelected
     );
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms.length,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms.length,
       4
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[0].name,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[0].name,
       'term 0'
     );
     assert.ok(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[0].isSelected
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[0]
+        .isSelected
     );
     assert.notOk(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[1].isSelected
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[1]
+        .isSelected
     );
     assert.notOk(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[2].isSelected
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[2]
+        .isSelected
     );
     assert.notOk(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3].isSelected
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3]
+        .isSelected
     );
-    await page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].remove();
-    await page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3].toggle();
-    await page.objectives.objectiveList.objectives[0].selectedTerms.save();
+    await page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].remove();
+    await page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3].toggle();
+    await page.details.objectives.objectiveList.objectives[0].selectedTerms.save();
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 3'
     );
   });
@@ -123,93 +138,108 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
   test('manage and cancel terms', async function (assert) {
     assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
-    await page.visit({
+    await page.details.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
+      1
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
+      1
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
       'Vocabulary 1 (school 0)'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 0'
     );
-    assert.notOk(page.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
-    await page.objectives.objectiveList.objectives[0].selectedTerms.list[0].manage();
-    assert.ok(page.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
+    assert.notOk(page.details.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
+    await page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].manage();
+    assert.ok(page.details.objectives.objectiveList.objectives[0].taxonomyManager.isPresent);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms.length,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms.length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].title,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].title,
       'Vocabulary 1 (school 0)'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms.length,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms
+        .length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].name,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0]
+        .name,
       'term 0'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options.length,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options.length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].value,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0]
+        .value,
       '1'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].text,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0]
+        .text,
       'Vocabulary 1 (school 0)'
     );
     assert.ok(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0].isSelected
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.vocabulary.options[0]
+        .isSelected
     );
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms.length,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms.length,
       4
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[0].name,
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[0].name,
       'term 0'
     );
     assert.ok(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[0].isSelected
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[0]
+        .isSelected
     );
     assert.notOk(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[1].isSelected
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[1]
+        .isSelected
     );
     assert.notOk(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[2].isSelected
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[2]
+        .isSelected
     );
     assert.notOk(
-      page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3].isSelected
+      page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3]
+        .isSelected
     );
-    await page.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].remove();
-    await page.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3].toggle();
-    await page.objectives.objectiveList.objectives[0].selectedTerms.cancel();
+    await page.details.objectives.objectiveList.objectives[0].taxonomyManager.selectedTerms[0].terms[0].remove();
+    await page.details.objectives.objectiveList.objectives[0].taxonomyManager.availableTerms[3].toggle();
+    await page.details.objectives.objectiveList.objectives[0].selectedTerms.cancel();
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 0'
     );
   });

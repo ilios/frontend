@@ -170,10 +170,10 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.ok(page.publishAll.isVisible);
     assert.ok(page.publishAll.hasUnlinkedWarning);
 
-    await page.course.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.course.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     await m.competencies[0].objectives[0].add();
-    await page.course.objectives.objectiveList.objectives[0].parents.save();
+    await page.details.objectives.objectiveList.objectives[0].parents.save();
     assert.notOk(page.publishAll.hasUnlinkedWarning);
   });
 });
