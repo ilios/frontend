@@ -127,7 +127,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @domainTrees={{this.domainTrees}}
       @programYearCompetencies={{this.programYearCompetencies}}
       @selected={{null}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{(noop)}}
     />`);
     assert.strictEqual(component.domains[0].title, this.domainModel2.title);
@@ -154,7 +154,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @domainTrees={{this.domainTrees}}
       @programYearCompetencies={{this.programYearCompetencies}}
       @selected={{this.selected}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{(noop)}}
     />`);
     assert.ok(component.domains[0].selected);
@@ -182,7 +182,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @domainTrees={{this.domainTrees}}
       @programYearCompetencies={{this.programYearCompetencies}}
       @selected={{this.selected}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{(noop)}}
     />`);
     assert.ok(component.domains[0].competencies[0].selected);
