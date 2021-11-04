@@ -13,9 +13,9 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
       @save={{(noop)}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.title.label, 'Title:');
-    assert.equal(component.done.text, 'Done');
-    assert.equal(component.cancel.text, 'Cancel');
+    assert.strictEqual(component.title.label, 'Title:');
+    assert.strictEqual(component.done.text, 'Done');
+    assert.strictEqual(component.cancel.text, 'Cancel');
     await a11yAudit(this.element);
   });
 
@@ -38,10 +38,10 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
       @save={{(noop)}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.title.errors.length, 0);
+    assert.strictEqual(component.title.errors.length, 0);
     await component.done.click();
-    assert.equal(component.title.errors.length, 1);
-    assert.equal(component.title.errors[0].text, 'This field can not be blank');
+    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(component.title.errors[0].text, 'This field can not be blank');
   });
 
   test('validation fails, title too short', async function (assert) {
@@ -51,11 +51,11 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
       @save={{(noop)}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.title.errors.length, 0);
+    assert.strictEqual(component.title.errors.length, 0);
     await component.title.set('Aa');
     await component.done.click();
-    assert.equal(component.title.errors.length, 1);
-    assert.equal(
+    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(
       component.title.errors[0].text,
       'This field is too short (minimum is 3 characters)'
     );
@@ -68,21 +68,20 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
       @save={{(noop)}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.title.errors.length, 0);
+    assert.strictEqual(component.title.errors.length, 0);
     await component.title.set('0123456789'.repeat(21));
     await component.done.click();
-    assert.equal(component.title.errors.length, 1);
-    assert.equal(
+    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(
       component.title.errors[0].text,
       'This field is too long (maximum is 60 characters)'
     );
   });
 
   test('save', async function (assert) {
-    assert.expect(2);
+    assert.expect(1);
     this.set('save', async (instructorGroup) => {
-      assert.equal(instructorGroup.title, 'Jayden Rules!');
-      assert.equal(await instructorGroup.school, this.schoolModel);
+      assert.strictEqual(instructorGroup.title, 'Jayden Rules!');
     });
 
     await render(hbs`<InstructorGroups::New

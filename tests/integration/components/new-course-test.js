@@ -19,13 +19,13 @@ module('Integration | Component | new course', function (hooks) {
     await render(
       hbs`<NewCourse @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} />`
     );
-    assert.equal(component.years.length, 6);
-    assert.equal(component.years[0].text, 'Select Academic Year');
-    assert.equal(component.years[1].text, thisYear - 2);
-    assert.equal(component.years[2].text, thisYear - 1);
-    assert.equal(component.years[3].text, thisYear);
-    assert.equal(component.years[4].text, thisYear + 1);
-    assert.equal(component.years[5].text, thisYear + 2);
+    assert.strictEqual(component.years.length, 6);
+    assert.strictEqual(component.years[0].text, 'Select Academic Year');
+    assert.strictEqual(parseInt(component.years[1].text, 10), thisYear - 2);
+    assert.strictEqual(parseInt(component.years[2].text, 10), thisYear - 1);
+    assert.strictEqual(parseInt(component.years[3].text, 10), thisYear);
+    assert.strictEqual(parseInt(component.years[4].text, 10), thisYear + 1);
+    assert.strictEqual(parseInt(component.years[5].text, 10), thisYear + 2);
     assert.ok(component.years[0].selected);
     assert.notOk(component.years[1].selected);
     assert.notOk(component.years[2].selected);
@@ -83,11 +83,11 @@ module('Integration | Component | new course', function (hooks) {
     await render(
       hbs`<NewCourse @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} />`
     );
-    assert.equal(component.years[1].text, `${thisYear - 2} - ${thisYear - 1}`);
-    assert.equal(component.years[2].text, `${thisYear - 1} - ${thisYear}`);
-    assert.equal(component.years[3].text, `${thisYear} - ${thisYear + 1}`);
-    assert.equal(component.years[4].text, `${thisYear + 1} - ${thisYear + 2}`);
-    assert.equal(component.years[5].text, `${thisYear + 2} - ${thisYear + 3}`);
+    assert.strictEqual(component.years[1].text, `${thisYear - 2} - ${thisYear - 1}`);
+    assert.strictEqual(component.years[2].text, `${thisYear - 1} - ${thisYear}`);
+    assert.strictEqual(component.years[3].text, `${thisYear} - ${thisYear + 1}`);
+    assert.strictEqual(component.years[4].text, `${thisYear + 1} - ${thisYear + 2}`);
+    assert.strictEqual(component.years[5].text, `${thisYear + 2} - ${thisYear + 3}`);
   });
 
   test('cancel', async function (assert) {
@@ -110,11 +110,11 @@ module('Integration | Component | new course', function (hooks) {
       .find('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     this.set('save', async (course) => {
-      assert.equal(course.title, 'test course');
-      assert.equal(course.year, academicYear.id);
-      assert.equal(course.level, 1);
+      assert.strictEqual(course.title, 'test course');
+      assert.strictEqual(course.year, parseInt(academicYear.id, 10));
+      assert.strictEqual(parseInt(course.level, 10), 1);
       const school = await course.school;
-      assert.equal(school.id, this.school.id);
+      assert.strictEqual(school.id, this.school.id);
     });
     await render(
       hbs`<NewCourse @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`
@@ -132,11 +132,11 @@ module('Integration | Component | new course', function (hooks) {
       .find('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     this.set('save', async (course) => {
-      assert.equal(course.title, 'test course');
-      assert.equal(course.year, academicYear.id);
-      assert.equal(course.level, 1);
+      assert.strictEqual(course.title, 'test course');
+      assert.strictEqual(course.year, parseInt(academicYear.id, 10));
+      assert.strictEqual(parseInt(course.level, 10), 1);
       const school = await course.school;
-      assert.equal(school.id, this.school.id);
+      assert.strictEqual(school.id, this.school.id);
     });
     await render(
       hbs`<NewCourse @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`

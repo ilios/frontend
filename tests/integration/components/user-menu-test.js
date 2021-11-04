@@ -29,7 +29,7 @@ module('Integration | Component | user-menu', function (hooks) {
     await render(hbs`<UserMenu />`);
 
     await a11yAudit(this.element);
-    assert.equal(component.text, '0 guy M. Mc0son');
+    assert.strictEqual(component.text, '0 guy M. Mc0son');
 
     await component.toggle.click();
     await a11yAudit(this.element);
@@ -39,34 +39,34 @@ module('Integration | Component | user-menu', function (hooks) {
   test('click opens menu', async function (assert) {
     await render(hbs`<UserMenu />`);
 
-    assert.equal(component.links.length, 0);
+    assert.strictEqual(component.links.length, 0);
     await component.toggle.click();
-    assert.equal(component.links.length, 3);
+    assert.strictEqual(component.links.length, 3);
   });
 
   test('down opens menu', async function (assert) {
     await render(hbs`<UserMenu />`);
 
-    assert.equal(component.links.length, 0);
+    assert.strictEqual(component.links.length, 0);
     await component.toggle.down();
-    assert.equal(component.links.length, 3);
+    assert.strictEqual(component.links.length, 3);
   });
 
   test('escape closes menu', async function (assert) {
     await render(hbs`<UserMenu />`);
 
     await component.toggle.down();
-    assert.equal(component.links.length, 3);
+    assert.strictEqual(component.links.length, 3);
     await component.toggle.esc();
-    assert.equal(component.links.length, 0);
+    assert.strictEqual(component.links.length, 0);
   });
 
   test('click closes menu', async function (assert) {
     await render(hbs`<UserMenu />`);
 
     await component.toggle.down();
-    assert.equal(component.links.length, 3);
+    assert.strictEqual(component.links.length, 3);
     await component.toggle.click();
-    assert.equal(component.links.length, 0);
+    assert.strictEqual(component.links.length, 0);
   });
 });

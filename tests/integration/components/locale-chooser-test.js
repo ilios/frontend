@@ -12,7 +12,7 @@ module('Integration | Component | locale-chooser', function (hooks) {
     await render(hbs`<LocaleChooser />`);
 
     await a11yAudit(this.element);
-    assert.equal(component.text, 'English (en)');
+    assert.strictEqual(component.text, 'English (en)');
 
     await component.toggle.click();
     await a11yAudit(this.element);
@@ -22,35 +22,35 @@ module('Integration | Component | locale-chooser', function (hooks) {
   test('click opens menu', async function (assert) {
     await render(hbs`<LocaleChooser />`);
 
-    assert.equal(component.locales.length, 0);
+    assert.strictEqual(component.locales.length, 0);
     await component.toggle.click();
-    assert.equal(component.locales.length, 3);
+    assert.strictEqual(component.locales.length, 3);
   });
 
   test('down opens menu', async function (assert) {
     await render(hbs`<LocaleChooser />`);
 
-    assert.equal(component.locales.length, 0);
+    assert.strictEqual(component.locales.length, 0);
     await component.toggle.down();
-    assert.equal(component.locales.length, 3);
+    assert.strictEqual(component.locales.length, 3);
   });
 
   test('escape closes menu', async function (assert) {
     await render(hbs`<LocaleChooser />`);
 
     await component.toggle.down();
-    assert.equal(component.locales.length, 3);
+    assert.strictEqual(component.locales.length, 3);
     await component.toggle.esc();
-    assert.equal(component.locales.length, 0);
+    assert.strictEqual(component.locales.length, 0);
   });
 
   test('click closes menu', async function (assert) {
     await render(hbs`<LocaleChooser />`);
 
     await component.toggle.down();
-    assert.equal(component.locales.length, 3);
+    assert.strictEqual(component.locales.length, 3);
     await component.toggle.click();
-    assert.equal(component.locales.length, 0);
+    assert.strictEqual(component.locales.length, 0);
   });
 
   test('change locale closes menu', async function (assert) {
@@ -58,7 +58,7 @@ module('Integration | Component | locale-chooser', function (hooks) {
 
     await component.toggle.click();
     await component.locales[1].click();
-    assert.equal(component.locales.length, 0);
-    assert.equal(component.text, 'Español (es)');
+    assert.strictEqual(component.locales.length, 0);
+    assert.strictEqual(component.text, 'Español (es)');
   });
 });

@@ -58,17 +58,20 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await render(hbs`<UserProfileBio @user={{this.user}} />`);
 
-    assert.equal(component.school, `Primary School: ${schoolModel.title}`);
-    assert.equal(component.firstName.text, `First Name: ${userModel.firstName}`);
-    assert.equal(component.middleName.text, `Middle Name: ${userModel.middleName}`);
-    assert.equal(component.lastName.text, `Last Name: ${userModel.lastName}`);
-    assert.equal(component.campusId.text, `Campus ID: ${userModel.campusId}`);
-    assert.equal(component.otherId.text, `Other ID: ${userModel.otherId}`);
-    assert.equal(component.email.text, `Email: ${userModel.email}`);
-    assert.equal(component.displayName.text, `Display Name: ${userModel.displayName}`);
-    assert.equal(component.preferredEmail.text, `Preferred Email: ${userModel.preferredEmail}`);
-    assert.equal(component.phone.text, `Phone: ${userModel.phone}`);
-    assert.equal(component.username.text, `Username: ${authenticationModel.username}`);
+    assert.strictEqual(component.school, `Primary School: ${schoolModel.title}`);
+    assert.strictEqual(component.firstName.text, `First Name: ${userModel.firstName}`);
+    assert.strictEqual(component.middleName.text, `Middle Name: ${userModel.middleName}`);
+    assert.strictEqual(component.lastName.text, `Last Name: ${userModel.lastName}`);
+    assert.strictEqual(component.campusId.text, `Campus ID: ${userModel.campusId}`);
+    assert.strictEqual(component.otherId.text, `Other ID: ${userModel.otherId}`);
+    assert.strictEqual(component.email.text, `Email: ${userModel.email}`);
+    assert.strictEqual(component.displayName.text, `Display Name: ${userModel.displayName}`);
+    assert.strictEqual(
+      component.preferredEmail.text,
+      `Preferred Email: ${userModel.preferredEmail}`
+    );
+    assert.strictEqual(component.phone.text, `Phone: ${userModel.phone}`);
+    assert.strictEqual(component.username.text, `Username: ${authenticationModel.username}`);
     assert.notOk(component.password.isVisible);
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
@@ -85,18 +88,21 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await render(hbs`<UserProfileBio @user={{this.user}} />`);
 
-    assert.equal(component.school, `Primary School: ${schoolModel.title}`);
-    assert.equal(component.firstName.text, `First Name: ${userModel.firstName}`);
-    assert.equal(component.middleName.text, `Middle Name: ${userModel.middleName}`);
-    assert.equal(component.lastName.text, `Last Name: ${userModel.lastName}`);
-    assert.equal(component.campusId.text, `Campus ID: ${userModel.campusId}`);
-    assert.equal(component.otherId.text, `Other ID: ${userModel.otherId}`);
-    assert.equal(component.email.text, `Email: ${userModel.email}`);
-    assert.equal(component.displayName.text, `Display Name: ${userModel.displayName}`);
-    assert.equal(component.preferredEmail.text, `Preferred Email: ${userModel.preferredEmail}`);
-    assert.equal(component.phone.text, `Phone: ${userModel.phone}`);
-    assert.equal(component.username.text, `Username: ${authenticationModel.username}`);
-    assert.equal(component.password.text, 'Password: *********');
+    assert.strictEqual(component.school, `Primary School: ${schoolModel.title}`);
+    assert.strictEqual(component.firstName.text, `First Name: ${userModel.firstName}`);
+    assert.strictEqual(component.middleName.text, `Middle Name: ${userModel.middleName}`);
+    assert.strictEqual(component.lastName.text, `Last Name: ${userModel.lastName}`);
+    assert.strictEqual(component.campusId.text, `Campus ID: ${userModel.campusId}`);
+    assert.strictEqual(component.otherId.text, `Other ID: ${userModel.otherId}`);
+    assert.strictEqual(component.email.text, `Email: ${userModel.email}`);
+    assert.strictEqual(component.displayName.text, `Display Name: ${userModel.displayName}`);
+    assert.strictEqual(
+      component.preferredEmail.text,
+      `Preferred Email: ${userModel.preferredEmail}`
+    );
+    assert.strictEqual(component.phone.text, `Phone: ${userModel.phone}`);
+    assert.strictEqual(component.username.text, `Username: ${authenticationModel.username}`);
+    assert.strictEqual(component.password.text, 'Password: *********');
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
   });
@@ -138,17 +144,17 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
-    assert.equal(updates.length, 2);
-    assert.equal(component.firstName.value, 'Test Person');
-    assert.equal(component.middleName.value, 'Name');
-    assert.equal(component.lastName.value, 'Thing');
-    assert.equal(component.campusId.value, 'idC');
-    assert.equal(component.otherId.value, 'idO');
-    assert.equal(component.email.value, 'test@test.com');
-    assert.equal(component.displayName.value, 'Best Name');
-    assert.equal(component.preferredEmail.value, 'test2@test.com');
-    assert.equal(component.phone.value, 'x1234');
-    assert.equal(component.username.value, 'test-username');
+    assert.strictEqual(updates.length, 2);
+    assert.strictEqual(component.firstName.value, 'Test Person');
+    assert.strictEqual(component.middleName.value, 'Name');
+    assert.strictEqual(component.lastName.value, 'Thing');
+    assert.strictEqual(component.campusId.value, 'idC');
+    assert.strictEqual(component.otherId.value, 'idO');
+    assert.strictEqual(component.email.value, 'test@test.com');
+    assert.strictEqual(component.displayName.value, 'Best Name');
+    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
+    assert.strictEqual(component.phone.value, 'x1234');
+    assert.strictEqual(component.username.value, 'test-username');
     assert.ok(component.username.isDisabled);
     assert.ok(component.syncWithDirectory.isPresent);
     await component.firstName.set('new first');
@@ -161,17 +167,17 @@ module('Integration | Component | user profile bio', function (hooks) {
     await component.preferredEmail.set('e2@e.com');
     await component.phone.set('12345x');
     await component.save();
-    assert.equal(userModel.firstName, 'new first');
-    assert.equal(userModel.middleName, 'new middle');
-    assert.equal(userModel.lastName, 'new last');
-    assert.equal(userModel.campusId, 'new campusId');
-    assert.equal(userModel.otherId, 'new otherId');
-    assert.equal(userModel.email, 'e@e.com');
-    assert.equal(userModel.displayName, 'new best name');
-    assert.equal(userModel.preferredEmail, 'e2@e.com');
-    assert.equal(userModel.phone, '12345x');
-    assert.equal(updates.length, 0);
-    assert.equal(authenticationModel.username, 'test-username');
+    assert.strictEqual(userModel.firstName, 'new first');
+    assert.strictEqual(userModel.middleName, 'new middle');
+    assert.strictEqual(userModel.lastName, 'new last');
+    assert.strictEqual(userModel.campusId, 'new campusId');
+    assert.strictEqual(userModel.otherId, 'new otherId');
+    assert.strictEqual(userModel.email, 'e@e.com');
+    assert.strictEqual(userModel.displayName, 'new best name');
+    assert.strictEqual(userModel.preferredEmail, 'e2@e.com');
+    assert.strictEqual(userModel.phone, '12345x');
+    assert.strictEqual(updates.length, 0);
+    assert.strictEqual(authenticationModel.username, 'test-username');
     assert.notOk(authenticationModel.password);
   });
 
@@ -189,16 +195,16 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
-    assert.equal(component.firstName.value, 'Test Person');
-    assert.equal(component.middleName.value, 'Name');
-    assert.equal(component.lastName.value, 'Thing');
-    assert.equal(component.campusId.value, 'idC');
-    assert.equal(component.otherId.value, 'idO');
-    assert.equal(component.email.value, 'test@test.com');
-    assert.equal(component.displayName.value, 'Best Name');
-    assert.equal(component.preferredEmail.value, 'test2@test.com');
-    assert.equal(component.phone.value, 'x1234');
-    assert.equal(component.username.value, 'test-username');
+    assert.strictEqual(component.firstName.value, 'Test Person');
+    assert.strictEqual(component.middleName.value, 'Name');
+    assert.strictEqual(component.lastName.value, 'Thing');
+    assert.strictEqual(component.campusId.value, 'idC');
+    assert.strictEqual(component.otherId.value, 'idO');
+    assert.strictEqual(component.email.value, 'test@test.com');
+    assert.strictEqual(component.displayName.value, 'Best Name');
+    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
+    assert.strictEqual(component.phone.value, 'x1234');
+    assert.strictEqual(component.username.value, 'test-username');
     await component.firstName.set('new first');
     await component.middleName.set('new middle');
     await component.lastName.set('new last');
@@ -210,16 +216,16 @@ module('Integration | Component | user profile bio', function (hooks) {
     await component.phone.set('12345x');
     await component.username.set('new-test-user');
     await component.save();
-    assert.equal(userModel.firstName, 'new first');
-    assert.equal(userModel.middleName, 'new middle');
-    assert.equal(userModel.lastName, 'new last');
-    assert.equal(userModel.campusId, 'new campusId');
-    assert.equal(userModel.otherId, 'new otherId');
-    assert.equal(userModel.email, 'e@e.com');
-    assert.equal(userModel.displayName, 'new best name');
-    assert.equal(userModel.preferredEmail, 'e2@e.com');
-    assert.equal(userModel.phone, '12345x');
-    assert.equal(authenticationModel.username, 'new-test-user');
+    assert.strictEqual(userModel.firstName, 'new first');
+    assert.strictEqual(userModel.middleName, 'new middle');
+    assert.strictEqual(userModel.lastName, 'new last');
+    assert.strictEqual(userModel.campusId, 'new campusId');
+    assert.strictEqual(userModel.otherId, 'new otherId');
+    assert.strictEqual(userModel.email, 'e@e.com');
+    assert.strictEqual(userModel.displayName, 'new best name');
+    assert.strictEqual(userModel.preferredEmail, 'e2@e.com');
+    assert.strictEqual(userModel.phone, '12345x');
+    assert.strictEqual(authenticationModel.username, 'new-test-user');
     assert.notOk(authenticationModel.password);
   });
 
@@ -237,19 +243,19 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
-    assert.equal(component.firstName.value, 'Test Person');
-    assert.equal(component.middleName.value, 'Name');
-    assert.equal(component.lastName.value, 'Thing');
-    assert.equal(component.campusId.value, 'idC');
-    assert.equal(component.otherId.value, 'idO');
-    assert.equal(component.email.value, 'test@test.com');
-    assert.equal(component.displayName.value, 'Best Name');
-    assert.equal(component.preferredEmail.value, 'test2@test.com');
-    assert.equal(component.phone.value, 'x1234');
-    assert.equal(component.username.value, 'test-username');
+    assert.strictEqual(component.firstName.value, 'Test Person');
+    assert.strictEqual(component.middleName.value, 'Name');
+    assert.strictEqual(component.lastName.value, 'Thing');
+    assert.strictEqual(component.campusId.value, 'idC');
+    assert.strictEqual(component.otherId.value, 'idO');
+    assert.strictEqual(component.email.value, 'test@test.com');
+    assert.strictEqual(component.displayName.value, 'Best Name');
+    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
+    assert.strictEqual(component.phone.value, 'x1234');
+    assert.strictEqual(component.username.value, 'test-username');
     assert.notOk(component.syncWithDirectory.isPresent);
     await component.password.edit();
-    assert.equal(component.password.value, '');
+    assert.strictEqual(component.password.value, '');
     await component.firstName.set('new first');
     await component.middleName.set('new middle');
     await component.lastName.set('new last');
@@ -262,17 +268,17 @@ module('Integration | Component | user profile bio', function (hooks) {
     await component.username.set('new-test-user');
     await component.password.set('new-password');
     await component.save();
-    assert.equal(userModel.firstName, 'new first');
-    assert.equal(userModel.middleName, 'new middle');
-    assert.equal(userModel.lastName, 'new last');
-    assert.equal(userModel.campusId, 'new campusId');
-    assert.equal(userModel.otherId, 'new otherId');
-    assert.equal(userModel.email, 'e@e.com');
-    assert.equal(userModel.displayName, 'new best name');
-    assert.equal(userModel.preferredEmail, 'e2@e.com');
-    assert.equal(userModel.phone, '12345x');
-    assert.equal(authenticationModel.username, 'new-test-user');
-    assert.equal(authenticationModel.password, 'new-password');
+    assert.strictEqual(userModel.firstName, 'new first');
+    assert.strictEqual(userModel.middleName, 'new middle');
+    assert.strictEqual(userModel.lastName, 'new last');
+    assert.strictEqual(userModel.campusId, 'new campusId');
+    assert.strictEqual(userModel.otherId, 'new otherId');
+    assert.strictEqual(userModel.email, 'e@e.com');
+    assert.strictEqual(userModel.displayName, 'new best name');
+    assert.strictEqual(userModel.preferredEmail, 'e2@e.com');
+    assert.strictEqual(userModel.phone, '12345x');
+    assert.strictEqual(authenticationModel.username, 'new-test-user');
+    assert.strictEqual(authenticationModel.password, 'new-password');
   });
 
   test('closing password box clears input', async function (assert) {
@@ -285,11 +291,11 @@ module('Integration | Component | user profile bio', function (hooks) {
     );
 
     await component.password.edit();
-    assert.equal(component.password.value, '');
+    assert.strictEqual(component.password.value, '');
     await component.password.set('new-password');
     await component.password.cancel();
     await component.password.edit();
-    assert.equal(component.password.value, '');
+    assert.strictEqual(component.password.value, '');
   });
 
   test('password strength 0 display', async function (assert) {
@@ -303,8 +309,8 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await component.password.edit();
     await component.password.set('12345');
-    assert.equal(component.password.meter.value, 0);
-    assert.equal(component.password.strength.text, 'Try Harder');
+    assert.strictEqual(component.password.meter.value, 0);
+    assert.strictEqual(component.password.strength.text, 'Try Harder');
     assert.ok(component.password.strength.hasZeroClass);
   });
 
@@ -319,8 +325,8 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await component.password.edit();
     await component.password.set('12345ab');
-    assert.equal(component.password.meter.value, 1);
-    assert.equal(component.password.strength.text, 'Bad');
+    assert.strictEqual(component.password.meter.value, 1);
+    assert.strictEqual(component.password.strength.text, 'Bad');
     assert.ok(component.password.strength.hasOneClass);
   });
 
@@ -335,8 +341,8 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await component.password.edit();
     await component.password.set('12345ab13&');
-    assert.equal(component.password.meter.value, 2);
-    assert.equal(component.password.strength.text, 'Weak');
+    assert.strictEqual(component.password.meter.value, 2);
+    assert.strictEqual(component.password.strength.text, 'Weak');
     assert.ok(component.password.strength.hasTwoClass);
   });
 
@@ -352,8 +358,8 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await component.password.edit();
     await component.password.set('12345ab13&!!');
-    assert.equal(component.password.meter.value, 3);
-    assert.equal(component.password.strength.text, 'Good');
+    assert.strictEqual(component.password.meter.value, 3);
+    assert.strictEqual(component.password.strength.text, 'Good');
     assert.ok(component.password.strength.hasThreeClass);
   });
 
@@ -369,8 +375,8 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await component.password.edit();
     await component.password.set('12345ab14&HHtB');
-    assert.equal(component.password.meter.value, 4);
-    assert.equal(component.password.strength.text, 'Strong');
+    assert.strictEqual(component.password.meter.value, 4);
+    assert.strictEqual(component.password.strength.text, 'Strong');
     assert.ok(component.password.strength.hasFourClass);
   });
 
@@ -381,7 +387,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
     this.server.get(`application/directory/find/:id`, (scheme, { params }) => {
       assert.ok('id' in params);
-      assert.equal(params.id, 13);
+      assert.strictEqual(parseInt(params.id, 10), 13);
       return {
         result: {
           firstName: 'new-first-name',
@@ -399,27 +405,27 @@ module('Integration | Component | user profile bio', function (hooks) {
       hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
     );
 
-    assert.equal(component.firstName.value, 'Test Person');
-    assert.equal(component.middleName.value, 'Name');
-    assert.equal(component.lastName.value, 'Thing');
-    assert.equal(component.campusId.value, 'idC');
-    assert.equal(component.otherId.value, 'idO');
-    assert.equal(component.email.value, 'test@test.com');
-    assert.equal(component.displayName.value, 'Best Name');
-    assert.equal(component.preferredEmail.value, 'test2@test.com');
-    assert.equal(component.phone.value, 'x1234');
-    assert.equal(component.username.value, 'test-username');
+    assert.strictEqual(component.firstName.value, 'Test Person');
+    assert.strictEqual(component.middleName.value, 'Name');
+    assert.strictEqual(component.lastName.value, 'Thing');
+    assert.strictEqual(component.campusId.value, 'idC');
+    assert.strictEqual(component.otherId.value, 'idO');
+    assert.strictEqual(component.email.value, 'test@test.com');
+    assert.strictEqual(component.displayName.value, 'Best Name');
+    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
+    assert.strictEqual(component.phone.value, 'x1234');
+    assert.strictEqual(component.username.value, 'test-username');
     await component.syncWithDirectory.click();
-    assert.equal(component.firstName.value, 'new-first-name');
-    assert.equal(component.middleName.value, 'Name');
-    assert.equal(component.lastName.value, 'new-last-name');
-    assert.equal(component.campusId.value, 'new-campus-id');
-    assert.equal(component.otherId.value, 'idO');
-    assert.equal(component.email.value, 'new-email');
-    assert.equal(component.displayName.value, 'new-best-name');
-    assert.equal(component.preferredEmail.value, 'test2@test.com');
-    assert.equal(component.phone.value, 'new-phone');
-    assert.equal(component.username.value, 'new-username');
+    assert.strictEqual(component.firstName.value, 'new-first-name');
+    assert.strictEqual(component.middleName.value, 'Name');
+    assert.strictEqual(component.lastName.value, 'new-last-name');
+    assert.strictEqual(component.campusId.value, 'new-campus-id');
+    assert.strictEqual(component.otherId.value, 'idO');
+    assert.strictEqual(component.email.value, 'new-email');
+    assert.strictEqual(component.displayName.value, 'new-best-name');
+    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
+    assert.strictEqual(component.phone.value, 'new-phone');
+    assert.strictEqual(component.username.value, 'new-username');
     assert.ok(component.firstName.hasBeenSyncedFromDirectory);
     assert.ok(component.lastName.hasBeenSyncedFromDirectory);
     assert.ok(component.email.hasBeenSyncedFromDirectory);
@@ -438,10 +444,10 @@ module('Integration | Component | user profile bio', function (hooks) {
       hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
     );
 
-    assert.equal(component.preferredEmail.value, 'test2@test.com');
+    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
     await component.preferredEmail.set('');
     await component.save();
-    assert.equal(userModel.preferredEmail, '');
+    assert.strictEqual(userModel.preferredEmail, '');
   });
 
   test('display name can be blanked', async function (assert) {
@@ -453,9 +459,9 @@ module('Integration | Component | user profile bio', function (hooks) {
       hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
     );
 
-    assert.equal(component.displayName.value, 'Best Name');
+    assert.strictEqual(component.displayName.value, 'Best Name');
     await component.displayName.set('');
     await component.save();
-    assert.equal(userModel.displayName, '');
+    assert.strictEqual(userModel.displayName, '');
   });
 });

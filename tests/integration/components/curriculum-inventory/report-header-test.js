@@ -25,11 +25,11 @@ module('Integration | Component | curriculum-inventory/report-header', function 
       @canUpdate={{true}}
       @finalize={{(noop)}}
     />`);
-    assert.equal(this.report.name, component.name.value, 'Report name shows.');
+    assert.strictEqual(this.report.name, component.name.value, 'Report name shows.');
     assert.ok(component.name.isEditable, 'Report name is editable.');
     assert.notOk(component.finalizeButtonIsDisabled, 'Finalize button is not disabled.');
     assert.ok(component.canBeDownloaded, 'Download link shows.');
-    assert.equal(
+    assert.strictEqual(
       this.report.absoluteFileUri,
       component.downloadLink.link,
       'Download link target is correct'
@@ -42,7 +42,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
       @canUpdate={{false}}
       @finalize={{(noop)}}
     />`);
-    assert.equal(this.report.name, component.lockedName);
+    assert.strictEqual(this.report.name, component.lockedName);
     assert.ok(component.hasLockOnName, 'Lock icon is showing with name.');
     assert.notOk(component.name.isEditable, 'Report name is not editable.');
     assert.ok(component.canBeDownloaded, 'Download link shows.');
@@ -61,7 +61,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     await component.name.set(newName);
     await component.name.save();
     assert.notOk(component.name.hasError);
-    assert.equal(newName, component.name.value);
+    assert.strictEqual(newName, component.name.value);
   });
 
   test('change name fails on empty value', async function (assert) {

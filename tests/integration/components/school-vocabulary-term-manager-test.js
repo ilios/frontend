@@ -52,18 +52,18 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canCreate={{true}}
     />`);
 
-    assert.equal(component.title, `Title: ${term.title}`);
-    assert.equal(component.description, `Description: ${term.description}`);
-    assert.equal(component.breadcrumbs.all, 'All Vocabularies');
-    assert.equal(component.breadcrumbs.vocabulary, vocabulary.title);
-    assert.equal(component.breadcrumbs.terms.length, 3);
-    assert.equal(component.breadcrumbs.terms[0].text, grandParent.title);
-    assert.equal(component.breadcrumbs.terms[1].text, parent.title);
-    assert.equal(component.breadcrumbs.terms[2].text, term.title);
+    assert.strictEqual(component.title, `Title: ${term.title}`);
+    assert.strictEqual(component.description, `Description: ${term.description}`);
+    assert.strictEqual(component.breadcrumbs.all, 'All Vocabularies');
+    assert.strictEqual(component.breadcrumbs.vocabulary, vocabulary.title);
+    assert.strictEqual(component.breadcrumbs.terms.length, 3);
+    assert.strictEqual(component.breadcrumbs.terms[0].text, grandParent.title);
+    assert.strictEqual(component.breadcrumbs.terms[1].text, parent.title);
+    assert.strictEqual(component.breadcrumbs.terms[2].text, term.title);
 
-    assert.equal(component.subTerms.list.length, 2);
-    assert.equal(component.subTerms.list[0].text, 'term 3 (0) (inactive)');
-    assert.equal(component.subTerms.list[1].text, 'term 4 (0)');
+    assert.strictEqual(component.subTerms.list.length, 2);
+    assert.strictEqual(component.subTerms.list[0].text, 'term 3 (0) (inactive)');
+    assert.strictEqual(component.subTerms.list[1].text, 'term 4 (0)');
   });
 
   test('activate inactive term', async function (assert) {
@@ -89,9 +89,9 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canDelete={{true}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.isActive.yesNoToggle.checked, 'false');
+    assert.strictEqual(component.isActive.yesNoToggle.checked, 'false');
     await component.isActive.yesNoToggle.click();
-    assert.equal(component.isActive.yesNoToggle.checked, 'true');
+    assert.strictEqual(component.isActive.yesNoToggle.checked, 'true');
     assert.ok(this.server.db.terms[0].active);
   });
 
@@ -118,9 +118,9 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canDelete={{true}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.isActive.yesNoToggle.checked, 'true');
+    assert.strictEqual(component.isActive.yesNoToggle.checked, 'true');
     await component.isActive.yesNoToggle.click();
-    assert.equal(component.isActive.yesNoToggle.checked, 'false');
+    assert.strictEqual(component.isActive.yesNoToggle.checked, 'false');
     assert.notOk(this.server.db.terms[0].active);
   });
 
@@ -148,11 +148,11 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canDelete={{true}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${term.title}`);
+    assert.strictEqual(component.title, `Title: ${term.title}`);
     await component.editTitle();
     await component.changeTitle('new title');
     await component.saveTitle();
-    assert.equal(this.server.db.terms[0].title, 'new title');
+    assert.strictEqual(this.server.db.terms[0].title, 'new title');
   });
 
   test("can't set empty term title", async function (assert) {
@@ -179,14 +179,14 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canDelete={{true}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${term.title}`);
+    assert.strictEqual(component.title, `Title: ${term.title}`);
     assert.notOk(component.hasError);
     await component.editTitle();
     await component.changeTitle('');
     await component.saveTitle();
     assert.ok(component.hasError);
-    assert.equal(component.errorMessage, 'This field can not be blank');
-    assert.equal(this.server.db.terms[0].title, 'term 0');
+    assert.strictEqual(component.errorMessage, 'This field can not be blank');
+    assert.strictEqual(this.server.db.terms[0].title, 'term 0');
   });
 
   test('prevent duplicate term title', async function (assert) {
@@ -218,14 +218,14 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canDelete={{true}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${term.title}`);
+    assert.strictEqual(component.title, `Title: ${term.title}`);
     assert.notOk(component.hasError);
     await component.editTitle();
     await component.changeTitle('duplicate one');
     await component.saveTitle();
     assert.ok(component.hasError);
-    assert.equal(component.errorMessage, 'Term is a duplicate');
-    assert.equal(this.server.db.terms[0].title, 'term 0');
+    assert.strictEqual(component.errorMessage, 'Term is a duplicate');
+    assert.strictEqual(this.server.db.terms[0].title, 'term 0');
   });
 
   test('add term', async function (assert) {
@@ -251,15 +251,15 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canDelete={{true}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${term.title}`);
-    assert.equal(component.subTerms.list.length, 0);
+    assert.strictEqual(component.title, `Title: ${term.title}`);
+    assert.strictEqual(component.subTerms.list.length, 0);
 
     await component.subTerms.newTermForm.setTitle('new term');
     await component.subTerms.newTermForm.save();
-    assert.equal(component.subTerms.list.length, 1);
+    assert.strictEqual(component.subTerms.list.length, 1);
 
-    assert.equal(this.server.db.terms[1].title, 'new term');
-    assert.equal(this.server.db.terms[1].vocabularyId, vocabulary.id);
+    assert.strictEqual(this.server.db.terms[1].title, 'new term');
+    assert.strictEqual(this.server.db.terms[1].vocabularyId, vocabulary.id);
   });
 
   test("can't add term with empty title", async function (assert) {
@@ -285,15 +285,15 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canDelete={{true}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${term.title}`);
-    assert.equal(component.subTerms.list.length, 0);
+    assert.strictEqual(component.title, `Title: ${term.title}`);
+    assert.strictEqual(component.subTerms.list.length, 0);
 
     assert.notOk(component.subTerms.newTermForm.hasError);
     await component.subTerms.newTermForm.setTitle('');
     await component.subTerms.newTermForm.save();
-    assert.equal(component.subTerms.list.length, 0);
+    assert.strictEqual(component.subTerms.list.length, 0);
     assert.ok(component.subTerms.newTermForm.hasError);
-    assert.equal(component.subTerms.newTermForm.errorMessage, 'This field can not be blank');
+    assert.strictEqual(component.subTerms.newTermForm.errorMessage, 'This field can not be blank');
   });
 
   test("can't add term with duplicate title", async function (assert) {
@@ -325,14 +325,14 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canDelete={{true}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${term.title}`);
-    assert.equal(component.subTerms.list.length, 1);
+    assert.strictEqual(component.title, `Title: ${term.title}`);
+    assert.strictEqual(component.subTerms.list.length, 1);
 
     assert.notOk(component.subTerms.newTermForm.hasError);
     await component.subTerms.newTermForm.setTitle('duplicate term');
     await component.subTerms.newTermForm.save();
-    assert.equal(component.subTerms.list.length, 1);
+    assert.strictEqual(component.subTerms.list.length, 1);
     assert.ok(component.subTerms.newTermForm.hasError);
-    assert.equal(component.subTerms.newTermForm.errorMessage, 'Term is a duplicate');
+    assert.strictEqual(component.subTerms.newTermForm.errorMessage, 'Term is a duplicate');
   });
 });

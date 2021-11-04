@@ -19,14 +19,14 @@ module('Integration | Component | ilios-navigation', function (hooks) {
     await a11yAudit(this.element);
 
     assert.ok(component.expandCollapse.isPresent);
-    assert.equal(component.links.length, 7);
-    assert.equal(component.links[0].text, 'Dashboard');
-    assert.equal(component.links[1].text, 'Courses and Sessions');
-    assert.equal(component.links[2].text, 'Learner Groups');
-    assert.equal(component.links[3].text, 'Instructor Groups');
-    assert.equal(component.links[4].text, 'Schools');
-    assert.equal(component.links[5].text, 'Programs');
-    assert.equal(component.links[6].text, 'Curriculum Inventory');
+    assert.strictEqual(component.links.length, 7);
+    assert.strictEqual(component.links[0].text, 'Dashboard');
+    assert.strictEqual(component.links[1].text, 'Courses and Sessions');
+    assert.strictEqual(component.links[2].text, 'Learner Groups');
+    assert.strictEqual(component.links[3].text, 'Instructor Groups');
+    assert.strictEqual(component.links[4].text, 'Schools');
+    assert.strictEqual(component.links[5].text, 'Programs');
+    assert.strictEqual(component.links[6].text, 'Curriculum Inventory');
   });
 
   test('navigation does not render for non-privileged user', async function (assert) {
@@ -39,7 +39,7 @@ module('Integration | Component | ilios-navigation', function (hooks) {
     await a11yAudit(this.element);
 
     assert.notOk(component.expandCollapse.isPresent);
-    assert.equal(component.links.length, 0);
+    assert.strictEqual(component.links.length, 0);
   });
 
   test('Super-privileged Users can access Admin', async function (assert) {
@@ -52,14 +52,14 @@ module('Integration | Component | ilios-navigation', function (hooks) {
     await render(hbs`<IliosNavigation />`);
     await a11yAudit(this.element);
 
-    assert.equal(component.links.length, 8);
-    assert.equal(component.links[0].text, 'Dashboard');
-    assert.equal(component.links[1].text, 'Courses and Sessions');
-    assert.equal(component.links[2].text, 'Learner Groups');
-    assert.equal(component.links[3].text, 'Instructor Groups');
-    assert.equal(component.links[4].text, 'Schools');
-    assert.equal(component.links[5].text, 'Programs');
-    assert.equal(component.links[6].text, 'Admin');
-    assert.equal(component.links[7].text, 'Curriculum Inventory');
+    assert.strictEqual(component.links.length, 8);
+    assert.strictEqual(component.links[0].text, 'Dashboard');
+    assert.strictEqual(component.links[1].text, 'Courses and Sessions');
+    assert.strictEqual(component.links[2].text, 'Learner Groups');
+    assert.strictEqual(component.links[3].text, 'Instructor Groups');
+    assert.strictEqual(component.links[4].text, 'Schools');
+    assert.strictEqual(component.links[5].text, 'Programs');
+    assert.strictEqual(component.links[6].text, 'Admin');
+    assert.strictEqual(component.links[7].text, 'Curriculum Inventory');
   });
 });

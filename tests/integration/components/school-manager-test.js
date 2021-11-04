@@ -195,14 +195,14 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolNewVocabulary={{(noop)}}
     />`);
 
-    assert.equal(component.title.text, 'school 0');
+    assert.strictEqual(component.title.text, 'school 0');
     assert.notOk(component.title.hasError);
     await component.title.edit();
     await component.title.set(newTitle);
     await component.title.save();
     assert.notOk(component.title.hasError);
-    assert.equal(this.school.title, newTitle);
-    assert.equal(component.title.text, newTitle);
+    assert.strictEqual(this.school.title, newTitle);
+    assert.strictEqual(component.title.text, newTitle);
   });
 
   test('cancel title changes', async function (assert) {
@@ -256,12 +256,12 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolNewVocabulary={{(noop)}}
     />`);
 
-    assert.equal(component.title.text, 'school 0');
+    assert.strictEqual(component.title.text, 'school 0');
     await component.title.edit();
     await component.title.set(newTitle);
     await component.title.cancel();
-    assert.equal(this.school.title, 'school 0');
-    assert.equal(component.title.text, 'school 0');
+    assert.strictEqual(this.school.title, 'school 0');
+    assert.strictEqual(component.title.text, 'school 0');
   });
 
   test('validation fails if title is too short', async function (assert) {
@@ -314,7 +314,7 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolNewVocabulary={{(noop)}}
     />`);
 
-    assert.equal(component.title.text, 'school 0');
+    assert.strictEqual(component.title.text, 'school 0');
     assert.notOk(component.title.hasError);
     await component.title.edit();
     await component.title.set('');
@@ -372,7 +372,7 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolNewVocabulary={{(noop)}}
     />`);
 
-    assert.equal(component.title.text, 'school 0');
+    assert.strictEqual(component.title.text, 'school 0');
     assert.notOk(component.title.hasError);
     await component.title.edit();
     await component.title.set('0123456789'.repeat(21));

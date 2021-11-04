@@ -23,6 +23,6 @@ module('Acceptance | curriculum inventory reports', function (hooks) {
       program: this.program,
     });
     await visit(url);
-    assert.equal(page.reports.reports.reports[0].nameLink, '/curriculum-inventory-reports/1');
+    assert.strictEqual(page.reports.reports.reports[0].nameLink, '/curriculum-inventory-reports/1');
   });
 });

@@ -50,12 +50,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
       />`
     );
 
-    assert.equal(component.title, 'block 1');
-    assert.equal(component.academicLevel, '5');
-    assert.equal(component.orderInSequence, '3');
-    assert.equal(component.startDate, moment('2021-03-17').format('L'));
-    assert.equal(component.endDate, moment('2021-05-22').format('L'));
-    assert.equal(component.course, 'course 0');
+    assert.strictEqual(component.title, 'block 1');
+    assert.strictEqual(component.academicLevel, '5');
+    assert.strictEqual(component.orderInSequence, '3');
+    assert.strictEqual(component.startDate, moment('2021-03-17').format('L'));
+    assert.strictEqual(component.endDate, moment('2021-05-22').format('L'));
+    assert.strictEqual(component.course, 'course 0');
     assert.ok(component.isDeletable);
   });
 
@@ -75,7 +75,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
       />`
     );
 
-    assert.equal(component.orderInSequence, 'n/a');
+    assert.strictEqual(component.orderInSequence, 'n/a');
   });
 
   test('read-only mode', async function (assert) {
@@ -105,7 +105,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
       .find('curriculum-inventory-sequence-block', block.id);
     this.set('block', blockModel);
     this.set('remove', (block) => {
-      assert.equal(block, blockModel);
+      assert.strictEqual(block, blockModel);
     });
 
     await render(

@@ -26,19 +26,19 @@ module('Integration | Component | programs/list', function (hooks) {
     this.set('programs', programModels);
     await render(hbs`<Programs::List @programs={{this.programs}} />`);
 
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'program 0');
-    assert.equal(component.items[0].school, 'school 0');
-    assert.equal(component.items[1].title, 'program 1');
-    assert.equal(component.items[1].school, 'school 0');
-    assert.equal(component.items[2].title, 'program 2');
-    assert.equal(component.items[2].school, 'school 0');
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'program 0');
+    assert.strictEqual(component.items[0].school, 'school 0');
+    assert.strictEqual(component.items[1].title, 'program 1');
+    assert.strictEqual(component.items[1].school, 'school 0');
+    assert.strictEqual(component.items[2].title, 'program 2');
+    assert.strictEqual(component.items[2].school, 'school 0');
   });
 
   test('it renders empty', async function (assert) {
     await render(hbs`<Programs::List @programs={{(array)}} />`);
 
-    assert.equal(component.items.length, 0);
+    assert.strictEqual(component.items.length, 0);
     assert.ok(component.isEmpty);
   });
 
@@ -48,13 +48,13 @@ module('Integration | Component | programs/list', function (hooks) {
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
     await render(hbs`<Programs::List @programs={{this.programs}} />`);
-    assert.equal(this.server.db.programs.length, 3);
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'program 0');
+    assert.strictEqual(this.server.db.programs.length, 3);
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'program 0');
     await component.items[0].remove();
     await component.confirmRemoval.confirm();
-    assert.equal(this.server.db.programs.length, 2);
-    assert.equal(component.items.length, 2);
+    assert.strictEqual(this.server.db.programs.length, 2);
+    assert.strictEqual(component.items.length, 2);
   });
 
   test('cancel remove', async function (assert) {
@@ -63,12 +63,12 @@ module('Integration | Component | programs/list', function (hooks) {
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
     await render(hbs`<Programs::List @programs={{this.programs}} />`);
-    assert.equal(this.server.db.programs.length, 3);
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'program 0');
+    assert.strictEqual(this.server.db.programs.length, 3);
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'program 0');
     await component.items[0].remove();
     await component.confirmRemoval.cancel();
-    assert.equal(this.server.db.programs.length, 3);
-    assert.equal(component.items.length, 3);
+    assert.strictEqual(this.server.db.programs.length, 3);
+    assert.strictEqual(component.items.length, 3);
   });
 });

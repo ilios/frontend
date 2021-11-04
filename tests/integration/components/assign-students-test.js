@@ -49,12 +49,12 @@ module('Integration | Component | assign students', function (hooks) {
       @setLimit={{(noop)}}
     />`);
 
-    assert.equal(component.cohorts.options.length, 1);
-    assert.equal(component.cohorts.options[0].text, 'program title test cohort');
-    assert.equal(component.students.length, 2);
-    assert.equal(component.students[0].name.userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.cohorts.options.length, 1);
+    assert.strictEqual(component.cohorts.options[0].text, 'program title test cohort');
+    assert.strictEqual(component.students.length, 2);
+    assert.strictEqual(component.students[0].name.userNameInfo.fullName, '0 guy M. Mc0son');
     assert.notOk(component.students[0].name.userNameInfo.hasAdditionalInfo);
-    assert.equal(component.students[1].name.userNameInfo.fullName, 'Aardvark');
+    assert.strictEqual(component.students[1].name.userNameInfo.fullName, 'Aardvark');
     assert.ok(component.students[1].name.userNameInfo.hasAdditionalInfo);
   });
 
@@ -210,9 +210,9 @@ module('Integration | Component | assign students', function (hooks) {
       @setLimit={{(noop)}}
     />`);
 
-    assert.equal(this.server.db.users[0].primaryCohortId, null);
+    assert.strictEqual(this.server.db.users[0].primaryCohortId, null);
     await component.toggleAll();
     await component.save();
-    assert.equal(this.server.db.users[0].primaryCohortId, 1);
+    assert.strictEqual(parseInt(this.server.db.users[0].primaryCohortId, 10), 1);
   });
 });

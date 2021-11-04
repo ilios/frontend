@@ -10,9 +10,9 @@ module('Unit | Utility | clone learner group', function () {
     assert.expect(11);
     const store = EmberObject.create({
       createRecord(what, { title, location: loc }) {
-        assert.equal(what, 'learner-group');
-        assert.equal(title, 'to clone');
-        assert.equal(loc, 'over the rainbow');
+        assert.strictEqual(what, 'learner-group');
+        assert.strictEqual(title, 'to clone');
+        assert.strictEqual(loc, 'over the rainbow');
 
         return EmberObject.create({ title, location: loc });
       },
@@ -26,14 +26,14 @@ module('Unit | Utility | clone learner group', function () {
     });
     const cohort = EmberObject.create({});
     const groups = await cloneLearnerGroup(store, group, cohort, false);
-    assert.equal(groups.length, 1);
+    assert.strictEqual(groups.length, 1);
     const result = groups[0];
     assert.ok(result);
-    assert.equal(result.get('title'), group.get('title'), 'title was copied');
-    assert.equal(result.get('location'), group.get('location'), 'locationw as copied');
-    assert.equal(result.get('cohort'), cohort, 'cohort was copied');
-    assert.equal(result.get('instructors').length, 1);
+    assert.strictEqual(result.get('title'), group.get('title'), 'title was copied');
+    assert.strictEqual(result.get('location'), group.get('location'), 'locationw as copied');
+    assert.strictEqual(result.get('cohort'), cohort, 'cohort was copied');
+    assert.strictEqual(result.get('instructors').length, 1);
     assert.deepEqual(result.get('instructors'), [instructor], 'instructors were copied');
-    assert.equal(result.get('parent'), null, 'there was no parent');
+    assert.strictEqual(result.get('parent'), undefined, 'there was no parent');
   });
 });

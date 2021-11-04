@@ -34,22 +34,25 @@ module(
       @manage={{(noop)}}
     />`);
 
-      assert.equal(component.header.title, 'Curriculum Inventory Institutional Information');
+      assert.strictEqual(component.header.title, 'Curriculum Inventory Institutional Information');
       assert.ok(component.header.hasSaveButton);
-      assert.equal(component.content.name.label, 'School Name');
-      assert.equal(component.content.name.value, 'School of Rocket Surgery');
-      assert.equal(component.content.aamcCode.label, 'AAMC School ID (e.g. "Institution ID")');
-      assert.equal(component.content.aamcCode.value, '12345');
-      assert.equal(component.content.addressStreet.label, 'Street');
-      assert.equal(component.content.addressStreet.value, '123 Main Street');
-      assert.equal(component.content.addressCity.label, 'City');
-      assert.equal(component.content.addressCity.value, 'Browntown');
-      assert.equal(component.content.addressStateOrProvince.label, 'State or Province');
-      assert.equal(component.content.addressStateOrProvince.value, 'XY');
-      assert.equal(component.content.addressZipCode.label, 'ZIP Code');
-      assert.equal(component.content.addressZipCode.value, '99999');
-      assert.equal(component.content.addressCountryCode.label, 'Country');
-      assert.equal(component.content.addressCountryCode.value, 'US');
+      assert.strictEqual(component.content.name.label, 'School Name');
+      assert.strictEqual(component.content.name.value, 'School of Rocket Surgery');
+      assert.strictEqual(
+        component.content.aamcCode.label,
+        'AAMC School ID (e.g. "Institution ID")'
+      );
+      assert.strictEqual(component.content.aamcCode.value, '12345');
+      assert.strictEqual(component.content.addressStreet.label, 'Street');
+      assert.strictEqual(component.content.addressStreet.value, '123 Main Street');
+      assert.strictEqual(component.content.addressCity.label, 'City');
+      assert.strictEqual(component.content.addressCity.value, 'Browntown');
+      assert.strictEqual(component.content.addressStateOrProvince.label, 'State or Province');
+      assert.strictEqual(component.content.addressStateOrProvince.value, 'XY');
+      assert.strictEqual(component.content.addressZipCode.label, 'ZIP Code');
+      assert.strictEqual(component.content.addressZipCode.value, '99999');
+      assert.strictEqual(component.content.addressCountryCode.label, 'Country');
+      assert.strictEqual(component.content.addressCountryCode.value, 'US');
     });
 
     test('empty form if no institution exists', async function (assert) {
@@ -64,13 +67,13 @@ module(
       @manage={{(noop)}}
     />`);
 
-      assert.equal(component.content.name.value, '');
-      assert.equal(component.content.aamcCode.value, '');
-      assert.equal(component.content.addressStreet.value, '');
-      assert.equal(component.content.addressCity.value, '');
-      assert.equal(component.content.addressStateOrProvince.value, '');
-      assert.equal(component.content.addressZipCode.value, '');
-      assert.equal(component.content.addressCountryCode.value, '');
+      assert.strictEqual(component.content.name.value, '');
+      assert.strictEqual(component.content.aamcCode.value, '');
+      assert.strictEqual(component.content.addressStreet.value, '');
+      assert.strictEqual(component.content.addressCity.value, '');
+      assert.strictEqual(component.content.addressStateOrProvince.value, '');
+      assert.strictEqual(component.content.addressZipCode.value, '');
+      assert.strictEqual(component.content.addressCountryCode.value, '');
     });
 
     test('cancel', async function (assert) {
@@ -122,14 +125,14 @@ module(
       this.set('school', schoolModel);
       this.set('canUpdate', true);
       this.set('saveInstitution', (institution) => {
-        assert.equal(institution.get('name'), newName);
-        assert.equal(institution.get('aamcCode'), newAamcCode);
-        assert.equal(institution.get('addressStreet'), newAddressStreet);
-        assert.equal(institution.get('addressCity'), newAddressCity);
-        assert.equal(institution.get('addressStateOrProvince'), newAddressStateOrProvince);
-        assert.equal(institution.get('addressZipCode'), newAddressZipCode);
-        assert.equal(institution.get('addressCountryCode'), newAddressCountryCode);
-        assert.equal(institution.belongsTo('school').id(), schoolModel.get('id'));
+        assert.strictEqual(institution.get('name'), newName);
+        assert.strictEqual(institution.get('aamcCode'), newAamcCode);
+        assert.strictEqual(institution.get('addressStreet'), newAddressStreet);
+        assert.strictEqual(institution.get('addressCity'), newAddressCity);
+        assert.strictEqual(institution.get('addressStateOrProvince'), newAddressStateOrProvince);
+        assert.strictEqual(institution.get('addressZipCode'), newAddressZipCode);
+        assert.strictEqual(institution.get('addressCountryCode'), newAddressCountryCode);
+        assert.strictEqual(institution.belongsTo('school').id(), schoolModel.get('id'));
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
       @institution={{await this.school.curriculumInventoryInstitution}}
@@ -165,13 +168,13 @@ module(
       this.set('school', schoolModel);
       this.set('canUpdate', true);
       this.set('saveInstitution', (institution) => {
-        assert.equal(institution.get('name'), newName);
-        assert.equal(institution.get('aamcCode'), newAamcCode);
-        assert.equal(institution.get('addressStreet'), newAddressStreet);
-        assert.equal(institution.get('addressCity'), newAddressCity);
-        assert.equal(institution.get('addressStateOrProvince'), newAddressStateOrProvince);
-        assert.equal(institution.get('addressZipCode'), newAddressZipCode);
-        assert.equal(institution.get('addressCountryCode'), newAddressCountryCode);
+        assert.strictEqual(institution.get('name'), newName);
+        assert.strictEqual(institution.get('aamcCode'), newAamcCode);
+        assert.strictEqual(institution.get('addressStreet'), newAddressStreet);
+        assert.strictEqual(institution.get('addressCity'), newAddressCity);
+        assert.strictEqual(institution.get('addressStateOrProvince'), newAddressStateOrProvince);
+        assert.strictEqual(institution.get('addressZipCode'), newAddressZipCode);
+        assert.strictEqual(institution.get('addressCountryCode'), newAddressCountryCode);
         assert.notOk(institution.belongsTo('school').id());
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
@@ -216,25 +219,31 @@ module(
       await component.header.save();
 
       assert.ok(component.content.name.hasError);
-      assert.equal(component.content.name.errorMessage, 'This field can not be blank');
+      assert.strictEqual(component.content.name.errorMessage, 'This field can not be blank');
       assert.ok(component.content.aamcCode.hasError);
-      assert.equal(
+      assert.strictEqual(
         component.content.aamcCode.errorMessage,
         'This field must be greater than or equal to 1'
       );
       assert.ok(component.content.addressStreet.hasError);
-      assert.equal(component.content.addressStreet.errorMessage, 'This field can not be blank');
+      assert.strictEqual(
+        component.content.addressStreet.errorMessage,
+        'This field can not be blank'
+      );
       assert.ok(component.content.addressCity.hasError);
-      assert.equal(component.content.addressCity.errorMessage, 'This field can not be blank');
+      assert.strictEqual(component.content.addressCity.errorMessage, 'This field can not be blank');
       assert.ok(component.content.addressStateOrProvince.hasError);
-      assert.equal(
+      assert.strictEqual(
         component.content.addressStateOrProvince.errorMessage,
         'This field can not be blank'
       );
       assert.ok(component.content.addressZipCode.hasError);
-      assert.equal(component.content.addressZipCode.errorMessage, 'This field can not be blank');
+      assert.strictEqual(
+        component.content.addressZipCode.errorMessage,
+        'This field can not be blank'
+      );
       assert.ok(component.content.addressCountryCode.hasError);
-      assert.equal(
+      assert.strictEqual(
         component.content.addressCountryCode.errorMessage,
         'This field can not be blank'
       );

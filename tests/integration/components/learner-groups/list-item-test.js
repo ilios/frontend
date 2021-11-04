@@ -39,9 +39,9 @@ module('Integration | Component | learner-groups/list-item', function (hooks) {
       .find('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroups::ListItem @learnerGroup={{this.learnerGroup}} />`);
-    assert.equal(component.title, 'learner group 0');
-    assert.equal(component.users, '0');
-    assert.equal(component.children, '3');
+    assert.strictEqual(component.title, 'learner group 0');
+    assert.strictEqual(component.users, '0');
+    assert.strictEqual(component.children, '3');
     assert.ok(component.canBeDeleted);
     assert.ok(component.canBeCopied);
     await a11yAudit(this.element);
@@ -58,7 +58,7 @@ module('Integration | Component | learner-groups/list-item', function (hooks) {
       .find('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroups::ListItem @learnerGroup={{this.learnerGroup}} />`);
-    assert.equal(component.title, 'learner group 0');
+    assert.strictEqual(component.title, 'learner group 0');
     assert.notOk(component.canBeDeleted);
     assert.ok(component.canBeCopied);
     await a11yAudit(this.element);
@@ -75,7 +75,7 @@ module('Integration | Component | learner-groups/list-item', function (hooks) {
       .find('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroups::ListItem @learnerGroup={{this.learnerGroup}} />`);
-    assert.equal(component.title, 'learner group 0');
+    assert.strictEqual(component.title, 'learner group 0');
     assert.ok(component.canBeDeleted);
     assert.notOk(component.canBeCopied);
     await a11yAudit(this.element);
@@ -89,8 +89,8 @@ module('Integration | Component | learner-groups/list-item', function (hooks) {
       .find('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroups::ListItem @learnerGroup={{this.learnerGroup}} />`);
-    assert.equal(component.title, 'learner group 0');
-    assert.equal(component.users, '1');
+    assert.strictEqual(component.title, 'learner group 0');
+    assert.strictEqual(component.users, '1');
     assert.notOk(component.canBeDeleted);
   });
 
@@ -106,9 +106,9 @@ module('Integration | Component | learner-groups/list-item', function (hooks) {
       .find('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroups::ListItem @learnerGroup={{this.learnerGroup}} />`);
-    assert.equal(component.title, 'learner group 0');
-    assert.equal(component.children, '1');
-    assert.equal(component.users, '0');
+    assert.strictEqual(component.title, 'learner group 0');
+    assert.strictEqual(component.children, '1');
+    assert.strictEqual(component.users, '0');
     assert.notOk(component.canBeDeleted);
   });
 
@@ -140,7 +140,7 @@ module('Integration | Component | learner-groups/list-item', function (hooks) {
       .find('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroups::ListItem @learnerGroup={{this.learnerGroup}} />`);
-    assert.equal(component.title, 'learner group 0');
+    assert.strictEqual(component.title, 'learner group 0');
     assert.ok(component.canBeDeleted);
   });
 });

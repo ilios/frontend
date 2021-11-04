@@ -22,8 +22,8 @@ module('Integration | Component | pending single user update', function (hooks) 
 
     this.set('user', userModel);
     await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
-    assert.equal(component.updates.length, 1);
-    assert.equal(
+    assert.strictEqual(component.updates.length, 1);
+    assert.strictEqual(
       component.updates[0].explanation,
       'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.'
     );
@@ -46,8 +46,8 @@ module('Integration | Component | pending single user update', function (hooks) 
 
     this.set('user', userModel);
     await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
-    assert.equal(component.updates.length, 1);
-    assert.equal(
+    assert.strictEqual(component.updates.length, 1);
+    assert.strictEqual(
       component.updates[0].explanation,
       'The email address in the directory (directory-email) does not match the email in ilios (user-email).'
     );
@@ -68,15 +68,15 @@ module('Integration | Component | pending single user update', function (hooks) 
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
-    assert.equal(this.server.db.users[0].email, 'user-email');
-    assert.equal(this.server.db.pendingUserUpdates.length, 1);
+    assert.strictEqual(this.server.db.users[0].email, 'user-email');
+    assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
     this.set('user', userModel);
     await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
-    assert.equal(component.updates.length, 1);
+    assert.strictEqual(component.updates.length, 1);
     assert.ok(component.updates[0].hasUpdateEmailButton);
     await component.updates[0].updateEmail();
-    assert.equal(this.server.db.users[0].email, 'directory-email');
-    assert.equal(this.server.db.pendingUserUpdates.length, 0);
+    assert.strictEqual(this.server.db.users[0].email, 'directory-email');
+    assert.strictEqual(this.server.db.pendingUserUpdates.length, 0);
 
     a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -94,14 +94,14 @@ module('Integration | Component | pending single user update', function (hooks) 
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     assert.ok(this.server.db.users[0].enabled);
-    assert.equal(this.server.db.pendingUserUpdates.length, 1);
+    assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
     this.set('user', userModel);
     await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
-    assert.equal(component.updates.length, 1);
+    assert.strictEqual(component.updates.length, 1);
     assert.ok(component.updates[0].hasUpdateEmailButton);
     await component.updates[0].disable();
     assert.notOk(this.server.db.users[0].enabled);
-    assert.equal(this.server.db.pendingUserUpdates.length, 0);
+    assert.strictEqual(this.server.db.pendingUserUpdates.length, 0);
 
     a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -119,14 +119,14 @@ module('Integration | Component | pending single user update', function (hooks) 
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     assert.notOk(this.server.db.users[0].userSyncIgnore);
-    assert.equal(this.server.db.pendingUserUpdates.length, 1);
+    assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
     this.set('user', userModel);
     await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
-    assert.equal(component.updates.length, 1);
+    assert.strictEqual(component.updates.length, 1);
     assert.ok(component.updates[0].hasUpdateEmailButton);
     await component.updates[0].excludeFromSync();
     assert.ok(this.server.db.users[0].userSyncIgnore);
-    assert.equal(this.server.db.pendingUserUpdates.length, 0);
+    assert.strictEqual(this.server.db.pendingUserUpdates.length, 0);
 
     a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

@@ -73,12 +73,15 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
       @sortSessionsBy={{this.sortBy}}
       @setSortSessionBy={{(noop)}}
     />`);
-    assert.equal(component.header.title.value, blockModel.title);
-    assert.equal(component.overview.description.text, `Description: ${blockModel.description}`);
-    assert.equal(component.breadcrumbs.blockCrumbs.length, 3);
-    assert.equal(component.breadcrumbs.reportCrumb.text, 'Curriculum Inventory Report');
-    assert.equal(component.breadcrumbs.blockCrumbs[0].text, grandParentBlockModel.title);
-    assert.equal(component.breadcrumbs.blockCrumbs[1].text, parentBlockModel.title);
-    assert.equal(component.breadcrumbs.blockCrumbs[2].text, blockModel.title);
+    assert.strictEqual(component.header.title.value, blockModel.title);
+    assert.strictEqual(
+      component.overview.description.text,
+      `Description: ${blockModel.description}`
+    );
+    assert.strictEqual(component.breadcrumbs.blockCrumbs.length, 3);
+    assert.strictEqual(component.breadcrumbs.reportCrumb.text, 'Curriculum Inventory Report');
+    assert.strictEqual(component.breadcrumbs.blockCrumbs[0].text, grandParentBlockModel.title);
+    assert.strictEqual(component.breadcrumbs.blockCrumbs[1].text, parentBlockModel.title);
+    assert.strictEqual(component.breadcrumbs.blockCrumbs[2].text, blockModel.title);
   });
 });

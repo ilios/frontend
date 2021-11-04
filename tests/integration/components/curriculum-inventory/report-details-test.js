@@ -46,8 +46,8 @@ module('Integration | Component | curriculum-inventory/report-details', function
       @setLeadershipDetails={{(noop)}}
       @setManageLeadership={{(noop)}}
     />`);
-    assert.equal(component.header.name.text, reportModel.name);
-    assert.equal(component.overview.description.text, reportModel.description);
+    assert.strictEqual(component.header.name.text, reportModel.name);
+    assert.strictEqual(component.overview.description.text, reportModel.description);
   });
 
   test('finalize report', async function (assert) {

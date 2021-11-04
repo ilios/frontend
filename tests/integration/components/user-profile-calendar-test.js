@@ -23,16 +23,16 @@ module('Integration | Component | user profile calendar', function (hooks) {
 
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.equal(params.id, 13);
+      assert.strictEqual(parseInt(params.id, 10), 13);
 
       const today = moment();
       const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
       const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
 
       assert.ok('from' in queryParams);
-      assert.equal(queryParams.from, from);
+      assert.strictEqual(queryParams.from, from);
       assert.ok('to' in queryParams);
-      assert.equal(queryParams.to, to);
+      assert.strictEqual(queryParams.to, to);
 
       const userEvents = [
         {
@@ -88,7 +88,7 @@ module('Integration | Component | user profile calendar', function (hooks) {
     let called = 0;
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.equal(params.id, 13);
+      assert.strictEqual(parseInt(params.id, 10), 13);
       assert.ok('from' in queryParams);
       assert.ok('to' in queryParams);
       let to, from;
@@ -103,8 +103,8 @@ module('Integration | Component | user profile calendar', function (hooks) {
         to = moment(nextWeek).day(6).hour(23).minute(59).second(59).format('X');
       }
 
-      assert.equal(queryParams.from, from);
-      assert.equal(queryParams.to, to);
+      assert.strictEqual(queryParams.from, from);
+      assert.strictEqual(queryParams.to, to);
 
       called++;
       return { userEvents: [] };
@@ -122,7 +122,7 @@ module('Integration | Component | user profile calendar', function (hooks) {
     let called = 0;
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
-      assert.equal(params.id, 13);
+      assert.strictEqual(parseInt(params.id, 10), 13);
       assert.ok('from' in queryParams);
       assert.ok('to' in queryParams);
 
@@ -137,8 +137,8 @@ module('Integration | Component | user profile calendar', function (hooks) {
         from = moment(lastWeek).day(0).hour(0).minute(0).second(0).format('X');
         to = moment(lastWeek).day(6).hour(23).minute(59).second(59).format('X');
       }
-      assert.equal(queryParams.from, from);
-      assert.equal(queryParams.to, to);
+      assert.strictEqual(queryParams.from, from);
+      assert.strictEqual(queryParams.to, to);
 
       called++;
       return { userEvents: [] };

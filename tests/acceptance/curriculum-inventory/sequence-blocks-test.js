@@ -47,9 +47,9 @@ module('Acceptance | curriculum inventory sequence blocks', function (hooks) {
       .lookup('service:store')
       .find('curriculumInventoryReport', this.report.id);
     await page.visit({ reportId: reportModel.id });
-    assert.equal(page.blocks.list.items.length, 2);
+    assert.strictEqual(page.blocks.list.items.length, 2);
     await page.blocks.list.items[0].remove();
     await page.blocks.list.items[0].confirmRemoval.confirm();
-    assert.equal(page.blocks.list.items.length, 1);
+    assert.strictEqual(page.blocks.list.items.length, 1);
   });
 });

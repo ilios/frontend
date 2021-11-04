@@ -27,20 +27,20 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     this.set('parentGroup', parentGroup);
     await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} />`);
 
-    assert.equal(component.headings[0].text, 'Learner Group Title');
-    assert.equal(component.headings[1].text, 'Members');
-    assert.equal(component.headings[2].text, 'Subgroups');
-    assert.equal(component.headings[3].text, 'Actions');
+    assert.strictEqual(component.headings[0].text, 'Learner Group Title');
+    assert.strictEqual(component.headings[1].text, 'Members');
+    assert.strictEqual(component.headings[2].text, 'Subgroups');
+    assert.strictEqual(component.headings[3].text, 'Actions');
 
-    assert.equal(component.groups.length, 2);
+    assert.strictEqual(component.groups.length, 2);
 
-    assert.equal(component.groups[0].title, 'first');
-    assert.equal(component.groups[0].members, '2');
-    assert.equal(component.groups[0].subgroups, '0');
+    assert.strictEqual(component.groups[0].title, 'first');
+    assert.strictEqual(component.groups[0].members, '2');
+    assert.strictEqual(component.groups[0].subgroups, '0');
 
-    assert.equal(component.groups[1].title, 'second');
-    assert.equal(component.groups[1].members, '0');
-    assert.equal(component.groups[1].subgroups, '2');
+    assert.strictEqual(component.groups[1].title, 'second');
+    assert.strictEqual(component.groups[1].members, '0');
+    assert.strictEqual(component.groups[1].subgroups, '2');
   });
 
   test('can remove group', async function (assert) {
@@ -55,14 +55,14 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     await render(
       hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{parentGroup}} />`
     );
-    assert.equal(this.server.schema.learnerGroups.all().length, 2);
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(this.server.schema.learnerGroups.all().length, 2);
+    assert.strictEqual(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canRemove);
     await component.groups[0].actions.remove();
     assert.ok(component.confirmRemoval.confirmation.includes('Are you sure'));
     await component.confirmRemoval.confirm();
 
-    assert.equal(this.server.schema.learnerGroups.all().length, 1);
+    assert.strictEqual(this.server.schema.learnerGroups.all().length, 1);
   });
 
   test('cannot remove group (has 1+ courses)', async function (assert) {
@@ -79,17 +79,17 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     await render(
       hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{this.parentGroup}} />`
     );
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canRemove);
     await component.groups[0].actions.remove();
-    assert.equal(
+    assert.strictEqual(
       component.confirmRemoval.confirmation,
       'This group is attached to one course and cannot be deleted. 2013 course 0 OK'
     );
     assert.notOk(component.confirmRemoval.canConfirm);
     assert.ok(component.confirmRemoval.canCancel);
     await component.confirmRemoval.cancel();
-    assert.equal(component.groups.length, 1);
+    assert.strictEqual(component.groups.length, 1);
   });
 
   test('course academic year shows range if applicable by configuration', async function (assert) {
@@ -113,7 +113,7 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     );
 
     await component.groups[0].actions.remove();
-    assert.equal(
+    assert.strictEqual(
       component.confirmRemoval.confirmation,
       'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK'
     );
@@ -139,18 +139,18 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
       hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`
     );
 
-    assert.equal(component.groups.length, 1);
-    assert.equal(component.groups[0].title, 'first');
+    assert.strictEqual(component.groups.length, 1);
+    assert.strictEqual(component.groups[0].title, 'first');
     await component.toggleNewForm();
     await component.newForm.single.title(newTitle);
     await component.newForm.single.save();
-    assert.equal(component.savedResult, newTitle + ' Saved Successfully');
+    assert.strictEqual(component.savedResult, newTitle + ' Saved Successfully');
 
-    assert.equal(component.groups.length, 2);
-    assert.equal(component.groups[1].title, newTitle);
+    assert.strictEqual(component.groups.length, 2);
+    assert.strictEqual(component.groups[1].title, newTitle);
     const newGroup = await this.owner.lookup('service:store').find('learner-group', 3);
-    assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
-    assert.equal(newGroup.belongsTo('parent').id(), parent.id);
+    assert.strictEqual(newGroup.belongsTo('cohort').id(), cohort.id);
+    assert.strictEqual(newGroup.belongsTo('parent').id(), parent.id);
   });
 
   test('add multiple new groups', async function (assert) {
@@ -174,19 +174,19 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
       hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`
     );
 
-    assert.equal(component.groups.length, 1);
-    assert.equal(component.groups[0].title, 'group 1');
+    assert.strictEqual(component.groups.length, 1);
+    assert.strictEqual(component.groups[0].title, 'group 1');
     await component.toggleNewForm();
     await component.newForm.chooseMultipleGroups();
     await component.newForm.multiple.setNumberOfGroups(1);
     await component.newForm.multiple.save();
 
-    assert.equal(component.groups.length, 2);
-    assert.equal(component.groups[1].title, 'group 2');
+    assert.strictEqual(component.groups.length, 2);
+    assert.strictEqual(component.groups[1].title, 'group 2');
 
     const newGroup = await this.owner.lookup('service:store').find('learner-group', 3);
-    assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
-    assert.equal(newGroup.belongsTo('parent').id(), parent.id);
+    assert.strictEqual(newGroup.belongsTo('cohort').id(), cohort.id);
+    assert.strictEqual(newGroup.belongsTo('parent').id(), parent.id);
   });
 
   test('padding added when creating multiple new groups', async function (assert) {
@@ -202,22 +202,22 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
       hbs`<LearnergroupSubgroupList @parentGroup={{this.parentGroup}} @canCreate={{true}} />`
     );
 
-    assert.equal(component.groups.length, 0);
+    assert.strictEqual(component.groups.length, 0);
     await component.toggleNewForm();
     await component.newForm.chooseMultipleGroups();
     await component.newForm.multiple.setNumberOfGroups(10);
     await component.newForm.multiple.save();
-    assert.equal(component.groups.length, 10);
-    assert.equal(component.groups[0].title, 'group 01');
-    assert.equal(component.groups[1].title, 'group 02');
-    assert.equal(component.groups[2].title, 'group 03');
-    assert.equal(component.groups[3].title, 'group 04');
-    assert.equal(component.groups[4].title, 'group 05');
-    assert.equal(component.groups[5].title, 'group 06');
-    assert.equal(component.groups[6].title, 'group 07');
-    assert.equal(component.groups[7].title, 'group 08');
-    assert.equal(component.groups[8].title, 'group 09');
-    assert.equal(component.groups[9].title, 'group 10');
+    assert.strictEqual(component.groups.length, 10);
+    assert.strictEqual(component.groups[0].title, 'group 01');
+    assert.strictEqual(component.groups[1].title, 'group 02');
+    assert.strictEqual(component.groups[2].title, 'group 03');
+    assert.strictEqual(component.groups[3].title, 'group 04');
+    assert.strictEqual(component.groups[4].title, 'group 05');
+    assert.strictEqual(component.groups[5].title, 'group 06');
+    assert.strictEqual(component.groups[6].title, 'group 07');
+    assert.strictEqual(component.groups[7].title, 'group 08');
+    assert.strictEqual(component.groups[8].title, 'group 09');
+    assert.strictEqual(component.groups[9].title, 'group 10');
   });
 
   test('truncates multiple group with long name', async function (assert) {
@@ -238,18 +238,18 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
       hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`
     );
 
-    assert.equal(component.groups.length, 0);
+    assert.strictEqual(component.groups.length, 0);
     await component.toggleNewForm();
     await component.newForm.chooseMultipleGroups();
     await component.newForm.multiple.setNumberOfGroups(1);
     await component.newForm.multiple.save();
 
-    assert.equal(component.groups.length, 1);
-    assert.equal(component.groups[0].title, expectedGroupTitle);
+    assert.strictEqual(component.groups.length, 1);
+    assert.strictEqual(component.groups[0].title, expectedGroupTitle);
 
     const newGroup = await this.owner.lookup('service:store').find('learner-group', 2);
-    assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
-    assert.equal(newGroup.belongsTo('parent').id(), parent.id);
-    assert.equal(newGroup.title, expectedGroupTitle);
+    assert.strictEqual(newGroup.belongsTo('cohort').id(), cohort.id);
+    assert.strictEqual(newGroup.belongsTo('parent').id(), parent.id);
+    assert.strictEqual(newGroup.title, expectedGroupTitle);
   });
 });

@@ -39,23 +39,23 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
 
   test('list', async function (assert) {
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
-    assert.equal(page.competencies.title, 'Competencies (2)');
-    assert.equal(page.competencies.list.domains.length, 1);
-    assert.equal(page.competencies.list.domains[0].title, 'competency 0');
-    assert.equal(page.competencies.list.domains[0].competencies.length, 2);
-    assert.equal(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
-    assert.equal(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
+    assert.strictEqual(page.competencies.title, 'Competencies (2)');
+    assert.strictEqual(page.competencies.list.domains.length, 1);
+    assert.strictEqual(page.competencies.list.domains[0].title, 'competency 0');
+    assert.strictEqual(page.competencies.list.domains[0].competencies.length, 2);
+    assert.strictEqual(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
+    assert.strictEqual(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
   });
 
   test('list with permission to edit', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
-    assert.equal(page.competencies.title, 'Competencies (2)');
-    assert.equal(page.competencies.list.domains.length, 1);
-    assert.equal(page.competencies.list.domains[0].title, 'competency 0');
-    assert.equal(page.competencies.list.domains[0].competencies.length, 2);
-    assert.equal(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
-    assert.equal(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
+    assert.strictEqual(page.competencies.title, 'Competencies (2)');
+    assert.strictEqual(page.competencies.list.domains.length, 1);
+    assert.strictEqual(page.competencies.list.domains[0].title, 'competency 0');
+    assert.strictEqual(page.competencies.list.domains[0].competencies.length, 2);
+    assert.strictEqual(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
+    assert.strictEqual(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
   });
 
   test('manager list', async function (assert) {
@@ -65,13 +65,13 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
 
     const { manager } = page.competencies;
 
-    assert.equal(manager.domains.length, 2);
-    assert.equal(manager.domains[0].title, 'competency 0');
+    assert.strictEqual(manager.domains.length, 2);
+    assert.strictEqual(manager.domains[0].title, 'competency 0');
     assert.ok(manager.domains[0].isIndeterminate);
-    assert.equal(manager.domains[0].competencies.length, 2);
-    assert.equal(manager.domains[0].competencies[0].text, 'competency 1');
+    assert.strictEqual(manager.domains[0].competencies.length, 2);
+    assert.strictEqual(manager.domains[0].competencies[0].text, 'competency 1');
     assert.ok(manager.domains[0].competencies[0].isChecked);
-    assert.equal(manager.domains[0].competencies[1].text, 'competency 2');
+    assert.strictEqual(manager.domains[0].competencies[1].text, 'competency 2');
     assert.ok(manager.domains[0].competencies[1].isChecked);
   });
 
@@ -82,11 +82,11 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
 
     const { manager } = page.competencies;
 
-    assert.equal(manager.domains[1].title, 'competency 3');
-    assert.equal(manager.domains[1].competencies.length, 2);
-    assert.equal(manager.domains[1].competencies[0].text, 'competency 4');
+    assert.strictEqual(manager.domains[1].title, 'competency 3');
+    assert.strictEqual(manager.domains[1].competencies.length, 2);
+    assert.strictEqual(manager.domains[1].competencies[0].text, 'competency 4');
     assert.notOk(manager.domains[1].competencies[0].isChecked);
-    assert.equal(manager.domains[1].competencies[1].text, 'competency 5');
+    assert.strictEqual(manager.domains[1].competencies[1].text, 'competency 5');
     assert.notOk(manager.domains[1].competencies[1].isChecked);
 
     await manager.domains[1].click();
@@ -94,15 +94,15 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     await manager.domains[0].competencies[1].click();
     await page.competencies.save();
 
-    assert.equal(page.competencies.title, 'Competencies (3)');
-    assert.equal(page.competencies.list.domains.length, 2);
-    assert.equal(page.competencies.list.domains[0].title, 'competency 0');
-    assert.equal(page.competencies.list.domains[0].competencies.length, 1);
-    assert.equal(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
+    assert.strictEqual(page.competencies.title, 'Competencies (3)');
+    assert.strictEqual(page.competencies.list.domains.length, 2);
+    assert.strictEqual(page.competencies.list.domains[0].title, 'competency 0');
+    assert.strictEqual(page.competencies.list.domains[0].competencies.length, 1);
+    assert.strictEqual(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
 
-    assert.equal(page.competencies.list.domains[1].title, 'competency 3');
-    assert.equal(page.competencies.list.domains[1].competencies.length, 1);
-    assert.equal(page.competencies.list.domains[1].competencies[0].text, 'competency 5');
+    assert.strictEqual(page.competencies.list.domains[1].title, 'competency 3');
+    assert.strictEqual(page.competencies.list.domains[1].competencies.length, 1);
+    assert.strictEqual(page.competencies.list.domains[1].competencies[0].text, 'competency 5');
   });
 
   test('change and cancel', async function (assert) {
@@ -112,11 +112,11 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
 
     const { manager } = page.competencies;
 
-    assert.equal(manager.domains[1].title, 'competency 3');
-    assert.equal(manager.domains[1].competencies.length, 2);
-    assert.equal(manager.domains[1].competencies[0].text, 'competency 4');
+    assert.strictEqual(manager.domains[1].title, 'competency 3');
+    assert.strictEqual(manager.domains[1].competencies.length, 2);
+    assert.strictEqual(manager.domains[1].competencies[0].text, 'competency 4');
     assert.notOk(manager.domains[1].competencies[0].isChecked);
-    assert.equal(manager.domains[1].competencies[1].text, 'competency 5');
+    assert.strictEqual(manager.domains[1].competencies[1].text, 'competency 5');
     assert.notOk(manager.domains[1].competencies[1].isChecked);
 
     await manager.domains[1].click();
@@ -124,11 +124,11 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     await manager.domains[0].competencies[1].click();
     await page.competencies.cancel();
 
-    assert.equal(page.competencies.title, 'Competencies (2)');
-    assert.equal(page.competencies.list.domains.length, 1);
-    assert.equal(page.competencies.list.domains[0].title, 'competency 0');
-    assert.equal(page.competencies.list.domains[0].competencies.length, 2);
-    assert.equal(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
-    assert.equal(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
+    assert.strictEqual(page.competencies.title, 'Competencies (2)');
+    assert.strictEqual(page.competencies.list.domains.length, 1);
+    assert.strictEqual(page.competencies.list.domains[0].title, 'competency 0');
+    assert.strictEqual(page.competencies.list.domains[0].competencies.length, 2);
+    assert.strictEqual(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
+    assert.strictEqual(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
   });
 });

@@ -21,7 +21,7 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
 
     this.set('vocabulary', vocabularyModel);
     this.set('createTerm', (title) => {
-      assert.equal(newTitle, title);
+      assert.strictEqual(newTitle, title);
     });
     await render(hbs`<SchoolVocabularyNewTerm
       @vocabulary={{this.vocabulary}}
@@ -49,7 +49,7 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     await component.setTitle('');
     await component.save();
     assert.ok(component.hasError);
-    assert.equal(component.errorMessage, 'This field can not be blank');
+    assert.strictEqual(component.errorMessage, 'This field can not be blank');
   });
 
   test("can't add top-level term with duplicate title", async function (assert) {
@@ -74,7 +74,7 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     await component.setTitle(title);
     await component.save();
     assert.ok(component.hasError);
-    assert.equal(component.errorMessage, 'Term is a duplicate');
+    assert.strictEqual(component.errorMessage, 'Term is a duplicate');
   });
 
   test("can't add nested term with duplicate title", async function (assert) {
@@ -106,6 +106,6 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     await component.setTitle(title);
     await component.save();
     assert.ok(component.hasError);
-    assert.equal(component.errorMessage, 'Term is a duplicate');
+    assert.strictEqual(component.errorMessage, 'Term is a duplicate');
   });
 });

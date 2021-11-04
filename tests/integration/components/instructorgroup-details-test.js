@@ -36,20 +36,20 @@ module('Integration | Component | instructorgroup details', function (hooks) {
       hbs`<InstructorgroupDetails @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.header.title.text, 'instructor group 0');
-    assert.equal(component.header.members, 'Members: 2');
-    assert.equal(component.header.breadcrumb.crumbs.length, 3);
-    assert.equal(component.header.breadcrumb.crumbs[0].text, 'Instructor Groups');
-    assert.equal(component.header.breadcrumb.crumbs[1].text, 'school 0');
-    assert.equal(component.header.breadcrumb.crumbs[2].text, 'instructor group 0');
-    assert.equal(component.overview.users.length, 2);
-    assert.equal(component.overview.users[0].userNameInfo.fullName, 'Aardvark');
+    assert.strictEqual(component.header.title.text, 'instructor group 0');
+    assert.strictEqual(component.header.members, 'Members: 2');
+    assert.strictEqual(component.header.breadcrumb.crumbs.length, 3);
+    assert.strictEqual(component.header.breadcrumb.crumbs[0].text, 'Instructor Groups');
+    assert.strictEqual(component.header.breadcrumb.crumbs[1].text, 'school 0');
+    assert.strictEqual(component.header.breadcrumb.crumbs[2].text, 'instructor group 0');
+    assert.strictEqual(component.overview.users.length, 2);
+    assert.strictEqual(component.overview.users[0].userNameInfo.fullName, 'Aardvark');
     assert.ok(component.overview.users[0].userNameInfo.hasAdditionalInfo);
-    assert.equal(component.overview.users[1].userNameInfo.fullName, 'Anton M. Alpha');
+    assert.strictEqual(component.overview.users[1].userNameInfo.fullName, 'Anton M. Alpha');
     assert.notOk(component.overview.users[1].userNameInfo.hasAdditionalInfo);
-    assert.equal(component.overview.courses.length, 2);
-    assert.equal(component.overview.courses[0].text, 'Foundations 1');
-    assert.equal(component.overview.courses[1].text, 'Introduction 101');
+    assert.strictEqual(component.overview.courses.length, 2);
+    assert.strictEqual(component.overview.courses[0].text, 'Foundations 1');
+    assert.strictEqual(component.overview.courses[1].text, 'Introduction 101');
   });
 
   test('add user to group', async function (assert) {
@@ -63,12 +63,12 @@ module('Integration | Component | instructorgroup details', function (hooks) {
       hbs`<InstructorgroupDetails @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.overview.users.length, 0);
+    assert.strictEqual(component.overview.users.length, 0);
     await component.overview.search.set('user');
-    assert.equal(component.overview.search.results.length, 3);
+    assert.strictEqual(component.overview.search.results.length, 3);
     await component.overview.search.results[0].add();
-    assert.equal(component.overview.users.length, 1);
-    assert.equal(component.overview.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.overview.users.length, 1);
+    assert.strictEqual(component.overview.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
   });
 
   test('remove user from group', async function (assert) {
@@ -82,9 +82,9 @@ module('Integration | Component | instructorgroup details', function (hooks) {
       hbs`<InstructorgroupDetails @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.overview.users.length, 1);
-    assert.equal(component.overview.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.overview.users.length, 1);
+    assert.strictEqual(component.overview.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
     await component.overview.users[0].remove();
-    assert.equal(component.overview.users.length, 0);
+    assert.strictEqual(component.overview.users.length, 0);
   });
 });

@@ -66,55 +66,55 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @cancel={{(noop)}} @save={{(noop)}} />`
     );
 
-    assert.equal(component.title.label, 'Title:');
-    assert.equal(component.title.value, '');
-    assert.equal(component.description.label, 'Description:');
-    assert.equal(component.description.value, '');
-    assert.equal(component.course.label, 'Course:');
-    assert.equal(component.course.options.length, 3);
-    assert.equal(component.course.options[0].text, 'Select a Course');
-    assert.equal(component.course.options[1].text, 'Unlinked Course 1');
-    assert.equal(component.course.options[2].text, 'Unlinked Course 2');
-    assert.equal(component.required.label, 'Required:');
-    assert.equal(component.required.options.length, 3);
-    assert.equal(component.required.options[0].value, '1');
-    assert.equal(component.required.options[0].text, 'Required');
-    assert.equal(component.required.options[1].value, '2');
-    assert.equal(component.required.options[1].text, 'Optional (elective)');
-    assert.equal(component.required.options[2].value, '3');
-    assert.equal(component.required.options[2].text, 'Required In Track');
-    assert.equal(component.track.label, 'Is Track?');
-    assert.equal(component.track.yesNoToggle.checked, 'false');
-    assert.equal(component.startDate.label, 'Start Date:');
-    assert.equal(component.startDate.value, '');
-    assert.equal(component.endDate.label, 'End Date:');
-    assert.equal(component.endDate.value, '');
-    assert.equal(component.duration.label, 'Duration (in Days):');
-    assert.equal(component.duration.value, '0');
-    assert.equal(component.minimum.label, 'Minimum:');
-    assert.equal(component.minimum.value, '0');
-    assert.equal(component.maximum.label, 'Maximum:');
-    assert.equal(component.maximum.value, '0');
-    assert.equal(component.academicLevel.label, 'Academic Level:');
-    assert.equal(component.academicLevel.options.length, 10);
-    assert.equal(component.academicLevel.options[0].text, 'Year 0');
-    assert.equal(component.academicLevel.options[1].text, 'Year 1');
-    assert.equal(component.academicLevel.options[2].text, 'Year 2');
-    assert.equal(component.academicLevel.options[3].text, 'Year 3');
-    assert.equal(component.academicLevel.options[4].text, 'Year 4');
-    assert.equal(component.academicLevel.options[5].text, 'Year 5');
-    assert.equal(component.academicLevel.options[6].text, 'Year 6');
-    assert.equal(component.academicLevel.options[7].text, 'Year 7');
-    assert.equal(component.academicLevel.options[8].text, 'Year 8');
-    assert.equal(component.academicLevel.options[9].text, 'Year 9');
-    assert.equal(component.childSequenceOrder.label, 'Child Sequence Order:');
-    assert.equal(component.childSequenceOrder.options.length, 3);
-    assert.equal(component.childSequenceOrder.options[0].value, '1');
-    assert.equal(component.childSequenceOrder.options[0].text, 'Ordered');
-    assert.equal(component.childSequenceOrder.options[1].value, '2');
-    assert.equal(component.childSequenceOrder.options[1].text, 'Unordered');
-    assert.equal(component.childSequenceOrder.options[2].value, '3');
-    assert.equal(component.childSequenceOrder.options[2].text, 'Parallel');
+    assert.strictEqual(component.title.label, 'Title:');
+    assert.strictEqual(component.title.value, '');
+    assert.strictEqual(component.description.label, 'Description:');
+    assert.strictEqual(component.description.value, '');
+    assert.strictEqual(component.course.label, 'Course:');
+    assert.strictEqual(component.course.options.length, 3);
+    assert.strictEqual(component.course.options[0].text, 'Select a Course');
+    assert.strictEqual(component.course.options[1].text, 'Unlinked Course 1');
+    assert.strictEqual(component.course.options[2].text, 'Unlinked Course 2');
+    assert.strictEqual(component.required.label, 'Required:');
+    assert.strictEqual(component.required.options.length, 3);
+    assert.strictEqual(component.required.options[0].value, '1');
+    assert.strictEqual(component.required.options[0].text, 'Required');
+    assert.strictEqual(component.required.options[1].value, '2');
+    assert.strictEqual(component.required.options[1].text, 'Optional (elective)');
+    assert.strictEqual(component.required.options[2].value, '3');
+    assert.strictEqual(component.required.options[2].text, 'Required In Track');
+    assert.strictEqual(component.track.label, 'Is Track?');
+    assert.strictEqual(component.track.yesNoToggle.checked, 'false');
+    assert.strictEqual(component.startDate.label, 'Start Date:');
+    assert.strictEqual(component.startDate.value, '');
+    assert.strictEqual(component.endDate.label, 'End Date:');
+    assert.strictEqual(component.endDate.value, '');
+    assert.strictEqual(component.duration.label, 'Duration (in Days):');
+    assert.strictEqual(component.duration.value, '0');
+    assert.strictEqual(component.minimum.label, 'Minimum:');
+    assert.strictEqual(component.minimum.value, '0');
+    assert.strictEqual(component.maximum.label, 'Maximum:');
+    assert.strictEqual(component.maximum.value, '0');
+    assert.strictEqual(component.academicLevel.label, 'Academic Level:');
+    assert.strictEqual(component.academicLevel.options.length, 10);
+    assert.strictEqual(component.academicLevel.options[0].text, 'Year 0');
+    assert.strictEqual(component.academicLevel.options[1].text, 'Year 1');
+    assert.strictEqual(component.academicLevel.options[2].text, 'Year 2');
+    assert.strictEqual(component.academicLevel.options[3].text, 'Year 3');
+    assert.strictEqual(component.academicLevel.options[4].text, 'Year 4');
+    assert.strictEqual(component.academicLevel.options[5].text, 'Year 5');
+    assert.strictEqual(component.academicLevel.options[6].text, 'Year 6');
+    assert.strictEqual(component.academicLevel.options[7].text, 'Year 7');
+    assert.strictEqual(component.academicLevel.options[8].text, 'Year 8');
+    assert.strictEqual(component.academicLevel.options[9].text, 'Year 9');
+    assert.strictEqual(component.childSequenceOrder.label, 'Child Sequence Order:');
+    assert.strictEqual(component.childSequenceOrder.options.length, 3);
+    assert.strictEqual(component.childSequenceOrder.options[0].value, '1');
+    assert.strictEqual(component.childSequenceOrder.options[0].text, 'Ordered');
+    assert.strictEqual(component.childSequenceOrder.options[1].value, '2');
+    assert.strictEqual(component.childSequenceOrder.options[1].text, 'Unordered');
+    assert.strictEqual(component.childSequenceOrder.options[2].value, '3');
+    assert.strictEqual(component.childSequenceOrder.options[2].text, 'Parallel');
     assert.notOk(component.orderInSequence.isVisible);
   });
 
@@ -142,11 +142,11 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     );
 
     assert.ok(component.orderInSequence.isVisible);
-    assert.equal(component.orderInSequence.label, 'Order in Sequence:');
-    assert.equal(component.orderInSequence.options.length, 11);
+    assert.strictEqual(component.orderInSequence.label, 'Order in Sequence:');
+    assert.strictEqual(component.orderInSequence.options.length, 11);
     for (let i = 0; i < 11; i++) {
-      assert.equal(component.orderInSequence.options[i].value, (i + 1).toString());
-      assert.equal(component.orderInSequence.options[i].text, (i + 1).toString());
+      assert.strictEqual(component.orderInSequence.options[i].value, (i + 1).toString());
+      assert.strictEqual(component.orderInSequence.options[i].text, (i + 1).toString());
     }
   });
 
@@ -174,7 +174,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.notOk(component.course.details.isVisible);
     await component.course.select(courseModel.id);
     assert.ok(component.course.details.isVisible);
-    assert.equal(
+    assert.strictEqual(
       component.course.details.text,
       'Level: 1, Start Date: 2016-03-01, End Date: 2016-03-02 -Clerkship (clerkship type 0)'
     );
@@ -191,21 +191,21 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       .find('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
-      assert.equal(block.title, newTitle);
-      assert.equal(block.description, newDescription);
-      assert.equal(block.belongsTo('parent').id(), null);
-      assert.equal(block.belongsTo('academicLevel').id(), this.academicLevels[0].id);
-      assert.equal(block.required, 1);
+      assert.strictEqual(block.title, newTitle);
+      assert.strictEqual(block.description, newDescription);
+      assert.strictEqual(block.belongsTo('parent').id(), null);
+      assert.strictEqual(block.belongsTo('academicLevel').id(), this.academicLevels[0].id);
+      assert.strictEqual(parseInt(block.required, 10), 1);
       assert.false(block.track);
-      assert.equal(block.orderInSequence, 0);
-      assert.equal(block.childSequenceOrder, 1);
-      assert.equal(block.startDate.getTime(), newStartDate.getTime());
-      assert.equal(block.endDate.getTime(), newEndDate.getTime());
-      assert.equal(block.minimum, 0);
-      assert.equal(block.minimum, 0);
-      assert.equal(block.belongsTo('course').id(), null);
-      assert.equal(block.duration, 0);
-      assert.equal(block.belongsTo('report').id(), reportModel.id);
+      assert.strictEqual(parseInt(block.orderInSequence, 10), 0);
+      assert.strictEqual(parseInt(block.childSequenceOrder, 10), 1);
+      assert.strictEqual(block.startDate.getTime(), newStartDate.getTime());
+      assert.strictEqual(block.endDate.getTime(), newEndDate.getTime());
+      assert.strictEqual(parseInt(block.minimum, 10), 0);
+      assert.strictEqual(parseInt(block.minimum, 10), 0);
+      assert.strictEqual(block.belongsTo('course').id(), null);
+      assert.strictEqual(parseInt(block.duration, 10), 0);
+      assert.strictEqual(block.belongsTo('report').id(), reportModel.id);
     });
 
     await render(
@@ -235,14 +235,14 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
-      assert.equal(block.belongsTo('academicLevel').id(), 2);
-      assert.equal(block.required, 3);
+      assert.strictEqual(parseInt(block.belongsTo('academicLevel').id(), 10), 2);
+      assert.strictEqual(parseInt(block.required, 10), 3);
       assert.true(block.track);
-      assert.equal(block.childSequenceOrder, 2);
-      assert.equal(block.minimum, minimum);
-      assert.equal(block.maximum, maximum);
-      assert.equal(block.belongsTo('course').id(), courseModel.id);
-      assert.equal(block.duration, duration);
+      assert.strictEqual(parseInt(block.childSequenceOrder, 10), 2);
+      assert.strictEqual(parseInt(block.minimum, 10), minimum);
+      assert.strictEqual(parseInt(block.maximum, 10), maximum);
+      assert.strictEqual(block.belongsTo('course').id(), courseModel.id);
+      assert.strictEqual(parseInt(block.duration, 10), duration);
     });
 
     await render(
@@ -281,8 +281,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
     this.set('parentBlock', parentModel);
     this.set('save', (block) => {
-      assert.equal(block.orderInSequence, 2);
-      assert.equal(block.belongsTo('parent').id(), parent.id);
+      assert.strictEqual(block.orderInSequence, 2);
+      assert.strictEqual(block.belongsTo('parent').id(), parent.id);
     });
 
     await render(hbs`<CurriculumInventory::NewSequenceBlock
@@ -328,15 +328,15 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
     );
 
-    assert.equal(component.startDate.value, '');
-    assert.equal(component.endDate.value, '');
+    assert.strictEqual(component.startDate.value, '');
+    assert.strictEqual(component.endDate.value, '');
     await component.startDate.set(newStartDate);
     await component.endDate.set(newEndDate);
-    assert.equal(component.startDate.value, moment(newStartDate).format('M/D/YYYY'));
-    assert.equal(component.endDate.value, moment(newEndDate).format('M/D/YYYY'));
+    assert.strictEqual(component.startDate.value, moment(newStartDate).format('M/D/YYYY'));
+    assert.strictEqual(component.endDate.value, moment(newEndDate).format('M/D/YYYY'));
     await component.clearDates();
-    assert.equal(component.startDate.value, '');
-    assert.equal(component.endDate.value, '');
+    assert.strictEqual(component.startDate.value, '');
+    assert.strictEqual(component.endDate.value, '');
   });
 
   test('save fails when minimum is larger than maximum', async function (assert) {
@@ -349,11 +349,11 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
     );
 
-    assert.equal(component.maximum.errors.length, 0);
+    assert.strictEqual(component.maximum.errors.length, 0);
     await component.minimum.set('10');
     await component.maximum.set('5');
     await component.save();
-    assert.equal(component.maximum.errors.length, 1);
+    assert.strictEqual(component.maximum.errors.length, 1);
   });
 
   test('save fails when minimum is less than zero', async function (assert) {
@@ -366,10 +366,10 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
     );
 
-    assert.equal(component.minimum.errors.length, 0);
+    assert.strictEqual(component.minimum.errors.length, 0);
     await component.minimum.set('-1');
     await component.save();
-    assert.equal(component.minimum.errors.length, 1);
+    assert.strictEqual(component.minimum.errors.length, 1);
   });
 
   test('save fails when minimum is empty', async function (assert) {
@@ -382,10 +382,10 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
     );
 
-    assert.equal(component.minimum.errors.length, 0);
+    assert.strictEqual(component.minimum.errors.length, 0);
     await component.minimum.set('');
     await component.save();
-    assert.equal(component.minimum.errors.length, 1);
+    assert.strictEqual(component.minimum.errors.length, 1);
   });
 
   test('save fails when maximum is empty', async function (assert) {
@@ -398,10 +398,10 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
     );
 
-    assert.equal(component.maximum.errors.length, 0);
+    assert.strictEqual(component.maximum.errors.length, 0);
     await component.maximum.set('');
     await component.save();
-    assert.equal(component.maximum.errors.length, 1);
+    assert.strictEqual(component.maximum.errors.length, 1);
   });
 
   test('save with date range and a zero duration', async function (assert) {
@@ -414,9 +414,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       .find('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
-      assert.equal(block.startDate.getTime(), newStartDate.getTime());
-      assert.equal(block.endDate.getTime(), newEndDate.getTime());
-      assert.equal(block.duration, newDuration);
+      assert.strictEqual(block.startDate.getTime(), newStartDate.getTime());
+      assert.strictEqual(block.endDate.getTime(), newEndDate.getTime());
+      assert.strictEqual(parseInt(block.duration, 10), newDuration);
     });
 
     await render(
@@ -438,9 +438,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       .find('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
-      assert.equal(block.startDate, null);
-      assert.equal(block.endDate, null);
-      assert.equal(block.duration, newDuration);
+      assert.strictEqual(block.startDate, undefined);
+      assert.strictEqual(block.endDate, undefined);
+      assert.strictEqual(parseInt(block.duration, 10), newDuration);
     });
 
     await render(
@@ -468,8 +468,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.startDate.set(new Date('2016-11-12'));
     await component.endDate.set(new Date('2011-12-30'));
     await component.save();
-    assert.equal(component.startDate.errors.length, 0);
-    assert.equal(component.endDate.errors.length, 1);
+    assert.strictEqual(component.startDate.errors.length, 0);
+    assert.strictEqual(component.endDate.errors.length, 1);
   });
 
   test('save fails on missing duration', async function (assert) {
@@ -488,7 +488,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.endDate.set(new Date('2016-12-30'));
     await component.duration.set('');
     await component.save();
-    assert.equal(component.duration.errors.length, 1);
+    assert.strictEqual(component.duration.errors.length, 1);
   });
 
   test('save fails on invalid duration', async function (assert) {
@@ -507,7 +507,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.endDate.set(new Date('2016-12-30'));
     await component.duration.set('WRONG');
     await component.save();
-    assert.equal(component.duration.errors.length, 3);
+    assert.strictEqual(component.duration.errors.length, 3);
   });
 
   test('save fails if neither date range nor non-zero duration is provided', async function (assert) {
@@ -524,7 +524,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.description.set('Lorem Ipsum');
     await component.duration.set('');
     await component.save();
-    assert.equal(component.duration.errors.length, 1);
+    assert.strictEqual(component.duration.errors.length, 1);
   });
 
   test('save fails if start-date is given but no end-date is provided', async function (assert) {
@@ -541,6 +541,6 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date());
     await component.save();
-    assert.equal(component.endDate.errors.length, 2);
+    assert.strictEqual(component.endDate.errors.length, 2);
   });
 });

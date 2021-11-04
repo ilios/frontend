@@ -81,14 +81,14 @@ module('Integration | Component | user profile learnergroups', function (hooks) 
 
     await settled();
     assert.dom(learnerGroups).exists({ count: 2 }, 'correct number of learner groups');
-    assert.equal(
+    assert.strictEqual(
       find(firstLearnerGroup)
         .textContent.trim()
         .replace(/[\n\s]+/g, ''),
       'SOD:Program2Cohort2—LearnerGroup2',
       'cohort first learner group'
     );
-    assert.equal(
+    assert.strictEqual(
       find(secondLearnerGroup)
         .textContent.trim()
         .replace(/[\n\s]+/g, ''),

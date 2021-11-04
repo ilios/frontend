@@ -43,31 +43,31 @@ module('Integration | Component | programs/root', function (hooks) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     await render(hbs`<Programs::Root @schools={{this.schools}} />`);
-    assert.equal(component.list.items.length, 3);
-    assert.equal(component.list.items[0].title, 'program 3');
-    assert.equal(component.list.items[1].title, 'program 4');
-    assert.equal(component.list.items[2].title, 'program 5');
+    assert.strictEqual(component.list.items.length, 3);
+    assert.strictEqual(component.list.items[0].title, 'program 3');
+    assert.strictEqual(component.list.items[1].title, 'program 4');
+    assert.strictEqual(component.list.items[2].title, 'program 5');
 
-    assert.equal(component.schoolFilter.schools.length, 4);
-    assert.equal(component.schoolFilter.schools[0].text, 'school 0');
-    assert.equal(component.schoolFilter.schools[1].text, 'school 1');
-    assert.equal(component.schoolFilter.selectedSchool, '2');
+    assert.strictEqual(component.schoolFilter.schools.length, 4);
+    assert.strictEqual(component.schoolFilter.schools[0].text, 'school 0');
+    assert.strictEqual(component.schoolFilter.schools[1].text, 'school 1');
+    assert.strictEqual(component.schoolFilter.selectedSchool, '2');
   });
 
   test('school filter works', async function (assert) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     await render(hbs`<Programs::Root @schools={{this.schools}} />`);
-    assert.equal(component.schoolFilter.selectedSchool, '2');
-    assert.equal(component.list.items.length, 3);
-    assert.equal(component.list.items[0].title, 'program 3');
-    assert.equal(component.list.items[1].title, 'program 4');
-    assert.equal(component.list.items[2].title, 'program 5');
+    assert.strictEqual(component.schoolFilter.selectedSchool, '2');
+    assert.strictEqual(component.list.items.length, 3);
+    assert.strictEqual(component.list.items[0].title, 'program 3');
+    assert.strictEqual(component.list.items[1].title, 'program 4');
+    assert.strictEqual(component.list.items[2].title, 'program 5');
 
     await component.schoolFilter.select(3);
-    assert.equal(component.list.items.length, 3);
-    assert.equal(component.list.items[0].title, 'program 6');
-    assert.equal(component.list.items[1].title, 'program 7');
-    assert.equal(component.list.items[2].title, 'program 8');
+    assert.strictEqual(component.list.items.length, 3);
+    assert.strictEqual(component.list.items[0].title, 'program 6');
+    assert.strictEqual(component.list.items[1].title, 'program 7');
+    assert.strictEqual(component.list.items[2].title, 'program 8');
   });
 });

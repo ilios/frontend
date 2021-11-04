@@ -22,10 +22,10 @@ module('Integration | Component | school vocabularies expanded', function (hooks
       @setSchoolManagedVocabularyTerm={{(noop)}}
     />`);
 
-    assert.equal(component.title, 'Vocabularies (2)');
-    assert.equal(component.vocabulariesList.vocabularies.length, 2);
-    assert.equal(component.vocabulariesList.vocabularies[0].title.text, 'Vocabulary 1');
-    assert.equal(component.vocabulariesList.vocabularies[1].title.text, 'Vocabulary 2');
+    assert.strictEqual(component.title, 'Vocabularies (2)');
+    assert.strictEqual(component.vocabulariesList.vocabularies.length, 2);
+    assert.strictEqual(component.vocabulariesList.vocabularies[0].title.text, 'Vocabulary 1');
+    assert.strictEqual(component.vocabulariesList.vocabularies[1].title.text, 'Vocabulary 2');
     assert.notOk(component.vocabularyManager.isVisible);
     assert.notOk(component.termManager.isVisible);
   });

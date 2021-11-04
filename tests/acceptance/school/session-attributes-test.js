@@ -39,19 +39,22 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
     const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
 
-    assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
+    assert.strictEqual(await getElementText(attendanceTitle), getText('Attendance Required'));
     assert.dom(attendanceEnabled).hasClass('no');
     assert.dom(attendanceEnabled).hasClass('fa-ban');
 
-    assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
+    assert.strictEqual(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
     assert.dom(supplementalEnabled).hasClass('yes');
     assert.dom(supplementalEnabled).hasClass('fa-check');
 
-    assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
+    assert.strictEqual(
+      await getElementText(specialAttireTitle),
+      getText('Special Attire Required')
+    );
     assert.dom(specialAttireEnabled).hasClass('no');
     assert.dom(specialAttireEnabled).hasClass('fa-ban');
 
-    assert.equal(
+    assert.strictEqual(
       await getElementText(specialEquipmentTitle),
       getText('Special Equipment Required')
     );
@@ -84,19 +87,22 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
     const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
 
-    assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
+    assert.strictEqual(await getElementText(attendanceTitle), getText('Attendance Required'));
     assert.dom(attendanceEnabled).hasClass('no');
     assert.dom(attendanceEnabled).hasClass('fa-ban');
 
-    assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
+    assert.strictEqual(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
     assert.dom(supplementalEnabled).hasClass('yes');
     assert.dom(supplementalEnabled).hasClass('fa-check');
 
-    assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
+    assert.strictEqual(
+      await getElementText(specialAttireTitle),
+      getText('Special Attire Required')
+    );
     assert.dom(specialAttireEnabled).hasClass('no');
     assert.dom(specialAttireEnabled).hasClass('fa-ban');
 
-    assert.equal(
+    assert.strictEqual(
       await getElementText(specialEquipmentTitle),
       getText('Special Equipment Required')
     );
@@ -134,16 +140,19 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
     const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
 
-    assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
+    assert.strictEqual(await getElementText(attendanceTitle), getText('Attendance Required'));
     assert.dom(attendanceCheckbox).isNotChecked();
 
-    assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
+    assert.strictEqual(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
     assert.dom(supplementalCheckbox).isChecked();
 
-    assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
+    assert.strictEqual(
+      await getElementText(specialAttireTitle),
+      getText('Special Attire Required')
+    );
     assert.dom(specialAttireCheckbox).isNotChecked();
 
-    assert.equal(
+    assert.strictEqual(
       await getElementText(specialEquipmentTitle),
       getText('Special Equipment Required')
     );
@@ -159,19 +168,22 @@ module('Acceptance | School - Session Attributes', function (hooks) {
 
     await click(save);
 
-    assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
+    assert.strictEqual(await getElementText(attendanceTitle), getText('Attendance Required'));
     assert.dom(attendanceEnabled).hasClass('yes');
     assert.dom(attendanceEnabled).hasClass('fa-check');
 
-    assert.equal(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
+    assert.strictEqual(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
     assert.dom(supplementalEnabled).hasClass('no');
     assert.dom(supplementalEnabled).hasClass('fa-ban');
 
-    assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
+    assert.strictEqual(
+      await getElementText(specialAttireTitle),
+      getText('Special Attire Required')
+    );
     assert.dom(specialAttireEnabled).hasClass('no');
     assert.dom(specialAttireEnabled).hasClass('fa-ban');
 
-    assert.equal(
+    assert.strictEqual(
       await getElementText(specialEquipmentTitle),
       getText('Special Equipment Required')
     );

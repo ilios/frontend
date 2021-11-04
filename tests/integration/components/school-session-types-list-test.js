@@ -60,25 +60,28 @@ module('Integration | Component | school session types list', function (hooks) {
       hbs`<SchoolSessionTypesList @sessionTypes={{this.sessionTypes}} @manageSessionType={{(noop)}} />`
     );
 
-    assert.equal(component.sessionTypes.length, 3);
-    assert.equal(component.sessionTypes[0].title.text, 'first');
-    assert.equal(component.sessionTypes[0].sessionCount, '2');
+    assert.strictEqual(component.sessionTypes.length, 3);
+    assert.strictEqual(component.sessionTypes[0].title.text, 'first');
+    assert.strictEqual(component.sessionTypes[0].sessionCount, '2');
     assert.notOk(component.sessionTypes[0].isAssessment);
-    assert.equal(component.sessionTypes[0].aamcMethod, aamcMethod1.description);
-    assert.equal(component.sessionTypes[0].assessmentOption, '');
-    assert.equal(component.sessionTypes[0].calendarColor, 'background-color: #cccccc');
-    assert.equal(component.sessionTypes[1].title.text, 'second');
-    assert.equal(component.sessionTypes[1].sessionCount, '0');
+    assert.strictEqual(component.sessionTypes[0].aamcMethod, aamcMethod1.description);
+    assert.strictEqual(component.sessionTypes[0].assessmentOption, '');
+    assert.strictEqual(component.sessionTypes[0].calendarColor, 'background-color: #cccccc');
+    assert.strictEqual(component.sessionTypes[1].title.text, 'second');
+    assert.strictEqual(component.sessionTypes[1].sessionCount, '0');
     assert.ok(component.sessionTypes[1].isAssessment);
-    assert.equal(component.sessionTypes[1].aamcMethod, aamcMethod2.description + ' (inactive)');
-    assert.equal(component.sessionTypes[1].assessmentOption, 'formative');
-    assert.equal(component.sessionTypes[1].calendarColor, 'background-color: #123456');
-    assert.equal(component.sessionTypes[2].title.text, 'not needed anymore (inactive)');
-    assert.equal(component.sessionTypes[2].sessionCount, '2');
+    assert.strictEqual(
+      component.sessionTypes[1].aamcMethod,
+      aamcMethod2.description + ' (inactive)'
+    );
+    assert.strictEqual(component.sessionTypes[1].assessmentOption, 'formative');
+    assert.strictEqual(component.sessionTypes[1].calendarColor, 'background-color: #123456');
+    assert.strictEqual(component.sessionTypes[2].title.text, 'not needed anymore (inactive)');
+    assert.strictEqual(component.sessionTypes[2].sessionCount, '2');
     assert.notOk(component.sessionTypes[2].isAssessment);
-    assert.equal(component.sessionTypes[2].aamcMethod, aamcMethod1.description);
-    assert.equal(component.sessionTypes[2].assessmentOption, '');
-    assert.equal(component.sessionTypes[2].calendarColor, 'background-color: #ffffff');
+    assert.strictEqual(component.sessionTypes[2].aamcMethod, aamcMethod1.description);
+    assert.strictEqual(component.sessionTypes[2].assessmentOption, '');
+    assert.strictEqual(component.sessionTypes[2].calendarColor, 'background-color: #ffffff');
   });
 
   test('clicking edit fires action', async function (assert) {
@@ -94,7 +97,7 @@ module('Integration | Component | school session types list', function (hooks) {
 
     this.set('sessionTypes', sessionTypeModels);
     this.set('manageSessionType', (sessionTypeId) => {
-      assert.equal(sessionTypeId, 1);
+      assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(hbs`<SchoolSessionTypesList
       @sessionTypes={{this.sessionTypes}}
@@ -117,7 +120,7 @@ module('Integration | Component | school session types list', function (hooks) {
 
     this.set('sessionTypes', sessionTypeModels);
     this.set('manageSessionType', (sessionTypeId) => {
-      assert.equal(sessionTypeId, 1);
+      assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(hbs`<SchoolSessionTypesList
       @sessionTypes={{this.sessionTypes}}
@@ -172,8 +175,8 @@ module('Integration | Component | school session types list', function (hooks) {
       @canDelete={{true}}
     />`);
 
-    assert.equal(this.server.db.sessionTypes.length, 1);
+    assert.strictEqual(this.server.db.sessionTypes.length, 1);
     await component.sessionTypes[0].delete();
-    assert.equal(this.server.db.sessionTypes.length, 0);
+    assert.strictEqual(this.server.db.sessionTypes.length, 0);
   });
 });

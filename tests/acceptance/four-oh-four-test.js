@@ -16,8 +16,8 @@ module('Acceptance | FourOhFour', function (hooks) {
   test('visiting /four-oh-four', async function (assert) {
     await visit('/four-oh-four');
 
-    assert.equal(currentRouteName(), 'fourOhFour');
-    assert.equal(
+    assert.strictEqual(currentRouteName(), 'fourOhFour');
+    assert.strictEqual(
       await getElementText('.full-screen-error'),
       getText(
         "Rats! I couldn't find that. Please check your page address, and try again.Back to Dashboard"
@@ -28,6 +28,6 @@ module('Acceptance | FourOhFour', function (hooks) {
   test('visiting /nothing', async function (assert) {
     await visit('/nothing');
 
-    assert.equal(currentRouteName(), 'fourOhFour');
+    assert.strictEqual(currentRouteName(), 'fourOhFour');
   });
 });

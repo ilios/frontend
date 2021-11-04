@@ -40,23 +40,23 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     this.set('learnerGroups', learnerGroupModels);
     await render(hbs`<LearnerGroups::List @learnerGroups={{this.learnerGroups}} />`);
 
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'learner group 0');
-    assert.equal(component.items[0].users, '0');
-    assert.equal(component.items[0].children, '0');
-    assert.equal(component.items[1].title, 'learner group 1');
-    assert.equal(component.items[1].users, '0');
-    assert.equal(component.items[1].children, '3');
-    assert.equal(component.items[2].title, 'learner group 2');
-    assert.equal(component.items[2].users, '0');
-    assert.equal(component.items[2].children, '0');
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'learner group 0');
+    assert.strictEqual(component.items[0].users, '0');
+    assert.strictEqual(component.items[0].children, '0');
+    assert.strictEqual(component.items[1].title, 'learner group 1');
+    assert.strictEqual(component.items[1].users, '0');
+    assert.strictEqual(component.items[1].children, '3');
+    assert.strictEqual(component.items[2].title, 'learner group 2');
+    assert.strictEqual(component.items[2].users, '0');
+    assert.strictEqual(component.items[2].children, '0');
     await a11yAudit(this.element);
   });
 
   test('it renders empty', async function (assert) {
     await render(hbs`<LearnerGroups::List @programs={{(array)}} />`);
 
-    assert.equal(component.items.length, 0);
+    assert.strictEqual(component.items.length, 0);
     assert.ok(component.isEmpty);
   });
 
@@ -65,14 +65,14 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     await render(hbs`<LearnerGroups::List @learnerGroups={{this.learnerGroups}} />`);
-    assert.equal(this.server.db.learnerGroups.length, 3);
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'learner group 0');
+    assert.strictEqual(this.server.db.learnerGroups.length, 3);
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'learner group 0');
     await component.items[0].remove();
     await component.confirmRemoval.confirm();
-    assert.equal(this.server.db.learnerGroups.length, 2);
-    assert.equal(component.items.length, 2);
-    assert.equal(component.items[0].title, 'learner group 1');
+    assert.strictEqual(this.server.db.learnerGroups.length, 2);
+    assert.strictEqual(component.items.length, 2);
+    assert.strictEqual(component.items[0].title, 'learner group 1');
   });
 
   test('cancel remove', async function (assert) {
@@ -80,14 +80,14 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     await render(hbs`<LearnerGroups::List @learnerGroups={{this.learnerGroups}} />`);
-    assert.equal(this.server.db.learnerGroups.length, 3);
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'learner group 0');
+    assert.strictEqual(this.server.db.learnerGroups.length, 3);
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'learner group 0');
     await component.items[0].remove();
     await component.confirmRemoval.cancel();
-    assert.equal(this.server.db.learnerGroups.length, 3);
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'learner group 0');
+    assert.strictEqual(this.server.db.learnerGroups.length, 3);
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'learner group 0');
   });
 
   test('copy with learners', async function (assert) {
@@ -97,7 +97,7 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
       assert.ok(withLearners);
-      assert.equal(group.id, 1);
+      assert.strictEqual(parseInt(group.id, 10), 1);
     });
     await render(hbs`<LearnerGroups::List
       @learnerGroups={{this.learnerGroups}}
@@ -116,7 +116,7 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
       assert.notOk(withLearners);
-      assert.equal(group.id, 1);
+      assert.strictEqual(parseInt(group.id, 10), 1);
     });
     await render(hbs`<LearnerGroups::List
       @learnerGroups={{this.learnerGroups}}
@@ -135,7 +135,7 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
       assert.notOk(withLearners);
-      assert.equal(group.id, 1);
+      assert.strictEqual(parseInt(group.id, 10), 1);
     });
     await render(hbs`<LearnerGroups::List
       @learnerGroups={{this.learnerGroups}}

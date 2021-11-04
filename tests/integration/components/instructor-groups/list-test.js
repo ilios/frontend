@@ -29,22 +29,22 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     this.set('instructorGroups', instructorGroupModels);
     await render(hbs`<InstructorGroups::List @instructorGroups={{this.instructorGroups}} />`);
 
-    assert.equal(component.header.title.text, 'Instructor Group Title');
-    assert.equal(component.header.members.text, 'Members');
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'instructor group 0');
-    assert.equal(component.items[0].users, '0');
-    assert.equal(component.items[1].title, 'instructor group 1');
-    assert.equal(component.items[1].users, '0');
-    assert.equal(component.items[2].title, 'instructor group 2');
-    assert.equal(component.items[2].users, '0');
+    assert.strictEqual(component.header.title.text, 'Instructor Group Title');
+    assert.strictEqual(component.header.members.text, 'Members');
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'instructor group 0');
+    assert.strictEqual(component.items[0].users, '0');
+    assert.strictEqual(component.items[1].title, 'instructor group 1');
+    assert.strictEqual(component.items[1].users, '0');
+    assert.strictEqual(component.items[2].title, 'instructor group 2');
+    assert.strictEqual(component.items[2].users, '0');
     await a11yAudit(this.element);
   });
 
   test('it renders empty', async function (assert) {
     await render(hbs`<InstructorGroups::List @programs={{(array)}} />`);
 
-    assert.equal(component.items.length, 0);
+    assert.strictEqual(component.items.length, 0);
     assert.ok(component.isEmpty);
   });
 
@@ -56,14 +56,14 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
       .findAll('instructor-group');
     this.set('instructorGroups', instructorGroupModels);
     await render(hbs`<InstructorGroups::List @instructorGroups={{this.instructorGroups}} />`);
-    assert.equal(this.server.db.instructorGroups.length, 3);
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'instructor group 0');
+    assert.strictEqual(this.server.db.instructorGroups.length, 3);
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'instructor group 0');
     await component.items[0].remove();
     await component.confirmRemoval.confirm();
-    assert.equal(this.server.db.instructorGroups.length, 2);
-    assert.equal(component.items.length, 2);
-    assert.equal(component.items[0].title, 'instructor group 1');
+    assert.strictEqual(this.server.db.instructorGroups.length, 2);
+    assert.strictEqual(component.items.length, 2);
+    assert.strictEqual(component.items[0].title, 'instructor group 1');
   });
 
   test('cancel remove', async function (assert) {
@@ -74,14 +74,14 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
       .findAll('instructor-group');
     this.set('instructorGroups', instructorGroupModels);
     await render(hbs`<InstructorGroups::List @instructorGroups={{this.instructorGroups}} />`);
-    assert.equal(this.server.db.instructorGroups.length, 3);
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'instructor group 0');
+    assert.strictEqual(this.server.db.instructorGroups.length, 3);
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'instructor group 0');
     await component.items[0].remove();
     await component.confirmRemoval.cancel();
-    assert.equal(this.server.db.instructorGroups.length, 3);
-    assert.equal(component.items.length, 3);
-    assert.equal(component.items[0].title, 'instructor group 0');
+    assert.strictEqual(this.server.db.instructorGroups.length, 3);
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'instructor group 0');
   });
 
   test('sort', async function (assert) {
@@ -97,35 +97,35 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     this.set('instructorGroups', instructorGroupModels);
     await render(hbs`<InstructorGroups::List @instructorGroups={{this.instructorGroups}} />`);
 
-    assert.equal(component.items.length, 3);
+    assert.strictEqual(component.items.length, 3);
     assert.ok(component.header.title.isSortedAscending);
     assert.ok(component.header.members.isNotSorted);
-    assert.equal(component.items[0].title, 'instructor group 0');
-    assert.equal(component.items[0].users, '2');
-    assert.equal(component.items[1].title, 'instructor group 1');
-    assert.equal(component.items[1].users, '0');
-    assert.equal(component.items[2].title, 'instructor group 2');
-    assert.equal(component.items[2].users, '3');
+    assert.strictEqual(component.items[0].title, 'instructor group 0');
+    assert.strictEqual(component.items[0].users, '2');
+    assert.strictEqual(component.items[1].title, 'instructor group 1');
+    assert.strictEqual(component.items[1].users, '0');
+    assert.strictEqual(component.items[2].title, 'instructor group 2');
+    assert.strictEqual(component.items[2].users, '3');
 
     await component.header.title.click();
     assert.ok(component.header.title.isSortedDescending);
     assert.ok(component.header.members.isNotSorted);
-    assert.equal(component.items[0].title, 'instructor group 2');
-    assert.equal(component.items[1].title, 'instructor group 1');
-    assert.equal(component.items[2].title, 'instructor group 0');
+    assert.strictEqual(component.items[0].title, 'instructor group 2');
+    assert.strictEqual(component.items[1].title, 'instructor group 1');
+    assert.strictEqual(component.items[2].title, 'instructor group 0');
 
     await component.header.members.click();
     assert.ok(component.header.title.isNotSorted);
     assert.ok(component.header.members.isSortedAscending);
-    assert.equal(component.items[0].title, 'instructor group 1');
-    assert.equal(component.items[1].title, 'instructor group 0');
-    assert.equal(component.items[2].title, 'instructor group 2');
+    assert.strictEqual(component.items[0].title, 'instructor group 1');
+    assert.strictEqual(component.items[1].title, 'instructor group 0');
+    assert.strictEqual(component.items[2].title, 'instructor group 2');
 
     await component.header.members.click();
     assert.ok(component.header.title.isNotSorted);
     assert.ok(component.header.members.isSortedDescending);
-    assert.equal(component.items[0].title, 'instructor group 2');
-    assert.equal(component.items[1].title, 'instructor group 0');
-    assert.equal(component.items[2].title, 'instructor group 1');
+    assert.strictEqual(component.items[0].title, 'instructor group 2');
+    assert.strictEqual(component.items[1].title, 'instructor group 0');
+    assert.strictEqual(component.items[2].title, 'instructor group 1');
   });
 });

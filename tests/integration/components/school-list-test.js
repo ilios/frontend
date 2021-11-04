@@ -20,9 +20,9 @@ module('Integration | Component | school list', function (hooks) {
   test('it renders', async function (assert) {
     this.set('schools', [this.school1, this.school2]);
     await render(hbs`<SchoolList @schools={{this.schools}} />`);
-    assert.equal(component.schools.length, 2);
-    assert.equal(component.schools[0].title, 'school 0');
-    assert.equal(component.schools[1].title, 'school 1');
+    assert.strictEqual(component.schools.length, 2);
+    assert.strictEqual(component.schools[0].title, 'school 0');
+    assert.strictEqual(component.schools[1].title, 'school 1');
   });
 
   test('create school button is visible to root', async function (assert) {
@@ -73,17 +73,17 @@ module('Integration | Component | school list', function (hooks) {
     await component.expandCollapseButton.toggle();
 
     let schools = (await this.owner.lookup('service:store').findAll('school')).toArray();
-    assert.equal(schools.length, 2);
+    assert.strictEqual(schools.length, 2);
     assert.notOk(component.savedSchool.isVisible);
     component.newSchoolForm.title.set('school of rocket surgery');
     component.newSchoolForm.email.set('rocketsurgeongeneral@hoekacademy.edu');
     await component.newSchoolForm.submit();
     assert.ok(component.savedSchool.isVisible);
-    assert.equal(component.savedSchool.text, 'school of rocket surgery Saved Successfully');
+    assert.strictEqual(component.savedSchool.text, 'school of rocket surgery Saved Successfully');
     schools = (await this.owner.lookup('service:store').findAll('school')).toArray();
-    assert.equal(schools.length, 3);
-    assert.equal(schools[2].title, 'school of rocket surgery');
-    assert.equal(schools[2].iliosAdministratorEmail, 'rocketsurgeongeneral@hoekacademy.edu');
+    assert.strictEqual(schools.length, 3);
+    assert.strictEqual(schools[2].title, 'school of rocket surgery');
+    assert.strictEqual(schools[2].iliosAdministratorEmail, 'rocketsurgeongeneral@hoekacademy.edu');
   });
 
   test('submit empty form fails', async function (assert) {

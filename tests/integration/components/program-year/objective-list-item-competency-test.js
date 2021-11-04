@@ -41,7 +41,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @isSaving={{false}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.text, 'None');
+    assert.strictEqual(component.text, 'None');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -63,7 +63,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @isSaving={{false}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.text, 'competency 1 (competency 0)');
+    assert.strictEqual(component.text, 'competency 1 (competency 0)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -84,7 +84,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @isSaving={{false}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.text, 'competency 0');
+    assert.strictEqual(component.text, 'competency 0');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -108,7 +108,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @isSaving={{false}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.text, 'competency 1 (competency 0)');
+    assert.strictEqual(component.text, 'competency 1 (competency 0)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -131,7 +131,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @isSaving={{false}}
       @cancel={{(noop)}}
     />`);
-    assert.equal(component.text, 'competency 0');
+    assert.strictEqual(component.text, 'competency 0');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

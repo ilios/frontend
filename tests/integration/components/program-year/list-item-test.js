@@ -39,7 +39,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
       @programYear={{this.programYear}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
     />`);
-    assert.equal(component.title, 'cohort 0');
+    assert.strictEqual(component.title, 'cohort 0');
   });
 
   test('it without cohort title', async function (assert) {
@@ -56,7 +56,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
       @programYear={{this.programYear}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
     />`);
-    assert.equal(component.title, 'Class of 2016');
+    assert.strictEqual(component.title, 'Class of 2016');
   });
 
   test('it renders single year', async function (assert) {
@@ -73,7 +73,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
       @programYear={{this.programYear}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
     />`);
-    assert.equal(component.link.text, '2012');
+    assert.strictEqual(component.link.text, '2012');
   });
 
   test('it renders double year', async function (assert) {
@@ -90,7 +90,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
       @programYear={{this.programYear}}
       @academicYearCrossesCalendarYearBoundaries={{true}}
     />`);
-    assert.equal(component.link.text, '2012 - 2013');
+    assert.strictEqual(component.link.text, '2012 - 2013');
   });
 
   test('can be deleted', async function (assert) {

@@ -26,7 +26,7 @@ module('Acceptance | search', function (hooks) {
 
     this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
       assert.ok(queryParams.q);
-      assert.equal(queryParams.q, input);
+      assert.strictEqual(queryParams.q, input);
 
       return {
         results: {
@@ -37,12 +37,12 @@ module('Acceptance | search', function (hooks) {
     });
 
     await page.visit();
-    assert.equal(currentURL(), '/search');
+    assert.strictEqual(currentURL(), '/search');
     await page.searchBox.input(input);
-    assert.equal(currentURL(), '/search', 'entering input value does not update query param');
+    assert.strictEqual(currentURL(), '/search', 'entering input value does not update query param');
     await page.searchBox.clickIcon();
-    assert.equal(page.searchBox.inputValue, input);
-    assert.equal(currentURL(), `/search?q=${input}`, 'triggering search updates query param');
+    assert.strictEqual(page.searchBox.inputValue, input);
+    assert.strictEqual(currentURL(), `/search?q=${input}`, 'triggering search updates query param');
   });
 
   test('search with special chars #4752', async function (assert) {
@@ -60,12 +60,12 @@ module('Acceptance | search', function (hooks) {
     });
 
     await visit('/search');
-    assert.equal(currentURL(), '/search');
+    assert.strictEqual(currentURL(), '/search');
     await fillIn('input.global-search-input', input);
-    assert.equal(currentURL(), '/search', 'entering input value does not update query param');
+    assert.strictEqual(currentURL(), '/search', 'entering input value does not update query param');
     await click('[data-test-search-icon]');
-    assert.equal(currentURL(), `/search?q=${encodeURIComponent(input)}`);
-    assert.equal(find('input.global-search-input').value, input);
+    assert.strictEqual(currentURL(), `/search?q=${encodeURIComponent(input)}`);
+    assert.strictEqual(find('input.global-search-input').value, input);
   });
 
   test('search with special chars from dashboard #4752', async function (assert) {
@@ -85,11 +85,11 @@ module('Acceptance | search', function (hooks) {
     const searchBox = '[data-test-global-search] [data-test-global-search-box] input';
 
     await visit('/dashboard');
-    assert.equal(currentURL(), '/dashboard');
+    assert.strictEqual(currentURL(), '/dashboard');
     await fillIn(headerSearchBox, input);
     await click('[data-test-search-icon]');
-    assert.equal(currentURL(), `/search?page=1&q=${encodeURIComponent(input)}`);
-    assert.equal(find(searchBox).value, input);
+    assert.strictEqual(currentURL(), `/search?page=1&q=${encodeURIComponent(input)}`);
+    assert.strictEqual(find(searchBox).value, input);
   });
 
   test('clicking back from course to search works #4768', async function (assert) {
@@ -118,22 +118,22 @@ module('Acceptance | search', function (hooks) {
       };
     });
     await page.visit();
-    assert.equal(currentURL(), '/search');
+    assert.strictEqual(currentURL(), '/search');
     await page.searchBox.input(firstInput);
     await page.searchBox.clickIcon();
     await page.paginationLinks.pageLinks[1].click();
-    assert.equal(page.globalSearch.searchResults.length, 10);
-    assert.equal(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
-    assert.equal(page.searchBox.inputValue, firstInput);
-    assert.equal(currentURL(), `/search?page=2&q=${firstInput}`);
+    assert.strictEqual(page.globalSearch.searchResults.length, 10);
+    assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
+    assert.strictEqual(page.searchBox.inputValue, firstInput);
+    assert.strictEqual(currentURL(), `/search?page=2&q=${firstInput}`);
     await page.globalSearch.searchResults[0].clickCourse();
-    assert.equal(currentURL(), `/courses/11`);
+    assert.strictEqual(currentURL(), `/courses/11`);
     await page.visit({
       page: 2,
       q: firstInput,
     });
-    assert.equal(page.globalSearch.searchResults.length, 10);
-    assert.equal(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
+    assert.strictEqual(page.globalSearch.searchResults.length, 10);
+    assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
   });
 
   test('clicking back on search updates results and input #4759', async function (assert) {
@@ -170,24 +170,24 @@ module('Acceptance | search', function (hooks) {
           message = 'third time, first input';
           break;
       }
-      assert.equal(queryParams.q, input, message);
+      assert.strictEqual(queryParams.q, input, message);
       searchRun++;
       return rhett;
     });
     await page.visit();
-    assert.equal(currentURL(), '/search');
+    assert.strictEqual(currentURL(), '/search');
     await page.searchBox.input(firstInput);
     await page.searchBox.clickIcon();
-    assert.equal(page.searchBox.inputValue, firstInput);
-    assert.equal(currentURL(), `/search?q=${firstInput}`);
+    assert.strictEqual(page.searchBox.inputValue, firstInput);
+    assert.strictEqual(currentURL(), `/search?q=${firstInput}`);
     await page.searchBox.input(secondInput);
     await page.searchBox.clickIcon();
-    assert.equal(page.searchBox.inputValue, secondInput);
-    assert.equal(currentURL(), `/search?q=${secondInput}`);
+    assert.strictEqual(page.searchBox.inputValue, secondInput);
+    assert.strictEqual(currentURL(), `/search?q=${secondInput}`);
     await page.visit({ q: firstInput });
-    assert.equal(currentURL(), `/search?q=${firstInput}`);
-    assert.equal(page.searchBox.inputValue, firstInput);
-    assert.equal(page.searchBox.autocompleteResults.length, 0);
+    assert.strictEqual(currentURL(), `/search?q=${firstInput}`);
+    assert.strictEqual(page.searchBox.inputValue, firstInput);
+    assert.strictEqual(page.searchBox.autocompleteResults.length, 0);
   });
 
   test('search requires three chars #4769', async function (assert) {
@@ -197,9 +197,9 @@ module('Acceptance | search', function (hooks) {
     await page.visit();
     await page.searchBox.input(input);
     await page.searchBox.clickIcon();
-    assert.equal(page.globalSearch.searchResults.length, 0);
-    assert.equal(page.searchBox.autocompleteResults.length, 1);
-    assert.equal(page.searchBox.autocompleteResults[0].text, 'keep typing...');
+    assert.strictEqual(page.globalSearch.searchResults.length, 0);
+    assert.strictEqual(page.searchBox.autocompleteResults.length, 1);
+    assert.strictEqual(page.searchBox.autocompleteResults[0].text, 'keep typing...');
   });
 
   test('search requires three chars in URL #4769', async function (assert) {
@@ -207,9 +207,9 @@ module('Acceptance | search', function (hooks) {
     const input = 'br';
 
     await page.visit({ q: input });
-    assert.equal(page.searchBox.inputValue, input);
+    assert.strictEqual(page.searchBox.inputValue, input);
     await page.searchBox.clickIcon();
-    assert.equal(page.globalSearch.searchResults.length, 0);
+    assert.strictEqual(page.globalSearch.searchResults.length, 0);
   });
 
   test('school filter in query param', async function (assert) {
@@ -239,14 +239,14 @@ module('Acceptance | search', function (hooks) {
       q: 'something',
       ignoredSchools: '1-3',
     });
-    assert.equal(page.globalSearch.searchResults.length, 1);
-    assert.equal(page.globalSearch.searchResults[0].courseTitle, '2019 Course 1');
-    assert.equal(page.globalSearch.schoolFilters.length, 3);
-    assert.equal(page.globalSearch.schoolFilters[0].school, 'school 0 (1)');
+    assert.strictEqual(page.globalSearch.searchResults.length, 1);
+    assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2019 Course 1');
+    assert.strictEqual(page.globalSearch.schoolFilters.length, 3);
+    assert.strictEqual(page.globalSearch.schoolFilters[0].school, 'school 0 (1)');
     assert.notOk(page.globalSearch.schoolFilters[0].isSelected);
-    assert.equal(page.globalSearch.schoolFilters[1].school, 'school 1 (1)');
+    assert.strictEqual(page.globalSearch.schoolFilters[1].school, 'school 1 (1)');
     assert.ok(page.globalSearch.schoolFilters[1].isSelected);
-    assert.equal(page.globalSearch.schoolFilters[2].school, 'school 2 (1)');
+    assert.strictEqual(page.globalSearch.schoolFilters[2].school, 'school 2 (1)');
     assert.notOk(page.globalSearch.schoolFilters[2].isSelected);
   });
 
@@ -279,8 +279,8 @@ module('Acceptance | search', function (hooks) {
       q: 'something',
       year: '2020',
     });
-    assert.equal(page.globalSearch.searchResults.length, 1);
-    assert.equal(page.globalSearch.searchResults[0].courseTitle, '2020 course 2');
-    assert.equal(page.globalSearch.academicYear, '2020');
+    assert.strictEqual(page.globalSearch.searchResults.length, 1);
+    assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2020 course 2');
+    assert.strictEqual(page.globalSearch.academicYear, '2020');
   });
 });

@@ -39,13 +39,13 @@ module('Integration | Component | school competencies manager', function (hooks)
       @competencies={{this.competencies}}
     />`);
 
-    assert.equal(component.domains.length, 1);
-    assert.equal(component.domains[0].details.editor.text, 'domain1');
-    assert.equal(component.domains[0].competencies.length, 2);
-    assert.equal(component.domains[0].competencies[0].editor.text, 'competency1');
-    assert.equal(component.domains[0].competencies[0].objectivesCount, '(3)');
-    assert.equal(component.domains[0].competencies[1].editor.text, 'competency2');
-    assert.equal(component.domains[0].competencies[1].objectivesCount, '(0)');
+    assert.strictEqual(component.domains.length, 1);
+    assert.strictEqual(component.domains[0].details.editor.text, 'domain1');
+    assert.strictEqual(component.domains[0].competencies.length, 2);
+    assert.strictEqual(component.domains[0].competencies[0].editor.text, 'competency1');
+    assert.strictEqual(component.domains[0].competencies[0].objectivesCount, '(3)');
+    assert.strictEqual(component.domains[0].competencies[1].editor.text, 'competency2');
+    assert.strictEqual(component.domains[0].competencies[1].objectivesCount, '(0)');
     assert.notOk(component.domains[0].isRemovable);
     assert.notOk(component.domains[0].competencies[0].isRemovable);
     assert.ok(component.domains[0].competencies[1].isRemovable);
@@ -59,7 +59,7 @@ module('Integration | Component | school competencies manager', function (hooks)
 
     this.set('competencies', competencies);
     this.set('remove', (what) => {
-      assert.equal(what, domainModel);
+      assert.strictEqual(what, domainModel);
     });
     await render(hbs`<SchoolCompetenciesManager
       @canUpdate={{true}}
@@ -82,8 +82,8 @@ module('Integration | Component | school competencies manager', function (hooks)
 
     this.set('competencies', competencies);
     this.set('add', (what, title) => {
-      assert.equal(what, null);
-      assert.equal(title, newTitle);
+      assert.strictEqual(what, null);
+      assert.strictEqual(title, newTitle);
     });
     await render(hbs`<SchoolCompetenciesManager
       @canUpdate={{true}}
@@ -107,8 +107,8 @@ module('Integration | Component | school competencies manager', function (hooks)
 
     this.set('competencies', competencies);
     this.set('add', (what, title) => {
-      assert.equal(what, domainModel);
-      assert.equal(title, newTitle);
+      assert.strictEqual(what, domainModel);
+      assert.strictEqual(title, newTitle);
     });
     await render(hbs`<SchoolCompetenciesManager
       @canUpdate={{true}}

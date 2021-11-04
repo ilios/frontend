@@ -20,11 +20,11 @@ module('Integration | Component | school vocabularies list', function (hooks) {
     await render(
       hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{(noop)}} />`
     );
-    assert.equal(component.vocabularies.length, 2);
-    assert.equal(component.vocabularies[0].title.text, 'Vocabulary 1');
-    assert.equal(component.vocabularies[0].termsCount, '2');
-    assert.equal(component.vocabularies[1].title.text, 'Vocabulary 2');
-    assert.equal(component.vocabularies[1].termsCount, '1');
+    assert.strictEqual(component.vocabularies.length, 2);
+    assert.strictEqual(component.vocabularies[0].title.text, 'Vocabulary 1');
+    assert.strictEqual(component.vocabularies[0].termsCount, '2');
+    assert.strictEqual(component.vocabularies[1].title.text, 'Vocabulary 2');
+    assert.strictEqual(component.vocabularies[1].termsCount, '1');
   });
 
   test('cannot delete vocabularies with terms', async function (assert) {
@@ -40,7 +40,7 @@ module('Integration | Component | school vocabularies list', function (hooks) {
       @manageVocabulary={{(noop)}}
       @canDelete={{true}}
     />`);
-    assert.equal(component.vocabularies.length, 3);
+    assert.strictEqual(component.vocabularies.length, 3);
     assert.notOk(component.vocabularies[0].hasDeleteButton);
     assert.notOk(component.vocabularies[1].hasDeleteButton);
     assert.ok(component.vocabularies[2].hasDeleteButton);
@@ -62,7 +62,7 @@ module('Integration | Component | school vocabularies list', function (hooks) {
     assert.ok(component.deletionConfirmation.isVisible);
     await component.deletionConfirmation.submit();
     const vocabularies = await this.owner.lookup('service:store').findAll('vocabulary');
-    assert.equal(vocabularies.length, 0);
+    assert.strictEqual(vocabularies.length, 0);
   });
 
   test('clicking edit fires the action to manage the vocab', async function (assert) {
@@ -73,7 +73,7 @@ module('Integration | Component | school vocabularies list', function (hooks) {
 
     this.set('school', schoolModel);
     this.set('edit', (id) => {
-      assert.equal(id, vocabularies[0].id);
+      assert.strictEqual(id, vocabularies[0].id);
     });
     await render(
       hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{this.edit}} />`

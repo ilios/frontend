@@ -21,7 +21,7 @@ module('Unit | Initializer | inflector', function (hooks) {
 
   test('it works', async function (assert) {
     await this.application.boot();
-    assert.equal(pluralize(2, 'vocabulary'), '2 vocabularies');
-    assert.equal(pluralize(2, 'aamc-pcrs'), '2 aamc-pcrs');
+    assert.strictEqual(pluralize(2, 'vocabulary'), '2 vocabularies');
+    assert.strictEqual(pluralize(2, 'aamc-pcrs'), '2 aamc-pcrs');
   });
 });

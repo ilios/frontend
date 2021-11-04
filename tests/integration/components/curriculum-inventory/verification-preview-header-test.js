@@ -21,7 +21,7 @@ module(
         .find('curriculum-inventory-report', 1);
       this.set('report', report);
       await render(hbs`<CurriculumInventory::VerificationPreviewHeader @report={{this.report}} />`);
-      assert.equal(component.title, 'Verification Preview for Foo Bar 2019');
+      assert.strictEqual(component.title, 'Verification Preview for Foo Bar 2019');
     });
   }
 );

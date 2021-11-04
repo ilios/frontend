@@ -21,10 +21,10 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
     await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{(noop)}} />`);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
-    assert.equal(component.title.label, 'Title:');
-    assert.equal(component.title.value, '');
-    assert.equal(component.submit.text, 'Done');
-    assert.equal(component.cancel.text, 'Cancel');
+    assert.strictEqual(component.title.label, 'Title:');
+    assert.strictEqual(component.title.value, '');
+    assert.strictEqual(component.submit.text, 'Done');
+    assert.strictEqual(component.cancel.text, 'Cancel');
   });
 
   test('validation fails if title is blank', async function (assert) {
@@ -74,8 +74,8 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
       linked() {
         return {
           perform: (title, school, active) => {
-            assert.equal(title, newTitle);
-            assert.equal(school.id, 1);
+            assert.strictEqual(title, newTitle);
+            assert.strictEqual(parseInt(school.id, 10), 1);
             assert.true(active);
           },
         };

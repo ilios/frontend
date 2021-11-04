@@ -14,34 +14,32 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
+    this.program = this.server.create('program', { school: this.school });
   });
 
   test('check list', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     const thisYear = new Date().getFullYear();
-    this.server.create('program', {
-      schoolId: 1,
-    });
-    this.server.createList('cohort', 4);
+    const cohorts = this.server.createList('cohort', 4);
     this.server.create('programYear', {
-      programId: 1,
+      program: this.program,
       startYear: thisYear,
-      cohortId: 1,
+      cohort: cohorts[0],
     });
     this.server.create('programYear', {
-      programId: 1,
+      program: this.program,
       startYear: thisYear - 2,
-      cohortId: 2,
+      cohort: cohorts[1],
     });
     this.server.create('programYear', {
-      programId: 1,
+      program: this.program,
       startYear: thisYear - 1,
-      cohortId: 3,
+      cohort: cohorts[2],
     });
     this.server.create('programYear', {
-      programId: 1,
+      program: this.program,
       startYear: thisYear - 3,
-      cohortId: 4,
+      cohort: cohorts[3],
       archived: true,
     });
     await visit(url);
@@ -49,38 +47,38 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     const rows = findAll('[data-test-program-year-list] tbody tr');
     const expandButton = '.expand-collapse-button button';
     const yearOptions = '.startyear-select option';
-    assert.equal(rows.length, 3);
-    assert.equal(
+    assert.strictEqual(rows.length, 3);
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(1) td:nth-of-type(1)'
       ),
       `${thisYear - 2}`
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(1) td:nth-of-type(2)'
       ),
       'cohort1'
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(2) td:nth-of-type(1)'
       ),
       `${thisYear - 1}`
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(2) td:nth-of-type(2)'
       ),
       'cohort2'
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(3) td:nth-of-type(1)'
       ),
       `${thisYear}`
     );
-    assert.equal(
+    assert.strictEqual(
       await getElementText(
         '[data-test-program-year-list] tbody tr:nth-of-type(3) td:nth-of-type(2)'
       ),
@@ -102,46 +100,31 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     });
     this.server.create('cohort', { programYearId: 1 });
     await visit(url);
-    assert.equal(
-      await getElementText(
-        find(findAll('[data-test-program-year-list] tbody tr:nth-of-type(1) td')[2])
-      ),
-      5
-    );
+    assert
+      .dom('[data-test-program-year-list] tbody tr:nth-of-type(1) td:nth-of-type(3)')
+      .hasText('5');
   });
 
   test('check objectives', async function (assert) {
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('programYear', { program: this.program });
     this.server.createList('programYearObjective', 5, { programYear });
     this.server.create('cohort', { programYear });
     await visit(url);
-    assert.equal(
-      await getElementText(
-        find(findAll('[data-test-program-year-list] tbody tr:nth-of-type(1) td')[3])
-      ),
-      5
-    );
+    assert
+      .dom('[data-test-program-year-list] tbody tr:nth-of-type(1) td:nth-of-type(4)')
+      .hasText('5');
   });
 
   test('check directors', async function (assert) {
-    this.server.create('program', {
-      schoolId: 1,
-    });
-    this.server.create('programYear', {
-      programId: 1,
-    });
+    const programYear = this.server.create('programYear', { program: this.program });
     this.server.createList('user', 5, {
-      programYearIds: [1],
+      programYears: [programYear],
     });
-    this.server.create('cohort', { programYearId: 1 });
+    this.server.create('cohort', { programYear });
     await visit(url);
-    assert.equal(
-      await getElementText(
-        find(findAll('[data-test-program-year-list] tbody tr:nth-of-type(1) td')[4])
-      ),
-      5
-    );
+    assert
+      .dom('[data-test-program-year-list] tbody tr:nth-of-type(1) td:nth-of-type(5)')
+      .hasText('5');
   });
 
   test('check terms', async function (assert) {
@@ -163,12 +146,9 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     });
     this.server.create('cohort', { programYearId: 1 });
     await visit(url);
-    assert.equal(
-      await getElementText(
-        find(findAll('[data-test-program-year-list] tbody tr:nth-of-type(1) td')[5])
-      ),
-      5
-    );
+    assert
+      .dom('[data-test-program-year-list] tbody tr:nth-of-type(1) td:nth-of-type(6)')
+      .hasText('5');
   });
 
   test('check warnings', async function (assert) {
@@ -200,7 +180,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     this.server.create('cohort', { programYearId: 1 });
     await visit(url);
     await click('[data-test-program-year-list] tbody tr:nth-of-type(1) td:nth-of-type(1) a');
-    assert.equal(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'programYear.index');
   });
 
   test('can delete a program-year', async function (assert) {
@@ -291,12 +271,11 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     const directors = this.server.createList('user', 3);
     const competencies = this.server.createList('competency', 3);
-    const program = this.server.create('program', { school: this.school });
     const vocabulary = this.server.create('vocabulary', { school: this.school });
     const terms = this.server.createList('term', 3, { vocabulary });
     const currentYear = parseInt(moment().format('YYYY'), 10);
     const programYear = this.server.create('programYear', {
-      program,
+      program: this.program,
       startYear: currentYear,
       directors,
       competencies,
@@ -344,19 +323,16 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     const firstProgramYearUnlockButton = `${firstProgramYearRow} td:nth-of-type(7) [data-test-unlock]`;
     const secondProgramYearLockButton = `${secondProgramYearRow} td:nth-of-type(7) [data-test-lock]`;
     const secondProgramYearLockedIcon = `${secondProgramYearRow} td:nth-of-type(7) svg:nth-of-type(1)`;
-    const program = this.server.create('program', {
-      school: this.school,
-    });
     const cohorts = this.server.createList('cohort', 2);
     this.server.create('programYear', {
-      program,
+      program: this.program,
       startYear: 2014,
       cohort: cohorts[0],
       locked: true,
       directorIds: [this.user.id],
     });
     this.server.create('programYear', {
-      program,
+      program: this.program,
       startYear: 2015,
       cohort: cohorts[1],
       locked: false,
@@ -380,11 +356,8 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
 
   test('delete-button is not visible for program years with populated cohorts', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const program = this.server.create('program', {
-      school: this.school,
-    });
     const programYear = this.server.create('programYear', {
-      program,
+      program: this.program,
     });
     const cohort = this.server.create('cohort', {
       programYear,

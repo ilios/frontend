@@ -49,13 +49,13 @@ module('Integration | Component | my profile', function (hooks) {
       @toggleShowInvalidateTokens={{(noop)}}
     />`);
 
-    assert.equal(component.name, 'test name');
+    assert.strictEqual(component.name, 'test name');
     assert.ok(component.userIsStudent);
-    assert.equal(component.primarySchool, 'school 0');
-    assert.equal(component.primaryCohort, 'test cohort');
-    assert.equal(component.secondaryCohorts.length, 2);
-    assert.equal(component.secondaryCohorts[0].text, 'a third cohort program 1');
-    assert.equal(component.secondaryCohorts[1].text, 'second cohort program 0');
+    assert.strictEqual(component.primarySchool, 'school 0');
+    assert.strictEqual(component.primaryCohort, 'test cohort');
+    assert.strictEqual(component.secondaryCohorts.length, 2);
+    assert.strictEqual(component.secondaryCohorts[0].text, 'a third cohort program 1');
+    assert.strictEqual(component.secondaryCohorts[1].text, 'second cohort program 0');
     assert.ok(component.tokenInfoLink.includes('/api'));
   });
 
@@ -74,10 +74,10 @@ module('Integration | Component | my profile', function (hooks) {
     />`);
 
     assert.notOk(component.userIsStudent);
-    assert.equal(component.primarySchool, 'Unassigned');
-    assert.equal(component.primaryCohort, 'Unassigned');
-    assert.equal(component.secondaryCohorts.length, 1);
-    assert.equal(component.secondaryCohorts[0].text, 'Unassigned');
+    assert.strictEqual(component.primarySchool, 'Unassigned');
+    assert.strictEqual(component.primaryCohort, 'Unassigned');
+    assert.strictEqual(component.secondaryCohorts.length, 1);
+    assert.strictEqual(component.secondaryCohorts[0].text, 'Unassigned');
   });
 
   test('generates token when asked with good expiration date', async function (assert) {
@@ -86,7 +86,7 @@ module('Integration | Component | my profile', function (hooks) {
     this.server.get(`/auth/token`, (scheme, { queryParams }) => {
       assert.ok('ttl' in queryParams);
       const duration = moment.duration(queryParams.ttl);
-      assert.equal(duration.weeks(), 2);
+      assert.strictEqual(duration.weeks(), 2);
       assert.ok(duration.hours() < 24);
       assert.ok(duration.minutes() < 60);
       assert.ok(duration.seconds() < 60);
@@ -109,7 +109,7 @@ module('Integration | Component | my profile', function (hooks) {
     />`);
 
     await component.newTokenForm.submit();
-    assert.equal(component.newTokenResult.value, 'new token');
+    assert.strictEqual(component.newTokenResult.value, 'new token');
   });
 
   test('clear and reset from new token screen', async function (assert) {
@@ -136,7 +136,7 @@ module('Integration | Component | my profile', function (hooks) {
     />`);
 
     await component.newTokenForm.submit();
-    assert.equal(component.newTokenResult.value, 'new token');
+    assert.strictEqual(component.newTokenResult.value, 'new token');
     assert.notOk(component.newTokenForm.isVisible);
     await component.newTokenResult.reset();
   });
@@ -224,9 +224,9 @@ module('Integration | Component | my profile', function (hooks) {
     });
     const sessionMock = Service.extend({
       authenticate(how, obj) {
-        assert.equal(how, 'authenticator:ilios-jwt');
+        assert.strictEqual(how, 'authenticator:ilios-jwt');
         assert.ok(obj.jwt);
-        assert.equal(obj.jwt, 'new token');
+        assert.strictEqual(obj.jwt, 'new token');
       },
     });
     this.owner.register('service:session', sessionMock);

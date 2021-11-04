@@ -24,7 +24,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
       hbs`<CurriculumInventory::SequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
     );
     assert.ok(component.title.isVisible);
-    assert.equal(component.title.value, this.blockModel.title);
+    assert.strictEqual(component.title.value, this.blockModel.title);
     assert.ok(component.title.isEditable);
   });
 
@@ -47,7 +47,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
     await component.title.set(newTitle);
     await component.title.save();
     assert.notOk(component.title.hasError);
-    assert.equal(component.title.value, newTitle);
+    assert.strictEqual(component.title.value, newTitle);
   });
 
   test('change title fails on empty value', async function (assert) {
@@ -94,6 +94,6 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
     await component.title.edit();
     await component.title.set('some other title');
     await component.title.cancel();
-    assert.equal(component.title.value, this.blockModel.title);
+    assert.strictEqual(component.title.value, this.blockModel.title);
   });
 });

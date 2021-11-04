@@ -23,7 +23,7 @@ module('Integration | Component | global-search', function (hooks) {
   test('handles empty and non-empty query', async function (assert) {
     assert.expect(4);
     this.server.get('api/search/v1/curriculum', (schema, { queryParams: { q, onlySuggest } }) => {
-      assert.equal(q, 'hello world');
+      assert.strictEqual(q, 'hello world');
       assert.notOk(onlySuggest);
       return {
         results: {
@@ -48,7 +48,7 @@ module('Integration | Component | global-search', function (hooks) {
   test('bubbles action properly', async function (assert) {
     assert.expect(3);
     this.server.get('api/search/v1/curriculum', (schema, { queryParams: { q, onlySuggest } }) => {
-      assert.equal(q, 'typed it');
+      assert.strictEqual(q, 'typed it');
       assert.ok(onlySuggest);
       return {
         results: {
@@ -58,7 +58,7 @@ module('Integration | Component | global-search', function (hooks) {
       };
     });
 
-    this.set('query', (value) => assert.equal(value, 'typed it'));
+    this.set('query', (value) => assert.strictEqual(value, 'typed it'));
     await render(hbs`<GlobalSearch
       @onQuery={{fn this.query}}
       @onSelectPage={{(noop)}}
@@ -111,28 +111,28 @@ module('Integration | Component | global-search', function (hooks) {
       @selectedYear={{this.selectedYear}}
       @setSelectedYear={{set this.selectedYear}}
     />`);
-    assert.equal(component.academicYear, '');
-    assert.equal(
+    assert.strictEqual(component.academicYear, '');
+    assert.strictEqual(
       component.academicYearOptions,
       'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020'
     );
-    assert.equal(component.searchResults.length, 4);
-    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
-    assert.equal(component.searchResults[1].courseTitle, '2020 Course 2');
-    assert.equal(component.searchResults[2].courseTitle, '2021 Course 3');
-    assert.equal(component.searchResults[3].courseTitle, '2021 Course 4');
+    assert.strictEqual(component.searchResults.length, 4);
+    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
+    assert.strictEqual(component.searchResults[1].courseTitle, '2020 Course 2');
+    assert.strictEqual(component.searchResults[2].courseTitle, '2021 Course 3');
+    assert.strictEqual(component.searchResults[3].courseTitle, '2021 Course 4');
     await component.selectAcademicYear('2021');
-    assert.equal(component.searchResults.length, 2);
-    assert.equal(component.searchResults[0].courseTitle, '2021 Course 3');
-    assert.equal(component.searchResults[1].courseTitle, '2021 Course 4');
+    assert.strictEqual(component.searchResults.length, 2);
+    assert.strictEqual(component.searchResults[0].courseTitle, '2021 Course 3');
+    assert.strictEqual(component.searchResults[1].courseTitle, '2021 Course 4');
     await component.selectAcademicYear('2020');
-    assert.equal(component.academicYear, '2020');
-    assert.equal(component.searchResults.length, 1);
-    assert.equal(component.searchResults[0].courseTitle, '2020 Course 2');
+    assert.strictEqual(component.academicYear, '2020');
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.strictEqual(component.searchResults[0].courseTitle, '2020 Course 2');
     await component.selectAcademicYear('2019');
-    assert.equal(component.academicYear, '2019');
-    assert.equal(component.searchResults.length, 1);
-    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
+    assert.strictEqual(component.academicYear, '2019');
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
   });
 
   test('school filter works properly', async function (assert) {
@@ -185,70 +185,70 @@ module('Integration | Component | global-search', function (hooks) {
       @ignoredSchoolIds={{this.ignoredSchoolIds}}
       @setIgnoredSchoolIds={{set this.ignoredSchoolIds}}
     />`);
-    assert.equal(component.searchResults.length, 4);
-    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
-    assert.equal(component.searchResults[1].courseTitle, '2020 Course 2');
-    assert.equal(component.searchResults[2].courseTitle, '2021 Course 3');
-    assert.equal(component.searchResults[3].courseTitle, '2021 Course 4');
-    assert.equal(component.schoolFilters.length, 3);
-    assert.equal(component.schoolFilters[0].school, 'Dentistry (1)');
+    assert.strictEqual(component.searchResults.length, 4);
+    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
+    assert.strictEqual(component.searchResults[1].courseTitle, '2020 Course 2');
+    assert.strictEqual(component.searchResults[2].courseTitle, '2021 Course 3');
+    assert.strictEqual(component.searchResults[3].courseTitle, '2021 Course 4');
+    assert.strictEqual(component.schoolFilters.length, 3);
+    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry (1)');
     assert.ok(component.schoolFilters[0].isSelected);
-    assert.equal(component.schoolFilters[1].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Medicine (2)');
     assert.ok(component.schoolFilters[1].isSelected);
-    assert.equal(component.schoolFilters[2].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy (1)');
     assert.ok(component.schoolFilters[2].isSelected);
 
     await component.schoolFilters[1].toggle();
 
-    assert.equal(component.searchResults.length, 2);
-    assert.equal(component.searchResults[0].courseTitle, '2021 Course 3');
-    assert.equal(component.searchResults[1].courseTitle, '2021 Course 4');
-    assert.equal(component.schoolFilters.length, 3);
-    assert.equal(component.schoolFilters[0].school, 'Dentistry (1)');
+    assert.strictEqual(component.searchResults.length, 2);
+    assert.strictEqual(component.searchResults[0].courseTitle, '2021 Course 3');
+    assert.strictEqual(component.searchResults[1].courseTitle, '2021 Course 4');
+    assert.strictEqual(component.schoolFilters.length, 3);
+    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry (1)');
     assert.ok(component.schoolFilters[0].isSelected);
-    assert.equal(component.schoolFilters[1].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Medicine (2)');
     assert.notOk(component.schoolFilters[1].isSelected);
-    assert.equal(component.schoolFilters[2].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy (1)');
     assert.ok(component.schoolFilters[2].isSelected);
 
     await component.schoolFilters[0].toggle();
 
-    assert.equal(component.searchResults.length, 1);
-    assert.equal(component.searchResults[0].courseTitle, '2021 Course 3');
-    assert.equal(component.schoolFilters.length, 3);
-    assert.equal(component.schoolFilters[0].school, 'Dentistry (1)');
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.strictEqual(component.searchResults[0].courseTitle, '2021 Course 3');
+    assert.strictEqual(component.schoolFilters.length, 3);
+    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry (1)');
     assert.notOk(component.schoolFilters[0].isSelected);
-    assert.equal(component.schoolFilters[1].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Medicine (2)');
     assert.notOk(component.schoolFilters[1].isSelected);
-    assert.equal(component.schoolFilters[2].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy (1)');
     assert.ok(component.schoolFilters[2].isSelected);
 
     await component.schoolFilters[2].toggle();
 
-    assert.equal(component.searchResults.length, 0);
-    assert.equal(component.schoolFilters.length, 3);
-    assert.equal(component.schoolFilters[0].school, 'Dentistry (1)');
+    assert.strictEqual(component.searchResults.length, 0);
+    assert.strictEqual(component.schoolFilters.length, 3);
+    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry (1)');
     assert.notOk(component.schoolFilters[0].isSelected);
-    assert.equal(component.schoolFilters[1].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Medicine (2)');
     assert.notOk(component.schoolFilters[1].isSelected);
-    assert.equal(component.schoolFilters[2].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy (1)');
     assert.notOk(component.schoolFilters[2].isSelected);
 
     await component.schoolFilters[0].toggle();
     await component.schoolFilters[1].toggle();
     await component.schoolFilters[2].toggle();
 
-    assert.equal(component.searchResults.length, 4);
-    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
-    assert.equal(component.searchResults[1].courseTitle, '2020 Course 2');
-    assert.equal(component.searchResults[2].courseTitle, '2021 Course 3');
-    assert.equal(component.searchResults[3].courseTitle, '2021 Course 4');
-    assert.equal(component.schoolFilters.length, 3);
-    assert.equal(component.schoolFilters[0].school, 'Dentistry (1)');
+    assert.strictEqual(component.searchResults.length, 4);
+    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
+    assert.strictEqual(component.searchResults[1].courseTitle, '2020 Course 2');
+    assert.strictEqual(component.searchResults[2].courseTitle, '2021 Course 3');
+    assert.strictEqual(component.searchResults[3].courseTitle, '2021 Course 4');
+    assert.strictEqual(component.schoolFilters.length, 3);
+    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry (1)');
     assert.ok(component.schoolFilters[0].isSelected);
-    assert.equal(component.schoolFilters[1].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Medicine (2)');
     assert.ok(component.schoolFilters[1].isSelected);
-    assert.equal(component.schoolFilters[2].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy (1)');
     assert.ok(component.schoolFilters[2].isSelected);
   });
 
@@ -280,14 +280,14 @@ module('Integration | Component | global-search', function (hooks) {
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
-    assert.equal(component.searchResults.length, 1);
-    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
-    assert.equal(component.schoolFilters.length, 3);
-    assert.equal(component.schoolFilters[0].school, 'school 0 (0)');
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
+    assert.strictEqual(component.schoolFilters.length, 3);
+    assert.strictEqual(component.schoolFilters[0].school, 'school 0 (0)');
     assert.ok(component.schoolFilters[0].isDisabled);
-    assert.equal(component.schoolFilters[1].school, 'school 1 (1)');
+    assert.strictEqual(component.schoolFilters[1].school, 'school 1 (1)');
     assert.notOk(component.schoolFilters[1].isDisabled);
-    assert.equal(component.schoolFilters[2].school, 'school 2 (0)');
+    assert.strictEqual(component.schoolFilters[2].school, 'school 2 (0)');
     assert.ok(component.schoolFilters[2].isDisabled);
   });
 
@@ -319,8 +319,8 @@ module('Integration | Component | global-search', function (hooks) {
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
-    assert.equal(component.searchResults.length, 1);
-    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
-    assert.equal(component.schoolFilters.length, 0);
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
+    assert.strictEqual(component.schoolFilters.length, 0);
   });
 });

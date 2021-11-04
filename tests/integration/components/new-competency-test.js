@@ -11,7 +11,7 @@ module('Integration | Component | new competency', function (hooks) {
     assert.expect(1);
     const title = 'new co';
     this.set('add', (value) => {
-      assert.equal(value, title);
+      assert.strictEqual(value, title);
     });
     await render(hbs`<NewCompetency @add={{this.add}} />`);
     await component.title.set(title);
@@ -41,7 +41,7 @@ module('Integration | Component | new competency', function (hooks) {
     await component.title.submit();
     assert.ok(component.hasError);
     await component.title.cancel();
-    assert.equal(component.title.value, '');
+    assert.strictEqual(component.title.value, '');
     assert.notOk(component.hasError);
   });
 });

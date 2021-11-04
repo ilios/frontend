@@ -27,12 +27,12 @@ module('Integration | Component | school leadership expanded', function (hooks) 
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
     />`);
-    assert.equal(component.title, 'School Leadership');
-    assert.equal(component.leadershipList.directors.length, 1);
-    assert.equal(component.leadershipList.directors[0].text, '0 guy M. Mc0son');
-    assert.equal(component.leadershipList.administrators.length, 2);
-    assert.equal(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
-    assert.equal(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
+    assert.strictEqual(component.title, 'School Leadership');
+    assert.strictEqual(component.leadershipList.directors.length, 1);
+    assert.strictEqual(component.leadershipList.directors[0].text, '0 guy M. Mc0son');
+    assert.strictEqual(component.leadershipList.administrators.length, 2);
+    assert.strictEqual(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
+    assert.strictEqual(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
   });
 
   test('clicking the header collapses', async function (assert) {

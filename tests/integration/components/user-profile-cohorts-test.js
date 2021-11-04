@@ -69,7 +69,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
 
     this.server.patch('api/users/:id', (schema, request) => {
       const { data } = JSON.parse(request.requestBody);
-      assert.equal(
+      assert.strictEqual(
         data.relationships.primaryCohort.data.id,
         this.cohort2.id,
         'user has correct primary cohort'

@@ -60,26 +60,26 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     await render(hbs`<LearnerGroups::Root @schools={{this.schools}} />`);
-    assert.equal(component.list.items.length, 2);
-    assert.equal(component.list.items[0].title, 'learner group 2');
-    assert.equal(component.list.items[1].title, 'learner group 3');
+    assert.strictEqual(component.list.items.length, 2);
+    assert.strictEqual(component.list.items[0].title, 'learner group 2');
+    assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
-    assert.equal(component.schoolFilter.schools.length, 4);
-    assert.equal(component.schoolFilter.schools[0].text, 'school 0');
-    assert.equal(component.schoolFilter.schools[1].text, 'school 1');
-    assert.equal(component.schoolFilter.schools[2].text, 'school 2');
-    assert.equal(component.schoolFilter.schools[3].text, 'school 3');
-    assert.equal(component.schoolFilter.selectedSchool, '2');
+    assert.strictEqual(component.schoolFilter.schools.length, 4);
+    assert.strictEqual(component.schoolFilter.schools[0].text, 'school 0');
+    assert.strictEqual(component.schoolFilter.schools[1].text, 'school 1');
+    assert.strictEqual(component.schoolFilter.schools[2].text, 'school 2');
+    assert.strictEqual(component.schoolFilter.schools[3].text, 'school 3');
+    assert.strictEqual(component.schoolFilter.selectedSchool, '2');
 
-    assert.equal(component.programFilter.programs.length, 2);
-    assert.equal(component.programFilter.programs[0].text, 'program 2');
-    assert.equal(component.programFilter.programs[1].text, 'program 3');
-    assert.equal(component.programFilter.selectedProgram, '4');
+    assert.strictEqual(component.programFilter.programs.length, 2);
+    assert.strictEqual(component.programFilter.programs[0].text, 'program 2');
+    assert.strictEqual(component.programFilter.programs[1].text, 'program 3');
+    assert.strictEqual(component.programFilter.selectedProgram, '4');
 
-    assert.equal(component.programYearFilter.programYears.length, 2);
-    assert.equal(component.programYearFilter.programYears[0].text, 'cohort 7');
-    assert.equal(component.programYearFilter.programYears[1].text, 'cohort 6');
-    assert.equal(component.programYearFilter.selectedProgramYear, '6');
+    assert.strictEqual(component.programYearFilter.programYears.length, 2);
+    assert.strictEqual(component.programYearFilter.programYears[0].text, 'cohort 7');
+    assert.strictEqual(component.programYearFilter.programYears[1].text, 'cohort 6');
+    assert.strictEqual(component.programYearFilter.selectedProgramYear, '6');
 
     await a11yAudit(this.element);
   });
@@ -89,15 +89,15 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
-      assert.equal(schoolId, '3');
+      assert.strictEqual(schoolId, '3');
       this.set('schoolId', schoolId);
     });
     this.set('setProgramId', (programId) => {
-      assert.equal(programId, null);
+      assert.strictEqual(programId, null);
       this.set('programId', programId);
     });
     this.set('setProgramYearId', (programYearId) => {
-      assert.equal(programYearId, null);
+      assert.strictEqual(programYearId, null);
       this.set('programYearId', programYearId);
     });
 
@@ -110,17 +110,17 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @setProgramYearId={{this.setProgramYearId}}
       @programYearId={{this.programYearId}}
     />`);
-    assert.equal(component.schoolFilter.selectedSchool, '2');
-    assert.equal(component.programFilter.selectedProgram, '4');
-    assert.equal(component.programYearFilter.selectedProgramYear, '6');
-    assert.equal(component.list.items.length, 2);
-    assert.equal(component.list.items[0].title, 'learner group 2');
-    assert.equal(component.list.items[1].title, 'learner group 3');
+    assert.strictEqual(component.schoolFilter.selectedSchool, '2');
+    assert.strictEqual(component.programFilter.selectedProgram, '4');
+    assert.strictEqual(component.programYearFilter.selectedProgramYear, '6');
+    assert.strictEqual(component.list.items.length, 2);
+    assert.strictEqual(component.list.items[0].title, 'learner group 2');
+    assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
     await component.schoolFilter.select(3);
-    assert.equal(component.list.items.length, 2);
-    assert.equal(component.list.items[0].title, 'learner group 4');
-    assert.equal(component.list.items[1].title, 'learner group 5');
+    assert.strictEqual(component.list.items.length, 2);
+    assert.strictEqual(component.list.items[0].title, 'learner group 4');
+    assert.strictEqual(component.list.items[1].title, 'learner group 5');
   });
 
   test('program filter works', async function (assert) {
@@ -128,15 +128,15 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
-      assert.equal(schoolId, '2');
+      assert.strictEqual(schoolId, '2');
       this.set('schoolId', schoolId);
     });
     this.set('setProgramId', (programId) => {
-      assert.equal(programId, '3');
+      assert.strictEqual(programId, '3');
       this.set('programId', programId);
     });
     this.set('setProgramYearId', (programYearId) => {
-      assert.equal(programYearId, null);
+      assert.strictEqual(programYearId, null);
       this.set('programYearId', programYearId);
     });
 
@@ -149,15 +149,15 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @setProgramYearId={{this.setProgramYearId}}
       @programYearId={{this.programYearId}}
     />`);
-    assert.equal(component.schoolFilter.selectedSchool, '2');
-    assert.equal(component.programFilter.selectedProgram, '4');
-    assert.equal(component.programYearFilter.selectedProgramYear, '6');
-    assert.equal(component.list.items.length, 2);
-    assert.equal(component.list.items[0].title, 'learner group 2');
-    assert.equal(component.list.items[1].title, 'learner group 3');
+    assert.strictEqual(component.schoolFilter.selectedSchool, '2');
+    assert.strictEqual(component.programFilter.selectedProgram, '4');
+    assert.strictEqual(component.programYearFilter.selectedProgramYear, '6');
+    assert.strictEqual(component.list.items.length, 2);
+    assert.strictEqual(component.list.items[0].title, 'learner group 2');
+    assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
     await component.programFilter.select(3);
-    assert.equal(component.list.items.length, 0);
+    assert.strictEqual(component.list.items.length, 0);
   });
 
   test('program year filter works', async function (assert) {
@@ -165,15 +165,15 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
-      assert.equal(schoolId, '2');
+      assert.strictEqual(schoolId, '2');
       this.set('schoolId', schoolId);
     });
     this.set('setProgramId', (programId) => {
-      assert.equal(programId, '4');
+      assert.strictEqual(programId, '4');
       this.set('programId', programId);
     });
     this.set('setProgramYearId', (programYearId) => {
-      assert.equal(programYearId, '5');
+      assert.strictEqual(programYearId, '5');
       this.set('programYearId', programYearId);
     });
 
@@ -186,15 +186,15 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @setProgramYearId={{this.setProgramYearId}}
       @programYearId={{this.programYearId}}
     />`);
-    assert.equal(component.schoolFilter.selectedSchool, '2');
-    assert.equal(component.programFilter.selectedProgram, '4');
-    assert.equal(component.programYearFilter.selectedProgramYear, '6');
-    assert.equal(component.list.items.length, 2);
-    assert.equal(component.list.items[0].title, 'learner group 2');
-    assert.equal(component.list.items[1].title, 'learner group 3');
+    assert.strictEqual(component.schoolFilter.selectedSchool, '2');
+    assert.strictEqual(component.programFilter.selectedProgram, '4');
+    assert.strictEqual(component.programYearFilter.selectedProgramYear, '6');
+    assert.strictEqual(component.list.items.length, 2);
+    assert.strictEqual(component.list.items[0].title, 'learner group 2');
+    assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
     await component.programYearFilter.select(5);
-    assert.equal(component.list.items.length, 0);
+    assert.strictEqual(component.list.items.length, 0);
   });
 
   test('title filter works', async function (assert) {
@@ -202,7 +202,7 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setTitleFilter', (titleFilter) => {
-      assert.equal(titleFilter, '3');
+      assert.strictEqual(titleFilter, '3');
       this.set('titleFilter', titleFilter);
     });
 
@@ -211,12 +211,12 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @setTitleFilter={{this.setTitleFilter}}
       @titleFilter={{this.titleFilter}}
     />`);
-    assert.equal(component.list.items.length, 2);
-    assert.equal(component.list.items[0].title, 'learner group 2');
-    assert.equal(component.list.items[1].title, 'learner group 3');
+    assert.strictEqual(component.list.items.length, 2);
+    assert.strictEqual(component.list.items[0].title, 'learner group 2');
+    assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
     await component.setTitleFilter('3');
-    assert.equal(component.list.items.length, 1);
-    assert.equal(component.list.items[0].title, 'learner group 3');
+    assert.strictEqual(component.list.items.length, 1);
+    assert.strictEqual(component.list.items[0].title, 'learner group 3');
   });
 });

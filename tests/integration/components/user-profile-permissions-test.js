@@ -32,35 +32,35 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @setYear={{(noop)}}
     />`);
 
-    assert.equal(component.title, 'Permissions');
-    assert.equal(component.schools.length, 2);
-    assert.equal(component.schools[0].text, 'school 0');
-    assert.equal(component.schools[1].text, 'school 1');
-    assert.equal(component.selectedSchool, '2');
+    assert.strictEqual(component.title, 'Permissions');
+    assert.strictEqual(component.schools.length, 2);
+    assert.strictEqual(component.schools[0].text, 'school 0');
+    assert.strictEqual(component.schools[1].text, 'school 1');
+    assert.strictEqual(component.selectedSchool, '2');
 
-    assert.equal(component.years.length, 3);
-    assert.equal(component.years[0].text, `${this.thisYear - 1} - ${this.thisYear}`);
-    assert.equal(component.years[1].text, `${this.thisYear} - ${this.thisYear + 1}`);
-    assert.equal(component.years[2].text, `${this.thisYear + 1} - ${this.thisYear + 2}`);
-    assert.equal(component.selectedYear, this.currentAcademicYear);
+    assert.strictEqual(component.years.length, 3);
+    assert.strictEqual(component.years[0].text, `${this.thisYear - 1} - ${this.thisYear}`);
+    assert.strictEqual(component.years[1].text, `${this.thisYear} - ${this.thisYear + 1}`);
+    assert.strictEqual(component.years[2].text, `${this.thisYear + 1} - ${this.thisYear + 2}`);
+    assert.strictEqual(parseInt(component.selectedYear, 10), this.currentAcademicYear);
 
-    assert.equal(component.school.title, 'School (school 1)');
-    assert.equal(component.school.director, 'No');
-    assert.equal(component.school.administrator, 'No');
+    assert.strictEqual(component.school.title, 'School (school 1)');
+    assert.strictEqual(component.school.director, 'No');
+    assert.strictEqual(component.school.administrator, 'No');
 
-    assert.equal(component.programs.title, 'Programs (0)');
+    assert.strictEqual(component.programs.title, 'Programs (0)');
     assert.ok(component.programs.notDirecting);
 
-    assert.equal(component.programYears.title, 'Program Years (0)');
+    assert.strictEqual(component.programYears.title, 'Program Years (0)');
     assert.ok(component.programYears.notDirecting);
 
-    assert.equal(component.courses.title, 'Courses (0)');
+    assert.strictEqual(component.courses.title, 'Courses (0)');
     assert.ok(component.courses.notDirecting);
     assert.ok(component.courses.notAdministrating);
     assert.ok(component.courses.notInstructing);
     assert.ok(component.courses.notStudentAdvising);
 
-    assert.equal(component.sessions.title, 'Sessions (0)');
+    assert.strictEqual(component.sessions.title, 'Sessions (0)');
     assert.ok(component.sessions.notAdministrating);
     assert.ok(component.sessions.notInstructing);
     assert.ok(component.sessions.notStudentAdvising);
@@ -74,15 +74,15 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     this.set('setSchool', (schoolId) => {
-      assert.equal(schoolId, 1);
+      assert.strictEqual(parseInt(schoolId, 10), 1);
     });
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
       @setSchool={{this.setSchool}}
       @setYear={{(noop)}}
     />`);
-    assert.equal(component.selectedSchool, '2');
-    assert.equal(component.school.title, 'School (school 1)');
+    assert.strictEqual(component.selectedSchool, '2');
+    assert.strictEqual(component.school.title, 'School (school 1)');
     await component.changeSchool(1);
   });
 
@@ -107,16 +107,16 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     this.set('setYear', (year) => {
-      assert.equal(year, this.currentAcademicYear + 1);
+      assert.strictEqual(parseInt(year, 10), this.currentAcademicYear + 1);
     });
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
       @setSchool={{(noop)}}
       @setYear={{this.setYear}}
     />`);
-    assert.equal(component.selectedYear, this.currentAcademicYear);
+    assert.strictEqual(parseInt(component.selectedYear, 10), this.currentAcademicYear);
     await component.courses.toggle();
-    assert.equal(component.courses.directors.length, 1);
+    assert.strictEqual(component.courses.directors.length, 1);
     assert.ok(component.courses.notAdministrating);
     await component.changeYear(this.currentAcademicYear + 1);
   });
@@ -136,8 +136,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @setYear={{(noop)}}
     />`);
 
-    assert.equal(component.school.director, 'Yes');
-    assert.equal(component.school.administrator, 'Yes');
+    assert.strictEqual(component.school.director, 'Yes');
+    assert.strictEqual(component.school.administrator, 'Yes');
     assert.ok(component.programs.notDirecting);
     assert.ok(component.programYears.notDirecting);
     assert.ok(component.courses.notDirecting);
@@ -164,11 +164,11 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @setYear={{(noop)}}
     />`);
 
-    assert.equal(component.school.director, 'No');
-    assert.equal(component.school.administrator, 'No');
-    assert.equal(component.programs.title, 'Programs (1)');
-    assert.equal(component.programs.directors.length, 1);
-    assert.equal(component.programs.directors[0].text, 'program 0');
+    assert.strictEqual(component.school.director, 'No');
+    assert.strictEqual(component.school.administrator, 'No');
+    assert.strictEqual(component.programs.title, 'Programs (1)');
+    assert.strictEqual(component.programs.directors.length, 1);
+    assert.strictEqual(component.programs.directors[0].text, 'program 0');
 
     assert.ok(component.courses.notDirecting);
     assert.ok(component.courses.notAdministrating);
@@ -198,12 +198,12 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @setYear={{(noop)}}
     />`);
 
-    assert.equal(component.school.director, 'No');
-    assert.equal(component.school.administrator, 'No');
+    assert.strictEqual(component.school.director, 'No');
+    assert.strictEqual(component.school.administrator, 'No');
     assert.ok(component.programs.notDirecting);
-    assert.equal(component.programYears.title, 'Program Years (1)');
-    assert.equal(component.programYears.directors.length, 1);
-    assert.equal(component.programYears.directors[0].text, 'program 0 cohort 0');
+    assert.strictEqual(component.programYears.title, 'Program Years (1)');
+    assert.strictEqual(component.programYears.directors.length, 1);
+    assert.strictEqual(component.programYears.directors[0].text, 'program 0 cohort 0');
 
     assert.ok(component.courses.notDirecting);
     assert.ok(component.courses.notAdministrating);
@@ -239,24 +239,33 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @setYear={{(noop)}}
     />`);
 
-    assert.equal(component.school.director, 'No');
-    assert.equal(component.school.administrator, 'No');
+    assert.strictEqual(component.school.director, 'No');
+    assert.strictEqual(component.school.administrator, 'No');
     assert.ok(component.programs.notDirecting);
     assert.ok(component.programYears.notDirecting);
 
-    assert.equal(component.courses.title, 'Courses (4)');
-    assert.equal(component.courses.directors.length, 1);
-    assert.equal(component.courses.directors[0].text, `${this.currentAcademicYear} course 0`);
-    assert.equal(component.courses.administrators.length, 1);
-    assert.equal(component.courses.administrators[0].text, `${this.currentAcademicYear} course 0`);
-    assert.equal(component.courses.instructors.length, 1);
-    assert.equal(component.courses.instructors[0].text, `${this.currentAcademicYear} course 0`);
-    assert.equal(component.courses.studentAdvisors.length, 1);
-    assert.equal(component.courses.studentAdvisors[0].text, `${this.currentAcademicYear} course 0`);
-    assert.equal(component.sessions.title, 'Sessions (1)');
+    assert.strictEqual(component.courses.title, 'Courses (4)');
+    assert.strictEqual(component.courses.directors.length, 1);
+    assert.strictEqual(component.courses.directors[0].text, `${this.currentAcademicYear} course 0`);
+    assert.strictEqual(component.courses.administrators.length, 1);
+    assert.strictEqual(
+      component.courses.administrators[0].text,
+      `${this.currentAcademicYear} course 0`
+    );
+    assert.strictEqual(component.courses.instructors.length, 1);
+    assert.strictEqual(
+      component.courses.instructors[0].text,
+      `${this.currentAcademicYear} course 0`
+    );
+    assert.strictEqual(component.courses.studentAdvisors.length, 1);
+    assert.strictEqual(
+      component.courses.studentAdvisors[0].text,
+      `${this.currentAcademicYear} course 0`
+    );
+    assert.strictEqual(component.sessions.title, 'Sessions (1)');
     assert.ok(component.sessions.notAdministrating);
-    assert.equal(component.sessions.instructors.length, 1);
-    assert.equal(
+    assert.strictEqual(component.sessions.instructors.length, 1);
+    assert.strictEqual(
       component.sessions.instructors[0].text,
       `${this.currentAcademicYear} course 0 » session 0`
     );
@@ -289,30 +298,33 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @setYear={{(noop)}}
     />`);
 
-    assert.equal(component.school.director, 'No');
-    assert.equal(component.school.administrator, 'No');
+    assert.strictEqual(component.school.director, 'No');
+    assert.strictEqual(component.school.administrator, 'No');
     assert.ok(component.programs.notDirecting);
     assert.ok(component.programYears.notDirecting);
 
-    assert.equal(component.courses.title, 'Courses (1)');
+    assert.strictEqual(component.courses.title, 'Courses (1)');
     assert.ok(component.courses.notDirecting);
     assert.ok(component.courses.notAdministrating);
-    assert.equal(component.courses.instructors.length, 1);
-    assert.equal(component.courses.instructors[0].text, `${this.currentAcademicYear} course 0`);
+    assert.strictEqual(component.courses.instructors.length, 1);
+    assert.strictEqual(
+      component.courses.instructors[0].text,
+      `${this.currentAcademicYear} course 0`
+    );
     assert.ok(component.courses.notStudentAdvising);
-    assert.equal(component.sessions.title, 'Sessions (3)');
-    assert.equal(component.sessions.administrators.length, 1);
-    assert.equal(
+    assert.strictEqual(component.sessions.title, 'Sessions (3)');
+    assert.strictEqual(component.sessions.administrators.length, 1);
+    assert.strictEqual(
       component.sessions.administrators[0].text,
       `${this.currentAcademicYear} course 0 » session 0`
     );
-    assert.equal(component.sessions.instructors.length, 1);
-    assert.equal(
+    assert.strictEqual(component.sessions.instructors.length, 1);
+    assert.strictEqual(
       component.sessions.instructors[0].text,
       `${this.currentAcademicYear} course 0 » session 0`
     );
-    assert.equal(component.sessions.studentAdvisors.length, 1);
-    assert.equal(
+    assert.strictEqual(component.sessions.studentAdvisors.length, 1);
+    assert.strictEqual(
       component.sessions.studentAdvisors[0].text,
       `${this.currentAcademicYear} course 0 » session 0`
     );
@@ -340,7 +352,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @setYear={{(noop)}}
     />`);
 
-    assert.equal(component.selectedYear, this.currentAcademicYear);
+    assert.strictEqual(parseInt(component.selectedYear, 10), this.currentAcademicYear);
     unfreezeDate();
   });
 
@@ -377,33 +389,33 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     this.set('user', userModel);
 
     await render(hbs`<UserProfilePermissions @user={{this.user}} />`);
-    assert.equal(component.courses.administrators.length, 1);
-    assert.equal(
+    assert.strictEqual(component.courses.administrators.length, 1);
+    assert.strictEqual(
       component.courses.administrators[0].text,
       `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`
     );
-    assert.equal(component.courses.instructors.length, 1);
-    assert.equal(
+    assert.strictEqual(component.courses.instructors.length, 1);
+    assert.strictEqual(
       component.courses.instructors[0].text,
       `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`
     );
-    assert.equal(component.courses.studentAdvisors.length, 1);
-    assert.equal(
+    assert.strictEqual(component.courses.studentAdvisors.length, 1);
+    assert.strictEqual(
       component.courses.studentAdvisors[0].text,
       `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`
     );
-    assert.equal(component.sessions.administrators.length, 1);
-    assert.equal(
+    assert.strictEqual(component.sessions.administrators.length, 1);
+    assert.strictEqual(
       component.sessions.administrators[0].text,
       `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`
     );
-    assert.equal(component.sessions.instructors.length, 1);
-    assert.equal(
+    assert.strictEqual(component.sessions.instructors.length, 1);
+    assert.strictEqual(
       component.sessions.instructors[0].text,
       `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`
     );
-    assert.equal(component.sessions.studentAdvisors.length, 1);
-    assert.equal(
+    assert.strictEqual(component.sessions.studentAdvisors.length, 1);
+    assert.strictEqual(
       component.sessions.studentAdvisors[0].text,
       `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`
     );
@@ -426,7 +438,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @setYear={{(noop)}}
     />`);
 
-    assert.equal(component.selectedSchool, this.schools[1].id);
-    assert.equal(component.selectedYear, this.thisYear + 1);
+    assert.strictEqual(component.selectedSchool, this.schools[1].id);
+    assert.strictEqual(parseInt(component.selectedYear, 10), this.thisYear + 1);
   });
 });
