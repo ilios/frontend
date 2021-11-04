@@ -1,8 +1,8 @@
 .week-glance-pre-work {
   margin-left: .5rem;
-  h4 {
+  .title {
     @include ilios-heading-h6;
-    margin-bottom: .25rem;
+    display: inline;
   }
 
   &:last-of-type {
