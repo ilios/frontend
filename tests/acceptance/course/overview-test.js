@@ -40,7 +40,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       const clerkshipTypeModel = await this.owner
         .lookup('service:store')
         .find('courseClerkshipType', this.clerkshipType.id);
-      await page.details.visit({ courseId: courseModel.id });
+      await page.visit({ courseId: courseModel.id });
       assert.strictEqual(
         page.details.overview.startDate.text,
         'Start: ' + this.intl.formatDate(courseModel.startDate)
@@ -63,7 +63,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       const clerkshipTypeModel = await this.owner
         .lookup('service:store')
         .find('courseClerkshipType', this.clerkshipType.id);
-      await page.details.visit({ courseId: courseModel.id, details: true });
+      await page.visit({ courseId: courseModel.id, details: true });
       assert.strictEqual(
         page.details.overview.startDate.text,
         'Start: ' + this.intl.formatDate(courseModel.startDate)
@@ -83,7 +83,7 @@ module('Acceptance | Course - Overview', function (hooks) {
 
     test('open and close details', async function (assert) {
       const courseModel = await this.owner.lookup('service:store').find('course', this.course.id);
-      await page.details.visit({ courseId: courseModel.id });
+      await page.visit({ courseId: courseModel.id });
       assert.strictEqual(page.details.titles, 2);
       assert.strictEqual(currentURL(), '/courses/1');
       await page.details.collapseControl();
@@ -102,7 +102,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     assert.strictEqual(
       page.details.overview.clerkshipType.text,
       'Clerkship Type: ' + t('general.notAClerkship')
@@ -126,7 +126,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       clerkshipType,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     assert.strictEqual(
       page.details.overview.clerkshipType.text,
       'Clerkship Type: clerkship type 2'
@@ -148,7 +148,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     assert.strictEqual(page.details.header.title.value, 'course 0');
     await page.details.header.title.edit();
     await page.details.header.title.set('test new title');
@@ -165,7 +165,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     const newDate = moment(course.startDate).add(1, 'year').add(1, 'month');
     assert.strictEqual(
       page.details.overview.startDate.text,
@@ -193,7 +193,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     const startDate = this.intl.formatDate(courseModel.startDate);
     const newDate = moment(courseModel.startDate).add(1, 'year');
     assert.strictEqual(page.details.overview.startDate.text, `Start: ${startDate}`);
@@ -214,7 +214,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     const endDate = this.intl.formatDate(courseModel.endDate);
     const newDate = moment(course.endDate).add(1, 'year').add(1, 'month');
     assert.strictEqual(page.details.overview.endDate.text, `End: ${endDate}`);
@@ -234,7 +234,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     const endDate = this.intl.formatDate(courseModel.endDate);
     const newDate = moment(course.endDate).subtract(1, 'year');
     assert.strictEqual(page.details.overview.endDate.text, 'End: ' + endDate);
@@ -255,7 +255,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       externalId,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     const newValue = 'new id';
     assert.strictEqual(page.details.overview.externalId.text, `Course ID: ${externalId}`);
     await page.details.overview.externalId.edit();
@@ -273,7 +273,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       externalId: 'abc123',
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     assert.strictEqual(
       page.details.overview.externalId.text,
       `Course ID: ${courseModel.externalId}`
@@ -294,7 +294,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     assert.strictEqual(
       page.details.overview.externalId.text,
       'Course ID: ' + t('general.clickToEdit')
@@ -309,7 +309,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       level: 3,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     const newValue = 1;
     assert.strictEqual(page.details.overview.level.text, `Level: ${courseModel.level}`);
     await page.details.overview.level.edit();
@@ -326,7 +326,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     assert.ok(page.details.overview.rollover.isVisible);
     await page.details.overview.rollover.visit();
 
@@ -339,7 +339,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     assert.notOk(page.details.overview.rollover.isVisible);
   });
 
@@ -350,7 +350,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     assert.ok(page.details.overview.rollover.isVisible);
   });
 
@@ -361,7 +361,7 @@ module('Acceptance | Course - Overview', function (hooks) {
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    await page.details.visit({ courseId: courseModel.id, details: true });
+    await page.visit({ courseId: courseModel.id, details: true });
     assert.ok(page.details.overview.rollover.isVisible);
     await page.details.overview.rollover.visit();
     assert.notOk(page.details.overview.rollover.isVisible);

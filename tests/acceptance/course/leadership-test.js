@@ -27,7 +27,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
 
   test('collapsed leadership', async function (assert) {
     assert.expect(10);
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
 
     assert.strictEqual(page.details.leadershipCollapsed.title, 'Course Leadership');
     assert.strictEqual(page.details.leadershipCollapsed.headers.length, 1);
@@ -50,7 +50,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
 
   test('list leadership', async function (assert) {
     assert.expect(10);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseLeadershipDetails: true,
@@ -74,7 +74,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
 
   test('search administrators', async function (assert) {
     assert.expect(15);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseLeadershipDetails: true,
@@ -122,7 +122,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
 
   test('search directors', async function (assert) {
     assert.expect(15);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseLeadershipDetails: true,
@@ -149,7 +149,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
 
   test('search student advisors', async function (assert) {
     assert.expect(15);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseLeadershipDetails: true,
@@ -197,7 +197,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
 
   test('manage leadership', async function (assert) {
     assert.expect(18);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseLeadershipDetails: true,
@@ -245,7 +245,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
 
   test('cancel leadership changes', async function (assert) {
     assert.expect(9);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseLeadershipDetails: true,
@@ -284,7 +284,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
 
   test('save leadership changes', async function (assert) {
     assert.expect(9);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseLeadershipDetails: true,

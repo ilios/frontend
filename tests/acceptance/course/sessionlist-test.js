@@ -76,7 +76,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('session list', async function (assert) {
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
@@ -131,7 +131,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('expanded offering', async function (assert) {
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
@@ -172,7 +172,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('no offerings', async function (assert) {
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
@@ -186,7 +186,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('close offering details', async function (assert) {
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.details.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(expandedSessions.length, 0);
@@ -198,7 +198,7 @@ module('Acceptance | Course - Session List', function (hooks) {
 
   test('session last update timestamp visible in expanded mode', async function (assert) {
     assert.expect(1);
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.details.courseSessions.sessionsGrid;
     await sessions[0].expand();
     assert.strictEqual(
@@ -211,7 +211,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     this.server.create('offering', { session: this.session2 });
     this.server.create('offering', { session: this.session3 });
     this.server.create('offering', { session: this.session4 });
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.details.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(expandedSessions.length, 0);
@@ -227,7 +227,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   test('expand all sessions does not expand sessions with no offerings', async function (assert) {
     this.server.create('offering', { session: this.session2 });
     this.server.create('offering', { session: this.session4 });
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.details.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(expandedSessions.length, 0);
@@ -241,7 +241,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     this.server.create('offering', { session: this.session2 });
     this.server.create('offering', { session: this.session3 });
     this.server.create('offering', { session: this.session4 });
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.details.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(expandedSessions.length, 0);
@@ -257,7 +257,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     this.server.create('offering', { session: this.session2 });
     this.server.create('offering', { session: this.session3 });
     this.server.create('offering', { session: this.session4 });
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.details.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(expandedSessions.length, 0);
@@ -273,7 +273,7 @@ module('Acceptance | Course - Session List', function (hooks) {
 
   test('new session', async function (assert) {
     this.server.create('sessionType', { school: this.school });
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     await page.details.courseSessions.header.expandNewSessionForm();
@@ -292,7 +292,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('cancel session', async function (assert) {
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     await page.details.courseSessions.header.expandNewSessionForm();
@@ -304,7 +304,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('new session goes away when we navigate #643', async function (assert) {
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
     await page.details.courseSessions.header.expandNewSessionForm();
     assert.ok(page.details.courseSessions.newSession.isVisible);
@@ -323,7 +323,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('first offering is updated when offering is updated #1276', async function (assert) {
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
     const { offerings } = sessions[0].offerings;
 
@@ -362,7 +362,7 @@ module('Acceptance | Course - Session List', function (hooks) {
 
   test('title filter escapes regex', async function (assert) {
     assert.expect(4);
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(sessions[0].title, 'session 0');
@@ -372,7 +372,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('delete session', async function (assert) {
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(sessions[0].title, 'session 0');
@@ -390,7 +390,7 @@ module('Acceptance | Course - Session List', function (hooks) {
       course: this.course,
       sessionType: this.sessionType,
     });
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, sessionCount + 4);
 
@@ -404,7 +404,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('edit offering URL', async function (assert) {
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     const { sessions } = page.details.courseSessions.sessionsGrid;
     const { offerings } = sessions[0].offerings;
 

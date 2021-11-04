@@ -31,7 +31,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(14);
 
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,

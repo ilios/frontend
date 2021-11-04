@@ -47,7 +47,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   test('list cohorts', async function (assert) {
     assert.expect(4);
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     assert.strictEqual(page.details.cohorts.current.length, 1);
     assert.strictEqual(page.details.cohorts.current[0].school, 'school 0');
     assert.strictEqual(page.details.cohorts.current[0].program, 'program 0');
@@ -56,7 +56,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   test('manage cohorts', async function (assert) {
     assert.expect(4);
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     await page.details.cohorts.manage();
     assert.strictEqual(page.details.cohorts.selected.length, 1);
     assert.strictEqual(page.details.cohorts.selected[0].name, 'school 0 | program 0 | cohort 0');
@@ -66,7 +66,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   test('save cohort changes', async function (assert) {
     assert.expect(4);
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     await page.details.cohorts.manage();
     await page.details.cohorts.selected[0].remove();
     await page.details.cohorts.selectable[0].add();
@@ -80,7 +80,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   test('cancel cohort changes', async function (assert) {
     assert.expect(4);
-    await page.details.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: 1, details: true });
     await page.details.cohorts.manage();
     await page.details.cohorts.selected[0].remove();
     await page.details.cohorts.selectable[0].add();
@@ -95,7 +95,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
   test('removing a cohort remove course objectives parents linked to that cohort', async function (assert) {
     assert.expect(7);
 
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,

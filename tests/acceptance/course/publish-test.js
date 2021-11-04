@@ -20,7 +20,7 @@ module('Acceptance | Course - Publish', function (hooks) {
       school: this.school,
       cohorts: [this.cohort],
     });
-    await page.details.visit({ courseId: course.id });
+    await page.visit({ courseId: course.id });
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Not Published');
     await page.details.header.publicationMenu.toggle.click();
     await page.details.header.publicationMenu.publishAsIs();
@@ -34,7 +34,7 @@ module('Acceptance | Course - Publish', function (hooks) {
       school: this.school,
       cohorts: [this.cohort],
     });
-    await page.details.visit({ courseId: course.id });
+    await page.visit({ courseId: course.id });
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Not Published');
     await page.details.header.publicationMenu.toggle.click();
     await page.details.header.publicationMenu.markAsScheduled();
@@ -50,7 +50,7 @@ module('Acceptance | Course - Publish', function (hooks) {
       published: true,
       publishedAsTbd: true,
     });
-    await page.details.visit({ courseId: course.id });
+    await page.visit({ courseId: course.id });
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Scheduled');
     await page.details.header.publicationMenu.toggle.click();
     await page.details.header.publicationMenu.publishAsIs();
@@ -66,7 +66,7 @@ module('Acceptance | Course - Publish', function (hooks) {
       published: true,
       publishedAsTbd: true,
     });
-    await page.details.visit({ courseId: course.id });
+    await page.visit({ courseId: course.id });
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Scheduled');
     await page.details.header.publicationMenu.toggle.click();
     await page.details.header.publicationMenu.unpublishCourse();
@@ -81,7 +81,7 @@ module('Acceptance | Course - Publish', function (hooks) {
       cohorts: [this.cohort],
       published: true,
     });
-    await page.details.visit({ courseId: course.id });
+    await page.visit({ courseId: course.id });
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
     await page.details.header.publicationMenu.toggle.click();
     await page.details.header.publicationMenu.markAsScheduled();
@@ -96,7 +96,7 @@ module('Acceptance | Course - Publish', function (hooks) {
       cohorts: [this.cohort],
       published: true,
     });
-    await page.details.visit({ courseId: course.id });
+    await page.visit({ courseId: course.id });
     assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
     await page.details.header.publicationMenu.toggle.click();
     await page.details.header.publicationMenu.unpublishCourse();

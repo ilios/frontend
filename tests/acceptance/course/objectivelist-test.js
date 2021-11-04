@@ -48,7 +48,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
 
     this.server.createList('course-objective', 11, { course });
 
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -147,7 +147,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
       school: this.school,
     });
     this.server.create('course-objective', { course, title: longTitle });
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -173,7 +173,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
       school: this.school,
     });
     this.server.create('course-objective', { course });
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -201,7 +201,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
       school: this.school,
     });
     this.server.create('course-objective', { course });
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,

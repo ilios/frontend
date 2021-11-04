@@ -44,7 +44,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
   test('initial view', async function (assert) {
     assert.expect(16);
 
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -84,7 +84,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
   test('can select multiple parents', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(8);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,

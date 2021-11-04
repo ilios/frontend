@@ -1,4 +1,4 @@
-import { clickable, count, create, collection, text, visitable } from 'ember-cli-page-object';
+import { clickable, count, create, collection, text } from 'ember-cli-page-object';
 import objectives from './course/objectives';
 import learningMaterials from './learning-materials';
 import meshTerms from './mesh-terms';
@@ -12,7 +12,6 @@ import header from './course-header';
 
 export default create({
   scope: '[data-test-ilios-course-details]',
-  visit: visitable('/courses/:courseId'),
   collapseControl: clickable('.detail-collapsed-control'),
   titles: count('.title'),
   header,

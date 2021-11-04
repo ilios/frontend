@@ -59,7 +59,7 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(32);
 
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -122,7 +122,7 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
   test('save changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(12);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -173,7 +173,7 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
   test('cancel changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(12);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,

@@ -25,7 +25,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     assert.expect(9);
     const newObjectiveDescription = 'Test junk 123';
 
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -62,7 +62,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     this.server.create('course-objective', { course });
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -93,7 +93,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     this.server.create('course-objective', { course });
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -125,7 +125,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     assert.expect(5);
     const newObjectiveDescription = 'Test junk 123';
 
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,

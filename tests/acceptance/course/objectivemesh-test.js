@@ -42,7 +42,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   test('manage terms', async function (assert) {
     assert.expect(35);
     this.user.update({ administeredSchools: [this.school] });
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -115,7 +115,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
 
   test('save terms', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -176,7 +176,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
 
   test('cancel changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,

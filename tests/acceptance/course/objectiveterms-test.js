@@ -29,7 +29,7 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
   test('manage and save terms', async function (assert) {
     assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
@@ -138,7 +138,7 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
   test('manage and cancel terms', async function (assert) {
     assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,

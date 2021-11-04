@@ -54,7 +54,7 @@ module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
     });
 
     this.user.update({ administeredSchools: [this.school] });
-    await page.details.visit({
+    await page.visit({
       courseId: 1,
       details: true,
       courseObjectiveDetails: true,
