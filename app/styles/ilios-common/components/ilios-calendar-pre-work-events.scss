@@ -3,14 +3,16 @@
   margin-top: 1em;
   padding: 1em 0;
 
-  h4 {
+  .title {
     @include font-size('medium');
     font-weight: bold;
     margin-top: 0;
+    padding-left: 1rem;
   }
 
   ul {
     margin-left: 1em;
+    padding-left: 0;
     list-style-type: none;
   }
 }

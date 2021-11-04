@@ -3,7 +3,7 @@
   margin-top: 1em;
   padding: 1em 0;
 
-  h4 {
+  .title {
     @include font-size('medium');
     font-weight: bold;
     margin-top: 0;

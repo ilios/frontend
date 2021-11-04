@@ -1,19 +1,19 @@
 <div class="week-glance-pre-work" data-test-week-glance-pre-work>
-  <h4>
+  <h4 class="title">
     <LinkTo data-test-event-title @route="events" @model={{@events.firstObject.slug}}>
       {{@events.firstObject.name}}
     </LinkTo>
-    <span class="date" data-test-date>
-      {{t "general.dueBefore"}}
-      <a href={{concat "#event" @events.firstObject.postrequisiteSlug}}>
-        {{@events.firstObject.postrequisiteName}}
-      </a>
-      ({{format-date @events.firstObject.startDate}})
-    </span>
-    {{#if (gt @events.length 1)}}
-      <span data-test-more>
-        {{t "general.withXmoreOfferings" count=(sub @events.length 1)}}
-      </span>
-    {{/if}}
   </h4>
+  <span class="date" data-test-date>
+    {{t "general.dueBefore"}}
+    <a href={{concat "#event" @events.firstObject.postrequisiteSlug}}>
+      {{@events.firstObject.postrequisiteName}}
+    </a>
+    ({{format-date @events.firstObject.startDate}})
+  </span>
+  {{#if (gt @events.length 1)}}
+    <span data-test-more>
+      {{t "general.withXmoreOfferings" count=(sub @events.length 1)}}
+    </span>
+  {{/if}}
 </div>

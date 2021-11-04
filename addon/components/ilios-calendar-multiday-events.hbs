@@ -1,8 +1,8 @@
 {{#if @events.length}}
   <div class="ilios-calendar-multiday-events">
-    <h4 data-test-title>
+    <h3 class="title" data-test-title>
       {{t "general.multidayEvents"}}
-    </h4>
+    </h3>
     <ul>
       {{#each @events as |event|}}
         <IliosCalendarMultidayEvent
