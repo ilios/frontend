@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/course-publicationcheck';
 
 module('Integration | Component | course-publicationcheck', function (hooks) {
   setupRenderingTest(hooks);
@@ -18,8 +19,8 @@ module('Integration | Component | course-publicationcheck', function (hooks) {
     this.server.create('courseObjective', { course });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('model', courseModel);
-    await render(hbs`<CoursePublicationcheck @course={{model}} />`);
-    assert.ok(!!find('.fa-unlink'));
+    await render(hbs`<CoursePublicationcheck @course={{this.model}} />`);
+    assert.ok(component.unlink.isPresent);
   });
 
   test('it does not shows unlink icon', async function (assert) {
@@ -35,7 +36,7 @@ module('Integration | Component | course-publicationcheck', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('model', courseModel);
-    await render(hbs`<CoursePublicationcheck @course={{model}} />`);
-    assert.notOk(!!find('.fa-unlink'));
+    await render(hbs`<CoursePublicationcheck @course={{this.model}} />`);
+    assert.notOk(component.unlink.isPresent);
   });
 });
