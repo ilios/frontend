@@ -18,7 +18,7 @@
 
       a {
         color: $ilios-blue;
-        font-size: 1.2rem;
+        @include font-size('medium');
         margin-right: .5rem;
       }
     }

@@ -29,7 +29,7 @@
     .validation-error-message {
       color: $ilios-red;
       display: block;
-      font-size: 12px;
+      @include font-size('small');
       font-style: italic;
       margin-top: .25rem;
     }

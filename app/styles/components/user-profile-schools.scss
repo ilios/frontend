@@ -14,7 +14,7 @@
   }
 
   .primary-school {
-    font-size: 1.25rem;
+    @include font-size('medium');
   }
 
   .more-permissions-notice {

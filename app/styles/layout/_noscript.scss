@@ -3,7 +3,7 @@ noscript {
     background-color: $background-grey;
     border: 2px dashed $ilios-orange;
     color: $text-grey;
-    font-size: 2em;
+    @include font-size('xxl');
     font-weight: bold;
     margin: 2rem;
     padding: 2rem;

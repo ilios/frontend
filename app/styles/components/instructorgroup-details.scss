@@ -30,7 +30,7 @@
 
   .instructorgroup-loading {
     display: block;
-    font-size: 1.75rem;
+    @include font-size('xl');
     margin: auto;
     text-align: center;
   }

@@ -10,7 +10,7 @@
 
   h2 {
     @include ilios-heading;
-    font-size: 1.25rem;
+    @include font-size('medium');
     margin-bottom: 1rem;
     text-align: center;
     width: 100%;

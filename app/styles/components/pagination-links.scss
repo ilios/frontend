@@ -19,7 +19,7 @@
     }
 
     svg {
-      font-size: 1.25rem;
+      @include font-size('medium');
       margin-left: .25rem;
       position: relative;
       top: 2px;

@@ -1,6 +1,5 @@
 .filter-tools {
   $filter-tools-border-color: $base-border-color;
-  $filter-font-size: 1rem;
 
   @include clearfix;
   border-radius: $base-border-radius;
@@ -8,7 +7,7 @@
 
 
   .filter {
-    font-size: $filter-font-size;
+    @include font-size('base');
     margin-bottom: 1rem;
     margin-top: 1rem;
     min-height: 2.25rem;
