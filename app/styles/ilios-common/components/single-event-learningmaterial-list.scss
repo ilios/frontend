@@ -9,16 +9,13 @@
 
   }
   .single-event-learningmaterial-item-notes {
-    i {
-      display: inline;
-      @include font-size('small');
+    @include font-size('small');
+    .fa-icon {
       margin-right: 5px;
     }
 
     p {
       display: inline;
-      @include font-size('small');
-      font-style: italic;
     }
   }
 
