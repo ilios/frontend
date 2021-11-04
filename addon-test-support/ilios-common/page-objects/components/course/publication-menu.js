@@ -1,4 +1,4 @@
-import { create, triggerable, isVisible, isHidden } from 'ember-cli-page-object';
+import { clickable, create, triggerable, isVisible, isHidden } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-course-publication-menu]',
@@ -15,6 +15,11 @@ const definition = {
   hasReview: isVisible('[data-test-review]'),
   hasTbd: isVisible('[data-test-tbd]'),
   hasUnPublish: isVisible('[data-test-un-publish]'),
+  publishAsIs: clickable('[data-test-publish-as-is]'),
+  publish: clickable('[data-test-publish]'),
+  reviewMisingItems: clickable('[data-test-review]'),
+  markAsScheduled: clickable('[data-test-tbd]'),
+  unpublishCourse: clickable('[data-test-un-publish]'),
 };
 
 export default definition;
