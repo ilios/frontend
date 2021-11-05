@@ -108,7 +108,7 @@ export default class UserProfileBioComponent extends Component {
   @restartableTask
   *load() {
     if (this.args.user && this.args.isManaging) {
-      yield this.manage.perform();
+      yield this.manage.linked.perform();
     }
   }
 
