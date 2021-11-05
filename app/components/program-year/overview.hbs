@@ -1,4 +1,8 @@
-<div class="programyear-overview" ...attributes>
+<div
+  class="programyear-overview"
+  data-test-programyear-overview
+  ...attributes
+>
   <div class="programyear-overview-header">
     <h5>
       {{t "general.overview"}}
@@ -9,6 +13,7 @@
           @route="program-year-visualizations"
           @model={{@programYear}}
           title={{t "general.programYearVisualizations"}}
+          data-test-go-to-visualizations
         >
           <FaIcon @icon="chart-bar" />
         </LinkTo>
@@ -23,16 +28,22 @@
       {{#if @canUpdate}}
         <ul class="removable-directors">
           {{#each this.sortedDirectors as |user|}}
-            <li role="button" {{on "click" (perform this.removeDirector user)}}>
-              <UserNameInfo @user={{user}} />
-              <FaIcon @icon="times" class="remove" />
+            <li data-test-directors>
+              <button
+                type="button" {{on "click" (perform this.removeDirector user)}}
+                class="link-button"
+                data-test-remove
+              >
+                <UserNameInfo @user={{user}} />
+                <FaIcon @icon="times" class="remove" />
+              </button>
             </li>
           {{/each}}
         </ul>
       {{else}}
         <ul class="directors">
           {{#each this.sortedDirectors as |user|}}
-            <li>
+            <li data-test-directors>
               <UserNameInfo @user={{user}} />
             </li>
           {{else}}
