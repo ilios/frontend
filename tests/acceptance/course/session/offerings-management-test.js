@@ -34,9 +34,9 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     });
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.dateBlocks[0].offerings[0].edit();
+    await page.details.offerings.dateBlocks[0].offerings[0].edit();
 
-    const { offeringForm: form } = page.offerings;
+    const { offeringForm: form } = page.details.offerings;
     await form.instructorManager.search('guy 3');
     assert.strictEqual(form.instructorManager.searchResults.length, 1);
   });
@@ -60,9 +60,9 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     });
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.dateBlocks[0].offerings[0].edit();
+    await page.details.offerings.dateBlocks[0].offerings[0].edit();
 
-    const { offeringForm: form } = page.offerings;
+    const { offeringForm: form } = page.details.offerings;
     assert.strictEqual(form.instructorManager.selectedInstructors.length, 0);
     await form.instructorManager.search('guy 2');
     assert.strictEqual(form.instructorManager.searchResults.length, 1);
@@ -104,35 +104,37 @@ module('Acceptance | Session - Offering Management', function (hooks) {
       instructors: [instructor1, instructor2],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.strictEqual(page.offerings.dateBlocks[0].offerings[0].instructors.length, 2);
+    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[0].instructors.length, 2);
     assert.strictEqual(
-      page.offerings.dateBlocks[0].offerings[0].instructors[0].userNameInfo.fullName,
+      page.details.offerings.dateBlocks[0].offerings[0].instructors[0].userNameInfo.fullName,
       '1 guy M. Mc1son'
     );
     assert.notOk(
-      page.offerings.dateBlocks[0].offerings[0].instructors[0].userNameInfo.hasAdditionalInfo
+      page.details.offerings.dateBlocks[0].offerings[0].instructors[0].userNameInfo
+        .hasAdditionalInfo
     );
     assert.strictEqual(
-      page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.fullName,
+      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.fullName,
       'Clem Chowder'
     );
     assert.ok(
-      page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.hasAdditionalInfo
+      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo
+        .hasAdditionalInfo
     );
     assert.notOk(
-      page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible
+      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible
     );
-    await page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.expandTooltip();
+    await page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.expandTooltip();
     assert.ok(
-      page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible
+      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible
     );
     assert.strictEqual(
-      page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.tooltipContents,
+      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.tooltipContents,
       'Campus name of record: 2 guy M, Mc2son'
     );
-    await page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.closeTooltip();
+    await page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.closeTooltip();
     assert.notOk(
-      page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible
+      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible
     );
   });
 
@@ -162,40 +164,48 @@ module('Acceptance | Session - Offering Management', function (hooks) {
       learnerGroups: [subSubLearnerGroup, subLearnerGroup2, learnerGroup2],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.strictEqual(page.offerings.dateBlocks[0].offerings[0].learnerGroups.length, 3);
+    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups.length, 3);
     assert.strictEqual(
-      page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].title,
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].title,
       'Sub-sub Group'
     );
-    assert.notOk(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible);
-    await page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].expandTooltip();
-    assert.ok(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible);
+    assert.notOk(
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible
+    );
+    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].expandTooltip();
+    assert.ok(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible);
     assert.strictEqual(
-      page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].tooltipContents,
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].tooltipContents,
       'Parent groups: Top Group » Sub-Group'
     );
-    await page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].closeTooltip();
+    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].closeTooltip();
     assert.strictEqual(
-      page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].title,
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].title,
       'Sub-Group 2'
     );
-    assert.notOk(page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].isTooltipVisible);
-    await page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].expandTooltip();
-    assert.ok(page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].isTooltipVisible);
+    assert.notOk(
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].isTooltipVisible
+    );
+    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].expandTooltip();
+    assert.ok(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].isTooltipVisible);
     assert.strictEqual(
-      page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].tooltipContents,
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].tooltipContents,
       'Parent group: Top Group'
     );
-    await page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].closeTooltip();
-    assert.notOk(page.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible);
+    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].closeTooltip();
+    assert.notOk(
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible
+    );
     assert.strictEqual(
-      page.offerings.dateBlocks[0].offerings[0].learnerGroups[2].title,
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].title,
       'Other Top Group'
     );
-    assert.notOk(page.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible);
-    await page.offerings.dateBlocks[0].offerings[0].learnerGroups[2].expandTooltip();
     assert.notOk(
-      page.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible,
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible
+    );
+    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].expandTooltip();
+    assert.notOk(
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible,
       'no tooltip on top-level group'
     );
   });

@@ -35,24 +35,24 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 0'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'course objective 1'
     );
 
-    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
     assert.strictEqual(m.objectives.length, 3);
     assert.strictEqual(m.objectives[0].title, 'course objective 0');
@@ -73,40 +73,40 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     });
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 0'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'course objective 1'
     );
 
-    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
     await m.objectives[0].add();
     await m.objectives[2].add();
     assert.ok(m.objectives[0].notSelected);
     assert.ok(m.objectives[1].selected);
     assert.ok(m.objectives[2].selected);
-    await page.objectives.objectiveList.objectives[0].parents.save();
+    await page.details.objectives.objectiveList.objectives[0].parents.save();
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 1'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'course objective 2'
     );
   });
@@ -121,40 +121,40 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     });
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 0'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'course objective 1'
     );
 
-    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
     await m.objectives[0].add();
     await m.objectives[2].add();
     assert.ok(m.objectives[0].notSelected);
     assert.ok(m.objectives[1].selected);
     assert.ok(m.objectives[2].selected);
-    await page.objectives.objectiveList.objectives[0].parents.cancel();
+    await page.details.objectives.objectiveList.objectives[0].parents.cancel();
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 0'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'course objective 1'
     );
   });
@@ -169,33 +169,33 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     });
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 0'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'course objective 1'
     );
 
-    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
     await m.objectives[0].add();
     await m.objectives[1].add();
     assert.ok(m.objectives[0].notSelected);
     assert.ok(m.objectives[1].notSelected);
     assert.ok(m.objectives[2].notSelected);
-    await page.objectives.objectiveList.objectives[0].parents.save();
+    await page.details.objectives.objectiveList.objectives[0].parents.save();
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
   });
 });

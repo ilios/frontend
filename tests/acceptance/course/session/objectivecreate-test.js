@@ -35,28 +35,28 @@ module('Acceptance | Session - Objective Create', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    await page.objectives.createNew();
-    await page.objectives.newObjective.description(newObjectiveDescription);
-    await page.objectives.newObjective.save();
+    await page.details.objectives.createNew();
+    await page.details.objectives.newObjective.description(newObjectiveDescription);
+    await page.details.objectives.newObjective.save();
 
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
-    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].meshDescriptors.empty);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.text,
       newObjectiveDescription
     );
-    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
-    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].meshDescriptors.empty);
   });
 
   test('cancel new objective', async function (assert) {
@@ -67,22 +67,22 @@ module('Acceptance | Session - Objective Create', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    await page.objectives.createNew();
-    await page.objectives.newObjective.description('junk');
-    await page.objectives.newObjective.cancel();
+    await page.details.objectives.createNew();
+    await page.details.objectives.newObjective.description('junk');
+    await page.details.objectives.newObjective.cancel();
 
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
-    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].meshDescriptors.empty);
   });
 
   test('empty objective title can not be created', async function (assert) {
@@ -93,16 +93,21 @@ module('Acceptance | Session - Objective Create', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    await page.objectives.createNew();
-    assert.notOk(page.objectives.newObjective.hasValidationError);
-    await page.objectives.newObjective.description('<p>&nbsp</p><div></div><span>  </span>');
-    await page.objectives.newObjective.save();
-    assert.ok(page.objectives.newObjective.hasValidationError);
-    assert.strictEqual(page.objectives.newObjective.validationError, 'This field can not be blank');
+    await page.details.objectives.createNew();
+    assert.notOk(page.details.objectives.newObjective.hasValidationError);
+    await page.details.objectives.newObjective.description(
+      '<p>&nbsp</p><div></div><span>  </span>'
+    );
+    await page.details.objectives.newObjective.save();
+    assert.ok(page.details.objectives.newObjective.hasValidationError);
+    assert.strictEqual(
+      page.details.objectives.newObjective.validationError,
+      'This field can not be blank'
+    );
   });
 });
