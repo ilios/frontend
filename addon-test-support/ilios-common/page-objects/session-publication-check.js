@@ -1,11 +1,14 @@
-import { create, text } from 'ember-cli-page-object';
+import { create, text, visitable } from 'ember-cli-page-object';
 
-const definition = {
-  scope: '[data-test-session-publicationcheck]',
-  title: text('[data-test-title]'),
+import overview from './components/session-overview';
+
+export default create({
+  visit: visitable('/courses/:courseId/sessions/:sessionId/publicationcheck'),
+  overview,
   backToSession: {
     scope: '[data-test-back-to-session]',
   },
+  title: text('[data-test-title]'),
   sessionTitle: text('[data-test-session-title]'),
   offerings: text('[data-test-offerings]'),
   terms: text('[data-test-terms]'),
@@ -14,7 +17,4 @@ const definition = {
     scope: '[data-test-unlink]',
   },
   mesh: text('[data-test-mesh]'),
-};
-
-export default definition;
-export const component = create(definition);
+});
