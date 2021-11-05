@@ -39,31 +39,43 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
 
   test('list', async function (assert) {
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
-    assert.strictEqual(page.competencies.title, 'Competencies (2)');
-    assert.strictEqual(page.competencies.list.domains.length, 1);
-    assert.strictEqual(page.competencies.list.domains[0].title, 'competency 0');
-    assert.strictEqual(page.competencies.list.domains[0].competencies.length, 2);
-    assert.strictEqual(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
-    assert.strictEqual(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
+    assert.strictEqual(page.details.competencies.title, 'Competencies (2)');
+    assert.strictEqual(page.details.competencies.list.domains.length, 1);
+    assert.strictEqual(page.details.competencies.list.domains[0].title, 'competency 0');
+    assert.strictEqual(page.details.competencies.list.domains[0].competencies.length, 2);
+    assert.strictEqual(
+      page.details.competencies.list.domains[0].competencies[0].text,
+      'competency 1'
+    );
+    assert.strictEqual(
+      page.details.competencies.list.domains[0].competencies[1].text,
+      'competency 2'
+    );
   });
 
   test('list with permission to edit', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
-    assert.strictEqual(page.competencies.title, 'Competencies (2)');
-    assert.strictEqual(page.competencies.list.domains.length, 1);
-    assert.strictEqual(page.competencies.list.domains[0].title, 'competency 0');
-    assert.strictEqual(page.competencies.list.domains[0].competencies.length, 2);
-    assert.strictEqual(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
-    assert.strictEqual(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
+    assert.strictEqual(page.details.competencies.title, 'Competencies (2)');
+    assert.strictEqual(page.details.competencies.list.domains.length, 1);
+    assert.strictEqual(page.details.competencies.list.domains[0].title, 'competency 0');
+    assert.strictEqual(page.details.competencies.list.domains[0].competencies.length, 2);
+    assert.strictEqual(
+      page.details.competencies.list.domains[0].competencies[0].text,
+      'competency 1'
+    );
+    assert.strictEqual(
+      page.details.competencies.list.domains[0].competencies[1].text,
+      'competency 2'
+    );
   });
 
   test('manager list', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
-    await page.competencies.manage();
+    await page.details.competencies.manage();
 
-    const { manager } = page.competencies;
+    const { manager } = page.details.competencies;
 
     assert.strictEqual(manager.domains.length, 2);
     assert.strictEqual(manager.domains[0].title, 'competency 0');
@@ -78,9 +90,9 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   test('change and save', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
-    await page.competencies.manage();
+    await page.details.competencies.manage();
 
-    const { manager } = page.competencies;
+    const { manager } = page.details.competencies;
 
     assert.strictEqual(manager.domains[1].title, 'competency 3');
     assert.strictEqual(manager.domains[1].competencies.length, 2);
@@ -92,25 +104,31 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     await manager.domains[1].click();
     await manager.domains[1].competencies[0].click();
     await manager.domains[0].competencies[1].click();
-    await page.competencies.save();
+    await page.details.competencies.save();
 
-    assert.strictEqual(page.competencies.title, 'Competencies (3)');
-    assert.strictEqual(page.competencies.list.domains.length, 2);
-    assert.strictEqual(page.competencies.list.domains[0].title, 'competency 0');
-    assert.strictEqual(page.competencies.list.domains[0].competencies.length, 1);
-    assert.strictEqual(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
+    assert.strictEqual(page.details.competencies.title, 'Competencies (3)');
+    assert.strictEqual(page.details.competencies.list.domains.length, 2);
+    assert.strictEqual(page.details.competencies.list.domains[0].title, 'competency 0');
+    assert.strictEqual(page.details.competencies.list.domains[0].competencies.length, 1);
+    assert.strictEqual(
+      page.details.competencies.list.domains[0].competencies[0].text,
+      'competency 1'
+    );
 
-    assert.strictEqual(page.competencies.list.domains[1].title, 'competency 3');
-    assert.strictEqual(page.competencies.list.domains[1].competencies.length, 1);
-    assert.strictEqual(page.competencies.list.domains[1].competencies[0].text, 'competency 5');
+    assert.strictEqual(page.details.competencies.list.domains[1].title, 'competency 3');
+    assert.strictEqual(page.details.competencies.list.domains[1].competencies.length, 1);
+    assert.strictEqual(
+      page.details.competencies.list.domains[1].competencies[0].text,
+      'competency 5'
+    );
   });
 
   test('change and cancel', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
-    await page.competencies.manage();
+    await page.details.competencies.manage();
 
-    const { manager } = page.competencies;
+    const { manager } = page.details.competencies;
 
     assert.strictEqual(manager.domains[1].title, 'competency 3');
     assert.strictEqual(manager.domains[1].competencies.length, 2);
@@ -122,13 +140,19 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     await manager.domains[1].click();
     await manager.domains[1].competencies[0].click();
     await manager.domains[0].competencies[1].click();
-    await page.competencies.cancel();
+    await page.details.competencies.cancel();
 
-    assert.strictEqual(page.competencies.title, 'Competencies (2)');
-    assert.strictEqual(page.competencies.list.domains.length, 1);
-    assert.strictEqual(page.competencies.list.domains[0].title, 'competency 0');
-    assert.strictEqual(page.competencies.list.domains[0].competencies.length, 2);
-    assert.strictEqual(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
-    assert.strictEqual(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
+    assert.strictEqual(page.details.competencies.title, 'Competencies (2)');
+    assert.strictEqual(page.details.competencies.list.domains.length, 1);
+    assert.strictEqual(page.details.competencies.list.domains[0].title, 'competency 0');
+    assert.strictEqual(page.details.competencies.list.domains[0].competencies.length, 2);
+    assert.strictEqual(
+      page.details.competencies.list.domains[0].competencies[0].text,
+      'competency 1'
+    );
+    assert.strictEqual(
+      page.details.competencies.list.domains[0].competencies[1].text,
+      'competency 2'
+    );
   });
 });
