@@ -39,7 +39,7 @@
             aria-label={{t "general.manage"}}
             type="button"
             class="manage"
-            {{on "click" (perform this.manage)}}
+            {{on "click" (fn @setIsManaging true)}}
             data-test-manage
           >
 

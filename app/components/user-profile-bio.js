@@ -107,13 +107,6 @@ export default class UserProfileBioComponent extends Component {
 
   @restartableTask
   *load() {
-    if (this.args.user && this.args.isManaging) {
-      yield this.manage.linked.perform();
-    }
-  }
-
-  @restartableTask
-  *manage() {
     this.firstName = this.args.user.firstName;
     this.middleName = this.args.user.middleName;
     this.lastName = this.args.user.lastName;
@@ -129,7 +122,6 @@ export default class UserProfileBioComponent extends Component {
       this.password = '';
       this.passwordStrengthScore = 0;
     }
-    this.args.setIsManaging(true);
   }
 
   @dropTask
