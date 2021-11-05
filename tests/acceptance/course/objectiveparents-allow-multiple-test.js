@@ -30,14 +30,14 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
       competency,
     });
 
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       school: this.school,
       cohorts: [cohort],
     });
 
     this.server.create('courseObjective', {
       programYearObjectives: [programYearObjectives[0], programYearObjectives[1]],
-      course,
+      course: this.course,
     });
   });
 
@@ -45,7 +45,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
     assert.expect(16);
 
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
@@ -85,7 +85,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(8);
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });

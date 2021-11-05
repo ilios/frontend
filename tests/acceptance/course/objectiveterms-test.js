@@ -21,8 +21,8 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
     });
     const term = this.server.create('term', { vocabulary, active: true });
     this.server.createList('term', 3, { vocabulary, active: true });
-    const course = this.server.create('course', { school });
-    this.server.create('course-objective', { course, terms: [term] });
+    this.course = this.server.create('course', { school });
+    this.server.create('course-objective', { course: this.course, terms: [term] });
     this.school = school;
   });
 
@@ -30,7 +30,7 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
     assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
@@ -139,7 +139,7 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
     assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });

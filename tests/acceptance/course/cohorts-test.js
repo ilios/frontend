@@ -33,21 +33,21 @@ module('Acceptance | Course - Cohorts', function (hooks) {
       programYear: programYear2,
     });
 
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       year: 2013,
       school,
       cohorts: [programYear1.cohort], //instead of just cohort1 otherwise the relationship gets munged
     });
 
     this.server.create('courseObjective', {
-      course,
+      course: this.course,
       programYearObjectives: [programYearObjective1, programYearObjective2],
     });
   });
 
   test('list cohorts', async function (assert) {
     assert.expect(4);
-    await page.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.cohorts.current.length, 1);
     assert.strictEqual(page.details.cohorts.current[0].school, 'school 0');
     assert.strictEqual(page.details.cohorts.current[0].program, 'program 0');
@@ -56,7 +56,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   test('manage cohorts', async function (assert) {
     assert.expect(4);
-    await page.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: this.course.id, details: true });
     await page.details.cohorts.manage();
     assert.strictEqual(page.details.cohorts.selected.length, 1);
     assert.strictEqual(page.details.cohorts.selected[0].name, 'school 0 | program 0 | cohort 0');
@@ -66,7 +66,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   test('save cohort changes', async function (assert) {
     assert.expect(4);
-    await page.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: this.course.id, details: true });
     await page.details.cohorts.manage();
     await page.details.cohorts.selected[0].remove();
     await page.details.cohorts.selectable[0].add();
@@ -80,7 +80,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   test('cancel cohort changes', async function (assert) {
     assert.expect(4);
-    await page.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: this.course.id, details: true });
     await page.details.cohorts.manage();
     await page.details.cohorts.selected[0].remove();
     await page.details.cohorts.selectable[0].add();
@@ -96,7 +96,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     assert.expect(7);
 
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });

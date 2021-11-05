@@ -57,7 +57,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     this.server.create('offering', { session: session3 });
 
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
     });
     assert.ok(page.publishAll.isVisible);
     assert.notOk(page.publishAll.hasUnlinkedWarning);
@@ -124,7 +124,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     this.server.create('offering', { session });
 
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
     });
     assert.ok(page.publishAll.isVisible);
     await page.publishAll.review.save();
@@ -163,7 +163,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessions: [session],
     });
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });

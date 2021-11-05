@@ -34,16 +34,16 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       programYear,
       competency: competency2,
     });
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       year: 2013,
       school: this.school,
       cohorts: [cohort],
     });
     this.server.create('courseObjective', {
-      course,
+      course: this.course,
       programYearObjectives: [parent],
     });
-    this.server.create('courseObjective', { course });
+    this.server.create('courseObjective', { course: this.course });
   });
 
   test('list parent objectives by competency', async function (assert) {
@@ -51,7 +51,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     assert.expect(18);
 
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
@@ -91,7 +91,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(10);
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
@@ -131,7 +131,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(10);
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });

@@ -43,16 +43,16 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
       competency: competencies[1],
     });
 
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       year: 2013,
       school: this.school,
       cohorts: [cohort1, cohort2],
     });
     this.server.create('courseObjective', {
-      course,
+      course: this.course,
       programYearObjectives: [programYearObjective1, programYearObjective4],
     });
-    this.server.create('courseObjective', { course });
+    this.server.create('courseObjective', { course: this.course });
   });
 
   test('list parent objectives by competency', async function (assert) {
@@ -60,7 +60,7 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
     assert.expect(32);
 
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
@@ -123,7 +123,7 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(12);
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
@@ -174,7 +174,7 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(12);
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });

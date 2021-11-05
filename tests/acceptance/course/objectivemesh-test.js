@@ -16,7 +16,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
 
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       year: 2013,
       school: this.school,
     });
@@ -24,10 +24,10 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
     const meshDescriptors = this.server.createList('meshDescriptor', 6);
     this.server.create('courseObjective', {
       meshDescriptors: [meshDescriptors.shift()],
-      course,
+      course: this.course,
     });
-    this.server.create('courseObjective', { meshDescriptors, course });
-    this.server.create('courseObjective', { course });
+    this.server.create('courseObjective', { meshDescriptors, course: this.course });
+    this.server.create('courseObjective', { course: this.course });
 
     // create some other objectives not in this course
     //this.server.createList('objective', 2);
@@ -43,7 +43,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
     assert.expect(35);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
@@ -116,7 +116,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   test('save terms', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
@@ -177,7 +177,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   test('cancel changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });

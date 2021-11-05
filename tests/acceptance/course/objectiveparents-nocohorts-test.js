@@ -20,11 +20,11 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
       programYears: [programYear],
     });
     this.server.create('programYearObjective', { programYear, competency });
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       year: 2013,
       school: this.school,
     });
-    this.server.create('courseObjective', { course });
+    this.server.create('courseObjective', { course: this.course });
   });
 
   test('add and remove a new cohort', async function (assert) {
@@ -32,7 +32,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
     assert.expect(14);
 
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });

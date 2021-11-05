@@ -36,24 +36,24 @@ module('Acceptance | Course - Competencies', function (hooks) {
       programYear,
     });
 
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       year: 2013,
       school: this.school,
       cohorts: [cohort],
     });
     this.server.create('courseObjective', {
       programYearObjectives: [programYearObjective],
-      course,
+      course: this.course,
     });
     this.server.create('courseObjective', {
       programYearObjectives: [programYearObjective],
-      course,
+      course: this.course,
     });
   });
 
   test('collapsed competencies renders', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await page.visit({ courseId: 1, details: true });
+    await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.collapsedCompetencies.title, 'Competencies (1)');
     assert.strictEqual(page.details.collapsedCompetencies.headers[0].text, 'School');
     assert.strictEqual(page.details.collapsedCompetencies.headers[1].text, 'Competencies');
@@ -64,7 +64,7 @@ module('Acceptance | Course - Competencies', function (hooks) {
   test('changing objective parent changes summary', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
