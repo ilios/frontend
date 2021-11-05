@@ -3,25 +3,27 @@ import { pageObjectFillInFroalaEditor } from 'ilios-common';
 import postrequisiteEditor from './session/postrequisite-editor';
 import yesNoToggle from './toggle-yesno';
 import ilmDueDateAndTime from './session-overview-ilm-duedate';
+import publicationStatus from './publication-status';
+import publicationMenu from './session/publication-menu';
 
 export default create({
   scope: '[data-test-session-overview]',
   title: {
-    scope: '.session-header',
+    scope: '[data-test-title]',
     title: text('.editable'),
     edit: clickable('[data-test-edit]'),
     set: fillable('input'),
     save: clickable('.done'),
-    value: text('.title'),
+    value: text(),
   },
   copy: {
-    scope: 'a.copy',
+    scope: '[data-test-copy]',
     visit: clickable(),
     link: attribute('href'),
     visible: isVisible(),
   },
   sessionType: {
-    scope: '.sessiontype',
+    scope: '[data-test-session-type]',
     value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
     set: fillable('select'),
@@ -29,7 +31,7 @@ export default create({
     hasError: isVisible('.validation-error-message'),
   },
   sessionDescription: {
-    scope: '.sessiondescription',
+    scope: '[data-test-description]',
     value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
     set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
@@ -47,7 +49,7 @@ export default create({
     hasError: isVisible('.validation-error-message'),
   },
   ilmHours: {
-    scope: '.sessionilmhours',
+    scope: '[data-test-ilm-hours]',
     value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
     set: fillable('input'),
@@ -56,27 +58,27 @@ export default create({
   },
   ilmDueDateAndTime,
   supplemental: {
-    scope: '.sessionsupplemental',
+    scope: '[data-test-supplemental]',
     yesNoToggle,
   },
   specialAttire: {
-    scope: '.sessionspecialattire',
+    scope: '[data-test-special-attire]',
     yesNoToggle,
   },
   specialEquipment: {
-    scope: '.sessionspecialequipment',
+    scope: '[data-test-special-equipment]',
     yesNoToggle,
   },
   attendanceRequired: {
-    scope: '.sessionattendancerequired',
+    scope: '[data-test-attendance-required]',
     yesNoToggle,
   },
   toggleIlm: {
-    scope: '.independentlearningcontrol',
+    scope: '[data-test-ilm]',
     yesNoToggle,
   },
   prerequisites: {
-    scope: '.prerequisites',
+    scope: '[data-test-prerequisites]',
   },
   postrequisite: {
     scope: '[data-test-postrequisite]',
@@ -84,5 +86,7 @@ export default create({
     edit: clickable('[data-test-edit]'),
     editor: postrequisiteEditor,
   },
-  lastUpdated: text('.last-update'),
+  lastUpdated: text('[data-test-last-update]'),
+  publicationStatus,
+  publicationMenu,
 });
