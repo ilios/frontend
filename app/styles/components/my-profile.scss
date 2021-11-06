@@ -33,7 +33,7 @@
   .token-maintenance {
 
     border-top: 1px dotted $ilios-orange;
-    font-size: .8rem;
+    @include font-size('small');
     margin-top: 1rem;
     padding: 1rem;
 

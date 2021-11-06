@@ -27,7 +27,7 @@
       .editable,
       h5 {
         display: block;
-        font-size: 1.5rem;
+        @include font-size('large');
 
         @include for-laptop-and-up {
           display: inline;

@@ -55,7 +55,7 @@
       .fa-search {
         bottom: .125rem;
         display: inline-block;
-        font-size: .75rem;
+        @include font-size('small');
         margin-right: .125rem;
         position: relative;
       }

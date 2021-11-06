@@ -8,7 +8,7 @@
   }
 
   .primary-school {
-    font-size: 1.25rem;
+    @include font-size('medium');
     padding: 0 .5rem;
   }
 
@@ -79,9 +79,8 @@
 
   .password-strength {
     display: inline-block;
-    font-size: 1rem;
+    @include font-size('base');
     font-variant: small-caps;
-    line-height: .75rem;
     text-align: right;
     width: 10%;
 

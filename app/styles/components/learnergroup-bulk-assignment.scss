@@ -11,7 +11,7 @@
 
       i {
         color: $ilios-blue;
-        font-size: 2.25rem;
+        @include font-size('xxl');
         font-weight: 600;
         margin: 0;
         padding: 0;

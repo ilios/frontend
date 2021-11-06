@@ -24,12 +24,12 @@
   }
 
   .form-label {
-    font-size: .9rem;
+    @include font-size('small');
     font-weight: bold;
     text-align: left;
 
     &.sub-label {
-      font-size: .8rem;
+      @include font-size('small');
       font-style: italic;
       font-weight: normal;
     }

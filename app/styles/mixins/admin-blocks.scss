@@ -30,7 +30,7 @@
     }
 
     button {
-      font-size: 1rem;
+      @include font-size('base');
     }
 
     .inline-data {

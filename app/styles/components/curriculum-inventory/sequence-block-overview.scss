@@ -20,7 +20,7 @@
         }
 
         .details {
-          font-size: smaller;
+          @include font-size('small');
         }
       }
 
