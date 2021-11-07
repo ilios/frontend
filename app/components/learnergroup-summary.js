@@ -209,7 +209,6 @@ export default class LearnergroupSummaryComponent extends Component {
     const offerings = (await learnerGroup.offerings).toArray();
     const ilms = (await learnerGroup.ilmSessions).toArray();
     const arr = [].concat(offerings, ilms);
-
     const sessions = await Promise.all(arr.mapBy('session'));
     const filteredSessions = sessions.filter(Boolean).uniq();
     const courses = await Promise.all(filteredSessions.mapBy('course'));
@@ -224,7 +223,6 @@ export default class LearnergroupSummaryComponent extends Component {
       }
       return obj;
     });
-
     const children = (await learnerGroup.children).toArray();
     const childCourses = await map(children, async (child) => {
       return await this.getCoursesForGroupWithSubgroupName(learnerGroup.title, child);
@@ -242,7 +240,6 @@ export default class LearnergroupSummaryComponent extends Component {
       }
       courseObj.groups.pushObjects(obj.groups);
       courseObj.groups.uniq();
-
       return arr;
     }, []);
   }

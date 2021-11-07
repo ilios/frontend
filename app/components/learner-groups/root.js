@@ -42,7 +42,7 @@ export default class LearnerGroupsRootComponent extends Component {
   get cohortLoadingPromise() {
     const id = this.selectedProgramYear?.belongsTo('cohort').id();
     if (id) {
-      return this.dataLoader.loadCohortForLearnerGroups(id);
+      return this.dataLoader.loadCohortLearnerGroups(id);
     }
 
     return undefined;
@@ -54,7 +54,11 @@ export default class LearnerGroupsRootComponent extends Component {
 
   get selectedSchool() {
     const schoolId = this.args.schoolId ?? this.user?.belongsTo('school').id();
-    return this.args.schools.findBy('id', schoolId) ?? this.args.schools.firstObject;
+
+    const school = this.args.schools.findBy('id', schoolId) ?? this.args.schools.firstObject;
+    //trigger a pre-load of the data we need to load an individual group in this school
+    this.dataLoader.loadInstructorGroupsForSchool(school.id);
+    return school;
   }
 
   get selectedProgram() {

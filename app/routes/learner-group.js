@@ -1,42 +1,27 @@
 import Route from '@ember/routing/route';
-import { all } from 'rsvp';
 import { inject as service } from '@ember/service';
 
 export default class LearnerGroupRoute extends Route {
-  @service permissionChecker;
   @service session;
-
-  editable = false;
+  @service dataLoader;
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  async afterModel(model) {
-    const permissionChecker = this.permissionChecker;
-
-    const school = await model.get('school');
-    const canUpdate = await permissionChecker.canUpdateLearnerGroup(model);
-    const canDelete = await permissionChecker.canDeleteLearnerGroup(model);
-    const canCreate = await permissionChecker.canCreateLearnerGroup(school);
-
-    this.set('canUpdate', canUpdate);
-    this.set('canDelete', canDelete);
-    this.set('canCreate', canCreate);
-
-    //preload data to speed up rendering later
-    return all([
-      model.get('usersOnlyAtThisLevel'),
-      model.get('allInstructors'),
-      model.get('allParents'),
-      model.get('courses'),
-    ]);
+  async model(params) {
+    return this.dataLoader.loadLearnerGroup(params.learner_group_id);
   }
 
-  setupController(controller, model) {
-    super.setupController(controller, model);
-    controller.set('canUpdate', this.canUpdate);
-    controller.set('canDelete', this.canDelete);
-    controller.set('canCreate', this.canCreate);
+  async afterModel(learnerGroup) {
+    await this.dataLoader.loadLearnerGroup(learnerGroup.id);
+    const cohort = await learnerGroup.cohort;
+    const programYear = await cohort.programYear;
+    const program = await programYear.program;
+    const school = await program.school;
+    await Promise.all([
+      this.dataLoader.loadCohortLearnerGroups(cohort.id),
+      this.dataLoader.loadInstructorGroupsForSchool(school.id),
+    ]);
   }
 }
