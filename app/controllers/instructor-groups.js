@@ -1,15 +1,16 @@
 import Controller from '@ember/controller';
-import { task, timeout } from 'ember-concurrency';
+import { restartableTask, timeout } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  queryParams: {
-    schoolId: 'school',
-    titleFilter: 'filter',
-  },
+export default class InstructorGroupsController extends Controller {
+  queryParams = [{ schoolId: 'school' }, { titleFilter: 'filter' }];
+  @tracked schoolId;
+  @tracked titleFilter;
 
-  changeTitleFilter: task(function* (value) {
-    this.set('titleFilter', value);
+  @restartableTask
+  *changeTitleFilter(value) {
+    this.titleFilter = value;
     yield timeout(250);
     return value;
-  }).restartable(),
-});
+  }
+}
