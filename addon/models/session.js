@@ -207,7 +207,7 @@ export default class SessionModel extends Model {
     return parseFloat(ilmHours) + parseFloat(this.maxSingleOfferingDuration);
   }
 
-  @use _allTermVocabularies = new ResolveAsyncValue(() => [this.terms.mapBy('vocabulary')]);
+  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
   /**
    * A list of all vocabularies that are associated via terms.
    */

@@ -47,10 +47,9 @@ export default class CourseObjective extends Model {
   })
   programYearObjectives;
 
-  @use allTermVocabularies = new ResolveAsyncValue(() => [this.terms.mapBy('vocabulary')]);
-
+  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
   get associatedVocabularies() {
-    return this.allTermVocabularies?.uniq().sortBy('title');
+    return this._allTermVocabularies?.uniq().sortBy('title');
   }
 
   @use allTerms = new ResolveFlatMapBy(() => [this.terms, 'termWithAllParents']);
