@@ -33,15 +33,21 @@ module('Acceptance | Session - Leadership', function (hooks) {
     assert.expect(8);
     await page.visit({ courseId: 1, sessionId: 1 });
 
-    assert.strictEqual(page.leadershipCollapsed.title, 'Session Leadership');
-    assert.strictEqual(page.leadershipCollapsed.headers.length, 1);
-    assert.strictEqual(page.leadershipCollapsed.headers[0].title, 'Summary');
+    assert.strictEqual(page.details.leadershipCollapsed.title, 'Session Leadership');
+    assert.strictEqual(page.details.leadershipCollapsed.headers.length, 1);
+    assert.strictEqual(page.details.leadershipCollapsed.headers[0].title, 'Summary');
 
-    assert.strictEqual(page.leadershipCollapsed.summary.length, 2);
-    assert.strictEqual(page.leadershipCollapsed.summary[0].name, 'Administrators');
-    assert.strictEqual(page.leadershipCollapsed.summary[0].value, 'There are 2 administrators');
-    assert.strictEqual(page.leadershipCollapsed.summary[1].name, 'Student Advisors');
-    assert.strictEqual(page.leadershipCollapsed.summary[1].value, 'There is 1 student advisor');
+    assert.strictEqual(page.details.leadershipCollapsed.summary.length, 2);
+    assert.strictEqual(page.details.leadershipCollapsed.summary[0].name, 'Administrators');
+    assert.strictEqual(
+      page.details.leadershipCollapsed.summary[0].value,
+      'There are 2 administrators'
+    );
+    assert.strictEqual(page.details.leadershipCollapsed.summary[1].name, 'Student Advisors');
+    assert.strictEqual(
+      page.details.leadershipCollapsed.summary[1].value,
+      'There is 1 student advisor'
+    );
   });
 
   test('list leadership', async function (assert) {
@@ -52,8 +58,8 @@ module('Acceptance | Session - Leadership', function (hooks) {
       sessionLeadershipDetails: true,
     });
 
-    assert.strictEqual(page.leadershipExpanded.title, 'Session Leadership');
-    const { administrators, studentAdvisors } = page.leadershipExpanded.leadershipList;
+    assert.strictEqual(page.details.leadershipExpanded.title, 'Session Leadership');
+    const { administrators, studentAdvisors } = page.details.leadershipExpanded.leadershipList;
 
     assert.strictEqual(administrators.length, 2);
     assert.strictEqual(administrators[0].text, '3 guy M. Mc3son');
@@ -69,8 +75,8 @@ module('Acceptance | Session - Leadership', function (hooks) {
       sessionId: 1,
       sessionLeadershipDetails: true,
     });
-    await page.leadershipExpanded.manage();
-    const manager = page.leadershipExpanded.leadershipManager;
+    await page.details.leadershipExpanded.manage();
+    const manager = page.details.leadershipExpanded.leadershipManager;
     await manager.administratorSearch.search('guy');
     assert.strictEqual(manager.administratorSearch.results.length, 6);
     assert.strictEqual(
@@ -112,8 +118,8 @@ module('Acceptance | Session - Leadership', function (hooks) {
       sessionId: 1,
       sessionLeadershipDetails: true,
     });
-    await page.leadershipExpanded.manage();
-    const manager = page.leadershipExpanded.leadershipManager;
+    await page.details.leadershipExpanded.manage();
+    const manager = page.details.leadershipExpanded.leadershipManager;
     await manager.studentAdvisorSearch.search('guy');
     assert.strictEqual(manager.studentAdvisorSearch.results.length, 6);
     assert.strictEqual(
@@ -155,8 +161,8 @@ module('Acceptance | Session - Leadership', function (hooks) {
       sessionId: 1,
       sessionLeadershipDetails: true,
     });
-    await page.leadershipExpanded.manage();
-    const manager = page.leadershipExpanded.leadershipManager;
+    await page.details.leadershipExpanded.manage();
+    const manager = page.details.leadershipExpanded.leadershipManager;
 
     const { selectedAdministrators, selectedStudentAdvisors } = manager;
 
@@ -189,8 +195,8 @@ module('Acceptance | Session - Leadership', function (hooks) {
       sessionId: 1,
       sessionLeadershipDetails: true,
     });
-    await page.leadershipExpanded.manage();
-    const manager = page.leadershipExpanded.leadershipManager;
+    await page.details.leadershipExpanded.manage();
+    const manager = page.details.leadershipExpanded.leadershipManager;
     const { selectedAdministrators, selectedStudentAdvisors } = manager;
     await selectedAdministrators[1].remove();
     await selectedStudentAdvisors[0].remove();
@@ -201,8 +207,8 @@ module('Acceptance | Session - Leadership', function (hooks) {
     await manager.studentAdvisorSearch.search('guy');
     await manager.studentAdvisorSearch.results[1].add();
 
-    await page.leadershipExpanded.cancel();
-    const { administrators, studentAdvisors } = page.leadershipExpanded.leadershipList;
+    await page.details.leadershipExpanded.cancel();
+    const { administrators, studentAdvisors } = page.details.leadershipExpanded.leadershipList;
 
     assert.strictEqual(administrators.length, 2);
     assert.strictEqual(administrators[0].text, '3 guy M. Mc3son');
@@ -219,8 +225,8 @@ module('Acceptance | Session - Leadership', function (hooks) {
       sessionId: 1,
       sessionLeadershipDetails: true,
     });
-    await page.leadershipExpanded.manage();
-    const manager = page.leadershipExpanded.leadershipManager;
+    await page.details.leadershipExpanded.manage();
+    const manager = page.details.leadershipExpanded.leadershipManager;
     const { selectedAdministrators, selectedStudentAdvisors } = manager;
     await selectedAdministrators[1].remove();
     await selectedStudentAdvisors[0].remove();
@@ -230,8 +236,8 @@ module('Acceptance | Session - Leadership', function (hooks) {
     await manager.studentAdvisorSearch.search('guy');
     await manager.studentAdvisorSearch.results[1].add();
 
-    await page.leadershipExpanded.save();
-    const { administrators, studentAdvisors } = page.leadershipExpanded.leadershipList;
+    await page.details.leadershipExpanded.save();
+    const { administrators, studentAdvisors } = page.details.leadershipExpanded.leadershipList;
 
     assert.strictEqual(administrators.length, 2);
     assert.strictEqual(administrators[0].text, '1 guy M. Mc1son');

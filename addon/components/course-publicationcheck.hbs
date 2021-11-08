@@ -2,8 +2,9 @@
   class="course-publicationcheck"
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @course.courseObjectives}}
+  data-test-course-publicationcheck
 >
-  <div class="title">
+  <div class="title" data-test-title>
     {{t "general.missingItems"}} ({{@course.allPublicationIssuesLength}})
   </div>
   <div class="course-publicationcheck-content">
@@ -29,51 +30,52 @@
       </thead>
       <tbody>
         <tr>
-          <td>
+          <td data-test-course-title>
             {{@course.title}}
           </td>
           {{#if @course.cohorts.length}}
-            <td class="yes">
+            <td class="yes" data-test-cohorts>
               {{t "general.yes"}} ({{@course.cohorts.length}})
             </td>
           {{else}}
-            <td class="no">
+            <td class="no" data-test-cohorts>
               {{t "general.no"}}
             </td>
           {{/if}}
           {{#if @course.terms.length}}
-            <td class="yes">
+            <td class="yes" data-test-terms>
               {{t "general.yes"}} ({{@course.terms.length}})
             </td>
           {{else}}
-            <td class="no">
+            <td class="no" data-test-terms>
               {{t "general.no"}}
             </td>
           {{/if}}
           {{#if (has-many-length @course "courseObjectives")}}
-            <td class="yes">
+            <td class="yes" data-test-objectives>
               {{t "general.yes"}} ({{has-many-length @course "courseObjectives"}})
               {{#if this.showUnlinkIcon}}
                 <LinkTo
                   @route="course"
                   @model={{@course}}
                   @query={{hash details=true courseObjectiveDetails=true}}
+                  data-test-unlink
                 >
                   <FaIcon @icon="unlink" />
                 </LinkTo>
               {{/if}}
             </td>
           {{else}}
-            <td class="no">
+            <td class="no" data-test-objectives>
               {{t "general.no"}}
             </td>
           {{/if}}
           {{#if @course.meshDescriptors.length}}
-            <td class="yes">
+            <td class="yes" data-test-mesh>
               {{t "general.yes"}} ({{@course.meshDescriptors.length}})
             </td>
           {{else}}
-            <td class="no">
+            <td class="no" data-test-mesh>
               {{t "general.no"}}
             </td>
           {{/if}}

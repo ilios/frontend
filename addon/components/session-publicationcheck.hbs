@@ -2,6 +2,7 @@
   class="session-publicationcheck"
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @session}}
+  data-test-session-publicationcheck
 >
   <SessionOverview
     @session={{@session}}
@@ -12,13 +13,14 @@
     <LinkTo
       @route="session.index"
       @models={{array (await @session.course) @session}}
+      data-test-back-to-session
     >
       <FaIcon @icon="undo" />
       {{t "general.backToTitle" title=@session.title}}
     </LinkTo>
   </div>
   <div class="results">
-    <div class="title">
+    <div class="title" data-test-title>
       {{t "general.missingItems"}} ({{@session.allPublicationIssuesLength}})
     </div>
     <div class="session-publicationcheck-content">
@@ -44,36 +46,36 @@
         </thead>
         <tbody>
           <tr>
-            <td>
+            <td data-test-session-title>
               {{@session.title}}
             </td>
             {{#if @session.offerings.length}}
-              <td class="yes">
+              <td class="yes" data-test-offerings>
                 {{t "general.yes"}} ({{@session.offerings.length}})
               </td>
             {{else}}
-              <td class="no">
+              <td class="no" data-test-offerings>
                 {{t "general.no"}}
               </td>
             {{/if}}
             {{#if @session.terms.length}}
-              <td class="yes">
+              <td class="yes" data-test-terms>
                 {{t "general.yes"}} ({{@session.terms.length}})
               </td>
             {{else}}
-              <td class="no">
+              <td class="no" data-test-terms>
                 {{t "general.no"}}
               </td>
             {{/if}}
             {{#if (has-many-length @session "sessionObjectives")}}
-              <td class="yes">
+              <td class="yes" data-test-objectives>
                 {{t "general.yes"}} ({{has-many-length @session "sessionObjectives"}})
                 {{#if this.showUnlinkIcon}}
                   <button
                     class="link-button"
                     type="button"
                     {{on "click" this.transitionToSession}}
-                    data-test-go-to-session
+                    data-test-unlink
                   >
                     <FaIcon
                       @icon="unlink"
@@ -82,16 +84,16 @@
                 {{/if}}
               </td>
             {{else}}
-              <td class="no">
+              <td class="no" data-test-objectives>
                 {{t "general.no"}}
               </td>
             {{/if}}
             {{#if @session.meshDescriptors.length}}
-              <td class="yes">
+              <td class="yes" data-test-mesh>
                 {{t "general.yes"}} ({{@session.meshDescriptors.length}})
               </td>
             {{else}}
-              <td class="no">
+              <td class="no" data-test-mesh>
                 {{t "general.no"}}
               </td>
             {{/if}}

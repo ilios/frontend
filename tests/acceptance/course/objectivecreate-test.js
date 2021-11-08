@@ -26,32 +26,32 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    await page.objectives.createNew();
-    await page.objectives.newObjective.description(newObjectiveDescription);
-    await page.objectives.newObjective.save();
+    await page.details.objectives.createNew();
+    await page.details.objectives.newObjective.description(newObjectiveDescription);
+    await page.details.objectives.newObjective.save();
 
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
-    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].meshDescriptors.empty);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.text,
       newObjectiveDescription
     );
-    assert.ok(page.objectives.objectiveList.objectives[1].parents.empty);
-    assert.ok(page.objectives.objectiveList.objectives[1].meshDescriptors.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[1].parents.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[1].meshDescriptors.empty);
   });
 
   test('cancel new objective', async function (assert) {
@@ -63,26 +63,26 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    await page.objectives.createNew();
-    await page.objectives.newObjective.description('junk');
-    await page.objectives.newObjective.cancel();
+    await page.details.objectives.createNew();
+    await page.details.objectives.newObjective.description('junk');
+    await page.details.objectives.newObjective.cancel();
 
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
-    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].meshDescriptors.empty);
   });
 
   test('empty objective title can not be created', async function (assert) {
@@ -94,25 +94,30 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    await page.objectives.createNew();
-    assert.notOk(page.objectives.newObjective.hasValidationError);
-    await page.objectives.newObjective.description('<p>&nbsp</p><div></div><span>  </span>');
-    await page.objectives.newObjective.save();
-    assert.ok(page.objectives.newObjective.hasValidationError);
-    assert.strictEqual(page.objectives.newObjective.validationError, 'This field can not be blank');
+    await page.details.objectives.createNew();
+    assert.notOk(page.details.objectives.newObjective.hasValidationError);
+    await page.details.objectives.newObjective.description(
+      '<p>&nbsp</p><div></div><span>  </span>'
+    );
+    await page.details.objectives.newObjective.save();
+    assert.ok(page.details.objectives.newObjective.hasValidationError);
+    assert.strictEqual(
+      page.details.objectives.newObjective.validationError,
+      'This field can not be blank'
+    );
   });
 
   test('create objective in empty course', async function (assert) {
-    this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       school: this.school,
     });
@@ -121,21 +126,21 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 0);
-    await page.objectives.createNew();
-    await page.objectives.newObjective.description(newObjectiveDescription);
-    await page.objectives.newObjective.save();
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 0);
+    await page.details.objectives.createNew();
+    await page.details.objectives.newObjective.description(newObjectiveDescription);
+    await page.details.objectives.newObjective.save();
 
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       newObjectiveDescription
     );
-    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
-    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].meshDescriptors.empty);
   });
 });

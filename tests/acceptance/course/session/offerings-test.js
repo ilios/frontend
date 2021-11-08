@@ -80,15 +80,15 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.expect(2);
     await page.visit({ courseId: 1, sessionId: 1 });
 
-    assert.strictEqual(page.offerings.header.title, 'Offerings (3)');
-    assert.strictEqual(page.offerings.dateBlocks.length, 3);
+    assert.strictEqual(page.details.offerings.header.title, 'Offerings (3)');
+    assert.strictEqual(page.details.offerings.dateBlocks.length, 3);
   });
 
   test('offering dates', async function (assert) {
     assert.expect(23);
     await page.visit({ courseId: 1, sessionId: 1 });
 
-    const blocks = page.offerings.dateBlocks;
+    const blocks = page.details.offerings.dateBlocks;
     assert.ok(blocks[0].hasStartTime);
     assert.ok(blocks[0].hasEndTime);
     assert.notOk(blocks[0].hasMultiDay);
@@ -131,7 +131,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
   test('offering details', async function (assert) {
     await page.visit({ courseId: 1, sessionId: 1 });
-    const blocks = page.offerings.dateBlocks;
+    const blocks = page.details.offerings.dateBlocks;
     assert.strictEqual(blocks[0].offerings[0].learnerGroups.length, 2);
     assert.strictEqual(blocks[0].offerings[0].learnerGroups[0].title, 'learner group 0');
     assert.strictEqual(blocks[0].offerings[0].learnerGroups[1].title, 'learner group 1');
@@ -210,10 +210,10 @@ module('Acceptance | Session - Offerings', function (hooks) {
   test('confirm removal message', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.dateBlocks[0].offerings[0].remove();
-    assert.ok(page.offerings.dateBlocks[0].offerings[0].hasRemoveConfirm);
+    await page.details.offerings.dateBlocks[0].offerings[0].remove();
+    assert.ok(page.details.offerings.dateBlocks[0].offerings[0].hasRemoveConfirm);
     assert.strictEqual(
-      page.offerings.dateBlocks[0].offerings[0].removeConfirmMessage,
+      page.details.offerings.dateBlocks[0].offerings[0].removeConfirmMessage,
       'Are you sure you want to delete this offering with 2 learner groups? This action cannot be undone. Yes Cancel'
     );
   });
@@ -222,29 +222,29 @@ module('Acceptance | Session - Offerings', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(2);
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.dateBlocks[0].offerings[0].remove();
-    await page.offerings.dateBlocks[0].offerings[0].confirmRemoval();
-    assert.strictEqual(page.offerings.header.title, 'Offerings (2)');
-    assert.strictEqual(page.offerings.dateBlocks.length, 2);
+    await page.details.offerings.dateBlocks[0].offerings[0].remove();
+    await page.details.offerings.dateBlocks[0].offerings[0].confirmRemoval();
+    assert.strictEqual(page.details.offerings.header.title, 'Offerings (2)');
+    assert.strictEqual(page.details.offerings.dateBlocks.length, 2);
   });
 
   test('cancel remove offering', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(2);
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.dateBlocks[0].offerings[0].remove();
-    await page.offerings.dateBlocks[0].offerings[0].cancelRemoval();
-    assert.strictEqual(page.offerings.header.title, 'Offerings (3)');
-    assert.strictEqual(page.offerings.dateBlocks.length, 3);
+    await page.details.offerings.dateBlocks[0].offerings[0].remove();
+    await page.details.offerings.dateBlocks[0].offerings[0].cancelRemoval();
+    assert.strictEqual(page.details.offerings.header.title, 'Offerings (3)');
+    assert.strictEqual(page.details.offerings.dateBlocks.length, 3);
   });
 
   test('users can create a new offering single day', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(14);
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.header.createNew();
-    const { offeringForm: form } = page.offerings;
-    await page.offerings.singleOffering();
+    await page.details.offerings.header.createNew();
+    const { offeringForm: form } = page.details.offerings;
+    await page.details.offerings.singleOffering();
     await form.startDate.datePicker.set(new Date(2011, 8, 11));
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
@@ -259,7 +259,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.instructorManager.searchResults[0].add();
     await form.save();
 
-    const block = page.offerings.dateBlocks[0];
+    const block = page.details.offerings.dateBlocks[0];
 
     assert.ok(block.hasStartTime);
     assert.ok(block.hasEndTime);
@@ -282,9 +282,9 @@ module('Acceptance | Session - Offerings', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(13);
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.header.createNew();
-    const { offeringForm: form } = page.offerings;
-    await page.offerings.singleOffering();
+    await page.details.offerings.header.createNew();
+    const { offeringForm: form } = page.details.offerings;
+    await page.details.offerings.singleOffering();
     await form.startDate.datePicker.set(new Date(2011, 8, 11));
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
@@ -299,7 +299,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.instructorManager.searchResults[0].add();
     await form.save();
 
-    const block = page.offerings.dateBlocks[0];
+    const block = page.details.offerings.dateBlocks[0];
 
     assert.notOk(block.hasStartTime);
     assert.notOk(block.hasEndTime);
@@ -326,9 +326,9 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.expect(21);
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.header.createNew();
-    const { offeringForm: form } = page.offerings;
-    await page.offerings.smallGroup();
+    await page.details.offerings.header.createNew();
+    const { offeringForm: form } = page.details.offerings;
+    await page.details.offerings.smallGroup();
     await form.startDate.datePicker.set(new Date(2011, 8, 11));
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
@@ -340,7 +340,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.learnerManager.availableLearnerGroups.cohorts[0].trees[1].add();
     await form.save();
 
-    const block = page.offerings.dateBlocks[0];
+    const block = page.details.offerings.dateBlocks[0];
 
     assert.ok(block.hasStartTime);
     assert.ok(block.hasEndTime);
@@ -372,9 +372,9 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.expect(18);
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.dateBlocks[0].offerings[0].edit();
+    await page.details.offerings.dateBlocks[0].offerings[0].edit();
 
-    const { offeringForm: form } = page.offerings.dateBlocks[0].offerings[0];
+    const { offeringForm: form } = page.details.offerings.dateBlocks[0].offerings[0];
 
     await form.startDate.datePicker.set(new Date(2011, 9, 5));
     await form.startTime.timePicker.hour.select('11');
@@ -391,7 +391,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     await form.save();
 
-    const block = page.offerings.dateBlocks[0];
+    const block = page.details.offerings.dateBlocks[0];
 
     assert.ok(block.hasStartTime);
     assert.ok(block.hasEndTime);
@@ -421,9 +421,9 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.expect(77);
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.header.createNew();
-    const { offeringForm: form } = page.offerings;
-    await page.offerings.smallGroup();
+    await page.details.offerings.header.createNew();
+    const { offeringForm: form } = page.details.offerings;
+    await page.details.offerings.smallGroup();
     await form.startDate.datePicker.set(new Date(2015, 4, 22));
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
@@ -439,14 +439,14 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     await form.save();
 
-    assert.strictEqual(page.offerings.dateBlocks.length, 7);
-    assert.strictEqual(page.offerings.dateBlocks[0].dayOfMonth, 'May 22nd');
-    assert.strictEqual(page.offerings.dateBlocks[1].dayOfMonth, 'May 29th');
-    assert.strictEqual(page.offerings.dateBlocks[2].dayOfMonth, 'June 5th');
-    assert.strictEqual(page.offerings.dateBlocks[3].dayOfMonth, 'June 12th');
+    assert.strictEqual(page.details.offerings.dateBlocks.length, 7);
+    assert.strictEqual(page.details.offerings.dateBlocks[0].dayOfMonth, 'May 22nd');
+    assert.strictEqual(page.details.offerings.dateBlocks[1].dayOfMonth, 'May 29th');
+    assert.strictEqual(page.details.offerings.dateBlocks[2].dayOfMonth, 'June 5th');
+    assert.strictEqual(page.details.offerings.dateBlocks[3].dayOfMonth, 'June 12th');
 
     for (let i = 0; i < 4; i++) {
-      const block = page.offerings.dateBlocks[i];
+      const block = page.details.offerings.dateBlocks[i];
       assert.ok(block.hasStartTime);
       assert.ok(block.hasEndTime);
       assert.notOk(block.hasMultiDay);
@@ -490,9 +490,9 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.expect(57);
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.header.createNew();
-    const { offeringForm: form } = page.offerings;
-    await page.offerings.singleOffering();
+    await page.details.offerings.header.createNew();
+    const { offeringForm: form } = page.details.offerings;
+    await page.details.offerings.singleOffering();
     await form.startDate.datePicker.set(new Date(2015, 4, 22));
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
@@ -510,14 +510,14 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     await form.save();
 
-    assert.strictEqual(page.offerings.dateBlocks.length, 7);
-    assert.strictEqual(page.offerings.dateBlocks[0].dayOfMonth, 'May 22nd');
-    assert.strictEqual(page.offerings.dateBlocks[1].dayOfMonth, 'May 29th');
-    assert.strictEqual(page.offerings.dateBlocks[2].dayOfMonth, 'June 5th');
-    assert.strictEqual(page.offerings.dateBlocks[3].dayOfMonth, 'June 12th');
+    assert.strictEqual(page.details.offerings.dateBlocks.length, 7);
+    assert.strictEqual(page.details.offerings.dateBlocks[0].dayOfMonth, 'May 22nd');
+    assert.strictEqual(page.details.offerings.dateBlocks[1].dayOfMonth, 'May 29th');
+    assert.strictEqual(page.details.offerings.dateBlocks[2].dayOfMonth, 'June 5th');
+    assert.strictEqual(page.details.offerings.dateBlocks[3].dayOfMonth, 'June 12th');
 
     for (let i = 0; i < 4; i++) {
-      const block = page.offerings.dateBlocks[i];
+      const block = page.details.offerings.dateBlocks[i];
       assert.ok(block.hasStartTime);
       assert.ok(block.hasEndTime);
       assert.notOk(block.hasMultiDay);
@@ -556,12 +556,12 @@ module('Acceptance | Session - Offerings', function (hooks) {
     this.server.db.cohorts.update(1, { learnerGroupIds: [3, 4, 5, 6] });
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.offerings.dateBlocks[0].offerings[0].edit();
-    await page.offerings.dateBlocks[0].offerings[0].offeringForm.save();
-    assert.strictEqual(page.offerings.dateBlocks[0].offerings[0].location, 'room 0');
+    await page.details.offerings.dateBlocks[0].offerings[0].edit();
+    await page.details.offerings.dateBlocks[0].offerings[0].offeringForm.save();
+    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[0].location, 'room 0');
 
-    await page.offerings.dateBlocks[0].offerings[0].edit();
-    await page.offerings.dateBlocks[0].offerings[0].offeringForm.save();
-    assert.strictEqual(page.offerings.dateBlocks[0].offerings[0].location, 'room 0');
+    await page.details.offerings.dateBlocks[0].offerings[0].edit();
+    await page.details.offerings.dateBlocks[0].offerings[0].offeringForm.save();
+    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[0].location, 'room 0');
   });
 });

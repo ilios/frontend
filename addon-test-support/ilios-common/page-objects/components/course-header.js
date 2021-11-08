@@ -1,5 +1,6 @@
 import { create, clickable, fillable, text, isVisible } from 'ember-cli-page-object';
-
+import publicationMenu from './course/publication-menu';
+import publicationStatus from './publication-status';
 const definition = {
   scope: '[data-test-course-header]',
   title: {
@@ -12,6 +13,8 @@ const definition = {
     hasError: isVisible('.validation-error-message'),
   },
   academicYear: text('[data-test-academic-year]'),
+  publicationMenu,
+  publicationStatus,
 };
 
 export default definition;

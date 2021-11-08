@@ -57,7 +57,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     this.server.create('offering', { session: session3 });
 
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
     });
     assert.ok(page.publishAll.isVisible);
     assert.notOk(page.publishAll.hasUnlinkedWarning);
@@ -124,7 +124,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     this.server.create('offering', { session });
 
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
     });
     assert.ok(page.publishAll.isVisible);
     await page.publishAll.review.save();
@@ -163,17 +163,17 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessions: [session],
     });
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });
     assert.ok(page.publishAll.isVisible);
     assert.ok(page.publishAll.hasUnlinkedWarning);
 
-    await page.course.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.course.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     await m.competencies[0].objectives[0].add();
-    await page.course.objectives.objectiveList.objectives[0].parents.save();
+    await page.details.objectives.objectiveList.objectives[0].parents.save();
     assert.notOk(page.publishAll.hasUnlinkedWarning);
   });
 });

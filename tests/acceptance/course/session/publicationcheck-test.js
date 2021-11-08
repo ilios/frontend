@@ -1,10 +1,10 @@
-import { click, currentRouteName, currentURL, findAll, visit } from '@ember/test-helpers';
+import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication, getElementText, getText } from 'ilios-common';
+import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import page from 'ilios-common/page-objects/session-publication-check';
 
-const url = '/courses/1/sessions/1/publicationcheck';
 module('Acceptance | Session - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -31,37 +31,32 @@ module('Acceptance | Session - Publication Check', function (hooks) {
     });
     this.server.create('sessionObjective', { session });
     this.server.create('offering', { session });
-    await visit(url);
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.publication_check');
-    const items = findAll('.session-publicationcheck table tbody td');
-    assert.strictEqual(await getElementText(items[0]), getText('session 0'));
-    assert.strictEqual(await getElementText(items[1]), getText('Yes (1)'));
-    assert.strictEqual(await getElementText(items[2]), getText('Yes (1)'));
-    assert.strictEqual(await getElementText(items[3]), getText('Yes (1)'));
-    assert.strictEqual(await getElementText(items[4]), getText('Yes (1)'));
+    assert.strictEqual(page.sessionTitle, 'session 0');
+    assert.strictEqual(page.offerings, 'Yes (1)');
+    assert.strictEqual(page.terms, 'Yes (1)');
+    assert.strictEqual(page.objectives, 'Yes (1)');
+    assert.strictEqual(page.mesh, 'Yes (1)');
   });
 
   test('empty session count', async function (assert) {
-    //create 2 because the second one is empty
-    this.server.createList('session', 2, {
+    const session = this.server.create('session', {
       course: this.course,
     });
-    this.server.db.courses.update(1, { sessionIds: [1, 2] });
-    await visit('/courses/1/sessions/2/publicationcheck');
-    assert.strictEqual(currentRouteName(), 'session.publication_check');
-    const items = findAll('.session-publicationcheck table tbody td');
-    assert.strictEqual(await getElementText(items[0]), getText('session 1'));
-    assert.strictEqual(await getElementText(items[1]), getText('No'));
-    assert.strictEqual(await getElementText(items[2]), getText('No'));
-    assert.strictEqual(await getElementText(items[3]), getText('No'));
-    assert.strictEqual(await getElementText(items[4]), getText('No'));
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    assert.strictEqual(page.sessionTitle, 'session 0');
+    assert.strictEqual(page.offerings, 'No');
+    assert.strictEqual(page.terms, 'No');
+    assert.strictEqual(page.objectives, 'No');
+    assert.strictEqual(page.mesh, 'No');
   });
 
   test('unlink icon transitions properly', async function (assert) {
     const session = this.server.create('session', { course: this.course });
     this.server.create('sessionObjective', { session });
-    await visit(url);
-    await click('.fa-unlink');
+    await page.visit({ courseId: this.course.id, sessionId: session.id });
+    await page.unlink.click();
     assert.strictEqual(
       currentURL(),
       '/courses/1/sessions/1?addOffering=false&courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=false&courseTaxonomyDetails=false&details=false&sessionLeadershipDetails=false&sessionManageLeadership=false&sessionObjectiveDetails=true&sessionTaxonomyDetails=false'

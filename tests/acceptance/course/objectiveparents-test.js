@@ -34,16 +34,16 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       programYear,
       competency: competency2,
     });
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       year: 2013,
       school: this.school,
       cohorts: [cohort],
     });
     this.server.create('courseObjective', {
-      course,
+      course: this.course,
       programYearObjectives: [parent],
     });
-    this.server.create('courseObjective', { course });
+    this.server.create('courseObjective', { course: this.course });
   });
 
   test('list parent objectives by competency', async function (assert) {
@@ -51,24 +51,24 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     assert.expect(18);
 
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
     );
 
-    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
     assert.strictEqual(m.competencies.length, 2);
@@ -91,38 +91,38 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(10);
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
     );
 
-    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
     await m.competencies[1].objectives[0].add();
     assert.ok(m.competencies[0].objectives[0].notSelected);
     assert.ok(m.competencies[1].objectives[0].selected);
-    await page.objectives.objectiveList.objectives[0].parents.save();
+    await page.details.objectives.objectiveList.objectives[0].parents.save();
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 1'
     );
   });
@@ -131,38 +131,38 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(10);
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
     );
 
-    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
     await m.competencies[1].objectives[0].add();
     assert.ok(m.competencies[0].objectives[0].notSelected);
     assert.ok(m.competencies[1].objectives[0].selected);
-    await page.objectives.objectiveList.objectives[0].parents.cancel();
+    await page.details.objectives.objectiveList.objectives[0].parents.cancel();
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
     );
   });

@@ -30,14 +30,14 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
       competency,
     });
 
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       school: this.school,
       cohorts: [cohort],
     });
 
     this.server.create('courseObjective', {
       programYearObjectives: [programYearObjectives[0], programYearObjectives[1]],
-      course,
+      course: this.course,
     });
   });
 
@@ -45,28 +45,28 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
     assert.expect(16);
 
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'program-year objective 1'
     );
 
-    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
     assert.strictEqual(m.competencies.length, 1);
@@ -85,35 +85,35 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(8);
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[0].parentManager;
+    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     await m.competencies[0].objectives[2].add();
     await m.competencies[0].objectives[1].add();
     assert.ok(m.competencies[0].objectives[0].selected);
     assert.ok(m.competencies[0].objectives[1].notSelected);
     assert.ok(m.competencies[0].objectives[2].selected);
-    await page.objectives.objectiveList.objectives[0].parents.save();
+    await page.details.objectives.objectiveList.objectives[0].parents.save();
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'program-year objective 2'
     );
   });

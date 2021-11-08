@@ -6,7 +6,7 @@
   {{#let (unique-id) as |templateId|}}
     {{#if this.load.performCount}}
       <div class="session-header">
-        <span class="title">
+        <span class="title" data-test-title>
           {{#if @editable}}
             <EditableField
               @value={{this.title}}
@@ -39,7 +39,7 @@
       </div>
 
       <section class="session-overview">
-        <div class="last-update">
+        <div class="last-update" data-test-last-update>
           <FaIcon @icon="history" @title={{t "general.lastUpdate"}} />
           {{t "general.lastUpdate"}}:
           {{this.updatedAt}}
@@ -53,7 +53,12 @@
 
           <div class="session-overview-actions">
             {{#if (and (is-fulfilled this.showCopy) (await this.showCopy))}}
-              <LinkTo @route="session.copy" @models={{array @session.course @session}} class="copy">
+              <LinkTo
+                @route="session.copy"
+                @models={{array @session.course @session}}
+                class="copy"
+                data-test-copy
+              >
                 <FaIcon @icon="copy" @title={{t "general.copySession"}} @fixedWidth={{true}} />
               </LinkTo>
             {{/if}}
@@ -61,7 +66,7 @@
         </div>
 
         <div class="session-overview-content">
-          <div class="sessiontype block">
+          <div class="sessiontype block" data-test-session-type>
             <label for="session-type-{{templateId}}">{{t "general.sessionType"}}:</label>
             <span>
               {{#if @editable}}
@@ -96,7 +101,7 @@
             </span>
           </div>
           {{#if this.showSupplemental}}
-            <div class="sessionsupplemental block">
+            <div class="sessionsupplemental block" data-test-supplemental>
               <label>{{t "general.supplementalCurriculum"}}:</label>
               <span>
                 {{#if @editable}}
@@ -112,7 +117,7 @@
             </div>
           {{/if}}
           {{#if this.showSpecialAttireRequired}}
-            <div class="sessionspecialattire block">
+            <div class="sessionspecialattire block" data-test-special-attire>
               <label>{{t "general.specialAttireRequired"}}:</label>
               <span>
                 {{#if @editable}}
@@ -128,7 +133,7 @@
             </div>
           {{/if}}
           {{#if this.showSpecialEquipmentRequired}}
-            <div class="sessionspecialequipment block">
+            <div class="sessionspecialequipment block" data-test-special-equipment>
               <label>{{t "general.specialEquipmentRequired"}}:</label>
               <span>
                 {{#if @editable}}
@@ -144,7 +149,7 @@
             </div>
           {{/if}}
           {{#if this.showAttendanceRequired}}
-            <div class="sessionattendancerequired block">
+            <div class="sessionattendancerequired block" data-test-attendance-required>
               <label>{{t "general.attendanceRequired"}}:</label>
               <span>
                 {{#if @editable}}
@@ -160,7 +165,7 @@
             </div>
           {{/if}}
           <hr>
-          <div class="independentlearningcontrol block">
+          <div class="independentlearningcontrol block" data-test-ilm>
             <label>{{t "general.independentLearning"}}:</label>
             <span class="independentlearningcontrol-value">
               {{#if @editable}}
@@ -175,7 +180,7 @@
             </span>
           </div>
           {{#if this.isIndependentLearning}}
-            <div class="sessionilmhours block">
+            <div class="sessionilmhours block" data-test-ilm-hours>
               <label for="hours-{{templateId}}">{{t "general.hours"}}:</label>
               <span>
                 {{#if @editable}}
@@ -256,7 +261,7 @@
                 {{/if}}
               {{/if}}
             </div>
-            <div class="prerequisites block">
+            <div class="prerequisites block" data-test-prerequisites>
               <label>{{t "general.prerequisites"}}:</label>
               {{#if @session.hasPrerequisites}}
                 <span>
@@ -268,9 +273,8 @@
             </div>
           {{/if}}
           <hr>
-          <div class="sessiondescription">
+          <div class="sessiondescription" data-test-description>
             <label>{{t "general.description"}}:</label>
-
             <span>
               {{#if @editable}}
                 <EditableField

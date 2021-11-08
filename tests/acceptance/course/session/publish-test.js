@@ -1,192 +1,154 @@
-import { click, currentRouteName, findAll, visit } from '@ember/test-helpers';
+import { currentRouteName } from '@ember/test-helpers';
 import moment from 'moment';
 import { module, test } from 'qunit';
-import { setupAuthentication, getElementText, getText } from 'ilios-common';
-
+import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import page from 'ilios-common/page-objects/session';
 
 module('Acceptance | Session - Publish', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] });
-    const course = this.server.create('course', { school });
+    this.course = this.server.create('course', { school });
     this.server.create('sessionType');
-    this.server.create('ilmSession', {
-      dueDate: moment().format(),
-    });
     this.publishedSession = this.server.create('session', {
       published: true,
-      course,
+      course: this.course,
     });
     this.scheduledSession = this.server.create('session', {
-      course,
+      course: this.course,
       published: true,
       publishedAsTbd: true,
     });
     this.draftSession = this.server.create('session', {
-      course,
+      course: this.course,
     });
     this.ilmSession = this.server.create('session', {
-      course,
-      ilmSessionId: 1,
+      course: this.course,
+    });
+    this.server.create('ilmSession', {
+      session: this.ilmSession,
+      dueDate: moment().format(),
     });
     this.server.create('offering', {
-      sessionId: 1,
+      session: this.publishedSession,
       startDate: moment().format(),
       endDate: moment().add('6 hours').format(),
     });
     this.server.create('offering', {
-      sessionId: 2,
+      session: this.scheduledSession,
       startDate: moment().format(),
       endDate: moment().add('6 hours').format(),
     });
     this.server.create('offering', {
-      sessionId: 3,
+      session: this.draftSession,
       startDate: moment().format(),
       endDate: moment().add('6 hours').format(),
     });
   });
 
   test('check published session', async function (assert) {
-    assert.expect(6);
-    await visit('/courses/1/sessions/' + this.publishedSession.id);
-
+    await page.visit({ courseId: this.course.id, sessionId: this.publishedSession.id });
     assert.strictEqual(currentRouteName(), 'session.index');
-    const menu = '.session-header .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    assert.strictEqual(await getElementText(selector), getText('Published'));
-    //we have to click the button to create the options
-    await click(selector);
-
-    const items = findAll(choices);
-    assert.strictEqual(items.length, 3);
-    const expectedItems = ['Review 3 Missing Items', 'Mark as Scheduled', 'UnPublish Session'];
-    for (let i = 0; i < items.length; i++) {
-      assert.strictEqual(await getElementText(items[i]), getText(expectedItems[i]));
-    }
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Published');
+    await page.details.overview.publicationMenu.toggle.click();
+    assert.strictEqual(page.details.overview.publicationMenu.buttons.length, 3);
+    assert.strictEqual(
+      page.details.overview.publicationMenu.buttons[0].text,
+      'Review 3 Missing Items'
+    );
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[1].text, 'Mark as Scheduled');
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[2].text, 'UnPublish Session');
   });
 
   test('check scheduled session', async function (assert) {
-    assert.expect(6);
-    await visit('/courses/1/sessions/' + this.scheduledSession.id);
-
-    assert.strictEqual(currentRouteName(), 'session.index');
-    const menu = '.session-header .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    assert.strictEqual(await getElementText(selector), getText('Scheduled'));
-    //we have to click the button to create the options
-    await click(selector);
-    const items = findAll(choices);
-    assert.strictEqual(items.length, 3);
-    const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'UnPublish Session'];
-    for (let i = 0; i < items.length; i++) {
-      assert.strictEqual(await getElementText(items[i]), getText(expectedItems[i]));
-    }
+    await page.visit({ courseId: this.course.id, sessionId: this.scheduledSession.id });
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Scheduled');
+    await page.details.overview.publicationMenu.toggle.click();
+    assert.strictEqual(page.details.overview.publicationMenu.buttons.length, 3);
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish As-is');
+    assert.strictEqual(
+      page.details.overview.publicationMenu.buttons[1].text,
+      'Review 3 Missing Items'
+    );
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[2].text, 'UnPublish Session');
   });
 
   test('check draft session', async function (assert) {
-    assert.expect(6);
-    await visit('/courses/1/sessions/' + this.draftSession.id);
-
-    assert.strictEqual(currentRouteName(), 'session.index');
-    const menu = '.session-header .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    assert.strictEqual(await getElementText(selector), getText('Not Published'));
-    //we have to click the button to create the options
-    await click(selector);
-    const items = findAll(choices);
-    assert.strictEqual(items.length, 3);
-    const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'Mark as Scheduled'];
-    for (let i = 0; i < items.length; i++) {
-      assert.strictEqual(await getElementText(items[i]), getText(expectedItems[i]));
-    }
+    await page.visit({ courseId: this.course.id, sessionId: this.draftSession.id });
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Not Published');
+    await page.details.overview.publicationMenu.toggle.click();
+    assert.strictEqual(page.details.overview.publicationMenu.buttons.length, 3);
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish As-is');
+    assert.strictEqual(
+      page.details.overview.publicationMenu.buttons[1].text,
+      'Review 3 Missing Items'
+    );
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[2].text, 'Mark as Scheduled');
   });
 
   test('check publish draft session', async function (assert) {
-    await visit('/courses/1/sessions/' + this.draftSession.id);
-    const menu = '.session-header .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    const publish = `${choices}:nth-of-type(1)`;
-    await click(selector);
-    await click(publish);
-
-    assert.strictEqual(await getElementText(selector), getText('Published'));
+    await page.visit({ courseId: this.course.id, sessionId: this.draftSession.id });
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Not Published');
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.publishAsIs();
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Published');
   });
 
   test('check schedule draft session', async function (assert) {
-    await visit('/courses/1/sessions/' + this.draftSession.id);
-    const menu = '.session-header .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    const schedule = `${choices}:nth-of-type(3)`;
-    await click(selector);
-    await click(schedule);
-    assert.strictEqual(await getElementText(selector), getText('Scheduled'));
+    await page.visit({ courseId: this.course.id, sessionId: this.draftSession.id });
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Not Published');
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.markAsScheduled();
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Scheduled');
   });
 
   test('check publish scheduled session', async function (assert) {
-    await visit('/courses/1/sessions/' + this.scheduledSession.id);
-    const menu = '.session-header .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    const publish = `${choices}:nth-of-type(1)`;
-    await click(selector);
-    await click(publish);
-
-    assert.strictEqual(await getElementText(selector), getText('Published'));
+    await page.visit({ courseId: this.course.id, sessionId: this.scheduledSession.id });
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Scheduled');
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.publishAsIs();
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Published');
   });
 
   test('check unpublish scheduled session', async function (assert) {
-    await visit('/courses/1/sessions/' + this.scheduledSession.id);
-    const menu = '.session-header .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    const unPublish = `${choices}:nth-of-type(3)`;
-    await click(selector);
-    await click(unPublish);
-    assert.strictEqual(await getElementText(selector), getText('Not Published'));
+    await page.visit({ courseId: this.course.id, sessionId: this.scheduledSession.id });
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Scheduled');
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.unpublishSession();
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Not Published');
   });
 
   test('check schedule published session', async function (assert) {
-    await visit('/courses/1/sessions/' + this.publishedSession.id);
-    const menu = '.session-header .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] > button`;
-    const schedule = `${choices}:nth-of-type(2)`;
-    await click(selector);
-    await click(schedule);
-    assert.strictEqual(await getElementText(selector), getText('Scheduled'));
+    await page.visit({ courseId: this.course.id, sessionId: this.publishedSession.id });
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Published');
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.markAsScheduled();
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Scheduled');
   });
 
   test('check unpublish published session', async function (assert) {
-    await visit('/courses/1/sessions/' + this.publishedSession.id);
-    const menu = '.session-header .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    const unPublish = `${choices}:nth-of-type(3)`;
-    await click(selector);
-    await click(unPublish);
-    assert.strictEqual(await getElementText(selector), getText('Not Published'));
+    await page.visit({ courseId: this.course.id, sessionId: this.publishedSession.id });
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Published');
+    await page.details.overview.publicationMenu.toggle.click();
+    await page.details.overview.publicationMenu.unpublishSession();
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Not Published');
   });
 
   test('check publish requirements for ilm session', async function (assert) {
-    await visit('/courses/1/sessions/' + this.ilmSession.id);
-    const menu = '.session-header .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] > button`;
-    const firstChoice = `${choices}:nth-of-type(1)`;
-    const secondChoice = `${choices}:nth-of-type(2)`;
-    const thirdChoice = `${choices}:nth-of-type(3)`;
-    await click(selector);
-    assert.strictEqual(await getElementText(firstChoice), getText('Publish As-is'));
-    assert.strictEqual(await getElementText(secondChoice), getText('Review 3 Missing Items'));
-    assert.strictEqual(await getElementText(thirdChoice), getText('Mark as Scheduled'));
+    await page.visit({ courseId: this.course.id, sessionId: this.ilmSession.id });
+    assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Not Published');
+    await page.details.overview.publicationMenu.toggle.click();
+    assert.strictEqual(page.details.overview.publicationMenu.buttons.length, 3);
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[0].text, 'Publish As-is');
+    assert.strictEqual(
+      page.details.overview.publicationMenu.buttons[1].text,
+      'Review 3 Missing Items'
+    );
+    assert.strictEqual(page.details.overview.publicationMenu.buttons[2].text, 'Mark as Scheduled');
   });
 });

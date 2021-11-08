@@ -1,9 +1,8 @@
-import { click, visit, findAll } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication, getElementText, getText } from 'ilios-common';
-
+import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import page from 'ilios-common/page-objects/course';
 
 module('Acceptance | Course - Publish', function (hooks) {
   setupApplicationTest(hooks);
@@ -11,115 +10,96 @@ module('Acceptance | Course - Publish', function (hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
-    this.server.create('cohort');
+    this.cohort = this.server.create('cohort');
   });
 
   test('check publish draft course', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
-      cohortIds: [1],
+      school: this.school,
+      cohorts: [this.cohort],
     });
-    await visit('/courses/1');
-
-    const menu = '[data-test-course-header] .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    await click(selector);
-    await click(findAll(choices)[0]);
-
-    assert.strictEqual(await getElementText(selector), getText('Published'));
+    await page.visit({ courseId: course.id });
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Not Published');
+    await page.details.header.publicationMenu.toggle.click();
+    await page.details.header.publicationMenu.publishAsIs();
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
   });
 
   test('check schedule draft course', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
-      cohortIds: [1],
+      school: this.school,
+      cohorts: [this.cohort],
     });
-    await visit('/courses/1');
-    const menu = '[data-test-course-header] .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    await click(selector);
-    await click(findAll(choices)[2]);
-
-    assert.strictEqual(await getElementText(selector), getText('Scheduled'));
+    await page.visit({ courseId: course.id });
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Not Published');
+    await page.details.header.publicationMenu.toggle.click();
+    await page.details.header.publicationMenu.markAsScheduled();
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Scheduled');
   });
 
   test('check publish scheduled course', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
+      cohorts: [this.cohort],
       published: true,
       publishedAsTbd: true,
-      cohortIds: [1],
     });
-    await visit('/courses/1');
-    const menu = '[data-test-course-header] .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    await click(selector);
-    await click(findAll(choices)[0]);
-
-    assert.strictEqual(await getElementText(selector), getText('Published'));
+    await page.visit({ courseId: course.id });
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Scheduled');
+    await page.details.header.publicationMenu.toggle.click();
+    await page.details.header.publicationMenu.publishAsIs();
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
   });
 
   test('check unpublish scheduled course', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
+      cohorts: [this.cohort],
       published: true,
       publishedAsTbd: true,
-      cohortIds: [1],
     });
-    await visit('/courses/1');
-    const menu = '[data-test-course-header] .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    await click(selector);
-    await click(findAll(choices)[2]);
-
-    assert.strictEqual(await getElementText(selector), getText('Not Published'));
+    await page.visit({ courseId: course.id });
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Scheduled');
+    await page.details.header.publicationMenu.toggle.click();
+    await page.details.header.publicationMenu.unpublishCourse();
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Not Published');
   });
 
   test('check schedule published course', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
+      cohorts: [this.cohort],
       published: true,
-      cohortIds: [1],
     });
-    await visit('/courses/1');
-    const menu = '[data-test-course-header] .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    await click(selector);
-    await click(findAll(choices)[1]);
-
-    assert.strictEqual(await getElementText(selector), getText('Scheduled'));
+    await page.visit({ courseId: course.id });
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
+    await page.details.header.publicationMenu.toggle.click();
+    await page.details.header.publicationMenu.markAsScheduled();
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Scheduled');
   });
 
   test('check unpublish published course', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
+      cohorts: [this.cohort],
       published: true,
-      cohortIds: [1],
     });
-    await visit('/courses/1');
-    const menu = '[data-test-course-header] .publication-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    await click(selector);
-    await click(findAll(choices)[2]);
-
-    assert.strictEqual(await getElementText(selector), getText('Not Published'));
+    await page.visit({ courseId: course.id });
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Published');
+    await page.details.header.publicationMenu.toggle.click();
+    await page.details.header.publicationMenu.unpublishCourse();
+    assert.strictEqual(page.details.header.publicationMenu.toggle.text, 'Not Published');
   });
 });

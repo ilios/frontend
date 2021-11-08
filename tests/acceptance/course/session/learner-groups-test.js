@@ -62,7 +62,8 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
 
-      const { detailLearnerList, detailLearnergroupsList } = page.detailLearnersAndLearnerGroups;
+      const { detailLearnerList, detailLearnergroupsList } =
+        page.details.detailLearnersAndLearnerGroups;
       assert.strictEqual(detailLearnerList.learners.length, 2);
       assert.strictEqual(detailLearnerList.learners[0].userNameInfo.fullName, '1 guy M. Mc1son');
       assert.strictEqual(detailLearnerList.learners[1].userNameInfo.fullName, '2 guy M. Mc2son');
@@ -108,10 +109,10 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
       const { learnerSelectionManager, learnergroupSelectionManager } =
-        page.detailLearnersAndLearnerGroups;
+        page.details.detailLearnersAndLearnerGroups;
       assert.strictEqual(
         learnerSelectionManager.selectedLearners.detailLearnerList.learners.length,
         2
@@ -245,10 +246,10 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
       const { learnerSelectionManager, learnergroupSelectionManager } =
-        page.detailLearnersAndLearnerGroups;
+        page.details.detailLearnersAndLearnerGroups;
       assert.strictEqual(learnerSelectionManager.selectedLearners.noLearners.text, 'None');
       assert.strictEqual(learnergroupSelectionManager.selectedGroups.noGroups.text, 'None');
       assert.strictEqual(learnergroupSelectionManager.availableGroups.cohorts.length, 1);
@@ -332,14 +333,14 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
-        page.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
+        page.details.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
         3
       );
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
       const { selectedGroups, availableGroups } =
-        page.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
+        page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
 
       assert.strictEqual(selectedGroups.list.trees.length, 3);
       assert.strictEqual(
@@ -391,14 +392,14 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
-        page.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
+        page.details.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
         3
       );
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
       const { selectedGroups, availableGroups } =
-        page.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
+        page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
 
       assert.strictEqual(selectedGroups.list.trees.length, 3);
       assert.strictEqual(
@@ -450,14 +451,14 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
-        page.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
+        page.details.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
         3
       );
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
       const { selectedGroups, availableGroups } =
-        page.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
+        page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
 
       assert.strictEqual(selectedGroups.list.trees.length, 3);
 
@@ -482,9 +483,9 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         'learner group 3 (program 0 cohort 0)'
       );
 
-      await page.detailLearnersAndLearnerGroups.save();
+      await page.details.detailLearnersAndLearnerGroups.save();
 
-      const { detailLearnergroupsList } = page.detailLearnersAndLearnerGroups;
+      const { detailLearnergroupsList } = page.details.detailLearnersAndLearnerGroups;
       assert.strictEqual(detailLearnergroupsList.trees.length, 4);
       assert.strictEqual(
         detailLearnergroupsList.trees[0].title,
@@ -515,14 +516,14 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
-        page.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
+        page.details.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
         3
       );
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
       const { selectedGroups, availableGroups } =
-        page.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
+        page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
 
       assert.strictEqual(selectedGroups.list.trees.length, 3);
       assert.strictEqual(selectedGroups.list.trees[2].subgroups.length, 1);
@@ -548,9 +549,9 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(selectedGroups.list.trees[2].subgroups[0].title, 'learner group 3 (0)');
       assert.strictEqual(selectedGroups.list.trees[2].subgroups[1].title, 'learner group 5 (0)');
 
-      await page.detailLearnersAndLearnerGroups.save();
+      await page.details.detailLearnersAndLearnerGroups.save();
 
-      const { detailLearnergroupsList } = page.detailLearnersAndLearnerGroups;
+      const { detailLearnergroupsList } = page.details.detailLearnersAndLearnerGroups;
       assert.strictEqual(detailLearnergroupsList.trees.length, 3);
       assert.strictEqual(
         detailLearnergroupsList.trees[0].title,
@@ -588,14 +589,14 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
-        page.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
+        page.details.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
         3
       );
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
       const { selectedGroups, availableGroups } =
-        page.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
+        page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
 
       assert.strictEqual(selectedGroups.list.trees.length, 3);
       assert.strictEqual(selectedGroups.list.trees[2].subgroups.length, 1);
@@ -625,9 +626,9 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(selectedGroups.list.trees[2].subgroups[1].title, 'learner group 5 (0)');
       assert.strictEqual(selectedGroups.list.trees[2].subgroups[2].title, 'learner group 6 (0)');
 
-      await page.detailLearnersAndLearnerGroups.save();
+      await page.details.detailLearnersAndLearnerGroups.save();
 
-      const { detailLearnergroupsList } = page.detailLearnersAndLearnerGroups;
+      const { detailLearnergroupsList } = page.details.detailLearnersAndLearnerGroups;
       assert.strictEqual(detailLearnergroupsList.trees.length, 3);
       assert.strictEqual(
         detailLearnergroupsList.trees[0].title,
@@ -670,14 +671,14 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
-        page.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
+        page.details.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
         3
       );
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
       const { selectedGroups, availableGroups } =
-        page.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
+        page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
 
       assert.strictEqual(selectedGroups.list.trees.length, 3);
       assert.strictEqual(selectedGroups.list.trees[2].subgroups[0].title, 'learner group 3 (0)');
@@ -707,9 +708,9 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(selectedGroups.list.trees[2].subgroups[0].title, 'learner group 3 (0)');
       assert.strictEqual(selectedGroups.list.trees[2].subgroups[1].title, 'learner group 6 (0)');
 
-      await page.detailLearnersAndLearnerGroups.save();
+      await page.details.detailLearnersAndLearnerGroups.save();
 
-      const { detailLearnergroupsList } = page.detailLearnersAndLearnerGroups;
+      const { detailLearnergroupsList } = page.details.detailLearnersAndLearnerGroups;
       assert.strictEqual(detailLearnergroupsList.trees.length, 3);
       assert.strictEqual(
         detailLearnergroupsList.trees[0].title,
@@ -747,22 +748,22 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
-        page.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
+        page.details.detailLearnersAndLearnerGroups.detailLearnergroupsList.trees.length,
         3
       );
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
       const { selectedGroups, availableGroups } =
-        page.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
+        page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager;
 
       await availableGroups.cohorts[0].trees[2].add();
       await availableGroups.cohorts[0].trees[3].add();
       await selectedGroups.list.trees[3].subgroups[1].remove();
 
-      await page.detailLearnersAndLearnerGroups.cancel();
+      await page.details.detailLearnersAndLearnerGroups.cancel();
 
-      const { detailLearnergroupsList } = page.detailLearnersAndLearnerGroups;
+      const { detailLearnergroupsList } = page.details.detailLearnersAndLearnerGroups;
       assert.strictEqual(detailLearnergroupsList.trees.length, 3);
 
       assert.strictEqual(
@@ -796,11 +797,14 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(currentRouteName(), 'session.index');
 
-      assert.strictEqual(page.detailLearnersAndLearnerGroups.detailLearnerList.learners.length, 2);
+      assert.strictEqual(
+        page.details.detailLearnersAndLearnerGroups.detailLearnerList.learners.length,
+        2
+      );
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
-      const { learnerSelectionManager } = page.detailLearnersAndLearnerGroups;
+      const { learnerSelectionManager } = page.details.detailLearnersAndLearnerGroups;
 
       await learnerSelectionManager.search('shmoe');
 
@@ -813,19 +817,25 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         3
       );
 
-      await page.detailLearnersAndLearnerGroups.save();
+      await page.details.detailLearnersAndLearnerGroups.save();
 
-      assert.strictEqual(page.detailLearnersAndLearnerGroups.detailLearnerList.learners.length, 3);
       assert.strictEqual(
-        page.detailLearnersAndLearnerGroups.detailLearnerList.learners[0].userNameInfo.fullName,
+        page.details.detailLearnersAndLearnerGroups.detailLearnerList.learners.length,
+        3
+      );
+      assert.strictEqual(
+        page.details.detailLearnersAndLearnerGroups.detailLearnerList.learners[0].userNameInfo
+          .fullName,
         '1 guy M. Mc1son'
       );
       assert.strictEqual(
-        page.detailLearnersAndLearnerGroups.detailLearnerList.learners[1].userNameInfo.fullName,
+        page.details.detailLearnersAndLearnerGroups.detailLearnerList.learners[1].userNameInfo
+          .fullName,
         '2 guy M. Mc2son'
       );
       assert.strictEqual(
-        page.detailLearnersAndLearnerGroups.detailLearnerList.learners[2].userNameInfo.fullName,
+        page.details.detailLearnersAndLearnerGroups.detailLearnerList.learners[2].userNameInfo
+          .fullName,
         'joe u. shmoe'
       );
     });
@@ -840,11 +850,15 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       await page.visit({ courseId: 1, sessionId: 1 });
 
       assert.strictEqual(currentRouteName(), 'session.index');
-      assert.strictEqual(page.detailLearnersAndLearnerGroups.detailLearnerList.learners.length, 2);
+      assert.strictEqual(
+        page.details.detailLearnersAndLearnerGroups.detailLearnerList.learners.length,
+        2
+      );
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
-      const { selectedLearners } = page.detailLearnersAndLearnerGroups.learnerSelectionManager;
+      const { selectedLearners } =
+        page.details.detailLearnersAndLearnerGroups.learnerSelectionManager;
 
       assert.strictEqual(selectedLearners.detailLearnerList.learners.length, 2);
 
@@ -852,9 +866,12 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(selectedLearners.detailLearnerList.learners.length, 1);
 
-      await page.detailLearnersAndLearnerGroups.save();
+      await page.details.detailLearnersAndLearnerGroups.save();
 
-      assert.strictEqual(page.detailLearnersAndLearnerGroups.detailLearnerList.learners.length, 1);
+      assert.strictEqual(
+        page.details.detailLearnersAndLearnerGroups.detailLearnerList.learners.length,
+        1
+      );
     });
 
     test('undo learner change', async function (assert) {
@@ -867,11 +884,15 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       await page.visit({ courseId: 1, sessionId: 1 });
 
       assert.strictEqual(currentRouteName(), 'session.index');
-      assert.strictEqual(page.detailLearnersAndLearnerGroups.detailLearnerList.learners.length, 2);
+      assert.strictEqual(
+        page.details.detailLearnersAndLearnerGroups.detailLearnerList.learners.length,
+        2
+      );
 
-      await page.detailLearnersAndLearnerGroups.manage();
+      await page.details.detailLearnersAndLearnerGroups.manage();
 
-      const { selectedLearners } = page.detailLearnersAndLearnerGroups.learnerSelectionManager;
+      const { selectedLearners } =
+        page.details.detailLearnersAndLearnerGroups.learnerSelectionManager;
 
       assert.strictEqual(selectedLearners.detailLearnerList.learners.length, 2);
 
@@ -879,9 +900,12 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(selectedLearners.detailLearnerList.learners.length, 1);
 
-      await page.detailLearnersAndLearnerGroups.cancel();
+      await page.details.detailLearnersAndLearnerGroups.cancel();
 
-      assert.strictEqual(page.detailLearnersAndLearnerGroups.detailLearnerList.learners.length, 2);
+      assert.strictEqual(
+        page.details.detailLearnersAndLearnerGroups.detailLearnerList.learners.length,
+        2
+      );
     });
   });
 
@@ -911,11 +935,11 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       sessionId: 1,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.detailLearnersAndLearnerGroups.manage();
-    await page.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].add();
-    await page.detailLearnersAndLearnerGroups.save();
+    await page.details.detailLearnersAndLearnerGroups.manage();
+    await page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].add();
+    await page.details.detailLearnersAndLearnerGroups.save();
 
-    const { detailLearnergroupsList } = page.detailLearnersAndLearnerGroups;
+    const { detailLearnergroupsList } = page.details.detailLearnersAndLearnerGroups;
     assert.strictEqual(detailLearnergroupsList.trees.length, 1);
     assert.strictEqual(
       detailLearnergroupsList.trees[0].title,

@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
+import { component } from 'ilios-common/page-objects/components/publication-status';
 
 module('Integration | Component | publication-status', function (hooks) {
   setupRenderingTest(hooks);
@@ -14,8 +15,7 @@ module('Integration | Component | publication-status', function (hooks) {
       @showIcon={{true}}
       @showText={{true}}
     />`);
-    assert.dom().hasTextContaining('Published');
-
+    assert.strictEqual(component.value, 'Published');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -26,8 +26,7 @@ module('Integration | Component | publication-status', function (hooks) {
       @showIcon={{true}}
       @showText={{true}}
     />`);
-    assert.dom().hasTextContaining('Scheduled');
-
+    assert.strictEqual(component.value, 'Scheduled');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -38,8 +37,7 @@ module('Integration | Component | publication-status', function (hooks) {
       @showIcon={{true}}
       @showText={{true}}
     />`);
-    assert.dom().hasTextContaining('Not Published');
-
+    assert.strictEqual(component.value, 'Not Published');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

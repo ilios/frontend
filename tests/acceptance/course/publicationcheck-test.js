@@ -1,8 +1,9 @@
-import { currentRouteName, currentURL, click, findAll, visit } from '@ember/test-helpers';
+import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication, getElementText, getText } from 'ilios-common';
+import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import page from 'ilios-common/page-objects/course-publication-check';
 
 module('Acceptance | Course - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
@@ -36,35 +37,33 @@ module('Acceptance | Course - Publication Check', function (hooks) {
     this.server.create('courseObjective', { course: this.fullCourse });
     this.emptyCourse = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school,
     });
   });
 
   test('full course count', async function (assert) {
-    await visit('/courses/' + this.fullCourse.id + '/publicationcheck');
+    await page.visit({ courseId: this.fullCourse.id });
     assert.strictEqual(currentRouteName(), 'course.publication_check');
-    var items = findAll('.course-publicationcheck table tbody td');
-    assert.strictEqual(await getElementText(items[0]), getText('course 0'));
-    assert.strictEqual(await getElementText(items[1]), getText('Yes (1)'));
-    assert.strictEqual(await getElementText(items[2]), getText('Yes (1)'));
-    assert.strictEqual(await getElementText(items[3]), getText('Yes (1)'));
-    assert.strictEqual(await getElementText(items[4]), getText('Yes (1)'));
+    assert.strictEqual(page.publicationcheck.courseTitle, 'course 0');
+    assert.strictEqual(page.publicationcheck.cohorts, 'Yes (1)');
+    assert.strictEqual(page.publicationcheck.terms, 'Yes (1)');
+    assert.strictEqual(page.publicationcheck.objectives, 'Yes (1)');
+    assert.strictEqual(page.publicationcheck.mesh, 'Yes (1)');
   });
 
   test('empty course count', async function (assert) {
-    await visit('/courses/' + this.emptyCourse.id + '/publicationcheck');
+    await page.visit({ courseId: this.emptyCourse.id });
     assert.strictEqual(currentRouteName(), 'course.publication_check');
-    var items = findAll('.course-publicationcheck table tbody td');
-    assert.strictEqual(await getElementText(items[0]), getText('course 1'));
-    assert.strictEqual(await getElementText(items[1]), getText('No'));
-    assert.strictEqual(await getElementText(items[2]), getText('No'));
-    assert.strictEqual(await getElementText(items[3]), getText('No'));
-    assert.strictEqual(await getElementText(items[4]), getText('No'));
+    assert.strictEqual(page.publicationcheck.courseTitle, 'course 1');
+    assert.strictEqual(page.publicationcheck.cohorts, 'No');
+    assert.strictEqual(page.publicationcheck.terms, 'No');
+    assert.strictEqual(page.publicationcheck.objectives, 'No');
+    assert.strictEqual(page.publicationcheck.mesh, 'No');
   });
 
   test('unlink icon transitions properly', async function (assert) {
-    await visit('/courses/' + this.fullCourse.id + '/publicationcheck');
-    await click('.fa-unlink');
+    await page.visit({ courseId: this.fullCourse.id });
+    await page.publicationcheck.unlink.click();
     assert.strictEqual(currentURL(), '/courses/1?courseObjectiveDetails=true&details=true');
   });
 });

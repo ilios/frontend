@@ -49,79 +49,91 @@ module('Acceptance | Course - Objective List', function (hooks) {
     this.server.createList('course-objective', 11, { course });
 
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 13);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 13);
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title,
-      'descriptor 0'
-    );
-    assert.strictEqual(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
-    assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
-    );
-    assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
+      page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title,
+      'descriptor 0'
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
+      1
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)'
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
+      1
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 0'
     );
 
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.text,
       'course objective 1'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[1].parents.list.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[1].parents.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[1].parents.list[0].text,
+      page.details.objectives.objectiveList.objectives[1].parents.list[0].text,
       'program-year objective 1'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 2);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
+      page.details.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
+      2
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
       'descriptor 0'
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title,
+      page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title,
       'descriptor 1'
     );
-    assert.strictEqual(page.objectives.objectiveList.objectives[1].selectedTerms.list.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[1].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
-    );
-    assert.strictEqual(
-      page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms.length,
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list.length,
       1
     );
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)'
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms.length,
+      1
+    );
+    assert.strictEqual(
+      page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
       'term 1'
     );
 
     for (let i = 2; i <= 12; i++) {
       assert.strictEqual(
-        page.objectives.objectiveList.objectives[i].description.text,
+        page.details.objectives.objectiveList.objectives[i].description.text,
         `course objective ${i}`
       );
-      assert.ok(page.objectives.objectiveList.objectives[i].parents.empty);
-      assert.ok(page.objectives.objectiveList.objectives[i].meshDescriptors.empty);
+      assert.ok(page.details.objectives.objectiveList.objectives[i].parents.empty);
+      assert.ok(page.details.objectives.objectiveList.objectives[i].meshDescriptors.empty);
     }
   });
 
@@ -136,18 +148,18 @@ module('Acceptance | Course - Objective List', function (hooks) {
     });
     this.server.create('course-objective', { course, title: longTitle });
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       longTitle.substring(0, 200)
     );
-    await page.objectives.objectiveList.objectives[0].description.openEditor();
+    await page.details.objectives.objectiveList.objectives[0].description.openEditor();
     assert.strictEqual(
-      await page.objectives.objectiveList.objectives[0].description.editorContents(),
+      await page.details.objectives.objectiveList.objectives[0].description.editorContents(),
       `<p>${longTitle}</p>`
     );
   });
@@ -162,21 +174,21 @@ module('Acceptance | Course - Objective List', function (hooks) {
     });
     this.server.create('course-objective', { course });
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    await page.objectives.objectiveList.objectives[0].description.openEditor();
-    await page.objectives.objectiveList.objectives[0].description.edit(newDescription);
-    await page.objectives.objectiveList.objectives[0].description.save();
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
+    await page.details.objectives.objectiveList.objectives[0].description.openEditor();
+    await page.details.objectives.objectiveList.objectives[0].description.edit(newDescription);
+    await page.details.objectives.objectiveList.objectives[0].description.save();
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.text,
       newDescription
     );
   });
@@ -190,20 +202,22 @@ module('Acceptance | Course - Objective List', function (hooks) {
     });
     this.server.create('course-objective', { course });
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    assert.strictEqual(page.objectives.objectiveList.objectives.length, 1);
-    assert.notOk(page.objectives.objectiveList.objectives[0].description.hasValidationError);
-    await page.objectives.objectiveList.objectives[0].description.openEditor();
-    await page.objectives.objectiveList.objectives[0].description.edit(
+    assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[0].description.hasValidationError
+    );
+    await page.details.objectives.objectiveList.objectives[0].description.openEditor();
+    await page.details.objectives.objectiveList.objectives[0].description.edit(
       '<p>&nbsp</p><div></div><span>  </span>'
     );
-    await page.objectives.objectiveList.objectives[0].description.save();
-    assert.ok(page.objectives.objectiveList.objectives[0].description.hasValidationError);
+    await page.details.objectives.objectiveList.objectives[0].description.save();
+    assert.ok(page.details.objectives.objectiveList.objectives[0].description.hasValidationError);
     assert.strictEqual(
-      page.objectives.objectiveList.objectives[0].description.validationError,
+      page.details.objectives.objectiveList.objectives[0].description.validationError,
       'This field can not be blank'
     );
   });

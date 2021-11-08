@@ -35,25 +35,40 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.instructors.title, 'Instructors and Instructor Groups (3/3)');
+    assert.strictEqual(page.details.instructors.title, 'Instructors and Instructor Groups (3/3)');
 
-    assert.strictEqual(page.instructors.currentGroups.length, 3);
-    assert.strictEqual(page.instructors.currentGroups[0].title, 'instructor group 0');
-    assert.strictEqual(page.instructors.currentGroups[0].members.length, 2);
-    assert.strictEqual(page.instructors.currentGroups[0].members[0].text, '7 guy M. Mc7son');
-    assert.strictEqual(page.instructors.currentGroups[0].members[1].text, '8 guy M. Mc8son');
-    assert.strictEqual(page.instructors.currentGroups[1].title, 'instructor group 1');
-    assert.strictEqual(page.instructors.currentGroups[1].members.length, 3);
-    assert.strictEqual(page.instructors.currentGroups[1].members[0].text, '10 guy M. Mc10son');
-    assert.strictEqual(page.instructors.currentGroups[1].members[1].text, '11 guy M. Mc11son');
-    assert.strictEqual(page.instructors.currentGroups[1].members[2].text, '9 guy M. Mc9son');
-    assert.strictEqual(page.instructors.currentGroups[2].title, 'instructor group 2');
-    assert.strictEqual(page.instructors.currentGroups[2].members.length, 0);
+    assert.strictEqual(page.details.instructors.currentGroups.length, 3);
+    assert.strictEqual(page.details.instructors.currentGroups[0].title, 'instructor group 0');
+    assert.strictEqual(page.details.instructors.currentGroups[0].members.length, 2);
+    assert.strictEqual(
+      page.details.instructors.currentGroups[0].members[0].text,
+      '7 guy M. Mc7son'
+    );
+    assert.strictEqual(
+      page.details.instructors.currentGroups[0].members[1].text,
+      '8 guy M. Mc8son'
+    );
+    assert.strictEqual(page.details.instructors.currentGroups[1].title, 'instructor group 1');
+    assert.strictEqual(page.details.instructors.currentGroups[1].members.length, 3);
+    assert.strictEqual(
+      page.details.instructors.currentGroups[1].members[0].text,
+      '10 guy M. Mc10son'
+    );
+    assert.strictEqual(
+      page.details.instructors.currentGroups[1].members[1].text,
+      '11 guy M. Mc11son'
+    );
+    assert.strictEqual(
+      page.details.instructors.currentGroups[1].members[2].text,
+      '9 guy M. Mc9son'
+    );
+    assert.strictEqual(page.details.instructors.currentGroups[2].title, 'instructor group 2');
+    assert.strictEqual(page.details.instructors.currentGroups[2].members.length, 0);
 
-    assert.strictEqual(page.instructors.currentInstructors.length, 3);
-    assert.strictEqual(page.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
-    assert.strictEqual(page.instructors.currentInstructors[1].title, '2 guy M. Mc2son');
-    assert.strictEqual(page.instructors.currentInstructors[2].title, '3 guy M. Mc3son');
+    assert.strictEqual(page.details.instructors.currentInstructors.length, 3);
+    assert.strictEqual(page.details.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
+    assert.strictEqual(page.details.instructors.currentInstructors[1].title, '2 guy M. Mc2son');
+    assert.strictEqual(page.details.instructors.currentInstructors[2].title, '3 guy M. Mc3son');
   });
 
   test('manage instructors lists', async function (assert) {
@@ -64,8 +79,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
-    await page.instructors.manage();
-    const { manager } = page.instructors;
+    await page.details.instructors.manage();
+    const { manager } = page.details.instructors;
 
     assert.strictEqual(manager.instructorGroups.length, 3);
     assert.strictEqual(manager.instructorGroups[0].title, 'instructor group 0');
@@ -93,8 +108,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
-    await page.instructors.manage();
-    const { manager } = page.instructors;
+    await page.details.instructors.manage();
+    const { manager } = page.details.instructors;
 
     await manager.search('guy');
     assert.strictEqual(manager.searchResults.length, 12);
@@ -132,8 +147,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
-    await page.instructors.manage();
-    const { manager } = page.instructors;
+    await page.details.instructors.manage();
+    const { manager } = page.details.instructors;
 
     await manager.search('group');
     assert.strictEqual(manager.searchResults.length, 5);
@@ -157,8 +172,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
-    await page.instructors.manage();
-    const { manager } = page.instructors;
+    await page.details.instructors.manage();
+    const { manager } = page.details.instructors;
 
     await manager.search('group');
     await manager.searchResults[3].add();
@@ -174,17 +189,17 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.strictEqual(manager.instructors[1].text, '2 guy M. Mc2son');
     assert.strictEqual(manager.instructors[2].text, '3 guy M. Mc3son');
 
-    await page.instructors.save();
-    assert.strictEqual(page.instructors.currentGroups.length, 4);
-    assert.strictEqual(page.instructors.currentGroups[0].title, 'instructor group 0');
-    assert.strictEqual(page.instructors.currentGroups[1].title, 'instructor group 1');
-    assert.strictEqual(page.instructors.currentGroups[2].title, 'instructor group 2');
-    assert.strictEqual(page.instructors.currentGroups[3].title, 'instructor group 3');
+    await page.details.instructors.save();
+    assert.strictEqual(page.details.instructors.currentGroups.length, 4);
+    assert.strictEqual(page.details.instructors.currentGroups[0].title, 'instructor group 0');
+    assert.strictEqual(page.details.instructors.currentGroups[1].title, 'instructor group 1');
+    assert.strictEqual(page.details.instructors.currentGroups[2].title, 'instructor group 2');
+    assert.strictEqual(page.details.instructors.currentGroups[3].title, 'instructor group 3');
 
-    assert.strictEqual(page.instructors.currentInstructors.length, 3);
-    assert.strictEqual(page.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
-    assert.strictEqual(page.instructors.currentInstructors[1].title, '2 guy M. Mc2son');
-    assert.strictEqual(page.instructors.currentInstructors[2].title, '3 guy M. Mc3son');
+    assert.strictEqual(page.details.instructors.currentInstructors.length, 3);
+    assert.strictEqual(page.details.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
+    assert.strictEqual(page.details.instructors.currentInstructors[1].title, '2 guy M. Mc2son');
+    assert.strictEqual(page.details.instructors.currentInstructors[2].title, '3 guy M. Mc3son');
   });
 
   test('add instructor', async function (assert) {
@@ -195,8 +210,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
-    await page.instructors.manage();
-    const { manager } = page.instructors;
+    await page.details.instructors.manage();
+    const { manager } = page.details.instructors;
 
     await manager.search('guy');
     await manager.searchResults[4].add();
@@ -212,17 +227,17 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.strictEqual(manager.instructors[2].text, '3 guy M. Mc3son');
     assert.strictEqual(manager.instructors[3].text, '4 guy M. Mc4son');
 
-    await page.instructors.save();
-    assert.strictEqual(page.instructors.currentGroups.length, 3);
-    assert.strictEqual(page.instructors.currentGroups[0].title, 'instructor group 0');
-    assert.strictEqual(page.instructors.currentGroups[1].title, 'instructor group 1');
-    assert.strictEqual(page.instructors.currentGroups[2].title, 'instructor group 2');
+    await page.details.instructors.save();
+    assert.strictEqual(page.details.instructors.currentGroups.length, 3);
+    assert.strictEqual(page.details.instructors.currentGroups[0].title, 'instructor group 0');
+    assert.strictEqual(page.details.instructors.currentGroups[1].title, 'instructor group 1');
+    assert.strictEqual(page.details.instructors.currentGroups[2].title, 'instructor group 2');
 
-    assert.strictEqual(page.instructors.currentInstructors.length, 4);
-    assert.strictEqual(page.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
-    assert.strictEqual(page.instructors.currentInstructors[1].title, '2 guy M. Mc2son');
-    assert.strictEqual(page.instructors.currentInstructors[2].title, '3 guy M. Mc3son');
-    assert.strictEqual(page.instructors.currentInstructors[3].title, '4 guy M. Mc4son');
+    assert.strictEqual(page.details.instructors.currentInstructors.length, 4);
+    assert.strictEqual(page.details.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
+    assert.strictEqual(page.details.instructors.currentInstructors[1].title, '2 guy M. Mc2son');
+    assert.strictEqual(page.details.instructors.currentInstructors[2].title, '3 guy M. Mc3son');
+    assert.strictEqual(page.details.instructors.currentInstructors[3].title, '4 guy M. Mc4son');
   });
 
   test('remove instructor group', async function (assert) {
@@ -233,8 +248,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
-    await page.instructors.manage();
-    const { manager } = page.instructors;
+    await page.details.instructors.manage();
+    const { manager } = page.details.instructors;
 
     await manager.instructorGroups[0].remove();
 
@@ -247,15 +262,15 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.strictEqual(manager.instructors[1].text, '2 guy M. Mc2son');
     assert.strictEqual(manager.instructors[2].text, '3 guy M. Mc3son');
 
-    await page.instructors.save();
-    assert.strictEqual(page.instructors.currentGroups.length, 2);
-    assert.strictEqual(page.instructors.currentGroups[0].title, 'instructor group 1');
-    assert.strictEqual(page.instructors.currentGroups[1].title, 'instructor group 2');
+    await page.details.instructors.save();
+    assert.strictEqual(page.details.instructors.currentGroups.length, 2);
+    assert.strictEqual(page.details.instructors.currentGroups[0].title, 'instructor group 1');
+    assert.strictEqual(page.details.instructors.currentGroups[1].title, 'instructor group 2');
 
-    assert.strictEqual(page.instructors.currentInstructors.length, 3);
-    assert.strictEqual(page.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
-    assert.strictEqual(page.instructors.currentInstructors[1].title, '2 guy M. Mc2son');
-    assert.strictEqual(page.instructors.currentInstructors[2].title, '3 guy M. Mc3son');
+    assert.strictEqual(page.details.instructors.currentInstructors.length, 3);
+    assert.strictEqual(page.details.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
+    assert.strictEqual(page.details.instructors.currentInstructors[1].title, '2 guy M. Mc2son');
+    assert.strictEqual(page.details.instructors.currentInstructors[2].title, '3 guy M. Mc3son');
   });
 
   test('remove instructor', async function (assert) {
@@ -266,8 +281,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
-    await page.instructors.manage();
-    const { manager } = page.instructors;
+    await page.details.instructors.manage();
+    const { manager } = page.details.instructors;
 
     await manager.instructors[0].remove();
 
@@ -280,15 +295,15 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.strictEqual(manager.instructors[0].text, '2 guy M. Mc2son');
     assert.strictEqual(manager.instructors[1].text, '3 guy M. Mc3son');
 
-    await page.instructors.save();
-    assert.strictEqual(page.instructors.currentGroups.length, 3);
-    assert.strictEqual(page.instructors.currentGroups[0].title, 'instructor group 0');
-    assert.strictEqual(page.instructors.currentGroups[1].title, 'instructor group 1');
-    assert.strictEqual(page.instructors.currentGroups[2].title, 'instructor group 2');
+    await page.details.instructors.save();
+    assert.strictEqual(page.details.instructors.currentGroups.length, 3);
+    assert.strictEqual(page.details.instructors.currentGroups[0].title, 'instructor group 0');
+    assert.strictEqual(page.details.instructors.currentGroups[1].title, 'instructor group 1');
+    assert.strictEqual(page.details.instructors.currentGroups[2].title, 'instructor group 2');
 
-    assert.strictEqual(page.instructors.currentInstructors.length, 2);
-    assert.strictEqual(page.instructors.currentInstructors[0].title, '2 guy M. Mc2son');
-    assert.strictEqual(page.instructors.currentInstructors[1].title, '3 guy M. Mc3son');
+    assert.strictEqual(page.details.instructors.currentInstructors.length, 2);
+    assert.strictEqual(page.details.instructors.currentInstructors[0].title, '2 guy M. Mc2son');
+    assert.strictEqual(page.details.instructors.currentInstructors[1].title, '3 guy M. Mc3son');
   });
 
   test('undo instructor/group changes', async function (assert) {
@@ -299,23 +314,23 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(currentRouteName(), 'session.index');
-    await page.instructors.manage();
-    const { manager } = page.instructors;
+    await page.details.instructors.manage();
+    const { manager } = page.details.instructors;
 
     await manager.instructorGroups[0].remove();
     await manager.instructors[0].remove();
 
-    await page.instructors.cancel();
+    await page.details.instructors.cancel();
 
-    assert.strictEqual(page.instructors.currentGroups.length, 3);
-    assert.strictEqual(page.instructors.currentGroups[0].title, 'instructor group 0');
-    assert.strictEqual(page.instructors.currentGroups[1].title, 'instructor group 1');
-    assert.strictEqual(page.instructors.currentGroups[2].title, 'instructor group 2');
+    assert.strictEqual(page.details.instructors.currentGroups.length, 3);
+    assert.strictEqual(page.details.instructors.currentGroups[0].title, 'instructor group 0');
+    assert.strictEqual(page.details.instructors.currentGroups[1].title, 'instructor group 1');
+    assert.strictEqual(page.details.instructors.currentGroups[2].title, 'instructor group 2');
 
-    assert.strictEqual(page.instructors.currentInstructors.length, 3);
-    assert.strictEqual(page.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
-    assert.strictEqual(page.instructors.currentInstructors[1].title, '2 guy M. Mc2son');
-    assert.strictEqual(page.instructors.currentInstructors[2].title, '3 guy M. Mc3son');
+    assert.strictEqual(page.details.instructors.currentInstructors.length, 3);
+    assert.strictEqual(page.details.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
+    assert.strictEqual(page.details.instructors.currentInstructors[1].title, '2 guy M. Mc2son');
+    assert.strictEqual(page.details.instructors.currentInstructors[2].title, '3 guy M. Mc3son');
   });
 
   test('ilm due date is visible if sesion has no post-requisite', async function (assert) {
@@ -324,8 +339,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionId: 1,
       sessionLearnergroupDetails: true,
     });
-    assert.ok(page.overview.ilmDueDateAndTime.isPresent);
-    assert.ok(page.overview.ilmDueDateAndTime.isVisible);
+    assert.ok(page.details.overview.ilmDueDateAndTime.isPresent);
+    assert.ok(page.details.overview.ilmDueDateAndTime.isVisible);
   });
 
   test('ilm due date should not be visible if session has post-requisite', async function (assert) {
@@ -338,8 +353,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionId: 1,
       sessionLearnergroupDetails: true,
     });
-    assert.ok(page.overview.ilmDueDateAndTime.isPresent);
-    assert.ok(page.overview.ilmDueDateAndTime.isHidden);
+    assert.ok(page.details.overview.ilmDueDateAndTime.isPresent);
+    assert.ok(page.details.overview.ilmDueDateAndTime.isHidden);
   });
 
   test('ilm-only subcomponents disappear/reappear if ilm gets toggled off/on', async function (assert) {
@@ -351,17 +366,17 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     });
     assert.strictEqual(currentRouteName(), 'session.index');
 
-    assert.ok(page.learnersAreVisible);
-    assert.ok(page.instructorsAreVisible);
+    assert.ok(page.details.learnersAreVisible);
+    assert.ok(page.details.instructorsAreVisible);
 
-    await page.overview.toggleIlm.yesNoToggle.click();
+    await page.details.overview.toggleIlm.yesNoToggle.click();
 
-    assert.notOk(page.learnersAreVisible);
-    assert.notOk(page.instructorsAreVisible);
+    assert.notOk(page.details.learnersAreVisible);
+    assert.notOk(page.details.instructorsAreVisible);
 
-    await page.overview.toggleIlm.yesNoToggle.click();
+    await page.details.overview.toggleIlm.yesNoToggle.click();
 
-    assert.ok(page.learnersAreVisible);
-    assert.ok(page.instructorsAreVisible);
+    assert.ok(page.details.learnersAreVisible);
+    assert.ok(page.details.instructorsAreVisible);
   });
 });

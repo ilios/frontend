@@ -36,49 +36,49 @@ module('Acceptance | Course - Competencies', function (hooks) {
       programYear,
     });
 
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       year: 2013,
       school: this.school,
       cohorts: [cohort],
     });
     this.server.create('courseObjective', {
       programYearObjectives: [programYearObjective],
-      course,
+      course: this.course,
     });
     this.server.create('courseObjective', {
       programYearObjectives: [programYearObjective],
-      course,
+      course: this.course,
     });
   });
 
   test('collapsed competencies renders', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await page.visit({ courseId: 1, details: true });
-    assert.strictEqual(page.collapsedCompetencies.title, 'Competencies (1)');
-    assert.strictEqual(page.collapsedCompetencies.headers[0].text, 'School');
-    assert.strictEqual(page.collapsedCompetencies.headers[1].text, 'Competencies');
-    assert.strictEqual(page.collapsedCompetencies.competencies[0].school, 'school 0');
-    assert.strictEqual(page.collapsedCompetencies.competencies[0].count, '1');
+    await page.visit({ courseId: this.course.id, details: true });
+    assert.strictEqual(page.details.collapsedCompetencies.title, 'Competencies (1)');
+    assert.strictEqual(page.details.collapsedCompetencies.headers[0].text, 'School');
+    assert.strictEqual(page.details.collapsedCompetencies.headers[1].text, 'Competencies');
+    assert.strictEqual(page.details.collapsedCompetencies.competencies[0].school, 'school 0');
+    assert.strictEqual(page.details.collapsedCompetencies.competencies[0].count, '1');
   });
 
   test('changing objective parent changes summary', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
-      courseId: 1,
+      courseId: this.course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    await page.objectives.objectiveList.objectives[1].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[1].parentManager;
+    await page.details.objectives.objectiveList.objectives[1].parents.list[0].manage();
+    const m = page.details.objectives.objectiveList.objectives[1].parentManager;
     await m.competencies[1].objectives[0].add();
     assert.ok(m.competencies[0].objectives[0].notSelected);
     assert.ok(m.competencies[1].objectives[0].selected);
-    await page.objectives.objectiveList.objectives[1].parents.save();
+    await page.details.objectives.objectiveList.objectives[1].parents.save();
 
-    assert.strictEqual(page.collapsedCompetencies.title, 'Competencies (2)');
-    assert.strictEqual(page.collapsedCompetencies.headers[0].text, 'School');
-    assert.strictEqual(page.collapsedCompetencies.headers[1].text, 'Competencies');
-    assert.strictEqual(page.collapsedCompetencies.competencies[0].school, 'school 0');
-    assert.strictEqual(page.collapsedCompetencies.competencies[0].count, '2');
+    assert.strictEqual(page.details.collapsedCompetencies.title, 'Competencies (2)');
+    assert.strictEqual(page.details.collapsedCompetencies.headers[0].text, 'School');
+    assert.strictEqual(page.details.collapsedCompetencies.headers[1].text, 'Competencies');
+    assert.strictEqual(page.details.collapsedCompetencies.competencies[0].school, 'school 0');
+    assert.strictEqual(page.details.collapsedCompetencies.competencies[0].count, '2');
   });
 });

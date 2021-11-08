@@ -55,11 +55,11 @@ module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
 
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
-      courseId: 1,
+      courseId: course.id,
       details: true,
       courseObjectiveDetails: true,
     });
-    const { objectives } = page.objectives.objectiveList;
+    const { objectives } = page.details.objectives.objectiveList;
     assert.strictEqual(objectives.length, 1);
 
     assert.strictEqual(objectives[0].description.text, 'course objective 0');
