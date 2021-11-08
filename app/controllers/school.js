@@ -1,7 +1,8 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  queryParams: [
+export default class SchoolController extends Controller {
+  queryParams = [
     'schoolCompetencyDetails',
     'schoolManageCompetencies',
     'schoolVocabularyDetails',
@@ -16,19 +17,20 @@ export default Controller.extend({
     'schoolNewSessionType',
     'schoolManageInstitution',
     'schoolNewVocabulary',
-  ],
-  schoolCompetencyDetails: false,
-  schoolManageCompetencies: false,
-  schoolVocabularyDetails: false,
-  schoolManagedVocabulary: null,
-  schoolManagedVocabularyTerm: null,
-  schoolLeadershipDetails: false,
-  schoolManageLeadership: false,
-  schoolManageSessionAttributes: false,
-  schoolSessionAttributesDetails: false,
-  schoolNewSessionType: false,
-  schoolSessionTypeDetails: false,
-  schoolManagedSessionType: null,
-  schoolManageInstitution: false,
-  schoolNewVocabulary: false,
-});
+  ];
+
+  @tracked schoolCompetencyDetails = false;
+  @tracked schoolManageCompetencies = false;
+  @tracked schoolVocabularyDetails = false;
+  @tracked schoolManagedVocabulary = null;
+  @tracked schoolManagedVocabularyTerm = null;
+  @tracked schoolLeadershipDetails = false;
+  @tracked schoolManageLeadership = false;
+  @tracked schoolManageSessionAttributes = false;
+  @tracked schoolSessionAttributesDetails = false;
+  @tracked schoolNewSessionType = false;
+  @tracked schoolSessionTypeDetails = false;
+  @tracked schoolManagedSessionType = null;
+  @tracked schoolManageInstitution = false;
+  @tracked schoolNewVocabulary = false;
+}

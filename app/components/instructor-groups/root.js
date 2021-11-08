@@ -9,6 +9,7 @@ import { dropTask } from 'ember-concurrency';
 export default class InstructorGroupsRootComponent extends Component {
   @service currentUser;
   @service store;
+  @service dataLoader;
   @tracked showNewInstructorGroupForm = false;
   @tracked newInstructorGroup;
   @tracked instructorGroupPromises = new Map();
@@ -18,7 +19,7 @@ export default class InstructorGroupsRootComponent extends Component {
     'canCreateInstructorGroup',
     this.bestSelectedSchool,
   ]);
-  @use loadedSchools = new ResolveAsyncValue(() => [
+  @use loadedSchool = new ResolveAsyncValue(() => [
     this.getSchoolPromise(this.bestSelectedSchool.id),
   ]);
   @use instructorGroups = new ResolveAsyncValue(() => [
@@ -27,27 +28,30 @@ export default class InstructorGroupsRootComponent extends Component {
   ]);
 
   get isLoaded() {
-    return Boolean(this.loadedSchools);
+    return Boolean(this.loadedSchool);
   }
 
   get countForSelectedSchool() {
     return this.bestSelectedSchool.hasMany('instructorGroups').ids().length;
   }
 
-  getSchoolPromise(schoolId) {
+  async getSchoolPromise(schoolId) {
     if (!this.instructorGroupPromises.has(schoolId)) {
       this.instructorGroupPromises.set(
         schoolId,
-        this.store.query('instructor-group', {
-          include: 'offerings.session.course,ilmSessions.session.course,users',
-          filters: {
-            school: schoolId,
-          },
-        })
+        Promise.all([
+          this.dataLoader.loadInstructorGroupsForSchool(schoolId),
+          this.store.query('instructor-group', {
+            include: 'offerings.session.course,ilmSessions.session.course',
+            filters: {
+              school: schoolId,
+            },
+          }),
+        ])
       );
     }
-
-    return this.instructorGroupPromises.get(schoolId);
+    const arr = await this.instructorGroupPromises.get(schoolId);
+    return arr[1];
   }
 
   get bestSelectedSchool() {
