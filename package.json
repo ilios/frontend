@@ -60,7 +60,7 @@
     "ember-concurrency": "^2.0.0",
     "ember-could-get-used-to-this": "^1.0.1",
     "ember-data": "3.28.3",
-    "ember-drag-drop": "^0.8.0",
+    "ember-drag-drop": "^0.9.0-beta.0",
     "ember-event-helpers": "^0.1.0",
     "ember-feature-flags": "^6.0.0",
     "ember-file-upload": "^4.0.0",
