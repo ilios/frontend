@@ -28,11 +28,19 @@ export default class ResolveFlatMapBy extends Resource {
     const arr = this.args.positional[0];
     const mapByKey = this.args.positional[1];
 
+    if (arr) {
+      //consume the mapBy on each to entangle tracking
+      arr.forEach((element) => element[mapByKey]);
+    }
+
     //in case arr is a promise we have to resolve it.
     //this is also safe if arr isn't a promise.
     const resolvedArray = await Promise.resolve(arr);
     if (resolvedArray) {
-      this.data = await Promise.all(resolvedArray.mapBy(mapByKey));
+      //Ember data models return a promise from `mapBy`
+      //so we need to resolve it and then resolve the values in it
+      const mapBy = await resolvedArray.mapBy(mapByKey);
+      this.data = await Promise.all(mapBy);
     }
   }
 }
