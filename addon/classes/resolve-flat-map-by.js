@@ -20,7 +20,11 @@ export default class ResolveFlatMapBy extends Resource {
       if (Array.isArray(arr)) {
         return arr;
       }
-      return arr.toArray();
+      if ('toArray' in arr) {
+        return arr.toArray();
+      }
+
+      return arr;
     });
   }
 

@@ -213,8 +213,7 @@ export default class Course extends Model {
     return this.cohorts.length > 1;
   }
 
-  @use _allTermVocabularies = new ResolveAsyncValue(() => [this.terms.mapBy('vocabulary')]);
-
+  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
   /**
    * A list of all vocabularies that are associated via terms.
    */
