@@ -57,4 +57,25 @@ module('Unit | Model | course objective', function (hooks) {
     assert.ok(terms.includes(term5));
     assert.ok(terms.includes(term6));
   });
+
+  test('treeCompetencies', async function (assert) {
+    assert.expect(3);
+    const store = this.owner.lookup('service:store');
+    const subject = store.createRecord('course-objective');
+    const competency1 = store.createRecord('competency');
+    const competency2 = store.createRecord('competency');
+    const programYearObjective1 = store.createRecord('program-year-objective', {
+      competency: competency1,
+    });
+    const programYearObjective2 = store.createRecord('program-year-objective', {
+      competency: competency2,
+    });
+    subject
+      .get('programYearObjectives')
+      .pushObjects([programYearObjective1, programYearObjective2]);
+    const treeCompetencies = await waitForResource(subject, 'treeCompetencies');
+    assert.strictEqual(treeCompetencies.length, 2);
+    assert.ok(treeCompetencies.includes(competency1));
+    assert.ok(treeCompetencies.includes(competency2));
+  });
 });
