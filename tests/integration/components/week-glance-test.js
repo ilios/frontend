@@ -209,7 +209,7 @@ module('Integration | Component | week glance', function (hooks) {
       @showFullTitle={{false}}
       @year={{format-date this.today year="numeric"}}
       @week={{moment-format this.today "W"}}
-      @toggleCollapsed={{action toggle}}
+      @toggleCollapsed={{this.toggle}}
     />`);
     const title = '[data-test-week-title]';
     await settled();
@@ -231,7 +231,7 @@ module('Integration | Component | week glance', function (hooks) {
       @showFullTitle={{false}}
       @year={{format-date this.today year="numeric"}}
       @week={{moment-format this.today "W"}}
-      @toggleCollapsed={{action toggle}}
+      @toggleCollapsed={{this.toggle}}
     />`);
     const title = '[data-test-week-title]';
     await settled();
@@ -283,7 +283,7 @@ module('Integration | Component | week glance', function (hooks) {
       @collapsible={{false}}
       @collapsed={{false}}
       @showFullTitle={{true}}
-      @year={{year}}
+      @year={{this.year}}
       @week={{moment-format this.today "W"}}
     />`);
     const title = '[data-test-week-title]';

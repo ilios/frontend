@@ -45,7 +45,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
   test('it renders with only start date in the future', async function (assert) {
     const tomorrow = moment().add(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
-    await render(hbs`<TimedReleaseSchedule @startDate={{tomorrow}} />`);
+    await render(hbs`<TimedReleaseSchedule @startDate={{this.tomorrow}} />`);
     const expectedDate = tomorrow.toDate().toLocaleString([], localeFormatOptions);
 
     assert.dom(this.element).hasText(`(Available: ${expectedDate})`);
@@ -54,14 +54,14 @@ module('Integration | Component | timed release schedule', function (hooks) {
   test('it renders nothing with only start date in the past', async function (assert) {
     const tomorrow = moment().subtract(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
-    await render(hbs`<TimedReleaseSchedule @startDate={{tomorrow}} />`);
+    await render(hbs`<TimedReleaseSchedule @startDate={{this.tomorrow}} />`);
     assert.dom(this.element).hasNoText();
   });
 
   test('it renders with only end date in the future', async function (assert) {
     const tomorrow = moment().add(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
-    await render(hbs`<TimedReleaseSchedule @endDate={{tomorrow}} />`);
+    await render(hbs`<TimedReleaseSchedule @endDate={{this.tomorrow}} />`);
     const expectedDate = tomorrow.toDate().toLocaleString([], localeFormatOptions);
 
     assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
@@ -70,7 +70,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
   test('it renders with only end date the past', async function (assert) {
     const tomorrow = moment().subtract(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
-    await render(hbs`<TimedReleaseSchedule @endDate={{tomorrow}} />`);
+    await render(hbs`<TimedReleaseSchedule @endDate={{this.tomorrow}} />`);
     const expectedDate = tomorrow.toDate().toLocaleString([], localeFormatOptions);
     assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
   });

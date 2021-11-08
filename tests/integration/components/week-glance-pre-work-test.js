@@ -57,7 +57,7 @@ module('Integration | Component | week-glance-pre-work', function (hooks) {
         postrequisiteSlug: '123',
       },
     ]);
-    await render(hbs`<WeekGlancePreWork @events={{events}} />`);
+    await render(hbs`<WeekGlancePreWork @events={{this.events}} />`);
 
     assert.strictEqual(component.title, 'Learn to Learn');
     assert.strictEqual(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
@@ -76,7 +76,7 @@ module('Integration | Component | week-glance-pre-work', function (hooks) {
       },
       {},
     ]);
-    await render(hbs`<WeekGlancePreWork @events={{events}} />`);
+    await render(hbs`<WeekGlancePreWork @events={{this.events}} />`);
 
     assert.strictEqual(component.title, 'Learn to Learn');
     assert.strictEqual(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
@@ -96,7 +96,7 @@ module('Integration | Component | week-glance-pre-work', function (hooks) {
       {},
       {},
     ]);
-    await render(hbs`<WeekGlancePreWork @events={{events}} />`);
+    await render(hbs`<WeekGlancePreWork @events={{this.events}} />`);
 
     assert.strictEqual(component.title, 'Learn to Learn');
     assert.strictEqual(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);

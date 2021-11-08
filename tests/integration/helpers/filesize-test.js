@@ -9,7 +9,7 @@ module('helper:filesize', function (hooks) {
   test('it bytes', async function (assert) {
     this.set('inputValue', '42');
 
-    await render(hbs`{{filesize inputValue}}`);
+    await render(hbs`{{filesize this.inputValue}}`);
 
     assert.dom(this.element).hasText('42b');
   });
@@ -17,7 +17,7 @@ module('helper:filesize', function (hooks) {
   test('it kilobytes', async function (assert) {
     this.set('inputValue', '4200');
 
-    await render(hbs`{{filesize inputValue}}`);
+    await render(hbs`{{filesize this.inputValue}}`);
 
     assert.dom(this.element).hasText('4kb');
   });
@@ -25,7 +25,7 @@ module('helper:filesize', function (hooks) {
   test('it megabytes', async function (assert) {
     this.set('inputValue', '4200000');
 
-    await render(hbs`{{filesize inputValue}}`);
+    await render(hbs`{{filesize this.inputValue}}`);
 
     assert.dom(this.element).hasText('4mb');
   });

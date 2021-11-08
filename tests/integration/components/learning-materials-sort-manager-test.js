@@ -73,7 +73,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     this.set('cancel', () => {});
 
     await render(
-      hbs`<LearningMaterialsSortManager @subject={{subject}} @cancel={{this.cancel}} />`
+      hbs`<LearningMaterialsSortManager @subject={{this.subject}} @cancel={{this.cancel}} />`
     );
 
     return settled().then(() => {
@@ -138,7 +138,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     });
 
     await render(
-      hbs`<LearningMaterialsSortManager @subject={{subject}} @cancel={{action cancel}} />`
+      hbs`<LearningMaterialsSortManager @subject={{this.subject}} @cancel={{this.cancel}} />`
     );
 
     return settled().then(async () => {
@@ -184,7 +184,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     });
 
     await render(
-      hbs`<LearningMaterialsSortManager @subject={{subject}} @save={{action save}} @cancel={{this.cancel}} />`
+      hbs`<LearningMaterialsSortManager @subject={{this.subject}} @save={{this.save}} @cancel={{this.cancel}} />`
     );
 
     return settled().then(async () => {

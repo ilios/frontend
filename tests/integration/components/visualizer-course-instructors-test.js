@@ -51,7 +51,7 @@ module('Integration | Component | visualizer-course-instructors', function (hook
   test('it renders', async function (assert) {
     this.set('course', this.courseModel);
 
-    await render(hbs`<VisualizerCourseInstructors @course={{course}} @isIcon={{false}} />`);
+    await render(hbs`<VisualizerCourseInstructors @course={{this.course}} @isIcon={{false}} />`);
 
     const chartLabels = 'svg .bars text';
     assert.dom(chartLabels).exists({ count: 4 });

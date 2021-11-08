@@ -9,7 +9,7 @@ module('Integration | Component | sessions-grid-offering', function (hooks) {
   test('it renders', async function (assert) {
     const offering = {};
     this.set('offering', offering);
-    await render(hbs`<SessionsGridOffering @offering={{offering}} />`);
+    await render(hbs`<SessionsGridOffering @offering={{this.offering}} />`);
 
     assert.dom(this.element).hasText('');
   });

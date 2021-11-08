@@ -41,7 +41,7 @@ module('Integration | Helper | sort-by-position', function (hooks) {
 
   test('empty list', async function (assert) {
     await render(hbs`
-      {{#each (sort-by-position array) as |o|}}
+      {{#each (sort-by-position (array)) as |o|}}
         <span>{{o.title}}</span>
       {{else}}
         <span>Nada!</span>

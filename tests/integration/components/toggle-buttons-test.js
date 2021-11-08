@@ -53,8 +53,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       called++;
     });
     await render(hbs`<ToggleButtons
-      @toggle={{action toggle}}
-      @firstOptionSelected={{firstOptionSelected}}
+      @toggle={{this.toggle}}
+      @firstOptionSelected={{this.firstOptionSelected}}
       @firstLabel="Left"
       @secondLabel="Right"
     />`);
@@ -95,8 +95,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       assert.ok(false, 'this should not be fired');
     });
     await render(hbs`<ToggleButtons
-      @toggle={{action toggle}}
-      @firstOptionSelected={{firstOptionSelected}}
+      @toggle={{this.toggle}}
+      @firstOptionSelected={{this.firstOptionSelected}}
       @firstLabel="Left"
       @secondLabel="Right"
     />`);

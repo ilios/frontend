@@ -17,7 +17,7 @@ module('Integration | Component | search box', function (hooks) {
     this.set('search', (value) => {
       assert.strictEqual(value, '');
     });
-    await render(hbs`<SearchBox @search={{action search}} />`);
+    await render(hbs`<SearchBox @search={{this.search}} />`);
     const searchBoxIcon = '.search-icon';
     await click(searchBoxIcon);
   });
@@ -27,7 +27,7 @@ module('Integration | Component | search box', function (hooks) {
     this.set('search', (value) => {
       assert.strictEqual(value, 'typed it');
     });
-    await render(hbs`<SearchBox @search={{action search}} />`);
+    await render(hbs`<SearchBox @search={{this.search}} />`);
     await fillIn('input', 'typed it');
   });
 
@@ -36,15 +36,14 @@ module('Integration | Component | search box', function (hooks) {
     this.set('clear', () => {
       assert.ok(true);
     });
-    this.set('nothing', () => {});
-    await render(hbs`<SearchBox @search={{action nothing}} @clear={{action clear}} />`);
+    await render(hbs`<SearchBox @search={{(noop)}} @clear={{this.clear}} />`);
     await fillIn('input', 'typed it');
     await triggerKeyEvent('input', 'keyup', 27);
   });
 
   test('clicking icon sets focus', async function (assert) {
     this.set('search', () => {});
-    await render(hbs`<SearchBox @search={{action search}} />`);
+    await render(hbs`<SearchBox @search={{this.search}} />`);
     const searchBoxIcon = '.search-icon';
     await click(searchBoxIcon);
     assert.dom(find('input')).isFocused();

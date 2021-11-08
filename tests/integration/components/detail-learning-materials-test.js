@@ -83,7 +83,6 @@ module('Integration | Component | detail learning materials', function (hooks) {
     await render(hbs`<DetailLearningMaterials
       @subject={{this.subject}}
       @isCourse={{true}}
-      @isCourse={{true}}
       @editable={{true}}
     />`);
     assert.strictEqual(component.current[0].owner.userNameInfo.fullName, 'Clem Chowder');

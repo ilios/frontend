@@ -54,7 +54,7 @@ module('Integration | Component | visualizer-course-instructor-session-type', fu
     this.set('instructor', instructorModel);
 
     await render(
-      hbs`<VisualizerCourseInstructorSessionType @course={{course}} @user={{instructor}} @isIcon={{false}} />`
+      hbs`<VisualizerCourseInstructorSessionType @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} />`
     );
 
     const chart = 'svg';

@@ -49,7 +49,7 @@ module('Integration | Component | visualizer-course-vocabularies', function (hoo
 
     this.set('course', courseModel);
 
-    await render(hbs`<VisualizerCourseVocabularies @course={{course}} @isIcon={{false}} />`);
+    await render(hbs`<VisualizerCourseVocabularies @course={{this.course}} @isIcon={{false}} />`);
     const chart = 'svg';
     const chartLabels = `${chart} .slice text`;
     assert.dom(chartLabels).exists({ count: 2 });
