@@ -1,53 +1,55 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/user-search-result';
 
 module('Integration | Component | user-search-result-user', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    this.server.create('user');
-    const user = await this.owner.lookup('service:store').find('user', 1);
-    this.set('user', user);
+    const user = this.server.create('user');
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('user', userModel);
     await render(hbs`<UserSearchResultUser
       @user={{this.user}}
       @addUser={{(noop)}}
     />`);
-    assert.dom('[data-test-result]').includesText('0 guy M. Mc0son user@example.edu');
-    assert.dom('[data-test-result]').hasClass('active');
+    assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
+    assert.ok(component.isActive);
   });
 
   test('inactive if it is already selected', async function (assert) {
-    this.server.create('user');
-    const user = await this.owner.lookup('service:store').find('user', 1);
-    this.set('user', user);
+    const user = this.server.create('user');
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('user', userModel);
+    this.set('activeUsers', [userModel]);
     await render(hbs`<UserSearchResultUser
       @user={{this.user}}
       @addUser={{(noop)}}
-      @currentlyActiveUsers={{array this.user}}
+      @currentlyActiveUsers={{this.activeUsers}}
     />`);
-    assert.dom('[data-test-result]').includesText('0 guy M. Mc0son user@example.edu');
-    assert.dom('[data-test-result]').hasClass('inactive');
+    assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
+    assert.notOk(component.isActive);
   });
 
   test('click fires action', async function (assert) {
     assert.expect(3);
-    this.server.create('user');
-    const user = await this.owner.lookup('service:store').find('user', 1);
-    this.set('user', user);
+    const user = this.server.create('user');
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('user', userModel);
     this.set('add', (add) => {
-      assert.strictEqual(add, user);
+      assert.strictEqual(add, userModel);
     });
     await render(hbs`<UserSearchResultUser
       @user={{this.user}}
       @addUser={{this.add}}
       @currentlyActiveUsers={{(array)}}
     />`);
-    assert.dom('[data-test-result]').includesText('0 guy M. Mc0son user@example.edu');
-    assert.dom('[data-test-result]').hasClass('active');
-    await click('[data-test-result]');
+    assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
+    assert.ok(component.isActive);
+    await component.click();
   });
 });
