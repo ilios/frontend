@@ -99,14 +99,13 @@ export default class DashboardCalendarComponent extends Component {
     const cohorts = await this.getSchoolCohorts(school);
     const cohortProxies = await map(cohorts, async (cohort) => {
       let displayTitle = cohort.get('title');
+      const programYear = await cohort.programYear;
+      const classOfYear = await programYear.getClassOfYear();
       if (!displayTitle) {
         const intl = this.intl;
-        const classOfYear = await cohort.get('classOfYear');
         displayTitle = intl.t('general.classOf', { year: classOfYear });
       }
-      const programYear = await cohort.programYear;
       const program = await programYear.program;
-      const classOfYear = await programYear.classOfYear;
 
       return {
         id: cohort.id,

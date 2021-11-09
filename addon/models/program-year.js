@@ -50,6 +50,11 @@ export default class ProgramYear extends Model {
     return Number(this.startYear) + Number(this._program.duration);
   }
 
+  async getClassOfYear() {
+    const program = await this.program;
+    return Number(this.startYear) + Number(program.duration);
+  }
+
   @use _programYearObjectives = new ResolveAsyncValue(() => [this.programYearObjectives]);
 
   /**
