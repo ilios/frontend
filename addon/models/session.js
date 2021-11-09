@@ -308,7 +308,7 @@ export default class SessionModel extends Model {
 
   @use _postrequisite = new ResolveAsyncValue(() => [this.postrequisite]);
 
-  hasPostrequisite() {
+  get hasPostrequisite() {
     return !!this._postrequisite;
   }
 
