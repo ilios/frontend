@@ -1,8 +1,9 @@
-import { clickable, collection, create, fillable, isVisible, text } from 'ember-cli-page-object';
+import { clickable, collection, create, isVisible, text } from 'ember-cli-page-object';
+import search from './search-box';
 
 const definition = {
   scope: '[data-test-learningmaterial-search]',
-  search: fillable('[data-test-search-box] input'),
+  search,
   searchResults: collection('.lm-search-results > li', {
     title: text('[data-test-title]'),
     description: text('learning-material-description'),
