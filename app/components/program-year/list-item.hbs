@@ -3,10 +3,11 @@
     class={{if this.showRemoveConfirmation "confirm-removal"}}
     data-test-program-year-list-item
   >
-    <td class="text-left" data-test-link>
+    <td class="text-left">
       <LinkTo
         @route="programYear.index"
         @models={{array this.program @programYear}}
+        data-test-link
       >
         <FaIcon @icon="external-link-square-alt" />
         {{this.academicYear}}
@@ -26,28 +27,28 @@
       {{#if @programYear.competencies.length}}
         {{@programYear.competencies.length}}
       {{else}}
-        <FaIcon @icon="exclamation-triangle" class="warning" />
+        <FaIcon @icon="exclamation-triangle" class="warning" data-test-warning />
       {{/if}}
     </td>
     <td class="text-left hide-from-small-screen" data-test-objectives>
       {{#if @programYear.programYearObjectives.length}}
         {{@programYear.programYearObjectives.length}}
       {{else}}
-        <FaIcon @icon="exclamation-triangle" class="warning" />
+        <FaIcon @icon="exclamation-triangle" class="warning" data-test-warning />
       {{/if}}
     </td>
     <td class="text-left hide-from-small-screen" data-test-directors>
       {{#if @programYear.directors.length}}
         {{@programYear.directors.length}}
       {{else}}
-        <FaIcon @icon="exclamation-triangle" class="warning" />
+        <FaIcon @icon="exclamation-triangle" class="warning" data-test-warning />
       {{/if}}
     </td>
     <td class="text-left hide-from-small-screen" data-test-terms>
       {{#if @programYear.terms.length}}
         {{@programYear.terms.length}}
       {{else}}
-        <FaIcon @icon="exclamation-triangle" class="warning" />
+        <FaIcon @icon="exclamation-triangle" class="warning" data-test-warning />
       {{/if}}
     </td>
     <td class="text-right" colspan="2" data-test-actions>
@@ -100,7 +101,7 @@
   {{#if this.showRemoveConfirmation}}
     <tr class="confirm-removal" data-test-confirm-removal>
       <td colspan="8" class="hide-from-small-screen">
-        <div class="confirm-message">
+        <div class="confirm-message" data-test-message>
           {{t
             "general.confirmRemoveProgramYear"
             courseCount=this.cohort.courses.length
@@ -111,6 +112,7 @@
               type="button"
               class="remove text"
               {{on "click" (perform this.remove)}}
+              data-test-confirm
             >
               {{t "general.yes"}}
             </button>
@@ -118,6 +120,7 @@
               type="button"
               class="done text"
               {{on "click" (set this.showRemoveConfirmation false)}}
+              data-test-cancel
             >
               {{t "general.cancel"}}
             </button>
@@ -125,7 +128,7 @@
         </div>
       </td>
       <td colspan="3" class="hide-from-large-screen" data-test-confirm-removal>
-        <div class="confirm-message">
+        <div class="confirm-message" data-test-message>
           {{t
             "general.confirmRemoveProgramYear"
             courseCount=this.cohort.courses.length
@@ -136,6 +139,7 @@
               type="button"
               class="remove text"
               {{on "click" (perform this.remove)}}
+              data-test-confirm
             >
               {{t "general.yes"}}
             </button>
@@ -143,6 +147,7 @@
               type="button"
               class="done text"
               {{on "click" (set this.showRemoveConfirmation false)}}
+              data-test-cancel
             >
               {{t "general.cancel"}}
             </button>

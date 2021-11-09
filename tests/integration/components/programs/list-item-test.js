@@ -27,7 +27,7 @@ module('Integration | Component | programs/list-item', function (hooks) {
     await render(hbs`<Programs::ListItem @program={{this.program}} />`);
     assert.strictEqual(component.title, 'program 0');
     assert.strictEqual(component.school, 'school 0');
-    assert.ok(component.canBeDeleted);
+    assert.ok(component.canBeRemoved);
   });
 
   test('no permission to delete', async function (assert) {
@@ -40,7 +40,7 @@ module('Integration | Component | programs/list-item', function (hooks) {
     this.set('program', programModel);
     await render(hbs`<Programs::ListItem @program={{this.program}} />`);
     assert.strictEqual(component.title, 'program 0');
-    assert.notOk(component.canBeDeleted);
+    assert.notOk(component.canBeRemoved);
   });
 
   test('can not delete with associated years', async function (assert) {
@@ -49,7 +49,7 @@ module('Integration | Component | programs/list-item', function (hooks) {
     this.set('program', programModel);
     await render(hbs`<Programs::ListItem @program={{this.program}} />`);
     assert.strictEqual(component.title, 'program 0');
-    assert.notOk(component.canBeDeleted);
+    assert.notOk(component.canBeRemoved);
   });
 
   test('can not delete with associated ci reports', async function (assert) {
@@ -58,6 +58,6 @@ module('Integration | Component | programs/list-item', function (hooks) {
     this.set('program', programModel);
     await render(hbs`<Programs::ListItem @program={{this.program}} />`);
     assert.strictEqual(component.title, 'program 0');
-    assert.notOk(component.canBeDeleted);
+    assert.notOk(component.canBeRemoved);
   });
 });

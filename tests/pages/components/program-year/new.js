@@ -1,4 +1,4 @@
-import { create, clickable, collection, fillable, property, text } from 'ember-cli-page-object';
+import { create, collection, fillable, property, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-new-program-year]',
@@ -12,11 +12,9 @@ const definition = {
   },
   done: {
     scope: '[data-test-done]',
-    click: clickable(),
   },
   cancel: {
     scope: '[data-test-cancel]',
-    click: clickable(),
   },
 };
 
