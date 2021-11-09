@@ -58,7 +58,7 @@ module.exports = function (defaults) {
       useAppVersion: true,
     },
     autoImport: {
-      publicAssetURL: '/assets',
+      insertScriptsAt: 'auto-import-scripts',
     },
     'ember-fetch': {
       preferNative: true,
