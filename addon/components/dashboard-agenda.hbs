@@ -73,7 +73,12 @@
               {{#unless event.isBlanked}}
                 <tr>
                   <td colspan="4" class="event-date">
-                    <LinkTo @route="events" @model={{event.slug}}>
+                    <LinkTo
+                      @route="events"
+                      @model={{event.slug}}
+                      id={{concat "event" event.slug "date"}}
+                      aria-labelledby="{{concat "event" event.slug "name"}} {{concat "event" event.slug "date"}}"
+                    >
                       <FaIcon @icon="external-link-square-alt" />
                       {{#if event.ilmSession}}
                         <span class="ilm-due">
@@ -83,7 +88,7 @@
                       {{format-date event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}}
                     </LinkTo>
                   </td>
-                  <td colspan="4">
+                  <td colspan="4" id={{concat "event" event.slug "name"}}>
                     {{#if event.ilmSession}}
                       <strong>
                         {{t "general.ilm"}}:
@@ -92,11 +97,7 @@
                     {{event.name}}
                   </td>
                   <td colspan="2">
-                    {{#if event.location}}
-                      <LinkTo @route="events" @model={{event.slug}}>
-                        {{event.location}}
-                      </LinkTo>
-                    {{/if}}
+                    {{event.location}}
                   </td>
                   <td colspan="1">
                     {{#if event.attireRequired}}
