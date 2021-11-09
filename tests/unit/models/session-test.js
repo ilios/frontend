@@ -222,7 +222,7 @@ module('Unit | Model | Session', function (hooks) {
     const model = store.createRecord('session');
     assert.notOk(model.get('isIndependentLearning'));
     await store.createRecord('ilmSession', { id: 1, session: model });
-    assert.ok(model.isIndependentLearning);
+    assert.ok(await waitForResource(model, 'isIndependentLearning'));
   });
 
   test('associatedVocabularies', async function (assert) {

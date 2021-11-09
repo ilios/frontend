@@ -104,7 +104,7 @@ export default class SessionModel extends Model {
 
   @use _ilmSession = new ResolveAsyncValue(() => [this.ilmSession]);
   get isIndependentLearning() {
-    return Boolean(this.belongsTo('ilmSession').id() || this._ilmSession);
+    return !!this._ilmSession;
   }
 
   /**
@@ -237,7 +237,7 @@ export default class SessionModel extends Model {
   }
   @use _ilmLearnerGroups = new ResolveAsyncValue(() => [this._ilmSession?.learnerGroups]);
   get associatedIlmLearnerGroups() {
-    return this.isIndependentLearning ? this._ilmLearnerGroups?.toArray() : [];
+    return this._ilmLearnerGroups?.toArray() ?? [];
   }
 
   get associatedLearnerGroups() {
