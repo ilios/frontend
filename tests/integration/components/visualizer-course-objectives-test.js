@@ -59,7 +59,7 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
 
     this.set('course', courseModel);
 
-    await render(hbs`<VisualizerCourseObjectives @course={{course}} @isIcon={{false}} />`);
+    await render(hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} />`);
 
     const chart = 'svg';
     const chartLabels = `${chart} .slice text`;

@@ -92,7 +92,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
       assert.strictEqual(user.id, this.learnerModel1.id);
     });
     await render(
-      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{remove}}/>`
+      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{this.remove}}/>`
     );
     assert.strictEqual(component.selectedLearners.heading, 'Selected Learners');
     assert.strictEqual(component.selectedLearners.detailLearnerList.learners.length, 2);

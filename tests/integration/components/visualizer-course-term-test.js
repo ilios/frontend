@@ -53,7 +53,9 @@ module('Integration | Component | visualizer-course-term', function (hooks) {
     this.set('course', courseModel);
     this.set('term', termModel);
 
-    await render(hbs`<VisualizerCourseTerm @course={{course}} @term={{term}} @isIcon={{false}} />`);
+    await render(
+      hbs`<VisualizerCourseTerm @course={{this.course}} @term={{this.term}} @isIcon={{false}} />`
+    );
 
     const chartLabels = 'svg .bars text';
     assert.dom(chartLabels).exists({ count: 2 });

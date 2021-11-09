@@ -13,9 +13,9 @@ module('Integration | Component | sessions-grid', function (hooks) {
     this.set('sortBy', 'title');
     this.set('setSortBy', () => {});
     await render(hbs`<SessionsGrid
-      @sessions={{sessions}}
+      @sessions={{this.sessions}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{action setSortBy}}
+      @setSortBy={{this.setSortBy}}
     />`);
 
     assert.dom(this.element).hasText('');
@@ -38,10 +38,10 @@ module('Integration | Component | sessions-grid', function (hooks) {
       assert.strictEqual(s, session);
     });
     await render(hbs`<SessionsGrid
-      @sessions={{sessions}}
+      @sessions={{this.sessions}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{action setSortBy}}
-      @expandSession={{action expandSession}}
+      @setSortBy={{this.setSortBy}}
+      @expandSession={{this.expandSession}}
     />`);
 
     await click('[data-test-expand-collapse-control] svg');
@@ -64,10 +64,10 @@ module('Integration | Component | sessions-grid', function (hooks) {
       assert.ok(false);
     });
     await render(hbs`<SessionsGrid
-      @sessions={{sessions}}
+      @sessions={{this.sessions}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{action setSortBy}}
-      @expandSession={{action expandSession}}
+      @setSortBy={{this.setSortBy}}
+      @expandSession={{this.expandSession}}
     />`);
 
     await click('[data-test-expand-collapse-control] svg');

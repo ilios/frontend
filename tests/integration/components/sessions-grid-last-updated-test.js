@@ -22,7 +22,7 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
 
     this.set('session', sessionModel);
-    await render(hbs`<SessionsGridLastUpdated @session={{session}} />`);
+    await render(hbs`<SessionsGridLastUpdated @session={{this.session}} />`);
 
     assert.dom(this.element).hasText('Last Update Last Update: 07/09/2019 5:00 PM');
   });

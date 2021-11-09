@@ -34,14 +34,13 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     thirdEvent.endDate = date.clone().add(4, 'hour');
 
     this.set('events', [firstEvent, secondEvent, thirdEvent]);
-    this.set('nothing', parseInt);
     const events = '[data-test-ilios-calendar-event-month]';
     const more = '.month-more-events';
 
     await render(hbs`<IliosCalendarMonth
-      @date={{date}}
-      @calendarEvents={{events}}
-      @selectEvent={{action nothing}}
+      @date={{this.date}}
+      @calendarEvents={{this.events}}
+      @selectEvent={{(noop)}}
     />`);
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
     assert.strictEqual(this.element.textContent.trim().search(/^September 2015/), 0);
@@ -56,7 +55,6 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     const date = moment(new Date('2015-09-30T12:00:00'));
 
     this.set('date', date.toDate());
-    this.set('nothing', parseInt);
 
     const firstEvent = createUserEventObject();
     firstEvent.name = 'Some new thing';
@@ -73,9 +71,9 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     const more = '.month-more-events';
 
     await render(hbs`<IliosCalendarMonth
-      @date={{date}}
-      @calendarEvents={{events}}
-      @selectEvent={{action nothing}}
+      @date={{this.date}}
+      @calendarEvents={{this.events}}
+      @selectEvent={{(noop)}}
     />`);
     //Date input is Wednesday, September 30th.  Should be the first string
     assert.strictEqual(this.element.textContent.trim().search(/^September 2015/), 0);
@@ -97,7 +95,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     };
 
     await render(hbs`<IliosCalendarMonth
-      @date={{date}}
+      @date={{this.date}}
       @changeDate={{action "changeDate"}}
       @changeView={{action "changeView"}}
       @calendarEvents={{(array)}}

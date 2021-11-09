@@ -14,10 +14,10 @@ module('Integration | Component | leadership collapsed', function (hooks) {
     this.set('administratorsCount', 1);
     this.set('click', () => {});
     await render(hbs`<LeadershipCollapsed
-      @title={{title}}
-      @directorsCount={{directorsCount}}
-      @administratorsCount={{administratorsCount}}
-      @expand={{action click}}
+      @title={{this.title}}
+      @directorsCount={{this.directorsCount}}
+      @administratorsCount={{this.administratorsCount}}
+      @expand={{this.click}}
       @showAdministrators={{true}}
       @showDirectors={{true}}
     />`);
@@ -42,7 +42,7 @@ module('Integration | Component | leadership collapsed', function (hooks) {
     await render(hbs`<LeadershipCollapsed
       @directorsCount={{0}}
       @administratorsCount={{0}}
-      @expand={{action click}}
+      @expand={{this.click}}
       @showAdministrators={{true}}
       @showDirectors={{true}}
     />`);
@@ -59,12 +59,12 @@ module('Integration | Component | leadership collapsed', function (hooks) {
     this.set('administratorsCount', 1);
     this.set('click', () => {});
     await render(hbs`<LeadershipCollapsed
-      @title={{title}}
+      @title={{this.title}}
       @showDirectors={{false}}
       @showAdministrators={{true}}
-      @directorsCount={{directorsCount}}
-      @administratorsCount={{administratorsCount}}
-      @expand={{action click}}
+      @directorsCount={{this.directorsCount}}
+      @administratorsCount={{this.administratorsCount}}
+      @expand={{this.click}}
     />`);
     const title = '.title';
     const table = 'table';
@@ -83,12 +83,12 @@ module('Integration | Component | leadership collapsed', function (hooks) {
     this.set('administratorsCount', 1);
     this.set('click', () => {});
     await render(hbs`<LeadershipCollapsed
-      @title={{title}}
+      @title={{this.title}}
       @showAdministrators={{false}}
       @showDirectors={{true}}
-      @directorsCount={{directorsCount}}
-      @administratorsCount={{administratorsCount}}
-      @expand={{action click}}
+      @directorsCount={{this.directorsCount}}
+      @administratorsCount={{this.administratorsCount}}
+      @expand={{this.click}}
     />`);
     const title = '.title';
     const table = 'table';

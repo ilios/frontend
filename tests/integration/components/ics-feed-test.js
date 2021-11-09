@@ -12,7 +12,7 @@ module('Integration | Component | ics feed', function (hooks) {
     const element = 'p:nth-of-type(1)';
     this.set('instructions', instructions);
 
-    await render(hbs`<IcsFeed @instructions={{instructions}} />`);
+    await render(hbs`<IcsFeed @instructions={{this.instructions}} />`);
 
     assert.dom(element).hasText(instructions);
   });

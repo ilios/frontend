@@ -59,7 +59,7 @@ module('Integration | Component | visualizer-course-session-type', function (hoo
     this.set('type', sessionTypeModel);
 
     await render(
-      hbs`<VisualizerCourseSessionType @course={{course}} @sessionType={{type}} @isIcon={{false}} />`
+      hbs`<VisualizerCourseSessionType @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} />`
     );
 
     const chartLabels = 'svg .bars text';

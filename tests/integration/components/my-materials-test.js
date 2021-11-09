@@ -194,13 +194,13 @@ module('Integration | Component | my-materials', function (hooks) {
     assert.expect(4);
 
     this.set('materials', this.materials);
-    this.setProperties({ nothing: parseInt, filter: null });
+    this.set('filter', null);
     await render(hbs`<MyMaterials
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{action nothing}}
-      @setFilter={{action (mut this.filter)}}
+      @setCourseIdFilter={{(noop)}}
+      @setFilter={{set this.filter}}
     />`);
 
     const table = 'table:nth-of-type(1)';
@@ -218,13 +218,13 @@ module('Integration | Component | my-materials', function (hooks) {
     assert.expect(5);
 
     this.set('materials', this.materials);
-    this.setProperties({ nothing: parseInt, filter: null });
+    this.set('filter', null);
     await render(hbs`<MyMaterials
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
       @setCourseIdFilter={{(noop)}}
-      @setFilter={{action (mut this.filter)}}
+      @setFilter={{set this.filter}}
     />`);
 
     const table = 'table:nth-of-type(1)';
@@ -244,13 +244,13 @@ module('Integration | Component | my-materials', function (hooks) {
     assert.expect(4);
 
     this.set('materials', this.materials);
-    this.setProperties({ nothing: parseInt, filter: null });
+    this.set('filter', null);
     await render(hbs`<MyMaterials
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
       @setCourseIdFilter={{(noop)}}
-      @setFilter={{action (mut this.filter)}}
+      @setFilter={{set this.filter}}
     />`);
 
     const table = 'table:nth-of-type(1)';
@@ -268,13 +268,13 @@ module('Integration | Component | my-materials', function (hooks) {
     assert.expect(4);
 
     this.set('materials', this.materials);
-    this.setProperties({ nothing: parseInt, filter: null });
+    this.set('filter', null);
     await render(hbs`<MyMaterials
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
       @setCourseIdFilter={{(noop)}}
-      @setFilter={{action (mut this.filter)}}
+      @setFilter={{set this.filter}}
     />`);
 
     const table = 'table:nth-of-type(1)';
@@ -297,8 +297,8 @@ module('Integration | Component | my-materials', function (hooks) {
       @courseIdFilter={{this.course}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{action (mut this.course)}}
-      @setFilter={{action (mut this.filter)}}
+      @setCourseIdFilter={{set this.course}}
+      @setFilter={{set this.filter}}
     />`);
 
     const table = 'table:nth-of-type(1)';
@@ -395,7 +395,7 @@ module('Integration | Component | my-materials', function (hooks) {
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
       @setCourseIdFilter={{(noop)}}
-      @setFilter={{action (mut this.filter)}}
+      @setFilter={{set this.filter}}
     />`);
 
     const table = 'table:nth-of-type(1)';

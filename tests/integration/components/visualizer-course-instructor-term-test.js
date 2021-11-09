@@ -61,7 +61,7 @@ module('Integration | Component | visualizer-course-instructor-term', function (
     this.set('instructor', userModel);
 
     await render(
-      hbs`<VisualizerCourseInstructorTerm @course={{course}} @user={{instructor}} @isIcon={{false}} />`
+      hbs`<VisualizerCourseInstructorTerm @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} />`
     );
 
     const chartLabels = 'svg .bars text';
