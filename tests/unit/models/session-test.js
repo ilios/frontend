@@ -558,4 +558,23 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     assert.strictEqual(subject.textDescription, '');
   });
+
+  test('test showUnlinkIcon shows when a course has no objectives', async function (assert) {
+    assert.expect(1);
+    const store = this.owner.lookup('service:store');
+    const course = store.createRecord('course');
+    const session = store.createRecord('session', { course });
+    const showUnlinkIcon = await waitForResource(session, 'showUnlinkIcon');
+    assert.ok(showUnlinkIcon);
+  });
+
+  test('test dont showUnlinkIcon shows when a course objectives', async function (assert) {
+    assert.expect(1);
+    const store = this.owner.lookup('service:store');
+    const course = store.createRecord('course');
+    store.createRecord('course-objective', { course });
+    const session = store.createRecord('session', { course });
+    const showUnlinkIcon = await waitForResource(session, 'showUnlinkIcon');
+    assert.notOk(showUnlinkIcon);
+  });
 });

@@ -312,8 +312,7 @@ export default class SessionModel extends Model {
     return !!this._postrequisite;
   }
 
-  @use _courseObjectives = new ResolveFlatMapBy(() => [this.courses, 'courseObjectives']);
-
+  @use _courseObjectives = new ResolveAsyncValue(() => [this._course?.courseObjectives]);
   get showUnlinkIcon() {
     return this._courseObjectives?.length === 0;
   }
