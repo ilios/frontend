@@ -1,19 +1,21 @@
 <div class="search-box" data-test-search-box>
   <input
-    aria-label={{@placeholder}}
+    aria-label={{this.placeholder}}
     class="search-input"
     type="search"
     value={{this.value}}
-    placeholder={{@placeholder}}
+    placeholder={{this.placeholder}}
     {{on "input" this.update}}
     {{on "keyup" this.keyUp}}
     {{did-insert (set this.searchInput)}}
   >
-  <span
-    class="search-icon"
-    role="button"
+  <button
+    aria-label={{t "general.search"}}
+    class="link-button search-icon"
+    type="button"
     {{on "click" (pipe-action this.moveFocus (perform this.searchTask))}}
+    data-test-submit-search
   >
     <FaIcon @icon="search" />
-  </span>
+  </button>
 </div>
