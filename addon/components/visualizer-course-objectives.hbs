@@ -1,9 +1,7 @@
 <div
   class="visualizer-course-objectives {{unless @isIcon "not-icon"}}"
-  {{did-insert (perform this.load) @course}}
-  {{did-update (perform this.load) @course}}
 >
-  {{#unless this.load.isRunning}}
+  {{#if this.isLoaded}}
     {{#if (or @isIcon this.objectiveWithMinutes.length)}}
       <SimpleChart
         @name="donut"
@@ -51,5 +49,5 @@
         </ul>
       </div>
     {{/unless}}
-  {{/unless}}
+  {{/if}}
 </div>

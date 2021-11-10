@@ -1,29 +1,46 @@
 import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
-import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class VisualizerCourseVocabulary extends Component {
   @service router;
   @service intl;
-  @tracked data;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @restartableTask
-  *load(element, [course, vocabulary]) {
-    const sessions = yield course.get('sessions');
-    const terms = yield map(sessions.toArray(), async (session) => {
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
+
+  @use dataObjects = new AsyncProcess(() => [
+    this.getDataObjects.bind(this),
+    this.sessionsWithMinutes,
+  ]);
+
+  get sessionsWithMinutes() {
+    return this.sessions.map((session) => {
+      return {
+        session,
+        minutes: Math.round(session.totalSumDuration * 60),
+      };
+    });
+  }
+
+  get isLoaded() {
+    return !!this.dataObjects;
+  }
+
+  async getDataObjects(sessionsWithMinutes) {
+    const terms = await map(sessionsWithMinutes, async ({ session, minutes }) => {
       const sessionTerms = await session.get('terms');
-      const hours = await session.get('totalSumDuration');
-      const minutes = Math.round(hours * 60);
       const sessionTermsInThisVocabulary = await filter(sessionTerms.toArray(), async (term) => {
         const termVocab = await term.get('vocabulary');
-        return termVocab.get('id') === vocabulary.get('id');
+        return termVocab.get('id') === this.args.vocabulary.get('id');
       });
       return sessionTermsInThisVocabulary.map((term) => {
         return {
@@ -36,11 +53,13 @@ export default class VisualizerCourseVocabulary extends Component {
       });
     });
 
-    const flat = terms.reduce((flattened, obj) => {
+    return terms.reduce((flattened, obj) => {
       return flattened.pushObjects(obj.toArray());
     }, []);
+  }
 
-    const termData = flat.reduce((set, { term, session }) => {
+  get data() {
+    const termData = this.dataObjects.reduce((set, { term, session }) => {
       const termTitle = term.get('title');
       let existing = set.findBy('label', termTitle);
       if (!existing) {
@@ -70,7 +89,7 @@ export default class VisualizerCourseVocabulary extends Component {
       return obj;
     });
 
-    this.data = mappedTermsWithLabel.sort((first, second) => {
+    return mappedTermsWithLabel.sort((first, second) => {
       return first.data - second.data;
     });
   }
@@ -78,7 +97,7 @@ export default class VisualizerCourseVocabulary extends Component {
   @restartableTask
   *barHover(obj) {
     yield timeout(100);
-    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+    if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
       return;
@@ -91,9 +110,9 @@ export default class VisualizerCourseVocabulary extends Component {
 
   @action
   barClick(obj) {
-    if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+    if (this.args.isIcon || !obj || obj.empty || !obj.meta) {
       return;
     }
-    this.router.transitionTo('course-visualize-term', this.args.course.get('id'), obj.meta.termId);
+    this.router.transitionTo('course-visualize-term', this.args.course.id, obj.meta.termId);
   }
 }

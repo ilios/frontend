@@ -1,14 +1,12 @@
 <div
   class="visualizer-course-session-type {{unless @isIcon "not-icon"}}"
-  {{did-insert (perform this.load) @course @sessionType}}
-  {{did-update (perform this.load) @course @sessionType}}
 >
-  {{#unless this.load.isRunning}}
+  {{#if this.isLoaded}}
     {{#if (or @isIcon this.data.length)}}
       <SimpleChart
         @name="horz-bar"
         @isIcon={{@isIcon}}
-        @data={{await this.data}}
+        @data={{this.data}}
         @hover={{perform this.barHover}}
         @leave={{perform this.barHover}} as |chart|
       >
@@ -19,5 +17,5 @@
         {{/if}}
       </SimpleChart>
     {{/if}}
-  {{/unless}}
+  {{/if}}
 </div>

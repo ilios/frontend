@@ -1,53 +1,70 @@
 import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
-import { isEmpty, isPresent } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
+
 export default class VisualizerCourseObjectives extends Component {
   @service router;
   @service intl;
-  @tracked objectiveWithoutMinutes;
-  @tracked objectiveWithMinutes;
+
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @restartableTask
-  *load(element, [course]) {
-    const sessions = yield course.get('sessions');
-    const sessionCourseObjectiveMap = yield map(sessions.toArray(), async (session) => {
-      const hours = await session.get('totalSumDuration');
-      const minutes = Math.round(hours * 60);
-      const sessionObjectives = await session.get('sessionObjectives');
-      const sessionObjectivesWithParents = await filter(
-        sessionObjectives.toArray(),
-        async (sessionObjective) => {
-          const parents = await sessionObjective.get('courseObjectives');
-          return isPresent(parents);
-        }
-      );
-      const courseSessionObjectives = await map(
-        sessionObjectivesWithParents,
-        async (sessionObjective) => {
-          const parents = await sessionObjective.get('courseObjectives');
-          return parents.mapBy('id');
-        }
-      );
-      const flatObjectives = courseSessionObjectives.reduce((flattened, obj) => {
-        return flattened.pushObjects(obj.toArray());
-      }, []);
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
 
+  @use dataObjects = new AsyncProcess(() => [
+    this.getDataObjects.bind(this),
+    this.sessionsWithMinutes,
+  ]);
+
+  get sessionsWithMinutes() {
+    return this.sessions.map((session) => {
       return {
-        sessionTitle: session.get('title'),
-        objectives: flatObjectives,
-        minutes,
+        session,
+        minutes: Math.round(session.totalSumDuration * 60),
       };
     });
+  }
+
+  async getDataObjects(sessionsWithMinutes) {
+    const sessionCourseObjectiveMap = await map(
+      sessionsWithMinutes,
+      async ({ session, minutes }) => {
+        const sessionObjectives = await session.sessionObjectives;
+        const sessionObjectivesWithParents = await filter(
+          sessionObjectives.toArray(),
+          async (sessionObjective) => {
+            const parents = await sessionObjective.courseObjectives;
+            return parents.length;
+          }
+        );
+        const courseSessionObjectives = await map(
+          sessionObjectivesWithParents,
+          async (sessionObjective) => {
+            const parents = await sessionObjective.courseObjectives;
+            return parents.mapBy('id');
+          }
+        );
+        const flatObjectives = courseSessionObjectives.reduce((flattened, obj) => {
+          return flattened.pushObjects(obj.toArray());
+        }, []);
+
+        return {
+          sessionTitle: session.title,
+          objectives: flatObjectives,
+          minutes,
+        };
+      }
+    );
 
     // condensed objectives map
-    const courseObjectives = yield course.get('courseObjectives');
+    const courseObjectives = await this.args.course.courseObjectives;
     const mappedObjectives = courseObjectives.toArray().map((courseObjective) => {
       const minutes = sessionCourseObjectiveMap.map((obj) => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
@@ -74,20 +91,30 @@ export default class VisualizerCourseObjectives extends Component {
     const totalMinutes = mappedObjectives
       .mapBy('data')
       .reduce((total, minutes) => total + minutes, 0);
-    const condensedObjectiveData = mappedObjectives.map((obj) => {
+
+    return mappedObjectives.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${percent}%`;
       return obj;
     });
+  }
 
-    this.objectiveWithMinutes = condensedObjectiveData.filter((obj) => obj.data !== 0);
-    this.objectiveWithoutMinutes = condensedObjectiveData.filterBy('data', 0);
+  get objectiveWithMinutes() {
+    return this.dataObjects?.filter((obj) => obj.data !== 0);
+  }
+
+  get objectiveWithoutMinutes() {
+    return this.dataObjects?.filterBy('data', 0);
+  }
+
+  get isLoaded() {
+    return !!this.objectiveWithMinutes || !!this.objectiveWithoutMinutes;
   }
 
   @restartableTask
   *donutHover(obj) {
     yield timeout(100);
-    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+    if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
     }

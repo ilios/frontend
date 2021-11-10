@@ -1,6 +1,4 @@
 import Component from '@glimmer/component';
-import { map } from 'rsvp';
-import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
@@ -8,12 +6,22 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+
 export default class VisualizerCourseSessionTypes extends Component {
   @service router;
   @service intl;
-  @tracked data;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use sessionTypes = new ResolveFlatMapBy(() => [this.sessions, 'sessionType']);
+
+  get isLoaded() {
+    return !!this.sessionTypes;
+  }
 
   get chartType() {
     return this.args.chartType || 'horz-bar';
@@ -35,16 +43,13 @@ export default class VisualizerCourseSessionTypes extends Component {
     });
   }
 
-  @restartableTask
-  *load(element, [course]) {
-    const sessions = yield course.get('sessions');
-    const dataMap = yield map(sessions.toArray(), async (session) => {
-      const sessionType = await session.get('sessionType');
-      const hours = await session.get('totalSumDuration');
-      const minutes = Math.round(hours * 60);
+  get data() {
+    const dataMap = this.sessions.map((session) => {
+      const minutes = Math.round(session.totalSumDuration * 60);
+      const sessionType = this.sessionTypes.findBy('id', session.belongsTo('sessionType').id());
       return {
-        sessionTitle: session.get('title'),
-        sessionTypeTitle: sessionType.get('title'),
+        sessionTitle: session.title,
+        sessionTypeTitle: sessionType.title,
         sessionTypeId: sessionType.get('id'),
         minutes,
       };
@@ -73,7 +78,7 @@ export default class VisualizerCourseSessionTypes extends Component {
     const totalMinutes = mappedSessionTypes
       .mapBy('data')
       .reduce((total, minutes) => total + minutes, 0);
-    this.data = mappedSessionTypes
+    return mappedSessionTypes
       .map((obj) => {
         const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
         obj.label = `${obj.meta.sessionType} ${percent}%`;
@@ -89,7 +94,7 @@ export default class VisualizerCourseSessionTypes extends Component {
   @restartableTask
   *barHover(obj) {
     yield timeout(100);
-    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+    if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
       return;
@@ -105,7 +110,7 @@ export default class VisualizerCourseSessionTypes extends Component {
 
   @action
   barClick(obj) {
-    if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+    if (this.args.isIcon || !obj || obj.empty || !obj.meta) {
       return;
     }
     this.router.transitionTo(

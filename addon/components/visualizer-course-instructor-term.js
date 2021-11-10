@@ -1,45 +1,69 @@
 import Component from '@glimmer/component';
-import { filter, map } from 'rsvp';
+import { map } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
+
 export default class VisualizerCourseInstructorTerm extends Component {
   @service router;
   @service intl;
-  @tracked data;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @restartableTask
-  *load(element, [course, user]) {
-    const sessions = yield course.get('sessions');
-    const sessionsWithUser = yield filter(sessions.toArray(), async (session) => {
-      const instructors = await session.get('allInstructors');
-      return instructors.mapBy('id').includes(user.get('id'));
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
+  @use dataObjects = new AsyncProcess(() => [
+    this.getDataObjects.bind(this),
+    this.sessionsWithUser,
+  ]);
+
+  get sessionsWithUser() {
+    return this.sessions.filter((session) => {
+      return session.allInstructors?.mapBy('id').includes(this.args.user.id);
     });
+  }
 
-    const dataMap = yield map(sessionsWithUser, async (session) => {
-      const terms = await session.get('terms');
-
-      const hours = await session.get('totalSumDuration');
-      const minutes = Math.round(hours * 60);
-
-      return map(terms.toArray(), async (term) => {
-        const vocabulary = await term.get('vocabulary');
+  async getDataObjects(sessions) {
+    return map(sessions, async (session) => {
+      const terms = await map((await session.terms).toArray(), async (term) => {
+        const vocabulary = await term.vocabulary;
         return {
-          sessionTitle: session.get('title'),
-          termTitle: term.get('title'),
-          vocabularyTitle: vocabulary.get('title'),
+          termTitle: term.title,
+          vocabularyTitle: vocabulary.title,
+        };
+      });
+
+      return {
+        session,
+        terms,
+      };
+    });
+  }
+
+  get isLoaded() {
+    return !!this.dataObjects;
+  }
+
+  get data() {
+    const dataMap = this.dataObjects.map(({ session, terms }) => {
+      const minutes = Math.round(session.totalSumDuration * 60);
+      return terms.map(({ termTitle, vocabularyTitle }) => {
+        return {
+          sessionTitle: session.title,
+          termTitle,
+          vocabularyTitle,
           minutes,
         };
       });
     });
 
     const flat = dataMap.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
+      return flattened.pushObjects(obj);
     }, []);
 
     const sessionTypeData = flat.reduce((set, obj) => {
@@ -65,7 +89,7 @@ export default class VisualizerCourseInstructorTerm extends Component {
     const totalMinutes = sessionTypeData
       .mapBy('data')
       .reduce((total, minutes) => total + minutes, 0);
-    this.data = sessionTypeData
+    return sessionTypeData
       .map((obj) => {
         const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
         obj.label = `${obj.label} ${percent}%`;
