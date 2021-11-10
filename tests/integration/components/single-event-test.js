@@ -220,6 +220,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       isScheduled: false,
       offering: 1,
       lastModified: null,
+      sessionTypeTitle: 'test type',
     });
 
     this.set('event', this.server.db.userevents[0]);
@@ -264,6 +265,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       ilmSession: 1,
       lastModified: null,
       postrequisites: [postReq],
+      sessionTypeTitle: 'test type',
     });
 
     this.set('event', this.server.db.userevents[0]);
@@ -314,6 +316,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       offering: 1,
       lastModified: null,
       prerequisites: [prereq1, prereq2],
+      sessionTypeTitle: 'test type',
     });
 
     this.set('event', this.server.db.userevents[0]);
@@ -353,6 +356,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       offering: 1,
       lastModified: null,
       postrequisites: [postReq],
+      sessionTypeTitle: 'test type',
     });
 
     this.set('event', this.server.db.userevents[0]);
@@ -387,7 +391,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     const MockCurrentUserService = Service.extend({ userIsStudent: true });
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
-    this.server.create('userevent', { isUserEvent: true });
+    this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
     this.set('evt', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.evt}} />`);
     assert.ok(component.sessionLearningMaterials.linksToAllMaterials);
@@ -398,7 +402,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     const MockCurrentUserService = Service.extend({ userIsStudent: false });
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
-    this.server.create('userevent', { isUserEvent: true });
+    this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
     this.set('evt', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.evt}} />`);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
@@ -409,7 +413,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     const MockCurrentUserService = Service.extend({ userIsStudent: true });
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
-    this.server.create('userevent', { isUserEvent: false });
+    this.server.create('userevent', { isUserEvent: false, sessionTypeTitle: 'test type' });
     this.set('evt', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.evt}} />`);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
@@ -427,6 +431,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       isScheduled: false,
       offering: 1,
       lastModified: null,
+      sessionTypeTitle: 'test type',
     });
 
     this.set('event', this.server.db.userevents[0]);
@@ -459,6 +464,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       isScheduled: false,
       offering: 1,
       lastModified: null,
+      sessionTypeTitle: 'test type',
     });
 
     this.set('event', this.server.db.userevents[0]);
@@ -496,6 +502,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       isScheduled: false,
       offering: 1,
       lastModified: null,
+      sessionTypeTitle: 'test type',
     });
 
     this.set('event', this.server.db.userevents[0]);
@@ -545,6 +552,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       isScheduled: false,
       offering: 1,
       lastModified: null,
+      sessionTypeTitle: 'test type',
     });
 
     this.set('event', this.server.db.userevents[0]);
