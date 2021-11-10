@@ -1,6 +1,7 @@
-import { clickable, collection, create, fillable, text } from 'ember-cli-page-object';
+import { collection, create, text } from 'ember-cli-page-object';
 import detailLearnergroupsList from './detail-learnergroups-list';
 import learnergroupTree from './learnergroup-tree';
+import search from './search-box';
 
 const definition = {
   scope: '[data-test-learnergroup-selection-manager]',
@@ -15,8 +16,7 @@ const definition = {
   availableGroups: {
     scope: '[data-test-available-learner-groups]',
     title: text('[data-test-title]', { at: 0 }),
-    search: fillable('[data-test-search-box] input'),
-    runSearch: clickable('[data-test-search-box] .search-icon'),
+    search,
     cohorts: collection('[data-test-cohorts]', {
       title: text('[data-test-title]', { at: 0 }),
       trees: collection('[data-test-learnergroup-tree-root=true]', learnergroupTree),

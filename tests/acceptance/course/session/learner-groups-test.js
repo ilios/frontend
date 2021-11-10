@@ -356,7 +356,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         'learner group 3 (program 0 cohort 0)'
       );
 
-      await availableGroups.search('3');
+      await availableGroups.search.set('3');
 
       assert.strictEqual(availableGroups.cohorts.length, 1);
       assert.strictEqual(availableGroups.cohorts[0].title, 'program 0 cohort 0');
@@ -415,7 +415,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         'learner group 3 (program 0 cohort 0)'
       );
 
-      await availableGroups.search('5');
+      await availableGroups.search.set('5');
 
       assert.strictEqual(availableGroups.cohorts.length, 1);
       assert.strictEqual(availableGroups.cohorts[0].title, 'program 0 cohort 0');
@@ -806,11 +806,11 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       const { learnerSelectionManager } = page.details.detailLearnersAndLearnerGroups;
 
-      await learnerSelectionManager.search('shmoe');
+      await learnerSelectionManager.search.searchBox.set('shmoe');
 
-      assert.strictEqual(learnerSelectionManager.searchResults.length, 1);
+      assert.strictEqual(learnerSelectionManager.search.results.items.length, 1);
 
-      await learnerSelectionManager.searchResults[0].add();
+      await learnerSelectionManager.search.results.items[0].click();
 
       assert.strictEqual(
         learnerSelectionManager.selectedLearners.detailLearnerList.learners.length,

@@ -2,12 +2,12 @@ import {
   clickable,
   collection,
   create,
-  fillable,
   hasClass,
   isVisible,
   notHasClass,
   text,
 } from 'ember-cli-page-object';
+import search from './search-box';
 
 const definition = {
   scope: '.mesh-manager',
@@ -15,8 +15,7 @@ const definition = {
     title: text('.term-title'),
     remove: clickable(),
   }),
-  search: fillable('[data-test-search-box] input'),
-  runSearch: clickable('[data-test-search-box] .search-icon'),
+  search,
   searchResults: collection('[data-test-search-results] [data-test-search-result]', {
     title: text('.descriptor-name'),
     isDisabled: hasClass('disabled'),

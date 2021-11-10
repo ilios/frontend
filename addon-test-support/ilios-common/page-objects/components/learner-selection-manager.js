@@ -1,14 +1,6 @@
-import {
-  clickable,
-  collection,
-  create,
-  fillable,
-  hasClass,
-  isVisible,
-  notHasClass,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, create, isVisible, text } from 'ember-cli-page-object';
 import detailLearnerList from './detail-learner-list';
+import search from './user-search';
 
 const definition = {
   scope: '[data-test-learner-selection-manager]',
@@ -20,15 +12,7 @@ const definition = {
       scope: '[data-test-no-selected-learners]',
     },
   },
-  search: fillable('[data-test-search-box] input'),
-  runSearch: clickable('[data-test-search-box] .search-icon'),
-  searchResults: collection('[data-test-user-search] [data-test-result]', {
-    fullName: text('.name'),
-    email: text('.email'),
-    isDisabled: hasClass('disabled'),
-    isEnabled: notHasClass('disabled'),
-    add: clickable(),
-  }),
+  search,
   showMoreIsVisible: isVisible('[data-test-show-more]'),
   showMore: clickable('[data-test-show-more]'),
 };

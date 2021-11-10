@@ -1,14 +1,10 @@
-import { clickable, collection, create, fillable, hasClass, text } from 'ember-cli-page-object';
+import { clickable, collection, create, text } from 'ember-cli-page-object';
 import userNameInfo from './user-name-info';
+import search from './user-search';
 
 const definition = {
   scope: '[data-test-instructor-selection-manager]',
-  search: fillable('.search-box input'),
-  searchResults: collection('.results [data-test-result]', {
-    add: clickable(),
-    active: hasClass('active'),
-    inactive: hasClass('inactive'),
-  }),
+  search,
   instructors: collection('[data-test-instructors] li', {
     userNameInfo,
     remove: clickable('.remove'),

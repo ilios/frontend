@@ -3,7 +3,6 @@ import {
   collection,
   create,
   fillable,
-  hasClass,
   isPresent,
   isVisible,
   property,
@@ -17,6 +16,7 @@ import learnergroupTree from './learnergroup-tree';
 import yesNoToggle from './toggle-yesno';
 import datePicker from './date-picker';
 import timePicker from './time-picker';
+import search from './user-search';
 
 const definition = {
   scope: '[data-test-offering-form]',
@@ -111,12 +111,7 @@ const definition = {
       }),
       remove: clickable('[data-test-instructor-group-title]'),
     }),
-    search: fillable('.search-box input'),
-    searchResults: collection('.results [data-test-result]', {
-      add: clickable(),
-      active: hasClass('active'),
-      inactive: hasClass('inactive'),
-    }),
+    search,
   },
   learnerManager: {
     scope: '[data-test-learner-management]',
@@ -137,8 +132,7 @@ const definition = {
     availableLearnerGroups: {
       scope: '[data-test-available-learner-groups]',
       title: text('[data-test-title]', { at: 0 }),
-      search: fillable('[data-test-search-box] input'),
-      runSearch: clickable('[data-test-search-box] .search-icon'),
+      search,
       cohorts: collection('[data-test-cohorts]', {
         title: text('[data-test-title]', { at: 0 }),
         trees: collection('[data-test-learnergroup-tree-root=true]', learnergroupTree),

@@ -111,32 +111,32 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     await page.details.instructors.manage();
     const { manager } = page.details.instructors;
 
-    await manager.search('guy');
-    assert.strictEqual(manager.searchResults.length, 12);
-    assert.strictEqual(manager.searchResults[0].text, '0 guy M. Mc0son user@example.edu');
-    assert.ok(manager.searchResults[0].active);
-    assert.strictEqual(manager.searchResults[1].text, '1 guy M. Mc1son user@example.edu');
-    assert.ok(manager.searchResults[1].inactive);
-    assert.strictEqual(manager.searchResults[2].text, '2 guy M. Mc2son user@example.edu');
-    assert.ok(manager.searchResults[2].inactive);
-    assert.strictEqual(manager.searchResults[3].text, '3 guy M. Mc3son user@example.edu');
-    assert.ok(manager.searchResults[3].inactive);
-    assert.strictEqual(manager.searchResults[4].text, '4 guy M. Mc4son user@example.edu');
-    assert.ok(manager.searchResults[4].active);
-    assert.strictEqual(manager.searchResults[5].text, '5 guy M. Mc5son user@example.edu');
-    assert.ok(manager.searchResults[5].active);
-    assert.strictEqual(manager.searchResults[6].text, '6 guy M. Mc6son user@example.edu');
-    assert.ok(manager.searchResults[6].active);
-    assert.strictEqual(manager.searchResults[7].text, '7 guy M. Mc7son user@example.edu');
-    assert.ok(manager.searchResults[7].active);
-    assert.strictEqual(manager.searchResults[8].text, '8 guy M. Mc8son user@example.edu');
-    assert.ok(manager.searchResults[8].active);
-    assert.strictEqual(manager.searchResults[9].text, '9 guy M. Mc9son user@example.edu');
-    assert.ok(manager.searchResults[9].active);
-    assert.strictEqual(manager.searchResults[10].text, '10 guy M. Mc10son user@example.edu');
-    assert.ok(manager.searchResults[10].active);
-    assert.strictEqual(manager.searchResults[11].text, '11 guy M. Mc11son user@example.edu');
-    assert.ok(manager.searchResults[11].active);
+    await manager.search.searchBox.set('guy');
+    assert.strictEqual(manager.search.results.items.length, 12);
+    assert.strictEqual(manager.search.results.items[0].text, '0 guy M. Mc0son user@example.edu');
+    assert.ok(manager.search.results.items[0].isActive);
+    assert.strictEqual(manager.search.results.items[1].text, '1 guy M. Mc1son user@example.edu');
+    assert.notOk(manager.search.results.items[1].isActive);
+    assert.strictEqual(manager.search.results.items[2].text, '2 guy M. Mc2son user@example.edu');
+    assert.notOk(manager.search.results.items[2].isActive);
+    assert.strictEqual(manager.search.results.items[3].text, '3 guy M. Mc3son user@example.edu');
+    assert.notOk(manager.search.results.items[3].isActive);
+    assert.strictEqual(manager.search.results.items[4].text, '4 guy M. Mc4son user@example.edu');
+    assert.ok(manager.search.results.items[4].isActive);
+    assert.strictEqual(manager.search.results.items[5].text, '5 guy M. Mc5son user@example.edu');
+    assert.ok(manager.search.results.items[5].isActive);
+    assert.strictEqual(manager.search.results.items[6].text, '6 guy M. Mc6son user@example.edu');
+    assert.ok(manager.search.results.items[6].isActive);
+    assert.strictEqual(manager.search.results.items[7].text, '7 guy M. Mc7son user@example.edu');
+    assert.ok(manager.search.results.items[7].isActive);
+    assert.strictEqual(manager.search.results.items[8].text, '8 guy M. Mc8son user@example.edu');
+    assert.ok(manager.search.results.items[8].isActive);
+    assert.strictEqual(manager.search.results.items[9].text, '9 guy M. Mc9son user@example.edu');
+    assert.ok(manager.search.results.items[9].isActive);
+    assert.strictEqual(manager.search.results.items[10].text, '10 guy M. Mc10son user@example.edu');
+    assert.ok(manager.search.results.items[10].isActive);
+    assert.strictEqual(manager.search.results.items[11].text, '11 guy M. Mc11son user@example.edu');
+    assert.ok(manager.search.results.items[11].isActive);
   });
 
   test('manage instructors search groups', async function (assert) {
@@ -150,18 +150,18 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     await page.details.instructors.manage();
     const { manager } = page.details.instructors;
 
-    await manager.search('group');
-    assert.strictEqual(manager.searchResults.length, 5);
-    assert.strictEqual(manager.searchResults[0].text, 'instructor group 0');
-    assert.ok(manager.searchResults[0].inactive);
-    assert.strictEqual(manager.searchResults[1].text, 'instructor group 1');
-    assert.ok(manager.searchResults[1].inactive);
-    assert.strictEqual(manager.searchResults[2].text, 'instructor group 2');
-    assert.ok(manager.searchResults[2].inactive);
-    assert.strictEqual(manager.searchResults[3].text, 'instructor group 3');
-    assert.ok(manager.searchResults[3].active);
-    assert.strictEqual(manager.searchResults[4].text, 'instructor group 4');
-    assert.ok(manager.searchResults[4].active);
+    await manager.search.searchBox.set('group');
+    assert.strictEqual(manager.search.results.items.length, 5);
+    assert.strictEqual(manager.search.results.items[0].text, 'instructor group 0');
+    assert.notOk(manager.search.results.items[0].isActive);
+    assert.strictEqual(manager.search.results.items[1].text, 'instructor group 1');
+    assert.notOk(manager.search.results.items[1].isActive);
+    assert.strictEqual(manager.search.results.items[2].text, 'instructor group 2');
+    assert.notOk(manager.search.results.items[2].isActive);
+    assert.strictEqual(manager.search.results.items[3].text, 'instructor group 3');
+    assert.ok(manager.search.results.items[3].isActive);
+    assert.strictEqual(manager.search.results.items[4].text, 'instructor group 4');
+    assert.ok(manager.search.results.items[4].isActive);
   });
 
   test('add instructor group', async function (assert) {
@@ -175,8 +175,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     await page.details.instructors.manage();
     const { manager } = page.details.instructors;
 
-    await manager.search('group');
-    await manager.searchResults[3].add();
+    await manager.search.searchBox.set('group');
+    await manager.search.results.items[3].click();
 
     assert.strictEqual(manager.instructorGroups.length, 4);
     assert.strictEqual(manager.instructorGroups[0].title, 'instructor group 0');
@@ -213,8 +213,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     await page.details.instructors.manage();
     const { manager } = page.details.instructors;
 
-    await manager.search('guy');
-    await manager.searchResults[4].add();
+    await manager.search.searchBox.set('guy');
+    await manager.search.results.items[4].click();
 
     assert.strictEqual(manager.instructorGroups.length, 3);
     assert.strictEqual(manager.instructorGroups[0].title, 'instructor group 0');

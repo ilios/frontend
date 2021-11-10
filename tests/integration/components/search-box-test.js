@@ -1,15 +1,17 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, fillIn, find, triggerKeyEvent } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
+import { component } from 'ilios-common/page-objects/components/search-box';
 
 module('Integration | Component | search box', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
+  test('it renders and is accessible', async function (assert) {
     await render(hbs`<SearchBox />`);
-
-    assert.dom('input[type=search]').exists({ count: 1 });
+    await a11yAudit(this.element);
+    assert.ok(true, 'not a11y violations');
   });
 
   test('clicking search calls search', async function (assert) {
@@ -18,8 +20,7 @@ module('Integration | Component | search box', function (hooks) {
       assert.strictEqual(value, '');
     });
     await render(hbs`<SearchBox @search={{this.search}} />`);
-    const searchBoxIcon = '.search-icon';
-    await click(searchBoxIcon);
+    await component.submit();
   });
 
   test('typing calls search', async function (assert) {
@@ -28,7 +29,7 @@ module('Integration | Component | search box', function (hooks) {
       assert.strictEqual(value, 'typed it');
     });
     await render(hbs`<SearchBox @search={{this.search}} />`);
-    await fillIn('input', 'typed it');
+    await component.set('typed it');
   });
 
   test('escape calls clear', async function (assert) {
@@ -37,15 +38,26 @@ module('Integration | Component | search box', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<SearchBox @search={{(noop)}} @clear={{this.clear}} />`);
-    await fillIn('input', 'typed it');
-    await triggerKeyEvent('input', 'keyup', 27);
+    await component.set('typed it');
+    await component.esc();
   });
 
-  test('clicking icon sets focus', async function (assert) {
-    this.set('search', () => {});
-    await render(hbs`<SearchBox @search={{this.search}} />`);
-    const searchBoxIcon = '.search-icon';
-    await click(searchBoxIcon);
-    assert.dom(find('input')).isFocused();
+  test('clicking submit button sets focus', async function (assert) {
+    await render(hbs`<SearchBox @search={{(noop)}} />`);
+    assert.notOk(component.inputHasFocus);
+    await component.submit();
+    assert.ok(component.inputHasFocus);
+  });
+
+  test('default placeholder', async function (assert) {
+    await render(hbs`<SearchBox @search={{(noop)}} />`);
+    assert.strictEqual(component.placeholder, 'Search');
+  });
+
+  test('custom placeholder', async function (assert) {
+    const placeholder = 'Geflarknik';
+    this.set('placeholder', placeholder);
+    await render(hbs`<SearchBox @search={{(noop)}} @placeholder={{this.placeholder}} />`);
+    assert.strictEqual(component.placeholder, placeholder);
   });
 });

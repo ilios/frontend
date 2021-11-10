@@ -86,8 +86,8 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
     assert.strictEqual(m.selectedTerms[2].title, 'descriptor 3');
     assert.strictEqual(m.selectedTerms[3].title, 'descriptor 4');
     assert.strictEqual(m.selectedTerms[4].title, 'descriptor 5');
-    await m.search('descriptor');
-    await m.runSearch();
+    await m.search.set('descriptor');
+    await m.search.submit();
 
     assert.strictEqual(m.searchResults.length, 6);
     for (let i = 0; i < 6; i++) {
@@ -134,8 +134,8 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
 
     const m = page.details.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.strictEqual(m.selectedTerms.length, 5);
-    await m.search('descriptor');
-    await m.runSearch();
+    await m.search.set('descriptor');
+    await m.search.submit();
 
     await m.selectedTerms[0].remove();
     await m.searchResults[0].add();
@@ -195,8 +195,8 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
 
     const m = page.details.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.strictEqual(m.selectedTerms.length, 5);
-    await m.search('descriptor');
-    await m.runSearch();
+    await m.search.set('descriptor');
+    await m.search.submit();
 
     await m.selectedTerms[0].remove();
     await m.searchResults[0].add();

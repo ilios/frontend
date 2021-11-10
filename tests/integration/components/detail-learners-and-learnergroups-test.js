@@ -339,9 +339,9 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       component.learnerSelectionManager.selectedLearners.detailLearnerList.learners.length,
       3
     );
-    await component.learnerSelectionManager.search('does not matter');
-    assert.strictEqual(component.learnerSelectionManager.searchResults.length, 4);
-    await component.learnerSelectionManager.searchResults[3].add();
+    await component.learnerSelectionManager.search.searchBox.set('does not matter');
+    assert.strictEqual(component.learnerSelectionManager.search.results.items.length, 4);
+    await component.learnerSelectionManager.search.results.items[3].click();
     assert.strictEqual(
       component.learnerSelectionManager.selectedLearners.detailLearnerList.learners.length,
       4

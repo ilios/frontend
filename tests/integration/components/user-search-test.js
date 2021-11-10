@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, fillIn } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/user-search';
 
 module('Integration | Component | user search', function (hooks) {
   setupRenderingTest(hooks);
@@ -16,14 +17,15 @@ module('Integration | Component | user search', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<UserSearch />`);
-    assert.dom('input').exists({ count: 1 });
+    assert.ok(component.searchBox.isVisible);
+    assert.strictEqual(component.results.items.length, 0);
+    assert.notOk(component.resultsCount.isVisible);
   });
 
   test('less than 3 characters triggers warning', async function (assert) {
     await render(hbs`<UserSearch />`);
-
-    await fillIn('input', 'ab');
-    assert.dom('ul').hasText('keep typing...');
+    await component.searchBox.set('ab');
+    assert.strictEqual(component.results.text, 'keep typing...');
   });
 
   test('input triggers search', async function (assert) {
@@ -34,18 +36,16 @@ module('Integration | Component | user search', function (hooks) {
       return schema.users.all();
     });
     await render(hbs`<UserSearch />`);
-
-    await fillIn('input', 'search words');
-    assert.dom('li').exists({ count: 2 });
-    assert.dom('li:nth-of-type(1)').hasText('1 Results');
-    assert.dom('li:nth-of-type(2)').hasText('0 guy M. Mc0son user@example.edu');
+    await component.searchBox.set('search words');
+    assert.strictEqual(component.resultsCount.text, '1 Results');
+    assert.strictEqual(component.results.items.length, 1);
+    assert.strictEqual(component.results.items[0].text, '0 guy M. Mc0son user@example.edu');
   });
 
   test('no results displays messages', async function (assert) {
     await render(hbs`<UserSearch />`);
-
-    await fillIn('input', 'search words');
-    assert.dom('li').hasText('no results');
+    await component.searchBox.set('search words');
+    assert.strictEqual(component.results.text, 'no results');
   });
 
   test('search for groups', async function (assert) {
@@ -53,50 +53,46 @@ module('Integration | Component | user search', function (hooks) {
     const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     await render(hbs`<UserSearch @availableInstructorGroups={{this.availableInstructorGroups}} />`);
-
-    await fillIn('input', 'group');
-    assert.dom('li').exists({ count: 3 });
-    assert.dom('li:nth-of-type(1)').hasText('2 Results');
-    assert.dom('li:nth-of-type(2)').hasText('instructor group 0');
-    assert.dom('li:nth-of-type(3)').hasText('instructor group 1');
+    await component.searchBox.set('group');
+    assert.strictEqual(component.resultsCount.text, '2 Results');
+    assert.strictEqual(component.results.items.length, 2);
+    assert.strictEqual(component.results.items[0].text, 'instructor group 0');
+    assert.strictEqual(component.results.items[1].text, 'instructor group 1');
   });
 
   test('click user fires add user', async function (assert) {
     assert.expect(4);
     const user = this.server.create('user');
-
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('action', (passedUser) => {
-      assert.strictEqual(user.id, passedUser.id);
+      assert.strictEqual(passedUser, userModel);
     });
-    await render(hbs`<UserSearch @addUser={{fn this.action}} />`);
-
-    await fillIn('input', 'test');
-    assert.dom('li').exists({ count: 2 });
-    assert.dom('li:nth-of-type(1)').hasText('1 Results');
-    assert.dom('li:nth-of-type(2)').hasText('0 guy M. Mc0son user@example.edu');
-    await click('[data-test-result]');
+    await render(hbs`<UserSearch @addUser={{this.action}} />`);
+    await component.searchBox.set('test');
+    assert.strictEqual(component.resultsCount.text, '1 Results');
+    assert.strictEqual(component.results.items.length, 1);
+    assert.strictEqual(component.results.items[0].text, '0 guy M. Mc0son user@example.edu');
+    await component.results.items[0].click();
   });
 
   test('click group fires add group', async function (assert) {
     assert.expect(5);
-    this.set('action', (group) => {
-      assert.strictEqual(parseInt(group.id, 10), 1);
-    });
     this.server.createList('instructor-group', 2);
     const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
+    this.set('action', (group) => {
+      assert.strictEqual(group, instructorGroups.toArray()[0]);
+    });
     this.set('availableInstructorGroups', instructorGroups);
-
     await render(hbs`<UserSearch
       @availableInstructorGroups={{this.availableInstructorGroups}}
-      @addInstructorGroup={{fn this.action}}
+      @addInstructorGroup={{this.action}}
     />`);
-
-    await fillIn('input', 'group');
-    assert.dom('li').exists({ count: 3 });
-    assert.dom('li:nth-of-type(1)').hasText('2 Results');
-    assert.dom('li:nth-of-type(2)').hasText('instructor group 0');
-    assert.dom('li:nth-of-type(3)').hasText('instructor group 1');
-    await click('[data-test-result]');
+    await component.searchBox.set('group');
+    assert.strictEqual(component.resultsCount.text, '2 Results');
+    assert.strictEqual(component.results.items.length, 2);
+    assert.strictEqual(component.results.items[0].text, 'instructor group 0');
+    assert.strictEqual(component.results.items[1].text, 'instructor group 1');
+    await component.results.items[0].click();
   });
 
   test('sorting is natural', async function (assert) {
@@ -115,15 +111,14 @@ module('Integration | Component | user search', function (hooks) {
     this.server.create('user', {
       lastName: 'person',
     });
-
     await render(hbs`<UserSearch />`);
-    await fillIn('input', 'person');
-    assert.dom('li').exists({ count: 5 });
-    assert.dom('li:nth-of-type(1)').containsText('4 Results');
-    assert.dom('li:nth-of-type(2)').containsText('person');
-    assert.dom('li:nth-of-type(3)').containsText('3');
-    assert.dom('li:nth-of-type(4)').containsText('10');
-    assert.dom('li:nth-of-type(5)').containsText('20');
+    await component.searchBox.set('person');
+    assert.strictEqual(component.resultsCount.text, '4 Results');
+    assert.strictEqual(component.results.items.length, 4);
+    assert.strictEqual(component.results.items[0].text, '3 guy M. person user@example.edu');
+    assert.strictEqual(component.results.items[1].text, '3 M. person user@example.edu');
+    assert.strictEqual(component.results.items[2].text, '10 M. person user@example.edu');
+    assert.strictEqual(component.results.items[3].text, '20 M. person user@example.edu');
   });
 
   test('reads currentlyActiveUsers', async function (assert) {
@@ -134,11 +129,11 @@ module('Integration | Component | user search', function (hooks) {
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('currentlyActiveUsers', [userModel]);
     await render(hbs`<UserSearch @currentlyActiveUsers={{this.currentlyActiveUsers}} />`);
-    await fillIn('input', 'foo');
-
-    assert.dom('[data-test-results-count]').hasText('1 Results');
-    assert.dom('[data-test-result]').includesText('0 guy');
-    assert.dom('[data-test-result]').hasClass('inactive');
+    await component.searchBox.set('foo');
+    assert.strictEqual(component.resultsCount.text, '1 Results');
+    assert.strictEqual(component.results.items.length, 1);
+    assert.strictEqual(component.results.items[0].text, '0 guy M. Mc0son user@example.edu');
+    assert.notOk(component.results.items[0].isActive);
   });
 
   test('reads currentlyActiveUsers from a promise', async function (assert) {
@@ -151,11 +146,11 @@ module('Integration | Component | user search', function (hooks) {
     await render(hbs`<UserSearch
       @currentlyActiveUsers={{await this.currentlyActiveUsersPromise}}
     />`);
-    await fillIn('input', 'foo');
-
-    assert.dom('[data-test-results-count]').hasText('1 Results');
-    assert.dom('[data-test-result]').includesText('0 guy');
-    assert.dom('[data-test-result]').hasClass('inactive');
+    await component.searchBox.set('foo');
+    assert.strictEqual(component.resultsCount.text, '1 Results');
+    assert.strictEqual(component.results.items.length, 1);
+    assert.strictEqual(component.results.items[0].text, '0 guy M. Mc0son user@example.edu');
+    assert.notOk(component.results.items[0].isActive);
   });
 
   test('reads currentlyActiveInstructorGroups', async function (assert) {
@@ -167,11 +162,11 @@ module('Integration | Component | user search', function (hooks) {
       @availableInstructorGroups={{this.availableInstructorGroups}}
       @currentlyActiveInstructorGroups={{this.currentlyActiveInstructorGroups}}
     />`);
-    await fillIn('input', 'group');
-
-    assert.dom('[data-test-results-count]').hasText('1 Results');
-    assert.dom('[data-test-result]').includesText('instructor group 0');
-    assert.dom('[data-test-result]').hasClass('inactive');
+    await component.searchBox.set('group');
+    assert.strictEqual(component.resultsCount.text, '1 Results');
+    assert.strictEqual(component.results.items.length, 1);
+    assert.strictEqual(component.results.items[0].text, 'instructor group 0');
+    assert.notOk(component.results.items[0].isActive);
   });
 
   test('reads currentlyActiveInstructorGroups from a promise', async function (assert) {
@@ -183,10 +178,10 @@ module('Integration | Component | user search', function (hooks) {
       @availableInstructorGroups={{this.availableInstructorGroups}}
       @currentlyActiveInstructorGroups={{await this.currentlyActiveInstructorGroups}}
     />`);
-    await fillIn('input', 'group');
-
-    assert.dom('[data-test-results-count]').hasText('1 Results');
-    assert.dom('[data-test-result]').includesText('instructor group 0');
-    assert.dom('[data-test-result]').hasClass('inactive');
+    await component.searchBox.set('group');
+    assert.strictEqual(component.resultsCount.text, '1 Results');
+    assert.strictEqual(component.results.items.length, 1);
+    assert.strictEqual(component.results.items[0].text, 'instructor group 0');
+    assert.notOk(component.results.items[0].isActive);
   });
 });

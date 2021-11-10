@@ -25,8 +25,8 @@ module('Integration | Component | course/manage-objective-descriptors', function
 
     assert.strictEqual(m.selectedTerms.length, 1);
     assert.strictEqual(m.selectedTerms[0].title, 'descriptor 0');
-    await m.search('descriptor');
-    await m.runSearch();
+    await m.search.set('descriptor');
+    await m.search.submit();
     assert.strictEqual(m.searchResults.length, 4);
     assert.strictEqual(m.searchResults[0].title, `descriptor 0`);
     assert.ok(m.searchResults[0].isDisabled);
@@ -59,8 +59,8 @@ module('Integration | Component | course/manage-objective-descriptors', function
 
     assert.strictEqual(m.selectedTerms.length, 1);
     assert.strictEqual(m.selectedTerms[0].title, 'descriptor 0');
-    await m.search('descriptor');
-    await m.runSearch();
+    await m.search.set('descriptor');
+    await m.search.submit();
     assert.strictEqual(m.searchResults.length, 2);
     assert.strictEqual(m.searchResults[0].title, `descriptor 0`);
     assert.ok(m.searchResults[0].isDisabled);
@@ -100,8 +100,8 @@ module('Integration | Component | course/manage-objective-descriptors', function
 
     assert.strictEqual(m.selectedTerms.length, 1);
     assert.strictEqual(m.selectedTerms[0].title, 'descriptor 0');
-    await m.search('descriptor');
-    await m.runSearch();
+    await m.search.set('descriptor');
+    await m.search.submit();
     assert.strictEqual(m.searchResults.length, 2);
     assert.strictEqual(m.searchResults[0].title, `descriptor 0`);
     assert.ok(m.searchResults[0].isDisabled);
