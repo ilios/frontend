@@ -3,7 +3,7 @@ import { dropTask, restartableTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
-export default class LearningMaterialSortManagerComponent extends Component {
+export default class LearningMaterialsSortManagerComponent extends Component {
   @tracked sortableObjectList;
 
   @restartableTask
