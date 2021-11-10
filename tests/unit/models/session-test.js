@@ -559,21 +559,54 @@ module('Unit | Model | Session', function (hooks) {
     assert.strictEqual(subject.textDescription, '');
   });
 
-  test('test showUnlinkIcon shows when a course has no objectives', async function (assert) {
+  test('test showUnlinkIcon shows when only some sessionObjectives are linked to courseObjectives', async function (assert) {
     assert.expect(1);
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');
+    const courseObjective = store.createRecord('course-objective', { course });
     const session = store.createRecord('session', { course });
+    store.createRecord('session-objective', {
+      session,
+      courseObjectives: [courseObjective],
+    });
+    store.createRecord('session-objective', {
+      session,
+    });
     const showUnlinkIcon = await waitForResource(session, 'showUnlinkIcon');
     assert.ok(showUnlinkIcon);
   });
 
-  test('test dont showUnlinkIcon shows when a course objectives', async function (assert) {
+  test('test showUnlinkIcon shows when no sessionObjectives are linked to courseObjectives', async function (assert) {
     assert.expect(1);
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');
     store.createRecord('course-objective', { course });
     const session = store.createRecord('session', { course });
+    store.createRecord('session-objective', {
+      session,
+    });
+    store.createRecord('session-objective', {
+      session,
+    });
+    const showUnlinkIcon = await waitForResource(session, 'showUnlinkIcon');
+    assert.ok(showUnlinkIcon);
+  });
+
+  test('test dont showUnlinkIcon when all session objectives are linked to course objectives', async function (assert) {
+    const store = this.owner.lookup('service:store');
+    const course = store.createRecord('course');
+    const courseObjective1 = store.createRecord('course-objective', { course });
+    const courseObjective2 = store.createRecord('course-objective', { course });
+    const courseObjective3 = store.createRecord('course-objective', { course });
+    const session = store.createRecord('session', { course });
+    store.createRecord('session-objective', {
+      session,
+      courseObjectives: [courseObjective1],
+    });
+    store.createRecord('session-objective', {
+      session,
+      courseObjectives: [courseObjective2, courseObjective3],
+    });
     const showUnlinkIcon = await waitForResource(session, 'showUnlinkIcon');
     assert.notOk(showUnlinkIcon);
   });

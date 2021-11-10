@@ -6,6 +6,7 @@ import striptags from 'striptags';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class SessionModel extends Model {
   @attr('string')
@@ -312,9 +313,20 @@ export default class SessionModel extends Model {
     return !!this._postrequisite;
   }
 
-  @use _courseObjectives = new ResolveAsyncValue(() => [this._course?.courseObjectives]);
-  get showUnlinkIcon() {
-    return this._courseObjectives?.length === 0;
+  @use _sessionObjectiveCourseObjectives = new ResolveFlatMapBy(() => [
+    this._sessionObjectives,
+    'courseObjectives',
+  ]);
+  @use showUnlinkIcon = new AsyncProcess(() => [
+    this.getShowUnlinkIcon.bind(this),
+    this._sessionObjectiveCourseObjectives,
+  ]);
+  async getShowUnlinkIcon() {
+    const sessionObjectives = await this.sessionObjectives;
+    const collectionOfCourseObjectives = await Promise.all(
+      sessionObjectives.mapBy('courseObjectives')
+    );
+    return collectionOfCourseObjectives.any((courseObjectives) => courseObjectives.length === 0);
   }
 
   get requiredPublicationIssues() {
