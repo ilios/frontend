@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { map } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
@@ -8,15 +7,23 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+
 export default class VisualizerCourseInstructors extends Component {
   @service router;
   @service intl;
-  @tracked data;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
+  @use _sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+
   get chartType() {
     return this.args.chartType || 'horz-bar';
+  }
+
+  get isLoaded() {
+    return !!this._sessions;
   }
 
   get filteredData() {
@@ -36,23 +43,27 @@ export default class VisualizerCourseInstructors extends Component {
     });
   }
 
-  @restartableTask
-  *load(element, [course]) {
-    const sessions = yield course.get('sessions');
-    const dataMap = yield map(sessions.toArray(), async (session) => {
-      const instructors = await session.get('allInstructors');
+  get sessions() {
+    if (!this._sessions) {
+      return [];
+    }
 
-      const hours = await session.get('maxSingleOfferingDuration');
-      const minutes = Math.round(hours * 60);
+    const sessionsWithLoadedInstructors = this._sessions.filter(
+      (session) => session.allInstructors
+    );
 
+    return sessionsWithLoadedInstructors.map((session) => {
+      const minutes = Math.round(session.maxSingleOfferingDuration * 60);
       return {
-        sessionTitle: session.get('title'),
-        instructors,
+        sessionTitle: session.title,
+        instructors: session.allInstructors,
         minutes,
       };
     });
+  }
 
-    const instructorData = dataMap.reduce((set, obj) => {
+  get data() {
+    const instructorData = this.sessions.reduce((set, obj) => {
       obj.instructors.forEach((instructor) => {
         const name = instructor.get('fullName');
         const id = instructor.get('id');
@@ -78,7 +89,7 @@ export default class VisualizerCourseInstructors extends Component {
     const totalMinutes = instructorData
       .mapBy('data')
       .reduce((total, minutes) => total + minutes, 0);
-    this.data = instructorData.map((obj) => {
+    return instructorData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.label} ${percent}%`;
       obj.meta.totalMinutes = totalMinutes;
