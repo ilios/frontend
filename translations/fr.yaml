@@ -223,7 +223,7 @@ general:
   offerings: Offres
   otherVisualizations: "Autres Visualisations"
   overview: "Conception Général"
-  ownedBy: "Possédé par {owner}"
+  ownedBy: "Possédé par"
   owner: "Propriétaire"
   parentCount: "{count, plural, =1 {1 a un objectif mère} other {# ont des objectifs mères}}"
   parentGroup: "Mère groupe"
