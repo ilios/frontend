@@ -150,8 +150,8 @@ module('Integration | Component | instructor selection manager', function (hooks
       @removeInstructor={{(noop)}}
       @removeInstructorGroup={{(noop)}}
     />`);
-    await component.search('Gamma');
-    await component.searchResults[0].add();
+    await component.search.searchBox.set('Gamma');
+    await component.search.results.items[0].click();
   });
 
   test('search and add instructor', async function (assert) {
@@ -174,7 +174,7 @@ module('Integration | Component | instructor selection manager', function (hooks
       @removeInstructor={{(noop)}}
       @removeInstructorGroup={{(noop)}}
     />`);
-    await component.search('Aardvark');
-    await component.searchResults[0].add();
+    await component.search.searchBox.set('Aardvark');
+    await component.search.results.items[0].click();
   });
 });

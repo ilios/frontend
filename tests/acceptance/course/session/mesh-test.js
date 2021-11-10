@@ -57,9 +57,8 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 0');
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 1');
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 2');
-    await page.details.meshTerms.meshManager.search('descriptor');
-    await page.details.meshTerms.meshManager.runSearch();
-
+    await page.details.meshTerms.meshManager.search.set('descriptor');
+    await page.details.meshTerms.meshManager.search.submit();
     assert.strictEqual(page.details.meshTerms.meshManager.searchResults.length, 6);
     for (let i = 0; i < 6; i++) {
       assert.strictEqual(
@@ -93,9 +92,8 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     await page.details.meshTerms.manage();
 
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms.length, 3);
-    await page.details.meshTerms.meshManager.search('descriptor');
-    await page.details.meshTerms.meshManager.runSearch();
-
+    await page.details.meshTerms.meshManager.search.set('descriptor');
+    await page.details.meshTerms.meshManager.search.submit();
     await page.details.meshTerms.meshManager.selectedTerms[0].remove();
     await page.details.meshTerms.meshManager.searchResults[3].add();
 
@@ -122,9 +120,8 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     await page.details.meshTerms.manage();
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms.length, 3);
 
-    await page.details.meshTerms.meshManager.search('descriptor');
-    await page.details.meshTerms.meshManager.runSearch();
-
+    await page.details.meshTerms.meshManager.search.set('descriptor');
+    await page.details.meshTerms.meshManager.search.submit();
     await page.details.meshTerms.meshManager.selectedTerms[0].remove();
     await page.details.meshTerms.meshManager.searchResults[3].add();
 

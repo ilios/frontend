@@ -40,8 +40,8 @@ module('Integration | Component | mesh-manager', function (hooks) {
     assert.strictEqual(component.selectedTerms.length, 2);
     assert.strictEqual(component.selectedTerms[0].title, 'descriptor 2');
     assert.strictEqual(component.selectedTerms[1].title, 'descriptor 4');
-    await component.search('descriptor');
-    await component.runSearch();
+    await component.search.set('descriptor');
+    await component.search.submit();
 
     assert.strictEqual(component.searchResults.length, 5);
     for (let i = 0; i < 5; i++) {
@@ -65,8 +65,8 @@ module('Integration | Component | mesh-manager', function (hooks) {
       @add={{(noop)}}
       @remove={{(noop)}}
     />`);
-    await component.search('descriptor');
-    await component.runSearch();
+    await component.search.set('descriptor');
+    await component.search.submit();
 
     assert.strictEqual(component.searchResults.length, 50);
     for (let i = 0; i < 50; i++) {
@@ -93,8 +93,8 @@ module('Integration | Component | mesh-manager', function (hooks) {
       @add={{this.add}}
       @remove={{(noop)}}
     />`);
-    await component.search('descriptor');
-    await component.runSearch();
+    await component.search.set('descriptor');
+    await component.search.submit();
     assert.ok(component.searchResults[1].isEnabled);
     assert.strictEqual(component.searchResults[1].title, 'descriptor 1');
     await component.searchResults[1].add();
@@ -114,8 +114,8 @@ module('Integration | Component | mesh-manager', function (hooks) {
       @add={{this.add}}
       @remove={{(noop)}}
     />`);
-    await component.search('descriptor');
-    await component.runSearch();
+    await component.search.set('descriptor');
+    await component.search.submit();
     assert.ok(component.searchResults[0].isDisabled);
     await component.searchResults[0].add();
   });
@@ -123,8 +123,8 @@ module('Integration | Component | mesh-manager', function (hooks) {
   test('no terms', async function (assert) {
     this.server.createList('meshDescriptor', 3);
     await render(hbs`<MeshManager @editable={{true}} @add={{(noop)}} @remove={{(noop)}} />`);
-    await component.search('descriptor');
-    await component.runSearch();
+    await component.search.set('descriptor');
+    await component.search.submit();
     assert.ok(component.searchResults[1].isEnabled);
     assert.strictEqual(component.searchResults[1].title, 'descriptor 1');
     await component.searchResults[1].add();

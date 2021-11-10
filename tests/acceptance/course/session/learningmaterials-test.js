@@ -492,9 +492,8 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         page.details.learningMaterials.manager.meshManager.selectedTerms[1].title,
         'descriptor 2'
       );
-      await page.details.learningMaterials.manager.meshManager.search('descriptor');
-      await page.details.learningMaterials.manager.meshManager.runSearch();
-
+      await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
+      await page.details.learningMaterials.manager.meshManager.search.submit();
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.searchResults.length,
         6
@@ -541,9 +540,8 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         page.details.learningMaterials.manager.meshManager.selectedTerms.length,
         2
       );
-      await page.details.learningMaterials.manager.meshManager.search('descriptor');
-      await page.details.learningMaterials.manager.meshManager.runSearch();
-
+      await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
+      await page.details.learningMaterials.manager.meshManager.search.submit();
       await page.details.learningMaterials.manager.meshManager.selectedTerms[0].remove();
       await page.details.learningMaterials.manager.meshManager.searchResults[0].add();
 
@@ -573,9 +571,8 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         page.details.learningMaterials.manager.meshManager.selectedTerms.length,
         2
       );
-      await page.details.learningMaterials.manager.meshManager.search('descriptor');
-      await page.details.learningMaterials.manager.meshManager.runSearch();
-
+      await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
+      await page.details.learningMaterials.manager.meshManager.search.submit();
       await page.details.learningMaterials.manager.meshManager.selectedTerms[0].remove();
       await page.details.learningMaterials.manager.meshManager.searchResults[0].add();
 
@@ -599,7 +596,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.strictEqual(page.details.learningMaterials.current.length, 4);
-      await page.details.learningMaterials.search.search('doc');
+      await page.details.learningMaterials.search.search.set('doc');
       assert.strictEqual(page.details.learningMaterials.search.searchResults.length, 1);
 
       assert.strictEqual(

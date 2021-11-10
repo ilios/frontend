@@ -119,9 +119,9 @@ module('Integration | Component | learner selection manager', function (hooks) {
     await render(
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{this.add}} @remove={{(noop)}}/>`
     );
-    await component.search('Schmitt');
-    assert.strictEqual(component.searchResults.length, 1);
-    assert.strictEqual(component.searchResults[0].fullName, 'Jim R. Schmitt');
-    await component.searchResults[0].add();
+    await component.search.searchBox.set('Schmitt');
+    assert.strictEqual(component.search.results.items.length, 1);
+    assert.strictEqual(component.search.results.items[0].text, 'Jim R. Schmitt user@example.edu');
+    await component.search.results.items[0].click();
   });
 });

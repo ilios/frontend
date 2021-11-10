@@ -255,8 +255,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     await form.learnerManager.availableLearnerGroups.cohorts[0].trees[0].add();
     await form.learnerManager.availableLearnerGroups.cohorts[0].trees[1].add();
-    await form.instructorManager.search('guy');
-    await form.instructorManager.searchResults[0].add();
+    await form.instructorManager.search.searchBox.set('guy');
+    await form.instructorManager.search.results.items[0].click();
     await form.save();
 
     const block = page.details.offerings.dateBlocks[0];
@@ -295,8 +295,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     await form.learnerManager.availableLearnerGroups.cohorts[0].trees[0].add();
     await form.learnerManager.availableLearnerGroups.cohorts[0].trees[1].add();
-    await form.instructorManager.search('guy');
-    await form.instructorManager.searchResults[0].add();
+    await form.instructorManager.search.searchBox.set('guy');
+    await form.instructorManager.search.results.items[0].click();
     await form.save();
 
     const block = page.details.offerings.dateBlocks[0];
