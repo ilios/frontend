@@ -98,9 +98,9 @@ module('Acceptance | Programs', function (hooks) {
     const schools = this.server.createList('school', 2);
     await setupAuthentication({ school: schools[1] });
     await page.visit();
-    assert.strictEqual(page.schoolFilter.schools.length, 2);
-    assert.strictEqual(page.schoolFilter.schools[0].text, 'school 0');
-    assert.strictEqual(page.schoolFilter.schools[1].text, 'school 1');
-    assert.strictEqual(page.schoolFilter.selectedSchool, '2');
+    assert.strictEqual(page.root.schoolFilter.schools.length, 2);
+    assert.strictEqual(page.root.schoolFilter.schools[0].text, 'school 0');
+    assert.strictEqual(page.root.schoolFilter.schools[1].text, 'school 1');
+    assert.strictEqual(page.root.schoolFilter.selectedSchool, '2');
   });
 });
