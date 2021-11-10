@@ -1,3 +1,12 @@
+<CurriculumInventory::ReportDetails
+  @report={{@model}}
+  @canUpdate={{this.canUpdate}}
+  @leadershipDetails={{this.leadershipDetails}}
+  @setLeadershipDetails={{this.setLeadershipDetails}}
+  @manageLeadership={{this.manageLeadership}}
+  @setManageLeadership={{this.setManageLeadership}}
+  @markReportAsFinalized={{set this.isFinalized true}}
+/>
 <CurriculumInventory::ReportRollover
   @report={{@model}}
   @visit={{this.loadReport}}

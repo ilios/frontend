@@ -45,12 +45,14 @@ module('Integration | Component | curriculum-inventory/report-details', function
       @canUpdate={{true}}
       @setLeadershipDetails={{(noop)}}
       @setManageLeadership={{(noop)}}
+      @markReportAsFinalized={{(noop)}}
     />`);
     assert.strictEqual(component.header.name.text, reportModel.name);
     assert.strictEqual(component.overview.description.text, reportModel.description);
   });
 
   test('finalize report', async function (assert) {
+    assert.expect(7);
     const school = this.server.create('school');
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
     const program = this.server.create('program', {
@@ -71,11 +73,15 @@ module('Integration | Component | curriculum-inventory/report-details', function
       .find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     this.set('canUpdate', true);
+    this.set('markReportAsFinalized', () => {
+      assert.ok(true);
+    });
     await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
       @canUpdate={{this.canUpdate}}
       @setLeadershipDetails={{(noop)}}
       @setManageLeadership={{(noop)}}
+      @markReportAsFinalized={{this.markReportAsFinalized}}
     />`);
 
     assert.notOk(
@@ -130,6 +136,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
       @canUpdate={{true}}
       @setLeadershipDetails={{(noop)}}
       @setManageLeadership={{(noop)}}
+      @markReportAsFinalized={{(noop)}}
     />`);
 
     await click('.curriculum-inventory-report-header .finalize');
