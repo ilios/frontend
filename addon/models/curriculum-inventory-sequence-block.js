@@ -1,64 +1,120 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
+import { use } from 'ember-could-get-used-to-this';
+import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 
-const { alias, equal } = computed;
+export default class CurriculumInventorySequenceBlock extends Model {
+  @attr('string')
+  title;
 
-export default Model.extend({
-  title: attr('string'),
-  description: attr('string'),
-  required: attr('number'),
-  childSequenceOrder: attr('number'),
-  orderInSequence: attr('number'),
-  minimum: attr('number'),
-  maximum: attr('number'),
-  track: attr('boolean'),
-  startDate: attr('date'),
-  endDate: attr('date'),
-  duration: attr('number'),
-  academicLevel: belongsTo('curriculum-inventory-academic-level', {
-    async: true,
-  }),
-  parent: belongsTo('curriculum-inventory-sequence-block', {
-    async: true,
-    inverse: 'children',
-  }),
-  children: hasMany('curriculum-inventory-sequence-block', {
-    async: true,
-    inverse: 'parent',
-  }),
-  report: belongsTo('curriculum-inventory-report', { async: true }),
-  sessions: hasMany('session', { async: true }),
-  excludedSessions: hasMany('session', { async: true }),
-  course: belongsTo('course', { async: true }),
+  @attr('string')
+  description;
 
-  isFinalized: alias('report.isFinalized'),
-  isRequired: equal('required', 1),
-  isOptional: equal('required', 2),
-  isRequiredInTrack: equal('required', 3),
-  isOrdered: equal('childSequenceOrder', 1),
-  isUnordered: equal('childSequenceOrder', 2),
-  isParallel: equal('childSequenceOrder', 3),
+  @attr('number')
+  required;
+
+  @attr('number')
+  childSequenceOrder;
+
+  @attr('number')
+  orderInSequence;
+
+  @attr('number')
+  minimum;
+
+  @attr('number')
+  maximum;
+
+  @attr('boolean')
+  track;
+
+  @attr('date')
+  startDate;
+
+  @attr('date')
+  endDate;
+
+  @attr('number')
+  duration;
+
+  @belongsTo('curriculum-inventory-academic-level', { async: true })
+  academicLevel;
+
+  @belongsTo('curriculum-inventory-sequence-block', { async: true, inverse: 'children' })
+  parent;
+
+  @hasMany('curriculum-inventory-sequence-block', { async: true, inverse: 'parent' })
+  children;
+
+  @belongsTo('curriculum-inventory-report', { async: true })
+  report;
+
+  @hasMany('session', { async: true })
+  sessions;
+
+  @hasMany('session', { async: true })
+  excludedSessions;
+
+  @belongsTo('course', { async: true })
+  course;
+
+  @use allParents = new DeprecatedAsyncCP(() => [
+    this.getAllParents.bind(this),
+    'curriculumInventorySequenceBlock.allParents',
+    this.parent,
+  ]);
+
+  @use isFinalized = new DeprecatedAsyncCP(() => [
+    this._isFinalized.bind(this),
+    'curriculumInventorySequenceBlock.isFinalized',
+    this.report,
+  ]);
+
+  get isRequired() {
+    return 1 === parseInt(this.required, 10);
+  }
+
+  get isOptional() {
+    return 2 === parseInt(this.required, 10);
+  }
+
+  get isRequiredInTrack() {
+    return 3 === parseInt(this.required, 10);
+  }
+
+  get isOrdered() {
+    return 1 === parseInt(this.childSequenceOrder, 10);
+  }
+
+  get isUnordered() {
+    return 2 === parseInt(this.childSequenceOrder, 10);
+  }
+
+  get isParallel() {
+    return 3 === parseInt(this.childSequenceOrder, 10);
+  }
 
   /**
    * A list of all ancestors (parent, its parents parent etc) of this sequence block.
    * First element of the list is the block's direct ancestor (parent), while the last element is the oldest ancestor.
-   *
    * Returns a promise that resolves to an array of sequence block objects.
    * If this sequence block is a top-level block within its owning report, then that array is empty.
-   * @property allParents
-   * @type {Ember.computed}
-   * @public
-   * @todo Rename this property to 'ancestors'. [ST 2016/11/01]
    */
-  allParents: computed('parent', 'parent.allParents.[]', async function () {
+  async getAllParents() {
     const rhett = [];
     const parent = await this.parent;
     if (!parent) {
       return [];
     }
     rhett.pushObject(parent);
-    const parentsAncestors = await parent.get('allParents');
+    const parentsAncestors = await parent.allParents;
     rhett.pushObjects(parentsAncestors);
     return rhett;
-  }),
-});
+  }
+
+  /**
+   * @deprecated
+   */
+  async _isFinalized(report) {
+    return !!(await report)?.isFinalized;
+  }
+}

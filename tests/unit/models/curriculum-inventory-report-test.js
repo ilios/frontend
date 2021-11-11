@@ -27,7 +27,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
       parent: block2,
     });
     model.get('sequenceBlocks').pushObjects([block1, block2, block3]);
-    const blocks = await model.get('topLevelSequenceBlocks');
+    const blocks = await model.topLevelSequenceBlocks;
     assert.strictEqual(blocks.length, 2);
     assert.ok(blocks.includes(block1));
     assert.ok(blocks.includes(block2));
@@ -36,9 +36,9 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
   test('check if report is finalized', function (assert) {
     const store = this.owner.lookup('service:store');
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
-    assert.notOk(model.get('isFinalized'));
+    assert.notOk(model.isFinalized);
     store.createRecord('curriculumInventoryExport', { id: 1, report: model });
-    assert.ok(model.get('isFinalized'));
+    assert.ok(model.isFinalized);
   });
 
   test('get linked courses', async function (assert) {
@@ -61,7 +61,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
       report: model,
     });
     model.get('sequenceBlocks').pushObjects([block1, block2, block3]);
-    const linkedCourses = await model.get('linkedCourses');
+    const linkedCourses = await model.linkedCourses;
     assert.ok(linkedCourses.includes(course1));
     assert.ok(linkedCourses.includes(course2));
     assert.notOk(linkedCourses.includes(course3));
@@ -70,7 +70,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
   test('no linked courses', async function (assert) {
     assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
-    const hasLinkedCourses = await model.get('hasLinkedCourses');
+    const hasLinkedCourses = await model.hasLinkedCourses;
     assert.notOk(hasLinkedCourses);
   });
 
@@ -83,7 +83,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
         report: model,
       })
     );
-    const hasLinkedCourses = await model.get('hasLinkedCourses');
+    const hasLinkedCourses = await model.hasLinkedCourses;
     assert.notOk(hasLinkedCourses);
   });
 
@@ -98,7 +98,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
         course,
       })
     );
-    const hasLinkedCourses = await model.get('hasLinkedCourses');
+    const hasLinkedCourses = await model.hasLinkedCourses;
     assert.ok(hasLinkedCourses);
   });
 });
