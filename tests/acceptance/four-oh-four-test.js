@@ -1,14 +1,13 @@
 import { currentRouteName, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
 
 module('Acceptance | FourOhFour', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
   hooks.beforeEach(async function () {
     await setupAuthentication();
   });
@@ -17,17 +16,15 @@ module('Acceptance | FourOhFour', function (hooks) {
     await visit('/four-oh-four');
 
     assert.strictEqual(currentRouteName(), 'fourOhFour');
-    assert.strictEqual(
-      await getElementText('.full-screen-error'),
-      getText(
-        "Rats! I couldn't find that. Please check your page address, and try again.Back to Dashboard"
-      )
-    );
+    assert
+      .dom('.full-screen-error')
+      .hasText(
+        "Rats! I couldn't find that. Please check your page address, and try again. Back to Dashboard"
+      );
   });
 
   test('visiting /nothing', async function (assert) {
     await visit('/nothing');
-
     assert.strictEqual(currentRouteName(), 'fourOhFour');
   });
 });

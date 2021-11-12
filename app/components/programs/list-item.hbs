@@ -15,8 +15,8 @@
   >
     {{@program.school.title}}
   </td>
-  <td class="text-right actions" colspan="2">
-    <LinkTo @route="program" @model={{@program}} class="edit">
+  <td class="text-right actions" colspan="2" data-test-program>
+    <LinkTo @route="program" @model={{@program}} class="edit" data-test-edit-program>
       <FaIcon @icon="edit" class="enabled" />
     </LinkTo>
     {{#if this.canDelete}}
@@ -31,7 +31,7 @@
 {{#if this.showRemoveConfirmation}}
   <tr class="confirm-removal" data-test-confirm-removal>
     <td colspan={{if (media "isLaptopAndUp") "7" "5"}}>
-      <div class="confirm-message">
+      <div class="confirm-message" data-test-message>
         {{#if (is-fulfilled @program.courses)}}
           {{t
             "general.confirmRemoveProgram"

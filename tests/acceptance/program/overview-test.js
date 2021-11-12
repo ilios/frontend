@@ -19,8 +19,8 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
     assert.strictEqual(currentRouteName(), 'program.index');
-    assert.strictEqual(page.overview.shortTitle.text, 'Program Title (short): short_0');
-    assert.strictEqual(page.overview.duration.text, 'Duration (in Years): 4');
+    assert.strictEqual(page.root.overview.shortTitle.text, 'Program Title (short): short_0');
+    assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 4');
   });
 
   test('editable fields', async function (assert) {
@@ -30,8 +30,8 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
     assert.strictEqual(currentRouteName(), 'program.index');
-    assert.strictEqual(page.overview.shortTitle.text, 'Program Title (short): short_0');
-    assert.strictEqual(page.overview.duration.text, 'Duration (in Years): 4');
+    assert.strictEqual(page.root.overview.shortTitle.text, 'Program Title (short): short_0');
+    assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 4');
   });
 
   test('change title', async function (assert) {
@@ -41,11 +41,11 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
 
-    assert.strictEqual(page.header.title.text, 'program 0');
-    await page.header.title.edit();
-    await page.header.title.set('test new title');
-    await page.header.title.save();
-    assert.strictEqual(page.header.title.text, 'test new title');
+    assert.strictEqual(page.root.header.title.text, 'program 0');
+    await page.root.header.title.edit();
+    await page.root.header.title.set('test new title');
+    await page.root.header.title.save();
+    assert.strictEqual(page.root.header.title.text, 'test new title');
   });
 
   test('change short title', async function (assert) {
@@ -55,11 +55,11 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
 
-    assert.strictEqual(page.overview.shortTitle.text, 'Program Title (short): short_0');
-    await page.overview.shortTitle.edit();
-    await page.overview.shortTitle.set('newshort');
-    await page.overview.shortTitle.save();
-    assert.strictEqual(page.overview.shortTitle.text, 'Program Title (short): newshort');
+    assert.strictEqual(page.root.overview.shortTitle.text, 'Program Title (short): short_0');
+    await page.root.overview.shortTitle.edit();
+    await page.root.overview.shortTitle.set('newshort');
+    await page.root.overview.shortTitle.save();
+    assert.strictEqual(page.root.overview.shortTitle.text, 'Program Title (short): newshort');
   });
 
   test('change duration', async function (assert) {
@@ -70,15 +70,15 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
 
-    assert.strictEqual(page.overview.duration.text, 'Duration (in Years): 4');
-    await page.overview.duration.edit();
-    assert.strictEqual(page.overview.duration.options.length, 10);
+    assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 4');
+    await page.root.overview.duration.edit();
+    assert.strictEqual(page.root.overview.duration.options.length, 10);
     for (let i = 0; i < 10; i++) {
-      assert.strictEqual(parseInt(page.overview.duration.options[i].text), i + 1);
+      assert.strictEqual(parseInt(page.root.overview.duration.options[i].text), i + 1);
     }
-    await page.overview.duration.set(9);
-    await page.overview.duration.save();
-    assert.strictEqual(page.overview.duration.text, 'Duration (in Years): 9');
+    await page.root.overview.duration.set(9);
+    await page.root.overview.duration.save();
+    assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 9');
   });
 
   test('leave duration at 1', async function (assert) {
@@ -89,9 +89,9 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
 
-    assert.strictEqual(page.overview.duration.text, 'Duration (in Years): 1');
-    await page.overview.duration.edit();
-    await page.overview.duration.save();
-    assert.strictEqual(page.overview.duration.text, 'Duration (in Years): 1');
+    assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 1');
+    await page.root.overview.duration.edit();
+    await page.root.overview.duration.save();
+    assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 1');
   });
 });

@@ -1,11 +1,9 @@
-import { click, fillIn, find, findAll, currentRouteName, visit } from '@ember/test-helpers';
+import { currentRouteName } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
-const url = '/programs/1/programyears/1';
+import page from 'ilios/tests/pages/program-year';
 
 module('Acceptance | Program Year - Overview', function (hooks) {
   setupApplicationTest(hooks);
@@ -14,143 +12,111 @@ module('Acceptance | Program Year - Overview', function (hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    this.server.create('user');
-    this.server.create('user', { displayName: 'Zeppelin' });
-    this.server.createList('user', 3);
-    this.server.create('program', { school: this.school });
-    this.server.create('programYear', {
-      programId: 1,
-      directorIds: [2, 3, 4],
+    const director1 = this.server.create('user');
+    const director2 = this.server.create('user', { displayName: 'Zeppelin' });
+    const users = this.server.createList('user', 3);
+    const program = this.server.create('program', { school: this.school });
+    const programYear = this.server.create('programYear', {
+      program,
+      directors: [director1, director2, users[0]],
     });
     this.server.create('cohort', {
-      programYearId: 1,
+      programYear,
     });
+    this.program = program;
+    this.programYear = programYear;
   });
 
   test('list directors', async function (assert) {
-    await visit(url);
+    await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
     assert.strictEqual(currentRouteName(), 'programYear.index');
-    const directors = '.programyear-overview .directors li';
-    assert.dom(directors).exists({ count: 3 });
-    assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
-    assert.dom(`${directors}:nth-of-type(1) [data-test-info]`).doesNotExist();
-    assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('3 guy M. Mc3son');
-    assert.dom(`${directors}:nth-of-type(2) [data-test-info]`).doesNotExist();
-    assert.dom(`${directors}:nth-of-type(3) [data-test-fullname]`).hasText('Zeppelin');
-    assert.dom(`${directors}:nth-of-type(3) [data-test-info]`).exists();
+    assert.strictEqual(page.overview.directors.length, 3);
+    assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.notOk(page.overview.directors[0].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.notOk(page.overview.directors[1].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(page.overview.directors[2].userNameInfo.fullName, 'Zeppelin');
+    assert.ok(page.overview.directors[2].userNameInfo.hasAdditionalInfo);
   });
 
   test('list directors with privileges', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await visit(url);
-
+    await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
     assert.strictEqual(currentRouteName(), 'programYear.index');
-    const directors = '.programyear-overview .removable-directors li';
-    assert.dom(directors).exists({ count: 3 });
-    assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
-    assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('3 guy M. Mc3son');
-    assert.dom(`${directors}:nth-of-type(3) [data-test-fullname]`).hasText('Zeppelin');
+    assert.strictEqual(page.overview.directors.length, 3);
+    assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.strictEqual(page.overview.directors[2].userNameInfo.fullName, 'Zeppelin');
   });
 
   test('search directors', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await visit(url);
-
+    await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
     assert.strictEqual(currentRouteName(), 'programYear.index');
-    await fillIn(find('.programyear-overview .search-box input'), 'guy');
-    const searchResults = findAll('.programyear-overview .results li');
-    assert.strictEqual(searchResults.length, 7);
-    assert.strictEqual(await getElementText(searchResults[0]), getText('6 Results'));
-    assert.strictEqual(
-      await getElementText(searchResults[1]),
-      getText('0 guy M. Mc0son user@example.edu')
-    );
-    assert.dom(searchResults[1]).hasClass('active');
-    assert.strictEqual(
-      await getElementText(searchResults[2]),
-      getText('1 guy M. Mc1son user@example.edu')
-    );
-    assert.dom(searchResults[2]).hasClass('inactive');
-    assert.strictEqual(
-      await getElementText(searchResults[3]),
-      getText('3 guy M. Mc3son user@example.edu')
-    );
-    assert.dom(searchResults[3]).hasClass('inactive');
-    assert.strictEqual(
-      await getElementText(searchResults[4]),
-      getText('4 guy M. Mc4son user@example.edu')
-    );
-    assert.dom(searchResults[4]).hasClass('active');
-    assert.strictEqual(
-      await getElementText(searchResults[5]),
-      getText('5 guy M. Mc5son user@example.edu')
-    );
-    assert.dom(searchResults[5]).hasClass('active');
-    assert.strictEqual(
-      await getElementText(searchResults[6]),
-      getText('Zeppelin user@example.edu')
-    );
-    assert.dom(searchResults[6]).hasClass('inactive');
+    await page.overview.search.set('guy');
+    assert.strictEqual(page.overview.search.results.length, 6);
+    assert.strictEqual(page.overview.search.results[0].text, '0 guy M. Mc0son user@example.edu');
+    assert.ok(page.overview.search.results[0].isActive);
+    assert.strictEqual(page.overview.search.results[1].text, '1 guy M. Mc1son user@example.edu');
+    assert.notOk(page.overview.search.results[1].isActive);
+    assert.strictEqual(page.overview.search.results[2].text, '3 guy M. Mc3son user@example.edu');
+    assert.notOk(page.overview.search.results[2].isActive);
+    assert.strictEqual(page.overview.search.results[3].text, '4 guy M. Mc4son user@example.edu');
+    assert.ok(page.overview.search.results[3].isActive);
+    assert.strictEqual(page.overview.search.results[4].text, '5 guy M. Mc5son user@example.edu');
+    assert.ok(page.overview.search.results[4].isActive);
+    assert.strictEqual(page.overview.search.results[5].text, 'Zeppelin user@example.edu');
+    assert.notOk(page.overview.search.results[5].isActive);
   });
 
   test('add director', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await visit(url);
-
+    await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
     assert.strictEqual(currentRouteName(), 'programYear.index');
-    const directors = '.programyear-overview .removable-directors li';
-    assert.dom(directors).exists({ count: 3 });
-    assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
-    assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('3 guy M. Mc3son');
-    assert.dom(`${directors}:nth-of-type(3) [data-test-fullname]`).hasText('Zeppelin');
-
-    await fillIn(find('.programyear-overview .search-box input'), 'guy');
-    await click(findAll('.programyear-overview .results li')[5]);
-
-    assert.dom(directors).exists({ count: 4 });
-    assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
-    assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('3 guy M. Mc3son');
-    assert.dom(`${directors}:nth-of-type(3) [data-test-fullname]`).hasText('5 guy M. Mc5son');
-    assert.dom(`${directors}:nth-of-type(4) [data-test-fullname]`).hasText('Zeppelin');
+    assert.strictEqual(page.overview.directors.length, 3);
+    assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.strictEqual(page.overview.directors[2].userNameInfo.fullName, 'Zeppelin');
+    await page.overview.search.set('guy');
+    await page.overview.search.results[4].add();
+    assert.strictEqual(page.overview.directors.length, 4);
+    assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.strictEqual(page.overview.directors[2].userNameInfo.fullName, '5 guy M. Mc5son');
+    assert.strictEqual(page.overview.directors[3].userNameInfo.fullName, 'Zeppelin');
   });
 
   test('remove director', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await visit(url);
-
+    await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
     assert.strictEqual(currentRouteName(), 'programYear.index');
-    await click(find('.programyear-overview .removable-directors li'));
-    const directors = '.programyear-overview .removable-directors li';
-    assert.dom(directors).exists({ count: 2 });
-    assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('3 guy M. Mc3son');
-    assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('Zeppelin');
+    assert.strictEqual(page.overview.directors.length, 3);
+    assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.strictEqual(page.overview.directors[2].userNameInfo.fullName, 'Zeppelin');
+    await page.overview.directors[0].remove();
+    assert.strictEqual(page.overview.directors.length, 2);
+    assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, 'Zeppelin');
   });
 
   test('first director added is disabled #2770', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(5);
-    this.server.create('programYear', {
-      programId: 1,
-      directorIds: [],
+    const programYear = this.server.create('programYear', {
+      program: this.program,
+      directors: [],
     });
     this.server.create('cohort', {
-      programYearId: 2,
+      programYear,
     });
-    const overview = '.programyear-overview';
-    const directors = `${overview} .removable-directors li`;
-    const search = `${overview} [data-test-user-search]`;
-    const input = `${search} input`;
-    const results = `${search} .results li`;
-    const firstResult = `${results}:nth-of-type(2)`;
-
-    await visit('/programs/1/programyears/2');
-
+    await page.visit({ programId: this.program.id, programYearId: programYear.id });
     assert.strictEqual(currentRouteName(), 'programYear.index');
-    assert.dom(directors).doesNotExist('no directors initially');
-    await fillIn(input, 'guy');
-    assert.dom(firstResult).hasNoClass('inactive', 'the first user is active now');
-    await click(firstResult);
-    assert.dom(directors).exists({ count: 1 }, 'director is selected');
-    assert.dom(firstResult).hasClass('inactive', 'the first user is now marked as inactive');
+    assert.strictEqual(page.overview.directors.length, 0);
+    await page.overview.search.set('guy');
+    assert.strictEqual(page.overview.search.results.length, 6);
+    assert.ok(page.overview.search.results[0].isActive);
+    await page.overview.search.results[0].add();
+    assert.strictEqual(page.overview.directors.length, 1);
+    assert.notOk(page.overview.search.results[0].isActive);
   });
 });

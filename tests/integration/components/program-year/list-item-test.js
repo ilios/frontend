@@ -107,7 +107,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
       @programYear={{this.programYear}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
     />`);
-    assert.ok(component.canBeDeleted);
+    assert.ok(component.canBeRemoved);
   });
 
   test('cannot be deleted', async function (assert) {
@@ -129,6 +129,6 @@ module('Integration | Component | program-year/list-item', function (hooks) {
       @programYear={{this.programYear}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
     />`);
-    assert.notOk(component.canBeDeleted);
+    assert.notOk(component.canBeRemoved);
   });
 });

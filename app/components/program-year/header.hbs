@@ -5,7 +5,7 @@
 >
   <div class="backtolink">
     {{#if (is-fulfilled @programYear.program)}}
-      <LinkTo @route="program" @query={{hash}}>
+      <LinkTo @route="program" @query={{hash}} data-test-back-to-program>
         {{t "general.backToProgramYears"}}
       </LinkTo>
     {{/if}}
@@ -16,7 +16,7 @@
         <FaIcon @icon="lock" />
       {{/if}}
       {{#if @programYear}}
-        <h4>
+        <h4 data-test-matriculation-year>
           {{t "general.matriculationYear"}}
           {{#if this.academicYearCrossesCalendarYearBoundaries}}
             {{@programYear.startYear}} - {{add @programYear.startYear 1}}
@@ -24,7 +24,7 @@
             {{@programYear.startYear}}
           {{/if}}
         </h4>
-        <h5>
+        <h5 data-test-cohort>
           {{#if (get (await @programYear.cohort) "title")}}
             {{get (await @programYear.cohort) "title"}}
           {{else}}

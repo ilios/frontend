@@ -1,92 +1,105 @@
-import { click, find, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
-const url = '/programs/1/programyears/1?pyTaxonomyDetails=true';
+import page from 'ilios/tests/pages/program-year';
 
 module('Acceptance | Program Year - Terms', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    this.server.create('vocabulary', {
+    const vocabulary = this.server.create('vocabulary', {
       school: this.school,
       active: true,
     });
-    this.server.create('program', {
+    const program = this.server.create('program', {
       school: this.school,
     });
-    this.server.create('programYear', {
-      programId: 1,
+    const programYear = this.server.create('programYear', {
+      program,
     });
-    this.server.create('cohort', { programYearId: 1 });
+    this.server.create('cohort', { programYear });
     this.server.create('term', {
-      programYearIds: [1],
-      vocabularyId: 1,
+      programYears: [programYear],
+      vocabulary,
       active: true,
     });
     this.server.create('term', {
-      vocabularyId: 1,
+      vocabulary,
       active: true,
     });
+    this.program = program;
+    this.programYear = programYear;
   });
 
   test('list terms', async function (assert) {
-    assert.expect(2);
-    await visit(url);
-    var items = findAll('.detail-taxonomies ul.selected-taxonomy-terms li');
-    assert.strictEqual(items.length, 1);
-    assert.strictEqual(await getElementText(items[0]), getText('term 0'));
+    await page.visit({
+      programId: this.program.id,
+      programYearId: this.programYear.id,
+      pyTaxonomyDetails: true,
+    });
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies.length, 1);
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms.length, 1);
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms[0].name, 'term 0');
   });
 
   test('manage terms', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(3);
-    await visit(url);
-    await click(find('.taxonomy-manager .actions button'));
+    await page.visit({
+      programId: this.program.id,
+      programYearId: this.programYear.id,
+      pyTaxonomyDetails: true,
+    });
+    await page.details.detailTaxonomies.manage();
+    assert.strictEqual(page.details.detailTaxonomies.manager.selectedTerms.length, 1);
     assert.strictEqual(
-      await getElementText(find('.taxonomy-manager .removable-list li')),
-      getText('term 0')
+      page.details.detailTaxonomies.manager.selectedTerms[0].title,
+      'Vocabulary 1 (school 0)'
     );
+    assert.strictEqual(page.details.detailTaxonomies.manager.selectedTerms[0].terms.length, 1);
     assert.strictEqual(
-      await getElementText(find('.taxonomy-manager .selectable-terms-list li')),
-      getText('term 0')
+      page.details.detailTaxonomies.manager.selectedTerms[0].terms[0].name,
+      'term 0'
     );
-    assert.strictEqual(
-      await getElementText(findAll('.taxonomy-manager .selectable-terms-list li')[1]),
-      getText('term 1')
-    );
+    assert.strictEqual(page.details.detailTaxonomies.manager.availableTerms.length, 2);
+    assert.strictEqual(page.details.detailTaxonomies.manager.availableTerms[0].name, 'term 0');
+    assert.strictEqual(page.details.detailTaxonomies.manager.availableTerms[1].name, 'term 1');
   });
 
   test('save term changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(1);
-    await visit(url);
-    await click(find('.taxonomy-manager .actions button'));
-    await click(find('.taxonomy-manager .removable-list li'));
-    await click(find('.taxonomy-manager .selectable-terms-list li:nth-of-type(2) > div'));
-    await click('.taxonomy-manager button.bigadd');
-    assert.strictEqual(
-      await getElementText(find('.taxonomy-manager ul.selected-taxonomy-terms li')),
-      getText('term 1')
-    );
+    await page.visit({
+      programId: this.program.id,
+      programYearId: this.programYear.id,
+      pyTaxonomyDetails: true,
+    });
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms.length, 1);
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms[0].name, 'term 0');
+    await page.details.detailTaxonomies.manage();
+    await page.details.detailTaxonomies.manager.selectedTerms[0].terms[0].remove();
+    await page.details.detailTaxonomies.manager.availableTerms[1].toggle();
+    await page.details.detailTaxonomies.save();
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms.length, 1);
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms[0].name, 'term 1');
   });
 
   test('cancel term changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(1);
-    await visit(url);
-    await click(find('.taxonomy-manager .actions button'));
-    await click('.taxonomy-manager .removable-list li');
-    await click(find('.taxonomy-manager .selectable-terms-list li:nth-of-type(2) > div'));
-    await click('.taxonomy-manager button.bigcancel');
-    assert.strictEqual(
-      await getElementText(find('.taxonomy-manager ul.selected-taxonomy-terms li')),
-      getText('term 0')
-    );
+    await page.visit({
+      programId: this.program.id,
+      programYearId: this.programYear.id,
+      pyTaxonomyDetails: true,
+    });
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms.length, 1);
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms[0].name, 'term 0');
+    await page.details.detailTaxonomies.manage();
+    await page.details.detailTaxonomies.manager.selectedTerms[0].terms[0].remove();
+    await page.details.detailTaxonomies.manager.availableTerms[1].toggle();
+    await page.details.detailTaxonomies.cancel();
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms.length, 1);
+    assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms[0].name, 'term 0');
   });
 });

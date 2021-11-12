@@ -1,193 +1,163 @@
-import { click, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
+import page from 'ilios/tests/pages/school';
 
-const url = '/schools/1';
 module('Acceptance | School - Session Attributes', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    await setupAuthentication({ school });
+    this.school = this.server.create('school');
+    await setupAuthentication({ school: this.school });
   });
 
   test('check fields collapsed', async function (assert) {
-    assert.expect(12);
-    this.server.create('school');
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionAttendanceRequired',
       value: false,
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionSupplemental',
       value: true,
     });
-    await visit(url);
-
-    const rows = '.school-session-attributes-collapsed table tbody tr';
-    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
-    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) svg`;
-    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
-    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) svg`;
-    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
-    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
-    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
-    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
-
-    assert.strictEqual(await getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.dom(attendanceEnabled).hasClass('no');
-    assert.dom(attendanceEnabled).hasClass('fa-ban');
-
-    assert.strictEqual(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.dom(supplementalEnabled).hasClass('yes');
-    assert.dom(supplementalEnabled).hasClass('fa-check');
-
+    await page.visit({ schoolId: this.school.id });
     assert.strictEqual(
-      await getElementText(specialAttireTitle),
-      getText('Special Attire Required')
+      page.manager.schoolSessionAttributes.collapsed.attendanceRequired.label,
+      'Attendance Required'
     );
-    assert.dom(specialAttireEnabled).hasClass('no');
-    assert.dom(specialAttireEnabled).hasClass('fa-ban');
-
+    assert.ok(page.manager.schoolSessionAttributes.collapsed.attendanceRequired.isDisabled);
     assert.strictEqual(
-      await getElementText(specialEquipmentTitle),
-      getText('Special Equipment Required')
+      page.manager.schoolSessionAttributes.collapsed.supplemental.label,
+      'Supplemental Curriculum'
     );
-    assert.dom(specialEquipmentEnabled).hasClass('no');
-    assert.dom(specialEquipmentEnabled).hasClass('fa-ban');
+    assert.ok(page.manager.schoolSessionAttributes.collapsed.supplemental.isEnabled);
+    assert.strictEqual(
+      page.manager.schoolSessionAttributes.collapsed.specialAttireRequired.label,
+      'Special Attire Required'
+    );
+    assert.ok(page.manager.schoolSessionAttributes.collapsed.specialAttireRequired.isDisabled);
+    assert.strictEqual(
+      page.manager.schoolSessionAttributes.collapsed.specialEquipmentRequired.label,
+      'Special Equipment Required'
+    );
+    assert.ok(page.manager.schoolSessionAttributes.collapsed.specialEquipmentRequired.isDisabled);
   });
 
   test('check fields expanded', async function (assert) {
-    assert.expect(12);
-    this.server.create('school');
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionAttendanceRequired',
       value: false,
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionSupplemental',
       value: true,
     });
-    await visit(`${url}?schoolSessionAttributesDetails=true`);
-
-    const rows = '.school-session-attributes-expanded table tbody tr';
-    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
-    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) svg`;
-    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
-    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) svg`;
-    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
-    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
-    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
-    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
-
-    assert.strictEqual(await getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.dom(attendanceEnabled).hasClass('no');
-    assert.dom(attendanceEnabled).hasClass('fa-ban');
-
-    assert.strictEqual(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.dom(supplementalEnabled).hasClass('yes');
-    assert.dom(supplementalEnabled).hasClass('fa-check');
-
+    await page.visit({ schoolId: this.school.id, schoolSessionAttributesDetails: true });
     assert.strictEqual(
-      await getElementText(specialAttireTitle),
-      getText('Special Attire Required')
+      page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.label,
+      'Attendance Required'
     );
-    assert.dom(specialAttireEnabled).hasClass('no');
-    assert.dom(specialAttireEnabled).hasClass('fa-ban');
-
+    assert.ok(
+      page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.isDisabled
+    );
     assert.strictEqual(
-      await getElementText(specialEquipmentTitle),
-      getText('Special Equipment Required')
+      page.manager.schoolSessionAttributes.expanded.attributes.supplemental.label,
+      'Supplemental Curriculum'
     );
-    assert.dom(specialEquipmentEnabled).hasClass('no');
-    assert.dom(specialEquipmentEnabled).hasClass('fa-ban');
+    assert.ok(page.manager.schoolSessionAttributes.expanded.attributes.supplemental.isEnabled);
+    assert.strictEqual(
+      page.manager.schoolSessionAttributes.expanded.attributes.specialAttireRequired.label,
+      'Special Attire Required'
+    );
+    assert.ok(
+      page.manager.schoolSessionAttributes.expanded.attributes.specialAttireRequired.isDisabled
+    );
+    assert.strictEqual(
+      page.manager.schoolSessionAttributes.expanded.attributes.specialEquipmentRequired.label,
+      'Special Equipment Required'
+    );
+    assert.ok(
+      page.manager.schoolSessionAttributes.expanded.attributes.specialEquipmentRequired.isDisabled
+    );
   });
 
   test('manage session attributes', async function (assert) {
-    assert.expect(23);
-    this.server.create('school');
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionAttendanceRequired',
       value: false,
     });
     this.server.create('schoolConfig', {
-      schoolId: 1,
+      school: this.school,
       name: 'showSessionSupplemental',
       value: true,
     });
-    await visit(`${url}?schoolSessionAttributesDetails=true&schoolManageSessionAttributes=true`);
-
-    const rows = '.school-session-attributes-expanded table tbody tr';
-    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
-    const attendanceCheckbox = `${rows}:nth-of-type(1) td:nth-of-type(2) input`;
-    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
-    const supplementalCheckbox = `${rows}:nth-of-type(2) td:nth-of-type(2) input`;
-    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
-    const specialAttireCheckbox = `${rows}:nth-of-type(3) td:nth-of-type(2) input`;
-    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
-    const specialEquipmentCheckbox = `${rows}:nth-of-type(4) td:nth-of-type(2) input`;
-    const save = `.school-session-attributes-expanded .bigadd`;
-    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) svg`;
-    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) svg`;
-    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
-    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
-
-    assert.strictEqual(await getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.dom(attendanceCheckbox).isNotChecked();
-
-    assert.strictEqual(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.dom(supplementalCheckbox).isChecked();
-
+    await page.visit({
+      schoolId: this.school.id,
+      schoolSessionAttributesDetails: true,
+      schoolManageSessionAttributes: true,
+    });
     assert.strictEqual(
-      await getElementText(specialAttireTitle),
-      getText('Special Attire Required')
+      page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.label,
+      'Attendance Required'
     );
-    assert.dom(specialAttireCheckbox).isNotChecked();
-
+    assert.notOk(
+      page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.isChecked
+    );
     assert.strictEqual(
-      await getElementText(specialEquipmentTitle),
-      getText('Special Equipment Required')
+      page.manager.schoolSessionAttributes.expanded.manager.supplemental.label,
+      'Supplemental Curriculum'
     );
-    assert.dom(specialEquipmentCheckbox).isNotChecked();
-
-    await click(attendanceCheckbox);
-    await click(supplementalCheckbox);
-    await click(specialEquipmentCheckbox);
-
-    assert.dom(attendanceCheckbox).isChecked();
-    assert.dom(supplementalCheckbox).isNotChecked();
-    assert.dom(specialEquipmentCheckbox).isChecked();
-
-    await click(save);
-
-    assert.strictEqual(await getElementText(attendanceTitle), getText('Attendance Required'));
-    assert.dom(attendanceEnabled).hasClass('yes');
-    assert.dom(attendanceEnabled).hasClass('fa-check');
-
-    assert.strictEqual(await getElementText(supplementalTitle), getText('Supplemental Curriculum'));
-    assert.dom(supplementalEnabled).hasClass('no');
-    assert.dom(supplementalEnabled).hasClass('fa-ban');
-
+    assert.ok(page.manager.schoolSessionAttributes.expanded.manager.supplemental.isChecked);
     assert.strictEqual(
-      await getElementText(specialAttireTitle),
-      getText('Special Attire Required')
+      page.manager.schoolSessionAttributes.expanded.manager.specialAttireRequired.label,
+      'Special Attire Required'
     );
-    assert.dom(specialAttireEnabled).hasClass('no');
-    assert.dom(specialAttireEnabled).hasClass('fa-ban');
-
+    assert.notOk(
+      page.manager.schoolSessionAttributes.expanded.manager.specialAttireRequired.isChecked
+    );
     assert.strictEqual(
-      await getElementText(specialEquipmentTitle),
-      getText('Special Equipment Required')
+      page.manager.schoolSessionAttributes.expanded.manager.specialEquipmentRequired.label,
+      'Special Equipment Required'
     );
-    assert.dom(specialEquipmentEnabled).hasClass('yes');
-    assert.dom(specialEquipmentEnabled).hasClass('fa-check');
+    assert.notOk(
+      page.manager.schoolSessionAttributes.expanded.manager.specialEquipmentRequired.isChecked
+    );
+    await page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.check();
+    await page.manager.schoolSessionAttributes.expanded.manager.supplemental.check();
+    await page.manager.schoolSessionAttributes.expanded.manager.specialEquipmentRequired.check();
+    await page.manager.schoolSessionAttributes.expanded.save();
+    assert.strictEqual(
+      page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.label,
+      'Attendance Required'
+    );
+    assert.notOk(
+      page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.isDisabled
+    );
+    assert.strictEqual(
+      page.manager.schoolSessionAttributes.expanded.attributes.supplemental.label,
+      'Supplemental Curriculum'
+    );
+    assert.notOk(page.manager.schoolSessionAttributes.expanded.attributes.supplemental.isEnabled);
+    assert.strictEqual(
+      page.manager.schoolSessionAttributes.expanded.attributes.specialAttireRequired.label,
+      'Special Attire Required'
+    );
+    assert.ok(
+      page.manager.schoolSessionAttributes.expanded.attributes.specialAttireRequired.isDisabled
+    );
+    assert.strictEqual(
+      page.manager.schoolSessionAttributes.expanded.attributes.specialEquipmentRequired.label,
+      'Special Equipment Required'
+    );
+    assert.notOk(
+      page.manager.schoolSessionAttributes.expanded.attributes.specialEquipmentRequired.isDisabled
+    );
   });
 });

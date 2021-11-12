@@ -4,8 +4,16 @@ const definition = {
   scope: '[data-test-program-list-item]',
   title: text('[data-test-title]'),
   school: text('[data-test-school]'),
-  canBeDeleted: isVisible('[data-test-remove]'),
   remove: clickable('[data-test-remove]'),
+  edit: clickable('[data-test-edit-program]'),
+  canBeRemoved: isVisible('[data-test-remove]'),
+  confirmRemoval: {
+    scope: '[data-test-confirm-removal]',
+    message: text('[data-test-message]'),
+    confirm: clickable('[data-test-confirm]'),
+    cancel: clickable('[data-test-cancel]'),
+    resetScope: true,
+  },
 };
 
 export default definition;

@@ -1,11 +1,11 @@
 import { create, visitable } from 'ember-cli-page-object';
-
-import objectives from './components/program-year/objectives';
-import competencies from './components/program-year/competencies';
+import details from './components/program-year/details';
+import overview from './components/program-year/overview';
+import header from './components/program-year/header';
 
 export default create({
-  scope: '[data-test-program-year-details]',
   visit: visitable('/programs/:programId/programyears/:programYearId'),
-  objectives,
-  competencies,
+  details,
+  overview,
+  header,
 });
