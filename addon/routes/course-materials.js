@@ -4,8 +4,13 @@ import { all } from 'rsvp';
 
 export default class CourseMaterialsRoute extends Route {
   @service session;
+  @service dataLoader;
 
   titleToken = 'general.coursesAndSessions';
+
+  async model(params) {
+    return this.dataLoader.loadCourse(params.course_id);
+  }
 
   afterModel(course) {
     return all([
