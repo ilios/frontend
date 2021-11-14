@@ -1,28 +1,38 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { waitForResource } from 'ilios-common';
 
 module('Unit | Model | Competency', function (hooks) {
   setupTest(hooks);
 
   test('isDomain', function (assert) {
-    assert.expect(2);
+    assert.expect(4);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('competency');
     assert.ok(model.isDomain);
+    assert.notOk(model.isNotDomain);
 
     store.createRecord('competency', { id: 1, children: [model] });
     assert.notOk(model.isDomain);
+    assert.ok(model.isNotDomain);
   });
 
   test('domain', async function (assert) {
     assert.expect(2);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('competency');
-    let domain = await model.domain;
-    assert.strictEqual(domain, model);
+    assert.strictEqual(await waitForResource(model, 'domain'), model);
     const competency = store.createRecord('competency', { children: [model] });
-    domain = await model.domain;
-    assert.strictEqual(domain, competency);
+    assert.strictEqual(await waitForResource(model, 'domain'), competency);
+  });
+
+  test('getDomain', async function (assert) {
+    assert.expect(2);
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('competency');
+    assert.strictEqual(await model.getDomain(), model);
+    const competency = store.createRecord('competency', { children: [model] });
+    assert.strictEqual(await model.getDomain(), competency);
   });
 
   test('treeChildren', async function (assert) {
