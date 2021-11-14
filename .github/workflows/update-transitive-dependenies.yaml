@@ -7,7 +7,6 @@ on:
 
 jobs:
   update:
-    name: Tests
     runs-on: macos-latest
 
     steps:
