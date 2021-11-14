@@ -47,7 +47,9 @@ export default class ProgramYear extends Model {
     if (!this._program) {
       return undefined;
     }
-    return Number(this.startYear) + Number(this._program.duration);
+    const classOfYear = Number(this.startYear) + Number(this._program.duration);
+    //return as a string
+    return `${classOfYear}`;
   }
 
   async getClassOfYear() {

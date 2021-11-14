@@ -101,6 +101,6 @@ module('Unit | Model | Cohort', function (hooks) {
     });
     model.set('programYear', programYear);
     const classOfYear = await model.get('classOfYear');
-    assert.strictEqual(classOfYear, 2016);
+    assert.strictEqual(classOfYear, '2016');
   });
 });
