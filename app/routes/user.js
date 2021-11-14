@@ -12,6 +12,10 @@ export default class UserRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
+  model(params) {
+    return this.store.findRecord('user', params.user_id);
+  }
+
   /**
    * Prefetch user relationship data to smooth loading
    **/

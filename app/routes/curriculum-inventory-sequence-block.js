@@ -4,11 +4,19 @@ import { inject as service } from '@ember/service';
 export default class CurriculumInventorySequenceBlockRoute extends Route {
   @service permissionChecker;
   @service session;
+  @service store;
 
   canUpdate = false;
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+  }
+
+  model(params) {
+    return this.store.findRecord(
+      'curriculum-inventory-sequence-block',
+      params.curriculum_inventory_sequence_block_id
+    );
   }
 
   async afterModel(model) {

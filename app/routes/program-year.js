@@ -5,11 +5,16 @@ import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 export default class ProgramYearRoute extends Route {
   @service permissionChecker;
   @service session;
+  @service store;
 
   canUpdate = false;
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+  }
+
+  model(params) {
+    return this.store.findRecord('program-year', params.program_year_id);
   }
 
   /**
