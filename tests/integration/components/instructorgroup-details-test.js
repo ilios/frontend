@@ -64,9 +64,9 @@ module('Integration | Component | instructorgroup details', function (hooks) {
     );
 
     assert.strictEqual(component.overview.users.length, 0);
-    await component.overview.search.set('user');
-    assert.strictEqual(component.overview.search.results.length, 3);
-    await component.overview.search.results[0].add();
+    await component.overview.search.searchBox.set('user');
+    assert.strictEqual(component.overview.search.results.items.length, 3);
+    await component.overview.search.results.items[0].click();
     assert.strictEqual(component.overview.users.length, 1);
     assert.strictEqual(component.overview.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
   });

@@ -82,26 +82,26 @@ module('Acceptance | Instructor Group Details', function (hooks) {
   test('search instructors', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
-    await page.details.overview.search.set('guy');
-    assert.strictEqual(page.details.overview.search.results.length, 5);
+    await page.details.overview.search.searchBox.set('guy');
+    assert.strictEqual(page.details.overview.search.results.items.length, 5);
     assert.strictEqual(
-      page.details.overview.search.results[0].text,
+      page.details.overview.search.results.items[0].text,
       '0 guy M. Mc0son user@example.edu'
     );
     assert.strictEqual(
-      page.details.overview.search.results[1].text,
+      page.details.overview.search.results.items[1].text,
       '1 guy M. Mc1son user@example.edu'
     );
     assert.strictEqual(
-      page.details.overview.search.results[2].text,
+      page.details.overview.search.results.items[2].text,
       '2 guy M. Mc2son user@example.edu'
     );
     assert.strictEqual(
-      page.details.overview.search.results[3].text,
+      page.details.overview.search.results.items[3].text,
       '3 guy M. Mc3son user@example.edu'
     );
     assert.strictEqual(
-      page.details.overview.search.results[4].text,
+      page.details.overview.search.results.items[4].text,
       '4 guy M. Mc4son user@example.edu'
     );
   });
@@ -112,8 +112,8 @@ module('Acceptance | Instructor Group Details', function (hooks) {
     assert.strictEqual(page.details.overview.users.length, 2);
     assert.strictEqual(page.details.overview.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.details.overview.users[1].userNameInfo.fullName, '2 guy M. Mc2son');
-    await page.details.overview.search.set('guy');
-    await page.details.overview.search.results[3].add();
+    await page.details.overview.search.searchBox.set('guy');
+    await page.details.overview.search.results.items[3].click();
     assert.strictEqual(page.details.overview.users.length, 3);
     assert.strictEqual(page.details.overview.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.details.overview.users[1].userNameInfo.fullName, '2 guy M. Mc2son');

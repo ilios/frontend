@@ -53,20 +53,35 @@ module('Acceptance | Program Year - Overview', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
     assert.strictEqual(currentRouteName(), 'programYear.index');
-    await page.overview.search.set('guy');
-    assert.strictEqual(page.overview.search.results.length, 6);
-    assert.strictEqual(page.overview.search.results[0].text, '0 guy M. Mc0son user@example.edu');
-    assert.ok(page.overview.search.results[0].isActive);
-    assert.strictEqual(page.overview.search.results[1].text, '1 guy M. Mc1son user@example.edu');
-    assert.notOk(page.overview.search.results[1].isActive);
-    assert.strictEqual(page.overview.search.results[2].text, '3 guy M. Mc3son user@example.edu');
-    assert.notOk(page.overview.search.results[2].isActive);
-    assert.strictEqual(page.overview.search.results[3].text, '4 guy M. Mc4son user@example.edu');
-    assert.ok(page.overview.search.results[3].isActive);
-    assert.strictEqual(page.overview.search.results[4].text, '5 guy M. Mc5son user@example.edu');
-    assert.ok(page.overview.search.results[4].isActive);
-    assert.strictEqual(page.overview.search.results[5].text, 'Zeppelin user@example.edu');
-    assert.notOk(page.overview.search.results[5].isActive);
+    await page.overview.search.searchBox.set('guy');
+    assert.strictEqual(page.overview.search.results.items.length, 6);
+    assert.strictEqual(
+      page.overview.search.results.items[0].text,
+      '0 guy M. Mc0son user@example.edu'
+    );
+    assert.ok(page.overview.search.results.items[0].isActive);
+    assert.strictEqual(
+      page.overview.search.results.items[1].text,
+      '1 guy M. Mc1son user@example.edu'
+    );
+    assert.notOk(page.overview.search.results.items[1].isActive);
+    assert.strictEqual(
+      page.overview.search.results.items[2].text,
+      '3 guy M. Mc3son user@example.edu'
+    );
+    assert.notOk(page.overview.search.results.items[2].isActive);
+    assert.strictEqual(
+      page.overview.search.results.items[3].text,
+      '4 guy M. Mc4son user@example.edu'
+    );
+    assert.ok(page.overview.search.results.items[3].isActive);
+    assert.strictEqual(
+      page.overview.search.results.items[4].text,
+      '5 guy M. Mc5son user@example.edu'
+    );
+    assert.ok(page.overview.search.results.items[4].isActive);
+    assert.strictEqual(page.overview.search.results.items[5].text, 'Zeppelin user@example.edu');
+    assert.notOk(page.overview.search.results.items[5].isActive);
   });
 
   test('add director', async function (assert) {
@@ -77,8 +92,8 @@ module('Acceptance | Program Year - Overview', function (hooks) {
     assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, '3 guy M. Mc3son');
     assert.strictEqual(page.overview.directors[2].userNameInfo.fullName, 'Zeppelin');
-    await page.overview.search.set('guy');
-    await page.overview.search.results[4].add();
+    await page.overview.search.searchBox.set('guy');
+    await page.overview.search.results.items[4].click();
     assert.strictEqual(page.overview.directors.length, 4);
     assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, '3 guy M. Mc3son');
@@ -112,11 +127,11 @@ module('Acceptance | Program Year - Overview', function (hooks) {
     await page.visit({ programId: this.program.id, programYearId: programYear.id });
     assert.strictEqual(currentRouteName(), 'programYear.index');
     assert.strictEqual(page.overview.directors.length, 0);
-    await page.overview.search.set('guy');
-    assert.strictEqual(page.overview.search.results.length, 6);
-    assert.ok(page.overview.search.results[0].isActive);
-    await page.overview.search.results[0].add();
+    await page.overview.search.searchBox.set('guy');
+    assert.strictEqual(page.overview.search.results.items.length, 6);
+    assert.ok(page.overview.search.results.items[0].isActive);
+    await page.overview.search.results.items[0].click();
     assert.strictEqual(page.overview.directors.length, 1);
-    assert.notOk(page.overview.search.results[0].isActive);
+    assert.notOk(page.overview.search.results.items[0].isActive);
   });
 });
