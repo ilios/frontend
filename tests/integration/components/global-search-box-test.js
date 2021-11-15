@@ -28,6 +28,7 @@ module('Integration | Component | global search box', function (hooks) {
 
   test('clicking search icon focuses input', async function (assert) {
     await render(hbs`<GlobalSearchBox @search={{(noop)}} />`);
+    assert.notOk(component.inputHasFocus);
     await component.clickIcon();
     assert.ok(component.inputHasFocus);
   });
