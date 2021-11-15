@@ -30,7 +30,7 @@
     "@ember/test-helpers": "^2.4.2",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
-    "@ilios/ember-template-lint-plugin": "^2.0.1",
+    "@ilios/ember-template-lint-plugin": "^3.0.0",
     "@sentry/browser": "^6.14.3",
     "@sentry/integrations": "^6.14.3",
     "babel-eslint": "^10.1.0",
