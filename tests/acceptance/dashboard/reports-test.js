@@ -298,4 +298,14 @@ module('Acceptance | Dashboard Reports', function (hooks) {
     );
     assert.strictEqual(page.myReports.selectedReport.results[1].text, '2016 course 1');
   });
+
+  test('delete report', async function (assert) {
+    await page.visit();
+    assert.strictEqual(page.myReports.reports.length, 2);
+    assert.strictEqual(page.myReports.reports[0].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.myReports.reports[1].title, 'my report 0');
+    await page.myReports.reports[0].remove();
+    assert.strictEqual(page.myReports.reports.length, 1);
+    assert.strictEqual(page.myReports.reports[0].title, 'my report 0');
+  });
 });
