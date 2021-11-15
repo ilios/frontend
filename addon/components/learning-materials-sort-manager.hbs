@@ -42,8 +42,10 @@
               </span>
               <span class="details">
                 {{capitalize item.learningMaterial.type}},
-                {{t "general.ownedBy"}}
-                {{item.learningMaterial.owningUser.fullName}},
+                {{t
+                   "general.ownedBy"
+                   owner=item.learningMaterial.owningUser.fullName
+                }},
                 {{t "general.status"}}:
                 {{item.learningMaterial.status.title}}
               </span>
