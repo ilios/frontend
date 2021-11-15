@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 export default class SchoolRoute extends Route {
   @service permissionChecker;
   @service session;
+  @service store;
 
   canUpdateSchool = false;
   canUpdateCompetency = false;
@@ -23,6 +24,10 @@ export default class SchoolRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+  }
+
+  model(params) {
+    return this.store.findRecord('school', params.school_id);
   }
 
   async afterModel(school) {

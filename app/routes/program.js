@@ -4,11 +4,16 @@ import { inject as service } from '@ember/service';
 export default class ProgramRoute extends Route {
   @service permissionChecker;
   @service session;
+  @service store;
 
   canUpdate = false;
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+  }
+
+  model(params) {
+    return this.store.findRecord('program', params.program_id);
   }
 
   async afterModel(program) {
