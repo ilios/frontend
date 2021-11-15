@@ -223,8 +223,8 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.strictEqual(m.selectedTerms.length, 2);
     assert.strictEqual(m.selectedTerms[0].title, 'descriptor 0');
     assert.strictEqual(m.selectedTerms[1].title, 'descriptor 1');
-    await m.search('descriptor');
-    await m.runSearch();
+    await m.search.set('descriptor');
+    await m.search.submit();
 
     assert.strictEqual(m.searchResults.length, 4);
     for (let i = 0; i < 4; i++) {
@@ -263,8 +263,8 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
     const m = page.details.objectives.objectiveList.objectives[0].meshManager.meshManager;
     assert.strictEqual(m.selectedTerms.length, 2);
-    await m.search('descriptor');
-    await m.runSearch();
+    await m.search.set('descriptor');
+    await m.search.submit();
 
     await m.selectedTerms[0].remove();
     await m.searchResults[2].add();
@@ -305,8 +305,8 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
     const m = page.details.objectives.objectiveList.objectives[0].meshManager.meshManager;
     assert.strictEqual(m.selectedTerms.length, 2);
-    await m.search('descriptor');
-    await m.runSearch();
+    await m.search.set('descriptor');
+    await m.search.submit();
 
     await m.selectedTerms[0].remove();
     await m.searchResults[2].add();
