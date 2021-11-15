@@ -5,8 +5,13 @@ import { all } from 'rsvp';
 export default class CourseVisualizationsRoute extends Route {
   @service store;
   @service session;
+  @service dataLoader;
 
   titleToken = 'general.coursesAndSessions';
+
+  async model(params) {
+    return this.dataLoader.loadCourse(params.course_id);
+  }
 
   /**
    * Prefetch related data to limit network requests
