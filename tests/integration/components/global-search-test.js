@@ -64,8 +64,8 @@ module('Integration | Component | global-search', function (hooks) {
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
-    await component.input('typed it');
-    await component.clickIcon();
+    await component.searchBox.input('typed it');
+    await component.searchBox.clickIcon();
   });
 
   test('academic year filter works properly', async function (assert) {

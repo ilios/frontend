@@ -1,9 +1,10 @@
 import { module, test } from 'qunit';
-import { click, currentURL, fillIn, find, visit } from '@ember/test-helpers';
+import { currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import page from 'ilios/tests/pages/search';
+import dashboardPage from 'ilios/tests/pages/dashboard';
 
 module('Acceptance | search', function (hooks) {
   setupApplicationTest(hooks);
@@ -38,10 +39,10 @@ module('Acceptance | search', function (hooks) {
 
     await page.visit();
     assert.strictEqual(currentURL(), '/search');
-    await page.searchBox.input(input);
+    await page.globalSearch.searchBox.input(input);
     assert.strictEqual(currentURL(), '/search', 'entering input value does not update query param');
-    await page.searchBox.clickIcon();
-    assert.strictEqual(page.searchBox.inputValue, input);
+    await page.globalSearch.searchBox.clickIcon();
+    assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
     assert.strictEqual(currentURL(), `/search?q=${input}`, 'triggering search updates query param');
   });
 
@@ -59,13 +60,13 @@ module('Acceptance | search', function (hooks) {
       };
     });
 
-    await visit('/search');
+    await page.visit();
     assert.strictEqual(currentURL(), '/search');
-    await fillIn('input.global-search-input', input);
+    await page.globalSearch.searchBox.input(input);
     assert.strictEqual(currentURL(), '/search', 'entering input value does not update query param');
-    await click('[data-test-search-icon]');
+    await page.globalSearch.searchBox.clickIcon();
     assert.strictEqual(currentURL(), `/search?q=${encodeURIComponent(input)}`);
-    assert.strictEqual(find('input.global-search-input').value, input);
+    assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
   });
 
   test('search with special chars from dashboard #4752', async function (assert) {
@@ -81,15 +82,12 @@ module('Acceptance | search', function (hooks) {
         },
       };
     });
-    const headerSearchBox = '[data-test-ilios-header] [data-test-global-search-box] input';
-    const searchBox = '[data-test-global-search] [data-test-global-search-box] input';
-
-    await visit('/dashboard');
+    await dashboardPage.visit();
     assert.strictEqual(currentURL(), '/dashboard');
-    await fillIn(headerSearchBox, input);
-    await click('[data-test-search-icon]');
+    await dashboardPage.iliosHeader.searchBox.input(input);
+    await dashboardPage.iliosHeader.searchBox.clickIcon();
     assert.strictEqual(currentURL(), `/search?page=1&q=${encodeURIComponent(input)}`);
-    assert.strictEqual(find(searchBox).value, input);
+    assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
   });
 
   test('clicking back from course to search works #4768', async function (assert) {
@@ -119,12 +117,12 @@ module('Acceptance | search', function (hooks) {
     });
     await page.visit();
     assert.strictEqual(currentURL(), '/search');
-    await page.searchBox.input(firstInput);
-    await page.searchBox.clickIcon();
+    await page.globalSearch.searchBox.input(firstInput);
+    await page.globalSearch.searchBox.clickIcon();
     await page.paginationLinks.pageLinks[1].click();
     assert.strictEqual(page.globalSearch.searchResults.length, 10);
     assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
-    assert.strictEqual(page.searchBox.inputValue, firstInput);
+    assert.strictEqual(page.globalSearch.searchBox.inputValue, firstInput);
     assert.strictEqual(currentURL(), `/search?page=2&q=${firstInput}`);
     await page.globalSearch.searchResults[0].clickCourse();
     assert.strictEqual(currentURL(), `/courses/11`);
@@ -176,18 +174,18 @@ module('Acceptance | search', function (hooks) {
     });
     await page.visit();
     assert.strictEqual(currentURL(), '/search');
-    await page.searchBox.input(firstInput);
-    await page.searchBox.clickIcon();
-    assert.strictEqual(page.searchBox.inputValue, firstInput);
+    await page.globalSearch.searchBox.input(firstInput);
+    await page.globalSearch.searchBox.clickIcon();
+    assert.strictEqual(page.globalSearch.searchBox.inputValue, firstInput);
     assert.strictEqual(currentURL(), `/search?q=${firstInput}`);
-    await page.searchBox.input(secondInput);
-    await page.searchBox.clickIcon();
-    assert.strictEqual(page.searchBox.inputValue, secondInput);
+    await page.globalSearch.searchBox.input(secondInput);
+    await page.globalSearch.searchBox.clickIcon();
+    assert.strictEqual(page.globalSearch.searchBox.inputValue, secondInput);
     assert.strictEqual(currentURL(), `/search?q=${secondInput}`);
     await page.visit({ q: firstInput });
     assert.strictEqual(currentURL(), `/search?q=${firstInput}`);
-    assert.strictEqual(page.searchBox.inputValue, firstInput);
-    assert.strictEqual(page.searchBox.autocompleteResults.length, 0);
+    assert.strictEqual(page.globalSearch.searchBox.inputValue, firstInput);
+    assert.strictEqual(page.globalSearch.searchBox.autocompleteResults.length, 0);
   });
 
   test('search requires three chars #4769', async function (assert) {
@@ -195,11 +193,11 @@ module('Acceptance | search', function (hooks) {
     const input = 'br';
 
     await page.visit();
-    await page.searchBox.input(input);
-    await page.searchBox.clickIcon();
+    await page.globalSearch.searchBox.input(input);
+    await page.globalSearch.searchBox.clickIcon();
     assert.strictEqual(page.globalSearch.searchResults.length, 0);
-    assert.strictEqual(page.searchBox.autocompleteResults.length, 1);
-    assert.strictEqual(page.searchBox.autocompleteResults[0].text, 'keep typing...');
+    assert.strictEqual(page.globalSearch.searchBox.autocompleteResults.length, 1);
+    assert.strictEqual(page.globalSearch.searchBox.autocompleteResults[0].text, 'keep typing...');
   });
 
   test('search requires three chars in URL #4769', async function (assert) {
@@ -207,8 +205,8 @@ module('Acceptance | search', function (hooks) {
     const input = 'br';
 
     await page.visit({ q: input });
-    assert.strictEqual(page.searchBox.inputValue, input);
-    await page.searchBox.clickIcon();
+    assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
+    await page.globalSearch.searchBox.clickIcon();
     assert.strictEqual(page.globalSearch.searchResults.length, 0);
   });
 
