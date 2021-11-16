@@ -2,12 +2,16 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { dropTask, timeout, restartableTask } from 'ember-concurrency';
+import { dropTask, timeout } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import createDownloadFile from '../utils/create-download-file';
 import { later } from '@ember/runloop';
 import buildReportTitle from 'ilios/utils/build-report-title';
 import { map } from 'rsvp';
+
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 const SCROLL_KEY = 'dashboard-my-reports';
 
@@ -21,36 +25,39 @@ export default class DashboardMyreportsComponent extends Component {
   @tracked finishedBuildingReport = false;
   @tracked myReportEditorOn = false;
 
-  @tracked user;
-  @tracked reports;
-  @tracked allAcademicYears;
-  @tracked selectedReportTitle;
-  @tracked reportResultsList;
+  @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
+  @use userReports = new ResolveAsyncValue(() => [this.user?.reports]);
+  @use allAcademicYears = new ResolveAsyncValue(() => [this.store.findAll('academic-year')]);
 
-  constructor() {
-    super(...arguments);
-    this.currentUser.getModel().then((user) => (this.user = user));
+  @use reports = new AsyncProcess(() => [this.reportsWithTitles.bind(this), this.userReports]);
+
+  @use selectedReportTitle = new AsyncProcess(() => [
+    this.getSelectedReportTitle.bind(this),
+    this.args.selectedReport,
+  ]);
+
+  @use reportResultsList = new AsyncProcess(() => [
+    this.getReportResults.bind(this),
+    this.args.selectedReport,
+    this.args.selectedYear,
+  ]);
+
+  async getSelectedReportTitle(selectedReport) {
+    if (!selectedReport) {
+      return '';
+    }
+    return buildReportTitle(selectedReport, this.store, this.intl);
   }
 
-  @restartableTask
-  *load(element, [reports, selectedReport, selectedYear]) {
-    if (!reports) {
-      return;
+  async getReportResults(selectedReport, selectedYear) {
+    if (!selectedReport) {
+      return [];
     }
-    this.reports = yield this.reportsWithTitles(reports.toArray());
-
-    this.allAcademicYears = yield this.store.findAll('academic-year');
-    this.selectedReportTitle = null;
-    this.reportResultsList = null;
-
-    if (selectedReport) {
-      this.selectedReportTitle = yield buildReportTitle(selectedReport, this.store, this.intl);
-      this.reportResultsList = yield this.reporting.getResults(selectedReport, selectedYear);
-    }
+    return this.reporting.getResults(selectedReport, selectedYear);
   }
 
   async reportsWithTitles(reports) {
-    return map(reports, async (report) => {
+    return map(reports?.toArray() ?? [], async (report) => {
       return {
         title: await buildReportTitle(report, this.store, this.intl),
         report,
