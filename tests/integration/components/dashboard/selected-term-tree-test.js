@@ -1,11 +1,13 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | dashboard/SelectedTermTree', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   const tree = [
     EmberObject.create({

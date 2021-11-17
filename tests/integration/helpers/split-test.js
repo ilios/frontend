@@ -1,10 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Helper | split', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   test('it splits', async function (assert) {
     await render(hbs`
     {{#each (split "," "a,b,c") as |l|}}

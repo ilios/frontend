@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component as weeklyCalendarComponent } from 'ilios-common/page-objects/components/weekly-calendar';
@@ -7,6 +8,7 @@ import moment from 'moment';
 
 module('Integration | Component | ilios calendar week', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
     this.actions = {};

@@ -2,6 +2,7 @@ import Service from '@ember/service';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -10,6 +11,7 @@ import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Integration | Component | week glance', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
   const testDate = moment('2017-01-19').hour(0).minute(0).second(0);
 

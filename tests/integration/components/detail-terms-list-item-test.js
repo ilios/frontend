@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
@@ -7,6 +8,7 @@ import { resolve } from 'rsvp';
 
 module('Integration | Component | detail terms list item', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('top-level', async function (assert) {
     assert.expect(1);

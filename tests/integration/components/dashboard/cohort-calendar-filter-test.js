@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/dashboard/cohort-calendar-filter';
@@ -7,6 +8,7 @@ import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Integration | Component | dashboard/cohort-calendar-filter', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('it renders and is accessible', async function (assert) {
     this.set('cohortProxies', [

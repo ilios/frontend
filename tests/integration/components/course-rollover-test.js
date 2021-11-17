@@ -3,6 +3,7 @@ import { resolve } from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render, click, find, findAll, fillIn, blur as emberBlur } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -11,6 +12,7 @@ import queryString from 'query-string';
 
 module('Integration | Component | course rollover', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('it renders', async function (assert) {

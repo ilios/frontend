@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { settled, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import moment from 'moment';
@@ -9,6 +10,7 @@ import { component } from 'ilios-common/page-objects/components/weekly-calendar'
 
 module('Integration | Component | weekly-calendar', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -7,6 +8,7 @@ const s = '[data-test-ilios-calendar-event-month]';
 
 module('Integration | Component | ilios calendar event month', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
     const november111984 = moment('1984-11-11').hour(8);

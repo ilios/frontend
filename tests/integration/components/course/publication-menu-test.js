@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/course/publication-menu';
@@ -8,6 +9,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | course/publication-menu', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('it renders and is accessible for draft course', async function (assert) {

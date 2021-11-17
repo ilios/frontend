@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render, click } from '@ember/test-helpers';
 import moment from 'moment';
 import hbs from 'htmlbars-inline-precompile';
@@ -16,6 +17,7 @@ const getEvent = function () {
 
 module('Integration | Component | ilios calendar multiday event', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
     this.actions = {};

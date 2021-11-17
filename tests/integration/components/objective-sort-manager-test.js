@@ -1,13 +1,13 @@
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render, click, findAll } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | objective sort manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('it renders for session', async function (assert) {
