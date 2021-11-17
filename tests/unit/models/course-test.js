@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { waitForResource } from 'ilios-common';
+import { waitForResource, freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Unit | Model | Course', function (hooks) {
   setupTest(hooks);
@@ -337,5 +337,39 @@ module('Unit | Model | Course', function (hooks) {
     assert.ok(termsWithAllParents.includes(term4));
     assert.ok(termsWithAllParents.includes(term5));
     assert.ok(termsWithAllParents.includes(term6));
+  });
+
+  test('set dates based on year before year start', async function (assert) {
+    assert.expect(6);
+    freezeDateAt(new Date('5/6/1981'));
+    const course = this.owner.lookup('service:store').createRecord('course', {
+      year: 1981,
+    });
+    course.setDatesBasedOnYear();
+    assert.strictEqual(course.startDate.getYear(), 81);
+    assert.strictEqual(course.startDate.getMonth(), 6);
+    assert.strictEqual(course.startDate.getDate(), 1);
+
+    assert.strictEqual(course.endDate.getYear(), 81);
+    assert.strictEqual(course.endDate.getMonth(), 7);
+    assert.strictEqual(course.endDate.getDate(), 26);
+    unfreezeDate();
+  });
+
+  test('set dates based on year after year start', async function (assert) {
+    assert.expect(6);
+    freezeDateAt(new Date('12/11/1980'));
+    const course = this.owner.lookup('service:store').createRecord('course', {
+      year: 1980,
+    });
+    course.setDatesBasedOnYear();
+    assert.strictEqual(course.startDate.getYear(), 80);
+    assert.strictEqual(course.startDate.getMonth(), 11);
+    assert.strictEqual(course.startDate.getDate(), 11);
+
+    assert.strictEqual(course.endDate.getYear(), 81);
+    assert.strictEqual(course.endDate.getMonth(), 1);
+    assert.strictEqual(course.endDate.getDate(), 5);
+    unfreezeDate();
   });
 });

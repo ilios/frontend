@@ -243,7 +243,7 @@ export default class Course extends Model {
     const firstDayOfYear = moment(this.year + '-7-1', 'YYYY-MM-DD');
     const startDate = today < firstDayOfYear ? firstDayOfYear : today;
     const endDate = moment(startDate).add('8', 'weeks');
-    this.tartDate = startDate.toDate();
+    this.startDate = startDate.toDate();
     this.endDate = endDate.toDate();
   }
 
