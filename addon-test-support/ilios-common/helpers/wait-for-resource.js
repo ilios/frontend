@@ -26,7 +26,7 @@ class DelayedAccess {
       return true;
     }
 
-    return Boolean(this.value);
+    return this.value !== undefined;
   }
 
   async getValue() {
