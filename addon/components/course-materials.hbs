@@ -1,13 +1,10 @@
 <div
   class="course-materials"
   data-test-course-materials
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @course}}
-  {{did-update (perform this.update) this.courseMaterialsRelationship this.sessionsRelationship}}
 >
   <div class="material-list">
     <h3>
-      {{t "general.courseLearningMaterials"}} ({{get (await @course.learningMaterials) "length"}})
+      {{t "general.courseLearningMaterials"}} ({{@course.learningMaterials.length}})
     </h3>
     <span class="filter-course-lms">
       <input
@@ -49,37 +46,37 @@
         </tr>
       </thead>
       <tbody>
-        {{#if this.isLoadingOrReloading}}
+        {{#if this.isLoading}}
           <tr>
             <td colspan="6" align="center">
-              <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
+              <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} data-test-loading />
             </td>
           </tr>
         {{else}}
           {{#each
             (sort-by
-              @courseSort this.filteredCourseLearningMaterialObjects
-            ) as |lmObject|
+              @courseSort this.filteredCourseLearningMaterials
+            ) as |learningMaterial|
           }}
             <tr>
               <td colspan="4">
-                {{#if (includes lmObject.type this.typesWithUrl)}}
-                  <a href={{lmObject.url}} rel="noopener noreferrer" target="_blank">
-                    {{lmObject.title}}
+                {{#if (includes learningMaterial.type this.typesWithUrl)}}
+                  <a href={{learningMaterial.url}} rel="noopener noreferrer" target="_blank">
+                    {{learningMaterial.title}}
                   </a>
                 {{else}}
-                  {{lmObject.title}}
+                  {{learningMaterial.title}}
                   <br>
                   <small>
-                    {{lmObject.citation}}
+                    {{learningMaterial.citation}}
                   </small>
                 {{/if}}
               </td>
               <td>
-                {{capitalize lmObject.type}}
+                {{capitalize learningMaterial.type}}
               </td>
               <td>
-                {{lmObject.author}}
+                {{learningMaterial.originalAuthor}}
               </td>
             </tr>
           {{else}}
@@ -99,7 +96,7 @@
   </div>
   <div class="material-list">
     <h3 class="session-material-title">
-      {{t "general.sessionLearningMaterials"}} ({{this.sessionLearningMaterialObjects.length}})
+      {{t "general.sessionLearningMaterials"}} ({{this.sessionMaterials.length}})
     </h3>
     <span class="filter-session-lms">
       <input
@@ -170,7 +167,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#if this.isLoadingOrReloading}}
+        {{#if this.isLoading}}
           <tr>
             <td colspan="9" align="center">
               <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
@@ -184,30 +181,30 @@
           }}
             <tr>
               <td colspan="3">
-                {{#if (includes lmObject.type this.typesWithUrl)}}
-                  <a href={{lmObject.url}} rel="noopener noreferrer" target="_blank">
-                    {{lmObject.title}}
+                {{#if (includes lmObject.lm.type this.typesWithUrl)}}
+                  <a href={{lmObject.lm.url}} rel="noopener noreferrer" target="_blank">
+                    {{lmObject.lm.title}}
                   </a>
                 {{else}}
-                  {{lmObject.title}}
+                  {{lmObject.lm.title}}
                   <br>
                   <small>
-                    {{lmObject.citation}}
+                    {{lmObject.lm.citation}}
                   </small>
                 {{/if}}
               </td>
               <td>
-                {{capitalize lmObject.type}}
+                {{capitalize lmObject.lm.type}}
               </td>
               <td>
-                {{lmObject.author}}
+                {{lmObject.lm.originalAuthor}}
               </td>
               <td colspan="3">
-                {{lmObject.sessionTitle}}
+                {{lmObject.session.title}}
               </td>
               <td>
-                {{#if lmObject.firstOfferingDate}}
-                  {{format-date lmObject.firstOfferingDate}}
+                {{#if lmObject.session.firstOfferingDate}}
+                  {{format-date lmObject.session.firstOfferingDate}}
                 {{else}}
                   {{t "general.none"}}
                 {{/if}}

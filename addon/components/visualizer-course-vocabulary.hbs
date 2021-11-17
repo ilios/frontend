@@ -1,9 +1,7 @@
 <div
   class="visualizer-course-vocabulary {{unless @isIcon "not-icon"}}"
-  {{did-insert (perform this.load) @course @vocabulary}}
-  {{did-update (perform this.load) @course @vocabulary}}
 >
-  {{#unless this.load.isRunning}}
+  {{#if this.isLoaded}}
     {{#if (or @isIcon this.data.length)}}
       <SimpleChart
         @name="horz-bar"
@@ -20,5 +18,5 @@
         {{/if}}
       </SimpleChart>
     {{/if}}
-  {{/unless}}
+  {{/if}}
 </div>

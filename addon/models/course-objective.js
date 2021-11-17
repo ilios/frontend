@@ -1,103 +1,95 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
-import { all, map } from 'rsvp';
+import { map } from 'rsvp';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 
-export default Model.extend({
-  title: attr('string'),
-  position: attr('number', { defaultValue: 0 }),
-  active: attr('boolean', { defaultValue: true }),
-  course: belongsTo('course', { async: true }),
-  terms: hasMany('term', { async: true }),
-  meshDescriptors: hasMany('mesh-descriptor', { async: true }),
-  ancestor: belongsTo('course-objective', {
+export default class CourseObjective extends Model {
+  @attr('string')
+  title;
+
+  @attr('number', { defaultValue: 0 })
+  position;
+
+  @attr('boolean', { defaultValue: true })
+  active;
+
+  @belongsTo('course', { async: true })
+  course;
+
+  @hasMany('term', { async: true })
+  terms;
+
+  @hasMany('mesh-descriptor', { async: true })
+  meshDescriptors;
+
+  @belongsTo('course-objective', {
     inverse: 'descendants',
     async: true,
-  }),
-  descendants: hasMany('course-objective', {
+  })
+  ancestor;
+
+  @hasMany('course-objective', {
     inverse: 'ancestor',
     async: true,
-  }),
-  sessionObjectives: hasMany('session-objective', {
+  })
+  descendants;
+
+  @hasMany('session-objective', {
     inverse: 'courseObjectives',
     async: true,
-  }),
-  programYearObjectives: hasMany('program-year-objective', {
+  })
+  sessionObjectives;
+
+  @hasMany('program-year-objective', {
     inverse: 'courseObjectives',
     async: true,
-  }),
+  })
+  programYearObjectives;
 
-  /**
-   * A list of all vocabularies that are associated via terms.
-   * @property associatedVocabularies
-   * @type {Ember.computed}
-   * @public
-   */
-  associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.terms;
-    const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
-    return vocabularies.uniq().sortBy('title');
-  }),
+  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
+  get associatedVocabularies() {
+    return this._allTermVocabularies?.uniq().sortBy('title');
+  }
 
-  /**
-   * A list containing all associated terms and their parent terms.
-   * @property termsWithAllParents
-   * @type {Ember.computed}
-   * @public
-   */
-  termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.terms;
-    const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return allTerms
-      .reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, [])
-      .uniq();
-  }),
+  @use allTerms = new ResolveFlatMapBy(() => [this.terms, 'termWithAllParents']);
+
+  get termsWithAllParents() {
+    return this.allTerms?.uniq();
+  }
+
+  @use allTermCompetencies = new ResolveAsyncValue(() => [
+    this.programYearObjectives.mapBy('competency'),
+  ]);
 
   /**
    * All competencies associated with any program-year objectives linked to this course objective.
-   *
-   * @property treeCompetencies
-   * @type {Ember.computed}
-   * @public
-   * @todo change name to just "competencies" [ST 2020/07/08]
    */
-  treeCompetencies: computed('programYearObjectives.@each.competency', async function () {
-    const programYearObjectives = await this.programYearObjectives;
-    const competencies = await all(programYearObjectives.mapBy('competency'));
-    return competencies.uniq();
-  }),
+  get treeCompetencies() {
+    return this.allTermCompetencies?.uniq();
+  }
 
   /**
    * Unlink any linked program-year objectives from this course objective
    * if they belong to any program years in the given list.
-   *
-   * @method removeParentWithProgramYears
-   * @param {Array} programYearsToRemove
-   * @todo Rename this method to something better [ST 2020/07/08]
    */
   async removeParentWithProgramYears(programYearsToRemove) {
-    const programYearObjectives = await this.programYearObjectives;
+    const programYearObjectives = (await this.programYearObjectives).toArray();
 
-    await map(programYearObjectives.toArray(), async (programYearObjective) => {
-      const programYear = await programYearObjective.get('programYear');
+    await map(programYearObjectives, async (programYearObjective) => {
+      const programYear = await programYearObjective.programYear;
       if (programYearsToRemove.includes(programYear)) {
         programYearObjectives.removeObject(programYearObjective);
-        programYearObjective.get('courseObjectives').removeObject(this);
+        programYearObjective.courseObjectives.removeObject(this);
       }
     });
     await this.save();
-  },
+  }
 
   /**
    * @todo check if this method is obsolete, if so remove it [ST 2020/07/08]
    */
-  shortTitle: computed('title', function () {
-    const title = this.title;
-    if (title === undefined) {
-      return '';
-    }
-    return title.substr(0, 200);
-  }),
-});
+  get shortTitle() {
+    return this.title?.substr(0, 200) ?? '';
+  }
+}

@@ -12,7 +12,7 @@ export default class PublishAllSessionsComponent extends Component {
   @service store;
   @service flashMessages;
 
-  @tracked sessionsToOverride = [];
+  @tracked sessionsToNotOverride = [];
   @tracked publishableCollapsed = true;
   @tracked unPublishableCollapsed = true;
   @tracked totalSessionsToSave;
@@ -20,10 +20,13 @@ export default class PublishAllSessionsComponent extends Component {
 
   @use courseObjectives = new ResolveAsyncValue(() => [this.args.course.courseObjectives]);
 
-  constructor() {
-    super(...arguments);
-    this.sessionsToOverride = this.overridableSessions.filter((session) => {
-      return session.published && !session.publishedAsTbd;
+  get sessionsToOverride() {
+    return this.overridableSessions.filter((session) => {
+      return (
+        !this.sessionsToNotOverride.includes(session) &&
+        session.published &&
+        !session.publishedAsTbd
+      );
     });
   }
 
@@ -100,10 +103,10 @@ export default class PublishAllSessionsComponent extends Component {
 
   @action
   toggleSession(session) {
-    if (this.sessionsToOverride.includes(session)) {
-      this.sessionsToOverride = this.sessionsToOverride.filter(({ id }) => id !== session.id);
+    if (this.sessionsToNotOverride.includes(session)) {
+      this.sessionsToNotOverride = this.sessionsToNotOverride.filter(({ id }) => id !== session.id);
     } else {
-      this.sessionsToOverride = [...this.sessionsToOverride, session];
+      this.sessionsToNotOverride = [...this.sessionsToNotOverride, session];
     }
   }
 

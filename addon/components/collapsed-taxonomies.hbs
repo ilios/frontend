@@ -5,9 +5,7 @@
   <div class="title" role="button" {{on "click" @expand}} data-test-title>
     {{t "general.terms"}} ({{@subject.terms.length}})
   </div>
-  {{#if (is-pending @subject.associatedVocabularies)}}
-    <LoadingSpinner @tagName="h3" />
-  {{else}}
+  {{#if @subject.associatedVocabularies}}
     <div class="content">
       <table class="condensed">
         <thead>
@@ -24,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (await @subject.associatedVocabularies) as |vocab|}}
+          {{#each @subject.associatedVocabularies as |vocab|}}
             <tr>
               <td class="text-left">
                 {{vocab.title}}
@@ -40,6 +38,8 @@
         </tbody>
       </table>
     </div>
+  {{else}}
+    <LoadingSpinner />
   {{/if}}
 
 </section>

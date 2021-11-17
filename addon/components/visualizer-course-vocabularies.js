@@ -1,36 +1,55 @@
 import Component from '@glimmer/component';
 import { all, map } from 'rsvp';
-import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
+
 export default class VisualizerCourseVocabularies extends Component {
   @service router;
   @service intl;
-  @tracked data;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @restartableTask
-  *load(element, [course]) {
-    const sessions = yield course.get('sessions');
-    const dataMap = yield map(sessions.toArray(), async (session) => {
-      const terms = await session.get('terms');
-      const vocabularies = await all(terms.mapBy('vocabulary'));
-      const hours = await session.get('totalSumDuration');
-      const minutes = Math.round(hours * 60);
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
 
+  @use dataObjects = new AsyncProcess(() => [
+    this.getDataObjects.bind(this),
+    this.sessionsWithMinutes,
+  ]);
+
+  get sessionsWithMinutes() {
+    return this.sessions.map((session) => {
       return {
-        sessionTitle: session.get('title'),
+        session,
+        minutes: Math.round(session.totalSumDuration * 60),
+      };
+    });
+  }
+
+  get isLoaded() {
+    return !!this.dataObjects;
+  }
+
+  async getDataObjects(sessionsWithMinutes) {
+    return map(sessionsWithMinutes, async ({ session, minutes }) => {
+      const terms = await session.terms;
+      const vocabularies = await all(terms.mapBy('vocabulary'));
+      return {
+        sessionTitle: session.title,
         vocabularies,
         minutes,
       };
     });
+  }
 
-    this.data = dataMap.reduce((set, obj) => {
+  get data() {
+    return this.dataObjects.reduce((set, obj) => {
       obj.vocabularies.forEach((vocabulary) => {
         const vocabularyTitle = vocabulary.get('title');
         let existing = set.findBy('label', vocabularyTitle);
@@ -56,7 +75,7 @@ export default class VisualizerCourseVocabularies extends Component {
   @restartableTask
   *donutHover(obj) {
     yield timeout(100);
-    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+    if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
       return;
@@ -69,13 +88,13 @@ export default class VisualizerCourseVocabularies extends Component {
 
   @action
   donutClick(obj) {
-    if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+    if (this.args.isIcon || !obj || obj.empty || !obj.meta) {
       return;
     }
     this.router.transitionTo(
       'course-visualize-vocabulary',
-      this.args.course.get('id'),
-      obj.meta.vocabulary.get('id')
+      this.args.course.id,
+      obj.meta.vocabulary.id
     );
   }
 }

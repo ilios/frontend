@@ -109,7 +109,7 @@
   {{/if}}
   {{#if this.isManagingTerms}}
     <TaxonomyManager
-      @vocabularies={{await @session.assignableVocabularies}}
+      @vocabularies={{@session.course.assignableVocabularies}}
       @vocabulary={{this.selectedVocabulary}}
       @selectedTerms={{this.termsBuffer}}
       @add={{this.addTermToBuffer}}

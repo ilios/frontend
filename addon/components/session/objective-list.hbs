@@ -1,8 +1,6 @@
 <div
   class="session-objective-list"
   data-test-session-objective-list
-  {{did-insert (perform this.load) @session @session.sortedSessionObjectives @session.course.courseObjectives}}
-  {{did-update (perform this.load) @session @session.sortedSessionObjectives @session.course.courseObjectives}}
 >
   {{#if (and (is-array this.sessionObjectives) this.isSorting)}}
     <ObjectiveSortManager

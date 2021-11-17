@@ -39,13 +39,13 @@
   <div class="content">
     {{#if this.isManaging}}
       <TaxonomyManager
-        @vocabularies={{await @subject.assignableVocabularies}}
+        @vocabularies={{@subject.assignableVocabularies}}
         @selectedTerms={{this.bufferedTerms}}
         @add={{this.addTermToBuffer}}
         @remove={{this.removeTermFromBuffer}}
       />
     {{else}}
-      {{#each (await @subject.associatedVocabularies) as |vocab|}}
+      {{#each @subject.associatedVocabularies as |vocab|}}
         {{#if vocab.termCount}}
           <DetailTermsList
             @vocabulary={{vocab}}

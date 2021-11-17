@@ -1,31 +1,16 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
-import { hash } from 'rsvp';
-import { inject as service } from '@ember/service';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class SessionObjectiveListComponent extends Component {
-  @service store;
-  @service intl;
-
-  @tracked sessionObjectives;
   @tracked isSorting = false;
-  @tracked courseObjectives;
-  @tracked course;
-  @tracked sessionObjectiveCount;
 
-  @restartableTask
-  *load(element, [session]) {
-    if (!session) {
-      return;
-    }
-    this.sessionObjectiveCount = session.hasMany('sessionObjectives').ids().length;
-    this.course = yield session.course;
-    const { sessionObjectives, courseObjectives } = yield hash({
-      sessionObjectives: session.sortedSessionObjectives,
-      courseObjectives: this.course.courseObjectives,
-    });
-    this.sessionObjectives = sessionObjectives;
-    this.courseObjectives = courseObjectives;
+  @use course = new ResolveAsyncValue(() => [this.args.session.course]);
+  @use courseObjectives = new ResolveAsyncValue(() => [this.course?.courseObjectives]);
+  @use sessionObjectives = new ResolveAsyncValue(() => [this.args.session.sortedSessionObjectives]);
+
+  get sessionObjectiveCount() {
+    return this.sessionObjectives?.length ?? 0;
   }
 }

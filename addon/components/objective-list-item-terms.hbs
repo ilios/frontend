@@ -27,11 +27,11 @@
       <FaIcon @icon="undo" />
     </button>
   {{else}}
-    {{#each (await @subject.associatedVocabularies) as |vocab|}}
+    {{#each @subject.associatedVocabularies as |vocab|}}
       {{#if vocab.termCount}}
         <DetailTermsList
           @vocabulary={{vocab}}
-          @terms={{await @subject.terms}}
+          @terms={{@subject.terms}}
           @canEdit={{false}}
           @manage={{if @editable @manage (noop)}}
         />

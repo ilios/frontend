@@ -1,5 +1,6 @@
 export { default as setupAuthentication } from './helpers/setup-authentication';
 export { default as waitForResource } from './helpers/wait-for-resource';
+export { freezeDateAt, unfreezeDate } from './helpers/mockdate';
 export { flatpickrDatePicker } from './helpers/flatpickr-date-picker';
 export {
   fillInFroalaEditor,

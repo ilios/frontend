@@ -4,64 +4,47 @@ import { map } from 'rsvp';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+
 const DEBOUNCE_DELAY = 250;
 
 export default class CourseMaterialsComponent extends Component {
-  @tracked courseLearningMaterialObjects = [];
-  @tracked sessionLearningMaterialObjects = [];
-  @tracked courseMaterialsRelationship;
-  @tracked sessionsRelationship;
   @tracked courseQuery;
   @tracked sessionQuery;
 
-  constructor() {
-    super(...arguments);
-    this.typesWithUrl = ['file', 'link'];
+  typesWithUrl = ['file', 'link'];
+
+  @use courseMaterials = new ResolveAsyncValue(() => [this.args.course.learningMaterials]);
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use sessionMaterials = new ResolveFlatMapBy(() => [this.sessions, 'learningMaterials']);
+  @use courseMaterialLms = new ResolveFlatMapBy(() => [this.courseMaterials, 'learningMaterial']);
+  @use sessionMaterialObjects = new AsyncProcess(() => [
+    this.buildSessionMaterials.bind(this),
+    this.sessionMaterials ?? [],
+  ]);
+
+  get isLoading() {
+    return !this.courseMaterialLms || !this.sessionMaterialObjects;
   }
 
-  @restartableTask
-  *load() {
-    this.courseMaterialsRelationship = yield this.args.course.learningMaterials;
-    this.sessionsRelationship = yield this.args.course.sessions;
-  }
-
-  @restartableTask
-  *update() {
-    if (this.courseMaterialsRelationship) {
-      this.courseLearningMaterialObjects = yield map(
-        this.courseMaterialsRelationship.toArray(),
-        async (clm) => {
-          return await this.buildClmObject(clm);
-        }
-      );
+  get filteredCourseLearningMaterials() {
+    if (!this.courseMaterialLms) {
+      return [];
     }
-    if (this.sessionsRelationship) {
-      const sessionMaterials = yield map(this.sessionsRelationship.toArray(), async (session) => {
-        const data = await session.learningMaterials;
-        return data.toArray();
-      });
-      const flatSessionMaterials = sessionMaterials.flat(2);
-      this.sessionLearningMaterialObjects = yield map(flatSessionMaterials, async (slm) => {
-        return await this.buildSlmObject(slm);
-      });
-    }
-  }
-
-  get isLoadingOrReloading() {
-    return this.load.isRunning || this.update.isRunning;
-  }
-
-  get filteredCourseLearningMaterialObjects() {
     const q = cleanQuery(this.courseQuery);
     if (!q) {
-      return this.courseLearningMaterialObjects;
+      return this.courseMaterialLms;
     }
     const exp = new RegExp(q, 'gi');
-    return this.courseLearningMaterialObjects.filter((obj) => {
+    return this.courseMaterialLms.filter((obj) => {
       return (
         (obj.title && obj.title.match(exp)) ||
         (obj.description && obj.description.match(exp)) ||
-        (obj.author && obj.author.match(exp)) ||
+        (obj.originalAuthor && obj.originalAuthor.match(exp)) ||
         (obj.type && obj.type.match(exp)) ||
         (obj.citation && obj.citation.match(exp))
       );
@@ -69,19 +52,22 @@ export default class CourseMaterialsComponent extends Component {
   }
 
   get filteredSessionLearningMaterialObjects() {
+    if (!this.sessionMaterialObjects) {
+      return [];
+    }
     const q = cleanQuery(this.sessionQuery);
     if (!q) {
-      return this.sessionLearningMaterialObjects;
+      return this.sessionMaterialObjects;
     }
     const exp = new RegExp(q, 'gi');
-    return this.sessionLearningMaterialObjects.filter((obj) => {
+    return this.sessionMaterialObjects.filter((obj) => {
       return (
-        (obj.title && obj.title.match(exp)) ||
-        (obj.description && obj.description.match(exp)) ||
-        (obj.author && obj.author.match(exp)) ||
-        (obj.type && obj.type.match(exp)) ||
-        (obj.citation && obj.citation.match(exp)) ||
-        (obj.sessionTitle && obj.sessionTitle.match(exp))
+        (obj.lm.title && obj.lm.title.match(exp)) ||
+        (obj.lm.description && obj.lm.description.match(exp)) ||
+        (obj.lm.originalAuthor && obj.lm.originalAuthor.match(exp)) ||
+        (obj.lm.type && obj.lm.type.match(exp)) ||
+        (obj.lm.citation && obj.lm.citation.match(exp)) ||
+        (obj.session.title && obj.session.title.match(exp))
       );
     });
   }
@@ -122,31 +108,18 @@ export default class CourseMaterialsComponent extends Component {
     this.sessionQuery = q;
   }
 
-  async buildClmObject(clm) {
-    const lm = await clm.get('learningMaterial');
-    return {
-      author: lm.originalAuthor,
-      citation: lm.citation,
-      description: lm.description,
-      title: lm.title,
-      type: lm.type,
-      url: lm.url,
-    };
-  }
-
-  async buildSlmObject(slm) {
-    const lm = await slm.get('learningMaterial');
-    const session = await slm.session;
-    const firstOfferingDate = await session.firstOfferingDate;
-    return {
-      author: lm.originalAuthor,
-      citation: lm.citation,
-      description: lm.description,
-      firstOfferingDate,
-      sessionTitle: session.title,
-      title: lm.title,
-      type: lm.type,
-      url: lm.url,
-    };
+  /**
+   * Resovle session and LM so they can be used synchronousy
+   * in the filter.
+   */
+  async buildSessionMaterials(materials) {
+    return map(materials, async (slm) => {
+      const lm = await slm.get('learningMaterial');
+      const session = await slm.session;
+      return {
+        session,
+        lm,
+      };
+    });
   }
 }

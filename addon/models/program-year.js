@@ -1,89 +1,97 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
-import { all } from 'rsvp';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
-const { alias } = computed;
+export default class ProgramYear extends Model {
+  @attr('string')
+  startYear;
 
-export default Model.extend({
-  startYear: attr('string'),
-  locked: attr('boolean'),
-  archived: attr('boolean'),
-  program: belongsTo('program', { async: true }),
-  cohort: belongsTo('cohort', { async: true }),
-  directors: hasMany('user', { async: true }),
-  competencies: hasMany('competency', { async: true }),
-  programYearObjectives: hasMany('program-year-objective', { async: true }),
-  terms: hasMany('term', { async: true }),
+  @attr('boolean')
+  locked;
 
-  xObjectives: alias('programYearObjectives'),
-  assignableVocabularies: alias('program.school.vocabularies'),
+  @attr('boolean')
+  archived;
 
-  classOfYear: computed('startYear', 'program.duration', async function () {
-    const program = await this.program;
-    return parseInt(this.startYear, 10) + parseInt(program.duration, 10);
-  }),
-  requiredPublicationIssues: computed('startYear', 'cohort', 'program', function () {
-    return this.getRequiredPublicationIssues();
-  }),
-  optionalPublicationIssues: computed(
-    'directors.length',
-    'competencies.length',
-    'terms.length',
-    'programYearObjectives.length',
-    function () {
-      return this.getOptionalPublicationIssues();
+  @belongsTo('program', { async: true })
+  program;
+
+  @belongsTo('cohort', { async: true })
+  cohort;
+
+  @hasMany('user', { async: true })
+  directors;
+
+  @hasMany('competency', { async: true })
+  competencies;
+
+  @hasMany('program-year-objective', { async: true })
+  programYearObjectives;
+
+  @hasMany('term', { async: true })
+  terms;
+
+  get xObjectives() {
+    return this.programYearObjectives;
+  }
+
+  @use _program = new ResolveAsyncValue(() => [this.program]);
+  @use _school = new ResolveAsyncValue(() => [this._program?.school]);
+  @use _schoolVocabularies = new ResolveAsyncValue(() => [this._school?.vocabularies]);
+
+  get assignableVocabularies() {
+    return this._schoolVocabularies?.sortBy('title');
+  }
+
+  get classOfYear() {
+    if (!this._program) {
+      return '';
     }
-  ),
+    const classOfYear = Number(this.startYear) + Number(this._program.duration);
+    //return as a string
+    return `${classOfYear}`;
+  }
+
+  async getClassOfYear() {
+    const program = await this.program;
+    return Number(this.startYear) + Number(program.duration);
+  }
+
+  @use _programYearObjectives = new ResolveAsyncValue(() => [this.programYearObjectives]);
 
   /**
    * A list of program-year objectives, sorted by position.
-   * @property sortedProgramYearObjectives
-   * @type {Ember.computed}
-   * @public
    */
-  sortedProgramYearObjectives: computed('programYearObjectives.@each.position', async function () {
-    const objectives = await this.programYearObjectives;
-    return objectives.toArray().sort(sortableByPosition);
-  }),
+  get sortedProgramYearObjectives() {
+    return this._programYearObjectives?.toArray().sort(sortableByPosition);
+  }
+
+  @use _allTermVocabularies = new ResolveAsyncValue(() => [this.terms.mapBy('vocabulary')]);
 
   /**
    * A list of all vocabularies that are associated via terms.
-   * @property associatedVocabularies
-   * @type {Ember.computed}
-   * @public
    */
-  associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.terms;
-    const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
-    return vocabularies.uniq().sortBy('title');
-  }),
+  get associatedVocabularies() {
+    return this._allTermVocabularies?.uniq().sortBy('title');
+  }
+
+  @use _allTermParents = new ResolveAsyncValue(() => [this.terms.mapBy('allParents')]);
+  @use _terms = new ResolveAsyncValue(() => [this.terms]);
 
   /**
    * A list containing all associated terms and their parent terms.
-   * @property termsWithAllParents
-   * @type {Ember.computed}
-   * @public
    */
-  termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.terms;
-    const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return allTerms
-      .reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, [])
-      .uniq();
-  }),
+  get termsWithAllParents() {
+    if (!this._allTermParents || !this._terms) {
+      return [];
+    }
+    return [...this._allTermParents.flat(), ...this._terms.toArray()].uniq();
+  }
 
   /**
    * The number of terms attached to this model
-   * @property termCount
-   * @type {Ember.computed}
-   * @public
    */
-  termCount: computed('terms.[]', function () {
-    const termIds = this.hasMany('terms').ids();
-    return termIds.length;
-  }),
-});
+  get termCount() {
+    return this.terms.length;
+  }
+}

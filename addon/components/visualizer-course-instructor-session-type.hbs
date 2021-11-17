@@ -1,9 +1,7 @@
 <div
   class="visualizer-course-instructor-session-type {{unless @isIcon "not-icon"}}"
-  {{did-insert (perform this.load) @course @user}}
-  {{did-update (perform this.load) @course @user}}
 >
-  {{#unless this.load.isRunning}}
+  {{#if this.isLoaded}}
     {{#if (or @isIcon this.data.length)}}
       <SimpleChart
         @name="donut"
@@ -19,5 +17,5 @@
         {{/if}}
       </SimpleChart>
     {{/if}}
-  {{/unless}}
+  {{/if}}
 </div>

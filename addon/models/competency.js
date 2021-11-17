@@ -38,7 +38,7 @@ export default class CompetencyModel extends Model {
       until: '62',
       since: '61.0.0',
     });
-    return !this.isDomain();
+    return !this.isDomain;
   }
 
   get isDomain() {
@@ -52,7 +52,7 @@ export default class CompetencyModel extends Model {
   }
 
   @use domain = new DeprecatedAsyncCP(() => [
-    this._getDomain.bind(this),
+    this.getDomain.bind(this),
     'competency.domain',
     this.parent,
   ]);
@@ -63,7 +63,7 @@ export default class CompetencyModel extends Model {
     this.children,
   ]);
 
-  async _getDomain() {
+  async getDomain() {
     const parent = await this.parent;
     if (!parent) {
       return this;

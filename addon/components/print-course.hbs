@@ -79,7 +79,7 @@
         {{#if (is-fulfilled @course.competencies)}}
           {{#if (get (await @course.competencies) "length")}}
             <ul class="static-list">
-              {{#each (await @course.domains) as |domain|}}
+              {{#each @course.domainsWithSubcompetencies as |domain|}}
                 <li>
                   {{domain.title}}
                   <ul>
@@ -103,7 +103,7 @@
         {{t "general.terms"}} ({{@course.terms.length}})
       </div>
       <div class="content">
-        {{#each (await @course.associatedVocabularies) as |vocab|}}
+        {{#each @course.associatedVocabularies as |vocab|}}
           <DetailTermsList
             @vocabulary={{vocab}}
             @terms={{@course.terms}}
@@ -371,7 +371,7 @@
         </div>
         <div class="content">
           <div class="content">
-            {{#each (await session.associatedVocabularies) as |vocab|}}
+            {{#each session.course.associatedVocabularies as |vocab|}}
               <DetailTermsList
                 @vocabulary={{vocab}}
                 @terms={{session.terms}}

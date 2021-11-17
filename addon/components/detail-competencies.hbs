@@ -13,11 +13,11 @@
   {{#if this.hasCompetencies}}
     <div class="detail-competencies-content">
       <ul class="static-list">
-        {{#each (await @course.domains) as |domain|}}
+        {{#each @course.domainsWithSubcompetencies as |domain|}}
           <li>
             {{domain.title}}
             <ul>
-              {{#each (await domain.subCompetencies) as |competency|}}
+              {{#each domain.subCompetencies as |competency|}}
                 <li>
                   {{competency.title}}
                 </li>
