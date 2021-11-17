@@ -17,16 +17,6 @@ export default class CurriculumInventoryReportIndexController extends Controller
   }
 
   @action
-  setLeadershipDetails(leadershipDetails) {
-    this.leadershipDetails = leadershipDetails;
-  }
-
-  @action
-  setManageLeadership(manageLeadership) {
-    this.manageLeadership = manageLeadership;
-  }
-
-  @action
   async removeSequenceBlock(block) {
     await block.destroyRecord();
     this.model.reload();

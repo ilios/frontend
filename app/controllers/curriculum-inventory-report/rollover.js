@@ -14,16 +14,6 @@ export default class CurriculumInventoryReportRolloverController extends Control
   }
 
   @action
-  setLeadershipDetails(leadershipDetails) {
-    this.leadershipDetails = leadershipDetails;
-  }
-
-  @action
-  setManageLeadership(manageLeadership) {
-    this.manageLeadership = manageLeadership;
-  }
-
-  @action
   loadReport(newReport) {
     this.transitionToRoute('curriculumInventoryReport', newReport);
   }
