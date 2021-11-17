@@ -23,6 +23,6 @@ export default class CurriculumInventoryReportDetailsComponent extends Component
     this.showFinalizeConfirmation = false;
     const savedExport = yield newExport.save();
     this.args.report.set('export', savedExport);
-    this.args.markReportAsFinalized();
+    this.args.setIsFinalized(true);
   }
 }
