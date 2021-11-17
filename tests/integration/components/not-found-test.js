@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios-common/page-objects/components/not-found';
@@ -7,6 +8,7 @@ import { component } from 'ilios-common/page-objects/components/not-found';
 // @todo figure out how to suppress the dashboard route for testing purposes [ST 2021/11/04]
 module('Integration | Component | not-found', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('it displays not found message', async function (assert) {
     await render(hbs`<NotFound />`);

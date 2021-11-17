@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 const s = '[data-test-weekly-calendar-event]';
@@ -7,6 +8,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | weekly-calendar-event', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   this.createEvent = function (startDate, endDate) {

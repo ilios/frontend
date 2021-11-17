@@ -1,5 +1,6 @@
 import { module, test, todo } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
@@ -8,6 +9,7 @@ import { component } from 'ilios-common/page-objects/components/offering-form';
 
 module('Integration | Component | offering form', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('room and url input do not show by default', async function (assert) {

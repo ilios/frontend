@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { upload } from 'ember-file-upload/mirage';
@@ -10,6 +11,7 @@ import Response from 'ember-cli-mirage/response';
 
 module('Integration | Component | learning-material-uploader', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('upload file', async function (assert) {
