@@ -7,7 +7,7 @@ export default class CurriculumInventoryReportRolloverController extends Control
   @tracked hasUpdatePermissions = false;
   @tracked leadershipDetails = false;
   @tracked manageLeadership = false;
-  @tracked isFinalized = true;
+  @tracked isFinalized = this.model.belongsTo('export').id();
 
   get canUpdate() {
     return this.hasUpdatePermissions && !this.isFinalized;

@@ -19,6 +19,5 @@ export default class CurriculumInventoryReportReport extends Route {
   setupController(controller, model) {
     super.setupController(controller, model);
     controller.set('hasUpdatePermissions', this.canUpdate);
-    controller.set('isFinalized', !!model.belongsTo('export').id());
   }
 }
