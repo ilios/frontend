@@ -8,10 +8,10 @@ export default class DeprecatedResolveCP extends Resource {
 
   get value() {
     deprecate(`${this.deprecatedName} Computed Called`, false, {
-      id: 'common.async-computed',
+      id: 'common.resolve-computed',
       for: 'ilios-common',
-      until: '61',
-      since: '59.4.0',
+      until: '63',
+      since: '61.2.1',
     });
     return this.data;
   }
