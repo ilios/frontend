@@ -45,7 +45,7 @@ export default class ProgramYear extends Model {
 
   get classOfYear() {
     if (!this._program) {
-      return undefined;
+      return '';
     }
     const classOfYear = Number(this.startYear) + Number(this._program.duration);
     //return as a string
@@ -83,7 +83,7 @@ export default class ProgramYear extends Model {
    */
   get termsWithAllParents() {
     if (!this._allTermParents || !this._terms) {
-      return undefined;
+      return [];
     }
     return [...this._allTermParents.flat(), ...this._terms.toArray()].uniq();
   }

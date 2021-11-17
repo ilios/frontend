@@ -113,7 +113,7 @@ export default class SessionModel extends Model {
    */
   get sortedOfferingsByDate() {
     if (!this._offerings) {
-      return undefined;
+      return [];
     }
     const filteredOfferings = this._offerings.filter((offering) => offering.startDate);
     return filteredOfferings.sort((a, b) => {
@@ -224,7 +224,7 @@ export default class SessionModel extends Model {
    */
   get termsWithAllParents() {
     if (!this._allTermParents || !this._terms) {
-      return undefined;
+      return [];
     }
     return [...this._allTermParents.flat(), ...this._terms.toArray()].uniq();
   }
@@ -244,7 +244,7 @@ export default class SessionModel extends Model {
   get associatedLearnerGroups() {
     const ilmLearnerGroups = this.isIndependentLearning ? this.associatedIlmLearnerGroups : [];
     if (!this.offeringLearnerGroups || !ilmLearnerGroups) {
-      return undefined;
+      return [];
     }
     return [...this.offeringLearnerGroups, ...ilmLearnerGroups.toArray()].uniq().sortBy('title');
   }
@@ -278,7 +278,7 @@ export default class SessionModel extends Model {
     }
 
     if (!this._ilmSessionInstructors || !this._ilmSessionInstructorGroupInstructors) {
-      return undefined;
+      return [];
     }
 
     return [
@@ -293,7 +293,7 @@ export default class SessionModel extends Model {
       !this._offeringInstructorGroupInstructors ||
       !this._ilmSessionInstructorsIfIlmSession
     ) {
-      return undefined;
+      return [];
     }
 
     return [

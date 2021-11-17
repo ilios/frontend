@@ -185,7 +185,7 @@ export default class Course extends Model {
   @use _resolvedSchool = new ResolveAsyncValue(() => [this.school]);
   get schools() {
     if (!this._programSchools || !this._resolvedSchool) {
-      return undefined;
+      return [];
     }
 
     return [...this._programSchools, this._resolvedSchool].uniq();
@@ -229,7 +229,7 @@ export default class Course extends Model {
    */
   get termsWithAllParents() {
     if (!this._allTermParents || !this._resolvedTerms) {
-      return undefined;
+      return [];
     }
     return [...this._allTermParents, ...this._resolvedTerms.toArray()].uniq();
   }
