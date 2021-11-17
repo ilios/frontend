@@ -126,4 +126,60 @@ module('Unit | Model | Offering', function (hooks) {
     assert.strictEqual(allLearners[3].fullName, 'Larry Lazy');
     assert.strictEqual(allLearners[4].fullName, 'Omega');
   });
+
+  test('startDayOfYear', function (assert) {
+    const startDate = new Date('December 17, 1995 03:24:00');
+    const offering = this.owner.lookup('service:store').createRecord('offering', { startDate });
+    const startDayOfYear = offering.startDayOfYear;
+    assert.strictEqual(startDayOfYear, '351');
+  });
+
+  test('startYear', function (assert) {
+    const startDate = new Date('December 17, 1995 03:24:00');
+    const offering = this.owner.lookup('service:store').createRecord('offering', { startDate });
+    const startYear = offering.startYear;
+    assert.strictEqual(startYear, '1995');
+  });
+
+  test('startTime', function (assert) {
+    const startDate = new Date('December 17, 1995 03:24:00');
+    const offering = this.owner.lookup('service:store').createRecord('offering', { startDate });
+    const startTime = offering.startTime;
+    assert.strictEqual(startTime, '0324');
+  });
+
+  test('startYearAndDayOfYear', function (assert) {
+    const startDate = new Date('December 17, 1995 03:24:00');
+    const offering = this.owner.lookup('service:store').createRecord('offering', { startDate });
+    const startYearAndDayOfYear = offering.startYearAndDayOfYear;
+    assert.strictEqual(startYearAndDayOfYear, '3511995');
+  });
+
+  test('endDayOfYear', function (assert) {
+    const endDate = new Date('December 17, 1995 03:24:00');
+    const offering = this.owner.lookup('service:store').createRecord('offering', { endDate });
+    const endDayOfYear = offering.endDayOfYear;
+    assert.strictEqual(endDayOfYear, '351');
+  });
+
+  test('endYear', function (assert) {
+    const endDate = new Date('December 17, 1995 03:24:00');
+    const offering = this.owner.lookup('service:store').createRecord('offering', { endDate });
+    const endYear = offering.endYear;
+    assert.strictEqual(endYear, '1995');
+  });
+
+  test('endTime', function (assert) {
+    const endDate = new Date('December 17, 1995 03:24:00');
+    const offering = this.owner.lookup('service:store').createRecord('offering', { endDate });
+    const endTime = offering.endTime;
+    assert.strictEqual(endTime, '0324');
+  });
+
+  test('endYearAndDayOfYear', function (assert) {
+    const endDate = new Date('December 17, 1995 03:24:00');
+    const offering = this.owner.lookup('service:store').createRecord('offering', { endDate });
+    const endYearAndDayOfYear = offering.endYearAndDayOfYear;
+    assert.strictEqual(endYearAndDayOfYear, '3511995');
+  });
 });

@@ -1,6 +1,5 @@
 import EmberObject, { computed } from '@ember/object';
 import moment from 'moment';
-import format from 'ember-moment/computeds/format';
 
 const { sort } = computed;
 
@@ -24,9 +23,15 @@ const OfferingDateBlock = OfferingBlock.extend({
     const date = new Date(year, 0);
     return new Date(date.setDate(dayOfYear));
   }),
-  dateStamp: format('date', 'X'),
-  dayOfWeek: format('date', 'dddd'),
-  dayOfMonth: format('date', 'MMMM Do'),
+  dateStamp: computed('date', function () {
+    return moment(this.date).format('X');
+  }),
+  dayOfWeek: computed('date', function () {
+    return moment(this.date).format('dddd');
+  }),
+  dayOfMonth: computed('date', function () {
+    return moment(this.date).format('MMMM Do');
+  }),
   offeringTimeBlocks: computed('offerings.@each.{startDate,endDate}', function () {
     const offeringGroups = {};
     this.offerings.forEach(function (offering) {
@@ -67,10 +72,18 @@ const OfferingTimeBlock = OfferingBlock.extend({
     const key = this.timeKey.substring(11);
     return moment(key, 'YYYYDDDHHmm');
   }),
-  startTime: format('startDate', 'LT'),
-  endTime: format('endDate', 'LT'),
-  longStartText: format('startDate', 'dddd MMMM Do [@] LT'),
-  longEndText: format('endDate', 'dddd MMMM Do [@] LT'),
+  startTime: computed('startDate', function () {
+    return moment(this.startDate).format('LT');
+  }),
+  endTime: computed('endDate', function () {
+    return moment(this.endDate).format('LT');
+  }),
+  longStartText: computed('startDate', function () {
+    return moment(this.startDate).format('dddd MMMM Do [@] LT');
+  }),
+  longEndText: computed('endDate', function () {
+    return moment(this.endDate).format('dddd MMMM Do [@] LT');
+  }),
   sortOfferingsBy: null,
   sortedOfferings: sort('offerings', 'sortOfferingsBy'),
   durationHours: computed('totalMinutes', function () {
