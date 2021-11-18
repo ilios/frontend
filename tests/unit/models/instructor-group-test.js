@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { waitForResource } from 'ilios-common';
 
 module('Unit | Model | InstructorGroup', function (hooks) {
   setupTest(hooks);
@@ -32,7 +33,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
         store.createRecord('ilmSession', { session: session3 }),
         store.createRecord('ilmSession', { session: session4 }),
       ]);
-    const courses = await model.get('courses');
+    const courses = await waitForResource(model, 'courses');
     assert.strictEqual(courses.length, 3);
     assert.ok(courses.includes(course1));
     assert.ok(courses.includes(course2));
@@ -63,7 +64,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
         store.createRecord('ilmSession', { session: session3 }),
         store.createRecord('ilmSession', { session: session4 }),
       ]);
-    const sessions = await model.get('sessions');
+    const sessions = await waitForResource(model, 'sessions');
     assert.strictEqual(sessions.length, 4);
     assert.ok(sessions.includes(session1));
     assert.ok(sessions.includes(session2));
