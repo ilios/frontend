@@ -10,12 +10,12 @@ import {
 } from 'ember-cli-page-object';
 
 import courseSearchResult from './course-search-result';
+import searchBox from './global-search-box';
 
 const definition = {
   scope: '[data-test-global-search]',
+  searchBox,
   noResultsIsVisible: isVisible('.no-results'),
-  input: fillable('input.global-search-input'),
-  clickIcon: clickable('[data-test-search-icon]'),
   academicYear: value('[data-test-academic-year-filter]'),
   academicYearOptions: text('[data-test-academic-year-filter]'),
   courseTitleLinks: collection('.course-title-link'),
