@@ -12,6 +12,7 @@ module('Unit | Service | ilios config', function (hooks) {
         config: {
           type: 'authenticationType-foo',
           apiVersion: '1',
+          appVersion: '3.3.3',
           userSearchType: 'userSearchType-foo',
           random: 'random-foo',
           maxUploadSize: 'maxUploadSize-foo',
@@ -47,6 +48,30 @@ module('Unit | Service | ilios config', function (hooks) {
   test('it gets apiVersion', async function (assert) {
     const service = this.owner.lookup('service:ilios-config');
     assert.strictEqual(await service.getApiVersion(), '1');
+  });
+  test('it gets appVersion', async function (assert) {
+    const service = this.owner.lookup('service:ilios-config');
+    assert.strictEqual(await service.getAppVersion(), '3.3.3');
+  });
+  test('it ignores empty appVersion', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {},
+      };
+    });
+    const service = this.owner.lookup('service:ilios-config');
+    assert.strictEqual(await service.getAppVersion(), '');
+  });
+  test('it ignores development appVersion', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          appVersion: '0.1.0',
+        },
+      };
+    });
+    const service = this.owner.lookup('service:ilios-config');
+    assert.strictEqual(await service.getAppVersion(), '');
   });
   test('it gets trackingEnabled', async function (assert) {
     const service = this.owner.lookup('service:ilios-config');

@@ -35,6 +35,16 @@ export default class IliosConfigService extends Service {
     return this.itemFromConfig('apiVersion');
   }
 
+  async getAppVersion() {
+    const version = await this.itemFromConfig('appVersion');
+    //ignore this development and bad build version string
+    if (version === '0.1.0') {
+      return '';
+    } else {
+      return version ?? '';
+    }
+  }
+
   async getTrackingEnabled() {
     return this.itemFromConfig('trackingEnabled');
   }
