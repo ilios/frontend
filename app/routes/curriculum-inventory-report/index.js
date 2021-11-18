@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default class CurriculumInventoryReportReport extends Route {
+export default class CurriculumInventoryReportIndexRoute extends Route {
   @service permissionChecker;
   @service session;
   canUpdate = false;
