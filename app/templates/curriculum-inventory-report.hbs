@@ -4,12 +4,4 @@
     {{t "general.backToReports"}}
   </LinkTo>
 </div>
-<CurriculumInventory::ReportDetails
-  @report={{@model}}
-  @canUpdate={{and (not @model.isFinalized) this.canUpdate}}
-  @leadershipDetails={{this.leadershipDetails}}
-  @setLeadershipDetails={{this.setLeadershipDetails}}
-  @manageLeadership={{this.manageLeadership}}
-  @setManageLeadership={{this.setManageLeadership}}
-/>
 {{outlet}}

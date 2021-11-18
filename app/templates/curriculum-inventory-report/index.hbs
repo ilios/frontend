@@ -1,6 +1,15 @@
+<CurriculumInventory::ReportDetails
+  @report={{@model}}
+  @canUpdate={{this.canUpdate}}
+  @leadershipDetails={{this.leadershipDetails}}
+  @setLeadershipDetails={{set this.leadershipDetails}}
+  @manageLeadership={{this.manageLeadership}}
+  @setManageLeadership={{set this.manageLeadership}}
+  @setIsFinalized={{set this.isFinalized}}
+/>
 <CurriculumInventory::SequenceBlockList
   @report={{@model}}
   @sequenceBlocks={{this.topLevelSequenceBlocks}}
-  @canUpdate={{and (not @model.isFinalized) this.canUpdate}}
+  @canUpdate={{this.canUpdate}}
   @remove={{this.removeSequenceBlock}}
 />
