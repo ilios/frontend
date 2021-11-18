@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import moment from 'moment';
+import { waitForResource } from 'ilios-common';
 
 module('Unit | Model | Offering', function (hooks) {
   setupTest(hooks);
@@ -10,7 +11,8 @@ module('Unit | Model | Offering', function (hooks) {
     const offering = this.owner.lookup('service:store').createRecord('offering');
     const store = this.owner.lookup('service:store');
 
-    let allInstructors = await offering.get('allInstructors');
+    let allInstructors = await waitForResource(offering, 'allInstructors');
+
     assert.strictEqual(allInstructors.length, 0);
 
     const user1 = store.createRecord('user', { displayName: 'Beta' });
@@ -25,7 +27,7 @@ module('Unit | Model | Offering', function (hooks) {
     });
     offering.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
 
-    allInstructors = await offering.get('allInstructors');
+    allInstructors = await waitForResource(offering, 'allInstructors');
 
     assert.strictEqual(allInstructors.length, 3);
     assert.ok(allInstructors.includes(user1));
@@ -43,7 +45,7 @@ module('Unit | Model | Offering', function (hooks) {
     });
     offering.get('instructorGroups').pushObject(instructorGroup3);
 
-    allInstructors = await offering.get('allInstructors');
+    allInstructors = await waitForResource(offering, 'allInstructors');
 
     assert.strictEqual(allInstructors.length, 5);
     assert.strictEqual(allInstructors[0].fullName, 'Alpha');
@@ -82,7 +84,7 @@ module('Unit | Model | Offering', function (hooks) {
     const offering = this.owner.lookup('service:store').createRecord('offering');
     const store = this.owner.lookup('service:store');
 
-    let allLearners = await offering.get('allLearners');
+    let allLearners = await waitForResource(offering, 'allLearners');
     assert.strictEqual(allLearners.length, 0);
 
     const user1 = store.createRecord('user', { displayName: 'Beta' });
@@ -97,7 +99,7 @@ module('Unit | Model | Offering', function (hooks) {
     });
     offering.get('learnerGroups').pushObjects([learnerGroup1, learnerGroup2]);
 
-    allLearners = await offering.get('allLearners');
+    allLearners = await waitForResource(offering, 'allLearners');
 
     assert.strictEqual(allLearners.length, 3);
     assert.ok(allLearners.includes(user1));
@@ -115,7 +117,7 @@ module('Unit | Model | Offering', function (hooks) {
     });
     offering.get('learnerGroups').pushObject(learnerGroup3);
 
-    allLearners = await offering.get('allLearners');
+    allLearners = await waitForResource(offering, 'allLearners');
 
     assert.strictEqual(allLearners.length, 5);
     assert.strictEqual(allLearners[0].fullName, 'Alpha');
