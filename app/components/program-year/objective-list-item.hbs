@@ -2,8 +2,6 @@
   id="objective-{{@programYearObjective.id}}"
   class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}  {{unless @programYearObjective.active "is-inactive"}}"
   data-test-program-year-objective-list-item
-  {{did-insert (perform this.load) @programYearObjective}}
-  {{did-update (perform this.load) @programYearObjective @programYearCompetencies}}
 >
   <button
     class="expand-row grid-item"
@@ -151,7 +149,7 @@
   {{/if}}
   {{#if this.isManagingTerms}}
     <TaxonomyManager
-      @vocabularies={{await this.assignableVocabularies}}
+      @vocabularies={{this.assignableVocabularies}}
       @vocabulary={{this.selectedVocabulary}}
       @selectedTerms={{this.termsBuffer}}
       @add={{this.addTermToBuffer}}

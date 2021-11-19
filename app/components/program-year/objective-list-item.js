@@ -4,12 +4,14 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 @validatable
 export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;
 
-  @Length(3, 65000) @HtmlNotBlank() @tracked title;
+  @Length(3, 65000) @HtmlNotBlank() @tracked title = this.args.programYearObjective.title;
   @tracked isManagingCompetency;
   @tracked competencyBuffer;
   @tracked isManagingDescriptors;
@@ -18,19 +20,14 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
-  @tracked assignableVocabularies;
 
-  @restartableTask
-  *load(element, [programYearObjective]) {
-    if (!programYearObjective) {
-      return;
-    }
-    const programYear = yield programYearObjective.programYear;
-    const program = yield programYear.program;
-    const school = yield program.school;
-    const vocabularies = yield school.vocabularies;
-    this.assignableVocabularies = vocabularies.toArray();
-    this.title = programYearObjective.title;
+  @use programYear = new ResolveAsyncValue(() => [this.args.programYearObjective.programYear]);
+  @use program = new ResolveAsyncValue(() => [this.programYear?.program]);
+  @use school = new ResolveAsyncValue(() => [this.program?.school]);
+  @use vocabularies = new ResolveAsyncValue(() => [this.school?.vocabularies]);
+
+  get assignableVocabularies() {
+    return this.vocabularies?.toArray() ?? [];
   }
 
   get isManaging() {
@@ -43,7 +40,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   }
 
   get canDelete() {
-    return this.args.programYearObjective?.hasMany('courseObjectives').ids().length === 0;
+    return this.args.programYearObjective.courseObjectives.length === 0;
   }
 
   @dropTask
