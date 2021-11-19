@@ -1,126 +1,136 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
-import RSVP from 'rsvp';
-import momentFormat from 'ember-moment/computeds/format';
+import { use } from 'ember-could-get-used-to-this';
 import moment from 'moment';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 
-const { not } = computed;
-const { all } = RSVP;
+export default class Offering extends Model {
+  @attr('string')
+  room;
 
-export default Model.extend({
-  room: attr('string'),
-  site: attr('string'),
-  url: attr('string'),
-  startDate: attr('date'),
-  endDate: attr('date'),
-  updatedAt: attr('date'),
-  session: belongsTo('session', { async: true }),
-  learnerGroups: hasMany('learner-group', { async: true }),
-  instructorGroups: hasMany('instructor-group', { async: true }),
-  learners: hasMany('user', {
-    async: true,
-    inverse: 'offerings',
-  }),
-  instructors: hasMany('user', {
-    async: true,
-    inverse: 'instructedOfferings',
-  }),
-  //startFoo and key properties are used in creating offering blocks
-  startDayOfYear: momentFormat('startDate', 'DDDD'),
-  startYear: momentFormat('startDate', 'YYYY'),
-  startTime: momentFormat('startDate', 'HHmm'),
-  endDayOfYear: momentFormat('endDate', 'DDDD'),
-  endYear: momentFormat('endDate', 'YYYY'),
-  endTime: momentFormat('endDate', 'HHmm'),
-  startYearAndDayOfYear: momentFormat('startDate', 'DDDDYYYY'),
-  endYearAndDayOfYear: momentFormat('endDate', 'DDDDYYYY'),
-  isMultiDay: not('isSingleDay'),
-  isSingleDay: computed('startYearAndDayOfYear', 'endYearAndDayOfYear', function () {
+  @attr('string')
+  site;
+
+  @attr('string')
+  url;
+
+  @attr('date')
+  startDate;
+
+  @attr('date')
+  endDate;
+
+  @attr('date')
+  updatedAt;
+
+  @belongsTo('session', { async: true })
+  session;
+
+  @hasMany('learner-group', { async: true })
+  learnerGroups;
+
+  @hasMany('instructor-group', { async: true })
+  instructorGroups;
+
+  @hasMany('user', { async: true, inverse: 'offerings' })
+  learners;
+
+  @hasMany('user', { async: true, inverse: 'instructedOfferings' })
+  instructors;
+
+  get startDayOfYear() {
+    return moment(this.startDate).format('DDDD');
+  }
+
+  get startYear() {
+    return moment(this.startDate).format('YYYY');
+  }
+
+  get startTime() {
+    return moment(this.startDate).format('HHmm');
+  }
+
+  get endDayOfYear() {
+    return moment(this.endDate).format('DDDD');
+  }
+
+  get endYear() {
+    return moment(this.endDate).format('YYYY');
+  }
+
+  get endTime() {
+    return moment(this.endDate).format('HHmm');
+  }
+
+  get startYearAndDayOfYear() {
+    return moment(this.startDate).format('DDDDYYYY');
+  }
+
+  get endYearAndDayOfYear() {
+    return moment(this.endDate).format('DDDDYYYY');
+  }
+
+  get isMultiDay() {
+    return !this.isSingleDay;
+  }
+
+  get isSingleDay() {
     return this.startYearAndDayOfYear === this.endYearAndDayOfYear;
-  }),
-  dateKey: computed('startDayOfYear', 'startYear', function () {
+  }
+
+  get dateKey() {
     return this.startYear + this.startDayOfYear;
-  }),
-  timeKey: computed(
-    'startDayOfYear',
-    'startYear',
-    'startTime',
-    'endDayOfYear',
-    'endYear',
-    'endTime',
-    function () {
-      const properties = [
-        'startYear',
-        'startDayOfYear',
-        'startTime',
-        'endYear',
-        'endDayOfYear',
-        'endTime',
-      ];
-      let key = '';
-      for (let i = 0; i < properties.length; i++) {
-        key += this.get(properties[i]);
-      }
-      return key;
+  }
+
+  get timeKey() {
+    const properties = [
+      this.startYear,
+      this.startDayOfYear,
+      this.startTime,
+      this.endYear,
+      this.endDayOfYear,
+      this.endTime,
+    ];
+    let key = '';
+    for (let i = 0; i < properties.length; i++) {
+      key += properties[i];
     }
-  ),
-  /**
-   * All instructors associated with this offering, either directly or indirectly via instructor groups.
-   * @property allInstructors
-   * @type {Ember.computed}
-   */
-  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', async function () {
-    const instructorGroups = await this.instructorGroups;
-    const instructors = await this.instructors;
-    const instructorsInInstructorGroups = await all(instructorGroups.mapBy('users'));
-    const allInstructors = instructorsInInstructorGroups.reduce((array, set) => {
-      return array.pushObjects(set.toArray());
-    }, []);
+    return key;
+  }
 
-    allInstructors.pushObjects(instructors.toArray());
+  @use _instructors = new ResolveAsyncValue(() => [this.instructors]);
+  @use _instructorsInGroups = new ResolveFlatMapBy(() => [this.instructorGroups, 'users']);
+  get allInstructors() {
+    if (!this._instructors || !this._instructorsInGroups) {
+      return [];
+    }
+    return [...this._instructors.toArray(), ...this._instructorsInGroups].uniq().sortBy('fullName');
+  }
 
-    return allInstructors.uniq().sortBy('fullName');
-  }),
-  /**
-   * All learners associated with this offering, either directly or indirectly via learner groups.
-   * @property allLearners
-   * @type {Ember.computed}
-   */
-  allLearners: computed('learners.[]', 'learnerGroups.[]', async function () {
-    const learnerGroups = await this.learnerGroups;
-    const learners = await this.learners;
-    const learnersInLearnerGroups = await all(learnerGroups.mapBy('users'));
-    const allLearners = learnersInLearnerGroups.reduce((array, set) => {
-      return array.pushObjects(set.toArray());
-    }, []);
+  @use _learners = new ResolveAsyncValue(() => [this.learners]);
+  @use _learnersInGroups = new ResolveFlatMapBy(() => [this.learnerGroups, 'users']);
+  get allLearners() {
+    if (!this._learners || !this._learnersInGroups) {
+      return [];
+    }
+    return [...this._learners.toArray(), ...this._learnersInGroups].uniq().sortBy('fullName');
+  }
 
-    allLearners.pushObjects(learners.toArray());
-
-    return allLearners.uniq().sortBy('fullName');
-  }),
-
-  durationHours: computed('startDate', 'endDate', function () {
-    const startDate = this.startDate;
-    const endDate = this.endDate;
-
-    if (!startDate || !endDate) {
+  get durationHours() {
+    if (!this.startDate || !this.endDate) {
       return 0;
     }
-    const mStart = moment(startDate);
-    const mEnd = moment(endDate);
-    const diffInHours = mEnd.diff(mStart, 'hours');
+    const mStart = moment(this.startDate);
+    const mEnd = moment(this.endDate);
+    return mEnd.diff(mStart, 'hours');
+  }
 
-    return diffInHours;
-  }),
-  durationMinutes: computed('startDate', 'endDate', function () {
-    const startDate = this.startDate;
-    const endDate = this.endDate;
-
-    if (!startDate || !endDate) {
+  get durationMinutes() {
+    if (!this.startDate || !this.endDate) {
       return 0;
     }
-    const mStart = moment(startDate);
-    const mEnd = moment(endDate);
+    const mStart = moment(this.startDate);
+    const mEnd = moment(this.endDate);
 
     const endHour = mEnd.hour();
     const endMinute = mEnd.minute();
@@ -135,5 +145,5 @@ export default Model.extend({
       diff = 60 - startMinute + endMinute;
     }
     return diff;
-  }),
-});
+  }
+}
