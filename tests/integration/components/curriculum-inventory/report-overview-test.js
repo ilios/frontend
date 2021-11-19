@@ -10,8 +10,8 @@ import { component } from 'ilios/tests/pages/components/curriculum-inventory/rep
 
 module('Integration | Component | curriculum-inventory/report-overview', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
-  setupIntl(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');

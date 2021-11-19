@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
@@ -7,6 +8,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/reports';
 module('Integration | Component | curriculum-inventory/reports', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
