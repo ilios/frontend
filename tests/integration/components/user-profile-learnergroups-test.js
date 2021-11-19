@@ -2,6 +2,7 @@ import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render, settled, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -9,6 +10,7 @@ const { resolve } = RSVP;
 
 module('Integration | Component | user profile learnergroups', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
   const som = EmberObject.create({
     id: '1',
     title: 'SOM',

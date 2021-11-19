@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import Service from '@ember/service';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -8,6 +9,7 @@ import { component } from 'ilios/tests/pages/components/ilios-navigation';
 
 module('Integration | Component | ilios-navigation', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('it renders for privileged user', async function (assert) {
     const currentUserMock = Service.extend({

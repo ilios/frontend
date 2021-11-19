@@ -1,10 +1,8 @@
 <div
   class="program-year-objective-list"
   data-test-program-year-objective-list
-  {{did-insert (perform this.load) @programYear @programYear.sortedProgramYearObjectives @programYear.competencies}}
-  {{did-update (perform this.load) @programYear @programYear.sortedProgramYearObjectives @programYear.competencies}}
 >
-  {{#if (and (is-array this.programYearObjectives) this.isSorting)}}
+  {{#if (and (is-array @programYear.sortedProgramYearObjectives) this.isSorting)}}
     <ObjectiveSortManager
       @subject={{@programYear}}
       @close={{set this.isSorting false}}
@@ -39,8 +37,8 @@
       <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
       <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
     </div>
-    {{#if (and (is-array this.programYearObjectives) (is-array this.domainTrees))}}
-      {{#each this.programYearObjectives as |programYearObjective|}}
+    {{#if (and (is-array @programYear.sortedProgramYearObjectives) (is-array this.domainTrees))}}
+      {{#each @programYear.sortedProgramYearObjectives as |programYearObjective|}}
         <ProgramYear::ObjectiveListItem
           @programYearObjective={{programYearObjective}}
           @editable={{@editable}}

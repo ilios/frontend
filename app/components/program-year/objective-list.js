@@ -1,33 +1,27 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency';
-import { hash, map } from 'rsvp';
+import { dropTask } from 'ember-concurrency';
+import { map } from 'rsvp';
 import { inject as service } from '@ember/service';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;
   @service session;
 
-  @tracked programYearObjectives;
   @tracked isSorting = false;
-  @tracked domainTrees;
-  @tracked programYearCompetencies;
-  @tracked course;
-  @tracked programYearObjectiveCount;
 
-  @restartableTask
-  *load(element, [programYear]) {
-    if (!programYear) {
-      return;
-    }
-    this.programYearObjectiveCount = programYear.hasMany('programYearObjectives').ids().length;
-    const { programYearObjectives, programYearCompetencies } = yield hash({
-      programYearObjectives: programYear.sortedProgramYearObjectives,
-      programYearCompetencies: programYear.competencies,
-    });
-    this.programYearObjectives = programYearObjectives;
-    this.programYearCompetencies = programYearCompetencies.toArray();
-    this.domainTrees = yield this.getDomainTrees(this.programYearCompetencies);
+  @use programYearCompetencies = new ResolveAsyncValue(() => [this.args.programYear.competencies]);
+
+  @use domainTrees = new AsyncProcess(() => [
+    this.getDomainTrees.bind(this),
+    this.programYearCompetencies ?? [],
+  ]);
+
+  get programYearObjectiveCount() {
+    return this.args.programYear.programYearObjectives.length;
   }
 
   async getDomainTrees(programYearCompetencies) {
