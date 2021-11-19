@@ -25,7 +25,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
   test('it renders nothing with no start and end date and showNoSchedule set to false', async function (assert) {
     await render(hbs`<TimedReleaseSchedule @showNoSchedule={{false}} />`);
 
-    assert.dom(this.element).hasText('');
+    assert.dom('[data-test-timed-release-schedule]').doesNotExist();
   });
 
   test('it renders with both start and end date', async function (assert) {
@@ -53,11 +53,20 @@ module('Integration | Component | timed release schedule', function (hooks) {
     assert.dom(this.element).hasText(`(Available: ${expectedDate})`);
   });
 
-  test('it renders nothing with only start date in the past', async function (assert) {
-    const tomorrow = moment().subtract(1, 'day');
-    this.set('tomorrow', tomorrow.toDate());
-    await render(hbs`<TimedReleaseSchedule @startDate={{this.tomorrow}} />`);
+  test('it renders empty with only start date in the past', async function (assert) {
+    const yesterday = moment().subtract(1, 'day');
+    this.set('yesterday', yesterday.toDate());
+    await render(hbs`<TimedReleaseSchedule @startDate={{this.yesterday}} />`);
     assert.dom(this.element).hasNoText();
+  });
+
+  test('it renders nothing with only start date in the past and showNoSchdule set to false', async function (assert) {
+    const yesterday = moment().subtract(1, 'day');
+    this.set('yesterday', yesterday.toDate());
+    await render(
+      hbs`<TimedReleaseSchedule @startDate={{this.yesterday}} @showNoSchedule={{false}} />`
+    );
+    assert.dom('[data-test-timed-release-schedule]').doesNotExist();
   });
 
   test('it renders with only end date in the future', async function (assert) {

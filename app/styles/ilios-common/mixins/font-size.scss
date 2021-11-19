@@ -20,10 +20,10 @@
   
   font-size: 16px;
   //scale based on viewport width between 16px and 20px
-  @include for-phone-and-up {
-    font-size: calc(14px + .5vw);
-  }
   @include for-laptop-and-up {
+    font-size: calc(10px + .5vw);
+  }
+  @include for-desktop-and-up {
     font-size: 20px;
   }
 }

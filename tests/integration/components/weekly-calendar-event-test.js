@@ -26,7 +26,6 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
   this.getStyle = function (rowStart, minutes, columnSpan) {
     return {
       'background-color': 'rgb(0, 204, 101)',
-      'border-left-width': '5px',
       'border-left-style': 'solid',
       'border-left-color': 'rgb(0, 173, 86)',
       'grid-row-start': `${rowStart}`,

@@ -2,9 +2,10 @@ import Component from '@glimmer/component';
 import moment from 'moment';
 
 export default class TimedReleaseSchedule extends Component {
-  constructor() {
-    super(...arguments);
-    this.now = new Date();
+  now = new Date();
+
+  get show() {
+    return this.showNoSchedule || this.args.endDate || this.startDateInTheFuture;
   }
 
   get showNoSchedule() {

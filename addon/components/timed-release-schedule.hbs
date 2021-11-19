@@ -1,21 +1,23 @@
-<span class="timed-release-schedule">
-  {{#if (and @startDate @endDate)}}
-    ({{t
-      "general.timedReleaseStartAndEndDate"
-      startDate=(format-date @startDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric")
-      endDate=(format-date @endDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric")
-    }})
-  {{/if}}
-  {{#if (and @startDate (not @endDate) this.startDateInTheFuture)}}
-    ({{t
-      "general.timedReleaseOnlyStartDate"
-      startDate=(format-date @startDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric")
-    }})
-  {{/if}}
-  {{#if (and @endDate (not @startDate))}}
-    ({{t "general.timedReleaseOnlyEndDate" endDate=(format-date @endDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric")}})
-  {{/if}}
-  {{#if (and (not @startDate) (not @endDate) this.showNoSchedule)}}
-    {{t "general.timedReleaseNoSchedule"}}
-  {{/if}}
-</span>
+{{#if this.show}}
+  <span class="timed-release-schedule" data-test-timed-release-schedule>
+    {{#if (and @startDate @endDate)}}
+      ({{t
+        "general.timedReleaseStartAndEndDate"
+        startDate=(format-date @startDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric")
+        endDate=(format-date @endDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric")
+      }})
+    {{/if}}
+    {{#if (and @startDate (not @endDate) this.startDateInTheFuture)}}
+      ({{t
+        "general.timedReleaseOnlyStartDate"
+        startDate=(format-date @startDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric")
+      }})
+    {{/if}}
+    {{#if (and @endDate (not @startDate))}}
+      ({{t "general.timedReleaseOnlyEndDate" endDate=(format-date @endDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric")}})
+    {{/if}}
+    {{#if (and (not @startDate) (not @endDate) this.showNoSchedule)}}
+      {{t "general.timedReleaseNoSchedule"}}
+    {{/if}}
+  </span>
+{{/if}}

@@ -50,7 +50,7 @@ module(
         .hasText('second one');
       assert.dom('li:nth-of-type(2) .fa-file-audio').exists('LM type icon is present.');
       assert.dom('li:nth-of-type(2) a').hasAttribute('href', 'http://secondlink');
-      assert.dom('li:nth-of-type(2) .timed-release-schedule').hasNoText();
+      assert.dom('li:nth-of-type(2) .timed-release-schedule').isNotVisible();
 
       assert
         .dom('li:nth-of-type(3) .single-event-learningmaterial-item-title')
