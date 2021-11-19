@@ -1,32 +1,50 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/template';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
-export default Model.extend({
-  title: attr('string'),
-  calendarColor: attr('string'),
-  active: attr('boolean'),
-  assessment: attr('boolean'),
-  assessmentOption: belongsTo('assessment-option', { async: true }),
-  school: belongsTo('school', { async: true }),
-  aamcMethods: hasMany('aamc-method', { async: true }),
-  sessions: hasMany('session', { async: true }),
-  safeCalendarColor: computed('calendarColor', function () {
-    const calendarColor = this.calendarColor;
+export default class SessionType extends Model {
+  @attr('string')
+  title;
+
+  @attr('string')
+  calendarColor;
+
+  @attr('boolean')
+  active;
+
+  @attr('boolean')
+  assessment;
+
+  @belongsTo('assessment-option', { async: true })
+  assessmentOption;
+
+  @belongsTo('school', { async: true })
+  school;
+
+  @hasMany('aamc-method', { async: true })
+  aamcMethods;
+
+  @hasMany('session', { async: true })
+  sessions;
+
+  get safeCalendarColor() {
     const pattern = new RegExp('^#[a-fA-F0-9]{6}$');
-    if (pattern.test(calendarColor)) {
-      return htmlSafe(calendarColor);
+    if (pattern.test(this.calendarColor)) {
+      return htmlSafe(this.calendarColor);
     }
-
     return '';
-  }),
-  sessionCount: computed('sessions.[]', function () {
-    const sessons = this.hasMany('sessions');
+  }
 
-    return sessons.ids().length;
-  }),
-  firstAamcMethod: computed('aamcMethods.[]', async function () {
-    const aamcMethods = await this.aamcMethods;
-    return aamcMethods.get('firstObject');
-  }),
-});
+  get sessionCount() {
+    return this.sessions.length;
+  }
+
+  @use _aamcMethods = new ResolveAsyncValue(() => [this.aamcMethods]);
+  get firstAamcMethod() {
+    if (!this._aamcMethods) {
+      return undefined;
+    }
+    return this._aamcMethods.get('firstObject');
+  }
+}
