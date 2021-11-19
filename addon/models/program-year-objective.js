@@ -1,83 +1,76 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
-import { all } from 'rsvp';
+import { use } from 'ember-could-get-used-to-this';
+import DeprecatedResolveCP from 'ilios-common/classes/deprecated-resolve-cp';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 
-export default Model.extend({
-  title: attr('string'),
-  position: attr('number', { defaultValue: 0 }),
-  active: attr('boolean', { defaultValue: true }),
-  competency: belongsTo('competency', { async: true }),
-  programYear: belongsTo('program-year', { async: true }),
-  terms: hasMany('term', { async: true }),
-  meshDescriptors: hasMany('mesh-descriptor', { async: true }),
-  ancestor: belongsTo('program-year-objective', {
+export default class ProgramYearObjective extends Model {
+  @attr('string')
+  title;
+
+  @attr('number', { defaultValue: 0 })
+  position;
+
+  @attr('boolean', { defaultValue: true })
+  active;
+
+  @belongsTo('competency', { async: true })
+  competency;
+
+  @belongsTo('program-year', { async: true })
+  programYear;
+
+  @hasMany('term', { async: true })
+  terms;
+
+  @hasMany('mesh-descriptor', { async: true })
+  meshDescriptors;
+
+  @belongsTo('program-year-objective', {
     inverse: 'descendants',
     async: true,
-  }),
-  descendants: hasMany('program-year-objective', {
+  })
+  ancestor;
+
+  @hasMany('program-year-objective', {
     inverse: 'ancestor',
     async: true,
-  }),
-  courseObjectives: hasMany('course-objective', {
+  })
+  descendants;
+
+  @hasMany('course-objective', {
     inverse: 'programYearObjectives',
     async: true,
-  }),
+  })
+  courseObjectives;
 
-  /**
-   * A list of all vocabularies that are associated via terms.
-   * @property associatedVocabularies
-   * @type {Ember.computed}
-   * @public
-   */
-  associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.terms;
-    const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
-    return vocabularies.uniq().sortBy('title');
-  }),
+  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
+  get associatedVocabularies() {
+    return this._allTermVocabularies?.uniq().sortBy('title');
+  }
 
-  /**
-   * A list containing all associated terms and their parent terms.
-   * @property termsWithAllParents
-   * @type {Ember.computed}
-   * @public
-   */
-  termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.terms;
-    const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return allTerms
-      .reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, [])
-      .uniq();
-  }),
+  @use allTerms = new ResolveFlatMapBy(() => [this.terms, 'termWithAllParents']);
+  get termsWithAllParents() {
+    return this.allTerms?.uniq();
+  }
 
-  /**
-   * @deprecated
-   * @todo remove this and just use the object chaining instead [ST 2020/07/08]
-   */
-  firstProgram: computed('programYear', async function () {
-    const programYear = await this.programYear;
-    return await programYear.get('program');
-  }),
+  @use firstProgram = new DeprecatedResolveCP(() => [
+    this.programYear.get('program'),
+    'programYearObjective.firstProgram',
+  ]);
 
-  /**
-   * @deprecated
-   * @todo remove this and just use the object chaining instead [ST 2020/07/08]
-   */
-  firstCohort: computed('programYear', async function () {
-    const programYear = await this.programYear;
-    return await programYear.get('cohort');
-  }),
+  @use firstCohort = new DeprecatedResolveCP(() => [
+    this.programYear.get('cohort'),
+    'programYearObjective.firstCohort',
+  ]);
 
   /**
    * @todo check if this method is obsolete, if so remove it [ST 2020/07/08]
    */
-  shortTitle: computed('title', function () {
+  get shortTitle() {
     const title = this.title;
     if (title === undefined) {
       return '';
     }
     return title.substr(0, 200);
-  }),
-});
+  }
+}
