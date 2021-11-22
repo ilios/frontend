@@ -48,11 +48,6 @@ export default class Term extends Model {
     'term.titleWithParentTitles',
   ]);
 
-  @use allDescendants = new DeprecatedAsyncCP(() => [
-    this.getAllDescendants.bind(this),
-    'term.allDescendants',
-  ]);
-
   @use isActiveInTree = new DeprecatedAsyncCP(() => [
     this.getIsActiveInTree.bind(this),
     'term.isActiveInTree',

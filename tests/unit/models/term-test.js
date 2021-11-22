@@ -110,13 +110,13 @@ module('Unit | Model | term', function (hooks) {
     assert.notOk(isActive);
   });
 
-  test('allDescendants', async function (assert) {
+  test('getAllDescendants', async function (assert) {
     assert.expect(4);
     const model = this.store.createRecord('term');
     const child1 = this.store.createRecord('term', { parent: model });
     const child2 = this.store.createRecord('term', { parent: model });
     const child3 = this.store.createRecord('term', { parent: child1 });
-    const allDescendants = await model.get('allDescendants');
+    const allDescendants = await model.getAllDescendants();
     assert.strictEqual(allDescendants.length, 3);
     assert.strictEqual(allDescendants[0], child1);
     assert.strictEqual(allDescendants[1], child2);
