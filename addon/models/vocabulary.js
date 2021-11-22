@@ -1,7 +1,7 @@
 import Model, { belongsTo, hasMany, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import Inflector from 'ember-inflector';
-import { all } from 'rsvp';
+import { all, filter } from 'rsvp';
 
 Inflector.inflector.irregular('vocabulary', 'vocabularies');
 
@@ -13,7 +13,9 @@ export default Model.extend({
 
   topLevelTerms: computed('terms.[]', async function () {
     const terms = await this.terms;
-    return terms.toArray().filterBy('isTopLevel');
+    return filter(terms.toArray(), async (term) => {
+      return !(await term.parent);
+    });
   }),
 
   /**

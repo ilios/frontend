@@ -11,7 +11,7 @@
       {{@term.description}}
     </IliosTooltip>
   {{/if}}
-  {{#if @term.isTopLevel}}
+  {{#unless (await @term.parent)}}
     {{@term.title}}
   {{else}}
     {{#each (await @term.allParentTitles) as |title|}}
@@ -22,7 +22,7 @@
       </span>
     {{/each}}
     {{@term.title}}
-  {{/if}}
+  {{/unless}}
   {{#if (and @canEdit (not (await @term.isActiveInTree)))}}
     <span class="inactive">
       ({{t "general.inactive"}})

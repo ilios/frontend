@@ -6,7 +6,7 @@
   {{#unless this.loadFilteredTerms.isRunning}}
     {{#each (sort-by "title" this.terms) as |term|}}
       {{#if (await term.isActiveInTree)}}
-        <li class={{if term.isTopLevel "top-level" "nested"}}>
+        <li class={{if (await term.parent) "nested" "top-level"}}>
           <SelectableTermsListItem
             @selectedTerms={{@selectedTerms}}
             @term={{term}}
