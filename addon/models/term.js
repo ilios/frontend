@@ -141,29 +141,6 @@ export default class Term extends Model {
     return parentTitles.join(' > ') + ' > ' + this.title;
   }
 
-  //
-  // /**
-  //  * A list of descendants terms of this term.
-  //  *
-  //  * @property termWithAllDescendants
-  //  * @type {Ember.computed}
-  //  * @public
-  //  */
-  // allDescendants: computed('children.[]', 'children.@each.allDescendants', async function () {
-  //   const descendants = [];
-  //   const children = await this.children;
-  //   descendants.pushObjects(children.toArray());
-  //   const childrenDescendants = await map(children.mapBy('allDescendants'), (childDescendants) => {
-  //     return childDescendants;
-  //   });
-  //   descendants.pushObjects(
-  //     childrenDescendants.reduce((array, set) => {
-  //       array.pushObjects(set);
-  //       return array;
-  //     }, [])
-  //   );
-  //   return descendants;
-  // }),
   async getAllDescendants() {
     const descendants = [];
     const children = await this.children;
