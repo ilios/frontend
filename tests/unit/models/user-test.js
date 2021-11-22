@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { waitForResource } from 'ilios-common';
 
 module('Unit | Model | User', function (hooks) {
   setupTest(hooks);
@@ -153,7 +154,7 @@ module('Unit | Model | User', function (hooks) {
         id: 2,
       })
     );
-    const allRelatedCourses = await model.get('allRelatedCourses');
+    const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
@@ -177,7 +178,7 @@ module('Unit | Model | User', function (hooks) {
         id: 2,
       })
     );
-    const allRelatedCourses = await model.get('allRelatedCourses');
+    const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
@@ -215,7 +216,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const courses = [course1, course2];
-    const allRelatedCourses = await model.get('allRelatedCourses');
+    const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
@@ -253,7 +254,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const courses = [course1, course2];
-    const allRelatedCourses = await model.get('allRelatedCourses');
+    const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
@@ -286,7 +287,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const courses = [course1, course2];
-    const allRelatedCourses = await model.get('allRelatedCourses');
+    const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
@@ -319,7 +320,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const courses = [course1, course2];
-    const allRelatedCourses = await model.get('allRelatedCourses');
+    const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
@@ -357,7 +358,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const courses = [course1, course2];
-    const allRelatedCourses = await model.get('allRelatedCourses');
+    const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
@@ -401,7 +402,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const courses = [course1, course2];
-    const allRelatedCourses = await model.get('allRelatedCourses');
+    const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
@@ -430,7 +431,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const courses = [course1, course2];
-    const allRelatedCourses = await model.get('allRelatedCourses');
+    const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
@@ -440,7 +441,7 @@ module('Unit | Model | User', function (hooks) {
   test('isStudent - no roles', async function (assert) {
     assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('user');
-    const isStudent = await model.get('isStudent');
+    const isStudent = await waitForResource(model, 'isStudent');
     assert.notOk(isStudent);
   });
 
@@ -455,7 +456,7 @@ module('Unit | Model | User', function (hooks) {
       title: 'Alien Overlord',
     });
     model.get('roles').pushObjects([notAStudentRole, notAStudentRoleEither]);
-    const isStudent = await model.get('isStudent');
+    const isStudent = await waitForResource(model, 'isStudent');
     assert.notOk(isStudent);
   });
 
@@ -468,7 +469,7 @@ module('Unit | Model | User', function (hooks) {
     });
     const studentRole = store.createRecord('user-role', { title: 'Student' });
     model.get('roles').pushObjects([notAStudentRole, studentRole]);
-    const isStudent = await model.get('isStudent');
+    const isStudent = await waitForResource(model, 'isStudent');
     assert.ok(isStudent);
   });
 
@@ -477,7 +478,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('course', { directors: [model] });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -486,7 +487,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('course', { administrators: [model] });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -495,7 +496,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('session', { administrators: [model] });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -504,7 +505,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('learner-group', { instructors: [model] });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -513,7 +514,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('instructor-group', { users: [model] });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -522,7 +523,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('offering', { instructors: [model] });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -531,7 +532,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('program', { directors: [model] });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -540,7 +541,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('program-year', { directors: [model] });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -551,7 +552,7 @@ module('Unit | Model | User', function (hooks) {
     store.createRecord('curriculum-inventory-report', {
       administrators: [model],
     });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -560,7 +561,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('school', { directors: [model] });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -569,7 +570,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('school', { administrators: [model] });
-    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
@@ -578,7 +579,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('cohort', { users: [model] });
-    const isLearner = model.get('isLearner');
+    const isLearner = await waitForResource(model, 'isLearner');
     assert.ok(isLearner);
   });
 
@@ -587,7 +588,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('offering', { learners: [model] });
-    const isLearner = model.get('isLearner');
+    const isLearner = await waitForResource(model, 'isLearner');
     assert.ok(isLearner);
   });
 
@@ -596,7 +597,7 @@ module('Unit | Model | User', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('ilm-session', { learners: [model] });
-    const isLearner = model.get('isLearner');
+    const isLearner = await waitForResource(model, 'isLearner');
     assert.ok(isLearner);
   });
 
@@ -622,7 +623,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const courses = [course1, course2];
-    const allRelatedCourses = await model.get('allRelatedCourses');
+    const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
       assert.ok(allRelatedCourses.includes(course));
@@ -742,7 +743,7 @@ module('Unit | Model | User', function (hooks) {
     model.set('primaryCohort', primaryCohort);
     model.get('cohorts').pushObjects([primaryCohort, secondaryCohort, anotherCohort]);
 
-    const cohorts = await model.get('secondaryCohorts');
+    const cohorts = await waitForResource(model, 'secondaryCohorts');
     assert.strictEqual(cohorts.length, 2);
     assert.ok(cohorts.includes(secondaryCohort));
     assert.ok(cohorts.includes(anotherCohort));
@@ -787,7 +788,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const course = [course1, course2, course3, course4];
-    const allInstructedCourses = await model.get('allInstructedCourses');
+    const allInstructedCourses = await waitForResource(model, 'allInstructedCourses');
     assert.strictEqual(allInstructedCourses.length, course.length);
     course.forEach((session) => {
       assert.ok(allInstructedCourses.includes(session));
@@ -828,7 +829,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const sessions = [session1, session2, session3, session4];
-    const allInstructedSessions = await model.get('allInstructedSessions');
+    const allInstructedSessions = await waitForResource(model, 'allInstructedSessions');
     assert.strictEqual(allInstructedSessions.length, sessions.length);
     sessions.forEach((session) => {
       assert.ok(allInstructedSessions.includes(session));
