@@ -44,12 +44,6 @@ export default class SessionObjectiveModel extends Model {
     return this._allTermVocabularies?.uniq().sortBy('title');
   }
 
-  @use allTerms = new ResolveFlatMapBy(() => [this.terms, 'termWithAllParents']);
-
-  get termsWithAllParents() {
-    return this.allTerms?.uniq();
-  }
-
   /**
    * @todo check if this method is obsolete, if so remove it [ST 2020/07/08]
    */

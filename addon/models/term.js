@@ -43,13 +43,6 @@ export default class Term extends Model {
   @hasMany('session-objective', { async: true })
   sessionObjectives;
 
-  @use allParents = new DeprecatedAsyncCP(() => [this.getAllParents.bind(this), 'term.allParents']);
-
-  @use termWithAllParents = new DeprecatedAsyncCP(() => [
-    this.getTermWithAllParents.bind(this),
-    'term.termWithAllParents',
-  ]);
-
   @use allParentTitles = new DeprecatedAsyncCP(() => [
     this.getAllParentTitles.bind(this),
     'term.allParentTitles',
@@ -122,14 +115,6 @@ export default class Term extends Model {
     }
     const allParents = await parent.getAllParents();
     return [...allParents, parent];
-  }
-
-  /**
-   * A list of parent terms of this term, including this term as its last item.
-   */
-  async getTermWithAllParents() {
-    const allParents = await this.getAllParents();
-    return [...allParents, this];
   }
 
   /**

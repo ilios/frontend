@@ -31,23 +31,6 @@ export default Model.extend({
   }),
 
   /**
-   * A list containing all associated terms and their parent terms.
-   * @property termsWithAllParents
-   * @type {Ember.computed}
-   * @public
-   */
-  termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.terms;
-    const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return allTerms
-      .reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, [])
-      .uniq();
-  }),
-
-  /**
    * The number of terms attached to this model
    * @property termCount
    * @type {Ember.computed}

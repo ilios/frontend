@@ -75,19 +75,6 @@ export default class ProgramYear extends Model {
     return this._allTermVocabularies?.uniq().sortBy('title');
   }
 
-  @use _allTermParents = new ResolveAsyncValue(() => [this.terms.mapBy('allParents')]);
-  @use _terms = new ResolveAsyncValue(() => [this.terms]);
-
-  /**
-   * A list containing all associated terms and their parent terms.
-   */
-  get termsWithAllParents() {
-    if (!this._allTermParents || !this._terms) {
-      return [];
-    }
-    return [...this._allTermParents.flat(), ...this._terms.toArray()].uniq();
-  }
-
   /**
    * The number of terms attached to this model
    */
