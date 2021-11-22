@@ -241,27 +241,6 @@ module('Unit | Model | Session', function (hooks) {
     assert.strictEqual(vocabularies[1], vocab1);
   });
 
-  test('termsWithAllParents', async function (assert) {
-    assert.expect(7);
-    const subject = this.owner.lookup('service:store').createRecord('session');
-    const store = this.owner.lookup('service:store');
-    const term1 = store.createRecord('term');
-    const term2 = store.createRecord('term', { parent: term1 });
-    const term3 = store.createRecord('term', { parent: term1 });
-    const term4 = store.createRecord('term', { parent: term2 });
-    const term5 = store.createRecord('term', { parent: term3 });
-    const term6 = store.createRecord('term');
-    subject.get('terms').pushObjects([term4, term5, term6]);
-    const terms = await waitForResource(subject, 'termsWithAllParents');
-    assert.strictEqual(terms.length, 6);
-    assert.ok(terms.includes(term1));
-    assert.ok(terms.includes(term2));
-    assert.ok(terms.includes(term3));
-    assert.ok(terms.includes(term4));
-    assert.ok(terms.includes(term5));
-    assert.ok(terms.includes(term6));
-  });
-
   test('termCount', function (assert) {
     assert.expect(2);
     const subject = this.owner.lookup('service:store').createRecord('session');

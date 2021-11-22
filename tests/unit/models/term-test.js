@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { waitForResource } from 'ilios-common';
 
 module('Unit | Model | term', function (hooks) {
   setupTest(hooks);
@@ -26,30 +25,18 @@ module('Unit | Model | term', function (hooks) {
     assert.ok(model.get('hasChildren'));
   });
 
-  test('allParents', async function (assert) {
+  test('getAllParents', async function (assert) {
     assert.expect(3);
     const model = this.store.createRecord('term');
     const parent = this.store.createRecord('term', { children: [model] });
     const parentsParent = this.store.createRecord('term', { children: [parent] });
-    let allParents = await waitForResource(model, 'allParents');
+    let allParents = await model.getAllParents();
     assert.strictEqual(allParents.length, 2);
     assert.strictEqual(allParents[0], parentsParent);
     assert.strictEqual(allParents[1], parent);
   });
 
-  test('termWithAllParents', async function (assert) {
-    assert.expect(4);
-    const model = this.store.createRecord('term');
-    const parent = this.store.createRecord('term', { children: [model] });
-    const parentsParent = this.store.createRecord('term', { children: [parent] });
-    const allParents = await model.get('termWithAllParents');
-    assert.strictEqual(allParents.length, 3);
-    assert.strictEqual(allParents[0], parentsParent);
-    assert.strictEqual(allParents[1], parent);
-    assert.strictEqual(allParents[2], model);
-  });
-
-  test('allParentTitles', async function (assert) {
+  test('getAllParentTitles', async function (assert) {
     assert.expect(3);
     const model = this.store.createRecord('term');
     const parent = this.store.createRecord('term', {
@@ -57,7 +44,7 @@ module('Unit | Model | term', function (hooks) {
       title: 'Parent',
     });
     this.store.createRecord('term', { children: [parent], title: 'Grandparent' });
-    const titles = await model.get('allParentTitles');
+    const titles = await model.getAllParentTitles();
     assert.strictEqual(titles.length, 2);
     assert.strictEqual(titles[0], 'Grandparent');
     assert.strictEqual(titles[1], 'Parent');

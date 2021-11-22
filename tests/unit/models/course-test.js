@@ -315,30 +315,6 @@ module('Unit | Model | Course', function (hooks) {
     assert.strictEqual(vocabularies[1], vocabulary2);
   });
 
-  test('termsWithAllParents', async function (assert) {
-    assert.expect(7);
-    const course = this.owner.lookup('service:store').createRecord('course');
-    const store = this.owner.lookup('service:store');
-    const vocabulary = store.createRecord('vocabulary');
-
-    const term1 = store.createRecord('term', { vocabulary });
-    const term2 = store.createRecord('term', { vocabulary });
-    const term3 = store.createRecord('term', { vocabulary });
-    const term4 = store.createRecord('term', { vocabulary, parent: term1 });
-    const term5 = store.createRecord('term', { vocabulary, parent: term1 });
-    const term6 = store.createRecord('term', { vocabulary, parent: term2 });
-    course.terms.pushObjects([term3, term4, term5, term6]);
-
-    const termsWithAllParents = await waitForResource(course, 'termsWithAllParents');
-    assert.strictEqual(termsWithAllParents.length, 6);
-    assert.ok(termsWithAllParents.includes(term1));
-    assert.ok(termsWithAllParents.includes(term2));
-    assert.ok(termsWithAllParents.includes(term3));
-    assert.ok(termsWithAllParents.includes(term4));
-    assert.ok(termsWithAllParents.includes(term5));
-    assert.ok(termsWithAllParents.includes(term6));
-  });
-
   test('set dates based on year before year start', async function (assert) {
     assert.expect(6);
     freezeDateAt(new Date('5/6/1981'));
