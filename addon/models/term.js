@@ -43,11 +43,6 @@ export default class Term extends Model {
   @hasMany('session-objective', { async: true })
   sessionObjectives;
 
-  @use allParentTitles = new DeprecatedAsyncCP(() => [
-    this.getAllParentTitles.bind(this),
-    'term.allParentTitles',
-  ]);
-
   @use titleWithParentTitles = new DeprecatedAsyncCP(() => [
     this.getTitleWithParentTitles.bind(this),
     'term.titleWithParentTitles',

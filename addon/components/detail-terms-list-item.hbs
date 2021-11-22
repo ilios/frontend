@@ -14,7 +14,7 @@
   {{#unless (await @term.parent)}}
     {{@term.title}}
   {{else}}
-    {{#each (await @term.allParentTitles) as |title|}}
+    {{#each (await this.allParentTitles) as |title|}}
       {{! template-lint-disable no-bare-strings}}
       <span class="muted">
         {{title}}
