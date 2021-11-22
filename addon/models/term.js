@@ -48,11 +48,6 @@ export default class Term extends Model {
     'term.titleWithParentTitles',
   ]);
 
-  @use isActiveInTree = new DeprecatedAsyncCP(() => [
-    this.getIsActiveInTree.bind(this),
-    'term.isActiveInTree',
-  ]);
-
   get associatedLengths() {
     return [
       this.programYears.length,
@@ -154,23 +149,5 @@ export default class Term extends Model {
       return this.title;
     }
     return allDescendantTitles.join(' > ') + ' > ' + this.title;
-  }
-
-  /**
-   * TRUE if this term and all of its ancestors, if existent, are active. FALSE otherwise.
-   */
-  async getIsActiveInTree() {
-    const parent = await this.parent;
-    const active = this.active;
-
-    if (!active) {
-      return false;
-    }
-
-    if (!parent) {
-      return true;
-    }
-
-    return parent.getIsActiveInTree();
   }
 }

@@ -23,7 +23,7 @@
     {{/each}}
     {{@term.title}}
   {{/unless}}
-  {{#if (and @canEdit (not (await @term.isActiveInTree)))}}
+  {{#if (and @canEdit (not @term.active))}}
     <span class="inactive">
       ({{t "general.inactive"}})
     </span>

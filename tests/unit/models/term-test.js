@@ -63,53 +63,6 @@ module('Unit | Model | term', function (hooks) {
     assert.strictEqual(title, 'ein > bier > bitte');
   });
 
-  test('isActiveInTree - top level term', async function (assert) {
-    assert.expect(2);
-    let model = this.store.createRecord('term');
-    model.set('active', false);
-    let isActive = await model.get('isActiveInTree');
-    assert.notOk(isActive);
-
-    model = this.store.createRecord('term');
-    model.set('active', true);
-    isActive = await model.get('isActiveInTree');
-    assert.ok(isActive);
-  });
-
-  test('isActiveInTree - nested term', async function (assert) {
-    assert.expect(4);
-    let model = this.store.createRecord('term');
-    model.set('active', true);
-    let parent = this.store.createRecord('term', {
-      children: [model],
-      active: true,
-    });
-    this.store.createRecord('term', { children: [parent], active: true });
-    let isActive = await model.get('isActiveInTree');
-    assert.ok(isActive);
-
-    model = this.store.createRecord('term');
-    model.set('active', false);
-    parent = this.store.createRecord('term', { children: [model], active: true });
-    this.store.createRecord('term', { children: [parent], active: true });
-    isActive = await model.get('isActiveInTree');
-    assert.notOk(isActive);
-
-    model = this.store.createRecord('term');
-    model.set('active', true);
-    parent = this.store.createRecord('term', { children: [model], active: false });
-    this.store.createRecord('term', { children: [parent], active: true });
-    isActive = await model.get('isActiveInTree');
-    assert.notOk(isActive);
-
-    model = this.store.createRecord('term');
-    model.set('active', true);
-    parent = this.store.createRecord('term', { children: [model], active: true });
-    this.store.createRecord('term', { children: [parent], active: false });
-    isActive = await model.get('isActiveInTree');
-    assert.notOk(isActive);
-  });
-
   test('getAllDescendants', async function (assert) {
     assert.expect(4);
     const model = this.store.createRecord('term');
