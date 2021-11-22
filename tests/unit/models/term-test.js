@@ -123,7 +123,7 @@ module('Unit | Model | term', function (hooks) {
     assert.strictEqual(allDescendants[2], child3);
   });
 
-  test('titleWithDescendantTitles', async function (assert) {
+  test('getTitleWithDescendantTitles', async function (assert) {
     assert.expect(1);
     const model = this.store.createRecord('term', { title: 'top' });
     const child1 = this.store.createRecord('term', {
@@ -132,7 +132,7 @@ module('Unit | Model | term', function (hooks) {
     });
     this.store.createRecord('term', { title: 'second', parent: model });
     this.store.createRecord('term', { title: 'third', parent: child1 });
-    const titleWithDescendantTitles = await model.get('titleWithDescendantTitles');
+    const titleWithDescendantTitles = await model.getTitleWithDescendantTitles();
     assert.strictEqual(titleWithDescendantTitles, 'first > second > third > top');
   });
 
