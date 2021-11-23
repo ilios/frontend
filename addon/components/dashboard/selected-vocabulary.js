@@ -11,7 +11,6 @@ export default class DashboardSelectedVocabularyComponent extends Component {
     if (!this._topLevelTerms) {
       return [];
     }
-    console.log(this._topLevelTerms);
     return this._topLevelTerms;
   }
 }
