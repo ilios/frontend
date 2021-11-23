@@ -1,38 +1,40 @@
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | dashboard/SelectedTermTree', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
+  setupMirage(hooks);
 
-  const tree = [
-    EmberObject.create({
-      id: 1,
+  hooks.beforeEach(async function () {
+    const vocabulary = this.server.create('vocabulary');
+    const term1 = this.server.create('term', {
       title: 'top 1',
-      children: [],
-    }),
-    EmberObject.create({
-      id: 2,
+      vocabulary,
+    });
+    const term2 = this.server.create('term', {
       title: 'top 2',
-      children: [
-        EmberObject.create({
-          id: 3,
-          title: 'top 2 child 1',
-          children: [],
-        }),
-      ],
-    }),
-  ];
+      vocabulary,
+    });
+    this.server.create('term', {
+      title: 'top 2 child 1',
+      parent: term2,
+      vocabulary,
+    });
+    const termModel1 = await this.owner.lookup('service:store').find('term', term1.id);
+    const termModel2 = await this.owner.lookup('service:store').find('term', term2.id);
+    this.topLevelTerms = [termModel1, termModel2];
+  });
 
   test('it renders a tree', async function (assert) {
-    this.set('tree', tree);
-    this.set('selectedTermIds', [3]);
+    this.set('terms', this.topLevelTerms);
+    this.set('selectedTermIds', ['3']);
     await render(hbs`<Dashboard::SelectedTermTree
-      @terms={{this.tree}}
+      @terms={{this.terms}}
       @selectedTermIds={{this.selectedTermIds}}
       @add={{(noop)}}
       @remove={{(noop)}}
@@ -55,12 +57,12 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
 
   test('clicking unchecked checkbox fires add', async function (assert) {
     assert.expect(1);
-    this.set('tree', tree);
+    this.set('terms', this.topLevelTerms);
     this.set('add', (id) => {
-      assert.strictEqual(id, 1);
+      assert.strictEqual(id, '1');
     });
     await render(hbs`<Dashboard::SelectedTermTree
-      @terms={{this.tree}}
+      @terms={{this.terms}}
       @selectedTermIds={{(array)}}
       @add={{this.add}}
       @remove={{(noop)}}
@@ -70,13 +72,13 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
 
   test('clicking checked checkbox fires add', async function (assert) {
     assert.expect(1);
-    this.set('tree', tree);
-    this.set('selectedTermIds', [1]);
+    this.set('terms', this.topLevelTerms);
+    this.set('selectedTermIds', ['1']);
     this.set('remove', (id) => {
-      assert.strictEqual(id, 1);
+      assert.strictEqual(id, '1');
     });
     await render(hbs`<Dashboard::SelectedTermTree
-      @terms={{this.tree}}
+      @terms={{this.terms}}
       @selectedTermIds={{this.selectedTermIds}}
       @add={{(noop)}}
       @remove={{this.remove}}
