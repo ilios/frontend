@@ -1,7 +1,6 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
-import { deprecate } from '@ember/debug';
 
 export default class Term extends Model {
   @attr('string')
@@ -68,12 +67,6 @@ export default class Term extends Model {
   }
 
   get isTopLevel() {
-    deprecate(`term.isTopLevel called, check parent attribute directly instead.`, false, {
-      id: 'common.term-is-top-level',
-      for: 'ilios-common',
-      until: '62',
-      since: '62.0.1',
-    });
     return !this.belongsTo('parent').id();
   }
 
