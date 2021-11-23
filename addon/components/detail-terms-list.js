@@ -18,7 +18,7 @@ export default class DetailTermsListComponent extends Component {
     });
     const proxies = yield all(
       filteredTerms.map(async (term) => {
-        const title = await term.titleWithParentTitles;
+        const title = await term.getTitleWithParentTitles();
         return { term, title };
       })
     );

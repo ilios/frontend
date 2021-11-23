@@ -71,7 +71,7 @@ export default class DashboardFilterTagsComponent extends Component {
   async getTermTags() {
     return map(this.args.selectedTermIds, async (id) => {
       const term = await this.fetchModel('term', id);
-      const allTitles = await term.get('titleWithParentTitles');
+      const allTitles = await term.getTitleWithParentTitles();
       const vocabulary = await term.get('vocabulary');
       const title = vocabulary.get('title');
       return {
