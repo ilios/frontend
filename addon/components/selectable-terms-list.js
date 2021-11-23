@@ -7,7 +7,7 @@ export default class SelectableTermsList extends Component {
   @tracked terms = [];
 
   get topLevelTermsRelationshipPromise() {
-    return this.args.vocabulary ? this.args.vocabulary.get('topLevelTerms') : null;
+    return this.args.vocabulary ? this.args.vocabulary.getTopLevelTerms() : null;
   }
 
   @restartableTask
