@@ -1,4 +1,7 @@
-<ul class="selected-term-tree">
+<ul class="selected-term-tree"
+    data-test-selected-term-tree
+    data-test-selected-term-tree-level={{this.level}}
+>
   {{#each (sort-by "title" @terms) as |term|}}
     <li class="clickable">
       <Dashboard::FilterCheckbox
@@ -14,6 +17,7 @@
           @selectedTermIds={{@selectedTermIds}}
           @add={{@add}}
           @remove={{@remove}}
+          @level={{inc this.level}}
         />
       {{/if}}
     </li>
