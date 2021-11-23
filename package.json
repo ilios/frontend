@@ -71,7 +71,7 @@
     "ember-intl": "^6.0.0",
     "ember-math-helpers": "^2.9.0",
     "ember-modifier": "^3.0.0",
-    "ember-moment": "^8.0.0",
+    "ember-moment": "^9.0.1",
     "ember-promise-helpers": "2.0.0",
     "ember-simple-auth-token": "^5.0.0",
     "ember-simple-charts": "^8.0.0",

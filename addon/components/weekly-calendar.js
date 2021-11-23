@@ -22,6 +22,7 @@ export default class WeeklyCalendarComponent extends Component {
   }
 
   get firstDayOfWeek() {
+    this.intl.locale; //access to start autotracking
     return this.moment.moment(this.args.date).startOf('week');
   }
 
