@@ -37,12 +37,9 @@ module.exports = function (environment) {
     },
     'ember-simple-auth-token': {
       serverTokenEndpoint: '/auth/login',
-      serverTokenRefreshEndpoint: '/auth/token',
       tokenPropertyName: 'jwt',
-      refreshTokenPropertyName: 'jwt',
-      authorizationHeaderName: 'X-JWT-Authorization',
+      refreshAccessTokens: false,
       authorizationPrefix: 'Token ',
-      refreshLeeway: 60,
     },
     i18n: {
       defaultLocale: 'en',
