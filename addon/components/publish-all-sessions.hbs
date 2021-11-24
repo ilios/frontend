@@ -194,7 +194,7 @@
       {{#if this.overridableSessions.length}}
         <button
           type="button"
-          disabled={{this.allSessionsAsIs}}
+          disabled={{this.allSessionsPublished}}
           {{on "click" this.publishAllAsIs}}
           data-test-publish-all-as-is
         >
@@ -202,8 +202,8 @@
         </button>
         <button
           type="button"
-          disabled={{this.noSessionsAsIs}}
-          {{on "click" this.publishNoneAsIs}}
+          disabled={{this.allSessionsScheduled}}
+          {{on "click" this.scheduleAll}}
           data-test-mark-all-as-scheduled
         >
           {{t "general.markAsScheduled"}}
@@ -240,7 +240,7 @@
                       <label>
                         <input
                           type="checkbox"
-                          checked={{includes session.id (map-by "id" this.sessionsToOverride)}}
+                          checked={{includes session.id (map-by "id" this.sessionsToPublish)}}
                           {{on "click" (fn this.toggleSession session)}}
                           data-test-publish-as-is
                         >
@@ -251,7 +251,7 @@
                       <label>
                         <input
                           type="checkbox"
-                          checked={{not (includes session.id (map-by "id" this.sessionsToOverride))}}
+                          checked={{includes session.id (map-by "id" this.sessionsToSchedule)}}
                           {{on "click" (fn this.toggleSession session)}}
                           data-test-mark-as-scheduled
                         >
