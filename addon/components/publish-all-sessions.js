@@ -12,26 +12,48 @@ export default class PublishAllSessionsComponent extends Component {
   @service store;
   @service flashMessages;
 
-  @tracked sessionsToNotOverride = [];
   @tracked publishableCollapsed = true;
   @tracked unPublishableCollapsed = true;
   @tracked totalSessionsToSave;
   @tracked currentSessionsSaved;
 
+  @tracked userSelectedSessionsToPublish = [];
+  @tracked userSelectedSessionsToSchedule = [];
+
   @use courseObjectives = new ResolveAsyncValue(() => [this.args.course.courseObjectives]);
 
-  get sessionsToOverride() {
-    return this.overridableSessions.filter((session) => {
-      return (
-        !this.sessionsToNotOverride.includes(session) &&
-        session.published &&
-        !session.publishedAsTbd
-      );
+  get sessions() {
+    return this.args.sessions ?? [];
+  }
+
+  get publishedSessions() {
+    return this.overridableSessions.filter((s) => {
+      return s.published && !s.publishedAsTbd;
     });
   }
 
-  get noSessionsAsIs() {
-    return this.sessionsToOverride.length === 0;
+  get unpublishedSessions() {
+    return this.overridableSessions.filter((s) => !this.publishedSessions.includes(s));
+  }
+
+  get sessionsToPublish() {
+    const sessionsToPublish = [...this.publishedSessions, ...this.userSelectedSessionsToPublish];
+
+    return sessionsToPublish.filter((s) => !this.userSelectedSessionsToSchedule.includes(s)).uniq();
+  }
+
+  get sessionsToSchedule() {
+    const sessionsToPublish = [...this.unpublishedSessions, ...this.userSelectedSessionsToSchedule];
+
+    return sessionsToPublish.filter((s) => !this.userSelectedSessionsToPublish.includes(s)).uniq();
+  }
+
+  get allSessionsScheduled() {
+    return this.sessionsToSchedule.length === this.overridableSessions.length;
+  }
+
+  get allSessionsPublished() {
+    return this.sessionsToPublish.length === this.overridableSessions.length;
   }
 
   get saveProgressPercent() {
@@ -55,33 +77,20 @@ export default class PublishAllSessionsComponent extends Component {
     });
   }
 
-  get allSessionsAsIs() {
-    return this.sessionsToOverride.length === this.overridableSessions.length;
-  }
-
   get publishableSessions() {
-    if (!this.args.sessions) {
-      return [];
-    }
-    return this.args.sessions.filter((session) => {
+    return this.sessions.filter((session) => {
       return session.allPublicationIssuesLength === 0;
     });
   }
 
   get unPublishableSessions() {
-    if (!this.args.sessions) {
-      return [];
-    }
-    return this.args.sessions.filter((session) => {
+    return this.sessions.filter((session) => {
       return session.requiredPublicationIssues.length > 0;
     });
   }
 
   get overridableSessions() {
-    if (!this.args.sessions) {
-      return [];
-    }
-    return this.args.sessions.filter((session) => {
+    return this.sessions.filter((session) => {
       return (
         session.requiredPublicationIssues.length === 0 &&
         session.optionalPublicationIssues.length > 0
@@ -90,11 +99,11 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get publishCount() {
-    return this.publishableSessions.length + this.sessionsToOverride.length;
+    return this.publishableSessions.length + this.sessionsToPublish.length;
   }
 
   get scheduleCount() {
-    return this.overridableSessions.length - this.sessionsToOverride.length;
+    return this.sessionsToSchedule.length;
   }
 
   get ignoreCount() {
@@ -103,21 +112,29 @@ export default class PublishAllSessionsComponent extends Component {
 
   @action
   toggleSession(session) {
-    if (this.sessionsToNotOverride.includes(session)) {
-      this.sessionsToNotOverride = this.sessionsToNotOverride.filter(({ id }) => id !== session.id);
+    if (this.sessionsToPublish.includes(session)) {
+      this.userSelectedSessionsToPublish = this.userSelectedSessionsToPublish.filter(
+        (s) => s !== session
+      );
+      this.userSelectedSessionsToSchedule = [...this.userSelectedSessionsToSchedule, session];
     } else {
-      this.sessionsToNotOverride = [...this.sessionsToNotOverride, session];
+      this.userSelectedSessionsToSchedule = this.userSelectedSessionsToSchedule.filter(
+        (s) => s !== session
+      );
+      this.userSelectedSessionsToPublish = [...this.userSelectedSessionsToPublish, session];
     }
   }
 
   @action
   publishAllAsIs() {
-    this.sessionsToOverride = [...this.sessionsToOverride, ...this.overridableSessions].uniq();
+    this.userSelectedSessionsToSchedule = [];
+    this.userSelectedSessionsToPublish = [...this.overridableSessions];
   }
 
   @action
-  publishNoneAsIs() {
-    this.sessionsToOverride = [];
+  scheduleAll() {
+    this.userSelectedSessionsToPublish = [];
+    this.userSelectedSessionsToSchedule = [...this.overridableSessions];
   }
 
   async saveSomeSessions(sessions) {
