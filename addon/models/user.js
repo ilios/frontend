@@ -1,202 +1,263 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-import RSVP from 'rsvp';
-import { A } from '@ember/array';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { deprecate } from '@ember/debug';
 
-const { all, map } = RSVP;
+export default class User extends Model {
+  @attr('string')
+  lastName;
 
-export default Model.extend({
-  lastName: attr('string'),
-  firstName: attr('string'),
-  middleName: attr('string'),
-  displayName: attr('string'),
-  phone: attr('string'),
-  email: attr('string'),
-  preferredEmail: attr('string'),
-  addedViaIlios: attr('boolean'),
-  enabled: attr('boolean'),
-  campusId: attr('string'),
-  otherId: attr('string'),
-  examined: attr('boolean'),
-  userSyncIgnore: attr('boolean'),
-  icsFeedKey: attr('string'),
-  root: attr('boolean'),
-  reports: hasMany('report', { async: true }),
-  school: belongsTo('school', { async: true }),
-  authentication: belongsTo('authentication', { async: true }),
-  directedCourses: hasMany('course', {
+  @attr('string')
+  firstName;
+
+  @attr('string')
+  middleName;
+
+  @attr('string')
+  displayName;
+
+  @attr('string')
+  phone;
+
+  @attr('string')
+  email;
+
+  @attr('string')
+  preferredEmail;
+
+  @attr('boolean')
+  addedViaIlios;
+
+  @attr('boolean')
+  enabled;
+
+  @attr('string')
+  campusId;
+
+  @attr('string')
+  otherId;
+
+  @attr('boolean')
+  examined;
+
+  @attr('boolean')
+  userSyncIgnore;
+
+  @attr('string')
+  icsFeedKey;
+
+  @attr('boolean')
+  root;
+
+  @hasMany('report', { async: true })
+  reports;
+
+  @belongsTo('school', { async: true })
+  school;
+
+  @belongsTo('authentication', { async: true })
+  authentication;
+
+  @hasMany('course', {
     async: true,
     inverse: 'directors',
-  }),
-  administeredCourses: hasMany('course', {
+  })
+  directedCourses;
+
+  @hasMany('course', {
     async: true,
     inverse: 'administrators',
-  }),
-  studentAdvisedCourses: hasMany('course', {
+  })
+  administeredCourses;
+
+  @hasMany('course', {
     async: true,
     inverse: 'studentAdvisors',
-  }),
-  studentAdvisedSessions: hasMany('session', {
+  })
+  studentAdvisedCourses;
+
+  @hasMany('session', {
     async: true,
     inverse: 'studentAdvisors',
-  }),
-  learnerGroups: hasMany('learner-group', {
-    async: true,
-    inverse: 'users',
-  }),
-  instructedLearnerGroups: hasMany('learner-group', {
-    async: true,
-    inverse: 'instructors',
-  }),
-  instructorGroups: hasMany('instructor-group', {
-    async: true,
-    inverse: 'users',
-  }),
-  instructorIlmSessions: hasMany('ilm-session', {
-    async: true,
-    inverse: 'instructors',
-  }),
-  learnerIlmSessions: hasMany('ilm-session', {
-    async: true,
-    inverse: 'learners',
-  }),
-  offerings: hasMany('offering', {
-    async: true,
-    inverse: 'learners',
-  }),
-  instructedOfferings: hasMany('offering', {
-    async: true,
-    inverse: 'instructors',
-  }),
-  programYears: hasMany('program-year', { async: true }),
-  roles: hasMany('user-role', { async: true }),
-  directedSchools: hasMany('school', {
-    async: true,
-    inverse: 'directors',
-  }),
-  administeredSchools: hasMany('school', {
-    async: true,
-    inverse: 'administrators',
-  }),
-  administeredSessions: hasMany('session', {
-    async: true,
-    inverse: 'administrators',
-  }),
-  directedPrograms: hasMany('program', {
-    async: true,
-    inverse: 'directors',
-  }),
+  })
+  studentAdvisedSessions;
 
-  cohorts: hasMany('cohort', {
+  @hasMany('learner-group', {
     async: true,
     inverse: 'users',
-  }),
-  primaryCohort: belongsTo('cohort', { async: true, inverse: null }),
-  pendingUserUpdates: hasMany('pending-user-update', { async: true }),
-  administeredCurriculumInventoryReports: hasMany('curriculum-inventory-report', {
+  })
+  learnerGroups;
+
+  @hasMany('learner-group', {
+    async: true,
+    inverse: 'instructors',
+  })
+  instructedLearnerGroups;
+
+  @hasMany('instructor-group', {
+    async: true,
+    inverse: 'users',
+  })
+  instructorGroups;
+
+  @hasMany('ilm-session', {
+    async: true,
+    inverse: 'instructors',
+  })
+  instructorIlmSessions;
+
+  @hasMany('ilm-session', {
+    async: true,
+    inverse: 'learners',
+  })
+  learnerIlmSessions;
+
+  @hasMany('offering', {
+    async: true,
+    inverse: 'learners',
+  })
+  offerings;
+
+  @hasMany('offering', {
+    async: true,
+    inverse: 'instructors',
+  })
+  instructedOfferings;
+
+  @hasMany('program-year', { async: true })
+  programYears;
+
+  @hasMany('user-role', { async: true })
+  roles;
+
+  @hasMany('school', {
+    async: true,
+    inverse: 'directors',
+  })
+  directedSchools;
+
+  @hasMany('school', {
     async: true,
     inverse: 'administrators',
-  }),
+  })
+  administeredSchools;
+
+  @hasMany('session', {
+    async: true,
+    inverse: 'administrators',
+  })
+  administeredSessions;
+
+  @hasMany('program', {
+    async: true,
+    inverse: 'directors',
+  })
+  directedPrograms;
+
+  @hasMany('cohort', {
+    async: true,
+    inverse: 'users',
+  })
+  cohorts;
+
+  @belongsTo('cohort', { async: true, inverse: null })
+  primaryCohort;
+
+  @hasMany('pending-user-update', { async: true })
+  pendingUserUpdates;
+
+  @hasMany('curriculum-inventory-report', {
+    async: true,
+    inverse: 'administrators',
+  })
+  administeredCurriculumInventoryReports;
+
+  @use _roles = new ResolveAsyncValue(() => [this.roles, []]);
+
+  get _roleTitles() {
+    return this._roles.mapBy('title');
+  }
+
+  get isStudent() {
+    return Boolean(this._roleTitles?.includes('Student'));
+  }
+
+  @use _cohorts = new ResolveAsyncValue(() => [this.cohorts]);
+  @use _offerings = new ResolveAsyncValue(() => [this.offerings]);
+  @use _learnerIlmSessions = new ResolveAsyncValue(() => [this.learnerIlmSessions]);
 
   /**
-   * Resolves to TRUE if this user has the "Student" role, otherwise FALSE.
-   * @property isStudent
-   * @type {Ember.computed}
-   * @public
+   * Checks if a user is linked to any student things
    */
-  isStudent: computed('roles.[]', async function () {
-    const roles = await this.roles;
-    return !!roles.toArray().findBy('title', 'Student');
-  }),
+  get isLearner() {
+    return Boolean(
+      this._cohorts?.length || this._offerings?.length || this._learnerIlmSessions?.length
+    );
+  }
+
+  @use _directedCourses = new ResolveAsyncValue(() => [this.directedCourses]);
+  @use _administeredCourses = new ResolveAsyncValue(() => [this.administeredCourses]);
+  @use _administeredSessions = new ResolveAsyncValue(() => [this.administeredSessions]);
+  @use _instructorGroups = new ResolveAsyncValue(() => [this.instructorGroups]);
+  @use _instructedOfferings = new ResolveAsyncValue(() => [this.instructedOfferings]);
+  @use _instructedLearnerGroups = new ResolveAsyncValue(() => [this.instructedLearnerGroups]);
+  @use _directedPrograms = new ResolveAsyncValue(() => [this.directedPrograms]);
+  @use _programYears = new ResolveAsyncValue(() => [this.programYears]);
+  @use _administeredCurriculumInventoryReports = new ResolveAsyncValue(() => [
+    this.administeredCurriculumInventoryReports,
+  ]);
+  @use _directedSchools = new ResolveAsyncValue(() => [this.directedSchools]);
+  @use _administeredSchools = new ResolveAsyncValue(() => [this.administeredSchools]);
 
   /**
    * Checks if a user is linked to any non-student things
-   * @property isLearner
-   * @type {Ember.computed}
-   * @public
    */
-  isLearner: computed('cohorts.[]', 'offerings.[]', 'learnerIlmSessions.[]', function () {
-    const cohorts = this.hasMany('cohorts').ids();
-    const offerings = this.hasMany('offerings').ids();
-    const learnerIlmSessions = this.hasMany('learnerIlmSessions').ids();
+  get performsNonLearnerFunction() {
+    deprecate(
+      `user.performsNonLearnerFunction called, should be read from current-user session.`,
+      false,
+      {
+        id: 'common.user-performs-non-learner-function',
+        for: 'ilios-common',
+        until: '65',
+        since: '62.0.0',
+      }
+    );
+    return Boolean(
+      this._directedCourses?.length ||
+        this._administeredCourses?.length ||
+        this._administeredSessions?.length ||
+        this._instructorGroups?.length ||
+        this._instructedOfferings?.length ||
+        this._instructedLearnerGroups?.length ||
+        this._directedPrograms?.length ||
+        this._programYears?.length ||
+        this._administeredCurriculumInventoryReports?.length ||
+        this._directedSchools?.length ||
+        this._administeredSchools?.length
+    );
+  }
 
-    return !isEmpty(cohorts) || !isEmpty(offerings) || !isEmpty(learnerIlmSessions);
-  }),
-
-  /**
-   * Checks if a user is linked to any non-student things
-   * @property performsNonLearnerFunction
-   * @type {Ember.computed}
-   * @public
-   */
-  performsNonLearnerFunction: computed(
-    'directedCourses.[]',
-    'administeredCourses.[]',
-    'administeredSessions.[]',
-    'instructedLearnerGroups.[]',
-    'instructorGroups.[]',
-    'instructedOfferings.[]',
-    'directedPrograms.[]',
-    'programYears.[]',
-    'administeredCurriculumInventoryReports.[]',
-    'directedSchools.[]',
-    'administeredSchools.[]',
-    function () {
-      const directedCourses = this.hasMany('directedCourses').ids();
-      const administeredCourses = this.hasMany('administeredCourses').ids();
-      const administeredSessions = this.hasMany('administeredSessions').ids();
-      const instructedLearnerGroups = this.hasMany('instructedLearnerGroups').ids();
-      const instructorGroups = this.hasMany('instructorGroups').ids();
-      const instructedOfferings = this.hasMany('instructedOfferings').ids();
-      const directedPrograms = this.hasMany('directedPrograms').ids();
-      const programYears = this.hasMany('programYears').ids();
-      const administeredCurriculumInventoryReports = this.hasMany(
-        'administeredCurriculumInventoryReports'
-      ).ids();
-      const directedSchools = this.hasMany('directedSchools').ids();
-      const administeredSchools = this.hasMany('administeredSchools').ids();
-
-      return (
-        !isEmpty(directedCourses) ||
-        !isEmpty(administeredCourses) ||
-        !isEmpty(administeredSessions) ||
-        !isEmpty(instructedLearnerGroups) ||
-        !isEmpty(instructorGroups) ||
-        !isEmpty(instructedOfferings) ||
-        !isEmpty(directedPrograms) ||
-        !isEmpty(programYears) ||
-        !isEmpty(administeredCurriculumInventoryReports) ||
-        !isEmpty(directedSchools) ||
-        !isEmpty(administeredSchools)
-      );
-    }
-  ),
-
-  fullName: computed('fullNameFromFirstMiddleInitialLastName', 'displayName', function () {
+  get fullName() {
     return this.displayName ? this.displayName : this.fullNameFromFirstMiddleInitialLastName;
-  }),
+  }
 
-  fullNameFromFirstMiddleInitialLastName: computed(
-    'firstName',
-    'middleName',
-    'lastName',
-    function () {
-      if (!this.firstName || !this.lastName) {
-        return '';
-      }
-
-      const middleInitial = this.middleName ? this.middleName.charAt(0) : false;
-
-      if (middleInitial) {
-        return `${this.firstName} ${middleInitial}. ${this.lastName}`;
-      } else {
-        return `${this.firstName} ${this.lastName}`;
-      }
+  get fullNameFromFirstMiddleInitialLastName() {
+    if (!this.firstName || !this.lastName) {
+      return '';
     }
-  ),
 
-  fullNameFromFirstMiddleLastName: computed('firstName', 'middleName', 'lastName', function () {
+    const middleInitial = this.middleName ? this.middleName.charAt(0) : false;
+
+    if (middleInitial) {
+      return `${this.firstName} ${middleInitial}. ${this.lastName}`;
+    } else {
+      return `${this.firstName} ${this.lastName}`;
+    }
+  }
+
+  get fullNameFromFirstMiddleLastName() {
     if (!this.firstName || !this.lastName) {
       return '';
     }
@@ -206,171 +267,135 @@ export default Model.extend({
     } else {
       return `${this.firstName} ${this.lastName}`;
     }
-  }),
+  }
 
-  fullNameFromFirstLastName: computed('firstName', 'lastName', function () {
+  get fullNameFromFirstLastName() {
     if (!this.firstName || !this.lastName) {
       return '';
     }
     return `${this.firstName} ${this.lastName}`;
-  }),
+  }
 
-  hasDifferentDisplayName: computed(
-    'displayName',
-    'fullNameFromFirstMiddleInitialLastName',
-    'fullNameFromFirstMiddleLastName',
-    'fullNameFromFirstLastName',
-    function () {
-      const displayName = this.displayName?.trim().toLowerCase();
-      // no display name? nothing to compare then.
-      if (!displayName) {
-        return false;
-      }
-      // compare the display name to 'first last', then to 'first middle last' and 'first m. last' as a fallbacks.
-      return !(
-        displayName === this.fullNameFromFirstLastName.trim().toLowerCase() ||
-        displayName === this.fullNameFromFirstMiddleLastName.trim().toLowerCase() ||
-        displayName === this.fullNameFromFirstMiddleInitialLastName.trim().toLowerCase()
-      );
+  get hasDifferentDisplayName() {
+    const displayName = this.displayName?.trim().toLowerCase();
+    // no display name? nothing to compare then.
+    if (!displayName) {
+      return false;
     }
-  ),
+    // compare the display name to 'first last', then to 'first middle last' and 'first m. last' as a fallbacks.
+    return !(
+      displayName === this.fullNameFromFirstLastName.trim().toLowerCase() ||
+      displayName === this.fullNameFromFirstMiddleLastName.trim().toLowerCase() ||
+      displayName === this.fullNameFromFirstMiddleInitialLastName.trim().toLowerCase()
+    );
+  }
 
-  /**
-   * A list of all courses that this user is instructing in.
-   * @property allInstructedCourses
-   * @type {Ember.computed}
-   * @public
-   */
-  allInstructedCourses: computed(
-    'instructedLearnerGroups.[]',
-    'instructorGroups.[]',
-    'instructedOfferings.[]',
-    'instructorGroupCourses.[]',
-    'instructorIlmSessions.[]',
-    async function () {
-      const instructedLearnerGroups = await this.instructedLearnerGroups;
-      const instructorGroups = await this.instructorGroups;
-      const instructedOfferings = await this.instructedOfferings;
-      const instructorIlmSessions = await this.instructorIlmSessions;
+  @use _instructedLearnerGroupOfferings = new ResolveFlatMapBy(() => [
+    this._instructedLearnerGroups,
+    'offerings',
+  ]);
 
-      const groups = [];
-      groups.pushObjects(instructedLearnerGroups.toArray());
-      groups.pushObjects(instructorGroups.toArray());
-      const listsOfCourses = await map(groups.mapBy('courses'), (courses) => {
-        return courses.toArray();
-      });
-
-      // get a list of sessions associated with this user's offerings and ILMs
-      const offeringsAndIlms = instructedOfferings.toArray();
-      offeringsAndIlms.pushObjects(instructorIlmSessions.toArray());
-      const sessions = await all(offeringsAndIlms.mapBy('session'));
-
-      // get a list of courses from these sessions and add it to the lists of courses
-      const listOfCourses = await all(sessions.uniq().mapBy('course'));
-      listsOfCourses.pushObject(listOfCourses);
-
-      // flatten these lists down to one list of courses, and de-dupe that list
-      return listsOfCourses
-        .reduce((array, set) => {
-          array.pushObjects(set);
-          return array;
-        }, [])
-        .uniq();
+  get _instructedOfferings() {
+    if (!this._instructedLearnerGroupOfferings || !this._instructedOfferings) {
+      return [];
     }
-  ),
+    return [...this._instructedLearnerGroupOfferings, ...this._instructedOfferings].uniq();
+  }
 
-  /**
-   * A list of all sessions that this user is instructing in.
-   * @property allInstructedSessions
-   * @type {Ember.computed}
-   * @public
-   */
-  allInstructedSessions: computed(
-    'instructorGroups.[]',
-    'instructedOfferings.[]',
-    'instructorGroupCourses.[]',
-    'instructorIlmSessions.[]',
-    async function () {
-      const instructorGroups = await this.instructorGroups;
-      const instructedOfferings = await this.instructedOfferings;
-      const instructorIlmSessions = await this.instructorIlmSessions;
+  @use _instructorIlmSessions = new ResolveAsyncValue(() => [this.instructorIlmSessions]);
+  @use _instructorIlmSessionsSessions = new ResolveFlatMapBy(() => [
+    this._instructorIlmSessions,
+    'session',
+  ]);
+  @use _instructedOfferingSessions = new ResolveFlatMapBy(() => [
+    this._instructedOfferings,
+    'session',
+  ]);
+  @use _instructorGroupSessions = new ResolveFlatMapBy(() => [this._instructorGroups, 'sessions']);
 
-      const instructorGroupSessions = await all(instructorGroups.mapBy('sessions'), (sessions) => {
-        return sessions.toArray();
-      });
-
-      // flatten these lists down to one list of sessions, and de-dupe that list
-      const flatInstructorGroupSessions = instructorGroupSessions
-        .reduce((array, set) => {
-          array.pushObjects(set);
-          return array;
-        }, [])
-        .uniq();
-
-      const sessions = await all(
-        [].concat(instructedOfferings.toArray(), instructorIlmSessions.toArray()).mapBy('session')
-      );
-
-      return A().concat(flatInstructorGroupSessions, sessions).uniq();
+  get allInstructedSessions() {
+    if (
+      !this._instructorIlmSessionsSessions ||
+      !this._instructedOfferingSessions ||
+      !this._instructorGroupSessions
+    ) {
+      return [];
     }
-  ),
+    return [
+      ...this._instructorIlmSessionsSessions,
+      ...this._instructedOfferingSessions,
+      ...this._instructorGroupSessions,
+    ]
+      .uniq()
+      .filter(Boolean);
+  }
 
-  /**
-   * A list of all courses that this user is associated with - be it as administrator, learner, instructor or director.
-   * @property allRelatedCourses
-   * @type {Ember.computed}
-   * @public
-   */
-  allRelatedCourses: computed(
-    'directedCourses.[]',
-    'administeredCourses.[]',
-    'learnerGroups.[]',
-    'offerings.[]',
-    'learnerIlmSessions.[]',
-    'allInstructedCourses.[]',
-    async function () {
-      const directedCourses = await this.directedCourses;
-      const administeredCourses = await this.administeredCourses;
-      const learnerGroups = await this.learnerGroups;
-      const offerings = await this.offerings;
-      const learnerIlmSessions = await this.learnerIlmSessions;
-      const allInstructedCourses = await this.allInstructedCourses;
+  @use allInstructedCourses = new ResolveFlatMapBy(() => [this.allInstructedSessions, 'course']);
 
-      // get lists of courses associated with this user's learner-groups
-      const listsOfCourses = await map(learnerGroups.mapBy('courses'), (courses) => {
-        return courses.toArray();
-      });
+  @use _offeringSessions = new ResolveFlatMapBy(() => [this._offerings, 'session']);
+  @use _learnerIlmSessionSessions = new ResolveFlatMapBy(() => [
+    this._learnerIlmSessions,
+    'session',
+  ]);
+  @use _learnerGroupOfferings = new ResolveFlatMapBy(() => [this.learnerGroups, 'offerings']);
+  @use _learnerGroupIlmSessions = new ResolveFlatMapBy(() => [this.learnerGroups, 'ilmSessions']);
+  @use _learnerGroupIlmSessionsSessions = new ResolveFlatMapBy(() => [
+    this._learnerGroupIlmSessions,
+    'session',
+  ]);
 
-      // get a list of sessions associated with this user's offerings and ILMs
-      const offeringsAndIlms = [];
-      offeringsAndIlms.pushObjects(offerings.toArray());
-      offeringsAndIlms.pushObjects(learnerIlmSessions.toArray());
-      const sessions = await all(offeringsAndIlms.mapBy('session'));
-
-      // get a list of courses from these sessions and add it to the lists of courses
-      const listOfCourses = await all(sessions.uniq().mapBy('course'));
-      listsOfCourses.pushObject(listOfCourses);
-
-      // add the direct list of courses to the lists of courses
-      listsOfCourses.pushObject(directedCourses.toArray());
-      listsOfCourses.pushObject(administeredCourses.toArray());
-      listsOfCourses.pushObject(allInstructedCourses.toArray());
-
-      // flatten these lists down to one list of courses, and de-dupe that list
-      return listsOfCourses
-        .reduce((array, set) => {
-          array.pushObjects(set);
-          return array;
-        }, [])
-        .uniq();
+  get _learnerOfferings() {
+    if (!this._learnerGroupOfferings || !this._offerings) {
+      return [];
     }
-  ),
+    return [...this._learnerGroupOfferings, ...this._offerings.toArray()].uniq();
+  }
+  @use _learnerOfferingSessions = new ResolveFlatMapBy(() => [this._learnerOfferings, 'session']);
 
-  secondaryCohorts: computed('primaryCohort', 'cohorts.[]', async function () {
-    const cohorts = await this.cohorts;
-    const primaryCohort = await this.primaryCohort;
-    return cohorts.toArray().filter((cohort) => cohort !== primaryCohort);
-  }),
+  get _learnerSessions() {
+    if (
+      !this._learnerOfferingSessions ||
+      !this._learnerIlmSessionSessions ||
+      !this._learnerGroupIlmSessionsSessions
+    ) {
+      return [];
+    }
+    return [
+      ...this._learnerOfferingSessions,
+      ...this._learnerIlmSessionSessions,
+      ...this._learnerGroupIlmSessionsSessions,
+    ]
+      .uniq()
+      .filter(Boolean);
+  }
+
+  @use _learnerCourses = new ResolveFlatMapBy(() => [this._learnerSessions, 'course']);
+
+  get allRelatedCourses() {
+    if (
+      !this._learnerCourses ||
+      !this.allInstructedCourses ||
+      !this._directedCourses ||
+      !this._administeredCourses
+    ) {
+      return [];
+    }
+    return [
+      ...this._learnerCourses,
+      ...this.allInstructedCourses,
+      ...this._directedCourses.toArray(),
+      ...this._administeredCourses.toArray(),
+    ].uniq();
+  }
+
+  @use _primaryCohort = new ResolveAsyncValue(() => [this.primaryCohort]);
+
+  get secondaryCohorts() {
+    if (!this._cohorts || !this._primaryCohort) {
+      return [];
+    }
+    return this._cohorts.toArray().filter((cohort) => cohort !== this._primaryCohort);
+  }
 
   /**
    * Compare a user's learner groups to a list of learner groups and find the one
@@ -396,5 +421,5 @@ export default Model.extend({
       return childGroupsWhoAreUserGroupMembers.length === 0;
     });
     return lowestGroup ? lowestGroup : null;
-  },
-});
+  }
+}

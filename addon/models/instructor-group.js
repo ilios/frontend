@@ -1,72 +1,52 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import RSVP from 'rsvp';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-const { map, all } = RSVP;
+import { use } from 'ember-could-get-used-to-this';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 
-export default Model.extend({
-  title: attr('string'),
-  school: belongsTo('school', { async: true }),
-  learnerGroups: hasMany('learner-group', { async: true }),
-  ilmSessions: hasMany('ilm-session', { async: true }),
-  users: hasMany('user', { async: true }),
-  offerings: hasMany('offering', { async: true }),
+export default class InstructorGroupModel extends Model {
+  @attr('string')
+  title;
 
-  coursesFromOfferings: computed('offerings.[]', async function () {
-    const offerings = await this.offerings;
-    const courses = await map(offerings.toArray(), async (offering) => {
-      const session = await offering.get('session');
-      return session.get('course');
-    });
-    return courses.uniq();
-  }),
+  @belongsTo('school', { async: true })
+  school;
 
-  coursesFromIlmSessions: computed('ilmSessions.[]', async function () {
-    const ilmSessions = await this.ilmSessions;
-    const courses = await map(ilmSessions.toArray(), async (ilmSession) => {
-      const session = await ilmSession.get('session');
-      return session.get('course');
-    });
-    return courses.uniq();
-  }),
+  @hasMany('learner-group', { async: true })
+  learnerGroups;
 
-  courses: computed('coursesFromOfferings.[]', 'coursesFromIlmSessions.[]', async function () {
-    const offeringCourses = await this.coursesFromOfferings;
-    const ilmCourses = await this.coursesFromIlmSessions;
-    const courses = [];
-    courses.pushObjects(offeringCourses);
-    courses.pushObjects(ilmCourses);
-    return courses.uniqBy('id');
-  }),
+  @hasMany('ilm-session', { async: true })
+  ilmSessions;
+
+  @hasMany('user', { async: true })
+  users;
+
+  @hasMany('offering', { async: true })
+  offerings;
+
+  @use _offeringSessions = new ResolveFlatMapBy(() => [this.offerings, 'session']);
+  @use coursesFromOfferings = new ResolveFlatMapBy(() => [this._offeringSessions, 'course']);
+  @use _ilmSessionSessions = new ResolveFlatMapBy(() => [this.ilmSessions, 'session']);
+  @use coursesFromIlmSessions = new ResolveFlatMapBy(() => [this._ilmSessionSessions, 'course']);
+
+  get courses() {
+    if (!this.coursesFromIlmSessions || !this.coursesFromOfferings) {
+      return [];
+    }
+    return [...this.coursesFromIlmSessions, ...this.coursesFromOfferings].uniq();
+  }
 
   /**
    * A list of all sessions associated with this group, via offerings or via ILMs.
-   * @property sessions
-   * @type {Ember.computed}
-   * @public
    */
-  sessions: computed('ilmSessions.[]', 'offerings.[]', async function () {
-    const offerings = await this.offerings;
-    const ilms = await this.ilmSessions;
-    const arr = [].concat(offerings.toArray(), ilms.toArray());
-
-    const sessions = await all(arr.mapBy('session'));
-
-    return sessions
-      .filter((session) => {
-        return !isEmpty(session);
-      })
-      .uniq();
-  }),
+  get sessions() {
+    if (!this._offeringSessions || !this._ilmSessionSessions) {
+      return [];
+    }
+    return [...this._offeringSessions, ...this._ilmSessionSessions].uniq();
+  }
 
   /**
    * Returns the number of users in this group
-   * @property usersCount
-   * @type {Ember.computed}
-   * @public
    */
-  usersCount: computed('users.[]', function () {
-    const userIds = this.hasMany('users').ids();
-    return userIds.length;
-  }),
-});
+  get usersCount() {
+    return this.users.length;
+  }
+}
