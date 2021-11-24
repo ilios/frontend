@@ -1,127 +1,128 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-import { map } from 'rsvp';
-const { collect, sum, gte } = computed;
+import { use } from 'ember-could-get-used-to-this';
+import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 
-export default Model.extend({
-  title: attr('string'),
-  description: attr('string'),
-  vocabulary: belongsTo('vocabulary', { async: true }),
-  parent: belongsTo('term', { inverse: 'children', async: true }),
-  children: hasMany('term', { inverse: 'parent', async: true }),
-  programYears: hasMany('programYear', { async: true }),
-  sessions: hasMany('session', { async: true }),
-  courses: hasMany('course', { async: true }),
-  aamcResourceTypes: hasMany('aamcResourceType', { async: true }),
-  associatedLengths: collect(
-    'programYears.length',
-    'courses.length',
-    'sessions.length',
-    'programYearObjectives.length',
-    'courseObjectives.length',
-    'sessionObjectives.length'
-  ),
-  totalAssociations: sum('associatedLengths'),
-  hasAssociations: gte('totalAssociations', 1),
-  active: attr('boolean'),
-  courseObjectives: hasMany('course-objective', { async: true }),
-  programYearObjectives: hasMany('program-year-objective', { async: true }),
-  sessionObjectives: hasMany('session-objective', { async: true }),
+export default class Term extends Model {
+  @attr('string')
+  title;
 
-  isTopLevel: computed('parent', function () {
-    return isEmpty(this.belongsTo('parent').id());
-  }),
+  @attr('string')
+  description;
 
-  hasChildren: computed.gt('childCount', 0),
+  @belongsTo('vocabulary', { async: true })
+  vocabulary;
 
-  childCount: computed('children', function () {
-    return this.hasMany('children').ids().length;
-  }),
+  @belongsTo('term', { inverse: 'children', async: true })
+  parent;
+
+  @hasMany('term', { inverse: 'parent', async: true })
+  children;
+
+  @hasMany('programYear', { async: true })
+  programYears;
+
+  @hasMany('session', { async: true })
+  sessions;
+
+  @hasMany('course', { async: true })
+  courses;
+
+  @hasMany('aamcResourceType', { async: true })
+  aamcResourceTypes;
+
+  @attr('boolean')
+  active;
+
+  @hasMany('course-objective', { async: true })
+  courseObjectives;
+
+  @hasMany('program-year-objective', { async: true })
+  programYearObjectives;
+
+  @hasMany('session-objective', { async: true })
+  sessionObjectives;
+
+  @use titleWithParentTitles = new DeprecatedAsyncCP(() => [
+    this.getTitleWithParentTitles.bind(this),
+    'term.titleWithParentTitles',
+  ]);
+
+  get associatedLengths() {
+    return [
+      this.programYears.length,
+      this.courses.length,
+      this.sessions.length,
+      this.programYearObjectives.length,
+      this.courseObjectives.length,
+      this.sessionObjectives.length,
+    ];
+  }
+
+  get totalAssociations() {
+    return this.associatedLengths.reduce((prev, curr) => prev + curr);
+  }
+
+  get hasAssociations() {
+    return !!this.totalAssociations;
+  }
+
+  get isTopLevel() {
+    return !this.belongsTo('parent').id();
+  }
+
+  get childCount() {
+    return this.children.length;
+  }
+
+  get hasChildren() {
+    return !!this.childCount;
+  }
 
   /**
    * A list of parent terms of this term, sorted by ancestry (oldest ancestor first).
-   *
-   * @property allParents
-   * @type {Ember.computed}
-   * @public
    */
-  allParents: computed('parent', 'parent.allParents.[]', async function () {
-    const parentTerm = await this.parent;
-    if (!parentTerm) {
+  async getAllParents() {
+    const parent = await this.parent;
+    if (!parent) {
       return [];
     }
-
-    const terms = [];
-    const allParents = await parentTerm.get('allParents');
-    terms.pushObjects(allParents);
-    terms.pushObject(parentTerm);
-    return terms;
-  }),
-
-  /**
-   * A list of parent terms of this term, including this term as its last item.
-   *
-   * @property termWithAllParents
-   * @type {Ember.computed}
-   * @public
-   */
-  termWithAllParents: computed('allParents.[]', async function () {
-    const terms = [];
-    const allParents = await this.allParents;
-    terms.pushObjects(allParents);
-    terms.pushObject(this);
-    return terms;
-  }),
+    const allParents = await parent.getAllParents();
+    return [...allParents, parent];
+  }
 
   /**
    * A list of parent terms titles of this term, sorted by ancestry (oldest ancestor first).
-   *
-   * @property allParentTitles
-   * @type {Ember.computed}
-   * @public
    */
-  allParentTitles: computed('parent.{title,allParentTitles.[]}', async function () {
-    const parentTerm = await this.parent;
-    if (!parentTerm) {
+  async getAllParentTitles() {
+    const parent = await this.parent;
+    if (!parent) {
       return [];
     }
-
-    const parents = await parentTerm.get('allParents');
+    const parents = await parent.getAllParents();
     const titles = parents.mapBy('title');
-    titles.push(parentTerm.get('title'));
-    return titles;
-  }),
+    return [...titles, parent.title];
+  }
 
   /**
    * A list of parent terms titles of this term, including this term's title as its last item.
-   *
-   * @property titleWithParentTitles
-   * @type {Ember.computed}
-   * @public
    */
-  titleWithParentTitles: computed('title', 'allParentTitles.[]', async function () {
-    const parentTitles = await this.allParentTitles;
-    if (isEmpty(parentTitles)) {
+  async getTitleWithParentTitles() {
+    const parentTitles = await this.getAllParentTitles();
+    if (!parentTitles.length) {
       return this.title;
     }
     return parentTitles.join(' > ') + ' > ' + this.title;
-  }),
+  }
 
-  /**
-   * A list of descendants terms of this term.
-   *
-   * @property termWithAllDescendants
-   * @type {Ember.computed}
-   * @public
-   */
-  allDescendants: computed('children.[]', 'children.@each.allDescendants', async function () {
+  async getAllDescendants() {
     const descendants = [];
     const children = await this.children;
     descendants.pushObjects(children.toArray());
-    const childrenDescendants = await map(children.mapBy('allDescendants'), (childDescendants) => {
-      return childDescendants;
-    });
+    const childrenDescendants = await Promise.all(
+      children.toArray().map(async (child) => {
+        return child.getAllDescendants();
+      })
+    );
     descendants.pushObjects(
       childrenDescendants.reduce((array, set) => {
         array.pushObjects(set);
@@ -129,43 +130,17 @@ export default Model.extend({
       }, [])
     );
     return descendants;
-  }),
+  }
 
   /**
    * A list of descendant terms titles of this term, including this term's title as its last item.
-   *
-   * @property titleWithDescendantTitles
-   * @type {Ember.computed}
-   * @public
    */
-  titleWithDescendantTitles: computed('title', 'allDescendants.[]', async function () {
-    const allDescendants = await this.allDescendants;
+  async getTitleWithDescendantTitles() {
+    const allDescendants = await this.getAllDescendants();
     const allDescendantTitles = allDescendants.mapBy('title');
-    if (isEmpty(allDescendantTitles)) {
+    if (!allDescendantTitles.length) {
       return this.title;
     }
     return allDescendantTitles.join(' > ') + ' > ' + this.title;
-  }),
-
-  /**
-   * TRUE if this term and all of its ancestors, if existent, are active. FALSE otherwise.
-   *
-   * @property isActiveInTree
-   * @type {Ember.computed}
-   * @public
-   */
-  isActiveInTree: computed('active', 'parent.isActiveInTree', async function () {
-    const parent = await this.parent;
-    const active = this.active;
-
-    if (!active) {
-      return false;
-    }
-
-    if (!parent) {
-      return true;
-    }
-
-    return parent.get('isActiveInTree');
-  }),
-});
+  }
+}

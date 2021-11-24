@@ -52,12 +52,6 @@ export default class CourseObjective extends Model {
     return this._allTermVocabularies?.uniq().sortBy('title');
   }
 
-  @use allTerms = new ResolveFlatMapBy(() => [this.terms, 'termWithAllParents']);
-
-  get termsWithAllParents() {
-    return this.allTerms?.uniq();
-  }
-
   @use allTermCompetencies = new ResolveAsyncValue(() => [
     this.programYearObjectives.mapBy('competency'),
   ]);

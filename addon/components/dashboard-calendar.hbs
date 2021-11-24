@@ -103,12 +103,9 @@
               {{#if (is-array this.vocabularies)}}
                 <ul>
                   {{#each this.vocabularies as |vocabulary|}}
-                    <h6>
-                      {{vocabulary.title}}
-                    </h6>
-                    <Dashboard::SelectedTermTree
+                    <Dashboard::SelectedVocabulary
                       @selectedTermIds={{@selectedTermIds}}
-                      @terms={{await vocabulary.topLevelTerms}}
+                      @vocabulary={{vocabulary}}
                       @add={{@addTermId}}
                       @remove={{@removeTermId}}
                     />

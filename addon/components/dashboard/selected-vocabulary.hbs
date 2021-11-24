@@ -1,0 +1,11 @@
+<div data-test-dashboard-selected-vocabulary>
+  <h6 data-test-title>
+    {{@vocabulary.title}}
+  </h6>
+  <Dashboard::SelectedTermTree
+    @selectedTermIds={{@selectedTermIds}}
+    @terms={{this.topLevelTerms}}
+    @add={{@add}}
+    @remove={{@remove}}
+  />
+</div>

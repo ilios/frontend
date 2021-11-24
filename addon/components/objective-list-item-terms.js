@@ -10,7 +10,7 @@ export default class ObjectiveListItemTerms extends Component {
   *load(event, [filteredTerms]) {
     const proxies = yield all(
       filteredTerms.map(async (term) => {
-        const title = await term.titleWithParentTitles;
+        const title = await term.getTitleWithParentTitles();
         return { term, title };
       })
     );

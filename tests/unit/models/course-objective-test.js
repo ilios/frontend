@@ -37,27 +37,6 @@ module('Unit | Model | course objective', function (hooks) {
     assert.strictEqual(vocabulariesAgain[2], vocab1);
   });
 
-  test('termsWithAllParents', async function (assert) {
-    assert.expect(7);
-    const store = this.owner.lookup('service:store');
-    const subject = store.createRecord('course-objective');
-    const term1 = store.createRecord('term');
-    const term2 = store.createRecord('term', { parent: term1 });
-    const term3 = store.createRecord('term', { parent: term1 });
-    const term4 = store.createRecord('term', { parent: term2 });
-    const term5 = store.createRecord('term', { parent: term3 });
-    const term6 = store.createRecord('term');
-    subject.get('terms').pushObjects([term4, term5, term6]);
-    const terms = await waitForResource(subject, 'termsWithAllParents');
-    assert.strictEqual(terms.length, 6);
-    assert.ok(terms.includes(term1));
-    assert.ok(terms.includes(term2));
-    assert.ok(terms.includes(term3));
-    assert.ok(terms.includes(term4));
-    assert.ok(terms.includes(term5));
-    assert.ok(terms.includes(term6));
-  });
-
   test('treeCompetencies', async function (assert) {
     assert.expect(3);
     const store = this.owner.lookup('service:store');

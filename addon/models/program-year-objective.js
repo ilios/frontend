@@ -48,11 +48,6 @@ export default class ProgramYearObjective extends Model {
     return this._allTermVocabularies?.uniq().sortBy('title');
   }
 
-  @use allTerms = new ResolveFlatMapBy(() => [this.terms, 'termWithAllParents']);
-  get termsWithAllParents() {
-    return this.allTerms?.uniq();
-  }
-
   @use firstProgram = new DeprecatedResolveCP(() => [
     this.programYear.get('program'),
     'programYearObjective.firstProgram',

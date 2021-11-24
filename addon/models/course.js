@@ -221,19 +221,6 @@ export default class Course extends Model {
     return this._allTermVocabularies?.uniq().sortBy('title');
   }
 
-  @use _allTermParents = new ResolveFlatMapBy(() => [this.terms, 'allParents']);
-  @use _resolvedTerms = new ResolveAsyncValue(() => [this.terms]);
-
-  /**
-   * A list containing all associated terms and their parent terms.
-   */
-  get termsWithAllParents() {
-    if (!this._allTermParents || !this._resolvedTerms) {
-      return [];
-    }
-    return [...this._allTermParents, ...this._resolvedTerms.toArray()].uniq();
-  }
-
   get termCount() {
     return this.terms.length;
   }

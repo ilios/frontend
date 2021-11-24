@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { click, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { component } from 'ilios-common/page-objects/components/dashboard/filter-checkbox';
 
 module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
   setupRenderingTest(hooks);
@@ -19,10 +20,8 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
       </Dashboard::FilterCheckbox>
     `);
 
-    assert.dom().containsText('label text');
-    assert.dom('input').exists();
-    assert.dom('input').hasAttribute('type', 'checkbox');
-    assert.dom('input').isNotChecked();
+    assert.strictEqual(component.text, 'label text');
+    assert.notOk(component.isChecked);
   });
 
   test('it renders checked', async function (assert) {
@@ -35,11 +34,8 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
         label text
       </Dashboard::FilterCheckbox>
     `);
-
-    assert.dom().containsText('label text');
-    assert.dom('input').exists();
-    assert.dom('input').hasAttribute('type', 'checkbox');
-    assert.dom('input').isChecked();
+    assert.strictEqual(component.text, 'label text');
+    assert.ok(component.isChecked);
   });
 
   test('clicking label when checked fires remove', async function (assert) {
@@ -57,7 +53,7 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
       </Dashboard::FilterCheckbox>
     `);
 
-    await click('label');
+    await component.click();
   });
 
   test('clicking label when not checked fires add', async function (assert) {
@@ -75,6 +71,6 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
       </Dashboard::FilterCheckbox>
     `);
 
-    await click('label');
+    await component.click();
   });
 });

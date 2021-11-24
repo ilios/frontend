@@ -1,58 +1,37 @@
 import Model, { belongsTo, hasMany, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
 import Inflector from 'ember-inflector';
-import { all } from 'rsvp';
+import { filter } from 'rsvp';
+import { use } from 'ember-could-get-used-to-this';
+import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 
 Inflector.inflector.irregular('vocabulary', 'vocabularies');
 
-export default Model.extend({
-  title: attr('string'),
-  school: belongsTo('school', { async: true }),
-  active: attr('boolean'),
-  terms: hasMany('term', { async: true }),
+export default class Vocabulary extends Model {
+  @attr('string')
+  title;
 
-  topLevelTerms: computed('terms.[]', async function () {
+  @belongsTo('school', { async: true })
+  school;
+
+  @attr('boolean')
+  active;
+
+  @hasMany('term', { async: true })
+  terms;
+
+  @use topLevelTerms = new DeprecatedAsyncCP(() => [
+    this.getTopLevelTerms.bind(this),
+    'vocabulary.topLevelTerms',
+  ]);
+
+  async getTopLevelTerms() {
     const terms = await this.terms;
-    return terms.toArray().filterBy('isTopLevel');
-  }),
+    return filter(terms.toArray(), async (term) => {
+      return !(await term.parent);
+    });
+  }
 
-  /**
-   * A list of all vocabularies that are associated via terms.
-   * @property associatedVocabularies
-   * @type {Ember.computed}
-   * @public
-   */
-  associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.terms;
-    const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
-    return vocabularies.uniq().sortBy('title');
-  }),
-
-  /**
-   * A list containing all associated terms and their parent terms.
-   * @property termsWithAllParents
-   * @type {Ember.computed}
-   * @public
-   */
-  termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.terms;
-    const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return allTerms
-      .reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, [])
-      .uniq();
-  }),
-
-  /**
-   * The number of terms attached to this model
-   * @property termCount
-   * @type {Ember.computed}
-   * @public
-   */
-  termCount: computed('terms.[]', function () {
-    const termIds = this.hasMany('terms').ids();
-    return termIds.length;
-  }),
-});
+  get termCount() {
+    return this.terms.length;
+  }
+}
