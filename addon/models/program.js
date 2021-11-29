@@ -1,51 +1,53 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
-import { all } from 'rsvp';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 
-export default Model.extend({
-  title: attr('string'),
-  shortTitle: attr('string'),
-  duration: attr('number', { defaultValue: 1 }),
-  school: belongsTo('school', { async: true }),
-  programYears: hasMany('program-year', { async: true, inverse: 'program' }),
-  directors: hasMany('user', { async: true, inverse: 'directedPrograms' }),
-  curriculumInventoryReports: hasMany('curriculum-inventory-report', {
-    async: true,
-  }),
+export default class Program extends Model {
+  @attr('string')
+  title;
+  @attr('string')
+  shortTitle;
+  @attr('number', { defaultValue: 1 })
+  duration;
+  @belongsTo('school', { async: true })
+  school;
+  @hasMany('program-year', { async: true, inverse: 'program' })
+  programYears;
+  @hasMany('user', { async: true, inverse: 'directedPrograms' })
+  directors;
+  @hasMany('curriculum-inventory-report', { async: true })
+  curriculumInventoryReports;
 
-  hasCurriculumInventoryReports: computed('curriculumInventoryReports.[]', function () {
-    return this.hasMany('curriculumInventoryReports').ids().length > 0;
-  }),
+  get hasCurriculumInventoryReports() {
+    return !!this.curriculumInventoryReports.length;
+  }
 
-  hasProgramYears: computed('programYears.[]', function () {
-    return this.hasMany('programYears').ids().length > 0;
-  }),
+  get hasProgramYears() {
+    return !!this.programYears.length;
+  }
+
+  @use _cohorts = new ResolveAsyncValue(() => [this.programYears?.mapBy('cohort')]);
 
   /**
    * All cohorts associated with this program via its program years.
-   * @property cohorts
-   * @type {Ember.computed}
-   * @public
    */
-  cohorts: computed('programYears.[]', async function () {
-    const programYears = await this.programYears;
-    return all(programYears.toArray().mapBy('cohort'));
-  }),
+  get cohorts() {
+    if (!this._cohorts) {
+      return [];
+    }
+    return this._cohorts.toArray();
+  }
+
+  @use _courses = new ResolveFlatMapBy(() => [this._cohorts, 'courses']);
 
   /**
    * All courses linked to this program via its program years/cohorts.
-   * @property courses
-   * @type {Ember.computed}
-   * @public
    */
-  courses: computed('cohorts.[]', async function () {
-    const cohorts = await this.cohorts;
-    const courses = await all(cohorts.mapBy('courses'));
-    return courses
-      .reduce((array, set) => {
-        array.pushObjects(set.toArray());
-        return array;
-      }, [])
-      .uniq();
-  }),
-});
+  get courses() {
+    if (!this._courses) {
+      return [];
+    }
+    return this._courses.uniq();
+  }
+}
