@@ -1,27 +1,42 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
 
-export default Model.extend({
-  title: attr('string'),
-  description: attr('string'),
-  uploadDate: attr('date'),
-  originalAuthor: attr('string'),
-  citation: attr('string'),
-  copyrightPermission: attr('boolean'),
-  copyrightRationale: attr('string'),
-  filename: attr('string'),
-  mimetype: attr('string'),
-  filesize: attr('number'),
-  link: attr('string'),
-  absoluteFileUri: attr('string'),
-  userRole: belongsTo('learning-material-user-role', { async: true }),
-  status: belongsTo('learning-material-status', { async: true }),
-  owningUser: belongsTo('user', { async: true }),
-  sessionLearningMaterials: hasMany('session-learning-material', {
-    async: true,
-  }),
-  courseLearningMaterials: hasMany('course-learning-material', { async: true }),
-  type: computed('filename', 'citation', 'link', function () {
+export default class LearningMaterial extends Model {
+  @attr('string')
+  title;
+  @attr('string')
+  description;
+  @attr('date')
+  uploadDate;
+  @attr('string')
+  originalAuthor;
+  @attr('string')
+  citation;
+  @attr('boolean')
+  copyrightPermission;
+  @attr('string')
+  copyrightRationale;
+  @attr('string')
+  filename;
+  @attr('string')
+  mimetype;
+  @attr('number')
+  filesize;
+  @attr('string')
+  link;
+  @attr('string')
+  absoluteFileUri;
+  @belongsTo('learning-material-user-role', { async: true })
+  userRole;
+  @belongsTo('learning-material-status', { async: true })
+  status;
+  @belongsTo('user', { async: true })
+  owningUser;
+  @hasMany('session-learning-material', { async: true })
+  sessionLearningMaterials;
+  @hasMany('course-learning-material', { async: true })
+  courseLearningMaterials;
+
+  get type() {
     if (this.filename) {
       return 'file';
     }
@@ -33,8 +48,9 @@ export default Model.extend({
     }
 
     return null;
-  }),
-  url: computed('absoluteFileUri', 'citation', 'link', 'type', function () {
+  }
+
+  get url() {
     if (this.type === 'file') {
       return this.absoluteFileUri;
     }
@@ -43,9 +59,19 @@ export default Model.extend({
     }
 
     return null;
-  }),
-  isFile: computed.equal('type', 'file'),
-  isLink: computed.equal('type', 'link'),
-  isCitation: computed.equal('type', 'citation'),
-  fileHash: null,
-});
+  }
+
+  get isFile() {
+    return 'file' === this.type;
+  }
+
+  get isLink() {
+    return 'link' === this.type;
+  }
+
+  get isCitation() {
+    return 'citation' === this.type;
+  }
+
+  fileHash = null;
+}
