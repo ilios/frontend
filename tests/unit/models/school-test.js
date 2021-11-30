@@ -1,43 +1,25 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Unit | Model | School', function (hooks) {
   setupTest(hooks);
+  setupMirage(hooks);
 
-  test('getProgramYearsForYear', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('school');
-    const store = this.owner.lookup('service:store');
-    const program1 = store.createRecord('program');
-    const program2 = store.createRecord('program');
-    store.createRecord('programYear', { program: program1, startYear: 2014 });
-    const programYear1 = store.createRecord('programYear', {
-      program: program1,
-      startYear: 2017,
-    });
-    const programYear2 = store.createRecord('programYear', {
-      program: program2,
-      startYear: 2017,
-    });
-    model.get('programs').pushObjects([program1, program2]);
-
-    const programYears = await model.getProgramYearsForYear(2017);
-
-    assert.strictEqual(programYears.length, 2);
-    assert.ok(programYears.includes(programYear1));
-    assert.ok(programYears.includes(programYear2));
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
   });
 
   test('getConfigValue booleans', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const school = store.createRecord('school');
-    store.createRecord('school-config', {
+    const school = this.store.createRecord('school');
+    this.store.createRecord('school-config', {
       name: 'test-false',
       value: 'false',
       school,
     });
     const testFalse = await school.getConfigValue('test-false');
     assert.false(testFalse);
-    store.createRecord('school-config', {
+    this.store.createRecord('school-config', {
       name: 'test-true',
       value: 'true',
       school,
@@ -47,20 +29,59 @@ module('Unit | Model | School', function (hooks) {
   });
 
   test('getConfigValue empty', async function (assert) {
-    const school = this.owner.lookup('service:store').createRecord('school');
+    const school = this.store.createRecord('school');
     const testNull = await school.getConfigValue('test-false');
     assert.deepEqual(testNull, null);
   });
 
   test('getConfigValue null', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const school = store.createRecord('school');
-    store.createRecord('school-config', {
+    const school = this.store.createRecord('school');
+    this.store.createRecord('school-config', {
       name: 'test-null',
       value: 'null',
       school,
     });
     const testNull = await school.getConfigValue('test-null');
     assert.deepEqual(testNull, null);
+  });
+
+  test('cohorts', async function (assert) {
+    assert.ok(true);
+    const school = this.server.create('school');
+    const model = await this.store.find('school', school.id);
+    let cohorts = await model.cohorts;
+    assert.strictEqual(cohorts.length, 0);
+    const program1 = this.server.create('program', {
+      school,
+    });
+    const program2 = this.server.create('program', {
+      school,
+    });
+    const programYear1 = this.server.create('program-year', {
+      program: program1,
+    });
+    const programYear2 = this.server.create('program-year', {
+      program: program2,
+    });
+    const programYear3 = this.server.create('program-year', {
+      program: program2,
+    });
+    const programYear4 = this.server.create('program-year', {
+      program: program2,
+    });
+    this.server.create('cohort', {
+      programYear: programYear1,
+    });
+    this.server.create('cohort', {
+      programYear: programYear2,
+    });
+    this.server.create('cohort', {
+      programYear: programYear3,
+    });
+    this.server.create('cohort', {
+      programYear: programYear4,
+    });
+    cohorts = await model.cohorts;
+    assert.strictEqual(cohorts.length, 4);
   });
 });
