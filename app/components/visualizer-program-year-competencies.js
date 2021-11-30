@@ -18,7 +18,7 @@ export default class VisualizerProgramYearCompetenciesComponent extends Componen
   @restartableTask
   *load(element, [programYear]) {
     const cohort = yield programYear.cohort;
-    const year = yield cohort.classOfYear;
+    const year = yield programYear.getClassOfYear();
     const classOfYear = this.intl.t('general.classOf', { year });
     this.programYearName = cohort.title ?? classOfYear;
 

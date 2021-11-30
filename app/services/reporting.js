@@ -252,28 +252,26 @@ export default Service.extend({
 
   async programYearsResults(results) {
     const canView = await this.canViewPrograms;
-    const mappedResults = await map(results.toArray(), async (item) => {
+    return map(results.toArray(), async (programYear) => {
       const rhett = {};
-      const program = await item.get('program');
-      const school = await program.get('school');
-      const classOfYear = await item.get('classOfYear');
+      const program = await programYear.program;
+      const school = await programYear.school;
+      const classOfYear = await programYear.getClassOfYear();
 
       rhett.value = school.get('title') + ' ' + program.get('title') + ' ' + classOfYear;
       if (canView) {
         rhett.route = 'programYear';
         rhett.model = program;
-        rhett.model2 = item;
+        rhett.model2 = programYear;
       }
       return rhett;
     });
-
-    return mappedResults;
   },
 
   async programYearsArrayResults(results) {
     const intl = this.intl;
     const resultsWithClassOfYear = await map(results, async (programYear) => {
-      const classOfYear = await programYear.get('classOfYear');
+      const classOfYear = await programYear.getClassOfYear();
       return {
         programYear,
         classOfYear,
