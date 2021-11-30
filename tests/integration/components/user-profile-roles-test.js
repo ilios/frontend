@@ -95,11 +95,8 @@ module('Integration | Component | user profile roles', function (hooks) {
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     this.set('user', userModel);
-    this.set('nothing', parseInt);
 
-    await render(
-      hbs`<UserProfileRoles @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
-    );
+    await render(hbs`<UserProfileRoles @isManaging={{true}} @user={{user}} />`);
     const inputs = findAll('input');
     const formerStudent = '[data-test-former-student] input';
     const enabled = '[data-test-enabled] input';
