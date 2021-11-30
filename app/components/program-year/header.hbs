@@ -5,7 +5,7 @@
 >
   <div class="backtolink">
     {{#if (is-fulfilled @programYear.program)}}
-      <LinkTo @route="program" @query={{hash}} data-test-back-to-program>
+      <LinkTo @route="program" data-test-back-to-program>
         {{t "general.backToProgramYears"}}
       </LinkTo>
     {{/if}}
