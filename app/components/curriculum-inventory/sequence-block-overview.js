@@ -145,7 +145,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
         year: report.get('year'),
       },
     });
-    const linkedCourses = await report.linkedCourses;
+    const linkedCourses = await report.getLinkedCourses();
     // Filter out all courses that are linked to (sequence blocks in) this report.
     const linkableCourses = allLinkableCourses.filter((course) => {
       return !linkedCourses.includes(course);
