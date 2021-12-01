@@ -33,18 +33,13 @@
           data-test-manage
           {{on "click" @manage}}
         >
-          {{get (await @objective.competency) "title"}}
+          {{@objective.competency.title}}
         </button>
       {{else}}
-        <span data-test-competency>{{get (await @objective.competency) "title"}}</span>
+        <span data-test-competency>{{@objective.competency.title}}</span>
       {{/if}}
-      {{#if
-        (not-eq
-          (get (await @objective.competency) "id")
-          (get (await @objective.competency.domain) "id")
-        )
-      }}
-        <span data-test-domain>({{get (await @objective.competency.domain) "title"}})</span>
+      {{#if (await @objective.competency.parent)}}
+          <span data-test-domain>({{@objective.competency.parent.title}})</span>
       {{/if}}
     {{else if @editable}}
       <button type="button" {{on "click" @manage}} data-test-manage>

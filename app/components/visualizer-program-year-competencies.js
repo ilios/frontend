@@ -72,7 +72,7 @@ export default class VisualizerProgramYearCompetenciesComponent extends Componen
     const objectiveObjects = await this.getObjectiveObjects(programYear);
     const competencies = await programYear.competencies;
     return await map(competencies.toArray(), async (competency) => {
-      const domain = await competency.domain;
+      const domain = await competency.getDomain();
 
       const domainId = domain.id;
       const competencyId = competency.id;
@@ -88,7 +88,7 @@ export default class VisualizerProgramYearCompetenciesComponent extends Componen
   async getDomainObjects(programYear) {
     const competencies = await programYear.competencies;
     const competencyObjects = await this.getCompetencyObjects(programYear);
-    const domains = await map(competencies.toArray(), async (competency) => competency.domain);
+    const domains = await map(competencies.toArray(), async (competency) => competency.getDomain());
     return domains.uniq().map((domain) => {
       const id = domain.id;
       const name = domain.title;
