@@ -1,38 +1,52 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
-import { filter, hash } from 'rsvp';
-import { restartableTask } from 'ember-concurrency';
+import { filter } from 'rsvp';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class UserProfilePermissionsComponent extends Component {
   @service store;
   @service iliosConfig;
 
-  @tracked selectedSchool;
-  @tracked selectedYearId;
-  @tracked defaultSchool;
-  @tracked schools = [];
-  @tracked academicYears = [];
-  @tracked academicYearCrossesCalendarYearBoundaries = false;
-  @tracked schoolCollapsed = true;
-  @tracked programCollapsed = true;
-  @tracked programYearCollapsed = true;
-  @tracked courseCollapsed = true;
-  @tracked sessionCollapsed = true;
-  @tracked isDirectingSchool = false;
-  @tracked isAdministeringSchool = false;
-  @tracked directedPrograms = [];
-  @tracked directedProgramYears = [];
-  @tracked directedCourses = [];
-  @tracked administeredCourses = [];
-  @tracked instructedCourses = [];
-  @tracked studentAdvisedCourses = [];
-  @tracked administeredSessions = [];
-  @tracked instructedSessions = [];
-  @tracked studentAdvisedSessions = [];
+  @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+    false,
+  ]);
+  @use _schools = new ResolveAsyncValue(() => [this.store.findAll('school')]);
+  get schools() {
+    return this._schools?.toArray() ?? [];
+  }
+  @use _academicYears = new ResolveAsyncValue(() => [this.store.findAll('academic-year')]);
+  get academicYears() {
+    return this._academicYears?.toArray() ?? [];
+  }
+  @use defaultSchool = new ResolveAsyncValue(() => [this.args.user.school]);
+
+  @use _directedSchools = new ResolveAsyncValue(() => [this.args.user.directedSchools]);
+  get isDirectingSchool() {
+    return this._directedSchools?.includes(this.bestSelectedSchool);
+  }
+
+  @use _administeredSchools = new ResolveAsyncValue(() => [this.args.user.administeredSchools]);
+  get isAdministeringSchool() {
+    return this._administeredSchools?.includes(this.bestSelectedSchool);
+  }
+
+  get isLoaded() {
+    return !!this.bestSelectedSchool && !!this.selectedYearId;
+  }
 
   get courseCount() {
+    if (
+      !this.directedCourses ||
+      !this.administeredCourses ||
+      !this.instructedCourses ||
+      !this.studentAdvisedCourses
+    ) {
+      return 0;
+    }
     return (
       this.directedCourses.length +
       this.administeredCourses.length +
@@ -42,6 +56,9 @@ export default class UserProfilePermissionsComponent extends Component {
   }
 
   get sessionCount() {
+    if (!this.administeredSessions || !this.instructedSessions || !this.studentAdvisedSessions) {
+      return 0;
+    }
     return (
       this.administeredSessions.length +
       this.instructedSessions.length +
@@ -49,85 +66,84 @@ export default class UserProfilePermissionsComponent extends Component {
     );
   }
 
-  @restartableTask
-  *load() {
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
-    );
-
-    this.schools = (yield this.store.findAll('school')).toArray();
-    this.academicYears = (yield this.store.findAll('academic-year')).toArray();
-    this.defaultSchool = yield this.args.user.school;
-
-    this.selectedYearId = this.getBestSelectedYearId(
-      this.args.selectedYearId,
-      this.academicYears,
-      this.academicYearCrossesCalendarYearBoundaries
-    );
-
-    this.selectedSchool = this.getBestSelectedSchool(
-      this.args.selectedSchoolId,
-      this.defaultSchool,
-      this.schools
-    );
-
-    if (this.selectedSchool) {
-      this.isDirectingSchool = this.args.user
-        .hasMany('directedSchools')
-        .ids()
-        .includes(this.selectedSchool.id);
-      this.isAdministeringSchool = this.args.user
-        .hasMany('administeredSchools')
-        .ids()
-        .includes(this.selectedSchool.id);
-      const map = yield hash({
-        directedPrograms: this.getDirectedPrograms(this.selectedSchool),
-        directedProgramYears: this.getDirectedProgramYears(this.selectedSchool),
-        directedCourses: this.getDirectedCourses(this.selectedSchool, this.selectedYearId),
-        administeredCourses: this.getAdministeredCourses(this.selectedSchool, this.selectedYearId),
-        instructedCourses: this.getInstructedCourses(this.selectedSchool, this.selectedYearId),
-        studentAdvisedCourses: this.getStudentAdvisedCourses(
-          this.selectedSchool,
-          this.selectedYearId
-        ),
-        administeredSessions: this.getAdministeredSessions(
-          this.selectedSchool,
-          this.selectedYearId
-        ),
-        instructedSessions: this.getInstructedSessions(this.selectedSchool, this.selectedYearId),
-        studentAdvisedSessions: this.getStudentAdvisedSessions(
-          this.selectedSchool,
-          this.selectedYearId
-        ),
-      });
-      this.directedPrograms = map.directedPrograms;
-      this.directedProgramYears = map.directedProgramYears;
-      this.directedCourses = map.directedCourses;
-      this.administeredCourses = map.administeredCourses;
-      this.instructedCourses = map.instructedCourses;
-      this.studentAdvisedCourses = map.studentAdvisedCourses;
-      this.administeredSessions = map.administeredSessions;
-      this.instructedSessions = map.instructedSessions;
-      this.studentAdvisedSessions = map.studentAdvisedSessions;
-    }
+  get selectedYearId() {
+    return this.bestSelectedYear?.id;
   }
 
-  get selectedYear() {
-    return this.academicYears.findBy('id', this.selectedYearId);
-  }
+  @use _userDirectedPrograms = new ResolveAsyncValue(() => [this.args.user.directedPrograms]);
+  @use directedPrograms = new AsyncProcess(() => [
+    this.getDirectedPrograms.bind(this),
+    this.bestSelectedSchool,
+    this._userDirectedPrograms?.toArray() ?? [],
+  ]);
+  @use _userProgramYears = new ResolveAsyncValue(() => [this.args.user.programYears]);
+  @use directedProgramYears = new AsyncProcess(() => [
+    this.getDirectedProgramYears.bind(this),
+    this.bestSelectedSchool,
+    this._userProgramYears?.toArray() ?? [],
+  ]);
+  @use _userDirectedCourses = new ResolveAsyncValue(() => [this.args.user.directedCourses]);
+  @use directedCourses = new AsyncProcess(() => [
+    this.getDirectedCourses.bind(this),
+    this.bestSelectedSchool,
+    this.selectedYearId,
+    this._userDirectedCourses?.toArray() ?? [],
+  ]);
+  @use _userAdministeredCourses = new ResolveAsyncValue(() => [this.args.user.administeredCourses]);
+  @use administeredCourses = new AsyncProcess(() => [
+    this.getAdministeredCourses.bind(this),
+    this.bestSelectedSchool,
+    this.selectedYearId,
+    this._userAdministeredCourses?.toArray() ?? [],
+  ]);
+  @use instructedCourses = new AsyncProcess(() => [
+    this.getInstructedCourses.bind(this),
+    this.bestSelectedSchool,
+    this.selectedYearId,
+    this.args.user.allInstructedCourses,
+  ]);
+  @use _userStudentAdvisedCourses = new ResolveAsyncValue(() => [
+    this.args.user.studentAdvisedCourses,
+  ]);
+  @use studentAdvisedCourses = new AsyncProcess(() => [
+    this.getStudentAdvisedCourses.bind(this),
+    this.bestSelectedSchool,
+    this.selectedYearId,
+    this._userStudentAdvisedCourses?.toArray() ?? [],
+  ]);
+  @use _userAdministeredSessions = new ResolveAsyncValue(() => [
+    this.args.user.administeredSessions,
+  ]);
+  @use administeredSessions = new AsyncProcess(() => [
+    this.getAdministeredSessions.bind(this),
+    this.bestSelectedSchool,
+    this.selectedYearId,
+    this._userAdministeredSessions?.toArray() ?? [],
+  ]);
+  @use instructedSessions = new AsyncProcess(() => [
+    this.getInstructedSessions.bind(this),
+    this.bestSelectedSchool,
+    this.selectedYearId,
+    this.args.user.allInstructedSessions,
+  ]);
+  @use _userStudentAdvisedSessions = new ResolveAsyncValue(() => [
+    this.args.user.studentAdvisedSessions,
+  ]);
+  @use studentAdvisedSessions = new AsyncProcess(() => [
+    this.getStudentAdvisedSessions.bind(this),
+    this.bestSelectedSchool,
+    this.selectedYearId,
+    this._userStudentAdvisedSessions?.toArray() ?? [],
+  ]);
 
-  async getDirectedPrograms(selectedSchool) {
-    const directedPrograms = (await this.args.user.directedPrograms).toArray();
-
+  async getDirectedPrograms(selectedSchool, directedPrograms) {
     return filter(directedPrograms, async (program) => {
       const school = await program.school;
       return school === selectedSchool;
     });
   }
 
-  async getDirectedProgramYears(selectedSchool) {
-    const directedProgramYears = (await this.args.user.programYears).toArray();
-
+  async getDirectedProgramYears(selectedSchool, directedProgramYears) {
     return filter(directedProgramYears, async (programYear) => {
       const program = await programYear.program;
       const school = await program.school;
@@ -135,45 +151,35 @@ export default class UserProfilePermissionsComponent extends Component {
     });
   }
 
-  async getDirectedCourses(selectedSchool, selectedYearId) {
-    const directedCourses = (await this.args.user.directedCourses).toArray();
-
+  async getDirectedCourses(selectedSchool, selectedYearId, directedCourses) {
     return filter(directedCourses, async (course) => {
       const school = await course.school;
       return school === selectedSchool && selectedYearId === course.year.toString();
     });
   }
 
-  async getAdministeredCourses(selectedSchool, selectedYearId) {
-    const administeredCourses = (await this.args.user.administeredCourses).toArray();
-
+  async getAdministeredCourses(selectedSchool, selectedYearId, administeredCourses) {
     return filter(administeredCourses, async (course) => {
       const school = await course.school;
       return school === selectedSchool && selectedYearId === course.year.toString();
     });
   }
 
-  async getInstructedCourses(selectedSchool, selectedYearId) {
-    const allInstructedCourses = (await this.args.user.allInstructedCourses).toArray();
-
-    return filter(allInstructedCourses, async (course) => {
+  async getInstructedCourses(selectedSchool, selectedYearId, allInstructedCourses) {
+    return filter(allInstructedCourses ?? [], async (course) => {
       const school = await course.school;
       return school === selectedSchool && selectedYearId === course.year.toString();
     });
   }
 
-  async getStudentAdvisedCourses(selectedSchool, selectedYearId) {
-    const studentAdvisedCourses = (await this.args.user.studentAdvisedCourses).toArray();
-
+  async getStudentAdvisedCourses(selectedSchool, selectedYearId, studentAdvisedCourses) {
     return filter(studentAdvisedCourses, async (course) => {
       const school = await course.school;
       return school === selectedSchool && selectedYearId === course.year.toString();
     });
   }
 
-  async getAdministeredSessions(selectedSchool, selectedYearId) {
-    const administeredSessions = (await this.args.user.administeredSessions).toArray();
-
+  async getAdministeredSessions(selectedSchool, selectedYearId, administeredSessions) {
     return filter(administeredSessions, async (session) => {
       const course = await session.course;
       const school = await course.school;
@@ -181,9 +187,7 @@ export default class UserProfilePermissionsComponent extends Component {
     });
   }
 
-  async getInstructedSessions(selectedSchool, selectedYearId) {
-    const allInstructedSessions = (await this.args.user.allInstructedSessions).toArray();
-
+  async getInstructedSessions(selectedSchool, selectedYearId, allInstructedSessions) {
     return filter(allInstructedSessions, async (session) => {
       const course = await session.course;
       const school = await course.school;
@@ -191,9 +195,7 @@ export default class UserProfilePermissionsComponent extends Component {
     });
   }
 
-  async getStudentAdvisedSessions(selectedSchool, selectedYearId) {
-    const studentAdvisedSessions = (await this.args.user.studentAdvisedSessions).toArray();
-
+  async getStudentAdvisedSessions(selectedSchool, selectedYearId, studentAdvisedSessions) {
     return filter(studentAdvisedSessions, async (session) => {
       const course = await session.course;
       const school = await course.school;
@@ -201,32 +203,33 @@ export default class UserProfilePermissionsComponent extends Component {
     });
   }
 
-  getBestSelectedYearId(yearId, academicYears, academicYearCrossesCalendarYearBoundaries) {
+  get bestSelectedYear() {
     let currentYear;
-    if (yearId) {
-      currentYear = Number(yearId);
+    if (this.args.selectedYearId) {
+      currentYear = Number(this.args.selectedYearId);
     } else {
       currentYear = Number(moment().format('YYYY'));
     }
     const currentMonth = Number(moment().format('M'));
-    if (academicYearCrossesCalendarYearBoundaries && currentMonth < 6) {
+    if (this.academicYearCrossesCalendarYearBoundaries && currentMonth < 6) {
       currentYear--;
     }
-    let selectedYear = academicYears.find((year) => Number(year.id) === currentYear);
+    let selectedYear = this.academicYears.find((year) => Number(year.id) === currentYear);
     if (!selectedYear) {
-      selectedYear = academicYears.get('lastObject');
+      selectedYear = this.academicYears.get('lastObject');
     }
-    return selectedYear?.id;
+    return selectedYear;
   }
 
-  getBestSelectedSchool(schoolId, defaultSchool, schools) {
-    if (schoolId) {
-      return schools.findBy('id', schoolId);
-    } else if (defaultSchool) {
-      return schools.findBy('id', defaultSchool.id);
-    } else if (schools.length) {
-      return schools.sortBy('title')[0];
+  get bestSelectedSchool() {
+    if (this.args.selectedSchoolId) {
+      return this.schools.findBy('id', this.args.selectedSchoolId);
+    } else if (this.defaultSchool) {
+      return this.defaultSchool;
+    } else if (this.schools.length) {
+      return this.schools.sortBy('title')[0];
     }
+
     return null;
   }
 }
