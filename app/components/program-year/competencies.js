@@ -41,7 +41,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
 
   async getCompetenciesWithSelectedChildren(selectedCompetencies, competencies) {
     return await filter(competencies.toArray(), async (competency) => {
-      const children = await competency.treeChildren;
+      const children = await competency.children;
       const selectedChildren = children.filter((c) => selectedCompetencies.includes(c));
       return selectedChildren.length > 0;
     });

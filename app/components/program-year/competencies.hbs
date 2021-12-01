@@ -64,7 +64,7 @@
             {{/let}}
             <ul>
               {{#each (sort-by "title" this.competencies) as |competency|}}
-                {{#if (includes competency (await domain.treeChildren))}}
+                {{#if (includes competency (await domain.children))}}
                   <li>
                     {{#let (includes (get competency "id") (map-by "id" this.selectedCompetencies))
                       as |isSelected|
@@ -107,7 +107,7 @@
                 {{#each (sort-by "title" this.competencies) as |competency|}}
                   {{#if
                     (and
-                      (includes competency (await domain.treeChildren))
+                      (includes competency (await domain.children))
                       (includes
                         competency.id (map-by "id" this.selectedCompetencies)
                       )
