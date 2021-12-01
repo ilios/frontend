@@ -1,9 +1,9 @@
 <span
-  class="status publication-status {{if @item.isFinalized "published" "notpublished"}}"
+  class="status publication-status {{if this.isFinalized "published" "notpublished"}}"
   data-test-curriculum-inventory-report-publication-status
 >
   <span data-test-text>
-    {{#if @item.isFinalized}}
+    {{#if this.isFinalized}}
       {{t "general.finalized"}}
     {{else}}
       {{t "general.draft"}}

@@ -46,7 +46,7 @@
     colspan="2"
     data-test-status
   >
-    {{#if @report.isFinalized}}
+    {{#if this.report.isFinalized}}
       <FaIcon @icon="lock" class="enabled" />
     {{/if}}
     <CurriculumInventory::PublicationStatus @item={{@report}} />

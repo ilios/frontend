@@ -8,7 +8,7 @@ import { inject as service } from '@ember/service';
 export default class CurriculumInventoryReportListItemComponent extends Component {
   @service iliosConfig;
   @service permissionChecker;
-
+  @tracked isFinalized = this.args.report.belongsTo('export').id();
   @tracked showConfirmRemoval;
 
   @use canDelete = new PermissionChecker(() => [
