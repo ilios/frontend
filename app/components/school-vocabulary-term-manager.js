@@ -4,37 +4,31 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 @validatable
 export default class SchoolVocabularyTermManagerComponent extends Component {
   @service store;
   @service flashMessages;
   @service intl;
+
   @tracked
   @NotBlank()
   @Length(1, 200)
   @Custom('validateTitleCallback', 'validateTitleMessageCallback')
-  title;
-  @tracked isActive = false;
-  @tracked description;
+  title = this.args.term.title;
+
+  @tracked isActive = this.args.term.active;
+  @tracked description = this.args.term.description;
   @tracked newTerm;
-  @tracked termsRelationship;
 
-  get terms() {
-    if (this.termsRelationship) {
-      return this.termsRelationship.sortBy('title');
-    }
-    return [];
-  }
+  @use children = new ResolveAsyncValue(() => [this.args.term.children]);
+  @use allParents = new ResolveAsyncValue(() => [this.args.term.getAllParents()]);
 
-  @restartableTask
-  *load() {
-    this.newTerm = null;
-    this.title = this.args.term.title;
-    this.isActive = this.args.term.active;
-    this.description = this.args.term.description;
-    this.termsRelationship = yield this.args.term.children;
+  get isLoading() {
+    return !this.children || !this.allParents;
   }
 
   @dropTask
