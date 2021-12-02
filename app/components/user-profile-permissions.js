@@ -10,15 +10,18 @@ export default class UserProfilePermissionsComponent extends Component {
   @service store;
   @service iliosConfig;
 
+  schoolPromise = this.store.findAll('school');
+  academicYearPromise = this.store.findAll('academic-year');
+
   @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
     false,
   ]);
-  @use _schools = new ResolveAsyncValue(() => [this.store.findAll('school')]);
+  @use _schools = new ResolveAsyncValue(() => [this.schoolPromise]);
   get schools() {
     return this._schools?.toArray() ?? [];
   }
-  @use _academicYears = new ResolveAsyncValue(() => [this.store.findAll('academic-year')]);
+  @use _academicYears = new ResolveAsyncValue(() => [this.academicYearPromise]);
   get academicYears() {
     return this._academicYears?.toArray() ?? [];
   }
