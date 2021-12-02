@@ -29,14 +29,13 @@ export default class LearnerGroupsRootComponent extends Component {
   ]);
   @use programYears = new ResolveAsyncValue(() => [this.selectedProgram?.programYears]);
   @use selectedCohort = new ResolveAsyncValue(() => [this.cohortLoadingPromise]);
-  @use learnerGroups = new ResolveAsyncValue(() => [
-    this.selectedCohort?.rootLevelLearnerGroups,
-    [],
-  ]);
+  @use learnerGroups = new ResolveAsyncValue(() => [this.selectedCohort?.learnerGroups]);
 
   get newLearnerGroup() {
     //ensure we only show groups that haven't been deleted
-    return this.learnerGroups?.includes(this.savedLearnerGroup) ? this.savedLearnerGroup : null;
+    return this.rootLevelLearnerGroups?.includes(this.savedLearnerGroup)
+      ? this.savedLearnerGroup
+      : null;
   }
 
   get cohortLoadingPromise() {
@@ -83,15 +82,19 @@ export default class LearnerGroupsRootComponent extends Component {
     return this.programYears.sortBy('startYear').lastObject;
   }
 
-  get filteredLearnerGroups() {
+  get rootLevelLearnerGroups() {
     if (!this.learnerGroups) {
       return [];
     }
+    return this.learnerGroups.filter((learnerGroup) => !learnerGroup.belongsTo('parent').id());
+  }
+
+  get filteredLearnerGroups() {
     if (!this.args.titleFilter) {
-      return this.learnerGroups.toArray();
+      return this.rootLevelLearnerGroups.toArray();
     }
     const filter = this.args.titleFilter.trim().toLowerCase();
-    return this.learnerGroups.filter((learnerGroup) => {
+    return this.rootLevelLearnerGroups.filter((learnerGroup) => {
       return learnerGroup.title && learnerGroup.title.trim().toLowerCase().includes(filter);
     });
   }

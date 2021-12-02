@@ -81,7 +81,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   async getLinkableCourses(report) {
     const program = await report.program;
     const schoolId = program.belongsTo('school').id();
-    const linkedCourses = await report.linkedCourses;
+    const linkedCourses = await report.getLinkedCourses();
     const allLinkableCourses = await this.store.query('course', {
       filters: {
         school: [schoolId],

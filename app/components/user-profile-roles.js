@@ -48,7 +48,9 @@ export default class UserProfileRolesComponent extends Component {
   @action
   cancel() {
     this.resetFlipped();
-    this.args.setIsManaging(false);
+    if (this.args.setIsManaging) {
+      this.args.setIsManaging(false);
+    }
   }
 
   resetFlipped() {
@@ -75,7 +77,9 @@ export default class UserProfileRolesComponent extends Component {
     }
     this.resetFlipped();
     yield this.args.user.save();
-    this.args.setIsManaging(false);
+    if (this.args.setIsManaging) {
+      this.args.setIsManaging(false);
+    }
     this.hasSavedRecently = true;
     yield timeout(500);
     this.hasSavedRecently = false;

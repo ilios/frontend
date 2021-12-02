@@ -101,9 +101,9 @@
                 </button>
               {{/if}}
               <span data-test-title>
-                {{get (await cohort.school) "title"}}
+                {{cohort.programYear.program.school.title}}
                 <strong>
-                  {{get (await cohort.program) "title"}}
+                  {{cohort.programYear.program.title}}
                 </strong>
                 {{cohort.title}}
               </span>

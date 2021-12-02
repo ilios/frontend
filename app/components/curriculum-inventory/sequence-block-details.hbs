@@ -3,28 +3,26 @@
     @canUpdate={{@canUpdate}}
     @sequenceBlock={{@sequenceBlock}}
   />
-  {{#if (is-fulfilled @sequenceBlock.allParents)}}
-    <div class="breadcrumbs" data-test-breadcrumbs>
-      <span data-test-report-crumb>
-        <LinkTo
-          @route="curriculumInventoryReport"
-          @model={{@sequenceBlock.report}}
-        >
-          {{t "general.curriculumInventoryReport"}}
+  <div class="breadcrumbs" data-test-breadcrumbs>
+    <span data-test-report-crumb>
+      <LinkTo
+        @route="curriculumInventoryReport"
+        @model={{@sequenceBlock.report}}
+      >
+        {{t "general.curriculumInventoryReport"}}
+      </LinkTo>
+    </span>
+    {{#each (reverse this.allParents) as |parent|}}
+      <span data-test-block-crumb>
+        <LinkTo @route="curriculumInventorySequenceBlock" @model={{parent}}>
+          {{parent.title}}
         </LinkTo>
       </span>
-      {{#each (reverse (await @sequenceBlock.allParents)) as |parent|}}
-        <span data-test-block-crumb>
-          <LinkTo @route="curriculumInventorySequenceBlock" @model={{parent}}>
-            {{parent.title}}
-          </LinkTo>
-        </span>
-      {{/each}}
-      <span data-test-block-crumb>
-        {{@sequenceBlock.title}}
-      </span>
-    </div>
-  {{/if}}
+    {{/each}}
+    <span data-test-block-crumb>
+      {{@sequenceBlock.title}}
+    </span>
+  </div>
   <CurriculumInventory::SequenceBlockOverview
     @sequenceBlock={{@sequenceBlock}}
     @canUpdate={{@canUpdate}}

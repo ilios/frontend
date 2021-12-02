@@ -10,10 +10,17 @@ export default class CurriculumInventoryReportIndexController extends Controller
   @tracked leadershipDetails = false;
   @tracked manageLeadership = false;
   @tracked isFinalized = this.model.belongsTo('export').id();
-  @use topLevelSequenceBlocks = new ResolveAsyncValue(() => [this.model.topLevelSequenceBlocks]);
+  @use _sequenceBlocks = new ResolveAsyncValue(() => [this.model.sequenceBlocks]);
 
   get canUpdate() {
     return this.hasUpdatePermissions && !this.isFinalized;
+  }
+
+  get topLevelSequenceBlocks() {
+    if (!this._sequenceBlocks) {
+      return [];
+    }
+    return this._sequenceBlocks.toArray().filter((block) => !block.belongsTo('parent').id());
   }
 
   @action
