@@ -49,7 +49,18 @@
     {{#if this.isFinalized}}
       <FaIcon @icon="lock" class="enabled" />
     {{/if}}
-    <CurriculumInventory::PublicationStatus @item={{@report}} />
+    <span
+      class="status publication-status {{if this.isFinalized "published" "notpublished"}}"
+      data-test-curriculum-inventory-report-publication-status
+    >
+      <span data-test-text>
+        {{#if this.isFinalized}}
+          {{t "general.finalized"}}
+        {{else}}
+          {{t "general.draft"}}
+        {{/if}}
+      </span>
+    </span>
   </td>
   <td class="text-right report-actions" colspan="2" data-test-actions>
     <span role="button" {{on "click" (fn @edit @report)}}>
