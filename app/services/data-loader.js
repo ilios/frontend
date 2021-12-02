@@ -5,6 +5,7 @@ export default class DataLoaderService extends CommonDataLoaderService {
   #loadedLearnerGroup = new Map();
   #loadedSchoolInstructorGroups = new Map();
   #loadedCohortLearnerGroups = new Map();
+  #loadedUserProfiles = new Map();
   async loadCoursesForLearnerGroup(learnerGroupId) {
     if (!this.#loadedLearnerGroupWithCourses.has(learnerGroupId)) {
       const sessionIncludes = 'offerings.session.course';
@@ -81,5 +82,43 @@ export default class DataLoaderService extends CommonDataLoaderService {
     }
 
     return this.#loadedSchoolInstructorGroups.get(schoolId);
+  }
+  async loadUserProfile(id) {
+    if (!this.#loadedUserProfiles.has(id)) {
+      const includes = [
+        'directedCourses.sessions',
+        'administeredCourses.sessions',
+        'studentAdvisedCourses.sessions',
+        'studentAdvisedSessions.course',
+        'learnerGroups.offerings.session.course',
+        'learnerGroups.ilmSessions.session.course',
+        'instructedLearnerGroups.offerings.session.course',
+        'instructedLearnerGroups.ilmSessions.session.course',
+        'instructorGroups.offerings.session.course',
+        'instructorGroups.ilmSessions.session.course',
+        'instructorIlmSessions.session.course',
+        'learnerIlmSessions.session.course',
+        'offerings.session.course',
+        'instructedOfferings.session.course',
+        'programYears',
+        'directedSchools',
+        'administeredSchools',
+        'administeredSessions',
+        'directedPrograms',
+        'cohorts.programYear.program',
+        'primaryCohort',
+        'administeredCurriculumInventoryReports',
+        'roles',
+      ];
+      this.#loadedUserProfiles.set(
+        id,
+        this.store.findRecord('user', id, {
+          reload: true,
+          include: includes.join(','),
+        })
+      );
+    }
+
+    return this.#loadedUserProfiles.get(id);
   }
 }
