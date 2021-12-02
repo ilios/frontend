@@ -38,7 +38,7 @@
       {{else}}
         <span data-test-competency>{{@objective.competency.title}}</span>
       {{/if}}
-      {{#if (await @objective.competency.parent)}}
+      {{#if @objective.competency.parent}}
           <span data-test-domain>({{@objective.competency.parent.title}})</span>
       {{/if}}
     {{else if @editable}}
