@@ -1,17 +1,15 @@
 <div
   class="user-profile-permissions large-component"
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @selectedSchoolId @selectedYearId}}
   data-test-user-profile-permissions
   ...attributes
 >
   <h3 class="title" data-test-title>
     {{t "general.permissions"}}
-    {{#if this.load.isRunning}}
+    {{#unless this.isLoaded}}
       <LoadingSpinner />
-    {{/if}}
+    {{/unless}}
   </h3>
-  {{#unless this.load.isRunning}}
+  {{#if this.isLoaded}}
     <span>
       <FaIcon @icon="university" @fixedWidth={{true}} />
       <select
@@ -22,7 +20,7 @@
         {{#each (sort-by "title" this.schools) as |school|}}
           <option
             value={{school.id}}
-            selected={{is-equal school.id this.selectedSchool.id}}
+            selected={{is-equal school.id this.bestSelectedSchool.id}}
           >
             {{school.title}}
           </option>
@@ -47,7 +45,7 @@
     <p data-test-school-permissions>
     <h5 data-test-title>
       {{t "general.school"}}
-      ({{this.selectedSchool.title}})
+      ({{this.bestSelectedSchool.title}})
     </h5>
     <span class="hide-on-collapse" data-test-director>
         <strong>
@@ -280,6 +278,6 @@
       {{/each}}
     </ul>
     </p>
+  {{/if}}
 
-  {{/unless}}
 </div>

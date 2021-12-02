@@ -2,11 +2,9 @@
   <div
     class="school-vocabulary-term-manager"
     data-test-school-vocabulary-term-manager
-    {{did-insert (perform this.load)}}
-    {{did-update (perform this.load) @term.children}}
     attributes...
   >
-    {{#if this.load.isRunning}}
+    {{#if this.isLoading}}
       <LoadingSpinner />
     {{else}}
       <div class="breadcrumbs" data-test-breadcrumbs>
@@ -16,7 +14,7 @@
         <span role="button" data-test-vocabulary {{on "click" (fn @manageTerm null)}}>
           {{@vocabulary.title}}
         </span>
-        {{#each (await @term.allParents) as |parent|}}
+        {{#each this.allParents as |parent|}}
           <span role="button" data-test-term {{on "click" (fn @manageTerm parent.id)}}>
             {{parent.title}}
           </span>
@@ -55,7 +53,7 @@
                 {{message}}
               </span>
             {{/each}}
-            {{#if (and @canDelete (not this.terms.length) (not @term.hasAssociations))}}
+            {{#if (and @canDelete (not this.children.length) (not @term.hasAssociations))}}
               <FaIcon
                 @icon="trash"
                 class="clickable remove enabled"
@@ -124,7 +122,7 @@
             <SchoolVocabularyNewTerm @createTerm={{this.createTerm}} @term={{@term}}/>
         {{/if}}
         <ul data-test-term-list>
-          {{#each this.terms as |term|}}
+          {{#each this.children as |term|}}
             <li role="button" data-test-term {{on "click" (fn @manageTerm term.id)}}>
               {{term.title}} ({{term.childCount}})
               {{#unless term.active}}
