@@ -53,10 +53,6 @@ module.exports = function (defaults) {
       version: '4',
       patterns: ['https://fonts.gstatic.com/(.+)'],
     },
-    newVersion: {
-      enabled: true,
-      useAppVersion: true,
-    },
     autoImport: {
       insertScriptsAt: 'auto-import-scripts',
     },
