@@ -31,6 +31,8 @@ export default class AuthenticatedRoute extends Route {
   }
 
   activate() {
+    //remove our loading animation once the application is loaded
+    document.getElementById('ilios-loading-indicator')?.remove();
     if ('serviceWorker' in navigator) {
       const { controller: currentController } = navigator.serviceWorker;
       this.event = navigator.serviceWorker.addEventListener('controllerchange', async () => {
