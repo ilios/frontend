@@ -221,7 +221,10 @@ export default class SessionModel extends Model {
   }
 
   get associatedOfferingLearnerGroups() {
-    return this.offeringLearnerGroups;
+    if (!this.offeringLearnerGroups) {
+      return [];
+    }
+    return this.offeringLearnerGroups.uniq().sortBy('title');
   }
   @use _ilmLearnerGroups = new ResolveAsyncValue(() => [this._ilmSession?.learnerGroups]);
   get associatedIlmLearnerGroups() {

@@ -781,4 +781,21 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.collapsedObjectives.isPresent);
   });
+
+  test('shows associated learner groups', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
+    const session = this.server.create('session', { course: this.course });
+    const learnerGroups = this.server.createList('learner-group', 3);
+    this.server.create('offering', { session, learnerGroups });
+    this.server.create('offering', { session, learnerGroups });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.strictEqual(currentRouteName(), 'session.index');
+    assert.strictEqual(
+      page.details.overview.associatedGroups.groups,
+      'learner group 0, learner group 1, learner group 2'
+    );
+  });
 });

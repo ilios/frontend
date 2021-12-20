@@ -317,19 +317,13 @@
           </div>
           {{#unless this.isIndependentLearning}}
             <br>
-            <div class="sessionassociatedgroups">
+            <div class="sessionassociatedgroups" data-test-associated-groups>
               <label>{{t "general.associatedGroups"}}:</label>
               <span>
-                {{#if (is-fulfilled @session.associatedOfferingLearnerGroups)}}
-                  <span>
-                    {{#each (await @session.associatedOfferingLearnerGroups) as |group|}}
-                      {{group.title}},
-                    {{else}}
-                      {{t "general.none"}}
-                    {{/each}}
-                  </span>
+                {{#if @session.associatedOfferingLearnerGroups}}
+                  {{join ", " (map-by "title" @session.associatedOfferingLearnerGroups)}}
                 {{else}}
-                  <LoadingPart />
+                  {{t "general.none"}}
                 {{/if}}
               </span>
             </div>
