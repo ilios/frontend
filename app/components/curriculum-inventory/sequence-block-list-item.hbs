@@ -42,14 +42,6 @@
     {{/if}}
   </td>
   <td class="text-center" colspan="1">
-    <LinkTo
-      @route="curriculumInventorySequenceBlock"
-      @model={{@sequenceBlock}}
-      class="edit"
-      data-test-edit
-    >
-      <FaIcon @icon="edit" class="enabled" />
-    </LinkTo>
     {{#if @canUpdate}}
       <span
         class="clickable remove"
