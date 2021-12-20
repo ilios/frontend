@@ -16,9 +16,6 @@
     {{@program.school.title}}
   </td>
   <td class="text-right actions" colspan="2" data-test-program>
-    <LinkTo @route="program" @model={{@program}} class="edit" data-test-edit-program>
-      <FaIcon @icon="edit" class="enabled" />
-    </LinkTo>
     {{#if this.canDelete}}
       <button type="button" {{on "click" (set this.showRemoveConfirmation true)}} data-test-remove>
         <FaIcon @icon="trash" />

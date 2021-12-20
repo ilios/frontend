@@ -5,7 +5,6 @@ const definition = {
   title: text('[data-test-title]'),
   school: text('[data-test-school]'),
   remove: clickable('[data-test-remove]'),
-  edit: clickable('[data-test-edit-program]'),
   canBeRemoved: isVisible('[data-test-remove]'),
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
