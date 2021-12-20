@@ -44,7 +44,6 @@ const definition = {
   schools: collection('[data-test-school]', {
     title: text('[data-test-title]'),
     titleLink: attribute('href', '[data-test-title] a'),
-    editLink: attribute('href', '[data-test-edit] a'),
   }),
 };
 
