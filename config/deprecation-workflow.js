@@ -13,5 +13,6 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'common.curriculum-inventory-report-is-finalized' },
     { handler: 'silence', matchId: 'common.async-computed' },
     { handler: 'silence', matchId: 'common.school-cohorts' },
+    { handler: 'silence', matchId: 'ember-global' },
   ],
 };
