@@ -87,6 +87,11 @@ export default create({
     editor: postrequisiteEditor,
   },
   lastUpdated: text('[data-test-last-update]'),
+  associatedGroups: {
+    scope: '[data-test-associated-groups]',
+    label: text('label'),
+    groups: text('span'),
+  },
   publicationStatus,
   publicationMenu,
 });
