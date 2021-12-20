@@ -37,19 +37,6 @@
     .list {
       @include main-list-box-table;
 
-      .remove-button,
-      .copy-button {
-        @include ilios-button-reset;
-      }
-
-      .remove-button {
-        color: $ilios-remove-color;
-      }
-
-      .copy-button {
-        color: $ilios-blue;
-      }
-
       .confirm-copy,
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd)

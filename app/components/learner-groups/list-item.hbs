@@ -22,7 +22,7 @@
         <LoadingSpinner />
       {{else}}
         <button
-          class="remove-button"
+          class="link-button"
           type="button"
           {{on "click" (perform this.showRemove)}}
           data-test-remove
@@ -35,7 +35,7 @@
     {{/if}}
     {{#if (and this.canCreate (not this.showCopyConfirmation))}}
       <button
-        class="copy-button"
+        class="link-button"
         type="button"
         {{on "click" this.showCopy}}
         data-test-copy
