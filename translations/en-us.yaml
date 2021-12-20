@@ -100,6 +100,7 @@ general:
   defaultInstructors: "Default Instructors"
   defaultLocation: "Default Location"
   defaultVirtualLearningLink: "Default Virtual Learning Link"
+  deleteCourse: "Delete Course"
   departments: Departments
   deselectUser: "Deselect User"
   details: "Course Details"
@@ -183,6 +184,7 @@ general:
   lmDescriptorTitle: "Select MeSH Descriptors for Learning Materials"
   loading: "Loading Ilios"
   loadingSessionTypes: "Loading Session Types..."
+  lockCourse: "Lock Course"
   login: Login
   logo: "Ilios Logo"
   logout: Logout
@@ -416,6 +418,7 @@ general:
   unassignedStudentsSummary: "{count, plural, =1 {There is one student needing assignment to a cohort} other {There are # students needing assignment to a cohort}}"
   unassignedStudentsSummaryTitle: "Students Requiring Cohort Assignment"
   undo: Undo
+  unlockCourse: "Unlock course"
   unordered: Unordered
   unPublishProgram: "UnPublish Program"
   unPublishProgramYear: "UnPublish Program Year"

@@ -100,6 +100,7 @@ general:
   defaultInstructors: "Instructores Predeterminados"
   defaultLocation: "Ubicación Predeterminada"
   defaultVirtualLearningLink: "Enlace de Aprendizaje Virtual Predeterminado"
+  deleteCourse: "Eliminar el curso"
   departments: Departmentos
   deselectUser: "Deseleccione usuario"
   details: "Detalles de Curso"
@@ -183,6 +184,7 @@ general:
   lmDescriptorTitle: "Seleccione Descriptores de MeSH para Materiales de Aprendizaje"
   loading: "Marcando Ilios"
   loadingSessionTypes: "Cargando Tipos de Sesión..."
+  lockCourse: "Bloquear el curso"
   login: Inicio
   logo: "Logo de Ilios"
   logout: "Cerrar aplicación"
@@ -416,6 +418,7 @@ general:
   unassignedStudentsSummary: "{count, plural, =1 {Hay un estudiante que requiere asignación de cohorte} other {Hay # estudiantes que requieren asignación de cohorte}}"
   unassignedStudentsSummaryTitle: "Estudiantes que Requieren Asignación de Cohorte"
   undo: Deshacer
+  unlockCourse: "Desbloquea el curso"
   unordered: "No Ordenado"
   unPublishProgram: "No Publique El Programa"
   unPublishProgramYear: "No Publique Año de Programa"

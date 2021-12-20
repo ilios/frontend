@@ -108,6 +108,7 @@
                     <button
                       type="button"
                       class="link-button"
+                      title={{t "general.unlockCourse"}}
                       {{on "click" (perform this.unlockCourse course)}}
                       data-test-unlock
                     >
@@ -120,6 +121,7 @@
                   <button
                     type="button"
                     class="link-button"
+                    title={{t "general.lockCourse"}}
                     {{on "click" (perform this.lockCourse course)}}
                     data-test-lock
                   >
@@ -129,9 +131,15 @@
                   <FaIcon @icon="unlock" class="disabled" />
                 {{/if}}
                 {{#if (await (compute this.canDelete course))}}
-                  <span class="clickable remove" role="button" {{on "click" (fn this.confirmRemoval course)}}>
+                  <button
+                    type="button"
+                    class="link-button"
+                    title={{t "general.deleteCourse"}}
+                    {{on "click" (fn this.confirmRemoval course)}}
+                    data-test-remove
+                  >
                     <FaIcon @icon="trash" class="enabled" />
-                  </span>
+                  </button>
                 {{else}}
                   <FaIcon @icon="trash" class="disabled" />
                 {{/if}}
