@@ -108,6 +108,7 @@
                     <button
                       type="button"
                       class="link-button"
+                      title={{t "general.unlockCourse"}}
                       {{on "click" (perform this.unlockCourse course)}}
                       data-test-unlock
                     >
@@ -120,6 +121,7 @@
                   <button
                     type="button"
                     class="link-button"
+                    title={{t "general.lockCourse"}}
                     {{on "click" (perform this.lockCourse course)}}
                     data-test-lock
                   >
@@ -132,6 +134,7 @@
                   <button
                     type="button"
                     class="link-button"
+                    title={{t "general.deleteCourse"}}
                     {{on "click" (fn this.confirmRemoval course)}}
                     data-test-remove
                   >
