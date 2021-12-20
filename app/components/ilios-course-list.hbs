@@ -129,9 +129,14 @@
                   <FaIcon @icon="unlock" class="disabled" />
                 {{/if}}
                 {{#if (await (compute this.canDelete course))}}
-                  <span class="clickable remove" role="button" {{on "click" (fn this.confirmRemoval course)}}>
+                  <button
+                    type="button"
+                    class="link-button"
+                    {{on "click" (fn this.confirmRemoval course)}}
+                    data-test-remove
+                  >
                     <FaIcon @icon="trash" class="enabled" />
-                  </span>
+                  </button>
                 {{else}}
                   <FaIcon @icon="trash" class="disabled" />
                 {{/if}}
