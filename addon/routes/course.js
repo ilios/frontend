@@ -6,6 +6,7 @@ export default class CourseRoute extends Route {
   @service permissionChecker;
   @service dataLoader;
   @service session;
+  @service store;
 
   titleToken = 'general.coursesAndSessions';
   editable = false;
