@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import moment from 'moment';
 import { action } from '@ember/object';
 
 export default class IliosCalendarMonthComponent extends Component {
@@ -21,6 +22,18 @@ export default class IliosCalendarMonthComponent extends Component {
     return this.args.calendarEvents.filter((ev) => {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
+  }
+
+  get singleDayEvents() {
+    return this.nonIlmPreWorkEvents.filter((event) =>
+      moment(event.startDate).isSame(moment(event.endDate), 'day')
+    );
+  }
+
+  get multiDayEventsList() {
+    return this.nonIlmPreWorkEvents.filter(
+      (event) => !moment(event.startDate).isSame(moment(event.endDate), 'day')
+    );
   }
 
   @action
