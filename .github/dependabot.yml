@@ -24,7 +24,6 @@ updates:
   - dependency-name: ember-export-application-global
   - dependency-name: "@ember/jquery"
   - dependency-name: ember-load-initializers
-  - dependency-name: ember-maybe-import-regenerator
   - dependency-name: "@ember/optional-features"
   - dependency-name: ember-qunit
   - dependency-name: ember-resolver
