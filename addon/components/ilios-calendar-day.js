@@ -40,7 +40,7 @@ export default class IliosCalendarDayComponent extends Component {
       this.moment.moment(event.startDate).isSame(this.moment.moment(event.endDate), 'day')
     );
   }
-  multiDayEvents() {
+  get multiDayEvents() {
     return this.nonIlmPreWorkEvents.filter(
       (event) =>
         !this.moment.moment(event.startDate).isSame(this.moment.moment(event.endDate), 'day')
