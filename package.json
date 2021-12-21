@@ -78,7 +78,6 @@
     "ember-noscript": "^4.1.0",
     "ember-page-title": "^6.2.2",
     "ember-qunit": "^5.1.4",
-    "ember-qunit-nice-errors": "^1.2.0",
     "ember-resolver": "^8.0.2",
     "ember-responsive": "^4.0.2",
     "ember-service-worker": "^9.0.1",
