@@ -78,15 +78,13 @@
               {{#each (sort-by @sortBy this.usersInCurrentGroup) as |user index|}}
                 <tr class={{unless user.enabled "disabled-user-account" ""}}>
                   <td class="text-left" colspan="1">
-                    {{#if (or user.enabled this.currentUser.isRoot)}}
-                      {{#if @isEditing}}
-                        <input
-                          aria-labelledby="selected-username-{{index}}-{{templateId}}"
-                          type="checkbox"
-                          checked={{includes user.content this.selectedUsers}}
-                          {{on "click" (fn this.toggleUserSelection user.content)}}
-                        >
-                      {{/if}}
+                    {{#if (and @isEditing (or user.enabled this.currentUser.isRoot))}}
+                      <input
+                        aria-labelledby="selected-username-{{index}}-{{templateId}}"
+                        type="checkbox"
+                        checked={{includes user.content this.selectedUsers}}
+                        {{on "click" (fn this.toggleUserSelection user.content)}}
+                      >
                     {{/if}}
                     {{#unless user.enabled}}
                       <FaIcon
@@ -98,13 +96,43 @@
                     {{/unless}}
                   </td>
                   <td class="text-left" colspan="4">
-                    <UserNameInfo id="selected-username-{{index}}-{{templateId}}" @user={{user}} />
+                    {{#if (and @isEditing (or user.enabled this.currentUser.isRoot))}}
+                      <button
+                        class="inline-button"
+                        type="button"
+                        {{on "click" (fn this.toggleUserSelection user.content)}}
+                      >
+                        <UserNameInfo id="selected-username-{{index}}-{{templateId}}" @user={{user}} />
+                      </button>
+                    {{else}}
+                      <UserNameInfo id="selected-username-{{index}}-{{templateId}}" @user={{user}} />
+                    {{/if}}
                   </td>
                   <td class="text-left" colspan="2">
-                    {{user.campusId}}
+                    {{#if (and @isEditing (or user.enabled this.currentUser.isRoot))}}
+                      <button
+                        class="inline-button"
+                        type="button"
+                        {{on "click" (fn this.toggleUserSelection user.content)}}
+                      >
+                        {{user.campusId}}
+                      </button>
+                    {{else}}
+                      {{user.campusId}}
+                    {{/if}}
                   </td>
                   <td class="text-left hide-from-small-screen" colspan="5">
-                    {{user.email}}
+                    {{#if (and @isEditing (or user.enabled this.currentUser.isRoot))}}
+                      <button
+                        class="inline-button"
+                        type="button"
+                        {{on "click" (fn this.toggleUserSelection user.content)}}
+                      >
+                        {{user.email}}
+                      </button>
+                    {{else}}
+                      {{user.email}}
+                    {{/if}}
                   </td>
                   {{#if @isEditing}}
                     <td class="text-left" colspan="2">
@@ -155,15 +183,13 @@
                 {{#each (sort-by @sortBy this.usersNotInCurrentGroup) as |user index|}}
                   <tr class={{unless user.enabled "disabled-user-account" ""}}>
                     <td class="text-left" colspan="1">
-                      {{#if (or user.enabled this.currentUser.isRoot)}}
-                        {{#if @isEditing}}
-                          <input
-                            aria-labelledby="cohort-username-{{index}}-{{templateId}}"
-                            type="checkbox"
-                            checked={{includes user.content this.selectedUsers}}
-                            {{on "click" (fn this.toggleUserSelection user.content)}}
-                          >
-                        {{/if}}
+                      {{#if (and @isEditing (or user.enabled this.currentUser.isRoot))}}
+                        <input
+                          aria-labelledby="cohort-username-{{index}}-{{templateId}}"
+                          type="checkbox"
+                          checked={{includes user.content this.selectedUsers}}
+                          {{on "click" (fn this.toggleUserSelection user.content)}}
+                        >
                       {{/if}}
                       {{#unless user.enabled}}
                         <FaIcon
@@ -175,13 +201,43 @@
                       {{/unless}}
                     </td>
                     <td class="text-left" colspan="4">
-                      <UserNameInfo id="cohort-username-{{index}}-{{templateId}}" @user={{user}} />
+                      {{#if (and @isEditing (or user.enabled this.currentUser.isRoot))}}
+                        <button
+                          class="inline-button"
+                          type="button"
+                          {{on "click" (fn this.toggleUserSelection user.content)}}
+                        >
+                          <UserNameInfo id="cohort-username-{{index}}-{{templateId}}" @user={{user}} />
+                        </button>
+                      {{else}}
+                        <UserNameInfo id="cohort-username-{{index}}-{{templateId}}" @user={{user}} />
+                      {{/if}}
                     </td>
                     <td class="text-left" colspan="2">
-                      {{user.campusId}}
+                      {{#if (and @isEditing (or user.enabled this.currentUser.isRoot))}}
+                        <button
+                          class="inline-button"
+                          type="button"
+                          {{on "click" (fn this.toggleUserSelection user.content)}}
+                        >
+                          {{user.campusId}}
+                        </button>
+                      {{else}}
+                        {{user.campusId}}
+                      {{/if}}
                     </td>
                     <td class="text-left hide-from-small-screen" colspan="5">
-                      {{user.email}}
+                      {{#if (and @isEditing (or user.enabled this.currentUser.isRoot))}}
+                        <button
+                          class="inline-button"
+                          type="button"
+                          {{on "click" (fn this.toggleUserSelection user.content)}}
+                        >
+                          {{user.email}}
+                        </button>
+                      {{else}}
+                        {{user.email}}
+                      {{/if}}
                     </td>
                     {{#if @isEditing}}
                       <td class="text-left" colspan="2">

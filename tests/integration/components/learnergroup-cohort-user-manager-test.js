@@ -46,12 +46,18 @@ module('Integration | Component | learnergroup cohort user manager', function (h
     assert.strictEqual(component.title, 'Cohort Members NOT assigned to top level group (2)');
     assert.strictEqual(component.users.length, 2);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
-    assert.strictEqual(component.users[0].campusId, '1234');
-    assert.strictEqual(component.users[0].email, 'testemail');
+    assert.strictEqual(component.users[0].campusId.text, '1234');
+    assert.strictEqual(component.users[0].email.text, 'testemail');
+    assert.ok(component.users[0].name.isClickable);
+    assert.ok(component.users[0].campusId.isClickable);
+    assert.ok(component.users[0].email.isClickable);
     assert.notOk(component.users[0].isDisabled);
     assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
-    assert.strictEqual(component.users[1].campusId, '123');
-    assert.strictEqual(component.users[1].email, 'testemail2');
+    assert.strictEqual(component.users[1].campusId.text, '123');
+    assert.strictEqual(component.users[1].email.text, 'testemail2');
+    assert.notOk(component.users[1].name.isClickable);
+    assert.notOk(component.users[1].campusId.isClickable);
+    assert.notOk(component.users[1].email.isClickable);
     assert.ok(component.users[1].isDisabled);
   });
 
@@ -312,8 +318,6 @@ module('Integration | Component | learnergroup cohort user manager', function (h
   });
 
   test('root users can manage disabled users', async function (assert) {
-    assert.expect(2);
-
     const currentUserMock = Service.extend({
       isRoot: true,
     });
@@ -335,12 +339,13 @@ module('Integration | Component | learnergroup cohort user manager', function (h
     />`);
 
     assert.ok(component.users[0].canBeSelected, 'Checkbox visible');
+    assert.ok(component.users[0].name.isClickable);
+    assert.ok(component.users[0].campusId.isClickable);
+    assert.ok(component.users[0].email.isClickable);
     assert.ok(component.users[0].isDisabled, 'User is labeled as disabled.');
   });
 
   test('non-root users cannot manage disabled users', async function (assert) {
-    assert.expect(2);
-
     const currentUserMock = Service.extend({
       isRoot: false,
     });
@@ -363,6 +368,9 @@ module('Integration | Component | learnergroup cohort user manager', function (h
     />`);
 
     assert.notOk(component.users[0].canBeSelected, 'Checkbox visible');
+    assert.notOk(component.users[0].name.isClickable);
+    assert.notOk(component.users[0].campusId.isClickable);
+    assert.notOk(component.users[0].email.isClickable);
     assert.ok(component.users[0].isDisabled, 'User is labeled as disabled.');
   });
 
@@ -411,5 +419,62 @@ module('Integration | Component | learnergroup cohort user manager', function (h
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
     await component.filter('jasper d');
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+  });
+
+  test('click on name', async function (assert) {
+    const user = this.server.create('user', { enabled: true });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('users', [userModel]);
+    await render(hbs`<LearnergroupCohortUserManager
+      @users={{this.users}}
+      @canUpdate={{true}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top level group"
+      @sortBy="firstName"
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+    />`);
+    assert.notOk(component.users[0].isSelected);
+    await component.users[0].name.click();
+    assert.ok(component.users[0].isSelected);
+  });
+
+  test('click on campus id', async function (assert) {
+    const user = this.server.create('user', { enabled: true });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('users', [userModel]);
+    await render(hbs`<LearnergroupCohortUserManager
+      @users={{this.users}}
+      @canUpdate={{true}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top level group"
+      @sortBy="firstName"
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+    />`);
+    assert.notOk(component.users[0].isSelected);
+    await component.users[0].campusId.click();
+    assert.ok(component.users[0].isSelected);
+  });
+
+  test('click on email', async function (assert) {
+    const user = this.server.create('user', { enabled: true });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('users', [userModel]);
+    await render(hbs`<LearnergroupCohortUserManager
+      @users={{this.users}}
+      @canUpdate={{true}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top level group"
+      @sortBy="firstName"
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+    />`);
+    assert.notOk(component.users[0].isSelected);
+    await component.users[0].email.click();
+    assert.ok(component.users[0].isSelected);
   });
 });

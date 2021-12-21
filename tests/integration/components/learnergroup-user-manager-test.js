@@ -69,15 +69,21 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
       'Jasper M. Dog'
     );
-    assert.strictEqual(component.usersInCurrentGroup[0].campusId, '1234');
-    assert.strictEqual(component.usersInCurrentGroup[0].email, 'testemail');
+    assert.strictEqual(component.usersInCurrentGroup[0].campusId.text, '1234');
+    assert.strictEqual(component.usersInCurrentGroup[0].email.text, 'testemail');
+    assert.notOk(component.usersInCurrentGroup[0].name.isClickable);
+    assert.notOk(component.usersInCurrentGroup[0].campusId.isClickable);
+    assert.notOk(component.usersInCurrentGroup[0].email.isClickable);
     assert.notOk(component.usersInCurrentGroup[0].isDisabled);
     assert.strictEqual(
       component.usersInCurrentGroup[1].name.userNameInfo.fullName,
       'Jackson M. Doggy'
     );
-    assert.strictEqual(component.usersInCurrentGroup[1].campusId, '123');
-    assert.strictEqual(component.usersInCurrentGroup[1].email, 'testemail2');
+    assert.strictEqual(component.usersInCurrentGroup[1].campusId.text, '123');
+    assert.strictEqual(component.usersInCurrentGroup[1].email.text, 'testemail2');
+    assert.notOk(component.usersInCurrentGroup[1].name.isClickable);
+    assert.notOk(component.usersInCurrentGroup[1].campusId.isClickable);
+    assert.notOk(component.usersInCurrentGroup[1].email.isClickable);
     assert.ok(component.usersInCurrentGroup[1].isDisabled);
   });
 
@@ -138,18 +144,25 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
       'Jasper M. Dog'
     );
+    assert.ok(component.usersInCurrentGroup[0].name.isClickable);
+    assert.ok(component.usersInCurrentGroup[0].campusId.isClickable);
+    assert.ok(component.usersInCurrentGroup[0].email.isClickable);
+    assert.notOk(component.usersInCurrentGroup[0].isDisabled);
     assert.ok(component.usersInCurrentGroup[0].canBeSelected);
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
-    assert.strictEqual(component.usersInCurrentGroup[0].campusId, '1234');
-    assert.strictEqual(component.usersInCurrentGroup[0].email, 'testemail');
+    assert.strictEqual(component.usersInCurrentGroup[0].campusId.text, '1234');
+    assert.strictEqual(component.usersInCurrentGroup[0].email.text, 'testemail');
     assert.notOk(component.usersInCurrentGroup[0].isDisabled);
     assert.strictEqual(
       component.usersInCurrentGroup[1].name.userNameInfo.fullName,
       'Jackson M. Doggy'
     );
     assert.notOk(component.usersInCurrentGroup[1].canBeSelected);
-    assert.strictEqual(component.usersInCurrentGroup[1].campusId, '123');
-    assert.strictEqual(component.usersInCurrentGroup[1].email, 'testemail2');
+    assert.strictEqual(component.usersInCurrentGroup[1].campusId.text, '123');
+    assert.strictEqual(component.usersInCurrentGroup[1].email.text, 'testemail2');
+    assert.notOk(component.usersInCurrentGroup[1].name.isClickable);
+    assert.notOk(component.usersInCurrentGroup[1].campusId.isClickable);
+    assert.notOk(component.usersInCurrentGroup[1].email.isClickable);
     assert.ok(component.usersInCurrentGroup[1].isDisabled);
   });
 
@@ -806,5 +819,227 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
       'Jasper M. Dog'
     );
+  });
+
+  test('user not in group: click on name', async function (assert) {
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    const learnerGroupModel2 = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup2.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel2,
+      lowestGroupInTreeTitle: learnerGroupModel2.title,
+    });
+    this.set('users', [userModelProxy]);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{this.learnerGroupModel.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{(noop)}}
+      @isEditing={{true}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
+    />`);
+
+    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
+    await component.usersNotInCurrentGroup[0].name.click();
+    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
+  });
+
+  test('user not in group: click on campus id', async function (assert) {
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    const learnerGroupModel2 = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup2.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel2,
+      lowestGroupInTreeTitle: learnerGroupModel2.title,
+    });
+    this.set('users', [userModelProxy]);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{this.learnerGroupModel.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{(noop)}}
+      @isEditing={{true}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
+    />`);
+
+    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
+    await component.usersNotInCurrentGroup[0].campusId.click();
+    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
+  });
+
+  test('user not in group: click on email', async function (assert) {
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    const learnerGroupModel2 = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup2.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel2,
+      lowestGroupInTreeTitle: learnerGroupModel2.title,
+    });
+    this.set('users', [userModelProxy]);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{this.learnerGroupModel.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{(noop)}}
+      @isEditing={{true}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
+    />`);
+
+    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
+    await component.usersNotInCurrentGroup[0].email.click();
+    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
+  });
+
+  test('user in group: click on name', async function (assert) {
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title,
+    });
+    this.set('users', [userModelProxy]);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{this.learnerGroup.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{(noop)}}
+      @isEditing={{true}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
+    />`);
+
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    await component.usersInCurrentGroup[0].name.click();
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
+  });
+
+  test('user in group: click on campus id', async function (assert) {
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title,
+    });
+    this.set('users', [userModelProxy]);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{this.learnerGroup.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{(noop)}}
+      @isEditing={{true}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
+    />`);
+
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    await component.usersInCurrentGroup[0].campusId.click();
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
+  });
+
+  test('user in group: click on email', async function (assert) {
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title,
+    });
+    this.set('users', [userModelProxy]);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{this.learnerGroup.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{(noop)}}
+      @isEditing={{true}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
+    />`);
+
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    await component.usersInCurrentGroup[0].email.click();
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
   });
 });

@@ -25,11 +25,21 @@ const definition = {
     select: clickable('td:eq(0) input'),
     name: {
       scope: 'td:eq(1)',
+      isClickable: isPresent('button'),
+      click: clickable('button'),
       userNameInfo,
     },
-    campusId: text('td', { at: 2 }),
+    campusId: {
+      scope: 'td:eq(2)',
+      isClickable: isPresent('button'),
+      click: clickable('button'),
+    },
+    email: {
+      scope: 'td:eq(3)',
+      isClickable: isPresent('button'),
+      click: clickable('button'),
+    },
     isDisabled: isPresent('td:nth-of-type(1) [data-test-is-disabled]'),
-    email: text('td', { at: 3 }),
     add: clickable('[data-test-add-user]'),
     canBeAdded: isPresent('[data-test-add-user]'),
   }),
