@@ -30,5 +30,7 @@
 
   .inline-button {
     @include ilios-button-reset;
+    text-align: left;
+    width: 100%;
   }
 }
