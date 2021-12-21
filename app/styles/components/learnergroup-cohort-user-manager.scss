@@ -38,4 +38,8 @@
       overflow: auto;
     }
   }
+
+  .inline-button {
+    @include ilios-button-reset;
+  }
 }

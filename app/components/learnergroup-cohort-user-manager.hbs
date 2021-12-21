@@ -57,15 +57,13 @@
             {{#each (sort-by @sortBy this.filteredUsers) as |user index|}}
               <tr class={{unless user.enabled "disabled-user-account"}}>
                 <td class="text-left" colspan="1">
-                  {{#if (or user.enabled this.currentUser.isRoot)}}
-                    {{#if @canUpdate}}
-                      <input
-                        type="checkbox"
-                        checked={{includes user this.selectedUsers}}
-                        aria-labelledby="username-{{index}}-{{templateId}}"
-                        {{on "click" (fn this.toggleUserSelection user)}}
-                      >
-                    {{/if}}
+                  {{#if (and @canUpdate (or user.enabled this.currentUser.isRoot))}}
+                    <input
+                      type="checkbox"
+                      checked={{includes user this.selectedUsers}}
+                      aria-labelledby="username-{{index}}-{{templateId}}"
+                      {{on "click" (fn this.toggleUserSelection user)}}
+                    >
                   {{/if}}
                   {{#unless user.enabled}}
                     <FaIcon
@@ -77,13 +75,43 @@
                   {{/unless}}
                 </td>
                 <td class="text-left" colspan="4">
-                  <UserNameInfo id="username-{{index}}-{{templateId}}" @user={{user}} />
+                  {{#if (and @canUpdate (or user.enabled this.currentUser.isRoot))}}
+                    <button
+                      class="inline-button"
+                      type="button"
+                      {{on "click" (fn this.toggleUserSelection user)}}
+                    >
+                      <UserNameInfo id="username-{{index}}-{{templateId}}" @user={{user}} />
+                    </button>
+                  {{else}}
+                    <UserNameInfo id="username-{{index}}-{{templateId}}" @user={{user}} />
+                  {{/if}}
                 </td>
                 <td class="text-left" colspan="2">
-                  {{user.campusId}}
+                  {{#if (and @canUpdate (or user.enabled this.currentUser.isRoot))}}
+                    <button
+                      class="inline-button"
+                      type="button"
+                      {{on "click" (fn this.toggleUserSelection user)}}
+                    >
+                      {{user.campusId}}
+                    </button>
+                  {{else}}
+                    {{user.campusId}}
+                  {{/if}}
                 </td>
                 <td class="text-left hide-from-small-screen" colspan="5">
-                  {{user.email}}
+                  {{#if (and @canUpdate (or user.enabled this.currentUser.isRoot))}}
+                    <button
+                      class="inline-button"
+                      type="button"
+                      {{on "click" (fn this.toggleUserSelection user)}}
+                    >
+                      {{user.email}}
+                    </button>
+                  {{else}}
+                    {{user.email}}
+                  {{/if}}
                 </td>
                 <td class="text-left" colspan="1">
                   {{#if user.enabled}}
@@ -92,7 +120,7 @@
                     {{else if (and @canUpdate (eq this.selectedUsers.length 0))}}
                       <button
                         type="button"
-                        class="link-button"
+                        class="inline-button"
                         {{on "click" (perform this.addSingleUser user)}}
                         data-test-add-user
                       >
