@@ -30,12 +30,18 @@ module('Acceptance | pending user updates', function (hooks) {
     const userInSchool2 = this.server.create('user', { school: schools[1] });
     this.server.create('pending-user-update', {
       user: usersInSchool1[0],
+      type: 'emailMismatch',
+      value: 'dev@null.com',
     });
     this.server.create('pending-user-update', {
       user: usersInSchool1[1],
+      type: 'emailMismatch',
+      value: 'dev@null.com',
     });
     this.server.create('pending-user-update', {
       user: userInSchool2,
+      type: 'emailMismatch',
+      value: 'dev@null.com',
     });
     await setupAuthentication({ school: schools[0], administeredSchools: schools });
     await page.visit();
@@ -55,12 +61,18 @@ module('Acceptance | pending user updates', function (hooks) {
     const userInSchool2 = this.server.create('user', { school: schools[1] });
     this.server.create('pending-user-update', {
       user: usersInSchool1[0],
+      type: 'emailMismatch',
+      value: 'dev@null.com',
     });
     this.server.create('pending-user-update', {
       user: usersInSchool1[1],
+      type: 'emailMismatch',
+      value: 'dev@null.com',
     });
     this.server.create('pending-user-update', {
       user: userInSchool2,
+      type: 'emailMismatch',
+      value: 'dev@null.com',
     });
     await setupAuthentication({ school: schools[0], administeredSchools: schools });
     await page.visit({ school: 2 });
