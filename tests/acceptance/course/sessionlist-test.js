@@ -275,6 +275,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   test('new session', async function (assert) {
     this.server.create('sessionType', { school: this.school });
     await page.visit({ courseId: this.course.id, details: true });
+    assert.strictEqual(page.courseSessions.header.title, 'Sessions (4)');
     const { sessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     await page.courseSessions.header.expandNewSessionForm();
@@ -282,6 +283,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     await page.courseSessions.newSession.selectSessionType('2');
     await page.courseSessions.newSession.save();
 
+    assert.strictEqual(page.courseSessions.header.title, 'Sessions (5)');
     assert.strictEqual(sessions.length, 5);
     assert.strictEqual(sessions[4].title, 'xx new session');
     assert.strictEqual(sessions[4].type, 'session type 1');
