@@ -222,7 +222,7 @@ export default class Course extends Model {
   }
 
   get termCount() {
-    return this.terms.length;
+    return this.hasMany('terms').ids().length;
   }
 
   setDatesBasedOnYear() {

@@ -32,6 +32,6 @@ export default class Vocabulary extends Model {
   }
 
   get termCount() {
-    return this.terms.length;
+    return this.hasMany('terms').ids().length;
   }
 }

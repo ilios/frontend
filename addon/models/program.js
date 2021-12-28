@@ -20,11 +20,11 @@ export default class Program extends Model {
   curriculumInventoryReports;
 
   get hasCurriculumInventoryReports() {
-    return !!this.curriculumInventoryReports.length;
+    return !!this.hasMany('curriculumInventoryReports').ids().length;
   }
 
   get hasProgramYears() {
-    return !!this.programYears.length;
+    return !!this.hasMany('programYears').ids().length;
   }
 
   @use _cohorts = new ResolveAsyncValue(() => [this.programYears?.mapBy('cohort')]);
