@@ -165,20 +165,21 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups.length, 3);
+    assert.notOk(
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible
+    );
     assert.strictEqual(
       page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].title,
-      'Sub-sub Group'
+      'Other Top Group'
     );
     assert.notOk(
       page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible
     );
     await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].expandTooltip();
-    assert.ok(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible);
-    assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].tooltipContents,
-      'Parent groups: Top Group » Sub-Group'
+    assert.notOk(
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible,
+      'no tooltip on top-level group'
     );
-    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].closeTooltip();
     assert.strictEqual(
       page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].title,
       'Sub-Group 2'
@@ -193,20 +194,19 @@ module('Acceptance | Session - Offering Management', function (hooks) {
       'Parent group: Top Group'
     );
     await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].closeTooltip();
-    assert.notOk(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible
-    );
     assert.strictEqual(
       page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].title,
-      'Other Top Group'
+      'Sub-sub Group'
     );
     assert.notOk(
       page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible
     );
     await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].expandTooltip();
-    assert.notOk(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible,
-      'no tooltip on top-level group'
+    assert.ok(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible);
+    assert.strictEqual(
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].tooltipContents,
+      'Parent groups: Top Group » Sub-Group'
     );
+    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].closeTooltip();
   });
 });

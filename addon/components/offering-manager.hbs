@@ -20,7 +20,7 @@
   {{else}}
     <div class="offering-manager-learner-groups">
       <ul>
-        {{#each (await @offering.learnerGroups) as |learnerGroup|}}
+        {{#each this.sortedLearnerGroups as |learnerGroup|}}
           <li
             {{did-insert this.setLearnerGroupElement learnerGroup.id}}
             {{mouse-hover-toggle (fn this.toggleHover learnerGroup.id)}}
