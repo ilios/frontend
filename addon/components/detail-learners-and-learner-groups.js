@@ -54,13 +54,13 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
 
   @action
   async addLearnerGroupToBuffer(learnerGroup) {
-    const descendants = await learnerGroup.get('allDescendants');
+    const descendants = await learnerGroup.getAllDescendants();
     this.learnerGroupBuffer = [...this.learnerGroupBuffer, ...descendants, learnerGroup];
   }
 
   @action
   async removeLearnerGroupFromBuffer(learnerGroup) {
-    const descendants = await learnerGroup.get('allDescendants');
+    const descendants = await learnerGroup.getAllDescendants();
     const groupsToRemove = [...descendants, learnerGroup];
     this.learnerGroupBuffer = this.learnerGroupBuffer.filter((g) => !groupsToRemove.includes(g));
   }

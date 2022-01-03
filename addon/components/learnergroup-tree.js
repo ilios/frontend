@@ -1,55 +1,58 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { filter } from 'rsvp';
-import { isEmpty, isPresent } from '@ember/utils';
-import { restartableTask } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class LearnergroupTree extends Component {
-  @tracked isHidden = true;
-  @tracked selectable = false;
-  @tracked hasChildren = false;
   @service intl;
 
   get isRoot() {
-    return isPresent(this.args.isRoot) ? this.args.isRoot : true;
+    return this.args.isRoot ?? true;
   }
 
-  @restartableTask
-  *load(element, [learnerGroup, selectedGroups, filter]) {
-    const exp = new RegExp(filter, 'gi');
-    const children = yield learnerGroup.children;
-    const hasUnSelectedChildren = yield this.hasUnSelectedChildren(
-      children.toArray(),
-      selectedGroups
-    );
-    let filterMatch = true;
-    if (filter && filter.length > 0) {
-      const filterTitle = yield learnerGroup.filterTitle;
-      filterMatch = filterTitle.match(exp) != null;
-    }
-    const available =
-      hasUnSelectedChildren || isEmpty(selectedGroups) || !selectedGroups.includes(learnerGroup);
+  @use children = new ResolveAsyncValue(() => [this.args.learnerGroup.children]);
 
-    this.isHidden = !filterMatch || !available;
-    this.selectable = available;
-    this.hasChildren = children.length;
+  @use hasUnSelectedChildren = new AsyncProcess(() => [
+    this.getHasUnSelectedChildren.bind(this),
+    this.children,
+    this.args.selectedGroups,
+  ]);
+
+  get selectable() {
+    return this.hasUnSelectedChildren || !this.args.selectedGroups.includes(this.args.learnerGroup);
+  }
+
+  get hasChildren() {
+    return this.args.learnerGroup.hasMany('children').ids().length > 0;
+  }
+
+  get filterMatch() {
+    if (this.args.filter && this.args.filter.length > 0) {
+      const exp = new RegExp(this.args.filter, 'gi');
+      return this.args.learnerGroup.filterTitle.match(exp) != null;
+    }
+
+    return true;
+  }
+
+  get isHidden() {
+    return !this.filterMatch || !this.selectable;
   }
 
   /**
    * Recursively search a group tree to see if there are any children which have not been selected.
-   * @param {Array} children
-   * @param {Array} selectedGroups
-   * @return {boolean}
    **/
-  async hasUnSelectedChildren(children, selectedGroups) {
-    const unselectedChildren = await filter(children, async (child) => {
-      if (isEmpty(selectedGroups) || !selectedGroups.includes(child)) {
+  async getHasUnSelectedChildren(children, selectedGroups) {
+    const arr = children?.toArray() ?? [];
+    const unselectedChildren = await filter(arr, async (child) => {
+      if (!selectedGroups.includes(child)) {
         return true;
       }
       const childChildren = await child.children;
-      return this.hasUnSelectedChildren(childChildren.toArray(), selectedGroups);
+      return this.getHasUnSelectedChildren(childChildren.toArray(), selectedGroups);
     });
     return unselectedChildren.length > 0;
   }

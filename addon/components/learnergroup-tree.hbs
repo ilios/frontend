@@ -2,8 +2,6 @@
   hidden={{this.isHidden}}
   class="{{if this.hasChildren "strong" "em"}} {{unless this.selectable "disabled"}}"
   data-test-learnergroup-tree
-  {{did-insert (perform this.load) @learnerGroup @selectedGroups @filter}}
-  {{did-update (perform this.load) @learnerGroup @selectedGroups @filter}}
   data-test-learnergroup-tree-root={{if this.isRoot "true" "false"}}
 >
   {{#if this.selectable}}
@@ -21,10 +19,10 @@
   {{#if @learnerGroup.needsAccommodation}}
     <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
   {{/if}}
-  {{#if @learnerGroup.children.length}}
+  {{#if this.hasChildren}}
     <ul data-test-subgroups>
-      {{#if (is-fulfilled @learnerGroup.children)}}
-        {{#each (sort-by this.sortByTitle (await @learnerGroup.children)) as |child|}}
+      {{#if (is-array this.children)}}
+        {{#each (sort-by this.sortByTitle this.children) as |child|}}
           <LearnergroupTree
             @learnerGroup={{child}}
             @selectedGroups={{@selectedGroups}}

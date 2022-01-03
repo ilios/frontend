@@ -1,45 +1,31 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency';
-import { all, filter, map } from 'rsvp';
 
 export default class DetailLearnerGroupsListComponent extends Component {
-  @tracked trees;
-  @tracked lowestLeaves;
+  get learnerGroups() {
+    return this.args.learnerGroups ?? [];
+  }
 
-  @restartableTask
-  *load(event, [learnerGroups]) {
-    if (!learnerGroups) {
-      return;
-    }
+  get topLevelGroups() {
+    return this.learnerGroups.mapBy('topLevelGroup');
+  }
 
-    const topLevelGroups = yield all(learnerGroups.toArray().mapBy('topLevelGroup'));
-
-    this.trees = yield map(topLevelGroups.uniq(), async (topLevelGroup) => {
-      const groups = await filter(learnerGroups.toArray(), async (learnerGroup) => {
-        const thisGroupsTopLevelGroup = await learnerGroup.get('topLevelGroup');
-        return thisGroupsTopLevelGroup === topLevelGroup;
-      });
-
-      const sortProxies = await map(groups, async (group) => {
-        const sortTitle = await group.get('sortTitle');
-        return {
-          group,
-          sortTitle,
-        };
-      });
+  get trees() {
+    const arr = this.topLevelGroups?.uniq() ?? [];
+    return arr.map((topLevelGroup) => {
+      const groups = this.learnerGroups.filter((group) => group.topLevelGroup === topLevelGroup);
 
       return {
         topLevelGroup,
-        groups: sortProxies.sortBy('sortTitle').mapBy('group'),
+        groups,
       };
     });
+  }
 
-    const ids = learnerGroups.mapBy('id');
-    this.lowestLeaves = yield filter(learnerGroups.toArray(), async (group) => {
-      const children = await group.allDescendants;
-      const selectedChildren = children.filter((child) => ids.includes(child.id));
+  get lowestLeaves() {
+    const ids = this.learnerGroups.mapBy('id');
+    return this.learnerGroups.filter((group) => {
+      const selectedChildren = group.allDescendants.filter((child) => ids.includes(child.id));
       return selectedChildren.length === 0;
     });
   }
