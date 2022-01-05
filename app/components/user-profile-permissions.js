@@ -169,10 +169,11 @@ export default class UserProfilePermissionsComponent extends Component {
   }
 
   async getInstructedCourses(selectedSchool, selectedYearId, allInstructedCourses) {
-    return filter(allInstructedCourses ?? [], async (course) => {
+    const rhett = await filter(allInstructedCourses ?? [], async (course) => {
       const school = await course.school;
       return school === selectedSchool && selectedYearId === course.year.toString();
     });
+    return rhett.uniq();
   }
 
   async getStudentAdvisedCourses(selectedSchool, selectedYearId, studentAdvisedCourses) {
