@@ -1,19 +1,12 @@
-import {
-  attribute,
-  create,
-  clickable,
-  fillable,
-  is,
-  triggerable,
-  value,
-} from 'ember-cli-page-object';
+import { attribute, create, clickable, fillable, triggerable, value } from 'ember-cli-page-object';
+import { hasFocus } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-search-box]',
   submit: clickable('[data-test-submit-search]'),
   set: fillable('input'),
   value: value('input'),
-  inputHasFocus: is(':focus', 'input'),
+  inputHasFocus: hasFocus('input'),
   placeholder: attribute('placeholder', 'input'),
   esc: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
 };
