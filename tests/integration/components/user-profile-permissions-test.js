@@ -333,7 +333,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
   });
 
   test('if academic year does not cross year boundaries, and its the first half of the year then last year is selected', async function (assert) {
-    freezeDateAt(new Date('1/1/2021'));
+    freezeDateAt(new Date(`1/1/${this.thisYear}`));
     this.server.get('application/config', function () {
       return {
         config: {
@@ -341,25 +341,26 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
         },
       };
     });
-    this.currentAcademicYear = new Date().getFullYear() - 1;
+    const currentDate = new Date();
+    this.currentAcademicYear = currentDate.getFullYear() - 1;
     const user = this.server.create('user', {
       school: this.schools[1],
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
-
+    this.set('currentDate', currentDate);
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
+      @currentDate={{this.currentDate}}
       @setSchool={{(noop)}}
       @setYear={{(noop)}}
     />`);
-
     assert.strictEqual(parseInt(component.selectedYear, 10), this.currentAcademicYear);
     unfreezeDate();
   });
 
   test('academic year shows range as applicable by configuration', async function (assert) {
-    freezeDateAt(new Date('7/1/2021'));
+    freezeDateAt(new Date(`7/1/${this.thisYear}`));
     this.server.get('application/config', function () {
       return {
         config: {
