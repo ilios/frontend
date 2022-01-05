@@ -50,9 +50,12 @@ module('Integration | Component | user profile ics', function (hooks) {
     );
     await click('.refresh-key');
 
-    const icsFeedKey = this.server.db.users.find(13).icsFeedKey;
-    assert.notEqual(icsFeedKey, 'testkey', 'icsFeedKey is not the same');
-    assert.strictEqual(icsFeedKey.length, 64, 'icsFeedKey is a long string probably a hash');
+    assert.notEqual(userModel.icsFeedKey, 'testkey', 'icsFeedKey is not the same');
+    assert.strictEqual(
+      userModel.icsFeedKey.length,
+      64,
+      'icsFeedKey is a long string probably a hash'
+    );
   });
 
   test('clicking copy displays message', async function (assert) {
