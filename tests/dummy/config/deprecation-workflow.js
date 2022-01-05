@@ -14,6 +14,5 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'deprecated-run-loop-and-computed-dot-access' },
     { handler: 'silence', matchId: 'ember-simple-auth.initializer.setup-session-restoration' },
     { handler: 'silence', matchId: 'routing.transition-methods' },
-    { handler: 'silence', matchId: 'ember-cli-page-object.is-property' },
   ],
 };
