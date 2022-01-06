@@ -21,7 +21,7 @@ const definition = {
   },
   parents,
   meshDescriptors,
-  remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]' }),
+  remove: clickable('[data-test-remove]', { scope: '[data-test-actions]' }),
   hasTrashCan: isVisible('[data-icon="trash"]', {
     scope: '[data-test-actions]',
   }),
