@@ -54,7 +54,7 @@ const definition = {
     scope: '[data-test-timezone-picker]',
     currentTimezone: {
       scope: '[data-test-current-timezone]',
-      edit: clickable(),
+      edit: clickable('button'),
     },
     label: {
       scope: 'label',
@@ -102,7 +102,7 @@ const definition = {
     scope: '[data-test-instructor-management]',
     selectedInstructors: collection('[data-test-selected-instructor]', {
       userNameInfo,
-      remove: clickable('.remove'),
+      remove: clickable('button'),
     }),
     selectedInstructorGroups: collection('[data-test-selected-instructor-group]', {
       title: text('[data-test-instructor-group-title]'),
