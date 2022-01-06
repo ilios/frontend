@@ -233,6 +233,13 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       session,
       instructors: [user],
     });
+    const session2 = this.server.create('session', {
+      course,
+    });
+    this.server.create('offering', {
+      session: session2,
+      instructors: [user],
+    });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfilePermissions
@@ -264,12 +271,16 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       component.courses.studentAdvisors[0].text,
       `${this.currentAcademicYear} course 0`
     );
-    assert.strictEqual(component.sessions.title, 'Sessions (1)');
+    assert.strictEqual(component.sessions.title, 'Sessions (2)');
     assert.ok(component.sessions.notAdministrating);
-    assert.strictEqual(component.sessions.instructors.length, 1);
+    assert.strictEqual(component.sessions.instructors.length, 2);
     assert.strictEqual(
       component.sessions.instructors[0].text,
       `${this.currentAcademicYear} course 0 » session 0`
+    );
+    assert.strictEqual(
+      component.sessions.instructors[1].text,
+      `${this.currentAcademicYear} course 0 » session 1`
     );
     assert.ok(component.sessions.notStudentAdvising);
   });
