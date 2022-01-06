@@ -8,6 +8,5 @@ module.exports = {
     'ember-modifier': '2.1.2 || 3.0.0',
     '@embroider/util': '*',
     '@ember/render-modifiers': '1.0.2 || 2.0.2',
-    '@ember/test-waiters': '2.4.5 || 3.0.0',
   },
 };
