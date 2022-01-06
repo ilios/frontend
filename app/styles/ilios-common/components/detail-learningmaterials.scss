@@ -40,8 +40,9 @@
         min-height: 3.25rem;
         position: relative;
 
-        &.disabled {
-          cursor: default;
+        button.result {
+          @include ilios-button-reset;
+          text-align: left;
         }
 
         &:hover {
@@ -50,6 +51,7 @@
       }
 
       .learning-material-title {
+        @include ilios-heading-h4;
         color: inherit;
         display: block;
         margin: 0;

@@ -11,7 +11,7 @@ const definition = {
     properties: collection('.learning-material-properties li', {
       value: text(),
     }),
-    add: clickable(),
+    add: clickable('button'),
   }),
 };
 

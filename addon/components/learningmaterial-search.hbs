@@ -14,45 +14,47 @@
   {{else if this.searchResults.length}}
     <ul class="lm-search-results">
       {{#each this.searchResults as |learningMaterial|}}
-        <li
-          class={{if (includes learningMaterial.id @currentMaterialIds) "disabled"}}
-          role="button"
-          {{on "click" (perform this.addLearningMaterial learningMaterial)}}
-        >
-          <h4 class="learning-material-title">
-            <LmTypeIcon
-              @type={{learningMaterial.type}}
-              @mimetype={{learningMaterial.mimetype}}
-            />
-            <span data-test-title>
-              {{learningMaterial.title}}
-            </span>
-          </h4>
-          <span class="learning-material-description">
+        <li class={{if (includes learningMaterial.id @currentMaterialIds) "disabled"}}>
+          <button
+            class="result"
+            type="button"
+            {{on "click" (perform this.addLearningMaterial learningMaterial)}}
+          >
+            <div class="learning-material-title">
+              <LmTypeIcon
+                @type={{learningMaterial.type}}
+                @mimetype={{learningMaterial.mimetype}}
+              />
+              <span data-test-title>
+                {{learningMaterial.title}}
+              </span>
+            </div>
+            <span class="learning-material-description">
             {{! template-lint-disable no-triple-curlies }}
-            {{{learningMaterial.description}}}
+              {{{learningMaterial.description}}}
           </span>
-          {{#if learningMaterial.status.title}}
-            <span class="learning-material-status">
-              {{learningMaterial.status.title}}
-            </span>
-          {{/if}}
-          <ul class="learning-material-properties">
-            <li>
-              {{t "general.owner"}}:
-              {{learningMaterial.owningUser.fullName}}
-            </li>
-            {{#if learningMaterial.originalAuthor}}
-              <li>
-                {{t "general.contentAuthor"}}:
-                {{learningMaterial.originalAuthor}}
-              </li>
+            {{#if learningMaterial.status.title}}
+              <span class="learning-material-status">
+                {{learningMaterial.status.title}}
+              </span>
             {{/if}}
-            <li>
-              {{t "general.uploadDate"}}:
-              {{format-date learningMaterial.uploadDate}}
-            </li>
-          </ul>
+            <ul class="learning-material-properties">
+              <li>
+                {{t "general.owner"}}:
+                {{learningMaterial.owningUser.fullName}}
+              </li>
+              {{#if learningMaterial.originalAuthor}}
+                <li>
+                  {{t "general.contentAuthor"}}:
+                  {{learningMaterial.originalAuthor}}
+                </li>
+              {{/if}}
+              <li>
+                {{t "general.uploadDate"}}:
+                {{format-date learningMaterial.uploadDate}}
+              </li>
+            </ul>
+          </button>
         </li>
       {{/each}}
       {{#if this.hasMoreSearchResults}}
