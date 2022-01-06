@@ -1,6 +1,6 @@
-<div
+<button
   class="selectable-terms-list-item {{if this.isSelected "selected"}}"
-  role="button"
+  type="button"
   {{on "click" this.click}}
   {{mouse-hover-toggle (set this.isHovering)}}
   {{did-insert (set this.theElement)}}
@@ -18,4 +18,4 @@
       <FaIcon @icon="plus" class="add" />
     {{/if}}
   </span>
-</div>
+</button>

@@ -1,10 +1,13 @@
 .selectable-terms-list-item {
+  @include ilios-button-reset;
   border: 1px $header-grey solid;
   border-radius: 4px;
-  cursor: pointer;
+  display: block;
   margin-top: 5px;
   padding: .2em .4em .2em .6em;
+  text-align: left;
   vertical-align: middle;
+  width: 100%;
 
   &.selected {
     background-color: $header-grey;
