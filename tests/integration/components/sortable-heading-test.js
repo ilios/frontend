@@ -11,10 +11,10 @@ module('Integration | Component | sortable heading', function (hooks) {
   test('it renders with default options', async function (assert) {
     assert.expect(5);
     await render(hbs`<SortableHeading>Foo</SortableHeading>`);
-    assert.dom('span').hasText('Foo');
-    assert.dom('span').hasClass('text-left');
-    assert.dom('span').hasNoClass('hide-from-small-screen');
-    assert.dom('span').hasAttribute('title', '');
+    assert.dom('button').hasText('Foo');
+    assert.dom('button').hasClass('text-left');
+    assert.dom('button').hasNoClass('hide-from-small-screen');
+    assert.dom('button').hasAttribute('title', '');
     assert.dom('svg').hasClass('fa-sort');
   });
 
@@ -43,11 +43,11 @@ module('Integration | Component | sortable heading', function (hooks) {
             Foo
           </SortableHeading>`
     );
-    assert.dom('span').hasText('Foo');
-    assert.dom('span').hasClass(`text-${align}`);
-    assert.dom('span').hasClass('hide-from-small-screen');
-    assert.dom('span').hasClass('ham-of-shame');
-    assert.dom('span').hasAttribute('title', title);
+    assert.dom('button').hasText('Foo');
+    assert.dom('button').hasClass(`text-${align}`);
+    assert.dom('button').hasClass('hide-from-small-screen');
+    assert.dom('button').hasClass('ham-of-shame');
+    assert.dom('button').hasAttribute('title', title);
     assert.dom('svg').hasClass('fa-sort-numeric-down');
   });
   test('click event fires', async function (assert) {
@@ -56,6 +56,6 @@ module('Integration | Component | sortable heading', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<SortableHeading @onClick={{this.click}}>Foo</SortableHeading>`);
-    await click(find('span'));
+    await click(find('button'));
   });
 });
