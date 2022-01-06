@@ -529,7 +529,7 @@ module('Integration | Component | course rollover', function (hooks) {
       @visit={{(noop)}}
     />`);
     const advancedOptions = '.advanced-options';
-    const firstCohort = `${advancedOptions} .selectable-cohorts li:nth-of-type(1)`;
+    const firstCohort = `${advancedOptions} .selectable-cohorts li:nth-of-type(1) button`;
 
     await click(firstCohort);
     await click('.done');

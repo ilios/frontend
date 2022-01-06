@@ -1,4 +1,8 @@
 .detail-cohort-manager {
+  button {
+    @include ilios-button-reset;
+  }
+
   .selected-cohorts {
     @include ilios-removable-list;
   }

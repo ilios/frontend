@@ -36,11 +36,11 @@ export default create({
     }),
     selected: collection('.selected-cohorts li', {
       name: text(),
-      remove: clickable(),
+      remove: clickable('button'),
     }),
     selectable: collection('.selectable-cohorts li', {
       name: text(),
-      add: clickable(),
+      add: clickable('button'),
     }),
   },
   collapsedCompetencies,
