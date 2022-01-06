@@ -4,8 +4,8 @@ import userNameInfo from './user-name-info';
 const definition = {
   scope: '[data-test-detail-learner-list]',
   learners: collection('li', {
-    remove: clickable('[data-icon="times"]'),
-    isRemovable: isPresent('[data-icon="times"]'),
+    remove: clickable('button'),
+    isRemovable: isPresent('button'),
     userNameInfo,
   }),
 };
