@@ -18,13 +18,18 @@
       }
 
       tbody tr {
-        cursor: pointer;
         &.active {
           background-color: $ilios-green;
           color: $white;
         }
         &:hover {
           outline: 1px solid $ilios-green;
+        }
+
+        button {
+          @include ilios-button-reset;
+          text-align: left;
+          width: 100%;
         }
       }
     }
