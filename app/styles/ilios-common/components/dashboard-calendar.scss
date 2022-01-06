@@ -102,10 +102,10 @@
 
     .filter-tags {
       .filter-tag {
-        border-radius: 3px;
-        cursor: pointer;
-        display: inline-block;
+        @include ilios-button-reset;
         @include font-size('small');
+        border-radius: 3px;
+        display: inline-block;
         padding: 2px 5px;
       }
 
@@ -134,9 +134,9 @@
       }
 
       .filters-clear-filters {
-        color: $ilios-blue;
-        cursor: pointer;
+        @include ilios-button-reset;
         @include font-size('small');
+        color: $ilios-blue;
       }
     }
   }
