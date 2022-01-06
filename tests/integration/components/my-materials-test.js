@@ -346,10 +346,10 @@ module('Integration | Component | my-materials', function (hooks) {
 
     const table = 'table:nth-of-type(1)';
     const headers = `${table} thead th`;
-    const title = `${headers}:nth-of-type(3)`;
-    const courseTitle = `${headers}:nth-of-type(2)`;
-    const sessionTitle = `${headers}:nth-of-type(1)`;
-    const firstOffering = `${headers}:nth-of-type(5)`;
+    const title = `${headers}:nth-of-type(3) button`;
+    const courseTitle = `${headers}:nth-of-type(2) button`;
+    const sessionTitle = `${headers}:nth-of-type(1) button`;
+    const firstOffering = `${headers}:nth-of-type(5) button`;
     await click(title);
     await click(title);
     await click(courseTitle);

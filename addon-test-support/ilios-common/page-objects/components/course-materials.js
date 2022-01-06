@@ -13,9 +13,9 @@ const definition = {
   courseFilter: fillable('[data-test-course-filter]'),
   sortCoursesBy: {
     scope: '[data-test-course-table] thead',
-    title: clickable('th', { at: 0 }),
-    type: clickable('th', { at: 1 }),
-    author: clickable('th', { at: 2 }),
+    title: clickable('th:nth-of-type(1) button'),
+    type: clickable('th:nth-of-type(2) button'),
+    author: clickable('th:nth-of-type(3) button'),
   },
   courses: collection('[data-test-course-table] tbody tr', {
     title: text('td', { at: 0 }),
@@ -27,11 +27,11 @@ const definition = {
   sessionFilter: fillable('[data-test-session-filter]'),
   sortSessionsBy: {
     scope: '[data-test-session-table] thead',
-    title: clickable('th', { at: 0 }),
-    type: clickable('th', { at: 1 }),
-    author: clickable('th', { at: 2 }),
-    sessionTitle: clickable('th', { at: 3 }),
-    firstOffering: clickable('th', { at: 4 }),
+    title: clickable('th:nth-of-type(1) button'),
+    type: clickable('th:nth-of-type(2) button'),
+    author: clickable('th:nth-of-type(3) button'),
+    sessionTitle: clickable('th:nth-of-type(4) button'),
+    firstOffering: clickable('th:nth-of-type(5) button'),
   },
   sessions: collection('[data-test-session-table] tbody tr', {
     title: text('td', { at: 0 }),
