@@ -13,14 +13,14 @@ const definition = {
   scope: '.mesh-manager',
   selectedTerms: collection('.selected-terms li', {
     title: text('.term-title'),
-    remove: clickable(),
+    remove: clickable('button'),
   }),
   search,
   searchResults: collection('[data-test-search-results] [data-test-search-result]', {
     title: text('.descriptor-name'),
     isDisabled: hasClass('disabled'),
     isEnabled: notHasClass('disabled'),
-    add: clickable(),
+    add: clickable('button'),
   }),
   showMoreIsVisible: isVisible('[data-test-show-more]'),
   showMore: clickable('[data-test-show-more]'),

@@ -9,24 +9,37 @@
   {{/if}}
   <ul class="selected-terms">
     {{#each this.sortedTerms as |term|}}
-      <li
-        class={{if @editable "clickable"}}
-        role="button"
-        {{on "click" (fn this.remove term)}}
-      >
-        <span class="term-title">
-          {{term.name}}
-        </span>
-        <span class="term-details">
-          {{term.id}}
-          {{#if term.deleted}}
-            - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
-          {{else if term.trees}}
-            - {{term.trees.lastObject.treeNumber}}
-          {{/if}}
-        </span>
+      <li>
         {{#if @editable}}
-          <FaIcon @icon="times" class="remove" />
+          <button
+            type="button"
+            {{on "click" (fn @remove term)}}
+          >
+            <span class="term-title">
+              {{term.name}}
+            </span>
+            <span class="term-details">
+              {{term.id}}
+              {{#if term.deleted}}
+                - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
+              {{else if term.trees}}
+                - {{term.trees.lastObject.treeNumber}}
+              {{/if}}
+            </span>
+            <FaIcon @icon="times" class="remove" />
+          </button>
+        {{else}}
+          <span class="term-title">
+            {{term.name}}
+          </span>
+          <span class="term-details">
+          {{term.id}}
+            {{#if term.deleted}}
+              - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
+            {{else if term.trees}}
+              - {{term.trees.lastObject.treeNumber}}
+            {{/if}}
+          </span>
         {{/if}}
       </li>
     {{/each}}
@@ -50,32 +63,35 @@
       {{#each this.searchResults as |term|}}
         <li
           class={{if (includes term.id (map-by "id" this.terms)) "disabled"}}
-          role="button"
           data-test-search-result
-          {{on "click" (fn this.add term)}}
         >
-          <span class="descriptor-name" data-test-name>
-            {{term.name}}
-          </span>
-          <span class="descriptor-id">
-            {{term.id}}
-            {{#if term.trees}}
-              -{{term.trees.lastObject.treeNumber}}
-            {{/if}}
-          </span>
-          <ul class="mesh-concepts">
-            {{#each term.concepts as |concept|}}
-              {{#if concept.scopeNote}}
-                <li
-                  class="{{unless term.isActive "disabled"}}
-
-                    {{if concept.hasTruncatedScopeNote "truncated"}}"
-                >
-                  {{concept.truncatedScopeNote}}
-                </li>
+          <button
+            type="button"
+            {{on "click" (fn this.add term)}}
+          >
+            <span class="descriptor-name" data-test-name>
+              {{term.name}}
+            </span>
+            <span class="descriptor-id">
+              {{term.id}}
+              {{#if term.trees}}
+                -{{term.trees.lastObject.treeNumber}}
               {{/if}}
-            {{/each}}
-          </ul>
+            </span>
+            <ul class="mesh-concepts">
+              {{#each term.concepts as |concept|}}
+                {{#if concept.scopeNote}}
+                  <li
+                    class="{{unless term.isActive "disabled"}}
+
+                      {{if concept.hasTruncatedScopeNote "truncated"}}"
+                  >
+                    {{concept.truncatedScopeNote}}
+                  </li>
+                {{/if}}
+              {{/each}}
+            </ul>
+          </button>
         </li>
       {{/each}}
     </ul>

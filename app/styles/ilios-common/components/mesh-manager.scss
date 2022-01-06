@@ -19,6 +19,11 @@
     overflow-y: scroll;
     width: 80%;
 
+    button {
+      @include ilios-button-reset;
+      text-align: left;
+    }
+
     .descriptor-name {
       display: block;
       font-weight: bold;
@@ -46,6 +51,9 @@
     li {
       display: flex;
 
+      button {
+        @include ilios-button-reset;
+      }
       .remove {
         margin-left: .5em;
       }
