@@ -132,6 +132,7 @@ general:
   hour: Heure
   hours: Heures
   icsInstructions: "Pour ajouter votre calendrier à des services ou applications autre, utilisez cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir votre calendrier!"
+  ilios: Ilios
   ilm: ILM
   ilmDue: "ILM - Échéance"
   inactive: inactif
