@@ -1,96 +1,78 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import moment from 'moment';
 import hbs from 'htmlbars-inline-precompile';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-
-const getEvent = function () {
-  return {
-    startDate: moment('1984-11-11').toDate(),
-    endDate: moment('1984-11-12').toDate(),
-    name: 'Cheramie is born',
-    location: 'Lancaster, CA',
-  };
-};
+import { component } from 'ilios-common/page-objects/components/ilios-calendar-multiday-event';
 
 module('Integration | Component | ilios calendar multiday event', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
-    this.actions = {};
-    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
+    this.ev = {
+      startDate: moment('1984-11-11').toDate(),
+      endDate: moment('1984-11-12').toDate(),
+      name: 'Cheramie is born',
+      location: 'Lancaster, CA',
+    };
   });
 
   test('event displays correctly', async function (assert) {
-    assert.expect(3);
-    const event = getEvent();
-    this.set('event', event);
     await render(hbs`
       <ul>
         <IliosCalendarMultidayEvent
-          @event={{this.event}}
+          @event={{this.ev}}
           @isEventSelectable={{true}}
           @selectEvent={{(noop)}}
         />
       </ul>
     `);
-    assert.dom(this.element).containsText('11/11/84');
-    assert.dom(this.element).containsText('Cheramie is born');
-    assert.dom(this.element).containsText('Lancaster, CA');
+    assert.strictEqual(
+      component.text,
+      '11/11/84, 12:00 AM – 11/12/84, 12:00 AM Cheramie is born Lancaster, CA'
+    );
     await a11yAudit(this.element);
   });
 
   test('action fires on click', async function (assert) {
-    assert.expect(3);
-    const event = getEvent();
-    event.offering = 1;
-
-    this.set('event', event);
+    assert.expect(2);
+    this.ev.offering = 1;
     this.set('selectEvent', (value) => {
-      assert.deepEqual(event, value);
+      assert.deepEqual(this.ev, value);
     });
     await render(hbs`
       <IliosCalendarMultidayEvent
-        @event={{this.event}}
+        @event={{this.ev}}
         @isEventSelectable={{true}}
         @selectEvent={{this.selectEvent}}
       />
     `);
-    assert.dom(this.element).containsText('Cheramie is born');
-    assert.dom('[data-test-ilios-calendar-multiday-event] button').isEnabled();
-    await click('[data-test-ilios-calendar-multiday-event] button');
+    assert.notOk(component.isDisabled);
+    await component.click();
   });
 
-  test('action does not fire for scheduled events', async function (assert) {
-    const event = getEvent();
-
-    this.set('event', event);
+  test('event is disabled for scheduled events', async function (assert) {
     await render(hbs`
       <IliosCalendarMultidayEvent
-        @event={{this.event}}
+        @event={{this.ev}}
         @isEventSelectable={{true}}
         @selectEvent={{this.selectEvent}}
       />
     `);
-    assert.dom(this.element).containsText('Cheramie is born');
-    assert.dom('[data-test-ilios-calendar-multiday-event] button').isDisabled();
+    assert.ok(component.isDisabled);
   });
 
-  test('action does not fire for unselectableEvents events', async function (assert) {
-    const event = getEvent();
-    event.offering = 1;
-
-    this.set('event', event);
+  test('event is disabled when not explicitly flagged as selectable', async function (assert) {
+    this.ev.offering = 1;
     await render(hbs`
       <IliosCalendarMultidayEvent
-        @event={{this.event}}
+        @event={{this.ev}}
         @selectEvent={{this.selectEvent}}
       />
     `);
-    assert.dom(this.element).containsText('Cheramie is born');
-    assert.dom('[data-test-ilios-calendar-multiday-event] button').isDisabled();
+    assert.ok(component.isDisabled);
   });
 });

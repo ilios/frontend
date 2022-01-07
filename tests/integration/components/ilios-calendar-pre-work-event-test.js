@@ -4,9 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-
 import { component } from 'ilios-common/page-objects/components/ilios-calendar-pre-work-event';
-
 const today = moment();
 
 module('Integration | Component | ilios-calendar-pre-work-event', function (hooks) {
