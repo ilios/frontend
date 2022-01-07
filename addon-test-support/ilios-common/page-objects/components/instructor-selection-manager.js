@@ -7,7 +7,7 @@ const definition = {
   search,
   instructors: collection('[data-test-instructors] li', {
     userNameInfo,
-    remove: clickable('.remove'),
+    remove: clickable('button'),
   }),
   instructorGroups: collection('[data-test-instructor-group]', {
     title: text('[data-test-instructor-group-title]'),

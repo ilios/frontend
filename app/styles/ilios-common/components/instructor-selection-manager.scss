@@ -1,10 +1,10 @@
 .instructor-selection-manager {
 
   .instructor-group {
-    & > span {
+    button {
+      @include ilios-button-reset;
       background-color: $header-grey;
       border-radius: 4px;
-      cursor: pointer;
       font-weight: bold;
       padding: .2em .4em .2em .6em;
       vertical-align: middle;
@@ -27,6 +27,10 @@
   .instructors-list {
     @include ilios-removable-list;
     margin-bottom: 1rem;
+
+    button {
+      @include ilios-button-reset;
+    }
   }
 
   .search-box input[type='search'] {
