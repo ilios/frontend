@@ -15,4 +15,9 @@
   .results {
     @include user-search-results;
   }
+
+  .select-user {
+    @include ilios-button-reset;
+    text-align: left;
+  }
 }

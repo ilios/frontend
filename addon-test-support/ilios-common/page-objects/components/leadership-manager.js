@@ -9,7 +9,7 @@ export default {
     scope: '[data-test-director-search] [data-test-leadership-search]',
     search: fillable('input[type=search]'),
     results: collection('.results [data-test-result]', {
-      add: clickable(),
+      add: clickable('[data-test-select-user]'),
       isSelectable: hasClass('clickable'),
       isSelected: notHasClass('clickable'),
     }),
@@ -18,7 +18,7 @@ export default {
     scope: '[data-test-administrator-search] [data-test-leadership-search]',
     search: fillable('input[type=search]'),
     results: collection('.results [data-test-result]', {
-      add: clickable(),
+      add: clickable('[data-test-select-user]'),
       isSelectable: hasClass('clickable'),
       isSelected: notHasClass('clickable'),
     }),
@@ -30,7 +30,7 @@ export default {
     scope: '[data-test-student-advisor-search] [data-test-leadership-search]',
     search: fillable('input[type=search]'),
     results: collection('.results [data-test-result]', {
-      add: clickable(),
+      add: clickable('[data-test-select-user]'),
       isSelectable: hasClass('clickable'),
       isSelected: notHasClass('clickable'),
     }),
