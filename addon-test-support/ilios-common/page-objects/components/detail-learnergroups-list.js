@@ -19,7 +19,7 @@ const definition = {
       needsAccommodation: isVisible('> [data-icon="universal-access"]'),
       isTopLevel: hasClass('top-level-group'),
       isRemovable: hasClass('.clickable'),
-      remove: clickable(),
+      remove: clickable('[data-test-remove-learnergroup]'),
     }),
   }),
 };

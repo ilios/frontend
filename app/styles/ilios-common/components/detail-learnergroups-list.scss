@@ -23,6 +23,14 @@
     .remove-all-subgroups {
       display: flex;
       justify-content: flex-end;
+
+      button {
+        @include ilios-button-reset;
+      }
+    }
+
+    .remove-learnergroup {
+      @include ilios-button-reset;
     }
   }
 }
