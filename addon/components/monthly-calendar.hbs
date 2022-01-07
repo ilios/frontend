@@ -1,5 +1,7 @@
 <section class="monthly-calendar" data-test-monthly-calendar>
-  <h2 class="month-year">{{format-date this.firstDayOfMonth month="long" year="numeric"}}</h2>
+  <h2 class="month-year" data-test-month-year>
+    {{format-date this.firstDayOfMonth month="long" year="numeric"}}
+  </h2>
   <div class="calendar">
     {{#each this.days as |day|}}
       <div class="day week-{{day.weekOfMonth}} day-{{day.dayOfWeek}}" data-test-day>
