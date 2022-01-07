@@ -16,7 +16,7 @@ const definition = {
     removeAllSubgroups: clickable('[data-test-remove-all]'),
     subgroups: collection('[data-test-subgroup]', {
       title: text('[data-test-title]'),
-      needsAccommodation: isVisible('> [data-icon="universal-access"]'),
+      needsAccommodation: isVisible('[data-icon="universal-access"]', { at: 0 }),
       isTopLevel: hasClass('top-level-group'),
       isRemovable: hasClass('.clickable'),
       remove: clickable('[data-test-remove-learnergroup]'),

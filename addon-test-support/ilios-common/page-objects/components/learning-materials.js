@@ -45,7 +45,7 @@ const definition = {
     status: text('td', { at: 5 }),
     isNotePublic: isVisible('.fa-eye'),
     isTimedRelease: isVisible('.fa-clock'),
-    details: clickable('.link', { at: 0 }),
+    details: clickable('button', { at: 0 }),
   }),
   newLearningMaterial,
   manager: {
