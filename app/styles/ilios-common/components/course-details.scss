@@ -9,9 +9,11 @@
   border-width: 0 2px 2px;
 
   .detail-collapsed-control {
+    @include ilios-button-reset;
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
+    width: 100%;
 
     span {
       background-color: $ilios-orange;
