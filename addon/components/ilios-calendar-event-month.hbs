@@ -1,8 +1,8 @@
-<div
+<button
   {{! template-lint-disable no-inline-styles }}
   style={{this.style}}
   class="month-event {{if this.clickable "clickable"}}"
-  role="button"
+  type="button"
   data-test-ilios-calendar-event
   data-test-ilios-calendar-event-month
   {{on "click" (if this.clickable @selectEvent (noop))}}
@@ -46,5 +46,4 @@
       {{/if}}
     </span>
   {{/if}}
-
-</div>
+</button>
