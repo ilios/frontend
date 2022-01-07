@@ -34,30 +34,46 @@
         {{/if}}
         {{#if (eq result.type "user")}}
           <li
-            class="user
-              {{unless
-                (includes result.user.id this.existingUserIds)
-                "clickable"
-                "inactive"
-              }}"
-            role="button"
+            class="user {{unless (includes result.user.id this.existingUserIds) "clickable" "inactive"}}"
             data-test-result-index={{index}}
             data-test-result
-            {{on "click" (perform this.clickUser result.user)}}
           >
-            <span class="name">
-              {{result.user.fullName}}
-              {{#unless result.user.enabled}}
-                <FaIcon
-                  @icon="user-times"
-                  @title={{t "general.disabled"}}
-                  class="error"
-                />
-              {{/unless}}
-            </span>
-            <span class="email">
-              {{result.user.email}}
-            </span>
+            {{#if (includes result.user.id this.existingUserIds)}}
+              <span class="name">
+                {{result.user.fullName}}
+                  {{#unless result.user.enabled}}
+                    <FaIcon
+                      @icon="user-times"
+                      @title={{t "general.disabled"}}
+                      class="error"
+                    />
+                  {{/unless}}
+              </span>
+              <span class="email">
+                {{result.user.email}}
+              </span>
+            {{else}}
+              <button
+                class="select-user"
+                type="button"
+                {{on "click" (perform this.clickUser result.user)}}
+                data-test-select-user
+              >
+                <span class="name">
+                  {{result.user.fullName}}
+                  {{#unless result.user.enabled}}
+                    <FaIcon
+                      @icon="user-times"
+                      @title={{t "general.disabled"}}
+                      class="error"
+                    />
+                  {{/unless}}
+                </span>
+                <span class="email">
+                  {{result.user.email}}
+                </span>
+              </button>
+            {{/if}}
           </li>
         {{/if}}
       {{/each}}

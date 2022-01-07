@@ -12,15 +12,14 @@
             {{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})
           </legend>
           {{#if @isManaging}}
-            <div class="remove-all-subgroups">
-              <span
-                class="clickable remove"
-                data-test-remove-all
-                role="button"
+            <div class="remove remove-all-subgroups">
+              <button
+                type="button"
                 {{on "click" (fn @remove tree.topLevelGroup)}}
+                data-test-remove-all
               >
                 {{t "general.removeAll"}} (<FaIcon @icon="times" />)
-              </span>
+              </button>
             </div>
           {{/if}}
           <ul>
@@ -33,23 +32,31 @@
             {{#each
               (without tree.topLevelGroup (await tree.groups)) as |learnerGroup|
             }}
-              {{! template-lint-disable no-invalid-interactive}}
               <li
                 class="{{if
                     (includes learnerGroup (await this.lowestLeaves))
                     "lowest-leaf"
-                  }}
-                  {{if @isManaging "clickable"}}"
-                role={{if @isManaging "button"}}
-                {{on "click" (fn this.remove learnerGroup)}}
+                  }}"
                 data-test-subgroup
               >
-                <span data-test-title>{{learnerGroup.title}} ({{count-related learnerGroup "users"}})</span>
-                {{#if learnerGroup.needsAccommodation}}
-                  <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
-                {{/if}}
                 {{#if @isManaging}}
-                  <FaIcon @icon="times" class="remove" />
+                  <button
+                    class="remove-learnergroup"
+                    type="button"
+                    {{on "click" (fn this.remove learnerGroup)}}
+                    data-test-remove-learnergroup
+                  >
+                    <span data-test-title>{{learnerGroup.title}} ({{count-related learnerGroup "users"}})</span>
+                    {{#if learnerGroup.needsAccommodation}}
+                      <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+                    {{/if}}
+                    <FaIcon @icon="times" class="remove"></FaIcon>
+                  </button>
+                {{else}}
+                  <span data-test-title>{{learnerGroup.title}} ({{count-related learnerGroup "users"}})</span>
+                  {{#if learnerGroup.needsAccommodation}}
+                    <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+                  {{/if}}
                 {{/if}}
               </li>
             {{/each}}

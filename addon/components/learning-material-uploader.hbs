@@ -4,13 +4,15 @@
     @disabled={{this.upload.isRunning}}
     @name={{this.uploadQueueName}}
     @onFileAdd={{perform this.upload}} as |queue|>
-    <span class="upload-button" role="button">
-      {{#if (and (not this.fileUploadErrorMessage) queue.files.length)}}
+    {{#if (and (not this.fileUploadErrorMessage) queue.files.length)}}
+      <span class="upload-button">
         <LoadingSpinner />{{queue.progress}}%
-      {{else}}
+      </span>
+    {{else}}
+      <span class="upload-button" role="button">
         {{t "general.chooseFile"}}
-      {{/if}}
-    </span>
+      </span>
+    {{/if}}
     {{#if this.upload.lastSuccessful.value}}
       <span class="upload-result">
         {{this.upload.lastSuccessful.value}} <FaIcon @icon="check" class="add" />

@@ -6,9 +6,14 @@
     </h4>
     <ul class="instructors-list" data-test-instructors>
       {{#each (sort-by "fullName" (await @instructors)) as |user|}}
-        <li role="button" {{on "click" (fn @removeInstructor user)}}>
-          <UserNameInfo @user={{user}} />
-          <FaIcon @icon="times" class="remove" />
+        <li>
+          <button
+            type="button"
+            {{on "click" (fn @removeInstructor user)}}
+          >
+            <UserNameInfo @user={{user}} />
+            <FaIcon @icon="times" class="remove" />
+          </button>
         </li>
       {{/each}}
     </ul>
@@ -22,11 +27,15 @@
     <div data-test-instructor-groups>
       {{#each (sort-by "title" (await @instructorGroups)) as |instructorGroup|}}
         <div class="instructor-group" data-test-instructor-group>
-          <span role="button" data-test-instructor-group-title {{on "click" (fn @removeInstructorGroup instructorGroup)}}>
+          <button
+            type="button"
+            {{on "click" (fn @removeInstructorGroup instructorGroup)}}
+            data-test-instructor-group-title
+          >
             <FaIcon @icon="users" />
             {{instructorGroup.title}}
             <FaIcon @icon="times" class="remove" />
-          </span>
+          </button>
           <br>
           <ul class="instructorgroup-members-list" data-test-instructor-group-members>
             {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}

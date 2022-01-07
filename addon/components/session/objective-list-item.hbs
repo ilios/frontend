@@ -54,9 +54,15 @@
 
   <div class="actions grid-item" data-test-actions>
     {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation) (not this.showRemoveConfirmation))}}
-      <span class="clickable remove icon" role="button" {{on "click" (set this.showRemoveConfirmation true)}} aria-label={{t "general.remove"}}>
-        <FaIcon @icon="trash" class="enabled" />
-      </span>
+      <button
+        class="link-button"
+        type="button"
+        aria-label={{t "general.remove"}}
+        {{on "click" (set this.showRemoveConfirmation true)}}
+        data-test-remove
+      >
+        <FaIcon @icon="trash" class="enabled remove" />
+      </button>
     {{else}}
       <FaIcon @icon="trash" class="disabled" />
     {{/if}}

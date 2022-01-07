@@ -65,13 +65,17 @@
       }
 
       .month-event {
+        @include ilios-button-reset;
         cursor: default;
+        display: block;
         border: 1px solid $grey;
         border-radius: $base-border-radius;
         height: 1.5em;
         overflow: hidden;
         padding: 0 8px 0 0;
         position: relative;
+        text-align: left;
+        width: 100%;
 
         &.clickable {
           cursor: pointer;

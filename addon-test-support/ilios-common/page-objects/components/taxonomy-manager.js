@@ -26,14 +26,14 @@ const definition = {
   },
   availableTerms: collection('.selectable-terms-list li.top-level', {
     name: text('[data-test-title]', { at: 0 }),
-    notSelected: notHasClass('selected', 'div', { at: 0 }),
-    isSelected: hasClass('selected', 'div', { at: 0 }),
-    toggle: clickable('div', { at: 0 }),
+    notSelected: notHasClass('selected', 'button', { at: 0 }),
+    isSelected: hasClass('selected', 'button', { at: 0 }),
+    toggle: clickable('button', { at: 0 }),
     children: collection('.selectable-terms-list li.nested', {
       name: text('[data-test-title]'),
-      notSelected: notHasClass('selected', 'div'),
-      isSelected: hasClass('selected', 'div'),
-      toggle: clickable('div'),
+      notSelected: notHasClass('selected', 'button'),
+      isSelected: hasClass('selected', 'button'),
+      toggle: clickable('button'),
     }),
   }),
 };

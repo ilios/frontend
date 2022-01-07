@@ -10,6 +10,10 @@
 
     table {
       @include collapsed-container-table;
+
+      td.count {
+        padding-left: 1rem;
+      }
     }
   }
 }

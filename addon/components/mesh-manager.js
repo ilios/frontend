@@ -78,11 +78,4 @@ export default class MeshManagerComponent extends Component {
     }
     this.args.add(term);
   }
-
-  @action
-  remove(term) {
-    if (this.args.editable) {
-      this.args.remove(term);
-    }
-  }
 }

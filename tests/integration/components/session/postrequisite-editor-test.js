@@ -17,11 +17,10 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       sessions,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', sessions[2].id);
-    this.set('nothing', () => {});
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
-     @close={{this.nothing}}
+     @close={{(noop)}}
      @session={{this.session}}
     />`);
     assert.strictEqual(component.selectedPostrequisiteLabel, 'Due prior to:');
@@ -43,11 +42,10 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       course,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
-    this.set('nothing', () => {});
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
-     @close={{this.nothing}}
+     @close={{(noop)}}
      @session={{this.session}}
     />`);
     assert.strictEqual(component.selectedPostrequisiteTitle, 'session 1');
@@ -68,11 +66,10 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       course,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
-    this.set('nothing', () => {});
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
-     @close={{this.nothing}}
+     @close={{(noop)}}
      @session={{this.session}}
     />`);
     assert.strictEqual(component.selectedPostrequisiteTitle, 'session 1');
@@ -100,11 +97,10 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       course,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
-    this.set('nothing', () => {});
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
-     @close={{this.nothing}}
+     @close={{(noop)}}
      @session={{this.session}}
     />`);
     assert.strictEqual(component.selectedPostrequisiteTitle, 'session 1');
@@ -128,11 +124,10 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       sessions,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', sessions[0].id);
-    this.set('nothing', () => {});
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
-     @close={{this.nothing}}
+     @close={{(noop)}}
      @session={{this.session}}
     />`);
     assert.strictEqual(component.selectedPostrequisiteTitle, 'None');
@@ -206,11 +201,10 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       course,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
-    this.set('nothing', () => {});
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
-     @close={{this.nothing}}
+     @close={{(noop)}}
      @session={{this.session}}
     />`);
     assert.strictEqual(component.postRequisites.length, 3);

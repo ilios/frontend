@@ -212,7 +212,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     await fillIn(directorSearch, 'user');
 
     assert.ok(find(firstResult).textContent.includes('0 guy'));
-    await click(firstResult);
+    await click(`${firstResult} [data-test-select-user]`);
     assert.dom(directorsList).exists({ count: 1 });
     assert.dom(administratorsList).exists({ count: 1 });
     assert.dom(studentAdvisorsList).exists({ count: 1 });
@@ -257,7 +257,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     await fillIn(administratorSearch, 'user');
 
     assert.ok(find(firstResult).textContent.includes('0 guy'));
-    await click(firstResult);
+    await click(`${firstResult} [data-test-select-user]`);
     assert.dom(directorsList).exists({ count: 1 });
     assert.dom(administratorsList).exists({ count: 1 });
     assert.dom(studentAdvisorsList).exists({ count: 1 });
@@ -302,7 +302,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     await fillIn(studentAdvisorSearch, 'user');
 
     assert.ok(find(firstResult).textContent.includes('0 guy'));
-    await click(firstResult);
+    await click(`${firstResult} [data-test-select-user]`);
     assert.dom(directorsList).exists({ count: 1 });
     assert.dom(administratorsList).exists({ count: 1 });
     assert.dom(studentAdvisorsList).exists({ count: 1 });

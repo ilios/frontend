@@ -100,18 +100,21 @@
           {{#each (await this.proxyMaterials) as |lmProxy|}}
             <tr class={{if lmProxy.showRemoveConfirmation "confirm-removal"}}>
               <td
-                class="text-left clickable link"
+                class="text-left link"
                 colspan="3"
-                role="button"
-                {{on "click" (fn (mut this.managingMaterial) lmProxy.content)}}
               >
-                <LmTypeIcon
-                  @type={{lmProxy.learningMaterial.type}}
-                  @mimetype={{lmProxy.learningMaterial.mimetype}}
-                />
-                <span data-test-title>
-                  {{lmProxy.learningMaterial.title}}
-                </span>
+                <button
+                  type="button"
+                  {{on "click" (fn (mut this.managingMaterial) lmProxy.content)}}
+                >
+                  <LmTypeIcon
+                    @type={{lmProxy.learningMaterial.type}}
+                    @mimetype={{lmProxy.learningMaterial.mimetype}}
+                  />
+                  <span data-test-title>
+                    {{lmProxy.learningMaterial.title}}
+                  </span>
+                </button>
               </td>
               <td class="text-center" colspan="2">
                 <UserNameInfo @user={{await (get (await lmProxy.learningMaterial) "owningUser")}} />

@@ -132,6 +132,7 @@ general:
   hour: Hora
   hours: Horas
   icsInstructions: "Para agregar tu calendario a otra aplicación o servicio, utiliza esta URL.  Esta URL es como una contraseña.  ¡Cualquiera persona que la sepa puede ver tu calendario!"
+  ilios: Ilios
   ilm: ILM
   ilmDue: "AI - Debido Por"
   inactive: inactivo

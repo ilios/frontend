@@ -15,7 +15,7 @@ module('Integration | Component | sortable th', function (hooks) {
     assert.dom('th').hasClass('text-left');
     assert.dom('th').hasNoClass('hide-from-small-screen');
     assert.dom('th').hasAttribute('colspan', '1');
-    assert.dom('th').hasAttribute('title', '');
+    assert.dom('th button').hasAttribute('title', '');
     assert.dom('svg').hasClass('fa-sort');
   });
 
@@ -49,7 +49,7 @@ module('Integration | Component | sortable th', function (hooks) {
     assert.dom('th').hasClass(`text-${align}`);
     assert.dom('th').hasClass('hide-from-small-screen');
     assert.dom('th').hasAttribute('colspan', colspan);
-    assert.dom('th').hasAttribute('title', title);
+    assert.dom('th button').hasAttribute('title', title);
     assert.dom('svg').hasClass('fa-sort-numeric-down');
   });
 
@@ -84,6 +84,6 @@ module('Integration | Component | sortable th', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<SortableTh @onClick={{this.click}}>Foo</SortableTh>`);
-    await click(find('th'));
+    await click(find('th button'));
   });
 });

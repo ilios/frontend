@@ -9,6 +9,7 @@ const definition = {
   postRequisites: collection('[data-test-postrequisites] [data-test-postrequisite]', {
     isSelected: hasClass('active'),
     title: text('td', { at: 1 }),
+    click: clickable('td:eq(0) button'),
   }),
   close: clickable('[data-test-cancel]'),
   save: clickable('[data-test-save]'),

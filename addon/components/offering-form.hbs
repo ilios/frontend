@@ -123,11 +123,15 @@
               {{else}}
                 <div
                   data-test-current-timezone
-                  class="editable clickable current-timezone"
-                  role="button"
-                  {{on "click" (set this.isEditingTimezone true)}}
+                  class="current-timezone"
                 >
-                  {{this.formattedCurrentTimezone}}
+                  <button
+                    class="link-button"
+                    type="button"
+                    {{on "click" (set this.isEditingTimezone true)}}
+                  >
+                    {{this.formattedCurrentTimezone}}
+                  </button>
                 </div>
               {{/if}}
             </div>
@@ -246,9 +250,14 @@
                 {{#if (get (await this.instructors) "length")}}
                   <ul class="instructors-list" data-test-selected-instructors-list>
                     {{#each (sort-by "fullName" (await this.instructors)) as |user|}}
-                      <li role="button" {{on "click" (fn this.removeInstructor user)}} data-test-selected-instructor>
-                        <UserNameInfo @user={{user}} />
-                        <FaIcon @icon="times" class="remove" />
+                      <li data-test-selected-instructor>
+                        <button
+                          type="button"
+                          {{on "click" (fn this.removeInstructor user)}}
+                        >
+                          <UserNameInfo @user={{user}} />
+                          <FaIcon @icon="times" class="remove" />
+                        </button>
                       </li>
                     {{/each}}
                   </ul>
@@ -266,15 +275,15 @@
                 <div data-test-selected-instructor-groups>
                   {{#each (sort-by "title" (await this.instructorGroups)) as |instructorGroup|}}
                     <div class="instructor-group" data-test-selected-instructor-group>
-                      <span
-                        role="button"
+                      <button
+                        type="button"
                         data-test-instructor-group-title
                         {{on "click" (fn this.removeInstructorGroup instructorGroup)}}
                       >
                         <FaIcon @icon="users" />
                         {{instructorGroup.title}}
                         <FaIcon @icon="times" class="remove" />
-                      </span>
+                      </button>
                       <br>
                       <ul class="instructorgroup-members-list" data-test-selected-instructor-group-members>
                         {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
@@ -383,9 +392,14 @@
                 {{#if this.learners.length}}
                   <ul class="learners-list" data-test-selected-learners-list>
                     {{#each (sort-by "fullName" (await this.learners)) as |user|}}
-                      <li role="button" {{on "click" (fn this.removeLearner user)}}>
-                        <UserNameInfo @user={{user}} />
-                        <FaIcon @icon="times" class="remove" />
+                      <li>
+                        <button
+                          type="button"
+                          {{on "click" (fn this.removeLearner user)}}
+                        >
+                          <UserNameInfo @user={{user}} />
+                          <FaIcon @icon="times" class="remove" />
+                        </button>
                       </li>
                     {{/each}}
                   </ul>

@@ -10,23 +10,23 @@
       </header>
       <div class="filter-tags">
         {{#each (sort-by "name" this.filterTags) as |tag|}}
-          <span
+          <button
             class="filter-tag {{tag.class}}"
-            role="button"
+            type="button"
             {{on "click" (fn tag.remove tag.id)}}
           >
             {{tag.name}}
             <FaIcon @icon="times" />
-          </span>
+          </button>
         {{/each}}
-        <span
+        <button
           id="calendar-clear-filters"
           class="filters-clear-filters"
-          role="button"
+          type="button"
           {{on "click" @clearFilters}}
         >
           {{t "general.clearFilters"}}
-        </span>
+        </button>
       </div>
     {{/if}}
   </section>

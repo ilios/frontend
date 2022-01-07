@@ -108,11 +108,11 @@ module('Integration | Component | leadership search', function (hooks) {
       find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
       'testM.persontestemail'
     );
-    await click(firstResult);
+    await click(`${firstResult} [data-test-select-user]`);
   });
 
   test('can not add users twice', async function (assert) {
-    assert.expect(7);
+    assert.expect(8);
     this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
@@ -153,7 +153,7 @@ module('Integration | Component | leadership search', function (hooks) {
       'testM.person2testemail2'
     );
     assert.dom(secondResult).hasClass('clickable');
-    await click(firstResult);
-    await click(secondResult);
+    assert.dom(`${firstResult} [data-test-select-user]`).doesNotExist();
+    await click(`${secondResult} [data-test-select-user]`);
   });
 });

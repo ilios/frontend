@@ -77,17 +77,21 @@
     </div>
     {{#if @editable}}
       <div class="offering-manager-actions">
-        <span
-          class="clickable edit"
-          role="button"
+        <button
+          class="link-button edit"
+          type="button"
           {{on "click" (toggle "isEditing" this)}}
         >
           <FaIcon @icon="edit" class="enabled" />
-        </span>
+        </button>
         {{#if @editable}}
-          <span class="clickable remove" role="button" {{on "click" (set this.showRemoveConfirmation true)}}>
+          <button
+            class="link-button remove"
+            type="button"
+            {{on "click" (set this.showRemoveConfirmation true)}}
+          >
             <FaIcon @icon="trash" class="enabled" />
-          </span>
+          </button>
         {{else}}
           <FaIcon @icon="trash" class="disabled" />
         {{/if}}

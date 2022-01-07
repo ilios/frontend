@@ -41,32 +41,47 @@
       <tbody>
         {{#each this.filteredPostrequisites as |postrequisite|}}
           <tr
-            role="button"
             class={{if (eq postrequisite.id this.selectedPostrequisite.id) "active"}}
-            {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
             data-test-postrequisite
           >
             <td>
-              {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
-                <FaIcon
-                  @icon="minus"
-                />
-              {{else}}
-                <FaIcon
-                  @icon="plus"
-                  class="add"
-                />
-              {{/if}}
-            </td>
-            <td colspan="10">{{postrequisite.title}}</td>
-            <td colspan="3">
-              {{#if (await postrequisite.firstOfferingDate)}}
-                {{#if postrequisite.ilmSession}}
-                  <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{format-date (await postrequisite.firstOfferingDate)}}
+              <button
+                type="button"
+                {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+              >
+                {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
+                  <FaIcon
+                    @icon="minus"
+                  />
                 {{else}}
-                  {{format-date (await postrequisite.firstOfferingDate) month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
+                  <FaIcon
+                    @icon="plus"
+                    class="add"
+                  />
                 {{/if}}
-              {{/if}}
+              </button>
+            </td>
+            <td colspan="10">
+              <button
+                type="button"
+                {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+              >
+                {{postrequisite.title}}
+              </button>
+            </td>
+            <td colspan="3">
+              <button
+                type="button"
+                {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+              >
+                {{#if (await postrequisite.firstOfferingDate)}}
+                  {{#if postrequisite.ilmSession}}
+                    <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{format-date (await postrequisite.firstOfferingDate)}}
+                  {{else}}
+                    {{format-date (await postrequisite.firstOfferingDate) month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
+                  {{/if}}
+                {{/if}}
+              </button>
             </td>
           </tr>
         {{/each}}
