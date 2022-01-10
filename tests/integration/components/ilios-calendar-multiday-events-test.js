@@ -5,13 +5,14 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { DateTime } from 'luxon';
+import { component } from 'ilios-common/page-objects/components/ilios-calendar-multiday-events';
 
 module('Integration | Component | ilios calendar multiday events', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
-  const getEvents = function () {
-    return [
+  hooks.beforeEach(function () {
+    this.events = [
       {
         startDate: DateTime.fromISO('1984-11-11').toJSDate(),
         endDate: DateTime.fromISO('1984-11-12').toJSDate(),
@@ -25,14 +26,12 @@ module('Integration | Component | ilios calendar multiday events', function (hoo
         location: 'Lancaster, CA',
       },
     ];
-  };
+  });
 
   test('it renders', async function (assert) {
-    this.set('events', getEvents());
     await render(hbs`<IliosCalendarMultidayEvents @events={{this.events}} />`);
-
-    assert.dom('[data-test-title]').containsText('Multiday Events');
-    assert.dom('li').exists({ count: 2 });
+    assert.strictEqual(component.title, 'Multiday Events');
+    assert.strictEqual(component.events.length, 2);
     await a11yAudit(this.element);
   });
 });

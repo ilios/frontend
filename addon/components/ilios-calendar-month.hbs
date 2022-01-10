@@ -2,7 +2,7 @@
   <div class="ilios-calendar-month">
     <MonthlyCalendar
       @date={{@date}}
-      @events={{this.nonIlmPreWorkEvents}}
+      @events={{this.singleDayEvents}}
       @changeToDayView={{this.changeToDayView}}
       @selectEvent={{@selectEvent}}
     />
@@ -10,6 +10,11 @@
     <IliosCalendarPreWorkEvents
       @events={{this.ilmPreWorkEvents}}
       @areEventsSelectable={{@areEventsSelectable}}
+    />
+    <IliosCalendarMultidayEvents
+      @events={{this.multiDayEventsList}}
+      @selectEvent={{@selectEvent}}
+      @areEventsSelectable={{@areDaysSelectable}}
     />
   </div>
 {{/if}}

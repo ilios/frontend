@@ -1,125 +1,95 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import moment from 'moment';
+import { component } from 'ilios-common/page-objects/components/ilios-calendar-month';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | ilios calendar month', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
-  hooks.beforeEach(function () {
-    this.actions = {};
-    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
-  });
-
   test('month displays with three events', async function (assert) {
-    assert.expect(4);
-    const date = moment(new Date('2015-09-30T12:00:00'));
-
-    this.set('date', date.toDate());
-
+    const date = DateTime.fromISO('2015-09-30T12:00:00');
+    this.set('date', date.toISO());
     const firstEvent = createUserEventObject();
     firstEvent.name = 'Some new thing';
-    firstEvent.startDate = date.clone();
-    firstEvent.endDate = date.clone().add(1, 'hour');
-
+    firstEvent.startDate = date.toISO();
+    firstEvent.endDate = date.plus({ hour: 1 }).toISO();
     const secondEvent = createUserEventObject();
     secondEvent.name = 'Second new thing';
-    secondEvent.startDate = date.clone().add(1, 'hour');
-    secondEvent.endDate = date.clone().add(3, 'hour');
-
+    secondEvent.startDate = date.plus({ hour: 1 }).toISO();
+    secondEvent.endDate = date.plus({ hour: 3 }).toISO();
     const thirdEvent = createUserEventObject();
     thirdEvent.name = 'Third new thing';
-    thirdEvent.startDate = date.clone().add(3, 'hour');
-    thirdEvent.endDate = date.clone().add(4, 'hour');
-
+    thirdEvent.startDate = date.plus({ hour: 3 }).toISO();
+    thirdEvent.endDate = date.plus({ hour: 4 }).toISO();
     this.set('events', [firstEvent, secondEvent, thirdEvent]);
-    const events = '[data-test-ilios-calendar-event-month]';
-    const more = '.month-more-events';
-
     await render(hbs`<IliosCalendarMonth
       @date={{this.date}}
       @calendarEvents={{this.events}}
       @selectEvent={{(noop)}}
     />`);
-    //Date input is Wednesday, Septrmber 30th.  Should be the first string
-    assert.strictEqual(this.element.textContent.trim().search(/^September 2015/), 0);
-    assert.strictEqual(this.element.querySelectorAll(events).length, 2);
-    assert.strictEqual(this.element.querySelectorAll(more).length, 1);
-    assert.dom(this.element.querySelector(more)).hasText('Show more');
+    assert.strictEqual(component.calendar.monthYear, 'September 2015');
+    assert.strictEqual(component.calendar.events.length, 2);
+    assert.ok(component.calendar.days[29].hasShowMore);
   });
 
   test('month displays with two events', async function (assert) {
-    assert.expect(3);
-
-    const date = moment(new Date('2015-09-30T12:00:00'));
-
-    this.set('date', date.toDate());
-
+    const date = new DateTime.fromISO('2015-09-30T12:00:00');
+    this.set('date', date.toISO());
     const firstEvent = createUserEventObject();
     firstEvent.name = 'Some new thing';
-    firstEvent.startDate = date.clone();
-    firstEvent.endDate = date.clone().add(1, 'hour');
-
+    firstEvent.startDate = date.toISO();
+    firstEvent.endDate = date.plus({ hour: 1 }).toISO();
     const secondEvent = createUserEventObject();
     secondEvent.name = 'Second new thing';
-    secondEvent.startDate = date.clone().add(1, 'hour');
-    secondEvent.endDate = date.clone().add(3, 'hour');
-
+    secondEvent.startDate = date.plus({ hour: 1 }).toISO();
+    secondEvent.endDate = date.plus({ hour: 3 }).toISO();
     this.set('events', [firstEvent, secondEvent]);
-    const events = '[data-test-ilios-calendar-event-month]';
-    const more = '.month-more-events';
-
     await render(hbs`<IliosCalendarMonth
       @date={{this.date}}
       @calendarEvents={{this.events}}
       @selectEvent={{(noop)}}
     />`);
-    //Date input is Wednesday, September 30th.  Should be the first string
-    assert.strictEqual(this.element.textContent.trim().search(/^September 2015/), 0);
-    assert.strictEqual(this.element.querySelectorAll(events).length, 2);
-    assert.strictEqual(this.element.querySelectorAll(more).length, 0);
+    assert.strictEqual(component.calendar.monthYear, 'September 2015');
+    assert.strictEqual(component.calendar.events.length, 2);
+    assert.notOk(component.calendar.days[29].hasShowMore);
   });
 
   test('clicking on a day fires the correct event', async function (assert) {
     assert.expect(3);
-    const date = new Date('2015-09-30T12:00:00');
-    this.set('date', date);
-
-    this.actions.changeDate = (newDate) => {
+    const date = DateTime.fromISO('2015-09-30T12:00:00');
+    this.set('date', date.toISO());
+    this.set('changeDate', (newDate) => {
       assert.ok(newDate instanceof Date);
       assert.ok(newDate.toString().includes('Tue Sep 01'));
-    };
-    this.actions.changeView = (newView) => {
+    });
+    this.set('changeView', (newView) => {
       assert.strictEqual(newView, 'day');
-    };
-
+    });
     await render(hbs`<IliosCalendarMonth
       @date={{this.date}}
-      @changeDate={{action "changeDate"}}
-      @changeView={{action "changeView"}}
+      @changeDate={{this.changeDate}}
+      @changeView={{this.changeView}}
       @calendarEvents={{(array)}}
       @areDaysSelectable={{true}}
     />`);
-
-    await click('[data-test-day-button="1"]');
+    await component.calendar.days[0].selectDay();
   });
 
   test('prework', async function (assert) {
-    assert.expect(3);
-
-    const date = moment(new Date('2015-09-30T12:00:00'));
-
+    const date = DateTime.fromISO('2015-09-30T12:00:00');
     const event = createUserEventObject();
-    event.startDate = date.clone();
-    event.endDate = date.clone().add(1, 'hour');
+    const now = DateTime.now();
+    event.startDate = date.toISO();
+    event.endDate = date.plus({ hour: 1 }).toISO();
     event.prerequisites = [
       {
         name: 'prework 1',
-        startDate: moment().format(),
-        endDate: moment().format(),
+        startDate: now.toISO(),
+        endDate: now.toISO(),
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -130,8 +100,8 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       },
       {
         name: 'prework 2',
-        startDate: moment().format(),
-        endDate: moment().format(),
+        startDate: now.toISO(),
+        endDate: now.toISO(),
         location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
@@ -143,8 +113,8 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       },
       {
         name: 'blanked prework',
-        startDate: moment().format(),
-        endDate: moment().format(),
+        startDate: now.toISO(),
+        endDate: now.toISO(),
         location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
@@ -156,8 +126,8 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       },
       {
         name: 'scheduled prework',
-        startDate: moment().format(),
-        endDate: moment().format(),
+        startDate: now.toISO(),
+        endDate: now.toISO(),
         location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
@@ -169,8 +139,8 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       },
       {
         name: 'unpublished prework',
-        startDate: moment().format(),
-        endDate: moment().format(),
+        startDate: now.toISO(),
+        endDate: now.toISO(),
         location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
@@ -181,28 +151,31 @@ module('Integration | Component | ilios calendar month', function (hooks) {
         isBlanked: false,
       },
     ];
-    this.set('date', date.toDate());
+    this.set('date', date.toISO());
     this.set('events', [event]);
     await render(hbs`<IliosCalendarMonth
       @date={{this.date}}
       @calendarEvents={{this.events}}
       @selectEvent={{(noop)}}
     />`);
-    const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
-    const preworkElements = this.element.querySelectorAll(preworkSelector);
-    assert.strictEqual(preworkElements.length, 2);
-    assert.ok(preworkElements[0].textContent.includes('prework 1'));
-    assert.ok(preworkElements[1].textContent.includes('prework 2'));
+    assert.strictEqual(component.prework.events.length, 2);
+    assert.strictEqual(
+      component.prework.events[0].text,
+      `prework 1 Due Before third (${now.toFormat('D')})`
+    );
+    assert.strictEqual(
+      component.prework.events[1].text,
+      `prework 2 Due Before first (${now.toFormat('D')})`
+    );
   });
 
   test('prework to unpublished/scheduled/blanked events is not visible', async function (assert) {
-    assert.expect(1);
-
-    const date = moment(new Date('2015-09-30T12:00:00'));
+    const date = DateTime.fromISO('2015-09-30T12:00:00');
+    const now = DateTime.now();
     const publishedPrework = {
       name: 'published prework',
-      startDate: moment().format(),
-      endDate: moment().format(),
+      startDate: now.toISO(),
+      endDate: now.toISO(),
       ilmSession: true,
       slug: 'whatever',
       postrequisiteSlug: 'something',
@@ -229,21 +202,19 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     const events = [unpublishedEvent, scheduledEvent, blankedEvent];
 
     events.forEach((event) => {
-      event.startDate = date.clone();
-      event.endDate = date.clone().add(1, 'hour');
+      event.startDate = date.toISO();
+      event.endDate = date.plus({ hour: 1 }).toISO();
       event.prerequisites = [publishedPrework];
     });
 
-    this.set('date', date.toDate());
+    this.set('date', date.toISO());
     this.set('events', events);
     await render(hbs`<IliosCalendarMonth
       @date={{this.date}}
       @calendarEvents={{this.events}}
       @selectEvent={{(noop)}}
     />`);
-    const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
-    const preworkElements = this.element.querySelectorAll(preworkSelector);
-    assert.strictEqual(preworkElements.length, 0);
+    assert.strictEqual(component.prework.events.length, 0);
   });
 
   const createUserEventObject = function () {
@@ -262,4 +233,30 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       postrequisites: [],
     };
   };
+
+  test('multiday events', async function (assert) {
+    const date = DateTime.fromISO('2015-09-20T12:00:00');
+    const event = createUserEventObject();
+    event.startDate = date.toISO();
+    event.endDate = date.plus({ hour: 24 }).toISO();
+    const event2 = createUserEventObject();
+    event2.startDate = date.plus({ hour: 48 }).toISO();
+    event2.endDate = date.plus({ hour: 72 }).toISO();
+    this.set('date', date.toISO());
+    this.set('events', [event, event2]);
+    await render(hbs`<IliosCalendarMonth
+      @date={{this.date}}
+      @calendarEvents={{this.events}}
+      @selectEvent={{(noop)}}
+    />`);
+    assert.strictEqual(component.multiday.events.length, 2);
+    assert.strictEqual(
+      component.multiday.events[0].text,
+      '9/20/15, 12:00 PM – 9/21/15, 12:00 PM Rm. 160'
+    );
+    assert.strictEqual(
+      component.multiday.events[1].text,
+      '9/22/15, 12:00 PM – 9/23/15, 12:00 PM Rm. 160'
+    );
+  });
 });

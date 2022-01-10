@@ -2,6 +2,7 @@ import { create, clickable, collection, hasClass, isPresent, text } from 'ember-
 
 const definition = {
   scope: '[data-test-monthly-calendar]',
+  monthYear: text('[data-test-month-year]'),
   days: collection('[data-test-day]', {
     number: text('[data-test-number]'),
     selectDay: clickable('button', { scope: '[data-test-number]' }),
@@ -15,10 +16,11 @@ const definition = {
     isFirstWeek: hasClass('week-1'),
     isSecondWeek: hasClass('week-2'),
     isThirdWeek: hasClass('week-3'),
-    events: collection('[data-test-ilios-calendar-event]', {}),
+    events: collection('[data-test-ilios-calendar-event]'),
     hasShowMore: isPresent('[data-test-show-more-button]'),
     showMore: clickable('[data-test-show-more-button]'),
   }),
+  events: collection('[data-test-ilios-calendar-event-month]'),
 };
 
 export default definition;
