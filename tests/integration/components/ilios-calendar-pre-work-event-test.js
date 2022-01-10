@@ -3,9 +3,9 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/ilios-calendar-pre-work-event';
-const today = moment();
+const today = DateTime.now();
 
 module('Integration | Component | ilios-calendar-pre-work-event', function (hooks) {
   setupRenderingTest(hooks);
@@ -16,7 +16,7 @@ module('Integration | Component | ilios-calendar-pre-work-event', function (hook
     this.set('event', {
       name: 'Learn to Learn',
       slug: 'abc',
-      startDate: today.format(),
+      startDate: today.toISO(),
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
@@ -66,7 +66,7 @@ module('Integration | Component | ilios-calendar-pre-work-event', function (hook
     />`);
     assert.strictEqual(component.title, 'Learn to Learn');
     assert.strictEqual(component.titleUrl, '/events/abc');
-    assert.strictEqual(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.strictEqual(component.date, `Due Before reading to read (${today.toFormat('D')})`);
     assert.strictEqual(component.url, '/events/123');
   });
 
@@ -78,7 +78,7 @@ module('Integration | Component | ilios-calendar-pre-work-event', function (hook
     />`);
     assert.strictEqual(component.title, 'Learn to Learn');
     assert.notOk(component.titleUrlIsPresent);
-    assert.strictEqual(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
+    assert.strictEqual(component.date, `Due Before reading to read (${today.toFormat('D')})`);
     assert.notOk(component.urlIsPresent);
   });
 });

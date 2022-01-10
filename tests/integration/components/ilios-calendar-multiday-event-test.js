@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import hbs from 'htmlbars-inline-precompile';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/ilios-calendar-multiday-event';
@@ -13,8 +13,8 @@ module('Integration | Component | ilios calendar multiday event', function (hook
 
   hooks.beforeEach(function () {
     this.ev = {
-      startDate: moment('1984-11-11').toDate(),
-      endDate: moment('1984-11-12').toDate(),
+      startDate: DateTime.fromISO('1984-11-11').toISO(),
+      endDate: DateTime.fromISO('1984-11-12').toISO(),
       name: 'Cheramie is born',
       location: 'Lancaster, CA',
     };

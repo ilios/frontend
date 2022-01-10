@@ -3,9 +3,9 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/ilios-calendar-pre-work-events';
-const today = moment();
+const today = DateTime.now();
 
 module('Integration | Component | ilios-calendar-pre-work-events', function (hooks) {
   setupRenderingTest(hooks);
@@ -17,7 +17,7 @@ module('Integration | Component | ilios-calendar-pre-work-events', function (hoo
       {
         name: 'Learn to Learn',
         slug: 'abc',
-        startDate: today.format(),
+        startDate: today.toISO(),
         location: 'Room 123',
         sessionTypeTitle: 'Lecture',
         courseExternalId: 'C1',
@@ -66,7 +66,7 @@ module('Integration | Component | ilios-calendar-pre-work-events', function (hoo
     assert.strictEqual(component.events.length, 1);
     assert.strictEqual(
       component.events[0].text,
-      'Learn to Learn Due Before reading to read (1/7/2022)'
+      `Learn to Learn Due Before reading to read (${today.toFormat('D')})`
     );
   });
 });
