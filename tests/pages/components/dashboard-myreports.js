@@ -41,7 +41,7 @@ const definition = {
     runMeshSearch: clickable('[data-test-mesh-manager] [data-test-search-box] .search-icon'),
     meshSearchResults: collection('[data-test-search-results] li', {
       name: text('[data-test-name]'),
-      pick: clickable(),
+      pick: clickable('button'),
     }),
     save: clickable('[data-test-report-save]'),
   },

@@ -12,12 +12,14 @@ const definition = {
       isSortedAscending: hasClass('fa-sort-alpha-down', 'svg'),
       isSortedDescending: hasClass('fa-sort-alpha-down-alt', 'svg'),
       isNotSorted: hasClass('fa-sort', 'svg'),
+      click: clickable('button'),
     },
     members: {
       scope: 'th:nth-of-type(2)',
       isSortedAscending: hasClass('fa-sort-numeric-down', 'svg'),
       isSortedDescending: hasClass('fa-sort-numeric-down-alt', 'svg'),
       isNotSorted: hasClass('fa-sort', 'svg'),
+      click: clickable('button'),
     },
   },
   confirmRemoval: {

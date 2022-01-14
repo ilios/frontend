@@ -20,15 +20,18 @@ const definition = {
     },
     title: {
       scope: 'th:nth-of-type(3)',
+      click: clickable('button'),
     },
     sessionType: {
       scope: 'th:nth-of-type(4)',
+      click: clickable('button'),
     },
     totalTime: {
       scope: 'th:nth-of-type(5)',
     },
     offeringsCount: {
       scope: 'th:nth-of-type(6)',
+      click: clickable('button'),
     },
   },
   sessions: collection('tbody tr', {

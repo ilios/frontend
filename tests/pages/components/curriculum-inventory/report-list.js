@@ -12,8 +12,8 @@ const definition = {
     endDate: text('th', { at: 4 }),
     status: text('th', { at: 5 }),
     actions: text('th', { at: 6 }),
-    clickOnName: clickable('th', { at: 0 }),
-    clickOnYear: clickable('th', { at: 2 }),
+    clickOnName: clickable('th:nth-of-type(1) button'),
+    clickOnYear: clickable('th:nth-of-type(3) button'),
   },
   reports: collection('[data-test-curriculum-inventory-report-list-item]', {
     ...item,
