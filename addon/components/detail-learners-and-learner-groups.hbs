@@ -30,25 +30,25 @@
   </div>
   <div class="detail-learners-and-learner-groups-content">
     {{#if this.isManaging}}
-      <LearnerSelectionManager
-        @learners={{this.learnerBuffer}}
-        @add={{this.addLearnerToBuffer}}
-        @remove={{this.removeLearnerFromBuffer}}
-      />
       <LearnergroupSelectionManager
         @learnerGroups={{this.learnerGroupBuffer}}
         @cohorts={{@cohorts}}
         @add={{this.addLearnerGroupToBuffer}}
         @remove={{this.removeLearnerGroupFromBuffer}}
       />
+      <LearnerSelectionManager
+        @learners={{this.learnerBuffer}}
+        @add={{this.addLearnerToBuffer}}
+        @remove={{this.removeLearnerFromBuffer}}
+      />
     {{else}}
-      {{#if this.learnerCount}}
-        <h4 data-test-learners-title>{{t "general.learners"}} ({{this.learnerCount}})</h4>
-        <DetailLearnerList @learners={{await @ilmSession.learners}} @isManaging={{false}} />
-      {{/if}}
       {{#if this.learnerGroupCount}}
         <h4 data-test-learnergroups-title>{{t "general.learnerGroups"}} ({{this.learnerGroupCount}})</h4>
         <DetailLearnergroupsList @learnerGroups={{await @ilmSession.learnerGroups}} />
+      {{/if}}
+      {{#if this.learnerCount}}
+        <h4 data-test-learners-title>{{t "general.learners"}} ({{this.learnerCount}})</h4>
+        <DetailLearnerList @learners={{await @ilmSession.learners}} @isManaging={{false}} />
       {{/if}}
     {{/if}}
   </div>
