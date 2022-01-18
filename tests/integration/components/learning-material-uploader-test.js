@@ -7,7 +7,7 @@ import { upload } from 'ember-file-upload/mirage';
 import { selectFiles } from 'ember-file-upload/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import Service from '@ember/service';
-import Response from 'ember-cli-mirage/response';
+import { Response } from 'miragejs';
 
 module('Integration | Component | learning-material-uploader', function (hooks) {
   setupRenderingTest(hooks);
