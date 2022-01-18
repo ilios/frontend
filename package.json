@@ -98,7 +98,7 @@
     "@ilios/ember-template-lint-plugin": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
-    "dotenv": "^11.0.0",
+    "dotenv": "^14.2.0",
     "ember-a11y-testing": "^5.0.0",
     "ember-cli": "~3.28.1",
     "ember-cli-bundle-analyzer": "^0.2.0",
