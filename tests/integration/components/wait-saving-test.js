@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { fillIn, render, waitFor } from '@ember/test-helpers';
+import { fillIn, render, waitFor, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | wait saving', function (hooks) {
@@ -40,6 +40,7 @@ module('Integration | Component | wait saving', function (hooks) {
     assert.dom('input').isNotFocused();
     assert.dom('[data-test-wait-saving] [data-test-content]').isFocused();
     this.set('show', false);
+    await settled();
     assert.dom('input').isFocused();
   });
 });
