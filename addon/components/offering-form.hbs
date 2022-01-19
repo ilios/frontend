@@ -385,19 +385,11 @@
             {{/if}}
             <ValidationError @errors={{get-errors-for this.learnerGroups}} />
             {{#unless @smallGroupMode}}
-              <SelectedLearners
+              <LearnerSelectionManager
                 @learners={{this.learners}}
-                @isManaging={{true}}
                 @remove={{this.removeLearner}}
+                @add={{this.addLearner}}
               />
-              <div class="available-learners" data-test-available-learners>
-                <label>{{t "general.availableLearners"}}:</label>
-                <UserSearch
-                    @addUser={{this.addLearner}}
-                    @currentlyActiveUsers={{this.learners}}
-                    @placeholder={{t "general.findLearners"}}
-                />
-              </div>
             {{/unless}}
           </div>
         </fieldset>

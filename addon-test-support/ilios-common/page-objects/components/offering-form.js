@@ -12,7 +12,7 @@ import {
 } from 'ember-cli-page-object';
 import userNameInfo from './user-name-info';
 import detailLearnergroupsList from './detail-learnergroups-list';
-import selectedLearners from './selected-learners';
+import learnerSelectionManager from './learner-selection-manager';
 import learnergroupTree from './learnergroup-tree';
 import yesNoToggle from './toggle-yesno';
 import datePicker from './date-picker';
@@ -116,10 +116,7 @@ const definition = {
   },
   learnerManager: {
     scope: '[data-test-learner-management]',
-    selectedLearners,
-    availableLearners: {
-      scope: '[data-test-available-learners]',
-    },
+    learnerSelectionManager,
     selectedLearnerGroups: {
       scope: '[data-test-selected-learner-groups]',
       title: text('[data-test-title]', { at: 0 }),

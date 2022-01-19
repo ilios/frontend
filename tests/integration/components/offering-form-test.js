@@ -383,14 +383,12 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('learner manager is not present in small-group mode', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @smallGroupMode={{true}} />`);
-    assert.notOk(component.learnerManager.selectedLearners.isPresent);
-    assert.notOk(component.learnerManager.availableLearners.isPresent);
+    assert.notOk(component.learnerManager.learnerSelectionManager.isPresent);
   });
 
   test('learner manager is present in single-offering mode', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @smallGroupMode={{false}} />`);
-    assert.ok(component.learnerManager.selectedLearners.isPresent);
-    assert.ok(component.learnerManager.availableLearners.isPresent);
+    assert.ok(component.learnerManager.learnerSelectionManager.isPresent);
   });
 
   test('learnerGroup validation errors do not show up initially', async function (assert) {
