@@ -1,8 +1,8 @@
 <div class="learner-selection-manager" data-test-learner-selection-manager>
   <div class="selected-learners" data-test-selected-learners-section>
-    <h4>
-      {{t "general.selectedLearners"}}
-    </h4>
+    <label>
+      {{t "general.selectedLearners"}}:
+    </label>
     {{#if @learners.length}}
       <DetailLearnerList
           @learners={{@learners}}
@@ -15,12 +15,14 @@
       </p>
     {{/if}}
   </div>
-  <h4>
-    {{t "general.availableLearners"}}
-  </h4>
-  <UserSearch
-    @addUser={{@add}}
-    @currentlyActiveUsers={{@learners}}
-    @placeholder={{t "general.findLearners"}}
-  />
+  <div class="available-learners" data-test-available-learners-section>
+    <label>
+      {{t "general.availableLearners"}}:
+    </label>
+    <UserSearch
+      @addUser={{@add}}
+      @currentlyActiveUsers={{@learners}}
+      @placeholder={{t "general.findLearners"}}
+    />
+  </div>
 </div>

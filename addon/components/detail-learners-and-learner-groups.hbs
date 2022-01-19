@@ -43,12 +43,16 @@
       />
     {{else}}
       {{#if this.learnerGroupCount}}
-        <h4 data-test-learnergroups-title>{{t "general.learnerGroups"}} ({{this.learnerGroupCount}})</h4>
-        <DetailLearnergroupsList @learnerGroups={{await @ilmSession.learnerGroups}} />
+        <div class="selected-learner-groups" data-test-selected-learner-groups>
+          <label data-test-learnergroups-title>{{t "general.learnerGroups"}}:</label>
+          <DetailLearnergroupsList @learnerGroups={{await @ilmSession.learnerGroups}} />
+        </div>
       {{/if}}
       {{#if this.learnerCount}}
-        <h4 data-test-learners-title>{{t "general.learners"}} ({{this.learnerCount}})</h4>
-        <DetailLearnerList @learners={{await @ilmSession.learners}} @isManaging={{false}} />
+        <div class="selected-learners" data-test-selected-learners>
+          <label data-test-learners-title>{{t "general.learners"}}:</label>
+          <DetailLearnerList @learners={{await @ilmSession.learners}} @isManaging={{false}} />
+        </div>
       {{/if}}
     {{/if}}
   </div>
