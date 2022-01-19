@@ -385,30 +385,11 @@
             {{/if}}
             <ValidationError @errors={{get-errors-for this.learnerGroups}} />
             {{#unless @smallGroupMode}}
-              <div class="selected-learners" data-test-selected-learners>
-                <label>
-                  {{t "general.selectedLearners"}}:
-                </label>
-                {{#if this.learners.length}}
-                  <ul class="learners-list" data-test-selected-learners-list>
-                    {{#each (sort-by "fullName" (await this.learners)) as |user|}}
-                      <li>
-                        <button
-                          type="button"
-                          {{on "click" (fn this.removeLearner user)}}
-                        >
-                          <UserNameInfo @user={{user}} />
-                          <FaIcon @icon="times" class="remove" />
-                        </button>
-                      </li>
-                    {{/each}}
-                  </ul>
-                {{else}}
-                  <div data-test-no-selected-learners>
-                    {{t "general.none"}}
-                  </div>
-                {{/if}}
-              </div>
+              <SelectedLearners
+                @learners={{this.learners}}
+                @isManaging={{true}}
+                @remove={{this.removeLearner}}
+              />
               <div class="available-learners" data-test-available-learners>
                 <label>{{t "general.availableLearners"}}:</label>
                 <UserSearch

@@ -71,7 +71,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       @add={{(noop)}}
       @remove={{(noop)}}
     />`);
-    assert.strictEqual(component.selectedGroups.title, 'Selected Learner Groups');
+    assert.strictEqual(component.selectedGroups.title, 'Selected Learner Groups:');
     assert.strictEqual(component.selectedGroups.list.trees.length, 2);
     assert.strictEqual(
       component.selectedGroups.list.trees[0].title,

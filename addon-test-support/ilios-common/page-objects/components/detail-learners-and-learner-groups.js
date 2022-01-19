@@ -1,8 +1,8 @@
 import { clickable, create, isPresent, text } from 'ember-cli-page-object';
 import detailLearnergroupsList from './detail-learnergroups-list';
-import detailLearnerList from './detail-learner-list';
 import learnergroupSelectionManager from './learnergroup-selection-manager';
 import learnerSelectionManager from './learner-selection-manager';
+import selectedLearners from './selected-learners';
 
 const definition = {
   scope: '[data-test-detail-learners-and-learner-groups]',
@@ -15,9 +15,8 @@ const definition = {
   hasCancelButton: isPresent('[data-test-cancel]'),
   learnerSelectionManager,
   learnergroupSelectionManager,
-  detailLearnerList,
+  selectedLearners,
   detailLearnergroupsList,
-  learnersTitle: text('[data-test-learners-title]'),
   learnergroupsTitle: text('[data-test-learnergroups-title]'),
 };
 

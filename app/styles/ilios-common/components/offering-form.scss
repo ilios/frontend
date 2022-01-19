@@ -207,19 +207,6 @@
       }
     }
 
-    .learner-management {
-      .learners-list {
-        @include ilios-removable-list;
-
-        li {
-          margin-top: .25rem;
-          button {
-            @include ilios-button-reset;
-          }
-        }
-      }
-    }
-
     .available-learner-groups {
 
       .search-box {

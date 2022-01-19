@@ -1,21 +1,10 @@
 <div class="learner-selection-manager" data-test-learner-selection-manager>
-  <div class="selected-learners" data-test-selected-learners-section>
-    <label>
-      {{t "general.selectedLearners"}}:
-    </label>
-    {{#if @learners.length}}
-      <DetailLearnerList
-          @learners={{@learners}}
-          @isManaging={{true}}
-          @remove={{@remove}}
-      />
-    {{else}}
-      <p data-test-no-selected-learners>
-        {{t "general.none"}}
-      </p>
-    {{/if}}
-  </div>
-  <div class="available-learners" data-test-available-learners-section>
+  <SelectedLearners
+    @learners={{@learners}}
+    @isManaging={{true}}
+    @remove={{@remove}}
+  />
+  <div class="available-learners" data-test-available-learners>
     <label>
       {{t "general.availableLearners"}}:
     </label>

@@ -49,10 +49,7 @@
         </div>
       {{/if}}
       {{#if this.learnerCount}}
-        <div class="selected-learners" data-test-selected-learners>
-          <label data-test-learners-title>{{t "general.learners"}}:</label>
-          <DetailLearnerList @learners={{await @ilmSession.learners}} @isManaging={{false}} />
-        </div>
+        <SelectedLearners @learners={{await @ilmSession.learners}} @isManaging={{false}} class="display-selected-users" />
       {{/if}}
     {{/if}}
   </div>
