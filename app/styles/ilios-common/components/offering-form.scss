@@ -156,54 +156,11 @@
       margin-top: .5rem;
     }
 
-    .instructor-management {
-      .instructor-group {
-
-        margin-bottom: 1rem;
-
-        & > button {
-          @include ilios-button-reset;
-          background-color: $header-grey;
-          border-radius: 4px;
-          font-weight: bold;
-          padding: .2em .4em .2em .6em;
-          vertical-align: middle;
-
-          .fa-users {
-            margin-right: .5rem;
-          }
-          .remove {
-            margin-left: .5em;
-          }
-        }
-      }
-
-      .instructorgroup-members-list {
-        @include ilios-tag-list;
-
-        margin-top: .25rem;
-
-        li {
-          margin-top: .25rem;
-        }
-      }
-
-      .instructors-list {
-        @include ilios-removable-list;
-
-        li {
-          margin-top: .25rem;
-          button {
-            @include ilios-button-reset;
-          }
-        }
-      }
-    }
     .available-instructors,
     .available-learners,
     .available-learner-groups,
-    .instructor-groups,
-    .instructors,
+    .selected-instructors,
+    .selected-instructor-groups,
     .selected-learner-groups,
     .selected-learners {
       margin-bottom: .5rem;

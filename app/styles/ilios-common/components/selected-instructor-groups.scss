@@ -1,0 +1,14 @@
+.selected-instructor-groups {
+  .instructor-group-title {
+    @include ilios-tag-list;
+    font-weight: bold;
+
+    button {
+      @include ilios-button-reset;
+    }
+  }
+
+  .instructorgroup-members-list {
+    @include ilios-tag-list;
+  }
+}

@@ -14,10 +14,10 @@ import meshTerms from './mesh-terms';
 import taxonomies from './detail-taxonomies';
 import collapsedTaxonomies from './collapsed-taxonomies';
 import collapsedObjectives from './session/collapsed-objectives';
-import instructorSelectionManager from './instructor-selection-manager';
 import offeringForm from './offering-form';
 import leadershipCollapsed from './leadership-collapsed';
 import leadershipExpanded from './session-leadership-expanded';
+import detailInstructors from './detail-instructors';
 import detailLearnersAndLearnerGroups from './detail-learners-and-learner-groups';
 import userNameInfo from './user-name-info';
 import overview from './session-overview';
@@ -34,26 +34,9 @@ export default create({
   taxonomies,
   collapsedTaxonomies,
   detailLearnersAndLearnerGroups,
+  instructors: detailInstructors,
   learnersAreVisible: isVisible('[data-test-detail-learners-and-learner-groups]'),
   instructorsAreVisible: isVisible('[data-test-detail-instructors]'),
-  instructors: {
-    scope: '[data-test-detail-instructors]',
-    manage: clickable('.actions button'),
-    save: clickable('.actions button.bigadd'),
-    cancel: clickable('.actions button.bigcancel'),
-    title: text('.detail-instructors-header .title'),
-    currentGroups: collection('[data-test-instructor-group]', {
-      title: text('[data-test-instructor-group-title]'),
-      members: collection('[data-test-instructor-group-members] li', {
-        userNameInfo,
-      }),
-    }),
-    currentInstructors: collection('[data-test-instructors] li', {
-      title: text(),
-    }),
-    manager: instructorSelectionManager,
-  },
-
   offerings: {
     scope: '[data-test-session-offerings]',
     header: {

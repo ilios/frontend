@@ -37,8 +37,8 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     await page.details.offerings.dateBlocks[0].offerings[0].edit();
 
     const { offeringForm: form } = page.details.offerings;
-    await form.instructorManager.search.searchBox.set('guy 3');
-    assert.strictEqual(form.instructorManager.search.results.items.length, 1);
+    await form.instructorSelectionManager.search.searchBox.set('guy 3');
+    assert.strictEqual(form.instructorSelectionManager.search.results.items.length, 1);
   });
 
   test('searching for course directors as instructors does not remove existing instructors #3479', async function (assert) {
@@ -63,31 +63,31 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     await page.details.offerings.dateBlocks[0].offerings[0].edit();
 
     const { offeringForm: form } = page.details.offerings;
-    assert.strictEqual(form.instructorManager.selectedInstructors.length, 0);
-    await form.instructorManager.search.searchBox.set('guy 2');
-    assert.strictEqual(form.instructorManager.search.results.items.length, 1);
-    await form.instructorManager.search.results.items[0].click();
-    assert.strictEqual(form.instructorManager.selectedInstructors.length, 1);
+    assert.strictEqual(form.instructorSelectionManager.selectedInstructors.instructors.length, 0);
+    await form.instructorSelectionManager.search.searchBox.set('guy 2');
+    assert.strictEqual(form.instructorSelectionManager.search.results.items.length, 1);
+    await form.instructorSelectionManager.search.results.items[0].click();
+    assert.strictEqual(form.instructorSelectionManager.selectedInstructors.instructors.length, 1);
     assert.strictEqual(
-      form.instructorManager.selectedInstructors[0].userNameInfo.fullName,
+      form.instructorSelectionManager.selectedInstructors.instructors[0].userNameInfo.fullName,
       '2 guy M. Mc2son'
     );
 
-    await form.instructorManager.search.searchBox.set('guy 3');
-    assert.strictEqual(form.instructorManager.selectedInstructors.length, 1);
+    await form.instructorSelectionManager.search.searchBox.set('guy 3');
+    assert.strictEqual(form.instructorSelectionManager.selectedInstructors.instructors.length, 1);
     assert.strictEqual(
-      form.instructorManager.selectedInstructors[0].userNameInfo.fullName,
+      form.instructorSelectionManager.selectedInstructors.instructors[0].userNameInfo.fullName,
       '2 guy M. Mc2son'
     );
-    assert.strictEqual(form.instructorManager.search.results.items.length, 1);
-    await form.instructorManager.search.results.items[0].click();
-    assert.strictEqual(form.instructorManager.selectedInstructors.length, 2);
+    assert.strictEqual(form.instructorSelectionManager.search.results.items.length, 1);
+    await form.instructorSelectionManager.search.results.items[0].click();
+    assert.strictEqual(form.instructorSelectionManager.selectedInstructors.instructors.length, 2);
     assert.strictEqual(
-      form.instructorManager.selectedInstructors[0].userNameInfo.fullName,
+      form.instructorSelectionManager.selectedInstructors.instructors[0].userNameInfo.fullName,
       '2 guy M. Mc2son'
     );
     assert.strictEqual(
-      form.instructorManager.selectedInstructors[1].userNameInfo.fullName,
+      form.instructorSelectionManager.selectedInstructors.instructors[1].userNameInfo.fullName,
       '3 guy M. Mc3son'
     );
   });

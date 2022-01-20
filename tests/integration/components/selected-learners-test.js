@@ -5,8 +5,9 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/selected-learners';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
 
-module('Integration | Component | selected learners', function (hooks) {
+module('Integration | Component | selected-learners', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -36,6 +37,8 @@ module('Integration | Component | selected learners', function (hooks) {
     await render(hbs`<SelectedLearners @learners={{this.learners}} />`);
     assert.strictEqual(component.heading, 'Selected Learners:');
     assert.strictEqual(component.learners.length, 3);
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('no selected learners', async function (assert) {

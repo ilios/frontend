@@ -237,75 +237,16 @@
         {{#if @showInstructors}}
           <fieldset class="instructor-management" data-test-instructor-management>
             <legend>{{t "general.instructorsAndInstructorGroups"}}</legend>
-            <div class="instructors" data-test-selected-instructors>
-              <label>
-                {{t "general.selectedInstructors"}}:
-                {{#unless @offering}}
-                  <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
-                {{/unless}}
-              </label>
-              {{#if (get (await this.instructors) "length")}}
-                <ul class="instructors-list" data-test-selected-instructors-list>
-                  {{#each (sort-by "fullName" (await this.instructors)) as |user|}}
-                    <li data-test-selected-instructor>
-                      <button
-                        type="button"
-                        {{on "click" (fn this.removeInstructor user)}}
-                      >
-                        <UserNameInfo @user={{user}} />
-                        <FaIcon @icon="times" class="remove" />
-                      </button>
-                    </li>
-                  {{/each}}
-                </ul>
-              {{else}}
-                <div>{{t "general.none"}}</div>
-              {{/if}}
-            </div>
-            <div class="instructor-groups" data-test-selected-instructor-groups>
-              <label>
-                {{t "general.selectedInstructorGroups"}}:
-                {{#unless @offering}}
-                  <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
-                {{/unless}}
-              </label>
-              <div data-test-selected-instructor-groups>
-                {{#each (sort-by "title" (await this.instructorGroups)) as |instructorGroup|}}
-                  <div class="instructor-group" data-test-selected-instructor-group>
-                    <button
-                      type="button"
-                      data-test-instructor-group-title
-                      {{on "click" (fn this.removeInstructorGroup instructorGroup)}}
-                    >
-                      <FaIcon @icon="users" />
-                      {{instructorGroup.title}}
-                      <FaIcon @icon="times" class="remove" />
-                    </button>
-                    <br>
-                    <ul class="instructorgroup-members-list" data-test-selected-instructor-group-members>
-                      {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
-                        <li data-test-selected-instructor-group-member>
-                          <UserNameInfo @user={{user}} />
-                        </li>
-                      {{/each}}
-                    </ul>
-                  </div>
-                {{else}}
-                  <div>{{t "general.none"}}</div>
-                {{/each}}
-              </div>
-            </div>
-            <div class="available-instructors" data-test-available-instructors>
-              <label>{{t "general.availableInstructorsAndInstructorGroups"}}:</label>
-              <UserSearch
-                @addUser={{this.addInstructor}}
-                @addInstructorGroup={{this.addInstructorGroup}}
-                @currentlyActiveUsers={{this.instructors}}
-                @placeholder={{t "general.findInstructorOrGroup"}}
-                @availableInstructorGroups={{await this.availableInstructorGroups}}
-                @currentlyActiveInstructorGroups={{this.instructorGroups}}
-              />
-            </div>
+            <InstructorSelectionManager
+              @addInstructor={{this.addInstructor}}
+              @addInstructorGroup={{this.addInstructorGroup}}
+              @removeInstructor={{this.removeInstructor}}
+              @removeInstructorGroup={{this.removeInstructorGroup}}
+              @availableInstructorGroups={{this.availableInstructorGroups}}
+              @instructorGroups={{this.instructorGroups}}
+              @instructors={{this.instructors}}
+              @showDefaultNotLoaded={{not this.hasOffering}}
+            />
           </fieldset>
         {{/if}}
         <fieldset class="learner-management" data-test-learner-management>

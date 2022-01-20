@@ -108,12 +108,12 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('instructor manager does not show by default', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
-    assert.notOk(component.instructorManager.isPresent);
+    assert.notOk(component.instructorSelectionManager.isPresent);
   });
 
   test('instructor manager shows up when requested', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @showInstructors={{true}} />`);
-    assert.ok(component.instructorManager.isPresent);
+    assert.ok(component.instructorSelectionManager.isPresent);
   });
 
   test('before course startDate default initial startDate falls on course start date', async function (assert) {

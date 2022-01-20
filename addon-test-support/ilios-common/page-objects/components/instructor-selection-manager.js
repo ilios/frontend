@@ -1,21 +1,12 @@
-import { clickable, collection, create, text } from 'ember-cli-page-object';
-import userNameInfo from './user-name-info';
+import { create } from 'ember-cli-page-object';
 import search from './user-search';
-
+import selectedInstructors from './selected-instructors';
+import selectedInstructorGroups from './selected-instructor-groups';
 const definition = {
   scope: '[data-test-instructor-selection-manager]',
   search,
-  instructors: collection('[data-test-instructors] li', {
-    userNameInfo,
-    remove: clickable('button'),
-  }),
-  instructorGroups: collection('[data-test-instructor-group]', {
-    title: text('[data-test-instructor-group-title]'),
-    members: collection('[data-test-instructor-group-members] li', {
-      userNameInfo,
-    }),
-    remove: clickable('[data-test-instructor-group-title]'),
-  }),
+  selectedInstructors,
+  selectedInstructorGroups,
 };
 
 export default definition;

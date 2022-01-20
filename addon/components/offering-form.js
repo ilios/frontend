@@ -47,8 +47,8 @@ export default class OfferingForm extends Component {
   @Gt(0)
   @tracked
   numberOfWeeks = 1;
-  @tracked instructors = null;
-  @tracked instructorGroups = null;
+  @tracked instructors = [];
+  @tracked instructorGroups = [];
   @tracked offeringsToSave = 0;
   @tracked savedOfferings = 0;
   @tracked recurringDayOptions = null;
@@ -73,6 +73,10 @@ export default class OfferingForm extends Component {
       { day: '5', t: 'general.friday' },
       { day: '6', t: 'general.saturday' },
     ];
+  }
+
+  get hasOffering() {
+    return !!this.args.offering;
   }
 
   get defaultStartDate() {

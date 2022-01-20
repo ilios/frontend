@@ -255,8 +255,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].add();
     await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].add();
-    await form.instructorManager.search.searchBox.set('guy');
-    await form.instructorManager.search.results.items[0].click();
+    await form.instructorSelectionManager.search.searchBox.set('guy');
+    await form.instructorSelectionManager.search.results.items[0].click();
     await form.save();
 
     const block = page.details.offerings.dateBlocks[0];
@@ -295,8 +295,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].add();
     await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].add();
-    await form.instructorManager.search.searchBox.set('guy');
-    await form.instructorManager.search.results.items[0].click();
+    await form.instructorSelectionManager.search.searchBox.set('guy');
+    await form.instructorSelectionManager.search.results.items[0].click();
     await form.save();
 
     const block = page.details.offerings.dateBlocks[0];
@@ -386,8 +386,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.url.set('https://example.org');
 
     await form.learnerManager.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].removeAllSubgroups();
-    await form.instructorManager.selectedInstructors[0].remove();
-    await form.instructorManager.selectedInstructorGroups[0].remove();
+    await form.instructorSelectionManager.selectedInstructors.instructors[0].remove();
+    await form.instructorSelectionManager.selectedInstructorGroups.instructorGroups[0].remove();
 
     await form.save();
 

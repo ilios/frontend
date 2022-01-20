@@ -55,44 +55,69 @@ module('Integration | Component | instructor selection manager', function (hooks
       @removeInstructor={{(noop)}}
       @removeInstructorGroup={{(noop)}}
     />`);
-    assert.strictEqual(component.instructors.length, 3);
-    assert.strictEqual(component.instructors[0].userNameInfo.fullName, 'Aardvark');
-    assert.notOk(component.instructors[0].userNameInfo.isTooltipVisible);
-    await component.instructors[0].userNameInfo.expandTooltip();
-    assert.ok(component.instructors[0].userNameInfo.isTooltipVisible);
+    assert.strictEqual(component.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
-      component.instructors[0].userNameInfo.tooltipContents,
+      component.selectedInstructors.instructors[0].userNameInfo.fullName,
+      'Aardvark'
+    );
+    assert.notOk(component.selectedInstructors.instructors[0].userNameInfo.isTooltipVisible);
+    await component.selectedInstructors.instructors[0].userNameInfo.expandTooltip();
+    assert.ok(component.selectedInstructors.instructors[0].userNameInfo.isTooltipVisible);
+    assert.strictEqual(
+      component.selectedInstructors.instructors[0].userNameInfo.tooltipContents,
       'Campus name of record: 2 guy M, Mc2son'
     );
-    await component.instructors[0].userNameInfo.closeTooltip();
-    assert.strictEqual(component.instructors[1].userNameInfo.fullName, 'Jane A. Doe');
-    assert.notOk(component.instructors[1].userNameInfo.isTooltipVisible);
-    assert.strictEqual(component.instructors[2].userNameInfo.fullName, 'Joe M. Doe');
-    assert.notOk(component.instructors[2].userNameInfo.isTooltipVisible);
-    assert.strictEqual(component.instructorGroups.length, 2);
-    assert.strictEqual(component.instructorGroups[0].title, 'Alpha');
-    assert.strictEqual(component.instructorGroups[0].members.length, 2);
-    assert.strictEqual(component.instructorGroups[0].members[0].userNameInfo.fullName, 'Aardvark');
-    assert.notOk(component.instructorGroups[0].members[0].userNameInfo.isTooltipVisible);
-    await component.instructorGroups[0].members[0].userNameInfo.expandTooltip();
-    assert.ok(component.instructorGroups[0].members[0].userNameInfo.isTooltipVisible);
+    await component.selectedInstructors.instructors[0].userNameInfo.closeTooltip();
     assert.strictEqual(
-      component.instructorGroups[0].members[0].userNameInfo.tooltipContents,
-      'Campus name of record: 2 guy M, Mc2son'
-    );
-    await component.instructorGroups[0].members[0].userNameInfo.closeTooltip();
-    assert.strictEqual(
-      component.instructorGroups[0].members[1].userNameInfo.fullName,
+      component.selectedInstructors.instructors[1].userNameInfo.fullName,
       'Jane A. Doe'
     );
-    assert.notOk(component.instructorGroups[0].members[1].userNameInfo.isTooltipVisible);
-    assert.strictEqual(component.instructorGroups[1].members.length, 1);
+    assert.notOk(component.selectedInstructors.instructors[1].userNameInfo.isTooltipVisible);
     assert.strictEqual(
-      component.instructorGroups[1].members[0].userNameInfo.fullName,
+      component.selectedInstructors.instructors[2].userNameInfo.fullName,
       'Joe M. Doe'
     );
-    assert.notOk(component.instructorGroups[1].members[0].userNameInfo.isTooltipVisible);
-    assert.strictEqual(component.instructorGroups[1].title, 'Beta');
+    assert.notOk(component.selectedInstructors.instructors[2].userNameInfo.isTooltipVisible);
+    assert.strictEqual(component.selectedInstructorGroups.instructorGroups.length, 2);
+    assert.strictEqual(component.selectedInstructorGroups.instructorGroups[0].title, 'Alpha');
+    assert.strictEqual(component.selectedInstructorGroups.instructorGroups[0].members.length, 2);
+    assert.strictEqual(
+      component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo.fullName,
+      'Aardvark'
+    );
+    assert.notOk(
+      component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo
+        .isTooltipVisible
+    );
+    await component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo.expandTooltip();
+    assert.ok(
+      component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo
+        .isTooltipVisible
+    );
+    assert.strictEqual(
+      component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo
+        .tooltipContents,
+      'Campus name of record: 2 guy M, Mc2son'
+    );
+    await component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo.closeTooltip();
+    assert.strictEqual(
+      component.selectedInstructorGroups.instructorGroups[0].members[1].userNameInfo.fullName,
+      'Jane A. Doe'
+    );
+    assert.notOk(
+      component.selectedInstructorGroups.instructorGroups[0].members[1].userNameInfo
+        .isTooltipVisible
+    );
+    assert.strictEqual(component.selectedInstructorGroups.instructorGroups[1].members.length, 1);
+    assert.strictEqual(
+      component.selectedInstructorGroups.instructorGroups[1].members[0].userNameInfo.fullName,
+      'Joe M. Doe'
+    );
+    assert.notOk(
+      component.selectedInstructorGroups.instructorGroups[1].members[0].userNameInfo
+        .isTooltipVisible
+    );
+    assert.strictEqual(component.selectedInstructorGroups.instructorGroups[1].title, 'Beta');
   });
 
   test('remove selected instructor', async function (assert) {
@@ -112,7 +137,7 @@ module('Integration | Component | instructor selection manager', function (hooks
       @removeInstructor={{this.removeInstructor}}
       @removeInstructorGroup={{(noop)}}
     />`);
-    await component.instructors[0].remove();
+    await component.selectedInstructors.instructors[0].remove();
   });
 
   test('remove selected instructor group', async function (assert) {
@@ -132,7 +157,7 @@ module('Integration | Component | instructor selection manager', function (hooks
       @removeInstructor={{(noop)}}
       @removeInstructorGroup={{this.removeGroup}}
     />`);
-    await component.instructorGroups[0].remove();
+    await component.selectedInstructorGroups.instructorGroups[0].remove();
   });
 
   test('search and add instructor group', async function (assert) {

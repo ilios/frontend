@@ -23,8 +23,13 @@
     .learnergroup-selection-manager,
     .learner-selection-manager {
       grid-column: 1 / -1;
-      margin-bottom: .5rem;
+    }
 
+    .selected-learner-groups,
+    .selected-learners,
+    .available-learner-groups,
+    .available-learners {
+      margin-bottom: .5rem;
       label {
         display: inline-block;
         margin-bottom: .5rem;

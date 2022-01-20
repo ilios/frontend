@@ -1,6 +1,7 @@
+/* eslint-disable ember/no-computed-properties-in-native-classes */
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
@@ -45,12 +46,15 @@ export default class DetailInstructorsComponent extends Component {
     this.isManaging = false;
   }
 
+  @computed('args.ilmSession.instructors.length')
   get instructorCount() {
     if (!this.args.ilmSession) {
       return null;
     }
     return this.args.ilmSession.hasMany('instructors').ids().length;
   }
+
+  @computed('args.ilmSession.instructorGroups.length')
   get instructorGroupCount() {
     if (!this.args.ilmSession) {
       return null;
