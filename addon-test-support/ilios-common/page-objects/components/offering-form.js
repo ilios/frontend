@@ -11,9 +11,8 @@ import {
   value,
 } from 'ember-cli-page-object';
 import userNameInfo from './user-name-info';
-import selectedLearnerGroups from './selected-learner-groups';
 import learnerSelectionManager from './learner-selection-manager';
-import learnergroupTree from './learnergroup-tree';
+import learnergroupSelectionManager from './learnergroup-selection-manager';
 import yesNoToggle from './toggle-yesno';
 import datePicker from './date-picker';
 import timePicker from './time-picker';
@@ -117,16 +116,7 @@ const definition = {
   learnerManager: {
     scope: '[data-test-learner-management]',
     learnerSelectionManager,
-    selectedLearnerGroups,
-    availableLearnerGroups: {
-      scope: '[data-test-available-learner-groups]',
-      title: text('[data-test-title]', { at: 0 }),
-      search,
-      cohorts: collection('[data-test-cohorts]', {
-        title: text('[data-test-title]', { at: 0 }),
-        trees: collection('[data-test-learnergroup-tree-root=true]', learnergroupTree),
-      }),
-    },
+    learnergroupSelectionManager,
     hasError: isPresent('.validation-error-message'),
   },
 

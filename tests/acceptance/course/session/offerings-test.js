@@ -253,8 +253,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.duration.minutes.set(15);
     await form.location.set('Rm. 111');
 
-    await form.learnerManager.availableLearnerGroups.cohorts[0].trees[0].add();
-    await form.learnerManager.availableLearnerGroups.cohorts[0].trees[1].add();
+    await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].add();
+    await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].add();
     await form.instructorManager.search.searchBox.set('guy');
     await form.instructorManager.search.results.items[0].click();
     await form.save();
@@ -293,8 +293,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.duration.minutes.set(15);
     await form.location.set('Rm. 111');
 
-    await form.learnerManager.availableLearnerGroups.cohorts[0].trees[0].add();
-    await form.learnerManager.availableLearnerGroups.cohorts[0].trees[1].add();
+    await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].add();
+    await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].add();
     await form.instructorManager.search.searchBox.set('guy');
     await form.instructorManager.search.results.items[0].click();
     await form.save();
@@ -336,8 +336,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.duration.hours.set(15);
     await form.duration.minutes.set(15);
 
-    await form.learnerManager.availableLearnerGroups.cohorts[0].trees[0].add();
-    await form.learnerManager.availableLearnerGroups.cohorts[0].trees[1].add();
+    await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].add();
+    await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].add();
     await form.save();
 
     const block = page.details.offerings.dateBlocks[0];
@@ -385,7 +385,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.location.set('Rm. 111');
     await form.url.set('https://example.org');
 
-    await form.learnerManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].removeAllSubgroups();
+    await form.learnerManager.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].removeAllSubgroups();
     await form.instructorManager.selectedInstructors[0].remove();
     await form.instructorManager.selectedInstructorGroups[0].remove();
 
@@ -434,8 +434,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.recurring.yesNoToggle.click();
     await form.recurring.setWeeks(4);
 
-    await form.learnerManager.availableLearnerGroups.cohorts[0].trees[0].add();
-    await form.learnerManager.availableLearnerGroups.cohorts[0].trees[1].add();
+    await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].add();
+    await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].add();
 
     await form.save();
 
@@ -505,8 +505,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.recurring.yesNoToggle.click();
     await form.recurring.setWeeks(4);
 
-    await form.learnerManager.availableLearnerGroups.cohorts[0].trees[0].add();
-    await form.learnerManager.availableLearnerGroups.cohorts[0].trees[1].add();
+    await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].add();
+    await form.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].add();
 
     await form.save();
 

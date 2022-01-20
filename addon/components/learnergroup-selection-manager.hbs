@@ -1,9 +1,9 @@
 <div class="learnergroup-selection-manager" data-test-learnergroup-selection-manager>
   <SelectedLearnerGroups @learnerGroups={{await @learnerGroups}} @isManaging={{true}} @remove={{@remove}}/>
   <div class="available-learner-groups" data-test-available-learner-groups>
-    <label data-test-title>
+    <label data-test-heading>
       {{t "general.availableLearnerGroups"}}:
-      {{#unless (and (is-fulfilled this.allLearnerGroups) (is-fulfilled @cohorts))}}
+      {{#unless (is-fulfilled @cohorts)}}
         <LoadingSpinner />
       {{/unless}}
     </label>

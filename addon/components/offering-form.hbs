@@ -315,63 +315,12 @@
         <fieldset class="learner-management" >
           <legend>{{t "general.learnersAndLearnerGroups"}}</legend>
           <div class="learner-management-controls" data-test-learner-management>
-            <SelectedLearnerGroups
+            <LearnergroupSelectionManager
               @learnerGroups={{this.learnerGroups}}
-              @isManaging={{true}}
+              @cohorts={{@cohorts}}
+              @add={{this.addLearnerGroup}}
               @remove={{this.removeLearnerGroup}}
             />
-            {{#if @cohorts.length}}
-              <div class="available-learner-groups" data-test-available-learner-groups>
-                <label>
-                  {{t "general.availableLearnerGroups"}}:
-                  {{#unless (and (is-fulfilled this.allLearnerGroups) (is-fulfilled @cohorts))}}
-                    <LoadingSpinner />
-                  {{/unless}}
-                </label>
-                <SearchBox
-                  @search={{fn (mut this.learnerGroupsFilter)}}
-                  placeholder={{t "general.filterPlaceholder"}}
-                />
-                <div class="cohorts-container">
-                  {{#each (sort-by "title" (await @cohorts)) as |cohort|}}
-                    <div class="cohort-learner-groups" data-test-cohorts>
-                      {{#if
-                        (and
-                          (is-fulfilled cohort.programYear)
-                          (is-fulfilled cohort.programYear.program)
-                          (is-fulfilled cohort.rootLevelLearnerGroups)
-                        )
-                      }}
-                        <h5 class="cohort-title" data-test-title>
-                          {{cohort.programYear.program.title}}
-                          {{cohort.title}}
-                        </h5>
-                        <ul class="tree-groups-list" data-test-tree-groups-list>
-                          {{#each
-                            (sort-by
-                              this.sortLearnergroupsByTitle (await cohort.rootLevelLearnerGroups)
-                            ) as |learnerGroup|
-                          }}
-                            <LearnergroupTree
-                              @learnerGroup={{learnerGroup}}
-                              @selectedGroups={{this.learnerGroups}}
-                              @filter={{this.learnerGroupsFilter}}
-                              @add={{this.addLearnerGroup}}
-                            />
-                          {{/each}}
-                        </ul>
-                      {{else}}
-                        <LoadingSpinner />
-                      {{/if}}
-                    </div>
-                  {{/each}}
-                </div>
-              </div>
-            {{else}}
-              <div data-test-no-available-learner-groups>
-                {{t "general.noAvailableLearnerGroups"}}
-              </div>
-            {{/if}}
             <ValidationError @errors={{get-errors-for this.learnerGroups}} />
             {{#unless @smallGroupMode}}
               <LearnerSelectionManager

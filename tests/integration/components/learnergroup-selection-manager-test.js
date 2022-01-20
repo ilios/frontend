@@ -121,7 +121,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].subgroups[1]
         .needsAccommodation
     );
-    assert.strictEqual(component.availableGroups.title, 'Available Learner Groups:');
+    assert.strictEqual(component.availableGroups.heading, 'Available Learner Groups:');
     assert.strictEqual(component.availableGroups.cohorts.length, 2);
     assert.strictEqual(component.availableGroups.cohorts[0].title, 'program 0 cohort 0');
     assert.strictEqual(component.availableGroups.cohorts[0].trees.length, 1);

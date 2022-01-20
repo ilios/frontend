@@ -8,7 +8,7 @@ const definition = {
   selectedLearnerGroups,
   availableGroups: {
     scope: '[data-test-available-learner-groups]',
-    title: text('[data-test-title]', { at: 0 }),
+    heading: text('[data-test-heading]'),
     search,
     cohorts: collection('[data-test-cohorts]', {
       title: text('[data-test-title]', { at: 0 }),

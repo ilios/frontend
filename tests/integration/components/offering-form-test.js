@@ -517,15 +517,18 @@ module('Integration | Component | offering form', function (hooks) {
     await render(hbs`<OfferingForm @cohorts={{this.cohorts}} @close={{(noop)}} />`);
 
     assert.strictEqual(
-      component.learnerManager.availableLearnerGroups.cohorts[0].trees[0].title,
+      component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
+        .title,
       'Learner Group 1'
     );
     assert.strictEqual(
-      component.learnerManager.availableLearnerGroups.cohorts[0].trees[1].title,
+      component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
+        .title,
       'Learner Group 2'
     );
     assert.strictEqual(
-      component.learnerManager.availableLearnerGroups.cohorts[0].trees[2].title,
+      component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[2]
+        .title,
       'Learner Group 10'
     );
   });
