@@ -13,14 +13,12 @@
       grid-template-columns: 2fr 1fr 1fr;
 
       .instructor-management,
-      .instructor-management-controls,
       .learner-management,
-      .learner-management-controls,
       .scheduling {
         grid-column: 1 / -1;
       }
 
-      .scheduling-controls {
+      .scheduling {
         grid-template-columns: repeat(4, 1fr);
       }
 
@@ -37,17 +35,12 @@
       }
     }
 
-    .instructor-management-controls,
-    .learner-management-controls,
-    .scheduling-controls  {
-      align-items: start;
-      display: grid;
-      grid-gap: .25rem 1rem;
-    }
-
     .instructor-management,
     .learner-management,
     .scheduling {
+      align-items: start;
+      display: grid;
+      grid-gap: .25rem 1rem;
       margin-bottom: 1rem;
       legend {
         @include ilios-heading;
@@ -163,7 +156,7 @@
       margin-top: .5rem;
     }
 
-    .instructor-management-controls {
+    .instructor-management {
       .instructor-group {
 
         margin-bottom: 1rem;
@@ -206,40 +199,6 @@
         }
       }
     }
-
-    .available-learner-groups {
-
-      .search-box {
-        margin-bottom: .5rem;
-      }
-
-      .cohort-learner-groups {
-        border: 1px solid $ilios-blue;
-
-        h5 {
-          margin-bottom: .5rem;
-          padding: .5rem;
-        }
-
-        .tree-groups-list > li > span {
-          font-weight: bold;
-        }
-
-        & > ul {
-          @include ilios-list-tree;
-          background-color: $white;
-          height: 15rem;
-          margin-bottom: 1rem;
-          overflow-y: scroll;
-          padding: .5rem 0;
-
-          ul {
-            padding: 0;
-          }
-        }
-      }
-    }
-
     .available-instructors,
     .available-learners,
     .available-learner-groups,
