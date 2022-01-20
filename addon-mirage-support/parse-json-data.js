@@ -1,4 +1,5 @@
-import { camelize, singularize } from 'ember-cli-mirage/utils/inflector';
+import { camelize } from '@ember/string';
+import { singularize } from 'ember-inflector';
 
 export default function parseJsonData(json) {
   let attrs = {};
