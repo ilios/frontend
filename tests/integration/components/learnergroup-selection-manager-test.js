@@ -71,33 +71,57 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       @add={{(noop)}}
       @remove={{(noop)}}
     />`);
-    assert.strictEqual(component.selectedGroups.title, 'Selected Learner Groups:');
-    assert.strictEqual(component.selectedGroups.list.trees.length, 2);
+    assert.strictEqual(component.selectedLearnerGroups.heading, 'Selected Learner Groups:');
+    assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
     assert.strictEqual(
-      component.selectedGroups.list.trees[0].title,
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].title,
       'Top Group 1 (program 0 cohort 0)'
     );
-    assert.strictEqual(component.selectedGroups.list.trees[0].subgroups.length, 2);
     assert.strictEqual(
-      component.selectedGroups.list.trees[0].subgroups[0].title,
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups.length,
+      2
+    );
+    assert.strictEqual(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups[0].title,
       'Top Group 1 (0)'
     );
-    assert.ok(component.selectedGroups.list.trees[0].subgroups[0].needsAccommodation);
-    assert.strictEqual(component.selectedGroups.list.trees[0].subgroups[1].title, 'Second 1 (0)');
-    assert.notOk(component.selectedGroups.list.trees[0].subgroups[1].needsAccommodation);
+    assert.ok(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups[0]
+        .needsAccommodation
+    );
     assert.strictEqual(
-      component.selectedGroups.list.trees[1].title,
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups[1].title,
+      'Second 1 (0)'
+    );
+    assert.notOk(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups[1]
+        .needsAccommodation
+    );
+    assert.strictEqual(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].title,
       'Top Group 2 (program 0 cohort 1)'
     );
-    assert.strictEqual(component.selectedGroups.list.trees[1].subgroups.length, 2);
     assert.strictEqual(
-      component.selectedGroups.list.trees[1].subgroups[0].title,
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].subgroups.length,
+      2
+    );
+    assert.strictEqual(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].subgroups[0].title,
       'Top Group 2 (0)'
     );
-    assert.notOk(component.selectedGroups.list.trees[1].subgroups[0].needsAccommodation);
-    assert.strictEqual(component.selectedGroups.list.trees[1].subgroups[1].title, 'Second 10 (0)');
-    assert.ok(component.selectedGroups.list.trees[1].subgroups[1].needsAccommodation);
-    assert.strictEqual(component.availableGroups.title, 'Available Learner Groups');
+    assert.notOk(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].subgroups[0]
+        .needsAccommodation
+    );
+    assert.strictEqual(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].subgroups[1].title,
+      'Second 10 (0)'
+    );
+    assert.ok(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].subgroups[1]
+        .needsAccommodation
+    );
+    assert.strictEqual(component.availableGroups.title, 'Available Learner Groups:');
     assert.strictEqual(component.availableGroups.cohorts.length, 2);
     assert.strictEqual(component.availableGroups.cohorts[0].title, 'program 0 cohort 0');
     assert.strictEqual(component.availableGroups.cohorts[0].trees.length, 1);
@@ -146,7 +170,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       @add={{(noop)}}
       @remove={{this.remove}}
     />`);
-    await component.selectedGroups.list.trees[0].subgroups[1].remove();
+    await component.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups[1].remove();
   });
 
   test('add available group', async function (assert) {

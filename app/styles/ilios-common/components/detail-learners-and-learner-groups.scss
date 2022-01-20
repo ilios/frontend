@@ -18,10 +18,10 @@
     @include ilios-form;
     grid-template-columns: 1fr;
 
-    .display-selected-users,
+    .display-selected-learner-groups,
+    .display-selected-learners,
     .learnergroup-selection-manager,
-    .learner-selection-manager,
-    .selected-learner-groups {
+    .learner-selection-manager {
       grid-column: 1 / -1;
       margin-bottom: .5rem;
 

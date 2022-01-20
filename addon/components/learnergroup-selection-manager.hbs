@@ -1,20 +1,5 @@
 <div class="learnergroup-selection-manager" data-test-learnergroup-selection-manager>
-  <div class="selected-learner-groups" data-test-selected-learner-groups>
-    <label data-test-title>
-      {{t "general.selectedLearnerGroups"}}:
-    </label>
-    {{#if @learnerGroups.length}}
-      <DetailLearnergroupsList
-        @learnerGroups={{@learnerGroups}}
-        @isManaging={{true}}
-        @remove={{@remove}}
-      />
-    {{else}}
-      <p data-test-no-selected-learnergroups>
-        {{t "general.none"}}
-      </p>
-    {{/if}}
-  </div>
+  <SelectedLearnerGroups @learnerGroups={{await @learnerGroups}} @isManaging={{true}} @remove={{@remove}}/>
   <div class="available-learner-groups" data-test-available-learner-groups>
     <label data-test-title>
       {{t "general.availableLearnerGroups"}}:

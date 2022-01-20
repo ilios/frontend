@@ -1,8 +1,8 @@
 import { clickable, create, isPresent, text } from 'ember-cli-page-object';
-import detailLearnergroupsList from './detail-learnergroups-list';
 import learnergroupSelectionManager from './learnergroup-selection-manager';
 import learnerSelectionManager from './learner-selection-manager';
 import selectedLearners from './selected-learners';
+import selectedLearnerGroups from './selected-learner-groups';
 
 const definition = {
   scope: '[data-test-detail-learners-and-learner-groups]',
@@ -16,8 +16,7 @@ const definition = {
   learnerSelectionManager,
   learnergroupSelectionManager,
   selectedLearners,
-  detailLearnergroupsList,
-  learnergroupsTitle: text('[data-test-learnergroups-title]'),
+  selectedLearnerGroups,
 };
 
 export default definition;

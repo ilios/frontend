@@ -43,13 +43,10 @@
       />
     {{else}}
       {{#if this.learnerGroupCount}}
-        <div class="selected-learner-groups" data-test-selected-learner-groups>
-          <label data-test-learnergroups-title>{{t "general.learnerGroups"}}:</label>
-          <DetailLearnergroupsList @learnerGroups={{await @ilmSession.learnerGroups}} />
-        </div>
+        <SelectedLearnerGroups @learnerGroups={{await @ilmSession.learnerGroups}} @isManaging={{false}} class="display-selected-learner-groups" />
       {{/if}}
       {{#if this.learnerCount}}
-        <SelectedLearners @learners={{await @ilmSession.learners}} @isManaging={{false}} class="display-selected-users" />
+        <SelectedLearners @learners={{await @ilmSession.learners}} @isManaging={{false}} class="display-selected-learners" />
       {{/if}}
     {{/if}}
   </div>

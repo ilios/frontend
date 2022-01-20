@@ -11,7 +11,7 @@ import {
   value,
 } from 'ember-cli-page-object';
 import userNameInfo from './user-name-info';
-import detailLearnergroupsList from './detail-learnergroups-list';
+import selectedLearnerGroups from './selected-learner-groups';
 import learnerSelectionManager from './learner-selection-manager';
 import learnergroupTree from './learnergroup-tree';
 import yesNoToggle from './toggle-yesno';
@@ -117,14 +117,7 @@ const definition = {
   learnerManager: {
     scope: '[data-test-learner-management]',
     learnerSelectionManager,
-    selectedLearnerGroups: {
-      scope: '[data-test-selected-learner-groups]',
-      title: text('[data-test-title]', { at: 0 }),
-      list: detailLearnergroupsList,
-      noGroups: {
-        scope: '[data-test-no-selected-learner-groups]',
-      },
-    },
+    selectedLearnerGroups,
     availableLearnerGroups: {
       scope: '[data-test-available-learner-groups]',
       title: text('[data-test-title]', { at: 0 }),

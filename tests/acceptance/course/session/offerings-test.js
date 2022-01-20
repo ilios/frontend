@@ -385,7 +385,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.location.set('Rm. 111');
     await form.url.set('https://example.org');
 
-    await form.learnerManager.selectedLearnerGroups.list.trees[0].removeAllSubgroups();
+    await form.learnerManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].removeAllSubgroups();
     await form.instructorManager.selectedInstructors[0].remove();
     await form.instructorManager.selectedInstructorGroups[0].remove();
 

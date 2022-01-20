@@ -315,22 +315,11 @@
         <fieldset class="learner-management" >
           <legend>{{t "general.learnersAndLearnerGroups"}}</legend>
           <div class="learner-management-controls" data-test-learner-management>
-            <div class="selected-learner-groups" data-test-selected-learner-groups>
-              <label>
-                {{t "general.selectedLearnerGroups"}}:
-              </label>
-              {{#if this.learnerGroups.length}}
-                <DetailLearnergroupsList
-                  @learnerGroups={{this.learnerGroups}}
-                  @isManaging={{true}}
-                  @remove={{this.removeLearnerGroup}}
-                />
-              {{else}}
-                <div data-test-no-selected-learner-groups>
-                  {{t "general.none"}}
-                </div>
-              {{/if}}
-            </div>
+            <SelectedLearnerGroups
+              @learnerGroups={{this.learnerGroups}}
+              @isManaging={{true}}
+              @remove={{this.removeLearnerGroup}}
+            />
             {{#if @cohorts.length}}
               <div class="available-learner-groups" data-test-available-learner-groups>
                 <label>
