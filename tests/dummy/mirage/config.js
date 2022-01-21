@@ -1,6 +1,7 @@
 import commonRoutes from './routes';
 import ENV from 'dummy/config/environment';
-import { createServer, discoverEmberDataModels } from 'ember-cli-mirage';
+import { discoverEmberDataModels } from 'ember-cli-mirage';
+import { createServer } from 'miragejs';
 
 const { apiVersion } = ENV;
 
