@@ -204,6 +204,7 @@
       >
         <input
           aria-label={{t "general.search"}}
+          autocomplete="off"
           type="search"
           value={{@searchTerms}}
           {{on "input" (pick "target.value" @setSearchTerms)}}
