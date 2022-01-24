@@ -15,6 +15,13 @@ export default class CurriculumInventoryAcademicLevel extends Model {
 
   @hasMany('curriculum-inventory-sequence-block', {
     async: true,
+    inverse: 'startingAcademicLevel',
   })
-  sequenceBlocks;
+  startingSequenceBlocks;
+
+  @hasMany('curriculum-inventory-sequence-block', {
+    async: true,
+    inverse: 'endingAcademicLevel',
+  })
+  endingSequenceBlocks;
 }

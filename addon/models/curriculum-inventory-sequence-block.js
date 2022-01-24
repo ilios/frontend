@@ -36,8 +36,17 @@ export default class CurriculumInventorySequenceBlock extends Model {
   @attr('number')
   duration;
 
-  @belongsTo('curriculum-inventory-academic-level', { async: true })
-  academicLevel;
+  @belongsTo('curriculum-inventory-academic-level', {
+    async: true,
+    inverse: 'startingSequenceBlocks',
+  })
+  startingAcademicLevel;
+
+  @belongsTo('curriculum-inventory-academic-level', {
+    async: true,
+    inverse: 'endingSequenceBlocks',
+  })
+  endingAcademicLevel;
 
   @belongsTo('curriculum-inventory-sequence-block', { async: true, inverse: 'children' })
   parent;
