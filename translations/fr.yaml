@@ -117,6 +117,7 @@ general:
   educationalYear: "Année scolaire"
   email: Email
   enabled: "Activé"
+  endingLevel: "niveau final"
   errorDisplayMessage: "Désolé! Quelque chose s'est passé mal avec votre demande. Essayez s'il vous plaît de rafraîchir ou vérifier en arrière plus tard."
   error: Erreur
   errors: Erreurs
@@ -376,6 +377,7 @@ general:
   singleDay: "Seule Journée"
   singleGroup: "Seul groupe"
   skipToMainContent: passer au contenu principal de la page
+  startingLevel: "niveau de départ"
   startOver: recommencer
   stateOrProvince: "État ou province"
   statusCode: "Code d'état"

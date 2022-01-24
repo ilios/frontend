@@ -116,6 +116,7 @@ general:
   durationInYears: "Duration (in Years)"
   educationalYear: "Educational Year"
   email: Email
+  endingLevel: "Ending Level"
   enabled: Enabled
   errorDisplayMessage: "Sorry! Something went wrong with your request. Please try refreshing or check back later."
   error: Error
@@ -376,6 +377,7 @@ general:
   singleDay: "Single Day"
   singleGroup: "Single Group"
   skipToMainContent: Skip to main content
+  startingLevel: "Starting Level"
   startOver: "Start Over"
   stateOrProvince: "State or Province"
   statusCode: "Status Code"
