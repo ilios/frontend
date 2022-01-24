@@ -31,7 +31,7 @@
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@ilios/ember-template-lint-plugin": "^3.0.0",
-    "@sentry/browser": "^6.16.0",
+    "@sentry/browser": "^6.17.0",
     "@sentry/integrations": "^6.16.0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
