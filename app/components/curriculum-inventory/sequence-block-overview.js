@@ -20,7 +20,8 @@ import {
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {
   @service intl;
   @service store;
-  @tracked academicLevel;
+  @tracked startingAcademicLevel;
+  @tracked endingAcademicLevel;
   @tracked academicLevels;
   @tracked childSequenceOrder;
   @tracked course;
@@ -75,7 +76,8 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
       }
     }
     this.linkedSessions = yield sequenceBlock.sessions;
-    this.academicLevel = yield sequenceBlock.academicLevel;
+    this.startingAcademicLevel = yield sequenceBlock.startingAcademicLevel;
+    this.endingAcademicLevel = yield sequenceBlock.endingAcademicLevel;
     this.required = sequenceBlock.required.toString();
     this.duration = sequenceBlock.duration;
     this.startDate = sequenceBlock.startDate;
@@ -246,20 +248,37 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   @dropTask
-  *changeAcademicLevel() {
-    this.args.sequenceBlock.set('academicLevel', this.academicLevel);
+  *changeStartingAcademicLevel() {
+    this.args.sequenceBlock.set('startingAcademicLevel', this.startingAcademicLevel);
     yield this.args.sequenceBlock.save();
   }
 
   @action
-  setAcademicLevel(event) {
+  setStartingAcademicLevel(event) {
     const id = event.target.value;
-    this.academicLevel = this.academicLevels.findBy('id', id);
+    this.startingAcademicLevel = this.academicLevels.findBy('id', id);
+  }
+
+  @action
+  revertStartingAcademicLevelChanges() {
+    this.startingAcademicLevel = this.args.sequenceBlock.startingAcademicLevel;
+  }
+
+  @dropTask
+  *changeEndingAcademicLevel() {
+    this.args.sequenceBlock.set('endingAcademicLevel', this.endingAcademicLevel);
+    yield this.args.sequenceBlock.save();
+  }
+
+  @action
+  setEndingAcademicLevel(event) {
+    const id = event.target.value;
+    this.endingAcademicLevel = this.academicLevels.findBy('id', id);
   }
 
   @action
   revertAcademicLevelChanges() {
-    this.academicLevel = this.args.sequenceBlock.academicLevel;
+    this.endingAcademicLevel = this.args.sequenceBlock.endingAcademicLevel;
   }
 
   @dropTask

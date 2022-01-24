@@ -12,7 +12,6 @@ export default class CurriculumInventoryVerificationPreviewTable2Component exten
     return this.args.data.rows.map((row) => {
       return {
         title: row.title,
-        level: row.level,
         methods: methods.map((method) => {
           const minutes = row.instructional_methods[method.title];
           if (minutes) {
@@ -21,6 +20,8 @@ export default class CurriculumInventoryVerificationPreviewTable2Component exten
           return '';
         }),
         total: (row.total / 60).toFixed(2),
+        startingLevel: row.starting_level,
+        endingLevel: row.ending_level,
       };
     });
   }

@@ -2,7 +2,7 @@
   class={{if this.showRemoveConfirmation "confirm-removal"}}
   data-test-curriculum-inventory-sequence-block-list-item
 >
-  <td class="text-left" colspan="5" data-test-title>
+  <td class="text-left" colspan="4" data-test-title>
     <LinkTo
       @route="curriculumInventorySequenceBlock"
       @model={{@sequenceBlock}}
@@ -10,8 +10,11 @@
       {{@sequenceBlock.title}}
     </LinkTo>
   </td>
-  <td class="text-center" colspan="1" data-test-academic-level>
-    {{get (await @sequenceBlock.academicLevel) "level"}}
+  <td class="text-center" colspan="1" data-test-starting-academic-level>
+    {{get (await @sequenceBlock.startingAcademicLevel) "level"}}
+  </td>
+  <td class="text-center" colspan="1" data-test-ending-academic-level>
+    {{get (await @sequenceBlock.endingAcademicLevel) "level"}}
   </td>
   <td class="text-center" colspan="2" data-test-order-in-sequence>
     {{#if @isInOrderedSequence}}
