@@ -108,7 +108,7 @@
     "stylelint-config-recommended-scss": "^4.3.0",
     "stylelint-scss": "^3.21.0",
     "validator": "^13.7.0",
-    "webpack": "^5.66.0",
+    "webpack": "^5.67.0",
     "zxcvbn": "^4.4.2"
   },
   "engines": {
