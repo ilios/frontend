@@ -1,38 +1,4 @@
 .instructor-selection-manager {
-
-  .instructor-group {
-    button {
-      @include ilios-button-reset;
-      background-color: $header-grey;
-      border-radius: 4px;
-      font-weight: bold;
-      padding: .2em .4em .2em .6em;
-      vertical-align: middle;
-
-      .fa-users {
-        margin-right: .5rem;
-      }
-      .remove {
-        margin-left: .5em;
-      }
-    }
-    margin: 10px 0;
-  }
-
-  .instructorgroup-members-list {
-    @include ilios-tag-list;
-    margin-bottom: 1rem;
-  }
-
-  .instructors-list {
-    @include ilios-removable-list;
-    margin-bottom: 1rem;
-
-    button {
-      @include ilios-button-reset;
-    }
-  }
-
   .search-box input[type='search'] {
     min-width: 50%;
   }

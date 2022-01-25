@@ -108,12 +108,12 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('instructor manager does not show by default', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
-    assert.notOk(component.instructorManager.isPresent);
+    assert.notOk(component.instructorSelectionManager.isPresent);
   });
 
   test('instructor manager shows up when requested', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @showInstructors={{true}} />`);
-    assert.ok(component.instructorManager.isPresent);
+    assert.ok(component.instructorSelectionManager.isPresent);
   });
 
   test('before course startDate default initial startDate falls on course start date', async function (assert) {
@@ -383,14 +383,12 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('learner manager is not present in small-group mode', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @smallGroupMode={{true}} />`);
-    assert.notOk(component.learnerManager.selectedLearners.isPresent);
-    assert.notOk(component.learnerManager.availableLearners.isPresent);
+    assert.notOk(component.learnerManager.learnerSelectionManager.isPresent);
   });
 
   test('learner manager is present in single-offering mode', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @smallGroupMode={{false}} />`);
-    assert.ok(component.learnerManager.selectedLearners.isPresent);
-    assert.ok(component.learnerManager.availableLearners.isPresent);
+    assert.ok(component.learnerManager.learnerSelectionManager.isPresent);
   });
 
   test('learnerGroup validation errors do not show up initially', async function (assert) {
@@ -519,15 +517,18 @@ module('Integration | Component | offering form', function (hooks) {
     await render(hbs`<OfferingForm @cohorts={{this.cohorts}} @close={{(noop)}} />`);
 
     assert.strictEqual(
-      component.learnerManager.availableLearnerGroups.cohorts[0].trees[0].title,
+      component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
+        .title,
       'Learner Group 1'
     );
     assert.strictEqual(
-      component.learnerManager.availableLearnerGroups.cohorts[0].trees[1].title,
+      component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
+        .title,
       'Learner Group 2'
     );
     assert.strictEqual(
-      component.learnerManager.availableLearnerGroups.cohorts[0].trees[2].title,
+      component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[2]
+        .title,
       'Learner Group 10'
     );
   });

@@ -15,5 +15,25 @@
 
   .detail-learners-and-learner-groups-content {
     @include detail-container-content;
+    @include ilios-form;
+    grid-template-columns: 1fr;
+
+    .display-selected-learner-groups,
+    .display-selected-learners,
+    .learnergroup-selection-manager,
+    .learner-selection-manager {
+      grid-column: 1 / -1;
+    }
+
+    .selected-learner-groups,
+    .selected-learners,
+    .available-learner-groups,
+    .available-learners {
+      margin-bottom: .5rem;
+      label {
+        display: inline-block;
+        margin-bottom: .5rem;
+      }
+    }
   }
 }

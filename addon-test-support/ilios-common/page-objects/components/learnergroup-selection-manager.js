@@ -1,21 +1,14 @@
 import { collection, create, text } from 'ember-cli-page-object';
-import detailLearnergroupsList from './detail-learnergroups-list';
+import selectedLearnerGroups from './selected-learner-groups';
 import learnergroupTree from './learnergroup-tree';
 import search from './search-box';
 
 const definition = {
   scope: '[data-test-learnergroup-selection-manager]',
-  selectedGroups: {
-    scope: '[data-test-selected-learner-groups]',
-    title: text('[data-test-title]', { at: 0 }),
-    list: detailLearnergroupsList,
-    noGroups: {
-      scope: '[data-test-no-selected-learnergroups]',
-    },
-  },
+  selectedLearnerGroups,
   availableGroups: {
     scope: '[data-test-available-learner-groups]',
-    title: text('[data-test-title]', { at: 0 }),
+    heading: text('[data-test-heading]'),
     search,
     cohorts: collection('[data-test-cohorts]', {
       title: text('[data-test-title]', { at: 0 }),

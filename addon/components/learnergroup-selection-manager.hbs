@@ -1,27 +1,12 @@
 <div class="learnergroup-selection-manager" data-test-learnergroup-selection-manager>
-  <div class="selected-learner-groups" data-test-selected-learner-groups>
-    <h4 data-test-title>
-      {{t "general.selectedLearnerGroups"}}
-    </h4>
-    {{#if @learnerGroups.length}}
-      <DetailLearnergroupsList
-        @learnerGroups={{@learnerGroups}}
-        @isManaging={{true}}
-        @remove={{@remove}}
-      />
-    {{else}}
-      <p data-test-no-selected-learnergroups>
-        {{t "general.none"}}
-      </p>
-    {{/if}}
-  </div>
+  <SelectedLearnerGroups @learnerGroups={{@learnerGroups}} @isManaging={{true}} @remove={{@remove}}/>
   <div class="available-learner-groups" data-test-available-learner-groups>
-    <h4 data-test-title>
-      {{t "general.availableLearnerGroups"}}
-      {{#unless (and (is-fulfilled this.allLearnerGroups) (is-fulfilled @cohorts))}}
+    <label data-test-heading>
+      {{t "general.availableLearnerGroups"}}:
+      {{#unless (is-fulfilled @cohorts)}}
         <LoadingSpinner />
       {{/unless}}
-    </h4>
+    </label>
     <SearchBox
       @search={{fn (mut this.filter)}}
       placeholder={{t "general.filterPlaceholder"}}

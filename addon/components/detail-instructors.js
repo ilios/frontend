@@ -47,15 +47,16 @@ export default class DetailInstructorsComponent extends Component {
 
   get instructorCount() {
     if (!this.args.ilmSession) {
-      return null;
+      return 0;
     }
-    return this.args.ilmSession.hasMany('instructors').ids().length;
+    return this.args.ilmSession.instructors.length;
   }
+
   get instructorGroupCount() {
     if (!this.args.ilmSession) {
-      return null;
+      return 0;
     }
-    return this.args.ilmSession.hasMany('instructorGroups').ids().length;
+    return this.args.ilmSession.instructorGroups.length;
   }
   @action
   cancel() {

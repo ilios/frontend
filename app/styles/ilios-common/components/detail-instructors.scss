@@ -15,5 +15,24 @@
 
   .detail-instructors-content {
     @include detail-container-content;
+    @include ilios-form;
+    grid-template-columns: 1fr;
+
+    .display-selected-instructor-groups,
+    .display-selected-instructors,
+    .instructor-selection-manager {
+      grid-column: 1 / -1;
+    }
+
+    .available-instructors,
+    .selected-instructor-groups,
+    .selected-instructors {
+      margin-bottom: .5rem;
+
+      label {
+        display: inline-block;
+        margin-bottom: .5rem;
+      }
+    }
   }
 }

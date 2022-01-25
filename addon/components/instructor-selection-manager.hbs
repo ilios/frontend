@@ -1,60 +1,25 @@
 <section class="instructor-selection-manager" data-test-instructor-selection-manager>
-  {{#if (get (await @instructors) "length")}}
-    <h4>
-      {{t "general.instructors"}}
-      ({{get (await @instructors) "length"}})
-    </h4>
-    <ul class="instructors-list" data-test-instructors>
-      {{#each (sort-by "fullName" (await @instructors)) as |user|}}
-        <li>
-          <button
-            type="button"
-            {{on "click" (fn @removeInstructor user)}}
-          >
-            <UserNameInfo @user={{user}} />
-            <FaIcon @icon="times" class="remove" />
-          </button>
-        </li>
-      {{/each}}
-    </ul>
-  {{/if}}
-
-  {{#if (get (await @instructorGroups) "length")}}
-    <h4>
-      {{t "general.instructorGroups"}}
-      ({{get (await @instructorGroups) "length"}})
-    </h4>
-    <div data-test-instructor-groups>
-      {{#each (sort-by "title" (await @instructorGroups)) as |instructorGroup|}}
-        <div class="instructor-group" data-test-instructor-group>
-          <button
-            type="button"
-            {{on "click" (fn @removeInstructorGroup instructorGroup)}}
-            data-test-instructor-group-title
-          >
-            <FaIcon @icon="users" />
-            {{instructorGroup.title}}
-            <FaIcon @icon="times" class="remove" />
-          </button>
-          <br>
-          <ul class="instructorgroup-members-list" data-test-instructor-group-members>
-            {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
-              <li>
-                <UserNameInfo @user={{user}} />
-              </li>
-            {{/each}}
-          </ul>
-        </div>
-      {{/each}}
-    </div>
-  {{/if}}
-
-  <UserSearch
-    @addUser={{@addInstructor}}
-    @addInstructorGroup={{@addInstructorGroup}}
-    @currentlyActiveUsers={{@instructors}}
-    @placeholder={{t "general.findInstructorOrGroup"}}
-    @availableInstructorGroups={{await @availableInstructorGroups}}
-    @currentlyActiveInstructorGroups={{@instructorGroups}}
+  <SelectedInstructors
+    @instructors={{@instructors}}
+    @isManaging={{true}}
+    @showDefaultNotLoaded={{@showDefaultNotLoaded}}
+    @remove={{@removeInstructor}}
   />
+  <SelectedInstructorGroups
+    @instructorGroups={{@instructorGroups}}
+    @isManaging={{true}}
+    @showDefaultNotLoaded={{@showDefaultNotLoaded}}
+    @remove={{@removeInstructorGroup}}
+  />
+  <div class="available-instructors" data-test-available-instructors>
+    <label>{{t "general.availableInstructorsAndInstructorGroups"}}:</label>
+    <UserSearch
+      @addUser={{@addInstructor}}
+      @addInstructorGroup={{@addInstructorGroup}}
+      @currentlyActiveUsers={{@instructors}}
+      @placeholder={{t "general.findInstructorOrGroup"}}
+      @availableInstructorGroups={{@availableInstructorGroups}}
+      @currentlyActiveInstructorGroups={{@instructorGroups}}
+    />
+  </div>
 </section>

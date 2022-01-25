@@ -1,23 +1,4 @@
 .learnergroup-selection-manager {
-  .available-learner-groups {
-    display: grid;
-
-    @include for-laptop-and-up {
-      grid-gap: 10px;
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @include for-desktop-and-up {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .search-box {
-    grid-column: 1 / 2;
-  }
-
-  .cohorts-container {
-    grid-column: 1 / 2;
-  }
 
   .cohort-learner-groups {
     border: 1px solid $ilios-blue;

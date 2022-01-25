@@ -1,0 +1,41 @@
+<div class="selected-instructor-groups" data-test-selected-instructor-groups ...attributes>
+  <label class="heading" data-test-heading>
+    {{t "general.selectedInstructorGroups"}}:
+    {{#if @showDefaultNotLoaded}}
+      <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+    {{/if}}
+  </label>
+  <div data-test-selected-instructor-groups>
+    {{#each (sort-by "title" @instructorGroups) as |instructorGroup|}}
+      <div class="instructor-group" data-test-selected-instructor-group>
+        <ul class="instructor-group-title" data-test-instructor-group-title>
+          <li>
+            {{#if @isManaging}}
+              <button
+                type="button"
+                {{on "click" (fn @remove instructorGroup)}}
+                data-test-remove
+              >
+                <FaIcon @icon="users" />
+                {{instructorGroup.title}}
+                <FaIcon @icon="times" class="remove" />
+              </button>
+            {{else}}
+                <FaIcon @icon="users" />
+                {{instructorGroup.title}}
+            {{/if}}
+          </li>
+        </ul>
+        <ul class="instructorgroup-members-list" data-test-selected-instructor-group-members>
+          {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
+            <li data-test-selected-instructor-group-member>
+              <UserNameInfo @user={{user}} />
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{else}}
+      <div data-test-no-selected-instructor-groups>{{t "general.none"}}</div>
+    {{/each}}
+  </div>
+</div>

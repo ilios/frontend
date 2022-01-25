@@ -25,400 +25,246 @@
       <div class="form">
         <fieldset class="scheduling">
           <legend>{{t "general.scheduling"}}</legend>
-          <div class="scheduling-controls">
-            <div class="start-date">
-              <label>
-                {{t "general.startDate"}}:
-              </label>
-              <DatePicker
-                @value={{this.startDate}}
-                @onChange={{this.updateStartDate}}
-              />
-            </div>
-            <div class="start-time">
-              <label>
-                {{t "general.startTime"}}:
-              </label>
-              <TimePicker @date={{this.startDate}} @action={{this.updateStartTime}} />
-            </div>
-            <div class="offering-duration">
-              <label>
-                {{t "general.duration"}}:
-              </label>
-              <div class="duration-inputs">
-                <div class="hours">
-                  <div class="hours-container">
-                    <input
-                      id="hours-{{templateId}}"
-                      min="0"
-                      type="number"
-                      value={{this.durationHours}}
-                      disabled={{this.saveOffering.isRunning}}
-                      {{on "input" (perform this.updateDurationHours value="target.value")}}
-                      {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
-                    >
-                    <ValidationError @errors={{get-errors-for this.durationHours}} />
-                    <label for="hours-{{templateId}}">
-                      {{t "general.hours"}}
-                    </label>
-                  </div>
-                </div>
-                <div class="minutes">
-                  <div class="minutes-container">
-                    <input
-                      id="minutes-{{templateId}}"
-                      max="59"
-                      min="0"
-                      type="number"
-                      value={{this.durationMinutes}}
-                      disabled={{this.saveOffering.isRunning}}
-                      {{on "input" (perform this.updateDurationMinutes value="target.value")}}
-                      {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
-                    >
-                    <ValidationError @errors={{get-errors-for this.durationMinutes}} />
-                    <label for="minutes-{{templateId}}">
-                      {{t "general.minutes"}}
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="end-date-time">
-              <label>
-                {{t "general.end"}}:
-              </label>
-              {{#if this.endDate}}
-                <div class="text">
-                  {{format-date this.endDate month="numeric" day="numeric" year="numeric" hour="numeric" minute="numeric"}}
-                </div>
-              {{/if}}
-            </div>
-            <div class="timezone" data-test-timezone-picker>
-              <label for="timezone-{{templateId}}">
-                {{t "general.timezone"}}:
-              </label>
-              {{#if this.isEditingTimezone}}
-                <div class="picker">
-                  <select
-                    id="timezone-{{templateId}}"
-                    {{on "change" this.changeTimezone}}
-                  >
-                    {{#each this.timezones as |timezone|}}
-                      <option value={{timezone.value}} selected={{is-equal timezone.value this.currentTimezone}}>
-                        {{timezone.label}}
-                      </option>
-                    {{/each}}
-                  </select>
-                  <span class="actions">
-                    <button
-                      class="cancel"
-                      title={{t "general.cancel"}}
-                      type="button"
-                      {{on "click" (set this.isEditingTimezone false)}}
-                    >
-                      <FaIcon @icon="times" />
-                    </button>
-                  </span>
-                </div>
-              {{else}}
-                <div
-                  data-test-current-timezone
-                  class="current-timezone"
-                >
-                  <button
-                    class="link-button"
-                    type="button"
-                    {{on "click" (set this.isEditingTimezone true)}}
-                  >
-                    {{this.formattedCurrentTimezone}}
-                  </button>
-                </div>
-              {{/if}}
-            </div>
-
-            {{#if @showMakeRecurring}}
-              <div class="make-recurring">
-                <label>
-                  {{t "general.makeRecurring"}}:
-                </label>
-                <div>
-                  <ToggleYesno
-                    @yes={{this.makeRecurring}}
-                    @toggle={{set this.makeRecurring (not this.makeRecurring)}}
-                  />
-                  {{#if this.makeRecurring}}
-                    <div class="make-recurring-options">
-                      <div class="make-recurring-days">
-                        {{#each this.recurringDayOptions as |obj i|}}
-                          <div data-test-make-recurring-day>
-                            <input id="make-recurring-day-input-{{i}}-{{templateId}}"
-                              type="checkbox"
-                              checked={{or
-                                (includes obj.day this.recurringDays)
-                                (eq (moment-format this.startDate "d") obj.day)
-                              }}
-                              disabled={{eq (moment-format this.startDate "d") obj.day}}
-                              data-test-recurring-day-input={{i}}
-                              {{on "click" (fn this.toggleRecurringDay obj.day)}}
-                            >
-                            <label
-                              class="day-of-week clickable"
-                              for="make-recurring-day-input-{{i}}-{{templateId}}"
-                              data-test-recurring-day-label={{i}}
-                            >
-                              {{t obj.t}}
-                            </label>
-                          </div>
-                        {{/each}}
-                      </div>
-                      <div class="make-recurring-input-container">
-                        <input type="text"
-                          id="make-recurring-weeks-{{templateId}}"
-                          value={{this.numberOfWeeks}}
-                          class="make-recurring-input"
-                          {{on "input" this.changeNumberOfWeeks}}
-                          {{on "keyup" (fn this.addErrorDisplayFor "numberOfWeeks")}}
-                        >
-                        <label
-                          class="make-recurring-input-label"
-                          for="make-recurring-weeks-{{templateId}}"
-                        >
-                          {{t "general.weeks"}}
-                        </label>
-                        <ValidationError @errors={{get-errors-for this.numberOfWeeks}} />
-                      </div>
-                    </div>
-                  {{/if}}
-                </div>
-              </div>
-            {{/if}}
-            {{#if @showRoom}}
-              <div class="room">
-                <label for="location-{{templateId}}">
-                  {{t "general.location"}}:
-                  {{#unless @offering}}
-                    <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
-                  {{/unless}}
-                </label>
-                <input
-                  id="location-{{templateId}}"
-                  type="text"
-                  value={{this.room}}
-                  disabled={{this.saveOffering.isRunning}}
-                  {{on "input" this.changeRoom}}
-                  {{on "keyup" (fn this.addErrorDisplayFor "room")}}
-                  {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
-                >
-                <ValidationError @errors={{get-errors-for this.room}} />
-              </div>
-              <div class="url" data-test-url>
-                <label for="url-{{templateId}}">
-                  {{t "general.virtualLearningLink"}}:
-                  {{#unless @offering}}
-                    <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
-                  {{/unless}}
-                </label>
-                {{! template-lint-disable no-bare-strings}}
-                <input
-                    id="url-{{templateId}}"
-                    type="text"
-                    placeholder="https://example.com"
-                    value={{this.bestUrl}}
-                    inputmode="url"
+          <div class="start-date">
+            <label>
+              {{t "general.startDate"}}:
+            </label>
+            <DatePicker
+              @value={{this.startDate}}
+              @onChange={{this.updateStartDate}}
+            />
+          </div>
+          <div class="start-time">
+            <label>
+              {{t "general.startTime"}}:
+            </label>
+            <TimePicker @date={{this.startDate}} @action={{this.updateStartTime}} />
+          </div>
+          <div class="offering-duration">
+            <label>
+              {{t "general.duration"}}:
+            </label>
+            <div class="duration-inputs">
+              <div class="hours">
+                <div class="hours-container">
+                  <input
+                    id="hours-{{templateId}}"
+                    min="0"
+                    type="number"
+                    value={{this.durationHours}}
                     disabled={{this.saveOffering.isRunning}}
-                    {{on "input" (pick "target.value" this.changeURL)}}
-                    {{on "keyup" (fn this.addErrorDisplayFor "url")}}
-                    {{on "focus" this.selectAllText}}
+                    {{on "input" (perform this.updateDurationHours value="target.value")}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
-                >
-                <ValidationError @errors={{get-errors-for this.url}} />
+                  >
+                  <ValidationError @errors={{get-errors-for this.durationHours}} />
+                  <label for="hours-{{templateId}}">
+                    {{t "general.hours"}}
+                  </label>
+                </div>
+              </div>
+              <div class="minutes">
+                <div class="minutes-container">
+                  <input
+                    id="minutes-{{templateId}}"
+                    max="59"
+                    min="0"
+                    type="number"
+                    value={{this.durationMinutes}}
+                    disabled={{this.saveOffering.isRunning}}
+                    {{on "input" (perform this.updateDurationMinutes value="target.value")}}
+                    {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
+                  >
+                  <ValidationError @errors={{get-errors-for this.durationMinutes}} />
+                  <label for="minutes-{{templateId}}">
+                    {{t "general.minutes"}}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="end-date-time">
+            <label>
+              {{t "general.end"}}:
+            </label>
+            {{#if this.endDate}}
+              <div class="text">
+                {{format-date this.endDate month="numeric" day="numeric" year="numeric" hour="numeric" minute="numeric"}}
               </div>
             {{/if}}
           </div>
-        </fieldset>
-        {{#if @showInstructors}}
-          <fieldset class="instructor-management">
-            <legend>{{t "general.instructorsAndInstructorGroups"}}</legend>
-            <div class="instructor-management-controls" data-test-instructor-management>
-              <div class="instructors" data-test-selected-instructors>
-                <label>
-                  {{t "general.selectedInstructors"}}:
-                  {{#unless @offering}}
-                    <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
-                  {{/unless}}
-                </label>
-                {{#if (get (await this.instructors) "length")}}
-                  <ul class="instructors-list" data-test-selected-instructors-list>
-                    {{#each (sort-by "fullName" (await this.instructors)) as |user|}}
-                      <li data-test-selected-instructor>
-                        <button
-                          type="button"
-                          {{on "click" (fn this.removeInstructor user)}}
-                        >
-                          <UserNameInfo @user={{user}} />
-                          <FaIcon @icon="times" class="remove" />
-                        </button>
-                      </li>
-                    {{/each}}
-                  </ul>
-                {{else}}
-                  <div>{{t "general.none"}}</div>
-                {{/if}}
-              </div>
-              <div class="instructor-groups" data-test-selected-instructor-groups>
-                <label>
-                  {{t "general.selectedInstructorGroups"}}:
-                  {{#unless @offering}}
-                    <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
-                  {{/unless}}
-                </label>
-                <div data-test-selected-instructor-groups>
-                  {{#each (sort-by "title" (await this.instructorGroups)) as |instructorGroup|}}
-                    <div class="instructor-group" data-test-selected-instructor-group>
-                      <button
-                        type="button"
-                        data-test-instructor-group-title
-                        {{on "click" (fn this.removeInstructorGroup instructorGroup)}}
-                      >
-                        <FaIcon @icon="users" />
-                        {{instructorGroup.title}}
-                        <FaIcon @icon="times" class="remove" />
-                      </button>
-                      <br>
-                      <ul class="instructorgroup-members-list" data-test-selected-instructor-group-members>
-                        {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
-                          <li data-test-selected-instructor-group-member>
-                            <UserNameInfo @user={{user}} />
-                          </li>
-                        {{/each}}
-                      </ul>
-                    </div>
-                  {{else}}
-                    <div>{{t "general.none"}}</div>
+          <div class="timezone" data-test-timezone-picker>
+            <label for="timezone-{{templateId}}">
+              {{t "general.timezone"}}:
+            </label>
+            {{#if this.isEditingTimezone}}
+              <div class="picker">
+                <select
+                  id="timezone-{{templateId}}"
+                  {{on "change" this.changeTimezone}}
+                >
+                  {{#each this.timezones as |timezone|}}
+                    <option value={{timezone.value}} selected={{is-equal timezone.value this.currentTimezone}}>
+                      {{timezone.label}}
+                    </option>
                   {{/each}}
-                </div>
-              </div>
-              <div class="available-instructors" data-test-available-instructors>
-                <label>{{t "general.availableInstructorsAndInstructorGroups"}}:</label>
-                <UserSearch
-                  @addUser={{this.addInstructor}}
-                  @addInstructorGroup={{this.addInstructorGroup}}
-                  @currentlyActiveUsers={{this.instructors}}
-                  @placeholder={{t "general.findInstructorOrGroup"}}
-                  @availableInstructorGroups={{await this.availableInstructorGroups}}
-                  @currentlyActiveInstructorGroups={{this.instructorGroups}}
-                />
-              </div>
-            </div>
-          </fieldset>
-        {{/if}}
-        <fieldset class="learner-management" >
-          <legend>{{t "general.learnersAndLearnerGroups"}}</legend>
-          <div class="learner-management-controls" data-test-learner-management>
-            <div class="selected-learner-groups" data-test-selected-learner-groups>
-              <label>
-                {{t "general.selectedLearnerGroups"}}:
-              </label>
-              {{#if this.learnerGroups.length}}
-                <DetailLearnergroupsList
-                  @learnerGroups={{this.learnerGroups}}
-                  @isManaging={{true}}
-                  @remove={{this.removeLearnerGroup}}
-                />
-              {{else}}
-                <div data-test-no-selected-learner-groups>
-                  {{t "general.none"}}
-                </div>
-              {{/if}}
-            </div>
-            {{#if @cohorts.length}}
-              <div class="available-learner-groups" data-test-available-learner-groups>
-                <label>
-                  {{t "general.availableLearnerGroups"}}:
-                  {{#unless (and (is-fulfilled this.allLearnerGroups) (is-fulfilled @cohorts))}}
-                    <LoadingSpinner />
-                  {{/unless}}
-                </label>
-                <SearchBox
-                  @search={{fn (mut this.learnerGroupsFilter)}}
-                  placeholder={{t "general.filterPlaceholder"}}
-                />
-                <div class="cohorts-container">
-                  {{#each (sort-by "title" (await @cohorts)) as |cohort|}}
-                    <div class="cohort-learner-groups" data-test-cohorts>
-                      {{#if
-                        (and
-                          (is-fulfilled cohort.programYear)
-                          (is-fulfilled cohort.programYear.program)
-                          (is-fulfilled cohort.rootLevelLearnerGroups)
-                        )
-                      }}
-                        <h5 class="cohort-title" data-test-title>
-                          {{cohort.programYear.program.title}}
-                          {{cohort.title}}
-                        </h5>
-                        <ul class="tree-groups-list" data-test-tree-groups-list>
-                          {{#each
-                            (sort-by
-                              this.sortLearnergroupsByTitle (await cohort.rootLevelLearnerGroups)
-                            ) as |learnerGroup|
-                          }}
-                            <LearnergroupTree
-                              @learnerGroup={{learnerGroup}}
-                              @selectedGroups={{this.learnerGroups}}
-                              @filter={{this.learnerGroupsFilter}}
-                              @add={{this.addLearnerGroup}}
-                            />
-                          {{/each}}
-                        </ul>
-                      {{else}}
-                        <LoadingSpinner />
-                      {{/if}}
-                    </div>
-                  {{/each}}
-                </div>
+                </select>
+                <span class="actions">
+                  <button
+                    class="cancel"
+                    title={{t "general.cancel"}}
+                    type="button"
+                    {{on "click" (set this.isEditingTimezone false)}}
+                  >
+                    <FaIcon @icon="times" />
+                  </button>
+                </span>
               </div>
             {{else}}
-              <div data-test-no-available-learner-groups>
-                {{t "general.noAvailableLearnerGroups"}}
+              <div
+                data-test-current-timezone
+                class="current-timezone"
+              >
+                <button
+                  class="link-button"
+                  type="button"
+                  {{on "click" (set this.isEditingTimezone true)}}
+                >
+                  {{this.formattedCurrentTimezone}}
+                </button>
               </div>
             {{/if}}
-            <ValidationError @errors={{get-errors-for this.learnerGroups}} />
-            {{#unless @smallGroupMode}}
-              <div class="selected-learners" data-test-selected-learners>
-                <label>
-                  {{t "general.selectedLearners"}}:
-                </label>
-                {{#if this.learners.length}}
-                  <ul class="learners-list" data-test-selected-learners-list>
-                    {{#each (sort-by "fullName" (await this.learners)) as |user|}}
-                      <li>
-                        <button
-                          type="button"
-                          {{on "click" (fn this.removeLearner user)}}
-                        >
-                          <UserNameInfo @user={{user}} />
-                          <FaIcon @icon="times" class="remove" />
-                        </button>
-                      </li>
-                    {{/each}}
-                  </ul>
-                {{else}}
-                  <div data-test-no-selected-learners>
-                    {{t "general.none"}}
+          </div>
+
+          {{#if @showMakeRecurring}}
+            <div class="make-recurring">
+              <label>
+                {{t "general.makeRecurring"}}:
+              </label>
+              <div>
+                <ToggleYesno
+                  @yes={{this.makeRecurring}}
+                  @toggle={{set this.makeRecurring (not this.makeRecurring)}}
+                />
+                {{#if this.makeRecurring}}
+                  <div class="make-recurring-options">
+                    <div class="make-recurring-days">
+                      {{#each this.recurringDayOptions as |obj i|}}
+                        <div data-test-make-recurring-day>
+                          <input id="make-recurring-day-input-{{i}}-{{templateId}}"
+                            type="checkbox"
+                            checked={{or
+                              (includes obj.day this.recurringDays)
+                              (eq (moment-format this.startDate "d") obj.day)
+                            }}
+                            disabled={{eq (moment-format this.startDate "d") obj.day}}
+                            data-test-recurring-day-input={{i}}
+                            {{on "click" (fn this.toggleRecurringDay obj.day)}}
+                          >
+                          <label
+                            class="day-of-week clickable"
+                            for="make-recurring-day-input-{{i}}-{{templateId}}"
+                            data-test-recurring-day-label={{i}}
+                          >
+                            {{t obj.t}}
+                          </label>
+                        </div>
+                      {{/each}}
+                    </div>
+                    <div class="make-recurring-input-container">
+                      <input type="text"
+                        id="make-recurring-weeks-{{templateId}}"
+                        value={{this.numberOfWeeks}}
+                        class="make-recurring-input"
+                        {{on "input" this.changeNumberOfWeeks}}
+                        {{on "keyup" (fn this.addErrorDisplayFor "numberOfWeeks")}}
+                      >
+                      <label
+                        class="make-recurring-input-label"
+                        for="make-recurring-weeks-{{templateId}}"
+                      >
+                        {{t "general.weeks"}}
+                      </label>
+                      <ValidationError @errors={{get-errors-for this.numberOfWeeks}} />
+                    </div>
                   </div>
                 {{/if}}
               </div>
-              <div class="available-learners" data-test-available-learners>
-                <label>{{t "general.availableLearners"}}:</label>
-                <UserSearch
-                    @addUser={{this.addLearner}}
-                    @currentlyActiveUsers={{this.learners}}
-                    @placeholder={{t "general.findLearners"}}
-                />
-              </div>
-            {{/unless}}
-          </div>
+            </div>
+          {{/if}}
+          {{#if @showRoom}}
+            <div class="room">
+              <label for="location-{{templateId}}">
+                {{t "general.location"}}:
+                {{#unless @offering}}
+                  <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+                {{/unless}}
+              </label>
+              <input
+                id="location-{{templateId}}"
+                type="text"
+                value={{this.room}}
+                disabled={{this.saveOffering.isRunning}}
+                {{on "input" this.changeRoom}}
+                {{on "keyup" (fn this.addErrorDisplayFor "room")}}
+                {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
+              >
+              <ValidationError @errors={{get-errors-for this.room}} />
+            </div>
+            <div class="url" data-test-url>
+              <label for="url-{{templateId}}">
+                {{t "general.virtualLearningLink"}}:
+                {{#unless @offering}}
+                  <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+                {{/unless}}
+              </label>
+              {{! template-lint-disable no-bare-strings}}
+              <input
+                  id="url-{{templateId}}"
+                  type="text"
+                  placeholder="https://example.com"
+                  value={{this.bestUrl}}
+                  inputmode="url"
+                  disabled={{this.saveOffering.isRunning}}
+                  {{on "input" (pick "target.value" this.changeURL)}}
+                  {{on "keyup" (fn this.addErrorDisplayFor "url")}}
+                  {{on "focus" this.selectAllText}}
+                  {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
+              >
+              <ValidationError @errors={{get-errors-for this.url}} />
+            </div>
+          {{/if}}
+        </fieldset>
+        {{#if @showInstructors}}
+          <fieldset class="instructor-management" data-test-instructor-management>
+            <legend>{{t "general.instructorsAndInstructorGroups"}}</legend>
+            <InstructorSelectionManager
+              @addInstructor={{this.addInstructor}}
+              @addInstructorGroup={{this.addInstructorGroup}}
+              @removeInstructor={{this.removeInstructor}}
+              @removeInstructorGroup={{this.removeInstructorGroup}}
+              @availableInstructorGroups={{this.availableInstructorGroups}}
+              @instructorGroups={{this.instructorGroups}}
+              @instructors={{this.instructors}}
+              @showDefaultNotLoaded={{not this.hasOffering}}
+            />
+          </fieldset>
+        {{/if}}
+        <fieldset class="learner-management" data-test-learner-management>
+          <legend>{{t "general.learnersAndLearnerGroups"}}</legend>
+          <LearnergroupSelectionManager
+            @learnerGroups={{this.learnerGroups}}
+            @cohorts={{@cohorts}}
+            @add={{this.addLearnerGroup}}
+            @remove={{this.removeLearnerGroup}}
+          />
+          <ValidationError @errors={{get-errors-for this.learnerGroups}} />
+          {{#unless @smallGroupMode}}
+            <LearnerSelectionManager
+              @learners={{this.learners}}
+              @remove={{this.removeLearner}}
+              @add={{this.addLearner}}
+            />
+          {{/unless}}
         </fieldset>
         <div class="buttons">
           <SaveButton

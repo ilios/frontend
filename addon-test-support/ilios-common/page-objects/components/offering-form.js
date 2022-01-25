@@ -10,13 +10,12 @@ import {
   triggerable,
   value,
 } from 'ember-cli-page-object';
-import userNameInfo from './user-name-info';
-import detailLearnergroupsList from './detail-learnergroups-list';
-import learnergroupTree from './learnergroup-tree';
+import learnerSelectionManager from './learner-selection-manager';
+import learnergroupSelectionManager from './learnergroup-selection-manager';
+import instructorSelectionManager from './instructor-selection-manager';
 import yesNoToggle from './toggle-yesno';
 import datePicker from './date-picker';
 import timePicker from './time-picker';
-import search from './user-search';
 
 const definition = {
   scope: '[data-test-offering-form]',
@@ -98,46 +97,11 @@ const definition = {
       },
     }),
   },
-  instructorManager: {
-    scope: '[data-test-instructor-management]',
-    selectedInstructors: collection('[data-test-selected-instructor]', {
-      userNameInfo,
-      remove: clickable('button'),
-    }),
-    selectedInstructorGroups: collection('[data-test-selected-instructor-group]', {
-      title: text('[data-test-instructor-group-title]'),
-      members: collection('[data-test-instructor-group-member]', {
-        userNameInfo,
-      }),
-      remove: clickable('[data-test-instructor-group-title]'),
-    }),
-    search,
-  },
+  instructorSelectionManager,
   learnerManager: {
     scope: '[data-test-learner-management]',
-    selectedLearners: {
-      scope: '[data-test-selected-learners]',
-    },
-    availableLearners: {
-      scope: '[data-test-available-learners]',
-    },
-    selectedLearnerGroups: {
-      scope: '[data-test-selected-learner-groups]',
-      title: text('[data-test-title]', { at: 0 }),
-      list: detailLearnergroupsList,
-      noGroups: {
-        scope: '[data-test-no-selected-learner-groups]',
-      },
-    },
-    availableLearnerGroups: {
-      scope: '[data-test-available-learner-groups]',
-      title: text('[data-test-title]', { at: 0 }),
-      search,
-      cohorts: collection('[data-test-cohorts]', {
-        title: text('[data-test-title]', { at: 0 }),
-        trees: collection('[data-test-learnergroup-tree-root=true]', learnergroupTree),
-      }),
-    },
+    learnerSelectionManager,
+    learnergroupSelectionManager,
     hasError: isPresent('.validation-error-message'),
   },
 

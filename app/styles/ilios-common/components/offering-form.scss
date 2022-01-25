@@ -13,14 +13,12 @@
       grid-template-columns: 2fr 1fr 1fr;
 
       .instructor-management,
-      .instructor-management-controls,
       .learner-management,
-      .learner-management-controls,
       .scheduling {
         grid-column: 1 / -1;
       }
 
-      .scheduling-controls {
+      .scheduling {
         grid-template-columns: repeat(4, 1fr);
       }
 
@@ -37,17 +35,12 @@
       }
     }
 
-    .instructor-management-controls,
-    .learner-management-controls,
-    .scheduling-controls  {
-      align-items: start;
-      display: grid;
-      grid-gap: .25rem 1rem;
-    }
-
     .instructor-management,
     .learner-management,
     .scheduling {
+      align-items: start;
+      display: grid;
+      grid-gap: .25rem 1rem;
       margin-bottom: 1rem;
       legend {
         @include ilios-heading;
@@ -163,101 +156,11 @@
       margin-top: .5rem;
     }
 
-    .instructor-management-controls {
-      .instructor-group {
-
-        margin-bottom: 1rem;
-
-        & > button {
-          @include ilios-button-reset;
-          background-color: $header-grey;
-          border-radius: 4px;
-          font-weight: bold;
-          padding: .2em .4em .2em .6em;
-          vertical-align: middle;
-
-          .fa-users {
-            margin-right: .5rem;
-          }
-          .remove {
-            margin-left: .5em;
-          }
-        }
-      }
-
-      .instructorgroup-members-list {
-        @include ilios-tag-list;
-
-        margin-top: .25rem;
-
-        li {
-          margin-top: .25rem;
-        }
-      }
-
-      .instructors-list {
-        @include ilios-removable-list;
-
-        li {
-          margin-top: .25rem;
-          button {
-            @include ilios-button-reset;
-          }
-        }
-      }
-    }
-
-    .learner-management {
-      .learners-list {
-        @include ilios-removable-list;
-
-        li {
-          margin-top: .25rem;
-          button {
-            @include ilios-button-reset;
-          }
-        }
-      }
-    }
-
-    .available-learner-groups {
-
-      .search-box {
-        margin-bottom: .5rem;
-      }
-
-      .cohort-learner-groups {
-        border: 1px solid $ilios-blue;
-
-        h5 {
-          margin-bottom: .5rem;
-          padding: .5rem;
-        }
-
-        .tree-groups-list > li > span {
-          font-weight: bold;
-        }
-
-        & > ul {
-          @include ilios-list-tree;
-          background-color: $white;
-          height: 15rem;
-          margin-bottom: 1rem;
-          overflow-y: scroll;
-          padding: .5rem 0;
-
-          ul {
-            padding: 0;
-          }
-        }
-      }
-    }
-
     .available-instructors,
     .available-learners,
     .available-learner-groups,
-    .instructor-groups,
-    .instructors,
+    .selected-instructors,
+    .selected-instructor-groups,
     .selected-learner-groups,
     .selected-learners {
       margin-bottom: .5rem;

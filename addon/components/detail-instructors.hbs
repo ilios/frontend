@@ -3,7 +3,7 @@
   data-test-detail-instructors
 >
   <div class="detail-instructors-header">
-    <div class="title">
+    <div class="title" data-test-title>
       {{#if this.isManaging}}
         <span class="detail-specific-title">
           {{t "general.instructorsManageTitle"}}
@@ -15,14 +15,14 @@
     </div>
     <div class="actions">
       {{#if this.isManaging}}
-        <button class="bigadd" type="button" {{on "click" (perform this.save)}}>
+        <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
           <FaIcon @icon="check" />
         </button>
-        <button class="bigcancel" type="button" {{on "click" this.cancel}}>
+        <button class="bigcancel" type="button" {{on "click" this.cancel}} data-test-cancel>
           <FaIcon @icon="undo" />
         </button>
       {{else if @editable}}
-        <button type="button" {{on "click" (perform this.manage)}}>
+        <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
           {{t "general.instructorsManageTitle"}}
         </button>
       {{/if}}
@@ -38,12 +38,25 @@
         @availableInstructorGroups={{this.availableInstructorGroups}}
         @instructorGroups={{this.instructorGroupBuffer}}
         @instructors={{this.instructorBuffer}}
+        @showDefaultNotLoaded={{false}}
       />
     {{else}}
-      <DetailInstructorsList
-        @instructorGroups={{await @ilmSession.instructorGroups}}
-        @instructors={{await @ilmSession.instructors}}
-      />
+      {{#if this.instructorCount}}
+        <SelectedInstructors
+          @instructors={{@ilmSession.instructors}}
+          @isManaging={{false}}
+          @showDefaultNotLoaded={{false}}
+          class="display-selected-instructors"
+        />
+      {{/if}}
+      {{#if this.instructorGroupCount}}
+        <SelectedInstructorGroups
+          @instructorGroups={{@ilmSession.instructorGroups}}
+          @isManaging={{false}}
+          @showDefaultNotLoaded={{false}}
+          class="display-selected-instructor-groups"
+        />
+      {{/if}}
     {{/if}}
   </div>
 </section>
