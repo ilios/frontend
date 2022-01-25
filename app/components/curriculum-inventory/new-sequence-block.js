@@ -21,7 +21,9 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @service store;
 
   @tracked startingAcademicLevel;
-  @tracked endingAcademicLevel;
+  @tracked
+  @Custom('validateEndingLevelCallback', 'validateEndingLevelMessageCallback')
+  endingAcademicLevel;
   @tracked academicLevels;
   @tracked childSequenceOrder;
   @tracked childSequenceOrderOptions;
@@ -176,6 +178,19 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     });
   }
 
+  @action
+  validateEndingLevelCallback() {
+    return this.endingAcademicLevel.level >= this.startingAcademicLevel.level;
+  }
+
+  @action
+  validateEndingLevelMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.intl.t('general.startingLevel'),
+      description: this.intl.t('general.endingLevel'),
+    });
+  }
+
   @restartableTask
   *load() {
     this.orderInSequence = 0;
@@ -222,7 +237,15 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
 
   @dropTask
   *save() {
-    this.addErrorDisplaysFor(['title', 'duration', 'startDate', 'endDate', 'minimum', 'maximum']);
+    this.addErrorDisplaysFor([
+      'title',
+      'duration',
+      'startDate',
+      'endDate',
+      'minimum',
+      'maximum',
+      'endingAcademicLevel',
+    ]);
     const isValid = yield this.isValid();
     if (!isValid) {
       return false;
