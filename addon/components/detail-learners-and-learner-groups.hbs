@@ -43,10 +43,10 @@
       />
     {{else}}
       {{#if this.learnerGroupCount}}
-        <SelectedLearnerGroups @learnerGroups={{await @ilmSession.learnerGroups}} @isManaging={{false}} class="display-selected-learner-groups" />
+        <SelectedLearnerGroups @learnerGroups={{@ilmSession.learnerGroups}} @isManaging={{false}} class="display-selected-learner-groups" />
       {{/if}}
       {{#if this.learnerCount}}
-        <SelectedLearners @learners={{await @ilmSession.learners}} @isManaging={{false}} class="display-selected-learners" />
+        <SelectedLearners @learners={{@ilmSession.learners}} @isManaging={{false}} class="display-selected-learners" />
       {{/if}}
     {{/if}}
   </div>

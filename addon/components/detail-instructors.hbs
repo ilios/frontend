@@ -43,7 +43,7 @@
     {{else}}
       {{#if this.instructorCount}}
         <SelectedInstructors
-          @instructors={{await @ilmSession.instructors}}
+          @instructors={{@ilmSession.instructors}}
           @isManaging={{false}}
           @showDefaultNotLoaded={{false}}
           class="display-selected-instructors"
@@ -51,7 +51,7 @@
       {{/if}}
       {{#if this.instructorGroupCount}}
         <SelectedInstructorGroups
-          @instructorGroups={{await @ilmSession.instructorGroups}}
+          @instructorGroups={{@ilmSession.instructorGroups}}
           @isManaging={{false}}
           @showDefaultNotLoaded={{false}}
           class="display-selected-instructor-groups"
