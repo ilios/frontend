@@ -20,8 +20,12 @@ import {
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {
   @service intl;
   @service store;
-  @tracked startingAcademicLevel;
-  @tracked endingAcademicLevel;
+  @tracked
+  @Custom('validateStartingEndingLevelCallback', 'validateStartingEndingLevelMessageCallback')
+  startingAcademicLevel;
+  @tracked
+  @Custom('validateStartingEndingLevelCallback', 'validateStartingEndingLevelMessageCallback')
+  endingAcademicLevel;
   @tracked academicLevels;
   @tracked childSequenceOrder;
   @tracked course;
@@ -249,6 +253,11 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   @dropTask
   *changeStartingAcademicLevel() {
+    this.addErrorDisplaysFor(['startingAcademicLevel']);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
     this.args.sequenceBlock.set('startingAcademicLevel', this.startingAcademicLevel);
     yield this.args.sequenceBlock.save();
   }
@@ -266,6 +275,11 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   @dropTask
   *changeEndingAcademicLevel() {
+    this.addErrorDisplaysFor(['endingAcademicLevel']);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
     this.args.sequenceBlock.set('endingAcademicLevel', this.endingAcademicLevel);
     yield this.args.sequenceBlock.save();
   }
@@ -370,6 +384,27 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     return this.intl.t('errors.greaterThanOrEqualTo', {
       gte: this.intl.t('general.minimum'),
       description: this.intl.t('general.maximum'),
+    });
+  }
+
+  @action
+  validateStartingEndingLevelCallback() {
+    return this.endingAcademicLevel.level >= this.startingAcademicLevel.level;
+  }
+
+  @action
+  validateEndingLevelMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.intl.t('general.startingLevel'),
+      description: this.intl.t('general.endingLevel'),
+    });
+  }
+
+  @action
+  validateStartingEndingLevelMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.intl.t('general.startingLevel'),
+      description: this.intl.t('general.endingLevel'),
     });
   }
 
