@@ -140,7 +140,8 @@
     "webpack": "^5.64.2"
   },
   "engines": {
-    "node": "12.* || 14.* || >= 16"
+    "node": ">= 16",
+    "npm": ">= 8"
   },
   "ember": {
     "edition": "octane"
@@ -161,6 +162,9 @@
     "translations/",
     "vendor/"
   ],
+  "overrides": {
+    "@embroider/macros": "^1.0.0"
+  },
   "pre-commit": [
     "lint"
   ]
