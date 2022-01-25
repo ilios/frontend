@@ -162,6 +162,9 @@
     "translations/",
     "vendor/"
   ],
+  "overrides": {
+    "@embroider/macros": "^1.0.0"
+  },
   "pre-commit": [
     "lint"
   ]
