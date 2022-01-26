@@ -350,7 +350,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   validateMaximumMessageCallback() {
     return this.intl.t('errors.greaterThanOrEqualTo', {
       gte: this.intl.t('general.minimum'),
-      description: this.intl.t('general.term'),
+      description: this.intl.t('general.maximum'),
     });
   }
 
