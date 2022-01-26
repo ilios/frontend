@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $white: #fff;
 $black: #000;
 $grey: #eee;
@@ -12,7 +14,7 @@ $background-grey: #fbfbfb;
 $toggle-background-grey: #eceeef;
 $light-grey: #fefefe;
 $dark-grey: #aaa;
-$darker-grey: darken($dark-grey, 20);
+$darker-grey: color.adjust($dark-grey, $lightness: -20%);
 $header-grey: #edecec;
 $moderate-grey: #939393;
 $super-light-grey: #f6f6f6;
@@ -28,7 +30,7 @@ $ilios-red: #d9360b;
 $ilios-green: #21634c;
 $ilios-blue: #0071ad;
 $scheduled-brown: #8c4600;
-$dark-blue: darken($ilios-blue, 10);
+$dark-blue: color.adjust($ilios-blue, $lightness: -10%);
 
 $ilios-remove-color: #aa443e;
 $remove-background-color: #f1dedd;

@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .choose-material-type {
   margin: 0 .5rem;
   position: relative;
@@ -14,7 +16,7 @@
 
   .menu {
     background-color: $base-background-color;
-    box-shadow: 0 2px 2px transparentize($black, .8);
+    box-shadow: 0 2px 2px color.adjust($black, $alpha: .8);
     display: flex;
     flex-direction: column;
     list-style-type: none;

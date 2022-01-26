@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .dashboard-calendar {
   padding: .5em;
 
@@ -114,23 +116,23 @@
       }
 
       .tag-session-type {
-        background-color: lighten($ilios-blue, 30%);
+        background-color: color.adjust($ilios-blue, $lightness: 30%);
       }
 
       .tag-course-level {
-        background-color: lighten($ilios-blue, 40%);
+        background-color: color.adjust($ilios-blue, $lightness: 40%);
       }
 
       .tag-cohort {
-        background-color: lighten($ilios-blue, 50%);
+        background-color: color.adjust($ilios-blue, $lightness: 50%);
       }
 
       .tag-course {
-        background-color: lighten($ilios-blue, 60%);
+        background-color: color.adjust($ilios-blue, $lightness: 60%);
       }
 
       .tag-term {
-        background-color: lighten($ilios-blue, 40%);
+        background-color: color.adjust($ilios-blue, $lightness: 40%);
       }
 
       .filters-clear-filters {

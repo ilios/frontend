@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .sessions-grid-offering-table {
   @include ilios-table-structure;
   @include ilios-table-colors;
@@ -49,10 +51,10 @@
   .sessions-grid-offering {
     transition: background-color .5s ease-out;
     &.even {
-      background-color: darken($active-background-color, 10);
+      background-color: color.adjust($active-background-color, $lightness: -10%);
     }
     &.was-updated {
-      background-color: lighten($ilios-green, 30%);
+      background-color: color.adjust($ilios-green, $lightness: 30%);
     }
     .room {
       overflow-wrap: anywhere;
