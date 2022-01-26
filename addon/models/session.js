@@ -145,7 +145,7 @@ export default class SessionModel extends Model {
    * The maximum duration in hours (incl. fractions) of any session offerings.
    */
   get maxSingleOfferingDuration() {
-    if (!this.hasMany('offerings').ids().length) {
+    if (!this.hasMany('offerings').ids().length || !this._offerings) {
       return 0;
     }
     const sortedOfferings = this._offerings.toArray().sort(function (a, b) {
