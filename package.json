@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@ember/render-modifiers": "^2.0.0",
+    "@embroider/util": "^1.0.0",
     "@formatjs/intl-locale": "^2.4.7",
     "@formatjs/intl-pluralrules": "^4.0.0",
     "@formatjs/intl-relativetimeformat": "^9.1.2",
@@ -96,7 +97,6 @@
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.4.2",
     "@embroider/test-setup": "^1.0.0",
-    "@embroider/util": "^1.0.0",
     "@ilios/ember-template-lint-plugin": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
