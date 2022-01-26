@@ -138,7 +138,7 @@
     "qunit-dom": "^1.6.0",
     "sass": "^1.13.4",
     "stylelint": "^14.3.0",
-    "stylelint-config-recommended-scss": "^4.0.0",
+    "stylelint-config-recommended-scss": "^5.0.0",
     "stylelint-scss": "^3.5.1",
     "webpack": "^5.64.2"
   },
