@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @mixin ilios-list-reset() {
   list-style-type: none;
   margin: 0;
@@ -94,7 +96,7 @@
     }
 
     &.disabled {
-      color: lighten($base-font-color, 40);
+      color: color.adjust($base-font-color, $lightness: 40%);
       cursor: arrow;
     }
   }
