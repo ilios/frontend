@@ -112,7 +112,8 @@
     "zxcvbn": "^4.4.2"
   },
   "engines": {
-    "node": "12.* || 14.* || >= 16"
+    "node": ">= 16",
+    "npm": ">= 8"
   },
   "ember": {
     "edition": "octane"
@@ -122,6 +123,9 @@
       "lib/ilios-error",
       "lib/ilios-loading"
     ]
+  },
+  "overrides": {
+    "@embroider/macros": "^1.0.0"
   },
   "pre-commit": [
     "lint"
