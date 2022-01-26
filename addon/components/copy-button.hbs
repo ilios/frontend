@@ -2,7 +2,7 @@
   type="button"
   class="copy-btn"
   ...attributes
-  {{on "click" this.copy}}
+  {{on "click" (perform this.copy)}}
 >
   {{yield}}
 </button>
