@@ -20,7 +20,7 @@ module('Unit | Model | term', function (hooks) {
     assert.expect(2);
     const model = this.store.createRecord('term');
     assert.notOk(model.get('hasChildren'));
-    const child = this.store.createRecord('term', { id: 1 });
+    const child = this.store.createRecord('term', { id: 1, parent: model });
     model.get('children').pushObject(child);
     assert.ok(model.get('hasChildren'));
   });
@@ -128,7 +128,7 @@ module('Unit | Model | term', function (hooks) {
     assert.expect(2);
     const model = this.store.createRecord('term');
     assert.strictEqual(model.get('childCount'), 0);
-    const child = this.store.createRecord('term', { id: 1 });
+    const child = this.store.createRecord('term', { id: 1, parent: model });
     model.get('children').pushObject(child);
     assert.ok(model.get('childCount'), 1);
   });

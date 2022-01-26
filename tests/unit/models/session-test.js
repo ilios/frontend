@@ -246,8 +246,8 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     assert.strictEqual(subject.termCount, 0);
-    const term1 = store.createRecord('term');
-    const term2 = store.createRecord('term');
+    const term1 = store.createRecord('term', { id: 1, sessions: [subject] });
+    const term2 = store.createRecord('term', { id: 2, sessions: [subject] });
     subject.get('terms').pushObjects([term1, term2]);
     assert.strictEqual(subject.termCount, 2);
   });
@@ -314,10 +314,12 @@ module('Unit | Model | Session', function (hooks) {
     const allDayOffering = store.createRecord('offering', {
       startDate: moment('2017-01-01'),
       endDate: moment('2017-01-02'),
+      session: subject,
     });
     const halfAnHourOffering = store.createRecord('offering', {
       startDate: moment('2017-01-01 09:30:00'),
       endDate: moment('2017-01-01 10:00:00'),
+      session: subject,
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
     max = await waitForResource(subject, 'maxSingleOfferingDuration');

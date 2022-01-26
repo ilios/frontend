@@ -75,12 +75,12 @@ module('Unit | Model | InstructorGroup', function (hooks) {
   test('usersCount', async function (assert) {
     assert.expect(2);
     const store = this.owner.lookup('service:store');
-    const instructorGroup = store.createRecord('instructor-group');
-    assert.strictEqual(instructorGroup.get('usersCount'), 0);
-    const user1 = store.createRecord('user');
-    const user2 = store.createRecord('user');
+    const instructorGroup = store.createRecord('instructor-group', { id: 1 });
+    assert.strictEqual(instructorGroup.usersCount, 0);
+    const user1 = store.createRecord('user', { id: 1, instructorGroups: [instructorGroup] });
+    const user2 = store.createRecord('user', { id: 2, instructorGroups: [instructorGroup] });
 
     instructorGroup.get('users').pushObjects([user1, user2]);
-    assert.strictEqual(instructorGroup.get('usersCount'), 2);
+    assert.strictEqual(await waitForResource(instructorGroup, 'usersCount'), 2);
   });
 });
