@@ -14,9 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: 12
+          node-version: 16
+          cache: 'npm'
       - run: npm ci
       - run: npm run test:ember
         env:
@@ -28,10 +29,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js 12
-      uses: actions/setup-node@v1
+    - name: Use Node.js 16
+      uses: actions/setup-node@v2
       with:
-        node-version: 12
+        node-version: 16
+        cache: 'npm'
     - name: install dependencies
       run: npm ci
     - name: Ember CLI Deploy
