@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .learnergroup-bulk-assignment {
   border-bottom: 1px solid $ilios-orange;
   margin-bottom: 2rem;
@@ -44,11 +46,11 @@
       }
 
       &.matched {
-        background-color: lighten($ilios-green, 15%);
+        background-color: color.adjust($ilios-green, $lightness: 15%);
       }
 
       &.not-matched {
-        background-color: lighten($ilios-yellow, 15%);
+        background-color: color.adjust($ilios-yellow, $lightness: 15%);
       }
     }
   }

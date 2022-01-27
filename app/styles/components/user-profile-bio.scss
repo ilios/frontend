@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .user-profile-bio {
   .actions {
     @include detail-container-actions;
@@ -24,7 +26,7 @@
       }
 
       &.synced-from-directory input {
-        background-color: lighten($ilios-green, 40%);
+        background-color: color.adjust($ilios-green, $lightness: 40%);
         transition: background-color 500ms ease;
       }
     }

@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @mixin admin-blocks () {
   display: grid;
   grid-gap: .5rem;
@@ -43,7 +45,7 @@
   }
 
   .has-saved {
-    background-color: lighten($ilios-green, 30%);
+    background-color: color.adjust($ilios-green, $lightness: 30%);
     transition: background-color .5s ease-out;
   }
 
