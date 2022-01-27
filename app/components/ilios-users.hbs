@@ -8,6 +8,7 @@
   <div class="filters" data-test-filters>
     <div class="filter user-search">
       <input
+        autocomplete="name"
         type="search"
         value={{@query}}
         {{on "input" (pick "target.value" @setQuery)}}
