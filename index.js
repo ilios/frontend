@@ -67,7 +67,7 @@ module.exports = {
       trees.push(mirageTree);
     } else {
       //add a noop export for production builds
-      const noopTree = WriteFile('setup.js', 'export default function(){};');
+      const noopTree = WriteFile('routes.js', 'export default function(){};');
       const mirageTree = new Funnel(noopTree, { destDir: 'mirage' });
       trees.push(mirageTree);
     }
