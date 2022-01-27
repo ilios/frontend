@@ -166,7 +166,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   validateMaximumMessageCallback() {
     return this.intl.t('errors.greaterThanOrEqualTo', {
       gte: this.intl.t('general.minimum'),
-      description: this.intl.t('general.term'),
+      description: this.intl.t('general.maximum'),
     });
   }
 

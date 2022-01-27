@@ -975,6 +975,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.minMaxEditor.maximum.set('50');
     await component.minMaxEditor.save();
     assert.strictEqual(component.minMaxEditor.maximum.errors.length, 1);
+    assert.strictEqual(
+      component.minMaxEditor.maximum.errors[0].text,
+      'Maximum must be greater than or equal to Minimum'
+    );
   });
 
   test('save fails when minimum is less than zero', async function (assert) {
