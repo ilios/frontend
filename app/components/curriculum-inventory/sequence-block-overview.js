@@ -21,10 +21,10 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @service intl;
   @service store;
   @tracked
-  @Custom('validateStartingEndingLevelCallback', 'validateStartingEndingLevelMessageCallback')
+  @Custom('validateStartingEndingLevelCallback', 'validateStartingLevelMessageCallback')
   startingAcademicLevel;
   @tracked
-  @Custom('validateStartingEndingLevelCallback', 'validateStartingEndingLevelMessageCallback')
+  @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
   endingAcademicLevel;
   @tracked academicLevels;
   @tracked childSequenceOrder;
@@ -401,10 +401,10 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   @action
-  validateStartingEndingLevelMessageCallback() {
-    return this.intl.t('errors.greaterThanOrEqualTo', {
-      gte: this.intl.t('general.startLevel'),
-      description: this.intl.t('general.endLevel'),
+  validateStartingLevelMessageCallback() {
+    return this.intl.t('errors.lessThanOrEqualTo', {
+      lte: this.intl.t('general.endLevel'),
+      description: this.intl.t('general.startLevel'),
     });
   }
 
