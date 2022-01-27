@@ -300,7 +300,7 @@
             </span>
           </div>
           <div class="block starting-academic-level" data-test-starting-academic-level>
-            <label for="academic-level-{{templateId}}">{{t "general.startingLevel"}}:</label>
+            <label for="academic-level-{{templateId}}">{{t "general.startLevel"}}:</label>
             {{#if @canUpdate}}
               <EditableField
                 @value={{this.startingAcademicLevel.name}}
@@ -326,7 +326,7 @@
             {{/if}}
           </div>
           <div class="block ending-academic-level" data-test-ending-academic-level>
-            <label for="academic-level-{{templateId}}">{{t "general.endingLevel"}}:</label>
+            <label for="academic-level-{{templateId}}">{{t "general.endLevel"}}:</label>
             {{#if @canUpdate}}
               <EditableField
                 @value={{this.endingAcademicLevel.name}}

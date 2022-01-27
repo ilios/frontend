@@ -117,7 +117,7 @@ general:
   educationalYear: "Año Escolar"
   email: Correo
   enabled: Activa
-  endingLevel: "nivel final"
+  endLevel: "nivel final"
   errorDisplayMessage: "Lo sentimos! Algo salió mal con su pedido. Por favor, trate de actualizar la página o revise de nuevo más tarde."
   error: Error
   errors: Errores
@@ -377,7 +377,7 @@ general:
   singleDay: "Un Solo Día"
   singleGroup: "Solo grupo"
   skipToMainContent: Saltar al contenido principal
-  startingLevel: "nivel inicial"
+  startLevel: "nivel de inicio"
   startOver: "Empezar de Nuevo"
   stateOrProvince: "Estado o Provincia"
   statusCode: "Código de estado"
