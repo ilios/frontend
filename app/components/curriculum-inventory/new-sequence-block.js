@@ -3,7 +3,6 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import { ValidateIf } from 'class-validator';
 import {
   validatable,
   AfterDate,
@@ -30,11 +29,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @tracked course;
   @tracked description;
   @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration = 0;
-  @tracked
-  @ValidateIf((o) => o.hasZeroDuration || o.startDate)
-  @NotBlank()
-  @AfterDate('startDate', { granularity: 'day' })
-  endDate;
+  @tracked @NotBlank() @AfterDate('startDate', { granularity: 'day' }) endDate;
   @tracked orderInSequence = 0;
   @tracked linkableCourses = [];
   @tracked
@@ -47,7 +42,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @tracked orderInSequenceOptions = [];
   @tracked required;
   @tracked requiredOptions;
-  @tracked @ValidateIf((o) => o.hasZeroDuration) @NotBlank() startDate;
+  @tracked @NotBlank() startDate;
   @tracked @NotBlank() @Length(1, 200) title;
   @tracked track = false;
 
@@ -63,14 +58,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       { id: '2', title: this.intl.t('general.optionalElective') },
       { id: '3', title: this.intl.t('general.requiredInTrack') },
     ];
-  }
-
-  get hasZeroDuration() {
-    const num = Number(this.duration);
-    if (Number.isNaN(num)) {
-      return false;
-    }
-    return 0 === num;
   }
 
   get isLoading() {
