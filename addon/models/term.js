@@ -71,7 +71,7 @@ export default class Term extends Model {
   }
 
   get childCount() {
-    return this.children.length;
+    return this.hasMany('children').ids().length;
   }
 
   get hasChildren() {

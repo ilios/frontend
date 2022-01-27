@@ -37,7 +37,7 @@ export default class SessionType extends Model {
   }
 
   get sessionCount() {
-    return this.sessions.length;
+    return this.hasMany('sessions').ids().length;
   }
 
   @use _aamcMethods = new ResolveAsyncValue(() => [this.aamcMethods]);

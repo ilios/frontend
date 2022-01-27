@@ -1,83 +1,96 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
-import { isNone, isEmpty } from '@ember/utils';
-import RSVP from 'rsvp';
 import escapeRegExp from '../utils/escape-reg-exp';
+import { map } from 'rsvp';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
+import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
+import DeprecatedResolveCP from 'ilios-common/classes/deprecated-resolve-cp';
+import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 
-const { map, all } = RSVP;
+export default class LearnerGroup extends Model {
+  @attr('string')
+  title;
 
-export default Model.extend({
-  title: attr('string'),
-  location: attr('string'),
-  url: attr('string'),
-  needsAccommodation: attr('boolean'),
-  cohort: belongsTo('cohort', { async: true }),
-  parent: belongsTo('learner-group', { async: true, inverse: 'children' }),
-  children: hasMany('learner-group', { async: true, inverse: 'parent' }),
-  ilmSessions: hasMany('ilm-session', { async: true }),
-  offerings: hasMany('offering', { async: true }),
-  instructorGroups: hasMany('instructor-group', { async: true }),
-  users: hasMany('user', { async: true, inverse: 'learnerGroups' }),
-  instructors: hasMany('user', {
+  @attr('string')
+  location;
+
+  @attr('string')
+  url;
+
+  @attr('boolean')
+  needsAccommodation;
+
+  @belongsTo('cohort', { async: true })
+  cohort;
+
+  @belongsTo('learner-group', { async: true, inverse: 'children' })
+  parent;
+
+  @hasMany('learner-group', { async: true, inverse: 'parent' })
+  children;
+
+  @hasMany('ilm-session', { async: true })
+  ilmSessions;
+
+  @hasMany('offering', { async: true })
+  offerings;
+
+  @hasMany('instructor-group', { async: true })
+  instructorGroups;
+
+  @hasMany('user', { async: true, inverse: 'learnerGroups' })
+  users;
+
+  @hasMany('user', {
     async: true,
     inverse: 'instructedLearnerGroups',
-  }),
-  ancestor: belongsTo('learner-group', {
+  })
+  instructors;
+
+  @belongsTo('learner-group', {
     inverse: 'descendants',
     async: true,
-  }),
-  descendants: hasMany('learner-group', {
+  })
+  ancestor;
+
+  @hasMany('learner-group', {
     inverse: 'ancestor',
     async: true,
-  }),
+  })
+  descendants;
+
+  @use _offerings = new ResolveAsyncValue(() => [this.offerings]);
+  @use _ilmSessions = new ResolveAsyncValue(() => [this.ilmSessions]);
+
+  @use _offeringSessions = new ResolveFlatMapBy(() => [this.offerings, 'session']);
+  @use _ilmSessionSessions = new ResolveFlatMapBy(() => [this.ilmSessions, 'session']);
 
   /**
    * A list of all sessions associated with this learner group, via offerings or via ILMs.
-   * @property sessions
-   * @type {Ember.computed}
-   * @public
    */
-  sessions: computed('ilmSessions.[]', 'offerings.[]', async function () {
-    const offerings = await this.offerings;
-    const ilms = await this.ilmSessions;
-    const arr = [].concat(offerings.toArray(), ilms.toArray());
+  get sessions() {
+    if (!this._offeringSessions || !this._ilmSessionSessions) {
+      return [];
+    }
+    return [...this._offeringSessions, ...this._ilmSessionSessions].filter(Boolean).uniq();
+  }
 
-    const sessions = await all(arr.mapBy('session'));
-
-    return sessions
-      .filter((session) => {
-        return !isEmpty(session);
-      })
-      .uniq();
-  }),
+  @use _sessionCourses = new ResolveFlatMapBy(() => [this.sessions, 'course']);
 
   /**
    * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
-   * @property courses
-   * @type {Ember.computed}
-   * @public
    */
-  courses: computed('offerings.[]', 'ilmSessions.[]', async function () {
-    const offerings = await this.offerings;
-    const ilms = await this.ilmSessions;
-    const arr = [].concat(offerings.toArray(), ilms.toArray());
+  get courses() {
+    return this._sessionCourses?.uniq() ?? [];
+  }
 
-    const sessions = await map(arr.mapBy('session'), (session) => {
-      return session;
-    });
-
-    const filteredSessions = sessions
-      .filter((session) => {
-        return !isEmpty(session);
-      })
-      .uniq();
-
-    const courses = await map(filteredSessions.mapBy('course'), (course) => {
-      return course;
-    });
-
-    return courses.uniq();
-  }),
+  @use subgroupNumberingOffset = new DeprecatedAsyncCP(() => [
+    this.getSubgroupNumberingOffset.bind(this),
+    'learnerGroup.subgroupNumberingOffset',
+    this.children,
+    this.title,
+  ]);
 
   /**
    * Get the offset for numbering generated subgroups.
@@ -87,304 +100,232 @@ export default Model.extend({
    * subgroup number is 4, so the offset for generating new subgroups is 5.
    * If no subgroups exist, or none of the subgroup names match the <code>(Parent) (Number)</code> pattern, then the
    * offset will default to 1.
-   *
-   * @property subgroupNumberingOffset
-   * @type {Ember.computed}
-   * @public
    */
-  subgroupNumberingOffset: computed('children.[]', 'title', async function () {
+  async getSubgroupNumberingOffset() {
     const regex = new RegExp('^' + escapeRegExp(this.title) + ' ([0-9]+)$');
     const groups = await this.children;
     let offset = groups.reduce((previousValue, item) => {
       let rhett = previousValue;
       const matches = regex.exec(item.get('title'));
-      if (!isEmpty(matches)) {
+      if (matches) {
         rhett = Math.max(rhett, parseInt(matches[1], 10));
       }
       return rhett;
     }, 0);
     return ++offset;
-  }),
-
-  /**
-   * A list of all users in this group and any of its sub-groups.
-   * @property allDescendantUsers
-   * @type {Ember.computed}
-   * @public
-   */
-  allDescendantUsers: computed('users.[]', 'allDescendants.@each.users', async function () {
-    const users = await this.users;
-    const allDescendants = await this.allDescendants;
-    const usersInSubgroups = await all(allDescendants.mapBy('users'));
-    const allUsers = usersInSubgroups.reduce((array, subGroupUsers) => {
-      array.pushObjects(subGroupUsers.toArray());
-      return array;
-    }, []);
-    allUsers.pushObjects(users.toArray());
-
-    return allUsers.uniq();
-  }),
-
-  /**
-   * A list of users that are assigned to this group, excluding those that are ALSO assigned to any of this group's sub-groups.
-   * @property usersOnlyAtThisLevel
-   * @type {Ember.computed}
-   * @public
-   */
-  usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', async function () {
-    const users = await this.users;
-    const descendants = await this.allDescendants;
-    const membersAtThisLevel = await map(users.toArray(), async (user) => {
-      const userGroups = await user.get('learnerGroups');
-      const subGroups = userGroups.filter((group) => descendants.includes(group));
-      return isEmpty(subGroups) ? user : null;
-    });
-
-    return membersAtThisLevel.filter((user) => !isNone(user));
-  }),
-
-  allParentsTitle: computed('allParentTitles', async function () {
-    let title = '';
-    const allParentTitles = await this.allParentTitles;
-    allParentTitles.forEach((str) => {
-      title += str + ' > ';
-    });
-    return title;
-  }),
-
-  allParentTitles: computed('isTopLevelGroup', 'parent.allParentTitles.[]', async function () {
-    const titles = [];
-    const parent = await this.parent;
-    if (parent) {
-      const allParentTitles = await parent.get('allParentTitles');
-      if (!isEmpty(allParentTitles)) {
-        titles.pushObjects(allParentTitles);
-      }
-      titles.pushObject(parent.get('title'));
-    }
-
-    return titles;
-  }),
-
-  sortTitle: computed('title', 'allParentsTitle', async function () {
-    const allParentsTitle = await this.allParentsTitle;
-    const title = allParentsTitle + this.title;
-    return title.replace(/([\s->]+)/gi, '');
-  }),
+  }
 
   /**
    * A list of all nested sub-groups of this group.
-   * @property allDescendants
-   * @type {Ember.computed}
-   * @public
    */
-  allDescendants: computed('children.[]', 'children.@each.allDescendants', async function () {
-    const descendants = [];
-    const children = await this.children;
-    descendants.pushObjects(children.toArray());
-    const childrenDescendants = await all(children.mapBy('allDescendants'));
-    descendants.pushObjects(
-      childrenDescendants.reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, [])
-    );
-    return descendants;
-  }),
+  @use _allDescendants = new AsyncProcess(() => [
+    this.getAllDescendants.bind(this),
+    this.children.children,
+  ]);
+  get allDescendants() {
+    return this._allDescendants ?? [];
+  }
+
+  async getAllDescendants() {
+    const children = (await this.children).toArray();
+    const childDescendants = await map(children, (child) => {
+      return child.getAllDescendants();
+    });
+
+    return [...children, ...childDescendants.flat()];
+  }
+
+  @use _allDescendantUsers = new ResolveFlatMapBy(() => [this.allDescendants, 'users']);
+  @use _users = new ResolveAsyncValue(() => [this.users]);
+
+  /**
+   * A list of all users in this group and any of its sub-groups.
+   */
+  get allDescendantUsers() {
+    if (this._users && this._allDescendantUsers) {
+      return [...this._users.toArray(), ...this._allDescendantUsers].uniq();
+    }
+
+    return [];
+  }
+
+  /**
+   * A list of users that are assigned to this group, excluding those that are ALSO assigned to any of this group's sub-groups.
+   */
+  get usersOnlyAtThisLevel() {
+    if (!this._users || !this._allDescendantUsers) {
+      return [];
+    }
+
+    return this._users.filter((user) => !this._allDescendantUsers.includes(user));
+  }
+
+  @use _parent = new ResolveAsyncValue(() => [this.parent]);
+
+  get allParentTitles() {
+    if (this.isTopLevelGroup) {
+      return [];
+    }
+    if (!this._parent || !this._parent.allParentTitles) {
+      return undefined;
+    }
+
+    return [...this._parent.allParentTitles, this._parent.title];
+  }
+
+  get allParentsTitle() {
+    return this.allParentTitles?.reduce((acc, curr) => {
+      return (acc += curr + ' > ');
+    }, '');
+  }
+
+  get sortTitle() {
+    if (this.isTopLevelGroup) {
+      return this.title.replace(/\s/g, '');
+    }
+    if (!this.allParentTitles) {
+      return undefined;
+    }
+    return [...this.allParentTitles, this.title].join('').replace(/\s/g, '');
+  }
 
   /**
    * A text string comprised of all learner-group titles in this group's tree.
    * This includes that titles of all of its ancestors, all its descendants and this group's title itself.
-   * @property filterTitle
-   * @type {Ember.computed}
-   * @public
    */
-  filterTitle: computed(
-    'allDescendants.@each.title',
-    'allParents.@each.title',
-    'title',
-    async function () {
-      const allDescendants = await this.allDescendants;
-      const allParents = await this.allParents;
-      const titles = await all([
-        map(allDescendants, (learnerGroup) => learnerGroup.get('title')),
-        map(allParents, (learnerGroup) => learnerGroup.get('title')),
-      ]);
-      const flat = titles.reduce((flattened, arr) => {
-        return flattened.pushObjects(arr);
-      }, []);
-      flat.pushObject(this.title);
-      return flat.join('');
+  get filterTitle() {
+    if (!this.allParents || !this.allDescendants) {
+      return '';
     }
-  ),
 
-  allParents: computed('parent.allParents.[]', async function () {
-    const parent = await this.parent;
-    if (!parent) {
+    return [
+      ...this.allDescendants.mapBy('title'),
+      ...this.allParents.mapBy('title'),
+      this.title,
+    ].join('');
+  }
+
+  get allParents() {
+    if (this.isTopLevelGroup) {
       return [];
     }
-    const allParents = await parent.get('allParents');
+    if (!this._parent?.allParents) {
+      return undefined;
+    }
 
-    return [parent].concat(allParents);
-  }),
+    return [this._parent, ...this._parent.allParents];
+  }
 
   /**
    * The top-level group in this group's parentage tree, or this group itself if it has no parent.
-   * @property topLevelGroup
-   * @type {Ember.computed}
-   * @public
    */
-  topLevelGroup: computed('parent.topLevelGroup', async function () {
-    const parent = await this.parent;
-    if (isEmpty(parent)) {
-      return this;
-    }
-    return await parent.get('topLevelGroup');
-  }),
+  get topLevelGroup() {
+    return this.isTopLevelGroup ? this : this._parent?.topLevelGroup;
+  }
 
-  isTopLevelGroup: computed('parent', function () {
+  get isTopLevelGroup() {
     return !this.belongsTo('parent').id();
-  }),
+  }
 
-  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', async function () {
-    const allInstructors = [];
-    const instructors = await this.instructors;
-    allInstructors.pushObjects(instructors.toArray());
-    const instructorGroups = await this.instructorGroups;
-    const listsOfGroupInstructors = await all(instructorGroups.mapBy('users'));
-    listsOfGroupInstructors.forEach((groupInstructors) => {
-      allInstructors.pushObjects(groupInstructors.toArray());
-    });
-    return allInstructors.uniq();
-  }),
+  @use _instructors = new ResolveAsyncValue(() => [this.instructors]);
+  @use _instructorGroupUsers = new ResolveFlatMapBy(() => [this.instructorGroups, 'users']);
 
-  school: computed('cohort.programYear.program.school', async function () {
-    const cohort = await this.cohort;
-    const programYear = await cohort.get('programYear');
-    const program = await programYear.get('program');
-    return await program.get('school');
-  }),
+  get allInstructors() {
+    if (!this._instructors || !this._instructorGroupUsers) {
+      return [];
+    }
+
+    return [...this._instructors.toArray(), ...this._instructorGroupUsers].uniq();
+  }
+
+  @use _cohort = new ResolveAsyncValue(() => [this.cohort]);
+  @use _programYear = new ResolveAsyncValue(() => [this._cohort?.programYear]);
+  @use _program = new ResolveAsyncValue(() => [this._programYear?.program]);
+  @use school = new DeprecatedResolveCP(() => [this._program?.school, 'learnerGroup.school']);
+
+  @use _descendantUsers = new ResolveFlatMapBy(() => [this.allDescendants, 'users']);
 
   /**
    * Checks if this group or any of its subgroups has any learners.
-   * @property hasLearnersInGroupOrSubgroups
-   * @type {Ember.computed}
-   * @public
    */
-  hasLearnersInGroupOrSubgroups: computed(
-    'users.[]',
-    'children.@each.hasLearnersInGroupOrSubgroup',
-    async function () {
-      const userIds = this.hasMany('users').ids();
-      if (userIds.length) {
-        return true;
-      }
-
-      const children = await this.children;
-      if (!children.get('length')) {
-        return false;
-      }
-
-      const hasLearnersInSubgroups = await all(children.mapBy('hasLearnersInGroupOrSubgroups'));
-      return hasLearnersInSubgroups.reduce((acc, val) => {
-        return acc || val;
-      }, false);
+  get hasLearnersInGroupOrSubgroups() {
+    if (this.hasMany('users').ids().length) {
+      return true;
     }
-  ),
+
+    return this._descendantUsers?.length > 0;
+  }
 
   /**
    * Recursively checks if any of this group's subgroups and their subgroups need accommodation.
-   * @property hasSubgroupsInNeedOfAccommodation
-   * @type {Ember.computed}
-   * @public
    */
-  hasSubgroupsInNeedOfAccommodation: computed(
-    'children.@each.needsAccommodation',
-    'children.@each.hasSubgroupsInNeedOfAccommodation',
-    async function () {
-      const children = await this.children;
-      // no subgroups? no needs.
-      if (!children.get('length')) {
-        return false;
-      }
-
-      // check direct subgroups for their needs.
-      const subgroupsNeeds = children.mapBy('needsAccommodation').reduce((acc, val) => {
-        return acc || val;
-      }, false);
-
-      if (subgroupsNeeds) {
-        return true;
-      }
-
-      // if we don't know the needs yet, then recursively check subgroups of subgroups for their needs.
-      const subgroupsRecursiveNeeds = await all(
-        children.mapBy('hasSubgroupsInNeedOfAccommodation')
-      );
-      return subgroupsRecursiveNeeds.reduce((acc, val) => {
-        return acc || val;
-      }, false);
+  get hasSubgroupsInNeedOfAccommodation() {
+    // no subgroups? no needs.
+    if (!this.hasMany('children').ids().length) {
+      return false;
     }
-  ),
+
+    const subGroupsInNeedOfAccomodation = this.allDescendants?.filterBy('needsAccommodation');
+
+    return subGroupsInNeedOfAccomodation?.length > 0;
+  }
 
   /**
    * Returns the number of users in this group
-   * @property usersCount
-   * @type {Ember.computed}
-   * @public
    */
-  usersCount: computed('users.[]', function () {
-    const userIds = this.hasMany('users').ids();
-    return userIds.length;
-  }),
+  get usersCount() {
+    return this.hasMany('users').ids().length;
+  }
+
   /**
    * Returns the number of children in this group
-   * @property childrenCount
-   * @type {Ember.computed}
-   * @public
    */
-  childrenCount: computed('children.[]', function () {
-    const childrenIds = this.hasMany('children').ids();
-    return childrenIds.length;
-  }),
+  get childrenCount() {
+    return this.hasMany('children').ids().length;
+  }
 
   /**
    * Takes a user out of  a group and then traverses child groups recursively
    * to remove the user from them as well.  Will only modify groups where the
    * user currently exists.
-   * @param {Object} user The user model.
-   * @return {Array} The modified learner groups.
    */
   async removeUserFromGroupAndAllDescendants(user) {
     const modifiedGroups = [];
-    const userId = user.get('id');
-    const allDescendants = await this.allDescendants;
-    [this].concat(allDescendants.toArray()).forEach((group) => {
+    const userId = user.id;
+    const allDescendants = await this.getAllDescendants();
+    [this, ...allDescendants].forEach((group) => {
       if (group.hasMany('users').ids().includes(userId)) {
         group.get('users').removeObject(user);
         modifiedGroups.pushObject(group);
       }
     });
     return modifiedGroups.uniq();
-  },
+  }
+
+  async getAllParents() {
+    const parent = await this.parent;
+    if (!parent) {
+      return [];
+    }
+    const allParents = await parent.getAllParents();
+    return [parent, ...allParents];
+  }
 
   /**
    * Adds a user to a group and then traverses parent groups recursively
    * to add the user to them as well.  Will only modify groups where the
    * user currently does not exist.
-   * @param {Object} user The user model.
-   * @return {Array} The modified learner groups.
    */
   async addUserToGroupAndAllParents(user) {
     const modifiedGroups = [];
-    const userId = user.get('id');
-    const allParents = await this.allParents;
-    [this].concat(allParents.toArray()).forEach((group) => {
+    const userId = user.id;
+    const allParents = await this.getAllParents();
+    [this, ...allParents].forEach((group) => {
       if (!group.hasMany('users').ids().includes(userId)) {
         group.get('users').pushObject(user);
         modifiedGroups.pushObject(group);
       }
     });
     return modifiedGroups.uniq();
-  },
-});
+  }
+}

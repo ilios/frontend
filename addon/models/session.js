@@ -134,7 +134,7 @@ export default class SessionModel extends Model {
       return this._ilmSession.dueDate;
     }
 
-    if (!this._offerings?.length) {
+    if (!this.hasMany('offerings').ids().length) {
       return null;
     }
 
@@ -145,7 +145,7 @@ export default class SessionModel extends Model {
    * The maximum duration in hours (incl. fractions) of any session offerings.
    */
   get maxSingleOfferingDuration() {
-    if (!this._offerings?.length) {
+    if (!this.hasMany('offerings').ids().length || !this._offerings) {
       return 0;
     }
     const sortedOfferings = this._offerings.toArray().sort(function (a, b) {
@@ -217,7 +217,7 @@ export default class SessionModel extends Model {
   }
 
   get termCount() {
-    return this.terms.length;
+    return this.hasMany('terms').ids().length;
   }
 
   get associatedOfferingLearnerGroups() {

@@ -47,6 +47,6 @@ export default class InstructorGroupModel extends Model {
    * Returns the number of users in this group
    */
   get usersCount() {
-    return this.users.length;
+    return this.hasMany('users').ids().length;
   }
 }

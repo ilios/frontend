@@ -10,18 +10,21 @@ module('Unit | Model | Program', function (hooks) {
   });
 
   test('hasCurriculumInventoryReports', function (assert) {
-    const model = this.store.createRecord('program');
+    const model = this.store.createRecord('program', { id: 1 });
     assert.notOk(model.hasCurriculumInventoryReports);
-    const report = this.store.createRecord('curriculum-inventory-report', { id: 1 });
+    const report = this.store.createRecord('curriculum-inventory-report', {
+      id: 1,
+      program: model,
+    });
     model.curriculumInventoryReports.pushObject(report);
     assert.ok(model.hasCurriculumInventoryReports);
   });
 
   test('hasProgramYears', function (assert) {
-    const model = this.store.createRecord('program');
+    const model = this.store.createRecord('program', { id: 1 });
     assert.notOk(model.hasProgramYears);
-    const report = this.store.createRecord('program-year', { id: 1 });
-    model.programYears.pushObject(report);
+    const programYear = this.store.createRecord('program-year', { id: 1, program: model });
+    model.programYears.pushObject(programYear);
     assert.ok(model.hasProgramYears);
   });
 

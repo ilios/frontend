@@ -79,6 +79,6 @@ export default class ProgramYear extends Model {
    * The number of terms attached to this model
    */
   get termCount() {
-    return this.terms.length;
+    return this.hasMany('terms').ids().length;
   }
 }

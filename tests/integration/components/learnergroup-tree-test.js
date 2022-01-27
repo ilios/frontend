@@ -125,7 +125,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
 
   test('filter by learner group title', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
-    this.set('selectedGroups');
+    this.set('selectedGroups', []);
     this.set('filter', 'Second 2');
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @filter={{this.filter}} @add={{(noop)}} />`

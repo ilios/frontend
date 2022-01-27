@@ -25,7 +25,7 @@ export default class CourseSessionsComponent extends Component {
   @use school = new ResolveAsyncValue(() => [this.args.course.school]);
 
   get sessionsCount() {
-    return this.sessions?.length ?? 0;
+    return this.args.course.hasMany('sessions').ids().length;
   }
 
   get showExpandAll() {
