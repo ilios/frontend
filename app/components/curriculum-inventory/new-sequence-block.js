@@ -186,8 +186,8 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @action
   validateEndingLevelMessageCallback() {
     return this.intl.t('errors.greaterThanOrEqualTo', {
-      gte: this.intl.t('general.startingLevel'),
-      description: this.intl.t('general.endingLevel'),
+      gte: this.intl.t('general.startLevel'),
+      description: this.intl.t('general.endLevel'),
     });
   }
 
