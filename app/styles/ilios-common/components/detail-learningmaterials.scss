@@ -96,6 +96,10 @@
           @include ilios-list-reset;
         }
       }
+      .lm-title {
+        @include ilios-link-button;
+        text-align: left;
+      }
     }
 
     .icon-button {

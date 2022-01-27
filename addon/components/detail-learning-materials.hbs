@@ -99,13 +99,10 @@
         <tbody>
           {{#each (await this.proxyMaterials) as |lmProxy|}}
             <tr class={{if lmProxy.showRemoveConfirmation "confirm-removal"}}>
-              <td
-                class="text-left link"
-                colspan="3"
-              >
+              <td colspan="3">
                 <button
                   type="button"
-                  class="link-button"
+                  class="lm-title"
                   {{on "click" (fn (mut this.managingMaterial) lmProxy.content)}}
                 >
                   <LmTypeIcon
