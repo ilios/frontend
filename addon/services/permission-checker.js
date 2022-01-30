@@ -370,11 +370,17 @@ export default class PermissionCheckerService extends Service {
     return this.canChangeInSchool(school, 'CAN_CREATE_CURRICULUM_INVENTORY_REPORTS');
   }
   async canUpdateLearnerGroup(learnerGroup) {
-    const school = await learnerGroup.get('school');
+    const cohort = await learnerGroup.cohort;
+    const programYear = await cohort.programYear;
+    const program = await programYear.program;
+    const school = await program.school;
     return this.canChangeInSchool(school, 'CAN_UPDATE_LEARNER_GROUPS');
   }
   async canDeleteLearnerGroup(learnerGroup) {
-    const school = await learnerGroup.get('school');
+    const cohort = await learnerGroup.cohort;
+    const programYear = await cohort.programYear;
+    const program = await programYear.program;
+    const school = await program.school;
     return this.canChangeInSchool(school, 'CAN_DELETE_LEARNER_GROUPS');
   }
   async canUpdateLearnerGroupInSchool(school) {
