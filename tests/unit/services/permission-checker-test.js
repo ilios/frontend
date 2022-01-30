@@ -1,9 +1,11 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Unit | Service | permission-checker', function (hooks) {
   setupTest(hooks);
+  setupMirage(hooks);
 
   // Replace this with your real tests.
   test('it exists', function (assert) {
@@ -96,5 +98,97 @@ module('Unit | Service | permission-checker', function (hooks) {
     const service = this.owner.lookup('service:permission-checker');
     const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
     assert.ok(canChangeInSchool);
+  });
+
+  test('can update learner group', async function (assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('programYear', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    const group = this.server.create('learnerGroup', { cohort });
+    const model = await this.owner.lookup('service:store').find('learner-group', group.id);
+
+    const currentUserMock = Service.extend({
+      isRoot: false,
+      async getRolesInSchool(sch) {
+        assert.strictEqual(sch.id, school.id);
+        return ['SCHOOL_ADMINISTRATOR'];
+      },
+    });
+    this.owner.register('service:currentUser', currentUserMock);
+
+    const service = this.owner.lookup('service:permission-checker');
+    const canUpdateLearnerGroup = await service.canUpdateLearnerGroup(model);
+    assert.ok(canUpdateLearnerGroup);
+  });
+
+  test('can delete learner group', async function (assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('programYear', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    const group = this.server.create('learnerGroup', { cohort });
+    const model = await this.owner.lookup('service:store').find('learner-group', group.id);
+
+    const currentUserMock = Service.extend({
+      isRoot: false,
+      async getRolesInSchool(sch) {
+        assert.strictEqual(sch.id, school.id);
+        return ['SCHOOL_ADMINISTRATOR'];
+      },
+    });
+    this.owner.register('service:currentUser', currentUserMock);
+
+    const service = this.owner.lookup('service:permission-checker');
+    const canDeleteLearnerGroup = await service.canUpdateLearnerGroup(model);
+    assert.ok(canDeleteLearnerGroup);
+  });
+
+  test('can not update learner group', async function (assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('programYear', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    const group = this.server.create('learnerGroup', { cohort });
+    const model = await this.owner.lookup('service:store').find('learner-group', group.id);
+
+    const currentUserMock = Service.extend({
+      isRoot: false,
+      async getRolesInSchool(sch) {
+        assert.strictEqual(sch.id, school.id);
+        return [];
+      },
+    });
+    this.owner.register('service:currentUser', currentUserMock);
+
+    const service = this.owner.lookup('service:permission-checker');
+    const canUpdateLearnerGroup = await service.canUpdateLearnerGroup(model);
+    assert.notOk(canUpdateLearnerGroup);
+  });
+
+  test('can not delete learner group', async function (assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('programYear', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    const group = this.server.create('learnerGroup', { cohort });
+    const model = await this.owner.lookup('service:store').find('learner-group', group.id);
+
+    const currentUserMock = Service.extend({
+      isRoot: false,
+      async getRolesInSchool(sch) {
+        assert.strictEqual(sch.id, school.id);
+        return [];
+      },
+    });
+    this.owner.register('service:currentUser', currentUserMock);
+
+    const service = this.owner.lookup('service:permission-checker');
+    const canDeleteLearnerGroup = await service.canUpdateLearnerGroup(model);
+    assert.notOk(canDeleteLearnerGroup);
   });
 });
