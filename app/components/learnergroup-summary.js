@@ -46,9 +46,9 @@ export default class LearnergroupSummaryComponent extends Component {
       this.learnerGroupTitle = learnerGroup.title;
       const cohort = yield learnerGroup.cohort;
       this.cohortTitle = cohort.title;
-      const topLevelGroup = yield learnerGroup.topLevelGroup;
+      const topLevelGroup = yield learnerGroup.getTopLevelGroup();
       this.topLevelGroupTitle = topLevelGroup.title;
-      const allDescendants = yield topLevelGroup.allDescendants;
+      const allDescendants = yield topLevelGroup.getAllDescendants();
       this.treeGroups = [topLevelGroup, ...allDescendants];
       this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
       this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
@@ -173,10 +173,10 @@ export default class LearnergroupSummaryComponent extends Component {
   *createUsersToPassToManager() {
     let users;
     if (this.args.isEditing) {
-      const topLevelGroup = yield this.args.learnerGroup.topLevelGroup;
-      users = yield topLevelGroup.allDescendantUsers;
+      const topLevelGroup = yield this.args.learnerGroup.getTopLevelGroup();
+      users = yield topLevelGroup.getAllDescendantUsers();
     } else {
-      users = yield this.args.learnerGroup.usersOnlyAtThisLevel;
+      users = yield this.args.learnerGroup.getUsersOnlyAtThisLevel();
     }
     return yield map(users.toArray(), async (user) => {
       const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(this.treeGroups);
@@ -193,8 +193,8 @@ export default class LearnergroupSummaryComponent extends Component {
   *createUsersToPassToCohortManager() {
     const learnerGroup = this.args.learnerGroup;
     const cohort = yield learnerGroup.cohort;
-    const topLevelGroup = yield learnerGroup.topLevelGroup;
-    const currentUsers = yield topLevelGroup.allDescendantUsers;
+    const topLevelGroup = yield learnerGroup.getTopLevelGroup();
+    const currentUsers = yield topLevelGroup.getAllDescendantUsers();
     const users = yield cohort.users;
     return users.filter((user) => !currentUsers.includes(user));
   }
