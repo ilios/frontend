@@ -556,6 +556,32 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     assert.ok(users.includes(user2));
   });
 
+  test('get users only at this level', async function (assert) {
+    assert.expect(2);
+    const store = this.owner.lookup('service:store');
+    const learnerGroup = store.createRecord('learner-group');
+    const user1 = store.createRecord('user', { id: 1 });
+    const user2 = store.createRecord('user', { id: 2 });
+    const user3 = store.createRecord('user', { id: 3 });
+    const user4 = store.createRecord('user', { id: 4 });
+
+    const subgroup = store.createRecord('learner-group', {
+      id: 2,
+      parent: learnerGroup,
+      users: [user1, user3],
+    });
+    store.createRecord('learner-group', {
+      id: 3,
+      parent: subgroup,
+      users: [user4],
+    });
+    learnerGroup.get('users').pushObjects([user1, user2, user3, user4]);
+    learnerGroup.get('children').pushObject(subgroup);
+    const users = await learnerGroup.getUsersOnlyAtThisLevel();
+    assert.strictEqual(users.length, 1);
+    assert.ok(users.includes(user2));
+  });
+
   test('allParentTitles', async function (assert) {
     assert.expect(4);
     const store = this.owner.lookup('service:store');
