@@ -1,6 +1,4 @@
-import RSVP from 'rsvp';
-
-const { map } = RSVP;
+import { map } from 'rsvp';
 
 /**
  * Clones a group and all children returning all the groups in the order they were created
@@ -21,14 +19,14 @@ export default async function cloneLearnerGroup(store, group, cohort, withLearne
     newGroup.set('parent', parent);
   }
   if (withLearners) {
-    const users = await group.get('users');
+    const users = await group.users;
     await map(users.toArray(), async (user) => {
       await newGroup.addUserToGroupAndAllParents(user);
     });
   }
-  const instructors = await group.get('instructors');
+  const instructors = await group.instructors;
   newGroup.set('instructors', instructors);
-  const children = await group.get('children');
+  const children = await group.children;
   const newChildren = await map(children.toArray(), async (child) => {
     return await cloneLearnerGroup(store, child, cohort, withLearners, newGroup);
   });

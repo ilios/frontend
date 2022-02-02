@@ -50,7 +50,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
       return [];
     }
     const uploadedSubGroups = this.data.mapBy('subGroupName').uniq().filter(Boolean);
-    const groups = await this.args.learnerGroup.allDescendants;
+    const groups = await this.args.learnerGroup.getAllDescendants();
     const matchObjects = uploadedSubGroups.map((groupName) => {
       const group = groups.findBy('title', groupName);
       return {
@@ -133,8 +133,8 @@ export default class LearnerGroupUploadDataComponent extends Component {
               );
             }
 
-            const topLevelGroup = await this.args.learnerGroup.get('topLevelGroup');
-            const allUsersInGroupHierarchy = await topLevelGroup.get('allDescendantUsers');
+            const topLevelGroup = await this.args.learnerGroup.getTopLevelGroup();
+            const allUsersInGroupHierarchy = await topLevelGroup.getAllDescendantUsers();
             if (allUsersInGroupHierarchy.includes(user)) {
               errors.push(
                 this.intl.t('general.userExistsInGroupHierarchy', {
