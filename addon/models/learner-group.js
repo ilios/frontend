@@ -141,23 +141,42 @@ export default class LearnerGroup extends Model {
   /**
    * A list of all users in this group and any of its sub-groups.
    */
-  get allDescendantUsers() {
-    if (this._users && this._allDescendantUsers) {
-      return [...this._users.toArray(), ...this._allDescendantUsers].uniq();
-    }
+  @use allDescendantUsers = new AsyncProcess(() => [
+    this.getAllDescendantUsers.bind(this),
+    this._allDescendantUsers,
+    this._users,
+  ]);
 
-    return [];
+  async getAllDescendantUsers() {
+    const users = await this.users;
+    const descendantUsers = await this._getDescendantUsers();
+    return [...users.toArray(), ...descendantUsers];
+  }
+
+  async _getDescendantUsers() {
+    const allDescendants = await this.getAllDescendants();
+    const descendantsUsers = await Promise.all(allDescendants.mapBy('users'));
+    return descendantsUsers.reduce((all, groups) => {
+      all.pushObjects(groups.toArray());
+
+      return all;
+    }, []);
   }
 
   /**
    * A list of users that are assigned to this group, excluding those that are ALSO assigned to any of this group's sub-groups.
    */
-  get usersOnlyAtThisLevel() {
-    if (!this._users || !this._allDescendantUsers) {
-      return [];
-    }
+  @use usersOnlyAtThisLevel = new AsyncProcess(() => [
+    this.getUsersOnlyAtThisLevel.bind(this),
+    this.allDescendants,
+    this._users,
+  ]);
 
-    return this._users.filter((user) => !this._allDescendantUsers.includes(user));
+  async getUsersOnlyAtThisLevel() {
+    const users = (await this.users).toArray();
+    const descendantsUsers = await this._getDescendantUsers();
+
+    return users.filter((user) => !descendantsUsers.includes(user));
   }
 
   @use _parent = new ResolveAsyncValue(() => [this.parent]);
@@ -221,6 +240,15 @@ export default class LearnerGroup extends Model {
    */
   get topLevelGroup() {
     return this.isTopLevelGroup ? this : this._parent?.topLevelGroup;
+  }
+
+  async getTopLevelGroup() {
+    if (this.isTopLevelGroup) {
+      return this;
+    }
+
+    const parent = await this.parent;
+    return parent.getTopLevelGroup();
   }
 
   get isTopLevelGroup() {
@@ -320,12 +348,15 @@ export default class LearnerGroup extends Model {
     const modifiedGroups = [];
     const userId = user.id;
     const allParents = await this.getAllParents();
-    [this, ...allParents].forEach((group) => {
-      if (!group.hasMany('users').ids().includes(userId)) {
-        group.get('users').pushObject(user);
-        modifiedGroups.pushObject(group);
+    const groups = [this, ...allParents];
+    for (let i = 0; i < groups.length; i++) {
+      const users = await groups[i].users;
+      const ids = users.mapBy('id');
+      if (!ids.includes(userId)) {
+        users.pushObject(user);
+        modifiedGroups.pushObject(groups[i]);
       }
-    });
+    }
     return modifiedGroups.uniq();
   }
 }
