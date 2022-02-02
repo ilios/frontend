@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .global-search-box {
   display: inline-block;
   height: 2rem;
@@ -34,7 +36,7 @@
     background: $white;
     border: 1px solid $text-blue;
     border-radius: 0 0 3px 3px;
-    box-shadow: 0 2px 2px transparentize($black, .8);
+    box-shadow: 0 2px 2px color.adjust($black, $alpha: .8);
     color: $base-font-color;
     cursor: pointer;
     max-height: 23rem;
@@ -67,7 +69,7 @@
       }
 
       &.inactive {
-        color: darken($header-grey, 20);
+        color: color.adjust($header-grey, $lightness: -20%);
         font-style: italic;
       }
 
@@ -82,7 +84,7 @@
         width: 100%;
 
         &:hover {
-          background-color: lighten($base-link-color, 50);
+          background-color: color.adjust($base-link-color, $lightness: 50%);
         }
       }
 

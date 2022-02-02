@@ -1,6 +1,8 @@
+@use "sass:color";
+
 @mixin verification-preview-table() {
   td, th {
-    border: 1px solid darken($base-border-color, 15);
+    border: 1px solid color.adjust($base-border-color, $lightness: -15%);
   }
 
   th {

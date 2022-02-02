@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .school-competencies-list {
 
   .headers {
@@ -58,7 +60,7 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: lighten($ilios-green, 60);
+      background-color: color.adjust($ilios-green, $lightness: 60%);
     }
 
     &.is-managing {

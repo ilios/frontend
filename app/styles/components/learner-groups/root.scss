@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .learner-groups-root {
   @include main-list;
 
@@ -52,7 +54,7 @@
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd)
       {
-        background-color: lighten($ilios-blue, 60);
+        background-color: color.adjust($ilios-blue, $lightness: 60%);
         border: 2px solid $ilios-blue;
 
         &.actions-row {

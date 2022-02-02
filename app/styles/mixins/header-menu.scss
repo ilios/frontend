@@ -1,4 +1,6 @@
-$header-menu-background-color: darken($base-background-color, 3);
+@use "sass:color";
+
+$header-menu-background-color: color.adjust($base-background-color, $lightness: -3%);
 
 @mixin header-menu () {
   margin: 0 .5rem;
@@ -16,7 +18,7 @@ $header-menu-background-color: darken($base-background-color, 3);
 
   .menu {
     background-color: $header-menu-background-color;
-    box-shadow: 0 2px 2px transparentize($black, .8);
+    box-shadow: 0 2px 2px color.adjust($black, $alpha: .8);
     display: flex;
     flex-direction: column;
     list-style-type: none;
@@ -66,7 +68,7 @@ $header-menu-background-color: darken($base-background-color, 3);
 
   &[aria-checked='true'],
   &.active {
-    background-color: lighten($ilios-green, 25);
+    background-color: color.adjust($ilios-green, $lightness: 25%);
   }
 
   &:hover,
@@ -74,7 +76,7 @@ $header-menu-background-color: darken($base-background-color, 3);
     background-color: $white;
     &[aria-checked='true'],
     &.active {
-      background-color: lighten($ilios-green, 15);
+      background-color: color.adjust($ilios-green, $lightness: 15%);
     }
   }
 }
