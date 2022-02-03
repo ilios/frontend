@@ -28,6 +28,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
         this.server.create('curriculum-inventory-academic-level', {
           report,
           level: i,
+          name: `Year ${i}`,
         })
       );
     }
@@ -49,7 +50,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     const parentBlock = this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 1,
     });
-    const academicLevel = this.academicLevels[0];
+    const startingAcademicLevel = this.academicLevels[0];
+    const endingAcademicLevel = this.academicLevels[1];
     const ilmSessionType = this.server.create('session-type', { title: 'Independent Learning' });
     const ilmSession = this.server.create('ilm-session');
     this.server.create('session', {
@@ -87,7 +89,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 2,
       maximum: 15,
-      academicLevel,
+      startingAcademicLevel,
+      endingAcademicLevel,
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -117,9 +120,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       'Course: Course A Level: 4, Start Date: 2015-02-02, End Date: 2015-03-30 - Clerkship (Block)'
     );
     assert.ok(component.course.isEditable);
-    const level = await sequenceBlockModel.academicLevel;
-    assert.strictEqual(component.academicLevel.text, `Academic Level: ${level.name}`);
-    assert.ok(component.academicLevel.isEditable);
+    const startLevel = await sequenceBlockModel.startingAcademicLevel;
+    const endLevel = await sequenceBlockModel.endingAcademicLevel;
+    assert.strictEqual(component.startLevel.text, `Start Level: ${startLevel.name}`);
+    assert.strictEqual(component.endLevel.text, `End Level: ${endLevel.name}`);
+    assert.ok(component.startLevel.isEditable);
+    assert.ok(component.endLevel.isEditable);
     assert.strictEqual(component.required.text, 'Required: Required In Track');
     assert.ok(component.required.isEditable);
     assert.strictEqual(component.track.label, 'Is Track:');
@@ -168,7 +174,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 0,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -208,7 +215,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 0,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -270,7 +278,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 0,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     const newCourseModel = await this.owner.lookup('service:store').find('course', newCourse.id);
@@ -333,7 +342,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 0,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -371,7 +381,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 0,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -409,7 +420,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 0,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -446,7 +458,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 0,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -492,7 +505,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 2,
       maximum: 15,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     this.server.create('curriculum-inventory-sequence-block', {
       orderInSequence: 2,
@@ -529,18 +543,21 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.strictEqual(sequenceBlockModel.orderInSequence, newVal);
   });
 
-  test('change academic level', async function (assert) {
-    const newVal = 9;
+  test('change starting academic level', async function (assert) {
+    const newVal = 2;
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 0,
       childSequenceOrder: 1,
       orderInSequence: 0,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
       required: 2,
       track: true,
       minimum: 0,
       maximum: 0,
-      academicLevel: this.academicLevels[1],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -560,13 +577,56 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @setSortBy={{(noop)}}
     />`);
 
-    assert.strictEqual(component.academicLevel.text, 'Academic Level: Year 1');
-    await component.academicLevel.edit();
-    assert.strictEqual(component.academicLevel.options.length, 10);
-    assert.ok(component.academicLevel.options[1].isSelected);
-    await component.academicLevel.select(newVal);
-    await component.academicLevel.save();
-    assert.strictEqual(component.academicLevel.text, `Academic Level: Year ${newVal - 1}`);
+    assert.strictEqual(component.startLevel.text, 'Start Level: Year 1');
+    await component.startLevel.edit();
+    assert.strictEqual(component.startLevel.options.length, 10);
+    assert.ok(component.startLevel.options[0].isSelected);
+    await component.startLevel.select(newVal);
+    await component.startLevel.save();
+    assert.strictEqual(component.startLevel.text, `Start Level: Year 2`);
+  });
+
+  test('change ending academic level', async function (assert) {
+    const newVal = 1;
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
+      required: 2,
+      track: true,
+      minimum: 0,
+      maximum: 0,
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{(noop)}}
+    />`);
+
+    assert.strictEqual(component.endLevel.text, 'End Level: Year 10');
+    await component.endLevel.edit();
+    assert.strictEqual(component.endLevel.options.length, 10);
+    assert.ok(component.endLevel.options[9].isSelected);
+    await component.endLevel.select(newVal);
+    await component.endLevel.save();
+    assert.strictEqual(component.endLevel.text, `End Level: Year 1`);
   });
 
   test('manage sessions', async function (assert) {
@@ -610,7 +670,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 2,
       maximum: 15,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -689,7 +750,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 2,
       maximum: 15,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -719,9 +781,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       'Course: Course A Level: 4, Start Date: 2015-02-02, End Date: 2015-03-30 - Clerkship (Block)'
     );
     assert.notOk(component.course.isEditable);
-    const level = await sequenceBlockModel.academicLevel;
-    assert.strictEqual(component.academicLevel.text, `Academic Level: ${level.name}`);
-    assert.notOk(component.academicLevel.isEditable);
+    assert.strictEqual(component.startLevel.text, 'Start Level: Year 1');
+    assert.notOk(component.startLevel.isEditable);
+    assert.strictEqual(component.endLevel.text, 'End Level: Year 10');
+    assert.notOk(component.endLevel.isEditable);
     assert.strictEqual(component.required.text, 'Required: Required In Track');
     assert.notOk(component.required.isEditable);
     assert.strictEqual(component.track.text, 'Is Track: Yes');
@@ -761,6 +824,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('flagging block as elective sets minimum value to 0', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
       duration: 0,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -768,7 +833,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 10,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -800,13 +866,16 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 10,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
       childSequenceOrder: 1,
       orderInSequence: 0,
       required: 1,
       track: true,
       minimum: 10,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -825,7 +894,6 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sortBy={{this.sortBy}}
       @setSortBy={{(noop)}}
     />`);
-
     assert.strictEqual(component.required.text, 'Required: Required');
     assert.strictEqual(component.minimum.text, 'Minimum: 10');
     assert.notOk(component.isSelective.isHidden);
@@ -858,6 +926,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('edit minimum and maximum values, then save', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -865,7 +935,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 10,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -900,6 +971,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('edit minimum and maximum values, then cancel', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -907,7 +980,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 10,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -942,6 +1016,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save fails when minimum is larger than maximum', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -949,7 +1025,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 10,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -984,6 +1061,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save fails when minimum is less than zero', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -991,7 +1070,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 10,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1021,6 +1101,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save fails when minimum is empty', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1028,7 +1110,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 10,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1058,6 +1141,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save fails when maximum is empty', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1065,7 +1150,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1095,6 +1181,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('minimum field is set to 0 and disabled for electives', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1102,7 +1190,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1143,7 +1232,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1202,7 +1292,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1256,7 +1347,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1307,7 +1399,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1374,7 +1467,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1414,7 +1508,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1453,7 +1548,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1492,7 +1588,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1535,7 +1632,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 0,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1565,6 +1663,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('cancel editing on escape in minimum input', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: new Date('2016-04-23T00:00:00'),
+      endDate: new Date('2016-06-02T00:00:00'),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1572,7 +1672,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 5,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1603,6 +1704,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save on enter in minimum input', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: new Date('2016-04-23T00:00:00'),
+      endDate: new Date('2016-06-02T00:00:00'),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1610,7 +1713,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 5,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1641,6 +1745,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('cancel editing on escape in maximum input', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: new Date('2016-04-23T00:00:00'),
+      endDate: new Date('2016-06-02T00:00:00'),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1648,7 +1754,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 5,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1679,6 +1786,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save on enter in maximum input', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: new Date('2016-04-23T00:00:00'),
+      endDate: new Date('2016-06-02T00:00:00'),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1686,7 +1795,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 5,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1724,7 +1834,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 5,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1755,6 +1866,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save on enter in duration input', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
+      startDate: new Date('2016-04-23T00:00:00'),
+      endDate: new Date('2016-06-02T00:00:00'),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1762,7 +1875,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 5,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1800,7 +1914,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 5,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -1835,7 +1950,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       track: true,
       minimum: 5,
       maximum: 20,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
       course,
     });
     const reportModel = await this.owner

@@ -48,7 +48,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
       track: true,
       minimum: 2,
       maximum: 15,
-      academicLevel: academicLevels[0],
+      startingAcademicLevel: academicLevels[0],
+      endingAcademicLevel: academicLevels[1],
     });
     const reportModel = await this.owner
       .lookup('service:store')
