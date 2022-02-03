@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { all } from 'rsvp';
+import { ValidateIf } from 'class-validator';
 import {
   validatable,
   AfterDate,
@@ -48,11 +49,20 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked required;
   @tracked sessions = [];
   @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration;
-  @tracked @NotBlank() startDate;
+  @tracked @ValidateIf((o) => o.hasZeroDuration) @NotBlank() startDate;
   @tracked
+  @ValidateIf((o) => o.hasZeroDuration || o.startDate)
   @NotBlank()
   @AfterDate('startDate', { granularity: 'day' })
   endDate;
+
+  get hasZeroDuration() {
+    const num = Number(this.duration);
+    if (Number.isNaN(num)) {
+      return false;
+    }
+    return 0 === num;
+  }
 
   @restartableTask
   *load(element, [sequenceBlock]) {
