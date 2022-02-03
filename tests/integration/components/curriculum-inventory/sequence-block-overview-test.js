@@ -1616,8 +1616,62 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.duration.set('');
     await component.durationEditor.save();
     assert.strictEqual(component.durationEditor.startDate.errors.length, 1);
-    assert.strictEqual(component.durationEditor.endDate.errors.length, 2);
     assert.strictEqual(component.durationEditor.duration.errors.length, 1);
+  });
+
+  test('save fails if linked course is clerkship and start date is not provided', async function (assert) {
+    const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
+    const course = this.server.create('course', {
+      title: 'Course A',
+      startDate: new Date('2015-02-02'),
+      endDate: new Date('2015-03-30'),
+      clerkshipType,
+      level: 4,
+      school: this.school,
+    });
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      course,
+      startDate: new Date('2015-02-02'),
+      endDate: new Date('2015-03-30'),
+      duration: 5,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 2,
+      track: true,
+      minimum: 0,
+      maximum: 20,
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{(noop)}}
+    />`);
+
+    await component.duration.edit();
+    assert.strictEqual(component.durationEditor.startDate.errors.length, 0);
+    assert.strictEqual(component.durationEditor.endDate.errors.length, 0);
+    assert.strictEqual(component.durationEditor.duration.errors.length, 0);
+    await component.durationEditor.startDate.set(null);
+    await component.durationEditor.endDate.set(null);
+    await component.durationEditor.save();
+    assert.strictEqual(component.durationEditor.startDate.errors.length, 1);
+    assert.strictEqual(component.durationEditor.endDate.errors.length, 0);
+    assert.strictEqual(component.durationEditor.duration.errors.length, 0);
   });
 
   test('save fails if start-date is given but no end-date is provided', async function (assert) {

@@ -49,12 +49,22 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked required;
   @tracked sessions = [];
   @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration;
-  @tracked @ValidateIf((o) => o.hasZeroDuration) @NotBlank() startDate;
   @tracked
-  @ValidateIf((o) => o.hasZeroDuration || o.startDate)
+  @ValidateIf((o) => o.hasZeroDuration || o.linkedCourseIsClerkship)
+  @NotBlank()
+  startDate;
+  @tracked
+  @ValidateIf((o) => o.startDate)
   @NotBlank()
   @AfterDate('startDate', { granularity: 'day' })
   endDate;
+
+  get linkedCourseIsClerkship() {
+    if (!this.course) {
+      return false;
+    }
+    return !!this.course.belongsTo('clerkshipType').id();
+  }
 
   get hasZeroDuration() {
     const num = Number(this.duration);

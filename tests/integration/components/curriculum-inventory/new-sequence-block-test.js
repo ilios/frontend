@@ -558,6 +558,36 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.strictEqual(component.duration.errors.length, 1);
   });
 
+  test('save fails if linked course is clerkship and start date is not provided', async function (assert) {
+    const clerkshipType = this.server.create('course-clerkship-type');
+    const course = this.server.create('course', {
+      school: this.school,
+      year: '2016',
+      published: true,
+      title: 'my fancy course',
+      clerkshipType,
+      startDate: new Date('2016-03-01'),
+      endDate: new Date('2016-03-02'),
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('report', reportModel);
+
+    await render(
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+    );
+    await component.title.set('Foo Bar');
+    await component.description.set('Lorem Ipsum');
+    await component.duration.set('10');
+    await component.course.select(courseModel.id);
+    await component.save();
+    assert.strictEqual(component.startDate.errors.length, 1);
+    assert.strictEqual(component.endDate.errors.length, 0);
+    assert.strictEqual(component.duration.errors.length, 0);
+  });
+
   test('save fails if start-date is given but no end-date is provided', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
