@@ -1,1 +1,1 @@
-export { default, hasRoute } from 'ilios-common/helpers/has-route';
+export { default } from 'ilios-common/helpers/has-route';

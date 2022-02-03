@@ -1,1 +1,1 @@
-export { default, split } from 'ilios-common/helpers/split';
+export { default } from 'ilios-common/helpers/split';

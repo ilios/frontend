@@ -1,1 +1,1 @@
-export { default } from 'ilios-common/utils/query-utils';
+export { cleanQuery } from 'ilios-common/utils/query-utils';

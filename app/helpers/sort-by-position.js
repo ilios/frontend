@@ -1,1 +1,1 @@
-export { default, sortByPosition } from 'ilios-common/helpers/sort-by-position';
+export { default } from 'ilios-common/helpers/sort-by-position';
