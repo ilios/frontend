@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Factory } from 'ember-cli-mirage';
+import { Factory } from 'miragejs';
 
 export default Factory.extend({
   hours: (i) => (i + 1) * 5,

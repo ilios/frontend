@@ -1,6 +1,6 @@
 /*eslint no-console: 0*/
 import getName from './get-name';
-import { Collection, Model } from 'ember-cli-mirage';
+import { Collection, Model } from 'miragejs';
 
 const getAll = function (schema, request) {
   //turn /api/programyears?limit=1 into 'programYears'
