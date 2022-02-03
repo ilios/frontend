@@ -463,21 +463,25 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.save();
   });
 
-  test('save fails with non-zero duration and no date range', async function (assert) {
+  test('save with non-zero duration and no date range', async function (assert) {
+    assert.expect(3);
     const newDuration = 10;
     const reportModel = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
+    this.set('save', (block) => {
+      assert.strictEqual(block.startDate, undefined);
+      assert.strictEqual(block.endDate, undefined);
+      assert.strictEqual(parseInt(block.duration, 10), newDuration);
+    });
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{this.save}} @cancel={{(noop)}} />`
     );
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.duration.set(newDuration);
     await component.save();
-    assert.strictEqual(component.startDate.errors.length, 1);
-    assert.strictEqual(component.endDate.errors.length, 2);
   });
 
   test('save fails if end-date is older than start-date', async function (assert) {
