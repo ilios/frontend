@@ -97,18 +97,30 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.strictEqual(component.minimum.value, '0');
     assert.strictEqual(component.maximum.label, 'Maximum:');
     assert.strictEqual(component.maximum.value, '0');
-    assert.strictEqual(component.academicLevel.label, 'Academic Level:');
-    assert.strictEqual(component.academicLevel.options.length, 10);
-    assert.strictEqual(component.academicLevel.options[0].text, 'Year 0');
-    assert.strictEqual(component.academicLevel.options[1].text, 'Year 1');
-    assert.strictEqual(component.academicLevel.options[2].text, 'Year 2');
-    assert.strictEqual(component.academicLevel.options[3].text, 'Year 3');
-    assert.strictEqual(component.academicLevel.options[4].text, 'Year 4');
-    assert.strictEqual(component.academicLevel.options[5].text, 'Year 5');
-    assert.strictEqual(component.academicLevel.options[6].text, 'Year 6');
-    assert.strictEqual(component.academicLevel.options[7].text, 'Year 7');
-    assert.strictEqual(component.academicLevel.options[8].text, 'Year 8');
-    assert.strictEqual(component.academicLevel.options[9].text, 'Year 9');
+    assert.strictEqual(component.startLevel.label, 'Start Level:');
+    assert.strictEqual(component.startLevel.options.length, 10);
+    assert.strictEqual(component.startLevel.options[0].text, 'Year 0');
+    assert.strictEqual(component.startLevel.options[1].text, 'Year 1');
+    assert.strictEqual(component.startLevel.options[2].text, 'Year 2');
+    assert.strictEqual(component.startLevel.options[3].text, 'Year 3');
+    assert.strictEqual(component.startLevel.options[4].text, 'Year 4');
+    assert.strictEqual(component.startLevel.options[5].text, 'Year 5');
+    assert.strictEqual(component.startLevel.options[6].text, 'Year 6');
+    assert.strictEqual(component.startLevel.options[7].text, 'Year 7');
+    assert.strictEqual(component.startLevel.options[8].text, 'Year 8');
+    assert.strictEqual(component.startLevel.options[9].text, 'Year 9');
+    assert.strictEqual(component.endLevel.label, 'End Level:');
+    assert.strictEqual(component.endLevel.options.length, 10);
+    assert.strictEqual(component.endLevel.options[0].text, 'Year 0');
+    assert.strictEqual(component.endLevel.options[1].text, 'Year 1');
+    assert.strictEqual(component.endLevel.options[2].text, 'Year 2');
+    assert.strictEqual(component.endLevel.options[3].text, 'Year 3');
+    assert.strictEqual(component.endLevel.options[4].text, 'Year 4');
+    assert.strictEqual(component.endLevel.options[5].text, 'Year 5');
+    assert.strictEqual(component.endLevel.options[6].text, 'Year 6');
+    assert.strictEqual(component.endLevel.options[7].text, 'Year 7');
+    assert.strictEqual(component.endLevel.options[8].text, 'Year 8');
+    assert.strictEqual(component.endLevel.options[9].text, 'Year 9');
     assert.strictEqual(component.childSequenceOrder.label, 'Child Sequence Order:');
     assert.strictEqual(component.childSequenceOrder.options.length, 3);
     assert.strictEqual(component.childSequenceOrder.options[0].value, '1');
@@ -183,7 +195,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('save with defaults', async function (assert) {
-    assert.expect(15);
+    assert.expect(16);
     const newTitle = 'new sequence block';
     const newDescription = 'lorem ipsum';
     const newStartDate = new Date('2016-01-05');
@@ -196,9 +208,10 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       assert.strictEqual(block.title, newTitle);
       assert.strictEqual(block.description, newDescription);
       assert.strictEqual(block.belongsTo('parent').id(), null);
-      assert.strictEqual(block.belongsTo('academicLevel').id(), this.academicLevels[0].id);
+      assert.strictEqual(block.belongsTo('startingAcademicLevel').id(), this.academicLevels[0].id);
+      assert.strictEqual(block.belongsTo('endingAcademicLevel').id(), this.academicLevels[0].id);
       assert.strictEqual(parseInt(block.required, 10), 1);
-      assert.false(block.track);
+      assert.notOk(block.track);
       assert.strictEqual(parseInt(block.orderInSequence, 10), 0);
       assert.strictEqual(parseInt(block.childSequenceOrder, 10), 1);
       assert.strictEqual(block.startDate.getTime(), newStartDate.getTime());
@@ -222,7 +235,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('save with non-defaults', async function (assert) {
-    assert.expect(8);
+    assert.expect(11);
+    const newStartDate = new Date('2016-01-05');
+    const newEndDate = new Date('2016-02-12');
     const minimum = 10;
     const maximum = 12;
     const duration = 6;
@@ -237,10 +252,13 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
-      assert.strictEqual(parseInt(block.belongsTo('academicLevel').id(), 10), 2);
+      assert.strictEqual(parseInt(block.belongsTo('startingAcademicLevel').id(), 10), 2);
+      assert.strictEqual(parseInt(block.belongsTo('endingAcademicLevel').id(), 10), 3);
       assert.strictEqual(parseInt(block.required, 10), 3);
-      assert.true(block.track);
+      assert.ok(block.track);
       assert.strictEqual(parseInt(block.childSequenceOrder, 10), 2);
+      assert.strictEqual(block.startDate.getTime(), newStartDate.getTime());
+      assert.strictEqual(block.endDate.getTime(), newEndDate.getTime());
       assert.strictEqual(parseInt(block.minimum, 10), minimum);
       assert.strictEqual(parseInt(block.maximum, 10), maximum);
       assert.strictEqual(block.belongsTo('course').id(), courseModel.id);
@@ -253,22 +271,27 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
 
     await component.title.set('foo bar');
     await component.description.set('lorem ipsum');
+    await component.startDate.set(newStartDate);
+    await component.endDate.set(newEndDate);
     await component.duration.set(duration);
     await component.minimum.set(minimum);
     await component.maximum.set(maximum);
     await component.course.select(courseModel.id);
     await component.childSequenceOrder.select('2');
     await component.required.select('3');
-    await component.academicLevel.select('2');
+    await component.startLevel.select('2');
+    await component.endLevel.select('3');
     await component.track.yesNoToggle.click();
     await component.save();
   });
 
   test('save nested block in ordered sequence', async function (assert) {
-    assert.expect(2);
+    assert.expect(4);
     const parent = this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 1,
       report: this.report,
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
@@ -285,6 +308,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('save', (block) => {
       assert.strictEqual(block.orderInSequence, 2);
       assert.strictEqual(block.belongsTo('parent').id(), parent.id);
+      assert.strictEqual(parseInt(block.belongsTo('startingAcademicLevel').id(), 10), 1);
+      assert.strictEqual(parseInt(block.belongsTo('endingAcademicLevel').id(), 10), 2);
     });
 
     await render(hbs`<CurriculumInventory::NewSequenceBlock
@@ -297,6 +322,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.orderInSequence.select('2');
+    await component.startDate.set(new Date('2016-01-05'));
+    await component.endDate.set(new Date('2016-02-12'));
     await component.duration.set('19');
     await component.save();
   });
@@ -436,27 +463,21 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.save();
   });
 
-  test('save with non-zero duration and no date range', async function (assert) {
-    assert.expect(3);
+  test('save fails with non-zero duration and no date range', async function (assert) {
     const newDuration = 10;
     const reportModel = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
-    this.set('save', (block) => {
-      assert.strictEqual(block.startDate, undefined);
-      assert.strictEqual(block.endDate, undefined);
-      assert.strictEqual(parseInt(block.duration, 10), newDuration);
-    });
-
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
     );
-
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.duration.set(newDuration);
     await component.save();
+    assert.strictEqual(component.startDate.errors.length, 1);
+    assert.strictEqual(component.endDate.errors.length, 2);
   });
 
   test('save fails if end-date is older than start-date', async function (assert) {
