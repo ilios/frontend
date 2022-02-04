@@ -1,18 +1,23 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { all } from 'rsvp';
+import { action } from '@ember/object';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class ObjectiveSortManagerComponent extends Component {
-  @tracked sortableObjectList;
   @tracked totalObjectivesToSave;
   @tracked currentObjectivesSaved;
+  @tracked draggingItem;
+  @tracked draggedAboveItem;
+  @tracked draggedBelowItem;
+  @tracked sortableItems;
 
-  @restartableTask
-  *load(element, [subject]) {
-    const objectives = (yield subject.xObjectives).toArray();
-    this.sortableObjectList = objectives.sort(sortableByPosition);
+  @use objectives = new ResolveAsyncValue(() => [this.args.subject.xObjectives]);
+  get sortedObjectives() {
+    return this.objectives?.toArray().sort(sortableByPosition) ?? [];
   }
 
   get saveProgress() {
@@ -42,5 +47,37 @@ export default class ObjectiveSortManagerComponent extends Component {
 
     yield this.saveSomeObjectives(objectives);
     this.args.close();
+  }
+
+  resetHover() {
+    this.draggedAboveItem = null;
+    this.draggedBelowItem = null;
+  }
+
+  @action
+  drag(item) {
+    this.draggingItem = item;
+  }
+
+  @action
+  dragEnd() {
+    this.draggingItem = null;
+  }
+
+  @action
+  dragOver(item, { target, clientY }) {
+    this.resetHover();
+    const bounding = target.getBoundingClientRect();
+    const offset = bounding.y + bounding.height / 2;
+    if (clientY - offset > 0) {
+      this.draggedBelowItem = item;
+    } else {
+      this.draggedAboveItem = item;
+    }
+  }
+
+  @action
+  dragLeave() {
+    this.resetHover();
   }
 }

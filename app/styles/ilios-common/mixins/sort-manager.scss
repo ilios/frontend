@@ -22,33 +22,46 @@
     padding-top: .5rem;
   }
 
-  .draggable-object {
-    background-color: $header-grey;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: .3rem;
-    margin-top: 10px;
-    padding: .2rem .4rem .2rem .6rem;
-    vertical-align: middle;
+  .sortable-items {
+    list-style-type: none;
+    .item {
+      background-color: $header-grey;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 10px .3rem 0 0;
+      opacity: 1;
+      padding: 1rem;
+      vertical-align: middle;
+  
+      .fa {
+        vertical-align: top;
+      }
+      .details {
+        @include font-size('small');
+      }
 
-    .fa {
-      vertical-align: top;
-    }
-  }
+      .title {
+        display: inline-block;
+      }
 
-  .sortable-objects {
-    padding: 1rem;
-  }
 
-  .draggable-object-content {
-    display: inline-block;
-
-    .details {
-      @include font-size('small');
-    }
-
-    .title {
-      display: inline-block;
+      &.dragging-item {
+        opacity: 0.3;
+      }
+      &.dragged-above {
+        border-top: .3rem solid $ilios-green;
+      }
+      &.dragged-below {
+        border-bottom: .3rem solid $ilios-green;
+      }
+      &.dragged-below, &.dragged-above {
+        &.dragging-item {
+          border: none;
+        }
+        * {
+          pointer-events: none;
+        }
+      }
     }
   }
 }

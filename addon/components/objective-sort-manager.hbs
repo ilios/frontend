@@ -1,55 +1,53 @@
 <div
   class="objective-sort-manager"
-  {{did-insert (perform this.load) @subject}}
-  {{did-update (perform this.load) @subject}}
 >
-  {{#if (is-array this.sortableObjectList)}}
-    <div class="actions">
-      <button
-        class="bigadd"
-        type="button"
-        disabled={{this.saveSortOrder.isRunning}}
-        {{on "click" (perform this.saveSortOrder)}}
-      >
-        {{#if this.saveSortOrder.isRunning}}
-          <FaIcon @icon="spinner" @spin={{true}} /> {{this.saveProgress}}%
-        {{else}}
-          <FaIcon @icon="check" />
-        {{/if}}
-      </button>
-      <button
-        class="bigcancel"
-        type="button"
-        disabled={{this.saveSortOrder.isRunning}}
-        {{on "click" @close}}
-      >
-        <FaIcon @icon="undo" />
-      </button>
-    </div>
-    <div class="content">
-      <SortableObjects
-        @sortableObjectList={{this.sortableObjectList}}
-        @enableSort={{not this.saveSortOrder.isRunning}}
-        @useSwap={{true}}
-        @sortingScope="sortingGroup"
-      >
-        {{#each this.sortableObjectList as |item|}}
-          <DraggableObject
-            @content={{item}}
-            @isSortable={{not this.saveSortOrder.isRunning}}
-            @sortingScope="sortingGroup"
-          >
-            {{#unless this.saveSortOrder.isRunning}}
-              <FaIcon @icon="arrows-alt" />
-            {{/unless}}
-            <span class="draggable-object-content">
-              <span>
-                <TruncateText @text={{item.title}} />
-              </span>
+  <div class="actions">
+    <button
+      class="bigadd"
+      type="button"
+      disabled={{this.saveSortOrder.isRunning}}
+      {{on "click" (perform this.saveSortOrder)}}
+    >
+      {{#if this.saveSortOrder.isRunning}}
+        <FaIcon @icon="spinner" @spin={{true}} /> {{this.saveProgress}}%
+      {{else}}
+        <FaIcon @icon="check" />
+      {{/if}}
+    </button>
+    <button
+      class="bigcancel"
+      type="button"
+      disabled={{this.saveSortOrder.isRunning}}
+      {{on "click" @close}}
+    >
+      <FaIcon @icon="undo" />
+    </button>
+  </div>
+  <div class="content">
+    <ul class="sortable-items">
+      {{#each this.sortedObjectives as |item|}}
+        <li
+          class="item
+            {{if (eq this.draggingItem item) "dragging-item"}}
+            {{if (eq this.draggedAboveItem item) "dragged-above"}}
+            {{if (eq this.draggedBelowItem item) "dragged-below"}}
+          "
+          draggable="true"
+          {{on "drag" (fn this.drag item)}}
+          {{on "dragend" (fn this.dragEnd item)}}
+          {{on "dragleave" (fn this.dragLeave item)}}
+          {{on "dragover" (fn this.dragOver item)}}
+        >
+          {{#unless this.saveSortOrder.isRunning}}
+            <FaIcon @icon="arrows-alt" />
+          {{/unless}}
+          <span class="draggable-object-content">
+            <span>
+              <TruncateText @text={{item.title}} />
             </span>
-          </DraggableObject>
-        {{/each}}
-      </SortableObjects>
-    </div>
-  {{/if}}
+          </span>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
 </div>
