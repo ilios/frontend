@@ -38,7 +38,7 @@
     "broccoli-file-creator": "^2.1.1",
     "broccoli-merge-trees": "^4.2.0",
     "browserslist": "^4.19.1",
-    "caniuse-db": "^1.0.30001306",
+    "caniuse-db": "^1.0.30001307",
     "dotenv": "^16.0.0",
     "ember-a11y-refocus": "2.0.0",
     "ember-a11y-testing": "^5.0.0",
