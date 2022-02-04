@@ -400,7 +400,6 @@ module('Acceptance | Course - Session List', function (hooks) {
     for (let i = 1; i < 10; i++) {
       await sessions[i].visit();
       assert.strictEqual(currentRouteName(), 'session.index');
-      //await pauseTest();
       await sessionPage.backToSessions.click();
       assert.strictEqual(currentRouteName(), 'course.index');
       assert.strictEqual(sessions.length, sessionCount + 4);

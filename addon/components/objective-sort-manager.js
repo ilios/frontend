@@ -41,7 +41,7 @@ export default class ObjectiveSortManagerComponent extends Component {
 
   @dropTask
   *saveSortOrder() {
-    const objectives = this.sortableObjectList;
+    const objectives = this.items;
     for (let i = 0, n = objectives.length; i < n; i++) {
       objectives[i].set('position', i + 1);
     }
