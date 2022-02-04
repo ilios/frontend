@@ -25,7 +25,7 @@
   </div>
   <div class="content">
     <ul class="sortable-items">
-      {{#each this.sortedObjectives as |item|}}
+      {{#each this.items as |item|}}
         <li
           class="item
             {{if (eq this.draggingItem item) "dragging-item"}}
@@ -34,8 +34,7 @@
           "
           draggable="true"
           {{on "drag" (fn this.drag item)}}
-          {{on "dragend" (fn this.dragEnd item)}}
-          {{on "dragleave" (fn this.dragLeave item)}}
+          {{on "dragend" this.dragEnd}}
           {{on "dragover" (fn this.dragOver item)}}
         >
           {{#unless this.saveSortOrder.isRunning}}

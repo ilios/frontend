@@ -13,11 +13,15 @@ export default class ObjectiveSortManagerComponent extends Component {
   @tracked draggingItem;
   @tracked draggedAboveItem;
   @tracked draggedBelowItem;
-  @tracked sortableItems;
+  @tracked sortedItems;
 
   @use objectives = new ResolveAsyncValue(() => [this.args.subject.xObjectives]);
   get sortedObjectives() {
     return this.objectives?.toArray().sort(sortableByPosition) ?? [];
+  }
+
+  get items() {
+    return this.sortedItems ?? this.sortedObjectives;
   }
 
   get saveProgress() {
@@ -61,23 +65,29 @@ export default class ObjectiveSortManagerComponent extends Component {
 
   @action
   dragEnd() {
+    const arr = [...this.items].filter((item) => item !== this.draggingItem);
+    if (this.draggedAboveItem) {
+      const index = arr.indexOf(this.draggedAboveItem);
+      arr.splice(index, 0, this.draggingItem);
+    } else if (this.draggedBelowItem) {
+      const index = arr.indexOf(this.draggedBelowItem);
+      arr.splice(index + 1, 0, this.draggingItem);
+    }
+    this.sortedItems = arr;
+    this.resetHover();
     this.draggingItem = null;
   }
 
   @action
-  dragOver(item, { target, clientY }) {
+  dragOver(item, evt) {
+    evt.preventDefault();
     this.resetHover();
-    const bounding = target.getBoundingClientRect();
+    const bounding = evt.target.getBoundingClientRect();
     const offset = bounding.y + bounding.height / 2;
-    if (clientY - offset > 0) {
+    if (evt.clientY - offset > 0) {
       this.draggedBelowItem = item;
     } else {
       this.draggedAboveItem = item;
     }
-  }
-
-  @action
-  dragLeave() {
-    this.resetHover();
   }
 }
