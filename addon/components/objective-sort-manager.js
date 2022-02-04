@@ -65,15 +65,17 @@ export default class ObjectiveSortManagerComponent extends Component {
 
   @action
   dragEnd() {
-    const arr = [...this.items].filter((item) => item !== this.draggingItem);
-    if (this.draggedAboveItem) {
-      const index = arr.indexOf(this.draggedAboveItem);
-      arr.splice(index, 0, this.draggingItem);
-    } else if (this.draggedBelowItem) {
-      const index = arr.indexOf(this.draggedBelowItem);
-      arr.splice(index + 1, 0, this.draggingItem);
+    if (this.draggedAboveItem || this.draggedBelowItem) {
+      const arr = [...this.items].filter((item) => item !== this.draggingItem);
+      if (this.draggedAboveItem) {
+        const index = arr.indexOf(this.draggedAboveItem);
+        arr.splice(index, 0, this.draggingItem);
+      } else if (this.draggedBelowItem) {
+        const index = arr.indexOf(this.draggedBelowItem);
+        arr.splice(index + 1, 0, this.draggingItem);
+      }
+      this.sortedItems = arr;
     }
-    this.sortedItems = arr;
     this.resetHover();
     this.draggingItem = null;
   }
@@ -82,12 +84,14 @@ export default class ObjectiveSortManagerComponent extends Component {
   dragOver(item, evt) {
     evt.preventDefault();
     this.resetHover();
-    const bounding = evt.target.getBoundingClientRect();
-    const offset = bounding.y + bounding.height / 2;
-    if (evt.clientY - offset > 0) {
-      this.draggedBelowItem = item;
-    } else {
-      this.draggedAboveItem = item;
+    if (item !== this.draggingItem) {
+      const bounding = evt.target.getBoundingClientRect();
+      const offset = bounding.y + bounding.height / 2;
+      if (evt.clientY - offset > 0) {
+        this.draggedBelowItem = item;
+      } else {
+        this.draggedAboveItem = item;
+      }
     }
   }
 }
