@@ -66,23 +66,23 @@ module('Integration | Component | learning materials sort manager', function (ho
     await render(
       hbs`<LearningMaterialsSortManager @subject={{this.subject}} @cancel={{(noop)}} />`
     );
-    assert.dom('.draggable-object').exists({ count: 2 });
-    assert.dom('.draggable-object:nth-of-type(1) [data-test-title]').hasText(lmModel2.title);
+    assert.dom('.item').exists({ count: 2 });
+    assert.dom('.item:nth-of-type(1) [data-test-title]').hasText(lmModel2.title);
     assert
-      .dom('.draggable-object:nth-of-type(1) .lm-type-icon .fa-paragraph')
+      .dom('.item:nth-of-type(1) .lm-type-icon .fa-paragraph')
       .exists({ count: 1 }, 'Shows LM type icon.');
     assert.strictEqual(
-      find('.draggable-object:nth-of-type(1) .details').textContent.replace(/[\s\n\t]+/g, ''),
+      find('.item:nth-of-type(1) .details').textContent.replace(/[\s\n\t]+/g, ''),
       `${capitalize(lmModel2.type)}, owned by ${userModel2.fullName}, Status: ${
         statusModel2.title
       }`.replace(/[\s\n\t]+/g, '')
     );
-    assert.dom('.draggable-object:nth-of-type(2) [data-test-title]').hasText(lmModel1.title);
+    assert.dom('.item:nth-of-type(2) [data-test-title]').hasText(lmModel1.title);
     assert
-      .dom('.draggable-object:nth-of-type(2) .lm-type-icon .fa-file-pdf')
+      .dom('.item:nth-of-type(2) .lm-type-icon .fa-file-pdf')
       .exists({ count: 1 }, 'Shows LM type icon.');
     assert.strictEqual(
-      find('.draggable-object:nth-of-type(2) .details').textContent.replace(/[\s\n\t]+/g, ''),
+      find('.item:nth-of-type(2) .details').textContent.replace(/[\s\n\t]+/g, ''),
       `${capitalize(lmModel1.type)}, owned by ${userModel1.fullName}, Status: ${
         statusModel1.title
       }`.replace(/[\s\n\t]+/g, '')
