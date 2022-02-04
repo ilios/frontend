@@ -35,7 +35,8 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
       track: true,
       minimum: 2,
       maximum: 15,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
   });
 
@@ -47,7 +48,8 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
       report: this.report,
       childSequenceOrder: 1,
       orderInSequence: 0,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     this.server.create('curriculum-inventory-sequence-block', {
       parent: this.block,
@@ -56,7 +58,8 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
       report: this.report,
       childSequenceOrder: 1,
       orderInSequence: 0,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
 
     await page.visit({ blockId: 1 });
