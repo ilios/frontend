@@ -1,10 +1,8 @@
 <div
   class="learning-materials-sort-manager"
-  {{did-insert (perform this.load) @subject}}
-  {{did-update (perform this.load) @subject}}
   data-test-detail-learning-materials-sort-manager
 >
-  {{#if (is-array this.sortableObjectList)}}
+  {{#if (is-array this.learningMaterials)}}
     <div class="actions">
       <button class="bigadd" type="button" {{on "click" (perform this.callSave)}} data-test-save>
         <FaIcon
@@ -17,17 +15,18 @@
       </button>
     </div>
     <div class="content">
-      <SortableObjects
-        @sortableObjectList={{this.sortableObjectList}}
-        @enableSort={{true}}
-        @useSwap={{true}}
-        @sortingScope="sortingGroup"
-      >
-        {{#each this.sortableObjectList as |item|}}
-          <DraggableObject
-            @content={{item}}
-            @isSortable={{true}}
-            @sortingScope="sortingGroup"
+      <ul class="sortable-items">
+        {{#each this.items as |item|}}
+          <li
+            class="item
+              {{if (eq this.draggingItem item) "dragging-item"}}
+              {{if (eq this.draggedAboveItem item) "dragged-above"}}
+              {{if (eq this.draggedBelowItem item) "dragged-below"}}
+            "
+            draggable="true"
+            {{on "drag" (fn this.drag item)}}
+            {{on "dragend" this.dragEnd}}
+            {{on "dragover" (fn this.dragOver item)}}
           >
             <FaIcon @icon="arrows-alt" />
             <span class="draggable-object-content">
@@ -50,9 +49,9 @@
                 {{item.learningMaterial.status.title}}
               </span>
             </span>
-          </DraggableObject>
+          </li>
         {{/each}}
-      </SortableObjects>
+      </ul>
     </div>
   {{/if}}
 </div>
