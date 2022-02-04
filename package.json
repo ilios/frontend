@@ -106,7 +106,7 @@
     "ember-cli-dependency-lint": "^2.0.0",
     "ember-cli-deprecation-workflow": "^2.0.0",
     "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-cli-mirage": "^3.0.0-alpha.1",
+    "ember-cli-mirage": "^3.0.0-alpha.2",
     "ember-cli-sass": "10.0.1",
     "ember-cli-server-variables": "^3.0.0",
     "ember-cli-sri": "^2.1.1",
