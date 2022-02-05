@@ -1,1 +1,1 @@
-export { default, hasManyIds } from 'ilios-common/helpers/has-many-ids';
+export { default } from 'ilios-common/helpers/has-many-ids';

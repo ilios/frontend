@@ -1,1 +1,1 @@
-export { default, set } from 'ilios-common/helpers/-set';
+export { default } from 'ilios-common/helpers/-set';
