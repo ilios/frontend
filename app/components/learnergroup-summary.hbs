@@ -89,7 +89,7 @@
             {{/if}}
           </span>
         </div>
-        <div class="associatedcourses">
+        <div class="block associatedcourses">
           <label>
             {{t "general.associatedCourses"}} ({{this.courses.length}}):
           </label>
@@ -97,7 +97,6 @@
             {{#each (sort-by "courseTitle" this.courses) as |obj|}}
               <li>
                 <LinkTo @route="course" @model={{obj.course}}>
-                  <FaIcon @icon="external-link-square-alt" />
                   {{obj.courseTitle}}
                 </LinkTo>
               </li>
