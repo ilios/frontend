@@ -217,6 +217,7 @@ export default class LearnergroupSummaryComponent extends Component {
         id: course.id,
         courseTitle: course.title,
         groups: [],
+        course,
       };
       if (prefix) {
         obj.groups.push(`${prefix}>${learnerGroup.title}`);
@@ -235,6 +236,7 @@ export default class LearnergroupSummaryComponent extends Component {
           id: obj.id,
           courseTitle: obj.courseTitle,
           groups: [],
+          course: obj.course,
         };
         arr.push(courseObj);
       }

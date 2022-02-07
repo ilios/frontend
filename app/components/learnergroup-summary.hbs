@@ -95,7 +95,12 @@
           </label>
           <ul>
             {{#each (sort-by "courseTitle" this.courses) as |obj|}}
-              <li>{{obj.courseTitle}}</li>
+              <li>
+                <LinkTo @route="course" @model={{obj.course}}>
+                  <FaIcon @icon="external-link-square-alt" />
+                  {{obj.courseTitle}}
+                </LinkTo>
+              </li>
             {{/each}}
           </ul>
         </div>
