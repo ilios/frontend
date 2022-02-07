@@ -31,7 +31,7 @@
     "@embroider/util": "^1.0.0",
     "@formatjs/intl-locale": "^2.4.7",
     "@formatjs/intl-pluralrules": "^4.0.0",
-    "@formatjs/intl-relativetimeformat": "^9.1.2",
+    "@formatjs/intl-relativetimeformat": "^10.0.0",
     "@fortawesome/ember-fontawesome": "^0.3.1",
     "@fortawesome/free-brands-svg-icons": "^5.6.1",
     "@fortawesome/free-regular-svg-icons": "^5.6.1",
