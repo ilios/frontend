@@ -48,7 +48,7 @@ module.exports = function () {
       'square-minus',
       'paragraph',
       'pen-to-square',
-      'pencil-alt',
+      'pencil',
       'plus',
       'plus-square',
       'print',
