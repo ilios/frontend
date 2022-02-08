@@ -9,7 +9,6 @@ env:
 jobs:
   deploy:
     name: Deploy PR Preview
-    needs: test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -28,6 +27,7 @@ jobs:
         GITHUB_PR_NUMBER: ${{ github.event.number }}
   comment:
     runs-on: ubuntu-latest
+    needs: deploy
     steps:
       - uses: actions/github-script@v5
         with:
