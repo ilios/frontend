@@ -37,5 +37,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: Staging build deployed can be accessed with ilios:update-frontend --staging-build pr_preview-${{ github.event.number }}
+              body: "Staging build deployed can be accessed with ilios:update-frontend --staging-build pr_preview-${{ github.event.number }}"
             })
