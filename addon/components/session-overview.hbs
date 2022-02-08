@@ -225,7 +225,7 @@
                   <label>
                     {{#if @session.hasPostrequisite}}
                       <LinkTo @route="session.index" @models={{array (await @session.postrequisite.course) (await @session.postrequisite)}}>
-                        <FaIcon @icon="external-link-square-alt" /> {{t "general.duePriorTo"}}:
+                        <FaIcon @icon="square-up-right" /> {{t "general.duePriorTo"}}:
                       </LinkTo>
                     {{else}}
                       {{t "general.duePriorTo"}}:
@@ -248,7 +248,7 @@
                 <label>
                   {{#if @session.hasPostrequisite}}
                     <LinkTo @route="session.index" @models={{array (await @session.postrequisite.course) (await @session.postrequisite)}}>
-                      <FaIcon @icon="external-link-square-alt" /> {{t "general.duePriorTo"}}:
+                      <FaIcon @icon="square-up-right" /> {{t "general.duePriorTo"}}:
                     </LinkTo>>
                   {{else}}
                     {{t "general.duePriorTo"}}:
@@ -265,7 +265,7 @@
               <label>{{t "general.prerequisites"}}:</label>
               {{#if @session.hasPrerequisites}}
                 <span>
-                  {{#each (await @session.prerequisites) as |prerequisite|~}}<LinkTo @route="session.index" @models={{array (await prerequisite.course) prerequisite}}><FaIcon @icon="external-link-square-alt" /> {{prerequisite.title}}</LinkTo>{{#unless (eq prerequisite @session.prerequisites.lastObject)}}, {{/unless}}{{~/each}}
+                  {{#each (await @session.prerequisites) as |prerequisite|~}}<LinkTo @route="session.index" @models={{array (await prerequisite.course) prerequisite}}><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#unless (eq prerequisite @session.prerequisites.lastObject)}}, {{/unless}}{{~/each}}
                 </span>
               {{else}}
                 {{t "general.none"}}
