@@ -4,6 +4,10 @@ module.exports = function () {
     'free-solid-svg-icons': [
       'angle-double-down',
       'angle-double-left',
+      'arrow-down-1-9',
+      'arrow-down-9-1',
+      'arrow-down-a-z',
+      'arrow-down-z-a',
       'arrow-right-to-bracket',
       'arrows-alt',
       'backward',

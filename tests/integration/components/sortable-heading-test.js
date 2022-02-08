@@ -48,7 +48,7 @@ module('Integration | Component | sortable heading', function (hooks) {
     assert.dom('button').hasClass('hide-from-small-screen');
     assert.dom('button').hasClass('ham-of-shame');
     assert.dom('button').hasAttribute('title', title);
-    assert.dom('svg').hasClass('fa-sort-numeric-down');
+    assert.dom('svg').hasClass('fa-arrow-down-1-9');
   });
   test('click event fires', async function (assert) {
     assert.expect(1);

@@ -50,7 +50,7 @@ module('Integration | Component | sortable th', function (hooks) {
     assert.dom('th').hasClass('hide-from-small-screen');
     assert.dom('th').hasAttribute('colspan', colspan);
     assert.dom('th button').hasAttribute('title', title);
-    assert.dom('svg').hasClass('fa-sort-numeric-down');
+    assert.dom('svg').hasClass('fa-arrow-down-1-9');
   });
 
   test('sorted descending', async function (assert) {
@@ -66,7 +66,7 @@ module('Integration | Component | sortable th', function (hooks) {
             Foo
           </SortableTh>`
     );
-    assert.dom('svg').hasClass('fa-sort-numeric-down-alt');
+    assert.dom('svg').hasClass('fa-arrow-down-9-1');
   });
 
   test('no sort order specified defaults to ascending sort', async function (assert) {
@@ -75,7 +75,7 @@ module('Integration | Component | sortable th', function (hooks) {
     await render(
       hbs`<SortableTh @sortedBy={{this.sortedBy}} @sortType={{this.sortType}}>Foo</SortableTh>`
     );
-    assert.dom('svg').hasClass('fa-sort-numeric-down');
+    assert.dom('svg').hasClass('fa-arrow-down-1-9');
   });
 
   test('click event fires', async function (assert) {
