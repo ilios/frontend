@@ -59,7 +59,7 @@ module.exports = function () {
       'square-up-right',
       'spinner',
       'star',
-      'star-half-alt',
+      'star-half-stroke',
       'trash',
       'triangle-exclamation',
       'undo',
