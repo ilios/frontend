@@ -70,11 +70,17 @@ module.exports = function (deployTarget) {
     },
   };
 
-  if (deployTarget === 'staging') {
+  if (['staging', 'pr-preview'].includes(deployTarget)) {
     ENV.build.environment = 'production';
     ENV['s3-index'].bucket = 'frontend-archive-staging';
     ENV['s3-index'].prefix = API_VERSION;
     ENV['cloudfront'].distribution = 'E1W0LI6DFZEQOV';
+  }
+  if (deployTarget === 'pr-preview') {
+    ENV['s3-index'].revisionKey = function () {
+      return `pr_preview-${process.env.GITHUB_PR_NUMBER}`;
+    };
+    ENV['cloudfront'].allowOverwrite = true;
   }
 
   if (deployTarget === 'production') {
