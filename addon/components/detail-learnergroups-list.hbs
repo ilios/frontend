@@ -16,7 +16,7 @@
                 {{on "click" (fn @remove tree.topLevelGroup)}}
                 data-test-remove-all
               >
-                {{t "general.removeAll"}} (<FaIcon @icon="times" />)
+                {{t "general.removeAll"}} (<FaIcon @icon="xmark" />)
               </button>
             </div>
           {{/if}}
@@ -48,7 +48,7 @@
                     {{#if learnerGroup.needsAccommodation}}
                       <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
                     {{/if}}
-                    <FaIcon @icon="times" class="remove"></FaIcon>
+                    <FaIcon @icon="xmark" class="remove"></FaIcon>
                   </button>
                 {{else}}
                   <span data-test-title>{{learnerGroup.title}} ({{count-related learnerGroup "users"}})</span>

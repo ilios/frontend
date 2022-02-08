@@ -64,8 +64,8 @@ module('Integration | Component | detail terms list item', function (hooks) {
       @canEdit={{true}}
       @remove={{this.remove}}
     />`);
-    assert.dom('.fa-times').exists({ count: 1 });
-    await click('.fa-times');
+    assert.dom('.fa-xmark').exists({ count: 1 });
+    await click('.fa-xmark');
   });
 
   test('inactive', async function (assert) {
@@ -79,7 +79,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
       hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{true}} @remove={{(noop)}} />`
     );
     assert.dom('.inactive').hasText('(inactive)');
-    assert.dom('.fa-times').exists({ count: 1 });
+    assert.dom('.fa-xmark').exists({ count: 1 });
   });
 
   test('read-only mode', async function (assert) {
@@ -91,6 +91,6 @@ module('Integration | Component | detail terms list item', function (hooks) {
     this.set('term', termModel);
     await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />`);
     assert.dom('.inactive').doesNotExist();
-    assert.dom('.fa-times').doesNotExist();
+    assert.dom('.fa-xmark').doesNotExist();
   });
 });

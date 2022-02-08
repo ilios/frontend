@@ -9,7 +9,7 @@ const definition = {
     name: text(),
     remove: clickable(),
     isSelected: hasClass('selected'),
-    hasDeleteIcon: isPresent('.fa-times'),
+    hasDeleteIcon: isPresent('.fa-xmark'),
   }),
 };
 
