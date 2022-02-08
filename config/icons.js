@@ -16,7 +16,7 @@ module.exports = function () {
       'calendar-minus',
       'caret-down',
       'caret-right',
-      'chart-bar',
+      'chart-column',
       'check',
       'circle',
       'clock',
