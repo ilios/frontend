@@ -33,7 +33,7 @@ module('Integration | Component | editable field', function (hooks) {
   });
 
   test('it renders an edit icon when it looks empty', async function (assert) {
-    const icon = '.fa-edit';
+    const icon = '.fa-pen-to-square';
     this.set(
       'value',
       `
