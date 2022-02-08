@@ -2,8 +2,8 @@ module.exports = function () {
   return {
     'free-brands-svg-icons': ['black-tie'],
     'free-solid-svg-icons': [
-      'angle-double-down',
-      'angle-double-left',
+      'angles-down',
+      'angles-left',
       'arrow-down-1-9',
       'arrow-down-9-1',
       'arrow-down-a-z',
