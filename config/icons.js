@@ -4,10 +4,10 @@ module.exports = function () {
     'free-solid-svg-icons': [
       'angle-double-down',
       'angle-double-left',
-      'archive',
       'arrows-alt',
       'backward',
       'ban',
+      'box-archive',
       'calendar-check',
       'calendar-minus',
       'caret-down',
