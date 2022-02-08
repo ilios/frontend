@@ -103,10 +103,9 @@
         <span class="session-grid-status" data-test-status>
           {{#if (and obj.canUpdate obj.prerequisiteCount)}}
             <FaIcon
-              @icon="sign-in"
+              @icon="sign-in-alt"
               @ariaHidden={{false}}
               class="prerequisites"
-              @prefix="fad"
               @flip="horizontal"
               @title={{t "general.prerequisites"}}
               data-test-prerequisites
