@@ -45,7 +45,7 @@ module.exports = function () {
       'magnifying-glass',
       'meh',
       'minus',
-      'minus-square',
+      'square-minus',
       'paragraph',
       'pen-square',
       'pencil-alt',
