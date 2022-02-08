@@ -23,7 +23,7 @@ module.exports = function () {
       'cloud',
       'copy',
       'download',
-      'ellipsis-h',
+      'ellipsis',
       'exclamation',
       'exclamation-circle',
       'exclamation-triangle',
