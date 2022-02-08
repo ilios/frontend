@@ -80,7 +80,7 @@ module.exports = function (deployTarget) {
     ENV['s3-index'].revisionKey = function () {
       return `pr_preview-${process.env.GITHUB_PR_NUMBER}`;
     };
-    ENV['cloudfront'].allowOverwrite = true;
+    ENV['s3-index'].allowOverwrite = true;
   }
 
   if (deployTarget === 'production') {
