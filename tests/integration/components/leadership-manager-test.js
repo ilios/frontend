@@ -333,8 +333,8 @@ module('Integration | Component | leadership manager', function (hooks) {
     />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const disabledDirectors = `${directors} .fa-user-times`;
-    const disabledAdministrators = `${administrators} .fa-user-times`;
+    const disabledDirectors = `${directors} .fa-user-xmark`;
+    const disabledAdministrators = `${administrators} .fa-user-xmark`;
     const firstAdministratorName = `${administrators}:nth-of-type(1) [data-test-fullname]`;
     const secondAdministratorName = `${administrators}:nth-of-type(2) [data-test-fullname]`;
 

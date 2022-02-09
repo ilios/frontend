@@ -70,7 +70,7 @@ module.exports = function () {
       'user',
       'user-clock',
       'user-plus',
-      'user-times',
+      'user-xmark',
       'users',
       'xmark',
     ],
