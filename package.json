@@ -106,7 +106,7 @@
     "qunit": "^2.16.0",
     "qunit-dom": "^1.6.0",
     "sass": "^1.49.4",
-    "stylelint": "^14.3.0",
+    "stylelint": "^14.4.0",
     "stylelint-config-recommended-scss": "^5.0.0",
     "stylelint-scss": "^4.1.0",
     "validator": "^13.7.0",
