@@ -75,6 +75,6 @@ module.exports = function () {
       'xmark',
     ],
     'pro-light-svg-icons': ['clipboard-list'],
-    'pro-duotone-svg-icons': ['sign-in'],
+    'pro-duotone-svg-icons': ['arrow-right-to-bracket'],
   };
 };
