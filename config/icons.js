@@ -53,7 +53,6 @@ module.exports = function () {
       'random',
       'rss-square',
       'search',
-      'sign-in-alt',
       'sort',
       'sort-alpha-down',
       'sort-alpha-down-alt',
@@ -75,5 +74,6 @@ module.exports = function () {
       'users',
     ],
     'pro-light-svg-icons': ['clipboard-list'],
+    'pro-duotone-svg-icons': ['sign-in'],
   };
 };
