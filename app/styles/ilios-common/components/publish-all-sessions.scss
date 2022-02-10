@@ -44,7 +44,7 @@
       @include font-size('base');
     }
 
-    .fa-chart-bar {
+    .fa-chart-column {
       color: $ilios-blue;
       @include font-size('small');
     }
@@ -62,7 +62,7 @@
     }
   }
 
-  .fa-unlink {
+  .fa-link-slash {
     color: $black;
     @include font-size('small');
   }

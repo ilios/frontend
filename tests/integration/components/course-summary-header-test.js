@@ -60,9 +60,9 @@ module('Integration | Component | course summary header', function (hooks) {
     const status = `${blocks}:nth-of-type(5) span:nth-of-type(1) [data-test-text]`;
 
     assert.dom(title).hasText('course 0');
-    assert.dom(materialsIcon).hasClass('fa-archive');
+    assert.dom(materialsIcon).hasClass('fa-box-archive');
     assert.dom(printIcon).hasClass('fa-print');
-    assert.dom(rolloverIcon).hasClass('fa-random');
+    assert.dom(rolloverIcon).hasClass('fa-shuffle');
     assert.dom(start).hasText(new Date(course.startDate).toLocaleDateString());
     assert.dom(externalId).hasText('abc');
     assert.dom(end).hasText(new Date(course.endDate).toLocaleDateString());
@@ -90,7 +90,7 @@ module('Integration | Component | course summary header', function (hooks) {
 
     assert.ok(findAll(actions).length, 2);
     assert.dom(printIcon).hasClass('fa-print');
-    assert.dom(rolloverIcon).hasClass('fa-random');
+    assert.dom(rolloverIcon).hasClass('fa-shuffle');
   });
 
   test('no link to rollover when that is the current route', async function (assert) {
@@ -110,7 +110,7 @@ module('Integration | Component | course summary header', function (hooks) {
 
     assert.ok(findAll(actions).length, 2);
     assert.dom(printIcon).hasClass('fa-print');
-    assert.dom(materialsIcon).hasClass('fa-archive');
+    assert.dom(materialsIcon).hasClass('fa-box-archive');
   });
 
   test('no link to rollover when user cannot edit the course', async function (assert) {
@@ -133,6 +133,6 @@ module('Integration | Component | course summary header', function (hooks) {
 
     assert.ok(findAll(actions).length, 2);
     assert.dom(printIcon).hasClass('fa-print');
-    assert.dom(materialsIcon).hasClass('fa-archive');
+    assert.dom(materialsIcon).hasClass('fa-box-archive');
   });
 });

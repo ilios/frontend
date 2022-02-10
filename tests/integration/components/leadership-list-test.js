@@ -207,11 +207,11 @@ module('Integration | Component | leadership list', function (hooks) {
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
     const directorNames = `${directors} [data-test-fullname]`;
-    const disabledDirectors = `${directors} .fa-user-times`;
+    const disabledDirectors = `${directors} .fa-user-xmark`;
     const administratorNames = `${administrators} [data-test-fullname]`;
-    const disabledAdministrators = `${administrators} .fa-user-times`;
+    const disabledAdministrators = `${administrators} .fa-user-xmark`;
     const studentAdvisorNames = `${studentAdvisors} [data-test-fullname]`;
-    const disabledStudentAdvisors = `${studentAdvisors} .fa-user-times`;
+    const disabledStudentAdvisors = `${studentAdvisors} .fa-user-xmark`;
 
     assert.dom(directors).exists({ count: 1 });
     assert.dom(disabledDirectors).doesNotExist();

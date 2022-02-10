@@ -42,7 +42,7 @@
     {{/if}}
     {{#unless @mySchedule}}
       <div class="calendar-options-control calendar-school-picker">
-        <FaIcon @icon="university" />
+        <FaIcon @icon="building-columns" />
         {{#if this.hasMoreThanOneSchool}}
           <select aria-label={{t "general.schools"}} {{on "change" this.changeSchool}}>
             {{#each (sort-by "title" @allSchools) as |school|}}

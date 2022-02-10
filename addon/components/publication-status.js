@@ -20,7 +20,7 @@ export default class ProgressBarComponent extends Component {
       return 'star';
     }
 
-    return 'star-half-alt';
+    return 'star-half-stroke';
   }
 
   get publicationStatus() {

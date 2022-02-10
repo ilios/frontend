@@ -37,7 +37,7 @@
         @route="session.index"
         @models={{array @course this.saveSession.lastSuccessful.value}}
       >
-        <FaIcon @icon="external-link-square-alt" />
+        <FaIcon @icon="square-up-right" />
         {{get this.saveSession.lastSuccessful.value "title"}}
       </LinkTo>
       {{t "general.savedSuccessfully"}}

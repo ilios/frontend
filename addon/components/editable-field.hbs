@@ -11,7 +11,7 @@
               {{on "click" (set this.isEditing true)}}
             >
               <FaIcon
-                @icon="edit"
+                @icon="pen-to-square"
                 class="enabled"
               />
             </button>
@@ -32,7 +32,7 @@
                 {{displayText}}
               </span>
               {{#if isTruncated}}
-                <FaIcon @icon="ellipsis-h" @transform="down-6" />
+                <FaIcon @icon="ellipsis" @transform="down-6" />
                 <button
                   class="expand-text-button"
                   type="button"
@@ -40,7 +40,7 @@
                   data-test-expand
                   {{on "click" expand}}
                 >
-                  <FaIcon @icon="info-circle" />
+                  <FaIcon @icon="circle-info" />
                 </button>
               {{/if}}
             </TruncateText>
@@ -84,7 +84,7 @@
             title={{t "general.cancel"}}
             {{on "click" (perform this.closeEditor)}}
           >
-            <FaIcon @icon="times" />
+            <FaIcon @icon="xmark" />
           </button>
         </span>
       </span>

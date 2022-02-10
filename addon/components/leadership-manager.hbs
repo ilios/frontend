@@ -32,13 +32,13 @@
                     {{on "click" (fn @removeDirector user)}}
                     >
                     <FaIcon
-                      @icon="times"
+                      @icon="xmark"
                       class="clickable remove"
                     />
                   </button>
                   {{#unless user.enabled}}
                     <FaIcon
-                      @icon="user-times"
+                      @icon="user-xmark"
                       @title={{t "general.disabled"}}
                       class="disabled-user"
                     />
@@ -62,13 +62,13 @@
                     {{on "click" (fn @removeAdministrator user)}}
                   >
                     <FaIcon
-                      @icon="times"
+                      @icon="xmark"
                       class="clickable remove"
                     />
                   </button>
                   {{#unless user.enabled}}
                     <FaIcon
-                      @icon="user-times"
+                      @icon="user-xmark"
                       @title={{t "general.disabled"}}
                       class="disabled-user"
                     />
@@ -92,13 +92,13 @@
                     {{on "click" (fn @removeStudentAdvisor user)}}
                   >
                     <FaIcon
-                      @icon="times"
+                      @icon="xmark"
                       class="clickable remove"
                     />
                   </button>
                   {{#unless user.enabled}}
                     <FaIcon
-                      @icon="user-times"
+                      @icon="user-xmark"
                       @title={{t "general.disabled"}}
                       class="disabled-user"
                     />

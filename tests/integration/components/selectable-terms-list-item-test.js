@@ -46,8 +46,8 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     />`);
 
     assert.dom('.selected').exists({ count: 1 });
-    assert.dom('.actions .fa-times').exists({ count: 1 });
-    await click('.fa-times');
+    assert.dom('.actions .fa-xmark').exists({ count: 1 });
+    await click('.fa-xmark');
     assert.dom('.selected').exists({ count: 0 });
   });
 

@@ -20,7 +20,7 @@
       disabled={{this.saveSortOrder.isRunning}}
       {{on "click" @close}}
     >
-      <FaIcon @icon="undo" />
+      <FaIcon @icon="arrow-rotate-left" />
     </button>
   </div>
   <div class="content">
@@ -38,7 +38,7 @@
           {{on "dragover" (fn this.dragOver item)}}
         >
           {{#unless this.saveSortOrder.isRunning}}
-            <FaIcon @icon="arrows-alt" />
+            <FaIcon @icon="up-down-left-right" />
           {{/unless}}
           <span class="draggable-object-content">
             <span>

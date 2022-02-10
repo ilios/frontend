@@ -44,7 +44,7 @@
                 {{result.user.fullName}}
                   {{#unless result.user.enabled}}
                     <FaIcon
-                      @icon="user-times"
+                      @icon="user-xmark"
                       @title={{t "general.disabled"}}
                       class="error"
                     />
@@ -64,7 +64,7 @@
                   {{result.user.fullName}}
                   {{#unless result.user.enabled}}
                     <FaIcon
-                      @icon="user-times"
+                      @icon="user-xmark"
                       @title={{t "general.disabled"}}
                       class="error"
                     />

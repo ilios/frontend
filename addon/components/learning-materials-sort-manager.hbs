@@ -11,7 +11,7 @@
         />
       </button>
       <button class="bigcancel" type="button" {{on "click" @cancel}} data-test-cancel>
-        <FaIcon @icon="undo" />
+        <FaIcon @icon="arrow-rotate-left" />
       </button>
     </div>
     <div class="content">
@@ -28,7 +28,7 @@
             {{on "dragend" this.dragEnd}}
             {{on "dragover" (fn this.dragOver item)}}
           >
-            <FaIcon @icon="arrows-alt" />
+            <FaIcon @icon="up-down-left-right" />
             <span class="draggable-object-content">
               <span class="title">
                 <LmTypeIcon

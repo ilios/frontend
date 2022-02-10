@@ -33,9 +33,9 @@ export default class SortableHeading extends Component {
   get sortIcon() {
     if (this.sortedBy) {
       if (this.sortedAscending) {
-        return this.sortType === 'numeric' ? 'sort-numeric-down' : 'sort-alpha-down';
+        return this.sortType === 'numeric' ? 'arrow-down-1-9' : 'arrow-down-a-z';
       } else {
-        return this.sortType === 'numeric' ? 'sort-numeric-down-alt' : 'sort-alpha-down-alt';
+        return this.sortType === 'numeric' ? 'arrow-down-9-1' : 'arrow-down-z-a';
       }
     } else {
       return 'sort';
