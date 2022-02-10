@@ -40,7 +40,7 @@
     "browserslist": "^4.19.1",
     "caniuse-db": "^1.0.30001311",
     "dotenv": "^16.0.0",
-    "ember-a11y-refocus": "2.0.0",
+    "ember-a11y-refocus": "2.3.0",
     "ember-a11y-testing": "^5.0.0",
     "ember-ajax": "^5.1.1",
     "ember-auto-import": "^2.2.3",
