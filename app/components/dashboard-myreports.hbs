@@ -118,7 +118,7 @@
             {{#each (sort-by "title" this.reports) as |obj|}}
               <li>
                 <button type="button" {{on "click" (fn @onReportSelect obj.report.id)}} data-test-report-title>
-                    <FaIcon @icon="external-link-square-alt" />
+                    <FaIcon @icon="square-up-right" />
                     {{obj.title}}
                 </button>
                 <button

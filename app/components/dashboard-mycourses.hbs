@@ -23,7 +23,7 @@
                 {{#if this.canEditCourses}}
                   <li data-test-course>
                     <LinkTo @route="course" @model={{course}}>
-                      <FaIcon @icon="external-link-square-alt" />
+                      <FaIcon @icon="square-up-right" />
                       {{#if this.academicYearCrossesCalendarYearBoundaries}}
                         {{course.year}} - {{add course.year 1}}
                       {{else}}

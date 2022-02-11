@@ -32,7 +32,7 @@
             @route="programYear.index"
             @models={{array @program this.savedProgramYear}}
           >
-            <FaIcon @icon="external-link-square-alt" />
+            <FaIcon @icon="square-up-right" />
             {{#if this.academicYearCrossesCalendarYearBoundaries}}
               {{this.savedProgramYear.startYear}} - {{add this.savedProgramYear.startYear 1}}
             {{else}}
