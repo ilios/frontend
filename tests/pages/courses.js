@@ -9,6 +9,7 @@ import {
   text,
   visitable,
 } from 'ember-cli-page-object';
+import { hasFocus } from 'ilios-common';
 
 import courses from './components/ilios-course-list';
 import newCourse from './components/new-course';
@@ -34,5 +35,6 @@ export default create({
   newCourseLink: text('[data-test-newly-saved-course] a'),
   newCourseLinkIsHidden: isHidden('[data-test-newly-saved-course] a'),
   visitNewCourse: clickable('[data-test-newly-saved-course] a'),
+  filterHasFocus: hasFocus('[data-test-title-filter]'),
   courses,
 });

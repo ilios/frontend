@@ -2,6 +2,7 @@
   <NavigationNarrator
     @navigationText={{t "general.navigationCompleteText"}}
     @skipText={{t "general.skipToMainContent"}}
+    @routeChangeValidator={{this.checkRouteChange}}
   />
   <LinkTo @route="dashboard" class="logo" title={{t "general.dashboard"}}>
     <h1 class="visually-hidden" data-test-title>

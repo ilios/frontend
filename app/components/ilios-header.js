@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
+import { defaultValidator } from 'ember-a11y-refocus';
 
 export default class IliosHeaderComponent extends Component {
   @service currentUser;
@@ -26,5 +27,12 @@ export default class IliosHeaderComponent extends Component {
     this.router.transitionTo('search', {
       queryParams: { q },
     });
+  }
+
+  checkRouteChange(transition) {
+    if (transition.from?.name === transition.to?.name) {
+      return false;
+    }
+    return defaultValidator(transition);
   }
 }

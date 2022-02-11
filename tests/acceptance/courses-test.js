@@ -752,4 +752,18 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(page.courses.courses.length, 1);
     assert.strictEqual(page.courses.courses[0].year, `2014 - 2015`, 'course year shows as range');
   });
+
+  test('title filter does not lose focus #6417', async function (assert) {
+    this.server.create('academicYear', { id: 2014 });
+    this.server.create('course', {
+      year: 2014,
+      school: this.school,
+    });
+    await page.visit();
+    assert.strictEqual(page.courses.courses.length, 1);
+
+    assert.notOk(page.filterHasFocus);
+    await page.filterByTitle('first');
+    assert.ok(page.filterHasFocus);
+  });
 });
