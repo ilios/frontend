@@ -12,7 +12,7 @@
         {{on "click" (perform this.refreshKey)}}
       >
         <FaIcon
-          @icon={{if this.refreshKey.isRunning "spinner" "sync"}}
+          @icon={{if this.refreshKey.isRunning "spinner" "rotate"}}
           @spin={{this.refreshKey.isRunning}}
         />
       </button>
