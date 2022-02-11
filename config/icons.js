@@ -60,7 +60,7 @@ module.exports = function () {
       'turn-down',
       'turn-up',
       'unlock',
-      'user-md',
+      'user-doctor',
     ],
   };
 };
