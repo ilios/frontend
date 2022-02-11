@@ -26,7 +26,7 @@
         {{/if}}
       </div>
       <div class="programsfilter" data-test-programs-filter>
-        <FaIcon @icon="list-alt" @fixedWidth={{true}} />
+        <FaIcon @icon="rectangle-list" @fixedWidth={{true}} />
         {{#if this.programs.length}}
           <select aria-label={{t "general.filterByProgram"}} {{on "change" (pick "target.value" this.changeSelectedProgram)}}>
             {{#each this.programs as |program|}}
