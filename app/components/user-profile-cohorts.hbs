@@ -44,7 +44,7 @@
             {{on "click" (set this.primaryCohort null)}}
           >
             <FaIcon
-              @icon="level-down-alt"
+              @icon="turn-down"
               class="clickable remove"
               @title={{t "general.removePrimaryCohort"}}
             />
@@ -83,7 +83,7 @@
                   {{on "click" (set this.primaryCohort cohort)}}
                 >
                   <FaIcon
-                    @icon="level-up-alt"
+                    @icon="turn-up"
                     class="clickable add"
                     @title={{t "general.promoteToPrimaryCohort"}}
                   />
