@@ -29,7 +29,7 @@ module.exports = function () {
       'gears',
       'globe',
       'graduation-cap',
-      'home',
+      'house',
       'info-circle',
       'italic',
       'level-down-alt',
