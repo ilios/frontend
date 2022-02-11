@@ -7,7 +7,7 @@
   {{#unless this.load.isRunning}}
     <div class="filters">
       <div class="schoolsfilter" data-test-schools-filter>
-        <FaIcon @icon="university" @fixedWidth={{true}} />
+        <FaIcon @icon="building-columns" @fixedWidth={{true}} />
         {{#if this.hasMoreThanOneSchool}}
           <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
             {{#each this.sortedSchools as |school|}}

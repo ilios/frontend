@@ -11,7 +11,7 @@
   </h3>
   {{#if this.isLoaded}}
     <span>
-      <FaIcon @icon="university" @fixedWidth={{true}} />
+      <FaIcon @icon="building-columns" @fixedWidth={{true}} />
       <select
         aria-label={{t "general.schools"}}
         {{on "change" (pick "target.value" @setSchool)}}
