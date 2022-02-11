@@ -47,7 +47,7 @@ module.exports = function () {
       'sort',
       'spinner',
       'square-up-right',
-      'star-half-alt',
+      'star-half-stroke',
       'star',
       'subscript',
       'sun',
