@@ -5,7 +5,7 @@ import yesNoToggle from 'ilios-common/page-objects/components/toggle-yesno';
 const definition = {
   scope: '[data-test-school-vocabulary-term-manager]',
   title: text('[data-test-title]'),
-  editTitle: clickable('[data-test-title] .clickable'),
+  editTitle: clickable('[data-test-title] [data-test-edit]'),
   changeTitle: fillable('[data-test-title] input'),
   saveTitle: clickable('[data-test-title] .done'),
   hasError: isPresent('[data-test-title] .validation-error-message'),

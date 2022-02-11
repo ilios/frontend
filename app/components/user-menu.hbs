@@ -23,7 +23,7 @@
   {{#if this.isOpen}}
     <ClickOutside @onClickOutside={{fn (set this.isOpen) false}}>
       <ul class="menu">
-        <li tabindex="-1" data-test-item>
+        <li tabindex="-1" data-test-item {{did-insert this.focus}}>
           <LinkToWithAction @route="myprofile" @action={{set this.isOpen false}} @queryParams={{hash invalidatetokens=null newtoken=null}}>
             {{t "general.myProfile"}}
           </LinkToWithAction>

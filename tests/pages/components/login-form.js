@@ -29,7 +29,9 @@ const definition = {
       submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
     },
     login: clickable('[data-test-login]'),
-    submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
+    submit: triggerable('keyup', '[data-test-username] input', {
+      eventProperties: { key: 'Enter' },
+    }),
   },
 };
 
