@@ -4,16 +4,16 @@ import {
   collection,
   fillable,
   hasClass,
-  is,
   triggerable,
   value,
 } from 'ember-cli-page-object';
+import { hasFocus } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-global-search-box]',
   input: fillable('input'),
   inputValue: value('input'),
-  inputHasFocus: is(':focus', 'input'),
+  inputHasFocus: hasFocus('input'),
   triggerInput: triggerable('keyup', 'input'),
   clickIcon: clickable('[data-test-search-icon]'),
   autocompleteResults: collection('[data-test-autocomplete] li'),
