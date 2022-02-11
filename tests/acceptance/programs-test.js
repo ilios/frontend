@@ -75,15 +75,6 @@ module('Acceptance | Programs', function (hooks) {
       assert.strictEqual(page.root.list.items.length, 1);
     });
 
-    test('click edit takes you to program route', async function (assert) {
-      this.server.create('program', {
-        school: this.school,
-      });
-      await page.visit();
-      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(3) .edit');
-      assert.strictEqual(currentURL(), '/programs/1');
-    });
-
     test('click title takes you to program route', async function (assert) {
       this.server.create('program', {
         school: this.school,

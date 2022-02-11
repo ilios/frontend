@@ -14,10 +14,6 @@
       .title {
         @include main-list-box-header-title;
       }
-
-      .actions {
-        @include main-list-box-header-actions;
-      }
     }
   }
 

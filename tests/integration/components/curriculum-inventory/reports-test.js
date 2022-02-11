@@ -51,7 +51,6 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
 
   test('it renders', async function (assert) {
     await render(hbs`<CurriculumInventory::Reports
-      @editCurriculumInventoryReport={{(noop)}}
       @schools={{this.schools}}
       @sortReportsBy="name"
       @setSortBy={{(noop)}}
@@ -66,7 +65,6 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
 
   test('selected school with multiple programs', async function (assert) {
     await render(hbs`<CurriculumInventory::Reports
-      @editCurriculumInventoryReport={{(noop)}}
       @schools={{this.schools}}
       @schoolId={{this.schoolWithMultiplePrograms.id}}
       @programId={{this.program1.id}}
@@ -83,7 +81,6 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
 
   test('selected school with one program', async function (assert) {
     await render(hbs`<CurriculumInventory::Reports
-      @editCurriculumInventoryReport={{(noop)}}
       @schools={{this.schools}}
       @schoolId={{this.schoolWithOneProgram.id}}
       @programId={{this.program3.id}}
@@ -100,7 +97,6 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
 
   test('selected school without programs', async function (assert) {
     await render(hbs`<CurriculumInventory::Reports
-      @editCurriculumInventoryReport={{(noop)}}
       @schools={{this.schools}}
       @schoolId={{this.schoolWithoutPrograms.id}}
       @sortReportsBy="name"
@@ -120,7 +116,6 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
       assert.strictEqual(id, this.schoolWithOneProgram.id);
     });
     await render(hbs`<CurriculumInventory::Reports
-      @editCurriculumInventoryReport={{(noop)}}
       @schools={{this.schools}}
       @sortReportsBy="name"
       @setSortBy={{(noop)}}
@@ -136,7 +131,6 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
       assert.strictEqual(programId, this.program2.id);
     });
     await render(hbs`<CurriculumInventory::Reports
-      @editCurriculumInventoryReport={{(noop)}}
       @schools={{this.schools}}
       @sortReportsBy="name"
       @setSortBy={{(noop)}}
@@ -148,7 +142,6 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
 
   test('click expand button to show new report form', async function (assert) {
     await render(hbs`<CurriculumInventory::Reports
-      @editCurriculumInventoryReport={{(noop)}}
       @schools={{this.schools}}
       @sortReportsBy="name"
       @setSortBy={{(noop)}}

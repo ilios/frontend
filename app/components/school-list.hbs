@@ -90,25 +90,17 @@
         <table>
           <thead>
             <tr>
-              <th class="text-left" colspan="4">
+              <th class="text-left">
                 {{t "general.school"}}
-              </th>
-              <th class="text-left" colspan="1">
-                {{t "general.actions"}}
               </th>
             </tr>
           </thead>
           <tbody>
             {{#each (sort-by "title" @schools) as |school|}}
               <tr data-test-school>
-                <td class="text-left" colspan="4" data-test-title>
+                <td class="text-left" data-test-title>
                   <LinkTo @route="school" @model={{school}}>
                     {{school.title}}
-                  </LinkTo>
-                </td>
-                <td class="text-left" colspan="1">
-                  <LinkTo @route="school" @model={{school}} class="edit" data-test-edit>
-                    <FaIcon @icon="edit" />
                   </LinkTo>
                 </td>
               </tr>

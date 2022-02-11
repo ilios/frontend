@@ -52,4 +52,20 @@ module('Acceptance | curriculum inventory sequence blocks', function (hooks) {
     await page.blocks.list.items[0].confirmRemoval.confirm();
     assert.strictEqual(page.blocks.list.items.length, 1);
   });
+
+  test('block title is correctly linked to block details page', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      title: 'alpha',
+      description: 'lorem ipsum',
+      report: this.report,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      academicLevel: this.academicLevels[0],
+    });
+    await page.visit({ reportId: this.report.id });
+    assert.strictEqual(
+      page.blocks.list.items[0].titleLink,
+      `/curriculum-inventory-sequence-block/${block.id}`
+    );
+  });
 });

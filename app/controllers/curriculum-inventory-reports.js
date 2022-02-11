@@ -16,11 +16,6 @@ export default class CurriculumInventoryReportsController extends Controller {
   @tracked sortReportsBy = 'name';
 
   @action
-  editCurriculumInventoryReport(report) {
-    this.transitionToRoute('curriculumInventoryReport', report);
-  }
-
-  @action
   setSortBy(sortBy) {
     this.sortReportsBy = sortBy;
   }

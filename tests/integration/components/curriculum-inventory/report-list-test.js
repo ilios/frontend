@@ -53,7 +53,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
 
     this.set('reports', reports);
     await render(
-      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{(noop)}} @remove={{(noop)}} />`
+      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @remove={{(noop)}} />`
     );
     assert.strictEqual(
       component.headers.name,
@@ -135,7 +135,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     this.set('reports', [reportModel]);
 
     await render(
-      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{(noop)}} @remove={{(noop)}} />`
+      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @remove={{(noop)}} />`
     );
 
     assert.ok(component.reports[0].isDeletable);
@@ -162,16 +162,14 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     this.set('reports', [reportModel]);
 
     await render(
-      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{(noop)}} @remove={{(noop)}} />`
+      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @remove={{(noop)}} />`
     );
 
     assert.notOk(component.reports[0].isDeletable);
   });
 
   test('empty list', async function (assert) {
-    await render(
-      hbs`<CurriculumInventory::ReportList @reports={{(array)}} @edit={{(noop)}} @remove={{(noop)}}/>`
-    );
+    await render(hbs`<CurriculumInventory::ReportList @reports={{(array)}} @remove={{(noop)}}/>`);
     assert.strictEqual(component.emptyList.text, 'None');
   });
 
@@ -189,7 +187,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       assert.strictEqual(report.id, obj.id, 'Report is passed to remove action.');
     });
     await render(
-      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{(noop)}} @remove={{this.removeAction}} />`
+      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @remove={{this.removeAction}} />`
     );
     assert.notOk(component.confirmRemoval.isVisible, 'Confirm dialog is initially not visible.');
     await component.reports[0].remove();
@@ -212,7 +210,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       assert.ok(false, 'Remove action should not have been invoked.');
     });
     await render(
-      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{(noop)}} @remove={{this.removeAction}} />`
+      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @remove={{this.removeAction}} />`
     );
     assert.notOk(component.confirmRemoval.isVisible, 'Confirm dialog is initially not visible.');
     await component.reports[0].remove();
@@ -245,33 +243,12 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       @reports={{this.reports}}
       @setSortBy={{this.setSortBy}}
       @sortBy={{this.sortBy}}
-      @edit={{(noop)}}
       @remove={{(noop)}}
     />`);
     await component.headers.clickOnName();
     await component.headers.clickOnName();
     await component.headers.clickOnYear();
     await component.headers.clickOnYear();
-  });
-
-  test('edit', async function (assert) {
-    assert.expect(1);
-    const report = this.server.create('curriculum-inventory-report', {
-      program: this.program,
-      name: 'Zeppelin',
-    });
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
-
-    this.set('reports', [reportModel]);
-    this.set('editAction', (obj) => {
-      assert.strictEqual(report.id, obj.id, 'Report is passed to edit action.');
-    });
-    await render(
-      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{this.editAction}} @remove={{(noop)}} />`
-    );
-    await component.reports[0].edit();
   });
 
   test('academic year shows range depending on application config', async function (assert) {
@@ -296,7 +273,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     });
     this.set('reports', reports);
     await render(
-      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{(noop)}} @remove={{(noop)}} />`
+      hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @remove={{(noop)}} />`
     );
     assert.strictEqual(component.reports[0].year, '2017 - 2018', 'Academic year shows range.');
   });
