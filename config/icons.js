@@ -4,7 +4,6 @@ module.exports = function () {
     'pro-solid-svg-icons': ['lightbulb-on'],
     'free-brands-svg-icons': ['black-tie'],
     'free-solid-svg-icons': [
-      'ambulance',
       'angle-down',
       'angle-left',
       'angle-right',
@@ -58,6 +57,7 @@ module.exports = function () {
       'superscript',
       'sync',
       'table',
+      'truck-medical',
       'university',
       'unlock',
       'user-md',
