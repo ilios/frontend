@@ -6,13 +6,13 @@
   >
     <h3 data-test-title>
       {{#if this.haveUpdates}}
-        <FaIcon @icon="exclamation-triangle" class="no" />
+        <FaIcon @icon="triangle-exclamation" class="no" />
       {{/if}}
       {{t "general.pendingUpdatesSummaryTitle"}}
     </h3>
     <div id="schoolsfilter" class="filter" data-test-schools>
       <label class="inline-label" for="schools-{{template-id}}">
-        <FaIcon @icon="university" @title={{t "general.school"}} />
+        <FaIcon @icon="building-columns" @title={{t "general.school"}} />
       </label>
       <div id="school-selection" class="inline-data">
         {{#if (gt @schools.length 1)}}

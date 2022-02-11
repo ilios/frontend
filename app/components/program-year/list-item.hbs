@@ -9,7 +9,7 @@
         @models={{array this.program @programYear}}
         data-test-link
       >
-        <FaIcon @icon="external-link-square-alt" />
+        <FaIcon @icon="square-up-right" />
         {{this.academicYear}}
       </LinkTo>
     </td>
@@ -27,28 +27,28 @@
       {{#if @programYear.competencies.length}}
         {{@programYear.competencies.length}}
       {{else}}
-        <FaIcon @icon="exclamation-triangle" class="warning" data-test-warning />
+        <FaIcon @icon="triangle-exclamation" class="warning" data-test-warning />
       {{/if}}
     </td>
     <td class="text-left hide-from-small-screen" data-test-objectives>
       {{#if @programYear.programYearObjectives.length}}
         {{@programYear.programYearObjectives.length}}
       {{else}}
-        <FaIcon @icon="exclamation-triangle" class="warning" data-test-warning />
+        <FaIcon @icon="triangle-exclamation" class="warning" data-test-warning />
       {{/if}}
     </td>
     <td class="text-left hide-from-small-screen" data-test-directors>
       {{#if @programYear.directors.length}}
         {{@programYear.directors.length}}
       {{else}}
-        <FaIcon @icon="exclamation-triangle" class="warning" data-test-warning />
+        <FaIcon @icon="triangle-exclamation" class="warning" data-test-warning />
       {{/if}}
     </td>
     <td class="text-left hide-from-small-screen" data-test-terms>
       {{#if @programYear.terms.length}}
         {{@programYear.terms.length}}
       {{else}}
-        <FaIcon @icon="exclamation-triangle" class="warning" data-test-warning />
+        <FaIcon @icon="triangle-exclamation" class="warning" data-test-warning />
       {{/if}}
     </td>
     <td class="text-right" colspan="2" data-test-actions>

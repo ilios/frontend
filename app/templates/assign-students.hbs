@@ -5,7 +5,7 @@
 <section class="assign-students">
   <div class="filters">
     <div class="schoolsfilter" data-test-school-filter>
-      <FaIcon @icon="university" @fixedWidth={{true}} />
+      <FaIcon @icon="building-columns" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
         <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" (set this.schoolId))}}>
           {{#each (sort-by "title" @model.schools) as |school|}}

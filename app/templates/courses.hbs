@@ -10,7 +10,7 @@
       />
     </div>
     <div class="schoolsfilter" data-test-school-filter>
-      <FaIcon @icon="university" @fixedWidth={{true}} />
+      <FaIcon @icon="building-columns" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
         <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
           {{#each (sort-by "title" @model.schools) as |school|}}
@@ -77,7 +77,7 @@
       {{#if this.newCourse}}
         <div class="saved-result" data-test-newly-saved-course>
           <LinkTo @route="course" @model={{this.newCourse}}>
-            <FaIcon @icon="external-link-square-alt" />
+            <FaIcon @icon="square-up-right" />
             {{this.newCourse.title}}
           </LinkTo>
           {{t "general.savedSuccessfully"}}
