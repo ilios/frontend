@@ -15,11 +15,7 @@ export default class UserMenuComponent extends Component {
 
   @action
   toggleMenu() {
-    if (this.isOpen) {
-      this.isOpen = false;
-    } else {
-      this.openMenuAndSelectTheFirstItem();
-    }
+    this.isOpen = !this.isOpen;
   }
 
   @action
@@ -48,16 +44,9 @@ export default class UserMenuComponent extends Component {
     return true;
   }
 
-  openMenuAndSelectTheFirstItem() {
-    this.isOpen = true;
-    schedule('afterRender', () => {
-      this.element.querySelector('.menu li:nth-of-type(1) a').focus();
-    });
-  }
-
   handleArrowDown(evt, item) {
     if (evt.target.tagName.toLowerCase() === 'button') {
-      this.openMenuAndSelectTheFirstItem();
+      this.isOpen = true;
     } else {
       if (item.nextElementSibling) {
         item.nextElementSibling.querySelector('a').focus();
@@ -75,5 +64,9 @@ export default class UserMenuComponent extends Component {
     } else {
       this.element.querySelector('.menu li:last-of-type a').focus();
     }
+  }
+
+  focus(el) {
+    el.focus();
   }
 }
