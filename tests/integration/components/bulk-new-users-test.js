@@ -14,7 +14,7 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import Response from 'ember-cli-mirage/response';
+import { Response } from 'miragejs';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | bulk new users', function (hooks) {
