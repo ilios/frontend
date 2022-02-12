@@ -112,9 +112,10 @@
             <td colspan="1">
               {{#if user.hasWarning}}
                 <FaIcon
-                  @icon="exclamation-triangle"
+                  @icon="triangle-exclamation"
                   class="warning"
                   @title={{user.warning}}
+                  data-test-warning
                 />
               {{else}}
                 <FaIcon @icon="check" class="yes" />

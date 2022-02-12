@@ -35,43 +35,43 @@ const definition = {
   sortByStatus: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(7)' }),
   confirmCourseRemoval: clickable('[data-test-courses] .confirm-removal button.remove'),
   isSortedByTitleAscending: hasClass(
-    'fa-sort-alpha-down',
+    'fa-arrow-down-a-z',
     '[data-test-course-headings] th:eq(0) svg'
   ),
   isSortedByTitleDescending: hasClass(
-    'fa-sort-alpha-down-alt',
+    'fa-arrow-down-z-a',
     '[data-test-course-headings] th:eq(0) svg'
   ),
   isSortedByLevelAscending: hasClass(
-    'fa-sort-numeric-down',
+    'fa-arrow-down-1-9',
     '[data-test-course-headings] th:eq(3) svg'
   ),
   isSortedByLevelDescending: hasClass(
-    'fa-sort-numeric-down-alt',
+    'fa-arrow-down-9-1',
     '[data-test-course-headings] th:eq(3) svg'
   ),
   isSortedByStartDateAscending: hasClass(
-    'fa-sort-numeric-down',
+    'fa-arrow-down-1-9',
     '[data-test-course-headings] th:eq(4) svg'
   ),
   isSortedByStartDateDescending: hasClass(
-    'fa-sort-numeric-down-alt',
+    'fa-arrow-down-9-1',
     '[data-test-course-headings] th:eq(4) svg'
   ),
   isSortedByEndDateAscending: hasClass(
-    'fa-sort-numeric-down',
+    'fa-arrow-down-1-9',
     '[data-test-course-headings] th:eq(5) svg'
   ),
   isSortedByEndDateDescending: hasClass(
-    'fa-sort-numeric-down-alt',
+    'fa-arrow-down-9-1',
     '[data-test-course-headings] th:eq(5) svg'
   ),
   isSortedByStatusAscending: hasClass(
-    'fa-sort-alpha-down',
+    'fa-arrow-down-a-z',
     '[data-test-course-headings] th:eq(6) svg'
   ),
   isSortedByStatusDescending: hasClass(
-    'fa-sort-alpha-down-alt',
+    'fa-arrow-down-z-a',
     '[data-test-course-headings] th:eq(6) svg'
   ),
 };

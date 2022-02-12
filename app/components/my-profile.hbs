@@ -96,7 +96,7 @@
                 data-test-result-reset
                 {{on "click" (pipe @toggleShowCreateNewToken this.reset)}}
               >
-                <FaIcon @icon="times" />
+                <FaIcon @icon="xmark" />
               </button>
             </div>
           {{else}}
@@ -128,7 +128,7 @@
                 data-test-new-token-cancel
                 {{on "click" (pipe @toggleShowCreateNewToken this.reset)}}
               >
-                <FaIcon @icon="times" />
+                <FaIcon @icon="xmark" />
               </button>
             </div>
           {{/if}}

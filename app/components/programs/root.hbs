@@ -1,7 +1,7 @@
 <section class="programs-root" data-test-programs>
   <div class="filters">
     <div class="schools" data-test-school-filter>
-      <FaIcon @icon="university" @fixedWidth={{true}} />
+      <FaIcon @icon="building-columns" @fixedWidth={{true}} />
       {{#if (gt @schools.length 1)}}
         <select
           {{on "change" (pick "target.value" (set this.selectedSchoolId))}}
@@ -50,7 +50,7 @@
       {{#if this.newProgram}}
         <div class="saved-result">
           <LinkTo @route="program" @model={{this.newProgram}}>
-            <FaIcon @icon="external-link-square-alt" />
+            <FaIcon @icon="square-up-right" />
             {{this.newProgram.title}}
           </LinkTo>
           {{t "general.savedSuccessfully"}}

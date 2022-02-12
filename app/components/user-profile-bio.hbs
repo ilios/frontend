@@ -32,7 +32,7 @@
             {{on "click" this.cancel}}
             data-test-cancel
           >
-            <FaIcon @icon="undo" />
+            <FaIcon @icon="arrow-rotate-left" />
           </button>
         {{else if @isManageable}}
           <button
@@ -43,7 +43,7 @@
             data-test-manage
           >
 
-            <FaIcon @icon="edit" />
+            <FaIcon @icon="pen-to-square" />
           </button>
         {{/if}}
       </div>
@@ -174,7 +174,7 @@
                   data-test-directory-sync
                 >
                   <FaIcon
-                    @icon={{if this.directorySync.isRunning "spinner" "sync"}}
+                    @icon={{if this.directorySync.isRunning "spinner" "rotate"}}
                     @spin={{this.directorySync.isRunning}}
                   />
                 </button>

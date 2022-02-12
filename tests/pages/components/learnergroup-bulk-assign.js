@@ -14,7 +14,7 @@ const definition = {
   scope: '[data-test-learnergroup-bulk-assignment]',
   validUploadedUsers: collection('[data-test-upload-data-valid-users] tbody tr', {
     isValid: hasClass('fa-check', 'svg', { scope: 'td:nth-of-type(1)' }),
-    hasWarning: hasClass('fa-exclamation-triangle', 'svg', { scope: 'td:nth-of-type(1)' }),
+    hasWarning: isVisible('[data-test-warning]', { scope: 'td:nth-of-type(1)' }),
     firstName: text('td', { at: 1 }),
     lastName: text('td', { at: 2 }),
     campusId: text('td', { at: 3 }),

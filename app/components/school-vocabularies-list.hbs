@@ -53,7 +53,7 @@
                     data-test-manage
                     {{on "click" (fn @manageVocabulary vocabulary.id)}}
                   >
-                    <FaIcon @icon="edit" class="enabled" />
+                    <FaIcon @icon="pen-to-square" class="enabled" />
                   </span>
                   {{#if (and @canDelete (eq vocabulary.termCount 0))}}
                     <FaIcon

@@ -7,7 +7,7 @@
   {{#each this.updates as |update|}}
     <div class="update" data-test-update>
       <div class="explanation" data-test-explanation>
-        <FaIcon @icon="exclamation-triangle" class="no" />
+        <FaIcon @icon="triangle-exclamation" class="no" />
         {{#if (eq update.type "emailMismatch")}}
           {{t
             "general.pendingUserUpdates.emailMismatch"
@@ -54,7 +54,7 @@
             data-test-disable
           >
             <FaIcon
-              @icon="times"
+              @icon="xmark"
               class="no"
               @title={{t "general.disableUser"}}
             />

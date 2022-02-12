@@ -33,7 +33,7 @@
            }}
         >
           <FaIcon
-            @icon="home"
+            @icon="house"
             @fixedWidth={{true}}
           />
           <span class="text">
@@ -90,7 +90,7 @@
             title={{t "general.instructorGroups"}}
             @current-when="instructorGroups instructorGroup"
           >
-            <FaIcon @icon="user-md" @fixedWidth={{true}} />
+            <FaIcon @icon="user-doctor" @fixedWidth={{true}} />
             <span class="text">
               {{t "general.instructorGroups"}}
             </span>
@@ -102,7 +102,7 @@
             title={{t "general.schools"}}
             @current-when="schools school session-type-visualize-vocabularies session-type-visualize-terms"
         >
-            <FaIcon @icon="university" @fixedWidth={{true}} />
+            <FaIcon @icon="building-columns" @fixedWidth={{true}} />
             <span class="text">
               {{t "general.schools"}}
             </span>
@@ -114,7 +114,7 @@
             title={{t "general.programs"}}
             @current-when="programs program program-year-visualizations program-year-visualize-competencies"
           >
-            <FaIcon @icon="list-alt" @fixedWidth={{true}} />
+            <FaIcon @icon="rectangle-list" @fixedWidth={{true}} />
             <span class="text">
               {{t "general.programs"}}
             </span>
@@ -128,7 +128,7 @@
             title={{t "general.admin"}}
             @current-when="admin-dashboard users user assign-students pending-user-updates"
           >
-            <FaIcon @icon="cogs" @fixedWidth={{true}} />
+            <FaIcon @icon="gears" @fixedWidth={{true}} />
             <span class="text">
               {{t "general.admin"}}
             </span>
@@ -150,7 +150,7 @@
               )
             }}
           >
-            <FaIcon @icon="chart-bar" @fixedWidth={{true}} />
+            <FaIcon @icon="chart-column" @fixedWidth={{true}} />
             <span class="text">
               {{t "general.curriculumInventory"}}
             </span>

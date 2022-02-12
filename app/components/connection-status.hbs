@@ -8,12 +8,12 @@
   {{#unless this.isOnline}}
     {{#if this.unableToReconnect}}
         <span>
-          <FaIcon @icon="exclamation-triangle" />
+          <FaIcon @icon="triangle-exclamation" />
           {{t "general.unableToReconnect"}}
         </span>
       {{else}}
         <span>
-          <FaIcon @icon="exclamation-circle" />
+          <FaIcon @icon="circle-exclamation" />
           {{t "general.connectionLost"}}
           {{#unless this.stopAttemptingToReconnect}}
             {{t "general.reconnectionSeconds" count=this.timer}}

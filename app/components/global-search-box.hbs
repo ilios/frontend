@@ -23,7 +23,7 @@
     data-test-search-icon
     {{on "click" this.focusAndSearch}}
   >
-    <FaIcon @icon="search"/>
+    <FaIcon @icon="magnifying-glass"/>
   </button>
   {{#if this.hasResults}}
     <ClickOutside @onClickOutside={{set this.autocompleteResults null}}>
@@ -40,7 +40,7 @@
               )
             }}
           >
-            <FaIcon @icon="search" />
+            <FaIcon @icon="magnifying-glass" />
             <span class="result-text">
               {{result.text}}
             </span>

@@ -30,7 +30,7 @@
           />
         </button>
         <button type="button" class="bigcancel" {{on "click" this.stopManaging}} data-test-cancel>
-          <FaIcon @icon="undo" />
+          <FaIcon @icon="arrow-rotate-left" />
         </button>
       {{else if (or @canUpdate @canDelete @canCreate)}}
         <button type="button" {{on "click" (fn @setSchoolManageCompetencies true)}} data-test-manage>

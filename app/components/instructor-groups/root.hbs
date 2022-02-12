@@ -1,7 +1,7 @@
 <section class="instructor-groups-root" data-test-instructor-groups>
   <div class="filters">
     <div class="schools" data-test-school-filter>
-      <FaIcon @icon="university" @fixedWidth={{true}} />
+      <FaIcon @icon="building-columns" @fixedWidth={{true}} />
       {{#if (gt @schools.length 1)}}
         <select
           {{on "change" (pick "target.value" @setSchoolId)}}
@@ -61,7 +61,7 @@
       {{#if this.newInstructorGroup}}
         <div class="saved-result">
           <LinkTo @route="instructorGroup" @model={{this.newInstructorGroup}}>
-            <FaIcon @icon="external-link-square-alt" />
+            <FaIcon @icon="square-up-right" />
             {{this.newInstructorGroup.title}}
           </LinkTo>
           {{t "general.savedSuccessfully"}}

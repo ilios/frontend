@@ -7,7 +7,7 @@
   {{#unless this.load.isRunning}}
     <div class="filters">
       <div class="schoolsfilter" data-test-schools-filter>
-        <FaIcon @icon="university" @fixedWidth={{true}} />
+        <FaIcon @icon="building-columns" @fixedWidth={{true}} />
         {{#if this.hasMoreThanOneSchool}}
           <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
             {{#each this.sortedSchools as |school|}}
@@ -26,7 +26,7 @@
         {{/if}}
       </div>
       <div class="programsfilter" data-test-programs-filter>
-        <FaIcon @icon="list-alt" @fixedWidth={{true}} />
+        <FaIcon @icon="rectangle-list" @fixedWidth={{true}} />
         {{#if this.programs.length}}
           <select aria-label={{t "general.filterByProgram"}} {{on "change" (pick "target.value" this.changeSelectedProgram)}}>
             {{#each this.programs as |program|}}
@@ -69,7 +69,7 @@
         {{#if this.newReport}}
           <div class="saved-result" data-test-saved-results>
             <LinkTo @route="curriculumInventoryReport" @model={{this.newReport}}>
-              <FaIcon @icon="external-link-square-alt" />
+              <FaIcon @icon="square-up-right" />
               {{this.newReport.name}}
             </LinkTo>
             {{t "general.savedSuccessfully"}}

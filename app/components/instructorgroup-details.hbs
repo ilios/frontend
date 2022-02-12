@@ -33,7 +33,7 @@
                   {{on "click" (perform this.removeUser user)}}
                 >
                   <UserNameInfo @user={{user}} />
-                  <FaIcon @icon="times" class="remove" />
+                  <FaIcon @icon="xmark" class="remove" />
                 </button>
               </li>
             {{else}}
@@ -62,7 +62,7 @@
           {{#each (sort-by "title" (await @instructorGroup.courses)) as |course|}}
             <li data-test-course>
               <LinkTo @route="course" @model={{course}}>
-                <FaIcon @icon="external-link-square-alt" />
+                <FaIcon @icon="square-up-right" />
                 {{course.title}}
               </LinkTo>
             </li>
