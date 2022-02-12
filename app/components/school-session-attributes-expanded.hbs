@@ -18,7 +18,7 @@
           />
         </button>
         <button type="button" class="bigcancel" {{on "click" this.cancel}} data-test-cancel>
-          <FaIcon @icon="undo" />
+          <FaIcon @icon="arrow-rotate-left" />
         </button>
       {{else if @canUpdate}}
         <button type="button"  {{on "click" (fn @manage true)}} data-test-manage>

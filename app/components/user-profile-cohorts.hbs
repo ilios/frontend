@@ -23,7 +23,7 @@
             class="bigcancel"
             {{on "click" (fn @setIsManaging false)}}
           >
-            <FaIcon @icon="undo" />
+            <FaIcon @icon="arrow-rotate-left" />
           </button>
         {{else if @isManageable}}
           <button type="button" class="manage" {{on "click" (fn @setIsManaging true)}}>
