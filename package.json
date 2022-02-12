@@ -76,8 +76,10 @@
     "ember-cli-server-variables": "3.0.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
+    "ember-focus-trap": "^1.0.1",
     "ember-load-initializers": "^2.1.2",
     "ember-metrics": "1.5.2",
+    "ember-moment": "^10.0.0",
     "ember-noscript": "^4.1.0",
     "ember-page-title": "^7.0.0",
     "ember-qunit": "^6.0.0",
@@ -135,5 +137,10 @@
   "pre-commit": [
     "lint"
   ],
-  "private": true
+  "private": true,
+  "dependencies": {
+    "ember-auto-import": "^2.4.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.34"
+  }
 }
