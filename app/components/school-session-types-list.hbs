@@ -74,7 +74,7 @@
               data-test-manage
               {{on "click" (fn @manageSessionType sessionType.id)}}
             >
-              <FaIcon @icon="edit" class="edit" />
+              <FaIcon @icon="pen-to-square" class="edit" />
             </button>
             {{#if (eq sessionType.sessionCount 0)}}
               {{#if (includes sessionType.id this.deletedSessionTypes)}}
