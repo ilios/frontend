@@ -39,7 +39,7 @@
             {{#each (sort-by "fullName" this.instructors) as |user|}}
               <li role="button" {{on "click" (fn this.removeInstructor user)}} data-test-selected-instructor>
                 <UserNameInfo @user={{user}} />
-                <FaIcon @icon="times" class="remove" />
+                <FaIcon @icon="xmark" class="remove" />
               </li>
             {{/each}}
           </ul>
@@ -58,7 +58,7 @@
                 >
                   <FaIcon @icon="users" />
                   {{instructorGroup.title}}
-                  <FaIcon @icon="times" class="remove" />
+                  <FaIcon @icon="xmark" class="remove" />
                 </span>
                 <br>
                 <ul class="instructorgroup-members-list">
