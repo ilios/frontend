@@ -42,7 +42,7 @@
     @include main-list-box-table;
   }
 
-  .fa-download, .fa-edit, .fa-lock, .fa-trash {
+  .fa-download, .fa-pen-to-square, .fa-lock, .fa-trash {
     @include icon;
   }
 }
