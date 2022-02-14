@@ -29,7 +29,12 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @tracked childSequenceOrderOptions;
   @tracked course;
   @tracked description;
-  @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration = 0;
+  @tracked
+  @NotBlank()
+  @IsInt()
+  @Custom('validateDurationCallback', 'validateDurationMessageCallback')
+  @Lte(1200)
+  duration = 0;
   @tracked
   @ValidateIf((o) => o.hasZeroDuration || o.linkedCourseIsClerkship)
   @NotBlank()
@@ -198,6 +203,20 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     return this.intl.t('errors.greaterThanOrEqualTo', {
       gte: this.intl.t('general.startLevel'),
       description: this.intl.t('general.endLevel'),
+    });
+  }
+
+  @action
+  validateDurationCallback() {
+    const duration = parseInt(this.duration, 10);
+    return this.linkedCourseIsClerkship ? duration >= 1 : duration >= 0;
+  }
+
+  @action
+  validateDurationMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.linkedCourseIsClerkship ? 1 : 0,
+      description: this.intl.t('general.duration'),
     });
   }
 
