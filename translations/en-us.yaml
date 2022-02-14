@@ -298,6 +298,7 @@ general:
   permissions: Permissions
   permissionsInOtherSchools: "Permissions in Other Schools"
   perPage: "Per Page"
+  phasesStartToEnd: "Phases (Start - End)"
   phone: Phone
   physicianCompetencyReferenceSet: "Physician Competency Reference Set"
   physicianCompetencyReferenceSetAbbr: PCRS

@@ -9,10 +9,7 @@
           {{t "general.nonClerkshipSequenceBlocks"}}
         </th>
         <th rowspan="2">
-          {{t "general.startLevel"}}
-        </th>
-        <th rowspan="2">
-          {{t "general.endLevel"}}
+          {{t "general.phasesStartToEnd"}}
         </th>
         <th colspan={{add 1 @data.methods.length}}>
           {{t "general.numberOfFormalInstructionalHoursPerCourse"}}
@@ -36,10 +33,7 @@
             {{clerkship.title}}
           </td>
           <td>
-            {{clerkship.startingLevel}}
-          </td>
-          <td>
-            {{clerkship.endingLevel}}
+            {{clerkship.startingLevel}} - {{clerkship.endingLevel}}
           </td>
           {{#each clerkship.methods as |method|}}
             <td>
@@ -57,7 +51,6 @@
         <td colspan="2">
           {{t "general.total"}}
         </td>
-        <td></td>
         <td></td>
         {{#each this.methodTotals as |total|}}
           <td>

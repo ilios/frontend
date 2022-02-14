@@ -9,10 +9,7 @@
           {{t "general.clerkshipSequenceBlocks"}}
         </th>
         <th rowspan="2">
-          {{t "general.startLevel"}}
-        </th>
-        <th rowspan="2">
-          {{t "general.endLevel"}}
+          {{t "general.phasesStartToEnd"}}
         </th>
         <th colspan={{@data.methods.length}}>
           {{t "general.includedInGrade"}}
@@ -42,10 +39,7 @@
             {{clerkship.title}}
           </td>
           <td>
-            {{clerkship.startingLevel}}
-          </td>
-          <td>
-            {{clerkship.endingLevel}}
+            {{clerkship.startingLevel}} - {{clerkship.endingLevel}}
           </td>
           {{#each clerkship.methods as |method|}}
             <td>

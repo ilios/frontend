@@ -8,10 +8,9 @@ const definition = {
     headings: collection('thead tr th'),
     rows: collection('tbody tr', {
       title: text('td', { at: 0 }),
-      startLevel: text('td', { at: 1 }),
-      endLevel: text('td', { at: 2 }),
-      weeks: text('td', { at: 3 }),
-      avg: text('td', { at: 4 }),
+      startEndLevel: text('td', { at: 1 }),
+      weeks: text('td', { at: 2 }),
+      avg: text('td', { at: 3 }),
     }),
   },
 };
