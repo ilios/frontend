@@ -296,6 +296,7 @@ general:
   performsNonLearnerFunctions: "Acquitte de Fonctions Non-Apprenant"
   permissions: Permissions
   permissionsInOtherSchools: "Permissions en Autres Écoles"
+  phasesStartToEnd: "Phases (début - fin)"
   phone: "Téléphone"
   physicianCompetencyReferenceSet: "Ensemble de références de compétences de médecin"
   physicianCompetencyReferenceSetAbbr: PCRS
