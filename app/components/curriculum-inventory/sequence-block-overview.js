@@ -48,7 +48,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked report;
   @tracked required;
   @tracked sessions = [];
-  @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration;
+  @tracked
+  @NotBlank()
+  @IsInt()
+  @Custom('validateDurationCallback', 'validateDurationMessageCallback')
+  @Lte(1200)
+  duration;
   @tracked
   @ValidateIf((o) => o.hasZeroDuration || o.linkedCourseIsClerkship)
   @NotBlank()
@@ -415,6 +420,20 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     return this.intl.t('errors.lessThanOrEqualTo', {
       lte: this.intl.t('general.endLevel'),
       description: this.intl.t('general.startLevel'),
+    });
+  }
+
+  @action
+  validateDurationCallback() {
+    const duration = parseInt(this.duration, 10);
+    return this.linkedCourseIsClerkship ? duration >= 1 : duration >= 0;
+  }
+
+  @action
+  validateDurationMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.linkedCourseIsClerkship ? 1 : 0,
+      description: this.intl.t('general.duration'),
     });
   }
 
