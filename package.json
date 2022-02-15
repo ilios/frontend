@@ -79,7 +79,7 @@
     "ember-load-initializers": "^2.1.2",
     "ember-metrics": "1.4.2",
     "ember-noscript": "^4.1.0",
-    "ember-page-title": "^6.2.2",
+    "ember-page-title": "^7.0.0",
     "ember-qunit": "^5.1.4",
     "ember-resolver": "^8.0.2",
     "ember-responsive": "^4.0.2",
