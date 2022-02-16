@@ -22,7 +22,8 @@
     "test:ember": "ember test",
     "lint:style": "stylelint app/styles",
     "deploy:production": "ember deploy production --activate",
-    "deploy:staging": "ember deploy staging --activate"
+    "deploy:staging": "ember deploy staging --activate",
+    "deploy:test": "ember deploy development"
   },
   "devDependencies": {
     "@ember/edition-utils": "^1.2.0",

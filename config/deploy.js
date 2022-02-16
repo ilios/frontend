@@ -90,6 +90,7 @@ module.exports = function (deployTarget) {
     ENV['cloudfront'].distribution = 'E1RJJYSB507IYA';
   }
   if (deployTarget === 'development') {
+    ENV.build.environment = 'production';
     ENV.pipeline.disabled = {
       's3-index': true,
       cloudfront: true,
