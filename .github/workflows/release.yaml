@@ -13,7 +13,7 @@ jobs:
       with:
         node-version: 14
     - name: install dependencies
-      run: npm ci
+      run: npm ci --ignore-scripts
     - name: test
       run: npm run test:ember
 
@@ -27,7 +27,7 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - name: install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
       - name: publish
         run: npm publish
         env:
