@@ -14,22 +14,6 @@ module.exports = function (environment) {
     rootURL: '/',
     locationType: 'auto',
     redirectAfterShibLogin: true,
-    contentSecurityPolicy: {
-      'default-src': ["'none'"],
-      'script-src': ["'self'", "'unsafe-eval'", 'www.google-analytics.com'],
-      'font-src': ["'self'", 'fonts.gstatic.com'],
-      'connect-src': ["'self'", 'www.google-analytics.com', 'sentry.io'],
-      'img-src': [
-        "'self'",
-        'data:',
-        'www.google-analytics.com',
-        'cdnjs.cloudflare.com/ajax/libs/browser-logos/',
-        'sentry.io',
-      ],
-      'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
-      'media-src': ["'self'"],
-      'manifest-src': ["'self'"],
-    },
     flashMessageDefaults: {
       timeout: 3000,
       extendedTimeout: 1000,
@@ -109,7 +93,6 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
     ENV.redirectAfterShibLogin = false;
 
     //Remove mirage in developemnt, we only use it in testing
@@ -134,7 +117,6 @@ module.exports = function (environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.contentSecurityPolicy['script-src'].push("'unsafe-inline'");
     ENV.flashMessageDefaults.timeout = 100;
     ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
@@ -159,9 +141,6 @@ module.exports = function (environment) {
       enabled: false,
     };
   }
-
-  //add our API host to the list of acceptable data sources
-  ENV.contentSecurityPolicy['connect-src'].push(ENV.serverVariables.defaults['api-host']);
 
   return ENV;
 };
