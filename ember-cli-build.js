@@ -41,14 +41,6 @@ module.exports = function (defaults) {
     'ember-cli-qunit': {
       useLintTree: false,
     },
-    'ember-service-worker': {
-      immediateClaim: true,
-      versionStrategy: 'every-build',
-    },
-    'esw-cache-first': {
-      version: '4',
-      patterns: ['https://fonts.gstatic.com/(.+)'],
-    },
     autoImport: {
       insertScriptsAt: 'auto-import-scripts',
     },
