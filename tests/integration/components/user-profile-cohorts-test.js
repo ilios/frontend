@@ -40,7 +40,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('user', this.user);
-    await render(hbs`<UserProfileCohorts @user={{user}} />`);
+    await render(hbs`<UserProfileCohorts @user={{this.user}} />`);
     const primaryCohort = '[data-test-primary-cohort]';
     const secondaryCohorts = '[data-test-secondary-cohorts] li';
 
@@ -58,7 +58,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
       assert.ok(what, 'recieved boolean true value');
     });
     await render(
-      hbs`<UserProfileCohorts @user={{user}} @isManageable={{true}} @setIsManaging={{action click}} />`
+      hbs`<UserProfileCohorts @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`
     );
     const manage = 'button.manage';
     await click(manage);
@@ -86,7 +86,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     });
 
     await render(
-      hbs`<UserProfileCohorts @isManaging={{true}} @user={{user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileCohorts @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
     );
     const primaryCohort = '[data-test-primary-cohort] [data-test-title]';
     const secondaryCohorts = '[data-test-secondary-cohorts] li';

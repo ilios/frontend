@@ -47,8 +47,8 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     await render(hbs`<DashboardMyreports
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
-      @onReportSelect={{action this.setReport}}
-      @onReportYearSelect={{action this.setReportYear}}
+      @onReportSelect={{this.setReport}}
+      @onReportYearSelect={{this.setReportYear}}
     />`);
     assert.strictEqual(component.title, 'My Reports');
     assert.strictEqual(component.reports.length, 2);
@@ -108,8 +108,8 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     await render(hbs`<DashboardMyreports
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
-      @onReportSelect={{action this.setReport}}
-      @onReportYearSelect={{action this.setReportYear}}
+      @onReportSelect={{this.setReport}}
+      @onReportYearSelect={{this.setReportYear}}
     />`);
     assert.strictEqual(component.title, 'My Reports');
     assert.strictEqual(component.reports.length, 1);
@@ -185,8 +185,8 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     await render(hbs`<DashboardMyreports
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
-      @onReportSelect={{action this.setReport}}
-      @onReportYearSelect={{action this.setReportYear}}
+      @onReportSelect={{this.setReport}}
+      @onReportYearSelect={{this.setReportYear}}
     />`);
     await component.reports[0].select();
     assert.ok(component.selectedReport.yearsFilterExists);

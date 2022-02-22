@@ -268,7 +268,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     this.set('parent', parentBlockModel);
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @parent={{this.parent}}
-      @report={{await parent.report}}
+      @report={{await this.parent.report}}
       @sequenceBlocks={{(array)}}
     />`);
     assert.strictEqual(

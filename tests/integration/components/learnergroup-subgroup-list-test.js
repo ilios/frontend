@@ -27,7 +27,7 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
 
     this.set('parentGroup', parentGroup);
-    await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} />`);
+    await render(hbs`<LearnergroupSubgroupList @parentGroup={{this.parentGroup}} />`);
 
     assert.strictEqual(component.headings[0].text, 'Learner Group Title');
     assert.strictEqual(component.headings[1].text, 'Members');
@@ -55,7 +55,7 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
 
     this.set('parentGroup', parentGroup);
     await render(
-      hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{parentGroup}} />`
+      hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{this.parentGroup}} />`
     );
     assert.strictEqual(this.server.schema.learnerGroups.all().length, 2);
     assert.strictEqual(component.groups.length, 1);
@@ -138,7 +138,7 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
 
     this.set('parentGroup', parentGroup);
     await render(
-      hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`
+      hbs`<LearnergroupSubgroupList @parentGroup={{this.parentGroup}} @canCreate={{true}} />`
     );
 
     assert.strictEqual(component.groups.length, 1);
@@ -173,7 +173,7 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     this.set('parentGroup', parentGroup);
 
     await render(
-      hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`
+      hbs`<LearnergroupSubgroupList @parentGroup={{this.parentGroup}} @canCreate={{true}} />`
     );
 
     assert.strictEqual(component.groups.length, 1);
@@ -237,7 +237,7 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     this.set('parentGroup', parentGroup);
 
     await render(
-      hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`
+      hbs`<LearnergroupSubgroupList @parentGroup={{this.parentGroup}} @canCreate={{true}} />`
     );
 
     assert.strictEqual(component.groups.length, 0);

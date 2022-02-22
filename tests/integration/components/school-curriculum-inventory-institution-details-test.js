@@ -32,9 +32,9 @@ module(
       this.set('canUpdate', true);
       this.set('manage', parseInt);
       await render(hbs`<SchoolCurriculumInventoryInstitutionDetails
-      @school={{school}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
+      @school={{this.school}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{this.manage}}
     />`);
 
       assert.strictEqual(component.header.title, 'Curriculum Inventory Institutional Information');
@@ -70,9 +70,9 @@ module(
       this.set('canUpdate', false);
       this.set('manage', parseInt);
       await render(hbs`<SchoolCurriculumInventoryInstitutionDetails
-      @school={{school}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
+      @school={{this.school}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{this.manage}}
     />`);
       assert.notOk(component.header.hasManageAction);
     });
@@ -92,9 +92,9 @@ module(
         assert.ok(isManaging);
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionDetails
-      @school={{school}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
+      @school={{this.school}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{this.manage}}
     />`);
       await component.header.manage();
     });
@@ -108,9 +108,9 @@ module(
       this.set('canUpdate', true);
       this.set('manage', parseInt);
       await render(hbs`<SchoolCurriculumInventoryInstitutionDetails
-      @school={{school}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
+      @school={{this.school}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{this.manage}}
     />`);
       await assert.strictEqual(
         component.content.noInfo,

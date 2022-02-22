@@ -50,7 +50,9 @@ module('Integration | Component | learnergroup header', function (hooks) {
     });
 
     this.set('learnerGroup', learnerGroup);
-    await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} @canUpdate={{true}} />`);
+    await render(
+      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{true}} />`
+    );
 
     assert.dom('.title').hasText('our group');
     await click('.title .editable');
@@ -77,7 +79,7 @@ module('Integration | Component | learnergroup header', function (hooks) {
     });
 
     this.set('learnerGroup', learnerGroup);
-    await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} />`);
+    await render(hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} />`);
 
     assert.dom('header .info').hasText('Members: 1 / 2');
   });
@@ -98,7 +100,9 @@ module('Integration | Component | learnergroup header', function (hooks) {
     });
 
     this.set('learnerGroup', learnerGroup);
-    await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} @canUpdate={{true}} />`);
+    await render(
+      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{true}} />`
+    );
 
     assert.dom(title).hasText('our group', 'title is correct');
     assert.dom(errors).doesNotExist('there are no errors');

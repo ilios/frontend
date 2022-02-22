@@ -15,10 +15,10 @@ module('Integration | Component | school session attributes manager', function (
     this.set('showSessionSpecialAttireRequired', false);
     this.set('showSessionSpecialEquipmentRequired', false);
     await render(hbs`<SchoolSessionAttributesManager
-      @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
-      @showSessionSupplemental={{showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
+      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+      @showSessionSupplemental={{this.showSessionSupplemental}}
+      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
       @enable={{(noop)}}
       @disable={{(noop)}}
     />`);
@@ -43,10 +43,10 @@ module('Integration | Component | school session attributes manager', function (
       context.set(sentName, true);
     });
     await render(hbs`<SchoolSessionAttributesManager
-      @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
-      @showSessionSupplemental={{showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
+      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+      @showSessionSupplemental={{this.showSessionSupplemental}}
+      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
       @enable={{this.enable}}
       @disable={{(noop)}}
     />`);
@@ -96,10 +96,10 @@ module('Integration | Component | school session attributes manager', function (
       context.set(sentName, false);
     });
     await render(hbs`<SchoolSessionAttributesManager
-      @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
-      @showSessionSupplemental={{showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
+      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+      @showSessionSupplemental={{this.showSessionSupplemental}}
+      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
       @enable={{(noop)}}
       @disable={{this.disable}}
     />`);

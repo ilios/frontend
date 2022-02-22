@@ -27,7 +27,7 @@ module('Integration | Component | user profile roles', function (hooks) {
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     this.set('user', userModel);
-    await render(hbs`<UserProfileRoles @user={{user}} />`);
+    await render(hbs`<UserProfileRoles @user={{this.user}} />`);
     const student = '[data-test-student] span';
     const formerStudent = '[data-test-former-student] span';
     const enabled = '[data-test-enabled] span';
@@ -61,7 +61,7 @@ module('Integration | Component | user profile roles', function (hooks) {
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     this.set('user', userModel);
-    await render(hbs`<UserProfileRoles @user={{user}} />`);
+    await render(hbs`<UserProfileRoles @user={{this.user}} />`);
     const root = '[data-test-root] span';
 
     assert.dom(root).hasText('Yes');
@@ -80,7 +80,7 @@ module('Integration | Component | user profile roles', function (hooks) {
       assert.ok(what, 'recieved boolean true value');
     });
     await render(
-      hbs`<UserProfileRoles @user={{user}} @isManageable={{true}} @setIsManaging={{action click}} />`
+      hbs`<UserProfileRoles @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`
     );
     const manage = 'button.manage';
     await click(manage);
@@ -96,7 +96,7 @@ module('Integration | Component | user profile roles', function (hooks) {
 
     this.set('user', userModel);
 
-    await render(hbs`<UserProfileRoles @isManaging={{true}} @user={{user}} />`);
+    await render(hbs`<UserProfileRoles @isManaging={{true}} @user={{this.user}} />`);
     const inputs = findAll('input');
     const formerStudent = '[data-test-former-student] input';
     const enabled = '[data-test-enabled] input';

@@ -315,7 +315,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     this.set('close', () => {
       assert.ok(true);
     });
-    await render(hbs`<BulkNewUsers @close={{action close}} />`);
+    await render(hbs`<BulkNewUsers @close={{this.close}} />`);
     await click('.cancel');
   });
 

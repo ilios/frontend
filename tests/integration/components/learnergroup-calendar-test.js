@@ -47,7 +47,7 @@ module('Integration | Component | learnergroup calendar', function (hooks) {
       allDescendants: resolve([subGroup]),
     });
     this.set('learnerGroup', learnerGroup);
-    await render(hbs`<LearnergroupCalendar @learnerGroup={{learnerGroup}} />`);
+    await render(hbs`<LearnergroupCalendar @learnerGroup={{this.learnerGroup}} />`);
     const events = '[data-test-calendar-event]';
     await settled();
 
@@ -91,7 +91,7 @@ module('Integration | Component | learnergroup calendar', function (hooks) {
     });
 
     this.set('learnerGroup', learnerGroup);
-    await render(hbs`<LearnergroupCalendar @learnerGroup={{learnerGroup}} />`);
+    await render(hbs`<LearnergroupCalendar @learnerGroup={{this.learnerGroup}} />`);
     const events = '[data-test-calendar-event]';
     const subgroupEventsToggle =
       '[data-test-learnergroup-calendar-toggle-subgroup-events] label:nth-of-type(1)';
