@@ -7,7 +7,6 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'this-property-fallback' }, //https://github.com/sethwebster/ember-cli-new-version/pull/91
     { handler: 'silence', matchId: 'ember-lifeline-deprecated-addeventlistener' },
     { handler: 'silence', matchId: 'ember-test-helpers.setup-rendering-context.render' },
-    { handler: 'silence', matchId: 'routing.transition-methods' },
     { handler: 'silence', matchId: 'common.user-performs-non-learner-function' },
     { handler: 'silence', matchId: 'common.curriculum-inventory-report-is-finalized' },
     { handler: 'silence', matchId: 'common.async-computed' },
