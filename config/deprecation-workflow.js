@@ -14,6 +14,5 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'common.resolve-computed' },
     { handler: 'silence', matchId: 'common.school-cohorts' },
     { handler: 'silence', matchId: 'ember-global' },
-    { handler: 'silence', matchId: 'ember-simple-auth.initializer.setup-session-restoration' },
   ],
 };
