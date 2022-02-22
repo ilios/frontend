@@ -13,6 +13,7 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'common.async-computed' },
     { handler: 'silence', matchId: 'common.resolve-computed' },
     { handler: 'silence', matchId: 'common.school-cohorts' },
+    { handler: 'silence', matchId: 'deprecated-run-loop-and-computed-dot-access' }, //https://github.com/elidupuis/ember-cli-deploy-archive/pull/16
     { handler: 'silence', matchId: 'ember-global' },
     { handler: 'silence', matchId: 'ember-simple-auth.initializer.setup-session-restoration' },
   ],
