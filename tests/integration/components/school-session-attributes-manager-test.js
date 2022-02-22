@@ -42,7 +42,7 @@ module('Integration | Component | school session attributes manager', function (
       assert.strictEqual(sentName, name);
       context.set(sentName, true);
     });
-    await context.render(hbs`<SchoolSessionAttributesManager
+    await render(hbs`<SchoolSessionAttributesManager
       @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
       @showSessionSupplemental={{showSessionSupplemental}}
       @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
@@ -95,7 +95,7 @@ module('Integration | Component | school session attributes manager', function (
       assert.strictEqual(sentName, name);
       context.set(sentName, false);
     });
-    await context.render(hbs`<SchoolSessionAttributesManager
+    await render(hbs`<SchoolSessionAttributesManager
       @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
       @showSessionSupplemental={{showSessionSupplemental}}
       @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
