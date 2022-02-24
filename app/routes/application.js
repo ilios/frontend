@@ -16,6 +16,7 @@ export default class AuthenticatedRoute extends Route {
   @tracked event;
 
   async beforeModel() {
+    await this.session.setup();
     await loadPolyfills();
     const locale = this.intl.get('locale');
     this.moment.setLocale(locale);
