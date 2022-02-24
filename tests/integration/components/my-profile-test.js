@@ -46,7 +46,7 @@ module('Integration | Component | my profile', function (hooks) {
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
-      @user={{user}}
+      @user={{this.user}}
       @toggleShowCreateNewToken={{(noop)}}
       @toggleShowInvalidateTokens={{(noop)}}
     />`);
@@ -70,7 +70,7 @@ module('Integration | Component | my profile', function (hooks) {
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
-      @user={{user}}
+      @user={{this.user}}
       @toggleShowCreateNewToken={{(noop)}}
       @toggleShowInvalidateTokens={{(noop)}}
     />`);

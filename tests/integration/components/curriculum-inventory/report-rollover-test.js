@@ -62,7 +62,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       .find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
-    await render(hbs`<CurriculumInventory::ReportRollover @report={{report}} />`);
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
 
     assert.strictEqual(component.years.options.length, 4);
     assert.strictEqual(component.years.options[0].text, `${thisYear + 1} - ${thisYear + 2}`);

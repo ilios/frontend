@@ -211,7 +211,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnergroupInstructorManager
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @save={{this.save}}
       @canUpdate={{true}}
     />`);
@@ -239,7 +239,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @save={{(noop)}}
       @canUpdate={{true}}
     />`);
@@ -267,7 +267,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @save={{(noop)}}
       @canUpdate={{true}}
     />`);

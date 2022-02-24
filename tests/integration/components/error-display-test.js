@@ -56,7 +56,7 @@ module('Integration | Component | error display', function (hooks) {
     this.set('clearErrors', () => {
       assert.ok(true, 'action was fired');
     });
-    await render(hbs`<ErrorDisplay @errors={{errors}} @clearErrors={{action clearErrors}} />`);
+    await render(hbs`<ErrorDisplay @errors={{this.errors}} @clearErrors={{this.clearErrors}} />`);
     await click('.clear-errors button');
   });
 });

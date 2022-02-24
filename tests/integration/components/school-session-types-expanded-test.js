@@ -145,7 +145,7 @@ module('Integration | Component | school session types expanded', function (hook
       @canCreate={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
-      @managedSessionTypeId={{sessionType.id}}
+      @managedSessionTypeId={{this.sessionType.id}}
       @setSchoolManagedSessionType={{this.click}}
       @setSchoolNewSessionType={{(noop)}}
     />`);

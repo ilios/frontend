@@ -94,8 +94,8 @@ module(
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
       @institution={{await this.school.curriculumInventoryInstitution}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{this.manage}}
     />`);
       await component.header.cancel();
     });

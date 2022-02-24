@@ -33,7 +33,7 @@ module('Integration | Component | new myreport', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
 
     this.set('close', () => {});
-    await render(hbs`<NewMyreport @close={{action close}} />`);
+    await render(hbs`<NewMyreport @close={{this.close}} />`);
     const title = '.title';
     const schools = '[data-test-school] select';
     const subjects = '[data-test-subject] select';
@@ -97,7 +97,7 @@ module('Integration | Component | new myreport', function (hooks) {
 
     context.owner.register('service:current-user', CurrentUserMock);
     context.set('close', () => {});
-    await render(hbs`<NewMyreport @close={{action close}} />`);
+    await render(hbs`<NewMyreport @close={{this.close}} />`);
 
     const subject = `[data-test-subject] select`;
     const object = `[data-test-object] select`;
@@ -256,7 +256,7 @@ module('Integration | Component | new myreport', function (hooks) {
     const selectedUser = `.removable-list li:nth-of-type(1)`;
 
     this.set('close', () => {});
-    await render(hbs`<NewMyreport @close={{action close}} />`);
+    await render(hbs`<NewMyreport @close={{this.close}} />`);
     await fillIn(schoolSelect, 'null');
     const subjectSelect = find(subject);
     assert.strictEqual(subjectSelect.options[subjectSelect.selectedIndex].value, 'course');
