@@ -18,6 +18,7 @@
 
   th,
   td {
+    word-break: break-all;
     &.text-left,
     &.align-left {
       text-align: left;
