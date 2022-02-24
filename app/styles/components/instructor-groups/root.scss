@@ -35,12 +35,6 @@
 
     .list {
       @include main-list-box-table;
-
-      .remove-button {
-        @include ilios-button-reset;
-        background-color: $white;
-        color: $ilios-remove-color;
-      }
     }
   }
 }
