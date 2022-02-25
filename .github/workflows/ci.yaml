@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
     - name: install dependencies
@@ -44,7 +44,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
     - name: install dependencies
@@ -62,7 +62,7 @@ jobs:
          - embroider-optimized
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v3
       with:
         node-version: 14
     - name: install dependencies
