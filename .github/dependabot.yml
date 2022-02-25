@@ -35,3 +35,7 @@ updates:
   - dependency-name: eslint-plugin-node
   - dependency-name: loader.js
   - dependency-name: qunit-dom
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: daily
