@@ -187,6 +187,7 @@ general:
   multidayEvents: "Eventos de Varios Días"
   multiple: "Múltiple "
   mustBeSameDayOfWeekAsCurrentStartDate: "Debe ser el mismo día de la semana en curso como fecha de inicio"
+  myLearningMaterials: "Mis Materiales Didácticos"
   myMaterials: "Mis Materiales"
   mySchedule: "Mi Horario"
   newObjective: "Nuevo Objetivo"
@@ -194,6 +195,7 @@ general:
   newOffering: "Nueva Oferta"
   newSession: "Sesión Nueva"
   newUpdates: "Nuevas actualizaciones"
+  nextXDays: "Próximos {days} días"
   no: No
   noAssociatedCompetencies: "No Competencias Asociadas"
   noAssociatedCompetency: "No Competencia Asociada"

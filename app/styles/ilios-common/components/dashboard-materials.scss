@@ -3,33 +3,20 @@
   overflow-y: scroll;
   padding: 0 1em 1em;
 
-  .title {
-    @include ilios-heading-h4;
-  }
-
-  table {
-    @include ilios-table-structure;
-    @include ilios-table-colors;
-  }
-
-  .all-materials {
+  .header {
+    align-items: start;
+    column-gap: 1rem;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
 
     @include for-tablet-and-up {
-      float: right;
+      align-items: center;
+      flex-direction: row;
     }
 
-    a {
-      margin-left: .25rem;
+    .title {
+      @include ilios-heading-h4;
     }
   }
 
-  .lm-type-icon {
-    color: $dark-grey;
-  }
-
-  .timed-release-info {
-    @include font-size('small');
-  }
 }
