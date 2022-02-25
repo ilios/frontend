@@ -21,7 +21,7 @@ jobs:
         node-version: 16
         cache: 'npm'
     - name: install dependencies
-      run: npm ci
+      run: npm ci --ignore-scripts
     - name: calculate
       uses: paambaati/codeclimate-action@v2.6.0
       with:

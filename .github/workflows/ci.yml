@@ -29,7 +29,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: install dependencies
-      run: npm ci
+      run: npm ci --ignore-scripts
     - name: lint style
       run: npm run lint:style
     - name: lint hbs
@@ -51,6 +51,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: install dependencies
-      run: npm ci
+      run: npm ci --ignore-scripts
     - name: test build
       run: npm run build

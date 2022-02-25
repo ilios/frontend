@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - run: npm run test:ember
         env:
           SW_DISABLED: true
@@ -35,7 +35,7 @@ jobs:
         node-version: 16
         cache: 'npm'
     - name: install dependencies
-      run: npm ci
+      run: npm ci --ignore-scripts
     - name: Ember CLI Deploy
       run: npm run deploy:staging
       env:
