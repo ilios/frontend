@@ -26,7 +26,6 @@
               @competency={{competency}}
               @canUpdate={{@canUpdate}}
             />
-            <span data-test-objectives-count>({{competency.programYearObjectives.length}})</span>
             {{#if (and @canDelete (eq competency.programYearObjectives.length 0))}}
               <button
                 type="button"

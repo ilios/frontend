@@ -45,9 +45,7 @@ module('Integration | Component | school competencies manager', function (hooks)
     assert.strictEqual(component.domains[0].details.editor.text, 'domain1');
     assert.strictEqual(component.domains[0].competencies.length, 2);
     assert.strictEqual(component.domains[0].competencies[0].editor.text, 'competency1');
-    assert.strictEqual(component.domains[0].competencies[0].objectivesCount, '(3)');
     assert.strictEqual(component.domains[0].competencies[1].editor.text, 'competency2');
-    assert.strictEqual(component.domains[0].competencies[1].objectivesCount, '(0)');
     assert.notOk(component.domains[0].isRemovable);
     assert.notOk(component.domains[0].competencies[0].isRemovable);
     assert.ok(component.domains[0].competencies[1].isRemovable);
