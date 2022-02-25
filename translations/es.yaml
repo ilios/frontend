@@ -70,7 +70,7 @@ general:
   courseLevel: "Nivel del curso {level}"
   courseLevels: "Niveles de Curso"
   courseObjectives: "Objetivo del Curso"
-  courseOrType: "Curso / Tipo"
+  courseOrSessionType: "Curso / Tipo de Sesión"
   courseRollover: "Copiar Curso"
   courseRolloverSuccess: "Curso Copiado con Éxito"
   courseRolloverSummary: "Va a rodar este curso en el seleccionado año académico, junto con todas las opciones seleccionadas.. Para continuar, haga clic en \"done\". Para volver a su curso corriente, haga clic en \"cancel\""
@@ -89,7 +89,6 @@ general:
   defaultNotLoaded: "Predeterminado no cargado"
   deprecatedAbbreviation: "obs."
   description: "Descripción"
-  detail: Detalle
   directorCount: "Hay {count, plural, =1 {1 director} other {# directores}}"
   directors: Directores
   disabled: desactivado
@@ -237,6 +236,7 @@ general:
   program: Programa
   programAndCohort: "Programa/Clase de La Graduación"
   programCohorts: "Clases de La Graduación"
+  programDetail: "Detalle del programa"
   publicationStatus: "Estado de Publicación"
   publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
   publishAllSessions: "Publique {sessionCount} sesiónes"

@@ -70,7 +70,7 @@ general:
   courseLevel: "Niveau du cours {level}"
   courseLevels: "Niveaux de Cours"
   courseObjectives: "Objectifs du Cours"
-  courseOrType: "Cours / Type"
+  courseOrSessionType: "Cours / Type de séance"
   courseRollover: "Roulement Cours"
   courseRolloverSuccess: "Roulement achevée avec succès"
   courseRolloverSummary: "Vous êtes sur le point le roulement ce cours dans l'année universitaire choisie, avec toutes les options choisies. Continuer, cliquer \"done\". Pour retourner à votre cours actuel, le clic \"annul\""
@@ -89,7 +89,6 @@ general:
   defaultNotLoaded: "Par défaut non chargé"
   deprecatedAbbreviation: "obs."
   description: Description
-  detail: "Détail"
   directorCount: "Il y a {count, plural, =1 {un directeur} other {# directeurs}}"
   directors: Directeurs
   disabled: "désactivée"
@@ -237,6 +236,7 @@ general:
   program: "Diplôme"
   programAndCohort: "Diplôme et Cohortes"
   programCohorts: Cohortes
+  programDetail: "Détail du programme"
   publicationStatus: "Statut de Publication"
   publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, et ignorer des {ignoreCount} séances"
   publishAllSessions: "Publier {sessionCount} des séances"

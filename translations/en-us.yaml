@@ -70,7 +70,7 @@ general:
   courseLevel: "Course Level {level}"
   courseLevels: "Course Levels"
   courseObjectives: "Course Objectives"
-  courseOrType: "Course / Type"
+  courseOrSessionType: "Course / Session Type"
   courseRollover: "Rollover Course"
   courseRolloverSuccess: "Course-Rollover Completed Successfully"
   courseRolloverSummary: "You are about to roll over this course into the selected academic year, along with all selected options. To continue, click “Done”. To return to your current course, click “Cancel”."
@@ -89,7 +89,6 @@ general:
   defaultNotLoaded: "Default Not Loaded"
   deprecatedAbbreviation: "depr."
   description: Description
-  detail: Detail
   directorCount: "There {count, plural, =1 {is 1 director} other {are # directors}}"
   directors: Directors
   disabled: disabled
@@ -237,6 +236,7 @@ general:
   program: Program
   programAndCohort: "Program/Cohort"
   programCohorts: "Program Cohorts"
+  programDetail: "Program Detail"
   publicationStatus: "Publication Status"
   publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, and ignore {ignoreCount} sessions"
   publishAllSessions: "Publish {sessionCount} sessions"
