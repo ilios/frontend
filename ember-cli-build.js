@@ -15,6 +15,9 @@ module.exports = function (defaults) {
     'ember-fetch': {
       preferNative: true,
     },
+    'ember-simple-auth': {
+      useSessionSetupMethod: true, //can be removed in ESA v5.x
+    },
   });
 
   /*

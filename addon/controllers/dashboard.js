@@ -7,6 +7,7 @@ import moment from 'moment';
 export default class DashboardController extends Controller {
   @service currentUser;
   @service store;
+  @service router;
 
   queryParams = [
     'cohorts',
@@ -65,7 +66,7 @@ export default class DashboardController extends Controller {
 
   @action
   selectEvent(event) {
-    this.transitionToRoute('events', event.slug);
+    this.router.transitionTo('events', event.slug);
   }
 
   @action
