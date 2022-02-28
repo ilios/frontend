@@ -8,6 +8,7 @@ export default class ApplicationRoute extends Route {
   @service moment;
 
   async beforeModel(transition) {
+    await this.session.setup();
     this.session.requireAuthentication(transition, 'login');
     await loadPolyfills();
     this.intl.setLocale('en-us');
