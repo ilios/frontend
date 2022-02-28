@@ -11,6 +11,5 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'common.school-cohorts' },
     { handler: 'silence', matchId: 'common.user-performs-non-learner-function' },
     { handler: 'silence', matchId: 'common.curriculum-inventory-report-is-finalized' },
-    { handler: 'silence', matchId: 'deprecated-run-loop-and-computed-dot-access' },
   ],
 };
