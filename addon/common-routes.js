@@ -2,7 +2,6 @@ export function dashboardRoutes(router) {
   router.route('dashboard');
   router.route('events', { path: 'events/:slug' });
   router.route('weeklyevents');
-  router.route('mymaterials');
 }
 
 export function courseRoutes(router) {
