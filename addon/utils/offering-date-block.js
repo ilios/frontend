@@ -1,7 +1,6 @@
 import EmberObject, { computed } from '@ember/object';
+import { sort } from '@ember/object/computed';
 import moment from 'moment';
-
-const { sort } = computed;
 
 const OfferingBlock = EmberObject.extend({
   offerings: null,
