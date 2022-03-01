@@ -30,13 +30,13 @@ module('Integration | Component | toggle yesno', function (hooks) {
     });
     await render(hbs`<ToggleYesno @yes={{this.value}} @toggle={{this.toggle}} />`);
     assert.strictEqual(component.checked, 'true');
-    await component.handle.click();
+    await component.click();
     assert.strictEqual(component.checked, 'false');
-    await component.handle.click();
+    await component.click();
     assert.strictEqual(component.checked, 'true');
-    await component.label.click();
+    await component.handle.click();
     assert.strictEqual(component.checked, 'false');
-    await component.label.click();
+    await component.handle.click();
     assert.strictEqual(component.checked, 'true');
   });
 });

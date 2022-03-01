@@ -5,9 +5,6 @@ const definition = {
   handle: {
     scope: '[data-test-handle]',
   },
-  label: {
-    scope: '[data-test-label]',
-  },
   checked: attribute('aria-checked'),
 };
 

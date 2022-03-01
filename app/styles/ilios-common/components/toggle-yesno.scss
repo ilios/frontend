@@ -1,96 +1,39 @@
 .toggle-yesno {
-  background-image: (linear-gradient(to bottom, $switch-grey, $white 25px));
+  --height: 1.1em;
+  --switch-diff: 2px;
+  --width: calc(var(--height) * 2);
+  --switch: calc(var(--height) - var(--switch-diff));
   border-radius: 18px;
-  box-shadow: inset 0 -1px $white, inset 0 1px 1px $barely-visible-black;
-  cursor: pointer;
   display: inline-block;
-  height: 20px;
-  outline-color: transparent;
-  padding: 3px;
+  height: var(--height);
   position: relative;
-  vertical-align: top;
-  width: 56px;
+  width: var(--width);
+  background-color: $ilios-red;
+  padding: 0;
 
-  .switch-label {
-    background: $toggle-background-grey;
-    border-radius: inherit;
-    box-shadow: inset 0 1px 2px $almost-visible-black, inset 0 0 2px $almost-visible-black;
-    display: block;
-    @include font-size('small');
-    font-weight: bold;
-    height: inherit;
-    position: relative;
-    text-transform: uppercase;
-    transition-duration: .15s;
-    transition-property: opacity background;
-    transition-timing-function: ease-out;
-  }
-
-  .switch-label::before,
-  .switch-label::after {
-    margin-top: -.5em;
-    position: absolute;
-    top: 50%;
-    transition: inherit;
-  }
-
-  .switch-label::before {
-    color: $white;
-    content: attr(data-off);
-    right: 10px;
-    text-shadow: 0 1px $more-visible-black;
-  }
-
-  .switch-label::after {
-    color: $white;
-    content: attr(data-on);
-    left: 7px;
-    opacity: 0;
-    text-shadow: 0 1px $more-visible-black;
-  }
-
-  &[aria-checked="true"] .switch-label {
-    background: $switch-label-green;
-    box-shadow: inset 0 1px 2px $almost-visible-black, inset 0 0 3px $more-visible-black;
-  }
-
-  &[aria-checked="true"] .switch-label::before {
-    opacity: 0;
-  }
-
-  &[aria-checked="true"] .switch-label::after {
-    opacity: 1;
+  &.yes {
+    background-color: $ilios-green;
   }
 
   .switch-handle {
     background: $white;
-    background-image: (linear-gradient(to top , $white 40%, $toggle-background-grey));
     border-radius: 10px;
-    box-shadow: 1px 1px 5px $more-visible-black;
-    height: 18px;
-    left: 4px;
+    height: var(--switch);
+    left: var(--switch-diff);
     position: absolute;
-    top: 4px;
-    transition: left .15s ease-out;
-    width: 18px;
-  }
+    margin: 0;
+    top: 1px;
+    width: var(--switch);
+    display: grid;
+    justify-content: center;
+    align-content: center;
 
-  .switch-handle::before {
-    background: $switch-handle-grey;
-    background-image: (linear-gradient(to top , $switch-grey, $white));
-    border-radius: 6px;
-    box-shadow: inset 0 1px $barely-visible-black;
-    content: '';
-    height: 12px;
-    left: 50%;
-    margin: -6px 0 0 -6px;
-    position: absolute;
-    top: 50%;
-    width: 12px;
+    svg {
+      @include font-size("small");
+    }
   }
 
   &[aria-checked="true"] .switch-handle {
-    box-shadow: -1px 1px 5px $more-visible-black;
-    left: 33px;
+    left: calc(calc(var(--width) - var(--switch)) - var(--switch-diff));
   }
 }
