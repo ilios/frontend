@@ -24,6 +24,13 @@
     @include ilios-button;
     padding: .25rem .5rem;
 
+    &:active,
+    &:hover,
+    &:link,
+    &:visited {
+      text-decoration: none;
+    }
+
     &.active {
       background-color: $ilios-green;
     }
