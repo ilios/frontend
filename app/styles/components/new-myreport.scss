@@ -11,6 +11,7 @@
   }
 
   .new-myreport-content {
+    @include ilios-form-error;
     p {
       display: grid;
       grid-gap: .5rem;
@@ -18,6 +19,11 @@
 
       label {
         @include ilios-label;
+        text-align: right;
+      }
+
+      .validation-error-message {
+        grid-column: 1 / -1;
         text-align: right;
       }
     }
