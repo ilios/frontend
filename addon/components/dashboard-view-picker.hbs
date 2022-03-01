@@ -1,44 +1,40 @@
 <div class="dashboard-view-picker">
   <ul>
     <li>
-      <button
-        class={{if (eq @show "week") "active"}}
-        data-test-glance
-        type="button"
-        {{on "click" (fn @onChange "week")}}
+      <LinkTo
+        @route="dashboard.index"
+        title={{t "general.dashboard"}}
+        @current-when="dashboard.index"
       >
         {{t "general.weekAtAGlance"}}
-      </button>
+      </LinkTo>
     </li>
     <li>
-      <button
-        class={{if (eq @show "agenda") "active"}}
-        type="button"
-        data-test-activities
-        {{on "click" (fn @onChange "agenda")}}
+      <LinkTo
+        @route="dashboard.activities"
+        title={{t "general.activities"}}
+        @current-when="dashboard.activities"
       >
         {{t "general.activities"}}
-      </button>
+      </LinkTo>
     </li>
     <li>
-      <button
-        class={{if (eq @show "materials") "active"}}
-        type="button"
-        data-test-materials
-        {{on "click" (fn @onChange "materials")}}
+      <LinkTo
+        @route="dashboard.materials"
+        title={{t "general.materials"}}
+        @current-when="dashboard.materials"
       >
         {{t "general.materials"}}
-      </button>
+      </LinkTo>
     </li>
     <li>
-      <button
-        class={{if (eq @show "calendar") "active"}}
-        type="button"
-        data-test-calendar
-        {{on "click" (fn @onChange "calendar")}}
+      <LinkTo
+        @route="dashboard.calendar"
+        title={{t "general.calendar"}}
+        @current-when="dashboard.calendar"
       >
         {{t "general.calendar"}}
-      </button>
+      </LinkTo>
     </li>
   </ul>
 </div>
