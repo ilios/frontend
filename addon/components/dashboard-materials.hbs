@@ -32,7 +32,14 @@
       </div>
     </div>
     {{#if this.showAllMaterials}}
-      <DashboardAllMaterials />
+      <DashboardAllMaterials
+        @courseIdFilter={{@course}}
+        @filter={{@filter}}
+        @sortBy={{@sortBy}}
+        @setCourseIdFilter={{@setCourse}}
+        @setFilter={{@setFilter}}
+        @setSortBy={{@setSortBy}}
+      />
     {{else}}
       <DashboardCurrentMaterials @daysInAdvance={{this.daysInAdvance}} />
     {{/if}}

@@ -11,11 +11,6 @@ export default class DashboardAllMaterialsComponent extends Component {
   @service currentUser;
   @service fetch;
   @service iliosConfig;
-
-  @tracked courseId = null;
-  @tracked filter = null;
-  @tracked sortByParam = null;
-
   @tracked materials = null;
 
   constructor() {
@@ -37,11 +32,11 @@ export default class DashboardAllMaterialsComponent extends Component {
       return [];
     }
 
-    if (isPresent(this.courseId)) {
-      materials = this.materials.filterBy('course', this.courseId);
+    if (isPresent(this.args.courseId)) {
+      materials = this.materials.filterBy('course', this.args.courseId);
     }
 
-    if (isPresent(this.filter)) {
+    if (isPresent(this.args.filter)) {
       materials = materials.filter(({ courseTitle, instructors, sessionTitle, title }) => {
         let searchString = `${title} ${courseTitle} ${sessionTitle} `;
 
@@ -49,7 +44,7 @@ export default class DashboardAllMaterialsComponent extends Component {
           searchString += instructors.join(' ');
         }
 
-        return searchString.toLowerCase().includes(this.filter.toLowerCase());
+        return searchString.toLowerCase().includes(this.args.filter.toLowerCase());
       });
     }
     return materials;
@@ -68,7 +63,7 @@ export default class DashboardAllMaterialsComponent extends Component {
   }
 
   get sortedAscending() {
-    return this.sortBy.search(/desc/) === -1;
+    return this.args.sortBy.search(/desc/) === -1;
   }
 
   get materialsAreLoading() {
@@ -81,30 +76,23 @@ export default class DashboardAllMaterialsComponent extends Component {
   }
 
   @action
+  sortBy(what) {
+    if (this.args.sortBy === what) {
+      what += ':desc';
+    }
+    this.args.setSortBy(what);
+  }
+
+  @action
   changeCourseIdFilter(event) {
-    const value = event.target.value;
-    this.courseId = value === '' ? null : value;
+    // const value = event.target.value;
+    // this.courseId = value === '' ? null : value;
+    this.args.setCourseIdFilter(event.target.value);
   }
 
   @restartableTask
   *setQuery(query) {
     yield timeout(DEBOUNCE_DELAY);
-    this.filter = query;
-  }
-
-  get course() {
-    return this.courseId ?? '';
-  }
-
-  get sortBy() {
-    return this.sortByParam ?? 'firstOfferingDate:desc';
-  }
-
-  @action
-  setSortBy(what) {
-    if (this.sortByParam === what) {
-      what += ':desc';
-    }
-    this.sortByParam = what;
+    this.args.setFilter(query);
   }
 }

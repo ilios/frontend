@@ -24,7 +24,7 @@
         data-test-filter-input
         placeholder={{t "general.filterPlaceholder"}}
         type="text"
-        value={{this.filter}}
+        value={{@filter}}
         {{on "input" (perform this.setQuery value="target.value")}}
       >
     </span>
@@ -35,10 +35,10 @@
           @colspan={{3}}
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{or
-          (eq this.sortBy "sessionTitle")
-          (eq this.sortBy "sessionTitle:desc")
+          (eq @sortBy "sessionTitle")
+          (eq @sortBy "sessionTitle:desc")
         }}
-          @onClick={{fn this.setSortBy "sessionTitle"}}
+          @onClick={{fn this.sortBy "sessionTitle"}}
         >
           {{t "general.session"}}
         </SortableTh>
@@ -46,18 +46,18 @@
           @colspan={{3}}
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{or
-          (eq this.sortBy "courseTitle")
-          (eq this.sortBy "courseTitle:desc")
+          (eq @sortBy "courseTitle")
+          (eq @sortBy "courseTitle:desc")
         }}
-          @onClick={{fn this.setSortBy "courseTitle"}}
+          @onClick={{fn this.sortBy "courseTitle"}}
         >
           {{t "general.course"}}
         </SortableTh>
         <SortableTh
           @colspan={{3}}
           @sortedAscending={{this.sortedAscending}}
-          @sortedBy={{or (eq this.sortBy "title") (eq this.sortBy "title:desc")}}
-          @onClick={{fn this.setSortBy "title"}}
+          @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+          @onClick={{fn this.sortBy "title"}}
         >
           {{t "general.title"}}
         </SortableTh>
@@ -68,11 +68,11 @@
           @colspan={{1}}
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{or
-          (eq this.sortBy "firstOfferingDate")
-          (eq this.sortBy "firstOfferingDate:desc")
+          (eq @sortBy "firstOfferingDate")
+          (eq @sortBy "firstOfferingDate:desc")
         }}
           @sortType="numeric"
-          @onClick={{fn this.setSortBy "firstOfferingDate"}}
+          @onClick={{fn this.sortBy "firstOfferingDate"}}
         >
           {{t "general.date"}}
         </SortableTh>
@@ -86,7 +86,7 @@
           </td>
         </tr>
       {{else}}
-        {{#each (sort-by this.sortBy this.filteredMaterials) as |lmObject|}}
+        {{#each (sort-by @sortBy this.filteredMaterials) as |lmObject|}}
           <tr>
             <td colspan="3" data-test-session-title>
               {{lmObject.sessionTitle}}
