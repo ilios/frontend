@@ -6,6 +6,7 @@ import moment from 'moment';
 
 export default class DashboardCalendarController extends Controller {
   @service currentUser;
+  @service router;
   @service store;
 
   queryParams = [
@@ -65,7 +66,7 @@ export default class DashboardCalendarController extends Controller {
 
   @action
   selectEvent(event) {
-    this.transitionToRoute('events', event.slug);
+    this.router.transition('events', event.slug);
   }
 
   @action
