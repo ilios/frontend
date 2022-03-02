@@ -81,7 +81,6 @@ general:
   courseTitlePlaceholder: "Entre en un título para este curso"
   courseVisualizations: "Visualizaciones de Cursos"
   currentlySearchingPrompt: "buscando..."
-  dashboard: Tablero
   date: Fecha
   dateTime: "Fecha/Hora"
   day: "Día"

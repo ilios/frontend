@@ -81,7 +81,6 @@ general:
   courseTitlePlaceholder: "Ajoutez titre par ce cours"
   courseVisualizations: "Cours Visualisations"
   currentlySearchingPrompt: "Recherchent..."
-  dashboard: Tableau
   date: Date
   dateTime: "Date/Temps"
   day: Jour
