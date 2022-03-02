@@ -6,7 +6,7 @@ export function dashboardRoutes(router) {
       resetNamespace: true,
     },
     function () {
-      this.route('index');
+      this.route('week');
       this.route('activities');
       this.route('materials');
       this.route('calendar');
