@@ -30,7 +30,7 @@ export default class DashboardAllMaterialsComponent extends Component {
     this.materials = data.userMaterials;
   }
 
-  get allfilteredMaterials() {
+  get allFilteredMaterials() {
     let materials = this.materials;
     if (!this.materials) {
       return [];
@@ -69,13 +69,13 @@ export default class DashboardAllMaterialsComponent extends Component {
 
   get filteredMaterials() {
     if (this.limit >= this.total) {
-      return this.allfilteredMaterials;
+      return this.allFilteredMaterials;
     }
-    return this.allfilteredMaterials.slice(this.offset, this.offset + this.limit);
+    return this.allFilteredMaterials.slice(this.offset, this.offset + this.limit);
   }
 
   get total() {
-    return this.allfilteredMaterials.length;
+    return this.allFilteredMaterials.length;
   }
 
   get courses() {
