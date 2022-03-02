@@ -205,13 +205,11 @@ export default class SingleEvent extends Component {
 
   @action
   transitionToMyMaterials() {
-    // @todo re-enable course filtering and sorting on route [ST 2022/02/28]
-    // const course = this.courseId;
-    // const queryParams = { course, sortBy: 'sessionTitle' };
-    // this.router.transitionTo('mymaterials', { queryParams });
-    this.transitionTo('dashboard', {
+    this.router.transitionTo('dashboard.materials', {
       queryParams: {
         show: 'materials',
+        course: this.courseId,
+        showAll: true,
       },
     });
   }
