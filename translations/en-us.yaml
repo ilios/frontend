@@ -225,10 +225,12 @@ general:
   overview: "Overview"
   ownedBy: "owned by {owner}"
   owner: Owner
+  pagedResultsCount: "Showing {start} - {end} of {total}"
   parentCount: "{count, plural, =1 {1 has a parent} other {# have parents}}"
   parentGroup: "Parent group"
   parentGroups: "Parent groups"
   parentObjectives: "Parent Objectives"
+  perPage: "Per Page"
   pickADate: "Pick a date"
   prerequisites: "Prerequisites"
   preWork: "Pre-work"
