@@ -1,47 +1,22 @@
 <div class="dashboard-materials">
-  {{#let (unique-id) as |templateId|}}
-    <div class="header">
-      <h2 class="title" data-test-title>
-        {{t "general.myLearningMaterials"}}
-      </h2>
-      <div class="controls">
-        <span>
-          <input
-            id="next-{{templateId}}"
-            type="radio"
-            name="mode"
-            checked={{unless this.showAllMaterials "checked"}}
-            {{on "click" (set this.showAllMaterials false)}}
-          >
-          <label for="next-{{templateId}}">
-            {{t "general.nextXDays" days=this.daysInAdvance}}
-          </label>
-        </span>
-        <span>
-          <input
-            id="all-{{templateId}}"
-            type="radio"
-            name="mode"
-            checked={{if this.showAllMaterials "checked"}}
-            {{on "click" (set this.showAllMaterials true)}}
-          >
-          <label for="all-{{templateId}}">
-            {{t "general.allMaterials"}}
-          </label>
-        </span>
-      </div>
-    </div>
-    {{#if this.showAllMaterials}}
-      <DashboardAllMaterials
-        @courseIdFilter={{@course}}
-        @filter={{@filter}}
-        @sortBy={{@sortBy}}
-        @setCourseIdFilter={{@setCourse}}
-        @setFilter={{@setFilter}}
-        @setSortBy={{@setSortBy}}
-      />
-    {{else}}
-      <DashboardCurrentMaterials @daysInAdvance={{this.daysInAdvance}} />
-    {{/if}}
-  {{/let}}
+  <div class="header">
+    <ToggleButtons
+      @firstOptionSelected={{not @showAllMaterials}}
+      @firstLabel={{t "general.nextXDays" days=this.daysInAdvance}}
+      @secondLabel={{t "general.allMaterials"}}
+      @toggle={{@toggleMaterialsMode}}
+    />
+  </div>
+  {{#if @showAllMaterials}}
+    <DashboardAllMaterials
+      @courseIdFilter={{@course}}
+      @filter={{@filter}}
+      @sortBy={{@sortBy}}
+      @setCourseIdFilter={{@setCourse}}
+      @setFilter={{@setFilter}}
+      @setSortBy={{@setSortBy}}
+    />
+  {{else}}
+    <DashboardCurrentMaterials @daysInAdvance={{this.daysInAdvance}} />
+  {{/if}}
 </div>

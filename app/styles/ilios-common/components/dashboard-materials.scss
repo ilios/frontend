@@ -1,22 +1,9 @@
 .dashboard-materials {
   max-height: 40em;
   overflow-y: scroll;
-  padding: 0 1em 1em;
+  padding: .5em;
 
   .header {
-    align-items: start;
-    column-gap: 1rem;
-    display: flex;
-    flex-direction: column;
-
-    @include for-tablet-and-up {
-      align-items: center;
-      flex-direction: row;
-    }
-
-    .title {
-      @include ilios-heading-h4;
-    }
+    margin: 1em 1em 1em 0;
   }
-
 }
