@@ -28,6 +28,14 @@
         {{on "input" (perform this.setQuery value="target.value")}}
       >
     </span>
+    <PagedlistControls
+      @offset={{this.offset}}
+      @limit={{this.limit}}
+      @total={{this.total}}
+      @setOffset={{this.setOffset}}
+      @setLimit={{this.setLimit}}
+      data-test-top-paged-list-controls
+    />
     <table>
       <thead>
       <tr>
@@ -86,7 +94,7 @@
           </td>
         </tr>
       {{else}}
-        {{#each (sort-by @sortBy this.filteredMaterials) as |lmObject|}}
+        {{#each this.filteredMaterials as |lmObject|}}
           <tr>
             <td colspan="3" data-test-session-title>
               {{lmObject.sessionTitle}}
@@ -175,5 +183,13 @@
       {{/if}}
       </tbody>
     </table>
+    <PagedlistControls
+      @offset={{this.offset}}
+      @limit={{this.limit}}
+      @total={{this.total}}
+      @setOffset={{this.setOffset}}
+      @setLimit={{this.setLimit}}
+      data-test-bottom-paged-list-controls
+    />
   </div>
 </div>

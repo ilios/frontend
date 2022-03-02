@@ -38,4 +38,9 @@
   .fa-spinner.orange {
     color: $ilios-orange;
   }
+
+  .pagedlist-controls {
+    grid-column: 1 / -1;
+    text-align: right;
+  }
 }

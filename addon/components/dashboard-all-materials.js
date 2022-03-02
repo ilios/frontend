@@ -6,12 +6,16 @@ import { isNone, isPresent } from '@ember/utils';
 import { restartableTask, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_DELAY = 250;
+const DEFAULT_OFFSET = 0;
+const DEFAULT_LIMIT = 25;
 
 export default class DashboardAllMaterialsComponent extends Component {
   @service currentUser;
   @service fetch;
   @service iliosConfig;
   @tracked materials = null;
+  @tracked offset = DEFAULT_OFFSET;
+  @tracked limit = DEFAULT_LIMIT;
 
   constructor() {
     super(...arguments);
@@ -26,7 +30,7 @@ export default class DashboardAllMaterialsComponent extends Component {
     this.materials = data.userMaterials;
   }
 
-  get filteredMaterials() {
+  get allfilteredMaterials() {
     let materials = this.materials;
     if (!this.materials) {
       return [];
@@ -47,7 +51,31 @@ export default class DashboardAllMaterialsComponent extends Component {
         return searchString.toLowerCase().includes(this.args.filter.toLowerCase());
       });
     }
-    return materials;
+
+    const sortedMaterials = materials.sortBy(this.sortInfo.column);
+    if (this.sortInfo.descending) {
+      return sortedMaterials.reverse();
+    }
+    return sortedMaterials;
+  }
+
+  get sortInfo() {
+    const parts = this.args.sortBy.split(':');
+    const column = parts[0];
+    const descending = parts.length > 1 && parts[1] === 'desc';
+
+    return { column, descending, sortBy: this.args.sortBy };
+  }
+
+  get filteredMaterials() {
+    if (this.limit >= this.total) {
+      return this.allfilteredMaterials;
+    }
+    return this.allfilteredMaterials.slice(this.offset, this.offset + this.limit);
+  }
+
+  get total() {
+    return this.allfilteredMaterials.length;
   }
 
   get courses() {
@@ -84,15 +112,25 @@ export default class DashboardAllMaterialsComponent extends Component {
   }
 
   @action
+  setLimit(limit) {
+    this.limit = limit;
+  }
+
+  @action
+  setOffset(offset) {
+    this.offset = offset;
+  }
+
+  @action
   changeCourseIdFilter(event) {
-    // const value = event.target.value;
-    // this.courseId = value === '' ? null : value;
+    this.offset = DEFAULT_OFFSET;
     this.args.setCourseIdFilter(event.target.value);
   }
 
   @restartableTask
   *setQuery(query) {
     yield timeout(DEBOUNCE_DELAY);
+    this.offset = DEFAULT_OFFSET;
     this.args.setFilter(query);
   }
 }
