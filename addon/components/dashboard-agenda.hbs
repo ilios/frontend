@@ -1,20 +1,22 @@
-<div class="dashboard-agenda">
-  <h2 class="title" data-test-title>
-    {{t "general.upcomingActivities" days=this.daysInAdvance}}
-  </h2>
-  {{#if (is-array this.weeksEvents)}}
-    {{#if (gt this.ilmPreWorkEvents.length 0)}}
-      <div class="pre-work">
-        <IliosCalendarPreWorkEvents
-          @events={{this.ilmPreWorkEvents}}
-          @areEventsSelectable={{this.areEventsSelectable}}
-        />
-      </div>
-    {{/if}}
-    <div class="activities">
-      {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
-        <table>
-          <tbody>
+<div class="dashboard-agenda" data-test-dashboard-agenda>
+  <DashboardViewPicker />
+  <div class="dashboard-agenda-content">
+    <h2 class="title" data-test-title>
+      {{t "general.upcomingActivities" days=this.daysInAdvance}}
+    </h2>
+    {{#if (is-array this.weeksEvents)}}
+      {{#if (gt this.ilmPreWorkEvents.length 0)}}
+        <div class="pre-work">
+          <IliosCalendarPreWorkEvents
+            @events={{this.ilmPreWorkEvents}}
+            @areEventsSelectable={{this.areEventsSelectable}}
+          />
+        </div>
+      {{/if}}
+      <div class="activities">
+        {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
+          <table>
+            <tbody>
             {{#each this.nonIlmPreWorkEvents as |event|}}
               {{#if event.isBlanked}}
                 <tr>
@@ -133,18 +135,19 @@
                 </tr>
               {{/unless}}
             {{/each}}
-          </tbody>
-        </table>
-      {{else}}
-        <p>
-          {{t "general.none"}}
-        </p>
-      {{/if}}
-    </div>
-  {{else}}
-    <p>
-      <FaIcon @icon="spinner" @spin={{true}} />
-      {{t "general.loadingEvents"}}
-    </p>
-  {{/if}}
+            </tbody>
+          </table>
+        {{else}}
+          <p>
+            {{t "general.none"}}
+          </p>
+        {{/if}}
+      </div>
+    {{else}}
+      <p>
+        <FaIcon @icon="spinner" @spin={{true}} />
+        {{t "general.loadingEvents"}}
+      </p>
+    {{/if}}
+  </div>
 </div>

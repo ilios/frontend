@@ -1,18 +1,22 @@
 .dashboard-week {
-  max-height: 40em;
-  overflow-y: scroll;
-  padding: 0 1em 1em;
+  @include dashboard-component;
 
-  .weeklylink {
-    display: flex;
-    justify-content: flex-end;
+  .dashboard-week-content {
+    max-height: 40em;
+    overflow-y: scroll;
+    padding: 0 1em 1em;
 
-    @include for-tablet-and-up {
-      float: right;
-    }
+    .weeklylink {
+      display: flex;
+      justify-content: flex-end;
 
-    a {
-      margin-left: .25rem;
+      @include for-tablet-and-up {
+        float: right;
+      }
+
+      a {
+        margin-left: .25rem;
+      }
     }
   }
 }

@@ -1,9 +1,13 @@
 .dashboard-materials {
-  max-height: 40em;
-  overflow-y: scroll;
-  padding: .5em;
+  @include dashboard-component;
 
-  .header {
-    margin: 1em 1em 1em 0;
+  .dashboard-materials-content {
+    max-height: 40em;
+    overflow-y: scroll;
+    padding: .5em;
+
+    .header {
+      margin: 1em 1em 1em 0;
+    }
   }
 }

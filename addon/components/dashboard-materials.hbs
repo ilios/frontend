@@ -1,22 +1,26 @@
-<div class="dashboard-materials">
-  <div class="header">
-    <ToggleButtons
-      @firstOptionSelected={{not @showAllMaterials}}
-      @firstLabel={{t "general.nextXDays" days=this.daysInAdvance}}
-      @secondLabel={{t "general.allMaterials"}}
-      @toggle={{@toggleMaterialsMode}}
-    />
+<div class="dashboard-materials" data-test-dashboard-materials>
+  <DashboardViewPicker />
+  <div class="dashboard-materials-content">
+    <div class="header">
+      <ToggleButtons
+        @firstOptionSelected={{not @showAllMaterials}}
+        @firstLabel={{t "general.nextXDays" days=this.daysInAdvance}}
+        @secondLabel={{t "general.allMaterials"}}
+        @toggle={{@toggleMaterialsMode}}
+      />
+    </div>
+    {{#if @showAllMaterials}}
+      <DashboardAllMaterials
+        @courseIdFilter={{@course}}
+        @filter={{@filter}}
+        @sortBy={{@sortBy}}
+        @setCourseIdFilter={{@setCourse}}
+        @setFilter={{@setFilter}}
+        @setSortBy={{@setSortBy}}
+      />
+    {{else}}
+      <DashboardCurrentMaterials @daysInAdvance={{this.daysInAdvance}} />
+    {{/if}}
   </div>
-  {{#if @showAllMaterials}}
-    <DashboardAllMaterials
-      @courseIdFilter={{@course}}
-      @filter={{@filter}}
-      @sortBy={{@sortBy}}
-      @setCourseIdFilter={{@setCourse}}
-      @setFilter={{@setFilter}}
-      @setSortBy={{@setSortBy}}
-    />
-  {{else}}
-    <DashboardCurrentMaterials @daysInAdvance={{this.daysInAdvance}} />
-  {{/if}}
+
 </div>

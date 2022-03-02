@@ -1,18 +1,18 @@
-<div
-  class="dashboard-week"
-  data-test-dashboard-week
->
-  <div class="weeklylink" data-test-weekly-link>
-    {{t "general.view"}}:
-    <LinkTo @route="weeklyevents" @query={{hash expanded=this.expanded week=this.week}}>
-      {{t "general.allWeeks"}}
-    </LinkTo>
+<div class="dashboard-week" data-test-dashboard-week>
+  <DashboardViewPicker />
+  <div class="dashboard-week-content">
+    <div class="weeklylink" data-test-weekly-link>
+      {{t "general.view"}}:
+      <LinkTo @route="weeklyevents" @query={{hash expanded=this.expanded week=this.week}}>
+        {{t "general.allWeeks"}}
+      </LinkTo>
+    </div>
+    <WeekGlance
+      @collapsed={{false}}
+      @collapsible={{false}}
+      @showFullTitle={{true}}
+      @week={{this.week}}
+      @year={{this.year}}
+    />
   </div>
-  <WeekGlance
-    @collapsed={{false}}
-    @collapsible={{false}}
-    @showFullTitle={{true}}
-    @week={{this.week}}
-    @year={{this.year}}
-  />
 </div>
