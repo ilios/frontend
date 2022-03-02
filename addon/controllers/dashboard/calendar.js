@@ -66,7 +66,7 @@ export default class DashboardCalendarController extends Controller {
 
   @action
   selectEvent(event) {
-    this.router.transition('events', event.slug);
+    this.router.transitionTo('events', event.slug);
   }
 
   @action
