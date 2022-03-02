@@ -15,24 +15,24 @@
         {{#if (eq @selectedView viewType)}}
           {{t (concat "general." viewType)}}
         {{else}}
-          <LinkTo @route="dashboard" @query={{hash view=viewType}}>{{t (concat "general." viewType)}}</LinkTo>
+          <LinkTo @route="dashboard.calendar" @query={{hash view=viewType}}>{{t (concat "general." viewType)}}</LinkTo>
         {{/if}}
       </li>
     {{/each}}
   </ul>
   <ul class="inline calendar-time-picker">
     <li>
-      <LinkTo @route="dashboard" @query={{hash date=this.backDate}}>
+      <LinkTo @route="dashboard.calendar" @query={{hash date=this.backDate}}>
         <FaIcon @title={{t "general.back"}} @icon="backward" />
       </LinkTo>
     </li>
     <li>
-      <LinkTo @route="dashboard" @query={{hash date=this.todayDate}}>
+      <LinkTo @route="dashboard.calendar" @query={{hash date=this.todayDate}}>
         {{t "general.today"}}
       </LinkTo>
     </li>
     <li>
-      <LinkTo @route="dashboard" @query={{hash date=this.forwardDate}}>
+      <LinkTo @route="dashboard.calendar" @query={{hash date=this.forwardDate}}>
         <FaIcon @title={{t "general.forward"}} @icon="forward" />
       </LinkTo>
     </li>
