@@ -1,0 +1,15 @@
+.pagedlist-controls {
+  float: right;
+
+  .forward {
+    padding-right: .75rem;
+  }
+
+  .backward {
+    padding-left: .75rem;
+  }
+
+  select {
+    margin-left: .75rem;
+  }
+}

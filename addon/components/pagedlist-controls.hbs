@@ -1,0 +1,38 @@
+{{#let (unique-id) as |templateId|}}
+  <div class="pagedlist-controls" data-test-pagedlist-controls ...attributes>
+    {{#unless this.firstPage}}
+      <button class="link-button backward" type="button" {{on "click" this.goBack}} data-test-go-back>
+        <FaIcon @icon="backward" />
+      </button>
+    {{/unless}}
+    {{#if @limitless}}
+      <select aria-labelledby="per-page-{{templateId}}" {{on "change" (pick "target.value" this.setLimit)}} data-test-limits>
+        {{#each this.offsetOptions as |o|}}
+          <option value={{o}} selected={{is-equal o this.limit}} data-test-limit>
+            {{o}}
+          </option>
+        {{/each}}
+      </select>
+      <span id="per-page-{{templateId}}">{{t "general.perPage"}}</span>
+    {{else}}
+      <span data-test-paged-results-count>
+        {{t "general.pagedResultsCount" start=this.start end=this.end total=this.total}}
+      </span>
+    {{/if}}
+    {{#unless this.lastPage}}
+      <button class="link-button forward" type="button" {{on "click" this.goForward}} data-test-go-forward>
+        <FaIcon @icon="forward" />
+      </button>
+    {{/unless}}
+    {{#unless @limitless}}
+      <select aria-labelledby="per-page-{{templateId}}" {{on "change" (pick "target.value" this.setLimit)}} data-test-limits>
+        {{#each this.offsetOptions as |o|}}
+          <option value={{o}} selected={{is-equal o this.limit}} data-test-limit>
+            {{o}}
+          </option>
+        {{/each}}
+      </select>
+      <span id="per-page-{{templateId}}">{{t "general.perPage"}}</span>
+    {{/unless}}
+  </div>
+{{/let}}
