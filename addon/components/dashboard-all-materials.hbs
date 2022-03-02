@@ -10,7 +10,7 @@
         </option>
         {{#each this.courses as |courseObj|}}
           <option
-            selected={{is-equal courseObj.id @courseIdFilter}}
+            selected={{is-equal courseObj.id @courseId}}
             value={{courseObj.id}}
           >
             {{courseObj.title}}
