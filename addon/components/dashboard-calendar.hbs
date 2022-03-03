@@ -9,10 +9,10 @@
     <section class="calendar-controls">
       <div class="calendar-options-control togglemyschedule">
         <ToggleButtons
-          @firstOptionSelected={{@courseFilters}}
-          @firstLabel={{t "general.courseOrSessionType"}}
-          @secondLabel={{t "general.programDetail"}}
-          @toggle={{@toggleCourseFilters}}
+          @firstOptionSelected={{@mySchedule}}
+          @firstLabel={{t "general.mySchedule"}}
+          @secondLabel={{t "general.allEvents"}}
+          @toggle={{@toggleMySchedule}}
         />
       </div>
       <div class="calendar-options-control showfilters">
