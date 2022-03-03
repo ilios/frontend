@@ -18,7 +18,6 @@ export default class DashboardCalendarController extends Controller {
     'mySchedule',
     'school',
     'sessionTypes',
-    'show',
     'showFilters',
     'terms',
     'view',
@@ -33,7 +32,6 @@ export default class DashboardCalendarController extends Controller {
   @tracked date = null;
   @tracked mySchedule = true;
   @tracked school = null;
-  @tracked show = 'week';
   @tracked showFilters = false;
   @tracked view = 'week';
 
