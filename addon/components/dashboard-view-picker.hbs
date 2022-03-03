@@ -1,10 +1,11 @@
-<div class="dashboard-view-picker">
+<div class="dashboard-view-picker" data-test-dashboard-view-picker ...attributes>
   <ul>
     <li>
       <LinkTo
         @route="dashboard.week"
         title={{t "general.weekAtAGlance"}}
         @current-when="dashboard.week"
+        data-test-link-week
       >
         {{t "general.weekAtAGlance"}}
       </LinkTo>
@@ -14,6 +15,7 @@
         @route="dashboard.activities"
         title={{t "general.activities"}}
         @current-when="dashboard.activities"
+        data-test-link-activities
       >
         {{t "general.activities"}}
       </LinkTo>
@@ -23,6 +25,7 @@
         @route="dashboard.materials"
         title={{t "general.materials"}}
         @current-when="dashboard.materials"
+        data-test-link-materials
       >
         {{t "general.materials"}}
       </LinkTo>
@@ -32,6 +35,7 @@
         @route="dashboard.calendar"
         title={{t "general.calendar"}}
         @current-when="dashboard.calendar"
+        data-test-link-calendar
       >
         {{t "general.calendar"}}
       </LinkTo>

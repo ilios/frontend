@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import page from 'ilios-common/page-objects/dashboard';
+import page from 'ilios-common/page-objects/dashboard-week';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Acceptance | Dashboard Week at a Glance', function (hooks) {
@@ -40,11 +40,11 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       offering: 2,
     });
     await page.visit({ show: 'week' });
-    assert.strictEqual(currentRouteName(), 'dashboard');
+    assert.strictEqual(currentRouteName(), 'dashboard.week');
 
-    assert.strictEqual(page.weekGlance.offeringEvents.length, 2);
-    assert.strictEqual(page.weekGlance.offeringEvents[0].title, 'start of week');
-    assert.strictEqual(page.weekGlance.offeringEvents[1].title, 'end of week');
+    assert.strictEqual(page.week.weekGlance.offeringEvents.length, 2);
+    assert.strictEqual(page.week.weekGlance.offeringEvents[0].title, 'start of week');
+    assert.strictEqual(page.week.weekGlance.offeringEvents[1].title, 'end of week');
   });
 
   test('shows all pre work', async function (assert) {
@@ -68,16 +68,24 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       offering: 1,
       prerequisites,
     });
-    await page.visit({ show: 'week' });
-    assert.strictEqual(currentRouteName(), 'dashboard');
+    await page.visit();
+    assert.strictEqual(currentRouteName(), 'dashboard.week');
 
-    assert.strictEqual(page.weekGlance.offeringEvents.length, 1);
-    assert.strictEqual(page.weekGlance.preWork.length, 3);
-    assert.strictEqual(page.weekGlance.preWork[0].title, 'pre 1');
-    assert.strictEqual(page.weekGlance.preWork[1].title, 'pre 2');
-    assert.strictEqual(page.weekGlance.preWork[2].title, 'pre 3');
+    assert.strictEqual(page.week.weekGlance.offeringEvents.length, 1);
+    assert.strictEqual(page.week.weekGlance.preWork.length, 3);
+    assert.strictEqual(page.week.weekGlance.preWork[0].title, 'pre 1');
+    assert.strictEqual(page.week.weekGlance.preWork[1].title, 'pre 2');
+    assert.strictEqual(page.week.weekGlance.preWork[2].title, 'pre 3');
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('calendar is active in dashboard navigation', async function (assert) {
+    await page.visit();
+    assert.notOk(page.week.dashboardViewPicker.activities.isActive);
+    assert.notOk(page.week.dashboardViewPicker.calendar.isActive);
+    assert.notOk(page.week.dashboardViewPicker.materials.isActive);
+    assert.ok(page.week.dashboardViewPicker.week.isActive);
   });
 });
