@@ -61,7 +61,7 @@ general:
   color: Color
   competenciesManageTitle: "Manage Competencies"
   competency: Competency
-  competencyDomain: "Competency domain"
+  competencyDomain: "Competency Domain"
   confirmLogout: "You have successfully logged out of Ilios. To help protect your account and the security of others, please close all browser windows."
   confirmRemoveCourse: "Are you sure you want to delete this course, with {publishedOfferingCount} published offerings? This action will remove all sessions and offerings for this course, and cannot be undone."
   confirmRemoveInstructorGroup: "Are you sure you want to delete this instructor group, with {instructorCount} instructors? This action cannot be undone."
