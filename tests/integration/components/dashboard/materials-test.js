@@ -12,7 +12,7 @@ let lm1, lm2, lm3, lm4, lm5, userMaterials;
 const today = moment();
 const tomorrow = moment().add(1, 'day');
 
-module('Integration | Component | dashboard materials', function (hooks) {
+module('Integration | Component | dashboard/materials', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -97,7 +97,7 @@ module('Integration | Component | dashboard materials', function (hooks) {
       };
     });
 
-    await render(hbs`<DashboardMaterials />`);
+    await render(hbs`<Dashboard::Materials />`);
 
     const title = '[data-test-title]';
     const table = 'table:nth-of-type(1)';
@@ -219,7 +219,7 @@ module('Integration | Component | dashboard materials', function (hooks) {
     const title = '[data-test-title]';
     const body = 'p';
 
-    await render(hbs`<DashboardMaterials />`);
+    await render(hbs`<Dashboard::Materials />`);
     assert.dom('[data-test-all-materials-link]').hasText('View: All Materials');
     assert
       .dom(this.element.querySelector(title))

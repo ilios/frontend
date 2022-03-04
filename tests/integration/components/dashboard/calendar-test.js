@@ -2,7 +2,7 @@ import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 
-module('Integration | Component | dashboard calendar', function (hooks) {
+module('Integration | Component | dashboard/calendar', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 

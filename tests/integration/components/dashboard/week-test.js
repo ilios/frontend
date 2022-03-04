@@ -6,10 +6,9 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/dashboard/week';
 
-import { component } from 'ilios-common/page-objects/components/dashboard-week';
-
-module('Integration | Component | dashboard week', function (hooks) {
+module('Integration | Component | dashboard/week', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -86,7 +85,7 @@ module('Integration | Component | dashboard week', function (hooks) {
     assert.expect(5);
     this.owner.register('service:user-events', this.userEventsMock);
 
-    await render(hbs`<DashboardWeek />`);
+    await render(hbs`<Dashboard::Week />`);
     const expectedTitle = getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
@@ -100,7 +99,7 @@ module('Integration | Component | dashboard week', function (hooks) {
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    await render(hbs`<DashboardWeek />`);
+    await render(hbs`<Dashboard::Week />`);
     const expectedTitle = getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);

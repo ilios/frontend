@@ -12,7 +12,7 @@ let userEventsMock;
 let blankEventsMock;
 let preWork;
 
-module('Integration | Component | dashboard agenda', function (hooks) {
+module('Integration | Component | dashboard/agenda', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
@@ -207,7 +207,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     this.owner.register('service:user-events', userEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    await render(hbs`<DashboardAgenda />`);
+    await render(hbs`<Dashboard::Agenda />`);
     const title = '[data-test-title]';
 
     assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
@@ -250,7 +250,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     this.owner.register('service:user-events', userEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    await render(hbs`<DashboardAgenda />`);
+    await render(hbs`<Dashboard::Agenda />`);
     assert.strictEqual(
       this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-black-tie')
         .length,
@@ -286,7 +286,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     this.owner.register('service:user-events', blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    await render(hbs`<DashboardAgenda />`);
+    await render(hbs`<Dashboard::Agenda />`);
     const title = '[data-test-title]';
     const body = 'p';
 
