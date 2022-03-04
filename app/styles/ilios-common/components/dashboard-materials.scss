@@ -44,6 +44,10 @@
       @include ilios-table-colors;
       @include ilios-zebra-table;
       grid-column: 1 / -1;
+
+      .no-results {
+        text-align: center;
+      }
     }
 
     .fa-spinner.orange {
