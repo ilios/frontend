@@ -4,7 +4,7 @@
 >
   <DashboardViewPicker />
   <div class="dashboard-materials-content">
-    <div class="header">
+    <div class="header" data-test-materials-header>
       <ToggleButtons
         @firstOptionSelected={{not @showAllMaterials}}
         @firstLabel={{t "general.nextXDays" days=this.daysInAdvance}}
@@ -12,56 +12,56 @@
         @toggle={{@toggleMaterialsMode}}
       />
     </div>
-    <div class="material-list">
-    <span class="course-filter">
+    <div class="material-list" data-test-materials-list>
+      <span class="course-filter" data-test-course-filter>
         <select
           aria-label={{t "general.selectCourse"}}
           {{on "change" this.changeCourseIdFilter}}
         >
-        <option value="">
-          {{t "general.allCourses"}}
-        </option>
-        {{#if this.materialsLoaded}}
-          {{#each this.courses as |courseObj|}}
-            <option
-              selected={{is-equal courseObj.id @courseIdFilter}}
-              value={{courseObj.id}}
-            >
-              {{courseObj.title}}
-            </option>
-          {{/each}}
-          {{#unless this.canApplyCourseFilter}}
-            {{#if this.courseLoaded}}
-              {{#if this.course}}
-                <option selected="selected" disabled>{{this.course.title}}</option>
-              {{else}}
-                <option selected="selected" disabled>&ast;&ast; {{t "general.courseNotFound"}} &ast;&ast;</option>
+          <option value="">
+            {{t "general.allCourses"}}
+          </option>
+          {{#if this.materialsLoaded}}
+            {{#each this.courses as |courseObj|}}
+              <option
+                selected={{is-equal courseObj.id @courseIdFilter}}
+                value={{courseObj.id}}
+              >
+                {{courseObj.title}}
+              </option>
+            {{/each}}
+            {{#unless this.canApplyCourseFilter}}
+              {{#if this.courseLoaded}}
+                {{#if this.course}}
+                  <option selected="selected" disabled>{{this.course.title}}</option>
+                {{else}}
+                  <option selected="selected" disabled>&ast;&ast; {{t "general.courseNotFound"}} &ast;&ast;</option>
+                {{/if}}
               {{/if}}
-            {{/if}}
-          {{/unless}}
-        {{/if}}
-      </select>
-    </span>
-        <span class="filter">
-      <input
-        aria-label={{t "general.filterPlaceholder"}}
-        data-test-filter-input
-        placeholder={{t "general.filterPlaceholder"}}
-        type="text"
-        value={{@filter}}
-        {{on "input" (perform this.setQuery value="target.value")}}
-      >
-    </span>
-        <PagedlistControls
-          @offset={{@offset}}
-          @limit={{@limit}}
-          @total={{this.total}}
-          @setOffset={{@setOffset}}
-          @setLimit={{@setLimit}}
-          data-test-top-paged-list-controls
-        />
-        <table>
-          <thead>
+            {{/unless}}
+          {{/if}}
+        </select>
+      </span>
+      <span class="filter" data-test-text-filter>
+        <input
+          aria-label={{t "general.filterPlaceholder"}}
+          data-test-filter-input
+          placeholder={{t "general.filterPlaceholder"}}
+          type="text"
+          value={{@filter}}
+          {{on "input" (perform this.setQuery value="target.value")}}
+        >
+      </span>
+      <PagedlistControls
+        @offset={{@offset}}
+        @limit={{@limit}}
+        @total={{this.total}}
+        @setOffset={{@setOffset}}
+        @setLimit={{@setLimit}}
+        data-test-top-paged-list-controls
+      />
+      <table>
+        <thead>
           <tr>
             <SortableTh
               @colspan={{3}}
@@ -109,8 +109,8 @@
               {{t "general.date"}}
             </SortableTh>
           </tr>
-          </thead>
-          <tbody>
+        </thead>
+        <tbody>
           {{#if this.materialsLoaded}}
             {{#each this.filteredMaterials as |lmObject|}}
               <tr>
@@ -205,16 +205,16 @@
               </td>
             </tr>
           {{/if}}
-          </tbody>
-        </table>
-        <PagedlistControls
-          @offset={{@offset}}
-          @limit={{@limit}}
-          @total={{this.total}}
-          @setOffset={{@setOffset}}
-          @setLimit={{@setLimit}}
-          data-test-bottom-paged-list-controls
-        />
-      </div>
+        </tbody>
+      </table>
+      <PagedlistControls
+        @offset={{@offset}}
+        @limit={{@limit}}
+        @total={{this.total}}
+        @setOffset={{@setOffset}}
+        @setLimit={{@setLimit}}
+        data-test-bottom-paged-list-controls
+      />
     </div>
+  </div>
 </div>
