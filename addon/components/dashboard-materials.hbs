@@ -23,20 +23,22 @@
         <option value="">
           {{t "general.allCourses"}}
         </option>
-        {{#each this.courses as |courseObj|}}
-          <option
-            selected={{is-equal courseObj.id @courseIdFilter}}
-            value={{courseObj.id}}
-          >
-            {{courseObj.title}}
-          </option>
-        {{/each}}
-        {{#unless (or this.load.isRunning this.canApplyCourseFilter)}}
-          {{#if (await this.course)}}
-            <option selected="selected" disabled>{{this.course.title}}</option>
-          {{else}}
-            <option selected="selected" disabled>&ast;&ast; {{t "general.courseNotFound"}} &ast;&ast;</option>
-          {{/if}}
+        {{#unless this.load.isRunning}}
+          {{#each this.courses as |courseObj|}}
+            <option
+              selected={{is-equal courseObj.id @courseIdFilter}}
+              value={{courseObj.id}}
+            >
+              {{courseObj.title}}
+            </option>
+          {{/each}}
+          {{#unless this.canApplyCourseFilter}}
+            {{#if this.course}}
+              <option selected="selected" disabled>{{this.course.title}}</option>
+            {{else}}
+              <option selected="selected" disabled>&ast;&ast; {{t "general.courseNotFound"}} &ast;&ast;</option>
+            {{/if}}
+          {{/unless}}
         {{/unless}}
       </select>
     </span>
