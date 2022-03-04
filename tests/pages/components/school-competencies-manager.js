@@ -1,4 +1,4 @@
-import { collection, clickable, create, isVisible, text } from 'ember-cli-page-object';
+import { collection, clickable, create, isVisible } from 'ember-cli-page-object';
 import editor from './competency-title-editor';
 import newCompetency from './new-competency';
 
@@ -14,7 +14,6 @@ const definition = {
     competencies: collection('[data-test-competency]', {
       remove: clickable('[data-test-remove-competency]'),
       isRemovable: isVisible('[data-test-remove-competency]'),
-      objectivesCount: text('[data-test-objectives-count]'),
       editor,
     }),
     newCompetency,

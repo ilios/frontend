@@ -26,11 +26,11 @@ module('Integration | Component | school competencies collapsed', function (hook
     assert.strictEqual(component.expandButton.text, 'Competencies (3/4)');
     assert.strictEqual(component.domains.length, 3);
     assert.strictEqual(component.domains[0].title, 'competency 0');
-    assert.strictEqual(component.domains[0].summary, 'There are 3 competencies');
+    assert.strictEqual(component.domains[0].summary, 'There are 3 subcompetencies');
     assert.strictEqual(component.domains[1].title, 'competency 1');
-    assert.strictEqual(component.domains[1].summary, 'There is 1 competency');
+    assert.strictEqual(component.domains[1].summary, 'There is 1 subcompetency');
     assert.strictEqual(component.domains[2].title, 'competency 2');
-    assert.strictEqual(component.domains[2].summary, 'There are 0 competencies');
+    assert.strictEqual(component.domains[2].summary, 'There are 0 subcompetencies');
   });
 
   test('clicking expand fires action', async function (assert) {

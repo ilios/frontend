@@ -61,7 +61,7 @@ general:
   color: Color
   competenciesManageTitle: "Maneje Competencias"
   competency: Competencia
-  competencyCount: "{count, plural, =1 {Hay 1 competencia} other {Hay # competencias}}"
+  competencyDomain: "Dominio de Dompetencia"
   confirmLogout: "Usted ha cerrado la aplicación Ilios con éxito. Para asistir con la protección de su cuenta y la seguridad de otros, favor de cerrar todas las ventanas del navegador."
   confirmRemoveCourse: " ¿Estás seguro que quieres borrar este curso, con {publishedOfferingCount} ofrecimientos publicados? Esta acción borrará todas las sesiones y ofrecimientos para este curso y no se puede deshacer."
   confirmRemoveInstructorGroup: "¿Estás seguro que quieres remover este grupo de instructores, con {instructorCount} instructores? Esta acción no se puede deshacer."
@@ -384,6 +384,7 @@ general:
   street: Calle
   strong: Fuerte
   student: Estudiante
+  subCompetencyCount: "{count, plural, =1 {Hay 1 subcompetencia} other {Hay # subcompetencias}}"
   subgroupName: "Nombre del Subgrupo"
   subgroups: "Grupos Subordinados"
   subTerms: "Términos subordinados"
