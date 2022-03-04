@@ -69,6 +69,7 @@ general:
   courseLearningMaterials: "Matériels d'Étude du Cours"
   courseLevel: "Niveau du cours {level}"
   courseLevels: "Niveaux de Cours"
+  courseNotFound: "cours introuvable"
   courseObjectives: "Objectifs du Cours"
   courseOrSessionType: "Cours / Type de séance"
   courseRollover: "Roulement Cours"

@@ -69,6 +69,7 @@ general:
   courseLearningMaterials: "Course Learning Materials"
   courseLevel: "Course Level {level}"
   courseLevels: "Course Levels"
+  courseNotFound: "course not found"
   courseObjectives: "Course Objectives"
   courseOrSessionType: "Course / Session Type"
   courseRollover: "Rollover Course"
