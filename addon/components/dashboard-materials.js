@@ -9,8 +9,6 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import moment from 'moment';
 
 const DEBOUNCE_DELAY = 250;
-const DEFAULT_OFFSET = 0;
-const DEFAULT_LIMIT = 25;
 
 export default class DashboardMaterialsComponent extends Component {
   daysInAdvance = 60;
@@ -19,9 +17,6 @@ export default class DashboardMaterialsComponent extends Component {
   @service iliosConfig;
   @tracked showAllMaterials = false;
   @service currentUser;
-  // @tracked materials = null;
-  @tracked offset = DEFAULT_OFFSET;
-  @tracked limit = DEFAULT_LIMIT;
   @use _course = new AsyncProcess(() => [this.loadCourse.bind(this), this.args.courseIdFilter]);
   @use _materials = new AsyncProcess(() => [
     this.loadMaterials.bind(this),
@@ -118,10 +113,10 @@ export default class DashboardMaterialsComponent extends Component {
   }
 
   get filteredMaterials() {
-    if (this.limit >= this.total) {
+    if (this.args.limit >= this.total) {
       return this.allFilteredMaterials;
     }
-    return this.allFilteredMaterials.slice(this.offset, this.offset + this.limit);
+    return this.allFilteredMaterials.slice(this.args.offset, this.args.offset + this.args.limit);
   }
 
   get total() {
@@ -158,25 +153,15 @@ export default class DashboardMaterialsComponent extends Component {
   }
 
   @action
-  setLimit(limit) {
-    this.limit = limit;
-  }
-
-  @action
-  setOffset(offset) {
-    this.offset = offset;
-  }
-
-  @action
   changeCourseIdFilter(event) {
-    this.offset = DEFAULT_OFFSET;
+    this.args.setOffset(0);
     this.args.setCourseIdFilter(event.target.value);
   }
 
   @restartableTask
   *setQuery(query) {
     yield timeout(DEBOUNCE_DELAY);
-    this.offset = DEFAULT_OFFSET;
+    this.args.setOffset(0);
     this.args.setFilter(query);
   }
 }
