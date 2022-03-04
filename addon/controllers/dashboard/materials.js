@@ -22,11 +22,19 @@ export default class DashboardMaterialsController extends Controller {
   @tracked showAllMaterialsParam = null;
 
   get offset() {
-    return this.offsetParam ?? 0;
+    if (!this.offsetParam) {
+      return 0;
+    }
+    const offset = parseInt(this.offsetParam, 10);
+    return offset.isNaN ? 0 : offset;
   }
 
   get limit() {
-    return this.limitParam ?? DEFAULT_LIMIT;
+    if (!this.limitParam) {
+      return DEFAULT_LIMIT;
+    }
+    const limit = parseInt(this.limitParam, 10);
+    return limit.isNaN ? DEFAULT_LIMIT : limit;
   }
 
   get course() {
