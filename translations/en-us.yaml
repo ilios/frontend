@@ -282,7 +282,6 @@ general:
   orderInSequence: "Order in Sequence"
   other: Other
   otherId: "Other ID"
-  pagedResultsCount: "Showing {start} - {end} of {total}"
   parallel: Parallel
   password: Password
   pendingUpdatesSummary: "{count, plural, =1 {There is one user needing attention} other {There are # users needing attention}}"
@@ -296,7 +295,6 @@ general:
   performsNonLearnerFunctions: "Performs Non-Learner Functions"
   permissions: Permissions
   permissionsInOtherSchools: "Permissions in Other Schools"
-  perPage: "Per Page"
   phone: Phone
   physicianCompetencyReferenceSet: "Physician Competency Reference Set"
   physicianCompetencyReferenceSetAbbr: PCRS

@@ -282,7 +282,6 @@ general:
   orderInSequence: "Ordre dans séquence"
   other: Autre
   otherId: "Autre ID"
-  pagedResultsCount: "Montrant {start} - {end} de {total}"
   parallel: "Parallèle"
   password: "Mot de passe"
   pendingUpdatesSummary: "{count, plural, =1 {Il y a un utilisateur nécessitant une attention particulière} other {Il y a des # utilisateurs nécessitants une attention particulière}}"
@@ -296,7 +295,6 @@ general:
   performsNonLearnerFunctions: "Acquitte de Fonctions Non-Apprenant"
   permissions: Permissions
   permissionsInOtherSchools: "Permissions en Autres Écoles"
-  perPage: "Par Page"
   phone: "Téléphone"
   physicianCompetencyReferenceSet: "Ensemble de références de compétences de médecin"
   physicianCompetencyReferenceSetAbbr: PCRS
