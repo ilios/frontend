@@ -32,7 +32,6 @@ export default class DashboardMaterialsComponent extends Component {
       url += `?before=${to}&after=${from}`;
     }
     const data = await this.fetch.getJsonFromApiHost(url);
-    console.log(data.userMaterials);
     return data.userMaterials;
   }
 
