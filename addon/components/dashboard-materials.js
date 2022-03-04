@@ -19,10 +19,27 @@ export default class DashboardMaterialsComponent extends Component {
   @service iliosConfig;
   @tracked showAllMaterials = false;
   @service currentUser;
-  @tracked materials = null;
+  // @tracked materials = null;
   @tracked offset = DEFAULT_OFFSET;
   @tracked limit = DEFAULT_LIMIT;
   @use _course = new AsyncProcess(() => [this.loadCourse.bind(this), this.args.courseIdFilter]);
+  @use _materials = new AsyncProcess(() => [
+    this.loadMaterials.bind(this),
+    this.args.showAllMaterials,
+  ]);
+
+  async loadMaterials() {
+    const user = await this.currentUser.getModel();
+    let url = `${this.iliosConfig.apiNameSpace}/usermaterials/${user.id}`;
+    if (!this.args.showAllMaterials) {
+      const from = moment().hour(0).minute(0).unix();
+      const to = moment().hour(23).minute(59).add(this.daysInAdvance, 'days').unix();
+      url += `?before=${to}&after=${from}`;
+    }
+    const data = await this.fetch.getJsonFromApiHost(url);
+    console.log(data.userMaterials);
+    return data.userMaterials;
+  }
 
   async loadCourse(courseId) {
     let course = null;
@@ -41,17 +58,19 @@ export default class DashboardMaterialsComponent extends Component {
     return null;
   }
 
-  @restartableTask
-  *load() {
-    const user = yield this.currentUser.getModel();
-    let url = `${this.iliosConfig.apiNameSpace}/usermaterials/${user.id}`;
-    if (!this.args.showAllMaterials) {
-      const from = moment().hour(0).minute(0).unix();
-      const to = moment().hour(23).minute(59).add(this.daysInAdvance, 'days').unix();
-      url += `?before=${to}&after=${from}`;
+  get courseLoaded() {
+    return isPresent(this._course);
+  }
+
+  get materials() {
+    if (this._materials) {
+      return this._materials;
     }
-    const data = yield this.fetch.getJsonFromApiHost(url);
-    this.materials = data.userMaterials;
+    return [];
+  }
+
+  get materialsLoaded() {
+    return isPresent(this._materials);
   }
 
   get canApplyCourseFilter() {
@@ -61,18 +80,11 @@ export default class DashboardMaterialsComponent extends Component {
     return true;
   }
 
-  get allMaterials() {
-    if (!this.materials) {
-      return [];
-    }
-    return this.materials;
-  }
-
   get materialsFilteredByCourse() {
     if (isPresent(this.args.courseIdFilter)) {
-      return this.allMaterials.filterBy('course', this.args.courseIdFilter);
+      return this.materials.filterBy('course', this.args.courseIdFilter);
     }
-    return this.allMaterials;
+    return this.materials;
   }
 
   get allFilteredMaterials() {

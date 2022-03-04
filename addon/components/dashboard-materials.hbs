@@ -1,8 +1,6 @@
 <div
   class="dashboard-materials"
   data-test-dashboard-materials
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @showAllMaterials}}
 >
   <DashboardViewPicker />
   <div class="dashboard-materials-content">
@@ -23,7 +21,7 @@
         <option value="">
           {{t "general.allCourses"}}
         </option>
-        {{#unless this.load.isRunning}}
+        {{#if this.materialsLoaded}}
           {{#each this.courses as |courseObj|}}
             <option
               selected={{is-equal courseObj.id @courseIdFilter}}
@@ -33,13 +31,15 @@
             </option>
           {{/each}}
           {{#unless this.canApplyCourseFilter}}
-            {{#if this.course}}
-              <option selected="selected" disabled>{{this.course.title}}</option>
-            {{else}}
-              <option selected="selected" disabled>&ast;&ast; {{t "general.courseNotFound"}} &ast;&ast;</option>
+            {{#if this.courseLoaded}}
+              {{#if this.course}}
+                <option selected="selected" disabled>{{this.course.title}}</option>
+              {{else}}
+                <option selected="selected" disabled>&ast;&ast; {{t "general.courseNotFound"}} &ast;&ast;</option>
+              {{/if}}
             {{/if}}
           {{/unless}}
-        {{/unless}}
+        {{/if}}
       </select>
     </span>
         <span class="filter">
@@ -111,13 +111,7 @@
           </tr>
           </thead>
           <tbody>
-          {{#if this.load.isRunning}}
-            <tr>
-              <td class="text-center" colspan="11">
-                <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
-              </td>
-            </tr>
-          {{else}}
+          {{#if this.materialsLoaded}}
             {{#each this.filteredMaterials as |lmObject|}}
               <tr>
                 <td colspan="3" data-test-session-title>
@@ -204,6 +198,12 @@
                 </td>
               </tr>
             {{/each}}
+          {{else}}
+            <tr>
+              <td class="text-center" colspan="11">
+                <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
+              </td>
+            </tr>
           {{/if}}
           </tbody>
         </table>
