@@ -36,7 +36,7 @@ export default class DashboardMaterialsComponent extends Component {
   }
 
   async loadCourse(courseId) {
-    let course = null;
+    let course = false;
     try {
       course = await this.store.findRecord('course', courseId);
     } catch (e) {
