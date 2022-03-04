@@ -72,6 +72,8 @@ export default class DashboardMaterialsController extends Controller {
 
   @action
   toggleMaterialsMode() {
+    this.setLimit(null);
+    this.setOffset(null);
     this.showAllMaterialsParam = this.showAllMaterialsParam ? null : true;
   }
 }
