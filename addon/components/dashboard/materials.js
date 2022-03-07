@@ -36,7 +36,7 @@ export default class DashboardMaterialsComponent extends Component {
   }
 
   async loadCourse(courseId) {
-    let course = false;
+    let course = null;
     try {
       course = await this.store.findRecord('course', courseId);
     } catch (e) {
@@ -53,7 +53,7 @@ export default class DashboardMaterialsComponent extends Component {
   }
 
   get courseLoaded() {
-    return isPresent(this._course);
+    return this._course !== undefined;
   }
 
   get materials() {
@@ -64,7 +64,7 @@ export default class DashboardMaterialsComponent extends Component {
   }
 
   get materialsLoaded() {
-    return isPresent(this._materials);
+    return this._materials !== undefined;
   }
 
   get canApplyCourseFilter() {
