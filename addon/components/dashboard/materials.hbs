@@ -52,14 +52,15 @@
           {{on "input" (perform this.setQuery value="target.value")}}
         >
       </span>
-      <PagedlistControls
-        @offset={{@offset}}
-        @limit={{@limit}}
-        @total={{this.total}}
-        @setOffset={{@setOffset}}
-        @setLimit={{@setLimit}}
-        data-test-top-paged-list-controls
-      />
+      <span class="paginator" data-test-paginator-top>
+        <PagedlistControls
+          @offset={{@offset}}
+          @limit={{@limit}}
+          @total={{this.total}}
+          @setOffset={{@setOffset}}
+          @setLimit={{@setLimit}}
+        />
+      </span>
       <table>
         <thead>
           <tr>
@@ -207,14 +208,15 @@
           {{/if}}
         </tbody>
       </table>
-      <PagedlistControls
-        @offset={{@offset}}
-        @limit={{@limit}}
-        @total={{this.total}}
-        @setOffset={{@setOffset}}
-        @setLimit={{@setLimit}}
-        data-test-bottom-paged-list-controls
-      />
+      <span class="paginator" data-test-paginator-bottom>
+        <PagedlistControls
+          @offset={{@offset}}
+          @limit={{@limit}}
+          @total={{this.total}}
+          @setOffset={{@setOffset}}
+          @setLimit={{@setLimit}}
+        />
+      </span>
     </div>
   </div>
 </div>
