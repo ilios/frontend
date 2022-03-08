@@ -296,7 +296,6 @@ general:
   performsNonLearnerFunctions: "Performs Non-Learner Functions"
   permissions: Permissions
   permissionsInOtherSchools: "Permissions in Other Schools"
-  perPage: "Per Page"
   phone: Phone
   physicianCompetencyReferenceSet: "Physician Competency Reference Set"
   physicianCompetencyReferenceSetAbbr: PCRS
