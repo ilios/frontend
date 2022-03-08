@@ -114,7 +114,7 @@
         <tbody>
           {{#if this.materialsLoaded}}
             {{#each this.filteredMaterials as |lmObject|}}
-              <tr>
+              <tr data-test-learning-material>
                 <td colspan="3" data-test-session-title>
                   {{lmObject.sessionTitle}}
                 </td>
@@ -123,16 +123,16 @@
                 </td>
                 <td colspan="3" data-test-title>
                   {{#if lmObject.isBlanked}}
-                    <span class="lm-type-icon">
-                    <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
-                  </span>
+                    <span class="lm-type-icon" data-test-lm-type-icon>
+                      <FaIcon @icon="clock" @title={{t "general.timedRelease"}} data-test-is-blanked />
+                    </span>
                     {{lmObject.title}}
                     <span class="timed-release-info">
-                    <TimedReleaseSchedule
-                      @endDate={{lmObject.endDate}}
-                      @startDate={{lmObject.startDate}}
-                    />
-                  </span>
+                      <TimedReleaseSchedule
+                        @endDate={{lmObject.endDate}}
+                        @startDate={{lmObject.startDate}}
+                      />
+                    </span>
                   {{else}}
                     <LmTypeIcon
                       @mimetype={{lmObject.mimetype}}
@@ -140,13 +140,17 @@
                     />
                     {{#if lmObject.absoluteFileUri}}
                       {{#if (eq lmObject.mimetype "application/pdf")}}
-                        <a href="{{lmObject.absoluteFileUri}}?inline">
+                        <a
+                          href="{{lmObject.absoluteFileUri}}?inline"
+                          data-test-pdf-link
+                        >
                           {{lmObject.title}}
                         </a>
                         <a
                           href={{lmObject.absoluteFileUri}}
                           rel="noopener noreferrer"
                           target="_blank"
+                          data-test-pdf-download-link
                         >
                           <FaIcon
                             @icon="download"
@@ -158,12 +162,18 @@
                           href={{lmObject.absoluteFileUri}}
                           rel="noopener noreferrer"
                           target="_blank"
+                          data-test-file-link
                         >
                           {{lmObject.title}}
                         </a>
                       {{/if}}
                     {{else if lmObject.link}}
-                      <a href={{lmObject.link}} rel="noopener noreferrer" target="_blank">
+                      <a
+                        href={{lmObject.link}}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        data-test-link
+                      >
                         {{lmObject.title}}
                       </a>
                     {{else}}
@@ -175,7 +185,7 @@
                     {{/if}}
                   {{/if}}
                 </td>
-                <td class="hide-from-small-screen" colspan="1" data-test-instructor>
+                <td class="hide-from-small-screen" colspan="1" data-test-instructors>
                   <TruncateText
                     @length={{25}}
                     @text={{join
