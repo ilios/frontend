@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { findAll, render } from '@ember/test-helpers';
+import { findAll, render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -53,6 +53,9 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     this.set('course', this.courseModel);
 
     await render(hbs`<VisualizerCourseSessionTypes @course={{this.course}} @isIcon={{false}} />`);
+    //let the chart animations finish
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
 
     const chartLabels = 'svg .bars text';
     assert.dom(chartLabels).exists({ count: 2 });
@@ -68,6 +71,9 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     await render(
       hbs`<VisualizerCourseSessionTypes @course={{this.course}} @isIcon={{false}} @chartType="donut" />`
     );
+    //let the chart animations finish
+    await waitFor('.loaded');
+    await waitFor('svg .slice');
 
     const chartLabels = 'svg .slice text';
     assert.dom(chartLabels).exists({ count: 2 });
@@ -82,6 +88,9 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     await render(
       hbs`<VisualizerCourseSessionTypes @course={{this.course}} @filter={{this.title}} @isIcon={{false}} />`
     );
+    //let the chart animations finish
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
     const chartLabels = 'svg .bars text';
     assert.dom(chartLabels).exists({ count: 1 });
     assert.dom(findAll(chartLabels)[0]).hasText('Campaign 22.2%');

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, findAll } from '@ember/test-helpers';
+import { render, findAll, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -63,6 +63,9 @@ module('Integration | Component | visualizer-course-session-type', function (hoo
     await render(
       hbs`<VisualizerCourseSessionType @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} />`
     );
+    //let the chart animations finish
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
 
     const chartLabels = 'svg .bars text';
     assert.dom(chartLabels).exists({ count: 2 });

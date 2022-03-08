@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -52,6 +52,9 @@ module('Integration | Component | visualizer-course-vocabularies', function (hoo
     this.set('course', courseModel);
 
     await render(hbs`<VisualizerCourseVocabularies @course={{this.course}} @isIcon={{false}} />`);
+    //let the chart animations finish
+    await waitFor('.loaded');
+    await waitFor('svg .slice');
     const chart = 'svg';
     const chartLabels = `${chart} .slice text`;
     assert.dom(chartLabels).exists({ count: 2 });
