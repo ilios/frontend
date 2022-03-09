@@ -21,9 +21,18 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-  this.route('dashboard', {
-    resetNamespace: true,
-  });
+  this.route(
+    'dashboard',
+    {
+      resetNamespace: true,
+    },
+    function () {
+      this.route('week');
+      this.route('activities');
+      this.route('materials');
+      this.route('calendar');
+    }
+  );
   this.route('courses');
   this.route(
     'course',
