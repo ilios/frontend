@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { click, render, findAll } from '@ember/test-helpers';
+import { click, render, findAll, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -61,6 +61,9 @@ module('Integration | Component | visualizer-course-vocabulary', function (hooks
     await render(
       hbs`<VisualizerCourseVocabulary @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} />`
     );
+    //let the chart animations finish
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
 
     const chartLabels = 'svg .bars text';
     assert.dom(chartLabels).exists({ count: 2 });
@@ -84,6 +87,9 @@ module('Integration | Component | visualizer-course-vocabulary', function (hooks
     await render(
       hbs`<VisualizerCourseVocabulary @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} />`
     );
+    //let the chart animations finish
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
 
     await click('svg .bars rect:nth-of-type(1)');
   });

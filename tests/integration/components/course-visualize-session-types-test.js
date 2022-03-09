@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/course-visualize-session-types';
@@ -72,6 +72,8 @@ module('Integration | Component | course-visualize-session-types', function (hoo
   test('filter works', async function (assert) {
     this.set('course', this.courseModel);
     await render(hbs`<CourseVisualizeSessionTypes @model={{this.course}} />`);
+    //let the chart animations finish
+    await waitFor('.loaded');
     assert.strictEqual(component.title, 'course 0 2021');
     assert.strictEqual(component.chart.bars.length, 2);
     assert.strictEqual(component.chart.labels.length, 2);

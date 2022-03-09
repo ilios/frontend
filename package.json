@@ -73,7 +73,7 @@
     "ember-page-title": "^7.0.0",
     "ember-promise-helpers": "2.0.0",
     "ember-simple-auth-token": "^5.0.0",
-    "ember-simple-charts": "^9.0.2",
+    "ember-simple-charts": "^10.0.0",
     "ember-test-selectors": "^6.0.0",
     "ember-truth-helpers": "^3.0.0",
     "flatpickr": "^4.0.0",
