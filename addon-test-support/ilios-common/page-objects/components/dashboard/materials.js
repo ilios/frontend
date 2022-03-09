@@ -27,6 +27,7 @@ const definition = {
     value: value('select'),
     options: collection('option', {
       isSelected: property('selected'),
+      isDisabled: property('disabled'),
     }),
   },
   textFilter: {
