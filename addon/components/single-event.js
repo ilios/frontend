@@ -205,9 +205,13 @@ export default class SingleEvent extends Component {
 
   @action
   transitionToMyMaterials() {
-    const course = this.courseId;
-    const queryParams = { course, sortBy: 'sessionTitle' };
-    this.router.transitionTo('mymaterials', { queryParams });
+    this.router.transitionTo('dashboard.materials', {
+      queryParams: {
+        show: 'materials',
+        course: this.courseId,
+        showAll: true,
+      },
+    });
   }
 
   /**

@@ -1,8 +1,19 @@
 export function dashboardRoutes(router) {
-  router.route('dashboard');
+  router.route(
+    'dashboard',
+    {
+      path: 'dashboard',
+      resetNamespace: true,
+    },
+    function () {
+      this.route('week');
+      this.route('activities');
+      this.route('materials');
+      this.route('calendar');
+    }
+  );
   router.route('events', { path: 'events/:slug' });
   router.route('weeklyevents');
-  router.route('mymaterials');
 }
 
 export function courseRoutes(router) {

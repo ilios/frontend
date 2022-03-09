@@ -1,0 +1,153 @@
+<div class="dashboard-agenda" data-test-dashboard-agenda>
+  <Dashboard::ViewPicker />
+  <div class="dashboard-agenda-content">
+    <h2 class="title" data-test-title>
+      {{t "general.upcomingActivities" days=this.daysInAdvance}}
+    </h2>
+    {{#if (is-array this.weeksEvents)}}
+      {{#if (gt this.ilmPreWorkEvents.length 0)}}
+        <div class="pre-work">
+          <IliosCalendarPreWorkEvents
+            @events={{this.ilmPreWorkEvents}}
+            @areEventsSelectable={{this.areEventsSelectable}}
+          />
+        </div>
+      {{/if}}
+      <div class="activities">
+        {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
+          <table>
+            <tbody>
+            {{#each this.nonIlmPreWorkEvents as |event|}}
+              {{#if event.isBlanked}}
+                <tr>
+                  <td colspan="4" class="event-date">
+                    {{#if event.ilmSession}}
+                      <span class="ilm-due">
+                        {{t "general.dueBy"}}
+                      </span>
+                    {{/if}}
+                    {{format-date event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}}
+                  </td>
+                  <td colspan="4">
+                    {{#if event.ilmSession}}
+                      <strong>
+                        {{t "general.ilm"}}:
+                      </strong>
+                    {{/if}}
+                    {{event.name}}
+                  </td>
+                  <td colspan="2">
+                    {{event.location}}
+                  </td>
+                  <td colspan="1">
+                    {{#if event.attireRequired}}
+                      <FaIcon
+                        @icon="black-tie"
+                        @prefix="fab"
+                        @title={{t "general.whitecoatsSlashSpecialAttire"}}
+                      />
+                    {{/if}}
+                    {{#if event.equipmentRequired}}
+                      <FaIcon
+                        @icon="flask"
+                        @title={{t "general.specialEquipment"}}
+                      />
+                    {{/if}}
+                    {{#if event.attendanceRequired}}
+                      <FaIcon
+                        @icon="calendar-check"
+                        @title={{t "general.attendanceIsRequired"}}
+                      />
+                    {{/if}}
+                    {{#if
+                      (is-same-or-after
+                        event.lastModified this.sixDaysAgo precision="day"
+                      )
+                    }}
+                      <FaIcon
+                        @icon="circle-exclamation"
+                        @title={{t "general.newUpdates"}}
+                      />
+                    {{/if}}
+                  </td>
+                </tr>
+              {{/if}}
+              {{#unless event.isBlanked}}
+                <tr>
+                  <td colspan="4" class="event-date">
+                    <LinkTo
+                      @route="events"
+                      @model={{event.slug}}
+                      id={{concat "event" event.slug "date"}}
+                      aria-labelledby="{{concat "event" event.slug "name"}} {{concat "event" event.slug "date"}}"
+                    >
+                      <FaIcon @icon="square-up-right" />
+                      {{#if event.ilmSession}}
+                        <span class="ilm-due">
+                          {{t "general.dueBy"}}:
+                        </span>
+                      {{/if}}
+                      {{format-date event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}}
+                    </LinkTo>
+                  </td>
+                  <td colspan="4" id={{concat "event" event.slug "name"}}>
+                    {{#if event.ilmSession}}
+                      <strong>
+                        {{t "general.ilm"}}:
+                      </strong>
+                    {{/if}}
+                    {{event.name}}
+                  </td>
+                  <td colspan="2">
+                    {{event.location}}
+                  </td>
+                  <td colspan="1">
+                    {{#if event.attireRequired}}
+                      <FaIcon
+                        @icon="black-tie"
+                        @prefix="fab"
+                        @title={{t "general.whitecoatsSlashSpecialAttire"}}
+                      />
+                    {{/if}}
+                    {{#if event.equipmentRequired}}
+                      <FaIcon
+                        @icon="flask"
+                        @title={{t "general.specialEquipment"}}
+                      />
+                    {{/if}}
+                    {{#if event.attendanceRequired}}
+                      <FaIcon
+                        @icon="calendar-check"
+                        @title={{t "general.attendanceIsRequired"}}
+                      />
+                    {{/if}}
+                    {{#if
+                      (is-same-or-after
+                        event.lastModified this.sixDaysAgo precision="day"
+                      )
+                    }}
+                      <FaIcon
+                        @icon="circle-exclamation"
+                        @title={{t "general.newUpdates"}}
+                      />
+                    {{/if}}
+                  </td>
+                </tr>
+              {{/unless}}
+            {{/each}}
+            </tbody>
+          </table>
+        {{else}}
+          <p>
+            {{t "general.none"}}
+          </p>
+        {{/if}}
+      </div>
+    {{else}}
+      <p>
+        <FaIcon @icon="spinner" @spin={{true}} />
+        {{t "general.loadingEvents"}}
+      </p>
+    {{/if}}
+  </div>
+</div>

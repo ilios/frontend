@@ -1,0 +1,216 @@
+<div
+  class="dashboard-calendar"
+  {{did-insert (perform this.load) this.bestSelectedSchool}}
+  {{did-update (perform this.load) this.bestSelectedSchool}}
+  data-test-dashboard-calendar
+>
+  <Dashboard::ViewPicker />
+  <div class="dashboard-calendar-content">
+    <section class="calendar-controls">
+      <div class="calendar-options-control togglemyschedule">
+        <ToggleButtons
+          @firstOptionSelected={{@mySchedule}}
+          @firstLabel={{t "general.mySchedule"}}
+          @secondLabel={{t "general.allEvents"}}
+          @toggle={{@toggleMySchedule}}
+        />
+      </div>
+      <div class="calendar-options-control showfilters">
+        <ToggleButtons
+          @firstOptionSelected={{not @showFilters}}
+          @firstLabel={{t "general.hideFilters"}}
+          @secondLabel={{t "general.showFilters"}}
+          @toggle={{@toggleShowFilters}}
+        />
+      </div>
+      {{#if @showFilters}}
+        <div class="calendar-options-control togglecoursefilters">
+          <ToggleButtons
+            @firstOptionSelected={{@courseFilters}}
+            @firstLabel={{t "general.courseOrSessionType"}}
+            @secondLabel={{t "general.programDetail"}}
+            @toggle={{@toggleCourseFilters}}
+          />
+        </div>
+        {{#if this.showClearFilters}}
+          <span
+            id="calendar-clear-filters"
+            class="calendar-clear-filters"
+            role="button"
+            {{on "click" @clearFilters}}
+          >
+            {{t "general.clearFilters"}}
+          </span>
+        {{/if}}
+      {{/if}}
+      {{#unless @mySchedule}}
+        <div class="calendar-options-control calendar-school-picker">
+          <FaIcon @icon="building-columns" />
+          {{#if this.hasMoreThanOneSchool}}
+            <select aria-label={{t "general.schools"}} {{on "change" this.changeSchool}}>
+              {{#each (sort-by "title" @allSchools) as |school|}}
+                <option
+                  value={{school.id}}
+                  selected={{is-equal school this.bestSelectedSchool}}
+                >
+                  {{school.title}}
+                </option>
+              {{/each}}
+            </select>
+          {{else}}
+            {{get this.bestSelectedSchool "title"}}
+          {{/if}}
+        </div>
+      {{/unless}}
+      <div class="calendar-filters">
+        {{#if @showFilters}}
+          {{#if @courseFilters}}
+            <Dashboard::CoursesCalendarFilter
+              @school={{this.bestSelectedSchool}}
+              @add={{@addCourseId}}
+              @remove={{@removeCourseId}}
+              @selectedCourseIds={{@selectedCourseIds}}
+            />
+            <div
+              id="calendar-sessiontypefilter"
+              class="calendar-filter-list sessiontypefilter"
+            >
+              <h5>
+                {{t "general.sessionTypes"}}
+              </h5>
+              <div class="filters">
+                {{#if (is-array this.sessionTypes)}}
+                  <ul>
+                    {{#each this.sessionTypes as |type|}}
+                      <li class="clickable">
+                        <Dashboard::FilterCheckbox
+                          @checked={{includes type.id @selectedSessionTypeIds}}
+                          @add={{fn @addSessionTypeId type.id}}
+                          @remove={{fn @removeSessionTypeId type.id}}
+                        >
+                          {{type.title}}
+                        </Dashboard::FilterCheckbox>
+                      </li>
+                    {{/each}}
+                  </ul>
+                {{else}}
+                  <FaIcon @icon="spinner" @spin={{true}} />
+                {{/if}}
+              </div>
+            </div>
+            <div class="calendar-filter-list vocabularyfilter">
+              <h5>
+                {{t "general.terms"}}
+              </h5>
+              <div class="filters">
+                {{#if (is-array this.vocabularies)}}
+                  <ul>
+                    {{#each this.vocabularies as |vocabulary|}}
+                      <Dashboard::SelectedVocabulary
+                        @selectedTermIds={{@selectedTermIds}}
+                        @vocabulary={{vocabulary}}
+                        @add={{@addTermId}}
+                        @remove={{@removeTermId}}
+                      />
+                    {{/each}}
+                  </ul>
+                {{else}}
+                  <FaIcon @icon="spinner" @spin={{true}} />
+                {{/if}}
+              </div>
+            </div>
+          {{else}}
+            <div
+              id="calendar-sessiontypefilter"
+              class="calendar-filter-list sessiontypefilter"
+            >
+              <h5>
+                {{t "general.sessionTypes"}}
+              </h5>
+              <div class="filters">
+                {{#if (is-array this.sessionTypes)}}
+                  <ul>
+                    {{#each this.sessionTypes as |type|}}
+                      <li class="clickable">
+                        <Dashboard::FilterCheckbox
+                          @checked={{includes type.id @selectedSessionTypeIds}}
+                          @add={{fn @addSessionTypeId type.id}}
+                          @remove={{fn @removeSessionTypeId type.id}}
+                        >
+                          {{type.title}}
+                        </Dashboard::FilterCheckbox>
+                      </li>
+                    {{/each}}
+                  </ul>
+                {{else}}
+                  <FaIcon @icon="spinner" @spin={{true}} />
+                {{/if}}
+              </div>
+            </div>
+            <div
+              id="calendar-courselevelfilter"
+              class="calendar-filter-list small-filter-list courselevelfilter"
+            >
+              <h5>
+                {{t "general.courseLevels"}}
+              </h5>
+              <div class="filters">
+                <ul>
+                  {{#each this.courseLevels as |level|}}
+                    <li class="clickable">
+                      <Dashboard::FilterCheckbox
+                        @checked={{includes level @selectedCourseLevels}}
+                        @add={{fn @addCourseLevel level}}
+                        @remove={{fn @removeCourseLevel level}}
+                      >
+                        {{level}}
+                      </Dashboard::FilterCheckbox>
+                    </li>
+                  {{/each}}
+                </ul>
+              </div>
+            </div>
+            <Dashboard::CohortCalendarFilter
+              @cohortProxies={{this.cohortProxies}}
+              @add={{@addCohortId}}
+              @remove={{@removeCohortId}}
+              @selectedIds={{@selectedCohortIds}}
+            />
+          {{/if}}
+        {{/if}}
+      </div>
+    </section>
+    {{#if (is-array this.cohortProxies)}}
+      <Dashboard::FilterTags
+        @selectedCourseLevels={{@selectedCourseLevels}}
+        @selectedSessionTypeIds={{@selectedSessionTypeIds}}
+        @selectedCohortIds={{@selectedCohortIds}}
+        @selectedCourseIds={{@selectedCourseIds}}
+        @selectedTermIds={{@selectedTermIds}}
+        @cohortProxies={{this.cohortProxies}}
+        @removeCourseLevel={{@removeCourseLevel}}
+        @removeSessionTypeId={{@removeSessionTypeId}}
+        @removeCohortId={{@removeCohortId}}
+        @removeCourseId={{@removeCourseId}}
+        @removeTermId={{@removeTermId}}
+        @clearFilters={{@clearFilters}}
+      />
+    {{/if}}
+    <section class="fullwidth ilios-calendar-container"
+      {{did-insert (perform this.loadEvents) this.bestSelectedSchool this.fromTimeStamp this.toTimeStamp @mySchedule}}
+      {{did-update (perform this.loadEvents) this.bestSelectedSchool this.fromTimeStamp this.toTimeStamp @mySchedule}}
+    >
+      <IliosCalendar
+        @isLoadingEvents={{this.loadEvents.isRunning}}
+        @calendarEvents={{this.filteredEvents}}
+        @selectedDate={{@selectedDate}}
+        @selectedView={{@selectedView}}
+        @changeDate={{@changeDate}}
+        @changeView={{@changeView}}
+        @selectEvent={{@selectEvent}}
+        @icsFeedUrl={{this.absoluteIcsUri}}
+        @icsInstructions={{this.icsInstructionsTranslation}}
+      />
+    </section>
+  </div>
+</div>

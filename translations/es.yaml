@@ -69,6 +69,7 @@ general:
   courseLearningMaterials: "Materiales de Aprendizaje del Curso"
   courseLevel: "Nivel del curso {level}"
   courseLevels: "Niveles de Curso"
+  courseNotFound: "curso no encontrado"
   courseObjectives: "Objetivo del Curso"
   courseOrSessionType: "Curso / Tipo de Sesión"
   courseRollover: "Copiar Curso"
@@ -187,6 +188,7 @@ general:
   multidayEvents: "Eventos de Varios Días"
   multiple: "Múltiple "
   mustBeSameDayOfWeekAsCurrentStartDate: "Debe ser el mismo día de la semana en curso como fecha de inicio"
+  myLearningMaterials: "Mis Materiales Didácticos"
   myMaterials: "Mis Materiales"
   mySchedule: "Mi Horario"
   newObjective: "Nuevo Objetivo"
@@ -194,6 +196,7 @@ general:
   newOffering: "Nueva Oferta"
   newSession: "Sesión Nueva"
   newUpdates: "Nuevas actualizaciones"
+  nextXDays: "Próximos {days} días"
   no: No
   noAssociatedCompetencies: "No Competencias Asociadas"
   noAssociatedCompetency: "No Competencia Asociada"

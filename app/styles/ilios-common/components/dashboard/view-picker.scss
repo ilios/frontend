@@ -1,0 +1,38 @@
+.dashboard-view-picker {
+  background-color: $header-grey;
+  border-bottom: 1px solid $ilios-blue;
+  margin: 0;
+  padding: .5rem .25rem;
+
+  ul {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    @include for-tablet-and-up {
+      justify-content: flex-start;
+
+      li {
+        margin-right: 3em;
+      }
+    }
+  }
+
+  a {
+    @include ilios-button;
+    padding: .25rem .5rem;
+
+    &:active,
+    &:hover,
+    &:link,
+    &:visited {
+      text-decoration: none;
+    }
+
+    &.active {
+      background-color: $ilios-green;
+    }
+  }
+}
