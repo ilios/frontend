@@ -62,7 +62,8 @@ module('Acceptance | curriculum inventory sequence blocks', function (hooks) {
       report: this.report,
       childSequenceOrder: 1,
       orderInSequence: 0,
-      academicLevel: this.academicLevels[0],
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
     });
     await page.visit({ reportId: this.report.id });
     assert.strictEqual(
