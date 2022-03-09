@@ -39,6 +39,7 @@ module('Integration | Component | course-visualize-instructors', function (hooks
     await render(hbs`<CourseVisualizeInstructors @model={{this.course}} />`);
     //let the chart animations finish
     await waitFor('.loaded');
+    await waitFor('svg .bars');
 
     assert.strictEqual(component.title, 'course 0 2021');
     assert.strictEqual(component.chart.bars.length, 2);
