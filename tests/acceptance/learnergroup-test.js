@@ -307,17 +307,17 @@ module('Acceptance | Learnergroup', function (hooks) {
     this.server.create('offering');
 
     await page.visit({ learnerGroupId: 1 });
-    assert.ok(page.overview.calendarToggledHidden);
+    assert.ok(page.overview.displayToggle.firstButton.isChecked);
     assert.notOk(page.overview.calendar.isVisible);
     assert.strictEqual(page.overview.calendar.events.length, 0);
 
-    await page.overview.showCalendar();
-    assert.ok(page.overview.calendarToggledVisible);
+    await page.overview.displayToggle.secondButton.click();
+    assert.ok(page.overview.displayToggle.secondButton.isChecked);
     assert.ok(page.overview.calendar.isVisible);
     assert.strictEqual(page.overview.calendar.events.length, 1);
 
-    await page.overview.hideCalendar();
-    assert.ok(page.overview.calendarToggledHidden);
+    await page.overview.displayToggle.second();
+    assert.ok(page.overview.calendar.firstButton.click());
     assert.notOk(page.overview.calendar.isVisible);
     assert.strictEqual(page.overview.calendar.events.length, 0);
   });

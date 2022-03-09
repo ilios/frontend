@@ -83,7 +83,7 @@ module('Acceptance | search', function (hooks) {
       };
     });
     await dashboardPage.visit();
-    assert.strictEqual(currentURL(), '/dashboard');
+    assert.strictEqual(currentURL(), '/dashboard/week');
     await dashboardPage.iliosHeader.searchBox.input(input);
     await dashboardPage.iliosHeader.searchBox.clickIcon();
     assert.strictEqual(currentURL(), `/search?page=1&q=${encodeURIComponent(input)}`);

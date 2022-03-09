@@ -3,7 +3,7 @@ import myReports from './components/dashboard-myreports';
 import iliosHeader from 'ilios/tests/pages/components/ilios-header';
 
 export default create({
-  visit: visitable('/dashboard'),
+  visit: visitable('/dashboard/week'),
   iliosHeader,
   myReports,
 });
