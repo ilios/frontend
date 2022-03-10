@@ -32,11 +32,7 @@
           {{on "input" (pick "target.value" (set this.firstName))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "firstName") (perform this.saveOrCancel))}}
         >
-        {{#each (await (compute this.getErrorsFor "firstName")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.firstName}} />
       </div>
       <div class="item" data-test-middle-name>
         <label for="middle-{{templateId}}">
@@ -49,11 +45,7 @@
           {{on "input" (pick "target.value" (set this.middleName))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "middleName") (perform this.saveOrCancel))}}
         >
-        {{#each (await (compute this.getErrorsFor "middleName")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.middleName}} />
       </div>
       <div class="item" data-test-last-name>
         <label for="last-{{templateId}}">
@@ -66,11 +58,7 @@
           {{on "input" (pick "target.value" (set this.lastName))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "lastName") (perform this.saveOrCancel))}}
         >
-        {{#each (await (compute this.getErrorsFor "lastName")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.lastName}} />
       </div>
       <div class="item" data-test-campus-id>
         <label for="campus-{{templateId}}">
@@ -83,11 +71,7 @@
           {{on "input" (pick "target.value" (set this.campusId))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "campusId") (perform this.saveOrCancel))}}
         >
-        {{#each (await (compute this.getErrorsFor "campusId")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.campusId}} />
       </div>
       <div class="item" data-test-other-id>
         <label for="other-{{templateId}}">
@@ -100,11 +84,7 @@
           {{on "input" (pick "target.value" (set this.otherId))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "otherId") (perform this.saveOrCancel))}}
         >
-        {{#each (await (compute this.getErrorsFor "otherId")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.otherId}} />
       </div>
       <div class="item" data-test-email>
         <label for="email-{{templateId}}">
@@ -117,11 +97,7 @@
           {{on "input" (pick "target.value" (set this.email))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "email") (perform this.saveOrCancel))}}
         >
-        {{#each (await (compute this.getErrorsFor "email")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.email}} />
       </div>
       <div class="item" data-test-phone>
         <label for="phone-{{templateId}}">
@@ -134,11 +110,7 @@
           {{on "input" (pick "target.value" (set this.phone))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "phone") (perform this.saveOrCancel))}}
         >
-        {{#each (await (compute this.getErrorsFor "phone")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.phone}} />
       </div>
       <div class="item" data-test-username>
         <label for="username-{{templateId}}">
@@ -151,11 +123,7 @@
           {{on "input" (pick "target.value" (set this.username))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "username") (perform this.saveOrCancel))}}
         >
-        {{#each (await (compute this.getErrorsFor "username")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.username}} />
       </div>
       <div class="item" data-test-password>
         <label for="password-{{templateId}}">
@@ -168,11 +136,7 @@
           {{on "input" (pick "target.value" (set this.password))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "password") (perform this.saveOrCancel))}}
         >
-        {{#each (await (compute this.getErrorsFor "password")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.password}} />
       </div>
       <div class="item" data-test-school>
         <label for="primary-school-{{templateId}}">

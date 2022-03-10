@@ -22,9 +22,5 @@
       {{t "general.add"}}
     {{/if}}
   </button>
-  {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-    <span class="validation-error-message">
-      {{message}}
-    </span>
-  {{/each}}
+  <ValidationError @errors={{get-errors-for this.title}} />
 </div>

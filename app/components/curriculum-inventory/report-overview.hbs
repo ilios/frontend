@@ -56,11 +56,7 @@
                   @onChange={{queue (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
                   data-test-start-date-picker
                 />
-                {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
-                {{/each}}
+                <ValidationError @errors={{get-errors-for this.startDate}} />
               </EditableField>
             {{else}}
               {{format-date @report.startDate}}
@@ -83,11 +79,7 @@
                   @onChange={{queue (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
                   data-test-end-date-picker
                 />
-                {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
-                {{/each}}
+                <ValidationError @errors={{get-errors-for this.endDate}} />
               </EditableField>
             {{else}}
               {{format-date @report.endDate}}
@@ -154,11 +146,7 @@
                 >
                   {{this.description}}
                 </textarea>
-                {{#each (await (compute this.getErrorsFor "description")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
-                {{/each}}
+                <ValidationError @errors={{get-errors-for this.description}} />
               </EditableField>
             {{else}}
               {{this.description}}

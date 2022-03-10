@@ -19,11 +19,7 @@
           {{on "keyup" (fn this.addErrorDisplayFor "title")}}
           {{on "input" (pick "target.value" (set this.title))}}
         >
-        {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.title}} />
       </div>
       <div class="buttons">
         <button

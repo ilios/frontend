@@ -21,11 +21,7 @@
           disabled={{isSaving}}
           {{on "keyup" (fn this.addErrorDisplayFor "name")}}
         />
-        {{#each (await (compute this.getErrorsFor "name")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.name}} />
       </EditableField>
     {{else}}
       <h2 data-test-locked-name>

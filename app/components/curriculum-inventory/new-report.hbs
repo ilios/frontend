@@ -25,11 +25,7 @@
             {{on "input" (pick "target.value" (set this.name))}}
             {{on "keyup" (fn this.addErrorDisplayFor "name")}}
           >
-          {{#each (await (compute this.getErrorsFor "name")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.name}} />
         </div>
         <div class="item" data-test-description>
           <label for="description-{{templateId}}">
@@ -41,11 +37,7 @@
             placeholder={{t "general.reportDescriptionPlaceholder"}}
             {{on "input" (pick "target.value" (set this.description))}}
           >{{this.description}}</textarea>
-          {{#each (await (compute this.getErrorsFor "description")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.description}} />
         </div>
         <div class="item" data-test-program-title>
           <label>

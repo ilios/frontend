@@ -74,11 +74,7 @@
             {{on "input" (pick "target.value" (set this.otherId))}}
             {{on "keyup" (fn this.addErrorDisplayFor "otherId")}}
           >
-          {{#each (await (compute this.getErrorsFor "otherId")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.otherId}} />
         </div>
         <div class="item" data-test-username>
           <label for="username-{{templateId}}">
@@ -93,11 +89,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "username")}}
               {{on "keyup" this.keyboard}}
             >
-            {{#each (await (compute this.getErrorsFor "username")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.username}} />
           {{else}}
             <span>
               {{this.username}}
@@ -117,11 +109,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "password")}}
               {{on "keyup" this.keyboard}}
             >
-            {{#each (await (compute this.getErrorsFor "password")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.password}} />
           </div>
         {{/if}}
         <div class="item" data-test-school>

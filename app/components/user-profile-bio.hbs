@@ -78,11 +78,7 @@
               {{on "keyup" this.keyboard}}
               data-test-first-name-input
             >
-            {{#each (await (compute this.getErrorsFor "firstName")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.firstName}} />
           {{else}}
             <span class="value">
               {{@user.firstName}}
@@ -103,11 +99,7 @@
               {{on "keyup" this.keyboard}}
               data-test-middle-name-input
             >
-            {{#each (await (compute this.getErrorsFor "middleName")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.middleName}} />
           {{else}}
             <span class="value">
               {{@user.middleName}}
@@ -133,11 +125,7 @@
               {{on "keyup" this.keyboard}}
               data-test-last-name-input
             >
-            {{#each (await (compute this.getErrorsFor "lastName")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.lastName}} />
           {{else}}
             <span class="value">
               {{@user.lastName}}
@@ -179,11 +167,7 @@
                   />
                 </button>
               {{/unless}}
-              {{#each (await (compute this.getErrorsFor "campusId")) as |message|}}
-                <span class="validation-error-message" data-test-validation-error>
-                  {{message}}
-                </span>
-              {{/each}}
+<ValidationError @errors={{get-errors-for this.campusId}} />
             </div>
             {{#if this.showSyncErrorMessage}}
               <span class="validation-error-message" data-test-sync-error>
@@ -210,11 +194,7 @@
               {{on "keyup" this.keyboard}}
               data-test-other-id-input
             >
-            {{#each (await (compute this.getErrorsFor "otherId")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.otherId}} />
           {{else}}
             <span class="value">
               {{@user.otherId}}
@@ -239,11 +219,7 @@
               {{on "keyup" this.keyboard}}
               data-test-email-input
             >
-            {{#each (await (compute this.getErrorsFor "email")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.email}} />
           {{else}}
             <span class="value">
               {{@user.email}}
@@ -271,11 +247,7 @@
               {{on "keyup" this.keyboard}}
               data-test-display-name-input
             >
-            {{#each (await (compute this.getErrorsFor "displayName")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.displayName}} />
           {{else}}
             <span class="value">
               {{@user.displayName}}
@@ -303,11 +275,7 @@
               {{on "keyup" this.keyboard}}
               data-test-preferred-email-input
             >
-            {{#each (await (compute this.getErrorsFor "preferredEmail")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.preferredEmail}} />
           {{else}}
             <span class="value">
               {{@user.preferredEmail}}
@@ -332,11 +300,7 @@
               {{on "keyup" this.keyboard}}
               data-test-phone-input
             >
-            {{#each (await (compute this.getErrorsFor "phone")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.phone}} />
           {{else}}
             <span class="value">
               {{@user.phone}}
@@ -362,11 +326,7 @@
               disabled={{not this.canEditUsernameAndPassword}}
               data-test-username-input
             >
-            {{#each (await (compute this.getErrorsFor "username")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.username}} />
           {{else}}
             <span class="value">
               {{get (await @user.authentication) "username"}}
@@ -389,10 +349,8 @@
                   {{on "keyup" this.keyboard}}
                   data-test-password-input
                 >
-                {{#each (await (compute this.getErrorsFor "password")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
+                {{#if (has-error-for this.password)}}
+                  <ValidationError @errors={{get-errors-for this.password}} />
                 {{else if (gt this.password.length 0)}}
                   <span
                     class="password-strength
@@ -416,7 +374,7 @@
                     value={{this.passwordStrengthScore}}
                     data-test-password-strength-meter
                   ></meter>
-                {{/each}}
+                {{/if}}
                 <button
                   class="link-button cancel-password-field"
                   type="button"

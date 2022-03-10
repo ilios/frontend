@@ -33,11 +33,7 @@
                 {{on "input" (pick "target.value" (set this.title))}}
                 {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))}}
               >
-              {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-                <span class="validation-error-message">
-                  {{message}}
-                </span>
-              {{/each}}
+              <ValidationError @errors={{get-errors-for this.title}} />
             </div>
             <div class="item" data-test-email>
               <label for="email-{{templateId}}">
@@ -50,11 +46,7 @@
                 {{on "input" (pick "target.value" (set this.iliosAdministratorEmail))}}
                 {{on "keyup" (queue (fn this.addErrorDisplayFor "iliosAdministratorEmail") (perform this.saveOrCancel))}}
               >
-              {{#each (await (compute this.getErrorsFor "iliosAdministratorEmail")) as |message|}}
-                <span class="validation-error-message">
-                  {{message}}
-                </span>
-              {{/each}}
+              <ValidationError @errors={{get-errors-for this.iliosAdministratorEmail}} />
             </div>
             <div class="buttons">
               <button

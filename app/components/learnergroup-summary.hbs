@@ -46,11 +46,7 @@
                   disabled={{isSaving}}
                   {{on "keyup" (fn this.addErrorDisplayFor "location")}}
                 />
-                {{#each (await (compute this.getErrorsFor "location")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
-                {{/each}}
+                <ValidationError @errors={{get-errors-for this.location}} />
               </EditableField>
             {{else if this.location}}
               {{this.location}}
@@ -84,11 +80,7 @@
                   {{on "focus" this.selectAllText}}
                   disabled={{isSaving}}
                 >
-                {{#each (await (compute this.getErrorsFor "url")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
-                {{/each}}
+                <ValidationError @errors={{get-errors-for this.url}} />
               </EditableField>
             {{else if this.url}}
               {{this.url}}
