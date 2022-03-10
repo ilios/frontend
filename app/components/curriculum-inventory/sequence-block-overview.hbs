@@ -315,11 +315,7 @@
                     <option value={{obj.id}} selected={{eq obj.id this.startingAcademicLevel.id}}>{{obj.name}}</option>
                   {{/each}}
                 </select>
-                {{#each (await (compute this.getErrorsFor "startingAcademicLevel")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
-                {{/each}}
+                <ValidationError @errors={{get-errors-for this.startingAcademicLevel}} />
               </EditableField>
             {{else}}
               <span>{{this.startingAcademicLevel.name}}</span>
@@ -341,11 +337,7 @@
                     <option value={{obj.id}} selected={{eq obj.id this.endingAcademicLevel.id}}>{{obj.name}}</option>
                   {{/each}}
                 </select>
-                {{#each (await (compute this.getErrorsFor "endingAcademicLevel")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
-                {{/each}}
+                <ValidationError @errors={{get-errors-for this.endingAcademicLevel}} />
               </EditableField>
             {{else}}
               <span>{{this.endingAcademicLevel.name}}</span>
