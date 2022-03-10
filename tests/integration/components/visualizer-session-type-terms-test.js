@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -40,6 +40,8 @@ module('Integration | Component | visualizer session type terms', function (hook
     );
 
     assert.dom('svg').exists({ count: 1 });
+    await waitFor('.loaded');
+    await waitFor('svg .slice');
     assert.dom('svg g.slice').exists({ count: 3 });
     assert.dom('svg g.slice:nth-of-type(1)').hasText('25.0%');
     assert.dom('svg g.slice:nth-of-type(2)').hasText('25.0%');
