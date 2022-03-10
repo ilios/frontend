@@ -117,6 +117,7 @@ general:
   educationalYear: "Educational Year"
   email: Email
   enabled: Enabled
+  endLevel: "End Level"
   errorDisplayMessage: "Sorry! Something went wrong with your request. Please try refreshing or check back later."
   error: Error
   errors: Errors
@@ -296,6 +297,7 @@ general:
   performsNonLearnerFunctions: "Performs Non-Learner Functions"
   permissions: Permissions
   permissionsInOtherSchools: "Permissions in Other Schools"
+  phasesStartToEnd: "Phases (Start - End)"
   phone: Phone
   physicianCompetencyReferenceSet: "Physician Competency Reference Set"
   physicianCompetencyReferenceSetAbbr: PCRS
@@ -375,6 +377,7 @@ general:
   singleDay: "Single Day"
   singleGroup: "Single Group"
   skipToMainContent: Skip to main content
+  startLevel: "Start Level"
   startOver: "Start Over"
   stateOrProvince: "State or Province"
   statusCode: "Status Code"

@@ -1,8 +1,9 @@
-import { create, clickable, collection, isVisible, text, visitable } from 'ember-cli-page-object';
+import { create, clickable, collection, text, visitable } from 'ember-cli-page-object';
 import learnerGroupUserManager from './components/learnergroup-user-manager';
 import learnergroupSubgroupList from './components/learnergroup-subgroup-list';
 import bulkAssign from './components/learnergroup-bulk-assign';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import displayToggle from 'ilios-common/page-objects/components/toggle-buttons';
 
 export default create({
   visit: visitable('/learnergroups/:learnerGroupId'),
@@ -14,14 +15,7 @@ export default create({
     scope: '[data-test-overview]',
     manage: clickable('[data-test-overview-actions] [data-test-manage]'),
     learnerGroupUserManager,
-    calendarToggledHidden: isVisible(
-      '[data-test-toggle-learnergroup-calendar] [data-test-first][data-test-selected]'
-    ),
-    calendarToggledVisible: isVisible(
-      '[data-test-toggle-learnergroup-calendar] [data-test-second][data-test-selected]'
-    ),
-    hideCalendar: clickable('[data-test-toggle-learnergroup-calendar] [data-test-first]'),
-    showCalendar: clickable('[data-test-toggle-learnergroup-calendar] [data-test-second]'),
+    displayToggle,
     calendar: {
       scope: '[data-test-learnergroup-calendar]',
       toggleSubgroupEvents: clickable(

@@ -20,7 +20,12 @@ import {
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {
   @service intl;
   @service store;
-  @tracked academicLevel;
+  @tracked
+  @Custom('validateStartingEndingLevelCallback', 'validateStartingLevelMessageCallback')
+  startingAcademicLevel;
+  @tracked
+  @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
+  endingAcademicLevel;
   @tracked academicLevels;
   @tracked childSequenceOrder;
   @tracked course;
@@ -43,13 +48,28 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked report;
   @tracked required;
   @tracked sessions = [];
-  @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration;
-  @tracked @ValidateIf((o) => o.hasZeroDuration) @NotBlank() startDate;
   @tracked
-  @ValidateIf((o) => o.hasZeroDuration || o.startDate)
+  @NotBlank()
+  @IsInt()
+  @Custom('validateDurationCallback', 'validateDurationMessageCallback')
+  @Lte(1200)
+  duration;
+  @tracked
+  @ValidateIf((o) => o.hasZeroDuration || o.linkedCourseIsClerkship)
+  @NotBlank()
+  startDate;
+  @tracked
+  @ValidateIf((o) => o.startDate)
   @NotBlank()
   @AfterDate('startDate', { granularity: 'day' })
   endDate;
+
+  get linkedCourseIsClerkship() {
+    if (!this.course) {
+      return false;
+    }
+    return !!this.course.belongsTo('clerkshipType').id();
+  }
 
   get hasZeroDuration() {
     const num = Number(this.duration);
@@ -75,7 +95,8 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
       }
     }
     this.linkedSessions = yield sequenceBlock.sessions;
-    this.academicLevel = yield sequenceBlock.academicLevel;
+    this.startingAcademicLevel = yield sequenceBlock.startingAcademicLevel;
+    this.endingAcademicLevel = yield sequenceBlock.endingAcademicLevel;
     this.required = sequenceBlock.required.toString();
     this.duration = sequenceBlock.duration;
     this.startDate = sequenceBlock.startDate;
@@ -246,20 +267,47 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   @dropTask
-  *changeAcademicLevel() {
-    this.args.sequenceBlock.set('academicLevel', this.academicLevel);
+  *changeStartingAcademicLevel() {
+    this.addErrorDisplaysFor(['startingAcademicLevel']);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.args.sequenceBlock.set('startingAcademicLevel', this.startingAcademicLevel);
     yield this.args.sequenceBlock.save();
   }
 
   @action
-  setAcademicLevel(event) {
+  setStartingAcademicLevel(event) {
     const id = event.target.value;
-    this.academicLevel = this.academicLevels.findBy('id', id);
+    this.startingAcademicLevel = this.academicLevels.findBy('id', id);
+  }
+
+  @action
+  revertStartingAcademicLevelChanges() {
+    this.startingAcademicLevel = this.args.sequenceBlock.startingAcademicLevel;
+  }
+
+  @dropTask
+  *changeEndingAcademicLevel() {
+    this.addErrorDisplaysFor(['endingAcademicLevel']);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.args.sequenceBlock.set('endingAcademicLevel', this.endingAcademicLevel);
+    yield this.args.sequenceBlock.save();
+  }
+
+  @action
+  setEndingAcademicLevel(event) {
+    const id = event.target.value;
+    this.endingAcademicLevel = this.academicLevels.findBy('id', id);
   }
 
   @action
   revertAcademicLevelChanges() {
-    this.academicLevel = this.args.sequenceBlock.academicLevel;
+    this.endingAcademicLevel = this.args.sequenceBlock.endingAcademicLevel;
   }
 
   @dropTask
@@ -351,6 +399,41 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     return this.intl.t('errors.greaterThanOrEqualTo', {
       gte: this.intl.t('general.minimum'),
       description: this.intl.t('general.maximum'),
+    });
+  }
+
+  @action
+  validateStartingEndingLevelCallback() {
+    return this.endingAcademicLevel.level >= this.startingAcademicLevel.level;
+  }
+
+  @action
+  validateEndingLevelMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.intl.t('general.startLevel'),
+      description: this.intl.t('general.endLevel'),
+    });
+  }
+
+  @action
+  validateStartingLevelMessageCallback() {
+    return this.intl.t('errors.lessThanOrEqualTo', {
+      lte: this.intl.t('general.endLevel'),
+      description: this.intl.t('general.startLevel'),
+    });
+  }
+
+  @action
+  validateDurationCallback() {
+    const duration = parseInt(this.duration, 10);
+    return this.linkedCourseIsClerkship ? duration >= 1 : duration >= 0;
+  }
+
+  @action
+  validateDurationMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.linkedCourseIsClerkship ? 1 : 0,
+      description: this.intl.t('general.duration'),
     });
   }
 

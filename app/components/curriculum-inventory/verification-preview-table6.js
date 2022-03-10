@@ -7,11 +7,12 @@ export default class CurriculumInventoryVerificationPreviewTable6Component exten
       return {
         hasFormativeAssessments: row.has_formative_assessments ? 'Y' : '',
         hasNarrativeAssessments: row.has_narrative_assessments ? 'Y' : '',
-        level: row.level,
         methods: methods.map((method) => {
           return row.methods[method] ? 'X' : '';
         }),
         title: row.title,
+        startingLevel: row.starting_level,
+        endingLevel: row.ending_level,
       };
     });
   }

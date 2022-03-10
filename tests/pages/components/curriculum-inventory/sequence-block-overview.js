@@ -58,8 +58,21 @@ const definition = {
     save: clickable('.done'),
     cancel: clickable('.cancel'),
   },
-  academicLevel: {
-    scope: '[data-test-overview] [data-test-academic-level]',
+  startLevel: {
+    scope: '[data-test-overview] [data-test-starting-academic-level]',
+    label: text('label'),
+    edit: clickable('.editinplace [data-test-edit]'),
+    isEditable: isVisible('.editinplace'),
+    value: value('select'),
+    select: fillable('select'),
+    options: collection('option', {
+      isSelected: property('selected'),
+    }),
+    save: clickable('.done'),
+    cancel: clickable('.cancel'),
+  },
+  endLevel: {
+    scope: '[data-test-overview] [data-test-ending-academic-level]',
     label: text('label'),
     edit: clickable('.editinplace [data-test-edit]'),
     isEditable: isVisible('.editinplace'),

@@ -20,15 +20,27 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @service intl;
   @service store;
 
-  @tracked academicLevel;
+  @tracked startingAcademicLevel;
+  @tracked
+  @Custom('validateEndingLevelCallback', 'validateEndingLevelMessageCallback')
+  endingAcademicLevel;
   @tracked academicLevels;
   @tracked childSequenceOrder;
   @tracked childSequenceOrderOptions;
   @tracked course;
   @tracked description;
-  @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration = 0;
   @tracked
-  @ValidateIf((o) => o.hasZeroDuration || o.startDate)
+  @NotBlank()
+  @IsInt()
+  @Custom('validateDurationCallback', 'validateDurationMessageCallback')
+  @Lte(1200)
+  duration = 0;
+  @tracked
+  @ValidateIf((o) => o.hasZeroDuration || o.linkedCourseIsClerkship)
+  @NotBlank()
+  startDate;
+  @tracked
+  @ValidateIf((o) => o.startDate)
   @NotBlank()
   @AfterDate('startDate', { granularity: 'day' })
   endDate;
@@ -44,7 +56,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @tracked orderInSequenceOptions = [];
   @tracked required;
   @tracked requiredOptions;
-  @tracked @ValidateIf((o) => o.hasZeroDuration) @NotBlank() startDate;
   @tracked @NotBlank() @Length(1, 200) title;
   @tracked track = false;
 
@@ -60,6 +71,13 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       { id: '2', title: this.intl.t('general.optionalElective') },
       { id: '3', title: this.intl.t('general.requiredInTrack') },
     ];
+  }
+
+  get linkedCourseIsClerkship() {
+    if (!this.course) {
+      return false;
+    }
+    return !!this.course.belongsTo('clerkshipType').id();
   }
 
   get hasZeroDuration() {
@@ -127,8 +145,13 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   @action
-  setAcademicLevel(id) {
-    this.academicLevel = this.academicLevels.findBy('id', id);
+  setStartingAcademicLevel(id) {
+    this.startingAcademicLevel = this.academicLevels.findBy('id', id);
+  }
+
+  @action
+  setEndingAcademicLevel(id) {
+    this.endingAcademicLevel = this.academicLevels.findBy('id', id);
   }
 
   @action
@@ -170,6 +193,33 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     });
   }
 
+  @action
+  validateEndingLevelCallback() {
+    return this.endingAcademicLevel.level >= this.startingAcademicLevel.level;
+  }
+
+  @action
+  validateEndingLevelMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.intl.t('general.startLevel'),
+      description: this.intl.t('general.endLevel'),
+    });
+  }
+
+  @action
+  validateDurationCallback() {
+    const duration = parseInt(this.duration, 10);
+    return this.linkedCourseIsClerkship ? duration >= 1 : duration >= 0;
+  }
+
+  @action
+  validateDurationMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.linkedCourseIsClerkship ? 1 : 0,
+      description: this.intl.t('general.duration'),
+    });
+  }
+
   @restartableTask
   *load() {
     this.orderInSequence = 0;
@@ -183,14 +233,17 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     this.childSequenceOrder = this.childSequenceOrderOptions[0];
     this.required = this.requiredOptions[0];
     if (this.args.parent) {
-      this.academicLevel = yield this.args.parent.academicLevel;
+      this.startingAcademicLevel = yield this.args.parent.startingAcademicLevel;
+      this.endingAcademicLevel = yield this.args.parent.endingAcademicLevel;
     }
     if (this.args.report) {
       this.academicLevels = yield this.args.report.academicLevels;
       if (this.args.parent) {
-        this.academicLevel = yield this.args.parent.academicLevel;
+        this.startingAcademicLevel = yield this.args.parent.startingAcademicLevel;
+        this.endingAcademicLevel = yield this.args.parent.endingAcademicLevel;
       } else {
-        this.academicLevel = this.academicLevels.firstObject;
+        this.startingAcademicLevel = this.academicLevels.firstObject;
+        this.endingAcademicLevel = this.academicLevels.firstObject;
       }
       this.linkableCourses = yield this.getLinkableCourses(this.args.report);
     }
@@ -201,9 +254,11 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     if (this.args.report) {
       this.academicLevels = yield this.args.report.academicLevels;
       if (this.args.parent) {
-        this.academicLevel = yield this.args.parent.academicLevel;
+        this.startingAcademicLevel = yield this.args.parent.startingAcademicLevel;
+        this.endingAcademicLevel = yield this.args.parent.endingAcademicLevel;
       } else {
-        this.academicLevel = this.academicLevels.firstObject;
+        this.startingAcademicLevel = this.academicLevels.firstObject;
+        this.endingAcademicLevel = this.academicLevels.firstObject;
       }
       this.linkableCourses = yield this.getLinkableCourses(this.args.report);
     }
@@ -211,7 +266,15 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
 
   @dropTask
   *save() {
-    this.addErrorDisplaysFor(['title', 'duration', 'startDate', 'endDate', 'minimum', 'maximum']);
+    this.addErrorDisplaysFor([
+      'title',
+      'duration',
+      'startDate',
+      'endDate',
+      'minimum',
+      'maximum',
+      'endingAcademicLevel',
+    ]);
     const isValid = yield this.isValid();
     if (!isValid) {
       return false;
@@ -220,7 +283,8 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       title: this.title,
       description: this.description,
       parent: this.args.parent,
-      academicLevel: this.academicLevel,
+      startingAcademicLevel: this.startingAcademicLevel,
+      endingAcademicLevel: this.endingAcademicLevel,
       required: this.required.id,
       track: this.track,
       orderInSequence: this.orderInSequence,

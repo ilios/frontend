@@ -195,19 +195,38 @@
             </span>
           {{/each}}
         </div>
-        <div class="item academic-level" data-test-academic-level>
-          <label for="academic-level-{{templateId}}">
-            {{t "general.academicLevel"}}:
+        <div class="item starting-academic-level" data-test-starting-academic-level>
+          <label for="starting-academic-level-{{templateId}}">
+            {{t "general.startLevel"}}:
           </label>
           <select
-            id="academic-level-{{templateId}}"
+            id="starting-academic-level-{{templateId}}"
             disabled={{this.save.isRunning}}
-            {{on "change" (pick "target.value" this.setAcademicLevel)}}
+            {{on "change" (pick "target.value" this.setStartingAcademicLevel)}}
           >
             {{#each (sort-by "level" this.academicLevels) as |obj|}}
-              <option value={{obj.id}} selected={{eq obj.id this.academicLevel.id}}>{{obj.name}}</option>
+              <option value={{obj.id}} selected={{eq obj.id this.startingAcademicLevel.id}}>{{obj.name}}</option>
             {{/each}}
           </select>
+        </div>
+        <div class="item ending-academic-level" data-test-ending-academic-level>
+          <label for="ending-academic-level-{{templateId}}">
+            {{t "general.endLevel"}}:
+          </label>
+          <select
+            id="ending-academic-level-{{templateId}}"
+            disabled={{this.save.isRunning}}
+            {{on "change" (pick "target.value" this.setEndingAcademicLevel)}}
+          >
+            {{#each (sort-by "level" this.academicLevels) as |obj|}}
+              <option value={{obj.id}} selected={{eq obj.id this.endingAcademicLevel.id}}>{{obj.name}}</option>
+            {{/each}}
+          </select>
+          {{#each (await (compute this.getErrorsFor "endingAcademicLevel")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
         </div>
         <div class="item child-sequence-order" data-test-child-sequence-order>
           <label for="child-sequence-order-{{templateId}}">

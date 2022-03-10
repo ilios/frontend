@@ -96,8 +96,17 @@ const definition = {
     save: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
     cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
   },
-  academicLevel: {
-    scope: '[data-test-academic-level]',
+  startLevel: {
+    scope: '[data-test-starting-academic-level]',
+    label: text('label'),
+    value: value('select'),
+    select: fillable('select'),
+    options: collection('option', {
+      isSelected: property('selected'),
+    }),
+  },
+  endLevel: {
+    scope: '[data-test-ending-academic-level]',
     label: text('label'),
     value: value('select'),
     select: fillable('select'),

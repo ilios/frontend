@@ -13,7 +13,6 @@ module(
     setupIntl(hooks, 'en-us');
 
     test('it renders', async function (assert) {
-      assert.expect(27);
       const data = {
         methods: [
           { title: 'foo', total: 200 },
@@ -22,13 +21,15 @@ module(
         rows: [
           {
             title: 'Alpha',
-            level: 2,
+            starting_level: 2,
+            ending_level: 3,
             instructional_methods: { foo: 150, bar: 400 },
             total: 550,
           },
           {
             title: 'Beta',
-            level: 4,
+            starting_level: 4,
+            ending_level: 5,
             instructional_methods: { foo: 50 },
             total: 50,
           },
@@ -43,7 +44,7 @@ module(
       );
       assert.strictEqual(component.table.firstHeadings.length, 3);
       assert.strictEqual(component.table.firstHeadings[0].text, 'Non-Clerkship Sequence Blocks');
-      assert.strictEqual(component.table.firstHeadings[1].text, 'Academic Level');
+      assert.strictEqual(component.table.firstHeadings[1].text, 'Phases (Start - End)');
       assert.strictEqual(
         component.table.firstHeadings[2].text,
         'Number of Formal Instructional Hours Per Course'
@@ -55,12 +56,12 @@ module(
       assert.strictEqual(component.table.rows.length, 2);
       assert.strictEqual(component.table.rows[0].cells.length, 5);
       assert.strictEqual(component.table.rows[0].cells[0].text, 'Alpha');
-      assert.strictEqual(component.table.rows[0].cells[1].text, '2');
+      assert.strictEqual(component.table.rows[0].cells[1].text, '2 - 3');
       assert.strictEqual(component.table.rows[0].cells[2].text, '2.50');
       assert.strictEqual(component.table.rows[0].cells[3].text, '6.67');
       assert.strictEqual(component.table.rows[0].cells[4].text, '9.17');
       assert.strictEqual(component.table.rows[1].cells[0].text, 'Beta');
-      assert.strictEqual(component.table.rows[1].cells[1].text, '4');
+      assert.strictEqual(component.table.rows[1].cells[1].text, '4 - 5');
       assert.strictEqual(component.table.rows[1].cells[2].text, '0.83');
       assert.strictEqual(component.table.rows[1].cells[3].text, '');
       assert.strictEqual(component.table.rows[1].cells[4].text, '0.83');

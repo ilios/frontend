@@ -9,7 +9,7 @@
           {{t "general.nonClerkshipSequenceBlocks"}}
         </th>
         <th rowspan="2">
-          {{t "general.academicLevel"}}
+          {{t "general.phasesStartToEnd"}}
         </th>
         <th colspan={{add 1 @data.methods.length}}>
           {{t "general.includedInGrade"}}
@@ -42,7 +42,7 @@
             {{nonClerkship.title}}
           </td>
           <td>
-            {{nonClerkship.level}}
+            {{nonClerkship.startingLevel}} - {{nonClerkship.endingLevel}}
           </td>
           <td>
             {{nonClerkship.numExams}}

@@ -26,8 +26,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
 
   test('it renders', async function (assert) {
     const course = this.server.create('course');
-    const academicLevel = this.server.create('curriculum-inventory-academic-level', {
+    const startingAcademicLevel = this.server.create('curriculum-inventory-academic-level', {
       level: 5,
+    });
+    const endingAcademicLevel = this.server.create('curriculum-inventory-academic-level', {
+      level: 6,
     });
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
@@ -35,7 +38,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
       startDate: new Date('2021-03-17'),
       endDate: new Date('2021-05-22'),
       orderInSequence: 3,
-      academicLevel,
+      startingAcademicLevel,
+      endingAcademicLevel,
       course,
     });
     const blockModel = await this.owner
@@ -53,7 +57,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
     );
 
     assert.strictEqual(component.title, 'block 1');
-    assert.strictEqual(component.academicLevel, '5');
+    assert.strictEqual(component.startLevel, '5');
+    assert.strictEqual(component.endLevel, '6');
     assert.strictEqual(component.orderInSequence, '3');
     assert.strictEqual(component.startDate, moment('2021-03-17').format('L'));
     assert.strictEqual(component.endDate, moment('2021-05-22').format('L'));

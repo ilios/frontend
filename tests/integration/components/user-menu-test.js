@@ -43,7 +43,7 @@ module('Integration | Component | user-menu', function (hooks) {
 
     assert.strictEqual(component.links.length, 0);
     await component.toggle.click();
-    assert.strictEqual(component.links.length, 3);
+    assert.strictEqual(component.links.length, 2);
   });
 
   test('down opens menu', async function (assert) {
@@ -51,14 +51,14 @@ module('Integration | Component | user-menu', function (hooks) {
 
     assert.strictEqual(component.links.length, 0);
     await component.toggle.down();
-    assert.strictEqual(component.links.length, 3);
+    assert.strictEqual(component.links.length, 2);
   });
 
   test('escape closes menu', async function (assert) {
     await render(hbs`<UserMenu />`);
 
     await component.toggle.down();
-    assert.strictEqual(component.links.length, 3);
+    assert.strictEqual(component.links.length, 2);
     await component.toggle.esc();
     assert.strictEqual(component.links.length, 0);
   });
@@ -67,7 +67,7 @@ module('Integration | Component | user-menu', function (hooks) {
     await render(hbs`<UserMenu />`);
 
     await component.toggle.down();
-    assert.strictEqual(component.links.length, 3);
+    assert.strictEqual(component.links.length, 2);
     await component.toggle.click();
     assert.strictEqual(component.links.length, 0);
   });

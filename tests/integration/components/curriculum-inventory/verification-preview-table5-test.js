@@ -13,13 +13,13 @@ module(
     setupIntl(hooks, 'en-us');
 
     test('it renders', async function (assert) {
-      assert.expect(31);
       const data = {
         methods: ['foo', 'bar', 'baz'],
         rows: [
           {
             title: 'Alpha',
-            level: 1,
+            starting_level: 1,
+            ending_level: 2,
             methods: {
               foo: true,
               bar: false,
@@ -31,7 +31,8 @@ module(
           },
           {
             title: 'Beta',
-            level: 2,
+            starting_level: 2,
+            ending_level: 3,
             methods: {
               foo: false,
               bar: true,
@@ -52,7 +53,7 @@ module(
       );
       assert.strictEqual(component.table.firstHeadings.length, 4);
       assert.strictEqual(component.table.firstHeadings[0].text, 'Non-Clerkship Sequence Blocks');
-      assert.strictEqual(component.table.firstHeadings[1].text, 'Academic Level');
+      assert.strictEqual(component.table.firstHeadings[1].text, 'Phases (Start - End)');
       assert.strictEqual(component.table.firstHeadings[2].text, 'Included in Grade');
       assert.strictEqual(component.table.firstHeadings[3].text, 'Assessments');
       assert.strictEqual(component.table.secondHeadings.length, 6);
@@ -65,7 +66,7 @@ module(
       assert.strictEqual(component.table.rows.length, 2);
       assert.strictEqual(component.table.rows[0].cells.length, 8);
       assert.strictEqual(component.table.rows[0].cells[0].text, 'Alpha');
-      assert.strictEqual(component.table.rows[0].cells[1].text, '1');
+      assert.strictEqual(component.table.rows[0].cells[1].text, '1 - 2');
       assert.strictEqual(component.table.rows[0].cells[2].text, '1');
       assert.strictEqual(component.table.rows[0].cells[3].text, 'X');
       assert.strictEqual(component.table.rows[0].cells[4].text, '');
@@ -73,7 +74,7 @@ module(
       assert.strictEqual(component.table.rows[0].cells[6].text, 'Y');
       assert.strictEqual(component.table.rows[0].cells[7].text, '');
       assert.strictEqual(component.table.rows[1].cells[0].text, 'Beta');
-      assert.strictEqual(component.table.rows[1].cells[1].text, '2');
+      assert.strictEqual(component.table.rows[1].cells[1].text, '2 - 3');
       assert.strictEqual(component.table.rows[1].cells[2].text, '3');
       assert.strictEqual(component.table.rows[1].cells[3].text, '');
       assert.strictEqual(component.table.rows[1].cells[4].text, 'X');

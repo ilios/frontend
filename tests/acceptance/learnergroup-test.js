@@ -291,7 +291,6 @@ module('Acceptance | Learnergroup', function (hooks) {
   });
 
   test('learner group calendar', async function (assert) {
-    assert.expect(9);
     const programYear = this.server.create('programYear', { program: this.program });
     const cohort = this.server.create('cohort', { programYear });
     const learnerGroup = this.server.create('learnerGroup', { cohort });
@@ -307,23 +306,21 @@ module('Acceptance | Learnergroup', function (hooks) {
     this.server.create('offering');
 
     await page.visit({ learnerGroupId: 1 });
-    assert.ok(page.overview.calendarToggledHidden);
+    assert.ok(page.overview.displayToggle.firstButton.isChecked);
     assert.notOk(page.overview.calendar.isVisible);
     assert.strictEqual(page.overview.calendar.events.length, 0);
-
-    await page.overview.showCalendar();
-    assert.ok(page.overview.calendarToggledVisible);
+    await page.overview.displayToggle.secondButton.click();
+    assert.ok(page.overview.displayToggle.secondButton.isChecked);
     assert.ok(page.overview.calendar.isVisible);
     assert.strictEqual(page.overview.calendar.events.length, 1);
-
-    await page.overview.hideCalendar();
-    assert.ok(page.overview.calendarToggledHidden);
+    await page.overview.displayToggle.firstButton.click();
+    assert.ok(page.overview.displayToggle.firstButton.isChecked);
     assert.notOk(page.overview.calendar.isVisible);
     assert.strictEqual(page.overview.calendar.events.length, 0);
   });
 
   test('learner group calendar with subgroup events', async function (assert) {
-    assert.expect(3);
+    assert.expect(5);
     const programYear = this.server.create('programYear', { program: this.program });
     const cohort = this.server.create('cohort', { programYear });
     const learnerGroup = this.server.create('learnerGroup', { cohort });
@@ -350,8 +347,10 @@ module('Acceptance | Learnergroup', function (hooks) {
 
     await page.visit({ learnerGroupId: 1 });
     assert.strictEqual(page.overview.calendar.events.length, 0);
-    await page.overview.showCalendar();
+    assert.notOk(page.overview.calendar.isVisible);
+    await page.overview.displayToggle.secondButton.click();
     assert.strictEqual(page.overview.calendar.events.length, 1);
+    assert.ok(page.overview.calendar.isVisible);
     await page.overview.calendar.toggleSubgroupEvents();
     assert.strictEqual(page.overview.calendar.events.length, 2);
   });

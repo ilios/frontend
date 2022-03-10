@@ -1,45 +1,6 @@
 {{page-title (t "general.dashboard")}}
 <div class="ilios-dashboard" data-test-dashboard>
-  <CommonDashboard
-    @allSchools={{this.model.schools}}
-    @show={{this.show}}
-    @setShow={{set this.show}}
-    @selectedDate={{this.selectedDate}}
-    @selectedView={{this.selectedView}}
-    @mySchedule={{this.mySchedule}}
-    @showFilters={{this.showFilters}}
-    @changeDate={{this.changeDate}}
-    @changeView={{set this.view}}
-    @selectEvent={{this.selectEvent}}
-    @toggleMySchedule={{this.toggleMySchedule}}
-    @toggleShowFilters={{this.toggleShowFilters}}
-    @selectedSchool={{this.selectedSchool}}
-    @changeSchool={{set this.school}}
-    @courseFilters={{this.courseFilters}}
-    @toggleCourseFilters={{fn (set this.courseFilters) (not this.courseFilters)}}
-
-    @selectedCohortIds={{split "-" this.cohorts}}
-    @addCohortId={{fn this.add "cohorts"}}
-    @removeCohortId={{fn this.remove "cohorts"}}
-
-    @selectedCourseLevels={{split "-" this.courseLevels}}
-    @addCourseLevel={{fn this.add "courseLevels"}}
-    @removeCourseLevel={{fn this.remove "courseLevels"}}
-
-    @selectedCourseIds={{split "-" this.courses}}
-    @addCourseId={{fn this.add "courses"}}
-    @removeCourseId={{fn this.remove "courses"}}
-
-    @selectedSessionTypeIds={{split "-" this.sessionTypes}}
-    @addSessionTypeId={{fn this.add "sessionTypes"}}
-    @removeSessionTypeId={{fn this.remove "sessionTypes"}}
-
-    @selectedTermIds={{split "-" this.terms}}
-    @addTermId={{fn this.add "terms"}}
-    @removeTermId={{fn this.remove "terms"}}
-
-    @clearFilters={{this.clearFilters}}
-  />
+  {{outlet}}
 
   <div class="dashboard-blocks">
     <DashboardMyreports
@@ -47,7 +8,7 @@
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.reportYear}}
       @onReportSelect={{set this.report}}
-      @onReportYearSelect={{set this.reportYear}}
+      @onReportYearSelect={{this.setReportYear}}
     />
     <DashboardMycourses />
   </div>

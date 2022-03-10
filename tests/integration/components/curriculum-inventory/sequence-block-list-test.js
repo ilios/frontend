@@ -18,8 +18,9 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     const course = this.server.create('course', { title: 'Life Lessons' });
     const academicLevel1 = this.server.create('curriculum-inventory-academic-level', { level: 1 });
     const academicLevel2 = this.server.create('curriculum-inventory-academic-level', { level: 2 });
+    const academicLevel3 = this.server.create('curriculum-inventory-academic-level', { level: 3 });
     const report = this.server.create('curriculum-inventory-report', {
-      academicLevels: [academicLevel1, academicLevel2],
+      academicLevels: [academicLevel1, academicLevel2, academicLevel3],
       year: '2016',
       program,
       name: 'Lorem Ipsum',
@@ -29,7 +30,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     });
 
     const block1 = this.server.create('curriculum-inventory-sequence-block', {
-      academicLevel: academicLevel1,
+      startingAcademicLevel: academicLevel1,
+      endingAcademicLevel: academicLevel2,
       title: 'Foo',
       startDate: moment('2015-02-23').toDate(),
       endDate: moment('2016-12-03').toDate(),
@@ -38,7 +40,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       report,
     });
     const block2 = this.server.create('curriculum-inventory-sequence-block', {
-      academicLevel: academicLevel2,
+      startingAcademicLevel: academicLevel2,
+      endingAcademicLevel: academicLevel3,
       title: 'Bar',
       orderInSequence: 0,
       report,
@@ -49,6 +52,9 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     const academicLevelModel2 = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-academic-level', academicLevel2.id);
+    const academicLevelModel3 = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-academic-level', academicLevel3.id);
     const blockModel1 = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-sequence-block', block1.id);
@@ -62,6 +68,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
 
     this.academicLevel1 = academicLevelModel1;
     this.academicLevel2 = academicLevelModel2;
+    this.academicLevel3 = academicLevelModel3;
     this.sequenceBlock1 = blockModel1;
     this.sequenceBlock2 = blockModel2;
     this.report = reportModel;
@@ -88,8 +95,13 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       'Table column header has correct label.'
     );
     assert.strictEqual(
-      component.list.headers.level,
-      'Level',
+      component.list.headers.startLevel,
+      'Start Level',
+      'Table column header has correct label.'
+    );
+    assert.strictEqual(
+      component.list.headers.endLevel,
+      'End Level',
       'Table column header has correct label.'
     );
     assert.strictEqual(
@@ -119,20 +131,16 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     );
 
     assert.strictEqual(component.list.items[0].title, this.sequenceBlock2.title);
-    assert.strictEqual(
-      parseInt(component.list.items[0].academicLevel, 10),
-      this.academicLevel2.level
-    );
+    assert.strictEqual(parseInt(component.list.items[0].startLevel, 10), this.academicLevel2.level);
+    assert.strictEqual(parseInt(component.list.items[0].endLevel, 10), this.academicLevel3.level);
     assert.strictEqual(component.list.items[0].orderInSequence, 'n/a');
     assert.strictEqual(component.list.items[0].startDate, 'n/a');
     assert.strictEqual(component.list.items[0].endDate, 'n/a');
     assert.strictEqual(component.list.items[0].course, 'n/a');
     assert.ok(component.list.items[0].isDeletable);
     assert.strictEqual(component.list.items[1].title, this.sequenceBlock1.title);
-    assert.strictEqual(
-      parseInt(component.list.items[1].academicLevel, 10),
-      this.academicLevel1.level
-    );
+    assert.strictEqual(parseInt(component.list.items[1].startLevel, 10), this.academicLevel1.level);
+    assert.strictEqual(parseInt(component.list.items[1].endLevel, 10), this.academicLevel2.level);
     assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
     assert.strictEqual(
       component.list.items[1].startDate,
@@ -169,20 +177,16 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       'Component title is correct, and show the correct number of blocks.'
     );
     assert.strictEqual(component.list.items[0].title, this.sequenceBlock2.title);
-    assert.strictEqual(
-      parseInt(component.list.items[0].academicLevel, 10),
-      this.academicLevel2.level
-    );
+    assert.strictEqual(parseInt(component.list.items[0].startLevel, 10), this.academicLevel2.level);
+    assert.strictEqual(parseInt(component.list.items[0].endLevel, 10), this.academicLevel3.level);
     assert.strictEqual(component.list.items[0].orderInSequence, 'n/a');
     assert.strictEqual(component.list.items[0].startDate, 'n/a');
     assert.strictEqual(component.list.items[0].endDate, 'n/a');
     assert.strictEqual(component.list.items[0].course, 'n/a');
     assert.ok(component.list.items[0].isDeletable);
     assert.strictEqual(component.list.items[1].title, this.sequenceBlock1.title);
-    assert.strictEqual(
-      parseInt(component.list.items[1].academicLevel, 10),
-      this.academicLevel1.level
-    );
+    assert.strictEqual(parseInt(component.list.items[1].startLevel, 10), this.academicLevel1.level);
+    assert.strictEqual(parseInt(component.list.items[1].endLevel, 10), this.academicLevel2.level);
     assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
     assert.strictEqual(
       component.list.items[1].startDate,

@@ -60,7 +60,7 @@ module('Acceptance | Dashboard Reports', function (hooks) {
 
   test('visiting /dashboard', async function (assert) {
     await page.visit();
-    assert.strictEqual(currentRouteName(), 'dashboard');
+    assert.strictEqual(currentRouteName(), 'dashboard.week');
   });
 
   test('shows reports', async function (assert) {
@@ -77,7 +77,7 @@ module('Acceptance | Dashboard Reports', function (hooks) {
     assert.strictEqual(page.myReports.selectedReport.title, 'my report 0');
     assert.strictEqual(page.myReports.selectedReport.results.length, 1);
     assert.strictEqual(page.myReports.selectedReport.results[0].text, '2015 course 0 session 0');
-    assert.strictEqual(currentURL(), '/dashboard?report=1', 'report query param works');
+    assert.strictEqual(currentURL(), '/dashboard/week?report=1', 'report query param works');
   });
 
   test('academic years is shown as range as applicable by configuration', async function (assert) {
@@ -99,7 +99,7 @@ module('Acceptance | Dashboard Reports', function (hooks) {
       page.myReports.selectedReport.results[0].text,
       '2015 - 2016 course 0 session 0'
     );
-    assert.strictEqual(currentURL(), '/dashboard?report=1', 'report query param works');
+    assert.strictEqual(currentURL(), '/dashboard/week?report=1', 'report query param works');
   });
 
   test('no year filter on reports with a course prepositional object', async function (assert) {
@@ -118,12 +118,12 @@ module('Acceptance | Dashboard Reports', function (hooks) {
     assert.strictEqual(page.myReports.selectedReport.results.length, 2);
     assert.strictEqual(page.myReports.selectedReport.results[0].text, '2015 course 0 session 0');
     assert.strictEqual(page.myReports.selectedReport.results[1].text, '2016 course 1 session 1');
-    assert.strictEqual(currentURL(), '/dashboard?report=2', 'report query param works');
+    assert.strictEqual(currentURL(), '/dashboard/week?report=2', 'report query param works');
   });
 
   test('year filter works', async function (assert) {
     await page.visit();
-    assert.strictEqual(currentURL(), '/dashboard');
+    assert.strictEqual(currentURL(), '/dashboard/week');
     assert.strictEqual(page.myReports.reports.length, 2);
     await page.myReports.reports[0].select();
     assert.strictEqual(page.myReports.selectedReport.title, 'All Sessions for term 0 in school 0');
@@ -134,7 +134,7 @@ module('Acceptance | Dashboard Reports', function (hooks) {
     assert.strictEqual(page.myReports.selectedReport.results[0].text, '2016 course 1 session 1');
     assert.strictEqual(
       currentURL(),
-      '/dashboard?report=2&reportYear=2016',
+      '/dashboard/week?report=2&reportYear=2016',
       'reportYear query param works'
     );
   });

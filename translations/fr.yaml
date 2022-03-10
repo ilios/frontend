@@ -117,6 +117,7 @@ general:
   educationalYear: "Année scolaire"
   email: Email
   enabled: "Activé"
+  endLevel: "niveau final"
   errorDisplayMessage: "Désolé! Quelque chose s'est passé mal avec votre demande. Essayez s'il vous plaît de rafraîchir ou vérifier en arrière plus tard."
   error: Erreur
   errors: Erreurs
@@ -295,6 +296,7 @@ general:
   performsNonLearnerFunctions: "Acquitte de Fonctions Non-Apprenant"
   permissions: Permissions
   permissionsInOtherSchools: "Permissions en Autres Écoles"
+  phasesStartToEnd: "Phases (début - fin)"
   phone: "Téléphone"
   physicianCompetencyReferenceSet: "Ensemble de références de compétences de médecin"
   physicianCompetencyReferenceSetAbbr: PCRS
@@ -374,6 +376,7 @@ general:
   singleDay: "Seule Journée"
   singleGroup: "Seul groupe"
   skipToMainContent: passer au contenu principal de la page
+  startLevel: "niveau de départ"
   startOver: recommencer
   stateOrProvince: "État ou province"
   statusCode: "Code d'état"

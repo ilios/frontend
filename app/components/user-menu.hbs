@@ -29,15 +29,6 @@
           </LinkToWithAction>
         </li>
         <li tabindex="-1" data-test-item>
-          <LinkToWithAction
-            @route="mymaterials"
-            @action={{set this.isOpen false}}
-            @queryParams={{hash course=null filter=null sortBy=null firstOfferingDate=null}}
-          >
-            {{t "general.myMaterials"}}
-          </LinkToWithAction>
-        </li>
-        <li tabindex="-1" data-test-item>
           <LinkToWithAction @route="logout" @action={{set this.isOpen false}}>
             {{t "general.logout"}}
           </LinkToWithAction>

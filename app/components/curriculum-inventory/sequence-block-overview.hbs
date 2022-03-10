@@ -299,6 +299,50 @@
               {{/if}}
             </span>
           </div>
+          <div class="block starting-academic-level" data-test-starting-academic-level>
+            <label for="academic-level-{{templateId}}">{{t "general.startLevel"}}:</label>
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{this.startingAcademicLevel.name}}
+                @save={{perform this.changeStartingAcademicLevel}}
+                @close={{this.revertStartingAcademicLevelChanges}}
+              >
+                <select
+                  id="starting-academic-level-{{templateId}}"
+                  {{on "change" this.setStartingAcademicLevel}}
+                >
+                  {{#each (sort-by "level" this.academicLevels) as |obj|}}
+                    <option value={{obj.id}} selected={{eq obj.id this.startingAcademicLevel.id}}>{{obj.name}}</option>
+                  {{/each}}
+                </select>
+                <ValidationError @errors={{get-errors-for this.startingAcademicLevel}} />
+              </EditableField>
+            {{else}}
+              <span>{{this.startingAcademicLevel.name}}</span>
+            {{/if}}
+          </div>
+          <div class="block ending-academic-level" data-test-ending-academic-level>
+            <label for="academic-level-{{templateId}}">{{t "general.endLevel"}}:</label>
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{this.endingAcademicLevel.name}}
+                @save={{perform this.changeEndingAcademicLevel}}
+                @close={{this.revertEndingAcademicLevelChanges}}
+              >
+                <select
+                  id="ending-academic-level-{{templateId}}"
+                  {{on "change" this.setEndingAcademicLevel}}
+                >
+                  {{#each (sort-by "level" this.academicLevels) as |obj|}}
+                    <option value={{obj.id}} selected={{eq obj.id this.endingAcademicLevel.id}}>{{obj.name}}</option>
+                  {{/each}}
+                </select>
+                <ValidationError @errors={{get-errors-for this.endingAcademicLevel}} />
+              </EditableField>
+            {{else}}
+              <span>{{this.endingAcademicLevel.name}}</span>
+            {{/if}}
+          </div>
           <div class="block is-selective {{unless this.isSelective "hidden"}}" data-test-is-selective>
             <label>{{t "general.sequenceBlockIsSelective"}}</label>
           </div>
@@ -404,27 +448,6 @@
               {{/if}}
             </div>
           {{/if}}
-          <div class="block academic-level" data-test-academic-level>
-              <label for="academic-level-{{templateId}}">{{t "general.academicLevel"}}:</label>
-              {{#if @canUpdate}}
-                <EditableField
-                  @value={{this.academicLevel.name}}
-                  @save={{perform this.changeAcademicLevel}}
-                  @close={{this.revertAcademicLevelChanges}}
-                >
-                  <select
-                    id="academic-level-{{templateId}}"
-                    {{on "change" this.setAcademicLevel}}
-                  >
-                    {{#each (sort-by "level" this.academicLevels) as |obj|}}
-                      <option value={{obj.id}} selected={{eq obj.id this.academicLevel.id}}>{{obj.name}}</option>
-                    {{/each}}
-                  </select>
-                </EditableField>
-              {{else}}
-                <span>{{this.academicLevel.name}}</span>
-              {{/if}}
-          </div>
         {{/if}}
         {{#unless this.isManagingSessions}}
           <div class="block sessions" data-test-session-list-controls>
