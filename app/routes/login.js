@@ -27,18 +27,18 @@ export default Route.extend({
     this.transitionTo('index');
   },
   async getNewToken(ltiToken, apiHost) {
-    const apiHostWithNoTrailingSlash = apiHost.replace(/\/+$/, "");
+    const apiHostWithNoTrailingSlash = apiHost.replace(/\/+$/, '');
     const url = `${apiHostWithNoTrailingSlash}/auth/token`;
     const response = await fetch(url, {
       headers: {
-        'X-JWT-Authorization': `Token ${ltiToken}`
-      }
+        'X-JWT-Authorization': `Token ${ltiToken}`,
+      },
     });
     if (response.ok) {
       const obj = await response.json();
       return obj.jwt;
     } else {
-      throw new Error("Unable to extract token from refresh request");
+      throw new Error('Unable to extract token from refresh request');
     }
-  }
+  },
 });
