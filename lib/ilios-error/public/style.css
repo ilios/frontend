@@ -1,0 +1,21 @@
+#ilios-loading-error {
+  padding: 2em;
+}
+#ilios-loading-error h1,
+#ilios-loading-error h2 {
+  text-align: center;
+}
+#ilios-loading-error .supported-browsers {
+  border: 1px solid blue;
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+}
+#ilios-loading-error ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  list-style-type: none;
+}
+#ilios-loading-error.hidden {
+  display: none;
+}
