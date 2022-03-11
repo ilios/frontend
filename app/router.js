@@ -11,5 +11,16 @@ Router.map(function () {
   this.route('login-error');
   this.route('weeklyevents');
   this.route('events', { path: 'events/:slug' });
-  this.route('mymaterials');
+  this.route(
+    'dashboard',
+    {
+      resetNamespace: true,
+    },
+    function () {
+      this.route('week');
+      this.route('activities');
+      this.route('materials');
+      this.route('calendar');
+    }
+  );
 });

@@ -1,5 +1,5 @@
-import setupMirage from './setup';
+import { createServer } from 'miragejs';
 
-export default function () {
-  setupMirage(this);
+export default function (config) {
+  return createServer(config);
 }
