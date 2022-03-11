@@ -4,8 +4,10 @@ export default class ApplicationRoute extends Route {
   @service intl;
   @service moment;
   @service currentUser;
+  @service session;
 
-  beforeModel() {
+  async beforeModel() {
+    await this.session.setup();
     const intl = this.intl;
     const moment = this.moment;
     moment.setLocale(intl.locale);
