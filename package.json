@@ -11,15 +11,19 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
-    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
-    "lint:hbs": "ember-template-lint app/templates",
-    "lint:js": "eslint .",
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
+    "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
+    "lint:hbs": "ember-template-lint .",
+    "lint:hbs:fix": "ember-template-lint . --fix",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
-    "test": "npm-run-all lint:* test:*",
+    "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
     "lint:style": "stylelint app/styles",
     "deploy:production": "ember deploy production --activate",
-    "deploy:staging": "ember deploy staging --activate"
+    "deploy:staging": "ember deploy staging --activate",
+    "deploy:test": "ember deploy development"
   },
   "devDependencies": {
     "@csstools/postcss-sass": "^4.0.0",
