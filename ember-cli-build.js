@@ -13,7 +13,7 @@ module.exports = function (defaults) {
     fingerprint: {
       extensions: broccoliAssetRevDefaults.extensions.concat(['webmanifest', 'svg']),
       enabled: isProductionLikeBuild,
-      exclude: ['ilios-icon.png']
+      exclude: ['ilios-icon.png'],
     },
     sourcemaps: {
       enabled: true,
@@ -27,7 +27,7 @@ module.exports = function (defaults) {
       plugins: [require('ember-auto-import/babel-plugin')],
     },
     'ember-fetch': {
-      preferNative: true
+      preferNative: true,
     },
   });
   return app.toTree();

@@ -16,10 +16,10 @@ module.exports = function (environment) {
       tokenPropertyName: 'jwt',
       authorizationHeaderName: 'X-JWT-Authorization',
       authorizationPrefix: 'Token ',
-      refreshLeeway: 300
+      refreshLeeway: 300,
     },
     i18n: {
-      defaultLocale: 'en'
+      defaultLocale: 'en',
     },
     fontawesome: {
       enableExperimentalBuildTimeTransform: false,
@@ -35,13 +35,13 @@ module.exports = function (environment) {
         Array: true,
         Function: false,
         Date: false,
-      }
+      },
     },
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
   };
 
   if (environment === 'development') {
@@ -51,7 +51,7 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV['ember-cli-mirage'] = {
-      enabled: false
+      enabled: false,
     };
   }
 
