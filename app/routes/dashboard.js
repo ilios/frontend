@@ -1,13 +1,15 @@
-import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-// eslint-disable-next-line ember/no-mixins
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
 
-export default class DashboardRoute extends Route.extend(AuthenticatedRouteMixin) {
-  authenticationRoute = 'login-error';
+export default class DashboardRoute extends Route {
   @service store;
   @service currentUser;
+  @service session;
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login-error');
+  }
 
   async model() {
     return hash({

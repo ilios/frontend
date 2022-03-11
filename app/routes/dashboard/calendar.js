@@ -1,7 +1,10 @@
 import Route from '@ember/routing/route';
-// eslint-disable-next-line ember/no-mixins
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { inject as service } from '@ember/service';
 
-export default class DashboardCalendarRoute extends Route.extend(AuthenticatedRouteMixin) {
-  authenticationRoute = 'login-error';
+export default class DashboardCalendarRoute extends Route {
+  @service session;
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login-error');
+  }
 }
