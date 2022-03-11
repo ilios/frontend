@@ -69,4 +69,50 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
     await page.blocks.list.items[0].confirmRemoval.confirm();
     assert.strictEqual(page.blocks.list.items.length, 1);
   });
+
+  test('change start and end level #6551', async function (assert) {
+    this.server.create('curriculum-inventory-sequence-block', {
+      parent: this.block,
+      report: this.report,
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
+    });
+    const { startLevel, endLevel } = page.details.overview;
+
+    await page.visit({ blockId: 1 });
+    assert.strictEqual(startLevel.level, 'Year 0');
+    assert.strictEqual(endLevel.level, 'Year 1');
+    await endLevel.edit();
+    await endLevel.select('4');
+    await endLevel.save();
+    await startLevel.edit();
+    await startLevel.select('2');
+    await startLevel.save();
+
+    assert.strictEqual(startLevel.level, 'Year 1');
+    assert.strictEqual(endLevel.level, 'Year 3');
+  });
+
+  test('cancel start and end level changes #6551', async function (assert) {
+    this.server.create('curriculum-inventory-sequence-block', {
+      parent: this.block,
+      report: this.report,
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[1],
+    });
+    const { startLevel, endLevel } = page.details.overview;
+
+    await page.visit({ blockId: 1 });
+    assert.strictEqual(startLevel.level, 'Year 0');
+    assert.strictEqual(endLevel.level, 'Year 1');
+    await endLevel.edit();
+    await endLevel.select('4');
+    await endLevel.cancel();
+    await startLevel.edit();
+    await startLevel.select('2');
+    await startLevel.cancel();
+
+    assert.strictEqual(startLevel.level, 'Year 0');
+    assert.strictEqual(endLevel.level, 'Year 1');
+  });
 });

@@ -70,6 +70,7 @@ const definition = {
     }),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
+    level: text('[data-test-edit]'),
   },
   endLevel: {
     scope: '[data-test-overview] [data-test-ending-academic-level]',
@@ -83,6 +84,7 @@ const definition = {
     }),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
+    level: text('[data-test-edit]'),
   },
   track: {
     scope: '[data-test-overview] [data-test-track]',
