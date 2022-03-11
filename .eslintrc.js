@@ -2,14 +2,62 @@
 
 module.exports = {
   root: true,
-  extends: [
-    '@ilios/eslint-config-ember'
-  ],
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+    ecmaFeatures: {
+      legacyDecorators: true,
+    },
+  },
+  plugins: ['ember'],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
+  env: {
+    browser: true,
+  },
   rules: {
-    'ember/use-brace-expansion': 0,
-    'ember/no-capital-letters-in-routes': 0,
-    'ember/no-unnecessary-route-path-option': 0,
-    'ember/routes-segments-snake-case': 0,
-    'sort-imports': 0
-  }
+    'ember/no-classic-classes': 0,
+    'ember/require-tagless-components': 0,
+    'ember/classic-decorator-no-classic-methods': 0,
+    'ember/no-mixins': 0,
+    'ember/no-actions-hash': 0,
+    'ember/no-classic-components': 0,
+    'ember/no-component-lifecycle-hooks': 0,
+    'ember/no-new-mixins': 0,
+  },
+  overrides: [
+    // node files
+    {
+      files: [
+        './.eslintrc.js',
+        './.prettierrc.js',
+        './.template-lintrc.js',
+        './ember-cli-build.js',
+        './testem.js',
+        './blueprints/*/index.js',
+        './config/**/*.js',
+        './lib/*/index.js',
+        './server/**/*.js',
+      ],
+      parserOptions: {
+        sourceType: 'script',
+      },
+      env: {
+        browser: false,
+        node: true,
+      },
+      plugins: ['node'],
+      extends: ['plugin:node/recommended'],
+      rules: {
+        // this can be removed once the following is fixed
+        // https://github.com/mysticatea/eslint-plugin-node/issues/77
+        'node/no-unpublished-require': 'off',
+      },
+    },
+    {
+      // Test files:
+      files: ['tests/**/*-test.{js,ts}'],
+      extends: ['plugin:qunit/recommended'],
+    },
+  ],
 };
