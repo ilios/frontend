@@ -72,7 +72,8 @@
     "stylelint-scss": "^3.21.0"
   },
   "engines": {
-    "node": "10.* || >= 12"
+    "node": "14.* || >= 16",
+    "npm": ">= 8"
   },
   "ember": {
     "edition": "octane"
