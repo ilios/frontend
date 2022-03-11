@@ -78,7 +78,8 @@
     "sass": "^1.49.9",
     "stylelint": "^14.5.3",
     "stylelint-config-recommended-scss": "^5.0.0",
-    "stylelint-scss": "^4.1.0"
+    "stylelint-scss": "^4.1.0",
+    "webpack": "^5.70.0"
   },
   "engines": {
     "node": "14.* || >= 16",
