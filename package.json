@@ -91,9 +91,7 @@
     ]
   },
   "pre-commit": [
-    "lint:hbs",
-    "lint:style",
-    "lint:js"
+    "lint"
   ],
   "private": true
 }
