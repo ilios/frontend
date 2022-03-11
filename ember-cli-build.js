@@ -26,30 +26,9 @@ module.exports = function (defaults) {
     babel: {
       plugins: [require('ember-auto-import/babel-plugin')],
     },
-    postcssOptions: {
-      compile: {
-        extension: 'scss',
-        enabled: true,
-        parser: require('postcss-scss'),
-        plugins: [
-          {
-            module: require('@csstools/postcss-sass'),
-          },
-        ]
-      },
-      filter: {
-        enabled: true,
-        plugins: [
-          {
-            module: require('autoprefixer'),
-          }
-        ]
-      }
-    },
     'ember-fetch': {
       preferNative: true
     },
   });
-
   return app.toTree();
 };
