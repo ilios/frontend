@@ -306,7 +306,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   @action
-  revertAcademicLevelChanges() {
+  revertEndingAcademicLevelChanges() {
     this.endingAcademicLevel = this.args.sequenceBlock.endingAcademicLevel;
   }
 
