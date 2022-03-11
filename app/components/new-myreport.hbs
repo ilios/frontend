@@ -17,11 +17,7 @@
           {{on "keyup" (fn this.addErrorDisplayFor "title")}}
           data-test-report-title
         >
-        {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.title}} />
       </p>
       <p data-test-school>
         <label for="for-{{templateId}}">

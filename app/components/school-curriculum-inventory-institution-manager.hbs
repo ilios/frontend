@@ -48,11 +48,7 @@
               )
             }}
           >
-          {{#each (await (compute this.getErrorsFor "name")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.name}} />
         </div>
         <div class="item" data-test-institution-aamc-code>
           <label for="aamc-id-{{templateId}}">
@@ -71,11 +67,7 @@
               )
             }}
           >
-          {{#each (await (compute this.getErrorsFor "aamcCode")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.aamcCode}} />
         </div>
         <div class="item" data-test-institution-address-street>
           <label for="street-{{templateId}}">
@@ -93,11 +85,7 @@
               )
             }}
           >
-          {{#each (await (compute this.getErrorsFor "addressStreet")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.addressStreet}} />
         </div>
         <div class="item" data-test-institution-address-city>
           <label for="city-{{templateId}}">
@@ -115,11 +103,7 @@
               )
             }}
           >
-          {{#each (await (compute this.getErrorsFor "addressCity")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.addressCity}} />
         </div>
         <div class="item" data-test-institution-address-state-or-province>
           <label for="state-{{templateId}}">
@@ -137,11 +121,7 @@
               )
             }}
           >
-          {{#each (await (compute this.getErrorsFor "addressStateOrProvince")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.addressStateOrProvince}} />
         </div>
         <div class="item" data-test-institution-address-zip-code>
           <label for="zip-{{templateId}}">
@@ -159,11 +139,7 @@
               )
             }}
           >
-          {{#each (await (compute this.getErrorsFor "addressZipCode")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.addressZipCode}} />
         </div>
         <div class="item" data-test-institution-address-country-code>
           <label for="country-{{templateId}}">
@@ -182,11 +158,7 @@
               )
             }}
           >
-          {{#each (await (compute this.getErrorsFor "addressCountryCode")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.addressCountryCode}} />
         </div>
       </div>
     </div>

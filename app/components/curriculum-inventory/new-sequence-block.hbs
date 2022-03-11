@@ -25,11 +25,7 @@
             {{on "keyup" (queue (fn this.addErrorDisplayFor "title") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this.title))}}
           >
-          {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.title}} />
         </div>
         <div class="item course" data-test-course>
           <label for="course-{{templateId}}">
@@ -104,11 +100,7 @@
             @onChange={{this.changeStartDate}}
             data-test-start-date-picker
           />
-          {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.startDate}} />
         </div>
         <div class="item end-date" data-test-enddate>
           <label for="end-date-{{templateId}}">
@@ -120,11 +112,7 @@
             @onChange={{this.changeEndDate}}
             data-test-end-date-picker
           />
-          {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.endDate}} />
         </div>
         <div class="item duration" data-test-duration>
           <label for="duration-{{templateId}}">
@@ -138,11 +126,7 @@
             {{on "keyup" (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this.duration))}}
           >
-          {{#each (await (compute this.getErrorsFor "duration")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.duration}} />
         </div>
         <div class="item clear-dates">
           <button
@@ -171,11 +155,7 @@
             {{on "keyup" (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this.minimum))}}
           >
-          {{#each (await (compute this.getErrorsFor "minimum")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.minimum}} />
         </div>
         <div class="item maximum" data-test-maximum>
           <label for="maximum-{{templateId}}">
@@ -189,11 +169,7 @@
             {{on "keyup" (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this.maximum))}}
           >
-          {{#each (await (compute this.getErrorsFor "maximum")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.maximum}} />
         </div>
         <div class="item starting-academic-level" data-test-starting-academic-level>
           <label for="starting-academic-level-{{templateId}}">

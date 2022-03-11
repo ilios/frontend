@@ -16,11 +16,7 @@
         {{on "input" (pick "target.value" (set this.numberOfGroups))}}
         data-test-number-of-groups
       >
-      {{#each (await (compute this.getErrorsFor "numberOfGroups")) as |message|}}
-        <span class="validation-error-message">
-          {{message}}
-        </span>
-      {{/each}}
+      <ValidationError @errors={{get-errors-for this.numberOfGroups}} />
     </div>
     <div class="buttons">
       <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-save>

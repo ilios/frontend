@@ -27,11 +27,7 @@
             {{on "keyup" (queue (fn this.addErrorDisplayFor "name") this.saveOnEnter)}}
           >
         {{/let}}
-        {{#each (await (compute this.getErrorsFor "name")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{get-errors-for this.name}} />
       </div>
       <div class="item description" data-test-description>
         {{#let (unique-id) as |descriptionId|}}
@@ -44,11 +40,7 @@
             disabled={{this.save.isRunning}}
             placeholder={{t "general.reportDescriptionPlaceholder"}}
           >{{this.description}}</textarea>
-          {{#each (await (compute this.getErrorsFor "description")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.description}} />
         {{/let}}
       </div>
       <div class="item years" data-test-years>

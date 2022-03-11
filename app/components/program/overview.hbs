@@ -25,11 +25,7 @@
               disabled={{isSaving}}
             />
           </EditableField>
-          {{#each (await (compute this.getErrorsFor "shortTitle")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.shortTitle}} />
         {{else}}
           {{this.shortTitle}}
         {{/if}}
