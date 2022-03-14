@@ -14,10 +14,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    this.owner.setupRouter();
-  });
-
   test('it renders', async function (assert) {
     const now = moment().hour(8).minute(0).second(0);
     const course = this.server.create('course', {
@@ -244,7 +240,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
   test('postrequisite date and title are displayed', async function (assert) {
     assert.expect(4);
-
+    this.owner.setupRouter();
     const today = moment().hour(8).minute(0).second(0);
     const tomorrow = today.clone().add(1, 'day');
     const postReq = {
@@ -533,9 +529,9 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     );
   });
 
-  test('non learners get link to session', async function (assert) {
+  test('non learners get link to session if session route exists', async function (assert) {
     assert.expect(2);
-
+    this.owner.setupRouter();
     class CurrentUserMock extends Service {
       performsNonLearnerFunction = true;
     }
@@ -561,5 +557,34 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     await render(hbs`<SingleEvent @event={{this.event}} />`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.ok(component.summary.title.hasLink);
+  });
+
+  test("non learners don't get link to session if session route doesn't exists", async function (assert) {
+    assert.expect(2);
+    class CurrentUserMock extends Service {
+      performsNonLearnerFunction = true;
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
+
+    const today = moment().hour(8).minute(0).second(0);
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      course: 1,
+      session: 1,
+      startDate: today.format(),
+      endDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+      sessionTypeTitle: 'test type',
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
+    assert.notOk(component.summary.title.hasLink);
   });
 });

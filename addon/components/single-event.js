@@ -199,6 +199,15 @@ export default class SingleEvent extends Component {
     return this.currentUser.performsNonLearnerFunction;
   }
 
+  get sessionRouteExists() {
+    try {
+      this.router.urlFor('session', this.args.event.course, this.args.event.session);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   get canViewSession() {
     return this.currentUser.performsNonLearnerFunction;
   }

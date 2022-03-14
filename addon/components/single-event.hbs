@@ -12,7 +12,7 @@
         {{@event.courseTitle}}
         -
         <em>
-          {{#if this.canViewSession}}
+          {{#if (and this.sessionRouteExists this.canViewSession)}}
             <LinkTo
               @route="session"
               @models={{array @event.course @event.session}}
