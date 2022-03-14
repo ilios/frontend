@@ -231,11 +231,21 @@
                     {{on "click" (set this.isEditingDatesAndDuration true)}}
                     data-test-edit
                   >
-                    {{@sequenceBlock.duration}}
+                    {{#if @sequenceBlock.duration}}
+                      {{@sequenceBlock.duration}}
+                    {{else}}
+                      {{t "general.clickToEdit"}}
+                    {{/if}}
                   </span>
                 </span>
               {{else}}
-                <span>{{@sequenceBlock.duration}}</span>
+                <span>
+                  {{#if @sequenceBlock.duration}}
+                    {{@sequenceBlock.duration}}
+                  {{else}}
+                    {{t "general.notApplicableAbbr"}}
+                  {{/if}}
+                </span>
               {{/if}}
             </div>
           {{/if}}
