@@ -435,4 +435,22 @@ module('Acceptance | Learnergroup', function (hooks) {
     assert.strictEqual(page.usersInCohort.list.length, 3);
     assert.strictEqual(page.header.members, 'Members: 1 / 4');
   });
+
+  test('manage subgroup members does not duplicate members #3936', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const programYear = this.server.create('programYear', { program: this.program });
+    const cohort = this.server.create('cohort', { programYear });
+    const parent = this.server.create('learnerGroup', { cohort });
+    const child = this.server.create('learnerGroup', { cohort, parent });
+    this.server.createList('user', 2, { cohorts: [cohort], learnerGroups: [parent, child] });
+
+    assert.expect(3);
+
+    await page.visit({ learnerGroupId: child.id });
+    await page.overview.manage();
+    const users = page.overview.learnerGroupUserManager.usersInCurrentGroup;
+    assert.strictEqual(users.length, 2);
+    assert.strictEqual(users[0].name.userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(users[1].name.userNameInfo.fullName, '2 guy M. Mc2son');
+  });
 });
