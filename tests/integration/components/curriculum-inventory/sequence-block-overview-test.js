@@ -1327,10 +1327,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       component.endDate.text,
       'End: ' + moment(sequenceBlockModel.endDate).format('L')
     );
-    assert.strictEqual(
-      component.duration.text,
-      `Duration (in Days): ${sequenceBlockModel.duration}`
-    );
+    assert.strictEqual(component.duration.text, `Duration (in Days): Click to edit`);
     assert.strictEqual(newStartDate.getTime(), sequenceBlockModel.startDate.getTime());
     assert.strictEqual(newEndDate.getTime(), sequenceBlockModel.endDate.getTime());
     assert.strictEqual(newDuration, sequenceBlockModel.duration);
@@ -2086,5 +2083,41 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
     assert.strictEqual(component.sessions.label, 'Sessions (0)');
     assert.notOk(component.sessions.editButton.isVisible);
+  });
+
+  test('zero duration renders as n/a in read-only mode', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      startDate: moment('2015-01-02'),
+      endDate: moment('2015-04-30'),
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 10,
+      maximum: 20,
+      startingAcademicLevel: this.academicLevels[0],
+      endingAcademicLevel: this.academicLevels[9],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{false}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{(noop)}}
+    />`);
+
+    assert.strictEqual(component.duration.text, 'Duration (in Days): n/a');
   });
 });
