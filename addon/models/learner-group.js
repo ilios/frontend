@@ -150,7 +150,7 @@ export default class LearnerGroup extends Model {
   async getAllDescendantUsers() {
     const users = await this.users;
     const descendantUsers = await this._getDescendantUsers();
-    return [...users.toArray(), ...descendantUsers];
+    return [...users.toArray(), ...descendantUsers].uniq();
   }
 
   async _getDescendantUsers() {

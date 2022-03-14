@@ -94,7 +94,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       users: [user5],
       children: [subSubGroup1],
     });
-    learnerGroup.get('users').pushObjects([user1, user4]);
+    learnerGroup.get('users').pushObjects([user1, user2, user3, user4, user5]);
     learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
 
     const allDescendantUsers = await waitForResource(learnerGroup, 'allDescendantUsers');
