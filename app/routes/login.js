@@ -1,12 +1,12 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import jwtDecode from '../utils/jwt-decode';
-
 import fetch from 'fetch';
 
-export default Route.extend({
-  serverVariables: service(),
-  session: service(),
+export default class LoginRoute extends Route {
+  @service serverVariables;
+  @service session;
+
   async model({ token }) {
     const tokenData = jwtDecode(token);
     const audience = tokenData.aud;
@@ -25,7 +25,8 @@ export default Route.extend({
     const jwt = await this.getNewToken(token, apiHost);
     await this.session.authenticate('authenticator:ilios-jwt', { jwt });
     this.transitionTo('index');
-  },
+  }
+
   async getNewToken(ltiToken, apiHost) {
     const apiHostWithNoTrailingSlash = apiHost.replace(/\/+$/, '');
     const url = `${apiHostWithNoTrailingSlash}/auth/token`;
@@ -40,5 +41,5 @@ export default Route.extend({
     } else {
       throw new Error('Unable to extract token from refresh request');
     }
-  },
-});
+  }
+}
