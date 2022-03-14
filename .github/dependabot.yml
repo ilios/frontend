@@ -43,5 +43,6 @@ updates:
   - dependency-name: qunit
   - dependency-name: qunit-dom
 - package-ecosystem: github-actions
+  directory: "/"
   schedule:
     interval: daily
