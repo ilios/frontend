@@ -43,4 +43,8 @@
       @include ilios-static-list;
     }
   }
+
+  .offering-instructors {
+    @include ilios-list-reset;
+  }
 }
