@@ -17,8 +17,10 @@ module('Integration | Component | pagedlist controls', function (hooks) {
     assert.strictEqual(component.limit.options[2].text, '50');
     assert.ok(component.limit.options[0].selected);
     assert.strictEqual(component.pagerDetails.text, 'Showing 12 - 21 of 33');
-    assert.ok(component.canGoBack);
-    assert.ok(component.canGoForward);
+    assert.notOk(component.firstPage.isDisabled);
+    assert.notOk(component.previousPage.isDisabled);
+    assert.notOk(component.nextPage.isDisabled);
+    assert.notOk(component.lastPage.isDisabled);
   });
 
   test('limitless', async function (assert) {
@@ -36,23 +38,29 @@ module('Integration | Component | pagedlist controls', function (hooks) {
 
   test('first page', async function (assert) {
     await render(hbs`<PagedlistControls @offset={{0}} @limit={{10}} @total={{100}} />`);
-    assert.notOk(component.canGoBack);
-    assert.ok(component.canGoForward);
+    assert.ok(component.firstPage.isDisabled);
+    assert.ok(component.previousPage.isDisabled);
+    assert.notOk(component.nextPage.isDisabled);
+    assert.notOk(component.lastPage.isDisabled);
   });
 
   test('last page', async function (assert) {
     await render(hbs`<PagedlistControls @offset={{90}} @limit={{10}} @total={{100}} />`);
-    assert.ok(component.canGoBack);
-    assert.notOk(component.canGoForward);
+    assert.notOk(component.firstPage.isDisabled);
+    assert.notOk(component.previousPage.isDisabled);
+    assert.ok(component.nextPage.isDisabled);
+    assert.ok(component.lastPage.isDisabled);
   });
 
   test('last page is first page', async function (assert) {
     await render(hbs`<PagedlistControls @offset={{0}} @limit={{10}} @total={{10}} />`);
-    assert.notOk(component.canGoBack);
-    assert.notOk(component.canGoForward);
+    assert.ok(component.firstPage.isDisabled);
+    assert.ok(component.previousPage.isDisabled);
+    assert.ok(component.nextPage.isDisabled);
+    assert.ok(component.lastPage.isDisabled);
   });
 
-  test('go back', async function (assert) {
+  test('go to previous page', async function (assert) {
     assert.expect(1);
     this.set('setOffset', (offset) => {
       assert.strictEqual(offset, 80);
@@ -60,10 +68,10 @@ module('Integration | Component | pagedlist controls', function (hooks) {
     await render(
       hbs`<PagedlistControls @offset={{90}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />`
     );
-    await component.goBack();
+    await component.previousPage.click();
   });
 
-  test('go forward', async function (assert) {
+  test('go to next page', async function (assert) {
     assert.expect(1);
     this.set('setOffset', (offset) => {
       assert.strictEqual(offset, 10);
@@ -71,7 +79,29 @@ module('Integration | Component | pagedlist controls', function (hooks) {
     await render(
       hbs`<PagedlistControls @offset={{0}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />`
     );
-    await component.goForward();
+    await component.nextPage.click();
+  });
+
+  test('go to first page', async function (assert) {
+    assert.expect(1);
+    this.set('setOffset', (offset) => {
+      assert.strictEqual(offset, 0);
+    });
+    await render(
+      hbs`<PagedlistControls @offset={{50}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />`
+    );
+    await component.firstPage.click();
+  });
+
+  test('go to last page', async function (assert) {
+    assert.expect(1);
+    this.set('setOffset', (offset) => {
+      assert.strictEqual(offset, 90);
+    });
+    await render(
+      hbs`<PagedlistControls @offset={{50}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />`
+    );
+    await component.lastPage.click();
   });
 
   test('change limit', async function (assert) {

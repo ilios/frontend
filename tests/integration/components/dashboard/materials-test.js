@@ -385,7 +385,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       'Showing 51 - 150 of 205'
     );
     assert.strictEqual(component.table.rows.length, 100);
-    await component.topPaginator.controls.goForward();
+    await component.topPaginator.controls.nextPage.click();
   });
 
   test('sort by course title', async function (assert) {

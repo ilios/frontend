@@ -9,14 +9,14 @@
         data-test-go-to-first
         {{on "click" this.goToFirst}}
       >
-        <FaIcon @icon="backward" class={{if this.firstPage "disabled"}} />
+        <FaIcon @icon="backward-fast" class={{if this.firstPage "disabled"}} />
       </button>
       <button
         class="link-button backward"
         type="button"
         title={{t "general.previous"}}
-        data-test-go-back
         disabled={{this.firstPage}}
+        data-test-go-to-previous
         {{on "click" this.goBack}}
       >
         <FaIcon @icon="play" @flip="horizontal" class={{if this.firstPage "disabled"}} />
@@ -42,7 +42,7 @@
         type="button"
         title={{t "general.next"}}
         disabled={{this.lastPage}}
-        data-test-go-forward
+        data-test-go-to-next
         {{on "click" this.goForward}}
       >
         <FaIcon @icon="play" class={{if this.lastPage "disabled"}} />
@@ -51,11 +51,11 @@
         class="link-button forward"
         type="button"
         title={{t "general.last"}}
-        data-test-go-to-last
         disabled={{this.lastPage}}
+        data-test-go-to-last
         {{on "click" this.goToLast}}
       >
-        <FaIcon @icon="forward" class={{if this.lastPage "disabled"}}/>
+        <FaIcon @icon="fast-forward" class={{if this.lastPage "disabled"}}/>
       </button>
     {{/unless}}
     {{#unless @limitless}}

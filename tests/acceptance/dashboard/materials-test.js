@@ -261,7 +261,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(page.materials.table.rows.length, 50);
     assert.strictEqual(page.materials.table.rows[0].title, 'Citation title 105 citationtext 105');
-    await page.materials.topPaginator.controls.goForward();
+    await page.materials.topPaginator.controls.nextPage.click();
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
       'Showing 151 - 200 of 205'
@@ -326,7 +326,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       'Showing 1 - 25 of 205'
     );
     await page.materials.topPaginator.controls.limit.set(50);
-    await page.materials.topPaginator.controls.goForward();
+    await page.materials.topPaginator.controls.nextPage.click();
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
       'Showing 51 - 100 of 205'
@@ -357,7 +357,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       'Showing 1 - 25 of 205'
     );
     await page.materials.topPaginator.controls.limit.set(50);
-    await page.materials.topPaginator.controls.goForward();
+    await page.materials.topPaginator.controls.nextPage.click();
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
       'Showing 51 - 100 of 205'
@@ -388,7 +388,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       'Showing 1 - 25 of 205'
     );
     await page.materials.topPaginator.controls.limit.set(50);
-    await page.materials.topPaginator.controls.goForward();
+    await page.materials.topPaginator.controls.nextPage.click();
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
       'Showing 51 - 100 of 205'
