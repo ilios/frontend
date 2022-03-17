@@ -4,6 +4,7 @@
       <button
         class="link-button backward"
         type="button"
+        title={{t "general.first"}}
         disabled={{this.firstPage}}
         data-test-go-to-first
         {{on "click" this.goToFirst}}
@@ -13,6 +14,7 @@
       <button
         class="link-button backward"
         type="button"
+        title={{t "general.previous"}}
         data-test-go-back
         disabled={{this.firstPage}}
         {{on "click" this.goBack}}
@@ -36,9 +38,9 @@
     {{/if}}
     {{#unless @limitless}}
       <button
-        class="link-button
-        forward"
+        class="link-button forward"
         type="button"
+        title={{t "general.next"}}
         disabled={{this.lastPage}}
         data-test-go-forward
         {{on "click" this.goForward}}
@@ -48,6 +50,7 @@
       <button
         class="link-button forward"
         type="button"
+        title={{t "general.last"}}
         data-test-go-to-last
         disabled={{this.lastPage}}
         {{on "click" this.goToLast}}

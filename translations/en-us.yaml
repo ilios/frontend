@@ -117,6 +117,7 @@ general:
   fileSizeError: "This file is too large.  Maximum size is {maxSize}."
   findInstructorOrGroup: "Find Instructor or Group"
   findLearners: "Find Learners"
+  first: First
   firstOffering: "First Offering"
   forward: Forward
   friday: Friday
@@ -147,6 +148,7 @@ general:
   instructors: Instructors
   instructorsAndInstructorGroups: "Instructors and Instructor Groups"
   instructorsManageTitle: "Manage Instructors"
+  last: Last
   lastUpdate: "Last Update"
   learnerGroups: "Learner Groups"
   learnerGroupsManageTitle: "Manage Learner Groups"
@@ -191,6 +193,7 @@ general:
   myLearningMaterials: "My Learning Materials"
   myMaterials: "My Materials"
   mySchedule: "My Schedule"
+  next: Next
   newObjective: "New Objective"
   newObjectiveSaved: "New Objective Saved"
   newOffering: "New Offering"
@@ -236,6 +239,7 @@ general:
   perPage: "Per Page"
   pickADate: "Pick a date"
   prerequisites: "Prerequisites"
+  previous: Previous
   preWork: "Pre-work"
   printSummary: "Print Summary"
   program: Program

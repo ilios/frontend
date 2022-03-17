@@ -117,6 +117,7 @@ general:
   fileSizeError: "Este archivo es demasiado grande.  El tamaño máximo es {maxSize}."
   findInstructorOrGroup: "Buscar Instructor o Grupo"
   findLearners: "Encontrar estudiantes"
+  first: Primero
   firstOffering: "Ofrecimiento Primero"
   forward: Adelante
   friday: Viernes
@@ -147,6 +148,7 @@ general:
   instructors: Instructores
   instructorsAndInstructorGroups: "Instructores y Grupos de Instructores"
   instructorsManageTitle: "Administrar Instructores"
+  last: Último
   lastUpdate: "Última actualización"
   learnerGroups: "Grupos de Aprendedores"
   learnerGroupsManageTitle: "Administrar Grupos de Aprendedores"
@@ -196,6 +198,7 @@ general:
   newOffering: "Nueva Oferta"
   newSession: "Sesión Nueva"
   newUpdates: "Nuevas actualizaciones"
+  next: Próximo
   nextXDays: "Próximos {days} días"
   no: No
   noAssociatedCompetencies: "No Competencias Asociadas"
@@ -236,6 +239,7 @@ general:
   perPage: "Por Página"
   pickADate: "Elija una fecha"
   prerequisites: "Prerrequisitos"
+  previous: Anterior
   preWork: "Pre Trabajo"
   printSummary: "Sumario Printado"
   program: Programa
