@@ -1,13 +1,23 @@
 {{#let (unique-id) as |templateId|}}
   <div class="pagedlist-controls" data-test-pagedlist-controls ...attributes>
-    {{#unless this.firstPage}}
-      {{#if (gt this.numPages 2)}}
-        <button class="link-button backward" type="button" {{on "click" this.goToFirst}} data-test-go-to-first>
-          <FaIcon @icon="backward" />
-        </button>
-      {{/if}}
-      <button class="link-button backward" type="button" {{on "click" this.goBack}} data-test-go-back>
-        <FaIcon @icon="play" @flip="horizontal" />
+    {{#unless @limitless}}
+      <button
+        class="link-button backward"
+        type="button"
+        disabled={{this.firstPage}}
+        data-test-go-to-first
+        {{on "click" this.goToFirst}}
+      >
+        <FaIcon @icon="backward" class={{if this.firstPage "disabled"}} />
+      </button>
+      <button
+        class="link-button backward"
+        type="button"
+        data-test-go-back
+        disabled={{this.firstPage}}
+        {{on "click" this.goBack}}
+      >
+        <FaIcon @icon="play" @flip="horizontal" class={{if this.firstPage "disabled"}} />
       </button>
     {{/unless}}
     {{#if @limitless}}
@@ -24,15 +34,26 @@
         {{t "general.pagedResultsCount" start=this.start end=this.end total=this.total}}
       </span>
     {{/if}}
-    {{#unless this.lastPage}}
-      <button class="link-button forward" type="button" {{on "click" this.goForward}} data-test-go-forward>
-        <FaIcon @icon="play" />
+    {{#unless @limitless}}
+      <button
+        class="link-button
+        forward"
+        type="button"
+        disabled={{this.lastPage}}
+        data-test-go-forward
+        {{on "click" this.goForward}}
+      >
+        <FaIcon @icon="play" class={{if this.lastPage "disabled"}} />
       </button>
-      {{#if (gt this.numPages 2)}}
-        <button class="link-button forward" type="button" {{on "click" this.goToLast}} data-test-go-to-last>
-          <FaIcon @icon="forward" />
-        </button>
-      {{/if}}
+      <button
+        class="link-button forward"
+        type="button"
+        data-test-go-to-last
+        disabled={{this.lastPage}}
+        {{on "click" this.goToLast}}
+      >
+        <FaIcon @icon="forward" class={{if this.lastPage "disabled"}}/>
+      </button>
     {{/unless}}
     {{#unless @limitless}}
       <select aria-labelledby="per-page-{{templateId}}" {{on "change" (pick "target.value" this.setLimit)}} data-test-limits>
