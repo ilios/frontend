@@ -52,6 +52,7 @@ module.exports = function () {
       'paragraph',
       'pen-to-square',
       'pencil',
+      'play',
       'plus',
       'print',
       'shuffle',
