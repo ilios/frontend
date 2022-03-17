@@ -1,4 +1,4 @@
-import { currentRouteName } from '@ember/test-helpers';
+import { currentRouteName, currentURL } from '@ember/test-helpers';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
@@ -428,5 +428,32 @@ module('Acceptance | Course - Session List', function (hooks) {
     await form.url.set('https://zoom.example.edu');
     await form.save();
     assert.strictEqual(this.server.schema.offerings.find(1).url, 'https://zoom.example.edu');
+  });
+
+  test('sort by title #3941', async function (assert) {
+    assert.expect(18);
+    await page.visit({ courseId: this.course.id });
+    assert.strictEqual(currentURL(), '/courses/1');
+    const { sessions } = page.courseSessions.sessionsGrid;
+    const header = page.courseSessions.sessionsGridHeader;
+    assert.strictEqual(sessions.length, 4);
+    assert.strictEqual(sessions[0].title, 'session 0');
+    assert.strictEqual(sessions[1].title, 'session 1');
+    assert.strictEqual(sessions[2].title, 'session 2');
+    assert.strictEqual(sessions[3].title, 'session3\\');
+    await header.title.click();
+    assert.strictEqual(currentURL(), '/courses/1?sortSessionsBy=title%3Adesc');
+    assert.strictEqual(sessions.length, 4);
+    assert.strictEqual(sessions[0].title, 'session3\\');
+    assert.strictEqual(sessions[1].title, 'session 2');
+    assert.strictEqual(sessions[2].title, 'session 1');
+    assert.strictEqual(sessions[3].title, 'session 0');
+    await header.title.click();
+    assert.strictEqual(currentURL(), '/courses/1?sortSessionsBy=title');
+    assert.strictEqual(sessions.length, 4);
+    assert.strictEqual(sessions[0].title, 'session 0');
+    assert.strictEqual(sessions[1].title, 'session 1');
+    assert.strictEqual(sessions[2].title, 'session 2');
+    assert.strictEqual(sessions[3].title, 'session3\\');
   });
 });
