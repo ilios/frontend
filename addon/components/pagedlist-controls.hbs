@@ -1,6 +1,11 @@
 {{#let (unique-id) as |templateId|}}
   <div class="pagedlist-controls" data-test-pagedlist-controls ...attributes>
     {{#unless this.firstPage}}
+      {{#if (gt this.numPages 2)}}
+        <button class="link-button backward" type="button" {{on "click" this.goToFirst}} data-test-go-to-first>
+          <FaIcon @icon="backward" />
+        </button>
+      {{/if}}
       <button class="link-button backward" type="button" {{on "click" this.goBack}} data-test-go-back>
         <FaIcon @icon="play" @flip="horizontal" />
       </button>
@@ -23,6 +28,11 @@
       <button class="link-button forward" type="button" {{on "click" this.goForward}} data-test-go-forward>
         <FaIcon @icon="play" />
       </button>
+      {{#if (gt this.numPages 2)}}
+        <button class="link-button forward" type="button" {{on "click" this.goToLast}} data-test-go-to-last>
+          <FaIcon @icon="forward" />
+        </button>
+      {{/if}}
     {{/unless}}
     {{#unless @limitless}}
       <select aria-labelledby="per-page-{{templateId}}" {{on "change" (pick "target.value" this.setLimit)}} data-test-limits>

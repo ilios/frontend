@@ -18,6 +18,13 @@ export default class PagedlistControlsComponent extends Component {
     return this.offset <= 0;
   }
 
+  get numPages() {
+    if (this.limit) {
+      return Math.ceil(this.total / this.limit);
+    }
+    return 1;
+  }
+
   get start() {
     return this.offset + 1;
   }
@@ -55,6 +62,16 @@ export default class PagedlistControlsComponent extends Component {
     const offset = this.offset;
     const limit = this.limit;
     this.args.setOffset(offset + limit);
+  }
+
+  @action
+  goToFirst() {
+    this.args.setOffset(0);
+  }
+
+  @action
+  goToLast() {
+    this.args.setOffset(this.limit * (this.numPages - 1));
   }
 
   @action
