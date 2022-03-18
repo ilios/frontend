@@ -1,6 +1,12 @@
 .pagedlist-controls {
   float: right;
 
+  .fa-backward-fast,
+  .fa-fast-forward,
+  .fa-play {
+    @include icon;
+  }
+
   .forward {
     padding-right: .75rem;
   }
@@ -12,4 +18,5 @@
   select {
     margin-left: .75rem;
   }
+
 }

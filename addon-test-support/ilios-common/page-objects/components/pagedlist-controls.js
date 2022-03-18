@@ -1,18 +1,23 @@
-import {
-  clickable,
-  collection,
-  create,
-  fillable,
-  isPresent,
-  property,
-} from 'ember-cli-page-object';
+import { collection, create, fillable, property } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-pagedlist-controls]',
-  goBack: clickable('[data-test-go-back]'),
-  goForward: clickable('[data-test-go-forward]'),
-  canGoBack: isPresent('[data-test-go-back]'),
-  canGoForward: isPresent('[data-test-go-forward]'),
+  firstPage: {
+    scope: '[data-test-go-to-first]',
+    isDisabled: property('disabled'),
+  },
+  previousPage: {
+    scope: '[data-test-go-to-previous]',
+    isDisabled: property('disabled'),
+  },
+  nextPage: {
+    scope: '[data-test-go-to-next]',
+    isDisabled: property('disabled'),
+  },
+  lastPage: {
+    scope: '[data-test-go-to-last]',
+    isDisabled: property('disabled'),
+  },
   pagerDetails: {
     scope: '[data-test-paged-results-count]',
   },
