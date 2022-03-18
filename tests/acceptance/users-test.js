@@ -1,11 +1,10 @@
 import { click, fillIn, currentURL, find, triggerEvent, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
-
-const url = '/users';
-
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+
+const url = '/users';
 
 module('Acceptance | Users', function (hooks) {
   setupApplicationTest(hooks);
@@ -37,8 +36,8 @@ module('Acceptance | Users', function (hooks) {
   });
 
   test('can page through list of users', async function (assert) {
-    const leftArrow = '.backward';
-    const rightArrow = '.forward';
+    const leftArrow = '[data-test-go-to-previous]';
+    const rightArrow = '[data-test-go-to-next]';
 
     await visit(url);
     await click(rightArrow);
