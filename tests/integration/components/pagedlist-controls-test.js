@@ -34,6 +34,8 @@ module('Integration | Component | pagedlist controls', function (hooks) {
     assert.strictEqual(component.limit.options[5].text, '400');
     assert.strictEqual(component.limit.options[6].text, '1000');
     assert.notOk(component.pagerDetails.isPresent);
+    assert.notOk(component.firstPage.isPresent);
+    assert.notOk(component.lastPage.isPresent);
   });
 
   test('first page', async function (assert) {
