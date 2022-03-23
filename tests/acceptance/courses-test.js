@@ -1,11 +1,10 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import moment from 'moment';
 import page from 'ilios/tests/pages/courses';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { freezeDateAt, unfreezeDate } from 'ilios/tests/helpers/mockdate';
 
 module('Acceptance | Courses', function (hooks) {
   setupApplicationTest(hooks);

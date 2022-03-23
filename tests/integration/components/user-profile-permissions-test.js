@@ -6,7 +6,7 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import moment from 'moment';
 import { component } from 'ilios/tests/pages/components/user-profile-permissions';
-import { freezeDateAt, unfreezeDate } from 'ilios/tests/helpers/mockdate';
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Integration | Component | user-profile-permissions', function (hooks) {
   setupRenderingTest(hooks);
