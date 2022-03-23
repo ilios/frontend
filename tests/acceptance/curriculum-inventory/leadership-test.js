@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { setupAuthentication } from 'ilios-common';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/curriculum-inventory-report';
 

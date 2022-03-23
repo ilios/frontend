@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { setupAuthentication } from 'ilios-common';
 
 module('Integration | Component | user profile cohorts', function (hooks) {
   setupRenderingTest(hooks);

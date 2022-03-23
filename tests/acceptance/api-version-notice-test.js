@@ -1,6 +1,6 @@
 import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { setupAuthentication } from 'ilios-common';
 
 const url = '/';
 

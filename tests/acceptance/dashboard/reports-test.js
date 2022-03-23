@@ -1,6 +1,6 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { setupAuthentication } from 'ilios-common';
 import page from 'ilios/tests/pages/dashboard';
 
 import { setupApplicationTest } from 'ember-qunit';

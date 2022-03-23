@@ -1,6 +1,6 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { setupAuthentication } from 'ilios-common';
 import moment from 'moment';
 import page from 'ilios/tests/pages/courses';
 import { setupApplicationTest } from 'ember-qunit';
