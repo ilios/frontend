@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, click, fillIn } from '@ember/test-helpers';
+import { findAll, render, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -318,6 +318,46 @@ module('Integration | Component | learnergroup summary', function (hooks) {
     const coursesList = '[data-test-overview] .associatedcourses ul';
 
     assert.dom(coursesList).hasText('course 0');
+  });
+
+  test('associated courses are linked to course pages', async function (assert) {
+    const cohort = this.server.create('cohort', {
+      title: 'this cohort',
+      programYear: this.programYear,
+    });
+    const course = this.server.create('course');
+    const course2 = this.server.create('course');
+    const session = this.server.create('session', { course });
+    const session2 = this.server.create('session', { course: course2 });
+    const offering1 = this.server.create('offering', { session });
+    const offering2 = this.server.create('offering', { session: session2 });
+    const learnerGroup = this.server.create('learner-group', {
+      cohort,
+      offerings: [offering1, offering2],
+    });
+
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupSummary
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
+      @sortUsersBy="firstName"
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    const courses = findAll('[data-test-overview] .associatedcourses ul li a');
+    assert.strictEqual(courses.length, 2);
+    assert.dom(courses[0]).hasText('course 0');
+    assert.notEqual(courses[0].href.search(/\/courses\/1$/), -1);
+    assert.dom(courses[1]).hasText('course 1');
+    assert.notEqual(courses[1].href.search(/\/courses\/2$/), -1);
   });
 
   test('Update default URL', async function (assert) {
