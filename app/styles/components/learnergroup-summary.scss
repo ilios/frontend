@@ -5,6 +5,23 @@
     .block {
       @include ilios-overview-block;
 
+      &.associatedcourses {
+        align-items: flex-start;
+        margin-bottom: .5rem;
+        margin-top: .3rem;
+
+        label {
+          white-space: nowrap;
+        }
+        ul {
+          @include ilios-tag-list;
+
+          li {
+            margin-top: 0;
+          }
+        }
+      }
+
       > span {
         flex-grow: 1;
       }
@@ -27,20 +44,6 @@
       @include font-size('xxl');
       margin: auto;
       text-align: center;
-    }
-  }
-
-  .associatedcourses {
-    margin-bottom: .5rem;
-    margin-top: .3rem;
-    display: flex;
-
-    label {
-      white-space: nowrap;
-    }
-    ul {
-      @include ilios-tag-list;
-      margin: -8px 0 0 1rem;
     }
   }
 }

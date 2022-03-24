@@ -89,13 +89,17 @@
             {{/if}}
           </span>
         </div>
-        <div class="associatedcourses">
+        <div class="block associatedcourses">
           <label>
             {{t "general.associatedCourses"}} ({{this.courses.length}}):
           </label>
           <ul>
             {{#each (sort-by "courseTitle" this.courses) as |obj|}}
-              <li>{{obj.courseTitle}}</li>
+              <li>
+                <LinkTo @route="course" @model={{obj.course}}>
+                  {{obj.courseTitle}}
+                </LinkTo>
+              </li>
             {{/each}}
           </ul>
         </div>
