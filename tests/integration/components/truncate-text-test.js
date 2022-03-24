@@ -144,7 +144,7 @@ module('Integration | Component | truncate-text', function (hooks) {
   test('it yields isTruncated when not truncated', async function (assert) {
     this.set('text', 'abc');
     await render(hbs`
-      <TruncateText @text={{this.text}} as |displayText expand isTruncated|>
+      <TruncateText @text={{this.text}} as |displayText expand collapse isTruncated expanded|>
         {{isTruncated}}
         <button {{on "click" expand}}>Expand</button>
       </TruncateText>
@@ -155,7 +155,7 @@ module('Integration | Component | truncate-text', function (hooks) {
   test('it yields isTruncated when truncated', async function (assert) {
     this.set('longText', 't'.repeat(400));
     await render(hbs`
-      <TruncateText @text={{this.longText}} as |displayText expand isTruncated|>
+      <TruncateText @text={{this.longText}} as |displayText expand collapse isTruncated expanded|>
         {{isTruncated}}
         <button {{on "click" expand}}>Expand</button>
       </TruncateText>
@@ -163,5 +163,15 @@ module('Integration | Component | truncate-text', function (hooks) {
     assert.dom(this.element).includesText('true');
     await click('button');
     assert.dom(this.element).includesText('false');
+  });
+
+  test('expand/collapse', async function (assert) {
+    this.set('longText', 't'.repeat(400));
+    await render(hbs`<TruncateText @text={{this.longText}} />`);
+    assert.strictEqual(this.element.textContent.trim(), 't'.repeat(200));
+    await click('[data-test-expand]');
+    assert.strictEqual(this.element.textContent.trim(), 't'.repeat(400));
+    await click('[data-test-collapse]');
+    assert.strictEqual(this.element.textContent.trim(), 't'.repeat(200));
   });
 });

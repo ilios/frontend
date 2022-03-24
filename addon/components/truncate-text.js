@@ -47,8 +47,14 @@ export default class TruncateTextComponent extends Component {
       return this.displayText.toString() !== this.cleanText;
     }
   }
+
   @action
   expand() {
     this.expanded = true;
+  }
+
+  @action
+  collapse() {
+    this.expanded = false;
   }
 }

@@ -1,5 +1,5 @@
 {{#if (has-block)}}
-  {{yield this.displayText this.expand this.isTruncated}}
+  {{yield this.displayText this.expand this.collapse this.isTruncated this.expanded}}
 {{else}}
   <span class="truncate-text" ...attributes>
     {{this.displayText}}
@@ -8,12 +8,26 @@
       <button
         class="expand-buttons"
         aria-label={{t "general.expand"}}
+        title={{t "general.expand"}}
         type="button"
         data-test-expand
         {{on "click" this.expand}}
       >
-        <FaIcon @icon="circle-info" />
+        <FaIcon @icon="angles-down" />
       </button>
+    {{else}}
+      {{#if this.expanded}}
+        <button
+          class="expand-buttons"
+          aria-label={{t "general.collapse"}}
+          title={{t "general.collapse"}}
+          type="button"
+          data-test-collapse
+          {{on "click" this.collapse}}
+        >
+          <FaIcon @icon="angles-up" />
+        </button>
+      {{/if}}
     {{/if}}
   </span>
 {{/if}}
