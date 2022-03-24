@@ -5,7 +5,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import component from 'ilios/tests/pages/components/user-menu';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { setupAuthentication } from 'ilios-common';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import Service from '@ember/service';
 

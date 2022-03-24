@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { triggerEvent, waitFor } from '@ember/test-helpers';
-import setupAuthentication from '../helpers/setup-authentication';
+import { setupAuthentication } from 'ilios-common';
 import page from '../pages/learner-group';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 

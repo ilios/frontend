@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { find, visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { setupAuthentication } from 'ilios-common';
 import ENV from 'ilios/config/environment';
 import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
 const { version } = ENV.APP;
