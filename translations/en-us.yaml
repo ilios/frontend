@@ -46,6 +46,7 @@ general:
   cohort: Cohort
   cohorts: Cohorts
   cohortsManageTitle: "Manage Cohorts"
+  collapse: collapse
   collapseDetail: "Hide Details"
   competencies: Competencies
   completeSessions: "Sessions Complete: ready to publish"

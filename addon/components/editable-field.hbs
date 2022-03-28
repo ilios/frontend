@@ -20,7 +20,7 @@
               @renderHtml={{@renderHtml}}
               @text={{@value}}
               @onEdit={{set this.isEditing true}}
-              as |displayText expand isTruncated|
+              as |displayText expand collapse isTruncated expanded|
             >
               <span
                 class="clickable editable"
@@ -37,11 +37,25 @@
                   class="expand-text-button"
                   type="button"
                   aria-label={{t "general.expand"}}
+                  title={{t "general.expand"}}
                   data-test-expand
                   {{on "click" expand}}
                 >
-                  <FaIcon @icon="circle-info" />
+                  <FaIcon @icon="angles-down" />
                 </button>
+              {{else}}
+                {{#if expanded}}
+                  <button
+                    class="expand-text-button"
+                    aria-label={{t "general.collapse"}}
+                    title={{t "general.collapse"}}
+                    type="button"
+                    data-test-collapse
+                    {{on "click" collapse}}
+                  >
+                    <FaIcon @icon="angles-up" />
+                  </button>
+                {{/if}}
               {{/if}}
             </TruncateText>
           {{/if}}

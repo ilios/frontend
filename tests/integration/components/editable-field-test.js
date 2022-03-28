@@ -116,4 +116,16 @@ module('Integration | Component | editable field', function (hooks) {
 
     assert.dom('textarea', this.element).isFocused();
   });
+
+  test('expand/collapse overlong text', async function (assert) {
+    const text = 't'.repeat(400);
+    const abbreviatedText = 't'.repeat(200);
+    this.set('value', text);
+    await render(hbs`<EditableField @value={{this.value}} />`);
+    assert.dom(this.element).hasText(abbreviatedText);
+    await click('[data-test-expand]');
+    assert.dom(this.element).hasText(text);
+    await click('[data-test-collapse]');
+    assert.dom(this.element).hasText(abbreviatedText);
+  });
 });

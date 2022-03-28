@@ -46,6 +46,7 @@ general:
   cohort: "Clase de la Graduación"
   cohorts: "Clases de la Graduación"
   cohortsManageTitle: "Administrar Clases de La Graduación"
+  collapse: colapsar
   collapseDetail: "Esconder Detalles"
   competencies: Competencias
   completeSessions: "Sesiónes Completas: Listo a Publicar"
