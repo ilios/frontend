@@ -27,7 +27,7 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
       '/upload',
       upload(function (db, request) {
         const { name } = request.requestBody.file;
-        assert.strictEqual(name, 'blob');
+        assert.strictEqual(name, 'test.file');
         return new Response(
           200,
           {},
@@ -53,7 +53,7 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
       @setFilename={{this.setFilename}}
       @setFileHash={{this.setFileHash}}
     />`);
-    const file = new Blob(['test'], { type: 'text/plain' });
+    const file = new File(['1234'], 'test.file');
     await selectFiles('[data-test-learning-material-uploader] input', file);
     assert.strictEqual(filename, 'test.file');
     assert.strictEqual(fileHash, '1234');
@@ -69,14 +69,12 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
-    this.set('nothing', () => {});
-
     await render(hbs`<LearningMaterialUploader
       @for="test"
-      @setFilename={{this.nothing}}
-      @setFileHash={{this.nothing}}
+      @setFilename={{(noop)}}
+      @setFileHash={{(noop)}}
     />`);
-    const file = new Blob(['test'], { type: 'text/plain' });
+    const file = new File(['1234'], 'test.file');
     await selectFiles('[data-test-learning-material-uploader] input', file);
     assert.dom('[data-test-learning-material-uploader]').includesText('This file is too large.');
   });
