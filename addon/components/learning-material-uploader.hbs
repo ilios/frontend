@@ -1,17 +1,19 @@
 <span class="learning-material-uploader" data-test-learning-material-uploader>
-  <FileUpload
-    @for={{@for}}
-    @disabled={{this.upload.isRunning}}
-    @name={{this.uploadQueueName}}
-    @onFileAdd={{perform this.upload}} as |queue|>
+  {{#let (file-queue name=this.uploadQueueName onFileAdded=(perform this.upload)) as |queue|}}
     {{#if (and (not this.fileUploadErrorMessage) queue.files.length)}}
       <span class="upload-button">
         <LoadingSpinner />{{queue.progress}}%
       </span>
     {{else}}
-      <span class="upload-button" role="button">
+      <label class="upload-button" for={{@for}}>
         {{t "general.chooseFile"}}
-      </span>
+        <input
+          type="file"
+          id={{@for}}
+          hidden
+          {{queue.selectFile}}
+        >
+      </label>
     {{/if}}
     {{#if this.upload.lastSuccessful.value}}
       <span class="upload-result">
@@ -23,5 +25,5 @@
         <FaIcon @icon="circle-exclamation" class="warning" /> {{this.fileUploadErrorMessage}}
       </span>
     {{/if}}
-  </FileUpload>
+  {{/let}}
 </span>
