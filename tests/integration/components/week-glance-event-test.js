@@ -5,7 +5,6 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-
 import { component } from 'ilios-common/page-objects/components/week-glance-event';
 
 const today = moment();
@@ -67,7 +66,10 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.strictEqual(component.link, 'Virtual Session Link');
     assert.strictEqual(component.url, 'https://zoom.example.com/123?p=456');
     assert.ok(component.hasDescription);
-    assert.strictEqual(component.description, 'Best Session For SureLorem ipsum dolor sit amet, c');
+    assert.strictEqual(
+      component.description.content.text,
+      'Best Session For SureLorem ipsum dolor sit amet, c'
+    );
     assert.strictEqual(component.learningMaterials.length, 3);
     assert.strictEqual(component.learningMaterials[0].title, 'Citation LM');
     assert.ok(component.learningMaterials[0].hasTypeIcon);
@@ -204,7 +206,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.strictEqual(component.location, '- Room 123');
     assert.ok(component.hasDescription);
     assert.strictEqual(
-      component.description,
+      component.description.content.text,
       'Best Session For Sure' + 'Lorem ipsum dolor sit amet, c'
     );
     assert.strictEqual(component.learningMaterials.length, 3);
@@ -374,5 +376,52 @@ module('Integration | Component | week-glance-event', function (hooks) {
     await a11yAudit(this.element);
     assert.strictEqual(component.title, 'Learn to Learn');
     assert.notOk(component.hasLearningMaterials);
+  });
+
+  test('it renders markup on short session description', async function (assert) {
+    this.set('event', {
+      name: 'Learn to Learn',
+      startDate: today.format(),
+      location: 'Room 123',
+      sessionTypeTitle: 'Lecture',
+      courseExternalId: 'C1',
+      sessionDescription: '<h1 data-test-heading>Test</h1>',
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      learningMaterials: [],
+      attireRequired: true,
+      equipmentRequired: true,
+      attendanceRequired: true,
+      supplemental: true,
+    });
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    assert.strictEqual(component.description.content.text, 'Test');
+    assert.dom('[data-test-heading]').exists();
+  });
+
+  test('it renders markup when long session description is expanded', async function (assert) {
+    this.set('event', {
+      name: 'Learn to Learn',
+      startDate: today.format(),
+      location: 'Room 123',
+      sessionTypeTitle: 'Lecture',
+      courseExternalId: 'C1',
+      sessionDescription: '<h1 data-test-heading>Test</h1> ' + 't'.repeat(200),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      learningMaterials: [],
+      attireRequired: true,
+      equipmentRequired: true,
+      attendanceRequired: true,
+      supplemental: true,
+    });
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    assert.strictEqual(component.description.content.text, 'Test ' + 't'.repeat(45));
+    assert.dom('[data-test-heading]').doesNotExist();
+    await component.description.content.expand.click();
+    assert.strictEqual(component.description.content.text, 'Test ' + 't'.repeat(200));
+    assert.dom('[data-test-heading]').exists();
   });
 });

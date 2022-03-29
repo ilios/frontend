@@ -8,6 +8,8 @@ import {
   text,
 } from 'ember-cli-page-object';
 
+import truncateText from './truncate-text';
+
 const definition = {
   scope: '[data-test-week-glance-event]',
   title: text('[data-test-event-title]'),
@@ -17,7 +19,10 @@ const definition = {
   link: text('[data-test-url]'),
   url: property('href', '[data-test-url] a'),
   hasDescription: isPresent('[data-test-description]'),
-  description: text('[data-test-description]'),
+  description: {
+    scope: '[data-test-description]',
+    content: truncateText,
+  },
   sessionAttributes: collection('[data-test-session-attributes] svg', {
     attire: hasClass('fa-black-tie'),
     equipment: hasClass('fa-flask'),

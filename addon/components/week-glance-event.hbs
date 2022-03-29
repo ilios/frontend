@@ -91,7 +91,7 @@
   {{/if}}
   {{#if @event.sessionDescription.length}}
     <p class="description" data-test-description>
-      <TruncateText @text={{@event.sessionDescription}} @length={{50}} />
+      <TruncateText @text={{@event.sessionDescription}} @length={{50}} @renderHtml={{true}} />
     </p>
   {{/if}}
   {{#if this.hasSessionLearningMaterials}}
