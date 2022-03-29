@@ -5,10 +5,14 @@
         <LoadingSpinner />{{queue.progress}}%
       </span>
     {{else}}
-      <label for={{@for}}>
-        <span class="upload-button" role="button">
-          {{t "general.chooseFile"}}
-        </span>
+      <label class="upload-button" for={{@for}}>
+        {{t "general.chooseFile"}}
+        <input
+          type="file"
+          id={{@for}}
+          hidden
+          {{queue.selectFile}}
+        >
       </label>
     {{/if}}
     {{#if this.upload.lastSuccessful.value}}
@@ -21,11 +25,5 @@
         <FaIcon @icon="circle-exclamation" class="warning" /> {{this.fileUploadErrorMessage}}
       </span>
     {{/if}}
-    <input
-      type="file"
-      id={{@for}}
-      hidden
-      {{queue.selectFile}}
-    >
   {{/let}}
 </span>
