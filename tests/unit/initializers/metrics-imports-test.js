@@ -1,10 +1,9 @@
 import Application from '@ember/application';
-
 import config from 'ilios/config/environment';
-import { initialize } from 'ilios/initializers/metrics-imports';
+import { initialize } from 'ilios/initializers/inflector';
 import { module, test } from 'qunit';
 import Resolver from 'ember-resolver';
-import destroyApp from '../../helpers/destroy-app';
+import { run } from '@ember/runloop';
 
 module('Unit | Initializer | metrics-imports', function (hooks) {
   hooks.beforeEach(function () {
@@ -22,7 +21,7 @@ module('Unit | Initializer | metrics-imports', function (hooks) {
   });
 
   hooks.afterEach(function () {
-    destroyApp(this.application);
+    run(this.application, 'destroy');
   });
 
   test('it works', async function (assert) {
