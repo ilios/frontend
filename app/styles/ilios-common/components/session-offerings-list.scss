@@ -4,6 +4,7 @@
   .offering-block {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    margin-top: 1rem;
 
     .offering-form {
       grid-column: 1 / -1;
@@ -27,7 +28,6 @@
 
     .offering-block-time {
       grid-column: 1 / -1;
-      margin-bottom: 2rem;
       margin-top: 1rem;
 
       .offering-block-time-time-starttime,
