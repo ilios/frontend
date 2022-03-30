@@ -62,6 +62,7 @@ module.exports = function (environment) {
     noScript: {
       placeIn: 'body-footer',
     },
+    disableServiceWorker: process.env.SW_DISABLED === 'true' ?? false,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
