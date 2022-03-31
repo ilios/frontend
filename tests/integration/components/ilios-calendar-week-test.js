@@ -3,73 +3,62 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { component as weeklyCalendarComponent } from 'ilios-common/page-objects/components/weekly-calendar';
 import moment from 'moment';
+import { component } from 'ilios-common/page-objects/components/ilios-calendar-week';
 
 module('Integration | Component | ilios calendar week', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
-  hooks.beforeEach(function () {
-    this.actions = {};
-    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
-  });
-
   test('it renders', async function (assert) {
-    assert.expect(2);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
-
     await render(hbs`<IliosCalendarWeek @date={{this.date}} @calendarEvents={{(array)}} />`);
-    assert.dom().containsText('Week of September 27, 2015');
-    assert.strictEqual(weeklyCalendarComponent.events.length, 0);
+    assert.strictEqual(component.calendar.longWeekOfYear, 'Week of September 27, 2015');
+    assert.strictEqual(component.calendar.events.length, 0);
   });
 
   test('clicking on a day header fires the correct events', async function (assert) {
     assert.expect(3);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
-    this.actions.changeDate = (newDate) => {
+    this.set('changeDate', (newDate) => {
       assert.ok(newDate instanceof Date);
       assert.strictEqual(newDate.toString().search(/Sun Sep 27/), 0);
-    };
-    this.actions.changeView = (newView) => {
+    });
+    this.set('changeView', (newView) => {
       assert.strictEqual(newView, 'day');
-    };
+    });
 
     await render(hbs`<IliosCalendarWeek
       @date={{this.date}}
       @calendarEvents={{(array)}}
       @areDaysSelectable={{true}}
-      @changeDate={{action "changeDate"}}
-      @changeView={{action "changeView"}}
+      @changeDate={{this.changeDate}}
+      @changeView={{this.changeView}}
     />`);
-    weeklyCalendarComponent.dayHeadings[0].selectDay();
+    component.calendar.dayHeadings[0].selectDay();
   });
 
   test('clicking on a day header does nothing when areDaysSelectable is false', async function (assert) {
     assert.expect(0);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
-    this.set('nothing', () => {
-      assert.ok(false, 'this should never be called');
+    this.set('changeDate', () => {
+      assert.ok(false, 'this should never fire.');
     });
-
     await render(hbs`<IliosCalendarWeek
       @date={{this.date}}
       @calendarEvents={{(array)}}
       @areDaysSelectable={{false}}
-      @changeDate={{this.nothing}}
-      @changeView={{this.nothing}}
+      @changeDate={{this.changeDate}}
+      @changeView={{(noop)}}
     />`);
-    await weeklyCalendarComponent.dayHeadings[0].selectDay();
+    await component.calendar.dayHeadings[0].selectDay();
   });
 
   test('prework', async function (assert) {
-    assert.expect(3);
-
     const date = moment(new Date('2015-09-30T12:00:00'));
-
     const event = createUserEventObject();
     event.startDate = date.clone();
     event.endDate = date.clone().add(1, 'hour');
@@ -148,11 +137,9 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       @changeDate={{(noop)}}
       @changeView={{(noop)}}
     />`);
-    const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
-    const preworkElements = this.element.querySelectorAll(preworkSelector);
-    assert.strictEqual(preworkElements.length, 2);
-    assert.ok(preworkElements[0].textContent.includes('prework 1'));
-    assert.ok(preworkElements[1].textContent.includes('prework 2'));
+    assert.strictEqual(component.prework.events.length, 2);
+    assert.strictEqual(component.prework.events[0].title, 'prework 1');
+    assert.strictEqual(component.prework.events[1].title, 'prework 2');
   });
 
   test('prework to unpublished/scheduled/blanked events is not visible', async function (assert) {
@@ -203,9 +190,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       @changeDate={{(noop)}}
       @changeView={{(noop)}}
     />`);
-    const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
-    const preworkElements = this.element.querySelectorAll(preworkSelector);
-    assert.strictEqual(preworkElements.length, 0);
+    assert.strictEqual(component.prework.events.length, 0);
   });
 
   const createUserEventObject = function () {
