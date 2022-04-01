@@ -58,7 +58,7 @@
     "ember-resolver": "^8.0.2",
     "ember-source": "3.28.0",
     "ember-template-lint": "^3.6.0",
-    "ember-unique-id-helper-polyfill": "^1.1.0",
+    "ember-unique-id-helper-polyfill": "^1.2.0",
     "ember-web-app": "^5.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
