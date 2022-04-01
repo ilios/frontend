@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { component } from 'ilios-common/page-objects/components/copy-button';
 
 module('Integration | Component | copy-button', function (hooks) {
   setupRenderingTest(hooks);
@@ -13,8 +14,31 @@ module('Integration | Component | copy-button', function (hooks) {
       </CopyButton>
     `);
 
-    assert.dom(this.element).hasText('template block text');
-    assert.dom('button').exists({ count: 1 });
-    assert.dom('button').hasClass('copy-btn');
+    assert.strictEqual(component.text, 'template block text');
+  });
+
+  test('copy', async function (assert) {
+    assert.expect(2);
+    const text = 'lorem ipsum';
+    // temporarily overwrite the writeText method.
+    const writeText = navigator.clipboard.writeText;
+    navigator.clipboard.writeText = (value) => {
+      assert.strictEqual(text, value);
+    };
+    this.set('text', text);
+    this.set('success', () => {
+      assert.ok(true);
+    });
+    await render(hbs`
+      <CopyButton
+        @clipboardText={{this.text}}
+        @success={{this.success}}
+      >
+          copy this!
+        </CopyButton>
+    `);
+    await component.click();
+    // undo writeText overwrite.
+    navigator.clipboard.writeText = writeText;
   });
 });
