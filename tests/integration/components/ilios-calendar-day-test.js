@@ -4,28 +4,25 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
+import { component } from 'ilios-common/page-objects/components/ilios-calendar-day';
 
 module('Integration | Component | ilios calendar day', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    assert.expect(2);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
     await render(
       hbs`<IliosCalendarDay @date={{this.date}} @selectEvent={{(noop)}} @calendarEvents={{(array)}} />`
     );
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
-    assert.dom().containsText('Wednesday');
-    assert.dom('[data-test-calender-event]').doesNotExist();
+    assert.strictEqual(component.calendar.longDayOfWeek, 'Wednesday, September 30, 2015');
+    assert.strictEqual(component.calendar.events.length, 0);
   });
 
   test('prework', async function (assert) {
-    assert.expect(3);
-
     const date = moment(new Date('2015-09-30T12:00:00'));
-
     const event = createUserEventObject();
     event.startDate = date.clone();
     event.endDate = date.clone().add(1, 'hour');
@@ -102,11 +99,9 @@ module('Integration | Component | ilios calendar day', function (hooks) {
       @calendarEvents={{this.events}}
       @selectEvent={{(noop)}}
     />`);
-    const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
-    const preworkElements = this.element.querySelectorAll(preworkSelector);
-    assert.strictEqual(preworkElements.length, 2);
-    assert.ok(preworkElements[0].textContent.includes('prework 1'));
-    assert.ok(preworkElements[1].textContent.includes('prework 2'));
+    assert.strictEqual(component.prework.events.length, 2);
+    assert.strictEqual(component.prework.events[0].title, 'prework 1');
+    assert.strictEqual(component.prework.events[1].title, 'prework 2');
   });
 
   test('prework to unpublished/scheduled/blanked events is not visible', async function (assert) {
@@ -155,9 +150,7 @@ module('Integration | Component | ilios calendar day', function (hooks) {
       @calendarEvents={{this.events}}
       @selectEvent={{(noop)}}
     />`);
-    const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
-    const preworkElements = this.element.querySelectorAll(preworkSelector);
-    assert.strictEqual(preworkElements.length, 0);
+    assert.strictEqual(component.prework.events.length, 0);
   });
 
   const createUserEventObject = function () {

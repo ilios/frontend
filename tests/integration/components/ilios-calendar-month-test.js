@@ -3,8 +3,8 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { component } from 'ilios-common/page-objects/components/ilios-calendar-month';
 import { DateTime } from 'luxon';
+import { component } from 'ilios-common/page-objects/components/ilios-calendar-month';
 
 module('Integration | Component | ilios calendar month', function (hooks) {
   setupRenderingTest(hooks);

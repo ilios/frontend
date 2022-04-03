@@ -1,5 +1,5 @@
 {{#if (is-array @calendarEvents)}}
-  <div class="ilios-calendar-month">
+  <div class="ilios-calendar-month" data-test-ilios-calendar-month>
     <MonthlyCalendar
       @date={{@date}}
       @events={{this.singleDayEvents}}
