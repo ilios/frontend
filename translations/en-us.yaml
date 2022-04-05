@@ -406,6 +406,7 @@ general:
   termsBySessionType: "Terms by Session Type"
   thereAreXTerms: "{count, plural, =1 {There is 1 term} other {There are # terms}}"
   thisReportIsNoLongerAvailable: "This report is no longer available."
+  thisTermHasSubTerms: "This term has sub-terms."
   tokenInfo: "API Tokens are used to programmatically access Ilios data.  Your token is like a password - anyone who has it can make changes on your behalf.  Read more in the documentation at {apiDocsLink}."
   tooManyResults: "Search returned more than {count} results.  To see better results try your search again with more terms."
   total: "Total"
