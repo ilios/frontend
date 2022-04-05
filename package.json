@@ -1,6 +1,6 @@
 {
   "name": "lti-app",
-  "version": "12.0.1",
+  "version": "13.0.0",
   "description": "LTI App for ilios integration",
   "repository": "https://github.com/ilios/lti-app",
   "license": "MIT",
