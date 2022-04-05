@@ -81,7 +81,7 @@
     "ember-page-title": "^7.0.0",
     "ember-qunit": "^5.1.4",
     "ember-resolver": "^8.0.2",
-    "ember-responsive": "^4.0.2",
+    "ember-responsive": "^5.0.0",
     "ember-service-worker": "^9.0.1",
     "ember-service-worker-cache-first": "^0.6.2",
     "ember-source": "3.28.0",
