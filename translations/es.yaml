@@ -405,6 +405,7 @@ general:
   termsBySessionType: "Términos por Tipo de Sesión"
   thereAreXTerms: "{count, plural, =1 {Hay 1 término} other {Hay # términos}}"
   thisReportIsNoLongerAvailable: "Este informe ya no está disponible."
+  thisTermHasSubTerms: "Este término tiene subtérminos."
   tokenInfo: "Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en {apiDocsLink}."
   tooManyResults: "La búsqueda ha devuelto más de {count} resultados.  Para ver mejores resultados, intente su búsqueda otra vez con condiciones adicionales."
   total: "Total"

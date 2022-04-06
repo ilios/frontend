@@ -7,6 +7,7 @@ module.exports = function () {
       'angle-left',
       'angle-right',
       'arrow-circle-up',
+      'asterisk',
       'bars',
       'bold',
       'book',

@@ -120,7 +120,10 @@
         <ul data-test-term-list>
           {{#each this.children as |term|}}
             <li role="button" data-test-term {{on "click" (fn @manageTerm term.id)}}>
-              {{term.title}} ({{term.childCount}})
+              {{term.title}}
+              {{#if term.hasChildren}}
+                <FaIcon @icon="asterisk" data-test-has-children @title={{t "general.thisTermHasSubTerms"}} />
+              {{/if}}
               {{#unless term.active}}
                 <em>
                   ({{t "general.inactive"}})

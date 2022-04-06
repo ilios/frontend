@@ -12,15 +12,19 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(6);
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
-    this.server.create('term', {
+    const term = this.server.create('term', {
       vocabulary,
     });
     this.server.create('term', {
       active: true,
       vocabulary,
+    });
+    this.server.create('term', {
+      vocabulary,
+      parent: term,
+      active: false,
     });
 
     const vocabularyModel = await this.owner
@@ -33,12 +37,14 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
       @manageTerm={{(noop)}}
       @manageVocabulary={{(noop)}}
     />`);
-    assert.strictEqual(component.title, `Title: ${vocabulary.title} (2 total)`);
+    assert.strictEqual(component.title, `Title: ${vocabulary.title} (3 total)`);
     assert.strictEqual(component.breadcrumbs.all, 'All Vocabularies');
     assert.strictEqual(component.breadcrumbs.vocabulary, vocabulary.title);
     assert.strictEqual(component.terms.list.length, 2);
-    assert.strictEqual(component.terms.list[0].text, 'term 0 (0) (inactive)');
-    assert.strictEqual(component.terms.list[1].text, 'term 1 (0)');
+    assert.strictEqual(component.terms.list[0].text, 'term 0 This term has sub-terms. (inactive)');
+    assert.ok(component.terms.list[0].hasChildren);
+    assert.strictEqual(component.terms.list[1].text, 'term 1');
+    assert.notOk(component.terms.list[1].hasChildren);
   });
 
   test('change vocabulary title', async function (assert) {

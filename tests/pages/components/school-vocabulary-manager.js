@@ -18,6 +18,7 @@ const definition = {
     scope: '[data-test-terms]',
     list: collection('[data-test-term-list] [data-test-term]', {
       title: text(),
+      hasChildren: isPresent('[data-test-has-children]'),
     }),
     newTermForm,
   },
