@@ -22,7 +22,7 @@ export default class LearnerGroupListComponent extends Component {
 
   @action
   sortByTitle(instructorGroupA, instructorGroupB) {
-    const locale = this.intl.get('locale');
+    const locale = this.intl.get('primaryLocale');
     if ('title:desc' === this.sortBy) {
       return instructorGroupB.title.localeCompare(instructorGroupA.title, locale, {
         numeric: true,

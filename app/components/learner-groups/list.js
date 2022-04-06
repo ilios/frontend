@@ -21,7 +21,7 @@ export default class LearnerGroupsListComponent extends Component {
 
   @action
   sortByTitle(learnerGroupA, learnerGroupB) {
-    const locale = this.intl.get('locale');
+    const locale = this.intl.get('primaryLocale');
     if ('title:desc' === this.sortBy) {
       return learnerGroupB.title.localeCompare(learnerGroupA.title, locale, { numeric: true });
     }
