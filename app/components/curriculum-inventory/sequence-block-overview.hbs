@@ -18,13 +18,12 @@
               {{#if @canUpdate}}
                 <EditableField
                   @value={{this.course.title}}
-                  @save={{perform this.saveCourse}}
+                  @save={{this.saveCourse}}
                   @close={{this.revertCourseChanges}}
                   @clickPrompt={{t "general.selectCourse"}}
                 >
                   <select
                     id="course-{{templateId}}"
-                    disabled={{this.saveCourse.isRunning}}
                     {{on "change" this.updateCourse}}
                   >
                     <option value="" selected={{is-empty this.course}}>{{t "general.selectCourse"}}</option>
