@@ -32,7 +32,7 @@
       <div class="ilm-pre-work" data-test-ilm-pre-work>
         {{#if (gt this.ilmPreWork.length 0)}}
           <h3 class="pre-work-title">
-            {{t "general.preWork"}}
+            {{t "general.preWork"}}:
           </h3>
           {{#each this.ilmPreWork as |ilmGroup|}}
             <WeekGlancePreWork @events={{ilmGroup}} />
