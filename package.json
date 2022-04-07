@@ -130,8 +130,7 @@
   "ember-addon": {
     "paths": [
       "lib/ilios-error",
-      "lib/ilios-loading",
-      "lib/register-worker"
+      "lib/ilios-loading"
     ]
   },
   "pre-commit": [

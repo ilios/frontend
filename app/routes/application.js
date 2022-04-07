@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
 import { loadPolyfills } from 'ilios-common/utils/load-polyfills';
+import { launchWorker } from '../utils/launch-worker';
 
 export default class AuthenticatedRoute extends Route {
   @service currentUser;
@@ -15,6 +16,7 @@ export default class AuthenticatedRoute extends Route {
   @tracked event;
 
   async beforeModel() {
+    await launchWorker();
     await this.session.setup();
     await loadPolyfills();
     const locale = this.intl.get('primaryLocale');
@@ -30,7 +32,7 @@ export default class AuthenticatedRoute extends Route {
     }
   }
 
-  activate() {
+  async activate() {
     //remove our loading animation once the application is loaded
     document.getElementById('ilios-loading-indicator')?.remove();
     if ('serviceWorker' in navigator) {
