@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding-top: 1rem;
 
     @include for-laptop-and-up {
       flex-direction: row;
