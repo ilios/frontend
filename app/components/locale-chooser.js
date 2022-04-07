@@ -11,8 +11,8 @@ export default class LocaleChooserComponent extends Component {
   @tracked menuElement;
 
   get locale() {
-    const locale = this.intl.get('locale');
-    return this.locales.findBy('id', locale[0]);
+    const locale = this.intl.get('primaryLocale');
+    return this.locales.findBy('id', locale);
   }
 
   get locales() {
