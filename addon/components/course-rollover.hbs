@@ -3,6 +3,11 @@
   {{did-insert (perform this.load) @course}}
   {{did-update (perform this.load) @course}}
 >
+  {{#if this.save.isRunning}}
+    <WaitSaving
+      @showProgress={{false}}
+    />
+  {{/if}}
   {{#let (unique-id) as |templateId|}}
     <div class="backtolink">
       <LinkTo @route="course" @model={{@course}}>
@@ -113,7 +118,6 @@
           type="button"
           disabled={{if
             (or
-              this.isSaving
               (not this.selectedYear)
               (includes this.selectedYear this.unavailableYears)
             )
@@ -122,11 +126,7 @@
           class="done text"
           {{on "click" (perform this.save)}}
         >
-          {{#if this.isSaving}}
-            <LoadingSpinner />
-          {{else}}
-            {{t "general.done"}}
-          {{/if}}
+          {{t "general.done"}}
         </button>
         <LinkTo @route="course" @model={{@course}}>
           <button class="cancel text" type="button">
