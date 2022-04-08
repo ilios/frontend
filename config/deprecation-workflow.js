@@ -11,5 +11,7 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'common.school-cohorts' },
     { handler: 'silence', matchId: 'deprecated-run-loop-and-computed-dot-access' }, //https://github.com/elidupuis/ember-cli-deploy-archive/pull/16
     { handler: 'silence', matchId: 'ember-global' },
+    { handler: 'silence', matchId: 'ember-modifier.use-destroyables' },
+    { handler: 'silence', matchId: 'ember-modifier.no-args-property' },
   ],
 };
