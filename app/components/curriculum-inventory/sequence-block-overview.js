@@ -220,15 +220,17 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.minimum = this.args.sequenceBlock.minimum;
   }
 
-  @dropTask
-  *saveCourse() {
-    const oldCourse = yield this.args.sequenceBlock.course;
-    if (oldCourse !== this.course) {
-      this.args.sequenceBlock.set('sessions', []);
-      this.args.sequenceBlock.set('excludedSessions', []);
+  @action
+  async saveCourse() {
+    const oldCourse = await this.args.sequenceBlock.course;
+    if (!this.isDestroying) {
+      if (oldCourse !== this.course) {
+        this.args.sequenceBlock.set('sessions', []);
+        this.args.sequenceBlock.set('excludedSessions', []);
+      }
+      this.args.sequenceBlock.set('course', this.course);
+      await this.args.sequenceBlock.save();
     }
-    this.args.sequenceBlock.set('course', this.course);
-    yield this.args.sequenceBlock.save();
   }
 
   @action
