@@ -21,9 +21,9 @@
   </main>
   <footer class="ilios-footer">
     <div class="version">
-      {{this.apiVersion.version}}
-      {{! template-lint-disable no-curly-component-invocation }}
-      {{app-version versionOnly=true}}
+      {{this.iliosVersionTag}}
+      {{this.apiVersionTag}}
+      {{this.frontendVersionTag}}
     </div>
   </footer>
   <LoadingBar @isLoading={{this.currentlyLoading}} />

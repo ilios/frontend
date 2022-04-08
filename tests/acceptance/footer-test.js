@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { find, visit } from '@ember/test-helpers';
+import { visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { setupAuthentication } from 'ilios-common';
@@ -20,7 +20,9 @@ module('Acceptance | footer', function (hooks) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
     await visit('/');
-    assert.ok(find('.ilios-footer .version').textContent.includes(version.match(versionRegExp)));
-    assert.ok(find('.ilios-footer .version').textContent.includes(apiVersion));
+    const frontendVersion = version.match(versionRegExp);
+    assert
+      .dom('.ilios-footer .version')
+      .hasText(`v1.2.3 API: ${apiVersion} Frontend: v${frontendVersion}`);
   });
 });
