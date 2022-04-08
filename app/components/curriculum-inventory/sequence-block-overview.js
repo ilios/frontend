@@ -222,8 +222,8 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   @action
   async saveCourse() {
+    const oldCourse = await this.args.sequenceBlock.course;
     if (!this.isDestroying) {
-      const oldCourse = await this.args.sequenceBlock.course;
       if (oldCourse !== this.course) {
         this.args.sequenceBlock.set('sessions', []);
         this.args.sequenceBlock.set('excludedSessions', []);
