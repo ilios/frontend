@@ -3,9 +3,8 @@
   background-color: $ilios-orange;
   display: grid;
   grid-template-areas: 'logo tools';
-  height: 45px;
+  height: auto;
   grid-template-columns: 100px auto;
-
 
   @media print {
     display: none;
@@ -25,14 +24,33 @@
   // Elements on the far right
   .tools {
     background: transparent;
-    display: flex;
     grid-area: tools;
-    justify-self: end;
-    margin-right: 1rem;
+    margin-right: .25rem;
+    display: grid;
+    justify-content: end;
+    grid-template-areas: 
+    ". locale user"
+    "search search search";
+    row-gap: .25rem;
+    padding-bottom: .25rem;
+
+
+    @include for-tablet-and-up {
+      grid-template-areas: "search locale user";
+      padding-bottom: 0;
+    }
+
+    .locale-chooser {
+      grid-area: locale;
+    }
+    .user-menu {
+      grid-area: user;
+    }
 
     .global-search-box {
       margin-right: .5rem;
       width: 13rem;
+      grid-area: search;
 
       .autocomplete {
         width: 25rem;
