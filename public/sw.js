@@ -1,29 +1,13 @@
 const iliosServiceWorkerCacheName = 'ilios-files-1';
 
-const indexUrlPatterns = [
-  /\/dashboard(\/.*)?$/,
-  /\/courses(\/.*)?$/,
-  /\/course-materials(\/.*)?$/,
-  /\/instructorgroups(\/.*)?$/,
-  /\/learnergroups(\/.*)?$/,
-  /\/programs(\/.*)?$/,
-  /\/admin(\/.*)?$/,
-  /\/login(\/.*)?$/,
-  /\/logout(\/.*)?$/,
-  /\/schools(\/.*)?$/,
-  /\/myprofile(\/.*)?$/,
-  /\/mymaterials(\/.*)?$/,
-  /\/course-rollover(\/.*)?$/,
-  /\/curriculum-inventory-reports(\/.*)?$/,
-  /\/curriculum-inventory-sequence-block(\/.*)?$/,
-  /\/data(\/.*)?$/,
-  /\/weeklyevents(\/.*)?$/,
-];
-// Handle requests for index.html
 self.addEventListener('fetch', (event) => {
-  if (shouldHandleRequest(event.request, ['text/html'], indexUrlPatterns)) {
-    const indexUrl = new URL('index.html', self.location).toString();
-    cacheFallbackFetch(event, indexUrl);
+  //cache fingerprinted assets
+  if (
+    shouldHandleRequest(event.request, null, [
+      /\/(assets|ilios-loading)\/[a-z-]+\.[a-z0-9]{15,}\.(css|js)$/,
+    ])
+  ) {
+    cacheFirstFetch(event, event.request.url);
   }
 });
 
@@ -48,25 +32,12 @@ function shouldHandleRequest(request, fileTypes, filePatterns) {
   const isLocal = url.origin === location.origin;
   const isTests = url.pathname === '/tests';
   const acceptHeader = request.headers?.get('accept');
-  const isAcceptedRequest = fileTypes.some((type) => acceptHeader.includes(type));
+  const isAcceptedRequest = fileTypes
+    ? fileTypes.some((type) => acceptHeader.includes(type))
+    : true;
   const matchesPattern = filePatterns.some((pattern) => pattern.test(url.pathname));
 
   return !isTests && isGETRequest && isAcceptedRequest && isLocal && matchesPattern;
-}
-
-function cacheFallbackFetch(event, url) {
-  fetch(url)
-    .then(function (res) {
-      return caches.open(iliosServiceWorkerCacheName).then(function (cache) {
-        // Put in cache if succeeds
-        cache.put(url, res.clone());
-        event.respondWith(res);
-      });
-    })
-    .catch(function () {
-      // Fallback to cache
-      cacheFirstFetch(event, url);
-    });
 }
 
 function cacheFirstFetch(event, url) {
@@ -77,10 +48,10 @@ function cacheFirstFetch(event, url) {
       }
 
       /**
-          Re-fetch the resource in the event that the cache had been cleared
-          (mostly an issue with Safari 11.1 where clearing the cache causes
-          the browser to throw a non-descriptive blank error page).
-        */
+        Re-fetch the resource in the event that the cache had been cleared
+        (mostly an issue with Safari 11.1 where clearing the cache causes
+        the browser to throw a non-descriptive blank error page).
+      */
       return fetch(url, { credentials: 'include' }).then((fetchedResponse) => {
         caches.open(iliosServiceWorkerCacheName).then((cache) => cache.put(url, fetchedResponse));
         return fetchedResponse.clone();
