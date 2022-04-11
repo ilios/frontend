@@ -173,24 +173,24 @@ module('Integration | Component | course rollover', function (hooks) {
   });
 
   test('disable years when title already exists', async function (assert) {
-    assert.expect(5);
+    const title = 'to be rolled';
     const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
     const school = this.server.create('school');
     const course = this.server.create('course', {
-      title: 'to be rolled',
+      title,
       school,
       year: lastYear - 1,
     });
     this.server.create('course', {
       id: 2,
       school,
-      title: 'to be rolled',
+      title,
       year: lastYear,
     });
     this.server.create('course', {
       id: 3,
       school,
-      title: 'to be rolled',
+      title,
       year: lastYear + 2,
     });
 
@@ -201,7 +201,23 @@ module('Integration | Component | course rollover', function (hooks) {
       @visit={{(noop)}}
     />`);
 
-    const options = findAll('select:nth-of-type(1) option');
+    let options = findAll('select:nth-of-type(1) option');
+    assert.ok(options[0].disabled);
+    assert.notOk(options[1].disabled);
+    assert.ok(options[2].disabled);
+    assert.notOk(options[3].disabled);
+    assert.notOk(options[4].disabled);
+
+    await fillIn('[data-test-title]', 'new title');
+    options = findAll('select:nth-of-type(1) option');
+    assert.notOk(options[0].disabled);
+    assert.notOk(options[1].disabled);
+    assert.notOk(options[2].disabled);
+    assert.notOk(options[3].disabled);
+    assert.notOk(options[4].disabled);
+
+    await fillIn('[data-test-title]', title + ' ');
+    options = findAll('select:nth-of-type(1) option');
     assert.ok(options[0].disabled);
     assert.notOk(options[1].disabled);
     assert.ok(options[2].disabled);

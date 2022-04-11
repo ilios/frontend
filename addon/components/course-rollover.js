@@ -102,7 +102,7 @@ export default class CourseRolloverComponent extends Component {
     if (!this.allCourses) {
       return [];
     }
-    const existingCoursesWithTitle = this.allCourses.filterBy('title', this.title);
+    const existingCoursesWithTitle = this.allCourses.filterBy('title', this.title.trim());
     return existingCoursesWithTitle.mapBy('year');
   }
 
