@@ -112,4 +112,30 @@ module('Integration | Component | login-form', function (hooks) {
     await component.form.password.set(password);
     await component.form.password.submit();
   });
+
+  test('input validation', async function (assert) {
+    assert.expect(10);
+    const username = 'Foo';
+    const password = 'Bar';
+    const sessionMock = class extends Service {
+      authenticate() {
+        assert.strictEqual(arguments[1].username, username);
+        assert.strictEqual(arguments[1].password, password);
+      }
+    };
+    this.owner.register('service:session', sessionMock);
+    await render(hbs`<LoginForm />`);
+    assert.strictEqual(component.form.username.errors.length, 0);
+    assert.strictEqual(component.form.password.errors.length, 0);
+    await component.form.password.submit();
+    assert.strictEqual(component.form.username.errors.length, 1);
+    assert.strictEqual(component.form.username.errors[0].text, 'This field can not be blank');
+    assert.strictEqual(component.form.password.errors.length, 1);
+    assert.strictEqual(component.form.password.errors[0].text, 'This field can not be blank');
+    await component.form.username.set(username);
+    await component.form.password.set(password);
+    await component.form.password.submit();
+    assert.strictEqual(component.form.username.errors.length, 0);
+    assert.strictEqual(component.form.password.errors.length, 0);
+  });
 });

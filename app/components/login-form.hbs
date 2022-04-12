@@ -33,6 +33,7 @@
             {{on "input" (pick "target.value" (set this.username))}}
             {{on "keyup" this.submitOnEnter}}
           >
+          <ValidationError @errors={{get-errors-for this.username}} />
         </div>
         <div class="item" data-test-password>
           <label for="password-{{templateId}}">
@@ -46,6 +47,7 @@
             {{on "input" (pick "target.value" (set this.password))}}
             {{on "keyup" this.submitOnEnter}}
           >
+          <ValidationError @errors={{get-errors-for this.password}} />
         </div>
         <div class="buttons">
           <button

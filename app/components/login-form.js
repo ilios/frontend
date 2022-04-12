@@ -3,15 +3,22 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { validatable, NotBlank } from 'ilios-common/decorators/validation';
 
+@validatable
 export default class LoginFormComponent extends Component {
   @service session;
   @tracked error;
-  @tracked username;
-  @tracked password;
+  @tracked @NotBlank() username;
+  @tracked @NotBlank() password;
 
   @task
   *authenticate() {
+    this.addErrorDisplaysFor(['username', 'password']);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
     try {
       this.error = null;
       const session = this.session;
@@ -25,6 +32,8 @@ export default class LoginFormComponent extends Component {
         return 'general.' + key;
       });
       this.error = { keys };
+    } finally {
+      this.clearErrorDisplay();
     }
   }
 
