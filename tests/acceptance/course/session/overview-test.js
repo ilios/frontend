@@ -707,8 +707,10 @@ module('Acceptance | Session - Overview', function (hooks) {
       school: this.school,
       administeredSchools: [this.school],
     });
+    const ilmSession = this.server.create('ilmSession');
     this.server.create('session', {
       course: this.course,
+      ilmSession,
     });
     await page.visit({
       courseId: 1,
@@ -716,6 +718,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: None');
+    assert.ok(page.details.overview.ilmDueDateAndTime.isVisible);
   });
 
   test('has post-requisite', async function (assert) {
@@ -724,8 +727,10 @@ module('Acceptance | Session - Overview', function (hooks) {
       school: this.school,
       administeredSchools: [this.school],
     });
+    const ilmSession = this.server.create('ilmSession');
     const session = this.server.create('session', {
       course: this.course,
+      ilmSession,
     });
     const postRequisite = this.server.create('session', {
       course: this.course,
@@ -737,6 +742,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: session 1');
+    assert.notOk(page.details.overview.ilmDueDateAndTime.isVisible);
   });
 
   test('change post-requisite', async function (assert) {
