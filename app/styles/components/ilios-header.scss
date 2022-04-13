@@ -34,6 +34,10 @@
       margin-right: .5rem;
       width: 13rem;
 
+      @include for-phone-only {
+        width: 10rem;
+      }
+
       .autocomplete {
         width: 25rem;
 
