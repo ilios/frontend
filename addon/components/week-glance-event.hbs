@@ -23,7 +23,7 @@
     </span>
   </h3>
   {{#if @event.prerequisites.length}}
-    <p class="pre-work" data-test-pre-work>
+    <div class="pre-work" data-test-pre-work>
       <strong>
         {{t "general.preWork"}}:
       </strong>
@@ -36,7 +36,7 @@
           </li>
         {{/each}}
       </ol>
-    </p>
+    </div>
   {{/if}}
   <p>
     <span class="sessiontype" data-test-session-type>
