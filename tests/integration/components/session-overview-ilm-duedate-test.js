@@ -20,11 +20,8 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
   });
 
   test('it renders and is accessible', async function (assert) {
-    this.set('hasPostrequisite', false);
     this.set('editable', true);
-
     await render(hbs`<SessionOverviewIlmDuedate
-      @hasPostrequisite={{this.hasPostrequisite}}
       @ilmSession={{this.ilmSession}}
       @editable={{this.editable}}
     />`);
@@ -37,25 +34,10 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
     assert.ok(true, 'not a11y violations');
   });
 
-  test('if the session has postrequisites, this component is not visible', async function (assert) {
-    this.set('hasPostrequisite', true);
-    this.set('editable', true);
-
-    await render(hbs`<SessionOverviewIlmDuedate
-      @hasPostrequisite={{this.hasPostrequisite}}
-      @ilmSession={{this.ilmSession}}
-      @editable={{this.editable}}
-    />`);
-
-    assert.notOk(component.isVisible);
-  });
-
   test('it renders in read-only mode and is accessible', async function (assert) {
-    this.set('hasPostrequisite', false);
     this.set('editable', false);
 
     await render(hbs`<SessionOverviewIlmDuedate
-      @hasPostrequisite={{this.hasPostrequisite}}
       @ilmSession={{this.ilmSession}}
       @editable={{this.editable}}
     />`);
@@ -68,11 +50,9 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
   });
 
   test('change date and time, then save', async function (assert) {
-    this.set('hasPostrequisite', false);
     this.set('editable', true);
 
     await render(hbs`<SessionOverviewIlmDuedate
-      @hasPostrequisite={{this.hasPostrequisite}}
       @ilmSession={{this.ilmSession}}
       @editable={{this.editable}}
     />`);
@@ -92,11 +72,9 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
   });
 
   test('change date and time, then cancel', async function (assert) {
-    this.set('hasPostrequisite', false);
     this.set('editable', true);
 
     await render(hbs`<SessionOverviewIlmDuedate
-      @hasPostrequisite={{this.hasPostrequisite}}
       @ilmSession={{this.ilmSession}}
       @editable={{this.editable}}
     />`);

@@ -206,12 +206,13 @@
                 {{/if}}
               </span>
             </div>
-            <SessionOverviewIlmDuedate
-              @hasPostrequisite={{@session.hasPostrequisite}}
-              @ilmSession={{await @session.ilmSession}}
-              @editable={{@editable}}
-              class="block"
-            />
+            {{#unless @session.hasPostrequisite}}
+              <SessionOverviewIlmDuedate
+                @ilmSession={{await @session.ilmSession}}
+                @editable={{@editable}}
+                class="block"
+              />
+            {{/unless}}
           {{/if}}
           {{#if this.features.sessionLinkingAdminUi}}
             <div class="postrequisite block" data-test-postrequisite>

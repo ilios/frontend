@@ -574,7 +574,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionId: 1,
       sessionLearnergroupDetails: true,
     });
-    assert.ok(page.details.overview.ilmDueDateAndTime.isPresent);
     assert.ok(page.details.overview.ilmDueDateAndTime.isVisible);
   });
 
@@ -588,7 +587,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionId: 1,
       sessionLearnergroupDetails: true,
     });
-    assert.ok(page.details.overview.ilmDueDateAndTime.isPresent);
     assert.ok(page.details.overview.ilmDueDateAndTime.isHidden);
   });
 
