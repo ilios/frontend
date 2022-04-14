@@ -27,6 +27,9 @@ const definition = {
   expandedSessions: collection('[data-test-expanded-session]', {
     lastUpdated: text('.sessions-grid-last-updated'),
   }),
+  noResults: {
+    scope: '[data-test-no-results]',
+  },
 };
 
 export default definition;
