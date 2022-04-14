@@ -199,7 +199,7 @@ general:
   newOffering: "Nouvelle Offre"
   newSession: "Session neuf"
   newUpdates: "Nouvelles mises à jour"
-  next: Prochain
+  next: "Proch."
   nextXDays: "{days} prochains jours "
   no: Non
   noAssociatedCompetencies: "Nul compétences associées"
@@ -210,7 +210,7 @@ general:
   noCourseLearningMaterialsAvailable: "Aucun Matériels D'étude de Cours"
   none: Nul
   noOfferings: "Ce session n'a aucun des offres"
-  noResultsFound: "Aucun Résultat"
+  noResultsFound: "Aucun résultat n’a été trouvé. Veuillez réessayer."
   noSearchResultsPrompt: "Aucun Résultat"
   noSessionLearningMaterialsAvailable: "Aucun Matériels D'étude de Séance"
   notAClerkship: "Pas une stage"
@@ -271,11 +271,11 @@ general:
   scheduling: Planification
   school: "Écôle"
   schools: "Écôles"
-  search: Chercher
+  search: Rechercher
   searchForIliosUsers: "Trouver des utilisateurs..."
   searchPlaceholder: "Trouver matériels d'étude"
   selectCohortsToAttach: "Choisissez le cohorte d'étudiants que vous voulez attacher au cours nouveau"
-  selectCourse: "Sélectionnez un cours"
+  selectCourse: "Choisi cours"
   selectedInstructorGroups: "Groupes d’Instructeurs Selectionées"
   selectedInstructors: "Instructeurs Selectionées"
   selectedLearnerGroups: "Groupes d’Étudiants Selectionées"

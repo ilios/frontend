@@ -210,7 +210,7 @@ general:
   noCourseLearningMaterialsAvailable: "No Course Learning Materials Available"
   none: None
   noOfferings: "This session has no offerings"
-  noResultsFound: "No Results Found"
+  noResultsFound: "No results found. Please try again."
   noSearchResultsPrompt: "no results"
   noSessionLearningMaterialsAvailable: "No Session Learning Materials Available"
   notAClerkship: "Not a Clerkship"
@@ -275,7 +275,7 @@ general:
   searchForIliosUsers: "Find Ilios Users..."
   searchPlaceholder: "Find Learning Material"
   selectCohortsToAttach: "Select the cohort of students you wish to attach to the new course"
-  selectCourse: "Select a course"
+  selectCourse: "Select a Course"
   selectedInstructorGroups: "Selected Instructors Groups"
   selectedInstructors: "Selected Instructors"
   selectedLearnerGroups: "Selected Learner Groups"

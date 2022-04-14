@@ -199,7 +199,7 @@ general:
   newOffering: "Nueva Oferta"
   newSession: "Sesión Nueva"
   newUpdates: "Nuevas actualizaciones"
-  next: Próximo
+  next: Siguiente
   nextXDays: "Próximos {days} días"
   no: No
   noAssociatedCompetencies: "No Competencias Asociadas"
@@ -210,7 +210,7 @@ general:
   noCourseLearningMaterialsAvailable: "Ningunos Materiales Didácticos del Curso Disponibles"
   none: "Ningún"
   noOfferings: "Esta sesión no tiene ningunos ofrecimientos"
-  noResultsFound: "Ningunos Resultados Encontrados"
+  noResultsFound: "Ningún resultado encontrado. Por favor intente otra vez."
   noSearchResultsPrompt: "no resultados"
   noSessionLearningMaterialsAvailable: "Ningunos Materiales Didácticos de la Sesión Disponibles"
   notAClerkship: "No una Rotación"
@@ -275,7 +275,7 @@ general:
   searchForIliosUsers: "Encuentre Usuarios de Ilios..."
   searchPlaceholder: "encontrar material de aprendizaje"
   selectCohortsToAttach: "Seleccione la cohorte de estudiantes que desea adjuntar al nuevo curso"
-  selectCourse: "Seleccione un curso "
+  selectCourse: "Seleccionar un curso"
   selectedInstructorGroups: "Grupos de Instructores Seleccionados"
   selectedInstructors: "Instructores Seleccionados"
   selectedLearnerGroups: "Grupos de Aprendizaje Seleccionados"
