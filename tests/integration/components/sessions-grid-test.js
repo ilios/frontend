@@ -10,7 +10,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
+  test('it renders with no results', async function (assert) {
     this.set('sessions', []);
     this.set('sortBy', 'title');
     this.set('setSortBy', () => {});
@@ -20,7 +20,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
       @setSortBy={{this.setSortBy}}
     />`);
 
-    assert.dom(this.element).hasText('');
+    assert.dom(this.element).hasText('No results found. Please try again.');
   });
 
   test('clicking expand fires action', async function (assert) {
