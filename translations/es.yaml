@@ -126,7 +126,6 @@ general:
   exclude: Excluir
   excludeFromSync: "Excluir de la sincronización"
   existingGroup: "Grupo Existente"
-  fileSizeError: "Este archivo es demasiado grande.  El tamaño máximo es {maxSize}."
   fileTypeError: "Archivo mal subido: {fileType} no parece ser válido ficha separado archivo."
   fileUploadError: "No pudimos subir este archivo.   Por favor, asegúrese de que está conectado a la red.  Si este problema persiste, por favor avísenos."
   filterByNameOrEmail: "Aplicar un Filtro por nombre o email"
@@ -155,7 +154,6 @@ general:
   icsFeed: "Fuente de ICS"
   id: "ID"
   ignore: Ignorar
-  ilios: Ilios
   iliosUpdatePending: "¡Huzzah, hemos hecho Ilios mejor! Obtendrá las cosas nuevas en su próximo inicio de sesión, o haga clic para actualizar ahora."
   includedInGrade: "Incluido en Grado"
   instructionalMethod: "Método de Instrucción"
@@ -186,7 +184,6 @@ general:
   loading: "Marcando Ilios"
   loadingSessionTypes: "Cargando Tipos de Sesión..."
   lockCourse: "Bloquear el curso"
-  login: Inicio
   logo: "Logo de Ilios"
   logout: "Cerrar aplicación"
   manage: Manejar
@@ -236,7 +233,6 @@ general:
   newUser: "Nuevo Usuario"
   newUsersCreatedSuccessfully: "Nuevos usuarios creados con éxito"
   newUsersCreatedWarning: "Algunos usuarios fueron creados, pero hubo errores."
-  next: Siguiente
   noAccountExists: "Su cuenta {accountName} no coincide con los registros de Ilios. Si usted necesita más asistencia, póngase en contacto con su administrador de Ilios"
   noAvailableCohorts: "Ningun Clase de La Graduación Disponible"
   noCourses: "No hay ningún curso en esta escuela"
@@ -249,7 +245,6 @@ general:
   noPopulateGroup: "¡No! Déjelo vacío. Voy a agregar alumnos yo mismo."
   noPrintDraft: "Cursos que se encuentran en estado borrador no se puede imprimir"
   noProgramYears: "No hay años de programa en este programa"
-  noResultsFound: "Ningún resultado encontrado. Por favor intente otra vez."
   noSearchResults: "Su búsqueda no regresó ningunos resultados"
   noSelectedCompetencies: "No hay competencias seleccionadas"
   noSelectedLearnerGroups: "No hay grupos de aprendedores seleccionados"
@@ -347,8 +342,6 @@ general:
   saved: "Nuevo Usuario Salvó con Éxito"
   schoolLeadership: "Liderazgo Escolar"
   schoolName: "Nombre de escuela"
-  schools: Escuelas
-  search: Buscar
   searchDirectory: "Busque el directorio para nuevos usuarios"
   searchTheCurriculum: "Buscar el plan de estudios "
   searchUsers: "Buscar usuarios"
@@ -356,7 +349,6 @@ general:
   select: Selecciona
   selectAcademicYear: "Selecciona Año Academico"
   selectAllOrNone: "Seleccione Todo o Ninguno"
-  selectCourse: "Seleccionar un curso"
   selected: Escogido
   selectProgram: "Seleccione un Programa"
   selectSchool: "Seleccione Escuela"
