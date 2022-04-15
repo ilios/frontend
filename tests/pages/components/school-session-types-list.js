@@ -1,29 +1,10 @@
-import {
-  attribute,
-  collection,
-  clickable,
-  create,
-  hasClass,
-  isVisible,
-  text,
-} from 'ember-cli-page-object';
+import { collection, create } from 'ember-cli-page-object';
+
+import listItem from './school-session-types-list-item';
 
 const definition = {
   scope: '[data-test-school-session-types-list]',
-  sessionTypes: collection('[data-test-session-type]', {
-    title: {
-      scope: '[data-test-title]',
-      edit: clickable('button'),
-    },
-    sessionCount: text('[data-test-sessions-count]'),
-    isAssessment: hasClass('yes', '[data-test-is-assessment] svg'),
-    assessmentOption: text('[data-test-assessment-option]'),
-    aamcMethod: text('[data-test-assessment-method-description]'),
-    calendarColor: attribute('style', '[data-test-colorbox]'),
-    manage: clickable('[data-test-manage]'),
-    delete: clickable('[data-test-delete]'),
-    isDeletable: isVisible('[data-test-delete]'),
-  }),
+  sessionTypes: collection('[data-test-school-session-types-list-item]', listItem),
 };
 
 export default definition;

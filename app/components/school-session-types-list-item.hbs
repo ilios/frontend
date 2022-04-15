@@ -1,0 +1,83 @@
+<tr
+  class="school-session-types-list-item"
+  data-test-school-session-types-list-item
+  ...attributes
+>
+  <td colspan="3" data-test-title>
+    <button class="link-button" type="button" {{on "click" (fn @manageSessionType @sessionType.id)}}>
+      {{@sessionType.title}}
+    </button>
+    {{#unless @sessionType.active}}
+      <em data-test-inactive>
+        ({{t "general.inactive"}})
+      </em>
+    {{/unless}}
+  </td>
+  <td class="hide-from-small-screen" data-test-sessions-count>
+    {{@sessionType.sessionCount}}
+  </td>
+  <td data-test-is-assessment>
+    {{#if @sessionType.assessment}}
+      <FaIcon @icon="check" class="yes" />
+    {{else}}
+      <FaIcon @icon="ban" class="no" />
+    {{/if}}
+  </td>
+  <td class="hide-from-small-screen" colspan="2" data-test-assessment-option>
+    {{get (await @sessionType.assessmentOption) "name"}}
+  </td>
+  <td class="hide-from-small-screen" colspan="2" data-test-assessment-method-description>
+    {{get (await @sessionType.firstAamcMethod) "description"}}
+    {{#if (not (get (await @sessionType.firstAamcMethod) "active"))}}
+      <em>
+        ({{t "general.inactive"}})
+      </em>
+    {{/if}}
+  </td>
+  <td class="calendar-color hide-from-small-screen">
+    {{! template-lint-disable no-inline-styles style-concatenation no-triple-curlies}}
+    <span
+      class="box"
+      data-test-colorbox
+      style={{{concat "background-color: " @sessionType.safeCalendarColor}}}
+    ></span>
+  </td>
+  <td>
+    <button
+      type="button"
+      class="link-button"
+      data-test-manage
+      {{on "click" (fn @manageSessionType @sessionType.id)}}
+    >
+      <FaIcon @icon="pen-to-square" class="edit" />
+    </button>
+    {{#if (eq @sessionType.sessionCount 0)}}
+      {{#if @canDelete}}
+        <button
+          type="button"
+          class="link-button"
+          disabled={{this.deleteSessionType.isRunning}}
+          data-test-delete
+          {{on "click" (perform this.deleteSessionType @sessionType)}}
+        >
+          <FaIcon
+            @icon="trash"
+            class={{if
+            this.deleteSessionType.isRunning
+            "inactive"
+            "remove"
+          }}
+          />
+        </button>
+      {{/if}}
+    {{else}}
+      <FaIcon @icon="trash" class="disabled" />
+    {{/if}}
+    <LinkTo
+      @route="session-type-visualize-vocabularies"
+      @model={{@sessionType}}
+    >
+      <FaIcon @icon="chart-column" class="enabled" />
+    </LinkTo>
+  </td>
+</tr>
