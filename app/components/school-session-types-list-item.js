@@ -6,7 +6,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
   @tracked showRemoveConfirmation = false;
 
   @dropTask
-  *deleteSessionType() {
+  *remove() {
     yield this.args.sessionType.destroyRecord();
   }
 }

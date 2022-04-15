@@ -372,6 +372,7 @@ general:
   sequenceNumber: "Sequence #"
   sessionAttributes: "Session Attributes"
   sessionTitlePlaceholder: "Enter a title for this session"
+  sessionTypeConfirmRemoval: "Are you sure you want to delete this session type? This action cannot be undone."
   showResultsFor: "Show Results For"
   showSubgroupEvents: "Show events for all subgroups"
   singleDay: "Single Day"

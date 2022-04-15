@@ -56,14 +56,14 @@
         <button
           type="button"
           class="link-button"
-          disabled={{this.deleteSessionType.isRunning}}
+          disabled={{or (this.showRemoveConfirmation this.deleteSessionType.isRunning)}}
           data-test-delete
-          {{on "click" (perform this.deleteSessionType @sessionType)}}
+          {{on "click" (set this.showRemoveConfirmation true)}}
         >
           <FaIcon
             @icon="trash"
             class={{if
-            this.deleteSessionType.isRunning
+            (or this.showRemoveConfirmation this.deleteSessionType.isRunning)
             "inactive"
             "remove"
           }}
@@ -81,3 +81,55 @@
     </LinkTo>
   </td>
 </tr>
+{{#if this.showRemoveConfirmation}}
+  <tr class="confirm-removal">
+    <td colspan="11" class="hide-from-small-screen">
+      <div class="confirm-message" data-test-message>
+        {{t "general.sessionTypeConfirmRemoval"}}
+        <br>
+        <div class="confirm-buttons">
+          <button
+            type="button"
+            class="remove text"
+            {{on "click" (perform this.remove)}}
+            data-test-confirm
+          >
+            {{t "general.yes"}}
+          </button>
+          <button
+            type="button"
+            class="done text"
+            {{on "click" (set this.showRemoveConfirmation false)}}
+            data-test-cancel
+          >
+            {{t "general.cancel"}}
+          </button>
+        </div>
+      </div>
+    </td>
+    <td colspan="5" class="hide-from-large-screen" data-test-confirm-removal>
+      <div class="confirm-message" data-test-message>
+        {{t "general.sessionTypeConfirmRemoval"}}
+        <br>
+        <div class="confirm-buttons">
+          <button
+            type="button"
+            class="remove text"
+            {{on "click" (perform this.remove)}}
+            data-test-confirm
+          >
+            {{t "general.yes"}}
+          </button>
+          <button
+            type="button"
+            class="done text"
+            {{on "click" (set this.showRemoveConfirmation false)}}
+            data-test-cancel
+          >
+            {{t "general.cancel"}}
+          </button>
+        </div>
+      </div>
+    </td>
+  </tr>
+{{/if}}

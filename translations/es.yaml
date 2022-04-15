@@ -371,6 +371,7 @@ general:
   sequenceNumber: "No. de Secuencia"
   sessionAttributes: "Atributos de la Sesión"
   sessionTitlePlaceholder: "Entre en un titulo para esta sesión"
+  sessionTypeConfirmRemoval: "¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer."
   showResultsFor: "Mostrar Resultados Para"
   showSubgroupEvents: "Mostrar eventos para todos los grupos subordinados"
   singleDay: "Un Solo Día"

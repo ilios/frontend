@@ -14,6 +14,13 @@ const definition = {
   manage: clickable('[data-test-manage]'),
   delete: clickable('[data-test-delete]'),
   isDeletable: isVisible('[data-test-delete]'),
+  confirmRemoval: {
+    scope: '[data-test-confirm-removal]',
+    message: text('[data-test-message]'),
+    confirm: clickable('[data-test-confirm]'),
+    cancel: clickable('[data-test-cancel]'),
+    resetScope: true,
+  },
 };
 
 export default definition;
