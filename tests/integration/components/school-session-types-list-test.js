@@ -162,7 +162,7 @@ module('Integration | Component | school session types list', function (hooks) {
     assert.ok(component.sessionTypes[1].isDeletable);
   });
 
-  test('clicking delete deletes the record', async function (assert) {
+  test('delete session type', async function (assert) {
     const school = this.server.create('school');
     this.server.create('session-type', {
       school,
@@ -178,7 +178,13 @@ module('Integration | Component | school session types list', function (hooks) {
     />`);
 
     assert.strictEqual(this.server.db.sessionTypes.length, 1);
+    assert.notOk(component.sessionTypes[0].confirmRemoval.isVisible);
     await component.sessionTypes[0].delete();
+    assert.strictEqual(
+      component.sessionTypes[0].confirmRemoval.message,
+      'Are you sure you want to delete this session type? This action cannot be undone. Yes Cancel'
+    );
+    await component.sessionTypes[0].confirmRemoval.confirm();
     assert.strictEqual(this.server.db.sessionTypes.length, 0);
   });
 });
