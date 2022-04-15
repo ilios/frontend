@@ -126,7 +126,6 @@ general:
   exclude: Exclure
   excludeFromSync: "Exclure de Sync"
   existingGroup: "Groupe Existant "
-  fileSizeError: "Ce dossier est trop grand. Taille maximale est {maxSize})."
   fileTypeError: "Mal fichier téléchargé : {fileType} ne semble pas être un fichier correctement délimité."
   fileUploadError: "Nous n'avons pas pu télécharger ce dossier. Assurez S'il vous plaît que vous êtes connectés au réseau. Si ce problème persiste merci de nous faire savoir."
   filterByNameOrEmail: "Filtre par nom ou email"
@@ -155,7 +154,6 @@ general:
   icsFeed: "Données de ICS"
   id: "ID"
   ignore: Ignorer
-  ilios: Ilios
   iliosUpdatePending: "hourra! Nous avons fait Ilios mieux. Vous obtiendrez le nouveau truc sur votre connexion prochaine, ou cliquerez pour mettre à jour maintenant."
   includedInGrade: "Inclus dans le grade"
   instructionalMethod: "Modalité d'Instruction"
@@ -186,7 +184,6 @@ general:
   loading: "Chargement Ilios"
   loadingSessionTypes: "Chargement des genres de session..."
   lockCourse: "Verrouiller le cours"
-  login: Login
   logo: "Ilios Logo"
   logout: "Déconnexion"
   manage: Administrer
@@ -236,7 +233,6 @@ general:
   newUser: "Nouvel utilisateur"
   newUsersCreatedSuccessfully: "Nouveaux utilisateurs crées avec succès"
   newUsersCreatedWarning: "Certains utilisateurs ont été créés, mais il y avait des erreurs."
-  next: "Proch."
   noAccountExists: "Votre compte d'utilisateur {accountName} ne correspond pas à ceux des utilisateur enregistre en Ilios. Si vous avez besoin d'aide, n'hesitez pas à communiquer avec votre administrateur  d'Ilios."
   noAvailableCohorts: "Pas des Cohortes disponsibles"
   noCourses: "Il n'y a aucun des cours dans cette école."
@@ -347,8 +343,6 @@ general:
   saved: "Nouvel utilisateur enregistré avec succès"
   schoolLeadership: "Direction des Écoles"
   schoolName: "Nom de l'école"
-  schools: "Écoles"
-  search: Rechercher
   searchDirectory: "Consultez le répertoire pour les utilisateurs nouvels"
   searchTheCurriculum: "Rechercher le curriculum"
   searchUsers: "Rechercher des utilisateurs"
@@ -356,7 +350,6 @@ general:
   select: "Sélectionnez"
   selectAcademicYear: "Choisissez l’année scolaire"
   selectAllOrNone: "Sélectionner tout ou aucun"
-  selectCourse: "Choisi cours"
   selected: "Sélectionné"
   selectProgram: "Choisi Diplôme"
   selectSchool: "Choisi Écôle"

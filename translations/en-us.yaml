@@ -126,7 +126,6 @@ general:
   exclude: Exclude
   excludeFromSync: "Exclude From Sync"
   existingGroup: "Existing Group"
-  fileSizeError: "This file is too large.  Maximum size is {maxSize}."
   fileTypeError: "Bad file type: {fileType} does not appear to be a properly delimited file."
   fileUploadError: "We were unable to upload this file.  Please ensure you are connected to the network.  If this problem persists please let us know."
   filterByNameOrEmail: "Filter by name or email"
@@ -155,7 +154,6 @@ general:
   icsFeed: "ICS Feed"
   id: "ID"
   ignore: Ignore
-  ilios: Ilios
   iliosUpdatePending: "Huzzah! We've made Ilios better. You will get the new stuff on your next login, or click to update now."
   includedInGrade: "Included in Grade"
   instructionalMethod: "Instructional Method"
@@ -186,7 +184,6 @@ general:
   loading: "Loading Ilios"
   loadingSessionTypes: "Loading Session Types..."
   lockCourse: "Lock Course"
-  login: Login
   logo: "Ilios Logo"
   logout: Logout
   manage: Manage
@@ -236,7 +233,6 @@ general:
   newUser: "New User"
   newUsersCreatedSuccessfully: "New users created successfully"
   newUsersCreatedWarning: "Some users were created, but there were errors."
-  next: Next
   noAccountExists: "Your account {accountName} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator."
   noAvailableCohorts: "No available cohorts"
   noCourses: "There are no courses in this school"
@@ -249,7 +245,6 @@ general:
   noPopulateGroup: "No!  Leave it empty, I'll add students myself."
   noPrintDraft: "Courses which are in draft status cannot be printed"
   noProgramYears: "There are no program years in this program"
-  noResultsFound: "No results found. Please try again."
   noSearchResults: "Your search did not return any results"
   noSelectedCompetencies: "There are no selected competencies"
   noSelectedLearnerGroups: "There are no selected learner groups"
@@ -283,7 +278,6 @@ general:
   orderInSequence: "Order in Sequence"
   other: Other
   otherId: "Other ID"
-  pagedResultsCount: "Showing {start} - {end} of {total}"
   parallel: Parallel
   password: Password
   pendingUpdatesSummary: "{count, plural, =1 {There is one user needing attention} other {There are # users needing attention}}"
@@ -348,8 +342,6 @@ general:
   saved: "New User Saved Successfully"
   schoolName: "School Name"
   schoolLeadership: "School Leadership"
-  schools: Schools
-  search: Search
   searchDirectory: "Search directory for new users"
   searchTheCurriculum: "Search the curriculum"
   searchUsers: "Search for users"
@@ -357,7 +349,6 @@ general:
   select: Select
   selectAcademicYear: "Select Academic Year"
   selectAllOrNone: "Select All or None"
-  selectCourse: "Select a Course"
   selected: Selected
   selectProgram: "Select a Program"
   selectSchool: "Select School"
