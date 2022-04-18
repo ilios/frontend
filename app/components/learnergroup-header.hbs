@@ -48,7 +48,7 @@
     <div class="breadcrumbs">
       <span>
         <LinkTo
-          @route="learnerGroups"
+          @route="learner-groups"
           @query={{hash
             school=(await @learnerGroup.cohort.programYear.program.school.id)
             program=(await @learnerGroup.cohort.programYear.program.id)
@@ -61,7 +61,7 @@
       {{#each (reverse (await @learnerGroup.allParents)) as |parent|}}
         <span>
           <LinkTo
-            @route="learnerGroup"
+            @route="learner-group"
             @model={{parent}}
             @query={{hash sortUsersBy=@sortUsersBy}}
           >

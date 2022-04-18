@@ -29,7 +29,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
 
   test('list directors', async function (assert) {
     await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
-    assert.strictEqual(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'program-year.index');
     assert.strictEqual(page.overview.directors.length, 3);
     assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.notOk(page.overview.directors[0].userNameInfo.hasAdditionalInfo);
@@ -42,7 +42,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
   test('list directors with privileges', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
-    assert.strictEqual(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'program-year.index');
     assert.strictEqual(page.overview.directors.length, 3);
     assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, '3 guy M. Mc3son');
@@ -52,7 +52,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
   test('search directors', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
-    assert.strictEqual(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'program-year.index');
     await page.overview.search.searchBox.set('guy');
     assert.strictEqual(page.overview.search.results.items.length, 6);
     assert.strictEqual(
@@ -87,7 +87,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
   test('add director', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
-    assert.strictEqual(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'program-year.index');
     assert.strictEqual(page.overview.directors.length, 3);
     assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, '3 guy M. Mc3son');
@@ -104,7 +104,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
   test('remove director', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
-    assert.strictEqual(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'program-year.index');
     assert.strictEqual(page.overview.directors.length, 3);
     assert.strictEqual(page.overview.directors[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.overview.directors[1].userNameInfo.fullName, '3 guy M. Mc3son');
@@ -125,7 +125,7 @@ module('Acceptance | Program Year - Overview', function (hooks) {
       programYear,
     });
     await page.visit({ programId: this.program.id, programYearId: programYear.id });
-    assert.strictEqual(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'program-year.index');
     assert.strictEqual(page.overview.directors.length, 0);
     await page.overview.search.searchBox.set('guy');
     assert.strictEqual(page.overview.search.results.items.length, 6);

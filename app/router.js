@@ -1,4 +1,3 @@
-/* eslint-disable ember/no-capital-letters-in-routes */
 import { inject as service } from '@ember/service';
 import EmberRouter from '@ember/routing/router';
 import config from 'ilios/config/environment';
@@ -60,13 +59,12 @@ Router.map(function () {
   this.route('print_course', { path: 'course/:course_id/print' });
   this.route('course-materials', { path: 'courses/:course_id/materials' });
 
-  this.route('instructorGroups', { path: 'instructorgroups' });
-  this.route('instructorGroup', { path: 'instructorgroups/:instructor_group_id' });
+  this.route('instructor-groups', { path: 'instructorgroups' });
+  this.route('instructor-group', { path: 'instructorgroups/:instructor_group_id' });
 
-  this.route('testModels');
   this.route('programs');
-  this.route('learnerGroup', { path: 'learnergroups/:learner_group_id' });
-  this.route('learnerGroups', { path: 'learnergroups' });
+  this.route('learner-group', { path: 'learnergroups/:learner_group_id' });
+  this.route('learner-groups', { path: 'learnergroups' });
   this.route(
     'program',
     {
@@ -74,15 +72,15 @@ Router.map(function () {
       resetNamespace: true,
     },
     function () {
-      this.route('publicationCheck', { path: '/publicationcheck' });
+      this.route('publication-check', { path: '/publicationcheck' });
       this.route(
-        'programYear',
+        'program-year',
         {
           path: '/programyears/:program_year_id',
           resetNamespace: true,
         },
         function () {
-          this.route('publicationCheck', { path: '/publicationcheck' });
+          this.route('publication-check', { path: '/publicationcheck' });
         }
       );
     }
@@ -92,7 +90,7 @@ Router.map(function () {
   this.route('events', { path: 'events/:slug' });
   this.route('users', {});
   this.route('user', { path: '/users/:user_id' });
-  this.route('fourOhFour', { path: '*path' });
+  this.route('four-oh-four', { path: '*path' });
   this.route('logout');
   this.route('pending-user-updates', { path: '/admin/userupdates' });
   this.route('schools');
@@ -101,14 +99,12 @@ Router.map(function () {
   this.route('myprofile');
   this.route('mymaterials');
   this.route('course-rollover');
-  this.route('verificationPreview', {
+  this.route('verification-preview', {
     path: 'curriculum-inventory-reports/:curriculum_inventory_report_id/verification-preview',
   });
-  this.route('curriculumInventoryReports', {
-    path: 'curriculum-inventory-reports',
-  });
+  this.route('curriculum-inventory-reports');
   this.route(
-    'curriculumInventoryReport',
+    'curriculum-inventory-report',
     {
       path: 'curriculum-inventory-reports/:curriculum_inventory_report_id',
     },
@@ -116,7 +112,7 @@ Router.map(function () {
       this.route('rollover');
     }
   );
-  this.route('curriculumInventorySequenceBlock', {
+  this.route('curriculum-inventory-sequence-block', {
     path: 'curriculum-inventory-sequence-block/:curriculum_inventory_sequence_block_id',
   });
   this.route('course-visualizations', {

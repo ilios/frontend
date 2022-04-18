@@ -40,13 +40,13 @@
   </div>
   <div class="breadcrumbs" data-test-breadcrumb>
     <span>
-      <LinkTo @route="instructorGroups">
+      <LinkTo @route="instructor-groups">
         {{t "general.instructorGroups"}}
       </LinkTo>
     </span>
     <span>
       <LinkTo
-        @route="instructorGroups"
+        @route="instructor-groups"
         @query={{hash
           schoolId=(get (await @instructorGroup.school) "id")
         }}

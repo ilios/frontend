@@ -6,7 +6,7 @@
   <div class="breadcrumbs" data-test-breadcrumbs>
     <span data-test-report-crumb>
       <LinkTo
-        @route="curriculumInventoryReport"
+        @route="curriculum-inventory-report"
         @model={{@sequenceBlock.report}}
       >
         {{t "general.curriculumInventoryReport"}}
@@ -14,7 +14,7 @@
     </span>
     {{#each (reverse this.allParents) as |parent|}}
       <span data-test-block-crumb>
-        <LinkTo @route="curriculumInventorySequenceBlock" @model={{parent}}>
+        <LinkTo @route="curriculum-inventory-sequence-block" @model={{parent}}>
           {{parent.title}}
         </LinkTo>
       </span>

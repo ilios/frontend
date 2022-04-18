@@ -137,7 +137,7 @@
                   {{#if @isEditing}}
                     <td class="text-left" colspan="2">
                       <LinkTo
-                        @route="learnerGroup"
+                        @route="learner-group"
                         @model={{user.lowestGroupInTree}}
                         @query={{hash isEditing=@isEditing sortUsersBy=@sortBy}}
                       >
@@ -242,7 +242,7 @@
                     {{#if @isEditing}}
                       <td class="text-left" colspan="2">
                         <LinkTo
-                          @route="learnerGroup"
+                          @route="learner-group"
                           @model={{user.lowestGroupInTree}}
                           @query={{hash isEditing=@isEditing sortUsersBy=@sortBy}}
                         >

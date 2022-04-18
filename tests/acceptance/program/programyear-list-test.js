@@ -121,7 +121,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     this.server.create('cohort', { programYear });
     await page.visit({ programId: this.program.id });
     await page.programYears.items[0].link.click();
-    assert.strictEqual(currentRouteName(), 'programYear.index');
+    assert.strictEqual(currentRouteName(), 'program-year.index');
   });
 
   test('can delete a program-year', async function (assert) {

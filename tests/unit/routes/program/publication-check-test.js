@@ -5,7 +5,7 @@ module('Unit | Route | PublicationCheck ', function (hooks) {
   setupTest(hooks);
 
   test('it exists', function (assert) {
-    var route = this.owner.lookup('route:program/publicationCheck');
+    var route = this.owner.lookup('route:program/publication-check');
     assert.ok(route);
   });
 });
