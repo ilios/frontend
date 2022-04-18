@@ -74,6 +74,7 @@ module.exports = function (defaults) {
       'instructorGroups',
       'learnerGroup',
       'learnerGroups',
+      'login',
       'pending-user-updates',
       'print_course',
       'program-year-visualize-competencies',
