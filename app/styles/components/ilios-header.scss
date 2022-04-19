@@ -52,6 +52,10 @@
       width: 13rem;
       grid-area: search;
 
+      @include for-phone-only {
+        width: 10rem;
+      }
+
       .autocomplete {
         width: 25rem;
 
