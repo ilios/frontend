@@ -12,5 +12,10 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'common.user-performs-non-learner-function' },
     { handler: 'silence', matchId: 'common.curriculum-inventory-report-is-finalized' },
     { handler: 'silence', matchId: 'ember-modifier.use-destroyables' }, //https://github.com/zeppelin/ember-click-outside
+    { handler: 'silence', matchId: 'ember-polyfills.deprecate-assign' },
+    { handler: 'silence', matchId: 'ember-modifier.use-modify' },
+    { handler: 'silence', matchId: 'ember-modifier.no-args-property' },
+    { handler: 'silence', matchId: 'ember-modifier.no-element-property' },
+    { handler: 'silence', matchId: 'ember-modifier.function-based-options' },
   ],
 };
