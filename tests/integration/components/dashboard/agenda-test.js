@@ -17,7 +17,6 @@ module('Integration | Component | dashboard/agenda', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
-    this.owner.setupRouter();
     const today = moment();
     const tomorrow = moment().add(1, 'day').endOf('day');
     preWork = [

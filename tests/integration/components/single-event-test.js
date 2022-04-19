@@ -240,7 +240,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
   test('postrequisite date and title are displayed', async function (assert) {
     assert.expect(4);
-    this.owner.setupRouter();
     const today = moment().hour(8).minute(0).second(0);
     const tomorrow = today.clone().add(1, 'day');
     const postReq = {
@@ -330,7 +329,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
   test('for non ilms postrequisite date and title are displayed along with offering date', async function (assert) {
     assert.expect(4);
-    this.owner.setupRouter();
 
     const today = moment().hour(8).minute(0).second(0);
     const tomorrow = today.clone().add(1, 'day');
@@ -385,7 +383,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('link to all materials if user is student and event is user-event', async function (assert) {
-    this.owner.setupRouter();
     const MockCurrentUserService = Service.extend({ userIsStudent: true });
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
@@ -396,7 +393,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('no link to all materials if user is not a student and event is user-event', async function (assert) {
-    this.owner.setupRouter();
     const MockCurrentUserService = Service.extend({ userIsStudent: false });
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
@@ -407,7 +403,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('no link to all materials if user is student and event is school-event', async function (assert) {
-    this.owner.setupRouter();
     const MockCurrentUserService = Service.extend({ userIsStudent: true });
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
@@ -531,7 +526,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
   test('non learners get link to session if session route exists', async function (assert) {
     assert.expect(2);
-    this.owner.setupRouter();
     class CurrentUserMock extends Service {
       performsNonLearnerFunction = true;
     }

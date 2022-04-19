@@ -12,7 +12,6 @@ module('Integration | Component | ilios-calendar-pre-work-events', function (hoo
   setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
-    this.owner.setupRouter();
     this.events = [
       {
         name: 'Learn to Learn',
