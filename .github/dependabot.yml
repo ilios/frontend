@@ -9,6 +9,9 @@ updates:
   open-pull-requests-limit: 10
   ignore:
   - dependency-name: broccoli-asset-rev
+  - dependency-name: "@ember/optional-features"
+  - dependency-name: "@ember/test-helpers"
+  - dependency-name: "@embroider/test-setup"
   - dependency-name: ember-auto-import
   - dependency-name: ember-cli
   - dependency-name: ember-cli-babel
@@ -22,9 +25,7 @@ updates:
   - dependency-name: ember-cli-uglify
   - dependency-name: ember-disable-prototype-extensions
   - dependency-name: ember-export-application-global
-  - dependency-name: "@ember/jquery"
   - dependency-name: ember-load-initializers
-  - dependency-name: "@ember/optional-features"
   - dependency-name: ember-qunit
   - dependency-name: ember-resolver
   - dependency-name: ember-source
@@ -35,6 +36,7 @@ updates:
   - dependency-name: eslint-plugin-node
   - dependency-name: loader.js
   - dependency-name: qunit-dom
+  - dependency-name: webpack
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
