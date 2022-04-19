@@ -627,9 +627,9 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
     await click(clearFilter);
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-    assert.notOk(find(sessiontype).checked, 'filter is unchecked');
-    assert.notOk(find(course).checked, 'filter is unchecked');
-    assert.notOk(find(term).checked, 'filter is unchecked');
+    assert.dom(sessiontype).isNotChecked('filter is unchecked');
+    assert.dom(course).isNotChecked('filter is unchecked');
+    assert.dom(term).isNotChecked('filter is unchecked');
   });
 
   test('clear all detail filters', async function (assert) {
@@ -654,9 +654,9 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
     await click(clearFilter);
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-    assert.notOk(find(sessiontype).checked, 'filter is unchecked');
-    assert.notOk(find(courselevel).checked, 'filter is unchecked');
-    assert.notOk(find(cohort).checked, 'filter is unchecked');
+    assert.dom(sessiontype).isNotChecked('filter is unchecked');
+    assert.dom(courselevel).isNotChecked('filter is unchecked');
+    assert.dom(cohort).isNotChecked('filter is unchecked');
   });
 
   test('filter tags work properly', async function (assert) {
@@ -688,7 +688,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.strictEqual(getTagText(2), 'session type 0', 'filter tag is active');
 
     await clickTag(1);
-    assert.notOk(find(courselevel).checked, 'filter is unchecked');
+    assert.dom(courselevel).isNotChecked('filter is unchecked');
     assert.strictEqual(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
     assert.strictEqual(getTagText(1), 'session type 0', 'filter tag is active');
 
@@ -697,8 +697,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
     await click(clearFilter);
     assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
-    assert.notOk(find(sessiontype).checked, 'filter is unchecked');
-    assert.notOk(find(cohort).checked, 'filter is unchecked');
+    assert.dom(sessiontype).isNotChecked('filter is unchecked');
+    assert.dom(cohort).isNotChecked('filter is unchecked');
   });
 
   test('calendar is active in dashboard navigation', async function (assert) {
