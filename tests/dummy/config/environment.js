@@ -44,6 +44,9 @@ module.exports = function (environment) {
         visualNoiseLevel: 1,
       },
     },
+    flashMessageDefaults: {
+      injectionFactories: [],
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
