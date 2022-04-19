@@ -23,7 +23,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
       .lookup('service:store')
       .find('curriculumInventoryReport', report.id);
     await page.visit({ reportId: reportModel.id });
-    assert.strictEqual(currentRouteName(), 'curriculumInventoryReport.index');
+    assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.index');
     assert.notOk(page.blocks.newBlock.form.isVisible);
     await page.blocks.header.expandCollapse.toggle();
     assert.ok(page.blocks.newBlock.form.isVisible);
@@ -44,7 +44,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
       .lookup('service:store')
       .find('curriculumInventoryReport', report.id);
     await page.visit({ reportId: reportModel.id });
-    assert.strictEqual(currentRouteName(), 'curriculumInventoryReport.index');
+    assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.index');
     assert.notOk(page.details.overview.rolloverLink.isVisible);
   });
 
@@ -64,7 +64,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
       .lookup('service:store')
       .find('curriculumInventoryReport', report.id);
     await page.visit({ reportId: reportModel.id });
-    assert.strictEqual(currentRouteName(), 'curriculumInventoryReport.index');
+    assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.index');
     assert.ok(page.details.overview.rolloverLink.isVisible);
   });
 

@@ -18,7 +18,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
     test('visiting /instructorgroups', async function (assert) {
       await page.visit();
-      assert.strictEqual(currentRouteName(), 'instructorGroups');
+      assert.strictEqual(currentRouteName(), 'instructor-groups');
     });
 
     test('list groups', async function (assert) {

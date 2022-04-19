@@ -53,7 +53,7 @@ module('Acceptance | Instructor Group Details', function (hooks) {
 
   test('check fields', async function (assert) {
     await visit(url);
-    assert.strictEqual(currentRouteName(), 'instructorGroup');
+    assert.strictEqual(currentRouteName(), 'instructor-group');
     assert.strictEqual(page.details.header.title.text, 'instructor group 0');
     assert.strictEqual(page.details.header.members, 'Members: 2');
     assert.strictEqual(page.details.header.breadcrumb.crumbs.length, 3);

@@ -25,7 +25,7 @@ module('Acceptance | Program - Publication Check', function (hooks) {
 
   test('full program count', async function (assert) {
     await visit('/programs/' + this.fullProgram.id + '/publicationcheck');
-    assert.strictEqual(currentRouteName(), 'program.publicationCheck');
+    assert.strictEqual(currentRouteName(), 'program.publication-check');
     assert
       .dom('.program-publication-check .detail-content table tbody td:nth-of-type(1)')
       .hasText('program 0');
@@ -42,7 +42,7 @@ module('Acceptance | Program - Publication Check', function (hooks) {
 
   test('empty program count', async function (assert) {
     await visit('/programs/' + this.emptyProgram.id + '/publicationcheck');
-    assert.strictEqual(currentRouteName(), 'program.publicationCheck');
+    assert.strictEqual(currentRouteName(), 'program.publication-check');
     assert
       .dom('.program-publication-check .detail-content table tbody td:nth-of-type(1)')
       .hasText('program 1');

@@ -1,7 +1,7 @@
 {{page-title (t "general.programs")}}
 <section class="program-year-visualizations">
   <div class="backtolink">
-    <LinkTo @route="programYear.index" @models={{array @model.program @model}}>
+    <LinkTo @route="program-year.index" @models={{array @model.program @model}}>
       {{t "general.backToProgramYear"}}
     </LinkTo>
   </div>
@@ -12,7 +12,7 @@
     <LinkTo @route="program" @model={{@model.program}}>
       {{get @model.program "title"}}
     </LinkTo>
-    <LinkTo @route="programYear" @models={{array @model.program @model}}>
+    <LinkTo @route="program-year" @models={{array @model.program @model}}>
       {{#if (get @model.cohort "title")}}
         {{get @model.cohort "title"}}
       {{else}}

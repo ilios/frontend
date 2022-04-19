@@ -9,7 +9,7 @@
     <LinkTo @route="program" @model={{@model.program}}>
       {{get @model.program "title"}}
     </LinkTo>
-    <LinkTo @route="programYear" @models={{array @model.program @model}}>
+    <LinkTo @route="program-year" @models={{array @model.program @model}}>
       {{#if (get @model.cohort "title")}}
         {{get @model.cohort "title"}}
       {{else}}

@@ -74,9 +74,9 @@
         </li>
         <li>
           <LinkTo
-            @route="learnerGroups"
+            @route="learner-groups"
             title={{t "general.learnerGroups"}}
-            @current-when="learnerGroups learnerGroup"
+            @current-when="learner-groups learner-group"
           >
             <FaIcon @icon="graduation-cap" @fixedWidth={{true}} />
             <span class="text">
@@ -86,9 +86,9 @@
         </li>
         <li>
           <LinkTo
-            @route="instructorGroups"
+            @route="instructor-groups"
             title={{t "general.instructorGroups"}}
-            @current-when="instructorGroups instructorGroup"
+            @current-when="instructor-groups instructor-group"
           >
             <FaIcon @icon="user-doctor" @fixedWidth={{true}} />
             <span class="text">
@@ -138,15 +138,15 @@
       {{#if this.currentUser.performsNonLearnerFunction}}
         <li>
           <LinkTo
-            @route="curriculumInventoryReports"
+            @route="curriculum-inventory-reports"
             title={{t "general.curriculumInventory"}}
             @current-when={{
               join " "
               (array
-                "curriculumInventoryReport"
-                "curriculumInventoryReports"
-                "curriculumInventorySequenceBlock"
-                "verificationPreview"
+                "curriculum-inventory-report"
+                "curriculum-inventory-reports"
+                "curriculum-inventory-sequence-block"
+                "verification-preview"
               )
             }}
           >

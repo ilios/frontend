@@ -28,7 +28,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   @tracked canRollover = false;
 
   get showRollover() {
-    if (this.router.currentRouteName === 'curriculumInventoryReport.rollover') {
+    if (this.router.currentRouteName === 'curriculum-inventory-report.rollover') {
       return false;
     }
 
@@ -131,7 +131,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
 
   @action
   transitionToRollover() {
-    this.router.transitionTo('curriculumInventoryReport.rollover', this.args.report);
+    this.router.transitionTo('curriculum-inventory-report.rollover', this.args.report);
     scrollTo('.rollover-form');
   }
 }

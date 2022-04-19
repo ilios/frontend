@@ -15,7 +15,7 @@ module('Acceptance | FourOhFour', function (hooks) {
   test('visiting /four-oh-four', async function (assert) {
     await visit('/four-oh-four');
 
-    assert.strictEqual(currentRouteName(), 'fourOhFour');
+    assert.strictEqual(currentRouteName(), 'four-oh-four');
     assert
       .dom('.full-screen-error')
       .hasText(
@@ -25,6 +25,6 @@ module('Acceptance | FourOhFour', function (hooks) {
 
   test('visiting /nothing', async function (assert) {
     await visit('/nothing');
-    assert.strictEqual(currentRouteName(), 'fourOhFour');
+    assert.strictEqual(currentRouteName(), 'four-oh-four');
   });
 });

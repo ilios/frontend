@@ -18,7 +18,7 @@ module('Acceptance | Learner Groups', function (hooks) {
 
   test('visiting /learnergroups', async function (assert) {
     await page.visit();
-    assert.strictEqual(currentRouteName(), 'learnerGroups');
+    assert.strictEqual(currentRouteName(), 'learner-groups');
   });
 
   test('single option filters', async function (assert) {
@@ -415,7 +415,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
 
     await page.visit();
-    assert.strictEqual(currentRouteName(), 'learnerGroups');
+    assert.strictEqual(currentRouteName(), 'learner-groups');
     assert.notOk(page.hasNewGroupToggle);
   });
 
