@@ -152,7 +152,7 @@ export default class PublishAllSessionsComponent extends Component {
     const sessionsToSave = [];
 
     this.overridableSessions.forEach((session) => {
-      session.set('publishedAsTbd', !this.sessionsToOverride.includes(session));
+      session.set('publishedAsTbd', !this.sessionsToPublish.includes(session));
       session.set('published', true);
       sessionsToSave.push(session);
     });
