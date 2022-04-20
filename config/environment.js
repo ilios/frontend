@@ -128,18 +128,10 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
-  }
-
-  if (environment === 'preview') {
-    // here you can enable a preview-specific feature
-    ENV.IliosFeatures.programYearVisualizations = true;
-    ENV['ember-a11y-testing'].componentOptions.turnAuditOff = true;
-    ENV.featureFlags['globalSearch'] = true;
-
-    //Remove mirage
-    ENV['ember-cli-mirage'] = {
-      enabled: false,
-    };
+    if (process.env.ENABLE_PREVIEW_FEATURES) {
+      ENV.IliosFeatures.programYearVisualizations = true;
+      ENV.featureFlags['globalSearch'] = true;
+    }
   }
 
   return ENV;
