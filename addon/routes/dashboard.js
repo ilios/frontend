@@ -5,6 +5,6 @@ export default class DashboardRoute extends Route {
   @service router;
 
   beforeModel() {
-    this.router.transitionTo('dashboard.week');
+    this.router.replaceWith('dashboard.week');
   }
 }
