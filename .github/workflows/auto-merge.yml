@@ -44,12 +44,12 @@ jobs:
         run: |
           echo ${{steps.metadata.outputs.dependency-names}}
           echo ${{matrix.safe-dependency}}
-          echo ${{steps.dependabot-metadata.outputs.update-type}}
+          echo ${{steps.metadata.outputs.update-type}}
           echo ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency)}}
-          echo ${{steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor'}}
-          echo ${{steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch'}}
+          echo ${{steps.metadata.outputs.update-type == 'version-update:semver-minor'}}
+          echo ${{steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
       - name: Enable auto-merge for Dependabot PRs
-        if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor' || steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch') }}
+        if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') }}
         run: gh pr merge --auto --merge "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
