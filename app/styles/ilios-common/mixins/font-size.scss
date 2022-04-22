@@ -1,6 +1,6 @@
 /* stylelint-disable property-disallowed-list */
 :root {
-  --fs-smallest: 0.5rem;
+  --fs-smallest: max(0.5rem, 9px);
   --fs-small: 0.833rem;
   --fs-base: 1rem;
   --fs-medium: 1.2rem;
