@@ -3,7 +3,7 @@ import { dropTask, restartableTask } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { validatable, Length, AfterDate, NotBlank } from 'ilios-common/decorators/validation';
 
 @validatable
@@ -49,21 +49,20 @@ export default class LearningMaterialManagerComponent extends Component {
 
   @action
   updateDate(which, value) {
-    const oldDate = moment(this[which]);
-    const newDate = moment(value);
-    const hour = oldDate.get('hour');
-    const minute = oldDate.get('minute');
-    newDate.set({ hour, minute });
-    this[which] = newDate.toDate();
+    const { hour, minute } = DateTime.fromJSDate(this[which]);
+    const { year, ordinal } = DateTime.fromJSDate(value);
+    this[which] = DateTime.fromObject({
+      year,
+      ordinal,
+      hour,
+      minute,
+      second: 0,
+    }).toJSDate();
   }
   @action
   updateTime(which, value, type) {
-    const oldDate = moment(this[which]);
-    const year = oldDate.get('year');
-    const month = oldDate.get('month');
-    const date = oldDate.get('date');
-    let hour = oldDate.get('hour');
-    let minute = oldDate.get('minute');
+    let { year, ordinal, hour, minute } = DateTime.fromJSDate(this[which]);
+
     if (type === 'hour') {
       hour = value;
     }
@@ -71,13 +70,21 @@ export default class LearningMaterialManagerComponent extends Component {
       minute = value;
     }
 
-    const newDate = moment();
-    newDate.set({ year, month, date, hour, minute });
-    this[which] = newDate.toDate();
+    this[which] = DateTime.fromObject({
+      year: year,
+      ordinal: ordinal,
+      hour: hour,
+      minute: minute,
+      second: 0,
+    }).toJSDate();
   }
   @action
   addDate(which) {
-    this[which] = moment().hour(8).minute(0).second(0).toDate();
+    this[which] = DateTime.fromObject({
+      hour: 8,
+      minute: 0,
+      second: 0,
+    }).toJSDate();
   }
   @action
   addTerm(term) {
