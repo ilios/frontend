@@ -1,8 +1,32 @@
-import { clickable, create, collection, isPresent, text } from 'ember-cli-page-object';
+import { clickable, create, collection, hasClass, isPresent, text } from 'ember-cli-page-object';
 import listItem from './list-item';
 
 const definition = {
   scope: '[data-test-learner-groups-list]',
+  header: {
+    scope: 'thead',
+    title: {
+      scope: 'th:nth-of-type(1)',
+      isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
+      isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
+      isNotSorted: hasClass('fa-sort', 'svg'),
+      click: clickable('button'),
+    },
+    users: {
+      scope: 'th:nth-of-type(2)',
+      isSortedAscending: hasClass('fa-arrow-down-1-9', 'svg'),
+      isSortedDescending: hasClass('fa-arrow-down-9-1', 'svg'),
+      isNotSorted: hasClass('fa-sort', 'svg'),
+      click: clickable('button'),
+    },
+    children: {
+      isSortedAscending: hasClass('fa-arrow-down-1-9', 'svg'),
+      isSortedDescending: hasClass('fa-arrow-down-9-1', 'svg'),
+      isNotSorted: hasClass('fa-sort', 'svg'),
+      scope: 'th:nth-of-type(3)',
+      click: clickable('button'),
+    },
+  },
   items: collection('[data-test-learner-groups-list-item]', listItem),
   isEmpty: isPresent('[data-test-empty-list]'),
   confirmRemoval: {

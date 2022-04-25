@@ -40,7 +40,11 @@ module('Integration | Component | learner-groups/list', function (hooks) {
       await store.findRecord('learner-group', 3),
     ];
     this.set('learnerGroups', learnerGroupModels);
-    await render(hbs`<LearnerGroups::List @learnerGroups={{this.learnerGroups}} />`);
+    await render(hbs`<LearnerGroups::List
+      @learnerGroups={{this.learnerGroups}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
+    />`);
 
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -55,18 +59,100 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     await a11yAudit(this.element);
   });
 
-  test('it renders empty', async function (assert) {
-    await render(hbs`<LearnerGroups::List @programs={{(array)}} />`);
+  test('sort', async function (assert) {
+    const group1 = this.server.create('learner-group', {
+      cohort: this.cohort,
+      users: this.server.createList('user', 5),
+    });
+    const group2 = this.server.create('learner-group', {
+      cohort: this.cohort,
+      users: this.server.createList('user', 3),
+    });
+    const group3 = this.server.create('learner-group', {
+      cohort: this.cohort,
+      users: this.server.createList('user', 4),
+    });
+    this.server.createList('learner-group', 2, { parent: group1 });
+    this.server.createList('learner-group', 5, { parent: group2 });
+    this.server.createList('learner-group', 4, { parent: group3 });
+    const store = this.owner.lookup('service:store');
+    const learnerGroupModels = [
+      await store.findRecord('learner-group', group1.id),
+      await store.findRecord('learner-group', group2.id),
+      await store.findRecord('learner-group', group3.id),
+    ];
+    this.set('learnerGroups', learnerGroupModels);
+    this.set('sortBy', 'title');
+    await render(hbs`<LearnerGroups::List
+      @learnerGroups={{this.learnerGroups}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{set this.sortBy}}
+    />`);
 
-    assert.strictEqual(component.items.length, 0);
-    assert.ok(component.isEmpty);
+    assert.strictEqual(component.items.length, 3);
+    assert.ok(component.header.title.isSortedAscending);
+    assert.ok(component.header.users.isNotSorted);
+    assert.ok(component.header.children.isNotSorted);
+    assert.strictEqual(component.items[0].title, 'learner group 0');
+    assert.strictEqual(component.items[0].users, '5');
+    assert.strictEqual(component.items[0].children, '2');
+    assert.strictEqual(component.items[1].title, 'learner group 1');
+    assert.strictEqual(component.items[1].users, '3');
+    assert.strictEqual(component.items[1].children, '5');
+    assert.strictEqual(component.items[2].title, 'learner group 2');
+    assert.strictEqual(component.items[2].users, '4');
+    assert.strictEqual(component.items[2].children, '4');
+
+    await component.header.title.click();
+    assert.ok(component.header.title.isSortedDescending);
+    assert.ok(component.header.users.isNotSorted);
+    assert.ok(component.header.children.isNotSorted);
+    assert.strictEqual(component.items[0].title, 'learner group 2');
+    assert.strictEqual(component.items[1].title, 'learner group 1');
+    assert.strictEqual(component.items[2].title, 'learner group 0');
+
+    await component.header.users.click();
+    assert.ok(component.header.title.isNotSorted);
+    assert.ok(component.header.users.isSortedAscending);
+    assert.ok(component.header.children.isNotSorted);
+    assert.strictEqual(component.items[0].users, '3');
+    assert.strictEqual(component.items[1].users, '4');
+    assert.strictEqual(component.items[2].users, '5');
+
+    await component.header.users.click();
+    assert.ok(component.header.title.isNotSorted);
+    assert.ok(component.header.users.isSortedDescending);
+    assert.ok(component.header.children.isNotSorted);
+    assert.strictEqual(component.items[0].users, '5');
+    assert.strictEqual(component.items[1].users, '4');
+    assert.strictEqual(component.items[2].users, '3');
+
+    await component.header.children.click();
+    assert.ok(component.header.title.isNotSorted);
+    assert.ok(component.header.users.isNotSorted);
+    assert.ok(component.header.children.isSortedAscending);
+    assert.strictEqual(component.items[0].children, '2');
+    assert.strictEqual(component.items[1].children, '4');
+    assert.strictEqual(component.items[2].children, '5');
+
+    await component.header.children.click();
+    assert.ok(component.header.title.isNotSorted);
+    assert.ok(component.header.users.isNotSorted);
+    assert.ok(component.header.children.isSortedDescending);
+    assert.strictEqual(component.items[0].children, '5');
+    assert.strictEqual(component.items[1].children, '4');
+    assert.strictEqual(component.items[2].children, '2');
   });
 
   test('remove', async function (assert) {
     this.server.createList('learner-group', 3, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
-    await render(hbs`<LearnerGroups::List @learnerGroups={{this.learnerGroups}} />`);
+    await render(hbs`<LearnerGroups::List
+      @learnerGroups={{this.learnerGroups}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
+    />`);
     assert.strictEqual(this.server.db.learnerGroups.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -81,7 +167,11 @@ module('Integration | Component | learner-groups/list', function (hooks) {
     this.server.createList('learner-group', 3, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
-    await render(hbs`<LearnerGroups::List @learnerGroups={{this.learnerGroups}} />`);
+    await render(hbs`<LearnerGroups::List
+      @learnerGroups={{this.learnerGroups}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
+    />`);
     assert.strictEqual(this.server.db.learnerGroups.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -105,6 +195,8 @@ module('Integration | Component | learner-groups/list', function (hooks) {
       @learnerGroups={{this.learnerGroups}}
       @canCopyWithLearners={{true}}
       @copyGroup={{this.copyGroup}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
     />`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.canCopyWithLearners);
@@ -124,6 +216,8 @@ module('Integration | Component | learner-groups/list', function (hooks) {
       @learnerGroups={{this.learnerGroups}}
       @canCopyWithLearners={{true}}
       @copyGroup={{this.copyGroup}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
     />`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.canCopyWithLearners);
@@ -143,6 +237,8 @@ module('Integration | Component | learner-groups/list', function (hooks) {
       @learnerGroups={{this.learnerGroups}}
       @canCopyWithLearners={{false}}
       @copyGroup={{this.copyGroup}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
     />`);
     await component.items[0].copy();
     assert.notOk(component.confirmCopy.canCopyWithLearners);
@@ -161,6 +257,8 @@ module('Integration | Component | learner-groups/list', function (hooks) {
       @learnerGroups={{this.learnerGroups}}
       @canCopyWithLearners={{true}}
       @copyGroup={{this.copyGroup}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
     />`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.isPresent);
@@ -181,6 +279,8 @@ module('Integration | Component | learner-groups/list', function (hooks) {
       @learnerGroups={{this.learnerGroups}}
       @canCopyWithLearners={{false}}
       @copyGroup={{this.copyGroup}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
     />`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.isPresent);
