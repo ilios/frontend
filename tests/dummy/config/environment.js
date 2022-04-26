@@ -13,7 +13,7 @@ module.exports = function (environment) {
     modulePrefix: 'dummy',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'history',
     intl: {
       defaultLocale: 'en',
     },
@@ -43,6 +43,9 @@ module.exports = function (environment) {
         turnAuditOff: process.env.SKIP_A11Y || false,
         visualNoiseLevel: 1,
       },
+    },
+    flashMessageDefaults: {
+      injectionFactories: [],
     },
     EmberENV: {
       FEATURES: {

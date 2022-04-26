@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, find, click } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Helper | set', function (hooks) {
@@ -17,11 +17,11 @@ module('Integration | Helper | set', function (hooks) {
       </button>
     `);
 
-    assert.strictEqual(find('[data-test-greeting]').textContent.trim(), '');
+    assert.dom('[data-test-greeting]').hasText('');
 
     await click('button');
 
-    assert.strictEqual(find('[data-test-greeting]').textContent.trim(), 'Hello!');
+    assert.dom('[data-test-greeting]').hasText('Hello!');
   });
 
   test('it works when called directly', async function (assert) {
@@ -33,10 +33,10 @@ module('Integration | Helper | set', function (hooks) {
       </button>
     `);
 
-    assert.strictEqual(find('[data-test-greeting]').textContent.trim(), '');
+    assert.dom('[data-test-greeting]').hasText('');
 
     await click('button');
 
-    assert.strictEqual(find('[data-test-greeting]').textContent.trim(), 'Hello!');
+    assert.dom('[data-test-greeting]').hasText('Hello!');
   });
 });

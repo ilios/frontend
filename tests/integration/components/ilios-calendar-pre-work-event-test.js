@@ -12,7 +12,6 @@ module('Integration | Component | ilios-calendar-pre-work-event', function (hook
   setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
-    this.owner.setupRouter();
     this.set('event', {
       name: 'Learn to Learn',
       slug: 'abc',

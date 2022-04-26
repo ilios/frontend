@@ -24,6 +24,6 @@ module('Integration | Helper | has-many-ids', function (hooks) {
 
     await render(hbs`{{has-many-ids this.model "foo"}}`);
 
-    assert.strictEqual(this.element.textContent.trim(), '1,2');
+    assert.dom(this.element).hasText('1,2');
   });
 });
