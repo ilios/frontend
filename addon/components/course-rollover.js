@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 @validatable
 export default class CourseRolloverComponent extends Component {
@@ -25,7 +25,7 @@ export default class CourseRolloverComponent extends Component {
 
   constructor() {
     super(...arguments);
-    const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
+    const lastYear = DateTime.now().minus({ years: 1 }).year;
     this.years = [];
     for (let i = 0; i < 6; i++) {
       this.years.push(lastYear + i);
@@ -80,7 +80,7 @@ export default class CourseRolloverComponent extends Component {
       newCourseTitle: this.title,
     };
     if (this.startDate) {
-      data.newStartDate = moment(this.startDate).format('YYYY-MM-DD');
+      data.newStartDate = DateTime.fromJSDate(this.startDate).toFormat('yyyy-LL-dd');
     }
     if (this.skipOfferings) {
       data.skipOfferings = true;
@@ -115,16 +115,14 @@ export default class CourseRolloverComponent extends Component {
   changeSelectedYear(selectedYear) {
     this.selectedYear = Number(selectedYear);
 
-    const date = moment(this.args.course.startDate);
-    const day = date.isoWeekday();
-    const week = date.isoWeek();
+    const from = DateTime.fromJSDate(this.args.course.startDate);
 
-    this.startDate = moment()
-      .hour(0)
-      .minute(0)
-      .year(selectedYear)
-      .isoWeek(week)
-      .isoWeekday(day)
-      .toDate();
+    this.startDate = DateTime.fromObject({
+      hour: 0,
+      minute: 0,
+      weekYear: Number(selectedYear),
+      weekNumber: from.weekNumber,
+      weekday: from.weekday,
+    }).toJSDate();
   }
 }
