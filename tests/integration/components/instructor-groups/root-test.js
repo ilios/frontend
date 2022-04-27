@@ -45,7 +45,11 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
   test('it renders', async function (assert) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
-    await render(hbs`<InstructorGroups::Root @schools={{this.schools}} />`);
+    await render(hbs`<InstructorGroups::Root
+      @schools={{this.schools}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
+    />`);
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'instructor group 3');
     assert.strictEqual(component.list.items[1].title, 'instructor group 4');
@@ -71,6 +75,8 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @schools={{this.schools}}
       @setSchoolId={{this.setSchoolId}}
       @schoolId={{this.schoolId}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
     />`);
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.list.items.length, 3);
@@ -98,6 +104,8 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @schools={{this.schools}}
       @setTitleFilter={{this.setTitleFilter}}
       @titleFilter={{this.titleFilter}}
+      @sortBy="title"
+      @setSortBy={{(noop)}}
     />`);
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'instructor group 3');
@@ -107,5 +115,32 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
     await component.setTitleFilter('4');
     assert.strictEqual(component.list.items.length, 1);
     assert.strictEqual(component.list.items[0].title, 'instructor group 4');
+  });
+
+  test('sort', async function (assert) {
+    assert.expect(7);
+    setupPermissionChecker(this, true);
+    this.set('schools', this.schools);
+    this.set('sortBy', 'title');
+    this.set('setSortBy', (sortBy) => {
+      this.set(sortBy, 'title:desc');
+      this.set('sortBy', sortBy);
+    });
+
+    await render(hbs`<InstructorGroups::Root
+      @schools={{this.schools}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{this.setSortBy}}
+    />`);
+
+    assert.strictEqual(component.list.items.length, 3);
+    assert.strictEqual(component.list.items[0].title, 'instructor group 3');
+    assert.strictEqual(component.list.items[1].title, 'instructor group 4');
+    assert.strictEqual(component.list.items[2].title, 'instructor group 5');
+
+    await component.list.header.title.click();
+    assert.strictEqual(component.list.items[0].title, 'instructor group 5');
+    assert.strictEqual(component.list.items[1].title, 'instructor group 4');
+    assert.strictEqual(component.list.items[2].title, 'instructor group 3');
   });
 });

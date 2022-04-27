@@ -10,8 +10,8 @@
         @sortedAscending={{this.sortedAscending}}
         @onClick={{fn this.setSortBy "title"}}
         @sortedBy={{or
-          (eq this.sortBy "title")
-          (eq this.sortBy "title:desc")
+          (eq @sortBy "title")
+          (eq @sortBy "title:desc")
         }}
       >
         {{t "general.instructorGroupTitle"}}
@@ -24,8 +24,8 @@
         @sortType="numeric"
         @onClick={{fn this.setSortBy "usersCount"}}
         @sortedBy={{or
-          (eq this.sortBy "usersCount")
-          (eq this.sortBy "usersCount:desc")
+          (eq @sortBy "usersCount")
+          (eq @sortBy "usersCount:desc")
         }}
       >
         {{t "general.members"}}
@@ -40,7 +40,7 @@
   </thead>
   <tbody>
     {{#each (
-      sort-by (if (or (eq this.sortBy "title") (eq this.sortBy "title:desc")) this.sortByTitle this.sortBy
+      sort-by (if (or (eq @sortBy "title") (eq @sortBy "title:desc")) this.sortByTitle @sortBy
     ) @instructorGroups) as |instructorGroup|
     }}
       <InstructorGroups::ListItem @instructorGroup={{instructorGroup}} />
