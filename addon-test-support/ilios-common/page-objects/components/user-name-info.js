@@ -4,6 +4,8 @@ const definition = {
   scope: '[data-test-user-name-info]',
   fullName: text('[data-test-fullname]'),
   hasAdditionalInfo: isVisible('[data-test-info]'),
+  hasPronouns: isVisible('[data-test-pronouns]'),
+  pronouns: text('[data-test-pronouns]'),
   infoIconLabel: attribute('aria-label', '[data-test-info] svg'),
   id: attribute('id'),
   expandTooltip: triggerable('mouseover', '[data-test-info] .info'),
