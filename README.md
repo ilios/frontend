@@ -23,7 +23,8 @@ open source software, ilios would be nowhere, so if you have a chance to pay the
 You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
-* [Node](https://nodejs.org/)
+* [Node.js](https://nodejs.org/) (with npm)
+* [Ember CLI](https://cli.emberjs.com/release/)
 
 ### Installation
 
@@ -70,7 +71,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 ## Further Reading / Useful Links
 
 * [ember.js](https://emberjs.com/)
-* [ember-cli](https://ember-cli.com/)
+* [ember-cli](https://cli.emberjs.com/release/)
 * [Ilios User Guide](https://www.gitbook.com/book/iliosproject/ilios-user-guide/details)
 * Development Browser Extensions
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)

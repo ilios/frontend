@@ -12,7 +12,7 @@ module.exports = function (environment) {
     modulePrefix: 'ilios',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'history',
     redirectAfterShibLogin: true,
     flashMessageDefaults: {
       timeout: 3000,
