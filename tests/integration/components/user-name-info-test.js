@@ -17,6 +17,7 @@ module('Integration | Component | user-name-info', function (hooks) {
     this.set('user', userModel);
     await render(hbs`<UserNameInfo @user={{this.user}} />`);
     assert.notOk(component.hasAdditionalInfo);
+    assert.notOk(component.hasPronouns);
     assert.strictEqual(component.fullName, '0 guy M. Mc0son');
   });
 
@@ -42,5 +43,17 @@ module('Integration | Component | user-name-info', function (hooks) {
     this.set('user', userModel);
     await render(hbs`<UserNameInfo id="test-id" @user={{this.user}} />`);
     assert.strictEqual(component.id, 'test-id');
+  });
+
+  test('pronouns display if present', async function (assert) {
+    const user = this.server.create('user', {
+      pronouns: 'they/them/tay',
+    });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('user', userModel);
+    await render(hbs`<UserNameInfo @user={{this.user}} />`);
+    assert.ok(component.hasPronouns);
+    assert.strictEqual(component.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.pronouns, '(they/them/tay)');
   });
 });

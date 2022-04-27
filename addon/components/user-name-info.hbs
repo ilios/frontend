@@ -1,12 +1,13 @@
 <span
   class="user-name-info"
   data-test-user-name-info
-  {{did-insert this.load}}
-  {{did-update this.load @user}}
   ...attributes
 >
-  <span data-test-fullname>{{this.fullName}}</span>
-  {{#if this.hasDifferentCampusNameOfRecord}}
+  <span data-test-fullname>{{@user.fullName}}</span>
+  {{#if @user.pronouns}}
+    <span data-test-pronouns>({{@user.pronouns}})</span>
+  {{/if}}
+  {{#if @user.hasDifferentDisplayName}}
     <span
       data-test-info
       {{did-insert (set this.theElement)}}
@@ -20,7 +21,7 @@
       {{#if this.isHoveringOverUsernameInfo}}
         <IliosTooltip @target={{this.theElement}}>
           <strong>{{t "general.campusNameOfRecord"}}:</strong>
-          {{this.campusNameOfRecord}}
+          {{@user.fullNameFromFirstMiddleLastName}}
         </IliosTooltip>
       {{/if}}
     </span>

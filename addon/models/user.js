@@ -18,6 +18,9 @@ export default class User extends Model {
   displayName;
 
   @attr('string')
+  pronouns;
+
+  @attr('string')
   phone;
 
   @attr('string')
