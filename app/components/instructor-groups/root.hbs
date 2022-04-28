@@ -70,7 +70,11 @@
     </div>
     <div class="list">
       {{#if this.isLoaded}}
-        <InstructorGroups::List @instructorGroups={{sort-by "title" this.filteredInstructorGroups}} />
+        <InstructorGroups::List
+          @instructorGroups={{this.filteredInstructorGroups}}
+          @sortBy={{@sortBy}}
+          @setSortBy={{@setSortBy}}
+        />
       {{else}}
         <InstructorGroups::Loading @count={{this.countForSelectedSchool}} />
       {{/if}}

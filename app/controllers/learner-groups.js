@@ -3,12 +3,13 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 export default class LearnerGroupsController extends Controller {
-  queryParams = ['program', 'programYear', 'school', 'filter'];
+  queryParams = ['program', 'programYear', 'school', 'filter', 'sortBy'];
 
   @tracked programId;
   @tracked programYearId;
   @tracked schoolId;
   @tracked filter;
+  @tracked sortBy = 'title';
 
   @restartableTask
   *setTitleFilter(value) {
