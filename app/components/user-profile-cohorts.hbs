@@ -3,15 +3,21 @@
   {{did-insert (perform this.load) @user}}
   {{did-update (perform this.load) @user.cohorts @user.primaryCohort}}
   ...attributes
+  data-test-user-profile-cohorts
 >
   {{#if this.load.performCount}}
     <div class="user-profile-cohorts-header">
-      <h3 class="title">
+      <h3 class="title" data-test-title>
         {{t "general.cohorts"}}
       </h3>
       <div class="actions">
         {{#if @isManaging}}
-          <button type="button" class="bigadd" {{on "click" (perform this.save)}}>
+          <button
+            type="button"
+            class="bigadd"
+            {{on "click" (perform this.save)}}
+            data-test-save
+          >
             <FaIcon
               @icon={{if this.save.isRunning "spinner" "check"}}
               @spin={{this.save.isRunning}}
@@ -22,11 +28,17 @@
             disabled={{this.save.isRunning}}
             class="bigcancel"
             {{on "click" (fn @setIsManaging false)}}
+            data-test-cancel
           >
             <FaIcon @icon="arrow-rotate-left" />
           </button>
         {{else if @isManageable}}
-          <button type="button" class="manage" {{on "click" (fn @setIsManaging true)}}>
+          <button
+            type="button"
+            class="manage"
+            {{on "click" (fn @setIsManaging true)}}
+            data-test-manage
+          >
             <FaIcon @icon="pen-to-square" />
           </button>
         {{/if}}
@@ -42,6 +54,7 @@
             type="button"
             class="link-button"
             {{on "click" (set this.primaryCohort null)}}
+            data-test-remove
           >
             <FaIcon
               @icon="turn-down"
@@ -81,6 +94,7 @@
                   class="link-button"
                   type="button"
                   {{on "click" (set this.primaryCohort cohort)}}
+                  data-test-promote
                 >
                   <FaIcon
                     @icon="turn-up"
@@ -92,6 +106,7 @@
                   class="link-button"
                   type="button"
                   {{on "click" (fn this.removeSelectedCohort cohort)}}
+                  data-test-remove
                 >
                   <FaIcon
                     @icon="xmark"
@@ -119,13 +134,13 @@
         <h4>
           {{t "general.availableCohorts"}}
         </h4>
-        <div class="schoolsfilter">
+        <div class="schoolsfilter" data-test-schools>
           <FaIcon @icon="building-columns" @fixedWidth={{true}} />
           {{#if (gt this.schools.length 1)}}
             <select
               aria-label={{t "general.schools"}}
               {{on "change" (pick "target.value" (set this.selectedSchoolId))}}
-              data-test-school
+              data-test-filter
             >
               {{#each (sort-by "title" this.schools) as |school|}}
                 <option
@@ -155,6 +170,7 @@
                   type="button"
                   class="link-button"
                   {{on "click" (fn this.addSelectedCohort obj.cohort)}}
+                  data-test-add
                 >
                   <FaIcon
                     @icon="plus"

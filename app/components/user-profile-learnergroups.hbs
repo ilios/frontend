@@ -2,9 +2,10 @@
   class="user-profile-learnergroups large-component"
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @user.learnerGroups}}
+  data-test-user-profile-learnergroups
   ...attributes
 >
-  <h2 class="title">
+  <h2 class="title" data-test-title>
     {{t "general.learnerGroups"}}
   </h2>
   {{#if (is-array this.selectedLearnerGroups)}}
@@ -14,7 +15,7 @@
           {{#each
             (sort-by "sortTitle" this.selectedLearnerGroups) as |learnerGroup|
           }}
-            <li>
+            <li data-test-group>
               {{learnerGroup.schoolTitle}}:
               {{learnerGroup.programTitle}}
               <em>

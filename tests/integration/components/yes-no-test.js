@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { component } from 'ilios/tests/pages/components/yes-no';
 
 module('Integration | Component | yes-no', function (hooks) {
   setupRenderingTest(hooks);
@@ -10,13 +11,15 @@ module('Integration | Component | yes-no', function (hooks) {
 
   test('it renders yes', async function (assert) {
     await render(hbs`<YesNo @value={{true}} />`);
-    assert.dom(this.element).hasText('Yes');
-    assert.dom(this.element.querySelector('span')).hasClass('yes');
+    assert.strictEqual(component.text, 'Yes');
+    assert.ok(component.yes);
+    assert.notOk(component.no);
   });
 
   test('it renders no', async function (assert) {
     await render(hbs`<YesNo @value={{false}} />`);
-    assert.dom(this.element).hasText('No');
-    assert.dom(this.element.querySelector('span')).hasClass('no');
+    assert.strictEqual(component.text, 'No');
+    assert.notOk(component.yes);
+    assert.ok(component.no);
   });
 });

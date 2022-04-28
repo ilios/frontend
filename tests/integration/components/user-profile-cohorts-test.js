@@ -1,10 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, click, fillIn } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { setupAuthentication } from 'ilios-common';
+import { component } from 'ilios/tests/pages/components/user-profile-cohorts';
 
 module('Integration | Component | user profile cohorts', function (hooks) {
   setupRenderingTest(hooks);
@@ -41,14 +42,9 @@ module('Integration | Component | user profile cohorts', function (hooks) {
   test('it renders', async function (assert) {
     this.set('user', this.user);
     await render(hbs`<UserProfileCohorts @user={{this.user}} />`);
-    const primaryCohort = '[data-test-primary-cohort]';
-    const secondaryCohorts = '[data-test-secondary-cohorts] li';
-
-    assert
-      .dom(primaryCohort)
-      .hasText('Primary Cohort: school 0 program 0 cohort 0', 'primary cohort correct');
-    assert.dom(secondaryCohorts).exists({ count: 1 }, 'correct number of secondary cohorts');
-    assert.dom(secondaryCohorts).hasText('school 1 program 1 cohort 1', 'cohort correct');
+    assert.strictEqual(component.primaryCohort.text, 'Primary Cohort: school 0 program 0 cohort 0');
+    assert.strictEqual(component.secondaryCohorts.length, 1);
+    assert.strictEqual(component.secondaryCohorts[0].title, 'school 1 program 1 cohort 1');
   });
 
   test('clicking manage sends the action', async function (assert) {
@@ -60,15 +56,12 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     await render(
       hbs`<UserProfileCohorts @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`
     );
-    const manage = 'button.manage';
-    await click(manage);
+    await component.manage();
   });
 
   test('can edit user cohorts', async function (assert) {
-    assert.expect(12);
-
+    assert.expect(13);
     this.set('user', this.user);
-
     this.server.patch('api/users/:id', (schema, request) => {
       const { data } = JSON.parse(request.requestBody);
       assert.strictEqual(
@@ -76,44 +69,30 @@ module('Integration | Component | user profile cohorts', function (hooks) {
         this.cohort2.id,
         'user has correct primary cohort'
       );
-
       const cohortIds = data.relationships.cohorts.data.mapBy('id');
       assert.notOk(cohortIds.includes(this.cohort1.id), 'cohort1 has been removed');
       assert.ok(cohortIds.includes(this.cohort2.id), 'cohort2 is still present');
       assert.ok(cohortIds.includes(this.cohort4.id), 'cohort4 has been added');
-
       return schema.users.find(data.id);
     });
 
     await render(
       hbs`<UserProfileCohorts @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
     );
-    const primaryCohort = '[data-test-primary-cohort] [data-test-title]';
-    const secondaryCohorts = '[data-test-secondary-cohorts] li';
-    const firstSecondaryCohortTitle = `${secondaryCohorts}:nth-of-type(1) [data-test-title]`;
-    const schoolPicker = '[data-test-school]';
-    const assignableCohorts = '[data-test-assignable-cohorts] li';
-    const firstAssignableCohortTitle = `${assignableCohorts}:nth-of-type(1) [data-test-title]`;
-    const promoteFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) .add`;
-    const removeFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) .remove`;
-    const addFirstAssignableCohort = `${assignableCohorts}:nth-of-type(1) .add`;
 
-    assert.dom(primaryCohort).hasText('school 0 program 0 cohort 0', 'primary cohort correct');
-    assert.dom(secondaryCohorts).exists({ count: 1 }, 'correct number of secondary cohorts');
-    assert.dom(firstSecondaryCohortTitle).hasText('school 1 program 1 cohort 1', 'cohort correct');
-
-    assert.dom(schoolPicker).hasValue('1', 'correct school selected');
-    assert.dom(assignableCohorts).exists({ count: 1 }, 'correct number of assignable cohorts');
-    assert.dom(firstAssignableCohortTitle).hasText('program 0 cohort 2', 'cohort correct');
-
-    await fillIn(schoolPicker, '2');
-
-    assert.dom(assignableCohorts).exists({ count: 1 }, 'correct number of assignable cohorts');
-    assert.dom(firstAssignableCohortTitle).hasText('program 1 cohort 3', 'cohort correct');
-
-    await click(promoteFirstSecondaryCohort);
-    await click(removeFirstSecondaryCohort);
-    await click(addFirstAssignableCohort);
-    await click('.bigadd');
+    assert.strictEqual(component.primaryCohort.title, 'school 0 program 0 cohort 0');
+    assert.strictEqual(component.secondaryCohorts.length, 1);
+    assert.strictEqual(component.secondaryCohorts[0].title, 'school 1 program 1 cohort 1');
+    assert.strictEqual(component.schools.filter.value, '1');
+    assert.strictEqual(component.schools.filter.options.length, 2);
+    assert.strictEqual(component.assignableCohorts.length, 1);
+    assert.strictEqual(component.assignableCohorts[0].title, 'program 0 cohort 2');
+    await component.schools.filter.select('2');
+    assert.strictEqual(component.assignableCohorts.length, 1);
+    assert.strictEqual(component.assignableCohorts[0].title, 'program 1 cohort 3');
+    await component.secondaryCohorts[0].promote();
+    await component.secondaryCohorts[0].remove();
+    await component.assignableCohorts[0].add();
+    await component.save();
   });
 });

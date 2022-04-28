@@ -1,9 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, click, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/user-profile-roles';
 
 module('Integration | Component | user profile roles', function (hooks) {
   setupRenderingTest(hooks);
@@ -28,28 +29,17 @@ module('Integration | Component | user profile roles', function (hooks) {
 
     this.set('user', userModel);
     await render(hbs`<UserProfileRoles @user={{this.user}} />`);
-    const student = '[data-test-student] span';
-    const formerStudent = '[data-test-former-student] span';
-    const enabled = '[data-test-enabled] span';
-    const syncIgnored = '[data-test-exclude-from-sync] span';
-    const performsNonLearnerFunction = '[data-test-performs-non-learner-function] span';
-    const learner = '[data-test-learner] span';
-    const root = '[data-test-root] span';
 
-    assert.dom(student).hasText('Yes', 'student shows status');
-    assert.dom(formerStudent).hasText('No', 'former student shows status');
-    assert.dom(formerStudent).hasClass('no', 'former student has right class');
-    assert.dom(enabled).hasText('Yes', 'enabled shows status');
-    assert.dom(enabled).hasClass('yes', 'enabled has right class');
-    assert.dom(syncIgnored).hasText('No', 'sync ignored shows status');
-    assert.dom(syncIgnored).hasClass('no', 'sync ignored has right class');
-
-    assert.dom(performsNonLearnerFunction).hasText('No');
-    assert.dom(performsNonLearnerFunction).hasClass('no');
-    assert.dom(learner).hasText('No');
-    assert.dom(learner).hasClass('no');
-    assert.dom(root).hasText('No');
-    assert.dom(root).hasClass('no');
+    assert.strictEqual(component.student.value, 'Yes');
+    assert.strictEqual(component.formerStudent.value, 'No');
+    assert.strictEqual(component.enabled.value, 'Yes');
+    assert.strictEqual(component.excludeFromSync.value, 'No');
+    assert.ok(component.performsNonLearnerFunction.yesNo.no);
+    assert.notOk(component.performsNonLearnerFunction.yesNo.yes);
+    assert.ok(component.learner.yesNo.no);
+    assert.notOk(component.learner.yesNo.yes);
+    assert.ok(component.root.yesNo.no);
+    assert.notOk(component.root.yesNo.yes);
   });
 
   // @link https://github.com/ilios/frontend/issues/3899
@@ -62,10 +52,9 @@ module('Integration | Component | user profile roles', function (hooks) {
 
     this.set('user', userModel);
     await render(hbs`<UserProfileRoles @user={{this.user}} />`);
-    const root = '[data-test-root] span';
 
-    assert.dom(root).hasText('Yes');
-    assert.dom(root).hasClass('yes');
+    assert.ok(component.root.yesNo.yes);
+    assert.notOk(component.root.yesNo.no);
   });
 
   test('clicking manage sends the action', async function (assert) {
@@ -82,37 +71,26 @@ module('Integration | Component | user profile roles', function (hooks) {
     await render(
       hbs`<UserProfileRoles @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`
     );
-    const manage = 'button.manage';
-    await click(manage);
+    await component.manage.click();
   });
 
   test('can edit user roles', async function (assert) {
-    assert.expect(8);
+    assert.expect(7);
     const user = this.server.create('user', {
       root: true,
       roles: [this.studentRole],
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
-
     this.set('user', userModel);
-
     await render(hbs`<UserProfileRoles @isManaging={{true}} @user={{this.user}} />`);
-    const inputs = findAll('input');
-    const formerStudent = '[data-test-former-student] input';
-    const enabled = '[data-test-enabled] input';
-    const syncIgnored = '[data-test-exclude-from-sync] input';
 
-    assert.strictEqual(inputs.length, 3);
-    assert.dom(formerStudent).isNotChecked();
-    assert.dom(enabled).isChecked();
-    assert.dom(syncIgnored).isNotChecked();
-
-    await click(formerStudent);
-    await click(enabled);
-    await click(syncIgnored);
-
-    await click('.bigadd');
-
+    assert.notOk(component.formerStudent.isChecked);
+    assert.ok(component.enabled.isChecked);
+    assert.notOk(component.excludeFromSync.isChecked);
+    await component.formerStudent.check();
+    await component.enabled.check();
+    await component.excludeFromSync.check();
+    await component.save.click();
     assert.ok(userModel.hasMany('roles').ids().includes(this.studentRole.id));
     assert.ok(userModel.hasMany('roles').ids().includes(this.formerStudentRole.id));
     assert.false(userModel.get('enabled'), 'user is disabled');

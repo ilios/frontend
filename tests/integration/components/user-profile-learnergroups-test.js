@@ -1,101 +1,63 @@
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, settled, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/user-profile-learnergroups';
 
 module('Integration | Component | user profile learnergroups', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
-  const som = EmberObject.create({
-    id: '1',
-    title: 'SOM',
-  });
-  const sod = EmberObject.create({
-    id: '2',
-    title: 'SOD',
-  });
-  const program1 = EmberObject.create({
-    title: 'Program1',
-    school: resolve(som),
-  });
-  const program2 = EmberObject.create({
-    title: 'Program2',
-    school: resolve(sod),
-  });
-  som.set('programs', resolve([program1]));
-  sod.set('programs', resolve([program2]));
-  const programYear1 = EmberObject.create({
-    program: resolve(program1),
-    archived: false,
-  });
-  const programYear2 = EmberObject.create({
-    program: resolve(program2),
-    archived: false,
-  });
-  program1.set('programYears', resolve([programYear1]));
-  program2.set('programYears', resolve([programYear2]));
-
-  const cohort1 = EmberObject.create({
-    id: 1,
-    title: 'Cohort1',
-    programYear: resolve(programYear1),
-    program: resolve(program1),
-    school: resolve(som),
-  });
-
-  const cohort2 = EmberObject.create({
-    id: 2,
-    title: 'Cohort2',
-    programYear: resolve(programYear2),
-    program: resolve(program2),
-    school: resolve(sod),
-  });
-  programYear1.set('cohort', resolve(cohort1));
-  programYear2.set('cohort', resolve(cohort2));
-  const learnerGroup1 = EmberObject.create({
-    id: 1,
-    title: 'LearnerGroup1',
-    cohort: resolve(cohort1),
-  });
-  const learnerGroup2 = EmberObject.create({
-    id: 2,
-    title: 'LearnerGroup2',
-    cohort: resolve(cohort2),
-  });
-
-  const userLearnerGroups = [learnerGroup1, learnerGroup2];
-
-  const user = EmberObject.create({
-    learnerGroups: resolve(userLearnerGroups),
-  });
+  setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    this.set('user', user);
+    const som = this.server.create('school', {
+      title: 'SOM',
+    });
+    const sod = this.server.create('school', {
+      title: 'SOD',
+    });
+    const program1 = this.server.create('program', {
+      title: 'Program1',
+      school: som,
+    });
+    const program2 = this.server.create('program', {
+      title: 'Program2',
+      school: sod,
+    });
+    const programYear1 = this.server.create('programYear', {
+      program: program1,
+      archived: false,
+    });
+    const programYear2 = this.server.create('programYear', {
+      program: program2,
+      archived: false,
+    });
+    const cohort1 = this.server.create('cohort', {
+      title: 'Cohort1',
+      programYear: programYear1,
+    });
+    const cohort2 = this.server.create('cohort', {
+      title: 'Cohort2',
+      programYear: programYear2,
+    });
+    const learnerGroup1 = this.server.create('learnerGroup', {
+      title: 'LearnerGroup1',
+      cohort: cohort1,
+    });
+    const learnerGroup2 = this.server.create('learnerGroup', {
+      title: 'LearnerGroup2',
+      cohort: cohort2,
+    });
+    const user = this.server.create('user', {
+      learnerGroups: [learnerGroup1, learnerGroup2],
+    });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('user', userModel);
     await render(hbs`<UserProfileLearnergroups @user={{this.user}} />`);
-    const learnerGroups = 'ul:nth-of-type(1) li';
-    const firstLearnerGroup = `${learnerGroups}:nth-of-type(1)`;
-    const secondLearnerGroup = `${learnerGroups}:nth-of-type(2)`;
-
-    await settled();
-    assert.dom(learnerGroups).exists({ count: 2 }, 'correct number of learner groups');
-    assert.strictEqual(
-      find(firstLearnerGroup)
-        .textContent.trim()
-        .replace(/[\n\s]+/g, ''),
-      'SOD:Program2Cohort2—LearnerGroup2',
-      'cohort first learner group'
-    );
-    assert.strictEqual(
-      find(secondLearnerGroup)
-        .textContent.trim()
-        .replace(/[\n\s]+/g, ''),
-      'SOM:Program1Cohort1—LearnerGroup1',
-      'cohort second learner group'
-    );
+    assert.strictEqual(component.groups.length, 2);
+    assert.strictEqual(component.groups[0].text, 'SOD: Program2 Cohort2 — LearnerGroup2');
+    assert.strictEqual(component.groups[1].text, 'SOM: Program1 Cohort1 — LearnerGroup1');
   });
 });

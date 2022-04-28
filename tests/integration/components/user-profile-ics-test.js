@@ -1,9 +1,10 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/user-profile-ics';
 
 module('Integration | Component | user profile ics', function (hooks) {
   setupRenderingTest(hooks);
@@ -19,7 +20,6 @@ module('Integration | Component | user profile ics', function (hooks) {
     this.server.get('application/config', function () {
       return {
         config: {
-          userSearchType: 'ldap',
           apiVersion,
         },
       };
@@ -36,19 +36,16 @@ module('Integration | Component | user profile ics', function (hooks) {
     await render(
       hbs`<UserProfileIcs @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`
     );
-    await click('button.manage');
+    await component.manage();
   });
 
   test('can refresh key', async function (assert) {
-    assert.expect(2);
     const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
     this.set('user', userModel);
-
     await render(
       hbs`<UserProfileIcs @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
     );
-    await click('.refresh-key');
-
+    await component.refresh();
     assert.notEqual(userModel.icsFeedKey, 'testkey', 'icsFeedKey is not the same');
     assert.strictEqual(
       userModel.icsFeedKey.length,
@@ -57,18 +54,14 @@ module('Integration | Component | user profile ics', function (hooks) {
     );
   });
 
+  // test disabled b/c simulated clipboard access is blocked by browser.
   skip('clicking copy displays message', async function (assert) {
-    assert.expect(4);
     const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfileIcs @user={{this.user}} />`);
-    const button = 'button.copy-btn';
-    const successMessage = '.yes';
-
-    assert.dom(successMessage).doesNotExist();
-    assert.dom(button).exists({ count: 1 });
-    await click('.copy-btn');
-    assert.dom(successMessage).exists({ count: 1 });
-    assert.dom(successMessage).hasText('Copied Successfully');
+    assert.notOk(component.key.copy.successMessage.isVisible);
+    await component.key.copy.click();
+    assert.ok(component.key.copy.successMessage.isVisible);
+    assert.strictEqual(component.key.copy.successMessage.text, '');
   });
 });
