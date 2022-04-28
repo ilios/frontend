@@ -19,11 +19,11 @@
         {{on "change" (pick "target.value" this.matchGroup)}}
         id="sub-group-{{templateId}}"
       >
-        <option value="null" selected={{is-equal null this.matchedGroupId}}></option>
+        <option value="null" selected={{eq null this.matchedGroupId}}></option>
         {{#each @groups as |learnerGroup|}}
           <option
             value={{learnerGroup.id}}
-            selected={{is-equal learnerGroup.id this.matchedGroupId}}
+            selected={{eq learnerGroup.id this.matchedGroupId}}
           >
             {{learnerGroup.title}}
           </option>

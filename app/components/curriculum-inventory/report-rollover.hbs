@@ -71,7 +71,7 @@
               {{on "change" (pick "target.value" this.changeProgram)}}
             >
               {{#each (sort-by "title" this.programs) as |program|}}
-                <option value={{program.id}} selected={{is-equal program this.selectedProgram}}>
+                <option value={{program.id}} selected={{eq program this.selectedProgram}}>
                   {{program.title}}
                 </option>
               {{/each}}

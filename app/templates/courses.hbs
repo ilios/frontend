@@ -16,7 +16,7 @@
           {{#each (sort-by "title" @model.schools) as |school|}}
             <option
               value={{school.id}}
-              selected={{is-equal school this.selectedSchool}}
+              selected={{eq school this.selectedSchool}}
             >
               {{school.title}}
             </option>
@@ -34,7 +34,7 @@
         data-test-year-filter
       >
         {{#each (sort-by "title:desc" @model.years) as |year|}}
-          <option value={{year.id}} selected={{is-equal year this.selectedYear}}>
+          <option value={{year.id}} selected={{eq year this.selectedYear}}>
             {{year.title}}
           </option>
         {{/each}}

@@ -20,7 +20,7 @@
         {{#each (sort-by "title" this.schools) as |school|}}
           <option
             value={{school.id}}
-            selected={{is-equal school.id this.bestSelectedSchool.id}}
+            selected={{eq school.id this.bestSelectedSchool.id}}
           >
             {{school.title}}
           </option>
@@ -35,7 +35,7 @@
         data-test-select-year
       >
         {{#each (sort-by "title" this.academicYears) as |year|}}
-          <option value={{year.id}} selected={{is-equal year.id this.selectedYearId}}>
+          <option value={{year.id}} selected={{eq year.id this.selectedYearId}}>
             {{year.title}}
           </option>
         {{/each}}

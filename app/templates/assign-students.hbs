@@ -10,7 +10,7 @@
         <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" (set this.schoolId))}}>
           {{#each (sort-by "title" @model.schools) as |school|}}
             <option
-              selected={{is-equal school this.selectedSchool}}
+              selected={{eq school this.selectedSchool}}
               value={{school.id}}
             >
               {{school.title}}

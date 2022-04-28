@@ -37,7 +37,7 @@
               {{t "general.selectAcademicYear"}}
             </option>
             {{#each this.years as |year|}}
-              <option selected={{is-equal year this.selectedYear}} value={{year}}>
+              <option selected={{eq year this.selectedYear}} value={{year}}>
                 {{#if this.academicYearCrossesCalendarYearBoundaries}}
                   {{year}}
                   -
