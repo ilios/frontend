@@ -18,6 +18,7 @@ module.exports = function (environment) {
       timeout: 3000,
       extendedTimeout: 1000,
       types: ['success', 'warning', 'info', 'alert'],
+      injectionFactories: [],
     },
     'ember-simple-auth-token': {
       serverTokenEndpoint: '/auth/login',
