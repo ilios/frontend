@@ -50,7 +50,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     await render(hbs`<InstructorGroups::List
       @programs={{(array)}}
       @sortBy="title"
-      @setSortBy={{this.sortBy}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.strictEqual(component.items.length, 0);
