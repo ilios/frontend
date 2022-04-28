@@ -119,12 +119,8 @@ module.exports = {
       const links = fonts.map((font) => {
         return `<link rel="preload" href="${rootUrl}/assets/fonts/${font}" as="font" type="font/woff2" crossorigin="anonymous">`;
       });
-      const linkText = links.join('\n');
 
-      return `
-        <title>Ilios</title>
-        ${linkText}
-      `;
+      return links.join('\n');
     }
   },
 };
