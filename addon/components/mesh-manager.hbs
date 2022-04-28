@@ -2,118 +2,132 @@
   class="mesh-manager"
   data-test-mesh-manager
 >
-  {{#if @targetItemTitle}}
-    <h2>
-      {{t "general.selectMeshFor" title=@targetItemTitle}}
-    </h2>
-  {{/if}}
-  <ul class="selected-terms">
-    {{#each this.sortedTerms as |term|}}
-      <li>
-        {{#if @editable}}
-          <button
-            type="button"
-            {{on "click" (fn @remove term)}}
-          >
+  {{#let (unique-id) as |templateId|}}
+    {{#if @targetItemTitle}}
+      <h2>
+        {{t "general.selectMeshFor" title=@targetItemTitle}}
+      </h2>
+    {{/if}}
+    <ul class="selected-terms">
+      {{#each this.sortedTerms as |term|}}
+        <li>
+          {{#if @editable}}
+            <button
+              type="button"
+              {{on "click" (fn @remove term)}}
+            >
+              <span class="term-title">
+                {{term.name}}
+              </span>
+              <span class="term-details">
+                {{term.id}}
+                {{#if term.deleted}}
+                  - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
+                {{else if term.trees}}
+                  - {{term.trees.lastObject.treeNumber}}
+                {{/if}}
+              </span>
+              <FaIcon @icon="xmark" class="remove" />
+            </button>
+          {{else}}
             <span class="term-title">
               {{term.name}}
             </span>
             <span class="term-details">
-              {{term.id}}
+            {{term.id}}
               {{#if term.deleted}}
                 - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
               {{else if term.trees}}
                 - {{term.trees.lastObject.treeNumber}}
               {{/if}}
             </span>
-            <FaIcon @icon="xmark" class="remove" />
-          </button>
-        {{else}}
-          <span class="term-title">
-            {{term.name}}
-          </span>
-          <span class="term-details">
-          {{term.id}}
-            {{#if term.deleted}}
-              - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
-            {{else if term.trees}}
-              - {{term.trees.lastObject.treeNumber}}
-            {{/if}}
-          </span>
-        {{/if}}
-      </li>
-    {{/each}}
-  </ul>
-  {{#if @editable}}
-    <SearchBox
-      placeholder={{t "general.meshSearchPlaceholder"}}
-      @liveSearch={{false}}
-      @search={{perform this.search}}
-      @clear={{this.clear}}
-    />
-  {{/if}}
-  {{#if this.search.isRunning}}
-    <ul class="results">
-      <li>
-        {{t "general.currentlySearchingPrompt"}}
-      </li>
-    </ul>
-  {{else if this.searchResults.length}}
-    <ul class="mesh-search-results" data-test-search-results>
-      {{#each this.searchResults as |term|}}
-        <li
-          class={{if (includes term.id (map-by "id" this.terms)) "disabled"}}
-          data-test-search-result
-        >
-          <button
-            type="button"
-            {{on "click" (fn this.add term)}}
-          >
-            <span class="descriptor-name" data-test-name>
-              {{term.name}}
-            </span>
-            <span class="descriptor-id">
-              {{term.id}}
-              {{#if term.trees}}
-                -{{term.trees.lastObject.treeNumber}}
-              {{/if}}
-            </span>
-            <ul class="mesh-concepts">
-              {{#each term.concepts as |concept|}}
-                {{#if concept.scopeNote}}
-                  <li
-                    class="{{unless term.isActive "disabled"}}
-
-                      {{if concept.hasTruncatedScopeNote "truncated"}}"
-                  >
-                    {{concept.truncatedScopeNote}}
-                  </li>
-                {{/if}}
-              {{/each}}
-            </ul>
-          </button>
+          {{/if}}
         </li>
       {{/each}}
     </ul>
-    {{#if this.hasMoreSearchResults}}
-      <button
-        disabled={{if this.searchMore.isRunning true}}
-        type="button"
-        {{on "click" (perform this.searchMore)}}
-        data-test-show-more
-      >
-        <FaIcon
-          @icon={{if this.searchMore.isRunning "spinner"}}
-          @spin={{if this.searchMore.isRunning true false}}
-        />
-        {{t "general.showMore"}}
-      </button>
+    {{#if @editable}}
+      <div class="mesh-search" data-test-mesh-search>
+        <label for="mesh-search-{{templateId}}">{{t "general.searchMesh"}}:</label>
+        <input
+          id="mesh-search-{{templateId}}"
+          autocomplete="off"
+          class="search-input"
+          type="search"
+          value={{this.query}}
+          placeholder={{t "general.search"}}
+          {{on "input" this.update}}
+          {{on "keyup" this.keyUp}}
+          {{did-insert (set this.searchInput)}}
+        >
+      </div>
     {{/if}}
-  {{else if this.search.lastSuccessful}}
-    <ul class="results">
-      <li>
-        {{t "general.noSearchResultsPrompt"}}
-      </li>
-    </ul>
-  {{/if}}
+    <div {{on-click-outside this.clear}} data-test-search-results-container>
+      {{#if this.search.isRunning}}
+        <ul class="mesh-search-results">
+          <li>
+            {{t "general.currentlySearchingPrompt"}}
+          </li>
+        </ul>
+      {{else if this.searchResults.length}}
+        <ul class="mesh-search-results"
+            data-test-search-results
+        >
+          {{#each this.searchResults as |term|}}
+            <li
+              class={{if (includes term.id (map-by "id" this.terms)) "disabled"}}
+              data-test-search-result
+            >
+              <button
+                type="button"
+                {{on "click" (fn this.add term)}}
+              >
+                <span class="descriptor-name" data-test-name>
+                  {{term.name}}
+                </span>
+                <span class="descriptor-id">
+                  {{term.id}}
+                  {{#if term.trees}}
+                    -{{term.trees.lastObject.treeNumber}}
+                  {{/if}}
+                </span>
+                <ul class="mesh-concepts">
+                  {{#each term.concepts as |concept|}}
+                    {{#if concept.scopeNote}}
+                      <li
+                        class="{{unless term.isActive "disabled"}}
+
+                          {{if concept.hasTruncatedScopeNote "truncated"}}"
+                      >
+                        {{concept.truncatedScopeNote}}
+                      </li>
+                    {{/if}}
+                  {{/each}}
+                </ul>
+              </button>
+            </li>
+          {{/each}}
+        </ul>
+        {{#if this.hasMoreSearchResults}}
+          <button
+            disabled={{if this.searchMore.isRunning true}}
+            type="button"
+            {{on "click" (perform this.searchMore)}}
+            data-test-show-more
+          >
+            <FaIcon
+              @icon={{if this.searchMore.isRunning "spinner"}}
+              @spin={{if this.searchMore.isRunning true false}}
+            />
+            {{t "general.showMore"}}
+          </button>
+        {{/if}}
+      {{else if (and this.hasSearchQuery this.search.lastSuccessful)}}
+        <ul class="mesh-search-results">
+          <li>
+            {{t "general.noSearchResultsPrompt"}}
+          </li>
+        </ul>
+      {{/if}}
+    </div>
+  {{/let}}
 </section>
