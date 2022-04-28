@@ -28,13 +28,13 @@
           {{on "change" (pick "target.value" this.changeSchool)}}
           data-test-report-school
         >
-          <option value="null" selected={{is-equal null this.currentSchool}}>
+          <option value="null" selected={{eq null this.currentSchool}}>
             {{t "general.allSchools"}}
           </option>
           {{#each (sort-by "title" this.allSchools) as |school|}}
             <option
               value={{school.id}}
-              selected={{is-equal school.id this.currentSchool.id}}
+              selected={{eq school.id this.currentSchool.id}}
             >
               {{school.title}}
             </option>
@@ -51,7 +51,7 @@
           data-test-report-subject
         >
           {{#each this.subjectList as |o|}}
-            <option value={{o.value}} selected={{is-equal o.value this.currentSubject}}>
+            <option value={{o.value}} selected={{eq o.value this.currentSubject}}>
               {{o.label}}
             </option>
           {{/each}}
@@ -66,13 +66,13 @@
           {{on "change" (pick "target.value" this.changePrepositionalObject)}}
           data-test-report-object-type
         >
-          <option value="" selected={{is-equal null this.currentPrepositionalObject}}>
+          <option value="" selected={{eq null this.currentPrepositionalObject}}>
             {{t "general.anything"}}
           </option>
           {{#each this.prepositionalObjectList as |o|}}
             <option
               value={{o.value}}
-              selected={{is-equal o.value this.currentPrepositionalObject}}
+              selected={{eq o.value this.currentPrepositionalObject}}
             >
               {{o.label}}
             </option>
@@ -95,7 +95,7 @@
               ) as |year|
             }}
               <option
-                selected={{is-equal year.id this.selectedYear}}
+                selected={{eq year.id this.selectedYear}}
                 value={{year.id}}
               >
                 {{year.title}}
@@ -107,7 +107,7 @@
           <label for="which-is-{{templateId}}">
             {{t "general.whichIs"}}
           </label>
-          {{#if (is-equal this.currentPrepositionalObject "instructor")}}
+          {{#if (eq this.currentPrepositionalObject "instructor")}}
             {{#if this.selectedUser}}
               <ul class="removable-list tag-list">
                 <li role="button" {{on "click" (fn this.changePrepositionalObjectId null)}}>
@@ -118,7 +118,7 @@
             {{else}}
               <UserSearch @addUser={{this.chooseInstructor}} />
             {{/if}}
-          {{else if (is-equal this.currentPrepositionalObject "mesh term")}}
+          {{else if (eq this.currentPrepositionalObject "mesh term")}}
             {{#if this.selectedMeshTerm}}
               <ul class="removable-list tag-list details-list">
                 <li>
@@ -154,7 +154,7 @@
                 ) as |o|
               }}
                 <option
-                  selected={{is-equal o.value this.currentPrepositionalObjectId}}
+                  selected={{eq o.value this.currentPrepositionalObjectId}}
                   value={{o.value}}
                 >
                   {{#if o.academicYear}}

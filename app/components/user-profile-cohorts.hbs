@@ -145,7 +145,7 @@
               {{#each (sort-by "title" this.schools) as |school|}}
                 <option
                   value={{school.id}}
-                  selected={{is-equal school this.selectedSchool}}
+                  selected={{eq school this.selectedSchool}}
                 >
                   {{school.title}}
                 </option>

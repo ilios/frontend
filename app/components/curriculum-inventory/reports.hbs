@@ -13,7 +13,7 @@
             {{#each this.sortedSchools as |school|}}
               <option
                 value={{school.id}}
-                selected={{is-equal school (await this.selectedSchool)}}
+                selected={{eq school (await this.selectedSchool)}}
               >
                 {{school.title}}
               </option>
@@ -30,7 +30,7 @@
         {{#if this.programs.length}}
           <select aria-label={{t "general.filterByProgram"}} {{on "change" (pick "target.value" this.changeSelectedProgram)}}>
             {{#each this.programs as |program|}}
-              <option value={{program.id}} selected={{is-equal program this.selectedProgram}}>
+              <option value={{program.id}} selected={{eq program this.selectedProgram}}>
                 {{program.title}}
               </option>
             {{/each}}

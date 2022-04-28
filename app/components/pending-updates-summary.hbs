@@ -20,7 +20,7 @@
             {{#each (sort-by "title" @schools) as |school|}}
               <option
                 value={{school.id}}
-                selected={{is-equal school.id this.bestSelectedSchool.id}}
+                selected={{eq school.id this.bestSelectedSchool.id}}
               >
                 {{school.title}}
               </option>
