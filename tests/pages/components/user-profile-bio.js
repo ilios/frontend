@@ -92,6 +92,16 @@ const definition = {
     submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
     cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
   },
+  pronouns: {
+    scope: '[data-test-pronouns]',
+    label: text('label'),
+    set: fillable('input'),
+    value: value('input'),
+    hasError: isVisible('.validation-error-message'),
+    hasBeenSyncedFromDirectory: hasClass('synced-from-directory'),
+    submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
+    cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
+  },
   preferredEmail: {
     scope: '[data-test-preferred-email]',
     label: text('label'),
