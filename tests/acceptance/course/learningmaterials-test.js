@@ -496,7 +496,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
         'descriptor 2'
       );
       await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
-      await page.details.learningMaterials.manager.meshManager.search.submit();
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.searchResults.length,
         6
@@ -513,22 +512,22 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.notOk(page.details.learningMaterials.manager.meshManager.searchResults[3].isDisabled);
       assert.notOk(page.details.learningMaterials.manager.meshManager.searchResults[4].isDisabled);
       assert.notOk(page.details.learningMaterials.manager.meshManager.searchResults[5].isDisabled);
-
-      await page.details.learningMaterials.manager.meshManager.selectedTerms[0].remove();
       await page.details.learningMaterials.manager.meshManager.searchResults[0].add();
       assert.ok(page.details.learningMaterials.manager.meshManager.searchResults[0].isDisabled);
-      assert.notOk(page.details.learningMaterials.manager.meshManager.searchResults[1].isDisabled);
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms.length,
-        2
+        3
       );
-
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[0].title,
         'descriptor 0'
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[1].title,
+        'descriptor 1'
+      );
+      assert.strictEqual(
+        page.details.learningMaterials.manager.meshManager.selectedTerms[2].title,
         'descriptor 2'
       );
     });
@@ -543,11 +542,9 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
         page.details.learningMaterials.manager.meshManager.selectedTerms.length,
         2
       );
-      await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
-      await page.details.learningMaterials.manager.meshManager.search.submit();
       await page.details.learningMaterials.manager.meshManager.selectedTerms[0].remove();
+      await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
       await page.details.learningMaterials.manager.meshManager.searchResults[0].add();
-
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[0].title,
         'descriptor 0'
@@ -556,7 +553,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
         page.details.learningMaterials.manager.meshManager.selectedTerms[1].title,
         'descriptor 2'
       );
-
       await page.details.learningMaterials.manager.save();
       assert.strictEqual(
         page.details.learningMaterials.current[0].mesh,
@@ -574,11 +570,9 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
         page.details.learningMaterials.manager.meshManager.selectedTerms.length,
         2
       );
-      await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
-      await page.details.learningMaterials.manager.meshManager.search.submit();
       await page.details.learningMaterials.manager.meshManager.selectedTerms[0].remove();
+      await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
       await page.details.learningMaterials.manager.meshManager.searchResults[0].add();
-
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[0].title,
         'descriptor 0'
@@ -587,7 +581,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
         page.details.learningMaterials.manager.meshManager.selectedTerms[1].title,
         'descriptor 2'
       );
-
       await page.details.learningMaterials.manager.cancel();
       assert.strictEqual(
         page.details.learningMaterials.current[0].mesh,
