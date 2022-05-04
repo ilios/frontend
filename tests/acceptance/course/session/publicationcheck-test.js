@@ -57,9 +57,7 @@ module('Acceptance | Session - Publication Check', function (hooks) {
     this.server.create('sessionObjective', { session });
     await page.visit({ courseId: this.course.id, sessionId: session.id });
     await page.unlink.click();
-    assert.strictEqual(
-      currentURL(),
-      '/courses/1/sessions/1?addOffering=false&courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=false&courseTaxonomyDetails=false&details=false&sessionLeadershipDetails=false&sessionManageLeadership=false&sessionObjectiveDetails=true&sessionTaxonomyDetails=false'
-    );
+    assert.ok(currentURL().startsWith('/courses/1/sessions/1'));
+    assert.ok(currentURL().includes('sessionObjectiveDetails=true'));
   });
 });
