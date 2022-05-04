@@ -257,6 +257,34 @@
         <div
           class="item
             {{if
+              (includes "pronouns" this.updatedFieldsFromSync)
+              "synced-from-directory"
+            }}"
+          data-test-pronouns
+        >
+          <label for="pronouns-{{templateId}}">
+            {{t "general.pronouns"}}:
+          </label>
+          {{#if @isManaging}}
+            <input
+              id="pronouns-{{templateId}}"
+              type="text"
+              value={{this.pronouns}}
+              {{on "input" (pick "target.value" (set this.pronouns))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "pronouns")}}
+              {{on "keyup" this.keyboard}}
+              data-test-pronouns-input
+            >
+            <ValidationError @errors={{get-errors-for this.pronouns}} />
+          {{else}}
+            <span class="value">
+              {{@user.pronouns}}
+            </span>
+          {{/if}}
+        </div>
+        <div
+          class="item
+            {{if
               (includes "preferredEmail" this.updatedFieldsFromSync)
               "synced-from-directory"
             }}"

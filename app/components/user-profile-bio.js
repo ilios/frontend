@@ -20,6 +20,7 @@ export default class UserProfileBioComponent extends Component {
   @tracked @Length(0, 16) campusId;
   @tracked @IsEmail() @Length(1, 100) @NotBlank() email;
   @tracked @Length(0, 200) displayName;
+  @tracked @Length(0, 50) pronouns;
   @tracked @Length(1, 50) @NotBlank() firstName;
   @tracked @Length(1, 50) @NotBlank() lastName;
   @tracked @Length(0, 20) middleName;
@@ -89,6 +90,7 @@ export default class UserProfileBioComponent extends Component {
     this.otherId = null;
     this.email = null;
     this.displayName = null;
+    this.pronouns = null;
     this.preferredEmail = null;
     this.phone = null;
     this.username = null;
@@ -114,6 +116,7 @@ export default class UserProfileBioComponent extends Component {
     this.otherId = this.args.user.otherId;
     this.email = this.args.user.email;
     this.displayName = this.args.user.displayName;
+    this.pronouns = this.args.user.pronouns;
     this.preferredEmail = this.args.user.preferredEmail;
     this.phone = this.args.user.phone;
     const auth = yield this.args.user.authentication;
@@ -135,6 +138,7 @@ export default class UserProfileBioComponent extends Component {
       'otherId',
       'email',
       'displayName',
+      'pronouns',
       'preferredEmail',
       'phone',
       'username',
@@ -152,6 +156,7 @@ export default class UserProfileBioComponent extends Component {
     user.set('otherId', this.otherId);
     user.set('email', this.email);
     user.set('displayName', this.displayName);
+    user.set('pronouns', this.pronouns);
     user.set('preferredEmail', this.preferredEmail);
     user.set('phone', this.phone);
 
@@ -191,6 +196,7 @@ export default class UserProfileBioComponent extends Component {
       const firstName = this.firstName;
       const lastName = this.lastName;
       const displayName = this.displayName;
+      const pronouns = this.pronouns;
       const email = this.email;
       const username = this.username;
       const phone = this.phone;
@@ -206,6 +212,10 @@ export default class UserProfileBioComponent extends Component {
       if (userData.displayName !== displayName) {
         this.displayName = userData.displayName;
         this.updatedFieldsFromSync.pushObject('displayName');
+      }
+      if (userData.pronouns !== pronouns) {
+        this.pronouns = userData.pronouns;
+        this.updatedFieldsFromSync.pushObject('pronouns');
       }
       if (userData.email !== email) {
         this.email = userData.email;

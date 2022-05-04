@@ -35,6 +35,7 @@ module('Integration | Component | user profile bio', function (hooks) {
       middleName: 'Name',
       lastName: 'Thing',
       displayName: 'Best Name',
+      pronouns: 'they/them/tay',
       campusId: 'idC',
       otherId: 'idO',
       email: 'test@test.com',
@@ -68,6 +69,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(component.otherId.text, `Other ID: ${userModel.otherId}`);
     assert.strictEqual(component.email.text, `Email: ${userModel.email}`);
     assert.strictEqual(component.displayName.text, `Display Name: ${userModel.displayName}`);
+    assert.strictEqual(component.pronouns.text, `Pronouns: ${userModel.pronouns}`);
     assert.strictEqual(
       component.preferredEmail.text,
       `Preferred Email: ${userModel.preferredEmail}`
@@ -98,6 +100,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(component.otherId.text, `Other ID: ${userModel.otherId}`);
     assert.strictEqual(component.email.text, `Email: ${userModel.email}`);
     assert.strictEqual(component.displayName.text, `Display Name: ${userModel.displayName}`);
+    assert.strictEqual(component.pronouns.text, `Pronouns: ${userModel.pronouns}`);
     assert.strictEqual(
       component.preferredEmail.text,
       `Preferred Email: ${userModel.preferredEmail}`
@@ -154,6 +157,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(component.otherId.value, 'idO');
     assert.strictEqual(component.email.value, 'test@test.com');
     assert.strictEqual(component.displayName.value, 'Best Name');
+    assert.strictEqual(component.pronouns.value, 'they/them/tay');
     assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
     assert.strictEqual(component.phone.value, 'x1234');
     assert.strictEqual(component.username.value, 'test-username');
@@ -166,6 +170,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     await component.otherId.set('new otherId');
     await component.email.set('e@e.com');
     await component.displayName.set('new best name');
+    await component.pronouns.set('me/my/him');
     await component.preferredEmail.set('e2@e.com');
     await component.phone.set('12345x');
     await component.save();
@@ -176,6 +181,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(userModel.otherId, 'new otherId');
     assert.strictEqual(userModel.email, 'e@e.com');
     assert.strictEqual(userModel.displayName, 'new best name');
+    assert.strictEqual(userModel.pronouns, 'me/my/him');
     assert.strictEqual(userModel.preferredEmail, 'e2@e.com');
     assert.strictEqual(userModel.phone, '12345x');
     assert.strictEqual(updates.length, 0);
@@ -204,6 +210,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(component.otherId.value, 'idO');
     assert.strictEqual(component.email.value, 'test@test.com');
     assert.strictEqual(component.displayName.value, 'Best Name');
+    assert.strictEqual(component.pronouns.value, 'they/them/tay');
     assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
     assert.strictEqual(component.phone.value, 'x1234');
     assert.strictEqual(component.username.value, 'test-username');
@@ -214,6 +221,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     await component.otherId.set('new otherId');
     await component.email.set('e@e.com');
     await component.displayName.set('new best name');
+    await component.pronouns.set('she/her');
     await component.preferredEmail.set('e2@e.com');
     await component.phone.set('12345x');
     await component.username.set('new-test-user');
@@ -225,6 +233,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(userModel.otherId, 'new otherId');
     assert.strictEqual(userModel.email, 'e@e.com');
     assert.strictEqual(userModel.displayName, 'new best name');
+    assert.strictEqual(userModel.pronouns, 'she/her');
     assert.strictEqual(userModel.preferredEmail, 'e2@e.com');
     assert.strictEqual(userModel.phone, '12345x');
     assert.strictEqual(authenticationModel.username, 'new-test-user');
@@ -252,6 +261,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(component.otherId.value, 'idO');
     assert.strictEqual(component.email.value, 'test@test.com');
     assert.strictEqual(component.displayName.value, 'Best Name');
+    assert.strictEqual(component.pronouns.value, 'they/them/tay');
     assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
     assert.strictEqual(component.phone.value, 'x1234');
     assert.strictEqual(component.username.value, 'test-username');
@@ -265,6 +275,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     await component.otherId.set('new otherId');
     await component.email.set('e@e.com');
     await component.displayName.set('new best name');
+    await component.pronouns.set('');
     await component.preferredEmail.set('e2@e.com');
     await component.phone.set('12345x');
     await component.username.set('new-test-user');
@@ -277,6 +288,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(userModel.otherId, 'new otherId');
     assert.strictEqual(userModel.email, 'e@e.com');
     assert.strictEqual(userModel.displayName, 'new best name');
+    assert.strictEqual(userModel.pronouns, '');
     assert.strictEqual(userModel.preferredEmail, 'e2@e.com');
     assert.strictEqual(userModel.phone, '12345x');
     assert.strictEqual(authenticationModel.username, 'new-test-user');
@@ -383,7 +395,7 @@ module('Integration | Component | user profile bio', function (hooks) {
   });
 
   test('sync user from directory', async function (assert) {
-    assert.expect(29);
+    assert.expect(31);
     setupApplicationConfig('ldap', this);
     const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
     this.set('user', userModel);
@@ -395,6 +407,7 @@ module('Integration | Component | user profile bio', function (hooks) {
           firstName: 'new-first-name',
           lastName: 'new-last-name',
           displayName: 'new-best-name',
+          pronouns: 'new-pronouns',
           email: 'new-email',
           phone: 'new-phone',
           campusId: 'new-campus-id',
@@ -414,6 +427,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(component.otherId.value, 'idO');
     assert.strictEqual(component.email.value, 'test@test.com');
     assert.strictEqual(component.displayName.value, 'Best Name');
+    assert.strictEqual(component.pronouns.value, 'they/them/tay');
     assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
     assert.strictEqual(component.phone.value, 'x1234');
     assert.strictEqual(component.username.value, 'test-username');
@@ -425,6 +439,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(component.otherId.value, 'idO');
     assert.strictEqual(component.email.value, 'new-email');
     assert.strictEqual(component.displayName.value, 'new-best-name');
+    assert.strictEqual(component.pronouns.value, 'new-pronouns');
     assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
     assert.strictEqual(component.phone.value, 'new-phone');
     assert.strictEqual(component.username.value, 'new-username');
@@ -465,5 +480,20 @@ module('Integration | Component | user profile bio', function (hooks) {
     await component.displayName.set('');
     await component.save();
     assert.strictEqual(userModel.displayName, '');
+  });
+
+  test('pronouns can be blanked', async function (assert) {
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
+
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+    );
+
+    assert.strictEqual(component.pronouns.value, 'they/them/tay');
+    await component.pronouns.set('');
+    await component.save();
+    assert.strictEqual(userModel.pronouns, '');
   });
 });
