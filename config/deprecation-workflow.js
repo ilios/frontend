@@ -16,5 +16,6 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'ember-modifier.no-element-property' },
     { handler: 'silence', matchId: 'ember-modifier.use-modify' },
     { handler: 'silence', matchId: 'ember-modifier.function-based-options' },
+    { handler: 'silence', matchId: 'ember-polyfills.deprecate-assign' },
   ],
 };

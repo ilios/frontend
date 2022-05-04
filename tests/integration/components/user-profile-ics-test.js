@@ -45,8 +45,10 @@ module('Integration | Component | user profile ics', function (hooks) {
     await render(
       hbs`<UserProfileIcs @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
     );
+    const currentKey = this.user.icsFeedKey;
+    assert.strictEqual(userModel.icsFeedKey, currentKey, 'icsFeedKey is correct');
     await component.refresh();
-    assert.notEqual(userModel.icsFeedKey, 'testkey', 'icsFeedKey is not the same');
+    assert.notEqual(userModel.icsFeedKey, currentKey, 'icsFeedKey has been updated');
     assert.strictEqual(
       userModel.icsFeedKey.length,
       64,

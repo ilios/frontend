@@ -12,12 +12,13 @@ module.exports = function (environment) {
     modulePrefix: 'ilios',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'history',
     redirectAfterShibLogin: true,
     flashMessageDefaults: {
       timeout: 3000,
       extendedTimeout: 1000,
       types: ['success', 'warning', 'info', 'alert'],
+      injectionFactories: [],
     },
     'ember-simple-auth-token': {
       serverTokenEndpoint: '/auth/login',
