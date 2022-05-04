@@ -5,6 +5,7 @@ import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 
 const DEBOUNCE_TIMEOUT = 250;
+const MIN_INPUT = 3;
 const SEARCH_RESULTS_PER_PAGE = 50;
 
 export default class MeshManagerComponent extends Component {
@@ -72,6 +73,10 @@ export default class MeshManagerComponent extends Component {
 
   @restartableTask
   *search() {
+    if (this.query.length < MIN_INPUT) {
+      this.searchResults = [];
+      return; // don't linger around return right away
+    }
     yield timeout(DEBOUNCE_TIMEOUT);
     const descriptors = (yield this.store.query('mesh-descriptor', {
       q: this.query,

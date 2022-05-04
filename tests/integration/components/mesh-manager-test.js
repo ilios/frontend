@@ -127,6 +127,22 @@ module('Integration | Component | mesh-manager', function (hooks) {
     await component.searchResults[1].add();
   });
 
+  test('search term less than 3 characters', async function (assert) {
+    this.server.createList('meshDescriptor', 3);
+    await render(hbs`<MeshManager @editable={{true}} @add={{(noop)}} @remove={{(noop)}} />`);
+    await component.search.set('ab');
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.strictEqual(component.searchResults[0].text, 'keep typing...');
+  });
+
+  test('no search results', async function (assert) {
+    this.server.createList('meshDescriptor', 3);
+    await render(hbs`<MeshManager @editable={{true}} @add={{(noop)}} @remove={{(noop)}} />`);
+    await component.search.set('geflarknik');
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.strictEqual(component.searchResults[0].text, 'no results');
+  });
+
   test('clicking outside of search results dismissed them.', async function (assert) {
     assert.expect(3);
     const descriptors = this.server.createList('meshDescriptor', 3);

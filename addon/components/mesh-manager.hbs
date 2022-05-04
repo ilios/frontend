@@ -68,10 +68,14 @@
             {{t "general.currentlySearchingPrompt"}}
           </li>
         </ul>
+      {{else if (and this.hasSearchQuery (lte this.query.length 2))}}
+        <ul class="mesh-search-results" data-test-search-results>
+          <li data-test-search-result>
+            {{t "general.moreInputRequiredPrompt"}}
+          </li>
+        </ul>
       {{else if this.searchResults.length}}
-        <ul class="mesh-search-results"
-            data-test-search-results
-        >
+        <ul class="mesh-search-results" data-test-search-results>
           {{#each this.searchResults as |term|}}
             <li
               class={{if (includes term.id (map-by "id" this.terms)) "disabled"}}
@@ -121,9 +125,9 @@
             {{t "general.showMore"}}
           </button>
         {{/if}}
-      {{else if (and this.hasSearchQuery this.search.lastSuccessful)}}
-        <ul class="mesh-search-results">
-          <li>
+     {{else if (and this.hasSearchQuery this.search.lastSuccessful)}}
+        <ul class="mesh-search-results" data-test-search-results>
+          <li data-test-search-result>
             {{t "general.noSearchResultsPrompt"}}
           </li>
         </ul>
