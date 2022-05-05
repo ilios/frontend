@@ -176,7 +176,6 @@ general:
   mesh: MeSH
   meshCount: "{count, plural, =1 {1 tiene MeSH} other {# tienen MeSH}}"
   meshManageTitle: "Administrar MeSH"
-  meshSearchPlaceholder: "Buscar MeSH"
   meshTerms: "Terminos de MeSH"
   minute: Minuto
   minutes: Minutos
@@ -273,6 +272,7 @@ general:
   schools: Escuelas
   search: Buscar
   searchForIliosUsers: "Encuentre Usuarios de Ilios..."
+  searchMesh: "Buscar MeSH"
   searchPlaceholder: "encontrar material de aprendizaje"
   selectCohortsToAttach: "Seleccione la cohorte de estudiantes que desea adjuntar al nuevo curso"
   selectCourse: "Seleccionar un curso"

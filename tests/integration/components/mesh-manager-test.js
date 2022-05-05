@@ -43,7 +43,6 @@ module('Integration | Component | mesh-manager', function (hooks) {
     assert.strictEqual(component.selectedTerms[0].title, 'descriptor 2');
     assert.strictEqual(component.selectedTerms[1].title, 'descriptor 4');
     await component.search.set('descriptor');
-    await component.search.submit();
 
     assert.strictEqual(component.searchResults.length, 5);
     for (let i = 0; i < 5; i++) {
@@ -68,7 +67,6 @@ module('Integration | Component | mesh-manager', function (hooks) {
       @remove={{(noop)}}
     />`);
     await component.search.set('descriptor');
-    await component.search.submit();
 
     assert.strictEqual(component.searchResults.length, 50);
     for (let i = 0; i < 50; i++) {
@@ -96,7 +94,6 @@ module('Integration | Component | mesh-manager', function (hooks) {
       @remove={{(noop)}}
     />`);
     await component.search.set('descriptor');
-    await component.search.submit();
     assert.ok(component.searchResults[1].isEnabled);
     assert.strictEqual(component.searchResults[1].title, 'descriptor 1');
     await component.searchResults[1].add();
@@ -117,7 +114,6 @@ module('Integration | Component | mesh-manager', function (hooks) {
       @remove={{(noop)}}
     />`);
     await component.search.set('descriptor');
-    await component.search.submit();
     assert.ok(component.searchResults[0].isDisabled);
     await component.searchResults[0].add();
   });
@@ -126,9 +122,41 @@ module('Integration | Component | mesh-manager', function (hooks) {
     this.server.createList('meshDescriptor', 3);
     await render(hbs`<MeshManager @editable={{true}} @add={{(noop)}} @remove={{(noop)}} />`);
     await component.search.set('descriptor');
-    await component.search.submit();
     assert.ok(component.searchResults[1].isEnabled);
     assert.strictEqual(component.searchResults[1].title, 'descriptor 1');
     await component.searchResults[1].add();
+  });
+
+  test('search term less than 3 characters', async function (assert) {
+    this.server.createList('meshDescriptor', 3);
+    await render(hbs`<MeshManager @editable={{true}} @add={{(noop)}} @remove={{(noop)}} />`);
+    await component.search.set('ab');
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.strictEqual(component.searchResults[0].text, 'keep typing...');
+  });
+
+  test('no search results', async function (assert) {
+    this.server.createList('meshDescriptor', 3);
+    await render(hbs`<MeshManager @editable={{true}} @add={{(noop)}} @remove={{(noop)}} />`);
+    await component.search.set('geflarknik');
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.strictEqual(component.searchResults[0].text, 'no results');
+  });
+
+  test('clicking outside of search results dismissed them.', async function (assert) {
+    assert.expect(3);
+    const descriptors = this.server.createList('meshDescriptor', 3);
+    this.set('terms', [descriptors[0], descriptors[2]]);
+    await render(hbs`<MeshManager
+      @editable={{true}}
+      @terms={{this.terms}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
+    />`);
+    await component.search.set('descriptor');
+    assert.strictEqual(component.searchResults.length, 3);
+    await component.search.click(); // click on anything outside the search results area, doesn't matter what.
+    assert.strictEqual(component.search.value, '');
+    assert.strictEqual(component.searchResults.length, 0);
   });
 });

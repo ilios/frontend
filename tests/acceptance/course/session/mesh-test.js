@@ -58,7 +58,6 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 1');
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 2');
     await page.details.meshTerms.meshManager.search.set('descriptor');
-    await page.details.meshTerms.meshManager.search.submit();
     assert.strictEqual(page.details.meshTerms.meshManager.searchResults.length, 6);
     for (let i = 0; i < 6; i++) {
       assert.strictEqual(
@@ -72,16 +71,13 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     assert.ok(page.details.meshTerms.meshManager.searchResults[3].isEnabled);
     assert.ok(page.details.meshTerms.meshManager.searchResults[4].isEnabled);
     assert.ok(page.details.meshTerms.meshManager.searchResults[5].isEnabled);
-
-    await page.details.meshTerms.meshManager.selectedTerms[0].remove();
     await page.details.meshTerms.meshManager.searchResults[3].add();
     assert.ok(page.details.meshTerms.meshManager.searchResults[3].isDisabled);
-    assert.ok(page.details.meshTerms.meshManager.searchResults[0].isEnabled);
-    assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms.length, 3);
-
-    assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 1');
-    assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 2');
-    assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 3');
+    assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms.length, 4);
+    assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 0');
+    assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[1].title, 'descriptor 1');
+    assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[2].title, 'descriptor 2');
+    assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[3].title, 'descriptor 3');
   });
 
   test('save terms', async function (assert) {
@@ -92,9 +88,8 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     await page.details.meshTerms.manage();
 
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms.length, 3);
-    await page.details.meshTerms.meshManager.search.set('descriptor');
-    await page.details.meshTerms.meshManager.search.submit();
     await page.details.meshTerms.meshManager.selectedTerms[0].remove();
+    await page.details.meshTerms.meshManager.search.set('descriptor');
     await page.details.meshTerms.meshManager.searchResults[3].add();
 
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 1');
@@ -120,9 +115,8 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     await page.details.meshTerms.manage();
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms.length, 3);
 
-    await page.details.meshTerms.meshManager.search.set('descriptor');
-    await page.details.meshTerms.meshManager.search.submit();
     await page.details.meshTerms.meshManager.selectedTerms[0].remove();
+    await page.details.meshTerms.meshManager.search.set('descriptor');
     await page.details.meshTerms.meshManager.searchResults[3].add();
 
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms[0].title, 'descriptor 1');
