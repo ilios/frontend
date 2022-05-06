@@ -56,10 +56,10 @@
                     {{on "input" (perform this.updateDurationHours value="target.value")}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                   >
-                  <ValidationError @errors={{get-errors-for this.durationHours}} />
                   <label for="hours-{{templateId}}">
                     {{t "general.hours"}}
                   </label>
+                  <ValidationError @errors={{get-errors-for this.durationHours}} />
                 </div>
               </div>
               <div class="minutes">
@@ -74,10 +74,10 @@
                     {{on "input" (perform this.updateDurationMinutes value="target.value")}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                   >
-                  <ValidationError @errors={{get-errors-for this.durationMinutes}} />
                   <label for="minutes-{{templateId}}">
                     {{t "general.minutes"}}
                   </label>
+                  <ValidationError @errors={{get-errors-for this.durationMinutes}} />
                 </div>
               </div>
             </div>
