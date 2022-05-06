@@ -8,6 +8,7 @@ import moment from 'moment-timezone';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import {
   ArrayNotEmpty,
+  Custom,
   IsInt,
   Lte,
   Gte,
@@ -96,6 +97,7 @@ export default class OfferingForm extends Component {
 
   @IsInt()
   @Gte(0)
+  @Custom('validateDurationCallback', 'validateDurationMessageCallback')
   get durationHours() {
     const startDate = this.startDate;
     const endDate = this.endDate;
@@ -111,6 +113,7 @@ export default class OfferingForm extends Component {
   @IsInt()
   @Gte(0)
   @Lte(59)
+  @Custom('validateDurationCallback', 'validateDurationMessageCallback')
   get durationMinutes() {
     const startDate = this.startDate;
     const endDate = this.endDate;
@@ -556,6 +559,21 @@ export default class OfferingForm extends Component {
     const locale = this.intl.get('locale');
     return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, {
       numeric: true,
+    });
+  }
+
+  @action
+  validateDurationCallback() {
+    const hrs = parseInt(this.durationHours, 10) || 0;
+    const mins = parseInt(this.durationMinutes, 10) || 0;
+    return !!(hrs + mins);
+  }
+
+  @action
+  validateDurationMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: '0',
+      description: this.intl.t('general.duration'),
     });
   }
 }
