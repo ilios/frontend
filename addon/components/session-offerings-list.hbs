@@ -17,18 +17,19 @@
       {{#each block.offeringTimeBlocks as |offeringTimeBlock|}}
         <div class="offering-block-time">
           {{#if offeringTimeBlock.isMultiDay}}
-            <div class="multiday-offering-block-time-time">
-              <span class="multiday-offering-block-time-time-description">
-                {{t "general.multiday"}}
-              </span>
-              <span class="multiday-offering-block-time-time-starts">
-                {{t "general.starts"}}
+            <div class="offering-block-time-time">
+              <div class="offering-block-time-time-starts">
+                <label class="offering-block-time-time-starts-label">
+                  {{t "general.starts"}}:
+                </label>
                 {{offeringTimeBlock.longStartText}}
-              </span>
-              <span class="multiday-offering-block-time-time-ends">
-                {{t "general.ends"}}
+              </div>
+              <div class="offering-block-time-time-ends">
+                <label class="offering-block-time-time-ends-label">
+                  {{t "general.ends"}}:
+                </label>
                 {{offeringTimeBlock.longEndText}}
-              </span>
+              </div>
             </div>
           {{else}}
             <div class="offering-block-time-time">

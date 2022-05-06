@@ -85,7 +85,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('offering dates', async function (assert) {
-    assert.expect(23);
     await page.visit({ courseId: 1, sessionId: 1 });
 
     const blocks = page.details.offerings.dateBlocks;
@@ -103,7 +102,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     assert.ok(blocks[1].hasStartTime);
     assert.ok(blocks[1].hasEndTime);
-    assert.notOk(blocks[1].hasMultiDay);
     assert.strictEqual(blocks[1].dayOfWeek, moment(this.offering2.startDate).format('dddd'));
     assert.strictEqual(blocks[1].dayOfMonth, moment(this.offering2.startDate).format('MMMM Do'));
     assert.strictEqual(
@@ -115,18 +113,17 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     assert.notOk(blocks[2].hasStartTime);
     assert.notOk(blocks[2].hasEndTime);
-    assert.ok(blocks[2].hasMultiDay);
     assert.strictEqual(blocks[2].dayOfWeek, moment(this.offering3.startDate).format('dddd'));
     assert.strictEqual(blocks[2].dayOfMonth, moment(this.offering3.startDate).format('MMMM Do'));
-    const expectedText =
-      'Multiday ' +
-      'Starts ' +
-      moment(this.offering3.startDate).format('dddd MMMM Do [@] LT') +
-      ' Ends ' +
-      moment(this.offering3.endDate).format('dddd MMMM Do [@] LT');
     assert.strictEqual(blocks[2].offerings.length, 1);
-
-    assert.strictEqual(blocks[2].multiDay, expectedText);
+    assert.strictEqual(
+      blocks[2].multiDayStart,
+      'Starts: ' + moment(this.offering3.startDate).format('dddd MMMM Do [@] LT')
+    );
+    assert.strictEqual(
+      blocks[2].multiDayEnd,
+      'Ends: ' + moment(this.offering3.endDate).format('dddd MMMM Do [@] LT')
+    );
   });
 
   test('offering details', async function (assert) {
@@ -303,14 +300,10 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     assert.notOk(block.hasStartTime);
     assert.notOk(block.hasEndTime);
-    assert.ok(block.hasMultiDay);
     assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'September 11th');
-    const expectedText =
-      'Multiday ' +
-      'Starts Sunday September 11th @ 2:15 AM' +
-      ' Ends Monday September 12th @ 5:30 PM';
-    assert.strictEqual(block.multiDay, expectedText);
+    assert.strictEqual(block.multiDayStart, 'Starts: Sunday September 11th @ 2:15 AM');
+    assert.strictEqual(block.multiDayEnd, 'Ends: Monday September 12th @ 5:30 PM');
     assert.strictEqual(block.offerings.length, 1);
 
     assert.strictEqual(block.offerings[0].learnerGroups.length, 2);

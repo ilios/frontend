@@ -1,15 +1,11 @@
 .offering-manager {
-  border-bottom: 1px dotted $dark-grey;
-  display: grid;
   @include font-size('small');
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(5, 1fr);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   margin-bottom: .5rem;
   padding-bottom: .5rem;
 
   .offering-manager-learner-groups {
-    grid-column-start: 2;
-
     ul {
       @include ilios-list-reset;
     }
@@ -18,7 +14,6 @@
   .offering-manager-location {
     display: flex;
     flex-direction: column;
-    grid-column-start: 3;
     overflow-wrap: anywhere;
     .copy-btn {
       @include ilios-link-button;
@@ -30,16 +25,12 @@
   }
 
   .offering-manager-instructors {
-    grid-column-start: 4;
-
     ul {
       @include ilios-list-reset;
     }
   }
 
   .offering-manager-actions {
-    grid-column-start: 5;
-
     .remove {
       padding-left: .5rem;
     }
