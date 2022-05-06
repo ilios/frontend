@@ -1,16 +1,16 @@
 .dashboard-agenda {
   @include dashboard-component;
 
+  .title {
+    @include ilios-heading-h3;
+  }
+
   .dashboard-agenda-content {
-    .title {
-      @include ilios-heading-h4;
-    }
+     max-height: 40em;
+     overflow-y: scroll;
+     padding: 0 1em 1em;
 
     .activities {
-      max-height: 40em;
-      overflow-y: scroll;
-      padding: 0 1em 1em;
-
       table {
         @include ilios-table-structure;
         @include ilios-table-colors;
@@ -22,8 +22,12 @@
         }
       }
 
-      .event-date i {
-        color: $ilios-orange;
+      .event-date {
+        padding-left: 0;
+
+        i {
+          color: $ilios-orange;
+        }
       }
 
       .ilm-due {
