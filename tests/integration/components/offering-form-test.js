@@ -36,13 +36,6 @@ module('Integration | Component | offering form', function (hooks) {
     assert.ok(component.location.hasError);
   });
 
-  test('room validation succeeds on blank value', async function (assert) {
-    await render(hbs`<OfferingForm @close={{(noop)}} @save={{(noop)}} @showRoom={{true}} />`);
-    await component.location.set('');
-    await component.save();
-    assert.notOk(component.location.hasError);
-  });
-
   test('url validation errors do not show up initially', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     assert.notOk(component.url.hasError);
@@ -379,6 +372,17 @@ module('Integration | Component | offering form', function (hooks) {
     await component.duration.hours.set('2');
     await component.duration.minutes.set('50');
     assert.strictEqual(moment().hour(17).minute(0).format(format), component.endDate.value);
+  });
+
+  test('duration validation fails if both minutes and hours are zero', async function (assert) {
+    await render(hbs`<OfferingForm @close={{(noop)}} @save={{(noop)}} @showRoom={{true}} />`);
+    assert.notOk(component.duration.hours.hasError);
+    assert.notOk(component.duration.minutes.hasError);
+    await component.duration.hours.set('0');
+    await component.duration.minutes.set('0');
+    await component.save();
+    assert.ok(component.duration.hours.hasError);
+    assert.ok(component.duration.minutes.hasError);
   });
 
   test('learner manager is not present in small-group mode', async function (assert) {

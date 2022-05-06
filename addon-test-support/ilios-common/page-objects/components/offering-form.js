@@ -35,18 +35,22 @@ const definition = {
   duration: {
     scope: '.offering-duration',
     hours: {
-      scope: '.hours input',
-      set: fillable(),
-      submit: triggerable('keypress', '', {
+      scope: '.hours',
+      set: fillable('input'),
+      submit: triggerable('keypress', 'input', {
         eventProperties: { key: 'Enter' },
       }),
+      value: value('input'),
+      hasError: isVisible('.validation-error-message'),
     },
     minutes: {
-      scope: '.minutes input',
-      set: fillable(),
-      submit: triggerable('keypress', '', {
+      scope: '.minutes',
+      set: fillable('input'),
+      submit: triggerable('keypress', 'input', {
         eventProperties: { key: 'Enter' },
       }),
+      value: value('input'),
+      hasError: isVisible('.validation-error-message'),
     },
   },
   timezoneEditor: {
