@@ -48,23 +48,4 @@ module('Integration | Component | school competencies expanded', function (hooks
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
-
-  test('it renders empty', async function (assert) {
-    const school = this.server.create('school');
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
-    this.set('school', schoolModel);
-    await render(hbs`<SchoolCompetenciesExpanded
-      @school={{this.school}}
-      @canUpdate={{true}}
-      @canDelete={{true}}
-      @canCreate={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setSchoolManageCompetencies={{(noop)}}
-    />`);
-    assert.ok(component.competenciesList.isHidden);
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
 });
