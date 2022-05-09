@@ -27,10 +27,30 @@
       }
 
     .offering-block-time {
+      border-bottom: 1px dotted $dark-grey;
+      display: grid;
       grid-column: 1 / -1;
+      grid-template-columns: repeat(5, 1fr);
       margin-top: 1rem;
 
+      .offering-block-time-time {
+        grid-column: 1;
+      }
+
+      .offering-block-time-offerings {
+        grid-column: 2 / -1;
+      }
+
+      .offering-manager {
+        border-bottom: 1px dotted $dark-grey;
+        &:last-of-type {
+          border-bottom: 0;
+        }
+      }
+
+      .offering-block-time-time-starts,
       .offering-block-time-time-starttime,
+      .offering-block-time-time-ends,
       .offering-block-time-time-endtime {
         color: $medium-grey;
         display: block;
@@ -41,11 +61,12 @@
       .offering-block-time-time-endtime-label {
         font-weight: normal;
       }
+
+      .offering-block-time-time-starts-label,
+      .offering-block-time-time-ends-label {
+        display: block;
+        font-weight: normal;
+      }
     }
   }
-
-  .multiday-offering-block-time-time {
-    margin-bottom: .5rem;
-  }
-
 }

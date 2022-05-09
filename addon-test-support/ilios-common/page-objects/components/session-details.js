@@ -51,8 +51,8 @@ export default create({
       hasStartTime: isVisible('.offering-block-time-time-starttime'),
       endTime: text('.offering-block-time-time-endtime'),
       hasEndTime: isVisible('.offering-block-time-time-endtime'),
-      multiDay: text('.multiday-offering-block-time-time'),
-      hasMultiDay: isVisible('.multiday-offering-block-time-time'),
+      multiDayStart: text('.offering-block-time-time-starts'),
+      multiDayEnd: text('.offering-block-time-time-ends'),
       offerings: collection('[data-test-offerings] [data-test-offering-manager]', {
         learnerGroups: collection('.offering-manager-learner-groups li', {
           title: text(),
