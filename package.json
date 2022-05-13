@@ -76,7 +76,7 @@
     "ember-cli-terser": "^4.0.2",
     "ember-export-application-global": "^2.0.1",
     "ember-load-initializers": "^2.1.2",
-    "ember-metrics": "1.5.0",
+    "ember-metrics": "1.5.1",
     "ember-noscript": "^4.1.0",
     "ember-page-title": "^7.0.0",
     "ember-qunit": "^5.1.5",
