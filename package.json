@@ -57,7 +57,7 @@
     "ember-cli-deploy-archive": "1.0.0-beta.2",
     "ember-cli-deploy-brotli": "^0.3.0",
     "ember-cli-deploy-build": "2.0.0",
-    "ember-cli-deploy-cloudfront": "^4.0.0",
+    "ember-cli-deploy-cloudfront": "^5.0.0",
     "ember-cli-deploy-display-revisions": "2.1.2",
     "ember-cli-deploy-gzip": "^2.0.1",
     "ember-cli-deploy-json-config": "1.0.1",
