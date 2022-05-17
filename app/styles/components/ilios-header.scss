@@ -6,6 +6,7 @@
     grid-template-areas: 'logo tools';
     height: auto;
     grid-template-columns: 100px auto;
+    padding: .15rem;
 
     @media print {
       display: none;

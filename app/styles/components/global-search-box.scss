@@ -2,7 +2,7 @@
 
 .global-search-box {
   display: inline-block;
-  height: 2rem;
+  height: calc(2rem - 3px);
   max-width: 40rem;
   position: relative;
 
