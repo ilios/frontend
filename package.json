@@ -29,7 +29,7 @@
   "dependencies": {
     "@ember/render-modifiers": "^2.0.0",
     "@embroider/util": "^1.0.0",
-    "@formatjs/intl-locale": "^2.4.7",
+    "@formatjs/intl-locale": "^3.0.1",
     "@formatjs/intl-pluralrules": "^5.0.1",
     "@formatjs/intl-relativetimeformat": "^11.0.1",
     "@fortawesome/ember-fontawesome": "^0.3.1",
