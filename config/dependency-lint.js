@@ -3,6 +3,6 @@
 
 module.exports = {
   allowedVersions: {
-    'ember-get-config': '0.5.0 || ^1.0.0',
+    'ember-get-config': '^1.0.0 || ^2.0.0',
   },
 };
