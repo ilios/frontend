@@ -9,7 +9,7 @@ $header-menu-background-color: color.adjust($base-background-color, $lightness: 
 
   button {
     background-color: transparent;
-    border: 2px solid $ilios-orange;
+    border: 1px solid $header-menu-background-color;
     border-radius: .2rem;
     color: $text-grey;
     font-weight: normal;
