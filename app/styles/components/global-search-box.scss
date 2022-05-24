@@ -2,7 +2,6 @@
 
 .global-search-box {
   display: inline-block;
-  height: calc(2rem - 3px);
   max-width: 40rem;
   position: relative;
 
@@ -28,7 +27,7 @@
     margin-right: 2px;
     padding-left: 6px;
     position: absolute;
-    top: .5rem;
+    top: 25%;
   }
 
   .autocomplete {
