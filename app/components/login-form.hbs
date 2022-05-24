@@ -26,6 +26,7 @@
             autocapitalize="off"
             autocorrect="off"
             autofocus=""
+            autocomplete="username"
             id="username-{{templateId}}"
             type="text"
             disabled={{if this.authenticate.isRunning "disabled"}}
@@ -42,6 +43,7 @@
           <input
             id="password-{{templateId}}"
             type="password"
+            autocomplete="current-password"
             disabled={{if this.authenticate.isRunning "disabled"}}
             value={{this.password}}
             {{on "input" (pick "target.value" (set this.password))}}
