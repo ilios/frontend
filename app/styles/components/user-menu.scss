@@ -1,5 +1,9 @@
 .user-menu {
   @include header-menu;
+  
+  @include for-tablet-and-up {
+    margin-right: .5rem;
+  }
 
   .menu {
     li {

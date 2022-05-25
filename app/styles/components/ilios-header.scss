@@ -24,6 +24,7 @@
 
     // Elements on the far right
     .tools {
+      align-items: center;
       background: transparent;
       grid-area: tools;
       margin-right: .25rem;
@@ -35,10 +36,8 @@
       "search search search";
       row-gap: .25rem;
 
-
       @include for-tablet-and-up {
         grid-template-areas: "search locale user";
-        padding-bottom: 0;
       }
 
       .locale-chooser {
@@ -49,9 +48,8 @@
       }
 
       .global-search-box {
-        margin-right: .5rem;
-        width: 13rem;
         grid-area: search;
+        height: 100%;
 
         @include for-phone-only {
           width: 10rem;
@@ -69,7 +67,12 @@
             right: auto;
           }
         }
+
+        input[type='search'] {
+          border: 1px solid $white;
+        }
       }
+
     }
 
     .visually-hidden {

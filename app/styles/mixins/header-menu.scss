@@ -3,7 +3,7 @@
 $header-menu-background-color: color.adjust($base-background-color, $lightness: -3%);
 
 @mixin header-menu () {
-  margin: 0 .5rem;
+  margin: 0 0 0 .5rem;
   position: relative;
   text-align: right;
 
