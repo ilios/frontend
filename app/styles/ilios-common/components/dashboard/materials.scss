@@ -1,13 +1,18 @@
 .dashboard-materials {
   @include dashboard-component;
 
+  .title {
+    @include ilios-heading-h3;
+    margin-top: .5rem;
+    text-align: center;
+  }
   .dashboard-materials-content {
     max-height: 40em;
     overflow-y: scroll;
-    padding: .5em;
+    padding: .5rem;
 
     .header {
-      margin: 1em 1em 1em 0;
+      margin: 0 1em 1em 0;
     }
 
     .material-list {
