@@ -1,9 +1,9 @@
 .application-wrapper {
   display: grid;
   grid-template-areas:
-  'header'
-  'main'
-  'footer';
+  'logo header'
+  'main main'
+  'footer footer';
   grid-template-rows: auto 1fr 20px;
   height: 100vh;
   width: 100%;
@@ -28,10 +28,10 @@
 
   &.show-navigation {
     grid-template-areas:
-    'header'
-    'nav'
-    'main'
-    'footer';
+    'logo header'
+    'nav nav'
+    'main main'
+    'footer footer';
     grid-template-rows: auto auto 1fr 20px;
 
     @include for-tablet-and-up {
