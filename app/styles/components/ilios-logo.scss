@@ -6,4 +6,8 @@
         display: block;
         height: 95%;
     }
+
+    .visually-hidden {
+      @include visually-hidden;
+    }
 }
