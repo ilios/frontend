@@ -1,7 +1,6 @@
 /* stylelint-disable property-disallowed-list */
 .ilios-navigation {
   background-color: $text-grey;
-  border-bottom: 1px solid $grey;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 2rem auto;
@@ -79,6 +78,7 @@
 
   @include for-laptop-and-up {
     display: block;
+    border-bottom: calc(20px * .618) solid $ilios-orange;
 
     ul {
       display: inline;
