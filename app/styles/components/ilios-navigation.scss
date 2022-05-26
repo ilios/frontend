@@ -1,9 +1,13 @@
 /* stylelint-disable property-disallowed-list */
 .ilios-navigation {
-  background-color: $text-grey;
+  background-color: $medium-grey;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 2rem auto;
+
+  @include for-laptop-and-up {
+    background-color: $text-grey;
+  }
 
   ul {
     align-items: center;
@@ -27,10 +31,6 @@
         text-align: left;
       }
 
-      &:hover {
-        background-color: $grey;
-      }
-
     }
 
     .text {
@@ -41,6 +41,14 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+
+      .expander {
+        color: $white;
+
+        &:hover {
+          background-color: $ilios-blue;
+        }
+      }
     }
   }
 
@@ -50,11 +58,7 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
 
-        @include for-tablet-and-up {
-          grid-row-gap: .5rem;
-        }
-
-        li {
+        li a {
           padding: .5rem;
         }
       }
@@ -99,12 +103,20 @@
   }
 
   a {
-    color: $ilios-orange;
+    color: $white;
     display: block;
     height: 100%;
     text-decoration: none;
     width: 100%;
     font-weight: 400;
+
+    @include for-laptop-and-up {
+      color: $ilios-orange;
+
+      .text {
+        color: $white;
+      }
+    }
 
     &.active {
       font-weight: 700;
@@ -114,10 +126,6 @@
 
     &:hover {
       background-color: $ilios-blue;
-    }
-
-    .text {
-      color: $white;
     }
   }
 }
