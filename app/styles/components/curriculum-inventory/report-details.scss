@@ -1,5 +1,8 @@
 .curriculum-inventory-report-details {
   @include detail-container($ilios-orange);
+  padding: .5rem .25rem;
+  border: 1px solid $ilios-blue;
+  border-radius: 5px;
 
   .title {
     @include detail-container-title;

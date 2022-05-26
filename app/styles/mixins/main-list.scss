@@ -1,13 +1,14 @@
 @mixin main-list () {
   display: block;
-  margin: 0 .25rem;
-  padding: 0 1rem;
+  padding: .5rem .25rem;
+  border: 1px solid $ilios-blue;
+  border-radius: 5px;
 }
 
 @mixin main-list-filters () {
   display: flex;
   flex-direction: column;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 
   @include for-laptop-and-up {
     flex-direction: row;

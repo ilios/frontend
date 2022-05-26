@@ -1,4 +1,8 @@
 .learnergroup-summary {
+  padding: .5rem .25rem;
+  border: 1px solid $ilios-blue;
+  border-radius: 5px;
+  
   .learnergroup-overview {
     @include ilios-overview($ilios-orange);
 

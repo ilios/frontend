@@ -3,7 +3,7 @@
 @mixin admin-blocks () {
   display: grid;
   grid-gap: .5rem;
-
+  
   @include for-laptop-and-up {
     grid-template-columns: 1fr 1fr;
   }
@@ -11,7 +11,7 @@
   .small-component,
   .large-component {
     background-color: $grey;
-    border: 1px solid $black;
+    border: 1px solid $ilios-blue;
     border-radius: 5px;
     margin-bottom: 1rem;
     min-height: 5rem;
