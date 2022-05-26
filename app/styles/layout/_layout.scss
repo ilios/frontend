@@ -9,6 +9,10 @@
   height: 100vh;
   width: 100%;
 
+  & > .ilios-logo {
+    grid-area: logo;
+  }
+
   & > header {
     grid-area: header;
   }
@@ -42,27 +46,27 @@
 
     @include for-laptop-and-up {
       grid-template-areas:
-      'header  header'
-      'nav  loading'
+      'logo header'
+      'logo loading'
+      'logo main'
       'nav main'
       'footer footer';
       grid-template-columns: auto 1fr;
-      grid-template-rows: auto 10px 1fr 20px;
+      grid-template-rows: 42px 10px 16px auto 20px;
     }
 
     @include for-desktop-and-up {
       grid-template-areas:
-      'header header  header'
-      'nav loading  loading'
+      'logo header  header'
+      'logo    main main'
       'nav    main main'
       'footer footer  footer';
-      grid-template-columns: 260px 1fr 1fr;
+      grid-template-columns: auto 1fr 1fr;
     }
 
     & > nav {
       grid-area: nav;
       @include for-laptop-and-up {
-        padding-top: 10px;
         z-index: 5;
       }
     }

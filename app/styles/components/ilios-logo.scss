@@ -1,0 +1,9 @@
+.ilios-logo {
+    background-color: $ilios-orange;
+    .image {
+        background-image: url('images/ilios-logo.svg');
+        background-repeat: no-repeat;
+        display: block;
+        height: 95%;
+    }
+}
