@@ -2,6 +2,7 @@
 
 .dashboard-calendar {
   @include dashboard-component;
+  padding: 0 0 .5rem 0;
 
   .dashboard-calendar-content {
     padding: .5em;

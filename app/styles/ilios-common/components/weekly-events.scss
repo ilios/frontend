@@ -1,4 +1,6 @@
 .weekly-events {
+  @include main-border;
+  
   .year {
     text-align: center;
 
