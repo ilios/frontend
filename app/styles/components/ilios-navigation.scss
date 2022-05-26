@@ -37,6 +37,10 @@
       display: none;
     }
 
+    .if-active {
+      display: none;
+    }
+
     &.expand-navigation li {
       display: flex;
       flex-direction: column;
@@ -76,7 +80,7 @@
 
   @include for-smaller-than-laptop {
     a.active {
-      background-color: $grey;
+      background-color: $ilios-blue;
     }
   }
 
@@ -96,10 +100,6 @@
     .expand-navigation {
       display: none;
     }
-
-    a {
-      padding: .25rem .5rem;
-    }
   }
 
   a {
@@ -109,23 +109,46 @@
     text-decoration: none;
     width: 100%;
     font-weight: 400;
+    padding: .25rem .5rem;
 
     @include for-laptop-and-up {
       color: $ilios-orange;
+      display: grid;
+      grid-template-columns: 1.3em 1fr 1.5em;
+      justify-content: start;
+      align-items: center;
+      padding: .25rem 0 .25rem;
 
       .text {
+        margin-left: .25rem;
         color: $white;
       }
-    }
 
-    &.active {
-      font-weight: 700;
-      background-color: $ilios-blue;
-      color: $white;
+      .if-active {
+        color: $ilios-blue;
+        justify-self: end;
+        font-weight: bold;
+      }
+
+      &.active {
+        .if-active {
+          display: inline;
+        }
+        color: $ilios-blue;
+
+        .text {
+          color: $white;
+        }
+      }
     }
 
     &:hover {
       background-color: $ilios-blue;
+      color: $white;
+
+      .if-active {
+        color: $white;
+      }
     }
   }
 }
