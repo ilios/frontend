@@ -1,0 +1,59 @@
+@mixin course-header {
+  background-color: $culturedGrey;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+  padding: .8rem;
+  height: 7em;
+
+  @include for-tablet-and-up {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 3em;
+  }
+
+  h2, .title, .academic-year {
+    @include ilios-heading-h4;
+  }
+
+  .academic-year {
+    @include for-tablet-and-up {
+      display: inline;
+      margin-left: .5rem;
+    }
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+
+    @include for-tablet-and-up {
+      flex-direction: row;
+    }
+
+    input {
+      width: 100%;
+    }
+
+    .editable {
+      @include for-laptop-and-up {
+        display: inline;
+      }
+    }
+
+    .editinplace.is-editing {
+      @include for-laptop-and-up {
+        flex-grow: 2;
+      }
+    }
+  }
+
+  .course-publication {
+    @include for-laptop-and-up {
+      text-align: right;
+    }
+  }
+}

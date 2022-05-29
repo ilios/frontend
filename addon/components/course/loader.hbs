@@ -1,0 +1,32 @@
+{{#if this.isLoaded}}
+  <IliosCourseDetails
+    @course={{@course}}
+    @editable={{@editable}}
+    @showDetails={{@showDetails}}
+    @setShowDetails={{@setShowDetails}}
+    @courseLeadershipDetails={{@courseLeadershipDetails}}
+    @courseObjectiveDetails={{@courseObjectiveDetails}}
+    @courseTaxonomyDetails={{@courseTaxonomyDetails}}
+    @courseCompetencyDetails={{@courseCompetencyDetails}}
+    @courseManageLeadership={{@courseManageLeadership}}
+    @setCourseLeadershipDetails={{@setCourseLeadershipDetails}}
+    @setCourseObjectiveDetails={{@setCourseObjectiveDetails}}
+    @setCourseTaxonomyDetails={{@setCourseTaxonomyDetails}}
+    @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
+    @setCourseManageLeadership={{@setCourseManageLeadership}}
+  />
+{{else}}
+  <Course::BackToCourses />
+
+  <section aria-hidden="true" class="course-loader">
+    <CourseHeader @course={{@course}} @editable={{false}} />
+    <CourseOverview @course={{@course}} @editable={{false}} />
+
+    <div class="mock-detail-box" >
+      <span>
+        {{t "general.expandDetail"}}
+        <FaIcon @icon="square-plus" class="expand-collapse-icon" />
+      </span>
+    </div>
+  </section>
+{{/if}}

@@ -1,55 +1,17 @@
 .course-header {
-  background-color: $culturedGrey;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: .8rem;
-
-  @include for-tablet-and-up {
-    flex-direction: row;
-  }
-
-  h2, h3 {
-    @include ilios-heading-h4;
-  }
-
-  .academic-year {
-    @include for-tablet-and-up {
-      display: inline;
-      margin-left: .5rem;
-    }
-  }
-
+  @include course-header;
   .title {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 2;
-
-    @include for-tablet-and-up {
-      flex-direction: row;
-    }
-
-    input {
-      width: 100%;
-    }
 
     .editable {
       @include for-laptop-and-up {
         display: inline;
       }
-      @include font-size('large');
     }
 
     .editinplace.is-editing {
       @include for-laptop-and-up {
         flex-grow: 2;
       }
-    }
-  }
-
-  .course-publication {
-    @include for-laptop-and-up {
-      text-align: right;
     }
   }
 }

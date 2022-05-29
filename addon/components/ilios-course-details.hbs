@@ -3,13 +3,8 @@
   data-test-ilios-course-details
   {{did-insert (set this.topSection)}}
 >
-  {{#if (has-route "courses")}}
-    <div class="back-to-courses-list">
-      <LinkTo @route="courses">
-        {{t "general.backToCourses"}}
-      </LinkTo>
-    </div>
-  {{/if}}
+  <Course::BackToCourses />
+
   <CourseHeader @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
   <CourseOverview @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
   {{#unless @showDetails}}

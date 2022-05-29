@@ -1,34 +1,5 @@
 .course-overview {
-  @include ilios-overview($orange);
-
-  .title {
-    @include ilios-overview-title;
-  }
-
-  .course-overview-header {
-    @include ilios-overview-header;
-  }
-
-  .course-overview-actions {
-    @include ilios-overview-actions;
-
-    a, span {
-      @include font-size('medium');
-      margin-right: .5rem;
-    }
-
-    span {
-      color: $blueMunsell;
-    }
-  }
-
-  .block {
-    @include ilios-overview-block;
-  }
-
-  .course-overview-content {
-    @include ilios-overview-content;
-  }
+  @include course-overview;
 
   .courseexternalid {
     input {
@@ -40,4 +11,5 @@
   .universallocator {
     color: $davysGrey;
   }
+
 }
