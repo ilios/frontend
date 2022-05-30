@@ -12,11 +12,22 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 export default class VisualizerCourseObjectives extends Component {
   @service router;
   @service intl;
+  @service dataLoader;
 
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
+  @use loadedCourseSessions = new ResolveAsyncValue(() => [
+    this.dataLoader.loadCourseSessions(this.args.course.id),
+  ]);
+  @use courseSessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  get sessions() {
+    if (!this.loadedCourseSessions || !this.courseSessions) {
+      return [];
+    }
+
+    return this.courseSessions;
+  }
 
   @use dataObjects = new AsyncProcess(() => [
     this.getDataObjects.bind(this),
