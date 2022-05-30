@@ -1,10 +1,14 @@
 .course-sessions {
   @include detail-container($orange);
-  @include animate-loading(0, 1, 2s);
+  @include animate-loading(.5, 1, 4s);
   margin: .5rem 1rem 0 .5rem;
 
   .course-sessions-header {
     @include detail-container-header;
+    height: 2rem;
+    @include for-phone-only {
+      height: 3rem;
+    }
   }
 
   .title {

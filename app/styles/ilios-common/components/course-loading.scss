@@ -1,5 +1,5 @@
 .course-loading {
-  @include animate-loading(0, .75, 5s);
+  @include animate-loading(.1, .2, 2s);
   @include loading-text;
 
   .header {
@@ -14,8 +14,30 @@
   }
 }
 
+.course-sessions.course-sessions-loading {
+  border-bottom: 0;
+  @include animate-loading(.1, .5, 2s);
+  
+  .course-sessions-header {
+    height: 2rem;
+    @include for-phone-only {
+      height: 3rem;
+    }
+  }
+
+  .title {
+    @include loading-text;
+  }
+
+  .sessions-grid-header {
+    @include loading-text;
+    background-color: $moderate-grey;
+    height: 2rem;
+  }
+}
+
 .course-loader {
-  @include animate-loading(.1, .25, 5s);
+  @include animate-loading(.2, .5, 5s);
 }
 
 .course-loading, .course-loader {

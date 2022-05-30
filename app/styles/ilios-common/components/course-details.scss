@@ -1,5 +1,5 @@
 .course-details {
-  @include animate-loading(.25, 1, 1s);
+  @include animate-loading(.5, 1, 2s);
 
   $collapse-control-shadow-grey: #e2e2e2;
   $collapse-control-shadow-black: rgba(0, 0, 0, .34);
