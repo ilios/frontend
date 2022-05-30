@@ -17,6 +17,7 @@
 .course-sessions.course-sessions-loading {
   border-bottom: 0;
   @include animate-loading(.1, .5, 2s);
+  @include loading-shimmer;
   
   .course-sessions-header {
     height: 2rem;
@@ -45,6 +46,7 @@
   border-width: 0 2px 2px;
   border-color: $header-grey;
   border-style: solid;
+  @include loading-shimmer;
   
   .mock-detail-box {
     display: flex;
