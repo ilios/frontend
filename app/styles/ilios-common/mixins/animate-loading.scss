@@ -1,0 +1,8 @@
+@mixin animate-loading($initial-opacity, $final-opacity, $loading-time) {
+  transition: opacity $loading-time linear;
+  opacity: $final-opacity;
+
+  &.animate-loading {
+    opacity: $initial-opacity;
+  }
+}

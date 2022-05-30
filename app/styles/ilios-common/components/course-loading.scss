@@ -1,4 +1,5 @@
 .course-loading {
+  @include animate-loading(0, .75, 5s);
   @include loading-text;
 
   .header {
@@ -11,6 +12,10 @@
       @include loading-text;
     }
   }
+}
+
+.course-loader {
+  @include animate-loading(.1, .25, 5s);
 }
 
 .course-loading, .course-loader {
