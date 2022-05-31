@@ -1,13 +1,10 @@
 /* stylelint-disable property-disallowed-list */
+@use "sass:color";
 .ilios-navigation {
-  background-color: $medium-grey;
+  background-color: color.adjust($text-grey, $lightness: 15%);
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 2rem auto;
-
-  @include for-laptop-and-up {
-    background-color: $text-grey;
-  }
 
   ul {
     align-items: center;
@@ -29,6 +26,7 @@
         @include font-size('small');
         height: auto;
         text-align: left;
+        padding-left: .25rem;
       }
 
     }
@@ -112,7 +110,6 @@
     padding: .25rem .5rem;
 
     @include for-laptop-and-up {
-      color: $ilios-orange;
       display: grid;
       grid-template-columns: 1.3em 1fr 1.5em;
       justify-content: start;
@@ -125,7 +122,7 @@
       }
 
       .if-active {
-        color: $ilios-blue;
+        color: color.adjust($ilios-blue, $lightness: 25%);
         justify-self: end;
         font-weight: bold;
       }
@@ -134,7 +131,7 @@
         .if-active {
           display: inline;
         }
-        color: $ilios-blue;
+        color: color.adjust($ilios-blue, $lightness: 25%);
 
         .text {
           color: $white;
