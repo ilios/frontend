@@ -1,8 +1,6 @@
 @mixin main-list () {
   display: block;
-  padding: .5rem .25rem;
-  border: 1px solid $ilios-blue;
-  border-radius: 5px;
+  padding: 1rem .5rem;
 }
 
 @mixin main-list-filters () {
@@ -22,7 +20,7 @@
 }
 
 @mixin main-list-filter () {
-  padding-bottom: 1rem;
+  padding: 0 1rem 1rem 1rem;
   white-space: nowrap;
 
   @include for-laptop-and-up {
