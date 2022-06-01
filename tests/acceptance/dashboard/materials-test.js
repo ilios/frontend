@@ -92,7 +92,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
   });
 
   test('it renders with materials in show-current mode', async function (assert) {
-    assert.expect(77);
+    assert.expect(78);
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 100);
@@ -112,6 +112,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.notOk(page.materials.dashboardViewPicker.activities.isActive);
     assert.notOk(page.materials.dashboardViewPicker.week.isActive);
     assert.ok(page.materials.dashboardViewPicker.isVisible);
+    assert.strictEqual(page.materials.title, 'My Materials');
     assert.ok(page.materials.header.displayToggle.firstButton.isChecked);
     assert.strictEqual(page.materials.courseFilter.options.length, 5);
     assert.strictEqual(page.materials.courseFilter.options[0].text, 'All Courses');
