@@ -32,7 +32,7 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid $russion-green;
+    border: 1px solid $russian-green;
     clear: both;
     @include font-size('large');
     margin: 1rem;
@@ -50,14 +50,14 @@
     }
 
     p {
-      color: $russion-green;
+      color: $russian-green;
       font-weight: bold;
       margin: 0;
       margin-bottom: 1rem;
     }
 
     button {
-      background: $russion-green;
+      background: $russian-green;
       color: $white;
     }
   }

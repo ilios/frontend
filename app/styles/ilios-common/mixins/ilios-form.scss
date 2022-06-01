@@ -71,14 +71,14 @@
 
     &.done {
       background-color: $white;
-      border-color: $russion-green;
+      border-color: $russian-green;
       color: $raisin-black;
 
       &:enabled {
         &:hover,
         &:active,
         &.active {
-          background-color: $russion-green;
+          background-color: $russian-green;
           color: $white;
         }
       }

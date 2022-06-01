@@ -46,7 +46,7 @@
       &.good {
         &:hover,
         &:focus {
-          background-color: $russion-green;
+          background-color: $russian-green;
           color: $white;
         }
       }
@@ -74,8 +74,8 @@
 
   &.published {
     .toggle, .menu {
-      border-color: $russion-green;
-      color: $russion-green;
+      border-color: $russian-green;
+      color: $russian-green;
     }
   }
 
