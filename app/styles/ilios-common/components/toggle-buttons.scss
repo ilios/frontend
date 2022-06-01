@@ -7,7 +7,7 @@
 
   label {
     background-color: $white;
-    color: $green;
+    color: $russion-green;
     border: 1px solid rgba($black, .2);
     display: inline-block;
     @include font-size('small');
@@ -30,7 +30,7 @@
   }
 
   input:checked + label {
-    background-color: $green;
+    background-color: $russion-green;
     color: $white;
   }
 

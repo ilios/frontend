@@ -1,29 +1,28 @@
 @use "sass:color";
 
-$background-grey: hsl(0, 0%, 98%);
-$text-grey: hsl(345, 6%, 13%);
+$slight-white: hsl(0, 0%, 98%);
+$raisin-black: hsl(345, 6%, 13%);
 $white: hsl(0, 100%, 100%);
 $black: hsl(0, 0%, 0%);
 
 $orange: hsl(30, 100%, 40%);
-$blue: hsl(195, 53%, 43%);
-$green: hsl(103, 23%, 45%);
-$red: hsl(338, 49%, 43%);
-$yellow: hsl(52, 98%, 48%);
+$sepia: hsl(30, 100%, 20%);
 
-$dark-blue: color.adjust($blue, $lightness: -10%);
-$light-blue: color.adjust($blue, $lightness: 50%);
+$russion-green: hsl(103, 23%, 45%);
 
-$dark-grey: color.adjust($text-grey, $lightness: 10%);
-$light-grey: hsl(0, 0%, 98%);
-$header-grey: color.adjust($text-grey, $lightness: 80%);
-$medium-grey: color.adjust($text-grey, $lightness: 20%);
-$grey: color.adjust($background-grey, $lightness: -20%);
+$gold: hsl(48, 93%, 44%);
 
-$remove-background-color: color.adjust($red, $lightness: 40%);
-$dark-red: color.adjust($red, $lightness: -20%);
+$blue-munsell: hsl(195, 53%, 43%);
+$teal-blue: hsl(195, 52%, 36%);
+$light-blue: hsl(195, 51%, 92%);
 
-$scheduled-brown: #8c4600;
+$davys-grey: hsl(0, 0%, 32%);
+$cultured-grey: hsl(200, 15%, 92%);
+
+$crimson: hsl(346, 82%, 48%);
+$piggy-pink: hsl(346, 80%, 92%);
+$rosewood: hsl(346, 80%, 20%);
+
 
 $golden-ratio-small: 38.2%;
 $golden-ratio-large: 61.8%;

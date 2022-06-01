@@ -22,12 +22,12 @@
       }
 
       .offering-block-date-dayofmonth {
-        color: $medium-grey;
+        color: $davys-grey;
         }
       }
 
     .offering-block-time {
-      border-bottom: 1px dotted $dark-grey;
+      border-bottom: 1px dotted $davys-grey;
       display: grid;
       grid-column: 1 / -1;
       grid-template-columns: repeat(5, 1fr);
@@ -42,7 +42,7 @@
       }
 
       .offering-manager {
-        border-bottom: 1px dotted $dark-grey;
+        border-bottom: 1px dotted $davys-grey;
         &:last-of-type {
           border-bottom: 0;
         }
@@ -52,7 +52,7 @@
       .offering-block-time-time-starttime,
       .offering-block-time-time-ends,
       .offering-block-time-time-endtime {
-        color: $medium-grey;
+        color: $davys-grey;
         display: block;
         font-weight: bold;
       }

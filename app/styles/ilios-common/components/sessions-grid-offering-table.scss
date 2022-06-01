@@ -8,7 +8,7 @@
   width: 95%;
 
   thead {
-    background-color: $blue;
+    background-color: $blue-munsell;
     color: $white;
     position: sticky;
     top: 2rem;
@@ -44,7 +44,7 @@
   }
 
   .offering-block-date {
-    border-top: 1px solid $grey;
+    border-top: 1px solid $cultured-grey;
     font-weight: bold;
   }
 
@@ -54,7 +54,7 @@
       background-color: color.adjust($light-blue, $lightness: -10%);
     }
     &.was-updated {
-      background-color: color.adjust($green, $lightness: 30%);
+      background-color: color.adjust($russion-green, $lightness: 30%);
     }
     .room {
       overflow-wrap: anywhere;
@@ -71,7 +71,7 @@
 
   .offering-form {
     background-color: $white;
-    border: 1px solid $grey;
+    border: 1px solid $cultured-grey;
     padding: .5rem;
   }
 }

@@ -23,7 +23,7 @@
 }
 
 @mixin ilios-overview-title () {
-  color: $dark-blue;
+  color: $teal-blue;
   @include font-size('base');
   font-weight: bold;
 }

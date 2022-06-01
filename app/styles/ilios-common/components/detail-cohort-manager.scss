@@ -10,7 +10,7 @@
   .selectable-cohorts {
     @include ilios-selectable-list;
     background-color: $white;
-    border: 1px solid $blue;
+    border: 1px solid $blue-munsell;
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;

@@ -41,7 +41,7 @@
     }
 
     .day {
-      border: 1px solid $grey;
+      border: 1px solid $cultured-grey;
       padding: 5px;
       @for $week from 1 through 6 {
         @for $day from 1 through 7 {
@@ -68,7 +68,7 @@
         @include ilios-button-reset;
         cursor: default;
         display: block;
-        border: 1px solid $grey;
+        border: 1px solid $cultured-grey;
         border-radius: 3px;
         height: 1.5em;
         overflow: hidden;

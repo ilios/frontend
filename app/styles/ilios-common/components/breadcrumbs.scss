@@ -1,13 +1,13 @@
 @use "sass:math";
 
 .breadcrumbs {
-  $breadcrumb-border-color: $dark-blue;
+  $breadcrumb-border-color: $teal-blue;
   $breadcrumb-border: 1px solid $breadcrumb-border-color;
   $breadcrumb-height: 2rem;
   $breadcrumb-arrow-color: $breadcrumb-border-color;
-  $breadcrumb-background: $background-grey;
+  $breadcrumb-background: $slight-white;
   $breadcrumb-inactive-hover-color: $breadcrumb-background;
-  $breadcrumb-color: $dark-blue;
+  $breadcrumb-color: $teal-blue;
   $breadcrumb-color-hover: $orange;
   $breadcrumb-color-active: $breadcrumb-color;
 

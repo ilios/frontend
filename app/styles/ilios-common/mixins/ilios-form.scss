@@ -71,14 +71,14 @@
 
     &.done {
       background-color: $white;
-      border-color: $green;
-      color: $text-grey;
+      border-color: $russion-green;
+      color: $raisin-black;
 
       &:enabled {
         &:hover,
         &:active,
         &.active {
-          background-color: $green;
+          background-color: $russion-green;
           color: $white;
         }
       }
@@ -86,11 +86,11 @@
 
     &.cancel {
       background-color: $white;
-      border-color: $red;
-      color: $red;
+      border-color: $crimson;
+      color: $crimson;
 
       &:enabled:hover {
-        background-color: $red;
+        background-color: $crimson;
       }
     }
   }
@@ -109,13 +109,13 @@
 
 @mixin ilios-form-error {
   .validation-error-message {
-    color: $red;
+    color: $crimson;
     @include font-size('small');
   }
 
   input {
     &.has-error {
-      border-color: $red;
+      border-color: $crimson;
     }
   }
 }

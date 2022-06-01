@@ -27,7 +27,7 @@
     button {
       border: 0;
       background-color: $white;
-      color: $text-grey;
+      color: $raisin-black;
       display: block;
       outline: none;
       padding: .5rem 1rem;
@@ -38,7 +38,7 @@
       &.danger {
         &:hover,
         &:focus {
-          background-color: $red;
+          background-color: $crimson;
           color: $white;
         }
       }
@@ -46,7 +46,7 @@
       &.good {
         &:hover,
         &:focus {
-          background-color: $green;
+          background-color: $russion-green;
           color: $white;
         }
       }
@@ -74,22 +74,22 @@
 
   &.published {
     .toggle, .menu {
-      border-color: $green;
-      color: $green;
+      border-color: $russion-green;
+      color: $russion-green;
     }
   }
 
   &.notpublished {
     .toggle, .menu {
-      border-color: $yellow;
-      color: $yellow;
+      border-color: $gold;
+      color: $gold;
     }
   }
 
   &.scheduled {
     .toggle, .menu {
-      border-color: $scheduled-brown;
-      color: $scheduled-brown;
+      border-color: $sepia;
+      color: $sepia;
     }
   }
 }

@@ -1,6 +1,6 @@
 .publish-all-sessions {
-  background-color: $background-grey;
-  border: 1px solid $header-grey;
+  background-color: $slight-white;
+  border: 1px solid $cultured-grey;
   padding-left: 1rem;
 
   section {
@@ -32,7 +32,7 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid $green;
+    border: 1px solid $russion-green;
     clear: both;
     @include font-size('large');
     margin: 1rem;
@@ -40,24 +40,24 @@
     text-align: center;
 
     .unlinked-warning {
-      color: $yellow;
+      color: $gold;
       @include font-size('base');
     }
 
     .fa-chart-column {
-      color: $blue;
+      color: $blue-munsell;
       @include font-size('small');
     }
 
     p {
-      color: $green;
+      color: $russion-green;
       font-weight: bold;
       margin: 0;
       margin-bottom: 1rem;
     }
 
     button {
-      background: $green;
+      background: $russion-green;
       color: $white;
     }
   }

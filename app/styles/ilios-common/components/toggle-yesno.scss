@@ -8,11 +8,11 @@
   height: var(--height);
   position: relative;
   width: var(--width);
-  background-color: $red;
+  background-color: $crimson;
   padding: 0;
 
   &.yes {
-    background-color: $green;
+    background-color: $russion-green;
   }
 
   .switch-handle {

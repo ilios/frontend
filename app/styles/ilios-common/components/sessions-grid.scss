@@ -7,11 +7,11 @@
 
   .session {
     &:nth-of-type(even) {
-      background-color: $grey;
+      background-color: $cultured-grey;
     }
 
     &.is-expanded {
-      border: 1px solid $blue;
+      border: 1px solid $blue-munsell;
       background-color: $light-blue;
       margin: .5rem 0;
     }
@@ -27,14 +27,14 @@
 
       .instructional-notes,
       .prerequisites {
-        color: $green;
+        color: $russion-green;
         margin-right: .25rem;
       }
     }
 
     .confirm-removal {
-      background-color: $remove-background-color;
-      color: $red;
+      background-color: $piggy-pink;
+      color: $crimson;
       font-weight: bold;
       margin: 0;
       padding: 1rem 8rem;

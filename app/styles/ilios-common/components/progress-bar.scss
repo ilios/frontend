@@ -2,12 +2,12 @@
 @use "sass:math";
 
 .progress-bar {
-  $progress-border-color: $light-grey;
+  $progress-border-color: $cultured-grey;
   $progress-border: 1px solid $progress-border-color;
   $progress-meter-border-color: $orange;
   $progress-meter-border: 1px solid color.adjust($progress-meter-border-color, $lightness: -15%);
   $progress-meter-color: $progress-meter-border-color;
-  $progress-background: color.adjust($background-grey, $lightness: -5%);
+  $progress-background: color.adjust($slight-white, $lightness: -5%);
   $progress-animation-duration: .7s;
   $progress-color: $white;
   $box-shadow-color: color.adjust($progress-background, $lightness: -50%);
