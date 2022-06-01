@@ -36,6 +36,7 @@ export default class DataLoaderService extends Service {
         'sessionTypes',
         'vocabularies.terms.children.children.children',
         'courses',
+        'configurations',
       ];
       const include = relationships.join(',');
       this.#coursesSchools[id] = this.store.findRecord('school', id, {
@@ -71,6 +72,7 @@ export default class DataLoaderService extends Service {
         'courseObjectives.programYearObjectives',
         'courseObjectives.meshDescriptors',
         'courseObjectives.terms.vocabulary',
+        'courseObjectives.programYearObjectives.competency',
         'learningMaterials.learningMaterial.owningUser',
         'directors',
         'administrators',
