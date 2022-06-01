@@ -75,22 +75,22 @@ p {
 
 .add,
 .yes {
-  color: $ilios-green;
+  color: $green;
 }
 
 .remove,
 .no {
-  color: $ilios-remove-color;
+  color: $red;
 }
 
 .error,
 .is-error {
-  color: $alert-color;
+  color: $red;
 }
 
 .warning,
 .is-warning {
-  color: $warning-color;
+  color: $yellow;
 }
 
 .clickable,
@@ -100,15 +100,15 @@ p {
 
 .editable,
 .is-editable {
-  color: $ilios-blue;
+  color: $blue;
 }
 
 .published {
-  color: $ilios-green;
+  color: $green;
 }
 
 .notpublished {
-  color: $ilios-yellow;
+  color: $yellow;
 }
 
 .scheduled {

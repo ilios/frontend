@@ -89,7 +89,7 @@
   }
 
   th {
-    border-bottom: 1px solid color.adjust($base-border-color, $lightness: -15%);
+    border-bottom: 1px solid color.adjust($light-grey, $lightness: -15%);
   }
 }
 
@@ -99,7 +99,7 @@
       background-color: $remove-background-color;
 
       .confirm-message {
-        color: $ilios-remove-color;
+        color: $red;
         font-weight: bold;
         padding-left: 8em;
         padding-right: 8em;
@@ -119,10 +119,10 @@
 
       .remove {
         background-color: $white;
-        color: $ilios-remove-color;
+        color: $red;
 
         &:hover {
-          background-color: $ilios-remove-color;
+          background-color: $red;
           color: $white;
         }
       }

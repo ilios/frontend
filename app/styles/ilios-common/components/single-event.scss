@@ -16,7 +16,7 @@
     border-left: 3px solid $grey;
 
     caption {
-      color: $ilios-blue;
+      color: $blue;
       font-weight: bold;
     }
   }
@@ -40,14 +40,14 @@
       }
 
       .recently-updated-icon {
-        color: $updated-color;
+        color: $dark-red;
         position: absolute;
         right: 2px;
         top: 2px;
       }
 
       .recently-updated-icon-event {
-        color: $updated-color;
+        color: $dark-red;
       }
     }
 

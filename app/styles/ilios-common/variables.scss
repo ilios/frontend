@@ -1,67 +1,29 @@
 @use "sass:color";
 
-$white: #fff;
-$black: #000;
-$grey: #eee;
-$maroon: #800;
+$background-grey: hsl(0, 0%, 98%);
+$text-grey: hsl(345, 6%, 13%);
+$white: hsl(0, 100%, 100%);
+$black: hsl(0, 0%, 0%);
 
-$base-border-radius: 3px;
+$orange: hsl(30, 100%, 40%);
+$blue: hsl(195, 53%, 43%);
+$green: hsl(103, 23%, 45%);
+$red: hsl(338, 49%, 43%);
+$yellow: hsl(52, 98%, 48%);
 
-$ilios-orange: #c60;
-$ilios-yellow: #ffc339;
+$dark-blue: color.adjust($blue, $lightness: -10%);
+$light-blue: color.adjust($blue, $lightness: 50%);
 
-$background-grey: #fbfbfb;
-$toggle-background-grey: #eceeef;
-$light-grey: #fefefe;
-$dark-grey: #aaa;
-$darker-grey: color.adjust($dark-grey, $lightness: -20%);
-$header-grey: #edecec;
-$moderate-grey: #939393;
-$super-light-grey: #f6f6f6;
-$text-grey: #222;
-$text-blue: #00617f;
-$medium-grey: #666;
-$input-box-grey: #cbcbcb;
-$switch-label-blue: #5accef;
-$switch-blue: #47a8d8;
-$switch-green: #4fb845;
+$dark-grey: color.adjust($text-grey, $lightness: 10%);
+$light-grey: hsl(0, 0%, 98%);
+$header-grey: color.adjust($text-grey, $lightness: 80%);
+$medium-grey: color.adjust($text-grey, $lightness: 20%);
+$grey: color.adjust($background-grey, $lightness: -20%);
 
-$ilios-red: #d9360b;
-$ilios-green: #21634c;
-$ilios-blue: #0071ad;
+$remove-background-color: color.adjust($red, $lightness: 40%);
+$dark-red: color.adjust($red, $lightness: -20%);
+
 $scheduled-brown: #8c4600;
-$dark-blue: color.adjust($ilios-blue, $lightness: -10%);
-
-$ilios-remove-color: #aa443e;
-$remove-background-color: #f1dedd;
-$active-background-color: #effbff;
-$hover-border: #bce3ef;
-
-$success-color: $ilios-green;
-$warning-color: $ilios-yellow;
-$info-color: $ilios-blue;
-$alert-color: $ilios-red;
-$updated-color: #945c58;
-
-$base-font-color: $text-grey;
-$base-border-color: $background-grey;
-$base-background-color: $background-grey;
-
-// Link Colors
-$base-link-color: $ilios-blue;
-
-// Toggles
-// @todo identify and remove unused variables [ST 2018/11/26]
-$switch-label-green: #4fb845;
-$switch-blue: #47a8d8;
-$toggle-background-grey: #f0f0f0;
-$switch-grey: #eee;
-$switch-handle-grey: #f9f9f9;
-$calendar-switch-grey: #ddd;
-$offering-switch-blue: #009ccc;
-$barely-visible-black: rgba(0, 0, 0, .05);
-$almost-visible-black: rgba(0, 0, 0, .15);
-$more-visible-black: rgba(0, 0, 0, .2);
 
 $golden-ratio-small: 38.2%;
 $golden-ratio-large: 61.8%;

@@ -1,6 +1,6 @@
 @mixin loading-box () {
   animation: fadein;
-  background-color: $super-light-grey;
+  background-color: $light-grey;
   border: 1px dotted $dark-grey;
   transition: opacity 2s ease-out;
 

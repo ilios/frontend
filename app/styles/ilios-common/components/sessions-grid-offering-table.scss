@@ -8,7 +8,7 @@
   width: 95%;
 
   thead {
-    background-color: $ilios-blue;
+    background-color: $blue;
     color: $white;
     position: sticky;
     top: 2rem;
@@ -24,7 +24,7 @@
     padding: .2rem .5rem;
 
     &.expanded-offering-manager {
-      background-color: $active-background-color;
+      background-color: $light-blue;
       padding: 0;
     }
 
@@ -51,10 +51,10 @@
   .sessions-grid-offering {
     transition: background-color .5s ease-out;
     &.even {
-      background-color: color.adjust($active-background-color, $lightness: -10%);
+      background-color: color.adjust($light-blue, $lightness: -10%);
     }
     &.was-updated {
-      background-color: color.adjust($ilios-green, $lightness: 30%);
+      background-color: color.adjust($green, $lightness: 30%);
     }
     .room {
       overflow-wrap: anywhere;

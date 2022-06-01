@@ -49,16 +49,16 @@
   }
 
   thead {
-    background-color: $ilios-blue;
+    background-color: $blue;
     color: $white;
   }
 
   td:first-of-type {
-    color: $ilios-orange;
+    color: $orange;
     font-weight: bold;
   }
 
   .maybe {
-    color: $warning-color;
+    color: $yellow;
   }
 }

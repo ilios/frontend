@@ -1,5 +1,5 @@
 .detail-instructors {
-  @include detail-container($text-blue);
+  @include detail-container($dark-blue);
 
   .detail-instructors-header {
     @include detail-container-header;

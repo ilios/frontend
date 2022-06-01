@@ -18,7 +18,7 @@
         padding: 0;
 
         .fa-circle-exclamation {
-          color: $updated-color;
+          color: $dark-red;
         }
       }
 
@@ -26,12 +26,12 @@
         padding-left: 0;
 
         i {
-          color: $ilios-orange;
+          color: $orange;
         }
       }
 
       .ilm-due {
-        color: $ilios-orange;
+        color: $orange;
         font-weight: bold;
       }
     }

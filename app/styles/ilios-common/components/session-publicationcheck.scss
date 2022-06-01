@@ -1,14 +1,14 @@
 .session-publicationcheck {
-  background-color: $active-background-color;
+  background-color: $light-blue;
 
   .back-to-session {
-    border-top: 1px solid $ilios-orange;
+    border-top: 1px solid $orange;
     padding: 1rem 0;
   }
 
   .results {
-    background-color: $active-background-color;
-    @include detail-container($ilios-orange);
+    background-color: $light-blue;
+    @include detail-container($orange);
 
     .title {
       @include detail-container-title;
@@ -18,7 +18,7 @@
       @include detail-container-content;
 
       thead {
-        background-color: $ilios-blue;
+        background-color: $blue;
         color: $white;
       }
     }

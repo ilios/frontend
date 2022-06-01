@@ -19,7 +19,7 @@
       @include ilios-link-button;
 
       &.copying {
-        color: $ilios-green;
+        color: $green;
       }
     }
   }
@@ -38,7 +38,7 @@
 
   &.show-remove-confirmation {
     background-color: $remove-background-color;
-    border: 1px solid $ilios-remove-color;
+    border: 1px solid $red;
   }
 
   .confirm-removal {
@@ -47,7 +47,7 @@
 
     .confirm-message {
       background-color: $remove-background-color;
-      color: $ilios-remove-color;
+      color: $red;
       font-weight: bold;
       margin: 0;
       padding: 1rem 8rem;
@@ -65,7 +65,7 @@
 
     .remove {
       background-color: $white;
-      color: $ilios-remove-color;
+      color: $red;
     }
   }
 

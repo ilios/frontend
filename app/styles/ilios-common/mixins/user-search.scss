@@ -4,9 +4,9 @@
 
   background: $white;
   border: 1px solid $background-grey;
-  border-radius: $base-border-radius;
+  border-radius: 3px;
   box-shadow: 0 2px 2px color.adjust($black, $alpha: -.8);
-  color: $base-font-color;
+  color: $text-grey;
   max-height: 23rem;
   overflow-y: scroll;
   position: absolute;
@@ -19,8 +19,8 @@
   }
 
   li {
-    border-bottom: 1px solid $base-border-color;
-    color: $ilios-blue;
+    border-bottom: 1px solid $light-grey;
+    color: $blue;
     display: block;
     padding: .1rem;
     width: 100%;
@@ -31,13 +31,13 @@
     }
 
     &.summary {
-      color: $ilios-green;
+      color: $green;
     }
 
     a,
     &.clickable {
       &:hover {
-        background-color: color.adjust($base-link-color, $lightness: 50%);
+        background-color: color.adjust($blue, $lightness: 50%);
       }
     }
 

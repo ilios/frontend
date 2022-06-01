@@ -21,7 +21,7 @@
       content: '';
       transform: rotate(45deg);
       background: $dark-grey;
-      border: 1px solid $darker-grey;
+      border: 1px solid $dark-grey;
     }
   }
   &[data-popper-placement^='top'] .arrow {

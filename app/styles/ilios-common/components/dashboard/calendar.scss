@@ -34,7 +34,7 @@
       }
 
       .calendar-filter-list {
-        border: 1px solid $ilios-blue;
+        border: 1px solid $blue;
         float: left;
         @include font-size('small');
         margin-bottom: 1em;
@@ -58,7 +58,7 @@
           @include ilios-list-reset;
 
           li {
-            color: $ilios-blue;
+            color: $blue;
             cursor: pointer;
           }
         }
@@ -119,29 +119,29 @@
         }
 
         .tag-session-type {
-          background-color: color.adjust($ilios-blue, $lightness: 30%);
+          background-color: color.adjust($blue, $lightness: 30%);
         }
 
         .tag-course-level {
-          background-color: color.adjust($ilios-blue, $lightness: 40%);
+          background-color: color.adjust($blue, $lightness: 40%);
         }
 
         .tag-cohort {
-          background-color: color.adjust($ilios-blue, $lightness: 50%);
+          background-color: color.adjust($blue, $lightness: 50%);
         }
 
         .tag-course {
-          background-color: color.adjust($ilios-blue, $lightness: 60%);
+          background-color: color.adjust($blue, $lightness: 60%);
         }
 
         .tag-term {
-          background-color: color.adjust($ilios-blue, $lightness: 40%);
+          background-color: color.adjust($blue, $lightness: 40%);
         }
 
         .filters-clear-filters {
           @include ilios-button-reset;
           @include font-size('small');
-          color: $ilios-blue;
+          color: $blue;
         }
       }
     }

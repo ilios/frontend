@@ -104,11 +104,11 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: color.adjust($ilios-green, $lightness: 60%);
+      background-color: color.adjust($green, $lightness: 60%);
     }
 
     &.is-managing {
-      border: 2px solid $ilios-blue;
+      border: 2px solid $blue;
       .grid-item {
         background-color: $header-grey;
         border: 0;
@@ -129,7 +129,7 @@
       }
 
       .confirm-message {
-        color: $ilios-remove-color;
+        color: $red;
         grid-column: 1 / -1;
         font-weight: bold;
         text-align: center;
@@ -138,10 +138,10 @@
 
       .remove {
         background-color: $white;
-        color: $ilios-remove-color;
+        color: $red;
 
         &:hover {
-          background-color: $ilios-remove-color;
+          background-color: $red;
           color: white;
         }
       }
@@ -175,12 +175,12 @@
   }
 
   .bigadd {
-    background-color: $ilios-green;
+    background-color: $green;
     color: $white;
   }
 
   .bigcancel {
-    background-color: $ilios-red;
+    background-color: $red;
     color: $white;
     margin-left: .5em;
   }

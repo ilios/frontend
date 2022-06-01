@@ -1,7 +1,7 @@
 .daily-calendar-event {
   @include ilios-button-reset;
   cursor: default;
-  border-radius: $base-border-radius;
+  border-radius: 3px;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -19,7 +19,7 @@
   }
 
   .ilios-calendar-event-time {
-    color: $maroon;
+    color: $dark-red;
     display: block;
     @include font-size('small');
     font-weight: bold;

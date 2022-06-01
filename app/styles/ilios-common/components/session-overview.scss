@@ -27,11 +27,11 @@
 }
 
 .session-overview {
-  @include ilios-overview($text-blue);
-  border-bottom: 1px dotted $text-blue;
+  @include ilios-overview($dark-blue);
+  border-bottom: 1px dotted $dark-blue;
 
   .last-update {
-    color: $darker-grey;
+    color: $dark-grey;
     margin-right: 1rem;
     text-align: right;
   }
@@ -100,7 +100,7 @@
   }
 
   .fa-copy {
-    color: $ilios-green;
+    color: $green;
   }
 
   .post-requisite-edit {

@@ -1,5 +1,5 @@
 .session-offerings {
-  @include detail-container($text-blue);
+  @include detail-container($dark-blue);
 
   .offering-section-top {
     @include detail-container-header;
@@ -26,7 +26,7 @@
     grid-template-columns: repeat(5, 1fr);
 
     div {
-      background-color: $text-blue;
+      background-color: $dark-blue;
       border-right: 1px solid $white;
       color: $white;
       overflow: hidden;

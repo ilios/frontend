@@ -38,7 +38,7 @@
       &.danger {
         &:hover,
         &:focus {
-          background-color: $ilios-red;
+          background-color: $red;
           color: $white;
         }
       }
@@ -46,7 +46,7 @@
       &.good {
         &:hover,
         &:focus {
-          background-color: $ilios-green;
+          background-color: $green;
           color: $white;
         }
       }
@@ -74,15 +74,15 @@
 
   &.published {
     .toggle, .menu {
-      border-color: $ilios-green;
-      color: $ilios-green;
+      border-color: $green;
+      color: $green;
     }
   }
 
   &.notpublished {
     .toggle, .menu {
-      border-color: $ilios-yellow;
-      color: $ilios-yellow;
+      border-color: $yellow;
+      color: $yellow;
     }
   }
 

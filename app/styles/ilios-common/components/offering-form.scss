@@ -83,13 +83,13 @@
 
           button.cancel {
             background: transparent;
-            color: $ilios-red;
+            color: $red;
             margin: 0;
             padding: 0 .2rem;
 
             &:enabled:hover {
               color: $white;
-              background-color: $ilios-red;
+              background-color: $red;
             }
           }
         }
@@ -120,7 +120,7 @@
         width: 5rem;
 
         &:invalid {
-          border: 1px $ilios-red solid;
+          border: 1px $red solid;
         }
       }
     }
@@ -149,7 +149,7 @@
     }
 
     .validation-error-message {
-      color: $ilios-red;
+      color: $red;
       display: block;
       @include font-size('small');
       font-style: italic;

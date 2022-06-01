@@ -4,7 +4,7 @@
   padding-left: 1rem;
 
   section {
-    @include detail-container($ilios-orange);
+    @include detail-container($orange);
 
     .title {
       @include detail-container-title;
@@ -32,7 +32,7 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid $ilios-green;
+    border: 1px solid $green;
     clear: both;
     @include font-size('large');
     margin: 1rem;
@@ -40,24 +40,24 @@
     text-align: center;
 
     .unlinked-warning {
-      color: $ilios-yellow;
+      color: $yellow;
       @include font-size('base');
     }
 
     .fa-chart-column {
-      color: $ilios-blue;
+      color: $blue;
       @include font-size('small');
     }
 
     p {
-      color: $ilios-green;
+      color: $green;
       font-weight: bold;
       margin: 0;
       margin-bottom: 1rem;
     }
 
     button {
-      background: $ilios-green;
+      background: $green;
       color: $white;
     }
   }

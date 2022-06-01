@@ -23,7 +23,7 @@
 
 
   .block {
-    @include detail-container($ilios-orange);
+    @include detail-container($orange);
     background-color: $white;
     padding: 0 1rem;
 

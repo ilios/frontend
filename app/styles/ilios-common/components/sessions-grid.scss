@@ -11,8 +11,8 @@
     }
 
     &.is-expanded {
-      border: 1px solid $ilios-blue;
-      background-color: $active-background-color;
+      border: 1px solid $blue;
+      background-color: $light-blue;
       margin: .5rem 0;
     }
 
@@ -27,14 +27,14 @@
 
       .instructional-notes,
       .prerequisites {
-        color: $ilios-green;
+        color: $green;
         margin-right: .25rem;
       }
     }
 
     .confirm-removal {
       background-color: $remove-background-color;
-      color: $ilios-remove-color;
+      color: $red;
       font-weight: bold;
       margin: 0;
       padding: 1rem 8rem;

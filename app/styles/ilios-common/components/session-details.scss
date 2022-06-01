@@ -1,12 +1,12 @@
 .session-details {
-  background-color: $active-background-color;
+  background-color: $light-blue;
   border-color: $header-grey;
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
 
   table thead {
-    background-color: $text-blue;
+    background-color: $dark-blue;
     color: $white;
   }
 }

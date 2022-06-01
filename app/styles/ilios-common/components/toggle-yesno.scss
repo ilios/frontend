@@ -8,11 +8,11 @@
   height: var(--height);
   position: relative;
   width: var(--width);
-  background-color: $ilios-red;
+  background-color: $red;
   padding: 0;
 
   &.yes {
-    background-color: $ilios-green;
+    background-color: $green;
   }
 
   .switch-handle {
