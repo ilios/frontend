@@ -37,16 +37,16 @@
   }
 
   &.show-remove-confirmation {
-    background-color: $piggy-pink;
+    background-color: $lavenderBlush;
     border: 1px solid $crimson;
   }
 
   .confirm-removal {
-    background-color: $piggy-pink;
+    background-color: $lavenderBlush;
     grid-column: 1 / -1;
 
     .confirm-message {
-      background-color: $piggy-pink;
+      background-color: $lavenderBlush;
       color: $crimson;
       font-weight: bold;
       margin: 0;
@@ -60,7 +60,7 @@
     }
 
     &:hover {
-      background-color: $piggy-pink;
+      background-color: $lavenderBlush;
     }
 
     .remove {
