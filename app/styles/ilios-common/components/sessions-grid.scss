@@ -7,12 +7,12 @@
 
   .session {
     &:nth-of-type(even) {
-      background-color: $cultured-grey;
+      background-color: $culturedGrey;
     }
 
     &.is-expanded {
-      border: 1px solid $blue-munsell;
-      background-color: $light-blue;
+      border: 1px solid $blueMunsell;
+      background-color: $lightBlue;
       margin: .5rem 0;
     }
 
@@ -27,7 +27,7 @@
 
       .instructional-notes,
       .prerequisites {
-        color: $russian-green;
+        color: $russianGreen;
         margin-right: .25rem;
       }
     }

@@ -8,7 +8,7 @@
       margin: 0;
       position: relative;
       th {
-        background-color: $teal-blue;
+        background-color: $tealBlue;
         color: $white;
         position: sticky;
         top: 0;
@@ -19,11 +19,11 @@
 
       tbody tr {
         &.active {
-          background-color: $russian-green;
+          background-color: $russianGreen;
           color: $white;
         }
         &:hover {
-          outline: 1px solid $russian-green;
+          outline: 1px solid $russianGreen;
         }
 
         button {

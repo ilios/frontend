@@ -1,6 +1,6 @@
 .editinplace {
   .editable {
-    color: $blue-munsell;
+    color: $blueMunsell;
     cursor: pointer;
 
     &.prompt {
@@ -15,9 +15,9 @@
 
     #{$form-input-text-types} {
       background: $white;
-      border: 1px solid $cultured-grey;
+      border: 1px solid $culturedGrey;
       border-radius: 3px;
-      color: $raisin-black;
+      color: $raisinBlack;
       cursor: pointer;
       display: inline;
       outline: none;
@@ -45,10 +45,10 @@
         }
 
         &.done {
-          color: $russian-green;
+          color: $russianGreen;
 
           &:enabled:hover {
-            background-color: $russian-green;
+            background-color: $russianGreen;
           }
         }
 

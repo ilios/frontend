@@ -8,7 +8,7 @@
   width: 95%;
 
   thead {
-    background-color: $blue-munsell;
+    background-color: $blueMunsell;
     color: $white;
     position: sticky;
     top: 2rem;
@@ -24,7 +24,7 @@
     padding: .2rem .5rem;
 
     &.expanded-offering-manager {
-      background-color: $light-blue;
+      background-color: $lightBlue;
       padding: 0;
     }
 
@@ -44,17 +44,17 @@
   }
 
   .offering-block-date {
-    border-top: 1px solid $cultured-grey;
+    border-top: 1px solid $culturedGrey;
     font-weight: bold;
   }
 
   .sessions-grid-offering {
     transition: background-color .5s ease-out;
     &.even {
-      background-color: color.adjust($light-blue, $lightness: -10%);
+      background-color: color.adjust($lightBlue, $lightness: -10%);
     }
     &.was-updated {
-      background-color: color.adjust($russian-green, $lightness: 30%);
+      background-color: color.adjust($russianGreen, $lightness: 30%);
     }
     .room {
       overflow-wrap: anywhere;
@@ -71,7 +71,7 @@
 
   .offering-form {
     background-color: $white;
-    border: 1px solid $cultured-grey;
+    border: 1px solid $culturedGrey;
     padding: .5rem;
   }
 }

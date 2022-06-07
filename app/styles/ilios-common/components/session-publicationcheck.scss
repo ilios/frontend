@@ -1,5 +1,5 @@
 .session-publicationcheck {
-  background-color: $light-blue;
+  background-color: $lightBlue;
 
   .back-to-session {
     border-top: 1px solid $orange;
@@ -7,7 +7,7 @@
   }
 
   .results {
-    background-color: $light-blue;
+    background-color: $lightBlue;
     @include detail-container($orange);
 
     .title {
@@ -18,7 +18,7 @@
       @include detail-container-content;
 
       thead {
-        background-color: $blue-munsell;
+        background-color: $blueMunsell;
         color: $white;
       }
     }

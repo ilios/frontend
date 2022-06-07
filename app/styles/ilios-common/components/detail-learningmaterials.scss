@@ -28,7 +28,7 @@
     .lm-search-results {
       @include ilios-selectable-list;
       background-color: $white;
-      border: 1px solid $blue-munsell;
+      border: 1px solid $blueMunsell;
       margin: 0;
       max-height: 15rem;
       overflow-y: scroll;
@@ -36,7 +36,7 @@
       z-index: 10;
 
       li {
-        border-bottom: 1px solid $cultured-grey;
+        border-bottom: 1px solid $culturedGrey;
         min-height: 3.25rem;
         position: relative;
 
@@ -46,7 +46,7 @@
         }
 
         &:hover {
-          background: $cultured-grey;
+          background: $culturedGrey;
         }
       }
 
@@ -58,7 +58,7 @@
       }
 
       .learning-material-description {
-        color: $davys-grey;
+        color: $davysGrey;
         display: block;
         @include font-size('small');
       }
@@ -75,7 +75,7 @@
 
         li {
           border: 0;
-          color: $davys-grey;
+          color: $davysGrey;
           cursor: inherit;
           display: list-item;
           @include font-size('small');
@@ -104,7 +104,7 @@
 
     .icon-button {
       @include ilios-button-reset;
-      color: $blue-munsell;
+      color: $blueMunsell;
       &.remove {
         color: $crimson;
       }

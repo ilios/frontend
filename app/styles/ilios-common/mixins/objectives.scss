@@ -36,7 +36,7 @@
   }
 
   .new-objective {
-    border: 1px solid $cultured-grey;
+    border: 1px solid $culturedGrey;
     margin: 1rem;
     padding: .5rem;
 
@@ -69,7 +69,7 @@
     margin-right: .5em;
 
     .grid-item {
-      border-bottom: 1px solid $davys-grey;
+      border-bottom: 1px solid $davysGrey;
       padding: .5em .25em;
     }
 
@@ -104,13 +104,13 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: color.adjust($russian-green, $lightness: 60%);
+      background-color: color.adjust($russianGreen, $lightness: 60%);
     }
 
     &.is-managing {
-      border: 2px solid $blue-munsell;
+      border: 2px solid $blueMunsell;
       .grid-item {
-        background-color: $cultured-grey;
+        background-color: $culturedGrey;
         border: 0;
       }
     }
@@ -175,7 +175,7 @@
   }
 
   .bigadd {
-    background-color: $russian-green;
+    background-color: $russianGreen;
     color: $white;
   }
 

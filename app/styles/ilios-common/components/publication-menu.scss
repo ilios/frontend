@@ -27,7 +27,7 @@
     button {
       border: 0;
       background-color: $white;
-      color: $raisin-black;
+      color: $raisinBlack;
       display: block;
       outline: none;
       padding: .5rem 1rem;
@@ -46,7 +46,7 @@
       &.good {
         &:hover,
         &:focus {
-          background-color: $russian-green;
+          background-color: $russianGreen;
           color: $white;
         }
       }
@@ -74,8 +74,8 @@
 
   &.published {
     .toggle, .menu {
-      border-color: $russian-green;
-      color: $russian-green;
+      border-color: $russianGreen;
+      color: $russianGreen;
     }
   }
 

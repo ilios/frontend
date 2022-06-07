@@ -85,11 +85,11 @@
 
 @mixin ilios-table-colors () {
   thead {
-    background-color: $slight-white;
+    background-color: $slightWhite;
   }
 
   th {
-    border-bottom: 1px solid color.adjust($cultured-grey, $lightness: -15%);
+    border-bottom: 1px solid color.adjust($culturedGrey, $lightness: -15%);
   }
 }
 
@@ -132,6 +132,6 @@
 
 @mixin ilios-zebra-table () {
   tbody tr:nth-child(even) {
-    background-color: $cultured-grey;
+    background-color: $culturedGrey;
   }
 }

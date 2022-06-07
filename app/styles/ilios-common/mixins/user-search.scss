@@ -3,10 +3,10 @@
 @mixin user-search-results () {
 
   background: $white;
-  border: 1px solid $slight-white;
+  border: 1px solid $slightWhite;
   border-radius: 3px;
   box-shadow: 0 2px 2px color.adjust($black, $alpha: -.8);
-  color: $raisin-black;
+  color: $raisinBlack;
   max-height: 23rem;
   overflow-y: scroll;
   position: absolute;
@@ -19,25 +19,25 @@
   }
 
   li {
-    border-bottom: 1px solid $cultured-grey;
-    color: $blue-munsell;
+    border-bottom: 1px solid $culturedGrey;
+    color: $blueMunsell;
     display: block;
     padding: .1rem;
     width: 100%;
 
     &.inactive {
-      color: color.adjust($cultured-grey, $lightness: -20%);
+      color: color.adjust($culturedGrey, $lightness: -20%);
       font-style: italic;
     }
 
     &.summary {
-      color: $russian-green;
+      color: $russianGreen;
     }
 
     a,
     &.clickable {
       &:hover {
-        background-color: color.adjust($blue-munsell, $lightness: 50%);
+        background-color: color.adjust($blueMunsell, $lightness: 50%);
       }
     }
 
@@ -56,7 +56,7 @@
     }
 
     .email {
-      color: $davys-grey;
+      color: $davysGrey;
       font-style: italic;
     }
   }

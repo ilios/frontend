@@ -52,12 +52,12 @@
     margin-left: .25rem;
 
     &>.active {
-      color: $blue-munsell;
+      color: $blueMunsell;
       cursor: pointer;
     }
 
     &>.disabled {
-      color: $davys-grey;
+      color: $davysGrey;
     }
   }
 

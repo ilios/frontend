@@ -1,6 +1,6 @@
 .session-header {
 
-  background-color: $cultured-grey;
+  background-color: $culturedGrey;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -27,11 +27,11 @@
 }
 
 .session-overview {
-  @include ilios-overview($teal-blue);
-  border-bottom: 1px dotted $teal-blue;
+  @include ilios-overview($tealBlue);
+  border-bottom: 1px dotted $tealBlue;
 
   .last-update {
-    color: $davys-grey;
+    color: $davysGrey;
     margin-right: 1rem;
     text-align: right;
   }
@@ -100,7 +100,7 @@
   }
 
   .fa-copy {
-    color: $russian-green;
+    color: $russianGreen;
   }
 
   .post-requisite-edit {

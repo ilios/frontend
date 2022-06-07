@@ -1,6 +1,6 @@
 .publish-all-sessions {
-  background-color: $slight-white;
-  border: 1px solid $cultured-grey;
+  background-color: $slightWhite;
+  border: 1px solid $culturedGrey;
   padding-left: 1rem;
 
   section {
@@ -32,7 +32,7 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid $russian-green;
+    border: 1px solid $russianGreen;
     clear: both;
     @include font-size('large');
     margin: 1rem;
@@ -45,19 +45,19 @@
     }
 
     .fa-chart-column {
-      color: $blue-munsell;
+      color: $blueMunsell;
       @include font-size('small');
     }
 
     p {
-      color: $russian-green;
+      color: $russianGreen;
       font-weight: bold;
       margin: 0;
       margin-bottom: 1rem;
     }
 
     button {
-      background: $russian-green;
+      background: $russianGreen;
       color: $white;
     }
   }

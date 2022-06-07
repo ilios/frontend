@@ -1,12 +1,12 @@
 .click-choice-buttons {
   button {
-    background-color: $cultured-grey;
-    border: 1px outset $davys-grey;
-    color: $raisin-black;
+    background-color: $culturedGrey;
+    border: 1px outset $davysGrey;
+    color: $raisinBlack;
 
     &.active {
-      background-color: $blue-munsell;
-      border: 1px inset $blue-munsell;
+      background-color: $blueMunsell;
+      border: 1px inset $blueMunsell;
       color: $white;
     }
   }

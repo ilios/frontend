@@ -1,6 +1,6 @@
 .selectable-terms-list-item {
   @include ilios-button-reset;
-  border: 1px $cultured-grey solid;
+  border: 1px $culturedGrey solid;
   border-radius: 4px;
   display: block;
   margin-top: 5px;
@@ -10,7 +10,7 @@
   width: 100%;
 
   &.selected {
-    background-color: $cultured-grey;
+    background-color: $culturedGrey;
   }
 
   .actions {

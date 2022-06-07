@@ -6,10 +6,10 @@
   .results {
     @include ilios-list-reset;
     background: $white;
-    border: 1px solid $slight-white;
+    border: 1px solid $slightWhite;
     border-radius: 3px;
     box-shadow: 0 2px 2px color.adjust($black, $alpha: -.8);
-    color: $raisin-black;
+    color: $raisinBlack;
     left: 0;
     max-height: 15rem;
     overflow: scroll;
@@ -18,28 +18,28 @@
     z-index: 100;
 
     li {
-      border-bottom: 1px solid $cultured-grey;
+      border-bottom: 1px solid $culturedGrey;
       padding: .6rem;
       padding-left: 1rem;
 
       &.active:hover {
-        background-color: color.adjust($blue-munsell, $lightness: 50%);
+        background-color: color.adjust($blueMunsell, $lightness: 50%);
         cursor: pointer;
       }
 
       &.inactive {
-        color: color.adjust($cultured-grey, $lightness: -20%);
+        color: color.adjust($culturedGrey, $lightness: -20%);
         cursor: default;
         font-style: italic;
       }
 
       &.results-count {
-        color: $russian-green;
+        color: $russianGreen;
       }
     }
 
     .email {
-      color: $davys-grey;
+      color: $davysGrey;
       font-style: italic;
       padding-right: .2rem;
     }

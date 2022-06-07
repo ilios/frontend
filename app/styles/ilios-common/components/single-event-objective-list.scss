@@ -2,11 +2,11 @@
 
   button {
     &.active {
-      background-color: $russian-green;
+      background-color: $russianGreen;
     }
     &.disabled {
       cursor: default;
-      background-color: $davys-grey;
+      background-color: $davysGrey;
     }
   }
 

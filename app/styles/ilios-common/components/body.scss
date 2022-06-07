@@ -9,8 +9,8 @@ html {
 }
 
 body {
-  background-color: $slight-white;
-  color: $raisin-black;
+  background-color: $slightWhite;
+  color: $raisinBlack;
   font-family: Nunito, serif;
   margin: 0;
   padding: 0;
@@ -50,7 +50,7 @@ h6 {
 }
 
 select {
-  color: $raisin-black;
+  color: $raisinBlack;
   font-family: 'Nunito Sans', sans-serif;
 }
 
@@ -75,7 +75,7 @@ p {
 
 .add,
 .yes {
-  color: $russian-green;
+  color: $russianGreen;
 }
 
 .remove,
@@ -100,11 +100,11 @@ p {
 
 .editable,
 .is-editable {
-  color: $blue-munsell;
+  color: $blueMunsell;
 }
 
 .published {
-  color: $russian-green;
+  color: $russianGreen;
 }
 
 .notpublished {
