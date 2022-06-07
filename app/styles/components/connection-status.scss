@@ -1,6 +1,6 @@
 .connection-status {
   $height: 2.5rem;
-  @include critical-notice($warning-color, $text-grey, $height);
+  @include critical-notice($gold, $raisinBlack, $height);
 
   display: none;
 
@@ -17,7 +17,7 @@
     height: $height;
 
     button {
-      background-color: $text-grey;
+      background-color: $raisinBlack;
       border: 0;
       color: $white;
       display: inline-block;

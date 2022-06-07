@@ -1,8 +1,8 @@
 .programyear-overview {
-  @include ilios-overview($ilios-orange);
-  background: $background-grey;
-  border: 1px dotted $header-grey;
-  border-bottom: 1px dotted $ilios-orange;
+  @include ilios-overview($orange);
+  background: $slightWhite;
+  border: 1px dotted $culturedGrey;
+  border-bottom: 1px dotted $orange;
   padding: 0 2rem 1rem;
 
   .programyear-overview-header {
@@ -17,7 +17,7 @@
       @include ilios-overview-actions;
 
       a {
-        color: $ilios-blue;
+        color: $blueMunsell;
         @include font-size('medium');
         margin-right: .5rem;
       }

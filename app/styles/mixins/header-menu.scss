@@ -1,6 +1,6 @@
 @use "sass:color";
 
-$header-menu-background-color: color.adjust($base-background-color, $lightness: -3%);
+$header-menu-background-color: color.adjust($slightWhite, $lightness: -3%);
 
 @mixin header-menu () {
   margin: 0 0 0 .5rem;
@@ -11,7 +11,7 @@ $header-menu-background-color: color.adjust($base-background-color, $lightness: 
     background-color: transparent;
     border: 1px solid $header-menu-background-color;
     border-radius: .2rem;
-    color: $text-grey;
+    color: $raisinBlack;
     font-weight: normal;
     padding: .25rem;
   }
@@ -68,7 +68,7 @@ $header-menu-background-color: color.adjust($base-background-color, $lightness: 
 
   &[aria-checked='true'],
   &.active {
-    background-color: color.adjust($ilios-green, $lightness: 25%);
+    background-color: color.adjust($fernGreen, $lightness: 25%);
   }
 
   &:hover,
@@ -76,7 +76,7 @@ $header-menu-background-color: color.adjust($base-background-color, $lightness: 
     background-color: $white;
     &[aria-checked='true'],
     &.active {
-      background-color: color.adjust($ilios-green, $lightness: 15%);
+      background-color: color.adjust($fernGreen, $lightness: 15%);
     }
   }
 }

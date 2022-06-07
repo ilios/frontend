@@ -1,8 +1,8 @@
 noscript {
   p {
-    background-color: $background-grey;
-    border: 2px dashed $ilios-orange;
-    color: $text-grey;
+    background-color: $slightWhite;
+    border: 2px dashed $orange;
+    color: $raisinBlack;
     @include font-size('xxl');
     font-weight: bold;
     margin: 2rem;

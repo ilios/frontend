@@ -46,13 +46,13 @@
 }
 
 @mixin main-list-box () {
-  border: 2px solid $header-grey;
+  border: 2px solid $culturedGrey;
   display: block;
   width: 100%;
 }
 
 @mixin main-list-box-header () {
-  background-color: $header-grey;
+  background-color: $culturedGrey;
   display: flex;
   flex-direction: column;
   padding: .5rem 0;
@@ -87,7 +87,7 @@
 }
 
 @mixin main-list-saved-new () {
-  border: 1px solid $ilios-green;
+  border: 1px solid $fernGreen;
   margin: 1rem;
   padding: 1rem;
 }
@@ -104,7 +104,7 @@
     @include ilios-zebra-table;
 
     thead {
-      background-color: $header-grey;
+      background-color: $culturedGrey;
     }
   }
 }

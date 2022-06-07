@@ -1,7 +1,7 @@
 .learnergroup-cohort-user-manager {
-  @include detail-container($text-blue);
+  @include detail-container($tealBlue);
   border-bottom: 0;
-  border-top: 1px dotted $ilios-orange;
+  border-top: 1px dotted $orange;
 
   .learnergroup-cohort-user-manager-header {
     align-items: center;

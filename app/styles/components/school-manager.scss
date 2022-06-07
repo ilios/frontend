@@ -1,6 +1,6 @@
 .school-manager {
   padding: .5rem .25rem;
-  border: 1px solid $ilios-blue;
+  border: 1px solid $blueMunsell;
   border-radius: 5px;
 
   .backtolink {
@@ -9,7 +9,7 @@
   }
 
   .school-overview {
-    border-bottom: 1px dotted $header-grey;
+    border-bottom: 1px dotted $culturedGrey;
 
     h2 {
       @include ilios-heading-h2;

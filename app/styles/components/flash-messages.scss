@@ -34,19 +34,19 @@
   }
 
   .alert-success {
-    @include flash($success-color);
+    @include flash($fernGreen);
   }
 
   .alert-warning {
-    @include flash($warning-color);
+    @include flash($gold);
   }
 
   .alert-info {
-    @include flash($info-color);
+    @include flash($blueMunsell);
   }
 
   .alert-alert {
-    @include flash($alert-color);
+    @include flash($crimson);
   }
 
   .alert:last-of-type {

@@ -5,7 +5,7 @@
   }
 
   .is-student {
-    color: $ilios-green;
+    color: $fernGreen;
     display: block;
     text-align: center;
     width: 100%;
@@ -32,7 +32,7 @@
 
   .token-maintenance {
 
-    border-top: 1px dotted $ilios-orange;
+    border-top: 1px dotted $orange;
     @include font-size('small');
     margin-top: 1rem;
     padding: 1rem;

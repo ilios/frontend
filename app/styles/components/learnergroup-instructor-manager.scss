@@ -1,6 +1,6 @@
 .learnergroup-instructor-manager {
-  @include detail-container($ilios-orange);
-  border-top: 1px dotted $ilios-orange;
+  @include detail-container($orange);
+  border-top: 1px dotted $orange;
 
   .detail-header {
     @include detail-container-header;
@@ -27,7 +27,7 @@
 
     .removable-instructor-group {
       & > span {
-        background-color: $header-grey;
+        background-color: $culturedGrey;
         border-radius: 4px;
         cursor: pointer;
         font-weight: bold;

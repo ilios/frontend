@@ -2,7 +2,7 @@
 
 @mixin verification-preview-table() {
   td, th {
-    border: 1px solid color.adjust($base-border-color, $lightness: -15%);
+    border: 1px solid color.adjust($culturedGrey, $lightness: -15%);
   }
 
   th {
