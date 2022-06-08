@@ -19,11 +19,11 @@
 
       tbody tr {
         &.active {
-          background-color: $russianGreen;
+          background-color: $fernGreen;
           color: $white;
         }
         &:hover {
-          outline: 1px solid $russianGreen;
+          outline: 1px solid $fernGreen;
         }
 
         button {

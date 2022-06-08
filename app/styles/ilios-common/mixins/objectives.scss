@@ -104,7 +104,7 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: color.adjust($russianGreen, $lightness: 60%);
+      background-color: color.adjust($fernGreen, $lightness: 60%);
     }
 
     &.is-managing {
@@ -175,7 +175,7 @@
   }
 
   .bigadd {
-    background-color: $russianGreen;
+    background-color: $fernGreen;
     color: $white;
   }
 
