@@ -1,19 +1,19 @@
 @use "sass:color";
 
 @mixin ilios-link () {
-  color: $blueMunsell;
+  color: $tealBlue;
   cursor: pointer;
   font-weight: 600;
   text-decoration: none;
 
   &:visited {
-    color: $blueMunsell;
+    color: $tealBlue;
   }
 
   &:hover,
   &:active,
   &:focus {
-    color: color.adjust($blueMunsell, $lightness: -15%);
+    color: $blueMunsell;
     outline: thin dotted;
     text-decoration: underline;
   }
