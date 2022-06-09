@@ -18,7 +18,7 @@
 {{else}}
   <Course::BackToCourses />
 
-  <section aria-hidden="true" class="course-loader" {{animate-loading}}>
+  <section aria-hidden="true" class="course-loader" {{animate-loading "course" finalOpacity=".75"}}>
     <CourseHeader @course={{@course}} @editable={{false}} />
     <CourseOverview @course={{@course}} @editable={{false}} />
 

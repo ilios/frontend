@@ -1,6 +1,8 @@
+@use "sass:color";
+
 .course-loading {
-  @include animate-loading(.1, .2, 2s);
   @include loading-text;
+  @include loading-shimmer;
 
   .header {
     @include course-header;
@@ -16,7 +18,6 @@
 
 .course-sessions.course-sessions-loading {
   border-bottom: 0;
-  @include animate-loading(.1, .5, 2s);
   @include loading-shimmer;
   
   .course-sessions-header {
@@ -32,21 +33,16 @@
 
   .sessions-grid-header {
     @include loading-text;
-    background-color: $moderate-grey;
+    background-color: color.adjust($davysGrey, $lightness: 50%);
     height: 2rem;
   }
-}
-
-.course-loader {
-  @include animate-loading(.2, .5, 5s);
 }
 
 .course-loading, .course-loader {
   border-top: 0;
   border-width: 0 2px 2px;
-  border-color: $header-grey;
+  border-color: $culturedGrey;
   border-style: solid;
-  @include loading-shimmer;
   
   .mock-detail-box {
     display: flex;
@@ -55,11 +51,11 @@
     width: 100%;
 
     span {
-      background-color: $medium-grey;
+      background-color: color.adjust($davysGrey, $lightness: 50%);
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       padding: .25rem 4rem;
-      color: $medium-grey;
+      color: color.adjust($davysGrey, $lightness: 50%);
 
       .expand-collapse-icon {
         margin-left: .5rem;

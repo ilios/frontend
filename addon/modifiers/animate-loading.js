@@ -1,10 +1,35 @@
-import { modifier } from 'ember-modifier';
+import Modifier from 'ember-modifier';
+import { inject as service } from '@ember/service';
+import { registerDestructor } from '@ember/destroyable';
 
-export default modifier(function animateLoading(element) {
-  element.classList.add('animate-loading');
-  const timeout = setTimeout(() => element.classList.remove('animate-loading'), 1);
+export default class AnimateLoadingModifier extends Modifier {
+  @service loadingOpacityTracker;
+  timeoutId;
+  trackingName;
+  element;
 
-  return () => {
-    clearTimeout(timeout);
-  };
-});
+  constructor(owner, args) {
+    super(owner, args);
+    registerDestructor(this, () => {
+      clearTimeout(this.timeoutId);
+      if (this.trackingName) {
+        this.loadingOpacityTracker.set(this.trackingName, this.element.style.opacity);
+      }
+    });
+  }
+
+  modify(element, [trackingName], { initialOpacity = 0.1, finalOpacity = 1, loadingTime = 1000 }) {
+    this.element = element;
+    this.trackingName = trackingName;
+    if (trackingName && this.loadingOpacityTracker.has(trackingName)) {
+      element.style.opacity = this.loadingOpacityTracker.get(trackingName);
+    } else {
+      element.style.opacity = initialOpacity;
+    }
+
+    this.timeoutId = setTimeout(() => {
+      element.style.transition = `opacity ${loadingTime / 1000}s linear`;
+      element.style.opacity = finalOpacity;
+    }, 1);
+  }
+}

@@ -1,6 +1,5 @@
 .course-sessions {
   @include detail-container($orange);
-  @include animate-loading(.5, 1, 4s);
   margin: .5rem 1rem 0 .5rem;
 
   .course-sessions-header {

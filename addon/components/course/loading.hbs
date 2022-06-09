@@ -1,7 +1,7 @@
 <Course::BackToCourses />
 
-<div aria-hidden="true" {{animate-loading}}>
-  <div class="course-loading">
+<div aria-hidden="true">
+  <div class="course-loading" {{animate-loading "course" loadingTime=10000 finalOpacity=".5"}}>
     <div class="header">
       <span class="title">&nbsp;</span>
     </div>
@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <section class="course-sessions course-sessions-loading" {{animate-loading}}>
+  <section class="course-sessions course-sessions-loading" {{animate-loading "course-sessions" finalOpacity=".5"}}>
     <div class="course-sessions-header">
       {{!-- template-lint-disable no-bare-strings --}}
       <div class="title">
