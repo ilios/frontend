@@ -36,7 +36,7 @@
   }
 
   .new-objective {
-    border: 1px solid $header-grey;
+    border: 1px solid $culturedGrey;
     margin: 1rem;
     padding: .5rem;
 
@@ -69,7 +69,7 @@
     margin-right: .5em;
 
     .grid-item {
-      border-bottom: 1px solid $dark-grey;
+      border-bottom: 1px solid $davysGrey;
       padding: .5em .25em;
     }
 
@@ -104,13 +104,13 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: color.adjust($ilios-green, $lightness: 60%);
+      background-color: color.adjust($fernGreen, $lightness: 60%);
     }
 
     &.is-managing {
-      border: 2px solid $ilios-blue;
+      border: 2px solid $blueMunsell;
       .grid-item {
-        background-color: $header-grey;
+        background-color: $culturedGrey;
         border: 0;
       }
     }
@@ -122,14 +122,14 @@
     }
 
     &.confirm-removal {
-      background-color: $remove-background-color;
+      background-color: $lavenderBlush;
 
       .grid-item {
         border: 0;
       }
 
       .confirm-message {
-        color: $ilios-remove-color;
+        color: $crimson;
         grid-column: 1 / -1;
         font-weight: bold;
         text-align: center;
@@ -138,10 +138,10 @@
 
       .remove {
         background-color: $white;
-        color: $ilios-remove-color;
+        color: $crimson;
 
         &:hover {
-          background-color: $ilios-remove-color;
+          background-color: $crimson;
           color: white;
         }
       }
@@ -175,12 +175,12 @@
   }
 
   .bigadd {
-    background-color: $ilios-green;
+    background-color: $fernGreen;
     color: $white;
   }
 
   .bigcancel {
-    background-color: $ilios-red;
+    background-color: $crimson;
     color: $white;
     margin-left: .5em;
   }

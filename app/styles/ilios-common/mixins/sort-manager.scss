@@ -8,12 +8,12 @@
     }
 
     .bigadd {
-      background-color: $ilios-green;
+      background-color: $fernGreen;
       color: $white;
     }
 
     .bigcancel {
-      background-color: $ilios-red;
+      background-color: $crimson;
       color: $white;
     }
   }
@@ -25,7 +25,7 @@
   .sortable-items {
     list-style-type: none;
     .item {
-      background-color: $header-grey;
+      background-color: $culturedGrey;
       border-radius: 4px;
       box-sizing: border-box;
       cursor: pointer;
@@ -50,13 +50,13 @@
         opacity: 0.3;
       }
       &.dragged-above {
-        border-top: .7rem solid $ilios-orange;
+        border-top: .7rem solid $orange;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         padding: .3rem 1rem 1rem 1rem;
       }
       &.dragged-below {
-        border-bottom: .7rem solid $ilios-orange;
+        border-bottom: .7rem solid $orange;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         padding: 1rem 1rem .3rem 1rem;

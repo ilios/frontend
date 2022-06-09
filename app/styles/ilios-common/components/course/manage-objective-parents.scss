@@ -14,10 +14,10 @@
         padding: 0;
       }
       &.selected {
-        border-left: 10px solid $ilios-orange;
+        border-left: 10px solid $orange;
 
         .competency-title {
-          color: $ilios-green;
+          color: $fernGreen;
           font-weight: bold;
         }
       }
@@ -38,7 +38,7 @@
   }
 
   .no-cohorts {
-    color: $warning-color;
+    color: $gold;
     font-weight: bold;
   }
 }

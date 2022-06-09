@@ -85,21 +85,21 @@
 
 @mixin ilios-table-colors () {
   thead {
-    background-color: $background-grey;
+    background-color: $slightWhite;
   }
 
   th {
-    border-bottom: 1px solid color.adjust($base-border-color, $lightness: -15%);
+    border-bottom: 1px solid color.adjust($culturedGrey, $lightness: -15%);
   }
 }
 
 @mixin ilios-removable-table () {
   tbody {
     .confirm-removal {
-      background-color: $remove-background-color;
+      background-color: $lavenderBlush;
 
       .confirm-message {
-        color: $ilios-remove-color;
+        color: $crimson;
         font-weight: bold;
         padding-left: 8em;
         padding-right: 8em;
@@ -114,15 +114,15 @@
 
 
       &:hover {
-        background-color: $remove-background-color;
+        background-color: $lavenderBlush;
       }
 
       .remove {
         background-color: $white;
-        color: $ilios-remove-color;
+        color: $crimson;
 
         &:hover {
-          background-color: $ilios-remove-color;
+          background-color: $crimson;
           color: $white;
         }
       }
@@ -132,6 +132,6 @@
 
 @mixin ilios-zebra-table () {
   tbody tr:nth-child(even) {
-    background-color: $grey;
+    background-color: color.adjust($culturedGrey, $lightness: 96%);
   }
 }

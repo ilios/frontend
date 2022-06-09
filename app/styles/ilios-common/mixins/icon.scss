@@ -1,10 +1,10 @@
 @mixin icon {
   &.enabled {
-    color: $ilios-blue;
+    color: $blueMunsell;
     cursor: pointer;
   }
 
   &.disabled {
-    color: $dark-grey;
+    color: $davysGrey;
   }
 }

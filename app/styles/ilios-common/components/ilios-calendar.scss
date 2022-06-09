@@ -21,12 +21,12 @@
     float: right;
 
     .highlight {
-      color: $ilios-orange;
+      color: $orange;
       @include font-size('medium');
     }
 
     .on {
-      color: $ilios-green;
+      color: $fernGreen;
     }
   }
 
@@ -51,7 +51,7 @@
   }
 
   .ilios-calendar-ics-feed {
-    border: 1px dotted $ilios-orange;
+    border: 1px dotted $orange;
     margin: auto;
     margin-bottom: 1em;
     padding: 2em;
@@ -64,7 +64,7 @@
       padding: 0;
 
       &.yes {
-        color: $ilios-green;
+        color: $fernGreen;
       }
     }
 

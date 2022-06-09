@@ -1,8 +1,8 @@
 @mixin ilios-button () {
   appearance: none;
-  background-color: $dark-blue;
+  background-color: $tealBlue;
   border: 0;
-  border-radius: $base-border-radius;
+  border-radius: 3px;
   box-sizing: border-box;
   color: $white;
   cursor: pointer;
@@ -33,5 +33,5 @@
 
 @mixin ilios-link-button () {
   @include ilios-button-reset;
-  color: $base-link-color;
+  color: $blueMunsell;
 }

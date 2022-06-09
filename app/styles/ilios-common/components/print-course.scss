@@ -1,6 +1,6 @@
 .print-course {
   .header {
-    background-color: $header-grey;
+    background-color: $culturedGrey;
     padding: 0 1rem;
     width: 100%;
 
@@ -23,7 +23,7 @@
 
 
   .block {
-    @include detail-container($ilios-orange);
+    @include detail-container($orange);
     background-color: $white;
     padding: 0 1rem;
 

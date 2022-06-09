@@ -3,7 +3,7 @@
   .flatpickr-next-month,
   .flatpickr-prev-month {
     color: $white;
-    background: $ilios-orange;
+    background: $orange;
 
     svg {
       fill: $white;
@@ -23,7 +23,7 @@
       text-align-last: right;
 
       option {
-        color: $text-grey;
+        color: $raisinBlack;
       }
     }
 
@@ -42,9 +42,9 @@
 span.flatpickr-weekday,
 .flatpickr-day.selected {
   color: $white;
-  background: $ilios-orange;
+  background: $orange;
 }
 
 .flatpickr-day.selected {
-  border-color: $ilios-orange;
+  border-color: $orange;
 }

@@ -1,5 +1,5 @@
 .api-version-notice {
-  @include critical-notice($warning-color, $text-grey, 1rem);
+  @include critical-notice($gold, $raisinBlack, 1rem);
 
   display: none;
   padding: .25rem 1rem;
@@ -10,7 +10,7 @@
 
   .details {
     button {
-      background-color: $text-grey;
+      background-color: $raisinBlack;
       border: 0;
       color: $white;
       display: inline-block;

@@ -2,11 +2,11 @@
 
   button {
     &.active {
-      background-color: $ilios-green;
+      background-color: $fernGreen;
     }
     &.disabled {
       cursor: default;
-      background-color: $dark-grey;
+      background-color: $davysGrey;
     }
   }
 
@@ -74,7 +74,7 @@
   }
 
   .objective {
-    border-bottom: 1px dotted $ilios-orange;
+    border-bottom: 1px dotted $orange;
     &:last-of-type {
       border-bottom: 0;
     }

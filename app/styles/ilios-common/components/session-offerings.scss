@@ -1,5 +1,5 @@
 .session-offerings {
-  @include detail-container($text-blue);
+  @include detail-container($tealBlue);
 
   .offering-section-top {
     @include detail-container-header;
@@ -20,13 +20,13 @@
   }
 
   .session-offerings-header {
-    background-color: $header-grey;
+    background-color: $culturedGrey;
     display: grid;
     font-weight: bold;
     grid-template-columns: repeat(5, 1fr);
 
     div {
-      background-color: $text-blue;
+      background-color: $tealBlue;
       border-right: 1px solid $white;
       color: $white;
       overflow: hidden;

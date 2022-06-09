@@ -7,10 +7,11 @@
 
   label {
     background-color: $white;
-    color: $ilios-green;
+    color: $tealBlue;
     border: 1px solid rgba($black, .2);
     display: inline-block;
     @include font-size('small');
+    font-weight: 600;
     min-width: 3em;
     padding: .25em .5em;
     text-align: center;
@@ -30,7 +31,7 @@
   }
 
   input:checked + label {
-    background-color: $ilios-green;
+    background-color: $tealBlue;
     color: $white;
   }
 

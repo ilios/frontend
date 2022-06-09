@@ -4,13 +4,14 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios-common/page-objects/components/click-choice-buttons';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Integration | Component | click choice buttons', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    assert.expect(4);
+    assert.expect(5);
     await render(hbs`<ClickChoiceButtons
       @toggle={{(noop)}}
       @firstChoicePicked={{true}}
@@ -25,10 +26,12 @@ module('Integration | Component | click choice buttons', function (hooks) {
     );
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders second choice picked', async function (assert) {
-    assert.expect(4);
+    assert.expect(5);
     await render(hbs`<ClickChoiceButtons
       @toggle={{(noop)}}
       @firstChoicePicked={{false}}
@@ -43,6 +46,8 @@ module('Integration | Component | click choice buttons', function (hooks) {
     );
     assert.notOk(component.firstButton.isActive);
     assert.ok(component.secondButton.isActive);
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('click fires toggle action', async function (assert) {

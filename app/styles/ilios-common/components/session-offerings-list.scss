@@ -14,7 +14,7 @@
       grid-column: 1 / -1;
 
       .offering-block-date-dayofweek {
-        color: $ilios-orange;
+        color: $orange;
         display: block;
         @include font-size('medium');
         font-weight: bold;
@@ -22,12 +22,12 @@
       }
 
       .offering-block-date-dayofmonth {
-        color: $medium-grey;
+        color: $davysGrey;
         }
       }
 
     .offering-block-time {
-      border-bottom: 1px dotted $dark-grey;
+      border-bottom: 1px dotted $davysGrey;
       display: grid;
       grid-column: 1 / -1;
       grid-template-columns: repeat(5, 1fr);
@@ -42,7 +42,7 @@
       }
 
       .offering-manager {
-        border-bottom: 1px dotted $dark-grey;
+        border-bottom: 1px dotted $davysGrey;
         &:last-of-type {
           border-bottom: 0;
         }
@@ -52,7 +52,7 @@
       .offering-block-time-time-starttime,
       .offering-block-time-time-ends,
       .offering-block-time-time-endtime {
-        color: $medium-grey;
+        color: $davysGrey;
         display: block;
         font-weight: bold;
       }

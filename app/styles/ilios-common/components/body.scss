@@ -9,8 +9,8 @@ html {
 }
 
 body {
-  background-color: $background-grey;
-  color: $text-grey;
+  background-color: $slightWhite;
+  color: $raisinBlack;
   font-family: Nunito, serif;
   margin: 0;
   padding: 0;
@@ -50,7 +50,7 @@ h6 {
 }
 
 select {
-  color: $text-grey;
+  color: $raisinBlack;
   font-family: 'Nunito Sans', sans-serif;
 }
 
@@ -75,22 +75,22 @@ p {
 
 .add,
 .yes {
-  color: $ilios-green;
+  color: $fernGreen;
 }
 
 .remove,
 .no {
-  color: $ilios-remove-color;
+  color: $crimson;
 }
 
 .error,
 .is-error {
-  color: $alert-color;
+  color: $crimson;
 }
 
 .warning,
 .is-warning {
-  color: $warning-color;
+  color: $gold;
 }
 
 .clickable,
@@ -100,19 +100,19 @@ p {
 
 .editable,
 .is-editable {
-  color: $ilios-blue;
+  color: $tealBlue;
 }
 
 .published {
-  color: $ilios-green;
+  color: $fernGreen;
 }
 
 .notpublished {
-  color: $ilios-yellow;
+  color: $gold;
 }
 
 .scheduled {
-  color: $scheduled-brown;
+  color: $sepia;
 }
 
 .backtolink {

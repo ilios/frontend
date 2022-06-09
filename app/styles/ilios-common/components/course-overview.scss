@@ -1,5 +1,5 @@
 .course-overview {
-  @include ilios-overview($ilios-orange);
+  @include ilios-overview($orange);
 
   .title {
     @include ilios-overview-title;
@@ -18,7 +18,7 @@
     }
 
     span {
-      color: $ilios-blue;
+      color: $blueMunsell;
     }
   }
 
@@ -38,6 +38,6 @@
   }
 
   .universallocator {
-    color: $dark-grey;
+    color: $davysGrey;
   }
 }

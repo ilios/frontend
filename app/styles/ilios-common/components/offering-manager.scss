@@ -19,7 +19,7 @@
       @include ilios-link-button;
 
       &.copying {
-        color: $ilios-green;
+        color: $fernGreen;
       }
     }
   }
@@ -37,17 +37,17 @@
   }
 
   &.show-remove-confirmation {
-    background-color: $remove-background-color;
-    border: 1px solid $ilios-remove-color;
+    background-color: $lavenderBlush;
+    border: 1px solid $crimson;
   }
 
   .confirm-removal {
-    background-color: $remove-background-color;
+    background-color: $lavenderBlush;
     grid-column: 1 / -1;
 
     .confirm-message {
-      background-color: $remove-background-color;
-      color: $ilios-remove-color;
+      background-color: $lavenderBlush;
+      color: $crimson;
       font-weight: bold;
       margin: 0;
       padding: 1rem 8rem;
@@ -60,12 +60,12 @@
     }
 
     &:hover {
-      background-color: $remove-background-color;
+      background-color: $lavenderBlush;
     }
 
     .remove {
       background-color: $white;
-      color: $ilios-remove-color;
+      color: $crimson;
     }
   }
 

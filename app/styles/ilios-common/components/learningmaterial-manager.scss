@@ -13,7 +13,7 @@
   }
 
   .copy-btn {
-    background-color: $ilios-green;
+    background-color: $fernGreen;
   }
 
   .notes,
@@ -31,7 +31,7 @@
 
   h2 {
     @include ilios-heading;
-    color: $text-grey;
+    color: $raisinBlack;
     @include font-size('base');
     font-weight: bold;
   }
@@ -58,13 +58,13 @@
     }
 
     .add-date {
-      border: 1px solid $ilios-green;
-      color: $ilios-green;
+      border: 1px solid $fernGreen;
+      color: $fernGreen;
     }
 
     .remove-date {
-      border: 1px solid $ilios-red;
-      color: $ilios-red;
+      border: 1px solid $crimson;
+      color: $crimson;
     }
   }
 

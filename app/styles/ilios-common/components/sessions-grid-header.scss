@@ -1,7 +1,7 @@
 .sessions-grid-header {
   @include sessions-grid;
-  background-color: $dark-blue;
-  border-bottom: 1px solid $dark-grey;
+  background-color: $tealBlue;
+  border-bottom: 1px solid $davysGrey;
   color: $white;
   @include font-size('small');
   font-weight: normal;

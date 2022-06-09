@@ -6,7 +6,7 @@
 
   .copy-form {
     @include ilios-form;
-    border: 1px solid $ilios-blue;
+    border: 1px solid $blueMunsell;
     display: block;
     margin-top: 1rem;
     padding: 1rem;
@@ -19,8 +19,8 @@
       @include ilios-form-buttons;
 
       button:disabled {
-        background-color: $dark-grey;
-        border-color: $dark-grey;
+        background-color: $davysGrey;
+        border-color: $davysGrey;
         color: $white;
         cursor: default;
       }

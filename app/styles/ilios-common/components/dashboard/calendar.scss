@@ -34,7 +34,7 @@
       }
 
       .calendar-filter-list {
-        border: 1px solid $ilios-blue;
+        border: 1px solid $blueMunsell;
         float: left;
         @include font-size('small');
         margin-bottom: 1em;
@@ -43,8 +43,8 @@
         h5 {
           @include ilios-heading-h5;
           display: block;
-          background-color: $header-grey;
-          border-bottom: .5px solid $dark-grey;
+          background-color: $culturedGrey;
+          border-bottom: .5px solid $davysGrey;
           padding: .25em;
           width: 100%;
         }
@@ -58,7 +58,7 @@
           @include ilios-list-reset;
 
           li {
-            color: $ilios-blue;
+            color: $blueMunsell;
             cursor: pointer;
           }
         }
@@ -95,13 +95,13 @@
     }
 
     .filters-list {
-      background: $light-grey;
+      background: $culturedGrey;
       clear: both;
       margin-bottom: 1em;
       padding: 5px;
 
       .filters-header {
-        border-bottom: 1px solid $dark-grey;
+        border-bottom: 1px solid $davysGrey;
         @include font-size('small');
       }
 
@@ -115,33 +115,33 @@
         }
 
         .fa-close {
-          color: $grey;
+          color: $culturedGrey;
         }
 
         .tag-session-type {
-          background-color: color.adjust($ilios-blue, $lightness: 30%);
+          background-color: color.adjust($blueMunsell, $lightness: 30%);
         }
 
         .tag-course-level {
-          background-color: color.adjust($ilios-blue, $lightness: 40%);
+          background-color: color.adjust($blueMunsell, $lightness: 40%);
         }
 
         .tag-cohort {
-          background-color: color.adjust($ilios-blue, $lightness: 50%);
+          background-color: color.adjust($blueMunsell, $lightness: 50%);
         }
 
         .tag-course {
-          background-color: color.adjust($ilios-blue, $lightness: 60%);
+          background-color: color.adjust($blueMunsell, $lightness: 60%);
         }
 
         .tag-term {
-          background-color: color.adjust($ilios-blue, $lightness: 40%);
+          background-color: color.adjust($blueMunsell, $lightness: 40%);
         }
 
         .filters-clear-filters {
           @include ilios-button-reset;
           @include font-size('small');
-          color: $ilios-blue;
+          color: $blueMunsell;
         }
       }
     }

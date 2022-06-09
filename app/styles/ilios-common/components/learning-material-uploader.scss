@@ -1,15 +1,15 @@
 .learning-material-uploader {
   .upload-button {
-    background: $background-grey;
+    background: $slightWhite;
     border: 1px solid $black;
-    border-radius: $base-border-radius;
-    color: $text-grey;
+    border-radius: 3px;
+    color: $raisinBlack;
     cursor: pointer;
     display: inline-block;
     @include font-size('base');
     padding: .3em 1em;
     &:hover {
-      background-color: $dark-grey;
+      background-color: $davysGrey;
       color: $white;
     }
   }

@@ -1,5 +1,5 @@
 .course-sessions {
-  @include detail-container($ilios-orange);
+  @include detail-container($orange);
   margin: .5rem 1rem 0 .5rem;
 
   .course-sessions-header {
@@ -15,7 +15,7 @@
   }
 
   .save-result {
-    border: 1px solid $ilios-green;
+    border: 1px solid $fernGreen;
     margin: 1rem;
     padding: .75rem;
   }

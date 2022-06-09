@@ -8,7 +8,7 @@
       margin: 0;
       position: relative;
       th {
-        background-color: $text-blue;
+        background-color: $tealBlue;
         color: $white;
         position: sticky;
         top: 0;
@@ -19,11 +19,11 @@
 
       tbody tr {
         &.active {
-          background-color: $ilios-green;
+          background-color: $fernGreen;
           color: $white;
         }
         &:hover {
-          outline: 1px solid $ilios-green;
+          outline: 1px solid $fernGreen;
         }
 
         button {
@@ -36,7 +36,7 @@
   }
   button.remove {
     @include ilios-link-button;
-    color: $ilios-remove-color;
+    color: $crimson;
   }
   .info {
     display: flex;

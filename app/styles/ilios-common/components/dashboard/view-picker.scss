@@ -1,6 +1,6 @@
 .dashboard-view-picker {
-  background-color: $header-grey;
-  border-bottom: 1px solid $ilios-blue;
+  background-color: $culturedGrey;
+  border-bottom: 1px solid $blueMunsell;
   margin: 0;
   padding: .5rem .25rem;
 
@@ -32,7 +32,7 @@
     }
 
     &.active {
-      background-color: $ilios-green;
+      background-color: $fernGreen;
     }
   }
 }

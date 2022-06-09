@@ -1,10 +1,10 @@
 .publish-all-sessions {
-  background-color: $background-grey;
-  border: 1px solid $header-grey;
+  background-color: $slightWhite;
+  border: 1px solid $culturedGrey;
   padding-left: 1rem;
 
   section {
-    @include detail-container($ilios-orange);
+    @include detail-container($orange);
 
     .title {
       @include detail-container-title;
@@ -32,7 +32,7 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid $ilios-green;
+    border: 1px solid $fernGreen;
     clear: both;
     @include font-size('large');
     margin: 1rem;
@@ -40,24 +40,24 @@
     text-align: center;
 
     .unlinked-warning {
-      color: $ilios-yellow;
+      color: $gold;
       @include font-size('base');
     }
 
     .fa-chart-column {
-      color: $ilios-blue;
+      color: $blueMunsell;
       @include font-size('small');
     }
 
     p {
-      color: $ilios-green;
+      color: $fernGreen;
       font-weight: bold;
       margin: 0;
       margin-bottom: 1rem;
     }
 
     button {
-      background: $ilios-green;
+      background: $fernGreen;
       color: $white;
     }
   }

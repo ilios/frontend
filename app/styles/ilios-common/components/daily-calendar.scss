@@ -4,7 +4,7 @@
   $hour-height: .3rem;
   $minute-rows: math.div(24 * 60, 5); //every 5 minutes
   --hour-space: 2.9rem;
-  $grid-border-color: $grey;
+  $grid-border-color: $culturedGrey;
 
   @include for-tablet-and-up {
     --hour-space: 5.5rem;

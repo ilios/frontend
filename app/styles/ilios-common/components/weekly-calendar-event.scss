@@ -1,11 +1,11 @@
 .weekly-calendar-event {
   @include ilios-button-reset;
   cursor: default;
-  border-radius: $base-border-radius;
+  border-radius: 3px;
   display: flex;
   flex-direction: column;
   justify-content: start;
-  color: $text-grey;
+  color: $raisinBlack;
   @include font-size('small');
   border: 1px solid $white;
   margin: 1px;
@@ -19,7 +19,7 @@
   }
 
   .ilios-calendar-event-time {
-    color: $maroon;
+    color: $rosewood;
     display: block;
     @include font-size('small');
     font-weight: bold;
