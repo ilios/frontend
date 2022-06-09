@@ -37,8 +37,7 @@ const definition = {
     chooseObject: fillable('[data-test-report-object]'),
     objectCount: count('[data-test-report-object] option'),
     chooseAcademicYear: fillable('[data-test-report-year-filter]'),
-    fillMeshSearch: fillable('[data-test-mesh-manager] [data-test-search-box] input'),
-    runMeshSearch: clickable('[data-test-mesh-manager] [data-test-search-box] .search-icon'),
+    fillMeshSearch: fillable('[data-test-mesh-manager] [data-test-mesh-search] input'),
     meshSearchResults: collection('[data-test-search-results] li', {
       name: text('[data-test-name]'),
       pick: clickable('button'),
