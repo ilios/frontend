@@ -2,25 +2,41 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupIntl } from 'ember-intl/test-support';
+import Service from '@ember/service';
 
 module('Integration | Component | course/loader', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    assert.expect(3);
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      school,
+    });
+    class DataLoader extends Service {
+      loadCourse(id) {
+        assert.strictEqual(id, course.id);
+        return new Promise(() => {});
+      }
+    }
+    this.owner.register('service:dataLoader', DataLoader);
+    class PermissionCheckerStub extends Service {
+      canCreateCourse() {
+        return false;
+      }
+    }
 
-    await render(hbs`<Course::Loader />`);
+    this.owner.register('service:permissionChecker', PermissionCheckerStub);
 
-    assert.dom(this.element).hasText('');
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
 
-    // Template block usage:
-    await render(hbs`
-      <Course::Loader>
-        template block text
-      </Course::Loader>
-    `);
-
-    assert.dom(this.element).hasText('template block text');
+    await render(hbs`<Course::Loader @course={{this.course}} />`);
+    assert.dom('section').hasClass('course-loader');
+    assert.dom('section').hasAttribute('aria-hidden', 'true');
   });
 });

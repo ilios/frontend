@@ -6,21 +6,10 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | course/back-to-courses', function (hooks) {
   setupRenderingTest(hooks);
 
+  // @todo figure out how to add a courses route so we can test [JJ 2022/6/9]
   test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
     await render(hbs`<Course::BackToCourses />`);
 
     assert.dom(this.element).hasText('');
-
-    // Template block usage:
-    await render(hbs`
-      <Course::BackToCourses>
-        template block text
-      </Course::BackToCourses>
-    `);
-
-    assert.dom(this.element).hasText('template block text');
   });
 });
