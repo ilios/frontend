@@ -1,13 +1,12 @@
 @mixin main-list () {
   display: block;
-  margin: 0 .25rem;
-  padding: 0 1rem;
+  padding: 1rem .5rem;
 }
 
 @mixin main-list-filters () {
   display: flex;
   flex-direction: column;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 
   @include for-laptop-and-up {
     flex-direction: row;
@@ -21,7 +20,7 @@
 }
 
 @mixin main-list-filter () {
-  padding-bottom: 1rem;
+  padding: 0 1rem 1rem 1rem;
   white-space: nowrap;
 
   @include for-laptop-and-up {
@@ -47,13 +46,13 @@
 }
 
 @mixin main-list-box () {
-  border: 2px solid $header-grey;
+  border: 2px solid $culturedGrey;
   display: block;
   width: 100%;
 }
 
 @mixin main-list-box-header () {
-  background-color: $header-grey;
+  background-color: $culturedGrey;
   display: flex;
   flex-direction: column;
   padding: .5rem 0;
@@ -88,7 +87,7 @@
 }
 
 @mixin main-list-saved-new () {
-  border: 1px solid $ilios-green;
+  border: 1px solid $fernGreen;
   margin: 1rem;
   padding: 1rem;
 }
@@ -105,7 +104,7 @@
     @include ilios-zebra-table;
 
     thead {
-      background-color: $header-grey;
+      background-color: $culturedGrey;
     }
   }
 }

@@ -7,7 +7,7 @@
 
   input[type='search'] {
     background-color: $white;
-    border: 1px solid $text-blue;
+    border: 1px solid $tealBlue;
     border-radius: 3px;
     height: 100%;
     padding: 0 .5rem 0 1.5rem;
@@ -20,7 +20,7 @@
   }
 
   .search-icon {
-    color: $ilios-blue;
+    color: $blueMunsell;
     cursor: pointer;
     display: inline-block;
     left: 0;
@@ -33,10 +33,10 @@
   .autocomplete {
     @include ilios-list-reset;
     background: $white;
-    border: 1px solid $text-blue;
+    border: 1px solid $tealBlue;
     border-radius: 0 0 3px 3px;
     box-shadow: 0 2px 2px color.adjust($black, $alpha: .8);
-    color: $base-font-color;
+    color: $raisinBlack;
     cursor: pointer;
     max-height: 23rem;
     max-width: 40rem;
@@ -68,12 +68,12 @@
       }
 
       &.inactive {
-        color: color.adjust($header-grey, $lightness: -20%);
+        color: color.adjust($culturedGrey, $lightness: -20%);
         font-style: italic;
       }
 
       &.summary {
-        color: $ilios-green;
+        color: $fernGreen;
       }
 
       a,
@@ -83,13 +83,13 @@
         width: 100%;
 
         &:hover {
-          background-color: color.adjust($base-link-color, $lightness: 50%);
+          background-color: color.adjust($blueMunsell, $lightness: 50%);
         }
       }
 
       &.active,
       &:hover {
-        background: $grey;
+        background: $culturedGrey;
       }
     }
   }

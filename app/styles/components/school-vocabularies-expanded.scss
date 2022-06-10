@@ -1,5 +1,5 @@
 .school-vocabularies-expanded {
-  @include detail-container($ilios-orange);
+  @include detail-container($orange);
 
   .school-vocabularies-expanded-header {
     @include detail-container-header;
@@ -17,7 +17,7 @@
     @include detail-container-content;
 
     .hierarchical-list {
-      background-color: $grey;
+      background-color: $culturedGrey;
       border: 1px solid $black;
       margin: 1rem;
       padding: 1rem;

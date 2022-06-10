@@ -1,6 +1,6 @@
 .school-vocabularies-list {
   .school-vocabularies-list-header {
-    background-color: $header-grey;
+    background-color: $culturedGrey;
     display: flex;
     justify-content: flex-end;
     padding: .5rem 1rem;
@@ -20,7 +20,7 @@
     }
 
     .savedvocabulary {
-      border: 1px solid $ilios-green;
+      border: 1px solid $fernGreen;
       margin: 1rem;
       padding: 1rem;
     }

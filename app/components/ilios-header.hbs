@@ -5,12 +5,6 @@
     @routeChangeValidator={{this.checkRouteChange}}
   />
   <div class="header-content">
-    <LinkTo @route="dashboard" class="logo" title={{t "general.dashboard"}}>
-      <h1 class="visually-hidden" data-test-title>
-        {{@title}}
-      </h1>
-      <span class="image"></span>
-    </LinkTo>
     <div class="tools">
       {{#if this.showSearch}}
         <GlobalSearchBox @search={{this.search}} />

@@ -32,7 +32,7 @@
 
     input[type='search'] {
       background-color: $white;
-      border: 1px solid $text-blue;
+      border: 1px solid $tealBlue;
       border-radius: 3px;
       height: 2rem;
       width: 100%;
@@ -43,8 +43,8 @@
 
       &.navigating {
         li {
-          background-color: $header-grey;
-          border-bottom: 1px solid $header-grey;
+          background-color: $culturedGrey;
+          border-bottom: 1px solid $culturedGrey;
         }
       }
     }

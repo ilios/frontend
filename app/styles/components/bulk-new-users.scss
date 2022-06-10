@@ -49,8 +49,8 @@
       overflow-y: scroll;
 
       .error {
-        border: 1px solid $alert-color;
-        color: $alert-color;
+        border: 1px solid $crimson;
+        color: $crimson;
       }
 
       table {
@@ -69,13 +69,13 @@
 
   .saving-user-errors,
   .saving-authentication-errors {
-    border: 1px solid $alert-color;
-    border-top: 10px solid $alert-color;
+    border: 1px solid $crimson;
+    border-top: 10px solid $crimson;
     margin: 1rem 4rem;
     padding: 0 1rem 1rem;
 
     p {
-      color: $alert-color;
+      color: $crimson;
     }
 
     li {

@@ -1,5 +1,5 @@
 .program-year-competencies {
-  @include detail-container($ilios-orange);
+  @include detail-container($orange);
 
   .header {
     @include detail-container-header;
@@ -20,7 +20,7 @@
   .competency-list,
   .managed-competency-list {
     @include ilios-list-tree;
-    border: 1px solid $input-box-grey;
+    border: 1px solid $culturedGrey;
     border-radius: 3px;
     margin: 2rem;
 

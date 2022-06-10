@@ -22,7 +22,7 @@
 
   .terms {
     background-color: $white;
-    border: 1px solid $base-link-color;
+    border: 1px solid $blueMunsell;
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
@@ -30,7 +30,7 @@
     width: 80%;
 
     .saved-result {
-      border: 1px solid $ilios-green;
+      border: 1px solid $fernGreen;
       margin: 1rem;
       padding: 1rem;
 
@@ -43,7 +43,7 @@
       @include ilios-selectable-list;
 
       em {
-        color: $ilios-red;
+        color: $crimson;
       }
     }
   }

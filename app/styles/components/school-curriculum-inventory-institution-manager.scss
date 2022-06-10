@@ -1,5 +1,5 @@
 .school-curriculum-inventory-institution-manager {
-  @include detail-container($ilios-orange);
+  @include detail-container($orange);
 
   .school-curriculum-inventory-institution-manager-header {
     @include detail-container-header;
@@ -27,7 +27,7 @@
     }
 
     .validation-error-message {
-      color: $ilios-red;
+      color: $crimson;
       display: block;
       @include font-size('small');
       font-style: italic;

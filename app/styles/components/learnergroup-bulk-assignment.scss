@@ -1,7 +1,7 @@
 @use "sass:color";
 
 .learnergroup-bulk-assignment {
-  border-bottom: 1px solid $ilios-orange;
+  border-bottom: 1px solid $orange;
   margin-bottom: 2rem;
   padding: 1rem;
 
@@ -12,7 +12,7 @@
       width: 100%;
 
       i {
-        color: $ilios-blue;
+        color: $blueMunsell;
         @include font-size('xxl');
         font-weight: 600;
         margin: 0;
@@ -21,13 +21,13 @@
     }
 
     .issue {
-      color: $dark-grey;
+      color: $davysGrey;
       margin-left: 1rem;
     }
   }
 
   .group-matcher {
-    border: 1px solid $dark-grey;
+    border: 1px solid $davysGrey;
 
     th:nth-child(1),
     td:nth-child(1) {
@@ -39,18 +39,18 @@
     }
 
     .learnergroup-bulk-group-matcher {
-      border: 1px solid $dark-grey;
+      border: 1px solid $davysGrey;
 
       select {
         width: 100%;
       }
 
       &.matched {
-        background-color: color.adjust($ilios-green, $lightness: 15%);
+        background-color: color.adjust($fernGreen, $lightness: 15%);
       }
 
       &.not-matched {
-        background-color: color.adjust($ilios-yellow, $lightness: 15%);
+        background-color: color.adjust($gold, $lightness: 15%);
       }
     }
   }

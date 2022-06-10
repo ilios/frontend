@@ -1,5 +1,5 @@
 .school-competencies-collapsed {
-  @include collapsed-container($ilios-orange);
+  @include collapsed-container($orange);
 
   .title {
     @include collapsed-container-title;

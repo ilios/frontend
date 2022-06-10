@@ -8,7 +8,15 @@
   class="application-wrapper
     {{if this.currentUser.performsNonLearnerFunction "show-navigation"}}"
 >
-  <IliosHeader @currentlyLoading={{this.currentlyLoading}} @title={{this.pageTitle.title}} />
+  <div class="ilios-logo">
+    <LinkTo @route="dashboard" title={{t "general.dashboard"}}>
+      <h1 class="visually-hidden" data-test-title>
+        {{this.pageTitle.title}}
+      </h1>
+      <span class="image"></span>
+    </LinkTo>
+  </div>
+  <IliosHeader />
   {{#if this.session.isAuthenticated}}
     <IliosNavigation />
   {{/if}}
@@ -26,6 +34,5 @@
       {{this.frontendVersionTag}}
     </div>
   </footer>
-  <LoadingBar @isLoading={{this.currentlyLoading}} />
 </div>
 <FlashMessages />

@@ -1,6 +1,6 @@
 .curriculum-inventory-report-overview {
-  @include ilios-overview($ilios-orange);
-  border-bottom: 1px dotted $ilios-orange;
+  @include ilios-overview($orange);
+  border-bottom: 1px dotted $orange;
   display: block;
 
   .report-overview-header {
@@ -14,7 +14,7 @@
       @include ilios-overview-actions;
 
       a, span {
-        color: $ilios-blue;
+        color: $blueMunsell;
         @include font-size('medium');
         margin-right: .5rem;
       }

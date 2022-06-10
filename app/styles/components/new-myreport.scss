@@ -1,12 +1,12 @@
 .new-myreport {
-  background-color: $background-grey;
-  border: 1px solid $header-grey;
+  background-color: $slightWhite;
+  border: 1px solid $culturedGrey;
   margin: .5rem;
   padding: 1rem 1rem 3rem;
 
   .title {
     @include ilios-heading-h5;
-    color: $ilios-orange;
+    color: $orange;
     margin-bottom: .5rem;
   }
 

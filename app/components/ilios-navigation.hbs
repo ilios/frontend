@@ -9,7 +9,7 @@
       <li title={{t "general.menu"}}>
         <button
           type="button"
-          class="link-button"
+          class="link-button expander"
           {{on "click" (set this.expanded (not this.expanded))}}
           data-test-expand-collapse
         >
@@ -39,6 +39,12 @@
           <span class="text">
             {{t "general.dashboard"}}
           </span>
+          <FaIcon
+            class="if-active"
+            @prefix="fas"
+            @icon="chevron-right"
+            @fixedWidth={{true}}
+          />
         </LinkTo>
       </li>
       {{#if this.currentUser.performsNonLearnerFunction}}
@@ -70,6 +76,11 @@
             <span class="text">
               {{t "general.coursesAndSessions"}}
             </span>
+            <FaIcon
+              class="if-active"
+              @icon="chevron-right"
+              @fixedWidth={{true}}
+            />
           </LinkTo>
         </li>
         <li>
@@ -82,6 +93,11 @@
             <span class="text">
               {{t "general.learnerGroups"}}
             </span>
+            <FaIcon
+              class="if-active"
+              @icon="chevron-right"
+              @fixedWidth={{true}}
+            />
           </LinkTo>
         </li>
         <li>
@@ -94,6 +110,11 @@
             <span class="text">
               {{t "general.instructorGroups"}}
             </span>
+            <FaIcon
+              class="if-active"
+              @icon="chevron-right"
+              @fixedWidth={{true}}
+            />
           </LinkTo>
         </li>
         <li>
@@ -106,6 +127,11 @@
             <span class="text">
               {{t "general.schools"}}
             </span>
+            <FaIcon
+              class="if-active"
+              @icon="chevron-right"
+              @fixedWidth={{true}}
+            />
           </LinkTo>
         </li>
         <li>
@@ -118,6 +144,11 @@
             <span class="text">
               {{t "general.programs"}}
             </span>
+            <FaIcon
+              class="if-active"
+              @icon="chevron-right"
+              @fixedWidth={{true}}
+            />
           </LinkTo>
         </li>
       {{/if}}
@@ -132,6 +163,11 @@
             <span class="text">
               {{t "general.admin"}}
             </span>
+            <FaIcon
+              class="if-active"
+              @icon="chevron-right"
+              @fixedWidth={{true}}
+            />
           </LinkTo>
         </li>
       {{/if}}
@@ -154,6 +190,11 @@
             <span class="text">
               {{t "general.curriculumInventory"}}
             </span>
+            <FaIcon
+              class="if-active"
+              @icon="chevron-right"
+              @fixedWidth={{true}}
+            />
           </LinkTo>
         </li>
       {{/if}}

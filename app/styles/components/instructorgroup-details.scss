@@ -1,13 +1,16 @@
 .instructorgroup-details {
+  padding: .5rem .25rem;
+  border: 1px solid $blueMunsell;
+  border-radius: 5px;
 
   .backtolink {
     margin: .5rem;
   }
 
   .instructorgroup-overview {
-    @include ilios-overview($header-grey);
-    background: $background-grey;
-    border: 1px dotted $header-grey;
+    @include ilios-overview($culturedGrey);
+    background: $slightWhite;
+    border: 1px dotted $culturedGrey;
     padding: 0 2rem 1rem;
 
     h2 {

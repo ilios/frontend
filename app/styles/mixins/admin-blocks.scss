@@ -3,15 +3,15 @@
 @mixin admin-blocks () {
   display: grid;
   grid-gap: .5rem;
-
+  
   @include for-laptop-and-up {
     grid-template-columns: 1fr 1fr;
   }
 
   .small-component,
   .large-component {
-    background-color: $grey;
-    border: 1px solid $black;
+    background-color: $culturedGrey;
+    border: 1px solid $blueMunsell;
     border-radius: 5px;
     margin-bottom: 1rem;
     min-height: 5rem;
@@ -19,7 +19,7 @@
 
     &.alert {
       background-color: $white;
-      border: 3px solid $ilios-yellow;
+      border: 3px solid $gold;
     }
 
     h3 {
@@ -45,7 +45,7 @@
   }
 
   .has-saved {
-    background-color: color.adjust($ilios-green, $lightness: 30%);
+    background-color: color.adjust($fernGreen, $lightness: 30%);
     transition: background-color .5s ease-out;
   }
 

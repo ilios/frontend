@@ -12,6 +12,7 @@ module.exports = function () {
       'bold',
       'book',
       'calendar',
+      'chevron-right',
       'face-meh',
       'gears',
       'globe',

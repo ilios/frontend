@@ -1,15 +1,18 @@
 .curriculum-inventory-report-details {
-  @include detail-container($ilios-orange);
+  @include detail-container($orange);
+  padding: .5rem .25rem;
+  border: 1px solid $blueMunsell;
+  border-radius: 5px;
 
   .title {
     @include detail-container-title;
   }
 
   .confirm-finalize {
-    background-color: $remove-background-color;
+    background-color: $lavenderBlush;
 
     .confirm-message {
-      color: $ilios-remove-color;
+      color: $crimson;
       font-weight: bold;
       padding: 1rem 10%;
       text-align: center;
@@ -21,12 +24,12 @@
 
 
     &:hover {
-      background-color: $remove-background-color;
+      background-color: $lavenderBlush;
     }
 
     .finalize {
       background-color: $white;
-      color: $ilios-remove-color;
+      color: $crimson;
     }
   }
 }

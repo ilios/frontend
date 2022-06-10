@@ -1,5 +1,5 @@
 .pagination-links {
-  color: $text-grey;
+  color: $raisinBlack;
   margin: 2rem 0;
   text-align: center;
 
@@ -8,7 +8,7 @@
     text-transform: uppercase;
 
     &:disabled {
-      color: $dark-grey;
+      color: $davysGrey;
       cursor: default;
     }
 
@@ -35,17 +35,17 @@
   }
 
   .page-button {
-    background: $background-grey;
-    border: 1px solid $darker-grey;
-    color: $darker-grey;
+    background: $slightWhite;
+    border: 1px solid $davysGrey;
+    color: $davysGrey;
     display: inline-block;
     min-width: 2rem;
     outline: none;
     padding: .125rem 0;
 
     &:hover {
-      background: $ilios-orange;
-      border: 1px solid $ilios-orange;
+      background: $orange;
+      border: 1px solid $orange;
       color: $white;
     }
 
@@ -56,7 +56,7 @@
     &:disabled {
       background: $white;
       border: none;
-      color: $text-grey;
+      color: $raisinBlack;
       cursor: default;
     }
   }

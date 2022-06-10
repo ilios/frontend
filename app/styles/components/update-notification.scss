@@ -2,5 +2,5 @@
 .ilios-update-notification {
   @include ilios-button-reset;
   $height: 2.5rem;
-  @include critical-notice($info-color, $super-light-grey, $height);
+  @include critical-notice($blueMunsell, $culturedGrey, $height);
 }

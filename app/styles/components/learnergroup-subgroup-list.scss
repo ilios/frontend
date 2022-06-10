@@ -1,7 +1,7 @@
 .learnergroup-subgroup-list {
-  @include detail-container($text-blue);
+  @include detail-container($tealBlue);
   border-bottom: 0;
-  border-top: 1px dotted $ilios-orange;
+  border-top: 1px dotted $orange;
 
   .learnergroup-subgroup-list-header {
     @include detail-container-header;
@@ -21,7 +21,7 @@
     @include detail-container-content;
 
     .saved-result {
-      border: 1px solid $ilios-green;
+      border: 1px solid $fernGreen;
       margin: 1rem;
       padding: .5rem;
     }

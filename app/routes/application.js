@@ -1,6 +1,5 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/browser';
 import { loadPolyfills } from 'ilios-common/utils/load-polyfills';
@@ -46,18 +45,5 @@ export default class AuthenticatedRoute extends Route {
     if (this.currentUser.currentUserId) {
       Sentry.setUser({ id: this.currentUser.currentUserId });
     }
-  }
-
-  @action
-  loading(transition) {
-    //@todo investigate if this is still a good pattern [JJ 3/21]
-    // eslint-disable-next-line ember/no-controller-access-in-routes
-    const controller = this.controllerFor('application');
-    controller.set('currentlyLoading', true);
-    transition.promise.finally(() => {
-      controller.set('currentlyLoading', false);
-    });
-
-    return true;
   }
 }

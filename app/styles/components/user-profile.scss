@@ -1,5 +1,4 @@
 .user-profile {
-  padding: 1rem;
 
   h1 {
     margin-bottom: 1rem;
@@ -14,7 +13,7 @@
     text-align: center;
 
     .user-is-student {
-      color: $ilios-green;
+      color: $fernGreen;
     }
   }
 
@@ -39,6 +38,6 @@
   }
 
   .refresh-key {
-    background-color: $ilios-green;
+    background-color: $fernGreen;
   }
 }

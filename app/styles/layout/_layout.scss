@@ -1,20 +1,20 @@
 .application-wrapper {
   display: grid;
   grid-template-areas:
-  'header'
-  'loading'
-  'main'
-  'footer';
-  grid-template-rows: auto 10px 1fr 20px;
+  'logo header'
+  'main main'
+  'footer footer';
+  grid-template-rows: auto 1fr 20px;
   height: 100vh;
   width: 100%;
+  background-color: $white;
+
+  & > .ilios-logo {
+    grid-area: logo;
+  }
 
   & > header {
     grid-area: header;
-  }
-
-  & > .loading-bar {
-    grid-area: loading;
   }
 
   & > main {
@@ -29,46 +29,45 @@
 
   &.show-navigation {
     grid-template-areas:
-    'header'
-    'nav'
-    'loading'
-    'main'
-    'footer';
-    grid-template-rows: auto auto 10px 1fr 20px;
+    'logo header'
+    'nav nav'
+    'main main'
+    'footer footer';
+    grid-template-rows: auto auto 1fr 20px;
 
     @include for-tablet-and-up {
-      grid-template-rows: auto auto 10px 1fr 20px;
+      grid-template-rows: auto auto 1fr 20px;
     }
 
     @include for-laptop-and-up {
       grid-template-areas:
-      'header  header'
-      'nav  loading'
+      'logo header'
+      'logo main'
       'nav main'
       'footer footer';
       grid-template-columns: auto 1fr;
-      grid-template-rows: auto 10px 1fr 20px;
+      grid-template-rows: 42px calc(42px * .382) auto 20px;
     }
 
     @include for-desktop-and-up {
       grid-template-areas:
-      'header header  header'
-      'nav loading  loading'
+      'logo header  header'
+      'logo    main main'
       'nav    main main'
       'footer footer  footer';
-      grid-template-columns: 260px 1fr 1fr;
+      grid-template-columns: auto 1fr 1fr;
+      grid-template-rows: 42px calc(42px * .618) auto 20px;
     }
 
     & > nav {
       grid-area: nav;
       @include for-laptop-and-up {
-        padding-top: 10px;
         z-index: 5;
       }
     }
 
     & > main {
-      margin: 0 5px;
+      margin: .5rem;
     }
 
   }

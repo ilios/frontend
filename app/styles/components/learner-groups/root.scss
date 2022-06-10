@@ -41,8 +41,8 @@
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd)
       {
-        background-color: color.adjust($ilios-blue, $lightness: 60%);
-        border: 2px solid $ilios-blue;
+        background-color: color.adjust($blueMunsell, $lightness: 60%);
+        border: 2px solid $blueMunsell;
 
         &.actions-row {
           border-top: 0;

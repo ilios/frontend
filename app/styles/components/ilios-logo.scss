@@ -1,0 +1,18 @@
+.ilios-logo {
+    background-color: $orange;
+    
+    @include for-laptop-and-up {
+      padding-bottom: .382rem;
+    }
+
+    .image {
+        background-image: url('images/ilios-logo.svg');
+        background-repeat: no-repeat;
+        display: block;
+        height: 95%;
+    }
+
+    .visually-hidden {
+      @include visually-hidden;
+    }
+}

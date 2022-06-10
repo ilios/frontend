@@ -216,8 +216,7 @@ module('Acceptance | Dashboard Reports', function (hooks) {
     await page.myReports.newReport.chooseSchool('1');
     await page.myReports.newReport.chooseSubject('course');
     await page.myReports.newReport.chooseObjectType('mesh term');
-    await page.myReports.newReport.fillMeshSearch('0');
-    await page.myReports.newReport.runMeshSearch();
+    await page.myReports.newReport.fillMeshSearch('descriptor 0');
     assert.strictEqual(page.myReports.newReport.meshSearchResults.length, 1);
     assert.strictEqual(page.myReports.newReport.meshSearchResults[0].text, 'descriptor 0 D1234');
     await page.myReports.newReport.meshSearchResults[0].pick();

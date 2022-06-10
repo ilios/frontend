@@ -26,7 +26,7 @@
       }
 
       &.synced-from-directory input {
-        background-color: color.adjust($ilios-green, $lightness: 40%);
+        background-color: color.adjust($fernGreen, $lightness: 40%);
         transition: background-color 500ms ease;
       }
     }
@@ -36,7 +36,7 @@
     display: flex;
 
     button {
-      background-color: $ilios-blue;
+      background-color: $blueMunsell;
       height: 2rem;
       margin-bottom: .25rem;
       margin-left: .5rem;
@@ -52,7 +52,7 @@
   meter {
     background: none;
     background-color: $white;
-    border: .5px solid $text-grey;
+    border: .5px solid $raisinBlack;
     height: .75rem;
     margin: .25rem 0;
     width: 60%;
@@ -67,17 +67,17 @@
     background-color: $white;
   }
 
-  meter[value='0']::-webkit-meter-optimum-value { background: $ilios-red; }
-  meter[value='1']::-webkit-meter-optimum-value { background: $ilios-red; }
-  meter[value='2']::-webkit-meter-optimum-value { background: $ilios-orange; }
-  meter[value='3']::-webkit-meter-optimum-value { background: $ilios-yellow; }
-  meter[value='4']::-webkit-meter-optimum-value { background: $ilios-green; }
+  meter[value='0']::-webkit-meter-optimum-value { background: $crimson; }
+  meter[value='1']::-webkit-meter-optimum-value { background: $crimson; }
+  meter[value='2']::-webkit-meter-optimum-value { background: $orange; }
+  meter[value='3']::-webkit-meter-optimum-value { background: $gold; }
+  meter[value='4']::-webkit-meter-optimum-value { background: $fernGreen; }
 
-  meter[value='0']:-moz-meter-bar { background: $ilios-red; }
-  meter[value='1']:-moz-meter-bar { background: $ilios-red; }
-  meter[value='2']:-moz-meter-bar { background: $ilios-orange; }
-  meter[value='3']:-moz-meter-bar { background: $ilios-yellow; }
-  meter[value='4']:-moz-meter-bar { background: $ilios-green; }
+  meter[value='0']:-moz-meter-bar { background: $crimson; }
+  meter[value='1']:-moz-meter-bar { background: $crimson; }
+  meter[value='2']:-moz-meter-bar { background: $orange; }
+  meter[value='3']:-moz-meter-bar { background: $gold; }
+  meter[value='4']:-moz-meter-bar { background: $fernGreen; }
 
   .password-strength {
     display: inline-block;
@@ -87,24 +87,24 @@
     width: 10%;
 
     &.strength-0 {
-      color: $ilios-red;
+      color: $crimson;
       width: 20%;
     }
 
     &.strength-1 {
-      color: $ilios-red;
+      color: $crimson;
     }
 
     &.strength-2 {
-      color: $ilios-orange;
+      color: $orange;
     }
 
     &.strength-3 {
-      color: $ilios-yellow;
+      color: $gold;
     }
 
     &.strength-4 {
-      color: $ilios-green;
+      color: $fernGreen;
     }
   }
 }

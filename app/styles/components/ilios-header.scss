@@ -1,7 +1,7 @@
 .ilios-header {
+  background-color: $orange;
   .header-content {
     align-items: center;
-    background-color: $ilios-orange;
     display: grid;
     grid-template-areas: 'logo tools';
     height: auto;
@@ -9,17 +9,6 @@
 
     @media print {
       display: none;
-    }
-
-    .logo {
-      grid-area: logo;
-
-      .image {
-        background-image: url('images/ilios-logo.svg');
-        background-repeat: no-repeat;
-        display: block;
-        height: 42px;
-      }
     }
 
     // Elements on the far right
@@ -73,10 +62,6 @@
         }
       }
 
-    }
-
-    .visually-hidden {
-      @include visually-hidden;
     }
   }
 }

@@ -1,7 +1,7 @@
 /* stylelint-disable property-disallowed-list */
+@use "sass:color";
 .ilios-navigation {
-  background-color: $background-grey;
-  border-bottom: 1px solid $grey;
+  background-color: $davysGrey;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 2rem auto;
@@ -17,7 +17,6 @@
     li {
       font-size: 4vmin;
       height: 100%;
-      padding: .25rem;
       text-align: center;
       width: 100%;
       margin: 0;
@@ -27,10 +26,11 @@
         @include font-size('small');
         height: auto;
         text-align: left;
-      }
 
-      &:hover {
-        background-color: $grey;
+        &:first-of-type {
+          padding-top: 2px;
+          border-top: 2px solid $davysGrey;
+        }
       }
 
     }
@@ -39,10 +39,22 @@
       display: none;
     }
 
+    .if-active {
+      display: none;
+    }
+
     &.expand-navigation li {
       display: flex;
       flex-direction: column;
       justify-content: center;
+
+      .expander {
+        color: $slightWhite;
+
+        &:hover {
+          background-color: $blueMunsell;
+        }
+      }
     }
   }
 
@@ -52,11 +64,7 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
 
-        @include for-tablet-and-up {
-          grid-row-gap: .5rem;
-        }
-
-        li {
+        li a {
           padding: .5rem;
         }
       }
@@ -74,14 +82,13 @@
 
   @include for-smaller-than-laptop {
     a.active {
-      background-color: $grey;
+      background-color: $blueMunsell;
     }
   }
 
   @include for-laptop-and-up {
-    border-right: 1px solid $header-grey;
-    box-shadow: 2px 1px 3px rgba($black, .19), inset 1px 0 2px rgba($black, .34);
     display: block;
+    border-bottom: calc(20px * .618) solid $orange;
 
     ul {
       display: inline;
@@ -89,37 +96,60 @@
       .text {
         clear: none;
         display: inline;
-        margin-left: .25rem;
       }
-    }
-
-    li {
-      border-bottom: 1px solid $grey;
     }
 
     .expand-navigation {
       display: none;
     }
-
-    a {
-      padding-left: 10px;
-    }
   }
 
   a {
-    color: $ilios-orange;
+    color: hsl(0, 0%, 92%);
     display: block;
     height: 100%;
     text-decoration: none;
     width: 100%;
     font-weight: 400;
+    padding: .25rem .5rem;
 
-    &.active {
-      font-weight: 700;
+    @include for-laptop-and-up {
+      display: grid;
+      grid-template-columns: 1.3em 1fr 1.5em;
+      justify-content: start;
+      align-items: center;
+      padding: .25rem;
+
+      .text {
+        margin-left: .25rem;
+        color: hsl(0, 0%, 92%);
+      }
+
+      .if-active {
+        color: $blueMunsell;
+        justify-self: end;
+        font-weight: bold;
+      }
+
+      &.active {
+        .if-active {
+          display: inline;
+        }
+        color: $blueMunsell;
+
+        .text {
+          color: hsl(0, 0%, 92%);
+        }
+      }
     }
 
-    .text {
-      color: $text-grey;
+    &:hover {
+      background-color: $blueMunsell;
+      color: hsl(0, 0%, 92%);
+
+      .if-active {
+        color: hsl(0, 0%, 92%);
+      }
     }
   }
 }
