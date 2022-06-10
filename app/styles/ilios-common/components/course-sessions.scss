@@ -1,6 +1,6 @@
 .course-sessions {
   @include detail-container($orange);
-  @include main-border;
+  @include main-section;
   border-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
