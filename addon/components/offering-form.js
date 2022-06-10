@@ -534,6 +534,7 @@ export default class OfferingForm extends Component {
   *updateDurationHours(hours) {
     yield timeout(DEBOUNCE_DELAY);
     this.addErrorDisplayFor('durationHours');
+    this.addErrorDisplayFor('durationMinutes');
     const minutes = this.durationMinutes;
     this.endDate = moment(this.startDate)
       .clone()
@@ -545,6 +546,7 @@ export default class OfferingForm extends Component {
   @restartableTask
   *updateDurationMinutes(minutes) {
     yield timeout(DEBOUNCE_DELAY);
+    this.addErrorDisplayFor('durationHours');
     this.addErrorDisplayFor('durationMinutes');
     const hours = this.durationHours;
     this.endDate = moment(this.startDate)
