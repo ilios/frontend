@@ -110,7 +110,6 @@
     .hours,
     .minutes,
     .make-recurring-input-container {
-      align-items: center;
       display: flex;
 
       input {
@@ -136,13 +135,14 @@
 
     .hours {
       margin-right: 40px;
-
+      flex-direction: column;
       .hours-container {
         vertical-align: top;
       }
     }
 
     .minutes {
+      flex-direction: column;
       .minutes-container {
         vertical-align: top;
       }
