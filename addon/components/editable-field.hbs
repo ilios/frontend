@@ -8,7 +8,7 @@
               class="link-button"
               type="button"
               data-test-edit
-              {{on "click" (set this.isEditing true)}}
+              {{on "click" (fn this.setIsEditing true)}}
             >
               <FaIcon
                 @icon="pen-to-square"
@@ -19,7 +19,7 @@
             <TruncateText
               @renderHtml={{@renderHtml}}
               @text={{@value}}
-              @onEdit={{set this.isEditing true}}
+              @onEdit={{fn this.setIsEditing true}}
               as |displayText expand collapse isTruncated expanded|
             >
               <span
@@ -27,7 +27,7 @@
                 aria-label={{t "general.edit"}}
                 data-test-edit
                 role="button"
-                {{on "click" (set this.isEditing true)}}
+                {{on "click" (fn this.setIsEditing true)}}
               >
                 {{displayText}}
               </span>
@@ -65,7 +65,7 @@
             aria-label={{t "general.edit"}}
             data-test-edit
             role="button"
-            {{on "click" (set this.isEditing true)}}
+            {{on "click" (fn this.setIsEditing true)}}
           >
             {{@clickPrompt}}
           </span>
@@ -97,6 +97,7 @@
             type="button"
             title={{t "general.cancel"}}
             {{on "click" (perform this.closeEditor)}}
+            data-test-cancel
           >
             <FaIcon @icon="xmark" />
           </button>

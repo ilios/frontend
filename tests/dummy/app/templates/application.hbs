@@ -1,2 +1,12 @@
 {{page-title (t "general.ilios")}}
-{{outlet}}
+<div class="application-wrapper">
+  <div class="logo"></div>
+  <header></header>
+  {{#if this.session.isAuthenticated}}
+    <nav></nav>
+  {{/if}}
+  <main>
+      {{outlet}}
+  </main>
+  <footer></footer>
+</div>

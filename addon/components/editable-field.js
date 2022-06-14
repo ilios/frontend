@@ -20,7 +20,7 @@ export default class EditableFieldComponent extends Component {
     yield timeout(1);
     const result = yield this.args.save();
     if (result !== false) {
-      this.isEditing = false;
+      this.setIsEditing(false);
     }
   }
 
@@ -28,7 +28,7 @@ export default class EditableFieldComponent extends Component {
   *closeEditor() {
     yield timeout(1);
     yield this.args.close();
-    this.isEditing = false;
+    this.setIsEditing(false);
   }
 
   focusFirstControl(element) {
@@ -55,6 +55,14 @@ export default class EditableFieldComponent extends Component {
       this.saveData.perform();
     } else if (27 === keyCode && this.args.closeOnEscape) {
       this.closeEditor.perform();
+    }
+  }
+
+  @action
+  setIsEditing(status) {
+    this.isEditing = status;
+    if (this.args.onEditingStatusChange) {
+      this.args.onEditingStatusChange(status);
     }
   }
 }

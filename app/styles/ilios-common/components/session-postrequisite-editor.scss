@@ -51,7 +51,7 @@
         width: $golden-ratio-large;
       }
       input {
-        width: $golden-ratio-small;
+        width: calc($golden-ratio-small * 100%);
       }
     }
 

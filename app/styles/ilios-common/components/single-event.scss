@@ -1,6 +1,6 @@
 .single-event {
+  @include main-section;
   display: grid;
-  margin-left: 1em;
 
   h2 {
     @include ilios-heading-h4;

@@ -1,1 +1,54 @@
 @import 'ilios-common/styles';
+.application-wrapper {
+  display: grid;
+  grid-template-areas:
+  'logo header'
+  'nav nav'
+  'main main'
+  'footer footer';
+  grid-template-rows: 42px 2rem 1fr 20px;
+
+  height: 100vh;
+  width: 100%;
+  background-color: $white;
+
+  @include for-tablet-and-up {
+    grid-template-rows: 42px 2rem 1fr 20px;
+  }
+
+  @include for-laptop-and-up {
+    grid-template-areas:
+    'logo header'
+    'logo main'
+    'nav main'
+    'footer footer';
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 42px calc(42px * .382) auto 20px;
+  }
+
+  & > nav {
+    grid-area: nav;
+    background-color: $davysGrey;
+  }
+  
+ 
+  & > .logo {
+   grid-area: logo;
+   background-color: $orange;
+  }
+ 
+  & > header {
+   grid-area: header;
+   background-color: $orange;
+  }
+ 
+  & > main {
+   background-color: $white;
+   grid-area: main;
+   margin: 5px;
+  }
+ 
+  & > footer {
+   grid-area: footer;
+  }
+}

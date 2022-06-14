@@ -1,27 +1,26 @@
 @mixin course-header {
-  background-color: $culturedGrey;
+  border-bottom: 1px solid $culturedGrey;
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: flex-start;
-  padding: .8rem;
-  height: 7em;
+  justify-content: space-between;
+  padding-bottom: calc($golden-ratio-small * 1rem);
 
   @include for-tablet-and-up {
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 3em;
+    align-items: flex-end;
+    height: 2rem;
   }
 
-  h2, .title, .academic-year {
+  h2, h3 {
     @include ilios-heading-h4;
+    @include text-align-bottom;
   }
 
   .academic-year {
+    margin-top: .5rem;
     @include for-tablet-and-up {
-      display: inline;
       margin-left: .5rem;
+      margin-top: 0;
     }
   }
 
@@ -34,19 +33,23 @@
       flex-direction: row;
     }
 
-    input {
-      width: 100%;
-    }
+    .editinplace {
+      @include ilios-heading-h4;
+      @include text-align-bottom;
 
-    .editable {
-      @include for-laptop-and-up {
-        display: inline;
-      }
-    }
+      &.is-editing {
+        @include for-laptop-and-up {
+          flex-grow: 2;
+        }
 
-    .editinplace.is-editing {
-      @include for-laptop-and-up {
-        flex-grow: 2;
+        .content,
+        input {
+          width: 100%;
+        }
+
+        input {
+          @include ilios-input;
+        }
       }
     }
   }

@@ -1,6 +1,9 @@
 .course-sessions {
   @include detail-container($orange);
-  margin: .5rem 1rem 0 .5rem;
+  @include main-section;
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 
   .course-sessions-header {
     @include detail-container-header;
