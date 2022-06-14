@@ -1,17 +1,3 @@
 .course-header {
   @include course-header;
-  .title {
-
-    .editable {
-      @include for-laptop-and-up {
-        display: inline;
-      }
-    }
-
-    .editinplace.is-editing {
-      @include for-laptop-and-up {
-        flex-grow: 2;
-      }
-    }
-  }
 }

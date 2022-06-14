@@ -128,4 +128,23 @@ module('Integration | Component | editable field', function (hooks) {
     await click('[data-test-collapse]');
     assert.dom(this.element).hasText(abbreviatedText);
   });
+
+  test('sends status info', async function (assert) {
+    assert.expect(3);
+    this.set('status', false);
+    await render(
+      hbs`<EditableField
+            @close={{(noop)}}
+            @value="lorem"
+            @onEditingStatusChange={{set this.status}}
+          >
+          </EditableField>
+      `
+    );
+    assert.notOk(this.status);
+    await click('[data-test-edit]');
+    assert.ok(this.status);
+    await click('[data-test-cancel]');
+    assert.notOk(this.status);
+  });
 });

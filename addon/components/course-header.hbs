@@ -12,6 +12,7 @@
           @save={{perform this.changeTitle}}
           @close={{this.revertTitleChanges}}
           @saveOnEnter={{true}}
+          @onEditingStatusChange={{set this.isEditingTitle}}
           @closeOnEscape={{true}} as |isSaving|
         >
           <input
@@ -32,20 +33,22 @@
           {{@course.title}}
         </h2>
       {{/if}}
-      <h3 class="academic-year" data-test-academic-year>
-        {{#if this.academicYearCrossesCalendarYearBoundaries}}
-          {{@course.year}} - {{add @course.year 1}}
-        {{else}}
-          {{@course.year}}
-        {{/if}}
-      </h3>
+      {{#unless this.isEditingTitle}}
+        <h3 class="academic-year" data-test-academic-year>
+          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+            {{@course.year}} - {{add @course.year 1}}
+          {{else}}
+            {{@course.year}}
+          {{/if}}
+        </h3>
+      {{/unless}}
     </span>
-    <span class="course-publication">
+    <div class="course-publication">
       {{#if @editable}}
         <Course::PublicationMenu @course={{@course}} />
       {{else}}
         <PublicationStatus @item={{@course}} @showIcon={{true}} @showText={{true}} />
       {{/if}}
-    </span>
+    </div>
   {{/unless}}
 </div>

@@ -4,8 +4,6 @@
   $collapse-control-shadow-grey: #e2e2e2;
   $collapse-control-shadow-black: rgba(0, 0, 0, .34);
 
-  background-color: $culturedGrey;
-
   .detail-collapsed-control {
     @include ilios-button-reset;
     display: flex;

@@ -39,10 +39,7 @@
 }
 
 .course-loading, .course-loader {
-  border-top: 0;
-  border-width: 0 2px 2px;
-  border-color: $culturedGrey;
-  border-style: solid;
+  @include main-section;
   
   .mock-detail-box {
     display: flex;
