@@ -1,4 +1,3 @@
-/* eslint-disable ember/no-computed-properties-in-native-classes */
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { task, restartableTask, timeout } from 'ember-concurrency';
@@ -20,9 +19,20 @@ export default class CourseSessionsComponent extends Component {
   @tracked filterByLocalCache = [];
   @tracked showNewSessionForm = false;
 
+  @use loadedCourseSessions = new ResolveAsyncValue(() => [
+    this.dataLoader.loadCourseSessions(this.args.course.id),
+  ]);
   @use sessionTypes = new ResolveAsyncValue(() => [this.school?.sessionTypes, []]);
-  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use courseSessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
   @use school = new ResolveAsyncValue(() => [this.args.course.school]);
+
+  get sessions() {
+    if (!this.loadedCourseSessions) {
+      return false;
+    }
+
+    return this.courseSessions;
+  }
 
   get sessionsCount() {
     return this.args.course.hasMany('sessions').ids().length;

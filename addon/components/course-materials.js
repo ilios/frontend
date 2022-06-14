@@ -4,7 +4,7 @@ import { map } from 'rsvp';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-
+import { inject as service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
@@ -13,13 +13,25 @@ import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 const DEBOUNCE_DELAY = 250;
 
 export default class CourseMaterialsComponent extends Component {
+  @service dataLoader;
   @tracked courseQuery;
   @tracked sessionQuery;
 
   typesWithUrl = ['file', 'link'];
 
   @use courseMaterials = new ResolveAsyncValue(() => [this.args.course.learningMaterials]);
-  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use loadedCourseSessions = new ResolveAsyncValue(() => [
+    this.dataLoader.loadCourseSessions(this.args.course.id),
+  ]);
+  @use courseSessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  get sessions() {
+    if (!this.loadedCourseSessions) {
+      return false;
+    }
+
+    return this.courseSessions;
+  }
+
   @use sessionMaterials = new ResolveFlatMapBy(() => [this.sessions, 'learningMaterials']);
   @use courseMaterialLms = new ResolveFlatMapBy(() => [this.courseMaterials, 'learningMaterial']);
   @use sessionMaterialObjects = new AsyncProcess(() => [

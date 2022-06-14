@@ -1,4 +1,9 @@
-<div class="sessions-grid-loading" role="presentation" aria-hidden="true">
+<div
+  class="sessions-grid-loading"
+  role="presentation"
+  aria-hidden="true"
+  {{animate-loading "course" finalOpacity=".75"}}
+>
   {{! template-lint-disable no-unused-block-params }}
   {{#each (repeat @count) as |empty|}}
     <div data-test-row>

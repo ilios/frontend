@@ -1,9 +1,65 @@
-.course-loading {
-  background-color: $culturedGrey;
-  padding: .8rem;
+@use "sass:color";
 
-  h2 {
-    color: transparent;
-    text-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
+.course-loading {
+  @include loading-text;
+  @include loading-shimmer;
+
+  .header {
+    @include course-header;
+  }
+  .overview {
+    @include course-overview;
+
+    .title {
+      @include loading-text;
+    }
+  }
+}
+
+.course-sessions.course-sessions-loading {
+  border-bottom: 0;
+  @include loading-shimmer;
+  
+  .course-sessions-header {
+    height: 2rem;
+    @include for-phone-only {
+      height: 3rem;
+    }
+  }
+
+  .title {
+    @include loading-text;
+  }
+
+  .sessions-grid-header {
+    @include loading-text;
+    background-color: color.adjust($davysGrey, $lightness: 50%);
+    height: 2rem;
+  }
+}
+
+.course-loading, .course-loader {
+  border-top: 0;
+  border-width: 0 2px 2px;
+  border-color: $culturedGrey;
+  border-style: solid;
+  
+  .mock-detail-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    width: 100%;
+
+    span {
+      background-color: color.adjust($davysGrey, $lightness: 50%);
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      padding: .25rem 4rem;
+      color: color.adjust($davysGrey, $lightness: 50%);
+
+      .expand-collapse-icon {
+        margin-left: .5rem;
+      }
+    }
   }
 }

@@ -11,8 +11,15 @@ export default class DataLoaderService extends Service {
   #courseSessions = {};
   async loadSchoolForCalendar(id) {
     if (!(id in this.#calendarSchools)) {
+      const relationships = [
+        'programs.programYears.cohort',
+        'sessionTypes',
+        'vocabularies.terms.children.children.children',
+        'courses',
+      ];
+      const include = relationships.join(',');
       this.#calendarSchools[id] = this.store.findRecord('school', id, {
-        include: 'programs.programYears.cohort,sessionTypes,vocabularies.terms,courses',
+        include,
         reload: true,
       });
     }
@@ -25,8 +32,15 @@ export default class DataLoaderService extends Service {
       return this.#calendarSchools[id];
     }
     if (!(id in this.#coursesSchools)) {
+      const relationships = [
+        'sessionTypes',
+        'vocabularies.terms.children.children.children',
+        'courses',
+        'configurations',
+      ];
+      const include = relationships.join(',');
       this.#coursesSchools[id] = this.store.findRecord('school', id, {
-        include: 'courses',
+        include,
         reload: true,
       });
     }
@@ -58,13 +72,11 @@ export default class DataLoaderService extends Service {
         'courseObjectives.programYearObjectives',
         'courseObjectives.meshDescriptors',
         'courseObjectives.terms.vocabulary',
+        'courseObjectives.programYearObjectives.competency',
         'learningMaterials.learningMaterial.owningUser',
         'directors',
-        'school.sessionTypes',
-        'school.configurations',
-        'school.competencies',
         'administrators',
-        'directors',
+        'studentAdvisors',
         'meshDescriptors.trees',
         'cohorts.programYear.program',
         'cohorts.programYear.programYearObjectives',
@@ -97,16 +109,18 @@ export default class DataLoaderService extends Service {
         'ilmSession.instructors',
         'ilmSession.instructorGroups.users',
         'ilmSession.learnerGroups.users',
-        'terms.vocabulary',
-        'terms.parent.parent.parent',
         'meshDescriptors.trees',
+        'administrators',
+        'studentAdvisors',
       ];
       const sessionIncludes = sessionRelationships.reduce((includes, item) => {
-        return `${includes}sessions.${item},`;
+        return `${includes}${item},`;
       }, '');
-      this.#courseSessions[id] = this.store.findRecord('course', id, {
+      this.#courseSessions[id] = this.store.query('session', {
+        filters: {
+          course: id,
+        },
         include: sessionIncludes,
-        reload: true,
       });
     }
     return this.#courseSessions[id];

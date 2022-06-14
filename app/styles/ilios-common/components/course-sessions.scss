@@ -4,6 +4,10 @@
 
   .course-sessions-header {
     @include detail-container-header;
+    height: 2rem;
+    @include for-phone-only {
+      height: 3rem;
+    }
   }
 
   .title {
