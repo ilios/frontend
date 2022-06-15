@@ -50,7 +50,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     await render(
       hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} @isManaging={{true}} @remove={{(noop)}}/>`
     );
-    assert.strictEqual(component.heading, 'Selected Instructors Groups:');
+    assert.strictEqual(component.heading, 'Selected Instructor Groups:');
     assert.strictEqual(component.instructorGroups.length, 3);
     assert.strictEqual(component.instructorGroups[0].title, 'instructor group 0');
     assert.ok(component.instructorGroups[0].isRemovable);
@@ -86,7 +86,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     await render(
       hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} @isManaging={{false}} />`
     );
-    assert.strictEqual(component.heading, 'Selected Instructors Groups:');
+    assert.strictEqual(component.heading, 'Selected Instructor Groups:');
     assert.strictEqual(component.instructorGroups.length, 3);
     assert.strictEqual(component.instructorGroups[0].title, 'instructor group 0');
     assert.notOk(component.instructorGroups[0].isRemovable);
@@ -120,7 +120,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
   test('no instructor groups', async function (assert) {
     this.set('instructors', []);
     await render(hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} />`);
-    assert.strictEqual(component.heading, 'Selected Instructors Groups:');
+    assert.strictEqual(component.heading, 'Selected Instructor Groups:');
     assert.strictEqual(component.instructorGroups.length, 0);
     assert.strictEqual(component.noGroups.text, 'None');
     await a11yAudit();
