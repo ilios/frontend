@@ -20,7 +20,6 @@
   & > main {
     background-color: $white;
     grid-area: main;
-    margin: 5px;
   }
 
   & > footer {
@@ -65,10 +64,5 @@
         z-index: 5;
       }
     }
-
-    & > main {
-      margin: .5rem;
-    }
-
   }
 }

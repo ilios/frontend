@@ -1,5 +1,5 @@
 .school-list {
-  @include main-list;
+  @include main-section;
 
   .schools {
     @include main-list-box;
