@@ -88,7 +88,7 @@
 
   @include for-laptop-and-up {
     display: block;
-    border-bottom: calc(20px * .618) solid $orange;
+    border-bottom: calc(20px * $golden-ratio-large) solid $orange;
 
     ul {
       display: inline;
