@@ -276,7 +276,7 @@ general:
   searchPlaceholder: "Find Learning Material"
   selectCohortsToAttach: "Select the cohort of students you wish to attach to the new course"
   selectCourse: "Select a Course"
-  selectedInstructorGroups: "Selected Instructors Groups"
+  selectedInstructorGroups: "Selected Instructor Groups"
   selectedInstructors: "Selected Instructors"
   selectedLearnerGroups: "Selected Learner Groups"
   selectedLearners: "Selected Learners"
