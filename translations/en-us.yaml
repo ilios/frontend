@@ -397,6 +397,7 @@ errors:
   invalid: "{description} is invalid"
   lessThan: "{description} must be less than {lt}"
   lessThanOrEqualTo: "{description} must be less than or equal to {lte}"
+  missingFile: "Missing file"
   notANumber: "{description} must be a number"
   notAnInteger: "{description} must be an integer"
   odd: "{description} must be odd"
