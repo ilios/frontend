@@ -2,7 +2,7 @@
     background-color: $orange;
     
     @include for-laptop-and-up {
-      padding-bottom: .382rem;
+      padding-bottom: calc($golden-ratio-small * 1rem);
     }
 
     .image {

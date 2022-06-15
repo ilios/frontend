@@ -20,7 +20,6 @@
   & > main {
     background-color: $white;
     grid-area: main;
-    margin: 5px;
   }
 
   & > footer {
@@ -56,7 +55,7 @@
       'nav    main main'
       'footer footer  footer';
       grid-template-columns: auto 1fr 1fr;
-      grid-template-rows: 42px calc(42px * .618) auto 20px;
+      grid-template-rows: 42px calc(42px * $golden-ratio-large) auto 20px;
     }
 
     & > nav {
@@ -65,10 +64,5 @@
         z-index: 5;
       }
     }
-
-    & > main {
-      margin: .5rem;
-    }
-
   }
 }

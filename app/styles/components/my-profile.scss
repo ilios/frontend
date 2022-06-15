@@ -1,4 +1,6 @@
 .my-profile {
+  @include main-section;
+  
   .name {
     margin: .25rem 0 0;
     text-align: center;

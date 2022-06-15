@@ -1,8 +1,3 @@
-@mixin main-list () {
-  display: block;
-  padding: 1rem .5rem;
-}
-
 @mixin main-list-filters () {
   display: flex;
   flex-direction: column;

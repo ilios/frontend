@@ -1,3 +1,4 @@
 .admin-dashboard {
+  @include main-section;
   @include admin-blocks;
 }

@@ -1,5 +1,6 @@
 .user-profile {
-
+  @include main-section;
+  
   h1 {
     margin-bottom: 1rem;
     text-align: center;
