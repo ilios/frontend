@@ -44,11 +44,9 @@
     </div>
     <section class="reports">
       <div class="header">
-        <div class="title">
-          <h2>
-            {{t "general.curriculumInventoryReports"}}
-          </h2>
-        </div>
+        <h2 class="title">
+          {{t "general.curriculumInventoryReports"}}
+        </h2>
         {{#if (and this.canCreate this.selectedProgram)}}
           <div class="actions">
             <ExpandCollapseButton

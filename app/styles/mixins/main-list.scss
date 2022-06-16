@@ -41,13 +41,12 @@
 }
 
 @mixin main-list-box () {
-  border: 2px solid $culturedGrey;
   display: block;
   width: 100%;
 }
 
 @mixin main-list-box-header () {
-  background-color: $culturedGrey;
+  border-bottom: 1px solid $culturedGrey;
   display: flex;
   flex-direction: column;
   padding: .5rem 0;
@@ -56,15 +55,16 @@
   @include for-laptop-and-up {
     flex-direction: row;
     justify-content: space-between;
+    margin-left: 1rem;
   }
 }
 
 @mixin main-list-box-header-title {
-  @include ilios-heading-h5;
+  @include ilios-heading-h4;
+  @include text-align-bottom;
   margin-bottom: .5rem;
   @include for-laptop-and-up {
     margin-bottom: 0;
-    padding-left: 1rem;
   }
 }
 

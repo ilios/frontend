@@ -2,11 +2,9 @@
   <section class="school-list" data-test-school-list ...attributes>
     <section class="schools">
       <div class="header">
-        <div class="title">
-          <h2>
-            {{t "general.schools"}}
-          </h2>
-        </div>
+        <h2 class="title">
+          {{t "general.schools"}}
+        </h2>
         {{#if this.currentUser.isRoot}}
           <div class="actions">
             <ExpandCollapseButton
