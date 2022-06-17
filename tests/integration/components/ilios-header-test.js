@@ -13,8 +13,13 @@ module('Integration | Component | ilios-header', function (hooks) {
   setupMirage(hooks); //even though we're not using mirage directly we need to ensure that /config API is owned
 
   test('it renders and is accessible', async function (assert) {
-    await render(hbs`<IliosHeader />`);
+    this.set('title', 'test');
+    await render(hbs`
+      {{page-title this.title}}
+      <IliosHeader />
+    `);
     assert.ok(component.isPresent);
+    assert.strictEqual(component.title, 'test');
 
     await a11yAudit(this.element);
   });
