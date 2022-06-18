@@ -4,6 +4,9 @@
     @skipText={{t "general.skipToMainContent"}}
     @routeChangeValidator={{this.checkRouteChange}}
   />
+  <h1 data-test-title>
+    {{this.pageTitle.title}}
+  </h1>
   <div class="header-content">
     <div class="tools">
       {{#if this.showSearch}}

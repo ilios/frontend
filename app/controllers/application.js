@@ -11,7 +11,6 @@ export default class ApplicationController extends Controller {
   @service currentUser;
   @service intl;
   @service session;
-  @service pageTitle;
   @service iliosConfig;
 
   @tracked currentlyLoading = false;

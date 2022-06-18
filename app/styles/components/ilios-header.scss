@@ -1,5 +1,10 @@
 .ilios-header {
   background-color: $orange;
+
+  h1 {
+    @include visually-hidden;
+  }
+
   .header-content {
     align-items: center;
     display: grid;

@@ -5,14 +5,8 @@
       padding-bottom: calc($golden-ratio-small * 1rem);
     }
 
-    .image {
-        background-image: url('images/ilios-logo.svg');
-        background-repeat: no-repeat;
+    img {
         display: block;
         height: 95%;
-    }
-
-    .visually-hidden {
-      @include visually-hidden;
     }
 }

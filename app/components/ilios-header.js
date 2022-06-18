@@ -10,6 +10,7 @@ export default class IliosHeaderComponent extends Component {
   @service session;
   @service router;
   @service iliosConfig;
+  @service pageTitle;
 
   @use searchEnabled = new ResolveAsyncValue(() => [this.iliosConfig.getSearchEnabled()]);
 
