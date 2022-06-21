@@ -45,7 +45,7 @@
       'nav main'
       'footer footer';
       grid-template-columns: auto 1fr;
-      grid-template-rows: 42px calc(42px * .382) auto 20px;
+      grid-template-rows: 42px calc(42px * $golden-ratio-small) auto 20px;
     }
 
     @include for-desktop-and-up {
