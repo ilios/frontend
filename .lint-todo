@@ -203,3 +203,4 @@ add|ember-template-lint|require-presentational-children|89|8|89|8|42b77ab3c30aae
 
 
 remove|ember-template-lint|require-presentational-children|89|8|89|8|42b77ab3c30aae7685c4eedbe560b320edee253a|1651017600000|1653609600000|1656201600000|app/components/program-year/objective-list-item.hbs
+remove|ember-template-lint|require-presentational-children|78|8|78|8|cc092ac2c6e1080bdd07204035b20eddb4b41522|1651017600000|1653609600000|1656201600000|app/components/curriculum-inventory/report-list-item.hbs
