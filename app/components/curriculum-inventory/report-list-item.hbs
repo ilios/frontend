@@ -74,13 +74,15 @@
       </a>
     </span>
     {{#if this.canDelete}}
-      <span role="button" {{on "click" (set this.showRemoveConfirmation true)}}>
-        <FaIcon
-          @icon="trash"
-          class="enabled clickable"
-          data-test-remove
-        />
-      </span>
+      <button
+        class="link-button"
+        type="button"
+        {{on "click" (set this.showRemoveConfirmation true)}}
+        aria-label={{t "general.remove"}}
+        data-test-remove
+      >
+        <FaIcon @icon="trash" class="enabled remove" />
+      </button>
     {{else}}
       <FaIcon @icon="trash" class="disabled" />
     {{/if}}
