@@ -110,9 +110,15 @@
           {{#if (eq this.currentPrepositionalObject "instructor")}}
             {{#if this.selectedUser}}
               <ul class="removable-list tag-list">
-                <li role="button" {{on "click" (fn this.changePrepositionalObjectId null)}}>
-                  {{this.selectedUser.fullName}}
-                  <FaIcon @icon="xmark" />
+                <li>
+                  <button
+                    class="link-button"
+                    type="button"
+                    {{on "click" (fn this.changePrepositionalObjectId null)}}
+                  >
+                    {{this.selectedUser.fullName}}
+                    <FaIcon @icon="xmark" />
+                  </button>
                 </li>
               </ul>
             {{else}}
