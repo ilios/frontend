@@ -37,9 +37,16 @@
           </h4>
           <ul class="removable-instructors">
             {{#each (sort-by "fullName" this.instructors) as |user|}}
-              <li role="button" {{on "click" (fn this.removeInstructor user)}} data-test-selected-instructor>
-                <UserNameInfo @user={{user}} />
-                <FaIcon @icon="xmark" class="remove" />
+              <li>
+                <button
+                  class="link-button"
+                  type="button"
+                  {{on "click" (fn this.removeInstructor user)}}
+                  data-test-selected-instructor
+                >
+                  <UserNameInfo @user={{user}} />
+                  <FaIcon @icon="xmark" class="remove" />
+                </button>
               </li>
             {{/each}}
           </ul>
@@ -51,15 +58,16 @@
           <div class="removable-instructor-groups">
             {{#each (sort-by "title" this.instructorGroups) as |instructorGroup|}}
               <div class="removable-instructor-group" data-test-selected-instructor-group>
-                <span
-                  role="button"
+                <button
+                  class="link-button"
+                  type="button"
                   data-test-instructor-group-title
                   {{on "click" (fn this.removeInstructorGroup instructorGroup)}}
                 >
                   <FaIcon @icon="users" />
                   {{instructorGroup.title}}
                   <FaIcon @icon="xmark" class="remove" />
-                </span>
+                </button>
                 <br>
                 <ul class="instructorgroup-members-list">
                   {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
