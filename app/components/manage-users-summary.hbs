@@ -76,24 +76,27 @@
             </li>
           {{/if}}
           {{#if (eq result.type "user")}}
-            <li
-              class="user {{unless this.clickUser.isRunning "clickable"}}"
-              role="button"
-              {{on "click" (perform this.clickUser result.user)}}
-            >
-              <span class="name">
-                {{result.user.fullName}}
-                {{#unless result.user.enabled}}
-                  <FaIcon
-                    @icon="user-xmark"
-                    @title={{t "general.disabled"}}
-                    class="error"
-                  />
-                {{/unless}}
-              </span>
-              <span class="email">
-                {{result.user.email}}
-              </span>
+            <li class="user">
+              <button
+                class="link-button"
+                type="button"
+                disabled={{this.clickUser.isRunning}}
+                {{on "click" (perform this.clickUser result.user)}}
+              >
+                <span class="name">
+                  {{result.user.fullName}}
+                  {{#unless result.user.enabled}}
+                    <FaIcon
+                      @icon="user-xmark"
+                      @title={{t "general.disabled"}}
+                      class="error"
+                    />
+                  {{/unless}}
+                </span>
+                <span class="email">
+                  {{result.user.email}}
+                </span>
+              </button>
             </li>
           {{/if}}
         {{/each}}
