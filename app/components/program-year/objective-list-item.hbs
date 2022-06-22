@@ -85,9 +85,15 @@
       {{/if}}
     {{/if}}
     {{#if (and this.canDelete @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
-      <span class="clickable remove icon" role="button" {{on "click" (set this.showRemoveConfirmation true)}} aria-label={{t "general.remove"}}>
-        <FaIcon @icon="trash" class="enabled" />
-      </span>
+      <button
+        class="link-button"
+        type="button"
+        {{on "click" (set this.showRemoveConfirmation true)}}
+        aria-label={{t "general.remove"}}
+        data-test-remove
+      >
+        <FaIcon @icon="trash" class="enabled remove" />
+      </button>
     {{else}}
       <FaIcon @icon="trash" class="disabled" />
     {{/if}}
