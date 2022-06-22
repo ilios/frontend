@@ -73,7 +73,7 @@
         <FaIcon @icon="download" class="enabled" />
       </a>
     </span>
-    {{#if this.canDelete}}
+    {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
       <button
         class="link-button"
         type="button"
