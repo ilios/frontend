@@ -7,15 +7,13 @@
   <h1 data-test-title>
     {{this.pageTitle.title}}
   </h1>
-  <div class="header-content">
-    <div class="tools">
-      {{#if this.showSearch}}
-        <GlobalSearchBox @search={{this.search}} />
-      {{/if}}
-      <LocaleChooser />
-      {{#if this.session.isAuthenticated}}
-        <UserMenu />
-      {{/if}}
-    </div>
+  <div class="tools">
+    {{#if this.showSearch}}
+      <GlobalSearchBox @search={{this.search}} />
+    {{/if}}
+    <LocaleChooser />
+    {{#if this.session.isAuthenticated}}
+      <UserMenu />
+    {{/if}}
   </div>
 </header>

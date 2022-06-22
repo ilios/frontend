@@ -4,69 +4,61 @@
   h1 {
     @include visually-hidden;
   }
-
-  .header-content {
-    align-items: center;
-    display: grid;
-    grid-template-areas: 'logo tools';
-    height: auto;
-    grid-template-columns: 100px auto;
-
+  
+  // Elements on the far right
+  .tools {
     @media print {
       display: none;
     }
+    
+    align-items: center;
+    background: transparent;
+    grid-area: tools;
+    margin-right: .25rem;
+    padding: .25rem 0;
+    display: grid;
+    justify-content: end;
+    grid-template-areas: 
+    ". locale user"
+    "search search search";
+    row-gap: .25rem;
 
-    // Elements on the far right
-    .tools {
-      align-items: center;
-      background: transparent;
-      grid-area: tools;
-      margin-right: .25rem;
-      padding: .25rem 0;
-      display: grid;
-      justify-content: end;
-      grid-template-areas: 
-      ". locale user"
-      "search search search";
-      row-gap: .25rem;
-
-      @include for-tablet-and-up {
-        grid-template-areas: "search locale user";
-      }
-
-      .locale-chooser {
-        grid-area: locale;
-      }
-      .user-menu {
-        grid-area: user;
-      }
-
-      .global-search-box {
-        grid-area: search;
-        height: 100%;
-
-        @include for-phone-only {
-          width: 10rem;
-        }
-
-        .autocomplete {
-          width: 25rem;
-
-          @include for-smaller-than-laptop {
-            right: 0rem;
-          }
-
-          @media screen and (max-width: 550px) {
-            left: -7rem;
-            right: auto;
-          }
-        }
-
-        input[type='search'] {
-          border: 1px solid $white;
-        }
-      }
-
+    @include for-tablet-and-up {
+      grid-template-areas: "search locale user";
     }
+
+    .locale-chooser {
+      grid-area: locale;
+    }
+    .user-menu {
+      grid-area: user;
+    }
+
+    .global-search-box {
+      grid-area: search;
+      height: 100%;
+
+      @include for-phone-only {
+        width: 10rem;
+      }
+
+      .autocomplete {
+        width: 25rem;
+
+        @include for-smaller-than-laptop {
+          right: 0rem;
+        }
+
+        @media screen and (max-width: 550px) {
+          left: -7rem;
+          right: auto;
+        }
+      }
+
+      input[type='search'] {
+        border: 1px solid $white;
+      }
+    }
+
   }
 }
