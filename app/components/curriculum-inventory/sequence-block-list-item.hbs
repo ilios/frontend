@@ -45,15 +45,16 @@
     {{/if}}
   </td>
   <td class="text-center" colspan="1">
-    {{#if @canUpdate}}
-      <span
-        class="clickable remove"
-        role="button"
+    {{#if (and @canUpdate (not this.showRemoveConfirmation))}}
+      <button
+        class="link-button"
+        type="button"
         {{on "click" (set this.showRemoveConfirmation true)}}
+        aria-label={{t "general.remove"}}
         data-test-remove
       >
-        <FaIcon @icon="trash" class="enabled" />
-      </span>
+        <FaIcon @icon="trash" class="enabled remove" />
+      </button>
     {{else}}
       <FaIcon @icon="trash" class="disabled" />
     {{/if}}
