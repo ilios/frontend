@@ -4,7 +4,7 @@
   'logo header'
   'main main'
   'footer footer';
-  grid-template-rows: auto 1fr 20px;
+  grid-template-rows: 42px auto 20px;
   height: 100vh;
   width: 100%;
   background-color: $white;
@@ -35,7 +35,7 @@
     grid-template-rows: auto auto 1fr 20px;
 
     @include for-tablet-and-up {
-      grid-template-rows: auto auto 1fr 20px;
+      grid-template-rows: 42px auto auto 20px;
     }
 
     @include for-laptop-and-up {
@@ -45,7 +45,7 @@
       'nav main'
       'footer footer';
       grid-template-columns: auto 1fr;
-      grid-template-rows: 42px calc(42px * .382) auto 20px;
+      grid-template-rows: 42px calc(42px * $golden-ratio-small) auto 20px;
     }
 
     @include for-desktop-and-up {
