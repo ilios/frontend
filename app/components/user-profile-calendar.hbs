@@ -7,14 +7,38 @@
     {{t "general.calendar"}}
   </h2>
   <ul class="calendar-time-picker">
-    <li class="clickable" {{on "click" this.goBack}} role="button" data-test-go-back>
-      <FaIcon @icon="backward" />
+    <li>
+      <button
+        class="link-button"
+        type="button"
+        aria-label={{t "general.back"}}
+       {{on "click" this.goBack}}
+        data-test-go-back
+      >
+        <FaIcon @icon="backward" @title={{t "general.back"}} />
+      </button>
     </li>
-    <li class="clickable" {{on "click" this.gotoToday}} role="button" data-test-go-today>
-      {{t "general.today"}}
+    <li>
+      <button
+        class="link-button"
+        type="button"
+        aria-label={{t "general.today"}}
+        {{on "click" this.gotoToday}}
+        data-test-go-today
+      >
+        {{t "general.today"}}
+      </button>
     </li>
-    <li class="clickable" {{on "click" this.goForward}} role="button" data-test-go-forward>
-      <FaIcon @icon="forward" />
+    <li>
+      <button
+        class="link-button"
+        type="button"
+        aria-label={{t "general.forward"}}
+        {{on "click" this.goForward}}
+        data-test-go-forward
+      >
+        <FaIcon @icon="forward" @title={{t "general.forward"}} />
+      </button>
     </li>
   </ul>
   <div class="ilios-calendar">
