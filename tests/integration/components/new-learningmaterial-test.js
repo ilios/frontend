@@ -69,4 +69,20 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       'This field is too long (maximum is 256 characters)'
     );
   });
+
+  test('missing file', async function (assert) {
+    this.set('type', 'file');
+    await render(hbs`
+      <NewLearningmaterial
+        @type={{this.type}}
+        @learningMaterialStatuses={{(array)}}
+        @learningMaterialUserRoles={{(array)}}
+        @save={{(noop)}}
+        @cancel={{(noop)}}
+      />
+   `);
+    assert.strictEqual(component.fileUpload.validationErrors.length, 0);
+    await component.save();
+    assert.strictEqual(component.fileUpload.validationErrors[0].text, 'Missing file');
+  });
 });

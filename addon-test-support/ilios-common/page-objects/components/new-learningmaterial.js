@@ -24,6 +24,10 @@ const definition = {
   save: clickable('.done'),
   cancel: clickable('.cancel'),
   hasAgreementValidationError: isVisible('[data-test-agreement-validation-error-message]'),
+  fileUpload: {
+    scope: '[data-test-file]',
+    validationErrors: collection('.validation-error-message'),
+  },
 };
 
 export default definition;

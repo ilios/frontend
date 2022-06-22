@@ -3,7 +3,14 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
-import { validatable, Length, NotBlank, IsTrue, IsURL } from 'ilios-common/decorators/validation';
+import {
+  validatable,
+  Custom,
+  Length,
+  NotBlank,
+  IsTrue,
+  IsURL,
+} from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from '../classes/resolve-async-value';
@@ -15,7 +22,11 @@ export default class NewLearningmaterialComponent extends Component {
   @service store;
   @service currentUser;
   @service iliosConfig;
-  @ValidateIf((o) => o.isFile) @NotBlank() @tracked filename;
+  @service intl;
+  @ValidateIf((o) => o.isFile)
+  @Custom('validateFilenameCallback', 'validateFilenameMessageCallback')
+  @tracked
+  filename;
   @ValidateIf((o) => o.isFile) @NotBlank() @tracked fileHash;
   @tracked statusId;
   @tracked userRoleId;
@@ -145,5 +156,16 @@ export default class NewLearningmaterialComponent extends Component {
     if (target.value === DEFAULT_URL_VALUE) {
       target.select();
     }
+  }
+
+  validateFilenameCallback() {
+    if (typeof this.filename === 'string') {
+      return this.filename.trim() !== '';
+    }
+    return this.filename !== null && this.filename !== undefined;
+  }
+
+  validateFilenameMessageCallback() {
+    return this.intl.t('errors.missingFile');
   }
 }
