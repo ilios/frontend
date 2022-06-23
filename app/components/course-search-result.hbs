@@ -27,14 +27,14 @@
       </li>
     {{/each}}
     {{#if (and (not this.showMore) (gt @course.sessions.length 3))}}
-      <span
-        class="show-more clickable link"
-        role="button"
+      <button
+        class="show-more link-button"
+        type="button"
         {{on "click" (set this.showMore true)}}
       >
         <FaIcon @icon="angle-down" />
         {{t "general.showMore"}}
-      </span>
+      </button>
     {{/if}}
   </ul>
 </li>
