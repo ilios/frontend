@@ -1,8 +1,6 @@
 .curriculum-inventory-report-details {
   @include detail-container($orange);
-  padding: .5rem .25rem;
-  border: 1px solid $blueMunsell;
-  border-radius: 5px;
+  margin: 0 .8rem;
 
   .title {
     @include detail-container-title;
