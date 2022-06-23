@@ -35,7 +35,7 @@
     grid-template-rows: auto auto 1fr 20px;
 
     @include for-tablet-and-up {
-      grid-template-rows: 42px auto auto 20px;
+      grid-template-rows: 42px auto 1fr 20px;
     }
 
     @include for-laptop-and-up {
