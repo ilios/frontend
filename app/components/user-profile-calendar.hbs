@@ -12,7 +12,7 @@
         class="link-button"
         type="button"
         aria-label={{t "general.back"}}
-       {{on "click" this.goBack}}
+        {{on "click" this.goBack}}
         data-test-go-back
       >
         <FaIcon @icon="backward" @title={{t "general.back"}} />
@@ -22,7 +22,6 @@
       <button
         class="link-button"
         type="button"
-        aria-label={{t "general.today"}}
         {{on "click" this.gotoToday}}
         data-test-go-today
       >
