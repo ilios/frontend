@@ -36,6 +36,9 @@
     <div class="header">
       <h2 class="title">
         {{t "general.instructorGroups"}}
+        {{#if this.isLoaded}}
+          ({{this.filteredInstructorGroups.length}})
+        {{/if}}
       </h2>
       <div class="actions">
         {{#if this.canCreate}}

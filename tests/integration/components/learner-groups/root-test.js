@@ -66,6 +66,7 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @sortBy="title"
       @setSortBy={{(noop)}}
     />`);
+    assert.strictEqual(component.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(component.list.items.length, 2);
     assert.strictEqual(component.list.items[0].title, 'learner group 2');
     assert.strictEqual(component.list.items[1].title, 'learner group 3');
@@ -91,7 +92,7 @@ module('Integration | Component | learner-groups/root', function (hooks) {
   });
 
   test('school filter works', async function (assert) {
-    assert.expect(12);
+    assert.expect(14);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
@@ -121,18 +122,20 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.programFilter.selectedProgram, '4');
     assert.strictEqual(component.programYearFilter.selectedProgramYear, '6');
+    assert.strictEqual(component.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(component.list.items.length, 2);
     assert.strictEqual(component.list.items[0].title, 'learner group 2');
     assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
     await component.schoolFilter.select(3);
+    assert.strictEqual(component.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(component.list.items.length, 2);
     assert.strictEqual(component.list.items[0].title, 'learner group 4');
     assert.strictEqual(component.list.items[1].title, 'learner group 5');
   });
 
   test('program filter works', async function (assert) {
-    assert.expect(10);
+    assert.expect(12);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
@@ -162,16 +165,18 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.programFilter.selectedProgram, '4');
     assert.strictEqual(component.programYearFilter.selectedProgramYear, '6');
+    assert.strictEqual(component.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(component.list.items.length, 2);
     assert.strictEqual(component.list.items[0].title, 'learner group 2');
     assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
     await component.programFilter.select(3);
+    assert.strictEqual(component.headerTitle, 'Learner Groups (0)');
     assert.strictEqual(component.list.items.length, 0);
   });
 
   test('program year filter works', async function (assert) {
-    assert.expect(10);
+    assert.expect(12);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
@@ -201,16 +206,18 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.programFilter.selectedProgram, '4');
     assert.strictEqual(component.programYearFilter.selectedProgramYear, '6');
+    assert.strictEqual(component.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(component.list.items.length, 2);
     assert.strictEqual(component.list.items[0].title, 'learner group 2');
     assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
     await component.programYearFilter.select(5);
+    assert.strictEqual(component.headerTitle, 'Learner Groups (0)');
     assert.strictEqual(component.list.items.length, 0);
   });
 
   test('title filter works', async function (assert) {
-    assert.expect(6);
+    assert.expect(8);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setTitleFilter', (titleFilter) => {
@@ -225,11 +232,13 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @sortBy="title"
       @setSortBy={{(noop)}}
     />`);
+    assert.strictEqual(component.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(component.list.items.length, 2);
     assert.strictEqual(component.list.items[0].title, 'learner group 2');
     assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
     await component.setTitleFilter('3');
+    assert.strictEqual(component.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(component.list.items.length, 1);
     assert.strictEqual(component.list.items[0].title, 'learner group 3');
   });

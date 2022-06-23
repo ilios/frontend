@@ -23,7 +23,6 @@ module('Acceptance | Learner Groups', function (hooks) {
 
   test('single option filters', async function (assert) {
     assert.expect(6);
-
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
     this.server.create('cohort', { programYear });
@@ -37,8 +36,7 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('multiple options filter', async function (assert) {
-    assert.expect(28);
-
+    assert.expect(31);
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
@@ -76,9 +74,11 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.programYearFilter.programYears[1].value, '1');
     assert.strictEqual(page.programYearFilter.selectedProgramYear, '3');
 
+    assert.strictEqual(page.headerTitle, 'Learner Groups (0)');
     assert.ok(page.list.isEmpty);
 
     await page.programYearFilter.select(1);
+    assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
 
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
@@ -86,6 +86,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.programFilter.select(2);
     assert.notOk(page.programYearFilter.hasMany);
     assert.strictEqual(page.programYearFilter.text, 'cohort 2');
+    assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, 'learner group 1');
   });
@@ -119,6 +120,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     });
 
     await page.visit();
+    assert.strictEqual(page.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(page.list.items.length, 2);
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
     assert.strictEqual(page.list.items[0].users, '5');
@@ -145,29 +147,35 @@ module('Acceptance | Learner Groups', function (hooks) {
       cohort,
     });
     await page.visit();
+    assert.strictEqual(page.headerTitle, 'Learner Groups (3)');
     assert.strictEqual(page.list.items.length, 3);
     assert.strictEqual(page.list.items[0].title, regularLearnerGroup.title);
     assert.strictEqual(page.list.items[1].title, firstLearnerGroup.title);
     assert.strictEqual(page.list.items[2].title, secondLearnerGroup.title);
 
     await page.setTitleFilter('first');
+    assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, firstLearnerGroup.title);
 
     await page.setTitleFilter('   first     ');
+    assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, firstLearnerGroup.title);
 
     await page.setTitleFilter('second');
+    assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, secondLearnerGroup.title);
 
     await page.setTitleFilter('special');
+    assert.strictEqual(page.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(page.list.items.length, 2);
     assert.strictEqual(page.list.items[0].title, firstLearnerGroup.title);
     assert.strictEqual(page.list.items[1].title, secondLearnerGroup.title);
 
     await page.setTitleFilter('');
+    assert.strictEqual(page.headerTitle, 'Learner Groups (3)');
     assert.strictEqual(page.list.items.length, 3);
     assert.strictEqual(page.list.items[0].title, regularLearnerGroup.title);
     assert.strictEqual(page.list.items[1].title, firstLearnerGroup.title);
@@ -175,8 +183,8 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('add new learnergroup', async function (assert) {
+    assert.expect(10);
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(8);
 
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
@@ -184,6 +192,7 @@ module('Acceptance | Learner Groups', function (hooks) {
 
     const newTitle = 'A New Test Title';
     await page.visit();
+    assert.strictEqual(page.headerTitle, 'Learner Groups (0)');
 
     assert.ok(page.list.isEmpty);
     await page.toggleNewLearnerGroupForm();
@@ -193,6 +202,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.newLearnerGroupForm.single.save();
 
     assert.strictEqual(page.savedResult, `${newTitle} Saved Successfully`);
+    assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, newTitle);
     assert.strictEqual(page.list.items[0].users, '0');
@@ -200,8 +210,8 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('cancel adding new learnergroup', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
+    this.user.update({ administeredSchools: [this.school] });
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
@@ -221,8 +231,8 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('remove learnergroup', async function (assert) {
+    assert.expect(7);
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(5);
 
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
@@ -231,19 +241,20 @@ module('Acceptance | Learner Groups', function (hooks) {
     this.server.create('learnerGroup', { cohort, parent });
 
     await page.visit();
+    assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
     assert.strictEqual(page.list.items[0].children, '1');
     assert.ok(page.list.items[0].canBeDeleted);
     await page.list.items[0].remove();
     await page.list.confirmRemoval.confirm();
-
+    assert.strictEqual(page.headerTitle, 'Learner Groups (0)');
     assert.ok(page.list.isEmpty);
   });
 
   test('cancel remove learnergroup', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
+    this.user.update({ administeredSchools: [this.school] });
 
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
@@ -261,6 +272,7 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('confirmation of remove message', async function (assert) {
+    assert.expect(5);
     this.user.update({ administeredSchools: [this.school] });
 
     this.server.createList('user', 5);
@@ -272,7 +284,6 @@ module('Acceptance | Learner Groups', function (hooks) {
     this.server.createList('offering', 2, {
       learnerGroups: [parent],
     });
-    assert.expect(5);
 
     await page.visit();
     assert.strictEqual(page.list.items.length, 1);
@@ -287,6 +298,7 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('populated learner groups are not deletable', async function (assert) {
+    assert.expect(3);
     this.user.update({ administeredSchools: [this.school] });
 
     this.server.createList('user', 5);
@@ -297,8 +309,6 @@ module('Acceptance | Learner Groups', function (hooks) {
       cohort,
       userIds: [2, 3, 4],
     });
-
-    assert.expect(3);
 
     await page.visit();
     assert.strictEqual(page.list.items.length, 1);
@@ -370,7 +380,6 @@ module('Acceptance | Learner Groups', function (hooks) {
 
   test('click title takes you to learnergroup route', async function (assert) {
     assert.expect(3);
-
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
@@ -385,7 +394,6 @@ module('Acceptance | Learner Groups', function (hooks) {
 
   test('add new learnergroup with full cohort', async function (assert) {
     assert.expect(8);
-
     this.user.update({ administeredSchools: [this.school] });
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
@@ -421,7 +429,6 @@ module('Acceptance | Learner Groups', function (hooks) {
 
   test('title filter escapes regex', async function (assert) {
     assert.expect(5);
-
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
@@ -441,8 +448,8 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('copy learnergroup without learners', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     assert.expect(23);
+    this.user.update({ administeredSchools: [this.school] });
 
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
@@ -497,8 +504,8 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('copy learnergroup with learners', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     assert.expect(23);
+    this.user.update({ administeredSchools: [this.school] });
 
     this.server.createList('user', 10);
     const program = this.server.create('program', { school: this.school });
