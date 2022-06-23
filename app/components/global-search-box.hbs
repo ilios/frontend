@@ -29,21 +29,23 @@
     <ClickOutside @onClickOutside={{set this.autocompleteResults null}}>
       <ul class="autocomplete" data-test-autocomplete>
         {{#each this.results as |result|}}
-          <li
-            class="autocomplete-row"
-            role="button"
-            {{on "click"
-              (pipe-action
-                (set this.autocompleteSelectedQuery null)
-                (set this.internalQuery result.text)
-                this.search
-              )
-            }}
-          >
-            <FaIcon @icon="magnifying-glass" />
-            <span class="result-text">
-              {{result.text}}
-            </span>
+          <li class="autocomplete-row">
+            <button
+              class="link-button"
+              type="button"
+              {{on "click"
+                (pipe-action
+                  (set this.autocompleteSelectedQuery null)
+                  (set this.internalQuery result.text)
+                  this.search
+                )
+              }}
+            >
+              <FaIcon @icon="magnifying-glass" />
+              <span class="result-text">
+                {{result.text}}
+              </span>
+            </button>
           </li>
         {{/each}}
       </ul>
