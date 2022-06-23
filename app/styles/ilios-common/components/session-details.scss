@@ -4,9 +4,24 @@
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
+  padding-left: .8rem;
 
-  table thead {
-    background-color: $tealBlue;
-    color: $white;
+  table {
+    thead {
+      background-color: $tealBlue;
+      color: $white;
+    }
+
+    th:first-of-type,
+    td:first-of-type {
+      padding-left: .2rem;
+    }
+
+    &.condensed {
+      th:first-of-type,
+      td:first-of-type {
+        padding-left: .2rem;
+      }
+    }
   }
 }

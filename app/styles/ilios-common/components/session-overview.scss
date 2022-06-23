@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: .8em;
+  padding: calc($golden-ratio-large * 1rem) 0 calc($golden-ratio-small * 1rem) 0;
 
   @include for-tablet-and-up {
     flex-direction: row;
