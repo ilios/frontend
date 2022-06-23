@@ -1,10 +1,8 @@
 .program {
+  @include main-section;
   margin-bottom: 1rem;
-  padding: .5rem .25rem;
-  border: 1px solid $blueMunsell;
-  border-radius: 5px;
 
   .leadership-collapsed {
-    padding: 0 2rem;
+    margin: 0 .8rem;
   }
 }

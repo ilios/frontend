@@ -1,8 +1,5 @@
 .program-overview {
   @include ilios-overview($culturedGrey);
-  background: $slightWhite;
-  border: 1px dotted $culturedGrey;
-  padding: 0 2rem 1rem;
 
   h2 {
     @include ilios-overview-title;
