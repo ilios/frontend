@@ -16,14 +16,37 @@
     </span>
   </p>
   <ul class="inline learnergroup-calendar-time-picker">
-    <li class="clickable" role="button" {{on "click" this.goBack}}>
-      <FaIcon @icon="backward" />
+    <li >
+      <button
+        class="link-button"
+        type="button"
+        aria-label={{t "general.forward"}}
+        {{on "click" this.goBack}}
+        data-test-go-back
+      >
+        <FaIcon @icon="backward" />
+      </button>
     </li>
-    <li class="clickable" role="button" {{on "click" this.gotoToday}}>
-      {{t "general.today"}}
+    <li>
+      <button
+        class="link-button"
+        type="button"
+        {{on "click" this.gotoToday}}
+        data-test-go-today
+      >
+        {{t "general.today"}}
+      </button>
     </li>
-    <li class="clickable" role="button" {{on "click" this.goForward}}>
-      <FaIcon @icon="forward" />
+    <li>
+      <button
+        class="link-button"
+        type="button"
+        aria-label={{t "general.forward"}}
+        {{on "click" this.goForward}}
+        data-test-go-forward
+      >
+        <FaIcon @icon="forward" />
+      </button>
     </li>
   </ul>
   <div class="ilios-calendar">
