@@ -47,6 +47,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
       });
 
       await page.visit();
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (2)');
       assert.strictEqual(page.list.items.length, 2);
       assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
       assert.strictEqual(parseInt(page.list.items[0].users, 10), 5);
@@ -75,6 +76,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
         school: this.school,
       });
       await page.visit();
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (4)');
       assert.strictEqual(page.list.items.length, 4);
       assert.strictEqual(page.list.items[0].title, regexInstructorGroup.title);
       assert.strictEqual(page.list.items[1].title, regularInstructorGroup.title);
@@ -82,27 +84,33 @@ module('Acceptance | Instructor Groups', function (hooks) {
       assert.strictEqual(page.list.items[3].title, secondInstructorGroup.title);
 
       await page.setTitleFilter('first');
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
 
       await page.setTitleFilter('  first   ');
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
 
       await page.setTitleFilter('second');
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, secondInstructorGroup.title);
 
       await page.setTitleFilter('special');
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (2)');
       assert.strictEqual(page.list.items.length, 2);
       assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
       assert.strictEqual(page.list.items[1].title, secondInstructorGroup.title);
 
       await page.setTitleFilter('\\');
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, regexInstructorGroup.title);
 
       await page.setTitleFilter('');
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (4)');
       assert.strictEqual(page.list.items.length, 4);
       assert.strictEqual(page.list.items[0].title, regexInstructorGroup.title);
       assert.strictEqual(page.list.items[1].title, regularInstructorGroup.title);
@@ -111,14 +119,16 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('add new instructorgroup', async function (assert) {
+      assert.expect(7);
       this.user.update({ administeredSchools: [this.school] });
-      assert.expect(5);
       await page.visit();
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (0)');
       const newTitle = 'new test title';
       await page.toggleNewInstructorGroupForm();
       await page.newInstructorGroupForm.title.set(newTitle);
       await page.newInstructorGroupForm.done.click();
       assert.strictEqual(page.savedResult, newTitle + ' Saved Successfully');
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, newTitle);
       assert.strictEqual(parseInt(page.list.items[0].users, 10), 0);
@@ -126,8 +136,8 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('cancel adding new instructor group', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       assert.expect(6);
+      this.user.update({ administeredSchools: [this.school] });
       this.server.create('instructorGroup', {
         school: this.school,
       });
@@ -143,23 +153,25 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('remove instructor group', async function (assert) {
+      assert.expect(6);
       this.user.update({ administeredSchools: [this.school] });
-      assert.expect(4);
       this.server.create('instructorGroup', {
         school: this.school,
       });
       await page.visit();
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, 'instructor group 0');
       await page.list.items[0].remove();
       await page.list.confirmRemoval.confirm();
+      assert.strictEqual(page.headerTitle, 'Instructor Groups (0)');
       assert.strictEqual(page.list.items.length, 0);
       assert.ok(page.emptyListRowIsVisible);
     });
 
     test('cancel remove instructor group', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       assert.expect(4);
+      this.user.update({ administeredSchools: [this.school] });
       this.server.create('instructorGroup', {
         school: this.school,
       });
@@ -173,6 +185,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('confirmation of remove message', async function (assert) {
+      assert.expect(3);
       this.user.update({ administeredSchools: [this.school] });
       const users = this.server.createList('user', 5);
       this.server.create('instructorGroup', {
@@ -180,7 +193,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
         users,
       });
 
-      assert.expect(3);
       await page.visit();
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, 'instructor group 0');
@@ -216,8 +228,8 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('cannot delete instructor group with attached courses #3767', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
+      this.user.update({ administeredSchools: [this.school] });
       const group1 = this.server.create('instructorGroup', {
         school: this.school,
       });

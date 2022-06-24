@@ -78,6 +78,9 @@
     <div class="header">
       <h2 class="title">
         {{t "general.learnerGroups"}}
+        {{#if this.isLoaded}}
+          ({{this.filteredLearnerGroups.length}})
+        {{/if}}
       </h2>
       <div class="actions">
         {{#if this.canCreate}}

@@ -50,11 +50,11 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @sortBy="title"
       @setSortBy={{(noop)}}
     />`);
+    assert.strictEqual(component.headerTitle, 'Instructor Groups (3)');
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'instructor group 3');
     assert.strictEqual(component.list.items[1].title, 'instructor group 4');
     assert.strictEqual(component.list.items[2].title, 'instructor group 5');
-
     assert.strictEqual(component.schoolFilter.schools.length, 4);
     assert.strictEqual(component.schoolFilter.schools[0].text, 'school 0');
     assert.strictEqual(component.schoolFilter.schools[1].text, 'school 1');
@@ -63,7 +63,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
   });
 
   test('school filter works', async function (assert) {
-    assert.expect(10);
+    assert.expect(12);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
@@ -78,6 +78,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @sortBy="title"
       @setSortBy={{(noop)}}
     />`);
+    assert.strictEqual(component.headerTitle, 'Instructor Groups (3)');
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'instructor group 3');
@@ -85,6 +86,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
     assert.strictEqual(component.list.items[2].title, 'instructor group 5');
 
     await component.schoolFilter.select(3);
+    assert.strictEqual(component.headerTitle, 'Instructor Groups (3)');
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'instructor group 6');
     assert.strictEqual(component.list.items[1].title, 'instructor group 7');
@@ -92,7 +94,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
   });
 
   test('title filter works', async function (assert) {
-    assert.expect(7);
+    assert.expect(9);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setTitleFilter', (titleFilter) => {
@@ -107,12 +109,14 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @sortBy="title"
       @setSortBy={{(noop)}}
     />`);
+    assert.strictEqual(component.headerTitle, 'Instructor Groups (3)');
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'instructor group 3');
     assert.strictEqual(component.list.items[1].title, 'instructor group 4');
     assert.strictEqual(component.list.items[2].title, 'instructor group 5');
 
     await component.setTitleFilter('4');
+    assert.strictEqual(component.headerTitle, 'Instructor Groups (1)');
     assert.strictEqual(component.list.items.length, 1);
     assert.strictEqual(component.list.items[0].title, 'instructor group 4');
   });
