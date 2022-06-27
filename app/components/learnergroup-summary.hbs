@@ -3,6 +3,7 @@
     class="learnergroup-summary"
     {{did-insert (perform this.load) @learnerGroup @isEditing @isBulkAssigning}}
     {{did-update (perform this.load) @learnerGroup @isEditing @isBulkAssigning}}
+    data-test-learnergroup-summary
     ...attributes
   >
     {{#unless this.load.isRunning}}
@@ -26,7 +27,7 @@
             {{/if}}
           </span>
         </div>
-        <div class="block defaultlocation">
+        <div class="block defaultlocation" data-test-location>
           <label for="location-{{templateId}}">
             {{t "general.defaultLocation"}}:
           </label>
@@ -55,7 +56,7 @@
             {{/if}}
           </span>
         </div>
-        <div class="block defaulturl">
+        <div class="block defaulturl" data-test-url>
           <label for="link-{{templateId}}">
             {{t "general.defaultVirtualLearningLink"}}:
           </label>
@@ -89,7 +90,7 @@
             {{/if}}
           </span>
         </div>
-        <div class="block associatedcourses">
+        <div class="block associatedcourses" data-test-courses>
           <label>
             {{t "general.associatedCourses"}} ({{this.courses.length}}):
           </label>
@@ -109,21 +110,53 @@
           @canUpdate={{@canUpdate}}
         />
         <div class="learnergroup-overview-actions" data-test-overview-actions>
-          {{#if (or @isEditing @isBulkAssigning)}}
-            <button
-              type="button"
-              {{on "click" (pipe (fn @setIsEditing false) (fn @setIsBulkAssigning false))}}
-            >
-              {{t "general.close"}}
-            </button>
-          {{else if @canUpdate}}
-            <button type="button" data-test-activate-bulk-assign {{on "click" (fn @setIsBulkAssigning true)}}>
+          <div class="title" data-test-title>
+            {{#if @isEditing}}
+              {{t "general.manageGroupMembership"}}
+            {{else if @isBulkAssigning}}
               {{t "general.uploadGroupAssignments"}}
-            </button>
-            <button type="button" data-test-manage {{on "click" (fn @setIsEditing true)}}>
-              {{t "general.manage"}}
-            </button>
-          {{/if}}
+            {{else}}
+              {{t "general.members"}}
+              ({{this.usersToPassToManager.length}})
+            {{/if}}
+          </div>
+          <span class="actions" data-test-buttons>
+            {{#if (or @isEditing @isBulkAssigning)}}
+              <button
+                class="close"
+                type="button"
+                {{on "click" (pipe (fn @setIsEditing false) (fn @setIsBulkAssigning false))}}
+                data-test-close
+              >
+                {{t "general.close"}}
+              </button>
+            {{else}}
+              <ToggleButtons
+                @firstOptionSelected={{not this.showLearnerGroupCalendar}}
+                @firstLabel={{t "general.hideCalendar"}}
+                @secondLabel={{t "general.showCalendar"}}
+                @toggle={{toggle "showLearnerGroupCalendar" this}}
+              />
+              {{#if @canUpdate}}
+                <button
+                  class="bulk-assign"
+                  type="button"
+                  data-test-activate-bulk-assign
+                  {{on "click" (fn @setIsBulkAssigning true)}}
+                >
+                  {{t "general.uploadGroupAssignments"}}
+                </button>
+                <button
+                  class="manage"
+                  type="button"
+                  data-test-manage
+                  {{on "click" (fn @setIsEditing true)}}
+                >
+                  {{t "general.manage"}}
+                </button>
+              {{/if}}
+            {{/if}}
+          </span>
         </div>
         {{#if @isBulkAssigning}}
           <LearnergroupBulkAssignment
@@ -148,14 +181,6 @@
             />
           </div>
         {{/if}}
-        <p class="block" data-test-toggle-learnergroup-calendar>
-          <ToggleButtons
-            @firstOptionSelected={{not this.showLearnerGroupCalendar}}
-            @firstLabel={{t "general.hideCalendar"}}
-            @secondLabel={{t "general.showCalendar"}}
-            @toggle={{toggle "showLearnerGroupCalendar" this}}
-          />
-        </p>
         {{#if this.showLearnerGroupCalendar}}
           <LearnergroupCalendar @learnerGroup={{@learnerGroup}} />
         {{/if}}

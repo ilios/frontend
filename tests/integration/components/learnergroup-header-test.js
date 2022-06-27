@@ -1,117 +1,146 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, click, fillIn, find, triggerEvent } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-const { resolve } = RSVP;
+import { render } from '@ember/test-helpers';
+import hbs from 'htmlbars-inline-precompile';
+import { component } from 'ilios/tests/pages/components/learnergroup-header';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | learnergroup header', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
-    const school = this.server.create('school');
+  hooks.beforeEach(async function () {
+    const users = this.server.createList('user', 3);
+    const school = this.server.create('school', { title: 'Medicine' });
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });
-    const parentGroup = this.server.create('learner-group', { cohort, title: 'parent group' });
     const learnerGroup = this.server.create('learner-group', {
+      title: 'lorem ipsum',
       cohort,
-      parent: parentGroup,
-      title: 'our group',
+      users,
     });
-    const learnerGroupModel = await this.owner
+    this.learnerGroup = await this.owner
       .lookup('service:store')
       .find('learner-group', learnerGroup.id);
-    this.set('learnerGroup', learnerGroupModel);
-
-    await render(hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} />`);
-
-    assert.dom('.title').hasText('our group');
-    assert.strictEqual(
-      find('.breadcrumbs').textContent.replace(/\s/g, ''),
-      'LearnerGroupsparentgroupourgroup'
-    );
-    const breadcrumbRootLinkUrl = new URL(find('.breadcrumbs > span a').href);
-    assert.strictEqual(breadcrumbRootLinkUrl.search, '?program=1&programYear=1&school=1');
   });
 
-  test('can change title', async function (assert) {
-    assert.expect(2);
-    const learnerGroup = EmberObject.create({
-      title: 'our group',
-      save() {
-        assert.strictEqual(this.title, 'new title');
-      },
-    });
-
-    this.set('learnerGroup', learnerGroup);
+  test('it renders', async function (assert) {
+    this.set('learnerGroup', this.learnerGroup);
+    this.set('canUpdate', true);
     await render(
-      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{true}} />`
+      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{this.canUpdate}} />`
     );
-
-    assert.dom('.title').hasText('our group');
-    await click('.title .editable');
-    await fillIn('.title input', 'new title');
-    await triggerEvent('.title input', 'input');
-    await click('.title .done');
+    assert.strictEqual(component.title.text, 'lorem ipsum');
+    assert.ok(component.title.isEditable);
+    assert.ok(component.members, 'Members: 3');
+    assert.strictEqual(component.breadcrumb.crumbs.length, 2);
+    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'Learner Groups');
+    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'lorem ipsum');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
-  test('counts members correctly', async function (assert) {
-    const cohort = EmberObject.create({
-      title: 'test group',
-      users: [1, 2],
-    });
-    const subGroup = EmberObject.create({
-      title: 'test sub-group',
-      users: [],
-      children: [],
-    });
-    const learnerGroup = EmberObject.create({
-      title: 'test group',
-      usersOnlyAtThisLevel: [1],
-      cohort,
-      children: resolve([subGroup]),
-    });
+  test('it renders in read-only mode', async function (assert) {
+    this.set('learnerGroup', this.learnerGroup);
+    this.set('canUpdate', false);
 
-    this.set('learnerGroup', learnerGroup);
-    await render(hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} />`);
-
-    assert.dom('header .info').hasText('Members: 1 / 2');
-  });
-
-  test('validate title length', async function (assert) {
-    assert.expect(4);
-    const title = '.title';
-    const edit = `${title} .editable`;
-    const input = `${title} input`;
-    const done = `${title} .done`;
-    const errors = `${title} .validation-error-message`;
-
-    const learnerGroup = EmberObject.create({
-      title: 'our group',
-      save() {
-        assert.ok(false, 'should not be called');
-      },
-    });
-
-    this.set('learnerGroup', learnerGroup);
     await render(
-      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{true}} />`
+      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.dom(title).hasText('our group', 'title is correct');
-    assert.dom(errors).doesNotExist('there are no errors');
-    await click(edit);
-    const longTitle = 'x'.repeat(61);
-    await fillIn(input, longTitle);
-    await click(done);
+    assert.strictEqual(component.title.text, 'lorem ipsum');
+    assert.notOk(component.title.isEditable);
+    assert.ok(component.members, 'Members: 3');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
 
-    assert.dom(errors).exists({ count: 1 }, 'there is now an error');
-    assert.ok(find(errors).textContent.search(/too long/) > -1, 'it is the correct error');
+  test('change title', async function (assert) {
+    const newTitle = 'foo bar';
+    this.set('learnerGroup', this.learnerGroup);
+    this.set('canUpdate', true);
+
+    await render(
+      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.strictEqual(component.title.text, 'lorem ipsum');
+    await component.title.edit();
+    assert.strictEqual(component.title.value, 'lorem ipsum');
+    await component.title.set(newTitle);
+    await component.title.save();
+    assert.strictEqual(component.title.text, 'foo bar');
+  });
+
+  test('changing title fails if new title is too long', async function (assert) {
+    this.set('learnerGroup', this.learnerGroup);
+    this.set('canUpdate', true);
+
+    await render(
+      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.strictEqual(component.title.text, 'lorem ipsum');
+    await component.title.edit();
+    assert.strictEqual(component.title.errors.length, 0);
+    assert.strictEqual(component.title.value, 'lorem ipsum');
+    await component.title.set('01234567890'.repeat(1000));
+    await component.title.save();
+    assert.strictEqual(component.title.errors.length, 1);
+  });
+
+  test('changing title fails if new title is too short', async function (assert) {
+    this.set('learnerGroup', this.learnerGroup);
+    this.set('canUpdate', true);
+
+    await render(
+      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.strictEqual(component.title.text, 'lorem ipsum');
+    await component.title.edit();
+    assert.strictEqual(component.title.errors.length, 0);
+    assert.strictEqual(component.title.value, 'lorem ipsum');
+    await component.title.set('AB');
+    await component.title.save();
+    assert.strictEqual(component.title.errors.length, 1);
+  });
+
+  test('changing title fails if title is blank', async function (assert) {
+    this.set('learnerGroup', this.learnerGroup);
+    this.set('canUpdate', true);
+
+    await render(
+      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.strictEqual(component.title.text, 'lorem ipsum');
+    await component.title.edit();
+    assert.strictEqual(component.title.errors.length, 0);
+    assert.strictEqual(component.title.value, 'lorem ipsum');
+    await component.title.set('');
+    await component.title.save();
+    assert.strictEqual(component.title.errors.length, 1);
+  });
+
+  test('cancel title changes', async function (assert) {
+    this.set('learnerGroup', this.learnerGroup);
+    this.set('canUpdate', true);
+
+    await render(
+      hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.strictEqual(component.title.text, 'lorem ipsum');
+    await component.title.edit();
+    assert.strictEqual(component.title.errors.length, 0);
+    assert.strictEqual(component.title.value, 'lorem ipsum');
+    await component.title.set('foo bar');
+    await component.title.cancel();
+    assert.strictEqual(component.title.text, 'lorem ipsum');
   });
 });

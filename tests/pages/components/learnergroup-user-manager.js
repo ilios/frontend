@@ -12,7 +12,6 @@ import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 const definition = {
   scope: '[data-test-learnergroup-user-manager]',
   filter: fillable('[data-test-filter]'),
-  title: text('[data-test-title]'),
   groupMembers: text('[data-test-group-members]'),
   allOtherMembers: text('[data-test-all-other-members]'),
   selectAll: {

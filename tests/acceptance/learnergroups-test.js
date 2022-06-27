@@ -1,7 +1,6 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/learner-groups';
@@ -494,13 +493,13 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.list.items[1].clickTitle();
     assert.strictEqual(currentURL(), '/learnergroups/5');
 
-    assert.strictEqual(learnerGroupPage.subgroups.groups.length, 2);
-    assert.strictEqual(learnerGroupPage.subgroups.groups[0].title, 'learner group 1');
-    assert.strictEqual(learnerGroupPage.subgroups.groups[0].members, '0');
-    assert.strictEqual(learnerGroupPage.subgroups.groups[0].subgroups, '1');
-    assert.strictEqual(learnerGroupPage.subgroups.groups[1].title, 'learner group 2');
-    assert.strictEqual(learnerGroupPage.subgroups.groups[1].members, '0');
-    assert.strictEqual(learnerGroupPage.subgroups.groups[1].subgroups, '0');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups.length, 2);
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].title, 'learner group 1');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].members, '0');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].subgroups, '1');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].title, 'learner group 2');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].members, '0');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].subgroups, '0');
   });
 
   test('copy learnergroup with learners', async function (assert) {
@@ -557,12 +556,12 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.list.items[1].clickTitle();
     assert.strictEqual(currentURL(), '/learnergroups/5');
 
-    assert.strictEqual(learnerGroupPage.subgroups.groups.length, 2);
-    assert.strictEqual(learnerGroupPage.subgroups.groups[0].title, 'learner group 1');
-    assert.strictEqual(learnerGroupPage.subgroups.groups[0].members, '1');
-    assert.strictEqual(learnerGroupPage.subgroups.groups[0].subgroups, '1');
-    assert.strictEqual(learnerGroupPage.subgroups.groups[1].title, 'learner group 2');
-    assert.strictEqual(learnerGroupPage.subgroups.groups[1].members, '3');
-    assert.strictEqual(learnerGroupPage.subgroups.groups[1].subgroups, '0');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups.length, 2);
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].title, 'learner group 1');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].members, '1');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].subgroups, '1');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].title, 'learner group 2');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].members, '3');
+    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].subgroups, '0');
   });
 });

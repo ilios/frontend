@@ -1,6 +1,6 @@
 .learnergroup-summary {
   @include main-section;
-  
+
   .learnergroup-overview {
     @include ilios-overview($orange);
 
@@ -34,9 +34,21 @@
     }
 
     .learnergroup-overview-actions {
+      @include detail-container-header;
       margin-top: .25rem;
       padding-top: .5rem;
-      text-align: right;
+
+      .title {
+        @include detail-container-title;
+      }
+
+      .actions {
+        @include for-phone-and-up {
+          .toggle-buttons {
+            display: inline;
+          }
+        }
+      }
     }
   }
 

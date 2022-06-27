@@ -1,11 +1,5 @@
 {{#let (unique-id) as |templateId|}}
   <div class="learnergroup-user-manager" ...attributes data-test-learnergroup-user-manager>
-    <div class="title" data-test-title>
-      {{#unless @isEditing}}
-        {{t "general.members"}}
-        ({{@users.length}})
-      {{/unless}}
-    </div>
     {{#if @users.length}}
       <div class="actions">
         <Input
