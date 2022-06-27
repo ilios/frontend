@@ -61,7 +61,7 @@
     "ember-data": "4.3.0",
     "ember-event-helpers": "^0.1.0",
     "ember-feature-flags": "^6.0.0",
-    "ember-file-upload": "^5.0.0-beta.6",
+    "ember-file-upload": "^7.0.2",
     "ember-focus-trap": "^1.0.0",
     "ember-in-element-polyfill": "^1.0.0",
     "ember-in-viewport": "^4.0.0",
