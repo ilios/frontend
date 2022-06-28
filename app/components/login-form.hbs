@@ -22,9 +22,11 @@
           <label for="username-{{templateId}}">
             {{t "general.username"}}:
           </label>
+          {{! template-lint-disable no-autofocus-attribute }}
           <input
             autocapitalize="off"
             autocorrect="off"
+            autofocus=""
             autocomplete="username"
             id="username-{{templateId}}"
             type="text"
