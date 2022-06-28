@@ -37,7 +37,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
     assert.strictEqual(component.competency.text, 'Add New');
     assert.strictEqual(component.meshDescriptors.text, 'Add New');
     assert.ok(component.isActive);
-    assert.ok(component.hasTrashCan);
+    assert.ok(component.canBeRemoved);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

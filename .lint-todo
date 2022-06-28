@@ -202,3 +202,33 @@ add|ember-template-lint|require-presentational-children|89|8|89|8|42b77ab3c30aae
 
 
 
+remove|ember-template-lint|require-presentational-children|89|8|89|8|42b77ab3c30aae7685c4eedbe560b320edee253a|1651017600000|1653609600000|1656201600000|app/components/program-year/objective-list-item.hbs
+remove|ember-template-lint|require-presentational-children|78|8|78|8|cc092ac2c6e1080bdd07204035b20eddb4b41522|1651017600000|1653609600000|1656201600000|app/components/curriculum-inventory/report-list-item.hbs
+remove|ember-template-lint|require-presentational-children|20|6|20|6|c5a6187196130cc3296ef3dbc64ee5f5ff5a6395|1651017600000|1653609600000|1656201600000|app/components/learnergroup-calendar.hbs
+remove|ember-template-lint|require-presentational-children|26|6|26|6|3c5ff50ddbfccb95d877794d169e2184b81b0ebf|1651017600000|1653609600000|1656201600000|app/components/learnergroup-calendar.hbs
+remove|ember-template-lint|require-presentational-children|41|16|41|16|2c0e802f8870a246522160f8ad9fe3f2df82700c|1651017600000|1653609600000|1656201600000|app/components/learnergroup-instructor-manager.hbs
+remove|ember-template-lint|require-presentational-children|42|16|42|16|303798bf2d7c802f21c8b927d79c6346d0a1e1de|1651017600000|1653609600000|1656201600000|app/components/learnergroup-instructor-manager.hbs
+remove|ember-template-lint|require-presentational-children|59|18|59|18|b2d395a69c0dff6cdfc1c7c3b342eaa4b0ef6c11|1651017600000|1653609600000|1656201600000|app/components/learnergroup-instructor-manager.hbs
+remove|ember-template-lint|require-presentational-children|61|18|61|18|303798bf2d7c802f21c8b927d79c6346d0a1e1de|1651017600000|1653609600000|1656201600000|app/components/learnergroup-instructor-manager.hbs
+remove|ember-template-lint|require-presentational-children|99|22|99|22|e8094c6dbfd595a75379e0286c29dedcbf62b6b4|1651017600000|1653609600000|1656201600000|app/components/learnergroup-list.hbs
+remove|ember-template-lint|require-presentational-children|101|22|101|22|42b77ab3c30aae7685c4eedbe560b320edee253a|1651017600000|1653609600000|1656201600000|app/components/learnergroup-list.hbs
+remove|ember-template-lint|no-autofocus-attribute|28|12|28|12|438b3b105276037fc1f0594dc46e727083aac033|1651017600000|1653609600000|1656201600000|app/components/login-form.hbs
+remove|ember-template-lint|require-presentational-children|87|18|87|18|dc45dbaa985b505809e1ca441660e5429048c991|1651017600000|1653609600000|1656201600000|app/components/manage-users-summary.hbs
+remove|ember-template-lint|require-presentational-children|115|18|115|18|47480b0614fb4959cd48a90d954d0b1e4ea073a8|1651017600000|1653609600000|1656201600000|app/components/new-myreport.hbs
+remove|ember-template-lint|require-presentational-children|56|20|56|20|5ef9a660f2f0ea94861c3f3088bd67e5193f67d0|1651017600000|1653609600000|1656201600000|app/components/school-vocabularies-list.hbs
+remove|ember-template-lint|require-presentational-children|54|14|54|14|876dfcb3439c0efbb46426d7ce6521438ec8e7b4|1651017600000|1653609600000|1656201600000|app/components/school-vocabulary-manager.hbs
+remove|ember-template-lint|require-presentational-children|68|16|68|16|9de6755d3f9bb4aaa14f43907369578da5f4ec16|1651017600000|1653609600000|1656201600000|app/components/school-vocabulary-manager.hbs
+remove|ember-template-lint|require-presentational-children|71|16|71|16|d0d2264f1f8e728171b7d15f7a7e343feaf1053b|1651017600000|1653609600000|1656201600000|app/components/school-vocabulary-manager.hbs
+remove|ember-template-lint|require-presentational-children|111|14|111|14|876dfcb3439c0efbb46426d7ce6521438ec8e7b4|1651017600000|1653609600000|1656201600000|app/components/school-vocabulary-term-manager.hbs
+remove|ember-template-lint|require-presentational-children|125|16|125|16|9de6755d3f9bb4aaa14f43907369578da5f4ec16|1651017600000|1653609600000|1656201600000|app/components/school-vocabulary-term-manager.hbs
+remove|ember-template-lint|require-presentational-children|128|16|128|16|d0d2264f1f8e728171b7d15f7a7e343feaf1053b|1651017600000|1653609600000|1656201600000|app/components/school-vocabulary-term-manager.hbs
+remove|ember-template-lint|require-presentational-children|11|6|11|6|c5a6187196130cc3296ef3dbc64ee5f5ff5a6395|1651017600000|1653609600000|1656201600000|app/components/user-profile-calendar.hbs
+remove|ember-template-lint|require-presentational-children|17|6|17|6|3c5ff50ddbfccb95d877794d169e2184b81b0ebf|1651017600000|1653609600000|1656201600000|app/components/user-profile-calendar.hbs
+remove|ember-template-lint|require-presentational-children|82|22|82|22|f07284d49443646868d889410613ebc7e7cef466|1651017600000|1653609600000|1656201600000|app/templates/pending-user-updates.hbs
+remove|ember-template-lint|require-presentational-children|97|20|97|20|345afd41538c6cc791ec540186f8fc2980a305bd|1651017600000|1653609600000|1656201600000|app/templates/pending-user-updates.hbs
+remove|ember-template-lint|require-presentational-children|111|20|111|20|bc1ecd33f126e9535e0f0b112c3289aa39fdf1d6|1651017600000|1653609600000|1656201600000|app/templates/pending-user-updates.hbs
+remove|ember-template-lint|require-presentational-children|12|4|12|4|9ff73b7ab2d2a3ab215e112d343dd44b1cba517a|1651017600000|1653609600000|1656201600000|app/components/curriculum-inventory/report-list-item.hbs
+remove|ember-template-lint|require-presentational-children|33|14|33|14|6f5bd03b03df627ce9978a56bf5bca456c9b901a|1651017600000|1653609600000|1656201600000|app/components/curriculum-inventory/report-overview.hbs
+remove|ember-template-lint|require-presentational-children|55|8|55|8|42b77ab3c30aae7685c4eedbe560b320edee253a|1651017600000|1653609600000|1656201600000|app/components/curriculum-inventory/sequence-block-list-item.hbs
+remove|ember-template-lint|require-presentational-children|43|12|43|12|1feaae191a43b2433bfe69681dafa9bd2dbb6e82|1651017600000|1653609600000|1656201600000|app/components/global-search-box.hbs
+remove|ember-template-lint|require-presentational-children|35|8|35|8|d5438b84487c5f3a6d6727f799488c66694e4bf2|1651017600000|1653609600000|1656201600000|app/components/course-search-result.hbs

@@ -75,7 +75,6 @@
                   {{#if (eq update.type "emailMismatch")}}
                     <button
                       type="button"
-                      role="button"
                       {{on "click" (perform this.updateEmailAddress update)}}
                       data-test-update-email
                     >
@@ -90,7 +89,6 @@
                   {{/if}}
                   <button
                     type="button"
-                    role="button"
                     {{on "click" (perform this.excludeFromSync update)}}
                     data-test-exclude-from-sync
                   >
@@ -104,7 +102,6 @@
                   <br>
                   <button
                     type="button"
-                    role="button"
                     {{on "click" (perform this.disableUser update)}}
                     data-test-disable-user
                   >

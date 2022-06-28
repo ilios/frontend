@@ -24,9 +24,10 @@
             />
           </LinkTo>
           {{#if this.showRollover}}
-            <span
-              class="link rollover"
-              role="button"
+            <button
+              class="link-button rollover"
+              type="button"
+              aria-label={{t "general.curriculumInventoryReportRollover"}}
               {{on "click" this.transitionToRollover}}
               data-test-transition-to-rollover
             >
@@ -35,7 +36,7 @@
                 @fixedWidth={{true}}
                 @title={{t "general.curriculumInventoryReportRollover"}}
               />
-            </span>
+            </button>
           {{/if}}
         </div>
       </div>

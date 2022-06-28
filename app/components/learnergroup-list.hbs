@@ -87,20 +87,21 @@
                   (and
                     @canDelete
                     (not (await learnerGroup.hasLearnersInGroupOrSubgroups))
+                    (not (includes learnerGroup.id (map-by "id" this.toRemove)))
                   )
                 }}
-                  <span
-                    class="clickable remove"
-                    role="button"
+                  <button
+                    class="link-button"
+                    type="button"
                     data-test-remove
                     {{on "click" (perform this.confirmRemove learnerGroup)}}
                   >
                     {{#if (includes learnerGroup this.preparingToRemove)}}
-                      <FaIcon @icon="spinner" @spin={{true}} />
+                      <FaIcon @icon="spinner" class="enabled remove" @spin={{true}} />
                     {{else}}
-                      <FaIcon @icon="trash" class="enabled" />
+                      <FaIcon @icon="trash" class="enabled remove" />
                     {{/if}}
-                  </span>
+                  </button>
                 {{else}}
                   <FaIcon @icon="trash" class="disabled" />
                 {{/if}}

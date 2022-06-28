@@ -4,9 +4,8 @@
   data-test-curriculum-inventory-report-list-item
 >
   <td
-    class="text-left clickable"
+    class="text-left"
     colspan="4"
-    role="button"
     data-test-name
   >
     <LinkTo @route="curriculum-inventory-report" @model={{@report}}>
@@ -73,14 +72,16 @@
         <FaIcon @icon="download" class="enabled" />
       </a>
     </span>
-    {{#if this.canDelete}}
-      <span role="button" {{on "click" (set this.showRemoveConfirmation true)}}>
-        <FaIcon
-          @icon="trash"
-          class="enabled clickable"
-          data-test-remove
-        />
-      </span>
+    {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
+      <button
+        class="link-button"
+        type="button"
+        {{on "click" (set this.showRemoveConfirmation true)}}
+        aria-label={{t "general.remove"}}
+        data-test-remove
+      >
+        <FaIcon @icon="trash" class="enabled remove" />
+      </button>
     {{else}}
       <FaIcon @icon="trash" class="disabled" />
     {{/if}}
