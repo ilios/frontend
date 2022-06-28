@@ -53,6 +53,10 @@
     li {
       padding: .25rem .375rem;
 
+      button {
+        @include ilios-button-reset;
+      }
+
       .fa-search {
         bottom: .125rem;
         display: inline-block;
