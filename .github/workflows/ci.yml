@@ -54,10 +54,9 @@ jobs:
       fail-fast: false
       matrix:
         try-scenario:
-          - ember-lts-3.28
           - ember-release
-          # - ember-beta
-          # - ember-canary
+          - ember-beta
+          - ember-canary
           - embroider-safe
           - embroider-optimized
 
