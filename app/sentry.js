@@ -1,42 +1,15 @@
-import * as Sentry from '@sentry/browser';
-import { Ember } from '@sentry/integrations/esm/ember';
+import * as Sentry from '@sentry/ember';
 import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
 
 function startSentry(config) {
   const captureErrors = isErrorCaptureEnabled(config);
-  const isDevelopmentEnvironment = config.environment !== 'production';
+  const DSN = config.sentry.dsn;
 
   Sentry.init({
-    ...config.sentry,
-    integrations: [new Ember()],
+    dsn: captureErrors ? DSN : null,
+    environment: config.environment,
     release: config.APP.version.match(versionRegExp)[0],
-    beforeSend(event, hint) {
-      const error = hint.originalException;
-
-      // ignore aborted route transitions from the Ember.js router
-      if (error && error.name === 'TransitionAborted') {
-        return null;
-      }
-
-      //print everything to the console when not in production
-      if (isDevelopmentEnvironment && error) {
-        console.error(error);
-      }
-      if (!captureErrors) {
-        return null;
-      }
-
-      // ignore aborted ajax calls, these happen when users navigate quickly between routes
-      if (
-        error &&
-        (error.message === 'The ajax operation was aborted' ||
-          error.message === 'The adapter operation was aborted')
-      ) {
-        return null;
-      }
-
-      return event;
-    },
+    tracesSampleRate: 0.25,
   });
 }
 

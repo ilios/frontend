@@ -58,7 +58,6 @@ module.exports = function (environment) {
     },
     sentry: {
       dsn: 'https://ded7a44cf4084601a2fb468484bbe3ed@sentry.io/1311608',
-      environment,
     },
     noScript: {
       placeIn: 'body-footer',

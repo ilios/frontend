@@ -11,8 +11,7 @@ jobs:
         safe-dependency:
         - "@ember/test-helpers"
         - "@ilios/ember-template-lint-plugin"
-        - "@sentry/browser"
-        - "@sentry/integrations"
+        - "@sentry/ember"
         - "babel-eslint"
         - "browserslist"
         - "caniuse-db"
