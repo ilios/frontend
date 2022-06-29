@@ -130,6 +130,6 @@
 
 @mixin ilios-zebra-table () {
   tbody tr:nth-child(even) {
-    background-color: color.adjust($culturedGrey, $lightness: 96%);
+    background-color: color.adjust($culturedGrey, $lightness: 4%);
   }
 }
