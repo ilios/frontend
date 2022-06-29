@@ -11,17 +11,5 @@
       background-color: $tealBlue;
       color: $white;
     }
-
-    th:first-of-type,
-    td:first-of-type {
-      padding-left: .2rem;
-    }
-
-    &.condensed {
-      th:first-of-type,
-      td:first-of-type {
-        padding-left: .2rem;
-      }
-    }
   }
 }
