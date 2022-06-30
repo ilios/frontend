@@ -14,7 +14,7 @@ module('Integration | Modifier | animate-loading', function (hooks) {
 
     await waitUntil(
       () => getComputedStyle(this.element.querySelector('div'), null).opacity === '1',
-      { timeout: 2000 }
+      { timeout: 5000 }
     );
     assert.dom('div').hasStyle({
       opacity: '1',
