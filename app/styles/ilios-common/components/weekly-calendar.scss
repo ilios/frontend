@@ -4,7 +4,6 @@
   $hour-height: .3rem;
   $minute-rows: math.div(24 * 60, 5); //every 5 minutes
   --hour-space: 2.9rem;
-  $grid-border-color: $culturedGrey;
 
   @include for-tablet-and-up {
     --hour-space: 5.5rem;
@@ -63,7 +62,7 @@
       grid-row: 1 / -1;
       grid-template-columns: repeat(50, 1fr);
       grid-template-rows: repeat($minute-rows, $hour-height);
-      border: 1px solid $grid-border-color;
+      border: 1px solid $culturedGrey;
       @for $day from 1 through 7 {
         &.day-#{$day} {
           grid-column: ($day + 1);
@@ -82,7 +81,7 @@
 
     .hour-border,
     .half-hour-border {
-      border-top: 1px solid $grid-border-color;
+      border-top: 1px solid $culturedGrey;
       grid-column: 2 / -1;
     }
 
