@@ -17,17 +17,13 @@
   tr,
   td,
   th {
-    padding: .25rem 0;
+    padding: .25rem .1rem;
     vertical-align: middle;
   }
 
   th,
   td {
     overflow-wrap: break-word;
-
-    &:first-of-type {
-      padding-left: .2rem;
-    }
 
     &.text-left,
     &.align-left {
@@ -64,14 +60,7 @@
     td,
     th {
       margin: 0;
-      padding: 0;
-    }
-
-    td,
-    th {
-      &:first-of-type {
-        padding-left: .2rem;
-      }
+      padding: 0 .1rem;
     }
   }
 
