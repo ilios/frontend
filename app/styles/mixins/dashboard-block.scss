@@ -1,6 +1,6 @@
 @mixin dashboard-block () {
   border: 1px solid $blueMunsell;
-  margin-top: 1rem;
+  margin: 1rem 0 0 .5rem;
   width: 100%;
 
   @include for-laptop-and-up {
