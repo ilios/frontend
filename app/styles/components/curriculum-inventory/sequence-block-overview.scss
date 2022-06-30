@@ -1,6 +1,7 @@
 .curriculum-inventory-sequence-block-overview {
   .curriculum-inventory-sequence-block-overview-wrapper {
     @include ilios-overview($orange);
+    padding: .8rem;
 
     .block {
       @include ilios-overview-block;

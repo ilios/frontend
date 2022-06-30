@@ -4,7 +4,6 @@
   flex-direction: column;
   justify-content: space-between;
   padding: calc($golden-ratio-large * 1rem) 0 calc($golden-ratio-small * 1rem) 0;
-  margin: 0 .8rem;
 
   @include for-tablet-and-up {
     flex-direction: row;
