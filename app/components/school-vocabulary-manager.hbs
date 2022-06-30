@@ -73,22 +73,24 @@
         {{/if}}
         <ul data-test-term-list>
           {{#each this.sortedTerms as |term|}}
-            <button
-              class="link-button"
-              type="button"
-              data-test-term
-              {{on "click" (fn @manageTerm term.id)}}
-            >
-              {{term.title}}
-              {{#if term.hasChildren}}
-                <FaIcon @icon="asterisk" data-test-has-children @title={{t "general.thisTermHasSubTerms"}} />
-              {{/if}}
-              {{#unless term.active}}
-                <em>
-                  ({{t "general.inactive"}})
-                </em>
-              {{/unless}}
-            </button>
+            <li>
+              <button
+                class="link-button"
+                type="button"
+                data-test-term
+                {{on "click" (fn @manageTerm term.id)}}
+              >
+                {{term.title}}
+                {{#if term.hasChildren}}
+                  <FaIcon @icon="asterisk" data-test-has-children @title={{t "general.thisTermHasSubTerms"}} />
+                {{/if}}
+                {{#unless term.active}}
+                  <em>
+                    ({{t "general.inactive"}})
+                  </em>
+                {{/unless}}
+              </button>
+            </li>
           {{/each}}
         </ul>
       </div>
