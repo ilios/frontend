@@ -1,7 +1,5 @@
 .instructorgroup-details {
   padding: .5rem .25rem;
-  border: 1px solid $blueMunsell;
-  border-radius: 5px;
 
   .backtolink {
     margin: .5rem;
@@ -17,7 +15,8 @@
       @include ilios-overview-title;
     }
 
-    .instructorgroup-users {
+    .instructorgroup-users,
+    .instructorgroupcourses {
       @include ilios-tag-list;
       margin-bottom: .5rem;
 
