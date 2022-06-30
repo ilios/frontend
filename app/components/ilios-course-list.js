@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask, task } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 
 export default class IliosCourseListComponent extends Component {
   @service intl;
@@ -11,7 +11,6 @@ export default class IliosCourseListComponent extends Component {
 
   @tracked coursesForRemovalConfirmation = [];
   @tracked savingCourseIds = [];
-  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
   get sortedAscending() {
     return !this.args.sortBy.includes(':desc');
@@ -38,13 +37,6 @@ export default class IliosCourseListComponent extends Component {
       translation += 'notPublished';
     }
     return this.intl.t(translation);
-  }
-
-  @restartableTask
-  *load() {
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
-    );
   }
 
   @task

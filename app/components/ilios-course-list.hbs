@@ -1,6 +1,5 @@
 <div
   data-test-ilios-course-list
-  {{did-insert (perform this.load)}}
   ...attributes
 >
   {{#unless this.load.isRunning}}
@@ -9,22 +8,16 @@
         <tr data-test-course-headings>
           <SortableTh
             data-test-course-title-heading
-            @colspan={{3}}
+            @colspan="8"
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
             @onClick={{fn this.setSortBy "title"}}
           >
             {{t "general.courseTitle"}}
           </SortableTh>
-          <th class="text-center hide-from-small-screen" colspan="2">
-            {{t "general.school"}}
-          </th>
-          <th class="text-center hide-from-small-screen" colspan="2">
-            {{t "general.year"}}
-          </th>
           <SortableTh
             @align="center"
-            @colspan={{1}}
+            @colspan="1"
             @hideFromSmallScreen={{true}}
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "level") (eq @sortBy "level:desc")}}
@@ -56,7 +49,8 @@
             {{t "general.endDate"}}
           </SortableTh>
           <SortableTh
-            @colspan="3"
+            @align="right"
+            @colspan="2"
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "status") (eq @sortBy "status:desc")}}
             @onClick={{fn this.setSortBy "status"}}
@@ -71,7 +65,7 @@
             class={{if (includes course.id this.coursesForRemovalConfirmation) "confirm-removal"}}
             data-test-active-row
           >
-            <td class="text-left" colspan="3">
+            <td class="text-left" colspan="8" data-test-course-title>
               <LinkTo @route="course" @model={{course}}>
                 {{course.title}}
                 {{#if course.externalId}}
@@ -79,30 +73,20 @@
                 {{/if}}
               </LinkTo>
             </td>
-            <td class="text-center hide-from-small-screen" colspan="2">
-              {{course.school.title}}
-            </td>
-            <td class="text-center hide-from-small-screen" colspan="2">
-              {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{course.year}} - {{add course.year 1}}
-              {{else}}
-                {{course.year}}
-              {{/if}}
-            </td>
-            <td class="text-center hide-from-small-screen" colspan="1">
+            <td class="text-center hide-from-small-screen" colspan="1" data-test-level>
               {{course.level}}
             </td>
-            <td class="text-center hide-from-small-screen" colspan="2">
+            <td class="text-center hide-from-small-screen" colspan="2" data-test-start-date>
               {{moment-format course.startDate "L"}}
             </td>
-            <td class="text-center hide-from-small-screen" colspan="2">
+            <td class="text-center hide-from-small-screen" colspan="2" data-test-end-date>
               {{moment-format course.endDate "L"}}
             </td>
-            <td class="text-left" colspan="3">
+            <td class="text-right" colspan="2" data-test-status>
               {{#if (includes course.id this.savingCourseIds)}}
                 <LoadingSpinner />
               {{else}}
-                <PublicationStatus @item={{course}} @showText={{true}} @showIcon={{false}} />
+                <PublicationStatus @item={{course}} @showText={{media "isLaptopAndUp"}} @showIcon={{not (media "isLaptopAndUp")}} />
                 {{#if course.locked}}
                   {{#if (await (compute this.canUnlock course))}}
                     <button
@@ -148,7 +132,7 @@
           </tr>
           {{#if (includes course.id this.coursesForRemovalConfirmation)}}
             <tr class="confirm-removal">
-              <td colspan={{if (media "isLaptopAndUp") "15" "6"}}>
+              <td colspan={{if (media "isLaptopAndUp") "15" "10"}}>
                 <div class="confirm-message">
                   {{t
                     "general.confirmRemoveCourse"
@@ -173,7 +157,7 @@
           {{/if}}
         {{else}}
           <tr data-test-empty-list>
-            <td class="text-center" colspan={{if (media "isLaptopAndUp") "15" "6"}}>
+            <td class="text-center" colspan={{if (media "isLaptopAndUp") "15" "10"}}>
               {{if @query (t "general.noResultsFound") (t "general.none")}}
             </td>
           </tr>
