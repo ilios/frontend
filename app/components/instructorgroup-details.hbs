@@ -53,23 +53,25 @@
         @currentlyActiveUsers={{await @instructorGroup.users}}
       />
     {{/if}}
-    <div class="instructorgroupcourses" data-test-courses>
+    <div data-test-courses>
       <label>
         {{t "general.associatedCourses"}}:
       </label>
       {{#if (is-fulfilled @instructorGroup.courses)}}
-        <ul data-test-courses>
-          {{#each (sort-by "title" (await @instructorGroup.courses)) as |course|}}
-            <li data-test-course>
-              <LinkTo @route="course" @model={{course}}>
-                <FaIcon @icon="square-up-right" />
-                {{course.title}}
-              </LinkTo>
-            </li>
-          {{else}}
-            <li data-test-course>{{t "general.none"}}</li>
-          {{/each}}
-        </ul>
+        <div>
+          <ul class="instructorgroupcourses" data-test-courses>
+            {{#each (sort-by "title" (await @instructorGroup.courses)) as |course|}}
+              <li data-test-course>
+                <LinkTo @route="course" @model={{course}}>
+                  <FaIcon @icon="square-up-right" />
+                  {{course.title}}
+                </LinkTo>
+              </li>
+            {{else}}
+              <li data-test-course>{{t "general.none"}}</li>
+            {{/each}}
+          </ul>
+        </div>
       {{else}}
         <LoadingSpinner class="instructorgroup-loading" />
       {{/if}}
