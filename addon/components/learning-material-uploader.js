@@ -31,7 +31,7 @@ export default class LearningMaterialUploaderComponent extends Component {
       headers: this.fetch.authHeaders,
     });
     if (response.status === 200) {
-      const { filename, fileHash } = response.body;
+      const { filename, fileHash } = yield response.json();
       this.args.setFilename(filename);
       this.args.setFileHash(fileHash);
       return filename;
