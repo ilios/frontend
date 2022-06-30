@@ -1,3 +1,5 @@
+<Course::BackToCourses />
+
 <section
   class="course-details"
   data-test-ilios-course-details
@@ -5,8 +7,6 @@
   {{animate-loading "course" loadingTime=500}}
   ...attributes
 >
-  <Course::BackToCourses />
-
   <CourseHeader @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
   <CourseOverview @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
   {{#unless @showDetails}}
