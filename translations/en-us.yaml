@@ -189,6 +189,7 @@ general:
   manage: Manage
   manageAPITokens: "Manage API Tokens"
   manageCompetencies: "Manage Competencies"
+  manageGroupMembership: "Manage Group Membership"
   manageInstitutionalInfo: "Manage CIR Institutional Info"
   manageSessionAttributes: "Manage Session Attributes"
   manageUsers: "Manage Users"

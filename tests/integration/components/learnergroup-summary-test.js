@@ -1,9 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { findAll, render, click, fillIn } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/learnergroup-summary';
 
 module('Integration | Component | learnergroup summary', function (hooks) {
   setupRenderingTest(hooks);
@@ -67,6 +68,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnergroupSummary
+      @canUpdate={{true}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
       @setIsBulkAssigning={{(noop)}}
@@ -76,19 +78,59 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
-    const instructors = '[data-test-overview] [data-test-assigned-instructor]';
-    const coursesList = '[data-test-overview] .associatedcourses ul';
+    assert.strictEqual(component.defaultLocation.text, 'Default Location: test location');
+    assert.strictEqual(component.instructorManager.assignedInstructors.length, 2);
+    assert.strictEqual(
+      component.instructorManager.assignedInstructors[0].userNameInfo.fullName,
+      'Aardvark'
+    );
+    assert.ok(component.instructorManager.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(
+      component.instructorManager.assignedInstructors[1].userNameInfo.fullName,
+      'Walther v. Vogelweide'
+    );
+    assert.notOk(component.instructorManager.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(component.associatedCourses.courses.length, 2);
+    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0');
+    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1');
+    assert.ok(component.actions.buttons.toggle.isVisible);
+    assert.ok(component.actions.buttons.bulkAssignment.isVisible);
+    assert.ok(component.actions.buttons.manageUsers.isVisible);
+    assert.strictEqual(component.actions.title, 'Members (2)');
+    assert.notOk(component.actions.buttons.close.isVisible);
+  });
 
-    assert.dom(defaultLocation).hasText('test location');
-    assert.dom(instructors).exists({ count: 2 });
-    assert.dom(`${instructors}:nth-of-type(1) [data-test-fullname]`).hasText('Aardvark');
-    assert.dom(`${instructors}:nth-of-type(1) [data-test-info]`).exists();
-    assert
-      .dom(`${instructors}:nth-of-type(2) [data-test-fullname]`)
-      .hasText('Walther v. Vogelweide');
-    assert.dom(`${instructors}:nth-of-type(2) [data-test-info]`).doesNotExist();
-    assert.dom(coursesList).hasText('course 0 course 1');
+  test('renders with data in read-only mode', async function (assert) {
+    const cohort = this.server.create('cohort', {
+      title: 'this cohort',
+      programYear: this.programYear,
+    });
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'test group',
+      location: 'test location',
+      cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupSummary
+      @canUpdate={{false}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
+      @sortUsersBy="fullName"
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    assert.ok(component.actions.buttons.toggle.isVisible);
+    assert.notOk(component.actions.buttons.bulkAssignment.isVisible);
+    assert.notOk(component.actions.buttons.manageUsers.isVisible);
+    assert.notOk(component.actions.buttons.close.isVisible);
+    assert.strictEqual(component.actions.title, 'Members (0)');
   });
 
   test('Needs accommodation', async function (assert) {
@@ -109,9 +151,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
       @canUpdate={{true}}
     />`);
-    assert
-      .dom('[data-test-needs-accommodation] [data-test-toggle-yesno]')
-      .hasAria('checked', 'true');
+    assert.strictEqual(component.needsAccommodation.toggle.checked, 'true');
   });
 
   test('Does not need accommodation', async function (assert) {
@@ -132,9 +172,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
       @canUpdate={{true}}
     />`);
-    assert
-      .dom('[data-test-needs-accommodation] [data-test-toggle-yesno]')
-      .hasAria('checked', 'false');
+    assert.strictEqual(component.needsAccommodation.toggle.checked, 'false');
   });
 
   test('Read-only: Needs accommodation', async function (assert) {
@@ -155,9 +193,10 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
       @canUpdate={{false}}
     />`);
-    assert
-      .dom('[data-test-needs-accommodation]')
-      .hasText('Accommodation is required for learners in this group: Yes');
+    assert.strictEqual(
+      component.needsAccommodation.text,
+      'Accommodation is required for learners in this group: Yes'
+    );
   });
 
   test('Read-only: Does not need accommodation', async function (assert) {
@@ -178,9 +217,10 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
       @canUpdate={{false}}
     />`);
-    assert
-      .dom('[data-test-needs-accommodation]')
-      .hasText('Accommodation is required for learners in this group: No');
+    assert.strictEqual(
+      component.needsAccommodation.text,
+      'Accommodation is required for learners in this group: No'
+    );
   });
 
   test('Toggle needs accommodations', async function (assert) {
@@ -201,20 +241,12 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
       @canUpdate={{true}}
     />`);
-    assert
-      .dom('[data-test-needs-accommodation] [data-test-toggle-yesno]')
-      .hasAria('checked', 'false');
-    assert.notOk(learnerGroupModel.needsAccommodation);
-    await click('[data-test-needs-accommodation] [data-test-toggle-yesno]');
-    assert.ok(learnerGroupModel.needsAccommodation);
-    assert
-      .dom('[data-test-needs-accommodation] [data-test-toggle-yesno]')
-      .hasAria('checked', 'true');
+    assert.strictEqual(component.needsAccommodation.toggle.checked, 'false');
+    await component.needsAccommodation.toggle.click();
+    assert.strictEqual(component.needsAccommodation.toggle.checked, 'true');
   });
 
   test('Update location', async function (assert) {
-    assert.expect(2);
-
     const learnerGroup = this.server.create('learner-group', {
       location: 'test location',
       cohort: this.cohort,
@@ -234,15 +266,11 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
-    const editLocation = `${defaultLocation} .editable`;
-    const input = `${defaultLocation} input`;
-    const save = `${defaultLocation} .done`;
-    assert.dom(defaultLocation).hasText('test location');
-    await click(editLocation);
-    await fillIn(input, 'new location name');
-    await click(save);
-    assert.dom(defaultLocation).hasText('new location name');
+    assert.strictEqual(component.defaultLocation.text, 'Default Location: test location');
+    await component.defaultLocation.edit();
+    await component.defaultLocation.set('new location name');
+    await component.defaultLocation.save();
+    assert.strictEqual(component.defaultLocation.text, 'Default Location: new location name');
   });
 
   test('Default location can be blank', async function (assert) {
@@ -265,15 +293,11 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
-    const editLocation = `${defaultLocation} .editable`;
-    const input = `${defaultLocation} input`;
-    const save = `${defaultLocation} .done`;
-    assert.dom(defaultLocation).hasText('test location');
-    await click(editLocation);
-    await fillIn(input, '');
-    await click(save);
-    assert.dom(defaultLocation).hasText('Click to edit');
+    assert.strictEqual(component.defaultLocation.text, 'Default Location: test location');
+    await component.defaultLocation.edit();
+    await component.defaultLocation.set('');
+    await component.defaultLocation.save();
+    assert.strictEqual(component.defaultLocation.text, 'Default Location: Click to edit');
   });
 
   test('each course is only shown once', async function (assert) {
@@ -315,9 +339,8 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const coursesList = '[data-test-overview] .associatedcourses ul';
-
-    assert.dom(coursesList).hasText('course 0');
+    assert.strictEqual(component.associatedCourses.courses.length, 1);
+    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0');
   });
 
   test('associated courses are linked to course pages', async function (assert) {
@@ -352,12 +375,11 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const courses = findAll('[data-test-overview] .associatedcourses ul li a');
-    assert.strictEqual(courses.length, 2);
-    assert.dom(courses[0]).hasText('course 0');
-    assert.notEqual(courses[0].href.search(/\/courses\/1$/), -1);
-    assert.dom(courses[1]).hasText('course 1');
-    assert.notEqual(courses[1].href.search(/\/courses\/2$/), -1);
+    assert.strictEqual(component.associatedCourses.courses.length, 2);
+    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0');
+    assert.strictEqual(component.associatedCourses.courses[0].linksTo, '/courses/1');
+    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1');
+    assert.strictEqual(component.associatedCourses.courses[1].linksTo, '/courses/2');
   });
 
   test('Update default URL', async function (assert) {
@@ -382,15 +404,17 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const defaultUrl = '[data-test-overview] .defaulturl span:nth-of-type(1)';
-    const editUrl = `${defaultUrl} .editable`;
-    const input = `${defaultUrl} input`;
-    const save = `${defaultUrl} .done`;
-    assert.dom(defaultUrl).hasText('https://iliosproject.org/');
-    await click(editUrl);
-    await fillIn(input, 'https://github.com/ilios/ilios');
-    await click(save);
-    assert.dom(defaultUrl).hasText('https://github.com/ilios/ilios');
+    assert.strictEqual(
+      component.defaultUrl.text,
+      'Default Virtual Learning Link: https://iliosproject.org/'
+    );
+    await component.defaultUrl.edit();
+    await component.defaultUrl.set('https://github.com/ilios/ilios');
+    await component.defaultUrl.save();
+    assert.strictEqual(
+      component.defaultUrl.text,
+      'Default Virtual Learning Link: https://github.com/ilios/ilios'
+    );
   });
 
   test('URL input validation', async function (assert) {
@@ -412,24 +436,117 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const defaultUrl = '[data-test-overview] .defaulturl span:nth-of-type(1)';
-    const editUrl = `${defaultUrl} .editable`;
-    const input = `${defaultUrl} input`;
-    const save = `${defaultUrl} .done`;
-    const errors = `${defaultUrl} .validation-error-message`;
-    assert.dom(editUrl).hasText('Click to edit');
-    await click(editUrl);
-    await fillIn(input, 'thisisnotanurl');
-    await click(save);
-    assert.dom(errors).hasText('This field must be a valid url');
-    await click(save);
-    await fillIn(input, 'www.stillnotavalidurlwithoutprotocol.com');
-    assert.dom(errors).hasText('This field must be a valid url');
-    await fillIn(input, 'h');
-    await click(save);
-    assert.dom(errors).hasText('This field is too short (minimum is 2 characters)');
-    await fillIn(input, 'https://' + '01234567890'.repeat(200) + '.org');
-    await click(save);
-    assert.dom(errors).hasText('This field is too long (maximum is 2000 characters)');
+    assert.strictEqual(component.defaultUrl.text, 'Default Virtual Learning Link: Click to edit');
+    await component.defaultUrl.edit();
+    assert.strictEqual(component.defaultUrl.value, 'https://');
+    assert.strictEqual(component.defaultUrl.errors.length, 0);
+    await component.defaultUrl.set('thisisnotanurl');
+    await component.defaultUrl.save();
+    assert.strictEqual(component.defaultUrl.errors.length, 1);
+    assert.strictEqual(component.defaultUrl.errors[0].text, 'This field must be a valid url');
+    await component.defaultUrl.set('www.stillnotavalidurlwithoutprotocol.com');
+    await component.defaultUrl.save();
+    assert.strictEqual(component.defaultUrl.errors.length, 1);
+    assert.strictEqual(component.defaultUrl.errors[0].text, 'This field must be a valid url');
+    await component.defaultUrl.set('https://' + 'abcdefghij'.repeat(200) + '.org');
+    await component.defaultUrl.save();
+    assert.strictEqual(component.defaultUrl.errors.length, 2);
+    assert.strictEqual(
+      component.defaultUrl.errors[0].text,
+      'This field is too long (maximum is 2000 characters)'
+    );
+    assert.strictEqual(component.defaultUrl.errors[1].text, 'This field must be a valid url');
+    await component.defaultUrl.set('https://abcdefghij.org');
+    await component.defaultUrl.save();
+    assert.strictEqual(
+      component.defaultUrl.text,
+      'Default Virtual Learning Link: https://abcdefghij.org'
+    );
+  });
+
+  test('learnergroup calendar', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', {
+      url: 'https://iliosproject.org/',
+      cohort: this.cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupSummary
+      @canUpdate={{true}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    assert.notOk(component.calendar.isVisible);
+    assert.strictEqual(component.actions.buttons.toggle.firstLabel.text, 'Hide Calendar');
+    assert.ok(component.actions.buttons.toggle.firstButton.isChecked);
+    assert.strictEqual(component.actions.buttons.toggle.secondLabel.text, 'Show Calendar');
+    assert.notOk(component.actions.buttons.toggle.secondButton.isChecked);
+    await component.actions.buttons.toggle.secondButton.click();
+    assert.ok(component.calendar.isVisible);
+  });
+
+  test('manage users', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', {
+      url: 'https://iliosproject.org/',
+      cohort: this.cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupSummary
+      @canUpdate={{true}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{true}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    assert.notOk(component.actions.buttons.toggle.isVisible);
+    assert.notOk(component.actions.buttons.bulkAssignment.isVisible);
+    assert.notOk(component.actions.buttons.manageUsers.isVisible);
+    assert.ok(component.actions.buttons.close.isVisible);
+    assert.ok(component.userManager.isVisible);
+    assert.strictEqual(component.actions.title, 'Manage Group Membership');
+  });
+
+  test('bulk assignment', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', {
+      url: 'https://iliosproject.org/',
+      cohort: this.cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    this.set('isBulkAssigning', false);
+
+    await render(hbs`<LearnergroupSummary
+      @canUpdate={{true}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{set this.isBulkAssigning true}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{this.isBulkAssigning}}
+    />`);
+    await component.actions.buttons.bulkAssignment.click();
+    assert.notOk(component.actions.buttons.toggle.isVisible);
+    assert.notOk(component.actions.buttons.bulkAssignment.isVisible);
+    assert.notOk(component.actions.buttons.manageUsers.isVisible);
+    assert.ok(component.actions.buttons.close.isVisible);
+    assert.ok(component.bulkAssignment.isVisible);
+    assert.strictEqual(component.actions.title, 'Upload Group Assignments');
   });
 });

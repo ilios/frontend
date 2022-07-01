@@ -9,6 +9,7 @@
     <span class="title">
         {{#if @canUpdate}}
           <EditableField
+            data-test-title
             @value={{if this.title this.title (t "general.clickToEdit")}}
             @save={{perform this.changeTitle}}
             @close={{this.revertTitleChanges}}
@@ -26,7 +27,7 @@
             <ValidationError @errors={{get-errors-for this.title}} />
           </EditableField>
         {{else}}
-          <h2>{{this.title}}</h2>
+          <h2 data-test-title>{{this.title}}</h2>
         {{/if}}
     </span>
     <span class="info" data-test-members>
@@ -45,7 +46,7 @@
     </span>
   </div>
   {{#if (is-fulfilled @learnerGroup.allParents)}}
-    <div class="breadcrumbs">
+    <div class="breadcrumbs" data-test-breadcrumb>
       <span>
         <LinkTo
           @route="learner-groups"

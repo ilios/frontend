@@ -63,7 +63,6 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
     />`);
-    assert.strictEqual(component.title, 'Members (2)');
     assert.strictEqual(component.usersInCurrentGroup.length, 2);
     assert.strictEqual(
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
