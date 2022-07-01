@@ -11,28 +11,26 @@ import {
 const definition = {
   scope: '[data-test-ilios-course-list]',
   courses: collection('[data-test-active-row]', {
-    title: text('td', { at: 0 }),
-    school: text('td', { at: 1 }),
-    year: text('td', { at: 2 }),
-    level: text('td', { at: 3 }),
-    startDate: text('td', { at: 4 }),
-    endDate: text('td', { at: 5 }),
-    status: text('td', { at: 6 }),
-    isLocked: hasClass('fa-lock', 'svg', { scope: 'td:eq(6)', at: 0 }),
-    isUnlocked: hasClass('fa-unlock', 'svg', { scope: 'td:eq(6)', at: 0 }),
-    lock: clickable('[data-test-lock]', { scope: 'td:eq(6)' }),
-    canLock: isVisible('[data-test-lock]', { scope: 'td:eq(6)' }),
-    canUnlock: isVisible('[data-test-unlock]', { scope: 'td:eq(6)' }),
-    unLock: clickable('[data-test-unlock]', { scope: 'td:eq(6)' }),
-    remove: clickable('[data-test-remove]', { scope: 'td:eq(6)' }),
-    removeActionCount: count('[data-test-remove]', { scope: 'td:eq(6)' }),
+    title: text('[data-test-course-title]'),
+    level: text('[data-test-level]'),
+    startDate: text('[data-test-start-date]'),
+    endDate: text('[data-test-end-date]'),
+    status: text('[data-test-status]'),
+    isLocked: hasClass('fa-lock', 'svg', { scope: '[data-test-status]', at: 1 }),
+    isUnlocked: hasClass('fa-unlock', 'svg', { scope: '[data-test-status]', at: 1 }),
+    lock: clickable('[data-test-lock]', { scope: '[data-test-status]' }),
+    canLock: isVisible('[data-test-lock]', { scope: '[data-test-status]' }),
+    canUnlock: isVisible('[data-test-unlock]', { scope: '[data-test-status]' }),
+    unLock: clickable('[data-test-unlock]', { scope: '[data-test-status]' }),
+    remove: clickable('[data-test-remove]', { scope: '[data-test-status]' }),
+    removeActionCount: count('[data-test-remove]', { scope: '[data-test-status]' }),
   }),
   emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
   sortByTitle: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(1)' }),
-  sortByLevel: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(4)' }),
-  sortByStartDate: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(5)' }),
-  sortByEndDate: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(6)' }),
-  sortByStatus: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(7)' }),
+  sortByLevel: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(2)' }),
+  sortByStartDate: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(3)' }),
+  sortByEndDate: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(4)' }),
+  sortByStatus: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(5)' }),
   confirmCourseRemoval: clickable('[data-test-courses] .confirm-removal button.remove'),
   isSortedByTitleAscending: hasClass(
     'fa-arrow-down-a-z',
@@ -44,35 +42,35 @@ const definition = {
   ),
   isSortedByLevelAscending: hasClass(
     'fa-arrow-down-1-9',
-    '[data-test-course-headings] th:eq(3) svg'
+    '[data-test-course-headings] th:eq(1) svg'
   ),
   isSortedByLevelDescending: hasClass(
     'fa-arrow-down-9-1',
-    '[data-test-course-headings] th:eq(3) svg'
+    '[data-test-course-headings] th:eq(1) svg'
   ),
   isSortedByStartDateAscending: hasClass(
     'fa-arrow-down-1-9',
-    '[data-test-course-headings] th:eq(4) svg'
+    '[data-test-course-headings] th:eq(2) svg'
   ),
   isSortedByStartDateDescending: hasClass(
     'fa-arrow-down-9-1',
-    '[data-test-course-headings] th:eq(4) svg'
+    '[data-test-course-headings] th:eq(2) svg'
   ),
   isSortedByEndDateAscending: hasClass(
     'fa-arrow-down-1-9',
-    '[data-test-course-headings] th:eq(5) svg'
+    '[data-test-course-headings] th:eq(3) svg'
   ),
   isSortedByEndDateDescending: hasClass(
     'fa-arrow-down-9-1',
-    '[data-test-course-headings] th:eq(5) svg'
+    '[data-test-course-headings] th:eq(3) svg'
   ),
   isSortedByStatusAscending: hasClass(
     'fa-arrow-down-a-z',
-    '[data-test-course-headings] th:eq(6) svg'
+    '[data-test-course-headings] th:eq(4) svg'
   ),
   isSortedByStatusDescending: hasClass(
     'fa-arrow-down-z-a',
-    '[data-test-course-headings] th:eq(6) svg'
+    '[data-test-course-headings] th:eq(4) svg'
   ),
 };
 
