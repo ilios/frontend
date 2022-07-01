@@ -1,7 +1,13 @@
 .ilios-dashboard {
   .dashboard-blocks {
+    @include main-section;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
+    flex-direction: column;
+    gap: .5rem;
+
+    @include for-laptop-and-up() {
+      flex-direction: row;
+    }
   }
 }

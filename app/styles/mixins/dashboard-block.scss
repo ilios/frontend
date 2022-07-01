@@ -1,11 +1,6 @@
 @mixin dashboard-block () {
   border: 1px solid $blueMunsell;
-  margin-top: 1rem;
-  width: 100%;
-
-  @include for-laptop-and-up {
-    width: 49%;
-  }
+  flex-grow: 1;
 
   .dashboard-block-header {
     align-items: center;
