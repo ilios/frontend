@@ -70,7 +70,7 @@
           {{t "general.sortMaterials"}}
         </button>
       {{/if}}
-      <table>
+      <table class={{if (gt this.materials.length 10) "sticky-header"}}>
         <thead>
           <tr>
             <th class="text-left" colspan="3">
