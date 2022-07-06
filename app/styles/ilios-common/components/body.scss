@@ -57,17 +57,13 @@ select {
 ul {
   li {
     margin-bottom: .5rem;
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
   }
 }
 
 p {
   margin-bottom: 1rem;
   @include paragraph-line-height;
-  
+
   a {
     text-decoration: underline;
   }
