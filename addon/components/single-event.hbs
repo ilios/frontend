@@ -100,23 +100,6 @@
         {{{@event.sessionDescription}}}
         <br>
       {{/if}}
-      {{log this.preworkMaterials}}
-      {{#if @event.prerequisites.length}}
-        <p class="pre-work" data-test-pre-work>
-          <h2>
-            {{t "general.preWork"}}
-          </h2>
-          <ul>
-            {{#each @event.prerequisites as |event|}}
-              <li>
-                <LinkTo @route="events" @model={{event.slug}}>
-                  {{event.name}}
-                </LinkTo>
-              </li>
-            {{/each}}
-          </ul>
-        </p>
-      {{/if}}
     </div>
     <fieldset>
       <div class="single-event-learningmaterial-list" data-test-session-materials>
