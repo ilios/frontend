@@ -147,21 +147,17 @@ export default class SingleEvent extends Component {
     if (!this.args.event.prerequisites) {
       return [];
     }
-    return this.args.event.prerequisites
-      .map((ev) => {
-        const rhett = {
-          name: ev.name,
-          slug: ev.slug,
-          learningMaterials: [],
-        };
-        rhett.learningMaterials = this.getTypedLearningMaterialProxies(ev.learningMaterials)
-          .filterBy('sessionLearningMaterial')
-          .sort(this.sessionLearningMaterialSortingCalling);
-        return rhett;
-      })
-      .filter((ev) => {
-        return ev.learningMaterials.length;
-      });
+    return this.args.event.prerequisites.map((ev) => {
+      const rhett = {
+        name: ev.name,
+        slug: ev.slug,
+        learningMaterials: [],
+      };
+      rhett.learningMaterials = this.getTypedLearningMaterialProxies(ev.learningMaterials)
+        .filterBy('sessionLearningMaterial')
+        .sort(this.sessionLearningMaterialSortingCalling);
+      return rhett;
+    });
   }
 
   get recentlyUpdated() {
