@@ -110,7 +110,7 @@
             {{on "click" (set this.isSessionMaterialsListExpanded (not this.isSessionMaterialsListExpanded))}}
             data-test-expand-collapse
           >
-            {{t "general.sessionLearningMaterials"}}
+            {{t "general.materials"}}
           </button>
           {{#if (and @event.isUserEvent (await this.currentUser.userIsStudent))}}
             <button
