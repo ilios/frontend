@@ -76,27 +76,8 @@ export default class SingleEvent extends Component {
   }
 
   get typedLearningMaterials() {
-    const handler = {
-      get: function (obj, prop) {
-        if ('type' === prop) {
-          if (obj.isBlanked) {
-            return 'unknown';
-          }
-          if (!isBlank(obj.citation)) {
-            return 'citation';
-          } else if (!isBlank(obj.link)) {
-            return 'link';
-          } else {
-            return 'file';
-          }
-        }
-        return obj[prop];
-      },
-    };
     const lms = this.args.event.learningMaterials || [];
-    return lms.map((lm) => {
-      return new Proxy(lm, handler);
-    });
+    return this.getTypedLearningMaterialProxies(lms);
   }
 
   get courseLearningMaterials() {
@@ -157,27 +138,9 @@ export default class SingleEvent extends Component {
 
   get sessionLearningMaterials() {
     const eventLms = this.typedLearningMaterials;
-    return eventLms.filterBy('sessionLearningMaterial').sort((lm1, lm2) => {
-      const pos1 = parseInt(lm1.position, 10) || 0;
-      const pos2 = parseInt(lm2.position, 10) || 0;
-
-      // 1. position, asc
-      if (pos1 > pos2) {
-        return 1;
-      } else if (pos1 < pos2) {
-        return -1;
-      }
-
-      // 2. session learning material id, desc
-      const id1 = lm1.sessionLearningMaterial;
-      const id2 = lm2.sessionLearningMaterial;
-      if (id1 > id2) {
-        return -1;
-      } else if (id1 < id2) {
-        return 1;
-      }
-      return 0;
-    });
+    return eventLms
+      .filterBy('sessionLearningMaterial')
+      .sort(this.sessionLearningMaterialSortingCalling);
   }
 
   get recentlyUpdated() {
@@ -245,6 +208,53 @@ export default class SingleEvent extends Component {
     // 2. id, desc
     const id1 = obj1.id;
     const id2 = obj2.id;
+    if (id1 > id2) {
+      return -1;
+    } else if (id1 < id2) {
+      return 1;
+    }
+    return 0;
+  }
+
+  getTypedLearningMaterialProxies(learningMaterials) {
+    const lms = learningMaterials || [];
+    const handler = {
+      get: function (obj, prop) {
+        if ('type' === prop) {
+          if (obj.isBlanked) {
+            return 'unknown';
+          }
+          if (!isBlank(obj.citation)) {
+            return 'citation';
+          } else if (!isBlank(obj.link)) {
+            return 'link';
+          } else {
+            return 'file';
+          }
+        }
+        return obj[prop];
+      },
+    };
+
+    return lms.map((lm) => {
+      return new Proxy(lm, handler);
+    });
+  }
+
+  sessionLearningMaterialSortingCalling(lm1, lm2) {
+    const pos1 = parseInt(lm1.position, 10) || 0;
+    const pos2 = parseInt(lm2.position, 10) || 0;
+
+    // 1. position, asc
+    if (pos1 > pos2) {
+      return 1;
+    } else if (pos1 < pos2) {
+      return -1;
+    }
+
+    // 2. session learning material id, desc
+    const id1 = lm1.sessionLearningMaterial;
+    const id2 = lm2.sessionLearningMaterial;
     if (id1 > id2) {
       return -1;
     } else if (id1 < id2) {
