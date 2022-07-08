@@ -1,6 +1,17 @@
 <div class="single-event-learningmaterial-list">
-  {{#if @learningMaterials.length}}
+  {{#if (or @learningMaterials.length @prework?.length)}}
     <ul class="static-list fa-ul">
+      {{#each @prework as |event|}}
+        <li class="prework-title" data-test-prework-event>
+          <FaIcon @icon="dumpster-fire" @listItem={{true}} />
+          <LinkTo @route="events" @model={{event.slug}}>
+            {{event.name}}
+          </LinkTo>
+        </li>
+        {{#each event.learningMaterials as |lm| }}
+          <SingleEventLearningmaterialListItem @learningMaterial={{lm}} linked={{false}} class="sub-item" />
+        {{/each}}
+      {{/each}}
       {{#each @learningMaterials as |lm|}}
         <SingleEventLearningmaterialListItem @learningMaterial={{lm}} />
       {{/each}}

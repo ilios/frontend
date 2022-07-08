@@ -30,6 +30,7 @@ module.exports = function () {
       'cloud',
       'copy',
       'download',
+      'dumpster-fire',
       'ellipsis',
       'exclamation',
       'expand',
