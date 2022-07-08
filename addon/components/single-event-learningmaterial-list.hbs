@@ -3,7 +3,7 @@
     <ul class="static-list fa-ul">
       {{#each @prework as |event|}}
         <li class="prework-title" data-test-prework-event>
-          <FaIcon @icon="dumpster-fire" @listItem={{true}} />
+          <FaIcon @icon="person-chalkboard" @listItem={{true}} />
           <LinkTo @route="events" @model={{event.slug}}>
             {{event.name}}
           </LinkTo>
