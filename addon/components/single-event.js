@@ -143,6 +143,27 @@ export default class SingleEvent extends Component {
       .sort(this.sessionLearningMaterialSortingCalling);
   }
 
+  get preworkMaterials() {
+    if (!this.args.event.prerequisites) {
+      return [];
+    }
+    return this.args.event.prerequisites
+      .map((ev) => {
+        const rhett = {
+          name: ev.name,
+          slug: ev.slug,
+          learningMaterials: [],
+        };
+        rhett.learningMaterials = this.getTypedLearningMaterialProxies(ev.learningMaterials)
+          .filterBy('sessionLearningMaterial')
+          .sort(this.sessionLearningMaterialSortingCalling);
+        return rhett;
+      })
+      .filter((ev) => {
+        return ev.learningMaterials.length;
+      });
+  }
+
   get recentlyUpdated() {
     const lastModifiedDate = moment(this.args.event.lastModified);
     const today = moment();
