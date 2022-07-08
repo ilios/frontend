@@ -81,6 +81,7 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
+      @linked={{true}}
     />`);
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.strictEqual(
@@ -122,6 +123,7 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
+      @linked={{true}}
     />`);
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.ok(component.typeIcon.isPdf);
@@ -144,12 +146,36 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
+      @linked={{true}}
     />`);
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.ok(component.typeIcon.isFile);
     assert.notOk(component.pdfLink.isPresent);
     assert.notOk(component.pdfDownloadLink.isPresent);
     assert.ok(component.fileLink.url.endsWith('/foo/bar'));
+    assert.strictEqual(component.filesize.text, '(1kb)');
+    assert.notOk(component.link.isPresent);
+    assert.notOk(component.citation.isPresent);
+    assert.notOk(component.publicNotes.isPresent);
+  });
+
+  test('file and not linked', async function (assert) {
+    const lm = {
+      title: 'foo bar',
+      mimetype: 'whatever/thisis',
+      filesize: 1111,
+      absoluteFileUri: '/foo/bar',
+    };
+    this.set('lm', lm);
+    await render(hbs`<SingleEventLearningmaterialListItem
+      @learningMaterial={{this.lm}}
+      @linked={{false}}
+    />`);
+    assert.strictEqual(component.title, 'foo bar (1kb)');
+    assert.ok(component.typeIcon.isFile);
+    assert.notOk(component.pdfLink.isPresent);
+    assert.notOk(component.pdfDownloadLink.isPresent);
+    assert.notOk(component.fileLink.isPresent);
     assert.strictEqual(component.filesize.text, '(1kb)');
     assert.notOk(component.link.isPresent);
     assert.notOk(component.citation.isPresent);
@@ -165,6 +191,7 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
+      @linked={{true}}
     />`);
     assert.strictEqual(component.title, 'foo bar');
     assert.ok(component.typeIcon.isLink);
@@ -173,6 +200,28 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     assert.notOk(component.fileLink.isPresent);
     assert.notOk(component.filesize.isPresent);
     assert.strictEqual(component.link.url, 'https://iliosproject.org/');
+    assert.notOk(component.citation.isPresent);
+    assert.notOk(component.publicNotes.isPresent);
+  });
+
+  test('link and not linked', async function (assert) {
+    const lm = {
+      title: 'foo bar',
+      type: 'link',
+      link: 'https://iliosproject.org/',
+    };
+    this.set('lm', lm);
+    await render(hbs`<SingleEventLearningmaterialListItem
+      @learningMaterial={{this.lm}}
+      @linked={{false}}
+    />`);
+    assert.strictEqual(component.title, 'foo bar');
+    assert.ok(component.typeIcon.isLink);
+    assert.notOk(component.pdfLink.isPresent);
+    assert.notOk(component.pdfDownloadLink.isPresent);
+    assert.notOk(component.fileLink.isPresent);
+    assert.notOk(component.filesize.isPresent);
+    assert.notOk(component.link.isPresent);
     assert.notOk(component.citation.isPresent);
     assert.notOk(component.publicNotes.isPresent);
   });

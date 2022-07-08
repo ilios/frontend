@@ -31,56 +31,70 @@
         {{#if @learningMaterial.required}}
           <FaIcon @icon="star" @title={{t "general.required"}} data-test-required-icon />
         {{/if}}
-        {{#if @learningMaterial.absoluteFileUri}}
-          {{#if (eq @learningMaterial.mimetype "application/pdf")}}
-            <a
-              id={{concat templateId @learningMaterial.id "lm"}}
-              href="{{@learningMaterial.absoluteFileUri}}?inline"
-              data-test-pdf-link
+        {{#if @linked}}
+          {{#if @learningMaterial.absoluteFileUri}}
+            {{#if (eq @learningMaterial.mimetype "application/pdf")}}
+              <a
+                id={{concat templateId @learningMaterial.id "lm"}}
+                href="{{@learningMaterial.absoluteFileUri}}?inline"
+                data-test-pdf-link
+              >
+                {{@learningMaterial.title}}
+              </a>
+              <a
+                id={{concat templateId @learningMaterial.id "lmdownload"}}
+                target="_blank"
+                href={{@learningMaterial.absoluteFileUri}}
+                rel="noopener noreferrer"
+                aria-label={{t "general.download"}}
+                aria-labelledby="{{concat templateId @learningMaterial.id "lmdownload"}} {{concat templateId @learningMaterial.id "lm"}}"
+                data-test-pdf-download-link
+              >
+                <FaIcon @icon="download" />
+              </a>
+            {{else}}
+              <a
+                target="_blank"
+                href={{@learningMaterial.absoluteFileUri}}
+                rel="noopener
+                noreferrer"
+                data-test-file-link
+              >
+                {{@learningMaterial.title}}
+              </a>
+            {{/if}}
+            <span
+              class="single-event-learningmaterial-filesize"
+              data-test-filesize
             >
-              {{@learningMaterial.title}}
-            </a>
+              {{#if @learningMaterial.filesize}}
+                ({{filesize @learningMaterial.filesize}})
+              {{/if}}
+            </span>
+          {{else if @learningMaterial.link}}
             <a
-              id={{concat templateId @learningMaterial.id "lmdownload"}}
-              target="_blank"
-              href={{@learningMaterial.absoluteFileUri}}
-              rel="noopener noreferrer"
-              aria-label={{t "general.download"}}
-              aria-labelledby="{{concat templateId @learningMaterial.id "lmdownload"}} {{concat templateId @learningMaterial.id "lm"}}"
-              data-test-pdf-download-link
-            >
-              <FaIcon @icon="download" />
-            </a>
-          {{else}}
-            <a
-              target="_blank"
-              href={{@learningMaterial.absoluteFileUri}}
+              target="_blank" href={{@learningMaterial.link}}
               rel="noopener
               noreferrer"
-              data-test-file-link
+              data-test-link
             >
               {{@learningMaterial.title}}
             </a>
-          {{/if}}
-          <span
-            class="single-event-learningmaterial-filesize"
-            data-test-filesize
-          >
-            {{#if @learningMaterial.filesize}}
-              ({{filesize @learningMaterial.filesize}})
-            {{/if}}
-          </span>
-        {{else if @learningMaterial.link}}
-          <a
-            target="_blank" href={{@learningMaterial.link}}
-            rel="noopener
-            noreferrer"
-            data-test-link
-          >
+          {{else}}
             {{@learningMaterial.title}}
-          </a>
+          {{/if}}
         {{else}}
           {{@learningMaterial.title}}
+          {{#if @learningMaterial.absoluteFileUri}}
+            <span
+              class="single-event-learningmaterial-filesize"
+              data-test-filesize
+            >
+              {{#if @learningMaterial.filesize}}
+                ({{filesize @learningMaterial.filesize}})
+              {{/if}}
+            </span>
+          {{/if}}
         {{/if}}
       </div>
       {{#if @learningMaterial.citation}}

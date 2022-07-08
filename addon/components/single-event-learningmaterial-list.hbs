@@ -9,11 +9,11 @@
           </LinkTo>
         </li>
         {{#each event.learningMaterials as |lm| }}
-          <SingleEventLearningmaterialListItem @learningMaterial={{lm}} linked={{false}} class="sub-item" />
+          <SingleEventLearningmaterialListItem @learningMaterial={{lm}} class="sub-item" />
         {{/each}}
       {{/each}}
       {{#each @learningMaterials as |lm|}}
-        <SingleEventLearningmaterialListItem @learningMaterial={{lm}} />
+        <SingleEventLearningmaterialListItem @learningMaterial={{lm}} @linked={{true}} />
       {{/each}}
     </ul>
   {{else}}
