@@ -37,7 +37,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
   });
 
   test('month displays with two events', async function (assert) {
-    const date = new DateTime.fromISO('2015-09-30T12:00:00');
+    const date = DateTime.fromISO('2015-09-30T12:00:00');
     this.set('date', date.toISO());
     const firstEvent = createUserEventObject();
     firstEvent.name = 'Some new thing';
