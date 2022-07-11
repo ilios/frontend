@@ -4,73 +4,118 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
+import { component } from 'ilios-common/page-objects/components/single-event-learningmaterial-list';
 
-module(
-  'Integration | Component | ilios calendar single event learningmaterial list',
-  function (hooks) {
-    setupRenderingTest(hooks);
-    setupIntl(hooks, 'en-us');
+module('Integration | Component | single-event-learningmaterial-list', function (hooks) {
+  setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
-    test('it renders', async function (assert) {
-      this.set('learningMaterials', [
-        {
-          title: 'first one',
-          mimetype: 'application/pdf',
-          absoluteFileUri: 'http://firstlink',
-          startDate: new Date(2003, 10, 12),
-          endDate: new Date(2003, 10, 18),
-        },
-        {
-          title: 'second one',
-          mimetype: 'audio/wav',
-          absoluteFileUri: 'http://secondlink',
-        },
-        {
-          title: 'third one',
-          endDate: new Date('2013-03-01T01:10:00'),
-          isBlanked: true,
-        },
-      ]);
-      await render(
-        hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />`
-      );
+  test('it renders', async function (assert) {
+    this.set('learningMaterials', [
+      {
+        title: 'first one',
+        mimetype: 'application/pdf',
+        absoluteFileUri: 'http://firstlink',
+      },
+      {
+        title: 'second one',
+        mimetype: 'audio/wav',
+      },
+      {
+        title: 'third one',
+        isBlanked: true,
+      },
+    ]);
+    await render(
+      hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />`
+    );
 
-      assert
-        .dom('li:nth-of-type(1) .single-event-learningmaterial-item-title')
-        .hasText('first one');
-      assert.dom('li:nth-of-type(1) .fa-file-pdf').exists('LM type icon is present.');
-      assert.dom('li:nth-of-type(1) a').hasAttribute('href', 'http://firstlink?inline');
-      assert
-        .dom('li:nth-of-type(1) a:nth-of-type(1)')
-        .hasAttribute('href', 'http://firstlink?inline');
-      assert.dom('li:nth-of-type(1) a:nth-of-type(2) .fa-download').exists();
-      assert.dom('li:nth-of-type(1) .timed-release-schedule').hasAnyText();
-      assert
-        .dom('li:nth-of-type(2) .single-event-learningmaterial-item-title')
-        .hasText('second one');
-      assert.dom('li:nth-of-type(2) .fa-file-audio').exists('LM type icon is present.');
-      assert.dom('li:nth-of-type(2) a').hasAttribute('href', 'http://secondlink');
-      assert.dom('li:nth-of-type(2) .timed-release-schedule').isNotVisible();
+    assert.strictEqual(component.items.length, 3);
+    assert.strictEqual(component.items[0].title, 'first one');
+    assert.ok(component.items[0].typeIcon.isPdf);
+    assert.strictEqual(component.items[1].title, 'second one');
+    assert.ok(component.items[1].typeIcon.isAudio);
+    assert.strictEqual(component.items[2].title, 'third one');
+    assert.notOk(component.items[2].typeIcon.isPresent);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
 
-      assert
-        .dom('li:nth-of-type(3) .single-event-learningmaterial-item-title')
-        .hasText('third one');
-      assert.dom('li:nth-of-type(3) .timed-release-schedule').hasAnyText();
-      await a11yAudit(this.element);
-      assert.ok(true, 'no a11y errors found!');
-    });
+  test('displays `None` when provided no content', async function (assert) {
+    this.set('learningMaterials', []);
+    await render(
+      hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />`
+    );
+    assert.strictEqual(component.text, 'None');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
 
-    test('displays `None` when provided no content', async function (assert) {
-      assert.expect(2);
-
-      this.set('learningMaterials', []);
-      await render(
-        hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />`
-      );
-
-      assert.dom('.no-content').hasText('None');
-      await a11yAudit(this.element);
-      assert.ok(true, 'no a11y errors found!');
-    });
-  }
-);
+  test('with prework materials', async function (assert) {
+    const materials = [
+      {
+        title: 'first one',
+        mimetype: 'application/pdf',
+        absoluteFileUri: 'http://firstlink',
+      },
+      {
+        title: 'second one',
+        mimetype: 'audio/wav',
+      },
+    ];
+    const prework = [
+      {
+        name: 'prework 1',
+        slug: 'prework1',
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: false,
+        learningMaterials: [
+          {
+            sessionLearningMaterial: '1',
+            title: 'aardvark',
+            link: 'https://iliosproject.org/',
+            position: 2,
+          },
+          {
+            sessionLearningMaterial: '2',
+            title: 'foo bar',
+            absoluteFileUri: '/dev/null',
+            mimetype: 'application/pdf',
+            position: 1,
+          },
+        ],
+      },
+      {
+        name: 'prework 2',
+        slug: 'prework2',
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: false,
+        learningMaterials: [
+          {
+            sessionLearningMaterial: '3',
+            title: 'readme',
+            citation: 'https://iliosproject.org/',
+          },
+        ],
+      },
+    ];
+    this.set('prework', prework);
+    this.set('learningMaterials', materials);
+    await render(
+      hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} @prework={{this.prework}} />`
+    );
+    assert.strictEqual(component.items.length, 5);
+    assert.strictEqual(component.prework.length, 2);
+    assert.strictEqual(component.items[0].title, 'aardvark');
+    assert.strictEqual(component.items[1].title, 'foo bar');
+    assert.strictEqual(component.items[2].title, 'readme');
+    assert.strictEqual(component.items[3].title, 'first one');
+    assert.strictEqual(component.items[4].title, 'second one');
+    assert.strictEqual(component.prework[0].text, 'prework 1');
+    assert.ok(component.prework[0].url.endsWith('/events/prework1'));
+    assert.strictEqual(component.prework[1].text, 'prework 2');
+    assert.ok(component.prework[1].url.endsWith('/events/prework2'));
+  });
+});

@@ -1,5 +1,5 @@
-<div class="single-event-learningmaterial-list">
-  {{#if (or @learningMaterials.length @prework?.length)}}
+<div class="single-event-learningmaterial-list" data-test-single-event-learningmaterial-list ...attributes>
+  {{#if (or @learningMaterials.length @prework.length)}}
     <ul class="static-list fa-ul">
       {{#each @prework as |event|}}
         <li class="prework-title" data-test-prework-event>
