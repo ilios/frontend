@@ -54,6 +54,7 @@ module.exports = function () {
       'square-minus',
       'paragraph',
       'pen-to-square',
+      'person-chalkboard',
       'pencil',
       'play',
       'plus',

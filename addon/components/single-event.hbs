@@ -100,22 +100,6 @@
         {{{@event.sessionDescription}}}
         <br>
       {{/if}}
-      {{#if @event.prerequisites.length}}
-        <p class="pre-work" data-test-pre-work>
-          <h2>
-            {{t "general.preWork"}}
-          </h2>
-          <ul>
-            {{#each @event.prerequisites as |event|}}
-              <li>
-                <LinkTo @route="events" @model={{event.slug}}>
-                  {{event.name}}
-                </LinkTo>
-              </li>
-            {{/each}}
-          </ul>
-        </p>
-      {{/if}}
     </div>
     <fieldset>
       <div class="single-event-learningmaterial-list" data-test-session-materials>
@@ -126,7 +110,7 @@
             {{on "click" (set this.isSessionMaterialsListExpanded (not this.isSessionMaterialsListExpanded))}}
             data-test-expand-collapse
           >
-            {{t "general.sessionLearningMaterials"}}
+            {{t "general.materials"}}
           </button>
           {{#if (and @event.isUserEvent (await this.currentUser.userIsStudent))}}
             <button
@@ -145,6 +129,7 @@
         {{#if this.isSessionMaterialsListExpanded}}
           <SingleEventLearningmaterialList
             @learningMaterials={{this.sessionLearningMaterials}}
+            @prework={{this.preworkMaterials}}
           />
         {{/if}}
       </div>

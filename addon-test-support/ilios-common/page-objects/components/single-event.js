@@ -8,6 +8,7 @@ import {
   text,
 } from 'ember-cli-page-object';
 import objectiveList from './single-event-objective-list';
+import materials from './single-event-learningmaterial-list';
 
 const definition = {
   scope: '[data-test-single-event]',
@@ -36,6 +37,7 @@ const definition = {
       toggle: clickable(),
     },
     linksToAllMaterials: isPresent('[data-test-link-to-all-materials]'),
+    materials,
   },
   courseObjectives: {
     scope: '[data-test-course-objectives]',
@@ -49,6 +51,7 @@ const definition = {
       toggle: clickable(),
     },
     linksToAllMaterials: isPresent('[data-test-link-to-all-materials]'),
+    materials,
   },
 };
 

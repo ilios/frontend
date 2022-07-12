@@ -284,23 +284,45 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.strictEqual(component.summary.offeredAtLink, `/events/1234`);
   });
 
-  test('prequisites are displayed', async function (assert) {
-    assert.expect(7);
-
+  test('prework learning materials are displayed', async function (assert) {
     const today = moment().hour(8).minute(0).second(0);
     const prereq1 = {
       name: 'prework 1',
+      slug: 'prework1',
       startDate: today.clone().subtract(1, 'day').format(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
+      learningMaterials: [
+        {
+          sessionLearningMaterial: '1',
+          title: 'aardvark',
+          link: 'https://iliosproject.org/',
+          position: 2,
+        },
+        {
+          sessionLearningMaterial: '2',
+          title: 'foo bar',
+          absoluteFileUri: '/dev/null',
+          mimetype: 'application/pdf',
+          position: 1,
+        },
+      ],
     };
     const prereq2 = {
       name: 'prework 2',
+      slug: 'prework2',
       startDate: today.clone().subtract(3, 'days').format(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
+      learningMaterials: [
+        {
+          sessionLearningMaterial: '3',
+          title: 'readme',
+          citation: 'https://iliosproject.org/',
+        },
+      ],
     };
     this.server.create('userevent', {
       name: 'Learn to Learn',
@@ -314,17 +336,34 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       lastModified: null,
       prerequisites: [prereq1, prereq2],
       sessionTypeTitle: 'test type',
+      learningMaterials: [
+        {
+          sessionLearningMaterial: '4',
+          title: 'some file',
+          absoluteFileUri: '/dev/null',
+          mimetype: 'text/plain',
+        },
+      ],
     });
 
-    this.set('event', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    this.set('ev', this.server.db.userevents[0]);
+    await render(hbs`<SingleEvent @event={{this.ev}} />`);
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
-    assert.strictEqual(component.summary.preWork.length, 2);
-    assert.strictEqual(component.summary.preWork[0].title, 'prework 1');
-    assert.ok(component.summary.preWork[0].hasLink);
-    assert.strictEqual(component.summary.preWork[1].title, 'prework 2');
-    assert.ok(component.summary.preWork[1].hasLink);
+    assert.strictEqual(component.sessionLearningMaterials.materials.items.length, 4);
+    assert.strictEqual(component.sessionLearningMaterials.materials.prework.length, 2);
+    assert.strictEqual(component.sessionLearningMaterials.materials.items[0].title, 'foo bar');
+    assert.strictEqual(component.sessionLearningMaterials.materials.items[1].title, 'aardvark');
+    assert.strictEqual(component.sessionLearningMaterials.materials.items[2].title, 'readme');
+    assert.strictEqual(component.sessionLearningMaterials.materials.items[3].title, 'some file');
+    assert.strictEqual(component.sessionLearningMaterials.materials.prework[0].text, 'prework 1');
+    assert.ok(
+      component.sessionLearningMaterials.materials.prework[0].url.endsWith('/events/prework1')
+    );
+    assert.strictEqual(component.sessionLearningMaterials.materials.prework[1].text, 'prework 2');
+    assert.ok(
+      component.sessionLearningMaterials.materials.prework[1].url.endsWith('/events/prework2')
+    );
   });
 
   test('for non ilms postrequisite date and title are displayed along with offering date', async function (assert) {
