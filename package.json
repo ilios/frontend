@@ -54,7 +54,7 @@
     "ember-cli-mirage": "^3.0.0-alpha.2",
     "ember-cli-page-object": "^2.0.0-beta.3",
     "ember-cli-string-helpers": "^6.0.1",
-    "ember-click-outside": "^4.0.0",
+    "ember-click-outside": "^5.0.0",
     "ember-composable-helpers": "5.0.0",
     "ember-concurrency": "^2.0.0",
     "ember-could-get-used-to-this": "^1.0.1",
