@@ -79,6 +79,15 @@
       display: table-cell;
     }
   }
+
+  &.sticky-header {
+    position: relative;
+
+    th {
+      position: sticky;
+      top: 0;
+    }
+  }
 }
 
 
@@ -89,6 +98,7 @@
 
   th {
     border-bottom: 1px solid color.adjust($culturedGrey, $lightness: -15%);
+    background-color: $slightWhite;
   }
 }
 
