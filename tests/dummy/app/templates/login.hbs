@@ -1,18 +1,21 @@
-{{#let (unique-id) as |templateId|}}
-  <label for="token-{{templateId}}">{{t "general.token"}}: </label>
-  <input
-    id="token-{{templateId}}"
-    type="text"
-    value={{this.jwt}}
-    {{on "input" (pick "target.value" (set this.jwt))}}
-    {{on "keypress" (perform this.loginOnEnter)}}
-    disabled={{this.login.isRunning}}
-  />
-  <button type="button" disabled={{this.login.isRunning}} {{on "click" (perform this.login)}}>
-    {{#if this.login.isRunning}}
-      <FaIcon @icon="spinner"  @spin={{true}}/>
-    {{/if}}
-    {{t "general.login"}}
-  </button>
-{{/let}}
-<p>{{this.error}}</p>
+<div class="token-login">
+  {{#let (unique-id) as |templateId|}}
+    <label for="token-{{templateId}}">{{t "general.token"}}: </label>
+    <input
+      id="token-{{templateId}}"
+      type="text"
+      value={{this.jwt}}
+      {{on "input" (pick "target.value" (set this.jwt))}}
+      {{on "keypress" (perform this.loginOnEnter)}}
+      disabled={{this.login.isRunning}}
+    />
+    <button type="button" disabled={{this.login.isRunning}} {{on "click" (perform this.login)}}>
+      {{#if this.login.isRunning}}
+        <FaIcon @icon="spinner"  @spin={{true}}/>
+      {{/if}}
+      {{t "general.login"}}
+    </button>
+  {{/let}}
+  <p>{{this.error}}</p>
+</div>
+

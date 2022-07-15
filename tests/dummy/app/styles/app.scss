@@ -30,25 +30,29 @@
     grid-area: nav;
     background-color: $davysGrey;
   }
-  
- 
+
+
   & > .logo {
    grid-area: logo;
    background-color: $orange;
   }
- 
+
   & > header {
    grid-area: header;
    background-color: $orange;
   }
- 
+
   & > main {
    background-color: $white;
    grid-area: main;
    margin: 0 5px;
   }
- 
+
   & > footer {
    grid-area: footer;
+  }
+
+  .token-login {
+    @include main-section;
   }
 }
