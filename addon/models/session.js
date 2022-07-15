@@ -89,12 +89,42 @@ export default class SessionModel extends Model {
 
   @use _offerings = new ResolveAsyncValue(() => [this.offerings]);
   @use offeringLearnerGroups = new ResolveFlatMapBy(() => [this.offerings, 'learnerGroups']);
+  @use _course = new ResolveAsyncValue(() => [this.course]);
+  @use _ilmSession = new ResolveAsyncValue(() => [this.ilmSession]);
+  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
+  @use _ilmLearnerGroups = new ResolveAsyncValue(() => [this._ilmSession?.learnerGroups]);
+  @use _sessionObjectives = new ResolveAsyncValue(() => [this.sessionObjectives]);
+  @use _offeringInstructors = new ResolveFlatMapBy(() => [this._offerings, 'instructors']);
+  @use _offeringInstructorGroups = new ResolveFlatMapBy(() => [
+    this._offerings,
+    'instructorGroups',
+  ]);
+  @use _offeringInstructorGroupInstructors = new ResolveFlatMapBy(() => [
+    this._offeringInstructorGroups,
+    'users',
+  ]);
+  @use _ilmSessionInstructors = new ResolveAsyncValue(() => [this._ilmSession?.instructors]);
+  @use _ilmSessionInstructorGroups = new ResolveAsyncValue(() => [
+    this._ilmSession?.instructorGroups,
+  ]);
+  @use _ilmSessionInstructorGroupInstructors = new ResolveFlatMapBy(() => [
+    this._ilmSessionInstructorGroups,
+    'users',
+  ]);
+  @use _postrequisite = new ResolveAsyncValue(() => [this.postrequisite]);
+  @use _sessionObjectiveCourseObjectives = new ResolveFlatMapBy(() => [
+    this._sessionObjectives,
+    'courseObjectives',
+  ]);
+  @use showUnlinkIcon = new AsyncProcess(() => [
+    this.getShowUnlinkIcon.bind(this),
+    this._sessionObjectiveCourseObjectives,
+  ]);
 
   get learnerGroupCount() {
     return this.offeringLearnerGroups?.length ?? 0;
   }
 
-  @use _course = new ResolveAsyncValue(() => [this.course]);
   get assignableVocabularies() {
     return this._course?.assignableVocabularies;
   }
@@ -103,7 +133,6 @@ export default class SessionModel extends Model {
     return this.sessionObjectives;
   }
 
-  @use _ilmSession = new ResolveAsyncValue(() => [this.ilmSession]);
   get isIndependentLearning() {
     return !!this._ilmSession;
   }
@@ -208,7 +237,6 @@ export default class SessionModel extends Model {
     return parseFloat(ilmHours) + parseFloat(this.maxSingleOfferingDuration);
   }
 
-  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
   /**
    * A list of all vocabularies that are associated via terms.
    */
@@ -226,7 +254,6 @@ export default class SessionModel extends Model {
     }
     return this.offeringLearnerGroups.uniq().sortBy('title');
   }
-  @use _ilmLearnerGroups = new ResolveAsyncValue(() => [this._ilmSession?.learnerGroups]);
   get associatedIlmLearnerGroups() {
     return this._ilmLearnerGroups?.toArray() ?? [];
   }
@@ -239,28 +266,9 @@ export default class SessionModel extends Model {
     return [...this.offeringLearnerGroups, ...ilmLearnerGroups.toArray()].uniq().sortBy('title');
   }
 
-  @use _sessionObjectives = new ResolveAsyncValue(() => [this.sessionObjectives]);
   get sortedSessionObjectives() {
     return this._sessionObjectives?.toArray().sort(sortableByPosition);
   }
-
-  @use _offeringInstructors = new ResolveFlatMapBy(() => [this._offerings, 'instructors']);
-  @use _offeringInstructorGroups = new ResolveFlatMapBy(() => [
-    this._offerings,
-    'instructorGroups',
-  ]);
-  @use _offeringInstructorGroupInstructors = new ResolveFlatMapBy(() => [
-    this._offeringInstructorGroups,
-    'users',
-  ]);
-  @use _ilmSessionInstructors = new ResolveAsyncValue(() => [this._ilmSession?.instructors]);
-  @use _ilmSessionInstructorGroups = new ResolveAsyncValue(() => [
-    this._ilmSession?.instructorGroups,
-  ]);
-  @use _ilmSessionInstructorGroupInstructors = new ResolveFlatMapBy(() => [
-    this._ilmSessionInstructorGroups,
-    'users',
-  ]);
 
   get _ilmSessionInstructorsIfIlmSession() {
     if (!this.isIndependentLearning) {
@@ -297,26 +305,8 @@ export default class SessionModel extends Model {
     return this.prerequisites.length > 0;
   }
 
-  @use _postrequisite = new ResolveAsyncValue(() => [this.postrequisite]);
-
   get hasPostrequisite() {
     return !!this._postrequisite;
-  }
-
-  @use _sessionObjectiveCourseObjectives = new ResolveFlatMapBy(() => [
-    this._sessionObjectives,
-    'courseObjectives',
-  ]);
-  @use showUnlinkIcon = new AsyncProcess(() => [
-    this.getShowUnlinkIcon.bind(this),
-    this._sessionObjectiveCourseObjectives,
-  ]);
-  async getShowUnlinkIcon() {
-    const sessionObjectives = await this.sessionObjectives;
-    const collectionOfCourseObjectives = await Promise.all(
-      sessionObjectives.mapBy('courseObjectives')
-    );
-    return collectionOfCourseObjectives.any((courseObjectives) => courseObjectives.length === 0);
   }
 
   get requiredPublicationIssues() {
@@ -375,5 +365,13 @@ export default class SessionModel extends Model {
 
   get textDescription() {
     return striptags(this.description);
+  }
+
+  async getShowUnlinkIcon() {
+    const sessionObjectives = await this.sessionObjectives;
+    const collectionOfCourseObjectives = await Promise.all(
+      sessionObjectives.mapBy('courseObjectives')
+    );
+    return collectionOfCourseObjectives.any((courseObjectives) => courseObjectives.length === 0);
   }
 }
