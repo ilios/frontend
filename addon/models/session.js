@@ -270,7 +270,7 @@ export default class SessionModel extends Model {
     return this._sessionObjectives?.toArray().sort(sortableByPosition);
   }
 
-  get _ilmSessionInstructorsIfIlmSession() {
+  get ilmSessionInstructors() {
     if (!this.isIndependentLearning) {
       return [];
     }
@@ -289,7 +289,7 @@ export default class SessionModel extends Model {
     if (
       !this._offeringInstructors ||
       !this._offeringInstructorGroupInstructors ||
-      !this._ilmSessionInstructorsIfIlmSession
+      !this.ilmSessionInstructors
     ) {
       return [];
     }
@@ -297,7 +297,7 @@ export default class SessionModel extends Model {
     return [
       ...this._offeringInstructors,
       ...this._offeringInstructorGroupInstructors,
-      ...this._ilmSessionInstructorsIfIlmSession,
+      ...this.ilmSessionInstructors,
     ].uniq();
   }
 
