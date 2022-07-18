@@ -374,4 +374,32 @@ export default class SessionModel extends Model {
     );
     return collectionOfCourseObjectives.any((courseObjectives) => courseObjectives.length === 0);
   }
+
+  async getAllIlmSessionInstructors() {
+    const ilmSession = await this.ilmSession;
+    if (!ilmSession) {
+      return [];
+    }
+    return ilmSession.getAllInstructors();
+  }
+
+  async getAllOfferingInstructors() {
+    const offerings = (await this.offerings).toArray();
+    if (!offerings.length) {
+      return [];
+    }
+    const allOfferingInstructors = await Promise.all(
+      offerings.map(async (offering) => {
+        return (await offering.getAllInstructors()).toArray();
+      })
+    );
+
+    return allOfferingInstructors.flat().uniq();
+  }
+
+  async getAllInstructors() {
+    const allIlmSessionInstructors = await this.getAllIlmSessionInstructors();
+    const allOfferingInstructors = await this.getAllOfferingInstructors();
+    return [...allOfferingInstructors, ...allIlmSessionInstructors].uniq();
+  }
 }

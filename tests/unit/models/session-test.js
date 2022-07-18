@@ -591,4 +591,54 @@ module('Unit | Model | Session', function (hooks) {
     const showUnlinkIcon = await waitForResource(session, 'showUnlinkIcon');
     assert.notOk(showUnlinkIcon);
   });
+
+  test('getAllInstructors', async function (assert) {
+    const store = this.owner.lookup('service:store');
+    const instructor1 = store.createRecord('user');
+    const instructor2 = store.createRecord('user');
+    const instructor3 = store.createRecord('user');
+    const instructor4 = store.createRecord('user');
+    const instructor5 = store.createRecord('user');
+    const instructor6 = store.createRecord('user');
+    const instructor7 = store.createRecord('user');
+    const instructor8 = store.createRecord('user');
+    const instructor9 = store.createRecord('user');
+    const instructorGroup1 = store.createRecord('instructorGroup', {
+      users: [instructor1, instructor2],
+    });
+    const instructorGroup2 = store.createRecord('instructorGroup', {
+      users: [instructor3],
+    });
+    const instructorGroup3 = store.createRecord('instructorGroup', {
+      users: [instructor4, instructor5],
+    });
+    const ilmSession = store.createRecord('ilmSession', {
+      instructorGroups: [instructorGroup1],
+      instructors: [instructor6, instructor1],
+    });
+    const offering1 = store.createRecord('offering', {
+      instructorGroups: [instructorGroup2],
+      instructors: [instructor7, instructor2],
+    });
+    const offering2 = store.createRecord('offering', {
+      instructorGroups: [instructorGroup3],
+      instructors: [instructor8, instructor9, instructor9],
+    });
+    const model = store.createRecord('session', {
+      ilmSession,
+      offerings: [offering1, offering2],
+    });
+
+    const allInstructors = await model.getAllInstructors();
+    assert.strictEqual(allInstructors.length, 9);
+    assert.ok(allInstructors.includes(instructor1));
+    assert.ok(allInstructors.includes(instructor2));
+    assert.ok(allInstructors.includes(instructor3));
+    assert.ok(allInstructors.includes(instructor4));
+    assert.ok(allInstructors.includes(instructor5));
+    assert.ok(allInstructors.includes(instructor6));
+    assert.ok(allInstructors.includes(instructor7));
+    assert.ok(allInstructors.includes(instructor8));
+    assert.ok(allInstructors.includes(instructor9));
+  });
 });
