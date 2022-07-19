@@ -20,13 +20,14 @@ module('Integration | Component | course-visualize-instructor', function (hooks)
     this.set('model', {
       user: userModel,
       course: courseModel,
-      offeringMinutes: 0,
-      ilmMinutes: 0,
+      offeringMinutes: 120,
+      ilmMinutes: 60,
     });
-
     await render(hbs`<CourseVisualizeInstructor @model={{this.model}} />`);
-
     assert.strictEqual(component.title, 'course 0 2021');
+    assert.strictEqual(component.instructorName, '0 guy M. Mc0son');
+    assert.strictEqual(component.totalOfferingsTime, 'Total Instructional Time 120 Minutes');
+    assert.strictEqual(component.totalIlmTime, 'Total ILM Time 60 Minutes');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {

@@ -9,6 +9,9 @@ const definition = create({
       link: attribute('href', 'a'),
     }),
   },
+  instructorName: text('[data-test-instructor-name]'),
+  totalOfferingsTime: text('[data-test-total-offerings-time]'),
+  totalIlmTime: text('[data-test-total-ilm-time]'),
 });
 
 export default definition;

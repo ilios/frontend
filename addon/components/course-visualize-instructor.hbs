@@ -24,13 +24,13 @@
         {{@model.user.fullName}}
       </span>
     </div>
-    <h2>
+    <h2 data-test-instructor-name>
       {{@model.user.fullName}}
     </h2>
-    <h3>
+    <h3 data-test-total-offerings-time>
       {{t "general.totalInstructionalTime" minutes=@model.offeringMinutes}}
     </h3>
-    <h3>
+    <h3 data-test-total-ilm-time>
       {{t "general.totalIlmTime" minutes=@model.ilmMinutes}}
     </h3>
     <h3 class="clickable" data-test-title>
