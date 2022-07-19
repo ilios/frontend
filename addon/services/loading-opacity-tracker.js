@@ -12,7 +12,4 @@ export default class LoadingOpacityTrackerService extends Service {
   has(key) {
     return this.#opacities.has(key);
   }
-  clear() {
-    this.#opacities.clear();
-  }
 }
