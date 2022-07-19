@@ -4,6 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/visualizer-course-instructor-session-type';
 
 module('Integration | Component | visualizer-course-instructor-session-type', function (hooks) {
   setupRenderingTest(hooks);
@@ -11,7 +12,6 @@ module('Integration | Component | visualizer-course-instructor-session-type', fu
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(3);
     const instructor = this.server.create('user');
     const sessionType1 = this.server.create('session-type', {
       title: 'Standalone',
@@ -58,14 +58,13 @@ module('Integration | Component | visualizer-course-instructor-session-type', fu
     await render(
       hbs`<VisualizerCourseInstructorSessionType @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} />`
     );
+
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .chart .slice');
 
-    const chart = 'svg';
-    const chartLabels = `${chart} .slice text`;
-    assert.dom(chartLabels).exists({ count: 2 });
-    assert.dom(chart).containsText('Standalone 77.8%');
-    assert.dom(chart).containsText('Campaign 22.2%');
+    assert.strictEqual(component.chart.slices.length, 2);
+    assert.strictEqual(component.chart.slices[0].text, 'Standalone 77.8%');
+    assert.strictEqual(component.chart.slices[1].text, 'Campaign 22.2%');
   });
 });

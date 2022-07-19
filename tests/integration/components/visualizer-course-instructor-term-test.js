@@ -1,9 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, findAll, waitFor } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/visualizer-course-instructor-term';
 
 module('Integration | Component | visualizer-course-instructor-term', function (hooks) {
   setupRenderingTest(hooks);
@@ -11,7 +12,6 @@ module('Integration | Component | visualizer-course-instructor-term', function (
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(3);
     const instructor = this.server.create('user');
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');
@@ -69,9 +69,9 @@ module('Integration | Component | visualizer-course-instructor-term', function (
     await waitFor('.loaded');
     await waitFor('svg .bars');
 
-    const chartLabels = 'svg .bars text';
-    assert.dom(chartLabels).exists({ count: 2 });
-    assert.dom(findAll(chartLabels)[0]).hasText('Vocabulary 1 > Standalone 77.8%');
-    assert.dom(findAll(chartLabels)[1]).hasText('Vocabulary 2 > Campaign 22.2%');
+    assert.strictEqual(component.chart.bars.length, 2);
+    assert.strictEqual(component.chart.labels.length, 2);
+    assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1 > Standalone 77.8%');
+    assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2 > Campaign 22.2%');
   });
 });

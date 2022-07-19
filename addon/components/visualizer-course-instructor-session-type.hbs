@@ -1,5 +1,7 @@
 <div
   class="visualizer-course-instructor-session-type {{unless @isIcon "not-icon"}}"
+  data-test-visualizer-course-instructor-session-type
+  ...attributes
 >
   {{#if this.isLoaded}}
     {{#if (or @isIcon this.data.length)}}
