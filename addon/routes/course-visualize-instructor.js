@@ -1,6 +1,7 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import { all, map, filter } from 'rsvp';
+import moment from 'moment';
 
 export default class CourseVisualizeInstructorRoute extends Route {
   @service session;
@@ -12,19 +13,28 @@ export default class CourseVisualizeInstructorRoute extends Route {
     const course = await this.store.find('course', params.course_id);
     const user = await this.store.find('user', params.user_id);
 
-    const sessions = await course.get('sessions');
+    const sessions = await course.sessions;
     const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
-      const instructors = await session.get('allInstructors');
-      return instructors.mapBy('id').includes(user.get('id'));
+      const instructors = await session.getAllInstructors();
+      return instructors.mapBy('id').includes(user.id);
     });
 
     const minutes = await map(sessionsWithUser, async (session) => {
-      const offeringHours = await session.get('maxSingleOfferingDuration');
-      const ilmSession = await session.get('ilmSession');
+      const offerings = await session.offerings;
+      const offeringsWithUser = await filter(offerings.toArray(), async (offering) => {
+        const instructors = await offering.getAllInstructors();
+        return instructors.mapBy('id').includes(user.id);
+      });
+      const offeringHours = offeringsWithUser
+        .reduce((total, offering) => {
+          return total + moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
+        }, 0)
+        .toFixed(2);
+      const ilmSession = await session.ilmSession;
       const offeringMinutes = Math.round(offeringHours * 60);
       let ilmMinutes = 0;
       if (ilmSession) {
-        ilmMinutes = Math.round(parseFloat(ilmSession.get('hours')) * 60);
+        ilmMinutes = Math.round(parseFloat(ilmSession.hours) * 60);
       }
       return {
         offeringMinutes,
@@ -44,8 +54,8 @@ export default class CourseVisualizeInstructorRoute extends Route {
     return await all([
       course.school,
       map(sessions, (s) => s.sessionType),
-      map(sessions, (s) => s.allInstructors),
-      map(sessions, (s) => s.totalSumDuration),
+      map(sessions, (s) => s.getAllInstructors()),
+      map(sessions, (s) => s.getTotalSumDuration()),
     ]);
   }
 
