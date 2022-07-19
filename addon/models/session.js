@@ -402,4 +402,34 @@ export default class SessionModel extends Model {
     const allOfferingInstructors = await this.getAllOfferingInstructors();
     return [...allOfferingInstructors, ...allIlmSessionInstructors].uniq();
   }
+
+  /**
+   * The total duration in hours (incl. fractions) of all session offerings.
+   */
+  async getTotalSumOfferingsDuration() {
+    const offerings = await this.offerings;
+
+    if (!offerings.length) {
+      return 0;
+    }
+
+    return offerings
+      .reduce((total, offering) => {
+        return total + moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
+      }, 0)
+      .toFixed(2);
+  }
+
+  /**
+   * Total duration in hours for offerings and ILM Sessions
+   * If both ILM and offerings are present sum them
+   */
+  async getTotalSumDuration() {
+    const ilmSession = await this.ilmSession;
+    const totalSumOfferingDuration = await this.getTotalSumOfferingsDuration();
+    if (!ilmSession) {
+      return totalSumOfferingDuration;
+    }
+    return parseFloat(ilmSession.hours) + parseFloat(totalSumOfferingDuration);
+  }
 }

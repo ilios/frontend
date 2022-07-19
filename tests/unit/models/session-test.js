@@ -453,8 +453,8 @@ module('Unit | Model | Session', function (hooks) {
     const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
     subject.set('ilmSession', ilmSession);
 
-    const max = await waitForResource(subject, 'totalSumDuration');
-    assert.strictEqual(Number(max), 27.1);
+    const total = await waitForResource(subject, 'totalSumDuration');
+    assert.strictEqual(Number(total), 27.1);
   });
 
   test('totalSumDuration without ILM', async function (assert) {
@@ -472,8 +472,8 @@ module('Unit | Model | Session', function (hooks) {
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
 
-    const max = await waitForResource(subject, 'totalSumDuration');
-    assert.strictEqual(Number(max), 24.5);
+    const total = await waitForResource(subject, 'totalSumDuration');
+    assert.strictEqual(Number(total), 24.5);
   });
 
   test('totalSumDuration only ILM', async function (assert) {
@@ -484,8 +484,8 @@ module('Unit | Model | Session', function (hooks) {
     const ilmSession = store.createRecord('ilmSession', { hours: 2 });
     subject.set('ilmSession', ilmSession);
 
-    const max = await waitForResource(subject, 'totalSumDuration');
-    assert.strictEqual(Number(max), 2.0);
+    const total = await waitForResource(subject, 'totalSumDuration');
+    assert.strictEqual(Number(total), 2.0);
   });
 
   test('allInstructors gets offerings data', async function (assert) {
@@ -640,5 +640,57 @@ module('Unit | Model | Session', function (hooks) {
     assert.ok(allInstructors.includes(instructor7));
     assert.ok(allInstructors.includes(instructor8));
     assert.ok(allInstructors.includes(instructor9));
+  });
+
+  test('getTotalSumDuration with ILM', async function (assert) {
+    assert.expect(1);
+    const subject = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
+
+    const allDayOffering = store.createRecord('offering', {
+      startDate: moment('2017-01-01'),
+      endDate: moment('2017-01-02').add(30, 'minutes'),
+    });
+    const halfAnHourOffering = store.createRecord('offering', {
+      startDate: moment('2017-01-01 09:30:00'),
+      endDate: moment('2017-01-01 10:00:00'),
+    });
+    subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+    const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
+    subject.set('ilmSession', ilmSession);
+
+    const total = await subject.getTotalSumDuration();
+    assert.strictEqual(Number(total), 27.1);
+  });
+
+  test('getTotalSumDuration without ILM', async function (assert) {
+    assert.expect(1);
+    const subject = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
+
+    const allDayOffering = store.createRecord('offering', {
+      startDate: moment('2017-01-01'),
+      endDate: moment('2017-01-02'),
+    });
+    const halfAnHourOffering = store.createRecord('offering', {
+      startDate: moment('2017-01-01 09:30:00'),
+      endDate: moment('2017-01-01 10:00:00'),
+    });
+    subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+
+    const total = await subject.getTotalSumDuration();
+    assert.strictEqual(Number(total), 24.5);
+  });
+
+  test('getTotalSumDuration only ILM', async function (assert) {
+    assert.expect(1);
+    const subject = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
+
+    const ilmSession = store.createRecord('ilmSession', { hours: 2 });
+    subject.set('ilmSession', ilmSession);
+
+    const total = await subject.getTotalSumDuration();
+    assert.strictEqual(Number(total), 2.0);
   });
 });
