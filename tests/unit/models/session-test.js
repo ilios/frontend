@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import moment from 'moment';
 import { waitForResource } from 'ilios-common';
@@ -643,9 +643,8 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('getTotalSumDuration with ILM', async function (assert) {
-    assert.expect(1);
-    const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
+    const subject = store.createRecord('session');
 
     const allDayOffering = store.createRecord('offering', {
       startDate: moment('2017-01-01'),
@@ -664,9 +663,8 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('getTotalSumDuration without ILM', async function (assert) {
-    assert.expect(1);
-    const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
+    const subject = store.createRecord('session');
 
     const allDayOffering = store.createRecord('offering', {
       startDate: moment('2017-01-01'),
@@ -683,14 +681,43 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('getTotalSumDuration only ILM', async function (assert) {
-    assert.expect(1);
-    const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
+    const subject = store.createRecord('session');
 
     const ilmSession = store.createRecord('ilmSession', { hours: 2 });
     subject.set('ilmSession', ilmSession);
 
     const total = await subject.getTotalSumDuration();
     assert.strictEqual(Number(total), 2.0);
+  });
+
+  skip('getTotalSumDurationByInstructor', async function (assert) {
+    const store = this.owner.lookup('service:store');
+    const instructor1 = store.createRecord('user', { id: 1 });
+    const subject = store.createRecord('session');
+
+    let total = await subject.getTotalSumDurationByInstructor(instructor1);
+    assert.strictEqual(total, 0);
+    // @todo implement [ST 2022/07/19]
+  });
+
+  skip('getTotalSumOfferingsDurationByInstructor', async function (assert) {
+    const store = this.owner.lookup('service:store');
+    const instructor1 = store.createRecord('user', { id: 1 });
+    const subject = store.createRecord('session');
+
+    let total = await subject.getTotalSumOfferingsDurationByInstructor(instructor1);
+    assert.strictEqual(total, 0);
+    // @todo implement [ST 2022/07/19]
+  });
+
+  skip('getTotalSumIlmDurationByInstructor', async function (assert) {
+    const store = this.owner.lookup('service:store');
+    const instructor1 = store.createRecord('user', { id: 1 });
+    const subject = store.createRecord('session');
+
+    let total = await subject.getTotalSumIlmDurationByInstructor(instructor1);
+    assert.strictEqual(total, 0);
+    // @todo implement [ST 2022/07/19]
   });
 });

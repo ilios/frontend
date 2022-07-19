@@ -2,7 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import moment from 'moment';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import striptags from 'striptags';
-
+import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
@@ -403,9 +403,6 @@ export default class SessionModel extends Model {
     return [...allOfferingInstructors, ...allIlmSessionInstructors].uniq();
   }
 
-  /**
-   * The total duration in hours (incl. fractions) of all session offerings.
-   */
   async getTotalSumOfferingsDuration() {
     const offerings = await this.offerings;
 
@@ -420,10 +417,6 @@ export default class SessionModel extends Model {
       .toFixed(2);
   }
 
-  /**
-   * Total duration in hours for offerings and ILM Sessions
-   * If both ILM and offerings are present sum them
-   */
   async getTotalSumDuration() {
     const ilmSession = await this.ilmSession;
     const totalSumOfferingDuration = await this.getTotalSumOfferingsDuration();
@@ -431,5 +424,37 @@ export default class SessionModel extends Model {
       return totalSumOfferingDuration;
     }
     return parseFloat(ilmSession.hours) + parseFloat(totalSumOfferingDuration);
+  }
+
+  async getTotalSumOfferingsDurationByInstructor(user) {
+    const offerings = await this.offerings;
+    const offeringsWithUser = await filter(offerings.toArray(), async (offering) => {
+      const instructors = await offering.getAllInstructors();
+      return instructors.mapBy('id').includes(user.id);
+    });
+    const offeringHours = offeringsWithUser
+      .reduce((total, offering) => {
+        return total + moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
+      }, 0)
+      .toFixed(2);
+    return Math.round(offeringHours * 60);
+  }
+
+  async getTotalSumIlmDurationByInstructor(user) {
+    const ilmSession = await this.ilmSession;
+    let ilmMinutes = 0;
+    if (ilmSession) {
+      const instructors = await ilmSession.getAllInstructors();
+      if (instructors.mapBy('id').includes(user.id)) {
+        ilmMinutes = Math.round(parseFloat(ilmSession.hours) * 60);
+      }
+    }
+    return ilmMinutes;
+  }
+
+  async getTotalSumDurationByInstructor(user) {
+    const offeringMinutes = await this.getTotalSumOfferingsDurationByInstructor(user);
+    const ilmMinutes = await this.getTotalSumIlmDurationByInstructor(user);
+    return parseFloat(offeringMinutes) + parseFloat(ilmMinutes);
   }
 }
