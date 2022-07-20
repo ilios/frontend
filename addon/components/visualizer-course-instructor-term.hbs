@@ -1,9 +1,10 @@
 <div
   class="visualizer-course-instructor-term {{unless @isIcon "not-icon"}}"
   data-test-visualizer-course-instructor-term
+  {{did-insert (perform this.load)}}
   ...attributes
 >
-  {{#if this.isLoaded}}
+  {{#unless this.load.isRunning}}
     {{#if (or @isIcon this.data.length)}}
       <SimpleChart
         @name="horz-bar"
@@ -19,5 +20,5 @@
         {{/if}}
       </SimpleChart>
     {{/if}}
-  {{/if}}
+  {{/unless}}
 </div>
