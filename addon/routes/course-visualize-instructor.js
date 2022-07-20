@@ -1,7 +1,6 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import { all, map, filter } from 'rsvp';
-import moment from 'moment';
 
 export default class CourseVisualizeInstructorRoute extends Route {
   @service session;
@@ -20,22 +19,8 @@ export default class CourseVisualizeInstructorRoute extends Route {
     });
 
     const minutes = await map(sessionsWithUser, async (session) => {
-      const offerings = await session.offerings;
-      const offeringsWithUser = await filter(offerings.toArray(), async (offering) => {
-        const instructors = await offering.getAllInstructors();
-        return instructors.mapBy('id').includes(user.id);
-      });
-      const offeringHours = offeringsWithUser
-        .reduce((total, offering) => {
-          return total + moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
-        }, 0)
-        .toFixed(2);
-      const ilmSession = await session.ilmSession;
-      const offeringMinutes = Math.round(offeringHours * 60);
-      let ilmMinutes = 0;
-      if (ilmSession) {
-        ilmMinutes = Math.round(parseFloat(ilmSession.hours) * 60);
-      }
+      const offeringMinutes = await session.getTotalSumOfferingsDurationByInstructor(user);
+      const ilmMinutes = await session.getTotalSumIlmDurationByInstructor(user);
       return {
         offeringMinutes,
         ilmMinutes,
