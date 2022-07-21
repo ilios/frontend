@@ -80,9 +80,9 @@ export default class VisualizerCourseInstructorTerm extends Component {
     this.data = sessionTermData
       .map((obj) => {
         const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.label = `${obj.label} ${percent}%`;
         obj.meta.totalMinutes = totalMinutes;
         obj.meta.percent = percent;
+        obj.label = `${obj.label}: ${obj.data} ${this.intl.t('general.minutes')}`;
         return obj;
       })
       .sort((first, second) => {
@@ -101,9 +101,9 @@ export default class VisualizerCourseInstructorTerm extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, data, meta } = obj;
+    const { label, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    this.tooltipTitle = htmlSafe(label);
     this.tooltipContent = meta.sessions.uniq().sort().join();
   }
 }

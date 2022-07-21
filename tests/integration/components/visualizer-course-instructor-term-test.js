@@ -71,7 +71,7 @@ module('Integration | Component | visualizer-course-instructor-term', function (
 
     assert.strictEqual(component.chart.bars.length, 2);
     assert.strictEqual(component.chart.labels.length, 2);
-    assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1 > Standalone 77.8%');
-    assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2 > Campaign 22.2%');
+    assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1 > Standalone: 630 Minutes');
+    assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2 > Campaign: 180 Minutes');
   });
 });
