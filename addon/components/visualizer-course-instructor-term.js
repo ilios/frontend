@@ -37,6 +37,10 @@ export default class VisualizerCourseInstructorTerm extends Component {
       };
     });
 
+    const totalMinutes = (yield map(sessionsWithTerms, async ({ session }) => {
+      return await session.getTotalSumOfferingsDurationByInstructor(this.args.user);
+    })).reduce((total, mins) => total + mins, 0);
+
     const dataMap = yield map(sessionsWithTerms, async ({ session, terms }) => {
       const minutes = await session.getTotalSumDurationByInstructor(this.args.user);
       return terms.map(({ termTitle, vocabularyTitle }) => {
@@ -72,10 +76,6 @@ export default class VisualizerCourseInstructorTerm extends Component {
 
       return set;
     }, []);
-
-    const totalMinutes = sessionTermData
-      .mapBy('data')
-      .reduce((total, minutes) => total + minutes, 0);
 
     this.data = sessionTermData
       .map((obj) => {

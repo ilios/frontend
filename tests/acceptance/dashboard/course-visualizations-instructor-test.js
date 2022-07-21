@@ -81,9 +81,9 @@ module('Acceptance | course visualizations - instructor', function (hooks) {
     await waitFor('svg .chart');
     assert.strictEqual(page.root.termsChart.chart.bars.length, 3);
     assert.strictEqual(page.root.termsChart.chart.labels.length, 3);
-    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'Vocabulary 1 > term 0 50.0%');
-    assert.strictEqual(page.root.termsChart.chart.labels[1].text, 'Vocabulary 1 > term 1 25.0%');
-    assert.strictEqual(page.root.termsChart.chart.labels[2].text, 'Vocabulary 2 > term 2 25.0%');
+    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'Vocabulary 1 > term 0 66.7%');
+    assert.strictEqual(page.root.termsChart.chart.labels[1].text, 'Vocabulary 1 > term 1 33.3%');
+    assert.strictEqual(page.root.termsChart.chart.labels[2].text, 'Vocabulary 2 > term 2 33.3%');
     assert.strictEqual(page.root.sessionTypesChart.chart.slices.length, 2);
     assert.strictEqual(page.root.sessionTypesChart.chart.slices[0].text, 'session type 0 66.7%');
     assert.strictEqual(page.root.sessionTypesChart.chart.slices[1].text, 'session type 1 33.3%');
