@@ -1,0 +1,19 @@
+.lm-icons {
+  height: 1rem;
+
+  .required {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    height: .45rem;
+  }
+
+  .lm-type-icon {
+    grid-column-start: 2;
+    grid-row-start: 1;
+    width: 1rem;
+  }
+  
+  display: inline-grid;
+  grid-template-columns: repeat(3, .5rem);
+  grid-template-rows: .5rem .5rem;
+}

@@ -22,80 +22,76 @@
         />
       </div>
     {{else}}
-      <LmTypeIcon
-        @type={{@learningMaterial.type}}
-        @mimetype={{@learningMaterial.mimetype}}
-        @listItem={{true}}
-      />
-      <div class="single-event-learningmaterial-item-title" data-test-title>
-        {{#if @learningMaterial.required}}
-          <FaIcon @icon="star" @title={{t "general.required"}} data-test-required-icon />
-        {{/if}}
-        {{#if @linked}}
-          {{#if @learningMaterial.absoluteFileUri}}
-            {{#if (eq @learningMaterial.mimetype "application/pdf")}}
-              <a
-                id={{concat templateId @learningMaterial.id "lm"}}
-                href="{{@learningMaterial.absoluteFileUri}}?inline"
-                data-test-pdf-link
+      <div class="single-event-learningmaterial-item-title">
+        <LmIcons @learningMaterial={{@learningMaterial}} />
+        <span data-test-title>
+          {{#if @linked}}
+            {{#if @learningMaterial.absoluteFileUri}}
+              {{#if (eq @learningMaterial.mimetype "application/pdf")}}
+                <a
+                  id={{concat templateId @learningMaterial.id "lm"}}
+                  href="{{@learningMaterial.absoluteFileUri}}?inline"
+                  data-test-pdf-link
+                >
+                  {{@learningMaterial.title}}
+                </a>
+                <a
+                  id={{concat templateId @learningMaterial.id "lmdownload"}}
+                  target="_blank"
+                  href={{@learningMaterial.absoluteFileUri}}
+                  rel="noopener noreferrer"
+                  aria-label={{t "general.download"}}
+                  aria-labelledby="{{concat templateId @learningMaterial.id "lmdownload"}} {{concat templateId @learningMaterial.id "lm"}}"
+                  data-test-pdf-download-link
+                >
+                  <FaIcon @icon="download" />
+                </a>
+              {{else}}
+                <a
+                  target="_blank"
+                  href={{@learningMaterial.absoluteFileUri}}
+                  rel="noopener
+                  noreferrer"
+                  data-test-file-link
+                >
+                  {{@learningMaterial.title}}
+                </a>
+              {{/if}}
+              <span
+                class="single-event-learningmaterial-filesize"
+                data-test-filesize
               >
-                {{@learningMaterial.title}}
-              </a>
-              <a
-                id={{concat templateId @learningMaterial.id "lmdownload"}}
-                target="_blank"
-                href={{@learningMaterial.absoluteFileUri}}
-                rel="noopener noreferrer"
-                aria-label={{t "general.download"}}
-                aria-labelledby="{{concat templateId @learningMaterial.id "lmdownload"}} {{concat templateId @learningMaterial.id "lm"}}"
-                data-test-pdf-download-link
-              >
-                <FaIcon @icon="download" />
-              </a>
-            {{else}}
+                {{#if @learningMaterial.filesize}}
+                  ({{filesize @learningMaterial.filesize}})
+                {{/if}}
+              </span>
+            {{else if @learningMaterial.link}}
               <a
                 target="_blank"
-                href={{@learningMaterial.absoluteFileUri}}
+                href={{@learningMaterial.link}}
                 rel="noopener
                 noreferrer"
-                data-test-file-link
+                data-test-link
               >
                 {{@learningMaterial.title}}
               </a>
-            {{/if}}
-            <span
-              class="single-event-learningmaterial-filesize"
-              data-test-filesize
-            >
-              {{#if @learningMaterial.filesize}}
-                ({{filesize @learningMaterial.filesize}})
-              {{/if}}
-            </span>
-          {{else if @learningMaterial.link}}
-            <a
-              target="_blank" href={{@learningMaterial.link}}
-              rel="noopener
-              noreferrer"
-              data-test-link
-            >
+            {{else}}
               {{@learningMaterial.title}}
-            </a>
+            {{/if}}
           {{else}}
             {{@learningMaterial.title}}
+            {{#if @learningMaterial.absoluteFileUri}}
+              <span
+                class="single-event-learningmaterial-filesize"
+                data-test-filesize
+              >
+                {{#if @learningMaterial.filesize}}
+                  ({{filesize @learningMaterial.filesize}})
+                {{/if}}
+              </span>
+            {{/if}}
           {{/if}}
-        {{else}}
-          {{@learningMaterial.title}}
-          {{#if @learningMaterial.absoluteFileUri}}
-            <span
-              class="single-event-learningmaterial-filesize"
-              data-test-filesize
-            >
-              {{#if @learningMaterial.filesize}}
-                ({{filesize @learningMaterial.filesize}})
-              {{/if}}
-            </span>
-          {{/if}}
-        {{/if}}
+        </span>
       </div>
       {{#if @learningMaterial.citation}}
         <div
