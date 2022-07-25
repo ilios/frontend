@@ -1,9 +1,9 @@
 <div class="single-event-learningmaterial-list" data-test-single-event-learningmaterial-list ...attributes>
   {{#if (or @learningMaterials.length @prework.length)}}
-    <ul class="static-list fa-ul">
+    <ul class="static-list">
       {{#each @prework as |event|}}
         <li class="prework-title" data-test-prework-event>
-          <FaIcon @icon="person-chalkboard" @listItem={{true}} />
+          <FaIcon @icon="person-chalkboard" />
           <LinkTo @route="events" @model={{event.slug}}>
             {{event.name}}
           </LinkTo>

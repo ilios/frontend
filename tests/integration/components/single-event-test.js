@@ -148,7 +148,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     const firstSessionLm =
       '.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)';
     assert
-      .dom(`${firstSessionLm} .lm-type-icon .fa-file-pdf`)
+      .dom(`${firstSessionLm} [data-test-lm-type-icon].fa-file-pdf`)
       .exists('PDF file type icon is visible');
     assert
       .dom(`${firstSessionLm} .single-event-learningmaterial-item-notes`)

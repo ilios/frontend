@@ -69,7 +69,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     assert.dom('.item').exists({ count: 2 });
     assert.dom('.item:nth-of-type(1) [data-test-title]').hasText(lmModel2.title);
     assert
-      .dom('.item:nth-of-type(1) .lm-type-icon .fa-paragraph')
+      .dom('.item:nth-of-type(1) [data-test-lm-type-icon].fa-paragraph')
       .exists({ count: 1 }, 'Shows LM type icon.');
     assert.strictEqual(
       find('.item:nth-of-type(1) .details').textContent.replace(/[\s\n\t]+/g, ''),
@@ -79,7 +79,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     );
     assert.dom('.item:nth-of-type(2) [data-test-title]').hasText(lmModel1.title);
     assert
-      .dom('.item:nth-of-type(2) .lm-type-icon .fa-file-pdf')
+      .dom('.item:nth-of-type(2) [data-test-lm-type-icon].fa-file-pdf')
       .exists({ count: 1 }, 'Shows LM type icon.');
     assert.strictEqual(
       find('.item:nth-of-type(2) .details').textContent.replace(/[\s\n\t]+/g, ''),

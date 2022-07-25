@@ -1,6 +1,7 @@
 .single-event-learningmaterial-list {
   .static-list {
     @include ilios-static-list;
+    padding-left: .25rem;
   }
 
   .single-event-learningmaterial-item-timing-info {
@@ -26,5 +27,11 @@
 
   .sub-item {
     margin-left: 1.5rem;
+  }
+
+
+  .single-event-learningmaterial-item-title {
+    display: flex;
+    align-items: center;
   }
 }

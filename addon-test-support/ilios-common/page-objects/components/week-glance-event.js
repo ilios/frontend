@@ -34,7 +34,7 @@ const definition = {
   hasLearningMaterials: isPresent('[data-test-learning-materials]'),
   learningMaterials: collection('[data-test-learning-materials] [data-test-learning-material]', {
     title: text('[data-test-material-title]'),
-    hasTypeIcon: isPresent('[data-test-lm-type-icon] svg'),
+    hasTypeIcon: isPresent('[data-test-lm-type-icon]'),
     typeIconTitle: text('[data-test-lm-type-icon]'),
     hasPublicNotes: isPresent('[data-test-public-notes]'),
     publicNotes: text('[data-test-public-notes]'),
