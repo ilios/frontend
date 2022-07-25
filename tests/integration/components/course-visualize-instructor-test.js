@@ -18,17 +18,15 @@ module('Integration | Component | course-visualize-instructor', function (hooks)
     const user = this.server.create('user');
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
-    this.set('model', {
-      user: userModel,
-      course: courseModel,
-      offeringMinutes: 120,
-      ilmMinutes: 60,
-    });
-    await render(hbs`<CourseVisualizeInstructor @model={{this.model}} />`);
+    this.set('course', courseModel);
+    this.set('user', userModel);
+
+    await render(hbs`<CourseVisualizeInstructor @course={{this.course}} @user={{this.user}} />`);
+
     assert.strictEqual(component.title, 'course 0 2021');
     assert.strictEqual(component.instructorName, '0 guy M. Mc0son');
-    assert.strictEqual(component.totalOfferingsTime, 'Total Instructional Time 120 Minutes');
-    assert.strictEqual(component.totalIlmTime, 'Total ILM Time 60 Minutes');
+    assert.strictEqual(component.totalOfferingsTime, 'Total Instructional Time 0 Minutes');
+    assert.strictEqual(component.totalIlmTime, 'Total ILM Time 0 Minutes');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
@@ -44,14 +42,10 @@ module('Integration | Component | course-visualize-instructor', function (hooks)
     const user = this.server.create('user');
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
-    this.set('model', {
-      user: userModel,
-      course: courseModel,
-      offeringMinutes: 0,
-      ilmMinutes: 0,
-    });
+    this.set('course', courseModel);
+    this.set('user', userModel);
 
-    await render(hbs`<CourseVisualizeInstructor @model={{this.model}} />`);
+    await render(hbs`<CourseVisualizeInstructor @course={{this.course}} @user={{this.user}} />`);
 
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
@@ -69,14 +63,10 @@ module('Integration | Component | course-visualize-instructor', function (hooks)
     const user = this.server.create('user');
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
-    this.set('model', {
-      user: userModel,
-      course: courseModel,
-      offeringMinutes: 0,
-      ilmMinutes: 0,
-    });
+    this.set('course', courseModel);
+    this.set('user', userModel);
 
-    await render(hbs`<CourseVisualizeInstructor @model={{this.model}} />`);
+    await render(hbs`<CourseVisualizeInstructor @course={{this.course}} @user={{this.user}} />`);
 
     assert.strictEqual(component.breadcrumb.crumbs.length, 4);
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
@@ -139,13 +129,10 @@ module('Integration | Component | course-visualize-instructor', function (hooks)
 
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     const userModel = await this.owner.lookup('service:store').find('user', instructor.id);
-    this.set('model', {
-      user: userModel,
-      course: courseModel,
-      offeringMinutes: 90,
-      ilmMinutes: 120,
-    });
-    await render(hbs`<CourseVisualizeInstructor @model={{this.model}} />`);
+    this.set('course', courseModel);
+    this.set('user', userModel);
+
+    await render(hbs`<CourseVisualizeInstructor @course={{this.course}} @user={{this.user}} />`);
 
     // wait for charts to load
     await waitFor('.loaded');
