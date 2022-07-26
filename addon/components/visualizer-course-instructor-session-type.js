@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { map } from 'rsvp';
+import { filter, map } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
@@ -15,33 +15,36 @@ export default class VisualizerCourseInstructorSessionType extends Component {
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
-  @use sessionsWithSessionType = new AsyncProcess(() => [
-    this.getSessionsWithSessionsTypes.bind(this),
-    this.sessions,
-  ]);
-  async getSessionsWithSessionsTypes(sessions) {
-    return map(sessions.toArray(), async (session) => {
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use loadedData = new AsyncProcess(() => [this.getData.bind(this), this.sessions]);
+
+  get data() {
+    if (!this.loadedData) {
+      return [];
+    }
+    return this.loadedData;
+  }
+
+  async getData(sessions) {
+    if (!sessions) {
+      return [];
+    }
+
+    const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
+      const allInstructors = await session.getAllOfferingInstructors();
+      return allInstructors.mapBy('id').includes(this.args.user.id);
+    });
+
+    const sessionsWithSessionType = await map(sessionsWithUser.toArray(), async (session) => {
       const sessionType = await session.sessionType;
       return {
         session,
         sessionType,
       };
     });
-  }
 
-  get isLoaded() {
-    return !!this.sessionsWithSessionType;
-  }
-
-  get data() {
-    const sessionsWithUser = this.sessionsWithSessionType.filter(({ session }) => {
-      return session.allInstructors?.mapBy('id').includes(this.args.user.id);
-    });
-
-    const dataMap = sessionsWithUser.map(({ session, sessionType }) => {
-      const minutes = Math.round(session.totalSumDuration * 60);
-
+    const dataMap = await map(sessionsWithSessionType, async ({ session, sessionType }) => {
+      const minutes = await session.getTotalSumDurationByInstructor(this.args.user);
       return {
         sessionTitle: session.title,
         sessionTypeTitle: sessionType.title,
@@ -71,6 +74,7 @@ export default class VisualizerCourseInstructorSessionType extends Component {
     const totalMinutes = sessionTypeData
       .mapBy('data')
       .reduce((total, minutes) => total + minutes, 0);
+
     return sessionTypeData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.label} ${percent}%`;

@@ -1,67 +1,64 @@
 <section
   class="course-visualize-instructor"
   data-test-course-visualize-instructor
-  {{did-insert (perform this.load)}}
 >
-  {{#unless this.load.isRunning}}
-    <div class="breadcrumbs" data-test-breadcrumb>
-      <span>
-        <LinkTo @route="course" @model={{@model.course}}>
-          {{@model.course.title}}
-        </LinkTo>
-      </span>
-      <span>
-        <LinkTo @route="course-visualizations" @model={{@model.course}}>
-          {{t "general.visualizations"}}
-        </LinkTo>
-      </span>
-      <span>
-        <LinkTo @route="course-visualize-instructors" @model={{@model.course}}>
-          {{t "general.instructors"}}
-        </LinkTo>
-      </span>
-      <span>
-        {{@model.user.fullName}}
-      </span>
-    </div>
-    <h2>
-      {{@model.user.fullName}}
-    </h2>
-    <h3>
-      {{t "general.totalInstructionalTime" minutes=@model.offeringMinutes}}
-    </h3>
-    <h3>
-      {{t "general.totalIlmTime" minutes=@model.ilmMinutes}}
-    </h3>
-    <h3 class="clickable" data-test-title>
-      <LinkTo @route="course" @model={{@model.course}}>
-        {{@model.course.title}}
-        {{#if this.academicYearCrossesCalendarYearBoundaries}}
-          {{@model.course.year}} - {{add @model.course.year 1}}
-        {{else}}
-          {{@model.course.year}}
-        {{/if}}
+  <div class="breadcrumbs" data-test-breadcrumb>
+    <span>
+      <LinkTo @route="course" @model={{@course}}>
+        {{@course.title}}
       </LinkTo>
-    </h3>
-    <div class="visualizations">
-      <div>
-        <h4>
-          {{t "general.terms"}}
-        </h4>
-        <VisualizerCourseInstructorTerm
-          @course={{@model.course}}
-          @user={{@model.user}}
-        />
-      </div>
-      <div>
-        <h4>
-          {{t "general.sessionTypes"}}
-        </h4>
-        <VisualizerCourseInstructorSessionType
-          @course={{@model.course}}
-          @user={{@model.user}}
-        />
-      </div>
+    </span>
+    <span>
+      <LinkTo @route="course-visualizations" @model={{@course}}>
+        {{t "general.visualizations"}}
+      </LinkTo>
+    </span>
+    <span>
+      <LinkTo @route="course-visualize-instructors" @model={{@course}}>
+        {{t "general.instructors"}}
+      </LinkTo>
+    </span>
+    <span>
+      {{@user.fullName}}
+    </span>
+  </div>
+  <h2 data-test-instructor-name>
+    {{@user.fullName}}
+  </h2>
+  <h3 data-test-total-offerings-time>
+    {{t "general.totalInstructionalTime" minutes=this.totalInstructionalTime}}
+  </h3>
+  <h3 data-test-total-ilm-time>
+    {{t "general.totalIlmTime" minutes=this.totalIlmTime}}
+  </h3>
+  <h3 class="clickable" data-test-title>
+    <LinkTo @route="course" @model={{@course}}>
+      {{@course.title}}
+      {{#if this.academicYearCrossesCalendarYearBoundaries}}
+        {{@course.year}} - {{add @course.year 1}}
+      {{else}}
+        {{@course.year}}
+      {{/if}}
+    </LinkTo>
+  </h3>
+  <div class="visualizations">
+    <div>
+      <h4>
+        {{t "general.terms"}}
+      </h4>
+      <VisualizerCourseInstructorTerm
+        @course={{@course}}
+        @user={{@user}}
+      />
     </div>
-  {{/unless}}
+    <div>
+      <h4>
+        {{t "general.sessionTypes"}}
+      </h4>
+      <VisualizerCourseInstructorSessionType
+        @course={{@course}}
+        @user={{@user}}
+      />
+    </div>
+  </div>
 </section>

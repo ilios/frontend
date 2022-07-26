@@ -1,21 +1,21 @@
 <div
   class="visualizer-course-instructor-term {{unless @isIcon "not-icon"}}"
+  data-test-visualizer-course-instructor-term
+  ...attributes
 >
-  {{#if this.isLoaded}}
-    {{#if (or @isIcon this.data.length)}}
-      <SimpleChart
-        @name="horz-bar"
-        @isIcon={{@isIcon}}
-        @data={{this.data}}
-        @hover={{perform this.donutHover}}
-        @leave={{perform this.donutHover}} as |chart|
-      >
-        {{#if this.tooltipContent}}
-          <chart.tooltip @title={{this.tooltipTitle}}>
-            {{this.tooltipContent}}
-          </chart.tooltip>
-        {{/if}}
-      </SimpleChart>
-    {{/if}}
+  {{#if (or @isIcon this.data.length)}}
+    <SimpleChart
+      @name="horz-bar"
+      @isIcon={{@isIcon}}
+      @data={{this.data}}
+      @hover={{perform this.donutHover}}
+      @leave={{perform this.donutHover}} as |chart|
+    >
+      {{#if this.tooltipContent}}
+        <chart.tooltip @title={{this.tooltipTitle}}>
+          {{this.tooltipContent}}
+        </chart.tooltip>
+      {{/if}}
+    </SimpleChart>
   {{/if}}
 </div>

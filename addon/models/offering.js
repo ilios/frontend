@@ -38,6 +38,11 @@ export default class Offering extends Model {
   @hasMany('user', { async: true, inverse: 'instructedOfferings' })
   instructors;
 
+  @use _instructors = new ResolveAsyncValue(() => [this.instructors]);
+  @use _instructorsInGroups = new ResolveFlatMapBy(() => [this.instructorGroups, 'users']);
+  @use _learners = new ResolveAsyncValue(() => [this.learners]);
+  @use _learnersInGroups = new ResolveFlatMapBy(() => [this.learnerGroups, 'users']);
+
   get startDayOfYear() {
     return moment(this.startDate).format('DDDD');
   }
@@ -98,8 +103,6 @@ export default class Offering extends Model {
     return key;
   }
 
-  @use _instructors = new ResolveAsyncValue(() => [this.instructors]);
-  @use _instructorsInGroups = new ResolveFlatMapBy(() => [this.instructorGroups, 'users']);
   get allInstructors() {
     if (!this._instructors || !this._instructorsInGroups) {
       return [];
@@ -107,8 +110,6 @@ export default class Offering extends Model {
     return [...this._instructors.toArray(), ...this._instructorsInGroups].uniq().sortBy('fullName');
   }
 
-  @use _learners = new ResolveAsyncValue(() => [this.learners]);
-  @use _learnersInGroups = new ResolveFlatMapBy(() => [this.learnerGroups, 'users']);
   get allLearners() {
     if (!this._learners || !this._learnersInGroups) {
       return [];
@@ -145,5 +146,20 @@ export default class Offering extends Model {
       diff = 60 - startMinute + endMinute;
     }
     return diff;
+  }
+
+  /**
+   * Retrieves a list of all instructors that are either directly attached to this offering,
+   * or that are attached via instructor groups.
+   * @returns {Promise<Array>}
+   */
+  async getAllInstructors() {
+    const instructors = (await this.instructors).toArray();
+    const instructorGroups = (await this.instructorGroups).toArray();
+    const instructorsInInstructorGroups = await Promise.all(instructorGroups.mapBy('users'));
+    return [
+      ...instructors,
+      ...instructorsInInstructorGroups.map((instructorGroup) => instructorGroup.toArray()).flat(),
+    ].uniq();
   }
 }

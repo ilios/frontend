@@ -1,11 +1,10 @@
 import Component from '@glimmer/component';
-import { map } from 'rsvp';
+import { filter, map } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
@@ -16,20 +15,27 @@ export default class VisualizerCourseInstructorTerm extends Component {
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
-  @use dataObjects = new AsyncProcess(() => [
-    this.getDataObjects.bind(this),
-    this.sessionsWithUser,
-  ]);
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use loadedData = new AsyncProcess(() => [this.getData.bind(this), this.sessions]);
 
-  get sessionsWithUser() {
-    return this.sessions.filter((session) => {
-      return session.allInstructors?.mapBy('id').includes(this.args.user.id);
-    });
+  get data() {
+    if (!this.loadedData) {
+      return [];
+    }
+    return this.loadedData;
   }
 
-  async getDataObjects(sessions) {
-    return map(sessions, async (session) => {
+  async getData(sessions) {
+    if (!sessions) {
+      return [];
+    }
+
+    const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
+      const allInstructors = await session.getAllOfferingInstructors();
+      return allInstructors.mapBy('id').includes(this.args.user.id);
+    });
+
+    const sessionsWithTerms = await map(sessionsWithUser, async (session) => {
       const terms = await map((await session.terms).toArray(), async (term) => {
         const vocabulary = await term.vocabulary;
         return {
@@ -43,15 +49,15 @@ export default class VisualizerCourseInstructorTerm extends Component {
         terms,
       };
     });
-  }
 
-  get isLoaded() {
-    return !!this.dataObjects;
-  }
+    const totalMinutes = (
+      await map(sessionsWithTerms, async ({ session }) => {
+        return await session.getTotalSumOfferingsDurationByInstructor(this.args.user);
+      })
+    ).reduce((total, mins) => total + mins, 0);
 
-  get data() {
-    const dataMap = this.dataObjects.map(({ session, terms }) => {
-      const minutes = Math.round(session.totalSumDuration * 60);
+    const dataMap = await map(sessionsWithTerms, async ({ session, terms }) => {
+      const minutes = await session.getTotalSumDurationByInstructor(this.args.user);
       return terms.map(({ termTitle, vocabularyTitle }) => {
         return {
           sessionTitle: session.title,
@@ -66,7 +72,7 @@ export default class VisualizerCourseInstructorTerm extends Component {
       return flattened.pushObjects(obj);
     }, []);
 
-    const sessionTypeData = flat.reduce((set, obj) => {
+    const sessionTermData = flat.reduce((set, obj) => {
       const name = `${obj.vocabularyTitle} > ${obj.termTitle}`;
       let existing = set.findBy('label', name);
       if (!existing) {
@@ -86,15 +92,12 @@ export default class VisualizerCourseInstructorTerm extends Component {
       return set;
     }, []);
 
-    const totalMinutes = sessionTypeData
-      .mapBy('data')
-      .reduce((total, minutes) => total + minutes, 0);
-    return sessionTypeData
+    return sessionTermData
       .map((obj) => {
         const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.label = `${obj.label} ${percent}%`;
         obj.meta.totalMinutes = totalMinutes;
         obj.meta.percent = percent;
+        obj.label = `${obj.label}: ${obj.data} ${this.intl.t('general.minutes')}`;
         return obj;
       })
       .sort((first, second) => {
@@ -113,9 +116,9 @@ export default class VisualizerCourseInstructorTerm extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, data, meta } = obj;
+    const { label, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    this.tooltipTitle = htmlSafe(label);
     this.tooltipContent = meta.sessions.uniq().sort().join();
   }
 }
