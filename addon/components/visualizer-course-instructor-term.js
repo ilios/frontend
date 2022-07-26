@@ -15,14 +15,14 @@ export default class VisualizerCourseInstructorTerm extends Component {
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @use _sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
-  @use _data = new AsyncProcess(() => [this.getData.bind(this), this._sessions]);
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use loadedData = new AsyncProcess(() => [this.getData.bind(this), this.sessions]);
 
   get data() {
-    if (!this._data) {
+    if (!this.loadedData) {
       return [];
     }
-    return this._data;
+    return this.loadedData;
   }
 
   async getData(sessions) {

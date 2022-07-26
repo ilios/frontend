@@ -12,21 +12,21 @@ export default class CourseVisualizeInstructorComponent extends Component {
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   ]);
 
-  @use _sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
-  @use _minutes = new AsyncProcess(() => [this.getMinutes.bind(this), this._sessions]);
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use minutes = new AsyncProcess(() => [this.getMinutes.bind(this), this.sessions]);
 
   get totalInstructionalTime() {
-    if (!this._minutes) {
+    if (!this.minutes) {
       return 0;
     }
-    return this._minutes.mapBy('offeringMinutes').reduce((total, mins) => total + mins, 0);
+    return this.minutes.mapBy('offeringMinutes').reduce((total, mins) => total + mins, 0);
   }
 
   get totalIlmTime() {
-    if (!this._minutes) {
+    if (!this.minutes) {
       return 0;
     }
-    return this._minutes.mapBy('ilmMinutes').reduce((total, mins) => total + mins, 0);
+    return this.minutes.mapBy('ilmMinutes').reduce((total, mins) => total + mins, 0);
   }
 
   async getMinutes(sessions) {
