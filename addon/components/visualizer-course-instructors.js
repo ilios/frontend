@@ -24,10 +24,6 @@ export default class VisualizerCourseInstructors extends Component {
     return this.args.chartType || 'horz-bar';
   }
 
-  get isLoaded() {
-    return !!this.sessions;
-  }
-
   get filteredData() {
     if (!this.data) {
       return [];
