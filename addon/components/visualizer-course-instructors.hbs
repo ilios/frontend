@@ -1,5 +1,7 @@
 <div
   class="visualizer-course-instructors {{unless @isIcon "not-icon"}}"
+  data-test-visualizer-course-instructors
+  ...attributes
 >
   {{#if (or @isIcon this.data.length)}}
     <SimpleChart

@@ -1,4 +1,5 @@
 import { attribute, collection, create, fillable, text, value } from 'ember-cli-page-object';
+import instructorsChart from './visualizer-course-instructors';
 
 const definition = create({
   scope: '[data-test-course-visualize-instructors]',
@@ -14,11 +15,7 @@ const definition = create({
     value: value('input'),
     set: fillable('input'),
   },
-  chart: {
-    scope: '.simple-chart-horz-bar',
-    bars: collection('.bars rect'),
-    labels: collection('.bars text'),
-  },
+  instructorsChart,
 });
 
 export default definition;
