@@ -54,6 +54,13 @@ module('Integration | Component | course-visualize-session-types', function (hoo
     this.set('course', this.courseModel);
     await render(hbs`<CourseVisualizeSessionTypes @model={{this.course}} />`);
     assert.strictEqual(component.title, 'course 0 2021');
+    assert.strictEqual(component.title, 'course 0 2021');
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
+    assert.strictEqual(component.sessionTypesChart.chart.bars.length, 2);
+    assert.strictEqual(component.sessionTypesChart.chart.labels.length, 2);
+    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign: 180 Minutes');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'Standalone: 630 Minutes');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
@@ -74,12 +81,16 @@ module('Integration | Component | course-visualize-session-types', function (hoo
     await render(hbs`<CourseVisualizeSessionTypes @model={{this.course}} />`);
     //let the chart animations finish
     await waitFor('.loaded');
+    await waitFor('svg .bars');
     assert.strictEqual(component.title, 'course 0 2021');
-    assert.strictEqual(component.chart.bars.length, 2);
-    assert.strictEqual(component.chart.labels.length, 2);
+    assert.strictEqual(component.sessionTypesChart.chart.bars.length, 2);
+    assert.strictEqual(component.sessionTypesChart.chart.labels.length, 2);
+    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign: 180 Minutes');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'Standalone: 630 Minutes');
     await component.filter.set('Campaign');
-    assert.strictEqual(component.chart.bars.length, 1);
-    assert.strictEqual(component.chart.labels.length, 1);
+    assert.strictEqual(component.sessionTypesChart.chart.bars.length, 1);
+    assert.strictEqual(component.sessionTypesChart.chart.labels.length, 1);
+    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign: 180 Minutes');
   });
 
   test('breadcrumb', async function (assert) {
