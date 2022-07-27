@@ -58,8 +58,8 @@ module('Integration | Component | visualizer-course-session-types', function (ho
 
     assert.strictEqual(component.chart.bars.length, 2);
     assert.strictEqual(component.chart.labels.length, 2);
-    assert.strictEqual(component.chart.labels[0].text, 'Campaign 22.2%');
-    assert.strictEqual(component.chart.labels[1].text, 'Standalone 77.8%');
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign: 180 Minutes');
+    assert.strictEqual(component.chart.labels[1].text, 'Standalone: 630 Minutes');
   });
 
   test('it renders as donut chart', async function (assert) {
@@ -73,8 +73,8 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     await waitFor('svg .slice');
 
     assert.strictEqual(component.chart.slices.length, 2);
-    assert.strictEqual(component.chart.slices[0].text, 'Campaign 22.2%');
-    assert.strictEqual(component.chart.slices[1].text, 'Standalone 77.8%');
+    assert.strictEqual(component.chart.slices[0].text, 'Campaign: 180 Minutes');
+    assert.strictEqual(component.chart.slices[1].text, 'Standalone: 630 Minutes');
   });
 
   test('filter applies', async function (assert) {
@@ -90,6 +90,6 @@ module('Integration | Component | visualizer-course-session-types', function (ho
 
     assert.strictEqual(component.chart.bars.length, 1);
     assert.strictEqual(component.chart.labels.length, 1);
-    assert.strictEqual(component.chart.labels[0].text, 'Campaign 22.2%');
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign: 180 Minutes');
   });
 });

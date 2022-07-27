@@ -88,7 +88,7 @@ export default class VisualizerCourseSessionTypes extends Component {
     return mappedSessionTypes
       .map((obj) => {
         const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.label = `${obj.meta.sessionType} ${percent}%`;
+        obj.label = `${obj.meta.sessionType}: ${obj.data} ${this.intl.t('general.minutes')}`;
         obj.meta.totalMinutes = totalMinutes;
         obj.meta.percent = percent;
         return obj;
@@ -106,9 +106,9 @@ export default class VisualizerCourseSessionTypes extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, data, meta } = obj;
+    const { label, meta } = obj;
 
-    const title = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    const title = htmlSafe(label);
     const sessions = meta.sessions.uniq().sort().join(', ');
 
     this.tooltipTitle = title;
