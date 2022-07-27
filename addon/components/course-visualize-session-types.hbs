@@ -1,47 +1,44 @@
 <section
   class="course-visualize-session-types"
   data-test-course-visualize-session-types
-  {{did-insert (perform this.load)}}
 >
-  {{#unless this.load.isRunning}}
-    <div class="breadcrumbs" data-test-breadcrumb>
-      <span>
-        <LinkTo @route="course" @model={{@model}}>
-          {{@model.title}}
-        </LinkTo>
-      </span>
-      <span>
-        <LinkTo @route="course-visualizations" @model={{@model}}>
-          {{t "general.visualizations"}}
-        </LinkTo>
-      </span>
-      <span>
-        {{t "general.sessionTypes"}}
-      </span>
-    </div>
-    <h2>
-      {{t "general.sessionTypes"}}
-    </h2>
-    <h3 class="clickable" data-test-title>
+  <div class="breadcrumbs" data-test-breadcrumb>
+    <span>
       <LinkTo @route="course" @model={{@model}}>
         {{@model.title}}
-        {{#if this.academicYearCrossesCalendarYearBoundaries}}
-          {{@model.year}} - {{add @model.year 1}}
-        {{else}}
-          {{@model.year}}
-        {{/if}}
       </LinkTo>
-    </h3>
-    <div class="filter" data-test-filter>
-      <input
-        aria-label={{t "general.filterChartPlaceholder"}}
-        autocomplete="off"
-        type="search"
-        value={{this.title}}
-        placeholder={{t "general.filterPlaceholder"}}
-        {{on "input" (pick "target.value" (set this.title))}}
-      >
-    </div>
-    <VisualizerCourseSessionTypes @filter={{this.title}} @course={{@model}} />
-  {{/unless}}
+    </span>
+    <span>
+      <LinkTo @route="course-visualizations" @model={{@model}}>
+        {{t "general.visualizations"}}
+      </LinkTo>
+    </span>
+    <span>
+      {{t "general.sessionTypes"}}
+    </span>
+  </div>
+  <h2>
+    {{t "general.sessionTypes"}}
+  </h2>
+  <h3 class="clickable" data-test-title>
+    <LinkTo @route="course" @model={{@model}}>
+      {{@model.title}}
+      {{#if this.academicYearCrossesCalendarYearBoundaries}}
+        {{@model.year}} - {{add @model.year 1}}
+      {{else}}
+        {{@model.year}}
+      {{/if}}
+    </LinkTo>
+  </h3>
+  <div class="filter" data-test-filter>
+    <input
+      aria-label={{t "general.filterChartPlaceholder"}}
+      autocomplete="off"
+      type="search"
+      value={{this.title}}
+      placeholder={{t "general.filterPlaceholder"}}
+      {{on "input" (pick "target.value" (set this.title))}}
+    >
+  </div>
+  <VisualizerCourseSessionTypes @filter={{this.title}} @course={{@model}} />
 </section>
