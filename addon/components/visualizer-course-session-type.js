@@ -18,26 +18,38 @@ export default class VisualizerCourseSessionType extends Component {
 
   @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
   @use sessionTypeSessions = new ResolveAsyncValue(() => [this.args.sessionType.sessions, []]);
-
-  get courseSessionsWithSessionType() {
-    return this.sessions.filter((session) => this.sessionTypeSessions.includes(session));
-  }
-
   @use dataObjects = new AsyncProcess(() => [
     this.getDataObjects.bind(this),
-    this.sessionsWithMinutes,
+    this.sessionsAndSessionTypeSessions,
   ]);
 
-  get sessionsWithMinutes() {
-    return this.courseSessionsWithSessionType.map((session) => {
-      return {
-        session,
-        minutes: Math.round(session.totalSumDuration * 60),
-      };
-    });
+  get sessionsAndSessionTypeSessions() {
+    const rhett = {
+      sessions: [],
+      sessionTypeSessions: [],
+    };
+    if (this.sessions && this.sessionTypeSessions) {
+      rhett.sessions = this.sessions.toArray();
+      rhett.sessionTypeSessions = this.sessionTypeSessions.toArray();
+    }
+    return rhett;
   }
 
-  async getDataObjects(sessionsWithMinutes) {
+  async getDataObjects(sessionsAndSessionTypeSessions) {
+    const sessions = sessionsAndSessionTypeSessions.sessions;
+    const sessionTypeSessions = sessionsAndSessionTypeSessions.sessionTypeSessions;
+    const courseSessionsWithSessionType = sessions.filter((session) =>
+      sessionTypeSessions.includes(session)
+    );
+
+    const sessionsWithMinutes = map(courseSessionsWithSessionType, async (session) => {
+      const hours = await session.getTotalSumDuration();
+      return {
+        session,
+        minutes: Math.round(hours * 60),
+      };
+    });
+
     const termData = await map(sessionsWithMinutes, async ({ session, minutes }) => {
       const terms = (await session.terms).toArray();
       return map(terms, async (term) => {
@@ -81,7 +93,7 @@ export default class VisualizerCourseSessionType extends Component {
     return data
       .map((obj) => {
         const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.label = `${obj.label} ${percent}%`;
+        obj.label = `${obj.label}: ${obj.data} ${this.intl.t('general.minutes')}`;
         obj.meta.totalMinutes = totalMinutes;
         obj.meta.percent = percent;
         return obj;
@@ -106,9 +118,9 @@ export default class VisualizerCourseSessionType extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, data, meta } = obj;
+    const { label, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    this.tooltipTitle = htmlSafe(label);
     this.tooltipContent = meta.sessions.uniq().sort().join(', ');
   }
 }
