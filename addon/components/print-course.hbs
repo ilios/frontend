@@ -304,12 +304,12 @@
           </div>
         {{/if}}
       </section>
-      <section class="block">
+      <section class="block" data-test-session-learning-materials>
         <div class="title">
-          {{t "general.learningMaterials"}} ({{get (await session.sessionLearningMaterials) "length"}})
+          {{t "general.learningMaterials"}} ({{get (await session.learningMaterials) "length"}})
         </div>
         <div class="content">
-          {{#if (get (await session.sessionLearningMaterials) "length")}}
+          {{#if (get (await session.learningMaterials) "length")}}
             <table>
               <thead>
                 <tr>
@@ -331,7 +331,7 @@
                 </tr>
               </thead>
               <tbody>
-                {{#each (await session.sessionLearningMaterials) as |lm|}}
+                {{#each (await session.learningMaterials) as |lm|}}
                   <tr>
                     <td class="text-left text-top" colspan="2">
                       {{lm.learningMaterial.title}}

@@ -1,7 +1,6 @@
 import { find, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -14,8 +13,8 @@ module('Acceptance | Course - Print Course', function (hooks) {
     const programYear = this.server.create('program-year', { program });
     this.server.create('academicYear');
     this.server.create('cohort', { programYear });
-    this.server.create('learning-material-user-role');
-    this.server.create('learning-material-status');
+    this.learningMaterialUserRole = this.server.create('learning-material-user-role');
+    this.learningMaterialStatus = this.server.create('learning-material-status');
     this.course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -32,7 +31,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
       courseIds: [1],
       vocabularyId: 1,
     });
-    this.server.create('user', {
+    this.user = this.server.create('user', {
       lastName: 'Brown',
       firstName: 'Emmet',
       id: 1,
@@ -286,5 +285,33 @@ module('Acceptance | Course - Print Course', function (hooks) {
     assert.dom(values[2]).hasText('Vocabulary 2 (school 0) term 1');
     assert.ok(values[3].textContent.trim().startsWith('MeSH Descriptor 1'));
     assert.ok(values[3].textContent.trim().endsWith('MeSH Descriptor 2'));
+  });
+
+  test('test print session learning materials', async function (assert) {
+    await setupAuthentication({ school: this.school });
+    const session = this.server.create('session', {
+      course: this.course,
+      published: true,
+      publishedAsTbd: false,
+    });
+    const learningMaterial = this.server.create('learningMaterial', {
+      title: 'Foo',
+      originalAuthor: 'Bar',
+      owningUser: this.user,
+      status: this.learningMaterialStatus,
+      userRole: this.learningMaterialUserRole,
+      copyrightPermission: true,
+      citation: 'lorem ipsum',
+    });
+    this.server.create('sessionLearningMaterial', {
+      learningMaterial,
+      session,
+      required: false,
+    });
+
+    await visit('/course/1/print');
+    const lms = await findAll('[data-test-session-learning-materials] tbody tr');
+    assert.strictEqual(lms.length, 1);
+    assert.dom(lms[0]).hasText('Foo citation No 1 lm description lorem ipsum');
   });
 });
