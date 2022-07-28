@@ -4,7 +4,6 @@ import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
@@ -17,33 +16,41 @@ export default class VisualizerCourseObjectives extends Component {
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @use loadedCourseSessions = new ResolveAsyncValue(() => [
-    this.dataLoader.loadCourseSessions(this.args.course.id),
-  ]);
   @use courseSessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use dataObjects = new AsyncProcess(() => [this.getDataObjects.bind(this), this.sessions]);
+
   get sessions() {
-    if (!this.loadedCourseSessions || !this.courseSessions) {
+    if (!this.courseSessions) {
       return [];
     }
 
-    return this.courseSessions;
+    return this.courseSessions.toArray();
   }
 
-  @use dataObjects = new AsyncProcess(() => [
-    this.getDataObjects.bind(this),
-    this.sessionsWithMinutes,
-  ]);
+  get objectiveWithMinutes() {
+    return this.dataObjects?.filter((obj) => obj.data !== 0);
+  }
 
-  get sessionsWithMinutes() {
-    return this.sessions.map((session) => {
+  get objectiveWithoutMinutes() {
+    return this.dataObjects?.filterBy('data', 0);
+  }
+
+  get isLoaded() {
+    return !!this.dataObjects;
+  }
+
+  async getDataObjects(sessions) {
+    if (!sessions) {
+      return [];
+    }
+
+    const sessionsWithMinutes = sessions.map(async (session) => {
+      const hours = await session.getTotalSumDuration();
       return {
         session,
-        minutes: Math.round(session.totalSumDuration * 60),
+        minutes: Math.round(hours * 60),
       };
     });
-  }
-
-  async getDataObjects(sessionsWithMinutes) {
     const sessionCourseObjectiveMap = await map(
       sessionsWithMinutes,
       async ({ session, minutes }) => {
@@ -108,18 +115,6 @@ export default class VisualizerCourseObjectives extends Component {
       obj.label = `${percent}%`;
       return obj;
     });
-  }
-
-  get objectiveWithMinutes() {
-    return this.dataObjects?.filter((obj) => obj.data !== 0);
-  }
-
-  get objectiveWithoutMinutes() {
-    return this.dataObjects?.filterBy('data', 0);
-  }
-
-  get isLoaded() {
-    return !!this.objectiveWithMinutes || !!this.objectiveWithoutMinutes;
   }
 
   @restartableTask
