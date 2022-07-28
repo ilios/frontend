@@ -119,6 +119,6 @@ export default class VisualizerCourseInstructorTerm extends Component {
     const { label, meta } = obj;
 
     this.tooltipTitle = htmlSafe(label);
-    this.tooltipContent = meta.sessions.uniq().sort().join();
+    this.tooltipContent = meta.sessions.uniq().sort().join(', ');
   }
 }

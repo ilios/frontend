@@ -95,6 +95,6 @@ export default class VisualizerCourseInstructorSessionType extends Component {
     const { label, data, meta } = obj;
 
     this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
-    this.tooltipContent = meta.sessions.uniq().sort().join();
+    this.tooltipContent = meta.sessions.uniq().sort().join(', ');
   }
 }
