@@ -126,10 +126,14 @@ export default class VisualizerCourseObjectives extends Component {
     }
     const { data, meta } = obj;
 
-    let objectiveTitle = meta.courseObjective.get('title');
-    const competency = yield meta.courseObjective.get('competency');
+    let objectiveTitle = meta.courseObjective.title;
+    const programYearObjectives = (yield meta.courseObjective.programYearObjectives).toArray();
+    let competency;
+    if (programYearObjectives.length) {
+      competency = yield programYearObjectives[0].competency;
+    }
     if (competency) {
-      objectiveTitle += `(${competency})`;
+      objectiveTitle += `(${competency.title})`;
     }
 
     const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`);
