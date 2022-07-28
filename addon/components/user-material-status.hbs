@@ -1,0 +1,32 @@
+{{#if this.isSessionLearningMaterial}}
+  <span data-test-user-material-status>
+    {{#if this.isStatusLoaded}}
+      {{#if (eq this.status 0)}}
+        <input
+          aria-label={{t "general.notStarted"}}
+          type="checkbox"
+          disabled={{this.setStatus.isRunning}}
+          {{on "click" (perform this.setStatus 1)}}
+        >
+      {{else if (eq this.status 1)}}
+        <input
+          aria-label={{t "general.inProgress"}}
+          indeterminate={{true}}
+          type="checkbox"
+          disabled={{this.setStatus.isRunning}}
+          {{on "click" (perform this.setStatus 2)}}
+        >
+      {{else if (eq this.status 2)}}
+        <input
+          aria-label={{t "general.complete"}}
+          checked={{true}}
+          type="checkbox"
+          disabled={{this.setStatus.isRunning}}
+          {{on "click" (perform this.setStatus 0)}}
+        >
+      {{/if}}
+    {{else}}
+      <LoadingSpinner />
+    {{/if}}
+  </span>
+{{/if}}

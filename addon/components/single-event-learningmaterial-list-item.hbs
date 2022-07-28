@@ -23,6 +23,7 @@
       </div>
     {{else}}
       <div class="single-event-learningmaterial-item-title">
+        <UserMaterialStatus @learningMaterial={{@learningMaterial}} />
         <LmIcons @learningMaterial={{@learningMaterial}} />
         <span data-test-title>
           {{#if @linked}}

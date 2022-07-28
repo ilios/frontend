@@ -34,6 +34,7 @@ var models = [
   'sessionObjectives',
   'sessionTypes',
   'userRoles',
+  'userSessionMaterialStatuses',
 ];
 export default function getName(string) {
   var camelString = models.find(function (item) {

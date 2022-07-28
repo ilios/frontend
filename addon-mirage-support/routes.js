@@ -64,6 +64,7 @@ export default function (server) {
     { route: 'pendinguserupdates/', name: 'pendingUserUpdate' },
     { route: 'programyears/', name: 'programYear' },
     { route: 'users/', name: 'user' },
+    { route: 'usersessionmaterialstatuses/', name: 'userSessionMaterialStatus' },
   ];
 
   models.forEach((obj) => {

@@ -49,6 +49,7 @@ general:
   collapse: réduire
   collapseDetail: "Masquer Détails"
   competencies: "Compétences"
+  complete: "Accompli"
   completeSessions: "Séances complète: prêt à publier"
   confirmObjectiveRemoval: "Êtes vous sûr de vouloir supprimer cet objectif?"
   confirmObjectiveRemovalMultipleSessionObjectives: "Vous êtes sur le point de supprimer cet objectif de cours, qui est lié à {count} objectifs de séance. Cela supprimera également ces liens. Êtes-vous certain de vouloir continuer?"
@@ -142,6 +143,7 @@ general:
   incompleteSessions: "Séances incomplète: ne peut être pas publiée"
   independentLearning: "Apprentissage autonome"
   independentLearningActivities: "Apprentissage autonome Activités"
+  inProgress: "En Cours"
   instructionalNotes: "Notes Didactiques"
   instructor: Instructeur
   instructorGroupMembers: "Membres du groupe d'instructeurs"
@@ -216,6 +218,7 @@ general:
   notes: Notes
   notFoundMessage: "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau."
   notPublished: "Non Publier"
+  notStarted: "Non Commencé"
   objectiveCompetencyManagerTitle: "Sélectionner Compétence Mère pour Objectif"
   objectiveCount:  "Il y a {count, plural, =1 {1 objectif} other {# objectifs}}"
   objectiveDescriptorTitle: "Choisi MeSH pour l'objectif"
