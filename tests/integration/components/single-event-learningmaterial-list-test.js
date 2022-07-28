@@ -108,14 +108,18 @@ module('Integration | Component | single-event-learningmaterial-list', function 
     );
     assert.strictEqual(component.items.length, 5);
     assert.strictEqual(component.prework.length, 2);
-    assert.strictEqual(component.items[0].title, 'aardvark');
-    assert.strictEqual(component.items[1].title, 'foo bar');
-    assert.strictEqual(component.items[2].title, 'readme');
+    assert.strictEqual(component.prework[0].name, 'prework 1');
+    assert.ok(component.prework[0].url.endsWith('/events/prework1'));
+    assert.strictEqual(component.prework[0].items.length, 2);
+    assert.strictEqual(component.prework[0].items[0].title, 'aardvark');
+    assert.strictEqual(component.prework[0].items[1].title, 'foo bar');
+
+    assert.strictEqual(component.prework[1].name, 'prework 2');
+    assert.strictEqual(component.prework[1].items.length, 1);
+    assert.strictEqual(component.prework[1].items[0].title, 'readme');
+    assert.ok(component.prework[1].url.endsWith('/events/prework2'));
+
     assert.strictEqual(component.items[3].title, 'first one');
     assert.strictEqual(component.items[4].title, 'second one');
-    assert.strictEqual(component.prework[0].text, 'prework 1');
-    assert.ok(component.prework[0].url.endsWith('/events/prework1'));
-    assert.strictEqual(component.prework[1].text, 'prework 2');
-    assert.ok(component.prework[1].url.endsWith('/events/prework2'));
   });
 });
