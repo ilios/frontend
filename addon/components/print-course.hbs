@@ -365,13 +365,13 @@
           {{/if}}
         </div>
       </section>
-      <section class="block">
+      <section class="block" data-test-session-terms>
         <div class="title">
           {{t "general.terms"}} ({{session.terms.length}})
         </div>
         <div class="content">
           <div class="content">
-            {{#each session.course.associatedVocabularies as |vocab|}}
+            {{#each session.associatedVocabularies as |vocab|}}
               <DetailTermsList
                 @vocabulary={{vocab}}
                 @terms={{session.terms}}

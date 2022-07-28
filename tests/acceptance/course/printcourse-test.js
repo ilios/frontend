@@ -314,4 +314,31 @@ module('Acceptance | Course - Print Course', function (hooks) {
     assert.strictEqual(lms.length, 1);
     assert.dom(lms[0]).hasText('Foo citation No 1 lm description lorem ipsum');
   });
+
+  test('test print session vocabulary terms', async function (assert) {
+    await setupAuthentication({ school: this.school });
+    const session = this.server.create('session', {
+      course: this.course,
+      published: true,
+      publishedAsTbd: false,
+    });
+    const vocabulary1 = this.server.create('vocabulary', { school: this.school });
+    const vocabulary2 = this.server.create('vocabulary', { school: this.school });
+    this.server.createList('term', 3, {
+      vocabulary: vocabulary1,
+      sessions: [session],
+    });
+    this.server.createList('term', 2, {
+      vocabulary: vocabulary2,
+      sessions: [session],
+    });
+
+    await visit('/course/1/print');
+    const sessionTerms = await find('[data-test-session-terms]');
+    assert
+      .dom(sessionTerms)
+      .hasText(
+        'Terms (5) Vocabulary 2 (school 0) term 1 term 2 term 3 Vocabulary 3 (school 0) term 4 term 5'
+      );
+  });
 });
