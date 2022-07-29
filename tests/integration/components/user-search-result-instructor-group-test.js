@@ -13,7 +13,9 @@ module('Integration | Component | user-search-result-instructor-group', function
 
   test('it renders', async function (assert) {
     const group = this.server.create('instructor-group');
-    const groupModel = await this.owner.lookup('service:store').find('instructor-group', group.id);
+    const groupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', group.id);
     this.set('group', groupModel);
     await render(hbs`<UserSearchResultInstructorGroup
       @group={{this.group}}
@@ -25,7 +27,9 @@ module('Integration | Component | user-search-result-instructor-group', function
 
   test('inactive if it is already selected', async function (assert) {
     const group = this.server.create('instructor-group');
-    const groupModel = await this.owner.lookup('service:store').find('instructor-group', group.id);
+    const groupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', group.id);
     this.set('group', groupModel);
     this.set('activeGroups', [groupModel]);
     await render(hbs`<UserSearchResultInstructorGroup
@@ -40,7 +44,9 @@ module('Integration | Component | user-search-result-instructor-group', function
   test('click fires action', async function (assert) {
     assert.expect(3);
     const group = this.server.create('instructor-group');
-    const groupModel = await this.owner.lookup('service:store').find('instructor-group', group.id);
+    const groupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', group.id);
     this.set('group', groupModel);
     this.set('add', (add) => {
       assert.strictEqual(add, groupModel);

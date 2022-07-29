@@ -28,7 +28,7 @@ module('Integration | Component | course materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials: [courseLm1],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.setProperties({
       course: courseModel,
@@ -103,7 +103,7 @@ module('Integration | Component | course materials', function (hooks) {
       learningMaterials: [courseLm1, courseLm2, courseLm3],
     });
 
-    return context.owner.lookup('service:store').find('course', course.id);
+    return context.owner.lookup('service:store').findRecord('course', course.id);
   };
 
   test('course & session lms render', async function (assert) {
@@ -395,7 +395,7 @@ module('Integration | Component | course materials', function (hooks) {
 
   test('no materials', async function (assert) {
     const course = this.server.create('course');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseMaterials

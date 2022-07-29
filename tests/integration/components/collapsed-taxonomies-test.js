@@ -37,7 +37,9 @@ module('Integration | Component | collapsed taxonomies', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    const sessionModel = await this.owner.lookup('service:store').find('session', this.session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .findRecord('session', this.session.id);
 
     this.set('subject', sessionModel);
     this.set('click', () => {});
@@ -56,7 +58,9 @@ module('Integration | Component | collapsed taxonomies', function (hooks) {
 
   test('click expands', async function (assert) {
     assert.expect(2);
-    const sessionModel = await this.owner.lookup('service:store').find('session', this.session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .findRecord('session', this.session.id);
 
     this.set('subject', sessionModel);
     this.set('click', () => {

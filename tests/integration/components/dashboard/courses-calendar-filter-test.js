@@ -28,7 +28,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
       school,
       year: thisYear - 1,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
@@ -74,7 +74,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
       school,
       year: thisYear - 1,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
@@ -101,7 +101,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
       school,
       year: 2016,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
@@ -144,7 +144,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
       school,
       year: 2014,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
@@ -167,7 +167,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     this.server.createList('course', 4, {
       school,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
@@ -195,7 +195,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     this.server.create('course', {
       school,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('remove', (id) => {
       assert.strictEqual(id, '1');
@@ -216,7 +216,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     this.server.create('course', {
       school,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('add', (id) => {
       assert.strictEqual(id, '1');

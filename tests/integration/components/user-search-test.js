@@ -65,7 +65,7 @@ module('Integration | Component | user search', function (hooks) {
   test('click user fires add user', async function (assert) {
     assert.expect(4);
     const user = this.server.create('user');
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('action', (passedUser) => {
       assert.strictEqual(passedUser, userModel);
     });
@@ -128,7 +128,7 @@ module('Integration | Component | user search', function (hooks) {
     this.server.get('api/users', (schema) => {
       return schema.users.all();
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('currentlyActiveUsers', [userModel]);
     await render(hbs`<UserSearch @currentlyActiveUsers={{this.currentlyActiveUsers}} />`);
     await component.searchBox.set('foo');

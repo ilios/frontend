@@ -32,7 +32,7 @@ module('Integration | Component | course/loader', function (hooks) {
 
     this.owner.register('service:permissionChecker', PermissionCheckerStub);
 
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<Course::Loader @course={{this.course}} />`);

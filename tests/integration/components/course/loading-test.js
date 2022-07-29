@@ -15,7 +15,7 @@ module('Integration | Component | course/loading', function (hooks) {
     const course = this.server.create('course', {
       school,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<Course::Loading @course={{this.course}} />`);

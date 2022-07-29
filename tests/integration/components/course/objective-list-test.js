@@ -32,7 +32,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
       terms: [term2],
     });
 
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(
@@ -69,7 +69,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
   test('empty list', async function (assert) {
     assert.expect(2);
     const course = this.server.create('course');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(
@@ -86,7 +86,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
     assert.expect(3);
     const course = this.server.create('course');
     this.server.create('course-objective', { course, position: 0 });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(

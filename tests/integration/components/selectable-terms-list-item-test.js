@@ -12,7 +12,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
 
   hooks.beforeEach(async function () {
     const term = this.server.create('term', { title: 'Term1' });
-    this.termModel = await this.owner.lookup('service:store').find('term', term.id);
+    this.termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
   });
 
   test('it renders', async function (assert) {

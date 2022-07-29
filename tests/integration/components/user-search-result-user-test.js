@@ -13,7 +13,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
 
   test('it renders', async function (assert) {
     const user = this.server.create('user');
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserSearchResultUser
       @user={{this.user}}
@@ -25,7 +25,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
 
   test('inactive if it is already selected', async function (assert) {
     const user = this.server.create('user');
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('activeUsers', [userModel]);
     await render(hbs`<UserSearchResultUser
@@ -40,7 +40,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
   test('click fires action', async function (assert) {
     assert.expect(3);
     const user = this.server.create('user');
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('add', (add) => {
       assert.strictEqual(add, userModel);

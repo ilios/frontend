@@ -126,7 +126,7 @@ module('Integration | Component | leadership search', function (hooks) {
     this.set('select', (user) => {
       assert.strictEqual(parseInt(user.id, 10), 2, 'only user2 should be sent here');
     });
-    const user1 = this.owner.lookup('service:store').find('user', 1);
+    const user1 = this.owner.lookup('service:store').findRecord('user', 1);
 
     this.set('existingUsers', [user1]);
     await render(hbs`<LeadershipSearch

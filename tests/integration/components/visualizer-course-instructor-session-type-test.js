@@ -49,8 +49,10 @@ module('Integration | Component | visualizer-course-instructor-session-type', fu
       instructors: [instructor],
     });
 
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const instructorModel = await this.owner.lookup('service:store').find('user', instructor.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    const instructorModel = await this.owner
+      .lookup('service:store')
+      .findRecord('user', instructor.id);
 
     this.set('course', courseModel);
     this.set('instructor', instructorModel);

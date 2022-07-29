@@ -13,7 +13,7 @@ module('Integration | Component | user-name-info', function (hooks) {
 
   test('it renders', async function (assert) {
     const user = this.server.create('user');
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserNameInfo @user={{this.user}} />`);
     assert.notOk(component.hasAdditionalInfo);
@@ -23,7 +23,7 @@ module('Integration | Component | user-name-info', function (hooks) {
 
   test('it renders with additional info', async function (assert) {
     const user = this.server.create('user', { displayName: 'Clem Chowder' });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserNameInfo @user={{this.user}} />`);
     assert.ok(component.hasAdditionalInfo);
@@ -39,7 +39,7 @@ module('Integration | Component | user-name-info', function (hooks) {
 
   test('passing in id as an attributes', async function (assert) {
     const user = this.server.create('user');
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserNameInfo id="test-id" @user={{this.user}} />`);
     assert.strictEqual(component.id, 'test-id');
@@ -49,7 +49,7 @@ module('Integration | Component | user-name-info', function (hooks) {
     const user = this.server.create('user', {
       pronouns: 'they/them/tay',
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserNameInfo @user={{this.user}} />`);
     assert.ok(component.hasPronouns);

@@ -43,12 +43,12 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     this.vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    this.termModel1 = await this.owner.lookup('service:store').find('term', term1.id);
-    this.termModel2 = await this.owner.lookup('service:store').find('term', term2.id);
-    this.termModel3 = await this.owner.lookup('service:store').find('term', term3.id);
-    this.termModel4 = await this.owner.lookup('service:store').find('term', term4.id);
-    this.termModel5 = await this.owner.lookup('service:store').find('term', term5.id);
+      .findRecord('vocabulary', vocabulary.id);
+    this.termModel1 = await this.owner.lookup('service:store').findRecord('term', term1.id);
+    this.termModel2 = await this.owner.lookup('service:store').findRecord('term', term2.id);
+    this.termModel3 = await this.owner.lookup('service:store').findRecord('term', term3.id);
+    this.termModel4 = await this.owner.lookup('service:store').findRecord('term', term4.id);
+    this.termModel5 = await this.owner.lookup('service:store').findRecord('term', term5.id);
   });
 
   test('it renders when given a vocabulary as input ', async function (assert) {

@@ -22,7 +22,7 @@ module('Integration | Component | session/objectives', function (hooks) {
       session,
       courseObjectives: [courseObjective],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`<Session::Objectives
@@ -66,7 +66,7 @@ module('Integration | Component | session/objectives', function (hooks) {
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
     this.server.create('sessionObjective', { session });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`<Session::Objectives

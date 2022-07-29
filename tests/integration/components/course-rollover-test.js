@@ -21,7 +21,7 @@ module('Integration | Component | course rollover', function (hooks) {
       title: 'old course',
       school,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseRollover @course={{this.course}} />`);
@@ -50,7 +50,7 @@ module('Integration | Component | course rollover', function (hooks) {
       title: 'old course',
       school,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseRollover @course={{this.course}} />`);
@@ -72,7 +72,7 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: moment().hour(0).minute(0).second(0).toDate(),
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
@@ -109,7 +109,7 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: moment().hour(0).minute(0).second(0).toDate(),
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     const newTitle = course.title + '2';
@@ -142,7 +142,7 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: moment().hour(0).minute(0).second(0).toDate(),
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     const selectedYear = parseInt(moment().add(2, 'years').format('YYYY'), 10);
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
@@ -194,7 +194,7 @@ module('Integration | Component | course rollover', function (hooks) {
       year: lastYear + 2,
     });
 
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -234,7 +234,7 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       year: thisYear,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', 2);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', 2);
     this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -263,7 +263,7 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: courseStartDate.toDate(),
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
@@ -337,7 +337,7 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: courseStartDate.toDate(),
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
@@ -403,7 +403,7 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: courseStartDate.toDate(),
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -439,7 +439,7 @@ module('Integration | Component | course rollover', function (hooks) {
       title: 'old course',
       school,
     });
-    const course = await this.owner.lookup('service:store').find('course', 1);
+    const course = await this.owner.lookup('service:store').findRecord('course', 1);
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
       const data = queryString.parse(request.requestBody, {
         parseBooleans: true,
@@ -472,7 +472,7 @@ module('Integration | Component | course rollover', function (hooks) {
     const course = this.server.create('course', {
       school,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseRollover @course={{this.course}} />`);
@@ -484,7 +484,7 @@ module('Integration | Component | course rollover', function (hooks) {
     const course = this.server.create('course', {
       school,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseRollover @course={{this.course}} />`);
@@ -518,7 +518,7 @@ module('Integration | Component | course rollover', function (hooks) {
       title: 'old course',
       school,
     });
-    const course = await this.owner.lookup('service:store').find('course', 1);
+    const course = await this.owner.lookup('service:store').findRecord('course', 1);
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
       const data = queryString.parse(request.requestBody, {
         arrayFormat: 'bracket',

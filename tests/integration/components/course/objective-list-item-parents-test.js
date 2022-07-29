@@ -33,7 +33,7 @@ module('Integration | Component | course/objective-list-item-parents', function 
     const courseObjective = this.server.create('courseObjective', { course });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(hbs`<Course::ObjectiveListItemParents
       @courseObjective={{this.courseObjective}}
@@ -61,7 +61,7 @@ module('Integration | Component | course/objective-list-item-parents', function 
     });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(hbs`<Course::ObjectiveListItemParents
       @courseObjective={{this.courseObjective}}
@@ -91,7 +91,7 @@ module('Integration | Component | course/objective-list-item-parents', function 
     });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(hbs`<Course::ObjectiveListItemParents
       @courseObjective={{this.courseObjective}}
@@ -119,7 +119,7 @@ module('Integration | Component | course/objective-list-item-parents', function 
     });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     this.set('save', () => {
       assert.ok(true);
@@ -146,7 +146,7 @@ module('Integration | Component | course/objective-list-item-parents', function 
     });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     this.set('cancel', () => {
       assert.ok(true);
@@ -173,7 +173,7 @@ module('Integration | Component | course/objective-list-item-parents', function 
     });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     this.set('manage', () => {
       assert.ok(true);

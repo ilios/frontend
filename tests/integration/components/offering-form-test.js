@@ -419,7 +419,9 @@ module('Integration | Component | offering form', function (hooks) {
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
     });
-    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
+    const offeringModel = await this.owner
+      .lookup('service:store')
+      .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     await render(hbs`<OfferingForm
       @offering={{this.offering}}
@@ -469,7 +471,9 @@ module('Integration | Component | offering form', function (hooks) {
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
     });
-    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
+    const offeringModel = await this.owner
+      .lookup('service:store')
+      .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', async (startDate, endDate) => {
       assert.strictEqual(moment(startDate).tz(utc).format('Y-MM-DD HH:mm'), '2005-06-25 05:24');
@@ -523,7 +527,7 @@ module('Integration | Component | offering form', function (hooks) {
     this.server.create('learnerGroup', { cohort, title: 'Learner Group 10' });
     this.server.create('learnerGroup', { cohort, title: 'Learner Group 2' });
 
-    const cohortModel = await this.owner.lookup('service:store').find('cohort', cohort.id);
+    const cohortModel = await this.owner.lookup('service:store').findRecord('cohort', cohort.id);
     this.set('cohorts', [cohortModel]);
     await render(hbs`<OfferingForm @cohorts={{this.cohorts}} @close={{(noop)}} />`);
 
@@ -547,7 +551,9 @@ module('Integration | Component | offering form', function (hooks) {
   test('save by pressing enter in duration hours field', async function (assert) {
     assert.expect(1);
     const offering = this.server.create('offering');
-    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
+    const offeringModel = await this.owner
+      .lookup('service:store')
+      .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
       assert.ok(true);
@@ -561,7 +567,9 @@ module('Integration | Component | offering form', function (hooks) {
   test('save by pressing enter in duration minutes field', async function (assert) {
     assert.expect(1);
     const offering = this.server.create('offering');
-    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
+    const offeringModel = await this.owner
+      .lookup('service:store')
+      .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
       assert.ok(true);
@@ -575,7 +583,9 @@ module('Integration | Component | offering form', function (hooks) {
   test('save by pressing enter in location field', async function (assert) {
     assert.expect(1);
     const offering = this.server.create('offering');
-    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
+    const offeringModel = await this.owner
+      .lookup('service:store')
+      .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
       assert.ok(true);
@@ -592,7 +602,9 @@ module('Integration | Component | offering form', function (hooks) {
   test('save by pressing enter in url field', async function (assert) {
     assert.expect(1);
     const offering = this.server.create('offering');
-    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
+    const offeringModel = await this.owner
+      .lookup('service:store')
+      .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
       assert.ok(true);

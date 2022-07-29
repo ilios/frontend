@@ -45,7 +45,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
     const terms = await this.owner.lookup('service:store').findAll('term');
 
     this.set('vocabulary', vocabularyModel);
@@ -97,7 +97,7 @@ module('Integration | Component | detail terms list', function (hooks) {
 
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
     const terms = await this.owner.lookup('service:store').findAll('term');
 
     this.set('vocabulary', vocabularyModel);
@@ -129,7 +129,7 @@ module('Integration | Component | detail terms list', function (hooks) {
 
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
     const terms = await this.owner.lookup('service:store').findAll('term');
     this.set('vocabulary', vocabularyModel);
     this.set('terms', terms);
@@ -161,7 +161,7 @@ module('Integration | Component | detail terms list', function (hooks) {
 
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
     this.set('vocabulary', vocabularyModel);
     this.set('terms', []);
     await render(hbs`<DetailTermsList
@@ -179,7 +179,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     this.server.create('term', { vocabulary });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
     this.set('vocabulary', vocabularyModel);
     this.set('terms', []);
     this.set('manage', (vocabulary) => {

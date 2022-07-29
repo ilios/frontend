@@ -27,9 +27,9 @@ module('Integration | Component | selected-learners', function (hooks) {
       displayName: 'Clem Chowder',
     });
 
-    this.learnerModel1 = await this.owner.lookup('service:store').find('user', learner1.id);
-    this.learnerModel2 = await this.owner.lookup('service:store').find('user', learner2.id);
-    this.learnerModel3 = await this.owner.lookup('service:store').find('user', learner3.id);
+    this.learnerModel1 = await this.owner.lookup('service:store').findRecord('user', learner1.id);
+    this.learnerModel2 = await this.owner.lookup('service:store').findRecord('user', learner2.id);
+    this.learnerModel3 = await this.owner.lookup('service:store').findRecord('user', learner3.id);
   });
 
   test('it renders', async function (assert) {

@@ -16,7 +16,9 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
     const ilmSession = this.server.create('ilm-session', {
       dueDate: new Date(2021, 4, 19, 23, 55, 0),
     });
-    this.ilmSession = await this.owner.lookup('service:store').find('ilmSession', ilmSession.id);
+    this.ilmSession = await this.owner
+      .lookup('service:store')
+      .findRecord('ilmSession', ilmSession.id);
   });
 
   test('it renders and is accessible', async function (assert) {

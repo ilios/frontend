@@ -16,10 +16,10 @@ module('Integration | Component | new session', function (hooks) {
     const sessionType2 = this.server.create('sessionType');
     this.sessionType = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.sessionType2 = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType2.id);
+      .findRecord('session-type', sessionType2.id);
   });
 
   test('it renders', async function (assert) {

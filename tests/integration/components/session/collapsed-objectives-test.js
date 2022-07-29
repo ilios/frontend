@@ -36,7 +36,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
         this.objectiveWithTerms,
       ],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`
@@ -61,7 +61,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     assert.expect(2);
 
     const session = this.server.create('session');
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     this.set('click', () => {
@@ -79,7 +79,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const session = this.server.create('session', {
       sessionObjectives: [this.objectiveWithCourseObjectives],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`
@@ -96,7 +96,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const session = this.server.create('session', {
       sessionObjectives: [this.objective],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`
@@ -113,7 +113,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const session = this.server.create('session', {
       sessionObjectives: [this.objectiveWithMesh],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`
@@ -130,7 +130,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const session = this.server.create('session', {
       sessionObjectives: [this.objective],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`
@@ -147,7 +147,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const session = this.server.create('session', {
       sessionObjectives: [this.objectiveWithTerms],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`
@@ -164,7 +164,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const session = this.server.create('session', {
       sessionObjectives: [this.objective],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`

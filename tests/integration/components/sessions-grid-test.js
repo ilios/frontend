@@ -78,8 +78,12 @@ module('Integration | Component | sessions-grid', function (hooks) {
   // @see issue ilios/common#1820 [ST 2020/12/10]
   test('deletion of session is disabled if it has prerequisites', async function (assert) {
     const sessions = this.server.createList('session', 2);
-    const sessionModel1 = await this.owner.lookup('service:store').find('session', sessions[0].id);
-    const sessionModel2 = await this.owner.lookup('service:store').find('session', sessions[0].id);
+    const sessionModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('session', sessions[0].id);
+    const sessionModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('session', sessions[0].id);
 
     this.set('sessions', [
       {

@@ -15,7 +15,7 @@ module('Integration | Component | session/manage-objective-parents', function (h
   test('it renders and is accessible', async function (assert) {
     const course = this.server.create('course');
     this.server.create('courseObjective', { course });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('courseObjectives', await courseModel.courseObjectives);
     this.set('courseTitle', course.title);
     await render(hbs`<Session::ManageObjectiveParents

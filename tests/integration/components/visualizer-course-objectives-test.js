@@ -57,7 +57,7 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
       endDate: new Date('2019-12-05T21:00:00'),
     });
 
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
 

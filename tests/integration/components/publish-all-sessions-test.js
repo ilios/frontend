@@ -57,14 +57,14 @@ module('Integration | Component | publish all sessions', function (hooks) {
     });
     this.server.create('sessionObjective', { session: completeSession });
     const store = this.owner.lookup('service:store');
-    this.publishableSession = await store.find('session', publishableSession.id);
-    this.unpublishableSession = await store.find('session', unpublishableSession.id);
-    this.completeSession = await store.find('session', completeSession.id);
-    this.fullyPublishedByIncompleteSession = await store.find(
+    this.publishableSession = await store.findRecord('session', publishableSession.id);
+    this.unpublishableSession = await store.findRecord('session', unpublishableSession.id);
+    this.completeSession = await store.findRecord('session', completeSession.id);
+    this.fullyPublishedByIncompleteSession = await store.findRecord(
       'session',
       fullyPublishedByIncompleteSession.id
     );
-    this.course = await store.find('course', course.id);
+    this.course = await store.findRecord('course', course.id);
   });
 
   test('it renders', async function (assert) {

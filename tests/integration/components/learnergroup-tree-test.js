@@ -42,25 +42,25 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
 
     this.topLevelLearnerGroup = await this.owner
       .lookup('service:store')
-      .find('learner-group', topLevelLearnerGroup.id);
+      .findRecord('learner-group', topLevelLearnerGroup.id);
     this.secondLevelLearnerGroup1 = await this.owner
       .lookup('service:store')
-      .find('learner-group', secondLevelLearnerGroup1.id);
+      .findRecord('learner-group', secondLevelLearnerGroup1.id);
     this.secondLevelLearnerGroup2 = await this.owner
       .lookup('service:store')
-      .find('learner-group', secondLevelLearnerGroup2.id);
+      .findRecord('learner-group', secondLevelLearnerGroup2.id);
     this.secondLevelLearnerGroup3 = await this.owner
       .lookup('service:store')
-      .find('learner-group', secondLevelLearnerGroup3.id);
+      .findRecord('learner-group', secondLevelLearnerGroup3.id);
     this.thirdLevelLearnerGroup1 = await this.owner
       .lookup('service:store')
-      .find('learner-group', thirdLevelLearnerGroup1.id);
+      .findRecord('learner-group', thirdLevelLearnerGroup1.id);
     this.thirdLevelLearnerGroup2 = await this.owner
       .lookup('service:store')
-      .find('learner-group', thirdLevelLearnerGroup2.id);
+      .findRecord('learner-group', thirdLevelLearnerGroup2.id);
     this.thirdLevelLearnerGroup3 = await this.owner
       .lookup('service:store')
-      .find('learner-group', thirdLevelLearnerGroup3.id);
+      .findRecord('learner-group', thirdLevelLearnerGroup3.id);
   });
 
   test('the group tree renders', async function (assert) {

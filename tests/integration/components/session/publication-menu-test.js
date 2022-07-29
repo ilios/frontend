@@ -14,7 +14,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
 
   test('it renders and is accessible for draft session', async function (assert) {
     this.server.create('session');
-    const sessionModel = await this.owner.lookup('service:store').find('session', 1);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
 
@@ -42,7 +42,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
       published: true,
       publishedAsTbd: true,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', 1);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
 
@@ -58,7 +58,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
       published: true,
       publishedAsTbd: false,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', 1);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
 
@@ -71,7 +71,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
 
   test('click opens menu', async function (assert) {
     this.server.create('session');
-    const sessionModel = await this.owner.lookup('service:store').find('session', 1);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
     assert.ok(component.menuClosed);
@@ -81,7 +81,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
 
   test('correct actions for unpublished session', async function (assert) {
     this.server.create('session');
-    const sessionModel = await this.owner.lookup('service:store').find('session', 1);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
     await component.toggle.click();
@@ -98,7 +98,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
       published: true,
       publishedAsTbd: true,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', 1);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
     await component.toggle.click();
@@ -115,7 +115,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
       published: true,
       publishedAsTbd: false,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', 1);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
     await component.toggle.click();
@@ -129,7 +129,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
 
   test('down opens menu', async function (assert) {
     this.server.create('session');
-    const sessionModel = await this.owner.lookup('service:store').find('session', 1);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
 
@@ -140,7 +140,7 @@ module('Integration | Component | session/publication-menu', function (hooks) {
 
   test('escape closes menu', async function (assert) {
     this.server.create('session');
-    const sessionModel = await this.owner.lookup('service:store').find('session', 1);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
     await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
 
