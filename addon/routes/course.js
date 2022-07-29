@@ -16,6 +16,10 @@ export default class CourseRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
+  async model(params) {
+    return this.dataLoader.loadCourse(params.course_id);
+  }
+
   async afterModel(course) {
     if (!this.#preloadTopLevel) {
       this.#preloadTopLevel = [
