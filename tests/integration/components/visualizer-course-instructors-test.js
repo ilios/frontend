@@ -47,7 +47,7 @@ module('Integration | Component | visualizer-course-instructors', function (hook
       instructors: [instructor1, instructor2, instructor3, instructor4],
     });
 
-    this.courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
   });
 
   test('it renders', async function (assert) {

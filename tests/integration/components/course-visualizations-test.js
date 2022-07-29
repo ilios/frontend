@@ -14,7 +14,7 @@ module('Integration | Component | course-visualizations', function (hooks) {
   test('it renders', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseVisualizations @model={{this.course}} />`);
@@ -36,7 +36,7 @@ module('Integration | Component | course-visualizations', function (hooks) {
     });
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseVisualizations @model={{this.course}} />`);

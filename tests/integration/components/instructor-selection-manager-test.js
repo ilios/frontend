@@ -34,12 +34,18 @@ module('Integration | Component | instructor selection manager', function (hooks
       title: 'Alpha',
     });
     const group3 = this.server.create('instructorGroup', { title: 'Gamma' });
-    this.instructor1 = await this.owner.lookup('service:store').find('user', instructor1.id);
-    this.instructor2 = await this.owner.lookup('service:store').find('user', instructor2.id);
-    this.instructor3 = await this.owner.lookup('service:store').find('user', instructor3.id);
-    this.group1 = await this.owner.lookup('service:store').find('instructor-group', group1.id);
-    this.group2 = await this.owner.lookup('service:store').find('instructor-group', group2.id);
-    this.group3 = await this.owner.lookup('service:store').find('instructor-group', group3.id);
+    this.instructor1 = await this.owner.lookup('service:store').findRecord('user', instructor1.id);
+    this.instructor2 = await this.owner.lookup('service:store').findRecord('user', instructor2.id);
+    this.instructor3 = await this.owner.lookup('service:store').findRecord('user', instructor3.id);
+    this.group1 = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', group1.id);
+    this.group2 = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', group2.id);
+    this.group3 = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', group3.id);
   });
 
   test('it renders', async function (assert) {

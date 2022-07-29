@@ -18,8 +18,8 @@ module('Integration | Component | course-visualize-session-type', function (hook
     const sessionType = this.server.create('sessionType', { school, sessions: [session] });
     this.sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
-    this.courseModel = await this.owner.lookup('service:store').find('course', course.id);
+      .findRecord('session-type', sessionType.id);
+    this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
   });
 
   test('it renders', async function (assert) {

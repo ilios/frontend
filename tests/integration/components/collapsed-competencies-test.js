@@ -43,7 +43,7 @@ module('Integration | Component | collapsed competencies', function (hooks) {
       course,
       programYearObjectives: [pyObjectiveC],
     });
-    this.course = await this.owner.lookup('service:store').find('course', course.id);
+    this.course = await this.owner.lookup('service:store').findRecord('course', course.id);
   });
 
   test('it renders', async function (assert) {

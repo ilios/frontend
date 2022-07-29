@@ -36,7 +36,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
         this.objectiveWithTerms,
       ],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
@@ -56,7 +56,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     assert.expect(2);
 
     const course = this.server.create('course');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     this.set('click', () => {
@@ -74,7 +74,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const course = this.server.create('course', {
       courseObjectives: [this.objectiveWithProgramYearObjectives],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
@@ -86,7 +86,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const course = this.server.create('course', {
       courseObjectives: [this.objective],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
@@ -98,7 +98,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const course = this.server.create('course', {
       courseObjectives: [this.objectiveWithMesh],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
@@ -110,7 +110,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const course = this.server.create('course', {
       courseObjectives: [this.objective],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
@@ -122,7 +122,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const course = this.server.create('course', {
       courseObjectives: [this.objectiveWithTerms],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
@@ -134,7 +134,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const course = this.server.create('course', {
       courseObjectives: [this.objective],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);

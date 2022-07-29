@@ -27,9 +27,15 @@ module('Integration | Component | selected-instructors', function (hooks) {
       displayName: 'Clem Chowder',
     });
 
-    this.instructorModel1 = await this.owner.lookup('service:store').find('user', instructor1.id);
-    this.instructorModel2 = await this.owner.lookup('service:store').find('user', instructor2.id);
-    this.instructorModel3 = await this.owner.lookup('service:store').find('user', instructor3.id);
+    this.instructorModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('user', instructor1.id);
+    this.instructorModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('user', instructor2.id);
+    this.instructorModel3 = await this.owner
+      .lookup('service:store')
+      .findRecord('user', instructor3.id);
   });
 
   test('it renders', async function (assert) {

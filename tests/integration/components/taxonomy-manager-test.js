@@ -63,12 +63,12 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       vocabulary: vocab2,
     });
 
-    this.vocabModel1 = await this.owner.lookup('service:store').find('vocabulary', vocab1.id);
-    this.vocabModel2 = await this.owner.lookup('service:store').find('vocabulary', vocab2.id);
-    this.vocabModel3 = await this.owner.lookup('service:store').find('vocabulary', vocab3.id);
-    this.termModel1 = await this.owner.lookup('service:store').find('term', term1.id);
-    this.termModel2 = await this.owner.lookup('service:store').find('term', term2.id);
-    this.termModel3 = await this.owner.lookup('service:store').find('term', term3.id);
+    this.vocabModel1 = await this.owner.lookup('service:store').findRecord('vocabulary', vocab1.id);
+    this.vocabModel2 = await this.owner.lookup('service:store').findRecord('vocabulary', vocab2.id);
+    this.vocabModel3 = await this.owner.lookup('service:store').findRecord('vocabulary', vocab3.id);
+    this.termModel1 = await this.owner.lookup('service:store').findRecord('term', term1.id);
+    this.termModel2 = await this.owner.lookup('service:store').findRecord('term', term2.id);
+    this.termModel3 = await this.owner.lookup('service:store').findRecord('term', term3.id);
   });
 
   test('it renders', async function (assert) {

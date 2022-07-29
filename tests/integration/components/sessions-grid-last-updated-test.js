@@ -21,7 +21,7 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
       updatedAt: moment('2019-07-09 17:00:00').toDate(),
     });
 
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`<SessionsGridLastUpdated @session={{this.session}} />`);

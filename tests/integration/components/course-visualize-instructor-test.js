@@ -16,8 +16,8 @@ module('Integration | Component | course-visualize-instructor', function (hooks)
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
     const user = this.server.create('user');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('course', courseModel);
     this.set('user', userModel);
 
@@ -40,8 +40,8 @@ module('Integration | Component | course-visualize-instructor', function (hooks)
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
     const user = this.server.create('user');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('course', courseModel);
     this.set('user', userModel);
 
@@ -61,8 +61,8 @@ module('Integration | Component | course-visualize-instructor', function (hooks)
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
     const user = this.server.create('user');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('course', courseModel);
     this.set('user', userModel);
 
@@ -127,8 +127,8 @@ module('Integration | Component | course-visualize-instructor', function (hooks)
       year: 2022,
     });
 
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const userModel = await this.owner.lookup('service:store').find('user', instructor.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', instructor.id);
     this.set('course', courseModel);
     this.set('user', userModel);
 

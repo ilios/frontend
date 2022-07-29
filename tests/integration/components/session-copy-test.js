@@ -48,7 +48,7 @@ module('Integration | Component | session copy', function (hooks) {
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`<SessionCopy @session={{this.session}} />`);
@@ -126,7 +126,7 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 2);
@@ -166,7 +166,7 @@ module('Integration | Component | session copy', function (hooks) {
     assert.strictEqual(newSessionObjective.belongsTo('session').id(), newSession.id);
     const objectiveTermModel = await this.owner
       .lookup('service:store')
-      .find('term', objectiveTerm.id);
+      .findRecord('term', objectiveTerm.id);
     const copiedSessionObjectiveTerms = await newSessionObjective.terms;
     assert.strictEqual(copiedSessionObjectiveTerms.length, 1);
     assert.ok(copiedSessionObjectiveTerms.includes(objectiveTermModel));
@@ -194,7 +194,7 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`<SessionCopy @session={{this.session}} />`);
@@ -239,7 +239,7 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(hbs`<SessionCopy @session={{this.session}} />`);
     const yearSelect = '.year-select select';
@@ -297,7 +297,7 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 2);
@@ -350,7 +350,7 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 3);
@@ -406,7 +406,7 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 3);
@@ -463,7 +463,7 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 4);
@@ -523,7 +523,7 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 4);

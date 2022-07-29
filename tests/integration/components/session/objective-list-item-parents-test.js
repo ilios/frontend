@@ -35,7 +35,7 @@ module('Integration | Component | session/objective-list-item-parents', function
     });
     const sessionObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('session-objective', sessionObjective.id);
+      .findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
@@ -63,7 +63,7 @@ module('Integration | Component | session/objective-list-item-parents', function
     });
     const sessionObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('session-objective', sessionObjective.id);
+      .findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
@@ -93,7 +93,7 @@ module('Integration | Component | session/objective-list-item-parents', function
     });
     const sessionObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('session-objective', sessionObjective.id);
+      .findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
@@ -121,7 +121,7 @@ module('Integration | Component | session/objective-list-item-parents', function
     });
     const sessionObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('session-objective', sessionObjective.id);
+      .findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     this.set('save', () => {
       assert.ok(true);
@@ -148,7 +148,7 @@ module('Integration | Component | session/objective-list-item-parents', function
     });
     const sessionObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('session-objective', sessionObjective.id);
+      .findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     this.set('cancel', () => {
       assert.ok(true);
@@ -175,7 +175,7 @@ module('Integration | Component | session/objective-list-item-parents', function
     });
     const sessionObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('session-objective', sessionObjective.id);
+      .findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     this.set('manage', () => {
       assert.ok(true);
@@ -213,7 +213,7 @@ module('Integration | Component | session/objective-list-item-parents', function
     });
     const sessionObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('session-objective', sessionObjective.id);
+      .findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}

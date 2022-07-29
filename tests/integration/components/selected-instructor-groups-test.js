@@ -36,13 +36,13 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
 
     this.instructorGroup1 = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup1.id);
+      .findRecord('instructor-group', instructorGroup1.id);
     this.instructorGroup2 = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup2.id);
+      .findRecord('instructor-group', instructorGroup2.id);
     this.instructorGroup3 = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup3.id);
+      .findRecord('instructor-group', instructorGroup3.id);
   });
 
   test('it renders', async function (assert) {

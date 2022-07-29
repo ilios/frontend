@@ -18,7 +18,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
     const courseObjective = this.server.create('courseObjective', { course });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem
@@ -41,7 +41,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
     const courseObjective = this.server.create('courseObjective', { course });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem
@@ -64,7 +64,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
     const courseObjective = this.server.create('courseObjective', { course });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem
@@ -83,7 +83,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
     const courseObjective = this.server.create('courseObjective', { course });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem
@@ -102,7 +102,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
     const courseObjective = this.server.create('courseObjective', { course });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem
@@ -121,7 +121,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
     const courseObjective = this.server.create('courseObjective', { course });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
-      .find('courseObjective', courseObjective.id);
+      .findRecord('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem

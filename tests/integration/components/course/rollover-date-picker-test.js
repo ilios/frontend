@@ -13,7 +13,7 @@ module('Integration | Component | course/rollover-date-picker', function (hooks)
 
   test('it renders', async function (assert) {
     const course = this.server.create('course');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{(noop)}} />`);
     assert.dom('input').hasValue(new Date(course.startDate).toLocaleDateString());
@@ -28,7 +28,7 @@ module('Integration | Component | course/rollover-date-picker', function (hooks)
     const course = this.server.create('course', {
       startDate: date,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     this.set('change', (changedDate) => {
       assert.strictEqual(newDate.getTime(), changedDate.getTime());

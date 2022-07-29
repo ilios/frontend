@@ -44,7 +44,7 @@ module('Integration | Component | visualizer-course-session-types', function (ho
       endDate: new Date('2019-12-05T21:00:00'),
     });
 
-    this.courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
   });
 
   test('it renders as bar chart by default', async function (assert) {

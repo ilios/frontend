@@ -39,10 +39,10 @@ module('Integration | Component | detail learnergroups list', function (hooks) {
     });
 
     const store = this.owner.lookup('service:store');
-    this.tlg1 = await store.find('learner-group', tlg1.id);
-    this.subGroup1 = await store.find('learner-group', subGroup1.id);
-    this.subSubGroup = await store.find('learner-group', subSubGroup1.id);
-    this.subGroup2 = await store.find('learner-group', subGroup2.id);
+    this.tlg1 = await store.findRecord('learner-group', tlg1.id);
+    this.subGroup1 = await store.findRecord('learner-group', subGroup1.id);
+    this.subSubGroup = await store.findRecord('learner-group', subSubGroup1.id);
+    this.subGroup2 = await store.findRecord('learner-group', subGroup2.id);
   });
 
   test('it renders', async function (assert) {

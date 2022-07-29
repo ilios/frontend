@@ -19,7 +19,7 @@ module('Integration | Component | course leadership expanded', function (hooks) 
       administrators: users,
       studentAdvisors: [users[0]],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseLeadershipExpanded
       @course={{this.course}}
@@ -46,7 +46,7 @@ module('Integration | Component | course leadership expanded', function (hooks) 
     const course = this.server.create('course', {
       administrators,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
@@ -68,7 +68,7 @@ module('Integration | Component | course leadership expanded', function (hooks) 
     const course = this.server.create('course', {
       directors,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
@@ -90,7 +90,7 @@ module('Integration | Component | course leadership expanded', function (hooks) 
     const course = this.server.create('course', {
       studentAdvisors,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
@@ -109,7 +109,7 @@ module('Integration | Component | course leadership expanded', function (hooks) 
   test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     const course = this.server.create('course');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');

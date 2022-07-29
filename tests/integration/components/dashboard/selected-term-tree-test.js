@@ -26,8 +26,8 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
       parent: term2,
       vocabulary,
     });
-    const termModel1 = await this.owner.lookup('service:store').find('term', term1.id);
-    const termModel2 = await this.owner.lookup('service:store').find('term', term2.id);
+    const termModel1 = await this.owner.lookup('service:store').findRecord('term', term1.id);
+    const termModel2 = await this.owner.lookup('service:store').findRecord('term', term2.id);
     this.topLevelTerms = [termModel1, termModel2];
   });
 

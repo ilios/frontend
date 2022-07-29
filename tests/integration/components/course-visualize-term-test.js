@@ -16,8 +16,8 @@ module('Integration | Component | course-visualize-term', function (hooks) {
     const vocabulary = this.server.create('vocabulary', { school });
     const term = this.server.create('term', { vocabulary });
     const course = this.server.create('course', { year: 2021, school, terms: [term] });
-    this.courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    this.termModel = await this.owner.lookup('service:store').find('term', term.id);
+    this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
   });
 
   test('it renders', async function (assert) {

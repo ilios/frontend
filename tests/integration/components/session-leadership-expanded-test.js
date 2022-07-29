@@ -20,7 +20,7 @@ module('Integration | Component | session leadership expanded', function (hooks)
       administrators: users,
       studentAdvisors: [users[0]],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(hbs`<SessionLeadershipExpanded
       @session={{this.session}}
@@ -47,7 +47,7 @@ module('Integration | Component | session leadership expanded', function (hooks)
       course,
       administrators,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
@@ -71,7 +71,7 @@ module('Integration | Component | session leadership expanded', function (hooks)
       course,
       studentAdvisors,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
@@ -90,7 +90,7 @@ module('Integration | Component | session leadership expanded', function (hooks)
   test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     const session = this.server.create('session');
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');

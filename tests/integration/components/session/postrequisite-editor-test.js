@@ -16,7 +16,9 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     this.server.create('course', {
       sessions,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', sessions[2].id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .findRecord('session', sessions[2].id);
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
@@ -41,7 +43,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       postrequisite: sessions[1],
       course,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
@@ -65,7 +67,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       postrequisite: sessions[1],
       course,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
@@ -96,7 +98,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       postrequisite: sessions[1],
       course,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
@@ -123,7 +125,9 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     this.server.create('course', {
       sessions,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', sessions[0].id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .findRecord('session', sessions[0].id);
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor
@@ -151,7 +155,9 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     this.server.create('course', {
       sessions,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', sessions[0].id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .findRecord('session', sessions[0].id);
     this.set('close', () => {
       assert.ok(true);
     });
@@ -170,7 +176,9 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     this.server.create('course', {
       sessions,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', sessions[0].id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .findRecord('session', sessions[0].id);
     this.set('close', () => {
       assert.ok(true);
     });
@@ -200,7 +208,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       title: 'fuzzy the cat',
       course,
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`<Session::PostrequisiteEditor

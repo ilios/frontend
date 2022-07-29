@@ -44,7 +44,7 @@ module('Integration | Component | course summary header', function (hooks) {
       level: 3,
       published: true,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
     const title = 'h2';
@@ -81,7 +81,7 @@ module('Integration | Component | course summary header', function (hooks) {
     const course = this.server.create('course', {
       school,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
     const actions = '.course-summary-actions a';
@@ -101,7 +101,7 @@ module('Integration | Component | course summary header', function (hooks) {
     this.owner.register('service:router', routerMock);
 
     const course = this.server.create('course');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
     const actions = '.course-summary-actions a';
@@ -124,7 +124,7 @@ module('Integration | Component | course summary header', function (hooks) {
     const course = this.server.create('course', {
       school,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
     const actions = '.course-summary-actions a';

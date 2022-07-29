@@ -28,7 +28,7 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
     });
     this.vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
   });
 
   test('it renders', async function (assert) {

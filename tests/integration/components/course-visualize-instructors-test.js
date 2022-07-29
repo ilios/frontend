@@ -14,7 +14,7 @@ module('Integration | Component | course-visualize-instructors', function (hooks
   test('it renders', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseVisualizeInstructors @model={{this.course}} />`);
@@ -33,7 +33,7 @@ module('Integration | Component | course-visualize-instructors', function (hooks
       endDate: new Date('2021/04/01'),
       instructors: [instructor1, instructor2],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseVisualizeInstructors @model={{this.course}} />`);
@@ -59,7 +59,7 @@ module('Integration | Component | course-visualize-instructors', function (hooks
     });
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseVisualizeInstructors @model={{this.course}} />`);
@@ -70,7 +70,7 @@ module('Integration | Component | course-visualize-instructors', function (hooks
   test('breadcrumb', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseVisualizeInstructors @model={{this.course}} />`);

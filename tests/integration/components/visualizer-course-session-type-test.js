@@ -52,10 +52,10 @@ module('Integration | Component | visualizer-course-session-type', function (hoo
       endDate: new Date('2019-12-05T21:00:00'),
     });
 
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
 
     this.set('course', courseModel);
     this.set('type', sessionTypeModel);

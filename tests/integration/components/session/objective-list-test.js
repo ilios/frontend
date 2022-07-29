@@ -32,7 +32,7 @@ module('Integration | Component | session/objective-list', function (hooks) {
       position: 0,
       terms: [term2],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(
@@ -70,7 +70,7 @@ module('Integration | Component | session/objective-list', function (hooks) {
     assert.expect(2);
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(
@@ -88,7 +88,7 @@ module('Integration | Component | session/objective-list', function (hooks) {
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
     this.server.create('sessionObjective', { session });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(

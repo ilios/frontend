@@ -51,17 +51,21 @@ module('Integration | Component | learning materials sort manager', function (ho
     const course = this.server.create('course', {
       learningMaterials: [clm1, clm2],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     const statusModel1 = await this.owner
       .lookup('service:store')
-      .find('learning-material-status', status1.id);
+      .findRecord('learning-material-status', status1.id);
     const statusModel2 = await this.owner
       .lookup('service:store')
-      .find('learning-material-status', status2.id);
-    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
-    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
-    const lmModel1 = await this.owner.lookup('service:store').find('learning-material', lm1.id);
-    const lmModel2 = await this.owner.lookup('service:store').find('learning-material', lm2.id);
+      .findRecord('learning-material-status', status2.id);
+    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
+    const lmModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('learning-material', lm1.id);
+    const lmModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('learning-material', lm2.id);
     this.set('subject', courseModel);
     await render(
       hbs`<LearningMaterialsSortManager @subject={{this.subject}} @cancel={{(noop)}} />`
@@ -119,7 +123,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     const course = this.server.create('course', {
       learningMaterials: [clm1, clm2],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
     this.set('cancel', () => {
       assert.ok(true, 'Cancel action was invoked correctly.');
@@ -160,13 +164,13 @@ module('Integration | Component | learning materials sort manager', function (ho
     const course = this.server.create('course', {
       learningMaterials: [clm1, clm2],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     const clmModel1 = await this.owner
       .lookup('service:store')
-      .find('course-learning-material', clm1.id);
+      .findRecord('course-learning-material', clm1.id);
     const clmModel2 = await this.owner
       .lookup('service:store')
-      .find('course-learning-material', clm2.id);
+      .findRecord('course-learning-material', clm2.id);
     this.set('subject', courseModel);
     this.set('save', (data) => {
       assert.strictEqual(data.length, 2);

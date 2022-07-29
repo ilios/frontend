@@ -56,8 +56,8 @@ module('Integration | Component | visualizer-course-instructor-term', function (
       instructors: [instructor],
     });
 
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const userModel = await this.owner.lookup('service:store').find('user', instructor.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', instructor.id);
 
     this.set('course', courseModel);
     this.set('instructor', userModel);

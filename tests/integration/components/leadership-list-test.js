@@ -29,9 +29,9 @@ module('Integration | Component | leadership list', function (hooks) {
       displayName: 'adam ant',
     });
 
-    this.user1 = await this.owner.lookup('service:store').find('user', user1.id);
-    this.user2 = await this.owner.lookup('service:store').find('user', user2.id);
-    this.user3 = await this.owner.lookup('service:store').find('user', user3.id);
+    this.user1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
+    this.user2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
+    this.user3 = await this.owner.lookup('service:store').findRecord('user', user3.id);
   });
 
   test('it renders with data', async function (assert) {

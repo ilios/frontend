@@ -37,7 +37,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials: [clm],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('subject', courseModel);
 
@@ -78,7 +78,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials: [clm],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('subject', courseModel);
 
@@ -115,7 +115,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
@@ -143,7 +143,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
@@ -159,7 +159,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     assert.expect(1);
 
     const course = this.server.create('course');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
@@ -187,7 +187,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials: [clm],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('subject', courseModel);
 
@@ -216,7 +216,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
     await render(hbs`<DetailLearningMaterials
       @subject={{this.subject}}
@@ -248,7 +248,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
     this.server.patch('/api/courselearningmaterials/1', (schema) => {
       assert.ok(true);

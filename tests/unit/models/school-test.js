@@ -48,7 +48,7 @@ module('Unit | Model | School', function (hooks) {
   test('cohorts', async function (assert) {
     assert.ok(true);
     const school = this.server.create('school');
-    const model = await this.store.find('school', school.id);
+    const model = await this.store.findRecord('school', school.id);
     let cohorts = await model.cohorts;
     assert.strictEqual(cohorts.length, 0);
     const program1 = this.server.create('program', {

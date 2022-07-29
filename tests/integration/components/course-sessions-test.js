@@ -28,7 +28,7 @@ module('Integration | Component | course sessions', function (hooks) {
   test('it renders', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseSessions
       @course={{this.course}}
@@ -47,7 +47,7 @@ module('Integration | Component | course sessions', function (hooks) {
     const course = this.server.create('course', { school });
     const sessionType = this.server.create('sessionType', { school });
     this.server.createList('session', 2, { course, sessionType });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseSessions
       @course={{this.course}}
@@ -69,7 +69,7 @@ module('Integration | Component | course sessions', function (hooks) {
     this.server.create('offering', {
       session: sessions[0],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseSessions
       @course={{this.course}}

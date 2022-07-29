@@ -9,8 +9,8 @@ export default class CourseVisualizeVocabularyRoute extends Route {
   titleToken = 'general.coursesAndSessions';
 
   async model(params) {
-    const course = await this.store.find('course', params.course_id);
-    const vocabulary = await this.store.find('vocabulary', params.vocabulary_id);
+    const course = await this.store.findRecord('course', params.course_id);
+    const vocabulary = await this.store.findRecord('vocabulary', params.vocabulary_id);
 
     return { course, vocabulary };
   }

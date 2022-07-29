@@ -28,7 +28,7 @@ module('Integration | Component | course overview', function (hooks) {
     this.server.create('course-clerkship-type', {
       courses: [course],
     });
-    const courseModel = await this.store.find('course', course.id);
+    const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 
@@ -46,7 +46,7 @@ module('Integration | Component | course overview', function (hooks) {
     this.server.create('course-clerkship-type', {
       courses: [course],
     });
-    const courseModel = await this.store.find('course', course.id);
+    const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 
@@ -64,7 +64,7 @@ module('Integration | Component | course overview', function (hooks) {
       startDate: moment().hour(8).format(),
       endDate: moment().hour(9).format(),
     });
-    const courseModel = await this.store.find('course', course.id);
+    const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 
@@ -81,7 +81,7 @@ module('Integration | Component | course overview', function (hooks) {
       startDate: moment().hour(8).format(),
       endDate: moment().hour(9).format(),
     });
-    const courseModel = await this.store.find('course', course.id);
+    const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 

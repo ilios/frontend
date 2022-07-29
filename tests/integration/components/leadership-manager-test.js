@@ -78,7 +78,7 @@ module('Integration | Component | leadership manager', function (hooks) {
   test('remove director', async function (assert) {
     assert.expect(3);
     this.server.createList('user', 1);
-    const user = await this.owner.lookup('service:store').find('user', 1);
+    const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', [user]);
     this.set('administrators', []);
     this.set('studentAdvisors', []);
@@ -111,7 +111,7 @@ module('Integration | Component | leadership manager', function (hooks) {
   test('remove administrator', async function (assert) {
     assert.expect(3);
     this.server.createList('user', 1);
-    const user = await this.owner.lookup('service:store').find('user', 1);
+    const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', []);
     this.set('administrators', [user]);
     this.set('studentAdvisors', []);
@@ -144,7 +144,7 @@ module('Integration | Component | leadership manager', function (hooks) {
   test('remove student advisor', async function (assert) {
     assert.expect(3);
     this.server.createList('user', 1);
-    const user = await this.owner.lookup('service:store').find('user', 1);
+    const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', []);
     this.set('administrators', []);
     this.set('studentAdvisors', [user]);
@@ -177,7 +177,7 @@ module('Integration | Component | leadership manager', function (hooks) {
   test('add director', async function (assert) {
     assert.expect(8);
     this.server.createList('user', 1);
-    const user = await this.owner.lookup('service:store').find('user', 1);
+    const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', []);
     this.set('administrators', [user]);
     this.set('studentAdvisors', [user]);
@@ -221,7 +221,7 @@ module('Integration | Component | leadership manager', function (hooks) {
   test('add administrator', async function (assert) {
     assert.expect(8);
     this.server.createList('user', 1);
-    const user = await this.owner.lookup('service:store').find('user', 1);
+    const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', [user]);
     this.set('administrators', []);
     this.set('studentAdvisors', [user]);
@@ -266,7 +266,7 @@ module('Integration | Component | leadership manager', function (hooks) {
   test('add student advisor', async function (assert) {
     assert.expect(8);
     this.server.createList('user', 1);
-    const user = await this.owner.lookup('service:store').find('user', 1);
+    const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', [user]);
     this.set('administrators', [user]);
     this.set('studentAdvisors', []);

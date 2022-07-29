@@ -107,7 +107,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
     const group = this.server.create('learnerGroup', { cohort });
-    const model = await this.owner.lookup('service:store').find('learner-group', group.id);
+    const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
     const currentUserMock = Service.extend({
       isRoot: false,
@@ -130,7 +130,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
     const group = this.server.create('learnerGroup', { cohort });
-    const model = await this.owner.lookup('service:store').find('learner-group', group.id);
+    const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
     const currentUserMock = Service.extend({
       isRoot: false,
@@ -153,7 +153,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
     const group = this.server.create('learnerGroup', { cohort });
-    const model = await this.owner.lookup('service:store').find('learner-group', group.id);
+    const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
     const currentUserMock = Service.extend({
       isRoot: false,
@@ -176,7 +176,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
     const group = this.server.create('learnerGroup', { cohort });
-    const model = await this.owner.lookup('service:store').find('learner-group', group.id);
+    const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
     const currentUserMock = Service.extend({
       isRoot: false,

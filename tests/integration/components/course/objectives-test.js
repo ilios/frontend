@@ -32,7 +32,7 @@ module('Integration | Component | course/objectives', function (hooks) {
       programYearObjectives: [pyObjectives[0]],
     });
     this.server.create('courseObjective', { course });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives
@@ -84,7 +84,7 @@ module('Integration | Component | course/objectives', function (hooks) {
       course,
       programYearObjectives: [pyObjectives[0]],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives
@@ -159,7 +159,7 @@ module('Integration | Component | course/objectives', function (hooks) {
     this.server.createList('programYearObjective', 4, {
       competency: competencies[1],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives
@@ -210,7 +210,7 @@ module('Integration | Component | course/objectives', function (hooks) {
   test('deleting objective', async function (assert) {
     const course = this.server.create('course');
     this.server.create('courseObjective', { course });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives

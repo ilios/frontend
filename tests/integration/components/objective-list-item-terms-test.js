@@ -27,10 +27,10 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
     });
     this.subject = await this.owner
       .lookup('service:store')
-      .find('course-objective', courseObjective.id);
+      .findRecord('course-objective', courseObjective.id);
     this.vocabularyModel1 = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary1.id);
+      .findRecord('vocabulary', vocabulary1.id);
   });
 
   test('it renders and is accessible when managing', async function (assert) {

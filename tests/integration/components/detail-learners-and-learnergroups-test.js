@@ -54,19 +54,28 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     });
 
     const store = this.owner.lookup('service:store');
-    this.cohort1 = await store.find('cohort', cohort1.id);
-    this.cohort2 = await store.find('cohort', cohort2.id);
-    this.topLevelLearnerGroup1 = await store.find('learner-group', topLevelLearnerGroup1.id);
-    this.topLevelLearnerGroup2 = await store.find('learner-group', topLevelLearnerGroup2.id);
-    this.topLevelLearnerGroup3 = await store.find('learner-group', topLevelLearnerGroup3.id);
-    this.secondLevelLearnerGroup1 = await store.find('learner-group', secondLevelLearnerGroup1.id);
-    this.secondLevelLearnerGroup2 = await store.find('learner-group', secondLevelLearnerGroup2.id);
-    this.secondLevelLearnerGroup3 = await store.find('learner-group', secondLevelLearnerGroup3.id);
-    this.learner1 = await store.find('user', learners[0].id);
-    this.learner2 = await store.find('user', learners[1].id);
-    this.learner3 = await store.find('user', learners[2].id);
-    this.learner4 = await store.find('user', learners[3].id);
-    this.ilmSession = await store.find('ilmSession', ilmSession.id);
+    this.cohort1 = await store.findRecord('cohort', cohort1.id);
+    this.cohort2 = await store.findRecord('cohort', cohort2.id);
+    this.topLevelLearnerGroup1 = await store.findRecord('learner-group', topLevelLearnerGroup1.id);
+    this.topLevelLearnerGroup2 = await store.findRecord('learner-group', topLevelLearnerGroup2.id);
+    this.topLevelLearnerGroup3 = await store.findRecord('learner-group', topLevelLearnerGroup3.id);
+    this.secondLevelLearnerGroup1 = await store.findRecord(
+      'learner-group',
+      secondLevelLearnerGroup1.id
+    );
+    this.secondLevelLearnerGroup2 = await store.findRecord(
+      'learner-group',
+      secondLevelLearnerGroup2.id
+    );
+    this.secondLevelLearnerGroup3 = await store.findRecord(
+      'learner-group',
+      secondLevelLearnerGroup3.id
+    );
+    this.learner1 = await store.findRecord('user', learners[0].id);
+    this.learner2 = await store.findRecord('user', learners[1].id);
+    this.learner3 = await store.findRecord('user', learners[2].id);
+    this.learner4 = await store.findRecord('user', learners[3].id);
+    this.ilmSession = await store.findRecord('ilmSession', ilmSession.id);
   });
 
   test('it renders', async function (assert) {

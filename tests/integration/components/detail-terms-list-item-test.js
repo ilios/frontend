@@ -19,7 +19,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
       vocabulary: this.vocabulary,
       title: 'Foo',
     });
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
     this.set('term', termModel);
     await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />`);
     assert.notStrictEqual(this.element.textContent.trim().indexOf('Foo'), -1);
@@ -40,7 +40,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
       title: 'Foo',
       parent: term2,
     });
-    const termModel = await this.owner.lookup('service:store').find('term', term3.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term3.id);
     this.set('term', termModel);
     await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />`);
     assert.dom('.muted').includesText('Lorem »');
@@ -54,7 +54,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
       vocabulary: this.vocabulary,
       title: 'Foo',
     });
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
     this.set('term', termModel);
     this.set('remove', (val) => {
       assert.strictEqual(termModel, val);
@@ -73,7 +73,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
       vocabulary: this.vocabulary,
       title: 'Foo',
     });
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
     this.set('term', termModel);
     await render(
       hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{true}} @remove={{(noop)}} />`
@@ -87,7 +87,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
       vocabulary: this.vocabulary,
       title: 'Foo',
     });
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
     this.set('term', termModel);
     await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />`);
     assert.dom('.inactive').doesNotExist();
