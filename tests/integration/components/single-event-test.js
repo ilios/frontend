@@ -350,20 +350,22 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     await render(hbs`<SingleEvent @event={{this.ev}} />`);
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
-    assert.strictEqual(component.sessionLearningMaterials.materials.items.length, 4);
-    assert.strictEqual(component.sessionLearningMaterials.materials.prework.length, 2);
-    assert.strictEqual(component.sessionLearningMaterials.materials.items[0].title, 'foo bar');
-    assert.strictEqual(component.sessionLearningMaterials.materials.items[1].title, 'aardvark');
-    assert.strictEqual(component.sessionLearningMaterials.materials.items[2].title, 'readme');
-    assert.strictEqual(component.sessionLearningMaterials.materials.items[3].title, 'some file');
-    assert.strictEqual(component.sessionLearningMaterials.materials.prework[0].text, 'prework 1');
-    assert.ok(
-      component.sessionLearningMaterials.materials.prework[0].url.endsWith('/events/prework1')
-    );
-    assert.strictEqual(component.sessionLearningMaterials.materials.prework[1].text, 'prework 2');
-    assert.ok(
-      component.sessionLearningMaterials.materials.prework[1].url.endsWith('/events/prework2')
-    );
+    const { materials } = component.sessionLearningMaterials;
+    assert.strictEqual(materials.items.length, 4);
+    assert.strictEqual(materials.prework.length, 2);
+
+    assert.strictEqual(materials.prework[0].name, 'prework 1');
+    assert.strictEqual(materials.prework[0].items.length, 2);
+    assert.strictEqual(materials.prework[0].items[0].title, 'foo bar');
+    assert.strictEqual(materials.prework[0].items[1].title, 'aardvark');
+    assert.ok(materials.prework[0].url.endsWith('/events/prework1'));
+
+    assert.strictEqual(materials.prework[1].name, 'prework 2');
+    assert.strictEqual(materials.prework[1].items.length, 1);
+    assert.strictEqual(materials.prework[1].items[0].title, 'readme');
+    assert.ok(materials.prework[1].url.endsWith('/events/prework2'));
+
+    assert.strictEqual(materials.items[3].title, 'some file');
   });
 
   test('for non ilms postrequisite date and title are displayed along with offering date', async function (assert) {
