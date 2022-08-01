@@ -15,11 +15,7 @@ export default class CourseVisualizeVocabulariesRoute extends Route {
 
   async afterModel(course) {
     const sessions = (await course.sessions).toArray();
-    return await all([
-      course.get('school'),
-      map(sessions, (s) => s.terms),
-      map(sessions, (s) => s.totalSumDuration),
-    ]);
+    return await all([course.get('school'), map(sessions, (s) => s.terms)]);
   }
 
   beforeModel(transition) {
