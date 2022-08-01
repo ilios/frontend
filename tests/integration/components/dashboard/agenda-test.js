@@ -202,7 +202,7 @@ module('Integration | Component | dashboard/agenda', function (hooks) {
   });
 
   test('it renders with events', async function (assert) {
-    assert.expect(17);
+    assert.expect(14);
     this.owner.register('service:user-events', userEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
@@ -226,22 +226,6 @@ module('Integration | Component | dashboard/agenda', function (hooks) {
       // moment().format('dddd, MMMM Do, YYYY h:mma'));
       assert.dom(tds[1]).hasText(mockEvents[i].name);
     }
-    const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
-    assert.strictEqual(this.element.querySelectorAll(preworkSelector).length, 2);
-    assert
-      .dom(this.element.querySelector(`${preworkSelector}:nth-of-type(1)`))
-      .hasText(
-        'prework 2 Due Before first (' +
-          new Date(mockEvents[0].startDate).toLocaleDateString() +
-          ')'
-      );
-    assert
-      .dom(this.element.querySelector(`${preworkSelector}:nth-of-type(2)`))
-      .hasText(
-        'prework 1 Due Before third (' +
-          new Date(mockEvents[2].startDate).toLocaleDateString() +
-          ')'
-      );
   });
 
   test('session attribute icons', async function (assert) {
