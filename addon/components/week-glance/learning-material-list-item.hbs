@@ -1,0 +1,79 @@
+<li class="week-glance-learning-material-list-item" ...attributes>
+  {{#if @lm.isBlanked}}
+    <span class="lm-type-icon" data-test-type-icon>
+      <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
+    </span>
+    <span data-test-material-title>
+      {{@lm.title}}
+    </span>
+  {{else}}
+    <LmIcons @learningMaterial={{@lm}} />
+    {{#if @lm.absoluteFileUri}}
+      {{#if (eq @lm.mimetype "application/pdf")}}
+        <a
+          id={{concat "event" @event.slug "lm" @index}}
+          href="{{@lm.absoluteFileUri}}?inline"
+          aria-labelledby="{{concat "event" @event.slug "lm" @index}} {{concat "event" @event.slug "title"}}"
+          data-test-material-title
+        >
+          {{@lm.title}}
+        </a>
+        <a
+          id={{concat "event" @event.slug "lmdownload" @index}}
+          href={{@lm.absoluteFileUri}}
+          aria-label={{t "general.download"}}
+          aria-labelledby="{{concat "event" @event.slug "lmdownload" @index}} {{concat "event" @event.slug "lm" @index}} {{concat "event" @event.slug "title"}}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaIcon @icon="download" />
+        </a>
+      {{else}}
+        <a
+          id={{concat "event" @event.slug "lm" @index}}
+          href={{@lm.absoluteFileUri}}
+          aria-labelledby="{{concat "event" @event.slug "lm" @index}} {{concat "event" @event.slug "title"}}"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-test-material-title
+        >
+          {{@lm.title}}
+        </a>
+      {{/if}}
+    {{else if @lm.link}}
+      <a
+        id={{concat "event" @event.slug "lm" @index}}
+        href={{@lm.link}}
+        aria-labelledby="{{concat "event" @event.slug "lm" @index}} {{concat "event" @event.slug "title"}}"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-test-material-title
+      >
+        {{@lm.title}}
+      </a>
+    {{else}}
+      <span data-test-material-title>
+        {{@lm.title}}
+      </span>
+      <ul data-test-citation>
+        <li>
+          <small>
+            {{@lm.citation}}
+          </small>
+        </li>
+      </ul>
+    {{/if}}
+    {{#if @lm.publicNotes}}
+      <p class="public-notes" data-test-public-notes>
+        <TruncateText @text={{@lm.publicNotes}} @length={{50}} />
+      </p>
+    {{/if}}
+  {{/if}}
+  <span class="timed-release-info" data-test-time-release-info>
+    <TimedReleaseSchedule
+      @startDate={{@lm.startDate}}
+      @endDate={{@lm.endDate}}
+      @showNoSchedule={{false}}
+    />
+  </span>
+</li>

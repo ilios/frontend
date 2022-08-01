@@ -1,8 +1,7 @@
 <div
   class="week-glance"
   data-test-week-glance
-  {{did-insert (perform this.load) @week @year}}
-  {{did-update (perform this.load) @week @year}}
+  {{did-insert this.scrollOnLoad}}
 >
   {{#if @collapsible}}
     <button
@@ -29,16 +28,6 @@
   {{/if}}
   {{#unless @collapsed}}
     {{#unless this.load.isRunning}}
-      <div class="ilm-pre-work" data-test-ilm-pre-work>
-        {{#if (gt this.ilmPreWork.length 0)}}
-          <h3 class="pre-work-title">
-            {{t "general.preWork"}}:
-          </h3>
-          {{#each this.ilmPreWork as |ilmGroup|}}
-            <WeekGlancePreWork @events={{ilmGroup}} />
-          {{/each}}
-        {{/if}}
-      </div>
       {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
         {{#each this.nonIlmPreWorkEvents as |event|}}
           <WeekGlanceEvent @event={{event}} />
