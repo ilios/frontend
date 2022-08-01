@@ -17,25 +17,23 @@ export default class VisualizerCourseVocabulary extends Component {
 
   @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
 
-  @use dataObjects = new AsyncProcess(() => [
-    this.getDataObjects.bind(this),
-    this.sessionsWithMinutes,
-  ]);
-
-  get sessionsWithMinutes() {
-    return this.sessions.map((session) => {
-      return {
-        session,
-        minutes: Math.round(session.totalSumDuration * 60),
-      };
-    });
-  }
+  @use dataObjects = new AsyncProcess(() => [this.getDataObjects.bind(this), this.sessions]);
 
   get isLoaded() {
     return !!this.dataObjects;
   }
 
-  async getDataObjects(sessionsWithMinutes) {
+  async getDataObjects(sessions) {
+    if (!sessions) {
+      return [];
+    }
+    const sessionsWithMinutes = await map(sessions.toArray(), async (session) => {
+      const hours = await session.getTotalSumDuration();
+      return {
+        session,
+        minutes: Math.round(hours * 60),
+      };
+    });
     const terms = await map(sessionsWithMinutes, async ({ session, minutes }) => {
       const sessionTerms = await session.get('terms');
       const sessionTermsInThisVocabulary = await filter(sessionTerms.toArray(), async (term) => {
