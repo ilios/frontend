@@ -1,4 +1,5 @@
 import { attribute, collection, create, text } from 'ember-cli-page-object';
+import objectivesChart from './visualizer-course-objectives';
 
 const definition = create({
   scope: '[data-test-course-visualize-objectives]',
@@ -9,6 +10,7 @@ const definition = create({
       link: attribute('href', 'a'),
     }),
   },
+  objectivesChart,
 });
 
 export default definition;

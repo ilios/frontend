@@ -1,5 +1,7 @@
 <div
   class="visualizer-course-objectives {{unless @isIcon "not-icon"}}"
+  data-test-visualizer-course-objectives
+  ...attributes
 >
   {{#if this.isLoaded}}
     {{#if (or @isIcon this.objectiveWithMinutes.length)}}
@@ -17,7 +19,7 @@
         {{/if}}
       </SimpleChart>
     {{else}}
-      <div class="with-hours">
+      <div class="with-hours" data-test-with-hours>
         <p>
           {{t "general.objectivesWithNoLink"}}
         </p>
@@ -27,7 +29,7 @@
       </div>
     {{/if}}
     {{#unless (or @isIcon (not this.objectiveWithoutMinutes.length))}}
-      <div class="zero-hours">
+      <div class="zero-hours" data-test-zero-hours>
         <h4>
           <FaIcon @icon="triangle-exclamation" class="warning" />
           {{t "general.unusedObjectives"}}:
