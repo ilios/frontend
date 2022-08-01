@@ -8,7 +8,7 @@
     </span>
   {{else}}
     <LmIcons @learningMaterial={{@lm}} />
-    {{#if @lm.absoluteFileUri}}
+    {{#if (and @lm.absoluteFileUri @showLink)}}
       {{#if (eq @lm.mimetype "application/pdf")}}
         <a
           id={{concat "event" @event.slug "lm" @index}}
@@ -40,7 +40,7 @@
           {{@lm.title}}
         </a>
       {{/if}}
-    {{else if @lm.link}}
+    {{else if (and @lm.link @showLink)}}
       <a
         id={{concat "event" @event.slug "lm" @index}}
         href={{@lm.link}}

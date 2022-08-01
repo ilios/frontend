@@ -10,6 +10,7 @@ const definition = {
   citation: text('[data-test-citation]'),
   url: attribute('href', '[data-test-material-title]'),
   timedReleaseInfo: text('[data-test-time-release-info]'),
+  hasLink: isPresent('a'),
 };
 
 export default definition;
