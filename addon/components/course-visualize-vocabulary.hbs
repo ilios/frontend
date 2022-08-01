@@ -1,45 +1,43 @@
 <section
   class="course-visualize-vocabulary"
   data-test-course-visualize-vocabulary
-  {{did-insert (perform this.load)}}
+  ...attributes
 >
-  {{#unless this.load.isRunning}}
-    <div class="breadcrumbs" data-test-breadcrumb>
-      <span>
-        <LinkTo @route="course" @model={{@model.course}}>
-          {{@model.course.title}}
-        </LinkTo>
-      </span>
-      <span>
-        <LinkTo @route="course-visualizations" @model={{@model.course}}>
-          {{t "general.visualizations"}}
-        </LinkTo>
-      </span>
-      <span>
-        <LinkTo @route="course-visualize-vocabularies" @model={{@model.course}}>
-          {{t "general.vocabularies"}}
-        </LinkTo>
-      </span>
-      <span>
-        {{@model.vocabulary.title}}
-      </span>
-    </div>
-    <h2>
-      {{@model.vocabulary.title}}
-    </h2>
-    <h3 class="clickable" data-test-title>
+  <div class="breadcrumbs" data-test-breadcrumb>
+    <span>
       <LinkTo @route="course" @model={{@model.course}}>
         {{@model.course.title}}
-        {{#if this.academicYearCrossesCalendarYearBoundaries}}
-          {{@model.course.year}} - {{add @model.course.year 1}}
-        {{else}}
-          {{@model.course.year}}
-        {{/if}}
       </LinkTo>
-    </h3>
-    <VisualizerCourseVocabulary
-      @course={{@model.course}}
-      @vocabulary={{@model.vocabulary}}
-    />
-  {{/unless}}
+    </span>
+    <span>
+      <LinkTo @route="course-visualizations" @model={{@model.course}}>
+        {{t "general.visualizations"}}
+      </LinkTo>
+    </span>
+    <span>
+      <LinkTo @route="course-visualize-vocabularies" @model={{@model.course}}>
+        {{t "general.vocabularies"}}
+      </LinkTo>
+    </span>
+    <span>
+      {{@model.vocabulary.title}}
+    </span>
+  </div>
+  <h2>
+    {{@model.vocabulary.title}}
+  </h2>
+  <h3 class="clickable" data-test-title>
+    <LinkTo @route="course" @model={{@model.course}}>
+      {{@model.course.title}}
+      {{#if this.academicYearCrossesCalendarYearBoundaries}}
+        {{@model.course.year}} - {{add @model.course.year 1}}
+      {{else}}
+        {{@model.course.year}}
+      {{/if}}
+    </LinkTo>
+  </h3>
+  <VisualizerCourseVocabulary
+    @course={{@model.course}}
+    @vocabulary={{@model.vocabulary}}
+  />
 </section>
