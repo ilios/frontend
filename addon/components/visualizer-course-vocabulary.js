@@ -81,7 +81,7 @@ export default class VisualizerCourseVocabulary extends Component {
     const totalMinutes = termData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
     const mappedTermsWithLabel = termData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-      obj.label = `${obj.meta.termTitle} ${percent}%`;
+      obj.label = `${obj.meta.termTitle}: ${obj.data} ${this.intl.t('general.minutes')}`;
       obj.meta.totalMinutes = totalMinutes;
       obj.meta.percent = percent;
       return obj;
@@ -100,9 +100,9 @@ export default class VisualizerCourseVocabulary extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, data, meta } = obj;
+    const { label, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    this.tooltipTitle = htmlSafe(label);
     this.tooltipContent = meta.sessions.uniq().sort().join(', ');
   }
 
