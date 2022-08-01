@@ -1,44 +1,53 @@
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import moment from 'moment';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
 import scrollIntoView from 'scroll-into-view';
+import { action } from '@ember/object';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class WeeklyGlance extends Component {
   @service userEvents;
   @service intl;
 
-  @tracked publishedWeekEvents;
-  @tracked midnightAtTheStartOfThisWeek;
-  @tracked midnightAtTheEndOfThisWeek;
-
-  @restartableTask
-  *load(element, [week, year]) {
-    // @todo does this still hold true? verify. [ST 2019/12/04]
-    this.intl; //we need to use the service so the CP will re-fire
-    const thursdayOfTheWeek = moment();
-    thursdayOfTheWeek.year(year);
-    thursdayOfTheWeek.day(4);
-    thursdayOfTheWeek.isoWeek(week);
-    thursdayOfTheWeek.hour(0).minute(0).second(0);
-
-    this.midnightAtTheStartOfThisWeek = thursdayOfTheWeek.clone().subtract(4, 'days');
-    this.midnightAtTheEndOfThisWeek = thursdayOfTheWeek
-      .clone()
-      .add(2, 'days')
-      .hour(23)
-      .minute(59)
-      .second(59);
-
-    const weekEvents = yield this.userEvents.getEvents(
+  @use weekEvents = new ResolveAsyncValue(() => [
+    this.userEvents.getEvents(
       this.midnightAtTheStartOfThisWeek.unix(),
       this.midnightAtTheEndOfThisWeek.unix()
-    );
-    this.publishedWeekEvents = weekEvents.filter((ev) => {
+    ),
+  ]);
+
+  get thursdayOfTheWeek() {
+    this.intl; //we need to use the service so the CP will re-fire
+    const thursdayOfTheWeek = moment();
+    thursdayOfTheWeek.year(this.args.year);
+    thursdayOfTheWeek.day(4);
+    thursdayOfTheWeek.isoWeek(this.args.week);
+    thursdayOfTheWeek.hour(0).minute(0).second(0);
+
+    return thursdayOfTheWeek;
+  }
+
+  get midnightAtTheStartOfThisWeek() {
+    return this.thursdayOfTheWeek.clone().subtract(4, 'days');
+  }
+
+  get midnightAtTheEndOfThisWeek() {
+    return this.thursdayOfTheWeek.clone().add(2, 'days').hour(23).minute(59).second(59);
+  }
+
+  get publishedWeekEvents() {
+    if (!this.weekEvents) {
+      return [];
+    }
+
+    return this.weekEvents.filter((ev) => {
       return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
     });
+  }
 
+  @action
+  scrollOnLoad(element) {
     if (this.args.week === this.args.weekInFocus) {
       scrollIntoView(element);
     }
@@ -57,58 +66,6 @@ export default class WeeklyGlance extends Component {
     }
     to = this.midnightAtTheEndOfThisWeek.format('D');
     return `${from}-${to}`;
-  }
-
-  get ilmPreWork() {
-    const rhett = [];
-
-    if (!this.publishedWeekEvents) {
-      return rhett;
-    }
-
-    const preWork = this.publishedWeekEvents.reduce((arr, eventObject) => {
-      return arr.pushObjects(eventObject.prerequisites);
-    }, []);
-
-    // grab ILMs only, and group them by session.
-    const groups = {};
-    preWork
-      .filter((ev) => ev.ilmSession)
-      .forEach((ilm) => {
-        if (!Object.prototype.hasOwnProperty.call(groups, ilm.session)) {
-          groups[ilm.session] = [];
-        }
-        groups[ilm.session].pushObject(ilm);
-      });
-
-    // return an array of arrays of ILMs.
-    const sessions = Object.getOwnPropertyNames(groups);
-    sessions.forEach((session) => {
-      rhett.push(groups[session]);
-    });
-
-    return rhett.sort((ilmGroupA, ilmGroupB) => {
-      const eventA = ilmGroupA.firstObject;
-      const eventB = ilmGroupB.firstObject;
-
-      if (eventA.startDate > eventB.startDate) {
-        return 1;
-      } else if (eventA.startDate < eventB.startDate) {
-        return -1;
-      }
-
-      if (eventA.postrequisiteName > eventB.postrequisiteName) {
-        return 1;
-      } else if (eventA.postrequisiteName < eventB.postrequisiteName) {
-        return -1;
-      }
-
-      if (eventA.session > eventB.session) {
-        return 1;
-      } else {
-        return -1;
-      }
-    });
   }
 
   get nonIlmPreWorkEvents() {

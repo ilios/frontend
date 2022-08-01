@@ -1,3 +1,4 @@
+@use "sass:color";
 .week-glance {
   .title {
     @include ilios-heading-h3;
@@ -22,10 +23,12 @@
     }
   }
 
-
-
   .event {
-    margin-bottom: 1em;
+    margin-bottom: .25rem;
+
+    &:nth-of-type(even) {
+      background-color: color.adjust($culturedGrey, $lightness: 4%);
+    }
 
     p {
       margin: 0;
@@ -42,17 +45,6 @@
       }
     }
 
-    ul {
-      list-style-position: inside;
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-
-      ul {
-        margin-left: 1em;
-      }
-    }
-
     .sessiontype,
     .location {
       font-style: italic;
@@ -63,47 +55,10 @@
       margin-left: 2em;
     }
 
-    .learning-materials {
-      margin-left: 2em;
-
-      .fa-external-link-square {
-        color: $orange;
-        @include font-size('small');
-      }
-
-      .public-notes {
-        padding-left: 2em;
-      }
-
-      .timed-release-info {
-        @include font-size('small');
-      }
-    }
-
     .instructors {
       label {
         font-weight: bold;
       }
-    }
-
-    .lm-type-icon {
-      color: $davysGrey;
-    }
-
-    .pre-work {
-
-      ol {
-        @include ilios-list-reset;
-        margin-left: 2em;
-      }
-    }
-  }
-
-  .ilm-pre-work {
-    .pre-work-title {
-      @include ilios-heading-h4;
-      font-weight: 700;
-      margin-bottom: .25rem;
     }
   }
 }

@@ -42,9 +42,9 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     await page.visit({ show: 'week' });
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 
-    assert.strictEqual(page.week.weekGlance.offeringEvents.length, 2);
-    assert.strictEqual(page.week.weekGlance.offeringEvents[0].title, 'start of week');
-    assert.strictEqual(page.week.weekGlance.offeringEvents[1].title, 'end of week');
+    assert.strictEqual(page.week.weekGlance.events.length, 2);
+    assert.strictEqual(page.week.weekGlance.events[0].title, 'start of week');
+    assert.strictEqual(page.week.weekGlance.events[1].title, 'end of week');
   });
 
   test('shows all pre work', async function (assert) {
@@ -57,8 +57,30 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
         session: id,
         prerequisites: [],
         postrequisites: [],
+        learningMaterials: [],
       };
     });
+    prerequisites[0]['learningMaterials'].push({
+      id: 1,
+      title: 'pre mat 1',
+      sessionLearningMaterial: 13,
+    });
+    prerequisites[0]['learningMaterials'].push({
+      id: 2,
+      title: 'pre mat 2',
+      sessionLearningMaterial: 99,
+    });
+    prerequisites[1]['learningMaterials'].push({
+      id: 3,
+      title: 'course mat 1',
+      courseLearningMaterial: 6,
+    });
+    prerequisites[2]['learningMaterials'].push({
+      id: 4,
+      title: 'pre mat 3',
+      sessionLearningMaterial: 24,
+    });
+
     this.server.create('userevent', {
       user: Number(this.user.id),
       startDate: today.format(),
@@ -71,11 +93,19 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     await page.visit();
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 
-    assert.strictEqual(page.week.weekGlance.offeringEvents.length, 1);
-    assert.strictEqual(page.week.weekGlance.preWork.length, 3);
-    assert.strictEqual(page.week.weekGlance.preWork[0].title, 'pre 1');
-    assert.strictEqual(page.week.weekGlance.preWork[1].title, 'pre 2');
-    assert.strictEqual(page.week.weekGlance.preWork[2].title, 'pre 3');
+    assert.strictEqual(page.week.weekGlance.events.length, 1);
+    const { learningMaterials } = page.week.weekGlance.events[0];
+    assert.strictEqual(learningMaterials.prework.length, 3);
+    assert.strictEqual(learningMaterials.prework[0].name, 'pre 1');
+    assert.strictEqual(learningMaterials.prework[0].materials.length, 2);
+    assert.strictEqual(learningMaterials.prework[0].materials[0].title, 'pre mat 2');
+    assert.strictEqual(learningMaterials.prework[0].materials[1].title, 'pre mat 1');
+
+    assert.strictEqual(learningMaterials.prework[1].name, 'pre 2');
+    assert.strictEqual(learningMaterials.prework[1].materials.length, 0);
+    assert.strictEqual(learningMaterials.prework[2].name, 'pre 3');
+    assert.strictEqual(learningMaterials.prework[2].materials.length, 1);
+    assert.strictEqual(learningMaterials.prework[2].materials[0].title, 'pre mat 3');
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');

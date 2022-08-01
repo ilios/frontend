@@ -109,10 +109,10 @@ module('Integration | Component | week glance', function (hooks) {
 
     assert.strictEqual(component.title, this.getTitle(true));
 
-    assert.strictEqual(component.offeringEvents.length, 3);
-    assert.strictEqual(component.offeringEvents[0].title, 'Learn to Learn');
-    assert.strictEqual(component.offeringEvents[1].title, 'Finding the Point in Life');
-    assert.strictEqual(component.offeringEvents[2].title, 'Schedule some materials');
+    assert.strictEqual(component.events.length, 3);
+    assert.strictEqual(component.events[0].title, 'Learn to Learn');
+    assert.strictEqual(component.events[1].title, 'Finding the Point in Life');
+    assert.strictEqual(component.events[2].title, 'Schedule some materials');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

@@ -89,9 +89,9 @@ module('Integration | Component | dashboard/week', function (hooks) {
     const expectedTitle = getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
-    assert.strictEqual(component.weekGlance.offeringEvents.length, 2, 'Blank events are not shown');
-    assert.strictEqual(component.weekGlance.offeringEvents[0].title, 'Learn to Learn');
-    assert.strictEqual(component.weekGlance.offeringEvents[1].title, 'Finding the Point in Life');
+    assert.strictEqual(component.weekGlance.events.length, 2, 'Blank events are not shown');
+    assert.strictEqual(component.weekGlance.events[0].title, 'Learn to Learn');
+    assert.strictEqual(component.weekGlance.events[1].title, 'Finding the Point in Life');
   });
 
   test('it renders blank', async function (assert) {
@@ -103,6 +103,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
     const expectedTitle = getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
-    assert.strictEqual(component.weekGlance.offeringEvents.length, 0);
+    assert.strictEqual(component.weekGlance.events.length, 0);
   });
 });

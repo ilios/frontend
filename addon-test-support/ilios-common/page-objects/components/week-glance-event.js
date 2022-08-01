@@ -1,12 +1,6 @@
-import {
-  attribute,
-  collection,
-  create,
-  hasClass,
-  isPresent,
-  property,
-  text,
-} from 'ember-cli-page-object';
+import { collection, create, hasClass, isPresent, property, text } from 'ember-cli-page-object';
+
+import learningMaterials from './week-glance/learning-material-list';
 
 import truncateText from './truncate-text';
 
@@ -32,21 +26,7 @@ const definition = {
   hasInstructors: isPresent('[data-test-instructors]'),
   instructors: text('[data-test-instructors]'),
   hasLearningMaterials: isPresent('[data-test-learning-materials]'),
-  learningMaterials: collection('[data-test-learning-materials] [data-test-learning-material]', {
-    title: text('[data-test-material-title]'),
-    hasTypeIcon: isPresent('[data-test-lm-type-icon]'),
-    typeIconTitle: text('[data-test-lm-type-icon]'),
-    hasPublicNotes: isPresent('[data-test-public-notes]'),
-    publicNotes: text('[data-test-public-notes]'),
-    hasCitation: isPresent('[data-test-citation]'),
-    citation: text('[data-test-citation]'),
-    url: attribute('href', '[data-test-material-title]'),
-    timedReleaseInfo: text('[data-test-time-release-info]'),
-  }),
-  preWork: collection('[data-test-pre-work] li', {
-    title: text(),
-    hasLink: isPresent('a'),
-  }),
+  learningMaterials,
 };
 
 export default definition;
