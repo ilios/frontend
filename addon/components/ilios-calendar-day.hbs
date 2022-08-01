@@ -5,10 +5,6 @@
       @events={{this.singleDayEvents}}
       @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}
     />
-    <IliosCalendarPreWorkEvents
-      @events={{this.ilmPreWorkEvents}}
-      @areEventsSelectable={{@areEventsSelectable}}
-    />
     <IliosCalendarMultidayEvents
       @events={{this.multiDayEvents}}
       @selectEvent={{@selectEvent}}
