@@ -5,10 +5,10 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
-
+import { map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class VisualizerCourseSessionTypes extends Component {
   @service router;
@@ -17,11 +17,7 @@ export default class VisualizerCourseSessionTypes extends Component {
   @tracked tooltipTitle = null;
 
   @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
-  @use sessionTypes = new ResolveFlatMapBy(() => [this.sessions, 'sessionType']);
-
-  get isLoaded() {
-    return !!this.sessionTypes;
-  }
+  @use loadedData = new AsyncProcess(() => [this.getData.bind(this), this.sessions]);
 
   get chartType() {
     return this.args.chartType || 'horz-bar';
@@ -31,7 +27,6 @@ export default class VisualizerCourseSessionTypes extends Component {
     if (!this.data) {
       return [];
     }
-
     let data = this.data;
     const q = cleanQuery(this.args.filter);
     if (q) {
@@ -44,9 +39,21 @@ export default class VisualizerCourseSessionTypes extends Component {
   }
 
   get data() {
-    const dataMap = this.sessions.map((session) => {
-      const minutes = Math.round(session.totalSumDuration * 60);
-      const sessionType = this.sessionTypes.findBy('id', session.belongsTo('sessionType').id());
+    if (!this.loadedData) {
+      return [];
+    }
+    return this.loadedData;
+  }
+
+  async getData(sessions) {
+    if (!sessions) {
+      return [];
+    }
+
+    const dataMap = await map(sessions.toArray(), async (session) => {
+      const hours = await session.getTotalSumDuration();
+      const minutes = Math.round(hours * 60);
+      const sessionType = await session.sessionType;
       return {
         sessionTitle: session.title,
         sessionTypeTitle: sessionType.title,
@@ -81,7 +88,7 @@ export default class VisualizerCourseSessionTypes extends Component {
     return mappedSessionTypes
       .map((obj) => {
         const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.label = `${obj.meta.sessionType} ${percent}%`;
+        obj.label = `${obj.meta.sessionType}: ${obj.data} ${this.intl.t('general.minutes')}`;
         obj.meta.totalMinutes = totalMinutes;
         obj.meta.percent = percent;
         return obj;
@@ -99,9 +106,9 @@ export default class VisualizerCourseSessionTypes extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, data, meta } = obj;
+    const { label, meta } = obj;
 
-    const title = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    const title = htmlSafe(label);
     const sessions = meta.sessions.uniq().sort().join(', ');
 
     this.tooltipTitle = title;

@@ -1,6 +1,6 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import { all, map } from 'rsvp';
+import { map } from 'rsvp';
 
 export default class CourseVisualizeSessionTypesRoute extends Route {
   @service session;
@@ -15,10 +15,7 @@ export default class CourseVisualizeSessionTypesRoute extends Route {
 
   async afterModel(course) {
     const sessions = (await course.sessions).toArray();
-    return await all([
-      map(sessions.toArray(), (s) => s.sessionType),
-      map(sessions.toArray(), (s) => s.totalSumDuration),
-    ]);
+    return await map(sessions.toArray(), (s) => s.sessionType);
   }
 
   beforeModel(transition) {

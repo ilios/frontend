@@ -1,4 +1,5 @@
 import { attribute, collection, create, text } from 'ember-cli-page-object';
+import sessionTypeChart from './visualizer-course-session-type';
 
 const definition = create({
   scope: '[data-test-course-visualize-session-type]',
@@ -9,6 +10,7 @@ const definition = create({
       link: attribute('href', 'a'),
     }),
   },
+  sessionTypeChart,
 });
 
 export default definition;

@@ -1,9 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { findAll, render, waitFor } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/visualizer-course-session-types';
 
 module('Integration | Component | visualizer-course-session-types', function (hooks) {
   setupRenderingTest(hooks);
@@ -48,8 +49,6 @@ module('Integration | Component | visualizer-course-session-types', function (ho
   });
 
   test('it renders as bar chart by default', async function (assert) {
-    assert.expect(3);
-
     this.set('course', this.courseModel);
 
     await render(hbs`<VisualizerCourseSessionTypes @course={{this.course}} @isIcon={{false}} />`);
@@ -57,15 +56,13 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     await waitFor('.loaded');
     await waitFor('svg .bars');
 
-    const chartLabels = 'svg .bars text';
-    assert.dom(chartLabels).exists({ count: 2 });
-    assert.dom(findAll(chartLabels)[0]).hasText('Campaign 22.2%');
-    assert.dom(findAll(chartLabels)[1]).hasText('Standalone 77.8%');
+    assert.strictEqual(component.chart.bars.length, 2);
+    assert.strictEqual(component.chart.labels.length, 2);
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign: 180 Minutes');
+    assert.strictEqual(component.chart.labels[1].text, 'Standalone: 630 Minutes');
   });
 
   test('it renders as donut chart', async function (assert) {
-    assert.expect(3);
-
     this.set('course', this.courseModel);
 
     await render(
@@ -75,10 +72,9 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     await waitFor('.loaded');
     await waitFor('svg .slice');
 
-    const chartLabels = 'svg .slice text';
-    assert.dom(chartLabels).exists({ count: 2 });
-    assert.dom(findAll(chartLabels)[0]).hasText('Campaign 22.2%');
-    assert.dom(findAll(chartLabels)[1]).hasText('Standalone 77.8%');
+    assert.strictEqual(component.chart.slices.length, 2);
+    assert.strictEqual(component.chart.slices[0].text, 'Campaign: 180 Minutes');
+    assert.strictEqual(component.chart.slices[1].text, 'Standalone: 630 Minutes');
   });
 
   test('filter applies', async function (assert) {
@@ -91,8 +87,9 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
-    const chartLabels = 'svg .bars text';
-    assert.dom(chartLabels).exists({ count: 1 });
-    assert.dom(findAll(chartLabels)[0]).hasText('Campaign 22.2%');
+
+    assert.strictEqual(component.chart.bars.length, 1);
+    assert.strictEqual(component.chart.labels.length, 1);
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign: 180 Minutes');
   });
 });

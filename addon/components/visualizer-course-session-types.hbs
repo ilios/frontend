@@ -1,22 +1,22 @@
 <div
   class="visualizer-course-session-types {{unless @isIcon "not-icon"}}"
+  data-test-visualizer-course-session-types
+  ...attributes
 >
-  {{#if this.isLoaded}}
-    {{#if (or @isIcon this.data.length)}}
-      <SimpleChart
-        @name={{this.chartType}}
-        @isIcon={{@isIcon}}
-        @data={{this.filteredData}}
-        @onClick={{this.barClick}}
-        @hover={{perform this.barHover}}
-        @leave={{perform this.barHover}} as |chart|
-      >
-        {{#if this.tooltipContent}}
-          <chart.tooltip @title={{this.tooltipTitle}}>
-            {{this.tooltipContent}}
-          </chart.tooltip>
-        {{/if}}
-      </SimpleChart>
-    {{/if}}
+  {{#if (or @isIcon this.data.length)}}
+    <SimpleChart
+      @name={{this.chartType}}
+      @isIcon={{@isIcon}}
+      @data={{this.filteredData}}
+      @onClick={{this.barClick}}
+      @hover={{perform this.barHover}}
+      @leave={{perform this.barHover}} as |chart|
+    >
+      {{#if this.tooltipContent}}
+        <chart.tooltip @title={{this.tooltipTitle}}>
+          {{this.tooltipContent}}
+        </chart.tooltip>
+      {{/if}}
+    </SimpleChart>
   {{/if}}
 </div>
