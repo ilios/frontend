@@ -1,17 +1,12 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-
-import { restartableTask } from 'ember-concurrency';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class CourseVisualizeObjectivesComponent extends Component {
   @service iliosConfig;
-  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
-  @restartableTask
-  *load() {
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
-    );
-  }
+  @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+  ]);
 }

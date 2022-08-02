@@ -15,11 +15,7 @@ export default class CourseVisualizeObjectivesRoute extends Route {
 
   async afterModel(course) {
     const sessions = (await course.sessions).toArray();
-    return await all([
-      course.get('objectives'),
-      map(sessions, (s) => s.objectives),
-      map(sessions, (s) => s.totalSumDuration),
-    ]);
+    return await all([course.objectives, map(sessions, (s) => s.objectives)]);
   }
 
   beforeModel(transition) {
