@@ -1,5 +1,7 @@
 <div
   class="visualizer-course-vocabularies {{unless @isIcon "not-icon"}}"
+  data-test-visualizer-course-vocabularies
+  ...attributes
 >
   {{#if this.isLoaded}}
     {{#if (or @isIcon this.data.length)}}

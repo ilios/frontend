@@ -21,8 +21,8 @@ module('Integration | Component | course-visualize-vocabularies', function (hook
     this.set('course', this.courseModel);
 
     await render(hbs`<CourseVisualizeVocabularies @model={{this.course}} />`);
-
-    assert.strictEqual(component.title, 'course 0 2021');
+    assert.strictEqual(component.courseTitle.text, 'course 0 2021');
+    assert.strictEqual(component.courseTitle.link, '/courses/1');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
@@ -36,8 +36,7 @@ module('Integration | Component | course-visualize-vocabularies', function (hook
     this.set('course', this.courseModel);
 
     await render(hbs`<CourseVisualizeVocabularies @model={{this.course}} />`);
-
-    assert.strictEqual(component.title, 'course 0 2021 - 2022');
+    assert.strictEqual(component.courseTitle.text, 'course 0 2021 - 2022');
   });
 
   test('breadcrumb', async function (assert) {

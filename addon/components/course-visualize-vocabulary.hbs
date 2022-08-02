@@ -23,10 +23,10 @@
       {{@model.vocabulary.title}}
     </span>
   </div>
-  <h2>
+  <h2 data-test-vocabulary-title>
     {{@model.vocabulary.title}}
   </h2>
-  <h3 class="clickable" data-test-title>
+  <h3 class="clickable" data-test-course-title>
     <LinkTo @route="course" @model={{@model.course}}>
       {{@model.course.title}}
       {{#if this.academicYearCrossesCalendarYearBoundaries}}
