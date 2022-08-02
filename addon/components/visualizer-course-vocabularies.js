@@ -5,7 +5,6 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
@@ -18,25 +17,23 @@ export default class VisualizerCourseVocabularies extends Component {
 
   @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
 
-  @use dataObjects = new AsyncProcess(() => [
-    this.getDataObjects.bind(this),
-    this.sessionsWithMinutes,
-  ]);
-
-  get sessionsWithMinutes() {
-    return this.sessions.map((session) => {
-      return {
-        session,
-        minutes: Math.round(session.totalSumDuration * 60),
-      };
-    });
-  }
+  @use dataObjects = new AsyncProcess(() => [this.getDataObjects.bind(this), this.sessions]);
 
   get isLoaded() {
     return !!this.dataObjects;
   }
 
-  async getDataObjects(sessionsWithMinutes) {
+  async getDataObjects(sessions) {
+    if (!sessions) {
+      return [];
+    }
+    const sessionsWithMinutes = await map(sessions.toArray(), async (session) => {
+      const hours = await session.getTotalSumDuration();
+      return {
+        session,
+        minutes: Math.round(hours * 60),
+      };
+    });
     return map(sessionsWithMinutes, async ({ session, minutes }) => {
       const terms = await session.terms;
       const vocabularies = await all(terms.mapBy('vocabulary'));

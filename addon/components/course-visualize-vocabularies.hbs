@@ -1,37 +1,35 @@
 <section
   class="course-visualize-vocabularies"
   data-test-course-visualize-vocabularies
-  {{did-insert (perform this.load)}}
+  ...attributes
 >
-  {{#unless this.load.isRunning}}
-    <div class="breadcrumbs" data-test-breadcrumb>
-      <span>
-        <LinkTo @route="course" @model={{@model}}>
-          {{@model.title}}
-        </LinkTo>
-      </span>
-      <span>
-        <LinkTo @route="course-visualizations" @model={{@model}}>
-          {{t "general.visualizations"}}
-        </LinkTo>
-      </span>
-      <span>
-        {{t "general.vocabularies"}}
-      </span>
-    </div>
-    <h2>
-      {{t "general.vocabularies"}}
-    </h2>
-    <h3 class="clickable" data-test-title>
+  <div class="breadcrumbs" data-test-breadcrumb>
+    <span>
       <LinkTo @route="course" @model={{@model}}>
         {{@model.title}}
-        {{#if this.academicYearCrossesCalendarYearBoundaries}}
-          {{@model.year}} - {{add @model.year 1}}
-        {{else}}
-          {{@model.year}}
-        {{/if}}
       </LinkTo>
-    </h3>
-    <VisualizerCourseVocabularies @course={{@model}} />
-  {{/unless}}
+    </span>
+    <span>
+      <LinkTo @route="course-visualizations" @model={{@model}}>
+        {{t "general.visualizations"}}
+      </LinkTo>
+    </span>
+    <span>
+      {{t "general.vocabularies"}}
+    </span>
+  </div>
+  <h2>
+    {{t "general.vocabularies"}}
+  </h2>
+  <h3 class="clickable" data-test-course-title>
+    <LinkTo @route="course" @model={{@model}}>
+      {{@model.title}}
+      {{#if this.academicYearCrossesCalendarYearBoundaries}}
+        {{@model.year}} - {{add @model.year 1}}
+      {{else}}
+        {{@model.year}}
+      {{/if}}
+    </LinkTo>
+  </h3>
+  <VisualizerCourseVocabularies @course={{@model}} />
 </section>

@@ -2,9 +2,10 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { click, render, findAll, waitFor } from '@ember/test-helpers';
+import { click, render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/visualizer-course-vocabulary';
 
 module('Integration | Component | visualizer-course-vocabulary', function (hooks) {
   setupRenderingTest(hooks);
@@ -65,10 +66,10 @@ module('Integration | Component | visualizer-course-vocabulary', function (hooks
     await waitFor('.loaded');
     await waitFor('svg .bars');
 
-    const chartLabels = 'svg .bars text';
-    assert.dom(chartLabels).exists({ count: 2 });
-    assert.dom(findAll(chartLabels)[0]).hasText('Campaign 22.2%');
-    assert.dom(findAll(chartLabels)[1]).hasText('Standalone 77.8%');
+    assert.strictEqual(component.chart.bars.length, 2);
+    assert.strictEqual(component.chart.labels.length, 2);
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign: 180 Minutes');
+    assert.strictEqual(component.chart.labels[1].text, 'Standalone: 630 Minutes');
   });
 
   test('on-click transition fires', async function (assert) {

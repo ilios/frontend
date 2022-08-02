@@ -4,6 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/visualizer-course-vocabularies';
 
 module('Integration | Component | visualizer-course-vocabularies', function (hooks) {
   setupRenderingTest(hooks);
@@ -11,7 +12,6 @@ module('Integration | Component | visualizer-course-vocabularies', function (hoo
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(3);
     const vocabulary1 = this.server.create('vocabulary', {
       title: 'Standalone',
     });
@@ -55,10 +55,8 @@ module('Integration | Component | visualizer-course-vocabularies', function (hoo
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .slice');
-    const chart = 'svg';
-    const chartLabels = `${chart} .slice text`;
-    assert.dom(chartLabels).exists({ count: 2 });
-    assert.dom(chart).containsText('Standalone');
-    assert.dom(chart).containsText('Campaign');
+    assert.strictEqual(component.chart.slices.length, 2);
+    assert.strictEqual(component.chart.slices[0].text, 'Standalone');
+    assert.strictEqual(component.chart.slices[1].text, 'Campaign');
   });
 });
