@@ -24,10 +24,12 @@
   }
 
   .event {
-    margin-bottom: .25rem;
+    padding: 0 .25rem;
+    margin: 1rem 0;
+    border-left: 3px solid $lightBlue;
 
     &:nth-of-type(even) {
-      background-color: color.adjust($culturedGrey, $lightness: 4%);
+      border-left: 3px solid $lavenderBlush;
     }
 
     p {
@@ -37,11 +39,11 @@
 
     .event-title {
       @include ilios-heading-h5;
-      font-weight: bolder;
+      font-weight: 700;
       margin-bottom: 0;
 
       .date {
-        font-weight: normal;
+        font-weight: 400;
       }
     }
 
@@ -57,7 +59,7 @@
 
     .instructors {
       label {
-        font-weight: bold;
+        font-weight: 600;
       }
     }
   }
