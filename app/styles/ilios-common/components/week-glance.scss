@@ -24,8 +24,13 @@
   }
 
   .event {
-    padding: .25rem 0;
-    margin: .25rem 0;
+    padding: 0 .25rem;
+    margin: 1rem 0;
+    border-left: 3px solid $lightBlue;
+
+    &:nth-of-type(even) {
+      border-left: 3px solid $lavenderBlush;
+    }
 
     p {
       margin: 0;
