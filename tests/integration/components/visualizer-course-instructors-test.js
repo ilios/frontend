@@ -2,9 +2,10 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { click, render, findAll, waitFor } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/visualizer-course-instructors';
 
 module('Integration | Component | visualizer-course-instructors', function (hooks) {
   setupRenderingTest(hooks);
@@ -58,12 +59,12 @@ module('Integration | Component | visualizer-course-instructors', function (hook
     await waitFor('.loaded');
     await waitFor('svg .bars');
 
-    const chartLabels = 'svg .bars text';
-    assert.dom(chartLabels).exists({ count: 4 });
-    assert.dom(findAll(chartLabels)[0]).containsText('Daisy 13.0%');
-    assert.dom(findAll(chartLabels)[1]).containsText('Duke 13.0%');
-    assert.dom(findAll(chartLabels)[2]).containsText('Marie 37.0%');
-    assert.dom(findAll(chartLabels)[3]).containsText('William 37.0%');
+    assert.strictEqual(component.chart.bars.length, 4);
+    assert.strictEqual(component.chart.labels.length, 4);
+    assert.strictEqual(component.chart.labels[0].text, 'Daisy: 180 Minutes');
+    assert.strictEqual(component.chart.labels[1].text, 'Duke: 180 Minutes');
+    assert.strictEqual(component.chart.labels[2].text, 'William: 510 Minutes');
+    assert.strictEqual(component.chart.labels[3].text, 'Marie: 810 Minutes');
   });
 
   test('filter applies', async function (assert) {
@@ -77,9 +78,9 @@ module('Integration | Component | visualizer-course-instructors', function (hook
     await waitFor('.loaded');
     await waitFor('svg .bars');
 
-    const chartLabels = 'svg .bars text';
-    assert.dom(chartLabels).exists({ count: 1 });
-    assert.dom(findAll(chartLabels)[0]).containsText('Marie 37.0%');
+    assert.strictEqual(component.chart.bars.length, 1);
+    assert.strictEqual(component.chart.labels.length, 1);
+    assert.strictEqual(component.chart.labels[0].text, 'Marie: 810 Minutes');
   });
 
   test('it renders as donut chart', async function (assert) {
@@ -92,8 +93,11 @@ module('Integration | Component | visualizer-course-instructors', function (hook
     await waitFor('.loaded');
     await waitFor('svg .slice');
 
-    const chartLabels = 'svg .slice text';
-    assert.dom(chartLabels).exists({ count: 4 });
+    assert.strictEqual(component.chart.slices.length, 4);
+    assert.strictEqual(component.chart.slices[0].text, 'Daisy: 180 Minutes');
+    assert.strictEqual(component.chart.slices[1].text, 'Duke: 180 Minutes');
+    assert.strictEqual(component.chart.slices[2].text, 'William: 510 Minutes');
+    assert.strictEqual(component.chart.slices[3].text, 'Marie: 810 Minutes');
   });
 
   test('on-click transition fires', async function (assert) {
@@ -113,6 +117,6 @@ module('Integration | Component | visualizer-course-instructors', function (hook
     await waitFor('.loaded');
     await waitFor('svg .bars');
 
-    await click('svg .bars rect:nth-of-type(1)');
+    await component.chart.bars[0].click();
   });
 });
