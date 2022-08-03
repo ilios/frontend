@@ -222,7 +222,6 @@ general:
   objectiveParentTitle: "Seleccione Objetivos Principales"
   objectiveParentTitleSingular: "Seleccione Objetivo Principale"
   objectives: Objetivos
-  objectivesTotalInstructionalTime: "Objetivos: Tiempo de Instrucción Total"
   objectivesWithNoHours: "Los siguientes objetivos del curso no están vinculados a ninguna sesión, o están vinculados sólo a las sesiones sin datos de duración."
   objectivesWithNoLink: "No hay objetivos del curso actualmente vinculados a tiempo de instrucción."
   offering: Ofrecimiento
