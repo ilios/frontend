@@ -19,7 +19,10 @@
         {{t "general.instructors"}}
       </span>
     </div>
-    <h2 class="clickable" data-test-title>
+    <h2>
+      {{t "general.instructors"}}
+    </h2>
+    <h3 class="clickable" data-test-title>
       <LinkTo @route="course" @model={{@model}}>
         {{@model.title}}
         {{#if this.academicYearCrossesCalendarYearBoundaries}}
@@ -28,9 +31,6 @@
           {{@model.year}}
         {{/if}}
       </LinkTo>
-    </h2>
-    <h3>
-      {{t "general.instructors"}}
     </h3>
     <div class="filter" data-test-filter>
       <input
