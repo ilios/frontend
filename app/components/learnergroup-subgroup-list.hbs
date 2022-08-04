@@ -44,9 +44,9 @@
         {{t "general.savedSuccessfully"}}
       </div>
     {{/if}}
-    <div class="learnergroup-subgroup-list-list">
-      {{#if (is-fulfilled @parentGroup.children)}}
-        {{#if (get (await @parentGroup.children) "length")}}
+    {{#if (is-fulfilled @parentGroup.children)}}
+      {{#if (get (await @parentGroup.children) "length")}}
+        <div class="learnergroup-subgroup-list-list">
           <LearnergroupList
             @bubbleSort={{false}}
             @learnerGroups={{await @parentGroup.children}}
@@ -56,10 +56,10 @@
             @remove={{this.removeLearnerGroup}}
             @copy={{perform this.copyGroup}}
           />
-        {{/if}}
-      {{else}}
-        <LoadingSpinner />
+        </div>
       {{/if}}
-    </div>
+    {{else}}
+      <LoadingSpinner />
+    {{/if}}
   </div>
 </section>
