@@ -44,12 +44,13 @@
 
     .results {
       @include user-search-results;
-
-      &.navigating {
-        li {
-          background-color: $culturedGrey;
-          border-bottom: 1px solid $culturedGrey;
-        }
+      button {
+        text-align: left;
+        width: 100%;
+      }
+      button:active {
+        background-color: $culturedGrey;
+        border-bottom: 1px solid $culturedGrey;
       }
     }
   }
