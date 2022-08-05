@@ -1,4 +1,22 @@
 <div class="programyear-details" data-test-program-year-details ...attributes>
+  {{#if @programYearLeadershipDetails}}
+    <ProgramYear::LeadershipExpanded
+      @programYear={{@programYear}}
+      @canUpdate={{@canUpdate}}
+      @collapse={{fn @setProgramYearLeadershipDetails false}}
+      @expand={{fn @setProgramYearLeadershipDetails true}}
+      @isManaging={{@manageProgramYearLeadership}}
+      @setIsManaging={{@setManageProgramYearLeadership}}
+    />
+  {{else}}
+    <LeadershipCollapsed
+      @title={{t "general.programYearLeadership"}}
+      @showAdministrators={{false}}
+      @showDirectors={{true}}
+      @directorsCount={{has-many-length @programYear "directors"}}
+      @expand={{fn @setProgramYearLeadershipDetails true}}
+    />
+  {{/if}}
   {{#if (or (eq @programYear.competencies.length 0) @pyCompetencyDetails)}}
     <ProgramYear::Competencies
       @programYear={{@programYear}}

@@ -8,14 +8,18 @@ export default class ProgramYearIndexController extends Controller {
     'pyObjectiveDetails',
     'pyTaxonomyDetails',
     'pyCompetencyDetails',
+    'pyLeadershipDetails',
     'managePyCompetencies',
+    'managePyLeadership',
   ];
 
   @tracked canUpdate = false;
   @tracked pyObjectiveDetails = false;
   @tracked pyTaxonomyDetails = false;
   @tracked pyCompetencyDetails = false;
+  @tracked pyLeadershipDetails = false;
   @tracked managePyCompetencies = false;
+  @tracked managePyLeadership = false;
 
   @use program = new ResolveAsyncValue(() => [this.model.program]);
 }

@@ -1,0 +1,45 @@
+<div
+  class="program-year-leadership-expanded"
+  data-test-program-year-leadership-expanded
+  ...attributes
+>
+  <div class="program-year-leadership-expanded-header">
+    <h3 class="title collapsible clickable" role="button" {{on "click" @collapse}}>
+      {{t "general.programYearLeadership"}}
+    </h3>
+    <div class="actions">
+      {{#if @isManaging}}
+        <button type="button" class="bigadd" {{on "click" (perform this.save)}}>
+          <FaIcon
+            @icon={{if this.save.isRunning "spinner" "check"}}
+            @spin={{this.save.isRunning}}
+          />
+        </button>
+        <button type="button" class="bigcancel" {{on "click" this.close}}>
+          <FaIcon @icon="arrow-rotate-left" />
+        </button>
+      {{else if @canUpdate}}
+        <button type="button" {{on "click" (fn @setIsManaging true)}}>
+          {{t "general.manageLeadership"}}
+        </button>
+      {{/if}}
+    </div>
+  </div>
+  <div class="program-leadership-expanded-content">
+    {{#if @isManaging}}
+      <LeadershipManager
+        @directors={{this.directors}}
+        @showAdministrators={{false}}
+        @showDirectors={{true}}
+        @addDirector={{this.addDirector}}
+        @removeDirector={{this.removeDirector}}
+      />
+    {{else}}
+      <LeadershipList
+        @directors={{this.directors}}
+        @showAdministrators={{false}}
+        @showDirectors={{true}}
+      />
+    {{/if}}
+  </div>
+</div>

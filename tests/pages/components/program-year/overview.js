@@ -1,14 +1,15 @@
-import { clickable, collection, create } from 'ember-cli-page-object';
-import search from 'ilios-common/page-objects/components/user-search';
-import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import { attribute, create, text } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-programyear-overview]',
-  directors: collection('[data-test-directors]', {
-    remove: clickable('[data-test-remove]'),
-    userNameInfo,
-  }),
-  search,
+  scope: '[data-test-program-year-overview]',
+  title: text('[data-test-title]'),
+  actions: {
+    scope: '[data-test-actions]',
+    visualizations: {
+      scope: '[data-test-go-to-visualizations]',
+      url: attribute('href'),
+    },
+  },
 };
 
 export default definition;

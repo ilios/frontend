@@ -1,13 +1,13 @@
 <div
   class="programyear-overview"
-  data-test-programyear-overview
+  data-test-program-year-overview
   ...attributes
 >
   <div class="programyear-overview-header">
-    <h5>
+    <h5 data-test-title>
       {{t "general.overview"}}
     </h5>
-    <div class="programyear-overview-actions">
+    <div class="programyear-overview-actions" data-test-actions>
       {{#if this.programYearVisualizations}}
         <LinkTo
           @route="program-year-visualizations"
@@ -19,44 +19,5 @@
         </LinkTo>
       {{/if}}
     </div>
-  </div>
-  <div class="programyear-overview-content">
-    <label>
-      {{t "general.directors"}}:
-    </label>
-    <div>
-      {{#if @canUpdate}}
-        <ul class="removable-directors">
-          {{#each this.sortedDirectors as |user|}}
-            <li data-test-directors>
-              <button
-                type="button" {{on "click" (perform this.removeDirector user)}}
-                class="link-button"
-                data-test-remove
-              >
-                <UserNameInfo @user={{user}} />
-                <FaIcon @icon="xmark" class="remove" />
-              </button>
-            </li>
-          {{/each}}
-        </ul>
-      {{else}}
-        <ul class="directors">
-          {{#each this.sortedDirectors as |user|}}
-            <li data-test-directors>
-              <UserNameInfo @user={{user}} />
-            </li>
-          {{else}}
-            {{t "general.none"}}
-          {{/each}}
-        </ul>
-      {{/if}}
-    </div>
-    {{#if @canUpdate}}
-      <UserSearch
-        @addUser={{perform this.addDirector}}
-        @currentlyActiveUsers={{this.directors}}
-      />
-    {{/if}}
   </div>
 </div>
