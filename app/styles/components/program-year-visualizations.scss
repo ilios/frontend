@@ -1,20 +1,21 @@
 .program-year-visualizations {
-  padding-left: 1rem;
+  @include main-section;
+  margin-bottom: 1rem;
 
-  .backtolink {
-    margin: 1rem 0;
-  }
+  .content {
+    margin: 0 .8rem;
 
-  .visualizations {
-    display: flex;
-    flex-wrap: wrap;
-    justify-items: center;
-    margin-top: 2rem;
+    .visualizations {
+      display: flex;
+      flex-wrap: wrap;
+      justify-items: center;
+      margin-top: 2rem;
 
-    .visualizer-program-year-competencies {
-      height: 40vh;
-      margin-bottom: 2rem;
-      width: 40vw;
+      .visualizer-program-year-competencies {
+        height: 40vh;
+        margin-bottom: 2rem;
+        width: 40vw;
+      }
     }
   }
 }
