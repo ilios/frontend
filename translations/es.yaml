@@ -312,6 +312,7 @@ general:
   programTitleShort: "Titulo de Programa (corto)"
   programYear: "Año de Programa"
   programYears: "Años de Programa"
+  programYearLeadership: "Liderazgo de Año de Programa"
   programYearVisualizations: "Visualizaciones de Año de Programa"
   promoteToPrimaryCohort: "Ascender al Principal Cohorte"
   pronouns: "Pronombres"
