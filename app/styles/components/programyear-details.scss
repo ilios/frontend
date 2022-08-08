@@ -1,4 +1,9 @@
 .programyear-details {
   background-color: $slightWhite;
+  margin: 0 1.5rem;
   padding: .8rem;
+
+  .collapsed-competencies {
+    border-top: 1px dotted $orange;
+  }
 }

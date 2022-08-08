@@ -1,5 +1,6 @@
 .program-overview {
   @include ilios-overview($culturedGrey);
+  margin: 0 .8rem;
 
   h2 {
     @include ilios-overview-title;
