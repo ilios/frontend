@@ -1,6 +1,10 @@
 .dashboard-mycourses {
   @include dashboard-block;
 
+  @include for-laptop-and-up() {
+    grid-column: 2 / 2;
+  }
+
   .dashboard-block-body {
     ul {
       @include ilios-list-reset;

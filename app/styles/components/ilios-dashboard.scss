@@ -1,13 +1,13 @@
 .ilios-dashboard {
   .dashboard-blocks {
     @include main-section;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     justify-content: space-between;
-    flex-direction: column;
     gap: .5rem;
 
     @include for-laptop-and-up() {
-      flex-direction: row;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

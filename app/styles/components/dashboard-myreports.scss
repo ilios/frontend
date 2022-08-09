@@ -1,6 +1,10 @@
 .dashboard-myreports {
   @include dashboard-block;
 
+  @include for-laptop-and-up() {
+    grid-column: 1 / 2;
+  }
+
   .saved-reports {
     @include ilios-list-reset;
     margin: .5rem;
