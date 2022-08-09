@@ -4,6 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { component } from 'ilios/tests/pages/components/program-year/header';
 
 module('Integration | Component | program-year/header', function (hooks) {
   setupRenderingTest(hooks);
@@ -11,7 +12,6 @@ module('Integration | Component | program-year/header', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(3);
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
@@ -27,16 +27,12 @@ module('Integration | Component | program-year/header', function (hooks) {
     const programYearModel = await this.owner
       .lookup('service:store')
       .find('program-year', programYear.id);
-
     this.set('programYear', programYearModel);
-    this.set('canUpdate', true);
-
-    await render(
-      hbs`<ProgramYear::Header @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
-    );
-    assert.dom('.backtolink').hasText('Back to Program Years');
-    assert.dom('header .fa-lock').doesNotExist();
-    assert.dom('header .title').hasText('Matriculation Year 2019 Lorem Ipsum');
+    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
+    assert.strictEqual(component.backToProgram.text, 'Back to Program Years');
+    assert.notOk(component.isLocked);
+    assert.strictEqual(component.matriculationYear, 'Matriculation Year 2019');
+    assert.strictEqual(component.cohort, '(Lorem Ipsum)');
   });
 
   test('matriculation year shows as year-range based on application config', async function (assert) {
@@ -63,13 +59,8 @@ module('Integration | Component | program-year/header', function (hooks) {
       .lookup('service:store')
       .find('program-year', programYear.id);
     this.set('programYear', programYearModel);
-    this.set('canUpdate', true);
-
-    await render(
-      hbs`<ProgramYear::Header @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
-    );
-
-    assert.dom('header .title').hasText('Matriculation Year 2019 - 2020 Lorem Ipsum');
+    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
+    assert.strictEqual(component.matriculationYear, 'Matriculation Year 2019 - 2020');
   });
 
   test('default cohort title', async function (assert) {
@@ -89,41 +80,9 @@ module('Integration | Component | program-year/header', function (hooks) {
     const programYearModel = await this.owner
       .lookup('service:store')
       .find('program-year', programYear.id);
-
     this.set('programYear', programYearModel);
-    this.set('canUpdate', true);
-
-    await render(
-      hbs`<ProgramYear::Header @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
-    );
-    assert.dom('header .title').hasText('Matriculation Year 2019 Class of 2023');
-  });
-
-  test('read-only', async function (assert) {
-    assert.expect(1);
-    const school = this.server.create('school', {});
-    const program = this.server.create('program', {
-      school,
-    });
-    const programYear = this.server.create('program-year', {
-      program,
-      startYear: 2019,
-    });
-    this.server.create('cohort', {
-      programYear,
-      title: 'Lorem Ipsum',
-    });
-    const programYearModel = await this.owner
-      .lookup('service:store')
-      .find('program-year', programYear.id);
-
-    this.set('programYear', programYearModel);
-    this.set('canUpdate', false);
-
-    await render(
-      hbs`<ProgramYear::Header @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
-    );
-    assert.dom('.programyear-publication button').doesNotExist();
+    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
+    assert.strictEqual(component.cohort, '(Class of 2023)');
   });
 
   test('locked', async function (assert) {
@@ -144,13 +103,8 @@ module('Integration | Component | program-year/header', function (hooks) {
     const programYearModel = await this.owner
       .lookup('service:store')
       .find('program-year', programYear.id);
-
     this.set('programYear', programYearModel);
-    this.set('canUpdate', false);
-
-    await render(
-      hbs`<ProgramYear::Header @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
-    );
-    assert.dom('header .fa-lock').exists();
+    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
+    assert.ok(component.isLocked);
   });
 });

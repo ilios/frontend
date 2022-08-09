@@ -13,7 +13,7 @@
   <header>
     <div class="title">
       {{#if @programYear.locked}}
-        <FaIcon @icon="lock" />
+        <FaIcon @icon="lock" data-test-lock/>
       {{/if}}
       {{#if @programYear}}
         <h4 data-test-matriculation-year>
@@ -26,9 +26,9 @@
         </h4>
         <h5 data-test-cohort>
           {{#if (get (await @programYear.cohort) "title")}}
-            {{get (await @programYear.cohort) "title"}}
+            ({{get (await @programYear.cohort) "title"}})
           {{else}}
-            {{t "general.classOf" year=(await @programYear.classOfYear)}}
+            ({{t "general.classOf" year=(await @programYear.classOfYear)}})
           {{/if}}
         </h5>
       {{/if}}
