@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { inject as service } from '@ember/service';
-import { restartableTask } from 'ember-concurrency';
+import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 export default class UserMaterialStatusComponent extends Component {
@@ -41,13 +41,13 @@ export default class UserMaterialStatusComponent extends Component {
   @restartableTask
   *setStatus(statusValue) {
     this.tmpStatus = statusValue;
-    const user = yield this.currentUser.getModel();
-    const sessionLearningMaterial = yield this.store.find(
-      'session-learning-material',
-      this.args.learningMaterial.sessionLearningMaterial
-    );
     let materialStatus = this.materialStatus;
     if (!materialStatus) {
+      const user = yield this.currentUser.getModel();
+      const sessionLearningMaterial = yield this.store.findRecord(
+        'session-learning-material',
+        this.args.learningMaterial.sessionLearningMaterial
+      );
       materialStatus = this.store.createRecord('user-session-material-status', {
         user,
         material: sessionLearningMaterial,
@@ -56,6 +56,7 @@ export default class UserMaterialStatusComponent extends Component {
     }
 
     materialStatus.set('status', statusValue);
+    yield timeout(500);
     yield materialStatus.save();
     this.tmpStatus = null;
   }
