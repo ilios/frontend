@@ -91,14 +91,14 @@
 }
 
 
-@mixin ilios-table-colors () {
+@mixin ilios-table-colors ($backgroundColor: $slightWhite) {
   thead {
-    background-color: $slightWhite;
+    background-color: $backgroundColor;
   }
 
   th {
     border-bottom: 1px solid color.adjust($culturedGrey, $lightness: -15%);
-    background-color: $slightWhite;
+    background-color: $backgroundColor;
   }
 }
 
