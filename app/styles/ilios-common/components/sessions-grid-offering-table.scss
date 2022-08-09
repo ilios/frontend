@@ -2,7 +2,7 @@
 
 .sessions-grid-offering-table {
   @include ilios-table-structure;
-  @include ilios-table-colors;
+  @include ilios-table-colors($blueMunsell);
 
   margin: auto;
   width: 95%;
