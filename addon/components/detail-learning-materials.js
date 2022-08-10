@@ -6,6 +6,7 @@ import { dropTask, restartableTask } from 'ember-concurrency';
 import { all } from 'rsvp';
 import ObjectProxy from '@ember/object/proxy';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import scrollIntoView from 'scroll-into-view';
 
 export default class DetailCohortsComponent extends Component {
   @service currentUser;
@@ -15,12 +16,12 @@ export default class DetailCohortsComponent extends Component {
   @tracked managingMaterial;
   @tracked totalMaterialsToSave;
   @tracked currentMaterialsSaved;
-
   @tracked displayAddNewForm = false;
   @tracked type;
   @tracked materialsRelationship;
   @tracked learningMaterialStatuses;
   @tracked learningMaterialUserRoles;
+  @tracked title;
 
   constructor() {
     super(...arguments);
@@ -82,6 +83,18 @@ export default class DetailCohortsComponent extends Component {
     this.displayAddNewForm = true;
   }
 
+  @action
+  closeLearningmaterialManager() {
+    this.managingMaterial = null;
+    scrollIntoView(this.title);
+  }
+
+  @action
+  closeNewLearningmaterial() {
+    this.displayAddNewForm = false;
+    scrollIntoView(this.title);
+  }
+
   @dropTask
   *saveNewLearningMaterial(lm) {
     const savedLm = yield lm.save();
@@ -106,6 +119,7 @@ export default class DetailCohortsComponent extends Component {
     yield lmSubject.save();
     this.displayAddNewForm = false;
     this.type = null;
+    scrollIntoView(this.title);
   }
 
   @dropTask
@@ -122,6 +136,7 @@ export default class DetailCohortsComponent extends Component {
 
     yield this.saveSomeMaterials(materialsToSave);
     this.isSorting = false;
+    scrollIntoView(this.title);
   }
 
   @dropTask
