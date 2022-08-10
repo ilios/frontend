@@ -5,10 +5,6 @@
     font-weight: bolder;
   }
 
-  .target-title {
-    word-break: break-all;
-  }
-
   .results,
   .mesh-search-results {
     @include ilios-list-reset;
