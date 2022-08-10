@@ -17,7 +17,7 @@
             type="text"
             value={{this.title}}
             disabled={{this.save.isRunning}}
-            {{on "key-press" (fn this.addErrorDisplayFor "title")}}
+            {{on "keyup" (fn this.addErrorDisplayFor "title")}}
             {{on "input" (pick "target.value" (set this.title))}}
           />
           <ValidationError @errors={{get-errors-for this.title}} data-test-title-validation-error-message />
