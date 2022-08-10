@@ -510,8 +510,8 @@ export default class OfferingForm extends Component {
         if (isPresent(defaultLocation)) {
           room = defaultLocation;
         }
-        const instructors = await learnerGroup.instructors;
-        const instructorGroups = await learnerGroup.instructorGroups;
+        const instructors = (await learnerGroup.instructors).toArray();
+        const instructorGroups = (await learnerGroup.instructorGroups).toArray();
         const offering = {
           startDate,
           endDate,

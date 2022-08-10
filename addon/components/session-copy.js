@@ -100,10 +100,9 @@ export default class SessionCopyComponent extends Component {
     );
 
     session.set('course', newCourse);
-    const props = yield hash(
-      sessionToCopy.getProperties('meshDescriptors', 'terms', 'sessionType')
-    );
-    session.setProperties(props);
+    session.set('meshDescriptors', (yield sessionToCopy.meshDescriptors).toArray());
+    session.set('terms', (yield sessionToCopy.terms).toArray());
+    session.set('sessionType', yield sessionToCopy.sessionType);
 
     const ilmToCopy = yield sessionToCopy.ilmSession;
     if (ilmToCopy) {
@@ -144,8 +143,8 @@ export default class SessionCopyComponent extends Component {
     const sessionObjectivesToCopy = relatedSessionObjectives.sortBy('id').toArray();
     for (let i = 0, n = sessionObjectivesToCopy.length; i < n; i++) {
       const sessionObjectiveToCopy = sessionObjectivesToCopy[i];
-      const meshDescriptors = yield sessionObjectiveToCopy.meshDescriptors;
-      const terms = yield sessionObjectiveToCopy.terms;
+      const meshDescriptors = (yield sessionObjectiveToCopy.meshDescriptors).toArray();
+      const terms = (yield sessionObjectiveToCopy.terms).toArray();
       const sessionObjective = this.store.createRecord('session-objective', {
         session,
         position: sessionObjectiveToCopy.position,

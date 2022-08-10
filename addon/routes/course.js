@@ -26,7 +26,8 @@ export default class CourseRoute extends Route {
         this.store.findAll('course-clerkship-type'),
         this.store.findAll('learning-material-status'),
         this.store.findAll('learning-material-user-role'),
-        this.dataLoader.loadSchoolForCourses(course.belongsTo('school').id()),
+        //temporarily disabled, waiting on https://github.com/emberjs/data/issues/8110
+        // this.dataLoader.loadSchoolForCourses(course.belongsTo('school').id()),
       ];
     }
     const [editable] = await Promise.all([
