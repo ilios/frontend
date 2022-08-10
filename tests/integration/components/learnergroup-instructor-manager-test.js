@@ -56,7 +56,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
       @canUpdate={{true}}
     />`);
 
-    assert.strictEqual(component.title, 'Default Instructors');
+    assert.strictEqual(component.title, 'Default Instructors (3)');
     assert.strictEqual(component.assignedInstructors.length, 3);
     assert.strictEqual(component.assignedInstructors[0].userNameInfo.fullName, 'aardvark');
     assert.dom(component.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
@@ -68,6 +68,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
     assert.notOk(component.cancelButton.isVisible);
     assert.strictEqual(component.manageButton.text, 'Manage Instructors');
     await component.manage();
+    assert.strictEqual(component.title, 'Manage Default Instructors');
     assert.strictEqual(component.selectedInstructors.length, 2);
     assert.strictEqual(component.selectedInstructors[0].userNameInfo.fullName, 'aardvark');
     assert.dom(component.selectedInstructors[0].userNameInfo.hasAdditionalInfo);
@@ -100,8 +101,8 @@ module('Integration | Component | learnergroup instructor manager', function (ho
       @save={{(noop)}}
       @canUpdate={{true}}
     />`);
+    assert.strictEqual(component.title, 'Default Instructors (0)');
     assert.strictEqual(component.selectedInstructors.length, 0);
-    assert.ok(component.hasNoAssignedInstructors);
   });
 
   test('read-only mode', async function (assert) {
