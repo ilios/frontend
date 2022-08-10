@@ -12,6 +12,7 @@
           value={{this.title}}
           {{on "focus-out" (fn this.addErrorDisplayFor "title")}}
           {{on "input" (pick "target.value" (set this.title))}}
+          {{on "keyup" (fn this.addErrorDisplayFor "title")}}
         />
         <ValidationError @errors={{get-errors-for this.title}} />
       </span>
