@@ -1,9 +1,10 @@
-import { create, property } from 'ember-cli-page-object';
+import { clickable, create, property } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-user-material-status]',
   isChecked: property('checked', 'input'),
   isIndeterminate: property('indeterminate', 'input'),
+  click: clickable('input'),
 };
 
 export default definition;

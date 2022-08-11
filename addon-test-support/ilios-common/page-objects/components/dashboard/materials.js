@@ -14,6 +14,7 @@ import {
 import dashboardViewPicker from './view-picker';
 import controls from '../pagedlist-controls';
 import displayToggle from '../toggle-buttons';
+import status from '../user-material-status';
 
 const definition = {
   scope: '[data-test-dashboard-materials]',
@@ -50,31 +51,31 @@ const definition = {
     headers: {
       scope: 'thead',
       sessionTitle: {
-        scope: 'th:nth-of-type(1)',
-        isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
-        isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
-        isSortedOn: notHasClass('fa-sort', 'svg'),
-        click: clickable('button'),
-      },
-      courseTitle: {
         scope: 'th:nth-of-type(2)',
         isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
         isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
         isSortedOn: notHasClass('fa-sort', 'svg'),
         click: clickable('button'),
       },
-      title: {
+      courseTitle: {
         scope: 'th:nth-of-type(3)',
         isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
         isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
         isSortedOn: notHasClass('fa-sort', 'svg'),
         click: clickable('button'),
       },
-      instructor: {
+      title: {
         scope: 'th:nth-of-type(4)',
+        isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
+        isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
+        isSortedOn: notHasClass('fa-sort', 'svg'),
+        click: clickable('button'),
+      },
+      instructor: {
+        scope: 'th:nth-of-type(5)',
       },
       firstOfferingDate: {
-        scope: 'th:nth-of-type(5)',
+        scope: 'th:nth-of-type(6)',
         isSortedAscending: hasClass('fa-arrow-down-1-9', 'svg'),
         isSortedDescending: hasClass('fa-arrow-down-9-1', 'svg'),
         isSortedOn: notHasClass('fa-sort', 'svg'),
@@ -82,6 +83,7 @@ const definition = {
       },
     },
     rows: collection('[data-test-learning-material]', {
+      status,
       sessionTitle: text('[data-test-session-title]'),
       courseTitle: text('[data-test-course-title]'),
       title: text('[data-test-title]'),
