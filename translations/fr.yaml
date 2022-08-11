@@ -189,6 +189,7 @@ general:
   manage: Administrer
   manageAPITokens: "Gérer des jetons de l’API"
   manageCompetencies: "Manager des Compétences"
+  manageDefaultInstructors: "Gérer les instructeurs par défaut"
   manageGroupMembership: "Gérer l'appartenance au groupe"
   manageInstitutionalInfo: "Manager les informations institutionnelles du CIR"
   manageSessionAttributes: "Gérer Attributs de Séance"

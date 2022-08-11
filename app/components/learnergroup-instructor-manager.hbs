@@ -7,7 +7,11 @@
   {{#unless this.load.isRunning}}
     <div class="detail-header">
       <div class="title" data-test-title>
-        {{t "general.defaultInstructors"}}
+        {{#if this.isManaging}}
+          {{t "general.manageDefaultInstructors"}}
+        {{else}}
+          {{t "general.defaultInstructors"}} ({{get (await @learnerGroup.allInstructors) "length"}})
+        {{/if}}
       </div>
       {{#if this.isManaging}}
         <div class="actions">
@@ -96,10 +100,6 @@
               </li>
             {{/each}}
           </ul>
-        {{else}}
-          <span data-test-no-assigned-instructors>
-            {{t "general.none"}}
-          </span>
         {{/if}}
       {{/if}}
     </div>

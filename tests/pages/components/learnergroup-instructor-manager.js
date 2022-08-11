@@ -1,12 +1,4 @@
-import {
-  clickable,
-  collection,
-  create,
-  fillable,
-  hasClass,
-  isVisible,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, collection, create, fillable, hasClass, text } from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 
 const definition = {
@@ -24,7 +16,6 @@ const definition = {
   saveButton: {
     scope: '[data-test-save]',
   },
-  hasNoAssignedInstructors: isVisible('[data-test-no-assigned-instructors]'),
   assignedInstructors: collection('[data-test-assigned-instructor]', {
     userNameInfo,
   }),
