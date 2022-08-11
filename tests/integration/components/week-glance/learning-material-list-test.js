@@ -4,10 +4,12 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 import { component } from 'ilios-common/page-objects/components/week-glance/learning-material-list';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | week-glance/learning-material-list', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function (assert) {
     this.set('event', {});

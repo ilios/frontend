@@ -24,6 +24,9 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     }
     class IliosConfigMock extends Service {
       apiNameSpace = '/api';
+      async itemFromConfig(name) {
+        return name === 'materialStatusEnabled';
+      }
     }
     this.owner.register('service:iliosConfig', IliosConfigMock);
     this.owner.register('service:current-user', CurrentUserMock);

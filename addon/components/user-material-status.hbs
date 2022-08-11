@@ -1,4 +1,4 @@
-{{#if (and this.isSessionLearningMaterial this.isStatusLoaded)}}
+{{#if (and this.isEnabled this.isSessionLearningMaterial this.isStatusLoaded)}}
   <span class="user-material-status" data-test-user-material-status>
     {{#if (eq this.status 0)}}
       <input

@@ -6,12 +6,14 @@ import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/week-glance-event';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 const today = moment();
 
 module('Integration | Component | week-glance-event', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
+  setupMirage(hooks);
 
   test('it renders with some stuff', async function (assert) {
     this.set('event', {

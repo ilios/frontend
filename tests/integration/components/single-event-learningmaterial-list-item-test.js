@@ -5,10 +5,12 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/single-event-learningmaterial-list-item';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | single-event-learningmaterial-list-item', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
+  setupMirage(hooks);
 
   test('blanked', async function (assert) {
     const lm = { title: 'foo bar', isBlanked: true };

@@ -8,11 +8,15 @@ import { tracked } from '@glimmer/tracking';
 export default class UserMaterialStatusComponent extends Component {
   @service store;
   @service currentUser;
+  @service iliosConfig;
 
   @tracked tmpStatus = null;
 
   @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
   @use sessionMaterialStatuses = new ResolveAsyncValue(() => [this.user?.sessionMaterialStatuses]);
+  @use isEnabled = new ResolveAsyncValue(() => [
+    this.iliosConfig.itemFromConfig('materialStatusEnabled'),
+  ]);
 
   get isStatusLoaded() {
     return Boolean(this.sessionMaterialStatuses);

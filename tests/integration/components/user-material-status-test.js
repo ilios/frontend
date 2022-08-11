@@ -30,6 +30,16 @@ module('Integration | Component | user-material-status', function (hooks) {
       }
     }
     this.owner.register('service:current-user', CurrentUserMock);
+
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          materialStatusEnabled: true,
+          apiVersion,
+        },
+      };
+    });
   });
 
   test('it renders with no status', async function (assert) {
@@ -70,5 +80,23 @@ module('Integration | Component | user-material-status', function (hooks) {
     await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />`);
     assert.true(component.isChecked);
     assert.dom(this.element).hasText('');
+  });
+
+  test('it does not render when not enabled', async function (assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          materialStatusEnabled: false,
+          apiVersion,
+        },
+      };
+    });
+    this.set('learningMaterial', {
+      sessionLearningMaterial: 3,
+    });
+
+    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />`);
+    assert.false(component.isPresent);
   });
 });
