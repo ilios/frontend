@@ -86,13 +86,17 @@ export default class DetailCohortsComponent extends Component {
   @action
   closeLearningmaterialManager() {
     this.managingMaterial = null;
-    scrollIntoView(this.title);
+    scrollIntoView(this.title, {
+      align: { top: 0 },
+    });
   }
 
   @action
   closeNewLearningmaterial() {
     this.displayAddNewForm = false;
-    scrollIntoView(this.title);
+    scrollIntoView(this.title, {
+      align: { top: 0 },
+    });
   }
 
   @dropTask
@@ -119,7 +123,9 @@ export default class DetailCohortsComponent extends Component {
     yield lmSubject.save();
     this.displayAddNewForm = false;
     this.type = null;
-    scrollIntoView(this.title);
+    scrollIntoView(this.title, {
+      align: { top: 0 },
+    });
   }
 
   @dropTask
@@ -136,7 +142,9 @@ export default class DetailCohortsComponent extends Component {
 
     yield this.saveSomeMaterials(materialsToSave);
     this.isSorting = false;
-    scrollIntoView(this.title);
+    scrollIntoView(this.title, {
+      align: { top: 0 },
+    });
   }
 
   @dropTask
