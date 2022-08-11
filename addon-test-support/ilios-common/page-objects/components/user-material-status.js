@@ -5,6 +5,7 @@ const definition = {
   isChecked: property('checked', 'input'),
   isIndeterminate: property('indeterminate', 'input'),
   click: clickable('input'),
+  isDisabled: property('disabled', 'input'),
 };
 
 export default definition;

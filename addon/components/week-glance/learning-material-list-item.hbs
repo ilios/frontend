@@ -7,9 +7,7 @@
       {{@lm.title}}
     </span>
   {{else}}
-    {{#if @showLink}}
-      <UserMaterialStatus @learningMaterial={{@lm}} />
-    {{/if}}
+    <UserMaterialStatus @learningMaterial={{@lm}} @disabled={{not @showLink}} />
     <LmIcons @learningMaterial={{@lm}} />
     {{#if (and @lm.absoluteFileUri @showLink)}}
       {{#if (eq @lm.mimetype "application/pdf")}}

@@ -49,6 +49,7 @@ module('Integration | Component | user-material-status', function (hooks) {
 
     await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />`);
     assert.false(component.isChecked);
+    assert.false(component.isDisabled);
     assert.dom(this.element).hasText('');
   });
 
@@ -98,5 +99,18 @@ module('Integration | Component | user-material-status', function (hooks) {
 
     await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />`);
     assert.false(component.isPresent);
+  });
+
+  test('checkbox inactive when disabled', async function (assert) {
+    this.set('learningMaterial', {
+      sessionLearningMaterial: 3,
+    });
+
+    await render(hbs`
+      <UserMaterialStatus @learningMaterial={{this.learningMaterial}} @disabled={{true}} />
+    `);
+    assert.true(component.isChecked);
+    assert.true(component.isDisabled);
+    assert.dom(this.element).hasText('');
   });
 });
