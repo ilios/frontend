@@ -31,7 +31,8 @@ module('Integration | Modifier | animate-loading', function (hooks) {
     });
 
     await waitUntil(
-      () => getComputedStyle(this.element.querySelector('div'), null).opacity === '0.6'
+      () => getComputedStyle(this.element.querySelector('div'), null).opacity === '0.6',
+      { timeout: 5000 }
     );
     assert.dom('div').hasStyle({
       opacity: '0.6',
@@ -50,7 +51,8 @@ module('Integration | Modifier | animate-loading', function (hooks) {
     });
 
     await waitUntil(
-      () => getComputedStyle(this.element.querySelector('div'), null).opacity === '1'
+      () => getComputedStyle(this.element.querySelector('div'), null).opacity === '1',
+      { timeout: 5000 }
     );
     assert.dom('div').hasStyle({
       opacity: '1',
