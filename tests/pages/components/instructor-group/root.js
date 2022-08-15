@@ -1,10 +1,10 @@
 import { clickable, collection, create, text } from 'ember-cli-page-object';
-import { default as header } from './instructorgroup-header';
+import header from './header';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 import search from 'ilios-common/page-objects/components/user-search';
 
 const definition = {
-  scope: '[data-test-instructorgroup-details]',
+  scope: '[data-test-instructor-group-root]',
   header,
   overview: {
     scope: '[data-test-overview]',

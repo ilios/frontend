@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { dropTask } from 'ember-concurrency';
 
-export default class InstructorgroupDetailsComponent extends Component {
+export default class InstructorGroupRootComponent extends Component {
   @dropTask
   *addUser(user) {
     const users = yield this.args.instructorGroup.users;

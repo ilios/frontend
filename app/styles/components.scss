@@ -20,8 +20,6 @@
 @import 'components/ilios-logo';
 @import 'components/ilios-navigation';
 @import 'components/ilios-users';
-@import 'components/instructorgroup-details';
-@import 'components/instructorgroup-header';
 @import 'components/learnergroup-bulk-assignment';
 @import 'components/learnergroup-calendar';
 @import 'components/learnergroup-cohort-user-manager';
@@ -91,6 +89,9 @@
 @import 'components/visualizer-session-type-vocabularies';
 
 @import 'components/learner-groups/root';
+
+@import 'components/instructor-group/root';
+@import 'components/instructor-group/header';
 
 @import 'components/instructor-groups/root';
 @import 'components/instructor-groups/loading';

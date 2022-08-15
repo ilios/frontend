@@ -9,7 +9,7 @@ import {
 } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-instructorgroup-header]',
+  scope: '[data-test-instructor-group-header]',
   title: {
     scope: '[data-test-title]',
     edit: clickable('[data-test-edit]'),

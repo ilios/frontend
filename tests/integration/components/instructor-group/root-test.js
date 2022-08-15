@@ -4,9 +4,9 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { component } from 'ilios/tests/pages/components/instructorgroup-details';
+import { component } from 'ilios/tests/pages/components/instructor-group/root';
 
-module('Integration | Component | instructorgroup details', function (hooks) {
+module('Integration | Component | instructor-group/root', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -35,7 +35,7 @@ module('Integration | Component | instructorgroup details', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<InstructorgroupDetails @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.strictEqual(component.header.title.text, 'instructor group 0');
@@ -62,7 +62,7 @@ module('Integration | Component | instructorgroup details', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<InstructorgroupDetails @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.strictEqual(component.overview.users.length, 0);
@@ -81,7 +81,7 @@ module('Integration | Component | instructorgroup details', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<InstructorgroupDetails @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.strictEqual(component.overview.users.length, 1);
