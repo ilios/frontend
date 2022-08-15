@@ -34,7 +34,9 @@ export default class CurrentUserService extends Service {
     }
 
     if (!this._userPromise) {
-      this._userPromise = this.store.findRecord('user', currentUserId);
+      this._userPromise = this.store.findRecord('user', currentUserId, {
+        include: 'sessionMaterialStatuses',
+      });
     }
     return await this._userPromise;
   }

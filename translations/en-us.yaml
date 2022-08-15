@@ -49,6 +49,7 @@ general:
   collapse: collapse
   collapseDetail: "Hide Details"
   competencies: Competencies
+  complete: "Complete"
   completeSessions: "Sessions Complete: ready to publish"
   confirmObjectiveRemoval: "Are you sure you want to delete this objective?"
   confirmObjectiveRemovalMultipleSessionObjectives: "You are about to delete this course objective, which is linked to {count} session objectives. This will delete those relationships as well. Are you sure you want to continue?"
@@ -142,6 +143,7 @@ general:
   incompleteSessions: "Sessions Incomplete: cannot publish"
   independentLearning: "Independent Learning"
   independentLearningActivities: "Independent Learning Activities"
+  inProgress: "In Progress"
   instructionalNotes: "Instructional Notes"
   instructor: Instructor
   instructorGroupMembers: "Instructor Group Members"
@@ -216,6 +218,7 @@ general:
   notes: Notes
   notFoundMessage: "Rats! I couldn't find that. Please check your page address, and try again."
   notPublished: "Not Published"
+  notStarted: "Not Started"
   objectiveCompetencyManagerTitle: "Select Parent Competency for Objective"
   objectiveCount: "There {count, plural, =1 {is 1 objective} other {are # objectives}}"
   objectiveDescriptorTitle: "Select MeSH Descriptors for Objective"

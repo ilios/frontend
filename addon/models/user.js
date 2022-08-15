@@ -176,6 +176,9 @@ export default class User extends Model {
   })
   administeredCurriculumInventoryReports;
 
+  @hasMany('user-session-material-status', { async: true })
+  sessionMaterialStatuses;
+
   @use _roles = new ResolveAsyncValue(() => [this.roles, []]);
 
   get _roleTitles() {

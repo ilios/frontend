@@ -67,8 +67,9 @@
       <table>
         <thead>
           <tr>
+            <th></th>
             <SortableTh
-              @colspan={{3}}
+              @colspan={{6}}
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or
               (eq @sortBy "sessionTitle")
@@ -79,7 +80,7 @@
               {{t "general.session"}}
             </SortableTh>
             <SortableTh
-              @colspan={{3}}
+              @colspan={{6}}
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or
               (eq @sortBy "courseTitle")
@@ -90,18 +91,18 @@
               {{t "general.course"}}
             </SortableTh>
             <SortableTh
-              @colspan={{3}}
+              @colspan={{6}}
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
               @onClick={{fn this.sortBy "title"}}
             >
               {{t "general.title"}}
             </SortableTh>
-            <th class="hide-from-small-screen">
+            <th colspan="4" class="hide-from-small-screen">
               {{t "general.instructor"}}
             </th>
             <SortableTh
-              @colspan={{1}}
+              @colspan={{4}}
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or
               (eq @sortBy "firstOfferingDate")
@@ -118,13 +119,16 @@
           {{#if this.materialsLoaded}}
             {{#each this.filteredMaterials as |lmObject|}}
               <tr data-test-learning-material>
-                <td colspan="3" data-test-session-title>
+                <td>
+                  <UserMaterialStatus @learningMaterial={{lmObject}} />
+                </td>
+                <td colspan="6" data-test-session-title>
                   {{lmObject.sessionTitle}}
                 </td>
-                <td colspan="3" data-test-course-title>
+                <td colspan="6" data-test-course-title>
                   {{lmObject.courseTitle}}
                 </td>
-                <td colspan="3" data-test-title>
+                <td colspan="6" data-test-title>
                   {{#if lmObject.isBlanked}}
                     <span class="lm-type-icon">
                       <FaIcon @icon="clock" @title={{t "general.timedRelease"}} data-test-is-blanked />
@@ -188,7 +192,7 @@
                     {{/if}}
                   {{/if}}
                 </td>
-                <td class="hide-from-small-screen" colspan="1" data-test-instructors>
+                <td class="hide-from-small-screen" colspan="4" data-test-instructors>
                   <TruncateText
                     @length={{25}}
                     @text={{join
@@ -197,7 +201,7 @@
                   }}
                   />
                 </td>
-                <td data-test-date>
+                <td colspan="4" data-test-date>
                   {{#if lmObject.firstOfferingDate}}
                     {{format-date lmObject.firstOfferingDate}}
                   {{else}}
@@ -207,14 +211,14 @@
               </tr>
             {{else}}
               <tr>
-                <td colspan="11" class="no-results" data-test-none>
+                <td colspan="27" class="no-results" data-test-none>
                   {{t "general.none"}}
                 </td>
               </tr>
             {{/each}}
           {{else}}
             <tr>
-              <td class="text-center" colspan="11">
+              <td class="text-center" colspan="27">
                 <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
               </td>
             </tr>

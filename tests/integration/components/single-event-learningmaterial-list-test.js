@@ -5,10 +5,12 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/single-event-learningmaterial-list';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | single-event-learningmaterial-list', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
+  setupMirage(hooks);
 
   test('it renders', async function (assert) {
     this.set('learningMaterials', [

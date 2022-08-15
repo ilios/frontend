@@ -16,6 +16,7 @@ export default function (config) {
         return {
           config: {
             type: 'form',
+            materialStatusEnabled: true,
             apiVersion,
           },
         };
