@@ -29,6 +29,7 @@ general:
   associatedWith: "Associated with"
   attribute: Attribute
   available: Available
+  availableInstructors: "Available Instructors"
   availableCohorts: "Available Cohorts"
   averageHoursOfInstructionPerWeek: "Average Hours of Instruction Per Week"
   backToAdminDashboard: "Back to Admin Dashboard"

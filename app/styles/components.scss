@@ -90,8 +90,11 @@
 
 @import 'components/learner-groups/root';
 
-@import 'components/instructor-group/root';
+@import 'components/instructor-group/courses';
 @import 'components/instructor-group/header';
+@import 'components/instructor-group/instructor-manager';
+@import 'components/instructor-group/root';
+@import 'components/instructor-group/users';
 
 @import 'components/instructor-groups/root';
 @import 'components/instructor-groups/loading';

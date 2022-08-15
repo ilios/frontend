@@ -5,32 +5,7 @@
     margin: .5rem;
   }
 
-  .instructorgroup-overview {
-    @include ilios-overview($culturedGrey);
-    background: $slightWhite;
-    border: 1px dotted $culturedGrey;
-    padding: 0 2rem 1rem;
-
-    h2 {
-      @include ilios-overview-title;
-    }
-
-    .instructorgroup-users,
-    .instructorgroupcourses {
-      @include ilios-tag-list;
-      margin-bottom: .5rem;
-
-      li {
-        display: flex;
-
-        .remove {
-          margin-left: .5em;
-        }
-      }
-    }
-  }
-
-  .instructorgroup-loading {
+  .instructor-group-loading {
     display: block;
     @include font-size('xl');
     margin: auto;

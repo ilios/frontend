@@ -30,6 +30,7 @@ general:
   attribute: Attribut
   available: Disponible
   availableCohorts: "Cohortes Disponsibles"
+  availableInstructors: "Instructeurs Disponibles"
   averageHoursOfInstructionPerWeek: "Nombre moyen d'heures d'enseignement par semaine"
   backToAdminDashboard: "Rétour au Page Admin"
   backToCalendar: "Retour au Calendrier"

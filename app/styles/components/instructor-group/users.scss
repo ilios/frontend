@@ -1,0 +1,24 @@
+.instructor-group-users {
+  @include detail-container($orange);
+  margin-left: 0.8rem;
+
+  .instructor-group-users-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .instructor-group-users-content {
+    @include detail-container-content;
+
+    .instructor-group-users-list {
+      @include ilios-tag-list;
+    }
+  }
+}

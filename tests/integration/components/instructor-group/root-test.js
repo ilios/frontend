@@ -11,7 +11,7 @@ module('Integration | Component | instructor-group/root', function (hooks) {
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
+  hooks.beforeEach(async function () {
     const user1 = this.server.create('user', { firstName: 'Anton', lastName: 'Alpha' });
     const user2 = this.server.create('user', {
       firstName: 'Zack',
@@ -25,68 +25,61 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     const session2 = this.server.create('session', { course: course2 });
     const offering1 = this.server.create('offering', { session: session1 });
     const offering2 = this.server.create('offering', { session: session2 });
-    const group = this.server.create('instructorGroup', {
+    const instructorGroup = this.server.create('instructorGroup', {
       users: [user1, user2],
       offerings: [offering1, offering2],
       school,
     });
-    const groupModel = await this.owner.lookup('service:store').find('instructorGroup', group.id);
-    this.set('group', groupModel);
-    this.set('canUpdate', true);
+    this.instructorGroup = await this.owner
+      .lookup('service:store')
+      .find('instructorGroup', instructorGroup.id);
+  });
 
+  test('it renders', async function (assert) {
+    this.set('group', this.instructorGroup);
     await render(
-      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{true}} />`
     );
-
     assert.strictEqual(component.header.title.text, 'instructor group 0');
     assert.strictEqual(component.header.members, 'Members: 2');
     assert.strictEqual(component.header.breadcrumb.crumbs.length, 3);
     assert.strictEqual(component.header.breadcrumb.crumbs[0].text, 'Instructor Groups');
     assert.strictEqual(component.header.breadcrumb.crumbs[1].text, 'school 0');
     assert.strictEqual(component.header.breadcrumb.crumbs[2].text, 'instructor group 0');
-    assert.strictEqual(component.overview.users.length, 2);
-    assert.strictEqual(component.overview.users[0].userNameInfo.fullName, 'Aardvark');
-    assert.ok(component.overview.users[0].userNameInfo.hasAdditionalInfo);
-    assert.strictEqual(component.overview.users[1].userNameInfo.fullName, 'Anton M. Alpha');
-    assert.notOk(component.overview.users[1].userNameInfo.hasAdditionalInfo);
-    assert.strictEqual(component.overview.courses.length, 2);
-    assert.strictEqual(component.overview.courses[0].text, 'Foundations 1');
-    assert.strictEqual(component.overview.courses[1].text, 'Introduction 101');
+    assert.strictEqual(component.users.title, 'Instructors (2)');
+    assert.ok(component.users.manage.isVisible);
+    assert.strictEqual(component.users.users.length, 2);
+    assert.strictEqual(component.users.users[0].userNameInfo.fullName, 'Aardvark');
+    assert.ok(component.users.users[0].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(component.users.users[1].userNameInfo.fullName, 'Anton M. Alpha');
+    assert.notOk(component.users.users[1].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(component.courses.title, 'Associated Courses (2)');
+    assert.strictEqual(component.courses.courses.length, 2);
+    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1');
+    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101');
   });
 
-  test('add user to group', async function (assert) {
-    this.server.createList('user', 3);
-    const group = this.server.create('instructorGroup');
-    const groupModel = await this.owner.lookup('service:store').find('instructorGroup', group.id);
-    this.set('group', groupModel);
-    this.set('canUpdate', true);
-
+  test('it renders in read-only mode', async function (assert) {
+    this.set('group', this.instructorGroup);
     await render(
-      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{false}} />`
     );
-
-    assert.strictEqual(component.overview.users.length, 0);
-    await component.overview.search.searchBox.set('user');
-    assert.strictEqual(component.overview.search.results.items.length, 3);
-    await component.overview.search.results.items[0].click();
-    assert.strictEqual(component.overview.users.length, 1);
-    assert.strictEqual(component.overview.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
-  });
-
-  test('remove user from group', async function (assert) {
-    const user = this.server.create('user');
-    const group = this.server.create('instructorGroup', { users: [user] });
-    const groupModel = await this.owner.lookup('service:store').find('instructorGroup', group.id);
-    this.set('group', groupModel);
-    this.set('canUpdate', true);
-
-    await render(
-      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{this.canUpdate}} />`
-    );
-
-    assert.strictEqual(component.overview.users.length, 1);
-    assert.strictEqual(component.overview.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
-    await component.overview.users[0].remove();
-    assert.strictEqual(component.overview.users.length, 0);
+    assert.strictEqual(component.header.title.text, 'instructor group 0');
+    assert.strictEqual(component.header.members, 'Members: 2');
+    assert.strictEqual(component.header.breadcrumb.crumbs.length, 3);
+    assert.strictEqual(component.header.breadcrumb.crumbs[0].text, 'Instructor Groups');
+    assert.strictEqual(component.header.breadcrumb.crumbs[1].text, 'school 0');
+    assert.strictEqual(component.header.breadcrumb.crumbs[2].text, 'instructor group 0');
+    assert.strictEqual(component.users.title, 'Instructors (2)');
+    assert.notOk(component.users.manage.isVisible);
+    assert.strictEqual(component.users.users.length, 2);
+    assert.strictEqual(component.users.users[0].userNameInfo.fullName, 'Aardvark');
+    assert.ok(component.users.users[0].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(component.users.users[1].userNameInfo.fullName, 'Anton M. Alpha');
+    assert.notOk(component.users.users[1].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(component.courses.title, 'Associated Courses (2)');
+    assert.strictEqual(component.courses.courses.length, 2);
+    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1');
+    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101');
   });
 });
