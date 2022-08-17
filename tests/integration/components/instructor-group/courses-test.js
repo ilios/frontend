@@ -4,6 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios/tests/pages/components/instructor-group/courses';
 
 module('Integration | Component | instructor-group/courses', function (hooks) {
@@ -48,6 +49,8 @@ module('Integration | Component | instructor-group/courses', function (hooks) {
     assert.strictEqual(component.courses[1].url, '/courses/2');
     assert.strictEqual(component.courses[2].text, 'course 2');
     assert.strictEqual(component.courses[2].url, '/courses/3');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('no linked courses', async function (assert) {

@@ -4,6 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios/tests/pages/components/instructor-group/instructor-manager';
 
 module('Integration | Component | instructor-group/instructor-manager', function (hooks) {
@@ -43,6 +44,8 @@ module('Integration | Component | instructor-group/instructor-manager', function
     );
     assert.notOk(component.noSelectedInstructors.isVisible);
     assert.strictEqual(component.availableInstructors.label, 'Available Instructors:');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders without selected instructors', async function (assert) {

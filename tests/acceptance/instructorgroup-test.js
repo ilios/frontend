@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import page from '../pages/instructor-group';
 
 const url = '/instructorgroups/1';
@@ -67,6 +68,8 @@ module('Acceptance | Instructor Group', function (hooks) {
     assert.strictEqual(page.root.courses.courses.length, 2);
     assert.strictEqual(page.root.courses.courses[0].text, 'course 0');
     assert.strictEqual(page.root.courses.courses[1].text, 'course 1');
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('change title', async function (assert) {

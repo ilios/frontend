@@ -4,6 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios/tests/pages/components/instructor-group/root';
 
 module('Integration | Component | instructor-group/root', function (hooks) {
@@ -57,6 +58,8 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     assert.strictEqual(component.courses.courses.length, 2);
     assert.strictEqual(component.courses.courses[0].text, 'Foundations 1');
     assert.strictEqual(component.courses.courses[1].text, 'Introduction 101');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders in read-only mode', async function (assert) {
@@ -81,5 +84,7 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     assert.strictEqual(component.courses.courses.length, 2);
     assert.strictEqual(component.courses.courses[0].text, 'Foundations 1');
     assert.strictEqual(component.courses.courses[1].text, 'Introduction 101');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 });

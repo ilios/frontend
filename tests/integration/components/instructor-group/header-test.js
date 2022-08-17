@@ -4,6 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios/tests/pages/components/instructor-group/header';
 
 module('Integration | Component | instructor-group/header', function (hooks) {
@@ -39,6 +40,8 @@ module('Integration | Component | instructor-group/header', function (hooks) {
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'Instructor Groups');
     assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Medicine');
     assert.strictEqual(component.breadcrumb.crumbs[2].text, 'lorem ipsum');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders in read-only mode', async function (assert) {
@@ -52,6 +55,8 @@ module('Integration | Component | instructor-group/header', function (hooks) {
     assert.strictEqual(component.title.text, 'lorem ipsum');
     assert.notOk(component.title.isEditable);
     assert.ok(component.members, 'Members: 3');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('change title', async function (assert) {

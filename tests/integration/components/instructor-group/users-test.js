@@ -4,6 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios/tests/pages/components/instructor-group/users';
 
 module('Integration | Component | instructor-group/users', function (hooks) {
@@ -31,24 +32,8 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     assert.strictEqual(component.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
     assert.strictEqual(component.users[1].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(component.users[2].userNameInfo.fullName, '2 guy M. Mc2son');
-  });
-
-  test('no users', async function (assert) {
-    const instructorGroup = this.server.create('instructor-group');
-    const instructorGroupModel = await this.owner
-      .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
-    this.set('instructorGroup', instructorGroupModel);
-    await render(
-      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`
-    );
-    assert.strictEqual(component.title, 'Instructors (0)');
-    assert.ok(component.manage.isVisible);
-    assert.strictEqual(component.manage.text, 'Manage Instructors');
-    assert.notOk(component.save.isVisible);
-    assert.notOk(component.cancel.isVisible);
-    assert.notOk(component.manager.isVisible);
-    assert.strictEqual(component.users.length, 0);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('read-only', async function (assert) {
@@ -70,6 +55,26 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     assert.strictEqual(component.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
     assert.strictEqual(component.users[1].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(component.users[2].userNameInfo.fullName, '2 guy M. Mc2son');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('no users', async function (assert) {
+    const instructorGroup = this.server.create('instructor-group');
+    const instructorGroupModel = await this.owner
+      .lookup('service:store')
+      .find('instructor-group', instructorGroup.id);
+    this.set('instructorGroup', instructorGroupModel);
+    await render(
+      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`
+    );
+    assert.strictEqual(component.title, 'Instructors (0)');
+    assert.ok(component.manage.isVisible);
+    assert.strictEqual(component.manage.text, 'Manage Instructors');
+    assert.notOk(component.save.isVisible);
+    assert.notOk(component.cancel.isVisible);
+    assert.notOk(component.manager.isVisible);
+    assert.strictEqual(component.users.length, 0);
   });
 
   test('remove user, then cancel', async function (assert) {
