@@ -12,14 +12,19 @@
   }
 
   .filter {
-    display: flex;
-    justify-content: flex-end;
-    margin: 1rem 0 .5rem;
-    padding-right: 5rem;
+    @include ilios-form;
+    padding-left: .8rem;
 
     input {
-      @include ilios-input;
-      width: 25rem;
+      @include ilios-form-last-item;
     }
+  }
+
+  .visualizations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: center;
+    margin-top: 2rem;
+    padding-left: .8rem;
   }
 }
