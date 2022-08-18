@@ -40,5 +40,7 @@
       {{on "input" (pick "target.value" (set this.title))}}
     >
   </div>
-  <VisualizerCourseSessionTypes @filter={{this.title}} @course={{@model}} />
+  <div class="visualizations">
+    <VisualizerCourseSessionTypes @filter={{this.title}} @course={{@model}} />
+  </div>
 </section>
