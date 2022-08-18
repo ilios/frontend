@@ -37,9 +37,11 @@
         {{/if}}
       </LinkTo>
     </h3>
-    <VisualizerCourseSessionType
-      @course={{@model.course}}
-      @sessionType={{@model.sessionType}}
-    />
+    <div class="visualizations">
+      <VisualizerCourseSessionType
+        @course={{@model.course}}
+        @sessionType={{@model.sessionType}}
+      />
+    </div>
   {{/unless}}
 </section>

@@ -45,6 +45,8 @@
         {{/if}}
       </LinkTo>
     </h3>
-    <VisualizerCourseTerm @course={{@model.course}} @term={{@model.term}} />
+    <div class="visualizations">
+      <VisualizerCourseTerm @course={{@model.course}} @term={{@model.term}} />
+    </div>
   {{/unless}}
 </section>

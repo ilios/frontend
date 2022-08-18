@@ -1,0 +1,36 @@
+@mixin course-visualization {
+  h2 {
+    @include ilios-heading-h2;
+    margin: .5rem;
+    text-align: center;
+  }
+
+  h3 {
+    @include ilios-heading-h3;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  h4 {
+    @include ilios-heading-h3;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .filter {
+    @include ilios-form;
+    padding-left: .8rem;
+
+    input {
+      @include ilios-form-last-item;
+    }
+  }
+
+  .visualizations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: center;
+    margin-top: 2rem;
+    padding-left: .8rem;
+  }
+}

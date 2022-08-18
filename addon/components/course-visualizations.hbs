@@ -4,10 +4,15 @@
   {{did-insert (perform this.load)}}
 >
   {{#unless this.load.isRunning}}
-    <div class="backtolink">
-      <LinkTo @route="course" @model={{@model}}>
-        {{t "general.backToCourse"}}
-      </LinkTo>
+    <div class="breadcrumbs" data-test-breadcrumb>
+      <span>
+        <LinkTo @route="course" @model={{@model}}>
+          {{@model.title}}
+        </LinkTo>
+      </span>
+      <span>
+        {{t "general.visualizations"}}
+      </span>
     </div>
     <h2>
       {{t "general.courseVisualizations"}}

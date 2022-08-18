@@ -36,8 +36,10 @@
       {{/if}}
     </LinkTo>
   </h3>
-  <VisualizerCourseVocabulary
-    @course={{@model.course}}
-    @vocabulary={{@model.vocabulary}}
-  />
+  <div class="visualizations">
+    <VisualizerCourseVocabulary
+      @course={{@model.course}}
+      @vocabulary={{@model.vocabulary}}
+    />
+  </div>
 </section>

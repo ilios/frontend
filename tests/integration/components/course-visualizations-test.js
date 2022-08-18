@@ -43,4 +43,18 @@ module('Integration | Component | course-visualizations', function (hooks) {
 
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
+
+  test('breadcrumb', async function (assert) {
+    const school = this.server.create('school');
+    const course = this.server.create('course', { year: 2021, school });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+
+    await render(hbs`<CourseVisualizations @model={{this.course}} />`);
+
+    assert.strictEqual(component.breadcrumb.crumbs.length, 2);
+    assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
+    assert.strictEqual(component.breadcrumb.crumbs[0].link, '/courses/1');
+    assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
+  });
 });

@@ -1,12 +1,7 @@
 .course-visualizations {
-  padding-left: 1rem;
+  @include course-visualization;
 
   .visualizations {
-    display: flex;
-    flex-wrap: wrap;
-    justify-items: center;
-    margin-top: 2rem;
-
     .visualizer-course-instructors,
     .visualizer-course-objectives,
     .visualizer-course-session-types,
