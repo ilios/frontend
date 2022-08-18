@@ -6,6 +6,8 @@ export default class DataLoaderService extends CommonDataLoaderService {
   #loadedSchoolInstructorGroups = new Map();
   #loadedCohortLearnerGroups = new Map();
   #loadedUserProfiles = new Map();
+  #loadedInstructorGroup = new Map();
+
   async loadCoursesForLearnerGroup(learnerGroupId) {
     if (!this.#loadedLearnerGroupWithCourses.has(learnerGroupId)) {
       const sessionIncludes = 'offerings.session.course';
@@ -69,6 +71,19 @@ export default class DataLoaderService extends CommonDataLoaderService {
     }
 
     return this.#loadedLearnerGroup.get(learnerGroupId);
+  }
+  async loadInstructorGroup(instructorGroupId) {
+    if (!this.#loadedInstructorGroup.has(instructorGroupId)) {
+      this.#loadedInstructorGroup.set(
+        instructorGroupId,
+        this.store.findRecord('instructor-group', instructorGroupId, {
+          reload: true,
+          include: 'users,ilmSessions.session.course,offerings.session.course',
+        })
+      );
+    }
+
+    return this.#loadedInstructorGroup.get(instructorGroupId);
   }
   async loadInstructorGroupsForSchool(schoolId) {
     if (!this.#loadedSchoolInstructorGroups.has(schoolId)) {

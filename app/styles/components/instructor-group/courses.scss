@@ -1,0 +1,24 @@
+.instructor-group-courses {
+  @include detail-container($orange);
+  margin-left: 0.8rem;
+
+  .instructor-group-courses-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+  }
+
+  .instructor-group-courses-content {
+    @include detail-container-content;
+
+    .instructor-group-courses-list {
+      @include ilios-tag-list;
+
+      a {
+        color: $black;
+      }
+    }
+  }
+}

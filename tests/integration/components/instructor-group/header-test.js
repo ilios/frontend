@@ -4,10 +4,10 @@ import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { component } from 'ilios/tests/pages/components/instructorgroup-header';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { component } from 'ilios/tests/pages/components/instructor-group/header';
 
-module('Integration | Component | instructorgroup header', function (hooks) {
+module('Integration | Component | instructor-group/header', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -30,7 +30,7 @@ module('Integration | Component | instructorgroup header', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Header @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
@@ -49,7 +49,7 @@ module('Integration | Component | instructorgroup header', function (hooks) {
     this.set('canUpdate', false);
 
     await render(
-      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Header @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
@@ -65,7 +65,7 @@ module('Integration | Component | instructorgroup header', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Header @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
@@ -81,7 +81,7 @@ module('Integration | Component | instructorgroup header', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Header @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
@@ -98,7 +98,7 @@ module('Integration | Component | instructorgroup header', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Header @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
@@ -115,7 +115,7 @@ module('Integration | Component | instructorgroup header', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Header @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
@@ -132,7 +132,7 @@ module('Integration | Component | instructorgroup header', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+      hbs`<InstructorGroup::Header @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.strictEqual(component.title.text, 'lorem ipsum');

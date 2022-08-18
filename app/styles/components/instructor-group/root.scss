@@ -1,0 +1,14 @@
+.instructor-group-root {
+  padding: .5rem .25rem;
+
+  .backtolink {
+    margin: .5rem;
+  }
+
+  .instructor-group-loading {
+    display: block;
+    @include font-size('xl');
+    margin: auto;
+    text-align: center;
+  }
+}

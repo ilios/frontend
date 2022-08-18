@@ -1,0 +1,23 @@
+.instructor-group-instructor-manager {
+  @include detail-container-content;
+  @include ilios-form;
+  grid-template-columns: 1fr;
+
+  .instructor-list {
+    @include ilios-removable-list;
+  }
+
+  .available-instructors,
+  .selected-instructors {
+    grid-column: 1 / -1;
+
+    label {
+      display: inline-block;
+      margin-bottom: .5rem;
+    }
+  }
+
+  .selected-instructors {
+    margin-bottom: .5rem;
+  }
+}
