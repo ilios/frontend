@@ -27,30 +27,26 @@
     </div>
   </div>
   <div class="instructor-group-users-content">
-    {{#if (is-fulfilled @instructorGroup.users)}}
-      {{#if this.isManaging}}
-        {{#unless this.manage.isRunning}}
-          <InstructorGroup::InstructorManager
-            @instructors={{this.users}}
-            @add={{this.addUser}}
-            @remove={{this.removeUser}}
-          />
-        {{/unless}}
-      {{else}}
-        <ul class="instructor-group-users-list" data-test-users-list>
-          {{#each
-            (sort-by
-              "fullName" (await @instructorGroup.users)
-            ) as |user|
-          }}
-            <li data-test-user>
-              <UserNameInfo @user={{user}} />
-            </li>
-          {{/each}}
-        </ul>
-      {{/if}}
+    {{#if this.isManaging}}
+      {{#unless this.manage.isRunning}}
+        <InstructorGroup::InstructorManager
+          @instructors={{this.users}}
+          @add={{this.addUser}}
+          @remove={{this.removeUser}}
+        />
+      {{/unless}}
     {{else}}
-      <LoadingSpinner />
+      <ul class="instructor-group-users-list" data-test-users-list>
+        {{#each
+          (sort-by
+            "fullName" (await @instructorGroup.users)
+          ) as |user|
+        }}
+          <li data-test-user>
+            <UserNameInfo @user={{user}} />
+          </li>
+        {{/each}}
+      </ul>
     {{/if}}
   </div>
 </section>

@@ -5,6 +5,7 @@ export default class InstructorGroupRoute extends Route {
   @service permissionChecker;
   @service session;
   @service store;
+  @service dataLoader;
 
   canUpdate = false;
 
@@ -13,7 +14,7 @@ export default class InstructorGroupRoute extends Route {
   }
 
   model(params) {
-    return this.store.findRecord('instructor-group', params.instructor_group_id);
+    return this.dataLoader.loadInstructorGroup(params.instructor_group_id);
   }
 
   async afterModel(instructorGroup) {
