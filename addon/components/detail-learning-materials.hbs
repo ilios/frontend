@@ -5,7 +5,7 @@
   {{did-update (perform this.load) @subject.learningMaterials}}
 >
   <div class="detail-learningmaterials-header">
-    <div class="title">
+    <div class="title" {{did-insert (set this.title)}}>
       {{#if this.isManaging}}
         <span class="specific-title">
           {{t "general.learningMaterialManageTitle"}}
@@ -42,7 +42,7 @@
       <LearningmaterialManager
         @learningMaterial={{this.managingMaterial}}
         @editable={{@editable}}
-        @closeManager={{fn (set this.managingMaterial) null}}
+        @closeManager={{this.closeLearningmaterialManager}}
         @learningMaterialStatuses={{await this.learningMaterialStatuses}}
       />
     {{else if this.isSorting}}
@@ -57,7 +57,7 @@
         @learningMaterialStatuses={{await this.learningMaterialStatuses}}
         @learningMaterialUserRoles={{await this.learningMaterialUserRoles}}
         @save={{perform this.saveNewLearningMaterial}}
-        @cancel={{fn (set this.displayAddNewForm) false}}
+        @cancel={{this.closeNewLearningmaterial}}
       />
     {{else if (get (await @subject.learningMaterials) "length")}}
       {{#if (and @editable (await this.hasMoreThanOneLearningMaterial))}}
