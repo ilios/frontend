@@ -21,5 +21,13 @@
       @include ilios-input;
       width: 25rem;
     }
+
+    .visualizations {
+      display: flex;
+      flex-wrap: wrap;
+      justify-items: center;
+      margin-top: 2rem;
+      padding-left: .8rem;
+    }
   }
 }

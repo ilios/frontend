@@ -1,6 +1,4 @@
 .course-visualizations {
-  padding-left: 1rem;
-
   h2 {
     @include ilios-heading-h2;
     margin: .5rem;
@@ -18,6 +16,7 @@
     flex-wrap: wrap;
     justify-items: center;
     margin-top: 2rem;
+    padding-left: .8rem;
 
     .visualizer-course-instructors,
     .visualizer-course-objectives,
