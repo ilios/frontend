@@ -78,7 +78,7 @@ export default class DataLoaderService extends CommonDataLoaderService {
         instructorGroupId,
         this.store.findRecord('instructor-group', instructorGroupId, {
           reload: true,
-          include: 'users',
+          include: 'users,ilmSessions.session.course,offerings.session.course',
         })
       );
     }
