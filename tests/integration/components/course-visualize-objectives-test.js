@@ -101,7 +101,7 @@ module('Integration | Component | course-visualize-objectives', function (hooks)
       startDate: new Date('2019-12-05T18:00:00'),
       endDate: new Date('2019-12-05T21:00:00'),
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseVisualizeObjectives @model={{this.course}} />`);
