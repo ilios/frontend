@@ -20,7 +20,6 @@ jobs:
         - "broccoli-merge-trees"
         - "ember-cli-mirage"
         - "ember-cli-page-object"
-        - "ember-data"
         - "ember-test-selectors"
         - "babel-eslint"
         - "ember-a11y-testing"
