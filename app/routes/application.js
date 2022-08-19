@@ -10,7 +10,7 @@ export default class ApplicationRoute extends Route {
     await this.session.setup();
     const intl = this.intl;
     const moment = this.moment;
-    moment.setLocale(intl.locale);
+    moment.setLocale(intl.locale[0]);
     window.document.querySelector('html').setAttribute('lang', intl.locale);
   }
 
