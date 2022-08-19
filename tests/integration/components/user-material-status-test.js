@@ -23,7 +23,7 @@ module('Integration | Component | user-material-status', function (hooks) {
       });
     }
     this.server.create('session-learning-material', { id: 4 });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
         return userModel;
