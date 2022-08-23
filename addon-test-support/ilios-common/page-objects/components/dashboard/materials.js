@@ -51,21 +51,21 @@ const definition = {
     headers: {
       scope: 'thead',
       sessionTitle: {
-        scope: 'th:nth-of-type(2)',
-        isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
-        isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
-        isSortedOn: notHasClass('fa-sort', 'svg'),
-        click: clickable('button'),
-      },
-      courseTitle: {
         scope: 'th:nth-of-type(3)',
         isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
         isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
         isSortedOn: notHasClass('fa-sort', 'svg'),
         click: clickable('button'),
       },
-      title: {
+      courseTitle: {
         scope: 'th:nth-of-type(4)',
+        isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
+        isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
+        isSortedOn: notHasClass('fa-sort', 'svg'),
+        click: clickable('button'),
+      },
+      title: {
+        scope: 'th:nth-of-type(2)',
         isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
         isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
         isSortedOn: notHasClass('fa-sort', 'svg'),
