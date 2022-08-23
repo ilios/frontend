@@ -71,6 +71,14 @@
             <SortableTh
               @colspan={{6}}
               @sortedAscending={{this.sortedAscending}}
+              @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+              @onClick={{fn this.sortBy "title"}}
+            >
+              {{t "general.title"}}
+            </SortableTh>
+            <SortableTh
+              @colspan={{6}}
+              @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or
               (eq @sortBy "sessionTitle")
               (eq @sortBy "sessionTitle:desc")
@@ -89,14 +97,6 @@
               @onClick={{fn this.sortBy "courseTitle"}}
             >
               {{t "general.course"}}
-            </SortableTh>
-            <SortableTh
-              @colspan={{6}}
-              @sortedAscending={{this.sortedAscending}}
-              @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
-              @onClick={{fn this.sortBy "title"}}
-            >
-              {{t "general.title"}}
             </SortableTh>
             <th colspan="4" class="hide-from-small-screen">
               {{t "general.instructor"}}
@@ -121,12 +121,6 @@
               <tr data-test-learning-material>
                 <td>
                   <UserMaterialStatus @learningMaterial={{lmObject}} />
-                </td>
-                <td colspan="6" data-test-session-title>
-                  {{lmObject.sessionTitle}}
-                </td>
-                <td colspan="6" data-test-course-title>
-                  {{lmObject.courseTitle}}
                 </td>
                 <td colspan="6" data-test-title>
                   {{#if lmObject.isBlanked}}
@@ -191,6 +185,12 @@
                       </small>
                     {{/if}}
                   {{/if}}
+                </td>
+                <td colspan="6" data-test-session-title>
+                  {{lmObject.sessionTitle}}
+                </td>
+                <td colspan="6" data-test-course-title>
+                  {{lmObject.courseTitle}}
                 </td>
                 <td class="hide-from-small-screen" colspan="4" data-test-instructors>
                   <TruncateText
