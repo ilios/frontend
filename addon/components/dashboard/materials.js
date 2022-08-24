@@ -6,6 +6,7 @@ import { isPresent } from '@ember/utils';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import moment from 'moment';
 
 const DEBOUNCE_DELAY = 250;
@@ -21,6 +22,9 @@ export default class DashboardMaterialsComponent extends Component {
   @use _materials = new AsyncProcess(() => [
     this.loadMaterials.bind(this),
     this.args.showAllMaterials,
+  ]);
+  @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   ]);
 
   async loadMaterials() {
@@ -128,10 +132,15 @@ export default class DashboardMaterialsComponent extends Component {
     }
     return this.materials
       .map((material) => {
-        return { id: material.course, title: material.courseTitle };
+        return {
+          id: material.course,
+          title: material.courseTitle,
+          externalId: material.courseExternalId,
+          year: material.courseYear,
+        };
       })
       .uniqBy('id')
-      .sortBy('title');
+      .sortBy('year', 'title');
   }
 
   get sortedAscending() {

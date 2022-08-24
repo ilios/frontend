@@ -34,7 +34,15 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     const today = moment();
     const tomorrow = moment().add(1, 'day');
     const nextWeek = moment().add(1, 'week');
-    const courses = this.server.createList('course', 5);
+    const courses = [
+      this.server.create('course', {
+        externalId: 'ID1234',
+        year: 2021,
+      }),
+      ...this.server.createList('course', 4, {
+        year: 2022,
+      }),
+    ];
     const lm1 = {
       title: 'title1',
       absoluteFileUri: 'http://myhost.com/url1',
@@ -43,6 +51,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       type: 'file',
       mimetype: 'application/pdf',
       courseTitle: courses[0].title,
+      courseYear: courses[0].year,
+      courseExternalId: courses[0].externalId,
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: today.toDate(),
     };
@@ -53,6 +63,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       course: courses[1].id,
       type: 'link',
       courseTitle: courses[1].title,
+      courseYear: courses[1].year,
+      courseExternalId: courses[1].externalId,
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: tomorrow.toDate(),
     };
@@ -63,6 +75,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       type: 'citation',
       course: courses[2].id,
       courseTitle: courses[2].title,
+      courseYear: courses[2].year,
+      courseExternalId: courses[2].externalId,
       firstOfferingDate: today.toDate(),
     };
     const lm4 = {
@@ -73,6 +87,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       type: 'file',
       mimetype: 'text/plain',
       courseTitle: courses[0].title,
+      courseYear: courses[0].year,
+      courseExternalId: courses[0].externalId,
       instructors: ['Instructor3name', 'Instructor4name'],
       firstOfferingDate: tomorrow.toDate(),
     };
@@ -82,6 +98,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       course: courses[4].id,
       sessionTitle: 'session5title',
       courseTitle: courses[4].title,
+      courseYear: courses[4].year,
+      courseExternalId: courses[4].externalId,
       firstOfferingDate: tomorrow.toDate(),
       endDate: new Date('2013-03-01T01:10:00'),
     };
@@ -96,6 +114,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         type: 'citation',
         course: courses[3].id,
         courseTitle: courses[3].title,
+        courseYear: courses[3].year,
+        courseExternalId: courses[3].externalId,
         firstOfferingDate: nextWeek.toDate(),
       });
     }
@@ -143,10 +163,10 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.title, 'My Materials');
     assert.strictEqual(component.courseFilter.options.length, 5);
     assert.strictEqual(component.courseFilter.options[0].text, 'All Courses');
-    assert.strictEqual(component.courseFilter.options[1].text, 'course 0');
-    assert.strictEqual(component.courseFilter.options[2].text, 'course 1');
-    assert.strictEqual(component.courseFilter.options[3].text, 'course 2');
-    assert.strictEqual(component.courseFilter.options[4].text, 'course 4');
+    assert.strictEqual(component.courseFilter.options[1].text, '2021 | [ID1234] | course 0');
+    assert.strictEqual(component.courseFilter.options[2].text, '2022 | course 1');
+    assert.strictEqual(component.courseFilter.options[3].text, '2022 | course 2');
+    assert.strictEqual(component.courseFilter.options[4].text, '2022 | course 4');
     assert.ok(component.courseFilter.options[0].isSelected);
     assert.notOk(component.courseFilter.options[1].isSelected);
     assert.notOk(component.courseFilter.options[2].isSelected);
@@ -241,11 +261,11 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.ok(component.header.displayToggle.secondButton.isChecked);
     assert.strictEqual(component.courseFilter.options.length, 6);
     assert.strictEqual(component.courseFilter.options[0].text, 'All Courses');
-    assert.strictEqual(component.courseFilter.options[1].text, 'course 0');
-    assert.strictEqual(component.courseFilter.options[2].text, 'course 1');
-    assert.strictEqual(component.courseFilter.options[3].text, 'course 2');
-    assert.strictEqual(component.courseFilter.options[4].text, 'course 3');
-    assert.strictEqual(component.courseFilter.options[5].text, 'course 4');
+    assert.strictEqual(component.courseFilter.options[1].text, '2021 | [ID1234] | course 0');
+    assert.strictEqual(component.courseFilter.options[2].text, '2022 | course 1');
+    assert.strictEqual(component.courseFilter.options[3].text, '2022 | course 2');
+    assert.strictEqual(component.courseFilter.options[4].text, '2022 | course 3');
+    assert.strictEqual(component.courseFilter.options[5].text, '2022 | course 4');
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 25 of 205');
     assert.strictEqual(
       component.bottomPaginator.controls.pagerDetails.text,
