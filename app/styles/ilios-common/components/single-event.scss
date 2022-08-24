@@ -11,16 +11,6 @@
     }
   }
 
-  fieldset {
-    border: 0;
-    border-left: 3px solid $culturedGrey;
-
-    caption {
-      color: $blueMunsell;
-      font-weight: bold;
-    }
-  }
-
   .pre-work {
     h2 {
       @include ilios-heading-h5;
