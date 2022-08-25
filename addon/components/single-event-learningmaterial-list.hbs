@@ -1,5 +1,5 @@
 <div class="single-event-learningmaterial-list" data-test-single-event-learningmaterial-list ...attributes>
-  {{#if (or @learningMaterials.length @prework.length)}}
+  {{#if @prework.length}}
     <ul class="static-list prework">
       {{#each @prework as |event|}}
         <li data-test-prework-event>
@@ -13,12 +13,15 @@
         </li>
       {{/each}}
     </ul>
+  {{/if}}
+  {{#if @learningMaterials.length}}
     <ul class="static-list">
       {{#each @learningMaterials as |lm|}}
         <SingleEventLearningmaterialListItem @learningMaterial={{lm}} @linked={{true}} />
       {{/each}}
     </ul>
-  {{else}}
+  {{/if}}
+  {{#if (and (not @learningMaterial.length) (not @prework.length))}}
     <p class="no-content">
       {{t "general.none"}}
     </p>
