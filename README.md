@@ -5,6 +5,10 @@
 - [Ilios Frontend](https://github.com/ilios/common)
 - [Ilios LTI App](https://github.com/ilios/lti-app)
 
+## Reporting Issue
+
+All Ilios issues should be reported to our [common issue tracker](https://github.com/ilios/ilios/issues)
+
 Compatibility
 ------------------------------------------------------------------------------
 
