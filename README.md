@@ -16,6 +16,10 @@ open source software, ilios would be nowhere, so if you have a chance to pay the
 - [Netlify](https://www.netlify.com)
 - [BrowserStack](https://www.browserstack.com)
 
+## Reporting Issue
+
+All Ilios issues should be reported to our [common issue tracker](https://github.com/ilios/ilios/issues)
+
 ## Directions for developers working with this ember-cli app
 
 ### Prerequisites
