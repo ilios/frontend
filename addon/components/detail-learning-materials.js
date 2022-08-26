@@ -29,10 +29,9 @@ export default class DetailCohortsComponent extends Component {
     this.learningMaterialUserRoles = this.store.peekAll('learning-material-user-role');
   }
 
-  @restartableTask
-  *load() {
-    this.materialsRelationship = yield this.args.subject.learningMaterials;
-  }
+  load = restartableTask(async () => {
+    this.materialsRelationship = await this.args.subject.learningMaterials;
+  });
 
   get materials() {
     if (!this.materialsRelationship) {
@@ -99,9 +98,8 @@ export default class DetailCohortsComponent extends Component {
     });
   }
 
-  @dropTask
-  *saveNewLearningMaterial(lm) {
-    const savedLm = yield lm.save();
+  saveNewLearningMaterial = dropTask(async (lm) => {
+    const savedLm = await lm.save();
 
     let lmSubject;
     let position = 0;
@@ -120,16 +118,15 @@ export default class DetailCohortsComponent extends Component {
       });
     }
     lmSubject.set('learningMaterial', savedLm);
-    yield lmSubject.save();
+    await lmSubject.save();
     this.displayAddNewForm = false;
     this.type = null;
     scrollIntoView(this.title, {
       align: { top: 0 },
     });
-  }
+  });
 
-  @dropTask
-  *saveSortOrder(learningMaterials) {
+  saveSortOrder = dropTask(async (learningMaterials) => {
     const materialsToSave = [];
     for (let i = 0, n = learningMaterials.length; i < n; i++) {
       const lm = learningMaterials[i];
@@ -140,15 +137,14 @@ export default class DetailCohortsComponent extends Component {
       }
     }
 
-    yield this.saveSomeMaterials(materialsToSave);
+    await this.saveSomeMaterials(materialsToSave);
     this.isSorting = false;
     scrollIntoView(this.title, {
       align: { top: 0 },
     });
-  }
+  });
 
-  @dropTask
-  *addLearningMaterial(parentLearningMaterial) {
+  addLearningMaterial = dropTask(async (parentLearningMaterial) => {
     let newLearningMaterial;
 
     if (this.args.isCourse) {
@@ -169,15 +165,14 @@ export default class DetailCohortsComponent extends Component {
       position = this.materials.sortBy('position').reverse()[0].get('position') + 1;
     }
     newLearningMaterial.set('position', position);
-    yield newLearningMaterial.save();
-  }
+    await newLearningMaterial.save();
+  });
 
-  @dropTask
-  *remove(lmProxy) {
+  remove = dropTask(async (lmProxy) => {
     const subjectLearningMaterial = lmProxy.get('content');
     subjectLearningMaterial.deleteRecord();
-    return yield subjectLearningMaterial.save();
-  }
+    return await subjectLearningMaterial.save();
+  });
 
   async saveSomeMaterials(arr) {
     const chunk = arr.splice(0, 5);

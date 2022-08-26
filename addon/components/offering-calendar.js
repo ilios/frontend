@@ -34,12 +34,11 @@ export default class OfferingCalendar extends Component {
     return [...filteredEvents, this.currentEvent];
   }
 
-  @restartableTask
-  *load(element, [startDate, endDate, learnerGroups, session]) {
+  load = restartableTask(async (element, [startDate, endDate, learnerGroups, session]) => {
     if (!learnerGroups) {
       this.learnerGroupEvents = [];
     } else {
-      const data = yield map(learnerGroups, async (learnerGroup) => {
+      const data = await map(learnerGroups, async (learnerGroup) => {
         const offerings = await learnerGroup.offerings;
         return await map(offerings.toArray(), async (offering) => {
           const session = await offering.session;
@@ -67,10 +66,10 @@ export default class OfferingCalendar extends Component {
       this.sessionEvents = [];
       this.currentEvent = null;
     } else {
-      const offerings = yield session.offerings;
-      const sessionType = yield session.sessionType;
-      const course = yield session.course;
-      this.sessionEvents = yield map(offerings.toArray(), async (offering) => {
+      const offerings = await session.offerings;
+      const sessionType = await session.sessionType;
+      const course = await session.course;
+      this.sessionEvents = await map(offerings.toArray(), async (offering) => {
         return {
           startDate: offering.startDate,
           endDate: offering.endDate,
@@ -97,5 +96,5 @@ export default class OfferingCalendar extends Component {
         prerequisites: [],
       };
     }
-  }
+  });
 }

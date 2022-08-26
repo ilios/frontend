@@ -151,22 +151,20 @@ export default class OfferingForm extends Component {
     return DEFAULT_URL_VALUE;
   }
 
-  @restartableTask
-  *load(element, [offering, cohorts]) {
-    yield this.loadData.perform(offering, cohorts);
-    yield timeout(1);
-  }
+  load = restartableTask(async (element, [offering, cohorts]) => {
+    await this.loadData.perform(offering, cohorts);
+    await timeout(1);
+  });
 
-  @restartableTask()
-  *loadData(offering, cohorts) {
-    this.availableInstructorGroups = yield this.loadAvailableInstructorGroups(cohorts);
+  loadData = restartableTask(async (offering, cohorts) => {
+    this.availableInstructorGroups = await this.loadAvailableInstructorGroups(cohorts);
 
     if (isPresent(offering)) {
-      yield this.loadAttrsFromOffering.perform(offering);
+      await this.loadAttrsFromOffering.perform(offering);
     } else {
       this.loadDefaultAttrs();
     }
-  }
+  });
 
   @action
   async addLearnerGroup(learnerGroup) {
@@ -330,8 +328,7 @@ export default class OfferingForm extends Component {
     this.loaded = true;
   }
 
-  @dropTask
-  *loadAttrsFromOffering(offering) {
+  loadAttrsFromOffering = dropTask(async (offering) => {
     if (this.loaded) {
       return;
     }
@@ -340,7 +337,7 @@ export default class OfferingForm extends Component {
     this.room = offering.get('room');
     this.url = offering.get('url');
     this.recurringDays = [];
-    const obj = yield hash({
+    const obj = await hash({
       learnerGroups: offering.get('learnerGroups'),
       learners: offering.get('learners'),
       instructors: offering.get('instructors'),
@@ -351,18 +348,16 @@ export default class OfferingForm extends Component {
     this.instructors = obj.instructors.toArray();
     this.instructorGroups = obj.instructorGroups.toArray();
     this.loaded = true;
-  }
+  });
 
-  @dropTask
-  *saveOnEnter(event) {
+  saveOnEnter = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
-      yield this.saveOffering.perform();
+      await this.saveOffering.perform();
     }
-  }
+  });
 
-  @dropTask
-  *saveOffering() {
+  saveOffering = dropTask(async () => {
     this.addErrorDisplaysFor([
       'room',
       'url',
@@ -372,14 +367,14 @@ export default class OfferingForm extends Component {
       'learnerGroups',
     ]);
 
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.saveProgressPercent = 1;
-    yield timeout(1);
-    let offerings = yield this.makeRecurringOfferingObjects();
-    offerings = yield this.makeSmallGroupOfferingObjects(offerings);
+    await timeout(1);
+    let offerings = await this.makeRecurringOfferingObjects();
+    offerings = await this.makeSmallGroupOfferingObjects(offerings);
 
     // adjust timezone
     offerings.forEach((offering) => {
@@ -397,7 +392,7 @@ export default class OfferingForm extends Component {
     let parts;
     while (offerings.length > 0) {
       parts = offerings.splice(0, 5);
-      yield map(
+      await map(
         parts,
         ({
           startDate,
@@ -425,10 +420,10 @@ export default class OfferingForm extends Component {
       this.saveProgressPercent = Math.floor((savedOfferings / totalOfferings) * 100);
     }
     this.saveProgressPercent = 100;
-    yield timeout(500);
+    await timeout(500);
     this.clearErrorDisplay();
     this.args.close();
-  }
+  });
 
   async makeRecurringOfferingObjects() {
     const makeRecurring = this.makeRecurring;
@@ -530,9 +525,8 @@ export default class OfferingForm extends Component {
     return smallGroupOfferings;
   }
 
-  @restartableTask
-  *updateDurationHours(hours) {
-    yield timeout(DEBOUNCE_DELAY);
+  updateDurationHours = restartableTask(async (hours) => {
+    await timeout(DEBOUNCE_DELAY);
     this.addErrorDisplayFor('durationHours');
     this.addErrorDisplayFor('durationMinutes');
     const minutes = this.durationMinutes;
@@ -541,11 +535,10 @@ export default class OfferingForm extends Component {
       .add(hours, 'hours')
       .add(minutes, 'minutes')
       .toDate();
-  }
+  });
 
-  @restartableTask
-  *updateDurationMinutes(minutes) {
-    yield timeout(DEBOUNCE_DELAY);
+  updateDurationMinutes = restartableTask(async (minutes) => {
+    await timeout(DEBOUNCE_DELAY);
     this.addErrorDisplayFor('durationHours');
     this.addErrorDisplayFor('durationMinutes');
     const hours = this.durationHours;
@@ -554,7 +547,7 @@ export default class OfferingForm extends Component {
       .add(hours, 'hours')
       .add(minutes, 'minutes')
       .toDate();
-  }
+  });
 
   @action
   sortLearnergroupsByTitle(learnerGroupA, learnerGroupB) {

@@ -147,8 +147,7 @@ export default class PublishAllSessionsComponent extends Component {
     }
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     const sessionsToSave = [];
 
     this.overridableSessions.forEach((session) => {
@@ -164,11 +163,11 @@ export default class PublishAllSessionsComponent extends Component {
     this.totalSessionsToSave = sessionsToSave.length;
     this.currentSessionsSaved = 0;
 
-    yield this.saveSomeSessions(sessionsToSave);
+    await this.saveSomeSessions(sessionsToSave);
     this.flashMessages.success('general.savedSuccessfully');
-    yield timeout(500);
+    await timeout(500);
     this.args.saved();
-  }
+  });
 
   @action
   async transitionToCourse() {

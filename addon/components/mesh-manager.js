@@ -71,17 +71,18 @@ export default class MeshManagerComponent extends Component {
     this?.searchInput.focus();
   }
 
-  @restartableTask
-  *search() {
+  search = restartableTask(async () => {
     if (this.query.length < MIN_INPUT) {
       this.searchResults = [];
       return; // don't linger around return right away
     }
-    yield timeout(DEBOUNCE_TIMEOUT);
-    const descriptors = (yield this.store.query('mesh-descriptor', {
-      q: this.query,
-      limit: SEARCH_RESULTS_PER_PAGE + 1,
-    })).toArray();
+    await timeout(DEBOUNCE_TIMEOUT);
+    const descriptors = (
+      await this.store.query('mesh-descriptor', {
+        q: this.query,
+        limit: SEARCH_RESULTS_PER_PAGE + 1,
+      })
+    ).toArray();
 
     this.searchPage = 1;
     this.hasMoreSearchResults = descriptors.length > SEARCH_RESULTS_PER_PAGE;
@@ -89,20 +90,21 @@ export default class MeshManagerComponent extends Component {
       descriptors.pop();
     }
     this.searchResults = descriptors;
-  }
+  });
 
-  @dropTask
-  *searchMore() {
-    const descriptors = (yield this.store.query('mesh-descriptor', {
-      q: this.query,
-      limit: SEARCH_RESULTS_PER_PAGE + 1,
-      offset: this.searchPage * SEARCH_RESULTS_PER_PAGE,
-    })).toArray();
+  searchMore = dropTask(async () => {
+    const descriptors = (
+      await this.store.query('mesh-descriptor', {
+        q: this.query,
+        limit: SEARCH_RESULTS_PER_PAGE + 1,
+        offset: this.searchPage * SEARCH_RESULTS_PER_PAGE,
+      })
+    ).toArray();
     this.searchPage = this.searchPage + 1;
     this.hasMoreSearchResults = descriptors.length > SEARCH_RESULTS_PER_PAGE;
     if (this.hasMoreSearchResults) {
       descriptors.pop();
     }
     this.searchResults = [...this.searchResults, ...descriptors];
-  }
+  });
 }

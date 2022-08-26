@@ -39,8 +39,7 @@ export default class ObjectiveSortManagerComponent extends Component {
     }
   }
 
-  @dropTask
-  *saveSortOrder() {
+  saveSortOrder = dropTask(async () => {
     const objectives = this.items;
     for (let i = 0, n = objectives.length; i < n; i++) {
       objectives[i].set('position', i + 1);
@@ -49,9 +48,9 @@ export default class ObjectiveSortManagerComponent extends Component {
     this.totalObjectivesToSave = objectives.length;
     this.currentObjectivesSaved = 0;
 
-    yield this.saveSomeObjectives(objectives);
+    await this.saveSomeObjectives(objectives);
     this.args.close();
-  }
+  });
 
   resetHover() {
     this.draggedAboveItem = null;

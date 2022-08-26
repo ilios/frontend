@@ -19,15 +19,14 @@ export default class SessionsGridHeader extends Component {
     this.args.setSortBy(what);
   }
 
-  @dropTask
-  *expandAll() {
+  expandAll = dropTask(async () => {
     this.isExpanding = true;
-    yield timeout(100);
+    await timeout(100);
     this.args.toggleExpandAll();
     // we need to wait for the browser to hand back
     //control and then swap the icon back
-    yield next(() => {
+    await next(() => {
       this.isExpanding = false;
     });
-  }
+  });
 }

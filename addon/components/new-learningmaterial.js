@@ -90,14 +90,13 @@ export default class NewLearningmaterialComponent extends Component {
     return this.link ?? DEFAULT_URL_VALUE;
   }
 
-  @dropTask
-  *prepareSave() {
+  prepareSave = dropTask(async () => {
     this.addErrorDisplayForAllFields();
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    const owningUser = yield this.currentUser.getModel();
+    const owningUser = await this.currentUser.getModel();
 
     const learningMaterial = this.store.createRecord('learningMaterial', {
       title: this.title,
@@ -127,9 +126,9 @@ export default class NewLearningmaterialComponent extends Component {
       }
     }
 
-    yield this.args.save(learningMaterial);
+    await this.args.save(learningMaterial);
     this.clearErrorDisplay();
-  }
+  });
 
   @action
   changeStatusId(event) {

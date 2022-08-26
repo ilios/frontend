@@ -92,9 +92,8 @@ export default class VisualizerCourseVocabulary extends Component {
     });
   }
 
-  @restartableTask
-  *barHover(obj) {
-    yield timeout(100);
+  barHover = restartableTask(async (obj) => {
+    await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
@@ -104,7 +103,7 @@ export default class VisualizerCourseVocabulary extends Component {
 
     this.tooltipTitle = htmlSafe(label);
     this.tooltipContent = meta.sessions.uniq().sort().join(', ');
-  }
+  });
 
   @action
   barClick(obj) {

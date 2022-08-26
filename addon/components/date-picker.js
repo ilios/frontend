@@ -11,27 +11,25 @@ export default class DatePickerComponent extends Component {
   @tracked _flatPickerInstance;
   @tracked isOpen = false;
 
-  @restartableTask
-  *updatePicker(element, [value]) {
-    yield waitForProperty(this, '_flatPickerInstance');
+  updatePicker = restartableTask(async (element, [value]) => {
+    await waitForProperty(this, '_flatPickerInstance');
     if (this._flatPickerInstance.selectedDates[0] != value) {
       this._flatPickerInstance.setDate(value);
     }
-  }
+  });
 
-  @dropTask
-  *setupPicker(element) {
+  setupPicker = dropTask(async (element) => {
     const currentLocale = this.intl.locale[0];
     let locale;
     switch (currentLocale) {
       case 'fr':
         // eslint-disable-next-line no-case-declarations
-        const { French } = yield import('flatpickr/dist/l10n/fr.js');
+        const { French } = await import('flatpickr/dist/l10n/fr.js');
         locale = French;
         break;
       case 'es':
         // eslint-disable-next-line no-case-declarations
-        const { Spanish } = yield import('flatpickr/dist/l10n/es.js');
+        const { Spanish } = await import('flatpickr/dist/l10n/es.js');
         locale = Spanish;
         break;
       default:
@@ -53,7 +51,7 @@ export default class DatePickerComponent extends Component {
       maxDate: this.args.maxDate ?? null,
       minDate: this.args.minDate ?? null,
     });
-  }
+  });
 
   willDestroy() {
     super.willDestroy(...arguments);

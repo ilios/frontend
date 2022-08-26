@@ -17,20 +17,18 @@ export default class DetailTaxonomiesComponent extends Component {
     return !this.isManaging && terms.length;
   }
 
-  @dropTask
-  *manage() {
+  manage = dropTask(async () => {
     this.args.expand();
-    const terms = yield this.args.subject.terms;
+    const terms = await this.args.subject.terms;
     this.bufferedTerms = [...terms.toArray()];
     this.isManaging = true;
-  }
+  });
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.args.subject.set('terms', this.bufferedTerms);
-    yield this.args.subject.save();
+    await this.args.subject.save();
     this.isManaging = false;
-  }
+  });
 
   @action
   collapse() {

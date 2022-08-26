@@ -19,9 +19,8 @@ export default class DashboardFilterTagsComponent extends Component {
     );
   }
 
-  @restartableTask
-  *load() {
-    const tags = yield all([
+  load = restartableTask(async () => {
+    const tags = await all([
       this.getCourseLevelTags(),
       this.getSessionTypeTags(),
       this.getCohortTags(),
@@ -29,7 +28,7 @@ export default class DashboardFilterTagsComponent extends Component {
       this.getCourseTags(),
     ]);
     this.filterTags = tags.flat();
-  }
+  });
 
   async fetchModel(modelName, id) {
     const model = this.store.peekRecord(modelName, id);

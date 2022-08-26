@@ -16,14 +16,13 @@ export default class SessionCopyComponent extends Component {
   @tracked years;
   @tracked allCourses;
 
-  @restartableTask
-  *setup(element, [session]) {
+  setup = restartableTask(async (element, [session]) => {
     if (!session) {
       return;
     }
-    const course = yield session.course;
-    const school = yield course.school;
-    const { years, schoolCourses } = yield hash({
+    const course = await session.course;
+    const school = await course.school;
+    const { years, schoolCourses } = await hash({
       years: this.store.findAll('academicYear'),
       schoolCourses: this.store.query('course', {
         filters: {
@@ -37,10 +36,10 @@ export default class SessionCopyComponent extends Component {
       .map((year) => Number(year.id))
       .filter((year) => year >= thisYear - 1)
       .sort();
-    this.allCourses = yield filter(schoolCourses.toArray(), async (co) => {
+    this.allCourses = await filter(schoolCourses.toArray(), async (co) => {
       return this.permissionChecker.canCreateSession(co);
     });
-  }
+  });
 
   get bestSelectedYear() {
     if (this.selectedYear) {
@@ -79,9 +78,8 @@ export default class SessionCopyComponent extends Component {
     this.selectedCourseId = event.target.value;
   }
 
-  @dropTask
-  *save() {
-    yield timeout(10);
+  save = dropTask(async () => {
+    await timeout(10);
     const sessionToCopy = this.args.session;
     const newCourse = this.bestSelectedCourse;
     const toSave = [];
@@ -100,11 +98,11 @@ export default class SessionCopyComponent extends Component {
     );
 
     session.set('course', newCourse);
-    session.set('meshDescriptors', (yield sessionToCopy.meshDescriptors).toArray());
-    session.set('terms', (yield sessionToCopy.terms).toArray());
-    session.set('sessionType', yield sessionToCopy.sessionType);
+    session.set('meshDescriptors', (await sessionToCopy.meshDescriptors).toArray());
+    session.set('terms', (await sessionToCopy.terms).toArray());
+    session.set('sessionType', await sessionToCopy.sessionType);
 
-    const ilmToCopy = yield sessionToCopy.ilmSession;
+    const ilmToCopy = await sessionToCopy.ilmSession;
     if (ilmToCopy) {
       const ilm = this.store.createRecord(
         'ilmSession',
@@ -114,10 +112,10 @@ export default class SessionCopyComponent extends Component {
       toSave.pushObject(ilm);
     }
 
-    const learningMaterialsToCopy = yield sessionToCopy.learningMaterials;
+    const learningMaterialsToCopy = await sessionToCopy.learningMaterials;
     for (let i = 0; i < learningMaterialsToCopy.length; i++) {
       const learningMaterialToCopy = learningMaterialsToCopy.toArray()[i];
-      const lm = yield learningMaterialToCopy.learningMaterial;
+      const lm = await learningMaterialToCopy.learningMaterial;
       const learningMaterial = this.store.createRecord(
         'sessionLearningMaterial',
         learningMaterialToCopy.getProperties('notes', 'required', 'publicNotes', 'position')
@@ -127,24 +125,24 @@ export default class SessionCopyComponent extends Component {
       toSave.pushObject(learningMaterial);
     }
 
-    const originalCourse = yield sessionToCopy.course;
+    const originalCourse = await sessionToCopy.course;
     if (newCourse.id === originalCourse.id) {
-      const postrequisiteToCopy = yield sessionToCopy.postrequisite;
+      const postrequisiteToCopy = await sessionToCopy.postrequisite;
       session.set('postrequisite', postrequisiteToCopy);
     }
 
     // save the session first to fill out relationships with the session id
-    yield session.save();
-    yield all(toSave.invoke('save'));
+    await session.save();
+    await all(toSave.invoke('save'));
 
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon
-    const relatedSessionObjectives = yield sessionToCopy.sessionObjectives;
+    const relatedSessionObjectives = await sessionToCopy.sessionObjectives;
     const sessionObjectivesToCopy = relatedSessionObjectives.sortBy('id').toArray();
     for (let i = 0, n = sessionObjectivesToCopy.length; i < n; i++) {
       const sessionObjectiveToCopy = sessionObjectivesToCopy[i];
-      const meshDescriptors = (yield sessionObjectiveToCopy.meshDescriptors).toArray();
-      const terms = (yield sessionObjectiveToCopy.terms).toArray();
+      const meshDescriptors = (await sessionObjectiveToCopy.meshDescriptors).toArray();
+      const terms = (await sessionObjectiveToCopy.terms).toArray();
       const sessionObjective = this.store.createRecord('session-objective', {
         session,
         position: sessionObjectiveToCopy.position,
@@ -152,9 +150,9 @@ export default class SessionCopyComponent extends Component {
       });
       sessionObjective.set('meshDescriptors', meshDescriptors);
       sessionObjective.set('terms', terms);
-      yield sessionObjective.save();
+      await sessionObjective.save();
     }
     this.flashMessages.success('general.copySuccess');
     return this.args.visit(session);
-  }
+  });
 }

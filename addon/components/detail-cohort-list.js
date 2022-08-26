@@ -8,13 +8,12 @@ export default class DetailCohortListComponent extends Component {
   @service intl;
   @tracked sortedCohorts = null;
 
-  @restartableTask
-  *load(event, [cohorts]) {
+  load = restartableTask(async (event, [cohorts]) => {
     if (!cohorts) {
       return false;
     }
 
-    const sortProxies = yield map(cohorts.toArray(), async (cohort) => {
+    const sortProxies = await map(cohorts.toArray(), async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;
@@ -33,5 +32,5 @@ export default class DetailCohortListComponent extends Component {
     });
 
     this.sortedCohorts = sortProxies.sortBy('schoolTitle', 'displayTitle').mapBy('cohort');
-  }
+  });
 }

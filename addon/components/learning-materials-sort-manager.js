@@ -21,10 +21,10 @@ export default class LearningMaterialsSortManagerComponent extends Component {
   get items() {
     return this.sortedItems ?? this.sortedLearningMaterials;
   }
-  @dropTask
-  *callSave() {
-    yield this.args.save(this.items);
-  }
+
+  callSave = dropTask(async () => {
+    await this.args.save(this.items);
+  });
 
   resetHover() {
     this.draggedAboveItem = null;

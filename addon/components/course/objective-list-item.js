@@ -30,78 +30,72 @@ export default class CourseObjectiveListItemComponent extends Component {
     return this.isManagingParents || this.isManagingDescriptors || this.isManagingTerms;
   }
 
-  @dropTask
-  *saveTitleChanges() {
+  saveTitleChanges = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid('title');
+    const isValid = await this.isValid('title');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
     this.args.courseObjective.set('title', this.title);
-    yield this.args.courseObjective.save();
-  }
+    await this.args.courseObjective.save();
+  });
 
-  @dropTask
-  *manageParents() {
+  manageParents = dropTask(async () => {
     const objectives = this.args.cohortObjectives.reduce((set, cohortObject) => {
       const cohortObjectives = cohortObject.competencies.mapBy('objectives');
       return [...set, ...cohortObjectives.flat()];
     }, []);
-    const parents = yield this.args.courseObjective.programYearObjectives;
+    const parents = await this.args.courseObjective.programYearObjectives;
     this.parentsBuffer = parents.toArray().map((objective) => {
       return objectives.findBy('id', objective.id);
     });
     this.isManagingParents = true;
-  }
-  @dropTask
-  *manageDescriptors() {
-    const meshDescriptors = yield this.args.courseObjective.meshDescriptors;
+  });
+
+  manageDescriptors = dropTask(async () => {
+    const meshDescriptors = await this.args.courseObjective.meshDescriptors;
     this.descriptorsBuffer = meshDescriptors.toArray();
     this.isManagingDescriptors = true;
-  }
-  @dropTask
-  *manageTerms(vocabulary) {
+  });
+
+  manageTerms = dropTask(async (vocabulary) => {
     this.selectedVocabulary = vocabulary;
-    const terms = yield this.args.courseObjective.terms;
+    const terms = await this.args.courseObjective.terms;
     this.termsBuffer = terms.toArray();
     this.isManagingTerms = true;
-  }
+  });
 
-  @restartableTask
-  *highlightSave() {
-    yield timeout(1000);
-  }
+  highlightSave = restartableTask(async () => {
+    await timeout(1000);
+  });
 
-  @dropTask
-  *saveParents() {
+  saveParents = dropTask(async () => {
     const newParents = this.parentsBuffer.map((obj) => {
       return this.store.peekRecord('program-year-objective', obj.id);
     });
     this.args.courseObjective.set('programYearObjectives', newParents);
-    yield this.args.courseObjective.save();
+    await this.args.courseObjective.save();
     this.parentsBuffer = [];
     this.isManagingParents = false;
     this.highlightSave.perform();
-  }
+  });
 
-  @dropTask
-  *saveDescriptors() {
+  saveDescriptors = dropTask(async () => {
     this.args.courseObjective.set('meshDescriptors', this.descriptorsBuffer);
-    yield this.args.courseObjective.save();
+    await this.args.courseObjective.save();
     this.descriptorsBuffer = [];
     this.isManagingDescriptors = false;
     this.highlightSave.perform();
-  }
+  });
 
-  @dropTask
-  *saveTerms() {
+  saveTerms = dropTask(async () => {
     this.args.courseObjective.set('terms', this.termsBuffer);
-    yield this.args.courseObjective.save();
+    await this.args.courseObjective.save();
     this.termsBuffer = [];
     this.isManagingTerms = false;
     this.highlightSave.perform();
-  }
+  });
 
   @action
   revertTitleChanges() {
@@ -155,8 +149,8 @@ export default class CourseObjectiveListItemComponent extends Component {
     this.isManagingTerms = false;
     this.selectedVocabulary = null;
   }
-  @dropTask
-  *deleteObjective() {
-    yield this.args.courseObjective.destroyRecord();
-  }
+
+  deleteObjective = dropTask(async () => {
+    await this.args.courseObjective.destroyRecord();
+  });
 }

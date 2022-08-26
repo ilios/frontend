@@ -9,31 +9,29 @@ export default class LoginController extends Controller {
   @tracked jwt = null;
   @tracked error = null;
 
-  @dropTask
-  *login() {
+  login = dropTask(async () => {
     this.error = null;
 
     if (this.jwt) {
       const apiHost = this.iliosConfig.get('apiHost');
       const url = `${apiHost}/auth/token`;
-      const response = yield fetch(url, {
+      const response = await fetch(url, {
         headers: {
           'X-JWT-Authorization': `Token ${this.jwt}`,
         },
       });
       if (response.ok) {
-        const obj = yield response.json();
+        const obj = await response.json();
         const authenticator = 'authenticator:ilios-jwt';
         this.session.authenticate(authenticator, { jwt: obj.jwt });
       }
     }
-  }
+  });
 
-  @dropTask
-  *loginOnEnter(event) {
+  loginOnEnter = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
-      yield this.login.perform();
+      await this.login.perform();
     }
-  }
+  });
 }

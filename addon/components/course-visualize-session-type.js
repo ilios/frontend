@@ -8,10 +8,9 @@ export default class CourseVisualizeSessionTypeComponent extends Component {
   @tracked academicYearCrossesCalendarYearBoundaries = false;
   @tracked title;
 
-  @restartableTask
-  *load() {
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+  load = restartableTask(async () => {
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-  }
+  });
 }

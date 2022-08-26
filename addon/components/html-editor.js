@@ -79,14 +79,14 @@ export default class HtmlEditorComponent extends Component {
       });
     });
   }
-  @restartableTask
-  *loadEditor(element, [options]) {
+
+  loadEditor = restartableTask(async (element, [options]) => {
     if (!this.editor) {
-      this.editor = yield this.createEditor(element, options);
+      this.editor = await this.createEditor(element, options);
       this.editor.html.set(this.args.content);
       this.loadFinished = true;
     }
 
     return true;
-  }
+  });
 }

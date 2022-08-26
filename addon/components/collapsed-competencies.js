@@ -8,11 +8,10 @@ export default class CollapsedCompetenciesComponent extends Component {
   @tracked competenciesRelationship;
   @tracked allSchools;
 
-  @restartableTask
-  *load(element, [subject]) {
-    this.competenciesRelationship = yield subject.competencies;
-    this.allSchools = yield this.store.findAll('school');
-  }
+  load = restartableTask(async (element, [subject]) => {
+    this.competenciesRelationship = await subject.competencies;
+    this.allSchools = await this.store.findAll('school');
+  });
 
   get summary() {
     if (!this.allSchools || !this.competenciesRelationship) {

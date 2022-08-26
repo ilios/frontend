@@ -13,26 +13,25 @@ export default class CourseHeaderComponent extends Component {
   @tracked isEditingTitle = false;
   @tracked academicYearCrossesCalendarYearBoundaries = false;
 
-  @restartableTask
-  *load() {
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+  load = restartableTask(async () => {
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
     this.revertTitleChanges();
-  }
+  });
 
-  @restartableTask
-  *changeTitle() {
+  changeTitle = restartableTask(async () => {
     this.courseTitle = this.courseTitle.trim();
     this.addErrorDisplayFor('courseTitle');
-    const isValid = yield this.isValid('courseTitle');
+    const isValid = await this.isValid('courseTitle');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('courseTitle');
     this.args.course.set('title', this.courseTitle);
-    yield this.args.course.save();
-  }
+    await this.args.course.save();
+  });
+
   @action
   revertTitleChanges() {
     this.courseTitle = this.args.course.title;

@@ -14,14 +14,13 @@ export default class PrintCourseComponent extends Component {
   @tracked sessionsRelationship;
   @tracked academicYearCrossesCalendarYearBoundaries = false;
 
-  @dropTask
-  *load() {
-    this.courseLearningMaterialsRelationship = yield this.args.course.learningMaterials;
-    this.sessionsRelationship = yield this.args.course.sessions;
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+  load = dropTask(async () => {
+    this.courseLearningMaterialsRelationship = await this.args.course.learningMaterials;
+    this.sessionsRelationship = await this.args.course.sessions;
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-  }
+  });
 
   get courseLearningMaterials() {
     if (!this.courseLearningMaterialsRelationship) {

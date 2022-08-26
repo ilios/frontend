@@ -9,10 +9,9 @@ export default class SessionOfferingsListComponent extends Component {
   @service store;
   @tracked offeringsRelationship;
 
-  @restartableTask
-  *load() {
-    this.offeringsRelationship = yield this.args.session.offerings;
-  }
+  load = restartableTask(async () => {
+    this.offeringsRelationship = await this.args.session.offerings;
+  });
 
   get offerings() {
     return this.offeringsRelationship ? this.offeringsRelationship.toArray() : [];

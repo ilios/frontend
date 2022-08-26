@@ -8,10 +8,9 @@ export default class WeeklyCalendarComponent extends Component {
   @service intl;
   @service moment;
 
-  @restartableTask
-  *scrollView(calendarElement, [earliestHour]) {
+  scrollView = restartableTask(async (calendarElement, [earliestHour]) => {
     //waiting ensures that setHour has time to setup hour elements
-    yield timeout(1);
+    await timeout(1);
     // all of the hour elements are registered in the template as hour0, hour1, etc
     let hourElement = this.hour6;
 
@@ -19,7 +18,7 @@ export default class WeeklyCalendarComponent extends Component {
       hourElement = this[`hour${earliestHour - 2}`];
     }
     calendarElement.scrollTop = hourElement.offsetTop;
-  }
+  });
 
   get firstDayOfWeek() {
     this.intl.locale; //access to start autotracking

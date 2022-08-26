@@ -15,13 +15,13 @@ export default class LeadershipSearchComponent extends Component {
   get existingUserIds() {
     return this.args.existingUsers.mapBy('id');
   }
-  @restartableTask
-  *searchForUsers(query) {
+
+  searchForUsers = restartableTask(async (query) => {
     this.searchValue = query;
 
     const q = cleanQuery(query);
     if (!q) {
-      yield timeout(1);
+      await timeout(1);
       return [];
     }
 
@@ -33,9 +33,9 @@ export default class LeadershipSearchComponent extends Component {
         },
       ];
     }
-    yield timeout(DEBOUNCE_MS);
+    await timeout(DEBOUNCE_MS);
 
-    const searchResults = yield this.store.query('user', {
+    const searchResults = await this.store.query('user', {
       q,
       'order_by[lastName]': 'ASC',
       'order_by[firstName]': 'ASC',
@@ -66,15 +66,14 @@ export default class LeadershipSearchComponent extends Component {
     results.pushObjects(mappedResults);
 
     return results;
-  }
+  });
 
-  @dropTask
-  *clickUser(user) {
+  clickUser = dropTask(async (user) => {
     if (this.existingUserIds.includes(user.id)) {
       return;
     }
     this.searchValue = null;
-    yield this.searchForUsers.perform(null);
+    await this.searchForUsers.perform(null);
     this.args.selectUser(user);
-  }
+  });
 }

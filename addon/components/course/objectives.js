@@ -24,16 +24,14 @@ export default class CourseObjectivesComponent extends Component {
     return this.objectivesRelationship ? this.objectivesRelationship.length : 0;
   }
 
-  @restartableTask
-  *load() {
-    this.objectivesRelationship = yield this.args.course.courseObjectives;
-  }
+  load = restartableTask(async () => {
+    this.objectivesRelationship = await this.args.course.courseObjectives;
+  });
 
-  @dropTask
-  *saveNewObjective(title) {
+  saveNewObjective = dropTask(async (title) => {
     const newCourseObjective = this.store.createRecord('course-objective');
     let position = 0;
-    const courseObjectives = yield this.args.course.courseObjectives;
+    const courseObjectives = await this.args.course.courseObjectives;
     if (courseObjectives.length) {
       position = courseObjectives.sortBy('position').lastObject.position + 1;
     }
@@ -42,11 +40,11 @@ export default class CourseObjectivesComponent extends Component {
     newCourseObjective.set('position', position);
     newCourseObjective.set('course', this.args.course);
 
-    yield newCourseObjective.save();
+    await newCourseObjective.save();
 
     this.newObjectiveEditorOn = false;
     this.flashMessages.success('general.newObjectiveSaved');
-  }
+  });
 
   @action
   toggleNewObjectiveEditor() {

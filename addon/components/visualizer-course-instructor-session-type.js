@@ -84,9 +84,8 @@ export default class VisualizerCourseInstructorSessionType extends Component {
     });
   }
 
-  @restartableTask
-  *donutHover(obj) {
-    yield timeout(100);
+  donutHover = restartableTask(async (obj) => {
+    await timeout(100);
     if (this.args.isIcon || isEmpty(obj) || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
@@ -96,5 +95,5 @@ export default class VisualizerCourseInstructorSessionType extends Component {
 
     this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
     this.tooltipContent = meta.sessions.uniq().sort().join(', ');
-  }
+  });
 }

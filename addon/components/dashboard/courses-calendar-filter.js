@@ -82,16 +82,15 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
     return [];
   }
 
-  @restartableTask
-  *load() {
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+  load = restartableTask(async () => {
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
     if (this.args.school) {
-      yield this.dataLoader.loadSchoolForCalendar(this.args.school.id);
-      this.coursesRelationship = yield this.args.school.courses;
+      await this.dataLoader.loadSchoolForCalendar(this.args.school.id);
+      this.coursesRelationship = await this.args.school.courses;
     }
-  }
+  });
 
   @action
   scrollToLastYear(element, [year]) {

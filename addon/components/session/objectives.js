@@ -24,16 +24,14 @@ export default class SessionObjectivesComponent extends Component {
     return this.objectivesRelationship ? this.objectivesRelationship.length : 0;
   }
 
-  @restartableTask
-  *load() {
-    this.objectivesRelationship = yield this.args.session.sessionObjectives;
-  }
+  load = restartableTask(async () => {
+    this.objectivesRelationship = await this.args.session.sessionObjectives;
+  });
 
-  @dropTask
-  *saveNewObjective(title) {
+  saveNewObjective = dropTask(async (title) => {
     const newSessionObjective = this.store.createRecord('session-objective');
     let position = 0;
-    const sessionObjectives = yield this.args.session.sessionObjectives;
+    const sessionObjectives = await this.args.session.sessionObjectives;
     if (sessionObjectives.length) {
       position = sessionObjectives.sortBy('position').lastObject.position + 1;
     }
@@ -42,11 +40,11 @@ export default class SessionObjectivesComponent extends Component {
     newSessionObjective.set('position', position);
     newSessionObjective.set('session', this.args.session);
 
-    yield newSessionObjective.save();
+    await newSessionObjective.save();
 
     this.newObjectiveEditorOn = false;
     this.flashMessages.success('general.newObjectiveSaved');
-  }
+  });
 
   @action
   toggleNewObjectiveEditor() {
