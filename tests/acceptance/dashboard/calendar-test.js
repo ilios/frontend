@@ -559,46 +559,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 1);
   });
 
-  test('agenda show next seven days of events', async function (assert) {
-    const today = moment().hour(0).minute(2);
-    this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
-      offering: 1,
-      lastModified: today.clone().subtract(1, 'year'),
-    });
-    const endOfTheWeek = moment().add(6, 'days');
-    this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: endOfTheWeek.format(),
-      endDate: endOfTheWeek.clone().add(1, 'hour').format(),
-      offering: 2,
-      lastModified: today.clone().subtract(1, 'year'),
-    });
-    const yesterday = moment().subtract(25, 'hours');
-    this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: yesterday.format(),
-      endDate: yesterday.clone().add(1, 'hour').format(),
-      offering: 3,
-      lastModified: today.clone().subtract(1, 'year'),
-    });
-    await visit('/dashboard/activities');
-    const events = findAll('tr');
-    assert.strictEqual(events.length, 2);
-    const options = {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    };
-    assert.dom(events[0]).hasText(today.toDate().toLocaleString([], options) + ' event 0');
-    assert.dom(events[1]).hasText(endOfTheWeek.toDate().toLocaleString([], options) + ' event 1');
-  });
-
   test('clear all filters', async function (assert) {
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
@@ -703,7 +663,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('calendar is active in dashboard navigation', async function (assert) {
     await page.visit();
-    assert.notOk(page.calendar.dashboardViewPicker.activities.isActive);
     assert.ok(page.calendar.dashboardViewPicker.calendar.isActive);
     assert.notOk(page.calendar.dashboardViewPicker.materials.isActive);
     assert.notOk(page.calendar.dashboardViewPicker.week.isActive);

@@ -2,7 +2,6 @@ general:
   accessAllMaterialsForThisCourse: "Accéder à tout le matériel d'étude pour ce cours"
   actions: Actions
   activeFilters: "Filtres actifs"
-  activities: "Activités"
   add: "Ajouté"
   addNew: "Ajouté Neuf"
   administratorCount:  "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"

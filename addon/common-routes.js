@@ -7,7 +7,6 @@ export function dashboardRoutes(router) {
     },
     function () {
       this.route('week');
-      this.route('activities');
       this.route('materials');
       this.route('calendar');
     }
