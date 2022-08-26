@@ -24,7 +24,12 @@
     "start": "ember serve",
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
-    "test:ember-compatibility": "ember try:each"
+    "test:ember-compatibility": "ember try:each",
+    "test:ember:browserstack": "ember test --test-port=7774 --host=127.0.0.1 --config-file=testem.browserstack.js",
+    "test:browserstack": "npm-run-all browserstack:connect test:ember:browserstack browserstack:disconnect browserstack:results",
+    "browserstack:connect": "ember browserstack:connect",
+    "browserstack:disconnect": "ember browserstack:disconnect",
+    "browserstack:results": "ember browserstack:results"
   },
   "dependencies": {
     "@ember/render-modifiers": "^2.0.0",
@@ -129,6 +134,7 @@
     "dotenv": "^16.0.0",
     "ember-a11y-testing": "^5.0.0",
     "ember-cli": "~4.3.0",
+    "ember-cli-browserstack": "^2.0.1",
     "ember-cli-dependency-checker": "^3.3.1",
     "ember-cli-dependency-lint": "^2.0.0",
     "ember-cli-deprecation-workflow": "^2.0.0",
@@ -163,6 +169,7 @@
     "stylelint": "^14.3.0",
     "stylelint-config-recommended-scss": "^7.0.0",
     "stylelint-scss": "^4.1.0",
+    "testem-failure-only-reporter": "^1.0.0",
     "webpack": "^5.70.0"
   },
   "engines": {
