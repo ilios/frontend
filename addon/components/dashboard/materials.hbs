@@ -30,13 +30,33 @@
                 selected={{is-equal courseObj.id @courseIdFilter}}
                 value={{courseObj.id}}
               >
-                {{courseObj.title}}
+                {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                  {{courseObj.year}} - {{add courseObj.year 1}} |
+                {{else}}
+                  {{courseObj.year}} |
+                {{/if}}
+                {{#if courseObj.externalId}}
+                  [{{courseObj.externalId}}] | {{courseObj.title}}
+                {{else}}
+                  {{courseObj.title}}
+                {{/if}}
               </option>
             {{/each}}
             {{#unless this.canApplyCourseFilter}}
               {{#if this.courseLoaded}}
                 {{#if this.course}}
-                  <option selected="selected" disabled>{{this.course.title}}</option>
+                  <option selected="selected" disabled>
+                    {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                      {{this.course.year}} - {{add this.course.year 1}} |
+                    {{else}}
+                      {{this.course.year}} |
+                    {{/if}}
+                    {{#if this.course.externalId}}
+                      [{{this.course.externalId}}] | {{this.course.title}}
+                    {{else}}
+                      {{this.course.title}}
+                    {{/if}}
+                  </option>
                 {{else}}
                   <option selected="selected" disabled>&ast;&ast; {{t "general.courseNotFound"}} &ast;&ast;</option>
                 {{/if}}

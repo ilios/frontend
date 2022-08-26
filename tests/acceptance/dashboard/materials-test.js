@@ -17,7 +17,15 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     const today = moment();
     const tomorrow = moment().add(1, 'day');
     const nextWeek = moment().add(1, 'week');
-    const courses = this.server.createList('course', 5);
+    const courses = [
+      this.server.create('course', {
+        externalId: 'ID1234',
+        year: 2021,
+      }),
+      ...this.server.createList('course', 4, {
+        year: 2022,
+      }),
+    ];
     const lm1 = {
       title: 'title1',
       absoluteFileUri: 'http://myhost.com/url1',
@@ -27,6 +35,8 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       type: 'file',
       mimetype: 'application/pdf',
       courseTitle: courses[0].title,
+      courseYear: courses[0].year,
+      courseExternalId: courses[0].externalId,
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: today.toDate(),
     };
@@ -38,6 +48,8 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       course: courses[1].id,
       type: 'link',
       courseTitle: courses[1].title,
+      courseYear: courses[1].year,
+      courseExternalId: courses[1].externalId,
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: tomorrow.toDate(),
     };
@@ -48,6 +60,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       sessionLearningMaterial: 3,
       type: 'citation',
       course: courses[2].id,
+      courseYear: courses[2].year,
       courseTitle: courses[2].title,
       firstOfferingDate: today.toDate(),
     };
@@ -60,6 +73,8 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       type: 'file',
       mimetype: 'text/plain',
       courseTitle: courses[0].title,
+      courseYear: courses[0].year,
+      courseExternalId: courses[0].externalId,
       instructors: ['Instructor3name', 'Instructor4name'],
       firstOfferingDate: tomorrow.toDate(),
     };
@@ -70,6 +85,8 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       sessionTitle: 'session5title',
       sessionLearningMaterial: 5,
       courseTitle: courses[4].title,
+      courseYear: courses[4].year,
+      courseExternalId: courses[4].externalId,
       firstOfferingDate: tomorrow.toDate(),
       endDate: new Date('2013-03-01T01:10:00'),
     };
@@ -80,6 +97,8 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       type: 'file',
       mimetype: 'text/plain',
       courseTitle: courses[0].title,
+      courseYear: courses[0].year,
+      courseExternalId: courses[0].externalId,
       instructors: ['Instructor3name', 'Instructor4name'],
       firstOfferingDate: today.toDate(),
     };
@@ -95,6 +114,8 @@ module('Acceptance | Dashboard Materials', function (hooks) {
         type: 'citation',
         course: courses[3].id,
         courseTitle: courses[3].title,
+        courseYear: courses[3].year,
+        courseExternalId: courses[3].externalId,
         firstOfferingDate: nextWeek.toDate(),
       });
     }
@@ -145,10 +166,10 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.ok(page.materials.header.displayToggle.firstButton.isChecked);
     assert.strictEqual(page.materials.courseFilter.options.length, 5);
     assert.strictEqual(page.materials.courseFilter.options[0].text, 'All Courses');
-    assert.strictEqual(page.materials.courseFilter.options[1].text, 'course 0');
-    assert.strictEqual(page.materials.courseFilter.options[2].text, 'course 1');
-    assert.strictEqual(page.materials.courseFilter.options[3].text, 'course 2');
-    assert.strictEqual(page.materials.courseFilter.options[4].text, 'course 4');
+    assert.strictEqual(page.materials.courseFilter.options[1].text, '2021 | [ID1234] | course 0');
+    assert.strictEqual(page.materials.courseFilter.options[2].text, '2022 | course 1');
+    assert.strictEqual(page.materials.courseFilter.options[3].text, '2022 | course 2');
+    assert.strictEqual(page.materials.courseFilter.options[4].text, '2022 | course 4');
     assert.ok(page.materials.courseFilter.options[0].isSelected);
     assert.notOk(page.materials.courseFilter.options[1].isSelected);
     assert.notOk(page.materials.courseFilter.options[2].isSelected);
@@ -286,11 +307,11 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.ok(page.materials.header.displayToggle.secondButton.isChecked);
     assert.strictEqual(page.materials.courseFilter.options.length, 6);
     assert.strictEqual(page.materials.courseFilter.options[0].text, 'All Courses');
-    assert.strictEqual(page.materials.courseFilter.options[1].text, 'course 0');
-    assert.strictEqual(page.materials.courseFilter.options[2].text, 'course 1');
-    assert.strictEqual(page.materials.courseFilter.options[3].text, 'course 2');
-    assert.strictEqual(page.materials.courseFilter.options[4].text, 'course 3');
-    assert.strictEqual(page.materials.courseFilter.options[5].text, 'course 4');
+    assert.strictEqual(page.materials.courseFilter.options[1].text, '2021 | [ID1234] | course 0');
+    assert.strictEqual(page.materials.courseFilter.options[2].text, '2022 | course 1');
+    assert.strictEqual(page.materials.courseFilter.options[3].text, '2022 | course 2');
+    assert.strictEqual(page.materials.courseFilter.options[4].text, '2022 | course 3');
+    assert.strictEqual(page.materials.courseFilter.options[5].text, '2022 | course 4');
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
       'Showing 1 - 25 of 206'
@@ -468,11 +489,11 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(page.materials.courseFilter.options.length, 6);
     assert.strictEqual(page.materials.courseFilter.options[0].text, 'All Courses');
-    assert.strictEqual(page.materials.courseFilter.options[1].text, 'course 0');
-    assert.strictEqual(page.materials.courseFilter.options[2].text, 'course 1');
-    assert.strictEqual(page.materials.courseFilter.options[3].text, 'course 2');
-    assert.strictEqual(page.materials.courseFilter.options[4].text, 'course 4');
-    assert.strictEqual(page.materials.courseFilter.options[5].text, 'course 3');
+    assert.strictEqual(page.materials.courseFilter.options[1].text, '2021 | [ID1234] | course 0');
+    assert.strictEqual(page.materials.courseFilter.options[2].text, '2022 | course 1');
+    assert.strictEqual(page.materials.courseFilter.options[3].text, '2022 | course 2');
+    assert.strictEqual(page.materials.courseFilter.options[4].text, '2022 | course 4');
+    assert.strictEqual(page.materials.courseFilter.options[5].text, '2022 | course 3');
     assert.ok(page.materials.courseFilter.options[5].isSelected);
     assert.ok(page.materials.courseFilter.options[5].isDisabled);
   });
@@ -490,10 +511,10 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(page.materials.courseFilter.options.length, 6);
     assert.strictEqual(page.materials.courseFilter.options[0].text, 'All Courses');
-    assert.strictEqual(page.materials.courseFilter.options[1].text, 'course 0');
-    assert.strictEqual(page.materials.courseFilter.options[2].text, 'course 1');
-    assert.strictEqual(page.materials.courseFilter.options[3].text, 'course 2');
-    assert.strictEqual(page.materials.courseFilter.options[4].text, 'course 4');
+    assert.strictEqual(page.materials.courseFilter.options[1].text, '2021 | [ID1234] | course 0');
+    assert.strictEqual(page.materials.courseFilter.options[2].text, '2022 | course 1');
+    assert.strictEqual(page.materials.courseFilter.options[3].text, '2022 | course 2');
+    assert.strictEqual(page.materials.courseFilter.options[4].text, '2022 | course 4');
     assert.strictEqual(page.materials.courseFilter.options[5].text, '** course not found **');
     assert.ok(page.materials.courseFilter.options[5].isSelected);
     assert.ok(page.materials.courseFilter.options[5].isDisabled);
