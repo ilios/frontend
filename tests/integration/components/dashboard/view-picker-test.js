@@ -12,8 +12,6 @@ module('Integration | Component | dashboard/view-picker', function (hooks) {
 
   test('it renders and is accessible', async function (assert) {
     await render(hbs`<Dashboard::ViewPicker />`);
-    assert.strictEqual(component.activities.text, 'Activities');
-    assert.strictEqual(component.activities.linkTarget, '/dashboard/activities');
     assert.strictEqual(component.calendar.text, 'Calendar');
     assert.strictEqual(component.calendar.linkTarget, '/dashboard/calendar');
     assert.strictEqual(component.materials.text, 'Materials');

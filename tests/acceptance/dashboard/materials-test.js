@@ -122,7 +122,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
   });
 
   test('it renders with materials in show-current mode', async function (assert) {
-    assert.expect(95);
+    assert.expect(94);
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 100);
@@ -139,7 +139,6 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     await page.visit();
     assert.ok(page.materials.dashboardViewPicker.materials.isActive);
     assert.notOk(page.materials.dashboardViewPicker.calendar.isActive);
-    assert.notOk(page.materials.dashboardViewPicker.activities.isActive);
     assert.notOk(page.materials.dashboardViewPicker.week.isActive);
     assert.ok(page.materials.dashboardViewPicker.isVisible);
     assert.strictEqual(page.materials.title, 'My Materials');

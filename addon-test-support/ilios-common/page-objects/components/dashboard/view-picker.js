@@ -2,11 +2,6 @@ import { attribute, create, hasClass } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-dashboard-view-picker]',
-  activities: {
-    scope: '[data-test-link-activities]',
-    linkTarget: attribute('href'),
-    isActive: hasClass('active'),
-  },
   calendar: {
     scope: '[data-test-link-calendar]',
     linkTarget: attribute('href'),
