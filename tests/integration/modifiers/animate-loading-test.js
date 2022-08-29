@@ -8,9 +8,9 @@ module('Integration | Modifier | animate-loading', function (hooks) {
 
   test('it renders defaults', async function (assert) {
     await render(hbs`<div {{animate-loading}}></div>`);
-    assert.dom('div').hasStyle({
-      opacity: '0.1',
-    });
+    assert.ok(
+      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.1) < 0.001
+    );
 
     await waitUntil(
       () => getComputedStyle(this.element.querySelector('div'), null).opacity === '1',
@@ -26,18 +26,20 @@ module('Integration | Modifier | animate-loading', function (hooks) {
     await render(hbs`<div
       {{animate-loading initialOpacity=".3" finalOpacity="0.6" loadingTime=500}}>
     </div>`);
-    assert.dom('div').hasStyle({
-      opacity: '0.3',
-    });
+    assert.ok(
+      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.3) < 0.001
+    );
 
     await waitUntil(
-      () => getComputedStyle(this.element.querySelector('div'), null).opacity === '0.6',
+      () => getComputedStyle(this.element.querySelector('div'), null).opacity >= 0.6,
       { timeout: 5000 }
     );
     assert.dom('div').hasStyle({
-      opacity: '0.6',
       transition: 'opacity 0.5s linear 0s',
     });
+    assert.ok(
+      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.6) < 0.001
+    );
   });
 
   test('it works with tracker service', async function (assert) {
@@ -46,9 +48,9 @@ module('Integration | Modifier | animate-loading', function (hooks) {
     await render(hbs`<div
       {{animate-loading "someKey"}}>
     </div>`);
-    assert.dom('div').hasStyle({
-      opacity: '0.23',
-    });
+    assert.ok(
+      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.23) < 0.001
+    );
 
     await waitUntil(
       () => getComputedStyle(this.element.querySelector('div'), null).opacity === '1',
