@@ -5,6 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 const s = '[data-test-weekly-calendar-event]';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | weekly-calendar-event', function (hooks) {
   setupRenderingTest(hooks);
@@ -16,10 +17,10 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     const color = '#00cc65';
 
     this.server.create('userevent', {
-      startDate,
-      endDate,
+      startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toJSDate(),
+      endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toJSDate(),
       color,
-      lastModified,
+      lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toJSDate(),
     });
   };
 
