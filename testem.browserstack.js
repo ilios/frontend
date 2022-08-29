@@ -57,7 +57,22 @@ const BrowserStackLaunchers = {
   },
   BS_IOS_SAFARI: {
     exe: 'node_modules/.bin/browserstack-launch',
-    args: ['--os', 'ios', '--osv', '13', '--b', 'iPhone 8', '-t', '1200', '--u', '<url>'],
+    args: [
+      '--real_mobile',
+      'true',
+      '--os',
+      'ios',
+      '--osv',
+      '13',
+      '--b',
+      'iphone',
+      '--device',
+      'iPhone 8',
+      '-t',
+      '1200',
+      '--u',
+      '<url>',
+    ],
     protocol: 'browser',
   },
 };
