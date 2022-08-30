@@ -36,8 +36,8 @@ module('Integration | Component | timed release schedule', function (hooks) {
     await render(
       hbs`<TimedReleaseSchedule @startDate={{this.startDate}} @endDate={{this.endDate}} />`
     );
-    const expectedStartDate = startDate.toDate().toLocaleString([], localeFormatOptions);
-    const expectedEndDate = endDate.toDate().toLocaleString([], localeFormatOptions);
+    const expectedStartDate = this.intl.formatDate(startDate.toDate(), localeFormatOptions);
+    const expectedEndDate = this.intl.formatDate(endDate.toDate(), localeFormatOptions);
 
     assert
       .dom(this.element)
@@ -48,7 +48,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
     const tomorrow = moment().add(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
     await render(hbs`<TimedReleaseSchedule @startDate={{this.tomorrow}} />`);
-    const expectedDate = tomorrow.toDate().toLocaleString([], localeFormatOptions);
+    const expectedDate = this.intl.formatDate(tomorrow.toDate(), localeFormatOptions);
 
     assert.dom(this.element).hasText(`(Available: ${expectedDate})`);
   });
@@ -73,7 +73,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
     const tomorrow = moment().add(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
     await render(hbs`<TimedReleaseSchedule @endDate={{this.tomorrow}} />`);
-    const expectedDate = tomorrow.toDate().toLocaleString([], localeFormatOptions);
+    const expectedDate = this.intl.formatDate(tomorrow.toDate(), localeFormatOptions);
 
     assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
   });
@@ -82,7 +82,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
     const tomorrow = moment().subtract(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
     await render(hbs`<TimedReleaseSchedule @endDate={{this.tomorrow}} />`);
-    const expectedDate = tomorrow.toDate().toLocaleString([], localeFormatOptions);
+    const expectedDate = this.intl.formatDate(tomorrow.toDate(), localeFormatOptions);
     assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
   });
 });

@@ -346,7 +346,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.uploadDate,
-        today.toDate().toLocaleDateString()
+        this.intl.formatDate(today.toDate())
       );
       assert.ok(page.details.learningMaterials.manager.hasLink);
       assert.strictEqual(page.details.learningMaterials.manager.link, 'www.example.com');

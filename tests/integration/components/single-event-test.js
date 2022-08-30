@@ -227,7 +227,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
-      today.toDate().toLocaleString([], {
+      this.intl.formatDate(today.toDate(), {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -269,7 +269,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     await render(hbs`<SingleEvent @event={{this.event}} />`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
-    const formatedDate = tomorrow.toDate().toLocaleString([], {
+    const formatedDate = this.intl.formatDate(tomorrow.toDate(), {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -400,7 +400,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     await render(hbs`<SingleEvent @event={{this.event}} />`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
-    const formattedTomorrow = tomorrow.toDate().toLocaleString([], {
+    const formattedTomorrow = this.intl.formatDate(tomorrow.toDate(), {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -408,7 +408,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       hour: 'numeric',
       minute: 'numeric',
     });
-    const formattedToday = today.toDate().toLocaleString([], {
+    const formattedToday = this.intl.formatDate(today.toDate(), {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -474,7 +474,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
-      today.toDate().toLocaleString([], {
+      this.intl.formatDate(today.toDate(), {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -507,7 +507,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
-      today.toDate().toLocaleString([], {
+      this.intl.formatDate(today.toDate(), {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -516,7 +516,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         minute: 'numeric',
       }) +
         ' - ' +
-        laterToday.toDate().toLocaleString([], {
+        this.intl.formatDate(laterToday.toDate(), {
           hour: 'numeric',
           minute: 'numeric',
         })
@@ -545,7 +545,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
-      today.toDate().toLocaleString([], {
+      this.intl.formatDate(today.toDate(), {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -554,7 +554,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         minute: 'numeric',
       }) +
         ' - ' +
-        notToday.toDate().toLocaleString([], {
+        this.intl.formatDate(notToday.toDate(), {
           weekday: 'long',
           year: 'numeric',
           month: 'long',
