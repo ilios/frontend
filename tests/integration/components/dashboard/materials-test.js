@@ -101,7 +101,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       courseYear: courses[4].year,
       courseExternalId: courses[4].externalId,
       firstOfferingDate: tomorrow.toDate(),
-      endDate: new Date('2013-03-01T01:10:00'),
+      endDate: new Date(2013, 2, 1, 1, 10, 0),
     };
 
     const currentMaterials = [lm1, lm2, lm3, lm4, lm5];
