@@ -7,12 +7,11 @@ export default class CourseVisualizeInstructorsController extends Controller {
   queryParams = ['name'];
   name = '';
 
-  @restartableTask
-  *setName(name) {
+  setName = restartableTask(async (name) => {
     const clean = escapeRegExp(name);
     if (clean) {
-      yield timeout(250);
+      await timeout(250);
     }
     set(this, 'name', clean);
-  }
+  });
 }

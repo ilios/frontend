@@ -69,9 +69,8 @@ export default class VisualizerCourseVocabularies extends Component {
     }, []);
   }
 
-  @restartableTask
-  *donutHover(obj) {
-    yield timeout(100);
+  donutHover = restartableTask(async (obj) => {
+    await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
@@ -81,7 +80,7 @@ export default class VisualizerCourseVocabularies extends Component {
 
     this.tooltipTitle = htmlSafe(meta.vocabulary.get('title'));
     this.tooltipContent = this.intl.t('general.clickForMore');
-  }
+  });
 
   @action
   donutClick(obj) {

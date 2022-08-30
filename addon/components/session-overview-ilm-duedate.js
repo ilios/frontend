@@ -34,15 +34,14 @@ export default class SessionOverviewIlmDuedateComponent extends Component {
     this.dueDate = dueDate.toDate();
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplayFor('dueDate');
-    const isValid = yield this.isValid('dueDate');
+    const isValid = await this.isValid('dueDate');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('dueDate');
     this.args.ilmSession.dueDate = this.dueDate;
-    yield this.args.ilmSession.save();
-  }
+    await this.args.ilmSession.save();
+  });
 }

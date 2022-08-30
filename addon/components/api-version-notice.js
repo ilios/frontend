@@ -15,12 +15,11 @@ export default class ApiVersionNoticeComponent extends Component {
     window.location.reload();
   }
 
-  @dropTask
-  *check() {
-    const mismatched = yield this.apiVersion.getIsMismatched();
+  check = dropTask(async () => {
+    const mismatched = await this.apiVersion.getIsMismatched();
     if (mismatched && 'serviceWorker' in navigator) {
-      yield 2000; //wait to let the new service worker get fetched if it is available
-      const reg = yield navigator.serviceWorker.getRegistration();
+      await 2000; //wait to let the new service worker get fetched if it is available
+      const reg = await navigator.serviceWorker.getRegistration();
       if (reg) {
         if (reg.waiting) {
           this.update.perform();
@@ -35,25 +34,24 @@ export default class ApiVersionNoticeComponent extends Component {
     }
     this.mismatched = mismatched;
     return true; //always return true to update data-test-load-finished property
-  }
+  });
 
-  @dropTask
-  *countdown() {
+  countdown = dropTask(async () => {
     this.updateAvailable = true;
     for (let i = 5; i > 0; i--) {
       this.countdownToUpdate = i;
-      yield timeout(1000);
+      await timeout(1000);
     }
-    yield this.update.perform();
-  }
-  @dropTask
-  *update() {
+    await this.update.perform();
+  });
+
+  update = dropTask(async () => {
     if ('serviceWorker' in navigator) {
-      const reg = yield navigator.serviceWorker.getRegistration();
+      const reg = await navigator.serviceWorker.getRegistration();
       if (reg && reg.waiting) {
         reg.waiting.postMessage('skipWaiting');
       }
     }
-    yield timeout(3000);
-  }
+    await timeout(3000);
+  });
 }

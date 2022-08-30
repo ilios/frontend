@@ -10,11 +10,10 @@ export default class CourseSummaryHeaderComponent extends Component {
 
   @tracked canRollover;
 
-  @restartableTask
-  *load() {
-    const school = yield this.args.course.school;
-    this.canRollover = yield this.permissionChecker.canCreateCourse(school);
-  }
+  load = restartableTask(async () => {
+    const school = await this.args.course.school;
+    this.canRollover = await this.permissionChecker.canCreateCourse(school);
+  });
 
   get showRollover() {
     if (this.router.currentRouteName === 'course.rollover') {

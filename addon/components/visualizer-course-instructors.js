@@ -105,9 +105,8 @@ export default class VisualizerCourseInstructors extends Component {
     });
   }
 
-  @restartableTask
-  *barHover(obj) {
-    yield timeout(100);
+  barHover = restartableTask(async (obj) => {
+    await timeout(100);
     if (this.args.isIcon || isEmpty(obj) || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
@@ -117,7 +116,7 @@ export default class VisualizerCourseInstructors extends Component {
     const sessions = meta.sessions.uniq().sort().join(', ');
     this.tooltipTitle = htmlSafe(label);
     this.tooltipContent = htmlSafe(sessions + '<br /><br />' + this.intl.t('general.clickForMore'));
-  }
+  });
 
   @action
   barClick(obj) {

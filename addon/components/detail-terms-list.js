@@ -6,8 +6,7 @@ import { all } from 'rsvp';
 export default class DetailTermsListComponent extends Component {
   @tracked sortedTerms;
 
-  @dropTask
-  *load(event, [terms]) {
+  load = dropTask(async (event, [terms]) => {
     if (!terms) {
       this.sortedTerms = [];
       return;
@@ -16,7 +15,7 @@ export default class DetailTermsListComponent extends Component {
       const vocabId = term.belongsTo('vocabulary').id();
       return vocabId === this.args.vocabulary.id;
     });
-    const proxies = yield all(
+    const proxies = await all(
       filteredTerms.map(async (term) => {
         const title = await term.getTitleWithParentTitles();
         return { term, title };
@@ -29,5 +28,5 @@ export default class DetailTermsListComponent extends Component {
     });
 
     this.sortedTerms = sortedProxies.mapBy('term');
-  }
+  });
 }

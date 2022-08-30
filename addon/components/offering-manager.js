@@ -52,10 +52,10 @@ export default class OfferingManagerComponent extends Component {
     }
   }
 
-  @task
-  *textCopied() {
-    yield timeout(3000);
-  }
+  textCopied = task(async () => {
+    await timeout(3000);
+  });
+
   @action
   setLearnerGroupElement(element, [id]) {
     set(this, `learnerGroupElement${id}`, element);

@@ -12,12 +12,11 @@ export default class LearningMaterialUploaderComponent extends Component {
   uploadQueueName = 'materials';
   @tracked fileUploadErrorMessage = false;
 
-  @dropTask
-  *upload(file) {
+  upload = dropTask(async (file) => {
     this.args.setFilename(null);
     this.args.setFileHash(null);
     this.fileUploadErrorMessage = false;
-    const maxUploadSize = yield this.iliosConfig.getMaxUploadSize();
+    const maxUploadSize = await this.iliosConfig.getMaxUploadSize();
     if (file.size > maxUploadSize) {
       const maxSize = readableFileSize(maxUploadSize);
       this.fileUploadErrorMessage = this.intl.t('general.fileSizeError', {
@@ -27,16 +26,16 @@ export default class LearningMaterialUploaderComponent extends Component {
       queue.files.removeObject(file);
       return false;
     }
-    const response = yield file.upload(`${this.fetch.host}/upload`, {
+    const response = await file.upload(`${this.fetch.host}/upload`, {
       headers: this.fetch.authHeaders,
     });
     if (response.status === 200) {
-      const { filename, fileHash } = yield response.json();
+      const { filename, fileHash } = await response.json();
       this.args.setFilename(filename);
       this.args.setFileHash(fileHash);
       return filename;
     }
 
     return false;
-  }
+  });
 }

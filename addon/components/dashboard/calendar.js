@@ -51,49 +51,46 @@ export default class DashboardCalendarComponent extends Component {
     this.setup.perform();
   }
 
-  @dropTask
-  *setup() {
-    const user = yield this.currentUser.getModel();
-    this.usersPrimarySchool = yield user.school;
+  setup = dropTask(async () => {
+    const user = await this.currentUser.getModel();
+    this.usersPrimarySchool = await user.school;
 
     const icsFeedKey = user.icsFeedKey;
     const apiHost = this.iliosConfig.apiHost;
     const loc = window.location.protocol + '//' + window.location.hostname;
     const server = apiHost ? apiHost : loc;
     this.absoluteIcsUri = server + '/ics/' + icsFeedKey;
-  }
+  });
 
-  @restartableTask
-  *load(event, [school]) {
+  load = restartableTask(async (event, [school]) => {
     if (!school) {
       return;
     }
     this.cohortProxies = null;
     this.sessionTypes = null;
     this.vocabularies = null;
-    yield this.dataLoader.loadSchoolForCalendar(school.id);
+    await this.dataLoader.loadSchoolForCalendar(school.id);
     const promises = {
       cohortProxies: this.getCohortProxies(school),
       sessionTypes: this.getSessionTypes(school),
       vocabularies: this.getVocabularies(school),
     };
-    const results = yield hash(promises);
+    const results = await hash(promises);
     this.cohortProxies = results.cohortProxies;
     this.sessionTypes = results.sessionTypes;
     this.vocabularies = results.vocabularies;
-  }
+  });
 
-  @restartableTask
-  *loadEvents(event, [school, fromTimeStamp, toTimeStamp]) {
+  loadEvents = restartableTask(async (event, [school, fromTimeStamp, toTimeStamp]) => {
     if (!school || !fromTimeStamp || !toTimeStamp) {
       return;
     }
     if (this.args.mySchedule) {
-      this.ourEvents = yield this.userEvents.getEvents(fromTimeStamp, toTimeStamp);
+      this.ourEvents = await this.userEvents.getEvents(fromTimeStamp, toTimeStamp);
     } else {
-      this.ourEvents = yield this.schoolEvents.getEvents(school.id, fromTimeStamp, toTimeStamp);
+      this.ourEvents = await this.schoolEvents.getEvents(school.id, fromTimeStamp, toTimeStamp);
     }
-  }
+  });
 
   async getCohortProxies(school) {
     const cohorts = await this.getSchoolCohorts(school);

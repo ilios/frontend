@@ -17,17 +17,15 @@ export default class DetailInstructorsComponent extends Component {
     this.load.perform();
   }
 
-  @restartableTask
-  *load() {
-    const user = yield this.currentUser.getModel();
-    const school = yield user.school;
-    this.availableInstructorGroups = yield school.instructorGroups;
-  }
+  load = restartableTask(async () => {
+    const user = await this.currentUser.getModel();
+    const school = await user.school;
+    this.availableInstructorGroups = await school.instructorGroups;
+  });
 
-  @dropTask
-  *manage() {
+  manage = dropTask(async () => {
     const { ilmSession } = this.args;
-    const { instructorGroups, instructors } = yield hash({
+    const { instructorGroups, instructors } = await hash({
       instructorGroups: ilmSession.instructorGroups,
       instructors: ilmSession.instructors,
     });
@@ -35,15 +33,15 @@ export default class DetailInstructorsComponent extends Component {
     this.instructorGroupBuffer = instructorGroups.toArray();
     this.instructorBuffer = instructors.toArray();
     this.isManaging = true;
-  }
-  @dropTask
-  *save() {
+  });
+
+  save = dropTask(async () => {
     const { ilmSession } = this.args;
     ilmSession.set('instructorGroups', this.instructorGroupBuffer);
     ilmSession.set('instructors', this.instructorBuffer);
-    yield ilmSession.save();
+    await ilmSession.save();
     this.isManaging = false;
-  }
+  });
 
   get instructorCount() {
     if (!this.args.ilmSession) {

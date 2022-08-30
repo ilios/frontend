@@ -124,8 +124,7 @@ export default class LearningMaterialManagerComponent extends Component {
     return this.args.learningMaterialStatuses.findBy('id', this.statusId);
   }
 
-  @restartableTask
-  *load(element, [learningMaterial, parentMaterial]) {
+  load = restartableTask(async (element, [learningMaterial, parentMaterial]) => {
     if (!learningMaterial || !parentMaterial) {
       return;
     }
@@ -135,7 +134,7 @@ export default class LearningMaterialManagerComponent extends Component {
     this.startDate = learningMaterial.startDate;
     this.endDate = learningMaterial.endDate;
 
-    const meshDescriptors = yield learningMaterial.get('meshDescriptors');
+    const meshDescriptors = await learningMaterial.get('meshDescriptors');
     this.terms = meshDescriptors.toArray();
 
     this.parentMaterial = parentMaterial;
@@ -152,17 +151,17 @@ export default class LearningMaterialManagerComponent extends Component {
     this.filename = parentMaterial.filename;
     this.uploadDate = parentMaterial.uploadDate;
 
-    const status = yield parentMaterial.get('status');
+    const status = await parentMaterial.get('status');
     this.statusId = status.id;
-    this.owningUser = yield parentMaterial.get('owningUser');
-    const userRole = yield parentMaterial.get('userRole');
+    this.owningUser = await parentMaterial.get('owningUser');
+    const userRole = await parentMaterial.get('userRole');
     this.userRoleTitle = userRole.title;
-  }
-  @dropTask
-  *save() {
+  });
+
+  save = dropTask(async () => {
     this.addErrorDisplayForAllFields();
-    const isTitleValid = yield this.isValid('title');
-    const isEndDateValid = this.startDate && this.endDate ? yield this.isValid('endDate') : true;
+    const isTitleValid = await this.isValid('title');
+    const isEndDateValid = this.startDate && this.endDate ? await this.isValid('endDate') : true;
     if (!isTitleValid || !isEndDateValid) {
       return false;
     }
@@ -179,8 +178,8 @@ export default class LearningMaterialManagerComponent extends Component {
     this.parentMaterial.set('description', this.description);
 
     this.args.learningMaterial.set('meshDescriptors', this.terms);
-    yield this.args.learningMaterial.save();
-    yield this.parentMaterial.save();
+    await this.args.learningMaterial.save();
+    await this.parentMaterial.save();
     this.args.closeManager();
-  }
+  });
 }

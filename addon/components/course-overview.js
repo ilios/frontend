@@ -25,17 +25,16 @@ export default class CourseOverview extends Component {
   @tracked canCreateCourseInSchool = false;
   @tracked school = null;
 
-  @restartableTask
-  *load() {
-    this.clerkshipTypeOptions = yield this.store.peekAll('course-clerkship-type');
+  load = restartableTask(async () => {
+    this.clerkshipTypeOptions = await this.store.peekAll('course-clerkship-type');
     this.externalId = this.args.course.externalId;
     this.startDate = this.args.course.startDate;
     this.endDate = this.args.course.endDate;
     this.level = this.args.course.level;
-    this.school = yield this.args.course.school;
+    this.school = await this.args.course.school;
     this.clerkshipTypeId = this.args.course.belongsTo('clerkshipType').id();
-    this.canCreateCourseInSchool = yield this.permissionChecker.canCreateCourse(this.school);
-  }
+    this.canCreateCourseInSchool = await this.permissionChecker.canCreateCourse(this.school);
+  });
 
   get selectedClerkshipType() {
     if (!this.clerkshipTypeId) {
@@ -76,64 +75,60 @@ export default class CourseOverview extends Component {
     this.clerkshipTypeId = id;
   }
 
-  @restartableTask
-  *revertClerkshipTypeChanges() {
-    const clerkshipType = yield this.args.course.clerkshipType;
+  revertClerkshipTypeChanges = restartableTask(async () => {
+    const clerkshipType = await this.args.course.clerkshipType;
     if (clerkshipType) {
       this.clerkshipTypeId = clerkshipType.id;
     } else {
       this.clerkshipTypeId = null;
     }
-  }
+  });
 
-  @restartableTask
-  *changeStartDate() {
+  changeStartDate = restartableTask(async () => {
     this.addErrorDisplayFor('startDate');
-    const isValid = yield this.isValid('startDate');
+    const isValid = await this.isValid('startDate');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('startDate');
     this.args.course.set('startDate', this.startDate);
-    yield this.args.course.save();
+    await this.args.course.save();
     this.startDate = this.args.course.startDate;
-  }
+  });
 
   @action
   revertStartDateChanges() {
     this.startDate = this.args.course.startDate;
   }
 
-  @restartableTask
-  *changeEndDate() {
+  changeEndDate = restartableTask(async () => {
     this.addErrorDisplayFor('endDate');
-    const isValid = yield this.isValid('endDate');
+    const isValid = await this.isValid('endDate');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('endDate');
     this.args.course.set('endDate', this.endDate);
-    yield this.args.course.save();
+    await this.args.course.save();
     this.endDate = this.args.course.endDate;
-  }
+  });
 
   @action
   revertEndDateChanges() {
     this.endDate = this.args.course.endDate;
   }
 
-  @restartableTask
-  *changeExternalId() {
+  changeExternalId = restartableTask(async () => {
     this.addErrorDisplayFor('externalId');
-    const isValid = yield this.isValid('externalId');
+    const isValid = await this.isValid('externalId');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('externalId');
     this.args.course.set('externalId', this.externalId);
-    yield this.args.course.save();
+    await this.args.course.save();
     this.externalId = this.args.course.externalId;
-  }
+  });
 
   @action
   revertExternalIdChanges() {

@@ -10,23 +10,22 @@ export default class SelectableTermsList extends Component {
     return this.args.vocabulary ? this.args.vocabulary.getTopLevelTerms() : null;
   }
 
-  @restartableTask
-  *loadFilteredTerms() {
+  loadFilteredTerms = restartableTask(async () => {
     let terms = [];
     if (this.topLevelTermsRelationshipPromise) {
-      terms = (yield this.topLevelTermsRelationshipPromise).toArray();
+      terms = (await this.topLevelTermsRelationshipPromise).toArray();
     } else if (this.args.terms) {
       terms = this.args.terms.toArray();
     }
 
     if (this.args.termFilter) {
       const exp = new RegExp(this.args.termFilter, 'gi');
-      this.terms = yield filter(terms, async (term) => {
+      this.terms = await filter(terms, async (term) => {
         const searchString = await term.getTitleWithDescendantTitles();
         return searchString.match(exp);
       });
     } else {
       this.terms = terms;
     }
-  }
+  });
 }

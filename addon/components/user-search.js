@@ -51,8 +51,7 @@ export default class UserSearch extends Component {
     }
   }
 
-  @restartableTask
-  *search(searchTerms = '') {
+  search = restartableTask(async (searchTerms = '') => {
     this.showMoreInputPrompt = false;
     this.searchReturned = false;
     this.userResults = [];
@@ -64,10 +63,10 @@ export default class UserSearch extends Component {
       this.showMoreInputPrompt = true;
       return;
     }
-    this.userResults = yield this.searchUsers(searchTerms);
+    this.userResults = await this.searchUsers(searchTerms);
     this.instructorGroupResults = this.searchInstructorGroups(searchTerms);
     this.searchReturned = true;
-  }
+  });
 
   searchInstructorGroups(searchTerms) {
     const fragment = searchTerms.toLowerCase().trim();

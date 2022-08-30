@@ -45,10 +45,9 @@ export default class SessionOverview extends Component {
     return this.filteredSessionTypes.sortBy('title');
   }
 
-  @restartableTask
-  *load(element, [session, sessionTypes]) {
-    const course = yield session.course;
-    const school = yield course.school;
+  load = restartableTask(async (element, [session, sessionTypes]) => {
+    const course = await session.course;
+    const school = await course.school;
     const {
       ilmSession,
       sessionType,
@@ -57,7 +56,7 @@ export default class SessionOverview extends Component {
       showSessionSupplemental,
       showSessionSpecialAttireRequired,
       showSessionSpecialEquipmentRequired,
-    } = yield hash({
+    } = await hash({
       course: session.course,
       ilmSession: session.ilmSession,
       sessionType: session.sessionType,
@@ -88,7 +87,7 @@ export default class SessionOverview extends Component {
     this.updatedAt = moment(session.updatedAt).format('L LT');
     this.sessionTypes = sessionTypes || [];
     this.description = session.description;
-  }
+  });
 
   /**
    * Check if a user is allowed to create a session anywhere
@@ -124,15 +123,14 @@ export default class SessionOverview extends Component {
     return false;
   }
 
-  @dropTask
-  *saveIndependentLearning(value) {
+  saveIndependentLearning = dropTask(async (value) => {
     this.isIndependentLearning = value;
     if (!value) {
-      const ilmSession = yield this.args.session.ilmSession;
+      const ilmSession = await this.args.session.ilmSession;
       this.args.session.set('ilmSession', null);
       ilmSession.deleteRecord();
-      yield this.args.session.save();
-      yield ilmSession.save();
+      await this.args.session.save();
+      await ilmSession.save();
     } else {
       const hours = 1;
       const dueDate = moment().add(6, 'weeks').hour('17').minute('00').toDate();
@@ -142,10 +140,10 @@ export default class SessionOverview extends Component {
         hours,
         dueDate,
       });
-      this.args.session.set('ilmSession', yield ilmSession.save());
-      yield this.args.session.save();
+      this.args.session.set('ilmSession', await ilmSession.save());
+      await this.args.session.save();
     }
-  }
+  });
 
   @action
   async changeTitle() {
@@ -233,10 +231,9 @@ export default class SessionOverview extends Component {
     }
   }
 
-  @task
-  *saveDescription() {
+  saveDescription = task(async () => {
     this.addErrorDisplayFor('description');
-    const isValid = yield this.isValid('description');
+    const isValid = await this.isValid('description');
 
     if (!isValid) {
       return false;
@@ -244,8 +241,8 @@ export default class SessionOverview extends Component {
 
     this.removeErrorDisplayFor('description');
     this.args.session.description = this.description;
-    yield this.args.session.save();
-  }
+    await this.args.session.save();
+  });
 
   @action
   changeDescription(html) {
@@ -279,16 +276,15 @@ export default class SessionOverview extends Component {
     this.instructionalNotes = html;
   }
 
-  @task
-  *saveInstructionalNotes() {
+  saveInstructionalNotes = task(async () => {
     this.addErrorDisplayFor('instructionalNotes');
-    const isValid = yield this.isValid('instructionalNotes');
+    const isValid = await this.isValid('instructionalNotes');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('instructionalNotes');
     this.args.session.instructionalNotes = this.instructionalNotes;
 
-    yield this.args.session.save();
-  }
+    await this.args.session.save();
+  });
 }

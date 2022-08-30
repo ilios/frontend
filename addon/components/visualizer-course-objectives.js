@@ -117,9 +117,8 @@ export default class VisualizerCourseObjectives extends Component {
     });
   }
 
-  @restartableTask
-  *donutHover(obj) {
-    yield timeout(100);
+  donutHover = restartableTask(async (obj) => {
+    await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
@@ -127,10 +126,10 @@ export default class VisualizerCourseObjectives extends Component {
     const { data, meta } = obj;
 
     let objectiveTitle = meta.courseObjective.title;
-    const programYearObjectives = (yield meta.courseObjective.programYearObjectives).toArray();
+    const programYearObjectives = (await meta.courseObjective.programYearObjectives).toArray();
     let competency;
     if (programYearObjectives.length) {
-      competency = yield programYearObjectives[0].competency;
+      competency = await programYearObjectives[0].competency;
     }
     if (competency) {
       objectiveTitle += `(${competency.title})`;
@@ -142,5 +141,5 @@ export default class VisualizerCourseObjectives extends Component {
 
     this.tooltipTitle = title;
     this.tooltipContent = content;
-  }
+  });
 }

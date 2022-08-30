@@ -14,21 +14,22 @@ export default class SessionPostrequisiteEditorComponent extends Component {
       this.selectedPostrequisite = postrequisite;
     });
   }
-  @task
-  *setup() {
+
+  setup = task(async () => {
     const { session } = this.args;
-    const course = yield session.course;
-    const sessions = yield course.sessions;
+    const course = await session.course;
+    const sessions = await course.sessions;
     this.linkablePostrequisites = sessions
       .sortBy('title')
       .filter((sessionInCourse) => sessionInCourse.id !== session.id);
-  }
-  @task
-  *save() {
+  });
+
+  save = task(async () => {
     this.args.session.set('postrequisite', this.selectedPostrequisite);
-    yield this.args.session.save();
+    await this.args.session.save();
     this.args.close();
-  }
+  });
+
   get filteredPostrequisites() {
     if (!this.filter) {
       return this.linkablePostrequisites;

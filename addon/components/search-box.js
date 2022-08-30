@@ -53,9 +53,8 @@ export default class SearchBox extends Component {
     }
   }
 
-  @restartableTask
-  *searchTask() {
-    yield timeout(DEBOUNCE_TIMEOUT);
-    yield this.args.search(this.value);
-  }
+  searchTask = restartableTask(async () => {
+    await timeout(DEBOUNCE_TIMEOUT);
+    await this.args.search(this.value);
+  });
 }

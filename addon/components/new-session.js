@@ -37,10 +37,9 @@ export default class NewSessionComponent extends Component {
     return selectedSessionType;
   }
 
-  @dropTask
-  *saveNewSession() {
+  saveNewSession = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -49,9 +48,9 @@ export default class NewSessionComponent extends Component {
       title: this.title,
       sessionType: this.selectedSessionType,
     });
-    yield this.args.save(session);
+    await this.args.save(session);
     this.args.cancel();
-  }
+  });
 
   @action
   keyboard(event) {

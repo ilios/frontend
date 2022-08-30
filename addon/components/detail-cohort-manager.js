@@ -12,13 +12,12 @@ export default class DetailCohortManagerComponent extends Component {
   @tracked filter = '';
   @tracked availableCohortProxies = null;
 
-  @restartableTask
-  *load(event, [school]) {
+  load = restartableTask(async (event, [school]) => {
     if (!school) {
       return false;
     }
-    const allCohorts = yield this.store.findAll('cohort');
-    const cohortProxies = yield map(allCohorts.toArray(), async (cohort) => {
+    const allCohorts = await this.store.findAll('cohort');
+    const cohortProxies = await map(allCohorts.toArray(), async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;
@@ -26,7 +25,7 @@ export default class DetailCohortManagerComponent extends Component {
       return { school, program, programYear, cohort };
     });
 
-    this.availableCohortProxies = yield filter(cohortProxies, async (obj) => {
+    this.availableCohortProxies = await filter(cohortProxies, async (obj) => {
       if (obj.school === school) {
         return true;
       }
@@ -41,7 +40,7 @@ export default class DetailCohortManagerComponent extends Component {
     });
 
     return true;
-  }
+  });
 
   get unselectedAvailableCohortProxies() {
     if (!this.availableCohortProxies) {

@@ -32,23 +32,22 @@ export default class CourseRolloverComponent extends Component {
     }
   }
 
-  @restartableTask
-  *load(event, [course]) {
+  load = restartableTask(async (event, [course]) => {
     if (!course) {
       return;
     }
     this.title = course.title;
     const school = course.belongsTo('school').id();
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-    this.allCourses = yield this.store.query('course', {
+    this.allCourses = await this.store.query('course', {
       filters: {
         school,
       },
     });
     this.changeSelectedYear(this.years.firstObject);
-  }
+  });
 
   @action
   changeTitle(newTitle) {
@@ -63,11 +62,10 @@ export default class CourseRolloverComponent extends Component {
     this.selectedCohorts = this.selectedCohorts.filter((obj) => obj !== cohort);
   }
 
-  @dropTask
-  *save() {
-    yield timeout(1);
+  save = dropTask(async () => {
+    await timeout(1);
     this.addErrorDisplayForAllFields();
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -89,14 +87,14 @@ export default class CourseRolloverComponent extends Component {
       data.newCohorts = selectedCohortIds;
     }
 
-    const newCoursesObj = yield this.fetch.postQueryToApi(`courses/${courseId}/rollover`, data);
+    const newCoursesObj = await this.fetch.postQueryToApi(`courses/${courseId}/rollover`, data);
 
     this.flashMessages.success('general.courseRolloverSuccess');
     this.store.pushPayload(newCoursesObj);
     const newCourse = this.store.peekRecord('course', newCoursesObj.data.id);
 
     return this.args.visit(newCourse);
-  }
+  });
 
   get unavailableYears() {
     if (!this.allCourses) {

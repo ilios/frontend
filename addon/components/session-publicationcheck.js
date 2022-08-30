@@ -19,10 +19,10 @@ export default class SessionPublicationCheckComponent extends Component {
       return parentIds.length === 0;
     });
   }
-  @restartableTask
-  *load() {
-    this.objectivesRelationship = yield this.args.session.sessionObjectives;
-  }
+
+  load = restartableTask(async () => {
+    this.objectivesRelationship = await this.args.session.sessionObjectives;
+  });
 
   @action
   transitionToSession() {

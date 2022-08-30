@@ -42,13 +42,12 @@ export default class UserMaterialStatusComponent extends Component {
     return this.materialStatus?.status || 0;
   }
 
-  @restartableTask
-  *setStatus(statusValue) {
+  setStatus = restartableTask(async (statusValue) => {
     this.tmpStatus = statusValue;
     let materialStatus = this.materialStatus;
     if (!materialStatus) {
-      const user = yield this.currentUser.getModel();
-      const sessionLearningMaterial = yield this.store.findRecord(
+      const user = await this.currentUser.getModel();
+      const sessionLearningMaterial = await this.store.findRecord(
         'session-learning-material',
         this.args.learningMaterial.sessionLearningMaterial
       );
@@ -60,8 +59,8 @@ export default class UserMaterialStatusComponent extends Component {
     }
 
     materialStatus.set('status', statusValue);
-    yield timeout(500);
-    yield materialStatus.save();
+    await timeout(500);
+    await materialStatus.save();
     this.tmpStatus = null;
-  }
+  });
 }

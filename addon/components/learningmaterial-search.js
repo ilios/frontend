@@ -15,8 +15,7 @@ export default class LearningMaterialSearchComponent extends Component {
   @tracked hasMoreSearchResults = false;
   @tracked searchReturned = false;
 
-  @restartableTask
-  *search(query) {
+  search = restartableTask(async (query) => {
     if (query.trim() === '') {
       this.searchReturned = false;
       this.searchPage = 1;
@@ -26,7 +25,7 @@ export default class LearningMaterialSearchComponent extends Component {
     }
     this.searchReturned = false;
     this.query = query;
-    const results = yield this.store.query('learningMaterial', {
+    const results = await this.store.query('learningMaterial', {
       q: query,
       limit: this.searchResultsPerPage + 1,
       'order_by[title]': 'ASC',
@@ -41,7 +40,7 @@ export default class LearningMaterialSearchComponent extends Component {
       lms.pop();
     }
     this.searchResults = lms;
-  }
+  });
 
   @action
   clear() {
@@ -52,9 +51,9 @@ export default class LearningMaterialSearchComponent extends Component {
     this.hasMoreSearchResults = false;
     this.query = '';
   }
-  @dropTask
-  *searchMore() {
-    const results = yield this.store.query('learningMaterial', {
+
+  searchMore = dropTask(async () => {
+    const results = await this.store.query('learningMaterial', {
       q: this.query,
       limit: this.searchResultsPerPage + 1,
       offset: this.searchPage * this.searchResultsPerPage,
@@ -67,12 +66,11 @@ export default class LearningMaterialSearchComponent extends Component {
       lms.pop();
     }
     this.searchResults = [...this.searchResults, ...lms];
-  }
+  });
 
-  @enqueueTask
-  *addLearningMaterial(lm) {
+  addLearningMaterial = enqueueTask(async (lm) => {
     if (!this.args.currentMaterialIds.includes(lm.id)) {
-      yield this.args.add(lm);
+      await this.args.add(lm);
     }
-  }
+  });
 }

@@ -33,9 +33,9 @@ export default class CourseLeadershipExpandedComponent extends Component {
   removeStudentAdvisor(user) {
     this.studentAdvisors = this.studentAdvisors.filter((obj) => obj !== user);
   }
-  @dropTask
-  *manage() {
-    const obj = yield hash({
+
+  manage = dropTask(async () => {
+    const obj = await hash({
       administrators: this.args.course.administrators,
       directors: this.args.course.directors,
       studentAdvisors: this.args.course.studentAdvisors,
@@ -44,17 +44,17 @@ export default class CourseLeadershipExpandedComponent extends Component {
     this.directors = obj.directors.toArray();
     this.studentAdvisors = obj.studentAdvisors.toArray();
     this.args.setIsManaging(true);
-  }
-  @dropTask
-  *save() {
-    yield timeout(10);
+  });
+
+  save = dropTask(async () => {
+    await timeout(10);
     this.args.course.setProperties({
       directors: this.directors,
       administrators: this.administrators,
       studentAdvisors: this.studentAdvisors,
     });
     this.args.expand();
-    yield this.args.course.save();
+    await this.args.course.save();
     this.args.setIsManaging(false);
-  }
+  });
 }

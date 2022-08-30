@@ -108,17 +108,15 @@ export default class CourseMaterialsComponent extends Component {
     this.args.onSessionSort(prop);
   }
 
-  @restartableTask
-  *setCourseQuery(q) {
-    yield timeout(DEBOUNCE_DELAY);
+  setCourseQuery = restartableTask(async (q) => {
+    await timeout(DEBOUNCE_DELAY);
     this.courseQuery = q;
-  }
+  });
 
-  @restartableTask
-  *setSessionQuery(q) {
-    yield timeout(DEBOUNCE_DELAY);
+  setSessionQuery = restartableTask(async (q) => {
+    await timeout(DEBOUNCE_DELAY);
     this.sessionQuery = q;
-  }
+  });
 
   /**
    * Resovle session and LM so they can be used synchronousy

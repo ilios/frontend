@@ -22,22 +22,21 @@ export default class SessionsGridOffering extends Component {
     scrollIntoView(this.row);
   }
 
-  @dropTask
-  *changeRoom() {
-    yield timeout(10);
+  changeRoom = dropTask(async () => {
+    await timeout(10);
     this.addErrorDisplayFor('room');
-    const isValid = yield this.isValid('room');
+    const isValid = await this.isValid('room');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('room');
     this.args.offering.set('room', this.room);
-    yield this.args.offering.save();
-  }
+    await this.args.offering.save();
+  });
 
-  @dropTask
-  *save(startDate, endDate, room, url, learnerGroups, learners, instructorGroups, instructors) {
-    this.args.offering.setProperties({
+  save = dropTask(
+    this,
+    async (
       startDate,
       endDate,
       room,
@@ -45,18 +44,28 @@ export default class SessionsGridOffering extends Component {
       learnerGroups,
       learners,
       instructorGroups,
-      instructors,
-    });
-    yield this.args.offering.save();
-    this.updateUi.perform();
-  }
+      instructors
+    ) => {
+      this.args.offering.setProperties({
+        startDate,
+        endDate,
+        room,
+        url,
+        learnerGroups,
+        learners,
+        instructorGroups,
+        instructors,
+      });
+      await this.args.offering.save();
+      this.updateUi.perform();
+    }
+  );
 
-  @restartableTask
-  *updateUi() {
-    yield timeout(10);
+  updateUi = restartableTask(async () => {
+    await timeout(10);
     this.wasUpdated = true;
     scrollIntoView(this.element);
-    yield timeout(4000);
+    await timeout(4000);
     this.wasUpdated = false;
-  }
+  });
 }

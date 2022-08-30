@@ -69,9 +69,8 @@ export default class VisualizerCourseTerm extends Component {
     });
   }
 
-  @restartableTask
-  *barHover(obj) {
-    yield timeout(100);
+  barHover = restartableTask(async (obj) => {
+    await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
@@ -81,5 +80,5 @@ export default class VisualizerCourseTerm extends Component {
 
     this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
     this.tooltipContent = meta.sessions.uniq().sort().join(', ');
-  }
+  });
 }

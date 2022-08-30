@@ -8,30 +8,28 @@ export default class DetailCohortsComponent extends Component {
   @tracked isManaging = false;
   @tracked bufferedCohorts = [];
 
-  @dropTask
-  *manage() {
-    const cohorts = yield this.args.course.cohorts;
+  manage = dropTask(async () => {
+    const cohorts = await this.args.course.cohorts;
     this.bufferedCohorts = [...cohorts.toArray()];
     this.isManaging = true;
-  }
+  });
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     const { course } = this.args;
-    const cohortList = yield course.cohorts;
+    const cohortList = await course.cohorts;
     const removedCohorts = cohortList.filter((cohort) => {
       return !this.bufferedCohorts.includes(cohort);
     });
     if (removedCohorts.length) {
-      const programYearsToRemove = yield map(removedCohorts, async (cohort) => cohort.programYear);
-      const objectives = yield course.courseObjectives;
-      yield all(objectives.invoke('removeParentWithProgramYears', programYearsToRemove));
+      const programYearsToRemove = await map(removedCohorts, async (cohort) => cohort.programYear);
+      const objectives = await course.courseObjectives;
+      await all(objectives.invoke('removeParentWithProgramYears', programYearsToRemove));
     }
     course.set('cohorts', this.bufferedCohorts);
-    yield course.save();
+    await course.save();
     this.isManaging = false;
     this.bufferedCohorts = [];
-  }
+  });
 
   @action
   cancel() {

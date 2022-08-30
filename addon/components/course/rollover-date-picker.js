@@ -12,8 +12,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
 
   #flatPickerInstance;
 
-  @dropTask
-  *showPicker(element, [course, value]) {
+  showPicker = dropTask(async (element, [course, value]) => {
     if (!course) {
       return;
     }
@@ -25,12 +24,12 @@ export default class CourseRolloverDatePickerComponent extends Component {
     switch (currentLocale) {
       case 'fr':
         // eslint-disable-next-line no-case-declarations
-        const { French } = yield import('flatpickr/dist/l10n/fr.js');
+        const { French } = await import('flatpickr/dist/l10n/fr.js');
         locale = French;
         break;
       case 'es':
         // eslint-disable-next-line no-case-declarations
-        const { Spanish } = yield import('flatpickr/dist/l10n/es.js');
+        const { Spanish } = await import('flatpickr/dist/l10n/es.js');
         locale = Spanish;
         break;
       default:
@@ -62,7 +61,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
         },
       ],
     });
-  }
+  });
 
   @action
   close() {

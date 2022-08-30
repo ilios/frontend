@@ -5,10 +5,9 @@ import { restartableTask } from 'ember-concurrency';
 export default class CourseCollapsedObjectivesComponent extends Component {
   @tracked objectivesRelationship;
 
-  @restartableTask
-  *load() {
-    this.objectivesRelationship = yield this.args.course.courseObjectives;
-  }
+  load = restartableTask(async () => {
+    this.objectivesRelationship = await this.args.course.courseObjectives;
+  });
 
   get objectives() {
     return this.objectivesRelationship ? this.objectivesRelationship.toArray() : [];

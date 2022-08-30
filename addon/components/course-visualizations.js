@@ -7,10 +7,9 @@ export default class CourseVisualizationsComponent extends Component {
   @service iliosConfig;
   @tracked academicYearCrossesCalendarYearBoundaries = false;
 
-  @restartableTask
-  *load() {
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+  load = restartableTask(async () => {
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-  }
+  });
 }

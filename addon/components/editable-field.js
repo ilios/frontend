@@ -15,21 +15,19 @@ export default class EditableFieldComponent extends Component {
     return strippedText.length === 0;
   }
 
-  @dropTask
-  *saveData() {
-    yield timeout(1);
-    const result = yield this.args.save();
+  saveData = dropTask(async () => {
+    await timeout(1);
+    const result = await this.args.save();
     if (result !== false) {
       this.setIsEditing(false);
     }
-  }
+  });
 
-  @dropTask
-  *closeEditor() {
-    yield timeout(1);
-    yield this.args.close();
+  closeEditor = dropTask(async () => {
+    await timeout(1);
+    await this.args.close();
     this.setIsEditing(false);
-  }
+  });
 
   focusFirstControl(element) {
     const elements = element.querySelectorAll('input,textarea,select,.fr-element');
