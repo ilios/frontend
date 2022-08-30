@@ -8,7 +8,7 @@ const isProduction = process.env.EMBER_ENV === 'production';
 if (isCI || isProduction) {
   browsers.push('last 1 edge versions');
   browsers.push('firefox esr'); //sometimes points to the last 2 ESR releases when they overlap
-  browsers.push('last 3 iOS major versions');
+  browsers.push('last 2 iOS major versions');
   browsers.push('last 3 safari major versions');
 }
 
