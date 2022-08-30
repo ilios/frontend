@@ -1,16 +1,13 @@
 import { currentURL, currentRouteName } from '@ember/test-helpers';
 import moment from 'moment';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
-import { setupIntl, t } from 'ember-intl/test-support';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { t } from 'ember-intl/test-support';
 import page from 'ilios-common/page-objects/course';
 
 module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
-  setupIntl(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.school = this.server.create('school');

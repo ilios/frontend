@@ -1,14 +1,12 @@
 import { module, test } from 'qunit';
 import { currentURL, waitFor } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-instructor';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
 
 module('Acceptance | course visualizations - instructor', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
   });

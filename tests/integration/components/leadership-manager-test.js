@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { render, fillIn, click, findAll, find, triggerEvent } from '@ember/test-helpers';
 import { map } from 'rsvp';

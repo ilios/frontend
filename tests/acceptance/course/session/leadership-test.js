@@ -1,12 +1,10 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/session';
 
 module('Acceptance | Session - Leadership', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({
