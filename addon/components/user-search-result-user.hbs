@@ -16,6 +16,13 @@
   <li class="inactive" data-test-result>
     <div class="name">
       {{@user.fullName}}
+      {{#unless @user.enabled}}
+        <FaIcon
+          @icon="user-xmark"
+          @title={{t "general.disabled"}}
+          class="error"
+        />
+      {{/unless}}
     </div>
     <div class="email">
       {{@user.email}}
