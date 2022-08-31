@@ -1,4 +1,4 @@
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { render, click, findAll } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';

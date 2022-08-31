@@ -1,14 +1,12 @@
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import page from 'ilios-common/page-objects/dashboard-materials';
 
 module('Acceptance | Dashboard Materials', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');

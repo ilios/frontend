@@ -1,12 +1,10 @@
 import { find, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 
 module('Acceptance | Course - Print Course', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     const program = this.server.create('program', { school: this.school });

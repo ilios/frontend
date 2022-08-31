@@ -1,12 +1,10 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
 
 module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();

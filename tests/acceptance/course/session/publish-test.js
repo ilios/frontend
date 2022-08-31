@@ -2,13 +2,11 @@ import { currentRouteName } from '@ember/test-helpers';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
 
 module('Acceptance | Session - Publish', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');

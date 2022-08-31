@@ -2,17 +2,13 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import moment from 'moment';
 import { currentRouteName } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
 
 const today = moment();
 
 module('Acceptance | Session - Learning Materials', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
-  setupIntl(hooks, 'en-us');
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });

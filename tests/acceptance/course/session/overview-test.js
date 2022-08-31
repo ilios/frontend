@@ -3,14 +3,12 @@ import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 import { enableFeature } from 'ember-feature-flags/test-support';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/session';
 
 module('Acceptance | Session - Overview', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.server.create('academicYear');

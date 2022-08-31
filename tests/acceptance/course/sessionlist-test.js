@@ -2,8 +2,7 @@ import { currentRouteName, currentURL } from '@ember/test-helpers';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/sessions';
 import sessionPage from 'ilios-common/page-objects/session';
 
@@ -11,7 +10,6 @@ moment.locale('en');
 const today = moment().hour(8);
 module('Acceptance | Course - Session List', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });

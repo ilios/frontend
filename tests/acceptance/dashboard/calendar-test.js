@@ -11,14 +11,12 @@ import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupApplicationTest } from 'dummy/tests/helpers';
 import { map } from 'rsvp';
 import page from 'ilios-common/page-objects/dashboard-calendar';
 
 module('Acceptance | Dashboard Calendar', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
