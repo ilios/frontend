@@ -1,19 +1,2 @@
 {{page-title (t "general.programs")}}
-<section
-  class="program-year-visualize-objectives"
-  data-test-program-year-visualize-objectives
->
-  <h3>
-    <LinkTo @route="program" @model={{@model.program}}>
-      {{get @model.program "title"}}
-    </LinkTo>
-    <LinkTo @route="program-year" @models={{array @model.program @model}}>
-      {{#if (get @model.cohort "title")}}
-        {{get @model.cohort "title"}}
-      {{else}}
-        {{t "general.classOf" year=@model.classOfYear}}
-      {{/if}}
-    </LinkTo>
-  </h3>
-  <VisualizerProgramYearObjectives @programYear={{@model}} />
-</section>
+<ProgramYear::VisualizeObjectives @model={{@model}} />
