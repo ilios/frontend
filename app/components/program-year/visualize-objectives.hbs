@@ -2,17 +2,37 @@
   class="program-year-visualize-objectives"
   data-test-program-year-visualize-objectives
 >
-  <h3>
-    <LinkTo @route="program" @model={{@model.program}}>
-      {{get @model.program "title"}}
-    </LinkTo>
+  <div class="breadcrumbs" data-test-breadcrumb>
+      <span>
+        <LinkTo @route="program-year" @models={{array @model.program @model}}>
+          {{@model.program.title}}
+          {{#if @model.cohort.title}}
+            {{@model.cohort.title}}
+          {{else}}
+            {{t "general.classOf" year=@model.classOfYear}}
+          {{/if}}
+        </LinkTo>
+      </span>
+      <span>
+        {{t "general.objectives"}}
+      </span>
+  </div>
+  <h2>
+    {{t
+      "general.objectives"
+    }}
+  </h2>
+  <h3 data-test-title>
     <LinkTo @route="program-year" @models={{array @model.program @model}}>
-      {{#if (get @model.cohort "title")}}
-        {{get @model.cohort "title"}}
+      {{@model.program.title}}
+      {{#if @model.cohort.title}}
+        {{@model.cohort.title}}
       {{else}}
         {{t "general.classOf" year=@model.classOfYear}}
       {{/if}}
     </LinkTo>
   </h3>
-  <VisualizerProgramYearObjectives @programYear={{@model}} />
+  <div class="visualizations">
+    <VisualizerProgramYearObjectives @programYear={{@model}} />
+  </div>
 </section>
