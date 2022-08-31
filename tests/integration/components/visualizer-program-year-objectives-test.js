@@ -5,7 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | visualizer-program-year-competencies', function (hooks) {
+module('Integration | Component | visualizer-program-year-objectives', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -76,7 +76,7 @@ module('Integration | Component | visualizer-program-year-competencies', functio
       .lookup('service:store')
       .find('program-year', programYear.id);
     this.set('programYear', programYearModel);
-    await render(hbs`<VisualizerProgramYearCompetencies @programYear={{this.programYear}} />`);
+    await render(hbs`<VisualizerProgramYearObjectives @programYear={{this.programYear}} />`);
 
     assert.dom('svg').exists({ count: 1 });
     assert.dom('svg g.links').exists({ count: 1 });

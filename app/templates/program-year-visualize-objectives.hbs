@@ -1,10 +1,8 @@
 {{page-title (t "general.programs")}}
-<section class="program-year-visualize-competencies">
-  <div class="backtolink">
-    <LinkTo @route="program-year-visualizations" @model={{@model}}>
-      {{t "general.otherVisualizations"}}
-    </LinkTo>
-  </div>
+<section
+  class="program-year-visualize-objectives"
+  data-test-program-year-visualize-objectives
+>
   <h3>
     <LinkTo @route="program" @model={{@model.program}}>
       {{get @model.program "title"}}
@@ -17,5 +15,5 @@
       {{/if}}
     </LinkTo>
   </h3>
-  <VisualizerProgramYearCompetencies @programYear={{@model}} />
+  <VisualizerProgramYearObjectives @programYear={{@model}} />
 </section>

@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import { all } from 'rsvp';
 
-export default class ProgramYearVisualizeCompetenciesRoute extends Route {
+export default class ProgramYearVisualizeObjectivesRoute extends Route {
   @service store;
   @service session;
 
