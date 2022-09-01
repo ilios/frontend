@@ -4,7 +4,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import moment from 'moment';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-session-manager';
 
 module(
