@@ -20,4 +20,10 @@ module('Acceptance | dashboard accessibility', function (hooks) {
     await a11yAudit();
     assert.ok(true);
   });
+
+  test('skip link is first in tab order', async function (assert) {
+    await visit('/');
+    assert.dom('#ember-a11y-refocus-skip-link').exists();
+    assert.dom('#ember-a11y-refocus-skip-link').hasProperty('tabIndex', 0);
+  });
 });
