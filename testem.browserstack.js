@@ -41,26 +41,6 @@ const BrowserStackLaunchers = {
     ],
     protocol: 'browser',
   },
-  BS_MS_Chrome: {
-    exe: 'node_modules/.bin/browserstack-launch',
-    args: [
-      '--os',
-      'Windows',
-      '--osv',
-      '11',
-      '--b',
-      'Chrome',
-      '--bv',
-      '92',
-      '-t',
-      '1800',
-      '--browserstack.video',
-      'false',
-      '--u',
-      '<url>',
-    ],
-    protocol: 'browser',
-  },
   BS_IOS_SAFARI: {
     exe: 'node_modules/.bin/browserstack-launch',
     args: [
