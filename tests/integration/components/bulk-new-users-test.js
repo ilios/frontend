@@ -12,7 +12,7 @@ import {
   waitUntil,
   waitFor,
 } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import moment from 'moment';
 import { Response } from 'miragejs';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
