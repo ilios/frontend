@@ -116,4 +116,4 @@ jobs:
           firefox-version: ${{ matrix.firefox-version }}
       - run: firefox --version
       - name: test
-        run: npm run test:ember
+        run: npm run test:ember -- --launch=Firefox
