@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { render, fillIn, click, findAll, find, triggerEvent } from '@ember/test-helpers';
 import { map } from 'rsvp';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | leadership manager', function (hooks) {
