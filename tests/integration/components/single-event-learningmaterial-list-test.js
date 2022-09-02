@@ -39,6 +39,7 @@ module('Integration | Component | single-event-learningmaterial-list', function 
     assert.ok(component.items[1].typeIcon.isAudio);
     assert.strictEqual(component.items[2].title, 'third one');
     assert.notOk(component.items[2].typeIcon.isPresent);
+    assert.notOk(component.noContent.isVisible);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -48,7 +49,8 @@ module('Integration | Component | single-event-learningmaterial-list', function 
     await render(
       hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />`
     );
-    assert.strictEqual(component.text, 'None');
+    assert.ok(component.noContent.isVisible);
+    assert.ok(component.noContent.text, 'None');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -115,13 +117,12 @@ module('Integration | Component | single-event-learningmaterial-list', function 
     assert.strictEqual(component.prework[0].items.length, 2);
     assert.strictEqual(component.prework[0].items[0].title, 'aardvark');
     assert.strictEqual(component.prework[0].items[1].title, 'foo bar');
-
     assert.strictEqual(component.prework[1].name, 'prework 2');
     assert.strictEqual(component.prework[1].items.length, 1);
     assert.strictEqual(component.prework[1].items[0].title, 'readme');
     assert.ok(component.prework[1].url.endsWith('/events/prework2'));
-
     assert.strictEqual(component.items[3].title, 'first one');
     assert.strictEqual(component.items[4].title, 'second one');
+    assert.notOk(component.noContent.isVisible);
   });
 });

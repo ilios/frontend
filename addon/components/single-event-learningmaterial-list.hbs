@@ -21,8 +21,8 @@
       {{/each}}
     </ul>
   {{/if}}
-  {{#if (and (not @learningMaterial.length) (not @prework.length))}}
-    <p class="no-content">
+  {{#if (and (not @learningMaterials.length) (not @prework.length))}}
+    <p class="no-content" data-test-no-content>
       {{t "general.none"}}
     </p>
   {{/if}}
