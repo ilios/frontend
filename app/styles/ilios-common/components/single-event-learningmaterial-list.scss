@@ -4,19 +4,13 @@
     padding: .25rem;
     margin: 0;
 
-    &:last-of-type {
-      border-top: 0;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
-
     li:last-of-type {
       margin-bottom: .25rem;
     }
 
     &.prework {
       border-bottom: 0;
-  
+
       li > li {
         margin-left: 1.5rem;
       }
