@@ -85,7 +85,7 @@
     "ember-service-worker-cache-first": "^0.6.2",
     "ember-source": "4.3.0",
     "ember-template-lint": "^4.3.0",
-    "ember-unique-id-helper-polyfill": "^1.2.1",
+    "ember-unique-id-helper-polyfill": "^1.2.2",
     "ember-web-app": "^5.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
