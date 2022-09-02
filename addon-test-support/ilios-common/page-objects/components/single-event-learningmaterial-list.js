@@ -9,6 +9,9 @@ const definition = {
     name: text('[data-test-name]'),
     items: collection('[data-test-single-event-learningmaterial-list-item]', item),
   }),
+  noContent: {
+    scope: '[data-test-no-content]',
+  },
 };
 
 export default definition;
