@@ -72,7 +72,6 @@
 @import 'components/simple-chart-tooltip';
 @import 'components/pending-single-user-updates';
 @import 'components/pending-user-updates';
-@import 'components/program-year-visualizations';
 @import 'components/unassigned-students-summary';
 @import 'components/update-notification';
 @import 'components/user-menu';
@@ -84,7 +83,7 @@
 @import 'components/user-profile-permissions';
 @import 'components/user-profile-roles';
 @import 'components/user-profile-schools';
-@import 'components/visualizer-program-year-competencies';
+@import 'components/visualizer-program-year-objectives';
 @import 'components/visualizer-session-type-terms';
 @import 'components/visualizer-session-type-vocabularies';
 
@@ -120,6 +119,7 @@
 @import 'components/program-year/objective-list-item-competency';
 @import 'components/program-year/objective-list-item-expanded';
 @import 'components/program-year/objective-list';
+@import 'components/program-year/visualize-objectives';
 
 @import 'components/curriculum-inventory/leadership-expanded';
 @import 'components/curriculum-inventory/new-report';
