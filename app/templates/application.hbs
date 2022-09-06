@@ -8,12 +8,12 @@
   class="application-wrapper
     {{if this.currentUser.performsNonLearnerFunction "show-navigation"}}"
 >
+  <IliosHeader />
   <div class="ilios-logo">
     <LinkTo @route="dashboard" title={{t "general.dashboard"}}>
       <img role="presentation" src="/assets/images/ilios-logo.svg" alt="">
     </LinkTo>
   </div>
-  <IliosHeader />
   {{#if this.session.isAuthenticated}}
     <IliosNavigation />
   {{/if}}
