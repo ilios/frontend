@@ -225,6 +225,7 @@ export default class User extends Model {
         this._administeredSessions?.length ||
         this._instructorGroups?.length ||
         this._instructedOfferings?.length ||
+        this._instructedIlmSessions?.length ||
         this._instructedLearnerGroups?.length ||
         this._directedPrograms?.length ||
         this._programYears?.length ||
@@ -302,6 +303,14 @@ export default class User extends Model {
     this._instructorIlmSessions,
     'session',
   ]);
+
+  get _instructedIlmSessions() {
+    if (!this._instructorIlmSessions) {
+      return [];
+    }
+    return this._instructorIlmSessions.toArray();
+  }
+
   @use _instructedOfferingSessions = new ResolveFlatMapBy(() => [
     this._instructedOfferings,
     'session',
