@@ -1,41 +1,39 @@
-<li
-  hidden={{this.isHidden}}
-  class="{{if this.hasChildren "strong" "em"}} {{unless this.selectable "disabled"}}"
-  data-test-learnergroup-tree
-  data-test-learnergroup-tree-root={{if this.isRoot "true" "false"}}
->
-  {{#if this.selectable}}
-    <span
-      class="clickable"
-      role="button"
-      {{on "click" (fn this.add @learnerGroup)}}
-      data-test-title
+{{#let (unique-id) as |templateId|}}
+  <li
+    hidden={{this.isHidden}}
+    class={{if this.hasChildren "strong" "em"}}
+    data-test-learnergroup-tree
+    data-test-learnergroup-tree-root={{if this.isRoot "true" "false"}}
+  >
+    <input
+      id="learnergroup-{{templateId}}"
+      type="checkbox"
+      checked={{includes @learnerGroup @selectedGroups}}
+      {{on "click" (if (includes @learnerGroup @selectedGroups) (fn this.remove @learnerGroup) (fn this.add @learnerGroup))}}
     >
-      {{@learnerGroup.title}}
-    </span>
-  {{else}}
-    <span data-test-title>{{@learnerGroup.title}}</span>
-  {{/if}}
-  {{#if @learnerGroup.needsAccommodation}}
-    <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
-  {{/if}}
-  {{#if this.hasChildren}}
-    <ul data-test-subgroups>
-      {{#if (is-array this.children)}}
-        {{#each (sort-by this.sortByTitle this.children) as |child|}}
-          <LearnergroupTree
-            @learnerGroup={{child}}
-            @selectedGroups={{@selectedGroups}}
-            @isRoot={{false}}
-            @filter={{@filter}}
-            @add={{@add}}
-          />
-        {{/each}}
-      {{else}}
-        <li>
-          <LoadingSpinner />
-        </li>
-      {{/if}}
-    </ul>
-  {{/if}}
-</li>
+    <label for="learnergroup-{{templateId}}">{{@learnerGroup.title}}</label>
+    {{#if @learnerGroup.needsAccommodation}}
+      <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+    {{/if}}
+    {{#if this.hasChildren}}
+      <ul data-test-subgroups>
+        {{#if (is-array this.children)}}
+          {{#each (sort-by this.sortByTitle this.children) as |child|}}
+            <LearnergroupTree
+              @learnerGroup={{child}}
+              @selectedGroups={{@selectedGroups}}
+              @isRoot={{false}}
+              @filter={{@filter}}
+              @add={{@add}}
+              @remove={{@remove}}
+            />
+          {{/each}}
+        {{else}}
+          <li>
+            <LoadingSpinner />
+          </li>
+        {{/if}}
+      </ul>
+    {{/if}}
+  </li>
+{{/let}}
