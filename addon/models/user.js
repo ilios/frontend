@@ -2,7 +2,6 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { deprecate } from '@ember/debug';
 
 export default class User extends Model {
   @attr('string')
@@ -220,16 +219,6 @@ export default class User extends Model {
    * Checks if a user is linked to any non-student things
    */
   get performsNonLearnerFunction() {
-    deprecate(
-      `user.performsNonLearnerFunction called, should be read from current-user session.`,
-      false,
-      {
-        id: 'common.user-performs-non-learner-function',
-        for: 'ilios-common',
-        until: '65',
-        since: '62.0.0',
-      }
-    );
     return Boolean(
       this._directedCourses?.length ||
         this._administeredCourses?.length ||
