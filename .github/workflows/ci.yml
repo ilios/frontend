@@ -94,7 +94,11 @@ jobs:
           # This is in plaintext on purpose. It has no privileged access to anything (this is a free
           # account) and it allows us to run browserstack tests against PRs.
           BROWSERSTACK_ACCESS_KEY: yJjw6sE6izkpUw9oasGT
-        run: ember test --test-port=7774 --host=127.0.0.1 --config-file=testem.browserstack.js --launch=${{ matrix.launcher }}
+        run: |
+          npm run browserstack:connect
+          npm run test:ember:browserstack -- --launch=${{ matrix.launcher }}
+          npm run browserstack:disconnect
+          npm run browserstack:results
   
   firefox-test:
     name: Browser Tests (Firefox)
