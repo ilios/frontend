@@ -63,6 +63,28 @@ const BrowserStackLaunchers = {
     ],
     protocol: 'browser',
   },
+  BS_CHROME_ANDROID: {
+    exe: 'node_modules/.bin/browserstack-launch',
+    args: [
+      '--real_mobile',
+      'true',
+      '--os',
+      'android',
+      '--osv',
+      '12.0',
+      '--b',
+      'android',
+      '--device',
+      'Google Pixel 6',
+      '-t',
+      '1800',
+      '--browserstack.video',
+      'false',
+      '--u',
+      '<url>',
+    ],
+    protocol: 'browser',
+  },
 };
 
 module.exports = {

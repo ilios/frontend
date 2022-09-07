@@ -79,7 +79,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        launcher: [BS_OSX_Safari, BS_MS_Edge, BS_IOS_SAFARI]
+        launcher: 
+          - BS_OSX_Safari
+          - BS_MS_Edge
+          - BS_IOS_SAFARI
+          - BS_CHROME_ANDROID
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
