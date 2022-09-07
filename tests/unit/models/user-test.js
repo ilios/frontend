@@ -527,6 +527,15 @@ module('Unit | Model | User', function (hooks) {
     assert.ok(performsNonLearnerFunction);
   });
 
+  test('performsNonLearnerFunction - instructedIlmSessions', async function (assert) {
+    assert.expect(1);
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
+    store.createRecord('ilmSession', { instructors: [model] });
+    const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
+    assert.ok(performsNonLearnerFunction);
+  });
+
   test('performsNonLearnerFunction - directedPrograms', async function (assert) {
     assert.expect(1);
     const store = this.owner.lookup('service:store');
