@@ -336,7 +336,7 @@ export default class LearnerGroup extends Model {
       return [];
     }
     const allParents = await parent.getAllParents();
-    return [parent, ...allParents];
+    return [...allParents, parent];
   }
 
   async getAllParentTitles() {
@@ -346,7 +346,7 @@ export default class LearnerGroup extends Model {
     }
     const parents = await parent.getAllParents();
     const titles = parents.mapBy('title');
-    return [parent.title, ...titles];
+    return [...titles, parent.title];
   }
 
   async getTitleWithParentTitles() {
