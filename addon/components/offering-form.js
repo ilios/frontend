@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
-import { filter, hash, map } from 'rsvp';
+import { hash, map } from 'rsvp';
 import moment from 'moment-timezone';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import {
@@ -305,15 +305,6 @@ export default class OfferingForm extends Component {
     }, []);
   }
 
-  async lowestLearnerGroupLeaves(learnerGroups) {
-    const ids = learnerGroups.mapBy('id');
-    return filter(learnerGroups, async (group) => {
-      const children = await group.get('allDescendants');
-      const selectedChildren = children.filter((child) => ids.includes(child.get('id')));
-      return selectedChildren.length === 0;
-    });
-  }
-
   loadDefaultAttrs() {
     if (this.loaded) {
       return;
@@ -427,14 +418,13 @@ export default class OfferingForm extends Component {
 
   async makeRecurringOfferingObjects() {
     const makeRecurring = this.makeRecurring;
-    const learnerGroups = await this.lowestLearnerGroupLeaves(this.learnerGroups);
     const offerings = [];
     offerings.push({
       startDate: this.startDate,
       endDate: this.endDate,
       room: this.room,
       url: this.url,
-      learnerGroups,
+      learnerGroups: this.learnerGroups,
       learners: this.learners,
       instructorGroups: this.instructorGroups,
       instructors: this.instructors,
@@ -455,7 +445,7 @@ export default class OfferingForm extends Component {
         const obj = {
           room: this.room,
           url: this.url,
-          learnerGroups,
+          learnerGroups: this.learnerGroups,
           learners: this.learners,
           instructorGroups: this.instructorGroups,
           instructors: this.instructors,
@@ -474,7 +464,7 @@ export default class OfferingForm extends Component {
         const obj = {
           room: this.room,
           url: this.url,
-          learnerGroups,
+          learnerGroups: this.learnerGroups,
           learners: this.learners,
           instructorGroups: this.instructorGroups,
           instructors: this.instructors,
