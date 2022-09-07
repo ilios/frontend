@@ -94,6 +94,9 @@ jobs:
           # This is in plaintext on purpose. It has no privileged access to anything (this is a free
           # account) and it allows us to run browserstack tests against PRs.
           BROWSERSTACK_ACCESS_KEY: yJjw6sE6izkpUw9oasGT
+          # The following is necessary when using browserstack under matrix builds on Github Actions
+          # The Job ID + Run ID isn't unique across matrix runs and will fail when run simultaneously
+          BROWSERSTACK_LOCAL_ID_SUFFIX: ${{ matrix.launcher }}
         run: |
           npm run browserstack:connect
           npm run test:ember:browserstack -- --launch=${{ matrix.launcher }}
