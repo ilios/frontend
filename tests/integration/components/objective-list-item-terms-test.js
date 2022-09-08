@@ -13,7 +13,7 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const course = this.server.create('course');
+    this.course = this.server.create('course');
     const school1 = this.server.create('school');
     const school2 = this.server.create('school');
     const vocabulary1 = this.server.create('vocabulary', { school: school1 });
@@ -22,15 +22,12 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
     const term2 = this.server.create('term', { vocabulary: vocabulary1 });
     const term3 = this.server.create('term', { vocabulary: vocabulary2 });
     const courseObjective = this.server.create('courseObjective', {
-      course,
+      course: this.course,
       terms: [term1, term2, term3],
     });
-    this.subject = await this.owner
-      .lookup('service:store')
-      .findRecord('course-objective', courseObjective.id);
-    this.vocabularyModel1 = await this.owner
-      .lookup('service:store')
-      .findRecord('vocabulary', vocabulary1.id);
+    const store = this.owner.lookup('service:store');
+    this.subject = await store.findRecord('course-objective', courseObjective.id);
+    this.vocabularyModel1 = await store.findRecord('vocabulary', vocabulary1.id);
   });
 
   test('it renders and is accessible when managing', async function (assert) {
@@ -92,8 +89,13 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
 
   test('manage new', async function (assert) {
     assert.expect(1);
-    this.subject.set('terms', []);
-    this.set('subject', this.subject);
+    const courseObjective = this.server.create('courseObjective', {
+      course: this.course,
+    });
+    const subject = await this.owner
+      .lookup('service:store')
+      .findRecord('course-objective', courseObjective.id);
+    this.set('subject', subject);
     this.set('manage', (vocabulary) => {
       assert.strictEqual(vocabulary, null);
     });
