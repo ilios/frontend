@@ -10,6 +10,6 @@ export default class DetailLearnergroupsListItemComponent extends Component {
 
   @action
   remove(learnerGroup, ev) {
-    this.args.remove(learnerGroup, !ev.ctrlKey);
+    this.args.remove(learnerGroup, !(ev.ctrlKey || ev.shiftKey));
   }
 }
