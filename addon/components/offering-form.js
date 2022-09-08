@@ -167,19 +167,15 @@ export default class OfferingForm extends Component {
   });
 
   @action
-  async addLearnerGroup(learnerGroup, descendantsOnly) {
+  async addLearnerGroup(learnerGroup) {
     const descendants = await learnerGroup.getAllDescendants();
-    if (descendantsOnly) {
-      this.learnerGroups = [...this.learnerGroups, ...descendants].uniq();
-    } else {
-      this.learnerGroups = [...this.learnerGroups, ...descendants, learnerGroup].uniq();
-    }
+    this.learnerGroups = [...this.learnerGroups, ...descendants, learnerGroup].uniq();
   }
 
   @action
-  async removeLearnerGroup(learnerGroup, descendantsOnly) {
+  async removeLearnerGroup(learnerGroup) {
     const descendants = await learnerGroup.getAllDescendants();
-    const groupsToRemove = descendantsOnly ? [...descendants] : [...descendants, learnerGroup];
+    const groupsToRemove = [...descendants, learnerGroup];
     this.learnerGroups = this.learnerGroups.filter((g) => !groupsToRemove.includes(g)).uniq();
   }
 

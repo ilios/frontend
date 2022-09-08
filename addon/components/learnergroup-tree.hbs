@@ -11,10 +11,7 @@
       checked={{includes @learnerGroup @selectedGroups}}
       {{on "click" (if (includes @learnerGroup @selectedGroups) (fn this.remove @learnerGroup) (fn this.add @learnerGroup))}}
     >
-    <label
-      for="learnergroup-{{templateId}}"
-      {{on "click" (if (includes @learnerGroup @selectedGroups) (fn this.remove @learnerGroup) (fn this.add @learnerGroup))}}
-    >
+    <label for="learnergroup-{{templateId}}">
       {{@learnerGroup.title}}
     </label>
     {{#if @learnerGroup.needsAccommodation}}

@@ -54,19 +54,13 @@ export default class LearnergroupTree extends Component {
   }
 
   @action
-  add(learnerGroup, ev) {
-    this.args.add(learnerGroup, ev.ctrlKey);
-    if (ev.ctrlKey) {
-      ev.preventDefault();
-    }
+  add(learnerGroup) {
+    this.args.add(learnerGroup);
   }
 
   @action
-  remove(learnerGroup, ev) {
-    this.args.remove(learnerGroup, ev.ctrlKey);
-    if (ev.ctrlKey) {
-      ev.preventDefault();
-    }
+  remove(learnerGroup) {
+    this.args.remove(learnerGroup);
   }
 
   @action
