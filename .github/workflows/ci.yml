@@ -78,6 +78,7 @@ jobs:
     needs: [test]
     strategy:
       fail-fast: false
+      max-parallel: 2
       matrix:
         launcher: 
           - BS_OSX_Safari
