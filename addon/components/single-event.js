@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
 import moment from 'moment';
-import { filterBy, findById } from '../utils/array-helpers';
+import { findById } from '../utils/array-helpers';
 
 export default class SingleEvent extends Component {
   @service currentUser;
@@ -83,27 +83,29 @@ export default class SingleEvent extends Component {
 
   get courseLearningMaterials() {
     const eventLms = this.typedLearningMaterials;
-    return filterBy(eventLms, 'courseLearningMaterial').sort((lm1, lm2) => {
-      const pos1 = parseInt(lm1.position, 10) || 0;
-      const pos2 = parseInt(lm2.position, 10) || 0;
+    return eventLms
+      .filter((lm) => Boolean(lm.courseLearningMaterial))
+      .sort((lm1, lm2) => {
+        const pos1 = parseInt(lm1.position, 10) || 0;
+        const pos2 = parseInt(lm2.position, 10) || 0;
 
-      // 1. position, asc
-      if (pos1 > pos2) {
-        return 1;
-      } else if (pos1 < pos2) {
-        return -1;
-      }
+        // 1. position, asc
+        if (pos1 > pos2) {
+          return 1;
+        } else if (pos1 < pos2) {
+          return -1;
+        }
 
-      // 2. course learning material id, desc
-      const id1 = lm1.courseLearningMaterial;
-      const id2 = lm2.courseLearningMaterial;
-      if (id1 > id2) {
-        return -1;
-      } else if (id1 < id2) {
-        return 1;
-      }
-      return 0;
-    });
+        // 2. course learning material id, desc
+        const id1 = lm1.courseLearningMaterial;
+        const id2 = lm2.courseLearningMaterial;
+        if (id1 > id2) {
+          return -1;
+        } else if (id1 < id2) {
+          return 1;
+        }
+        return 0;
+      });
   }
 
   get sessionObjectives() {
@@ -139,9 +141,9 @@ export default class SingleEvent extends Component {
 
   get sessionLearningMaterials() {
     const eventLms = this.typedLearningMaterials;
-    return filterBy(eventLms, 'sessionLearningMaterial').sort(
-      this.sessionLearningMaterialSortingCalling
-    );
+    return eventLms
+      .filter((lm) => Boolean(lm.sessionLearningMaterial))
+      .sort(this.sessionLearningMaterialSortingCalling);
   }
 
   get preworkMaterials() {
@@ -154,10 +156,9 @@ export default class SingleEvent extends Component {
         slug: ev.slug,
         learningMaterials: [],
       };
-      rhett.learningMaterials = filterBy(
-        this.getTypedLearningMaterialProxies(ev.learningMaterials),
-        'sessionLearningMaterial'
-      ).sort(this.sessionLearningMaterialSortingCalling);
+      rhett.learningMaterials = this.getTypedLearningMaterialProxies(ev.learningMaterials)
+        .filter((lm) => Boolean(lm.sessionLearningMaterial))
+        .sort(this.sessionLearningMaterialSortingCalling);
       return rhett;
     });
   }

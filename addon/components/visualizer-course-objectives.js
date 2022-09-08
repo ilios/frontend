@@ -8,7 +8,7 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
+import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerCourseObjectives extends Component {
   @service router;
@@ -61,7 +61,7 @@ export default class VisualizerCourseObjectives extends Component {
   }
 
   get objectiveWithoutMinutes() {
-    return filterBy(this.dataObjects, 'data', 0);
+    return this.dataObjects?.filter((obj) => obj.data === 0);
   }
 
   get isLoaded() {

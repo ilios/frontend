@@ -3,7 +3,6 @@ import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
 import jwtDecode from '../utils/jwt-decode';
-import { filterBy } from '../utils/array-helpers';
 
 export default class CurrentUserService extends Service {
   @service store;
@@ -203,7 +202,7 @@ export default class CurrentUserService extends Service {
     const user = await this.getModel();
 
     const courses = await user.get('allInstructedCourses');
-    const matches = filterBy(courses, 'id', course.id);
+    const matches = courses.filter((c) => c.id === course.id);
 
     return matches.length > 0;
   }
@@ -218,7 +217,7 @@ export default class CurrentUserService extends Service {
     const user = await this.getModel();
 
     const sessions = await user.get('allInstructedSessions');
-    const matches = filterBy(sessions, 'id', session.id);
+    const matches = sessions.filter((s) => s.id === session.id);
 
     return matches.length > 0;
   }

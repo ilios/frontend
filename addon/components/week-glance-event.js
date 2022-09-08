@@ -1,12 +1,13 @@
 import Component from '@glimmer/component';
-import { filterBy } from '../utils/array-helpers';
 
 export default class WeekGlanceEvent extends Component {
   sortString(a, b) {
     return a.localeCompare(b);
   }
   get sessionLearningMaterials() {
-    return filterBy(this.args.event.learningMaterials ?? [], 'sessionLearningMaterial');
+    return (
+      this.args.event.learningMaterials?.filter((lm) => Boolean(lm.sessionLearningMaterial)) ?? []
+    );
   }
 
   get preworkEvents() {
@@ -19,10 +20,9 @@ export default class WeekGlanceEvent extends Component {
         slug: ev.slug,
         learningMaterials: [],
       };
-      rhett.learningMaterials = filterBy(
-        this.getTypedLearningMaterialProxies(ev.learningMaterials),
-        'sessionLearningMaterial'
-      ).sort(this.sessionLearningMaterialSortingCalling);
+      rhett.learningMaterials = this.getTypedLearningMaterialProxies(ev.learningMaterials)
+        .filter((lm) => Boolean(lm.sessionLearningMaterial))
+        .sort(this.sessionLearningMaterialSortingCalling);
       return rhett;
     });
   }
