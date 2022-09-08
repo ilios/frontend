@@ -13,7 +13,7 @@
             {{#each tree.groups as |group|}}
               <DetailLearnergroupsListItem
                 @group={{group}}
-                @remove={{this.remove}}
+                @remove={{@remove}}
                 @isManaging={{@isManaging}}
               />
             {{/each}}

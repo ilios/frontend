@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { filter, map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
@@ -50,12 +49,5 @@ export default class DetailLearnerGroupsListComponent extends Component {
         groups: sortedProxies.mapBy('group'),
       };
     });
-  }
-
-  @action
-  remove(learnerGroup) {
-    if (this.args.isManaging) {
-      this.args.remove(learnerGroup);
-    }
   }
 }

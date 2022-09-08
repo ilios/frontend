@@ -7,7 +7,7 @@
     <button
       class="remove-learnergroup"
       type="button"
-      {{on "click" (fn @remove @group)}}
+      {{on "click" (fn this.remove @group)}}
       data-test-remove-learnergroup
     >
       {{#if @group.isTopLevel}}
