@@ -8,11 +8,6 @@
       padding: .5rem;
     }
 
-    .tree-groups-list label {
-      font-weight: inherit;
-      margin-bottom: 0;
-    }
-
     & > ul {
       @include ilios-list-tree;
       background-color: $white;
