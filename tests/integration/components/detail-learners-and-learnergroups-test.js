@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
-import { render } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/detail-learners-and-learner-groups';
@@ -102,27 +102,31 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
     assert.strictEqual(
-      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups.length,
-      3
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].title,
+      'program 0 cohort 0'
     );
     assert.strictEqual(
-      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups[0].title,
-      'Top Group 1 (0)'
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
+      2
     );
     assert.strictEqual(
-      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups[1].title,
-      'Second 1 (0)'
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
+      'Top Group 1 » Second 1 (0)'
     );
     assert.strictEqual(
-      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups[2].title,
-      'Second 2 (0)'
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
+      'Top Group 1 » Second 2 (0)'
     );
     assert.strictEqual(
-      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].subgroups.length,
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].title,
+      'program 0 cohort 1'
+    );
+    assert.strictEqual(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
       1
     );
     assert.strictEqual(
-      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].subgroups[0].title,
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items[0].text,
       'Top Group 3 (0)'
     );
   });
@@ -155,39 +159,39 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       component.learnerSelectionManager.selectedLearners.learners[2].userNameInfo.fullName,
       '2 guy M. Mc2son'
     );
+    assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
-        .length,
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].title,
+      'program 0 cohort 0'
+    );
+    assert.strictEqual(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
       2
     );
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
-        .subgroups.length,
-      3
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
+      'Top Group 1 » Second 1 (0)'
+    );
+    assert.notOk(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].isChecked
     );
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
-        .subgroups[0].title,
-      'Top Group 1 (0)'
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
+      'Top Group 1 » Second 2 (0)'
+    );
+    assert.notOk(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].isChecked
     );
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
-        .subgroups[1].title,
-      'Second 1 (0)'
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].title,
+      'program 0 cohort 1'
     );
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
-        .subgroups[2].title,
-      'Second 2 (0)'
-    );
-    assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[1]
-        .subgroups.length,
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
       1
     );
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[1]
-        .subgroups[0].title,
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items[0].text,
       'Top Group 3 (0)'
     );
     assert.strictEqual(component.learnergroupSelectionManager.availableGroups.cohorts.length, 2);
@@ -204,7 +208,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       'Top Group 1'
     );
     assert.notOk(
-      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isHidden
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked
     );
     assert.strictEqual(
       component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups.length,
@@ -216,7 +220,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
     assert.ok(
       component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
-        .isHidden
+        .isChecked
     );
     assert.strictEqual(
       component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1].title,
@@ -224,7 +228,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
     assert.ok(
       component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
-        .isHidden
+        .isChecked
     );
     assert.strictEqual(
       component.learnergroupSelectionManager.availableGroups.cohorts[1].title,
@@ -239,7 +243,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       'Top Group 2'
     );
     assert.notOk(
-      component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].isHidden
+      component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].isChecked
     );
     assert.strictEqual(
       component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups.length,
@@ -251,13 +255,13 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
     assert.notOk(
       component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0]
-        .isHidden
+        .isChecked
     );
     assert.strictEqual(
       component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[1].title,
       'Top Group 3'
     );
-    assert.ok(component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[1].isHidden);
+    assert.ok(component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[1].isChecked);
   });
 
   test('read-only', async function (assert) {
@@ -285,7 +289,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 2);
   });
 
-  test('remove selected learner-group', async function (assert) {
+  test('remove learner-group from list', async function (assert) {
     this.set('ilmSession', this.ilmSession);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
@@ -296,22 +300,52 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
-        .subgroups.length,
-      3
+        .items.length,
+      2
     );
     assert.ok(
       component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
-        .isHidden
+        .isChecked
     );
-    await component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].subgroups[1].remove();
+    await component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].remove();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
-        .subgroups.length,
-      2
+        .items.length,
+      1
     );
     assert.notOk(
       component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
-        .isHidden
+        .isChecked
+    );
+  });
+
+  test('remove learner-group from picker', async function (assert) {
+    this.set('ilmSession', this.ilmSession);
+    this.set('cohorts', [this.cohort1, this.cohort2]);
+    await render(hbs`<DetailLearnersAndLearnerGroups
+      @editable={{true}}
+      @ilmSession={{this.ilmSession}}
+      @cohorts={{this.cohorts}}
+    />`);
+    await component.manage();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
+        .items.length,
+      2
+    );
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    await component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0].toggle();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
+        .items.length,
+      1
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
     );
   });
 
@@ -325,23 +359,23 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     />`);
     await component.manage();
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
-        .length,
-      2
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[1]
+        .items.length,
+      1
     );
     assert.notOk(
       component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0]
-        .isHidden
+        .isChecked
     );
-    await component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0].add();
+    await component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0].toggle();
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
-        .length,
-      3
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[1]
+        .items.length,
+      2
     );
     assert.ok(
       component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0]
-        .isHidden
+        .isChecked
     );
   });
 
@@ -376,33 +410,39 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @cohorts={{this.cohorts}}
     />`);
     assert.strictEqual(component.selectedLearners.learners.length, 3);
-    assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
+    assert.strictEqual(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
+      1
+    );
     await component.manage();
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
-        .length,
-      2
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[1]
+        .items.length,
+      1
     );
     assert.notOk(
       component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0]
-        .isHidden
+        .isChecked
     );
-    await component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0].add();
+    await component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0].toggle();
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
-        .length,
-      3
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[1]
+        .items.length,
+      2
     );
     assert.ok(
       component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0]
-        .isHidden
+        .isChecked
     );
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 3);
     await component.learnerSelectionManager.selectedLearners.learners[0].remove();
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 2);
     await component.cancel();
     assert.strictEqual(component.selectedLearners.learners.length, 3);
-    assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
+    assert.strictEqual(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
+      1
+    );
   });
 
   test('save', async function (assert) {
@@ -414,33 +454,39 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @cohorts={{this.cohorts}}
     />`);
     assert.strictEqual(component.selectedLearners.learners.length, 3);
-    assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
+    assert.strictEqual(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
+      1
+    );
     await component.manage();
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
-        .length,
-      2
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[1]
+        .items.length,
+      1
     );
     assert.notOk(
       component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0]
-        .isHidden
+        .isChecked
     );
-    await component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0].add();
+    await component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0].toggle();
     assert.strictEqual(
-      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
-        .length,
-      3
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[1]
+        .items.length,
+      2
     );
     assert.ok(
       component.learnergroupSelectionManager.availableGroups.cohorts[1].trees[0].subgroups[0]
-        .isHidden
+        .isChecked
     );
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 3);
     await component.learnerSelectionManager.selectedLearners.learners[0].remove();
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 2);
     await component.save();
     assert.strictEqual(component.selectedLearners.learners.length, 2);
-    assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 3);
+    assert.strictEqual(
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
+      2
+    );
   });
 
   test('it updates when relationships change #1550', async function (assert) {
@@ -459,5 +505,303 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     assert.strictEqual(component.title, 'Learners and Learner Groups (0/0)');
     assert.strictEqual(component.selectedLearners.learners.length, 0);
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 0);
+  });
+
+  test('adding a group with children adds them as well', async function (assert) {
+    this.ilmSession.set('learnerGroups', []);
+    this.set('ilmSession', this.ilmSession);
+    this.set('cohorts', [this.cohort1, this.cohort2]);
+    await render(hbs`<DetailLearnersAndLearnerGroups
+      @editable={{true}}
+      @ilmSession={{this.ilmSession}}
+      @cohorts={{this.cohorts}}
+    />`);
+    await component.manage();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
+        .length,
+      0
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+    await component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].toggle();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
+        .length,
+      1
+    );
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
+        .items.length,
+      3
+    );
+    assert.ok(component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked);
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+  });
+
+  test('removing a group with children from the picker removes them as well', async function (assert) {
+    this.ilmSession.set('learnerGroups', [
+      this.topLevelLearnerGroup1,
+      this.secondLevelLearnerGroup1,
+      this.secondLevelLearnerGroup2,
+    ]);
+    this.set('ilmSession', this.ilmSession);
+    this.set('cohorts', [this.cohort1, this.cohort2]);
+    await render(hbs`<DetailLearnersAndLearnerGroups
+      @editable={{true}}
+      @ilmSession={{this.ilmSession}}
+      @cohorts={{this.cohorts}}
+    />`);
+    await component.manage();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
+        .length,
+      1
+    );
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
+        .items.length,
+      3
+    );
+    assert.ok(component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked);
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+    await component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].toggle();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
+        .length,
+      0
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+  });
+
+  test('removing a group with children from the list removes them as well', async function (assert) {
+    this.ilmSession.set('learnerGroups', [
+      this.topLevelLearnerGroup1,
+      this.secondLevelLearnerGroup1,
+      this.secondLevelLearnerGroup2,
+    ]);
+    this.set('ilmSession', this.ilmSession);
+    this.set('cohorts', [this.cohort1, this.cohort2]);
+    await render(hbs`<DetailLearnersAndLearnerGroups
+      @editable={{true}}
+      @ilmSession={{this.ilmSession}}
+      @cohorts={{this.cohorts}}
+    />`);
+    await component.manage();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
+        .length,
+      1
+    );
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
+        .items.length,
+      3
+    );
+    assert.ok(component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked);
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+    await component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].remove();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
+        .length,
+      0
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+  });
+
+  test('selectively adding a group with children does not add the children', async function (assert) {
+    this.ilmSession.set('learnerGroups', []);
+    this.set('ilmSession', this.ilmSession);
+    this.set('cohorts', [this.cohort1, this.cohort2]);
+    await render(hbs`<DetailLearnersAndLearnerGroups
+      @editable={{true}}
+      @ilmSession={{this.ilmSession}}
+      @cohorts={{this.cohorts}}
+    />`);
+    await component.manage();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
+        .length,
+      0
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+    await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
+      shiftKey: true,
+    });
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
+        .length,
+      1
+    );
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
+        .items.length,
+      1
+    );
+    assert.ok(component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked);
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+  });
+
+  test('selectively removing a group with children from the picker does not remove the children', async function (assert) {
+    this.ilmSession.set('learnerGroups', [
+      this.topLevelLearnerGroup1,
+      this.secondLevelLearnerGroup1,
+      this.secondLevelLearnerGroup2,
+    ]);
+    this.set('ilmSession', this.ilmSession);
+    this.set('cohorts', [this.cohort1, this.cohort2]);
+    await render(hbs`<DetailLearnersAndLearnerGroups
+      @editable={{true}}
+      @ilmSession={{this.ilmSession}}
+      @cohorts={{this.cohorts}}
+    />`);
+    await component.manage();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
+        .length,
+      1
+    );
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
+        .items.length,
+      3
+    );
+    assert.ok(component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked);
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+    await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
+      shiftKey: true,
+    });
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked
+    );
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+  });
+
+  test('selectively removing a group with children from the list does not remove the children', async function (assert) {
+    this.ilmSession.set('learnerGroups', [
+      this.topLevelLearnerGroup1,
+      this.secondLevelLearnerGroup1,
+      this.secondLevelLearnerGroup2,
+    ]);
+    this.set('ilmSession', this.ilmSession);
+    this.set('cohorts', [this.cohort1, this.cohort2]);
+    await render(hbs`<DetailLearnersAndLearnerGroups
+      @editable={{true}}
+      @ilmSession={{this.ilmSession}}
+      @cohorts={{this.cohorts}}
+    />`);
+    await component.manage();
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
+        .length,
+      1
+    );
+    assert.strictEqual(
+      component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
+        .items.length,
+      3
+    );
+    assert.ok(component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked);
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
+    await click('[data-test-remove-learnergroup]', { at: 0, shiftKey: true });
+    assert.notOk(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked
+    );
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0]
+        .isChecked
+    );
+    assert.ok(
+      component.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[1]
+        .isChecked
+    );
   });
 });

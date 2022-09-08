@@ -1,27 +1,12 @@
-import {
-  clickable,
-  collection,
-  create,
-  hasClass,
-  isHidden,
-  isVisible,
-  text,
-} from 'ember-cli-page-object';
+import { collection, create, isHidden, text } from 'ember-cli-page-object';
+import item from './detail-learnergroups-list-item';
 
 const definition = {
   scope: '[data-test-detail-learnergroups-list]',
   isEmpty: isHidden('[data-test-trees]'),
   trees: collection('[data-test-tree]', {
     title: text('legend'),
-    removeAllSubgroups: clickable('[data-test-remove-all]'),
-    isRemovable: isVisible('[data-test-remove-all]'),
-    subgroups: collection('[data-test-subgroup]', {
-      title: text('[data-test-title]'),
-      needsAccommodation: isVisible('[data-icon="universal-access"]', { at: 0 }),
-      isTopLevel: hasClass('top-level-group'),
-      isRemovable: isVisible('[data-test-remove-learnergroup]'),
-      remove: clickable('[data-test-remove-learnergroup]'),
-    }),
+    items: collection(item.scope, item),
   }),
 };
 

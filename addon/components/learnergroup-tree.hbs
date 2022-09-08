@@ -10,11 +10,13 @@
         aria-labelledby="learnergroup-label-{{templateId}}"
         checked={{includes @learnerGroup @selectedGroups}}
         {{on "click" (if (includes @learnerGroup @selectedGroups) (fn this.remove @learnerGroup) (fn this.add @learnerGroup))}}
+        data-test-checkbox
       >
       <span
         id="learnergroup-label-{{templateId}}"
         role="button"
         {{on "click" (if (includes @learnerGroup @selectedGroups) (fn this.remove @learnerGroup) (fn this.add @learnerGroup))}}
+        data-test-checkbox-title
       >
         {{@learnerGroup.title}}
       </span>

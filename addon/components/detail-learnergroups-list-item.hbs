@@ -1,6 +1,6 @@
 <li
   class="detail-learnergroups-list-item"
-  data-test-detail-leanergroups-list-item
+  data-test-detail-learnergroups-list-item
   ...attributes
 >
   {{#if @isManaging}}
@@ -24,7 +24,11 @@
         ({{count-related @group "users"}})
       {{/if}}
       {{#if @group.needsAccommodation}}
-        <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+        <FaIcon
+          @icon="universal-access"
+          @title={{t "general.membersOfThisGroupRequireAccommodation"}}
+          data-test-needs-accommodation
+        ></FaIcon>
       {{/if}}
       <FaIcon @icon="xmark" class="remove"></FaIcon>
     </button>
@@ -43,7 +47,11 @@
       ({{count-related @group "users"}})
     {{/if}}
     {{#if @group.needsAccommodation}}
-      <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+      <FaIcon
+        @icon="universal-access"
+        @title={{t "general.membersOfThisGroupRequireAccommodation"}}
+        data-test-needs-accommodation
+      ></FaIcon>
     {{/if}}
   {{/if}}
 </li>
