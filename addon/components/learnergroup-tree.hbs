@@ -11,7 +11,12 @@
       checked={{includes @learnerGroup @selectedGroups}}
       {{on "click" (if (includes @learnerGroup @selectedGroups) (fn this.remove @learnerGroup) (fn this.add @learnerGroup))}}
     >
-    <label for="learnergroup-{{templateId}}">{{@learnerGroup.title}}</label>
+    <label
+      for="learnergroup-{{templateId}}"
+      {{on "click" (if (includes @learnerGroup @selectedGroups) (fn this.remove @learnerGroup) (fn this.add @learnerGroup))}}
+    >
+      {{@learnerGroup.title}}
+    </label>
     {{#if @learnerGroup.needsAccommodation}}
       <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
     {{/if}}
