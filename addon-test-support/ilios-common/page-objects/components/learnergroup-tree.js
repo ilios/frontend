@@ -18,7 +18,6 @@ const definition = {
   isStyledAsBranch: hasClass('strong'),
   isHidden: property('hidden'),
   isChecked: property('checked', '[data-test-checkbox]', { at: 0 }),
-  isDisabled: hasClass('disabled'),
   subgroups: collection('> [data-test-subgroups] > [data-test-learnergroup-tree]', {
     title: text('[data-test-checkbox-title]', { at: 0 }),
     needsAccommodation: isVisible(' > [data-icon="universal-access"]'),
@@ -28,7 +27,6 @@ const definition = {
     isStyledAsBranch: hasClass('strong'),
     isHidden: property('hidden'),
     isChecked: property('checked', '[data-test-checkbox]', { at: 0 }),
-    isDisabled: property('disabled'),
     subgroups: collection('> [data-test-subgroups] > [data-test-learnergroup-tree]', {
       title: text('[data-test-checkbox-title]', { at: 0 }),
       needsAccommodation: isVisible('[data-icon="universal-access"]'),
@@ -38,7 +36,6 @@ const definition = {
       isStyledAsBranch: hasClass('strong'),
       isHidden: property('hidden'),
       isChecked: property('checked', '[data-test-checkbox]', { at: 0 }),
-      isDisabled: property('disabled'),
     }),
   }),
 };
