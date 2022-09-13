@@ -32,8 +32,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
 
     const courses = await waitForResource(model, 'courses');
     assert.strictEqual(courses.length, 2);
-    assert.strictEqual(courses.objectAt(0).title, 'course1');
-    assert.strictEqual(courses.objectAt(1).title, 'course2');
+    assert.strictEqual(courses[0].title, 'course1');
+    assert.strictEqual(courses[1].title, 'course2');
   });
 
   test('list sessions', async function (assert) {

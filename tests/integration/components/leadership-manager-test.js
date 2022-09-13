@@ -17,7 +17,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     const users = await this.owner.lookup('service:store').findAll('user');
     this.set('directors', [users.firstObject]);
     this.set('administrators', users);
-    this.set('studentAdvisors', [users.objectAt(1)]);
+    this.set('studentAdvisors', [users[1]]);
 
     await render(hbs`<LeadershipManager
       @showAdministrators={{true}}
