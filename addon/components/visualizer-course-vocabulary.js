@@ -53,7 +53,7 @@ export default class VisualizerCourseVocabulary extends Component {
     });
 
     return terms.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.slice());
+      return flattened.push(obj.slice());
     }, []);
   }
 

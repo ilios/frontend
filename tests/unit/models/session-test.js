@@ -67,7 +67,7 @@ module('Unit | Model | Session', function (hooks) {
       learnerGroups: [learnerGroup3],
     });
 
-    session.get('offerings').pushObjects([offering1, offering2]);
+    session.get('offerings').push([offering1, offering2]);
 
     const groups = await waitForResource(session, 'associatedOfferingLearnerGroups');
     assert.strictEqual(groups.length, 3);
@@ -95,7 +95,7 @@ module('Unit | Model | Session', function (hooks) {
     const offering3 = store.createRecord('offering', {
       learnerGroups: [learnerGroup4],
     });
-    session.get('offerings').pushObjects([offering1, offering2, offering3]);
+    session.get('offerings').push([offering1, offering2, offering3]);
 
     const groups = await waitForResource(session, 'associatedOfferingLearnerGroups');
     assert.strictEqual(groups.length, 5);
@@ -175,7 +175,7 @@ module('Unit | Model | Session', function (hooks) {
     });
 
     session.set('ilmSession', ilm);
-    session.get('offerings').pushObjects([offering1, offering2]);
+    session.get('offerings').push([offering1, offering2]);
 
     const groups = await waitForResource(session, 'associatedLearnerGroups');
     assert.strictEqual(groups.length, 5);
@@ -201,7 +201,7 @@ module('Unit | Model | Session', function (hooks) {
       learnerGroups: [learnerGroup3],
     });
 
-    session.get('offerings').pushObjects([offering1, offering2]);
+    session.get('offerings').push([offering1, offering2]);
 
     assert.strictEqual(await waitForResource(session, 'learnerGroupCount'), 3);
 
@@ -234,7 +234,7 @@ module('Unit | Model | Session', function (hooks) {
     const term1 = store.createRecord('term', { vocabulary: vocab1 });
     const term2 = store.createRecord('term', { vocabulary: vocab1 });
     const term3 = store.createRecord('term', { vocabulary: vocab2 });
-    subject.get('terms').pushObjects([term1, term2, term3]);
+    subject.get('terms').push([term1, term2, term3]);
     const vocabularies = await waitForResource(subject, 'associatedVocabularies');
     assert.strictEqual(vocabularies.length, 2);
     assert.strictEqual(vocabularies[0], vocab2);
@@ -248,7 +248,7 @@ module('Unit | Model | Session', function (hooks) {
     assert.strictEqual(subject.termCount, 0);
     const term1 = store.createRecord('term', { id: 1, sessions: [subject] });
     const term2 = store.createRecord('term', { id: 2, sessions: [subject] });
-    subject.get('terms').pushObjects([term1, term2]);
+    subject.get('terms').push([term1, term2]);
     assert.strictEqual(subject.termCount, 2);
   });
 
@@ -299,7 +299,7 @@ module('Unit | Model | Session', function (hooks) {
       startDate: moment('2017-01-01 09:30:00').toDate(),
       endDate: moment('2017-01-01 10:00:00').toDate(),
     });
-    subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+    subject.get('offerings').push([allDayOffering, halfAnHourOffering]);
     total = await waitForResource(subject, 'totalSumOfferingsDuration');
     assert.strictEqual(Number(total), 24.5);
   });
@@ -321,7 +321,7 @@ module('Unit | Model | Session', function (hooks) {
       endDate: moment('2017-01-01 10:00:00').toDate(),
       session: subject,
     });
-    subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+    subject.get('offerings').push([allDayOffering, halfAnHourOffering]);
     max = await waitForResource(subject, 'maxSingleOfferingDuration');
     assert.strictEqual(Number(max), 24.0);
   });
@@ -355,7 +355,7 @@ module('Unit | Model | Session', function (hooks) {
     const offering2 = store.createRecord('offering', {
       startDate: moment('2016-01-01').toDate(),
     });
-    subject.get('offerings').pushObjects([offering1, offering2]);
+    subject.get('offerings').push([offering1, offering2]);
     const firstDate = await waitForResource(subject, 'firstOfferingDate');
     assert.strictEqual(offering2.get('startDate'), firstDate);
   });
@@ -374,9 +374,7 @@ module('Unit | Model | Session', function (hooks) {
       startDate: moment('2015-01-01').toDate(),
     });
     const offeringWithNoStartDate = store.createRecord('offering');
-    subject
-      .get('offerings')
-      .pushObjects([offering1, offering2, offering3, offeringWithNoStartDate]);
+    subject.get('offerings').push([offering1, offering2, offering3, offeringWithNoStartDate]);
     const sortedDates = await waitForResource(subject, 'sortedOfferingsByDate');
     assert.strictEqual(sortedDates.length, 3);
     assert.strictEqual(sortedDates[0], offering3);
@@ -397,7 +395,7 @@ module('Unit | Model | Session', function (hooks) {
       startDate: moment('2017-01-01 09:30:00').toDate(),
       endDate: moment('2017-01-01 10:00:00').toDate(),
     });
-    subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+    subject.get('offerings').push([allDayOffering, halfAnHourOffering]);
     const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
     subject.set('ilmSession', ilmSession);
 
@@ -418,7 +416,7 @@ module('Unit | Model | Session', function (hooks) {
       startDate: moment('2017-01-01 09:30:00').toDate(),
       endDate: moment('2017-01-01 10:00:00').toDate(),
     });
-    subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+    subject.get('offerings').push([allDayOffering, halfAnHourOffering]);
 
     const max = await waitForResource(subject, 'maxDuration');
     assert.strictEqual(Number(max), 24.0);
@@ -449,7 +447,7 @@ module('Unit | Model | Session', function (hooks) {
       startDate: moment('2017-01-01 09:30:00').toDate(),
       endDate: moment('2017-01-01 10:00:00').toDate(),
     });
-    subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+    subject.get('offerings').push([allDayOffering, halfAnHourOffering]);
     const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
     subject.set('ilmSession', ilmSession);
 
@@ -470,7 +468,7 @@ module('Unit | Model | Session', function (hooks) {
       startDate: moment('2017-01-01 09:30:00').toDate(),
       endDate: moment('2017-01-01 10:00:00').toDate(),
     });
-    subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+    subject.get('offerings').push([allDayOffering, halfAnHourOffering]);
 
     const total = await waitForResource(subject, 'totalSumDuration');
     assert.strictEqual(Number(total), 24.5);
@@ -654,7 +652,7 @@ module('Unit | Model | Session', function (hooks) {
       startDate: moment('2017-01-01 09:30:00').toDate(),
       endDate: moment('2017-01-01 10:00:00').toDate(),
     });
-    subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+    subject.get('offerings').push([allDayOffering, halfAnHourOffering]);
     const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
     subject.set('ilmSession', ilmSession);
 
@@ -674,7 +672,7 @@ module('Unit | Model | Session', function (hooks) {
       startDate: moment('2017-01-01 09:30:00').toDate(),
       endDate: moment('2017-01-01 10:00:00').toDate(),
     });
-    subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
+    subject.get('offerings').push([allDayOffering, halfAnHourOffering]);
 
     const total = await subject.getTotalSumDuration();
     assert.strictEqual(Number(total), 24.5);

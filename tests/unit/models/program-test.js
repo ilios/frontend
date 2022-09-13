@@ -38,7 +38,7 @@ module('Unit | Model | Program', function (hooks) {
     const programYear2 = this.store.createRecord('program-year', {
       cohort: cohort2,
     });
-    model.programYears.pushObjects([programYear1, programYear2]);
+    model.programYears.push([programYear1, programYear2]);
     await waitForResource(model, '_cohorts');
     assert.strictEqual(model.cohorts.length, 2);
     assert.ok(model.cohorts.includes(cohort1));
@@ -62,7 +62,7 @@ module('Unit | Model | Program', function (hooks) {
     const programYear2 = this.store.createRecord('program-year', {
       cohort: cohort2,
     });
-    model.programYears.pushObjects([programYear1, programYear2]);
+    model.programYears.push([programYear1, programYear2]);
     await waitForResource(model, '_courses');
     assert.strictEqual(model.courses.length, 3);
     assert.ok(model.courses.includes(course1));

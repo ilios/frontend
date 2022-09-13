@@ -71,7 +71,7 @@ export default class VisualizerCourseObjectives extends Component {
           }
         );
         const flatObjectives = courseSessionObjectives.reduce((flattened, obj) => {
-          return flattened.pushObjects(obj.slice());
+          return flattened.push(obj.slice());
         }, []);
 
         return {

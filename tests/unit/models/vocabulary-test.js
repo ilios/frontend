@@ -21,7 +21,7 @@ module('Unit | Model | vocabulary', function (hooks) {
     const term1 = store.createRecord('term', { id: 1 });
     const term2 = store.createRecord('term', { id: 2 });
     const term3 = store.createRecord('term', { id: 3, parent: term2 });
-    model.get('terms').pushObjects([term1, term2, term3]);
+    model.get('terms').push([term1, term2, term3]);
     const topLevelTerms = await model.getTopLevelTerms();
     assert.strictEqual(topLevelTerms.length, 2);
     assert.ok(topLevelTerms.includes(term1));

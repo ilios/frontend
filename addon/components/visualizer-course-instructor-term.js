@@ -70,7 +70,7 @@ export default class VisualizerCourseInstructorTerm extends Component {
     });
 
     const flat = dataMap.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj);
+      return flattened.push(obj);
     }, []);
 
     const sessionTermData = flat.reduce((set, obj) => {

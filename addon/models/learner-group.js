@@ -158,7 +158,7 @@ export default class LearnerGroup extends Model {
     const allDescendants = await this.getAllDescendants();
     const descendantsUsers = await Promise.all(mapBy(allDescendants, 'users'));
     return descendantsUsers.reduce((all, groups) => {
-      all.pushObjects(groups.slice());
+      all.push(groups.slice());
 
       return all;
     }, []);

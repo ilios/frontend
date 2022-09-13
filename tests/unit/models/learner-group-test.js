@@ -21,7 +21,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const session3 = store.createRecord('session', { course: course2 });
     model
       .get('offerings')
-      .pushObjects([
+      .push([
         store.createRecord('offering', { session: session1 }),
         store.createRecord('offering', { session: session1 }),
         store.createRecord('offering', { session: session1 }),
@@ -47,7 +47,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
 
     model
       .get('offerings')
-      .pushObjects([
+      .push([
         store.createRecord('offering', { session: session1 }),
         store.createRecord('offering', { session: session1 }),
         store.createRecord('offering', { session: session1 }),
@@ -57,7 +57,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       ]);
     model
       .get('ilmSessions')
-      .pushObjects([
+      .push([
         store.createRecord('ilmSession', { session: session3 }),
         store.createRecord('ilmSession', { session: session4 }),
       ]);
@@ -94,8 +94,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       users: [user5],
       children: [subSubGroup1],
     });
-    learnerGroup.get('users').pushObjects([user1, user2, user3, user4, user5]);
-    learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
+    learnerGroup.get('users').push([user1, user2, user3, user4, user5]);
+    learnerGroup.get('children').push([subGroup1, subGroup2]);
 
     const allDescendantUsers = await waitForResource(learnerGroup, 'allDescendantUsers');
     assert.strictEqual(allDescendantUsers.length, 5);
@@ -256,7 +256,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const instructorGroup2 = store.createRecord('instructor-group', {
       users: [user3],
     });
-    learnerGroup.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
+    learnerGroup.get('instructorGroups').push([instructorGroup1, instructorGroup2]);
 
     allInstructors = await waitForResource(learnerGroup, 'allInstructors');
     assert.strictEqual(allInstructors.length, 3);
@@ -549,7 +549,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: subgroup,
       users: [user4],
     });
-    learnerGroup.get('users').pushObjects([user1, user2, user3, user4]);
+    learnerGroup.get('users').push([user1, user2, user3, user4]);
     learnerGroup.get('children').pushObject(subgroup);
     const users = await waitForResource(learnerGroup, 'usersOnlyAtThisLevel');
     assert.strictEqual(users.length, 1);
@@ -575,7 +575,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: subgroup,
       users: [user4],
     });
-    learnerGroup.get('users').pushObjects([user1, user2, user3, user4]);
+    learnerGroup.get('users').push([user1, user2, user3, user4]);
     learnerGroup.get('children').pushObject(subgroup);
     const users = await learnerGroup.getUsersOnlyAtThisLevel();
     assert.strictEqual(users.length, 1);
@@ -699,7 +699,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const user1 = store.createRecord('user', { id: 1, learnerGroups: [learnerGroup] });
     const user2 = store.createRecord('user', { id: 2, learnerGroups: [learnerGroup] });
 
-    learnerGroup.get('users').pushObjects([user1, user2]);
+    learnerGroup.get('users').push([user1, user2]);
     assert.strictEqual(await waitForResource(learnerGroup, 'usersCount'), 2);
   });
 
@@ -711,7 +711,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const group1 = store.createRecord('learner-group', { id: 1, parent: learnerGroup });
     const group2 = store.createRecord('learner-group', { id: 2, parent: learnerGroup });
 
-    learnerGroup.get('children').pushObjects([group1, group2]);
+    learnerGroup.get('children').push([group1, group2]);
     assert.strictEqual(learnerGroup.childrenCount, 2);
   });
 

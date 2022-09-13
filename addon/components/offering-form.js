@@ -302,14 +302,14 @@ export default class OfferingForm extends Component {
         return cohort.get('school');
       });
       const schools = [];
-      schools.pushObjects(cohortSchools);
+      schools.push(cohortSchools);
       associatedSchools = uniqueById(schools.slice());
     }
     const allInstructorGroups = await map(associatedSchools, (school) => {
       return school.get('instructorGroups');
     });
     return allInstructorGroups.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.slice());
+      return flattened.push(obj.slice());
     }, []);
   }
 

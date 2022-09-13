@@ -118,15 +118,15 @@ export default class Term extends Model {
   async getAllDescendants() {
     const descendants = [];
     const children = await this.children;
-    descendants.pushObjects(children.slice());
+    descendants.push(children.slice());
     const childrenDescendants = await Promise.all(
       children.slice().map(async (child) => {
         return child.getAllDescendants();
       })
     );
-    descendants.pushObjects(
+    descendants.push(
       childrenDescendants.reduce((array, set) => {
-        array.pushObjects(set);
+        array.push(set);
         return array;
       }, [])
     );

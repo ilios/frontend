@@ -197,7 +197,7 @@ export default class Course extends Model {
   get assignableVocabularies() {
     return this._schoolVocabularies
       ?.reduce((acc, curr) => {
-        return acc.pushObjects(curr.slice());
+        return acc.push(curr.slice());
       }, [])
       .sortBy('school.title', 'title');
   }

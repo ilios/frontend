@@ -455,7 +455,7 @@ module('Unit | Model | User', function (hooks) {
     const notAStudentRoleEither = store.createRecord('user-role', {
       title: 'Alien Overlord',
     });
-    model.get('roles').pushObjects([notAStudentRole, notAStudentRoleEither]);
+    model.get('roles').push([notAStudentRole, notAStudentRoleEither]);
     const isStudent = await waitForResource(model, 'isStudent');
     assert.notOk(isStudent);
   });
@@ -468,7 +468,7 @@ module('Unit | Model | User', function (hooks) {
       title: 'Non-student',
     });
     const studentRole = store.createRecord('user-role', { title: 'Student' });
-    model.get('roles').pushObjects([notAStudentRole, studentRole]);
+    model.get('roles').push([notAStudentRole, studentRole]);
     const isStudent = await waitForResource(model, 'isStudent');
     assert.ok(isStudent);
   });
@@ -682,7 +682,7 @@ module('Unit | Model | User', function (hooks) {
       parent: learnerGroup2,
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
-    model.get('learnerGroups').pushObjects([learnerGroup, learnerGroup2]);
+    model.get('learnerGroups').push([learnerGroup, learnerGroup2]);
 
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
@@ -709,7 +709,7 @@ module('Unit | Model | User', function (hooks) {
       users: [model],
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
-    model.get('learnerGroups').pushObjects([learnerGroup, learnerGroup2, learnerGroup3]);
+    model.get('learnerGroups').push([learnerGroup, learnerGroup2, learnerGroup3]);
 
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
@@ -750,7 +750,7 @@ module('Unit | Model | User', function (hooks) {
       users: [model],
     });
     model.set('primaryCohort', primaryCohort);
-    model.get('cohorts').pushObjects([primaryCohort, secondaryCohort, anotherCohort]);
+    model.get('cohorts').push([primaryCohort, secondaryCohort, anotherCohort]);
 
     const cohorts = await waitForResource(model, 'secondaryCohorts');
     assert.strictEqual(cohorts.length, 2);

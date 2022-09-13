@@ -65,7 +65,7 @@ export default class VisualizerCourseSessionType extends Component {
     });
 
     return termData.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.slice());
+      return flattened.push(obj.slice());
     }, []);
   }
 

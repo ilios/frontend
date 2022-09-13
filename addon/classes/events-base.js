@@ -41,8 +41,8 @@ export default class EventsBase extends Service {
     const sessionTerms = await session.get('terms');
     const course = await session.get('course');
     const courseTerms = await course.get('terms');
-    terms.pushObjects(sessionTerms.slice());
-    terms.pushObjects(courseTerms.slice());
+    terms.push(sessionTerms.slice());
+    terms.push(courseTerms.slice());
     return uniqueValues(mapBy(terms, 'id'));
   }
 

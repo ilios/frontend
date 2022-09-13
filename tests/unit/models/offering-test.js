@@ -25,7 +25,7 @@ module('Unit | Model | Offering', function (hooks) {
     const instructorGroup2 = store.createRecord('instructor-group', {
       users: [user3],
     });
-    offering.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
+    offering.get('instructorGroups').push([instructorGroup1, instructorGroup2]);
 
     allInstructors = await waitForResource(offering, 'allInstructors');
 
@@ -97,7 +97,7 @@ module('Unit | Model | Offering', function (hooks) {
     const learnerGroup2 = store.createRecord('learner-group', {
       users: [user3],
     });
-    offering.get('learnerGroups').pushObjects([learnerGroup1, learnerGroup2]);
+    offering.get('learnerGroups').push([learnerGroup1, learnerGroup2]);
 
     allLearners = await waitForResource(offering, 'allLearners');
 
