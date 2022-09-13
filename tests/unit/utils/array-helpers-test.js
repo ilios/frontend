@@ -18,6 +18,34 @@ function getDogs() {
 }
 
 module('Unit | Utility | array-helpers', function () {
+  test('when array is false', function (assert) {
+    assert.false(mapBy(false, 'name'));
+    assert.false(sortByDate(false, 'dob'));
+    assert.false(sortByString(false, 'name'));
+    assert.false(sortByNumber(false, 'goodnessRanking'));
+    assert.false(uniqueBy(false, 'name'));
+    assert.false(uniqueById(false));
+    assert.false(uniqueValues(false));
+  });
+  test('when array is null', function (assert) {
+    assert.strictEqual(mapBy(null, 'name'), null);
+    assert.strictEqual(sortByDate(null, 'dob'), null);
+    assert.strictEqual(sortByString(null, 'name'), null);
+    assert.strictEqual(sortByNumber(null, 'goodnessRanking'), null);
+    assert.strictEqual(uniqueBy(null, 'name'), null);
+    assert.strictEqual(uniqueById(null), null);
+    assert.strictEqual(uniqueValues(null), null);
+  });
+  test('when array is undefined', function (assert) {
+    assert.strictEqual(mapBy(undefined, 'name'), undefined);
+    assert.strictEqual(sortByDate(undefined, 'dob'), undefined);
+    assert.strictEqual(sortByString(undefined, 'name'), undefined);
+    assert.strictEqual(sortByNumber(undefined, 'goodnessRanking'), undefined);
+    assert.strictEqual(uniqueBy(undefined, 'name'), undefined);
+    assert.strictEqual(uniqueById(undefined), undefined);
+    assert.strictEqual(uniqueValues(undefined), undefined);
+  });
+
   test('mapBy', function (assert) {
     let result = mapBy(getDogs(), 'name');
     assert.deepEqual(result, ['jayden', 'jasper', 'jackson']);
@@ -36,15 +64,6 @@ module('Unit | Utility | array-helpers', function () {
     const arr = getDogs();
     arr[1] = null;
     assert.deepEqual(mapBy(arr, 'name'), ['jayden', null, 'jackson']);
-  });
-  test('mapBy when array is false', function (assert) {
-    assert.false(mapBy(false, 'name'));
-  });
-  test('mapBy when array is null', function (assert) {
-    assert.deepEqual(mapBy(null, 'name'), null);
-  });
-  test('mapBy when array is undefined', function (assert) {
-    assert.deepEqual(mapBy(undefined, 'name'), undefined);
   });
 
   test('sortByString', function (assert) {
@@ -77,18 +96,6 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(result[1].name, 'jayden');
     assert.strictEqual(result[2], null);
   });
-  test('sortByString when array is false', function (assert) {
-    let result = sortByString(false, 'name');
-    assert.false(result);
-  });
-  test('sortByString when array is null', function (assert) {
-    let result = sortByString(null, 'name');
-    assert.deepEqual(result, null);
-  });
-  test('sortByString when array is undefined', function (assert) {
-    let result = sortByString(undefined, 'name');
-    assert.deepEqual(result, undefined);
-  });
 
   test('sortByDate', function (assert) {
     const result = sortByDate(getDogs(), 'dob');
@@ -119,18 +126,6 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(result[0].name, 'jackson');
     assert.strictEqual(result[1].name, 'jayden');
     assert.strictEqual(result[2], null);
-  });
-  test('sortByDate when array is false', function (assert) {
-    let result = sortByDate(false, 'dob');
-    assert.false(result);
-  });
-  test('sortByDate when array is null', function (assert) {
-    let result = sortByDate(null, 'dob');
-    assert.deepEqual(result, null);
-  });
-  test('sortByDate when array is undefined', function (assert) {
-    let result = sortByDate(undefined, 'dob');
-    assert.deepEqual(result, undefined);
   });
 
   test('sortByNumber', function (assert) {
@@ -163,18 +158,6 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(result[1].name, 'jackson');
     assert.strictEqual(result[2], null);
   });
-  test('sortByNumber when array is false', function (assert) {
-    let result = sortByNumber(false, 'goodnessRanking');
-    assert.false(result);
-  });
-  test('sortByNumber when array is null', function (assert) {
-    let result = sortByNumber(null, 'goodnessRanking');
-    assert.deepEqual(result, null);
-  });
-  test('sortByNumber when array is undefined', function (assert) {
-    let result = sortByNumber(undefined, 'goodnessRanking');
-    assert.deepEqual(result, undefined);
-  });
 
   test('uniqueBy', function (assert) {
     const arr = [...getDogs(), ...getDogs(), ...getDogs()];
@@ -205,18 +188,6 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(result.length, 2);
     assert.strictEqual(result[0].name, 'one');
     assert.deepEqual(result[1], null);
-  });
-  test('uniqueBy when array is false', function (assert) {
-    let result = uniqueBy(false, 'name');
-    assert.false(result);
-  });
-  test('uniqueBy when array is null', function (assert) {
-    let result = uniqueBy(null, 'name');
-    assert.deepEqual(result, null);
-  });
-  test('uniqueBy when array is undefined', function (assert) {
-    let result = uniqueBy(undefined, 'name');
-    assert.deepEqual(result, undefined);
   });
 
   test('uniqueById', function (assert) {
@@ -251,18 +222,6 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(result[0].name, 'one');
     assert.deepEqual(result[1], null);
   });
-  test('uniqueById when array is false', function (assert) {
-    let result = uniqueById(false);
-    assert.false(result);
-  });
-  test('uniqueById when array is null', function (assert) {
-    let result = uniqueById(null);
-    assert.deepEqual(result, null);
-  });
-  test('uniqueById when array is undefined', function (assert) {
-    let result = uniqueById(undefined);
-    assert.deepEqual(result, undefined);
-  });
 
   test('uniqueValues', function (assert) {
     const arr = ['one', 'two', 'one'];
@@ -279,17 +238,5 @@ module('Unit | Utility | array-helpers', function () {
     assert.deepEqual(result[1], undefined);
     assert.deepEqual(result[2], null);
     assert.deepEqual(result[3], 'two');
-  });
-  test('uniqueValues when array is false', function (assert) {
-    let result = uniqueValues(false);
-    assert.false(result);
-  });
-  test('uniqueValues when array is null', function (assert) {
-    let result = uniqueValues(null);
-    assert.deepEqual(result, null);
-  });
-  test('uniqueValues when array is undefined', function (assert) {
-    let result = uniqueValues(undefined);
-    assert.deepEqual(result, undefined);
   });
 });
