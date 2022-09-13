@@ -1,5 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { Resource } from 'ember-could-get-used-to-this';
+import { mapBy } from '../utils/array-helpers';
 
 export default class ResolveFlatMapBy extends Resource {
   @tracked data;
@@ -41,10 +42,14 @@ export default class ResolveFlatMapBy extends Resource {
     //this is also safe if arr isn't a promise.
     const resolvedArray = await Promise.resolve(arr);
     if (resolvedArray) {
-      //Ember data models return a promise from `mapBy`
-      //so we need to resolve it and then resolve the values in it
-      const mapBy = await resolvedArray.mapBy(mapByKey);
-      this.data = await Promise.all(mapBy);
+      if ('mapBy' in resolvedArray) {
+        //Ember data models return a promise from `mapBy`
+        //so we need to resolve it and then resolve the values in it
+        const mapBy = await resolvedArray.mapBy(mapByKey);
+        this.data = await Promise.all(mapBy);
+      } else {
+        this.data = await Promise.all(mapBy(resolvedArray, mapByKey));
+      }
     }
   }
 }
