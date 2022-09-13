@@ -197,7 +197,7 @@ export default class Course extends Model {
   get assignableVocabularies() {
     return this._schoolVocabularies
       ?.reduce((acc, curr) => {
-        return acc.pushObjects(curr.toArray());
+        return acc.pushObjects(curr.slice());
       }, [])
       .sortBy('school.title', 'title');
   }
@@ -207,7 +207,7 @@ export default class Course extends Model {
    * A list of course objectives, sorted by position (asc) and then id (desc).
    */
   get sortedCourseObjectives() {
-    return this._courseObjectives?.toArray().sort(sortableByPosition);
+    return this._courseObjectives?.slice().sort(sortableByPosition);
   }
 
   get hasMultipleCohorts() {

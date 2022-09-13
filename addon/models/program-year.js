@@ -64,7 +64,7 @@ export default class ProgramYear extends Model {
    * A list of program-year objectives, sorted by position.
    */
   get sortedProgramYearObjectives() {
-    return this._programYearObjectives?.toArray().sort(sortableByPosition);
+    return this._programYearObjectives?.slice().sort(sortableByPosition);
   }
 
   @use _allTermVocabularies = new ResolveAsyncValue(() => [mapBy(this.terms, 'vocabulary')]);

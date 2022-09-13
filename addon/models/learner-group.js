@@ -128,7 +128,7 @@ export default class LearnerGroup extends Model {
   }
 
   async getAllDescendants() {
-    const children = (await this.children).toArray();
+    const children = (await this.children).slice();
     const childDescendants = await map(children, (child) => {
       return child.getAllDescendants();
     });
@@ -151,14 +151,14 @@ export default class LearnerGroup extends Model {
   async getAllDescendantUsers() {
     const users = await this.users;
     const descendantUsers = await this._getDescendantUsers();
-    return uniqueById([...users.toArray(), ...descendantUsers]);
+    return uniqueById([...users.slice(), ...descendantUsers]);
   }
 
   async _getDescendantUsers() {
     const allDescendants = await this.getAllDescendants();
     const descendantsUsers = await Promise.all(mapBy(allDescendants, 'users'));
     return descendantsUsers.reduce((all, groups) => {
-      all.pushObjects(groups.toArray());
+      all.pushObjects(groups.slice());
 
       return all;
     }, []);
@@ -174,7 +174,7 @@ export default class LearnerGroup extends Model {
   ]);
 
   async getUsersOnlyAtThisLevel() {
-    const users = (await this.users).toArray();
+    const users = (await this.users).slice();
     const descendantsUsers = await this._getDescendantUsers();
 
     return users.filter((user) => !descendantsUsers.includes(user));
@@ -264,7 +264,7 @@ export default class LearnerGroup extends Model {
       return [];
     }
 
-    return uniqueById([...this._instructors.toArray(), ...this._instructorGroupUsers]);
+    return uniqueById([...this._instructors.slice(), ...this._instructorGroupUsers]);
   }
 
   @use _cohort = new ResolveAsyncValue(() => [this.cohort]);

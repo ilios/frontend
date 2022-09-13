@@ -83,7 +83,7 @@ export default class MeshManagerComponent extends Component {
         q: this.query,
         limit: SEARCH_RESULTS_PER_PAGE + 1,
       })
-    ).toArray();
+    ).slice();
 
     this.searchPage = 1;
     this.hasMoreSearchResults = descriptors.length > SEARCH_RESULTS_PER_PAGE;
@@ -100,7 +100,7 @@ export default class MeshManagerComponent extends Component {
         limit: SEARCH_RESULTS_PER_PAGE + 1,
         offset: this.searchPage * SEARCH_RESULTS_PER_PAGE,
       })
-    ).toArray();
+    ).slice();
     this.searchPage = this.searchPage + 1;
     this.hasMoreSearchResults = descriptors.length > SEARCH_RESULTS_PER_PAGE;
     if (this.hasMoreSearchResults) {

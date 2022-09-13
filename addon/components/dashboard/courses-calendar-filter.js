@@ -41,7 +41,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   }
 
   get courses() {
-    return this.coursesRelationship ? this.coursesRelationship.toArray() : [];
+    return this.coursesRelationship ? this.coursesRelationship.slice() : [];
   }
 
   get courseYears() {

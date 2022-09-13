@@ -51,7 +51,7 @@ export default class VisualizerCourseSessionTypes extends Component {
       return [];
     }
 
-    const dataMap = await map(sessions.toArray(), async (session) => {
+    const dataMap = await map(sessions.slice(), async (session) => {
       const hours = await session.getTotalSumDuration();
       const minutes = Math.round(hours * 60);
       const sessionType = await session.sessionType;

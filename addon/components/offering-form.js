@@ -298,7 +298,7 @@ export default class OfferingForm extends Component {
     if (isEmpty(cohorts)) {
       associatedSchools = [];
     } else {
-      const cohortSchools = await map(cohorts.toArray(), (cohort) => {
+      const cohortSchools = await map(cohorts.slice(), (cohort) => {
         return cohort.get('school');
       });
       const schools = [];
@@ -309,7 +309,7 @@ export default class OfferingForm extends Component {
       return school.get('instructorGroups');
     });
     return allInstructorGroups.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
+      return flattened.pushObjects(obj.slice());
     }, []);
   }
 
@@ -342,10 +342,10 @@ export default class OfferingForm extends Component {
       instructors: offering.get('instructors'),
       instructorGroups: offering.get('instructorGroups'),
     });
-    this.learnerGroups = obj.learnerGroups.toArray();
-    this.learners = obj.learners.toArray();
-    this.instructors = obj.instructors.toArray();
-    this.instructorGroups = obj.instructorGroups.toArray();
+    this.learnerGroups = obj.learnerGroups.slice();
+    this.learners = obj.learners.slice();
+    this.instructors = obj.instructors.slice();
+    this.instructorGroups = obj.instructorGroups.slice();
     this.loaded = true;
   });
 
@@ -503,8 +503,8 @@ export default class OfferingForm extends Component {
         if (isPresent(defaultLocation)) {
           room = defaultLocation;
         }
-        const instructors = (await learnerGroup.instructors).toArray();
-        const instructorGroups = (await learnerGroup.instructorGroups).toArray();
+        const instructors = (await learnerGroup.instructors).slice();
+        const instructorGroups = (await learnerGroup.instructorGroups).slice();
         const offering = {
           startDate,
           endDate,

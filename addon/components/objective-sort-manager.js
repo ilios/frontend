@@ -17,7 +17,7 @@ export default class ObjectiveSortManagerComponent extends Component {
 
   @use objectives = new ResolveAsyncValue(() => [this.args.subject.xObjectives]);
   get sortedObjectives() {
-    return this.objectives?.toArray().sort(sortableByPosition) ?? [];
+    return this.objectives?.slice().sort(sortableByPosition) ?? [];
   }
 
   get items() {

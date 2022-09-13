@@ -119,9 +119,9 @@ export default class DashboardCalendarComponent extends Component {
 
   async getSchoolCohorts(school) {
     const programs = await school.programs;
-    const programYears = await map(programs.toArray(), async (program) => {
+    const programYears = await map(programs.slice(), async (program) => {
       const programYears = await program.programYears;
-      return programYears.toArray();
+      return programYears.slice();
     });
     const cohorts = await all(mapBy(programYears.flat(), 'cohort'));
     return cohorts.filter(Boolean);

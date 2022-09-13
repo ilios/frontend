@@ -54,7 +54,7 @@ export default class VisualizerCourseInstructors extends Component {
       return [];
     }
 
-    const sessionsWithInstructors = await map(this.sessions.toArray(), async (session) => {
+    const sessionsWithInstructors = await map(this.sessions.slice(), async (session) => {
       const instructors = await session.getAllInstructors();
       const totalInstructionalTime = await session.getTotalSumOfferingsDuration();
       const instructorsWithInstructionalTime = await map(instructors, async (instructor) => {

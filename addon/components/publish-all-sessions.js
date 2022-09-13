@@ -77,7 +77,7 @@ export default class PublishAllSessionsComponent extends Component {
       return false;
     }
 
-    return this.courseObjectives.toArray().any((objective) => {
+    return this.courseObjectives.slice().any((objective) => {
       return objective.programYearObjectives.length === 0;
     });
   }

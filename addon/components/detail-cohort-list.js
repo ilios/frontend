@@ -14,7 +14,7 @@ export default class DetailCohortListComponent extends Component {
       return false;
     }
 
-    const sortProxies = await map(cohorts.toArray(), async (cohort) => {
+    const sortProxies = await map(cohorts.slice(), async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;

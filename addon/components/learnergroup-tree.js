@@ -42,13 +42,13 @@ export default class LearnergroupTree extends Component {
    * Recursively search a group tree to see if there are any children which have not been selected.
    **/
   async getHasUnSelectedChildren(children, selectedGroups) {
-    const arr = children?.toArray() ?? [];
+    const arr = children?.slice() ?? [];
     const unselectedChildren = await filter(arr, async (child) => {
       if (!selectedGroups.includes(child)) {
         return true;
       }
       const childChildren = await child.children;
-      return this.getHasUnSelectedChildren(childChildren.toArray(), selectedGroups);
+      return this.getHasUnSelectedChildren(childChildren.slice(), selectedGroups);
     });
     return unselectedChildren.length > 0;
   }

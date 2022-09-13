@@ -37,7 +37,7 @@ export default class Program extends Model {
     if (!this._cohorts) {
       return [];
     }
-    return this._cohorts.toArray();
+    return this._cohorts.slice();
   }
 
   @use _courses = new ResolveFlatMapBy(() => [this._cohorts, 'courses']);

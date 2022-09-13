@@ -24,7 +24,7 @@ export default class TaxonomyManager extends Component {
     if (!this.args.vocabularies) {
       return [];
     } else {
-      return this.args.vocabularies.toArray().filter((vocab) => {
+      return this.args.vocabularies.slice().filter((vocab) => {
         return vocab.get('termCount') > 0;
       });
     }

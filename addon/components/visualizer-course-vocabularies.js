@@ -28,7 +28,7 @@ export default class VisualizerCourseVocabularies extends Component {
     if (!sessions) {
       return [];
     }
-    const sessionsWithMinutes = await map(sessions.toArray(), async (session) => {
+    const sessionsWithMinutes = await map(sessions.slice(), async (session) => {
       const hours = await session.getTotalSumDuration();
       return {
         session,

@@ -22,7 +22,7 @@ export default class ResolveFlatMapBy extends Resource {
         return arr;
       }
       if ('toArray' in arr) {
-        return arr.toArray();
+        return arr.slice();
       }
 
       return arr;

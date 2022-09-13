@@ -25,7 +25,7 @@ export default class VisualizerCourseObjectives extends Component {
       return [];
     }
 
-    return this.courseSessions.toArray();
+    return this.courseSessions.slice();
   }
 
   get objectiveWithMinutes() {
@@ -57,7 +57,7 @@ export default class VisualizerCourseObjectives extends Component {
       async ({ session, minutes }) => {
         const sessionObjectives = await session.sessionObjectives;
         const sessionObjectivesWithParents = await filter(
-          sessionObjectives.toArray(),
+          sessionObjectives.slice(),
           async (sessionObjective) => {
             const parents = await sessionObjective.courseObjectives;
             return parents.length;
@@ -71,7 +71,7 @@ export default class VisualizerCourseObjectives extends Component {
           }
         );
         const flatObjectives = courseSessionObjectives.reduce((flattened, obj) => {
-          return flattened.pushObjects(obj.toArray());
+          return flattened.pushObjects(obj.slice());
         }, []);
 
         return {
@@ -84,7 +84,7 @@ export default class VisualizerCourseObjectives extends Component {
 
     // condensed objectives map
     const courseObjectives = await this.args.course.courseObjectives;
-    const mappedObjectives = courseObjectives.toArray().map((courseObjective) => {
+    const mappedObjectives = courseObjectives.slice().map((courseObjective) => {
       const minutes = sessionCourseObjectiveMap.map((obj) => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
           return obj.minutes;
@@ -128,7 +128,7 @@ export default class VisualizerCourseObjectives extends Component {
     const { data, meta } = obj;
 
     let objectiveTitle = meta.courseObjective.title;
-    const programYearObjectives = (await meta.courseObjective.programYearObjectives).toArray();
+    const programYearObjectives = (await meta.courseObjective.programYearObjectives).slice();
     let competency;
     if (programYearObjectives.length) {
       competency = await programYearObjectives[0].competency;

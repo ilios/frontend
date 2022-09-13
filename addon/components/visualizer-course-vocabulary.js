@@ -28,7 +28,7 @@ export default class VisualizerCourseVocabulary extends Component {
     if (!sessions) {
       return [];
     }
-    const sessionsWithMinutes = await map(sessions.toArray(), async (session) => {
+    const sessionsWithMinutes = await map(sessions.slice(), async (session) => {
       const hours = await session.getTotalSumDuration();
       return {
         session,
@@ -37,7 +37,7 @@ export default class VisualizerCourseVocabulary extends Component {
     });
     const terms = await map(sessionsWithMinutes, async ({ session, minutes }) => {
       const sessionTerms = await session.get('terms');
-      const sessionTermsInThisVocabulary = await filter(sessionTerms.toArray(), async (term) => {
+      const sessionTermsInThisVocabulary = await filter(sessionTerms.slice(), async (term) => {
         const termVocab = await term.get('vocabulary');
         return termVocab.get('id') === this.args.vocabulary.get('id');
       });
@@ -53,7 +53,7 @@ export default class VisualizerCourseVocabulary extends Component {
     });
 
     return terms.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
+      return flattened.pushObjects(obj.slice());
     }, []);
   }
 

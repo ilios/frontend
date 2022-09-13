@@ -73,6 +73,6 @@ export default class CompetencyModel extends Model {
 
   async _treeChildren() {
     const children = await this.children;
-    return children.toArray();
+    return children.slice();
   }
 }

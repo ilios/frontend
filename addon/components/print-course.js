@@ -27,7 +27,7 @@ export default class PrintCourseComponent extends Component {
       return [];
     }
 
-    return this.courseLearningMaterialsRelationship.toArray().sort(sortableByPosition);
+    return this.courseLearningMaterialsRelationship.slice().sort(sortableByPosition);
   }
 
   get sessions() {
@@ -39,6 +39,6 @@ export default class PrintCourseComponent extends Component {
       return this.sessionsRelationship.filterBy('isPublishedOrScheduled');
     }
 
-    return this.sessionsRelationship.toArray();
+    return this.sessionsRelationship.slice();
   }
 }

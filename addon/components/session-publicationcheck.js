@@ -14,7 +14,7 @@ export default class SessionPublicationCheckComponent extends Component {
     if (!this.objectivesRelationship) {
       return false;
     }
-    return this.objectivesRelationship.toArray().any((objective) => {
+    return this.objectivesRelationship.slice().any((objective) => {
       const parentIds = objective.hasMany('courseObjectives').ids();
       return parentIds.length === 0;
     });

@@ -30,8 +30,8 @@ export default class CourseLeadershipExpandedComponent extends Component {
       administrators: this.args.session.administrators,
       studentAdvisors: this.args.session.studentAdvisors,
     });
-    this.administrators = obj.administrators.toArray();
-    this.studentAdvisors = obj.studentAdvisors.toArray();
+    this.administrators = obj.administrators.slice();
+    this.studentAdvisors = obj.studentAdvisors.slice();
     this.args.setIsManaging(true);
   });
 

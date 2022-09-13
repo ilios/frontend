@@ -30,8 +30,8 @@ export default class VisualizerCourseSessionType extends Component {
       sessionTypeSessions: [],
     };
     if (this.sessions && this.sessionTypeSessions) {
-      rhett.sessions = this.sessions.toArray();
-      rhett.sessionTypeSessions = this.sessionTypeSessions.toArray();
+      rhett.sessions = this.sessions.slice();
+      rhett.sessionTypeSessions = this.sessionTypeSessions.slice();
     }
     return rhett;
   }
@@ -52,7 +52,7 @@ export default class VisualizerCourseSessionType extends Component {
     });
 
     const termData = await map(sessionsWithMinutes, async ({ session, minutes }) => {
-      const terms = (await session.terms).toArray();
+      const terms = (await session.terms).slice();
       return map(terms, async (term) => {
         const vocabulary = await term.vocabulary;
         return {
@@ -65,7 +65,7 @@ export default class VisualizerCourseSessionType extends Component {
     });
 
     return termData.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
+      return flattened.pushObjects(obj.slice());
     }, []);
   }
 

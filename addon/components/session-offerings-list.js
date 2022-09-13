@@ -15,7 +15,7 @@ export default class SessionOfferingsListComponent extends Component {
   });
 
   get offerings() {
-    return this.offeringsRelationship ? this.offeringsRelationship.toArray() : [];
+    return this.offeringsRelationship ? this.offeringsRelationship.slice() : [];
   }
 
   get offeringBlocks() {

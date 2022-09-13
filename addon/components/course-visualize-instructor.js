@@ -35,7 +35,7 @@ export default class CourseVisualizeInstructorComponent extends Component {
       return [];
     }
 
-    const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
+    const sessionsWithUser = await filter(sessions.slice(), async (session) => {
       const instructors = await session.getAllInstructors();
       return mapBy(instructors, 'id').includes(this.args.user.id);
     });

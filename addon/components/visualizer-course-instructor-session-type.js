@@ -31,12 +31,12 @@ export default class VisualizerCourseInstructorSessionType extends Component {
       return [];
     }
 
-    const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
+    const sessionsWithUser = await filter(sessions.slice(), async (session) => {
       const allInstructors = await session.getAllOfferingInstructors();
       return mapBy(allInstructors, 'id').includes(this.args.user.id);
     });
 
-    const sessionsWithSessionType = await map(sessionsWithUser.toArray(), async (session) => {
+    const sessionsWithSessionType = await map(sessionsWithUser.slice(), async (session) => {
       const sessionType = await session.sessionType;
       return {
         session,

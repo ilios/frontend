@@ -31,13 +31,13 @@ export default class VisualizerCourseInstructorTerm extends Component {
       return [];
     }
 
-    const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
+    const sessionsWithUser = await filter(sessions.slice(), async (session) => {
       const allInstructors = await session.getAllOfferingInstructors();
       return mapBy(allInstructors, 'id').includes(this.args.user.id);
     });
 
     const sessionsWithTerms = await map(sessionsWithUser, async (session) => {
-      const terms = await map((await session.terms).toArray(), async (term) => {
+      const terms = await map((await session.terms).slice(), async (term) => {
         const vocabulary = await term.vocabulary;
         return {
           termTitle: term.title,

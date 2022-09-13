@@ -39,7 +39,7 @@ export default class DetailCohortsComponent extends Component {
       return [];
     }
 
-    return this.materialsRelationship.toArray();
+    return this.materialsRelationship.slice();
   }
 
   get parentMaterialIds() {

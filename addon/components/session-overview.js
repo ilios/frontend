@@ -113,7 +113,7 @@ export default class SessionOverview extends Component {
       }
     }
     const school = await course.school;
-    const schoolCourses = (await school.courses).toArray();
+    const schoolCourses = (await school.courses).slice();
     let schoolCourse;
     for (schoolCourse of schoolCourses) {
       if (await this.permissionChecker.canCreateSession(schoolCourse)) {

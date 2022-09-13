@@ -70,7 +70,7 @@ export default class CourseObjective extends Model {
    * if they belong to any program years in the given list.
    */
   async removeParentWithProgramYears(programYearsToRemove) {
-    const programYearObjectives = (await this.programYearObjectives).toArray();
+    const programYearObjectives = (await this.programYearObjectives).slice();
 
     await map(programYearObjectives, async (programYearObjective) => {
       const programYear = await programYearObjective.programYear;

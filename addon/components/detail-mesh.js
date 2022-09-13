@@ -21,7 +21,7 @@ export default class DetailMeshComponent extends Component {
       return [];
     }
 
-    return this.meshDescriptorRelationship.toArray();
+    return this.meshDescriptorRelationship.slice();
   }
   @action
   manage() {

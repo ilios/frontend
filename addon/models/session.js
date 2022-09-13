@@ -178,7 +178,7 @@ export default class SessionModel extends Model {
     if (!this.hasMany('offerings').ids().length || !this._offerings) {
       return 0;
     }
-    const sortedOfferings = this._offerings.toArray().sort(function (a, b) {
+    const sortedOfferings = this._offerings.slice().sort(function (a, b) {
       const diffA = moment(a.endDate).diff(moment(a.startDate), 'minutes');
       const diffB = moment(b.endDate).diff(moment(b.startDate), 'minutes');
       if (diffA > diffB) {
@@ -256,7 +256,7 @@ export default class SessionModel extends Model {
     return sortByString(uniqueById(this.offeringLearnerGroups), 'title');
   }
   get associatedIlmLearnerGroups() {
-    return this._ilmLearnerGroups?.toArray() ?? [];
+    return this._ilmLearnerGroups?.slice() ?? [];
   }
 
   get associatedLearnerGroups() {
@@ -265,13 +265,13 @@ export default class SessionModel extends Model {
       return [];
     }
     return sortByString(
-      uniqueById([...this.offeringLearnerGroups, ...ilmLearnerGroups.toArray()]),
+      uniqueById([...this.offeringLearnerGroups, ...ilmLearnerGroups.slice()]),
       'title'
     );
   }
 
   get sortedSessionObjectives() {
-    return this._sessionObjectives?.toArray().sort(sortableByPosition);
+    return this._sessionObjectives?.slice().sort(sortableByPosition);
   }
 
   get ilmSessionInstructors() {
@@ -283,10 +283,7 @@ export default class SessionModel extends Model {
       return [];
     }
 
-    return [
-      ...this._ilmSessionInstructors.toArray(),
-      ...this._ilmSessionInstructorGroupInstructors,
-    ];
+    return [...this._ilmSessionInstructors.slice(), ...this._ilmSessionInstructorGroupInstructors];
   }
 
   get allInstructors() {
@@ -388,13 +385,13 @@ export default class SessionModel extends Model {
   }
 
   async getAllOfferingInstructors() {
-    const offerings = (await this.offerings).toArray();
+    const offerings = (await this.offerings).slice();
     if (!offerings.length) {
       return [];
     }
     const allOfferingInstructors = await Promise.all(
       offerings.map(async (offering) => {
-        return (await offering.getAllInstructors()).toArray();
+        return (await offering.getAllInstructors()).slice();
       })
     );
 
@@ -432,7 +429,7 @@ export default class SessionModel extends Model {
 
   async getTotalSumOfferingsDurationByInstructor(user) {
     const offerings = await this.offerings;
-    const offeringsWithUser = await filter(offerings.toArray(), async (offering) => {
+    const offeringsWithUser = await filter(offerings.slice(), async (offering) => {
       const instructors = await offering.getAllInstructors();
       return mapBy(instructors, 'id').includes(user.id);
     });

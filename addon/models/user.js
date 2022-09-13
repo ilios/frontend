@@ -309,7 +309,7 @@ export default class User extends Model {
     if (!this._instructorIlmSessions) {
       return [];
     }
-    return this._instructorIlmSessions.toArray();
+    return this._instructorIlmSessions.slice();
   }
 
   @use _instructedOfferingSessions = new ResolveFlatMapBy(() => [
@@ -353,7 +353,7 @@ export default class User extends Model {
     if (!this._learnerGroupOfferings || !this._offerings) {
       return [];
     }
-    return uniqueById([...this._learnerGroupOfferings, ...this._offerings.toArray()]);
+    return uniqueById([...this._learnerGroupOfferings, ...this._offerings.slice()]);
   }
   @use _learnerOfferingSessions = new ResolveFlatMapBy(() => [this._learnerOfferings, 'session']);
 
@@ -388,8 +388,8 @@ export default class User extends Model {
     return uniqueById([
       ...this._learnerCourses,
       ...this.allInstructedCourses,
-      ...this._directedCourses.toArray(),
-      ...this._administeredCourses.toArray(),
+      ...this._directedCourses.slice(),
+      ...this._administeredCourses.slice(),
     ]);
   }
 
@@ -399,7 +399,7 @@ export default class User extends Model {
     if (!this._cohorts || !this._primaryCohort) {
       return [];
     }
-    return this._cohorts.toArray().filter((cohort) => cohort !== this._primaryCohort);
+    return this._cohorts.slice().filter((cohort) => cohort !== this._primaryCohort);
   }
 
   /**
@@ -415,7 +415,7 @@ export default class User extends Model {
     const learnerGroups = await this.learnerGroups;
     //all the groups a user is in that are in our current learner groups tree
     const relevantGroups = learnerGroups
-      .toArray()
+      .slice()
       .filter((group) => learnerGroupTree.includes(group));
     const relevantGroupIds = mapBy(relevantGroups, 'id');
     const lowestGroup = relevantGroups.find((group) => {

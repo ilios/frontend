@@ -18,7 +18,7 @@ export default class DetailCohortManagerComponent extends Component {
       return false;
     }
     const allCohorts = await this.store.findAll('cohort');
-    const cohortProxies = await map(allCohorts.toArray(), async (cohort) => {
+    const cohortProxies = await map(allCohorts.slice(), async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;

@@ -18,8 +18,8 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
       learners: ilmSession.learners,
     });
 
-    this.learnerGroupBuffer = learnerGroups.toArray();
-    this.learnerBuffer = learners.toArray();
+    this.learnerGroupBuffer = learnerGroups.slice();
+    this.learnerBuffer = learners.slice();
     this.isManaging = true;
   });
 

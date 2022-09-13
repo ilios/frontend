@@ -30,8 +30,8 @@ export default class DetailInstructorsComponent extends Component {
       instructors: ilmSession.instructors,
     });
 
-    this.instructorGroupBuffer = instructorGroups.toArray();
-    this.instructorBuffer = instructors.toArray();
+    this.instructorGroupBuffer = instructorGroups.slice();
+    this.instructorBuffer = instructors.slice();
     this.isManaging = true;
   });
 

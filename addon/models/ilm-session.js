@@ -35,8 +35,8 @@ export default class IlmSession extends Model {
    * @returns {Promise<Array>}
    */
   async getAllInstructors() {
-    const instructors = (await this.instructors).toArray();
-    const instructorGroups = (await this.instructorGroups).toArray();
+    const instructors = (await this.instructors).slice();
+    const instructorGroups = (await this.instructorGroups).slice();
     const instructorsInInstructorGroups = await Promise.all(mapBy(instructorGroups, 'users'));
     return uniqueById([
       ...instructors,

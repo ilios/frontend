@@ -109,7 +109,7 @@ export default class Offering extends Model {
       return [];
     }
     return sortByString(
-      uniqueById([...this._instructors.toArray(), ...this._instructorsInGroups]),
+      uniqueById([...this._instructors.slice(), ...this._instructorsInGroups]),
       'fullName'
     );
   }
@@ -119,7 +119,7 @@ export default class Offering extends Model {
       return [];
     }
     return sortByString(
-      uniqueById([...this._learners.toArray(), ...this._learnersInGroups]),
+      uniqueById([...this._learners.slice(), ...this._learnersInGroups]),
       'fullName'
     );
   }
@@ -161,12 +161,12 @@ export default class Offering extends Model {
    * @returns {Promise<Array>}
    */
   async getAllInstructors() {
-    const instructors = (await this.instructors).toArray();
-    const instructorGroups = (await this.instructorGroups).toArray();
+    const instructors = (await this.instructors).slice();
+    const instructorGroups = (await this.instructorGroups).slice();
     const instructorsInInstructorGroups = await Promise.all(mapBy(instructorGroups, 'users'));
     return uniqueById([
       ...instructors,
-      ...instructorsInInstructorGroups.map((instructorGroup) => instructorGroup.toArray()).flat(),
+      ...instructorsInInstructorGroups.map((instructorGroup) => instructorGroup.slice()).flat(),
     ]);
   }
 }
