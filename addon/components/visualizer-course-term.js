@@ -6,7 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseTerm extends Component {
   @service router;
@@ -80,6 +80,6 @@ export default class VisualizerCourseTerm extends Component {
     const { label, data, meta } = obj;
 
     this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
-    this.tooltipContent = meta.sessions.uniq().sort().join(', ');
+    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
   });
 }

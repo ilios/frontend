@@ -18,6 +18,7 @@ import {
   validatable,
 } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
+import { uniqueById } from '../utils/array-helpers';
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
@@ -302,7 +303,7 @@ export default class OfferingForm extends Component {
       });
       const schools = [];
       schools.pushObjects(cohortSchools);
-      associatedSchools = schools.uniq().toArray();
+      associatedSchools = uniqueById(schools.slice());
     }
     const allInstructorGroups = await map(associatedSchools, (school) => {
       return school.get('instructorGroups');

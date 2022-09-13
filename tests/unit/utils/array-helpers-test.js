@@ -1,4 +1,12 @@
-import { mapBy, sortByDate, sortByString, sortByNumber } from 'ilios-common/utils/array-helpers';
+import {
+  mapBy,
+  sortByDate,
+  sortByString,
+  sortByNumber,
+  uniqueBy,
+  uniqueById,
+  uniqueValues,
+} from 'ilios-common/utils/array-helpers';
 import { module, test } from 'qunit';
 
 function getDogs() {
@@ -165,6 +173,123 @@ module('Unit | Utility | array-helpers', function () {
   });
   test('sortByNumber when array is undefined', function (assert) {
     let result = sortByNumber(undefined, 'goodnessRanking');
+    assert.deepEqual(result, undefined);
+  });
+
+  test('uniqueBy', function (assert) {
+    const arr = [...getDogs(), ...getDogs(), ...getDogs()];
+    assert.strictEqual(arr.length, 9);
+    const result = uniqueBy(arr, 'name');
+    assert.strictEqual(result.length, 3);
+    assert.strictEqual(result[0].name, 'jayden');
+    assert.strictEqual(result[1].name, 'jasper');
+    assert.strictEqual(result[2].name, 'jackson');
+  });
+  test('uniqueBy when key does not exist', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, {}, { id: 1, name: 'one' }];
+    const result = uniqueBy(arr, 'id');
+    assert.strictEqual(result.length, 2);
+    assert.strictEqual(result[0].name, 'one');
+    assert.deepEqual(result[1], {});
+  });
+  test('uniqueBy when item is undefined', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, undefined, { id: 1, name: 'one' }];
+    const result = uniqueBy(arr, 'id');
+    assert.strictEqual(result.length, 2);
+    assert.strictEqual(result[0].name, 'one');
+    assert.deepEqual(result[1], undefined);
+  });
+  test('uniqueBy when item is null', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, null, { id: 1, name: 'one' }];
+    const result = uniqueBy(arr, 'id');
+    assert.strictEqual(result.length, 2);
+    assert.strictEqual(result[0].name, 'one');
+    assert.deepEqual(result[1], null);
+  });
+  test('uniqueBy when array is false', function (assert) {
+    let result = uniqueBy(false, 'name');
+    assert.false(result);
+  });
+  test('uniqueBy when array is null', function (assert) {
+    let result = uniqueBy(null, 'name');
+    assert.deepEqual(result, null);
+  });
+  test('uniqueBy when array is undefined', function (assert) {
+    let result = uniqueBy(undefined, 'name');
+    assert.deepEqual(result, undefined);
+  });
+
+  test('uniqueById', function (assert) {
+    const arr = [
+      { id: 1, name: 'one' },
+      { id: 2, name: 'two' },
+      { id: 1, name: 'one' },
+    ];
+    const result = uniqueById(arr);
+    assert.strictEqual(result.length, 2);
+    assert.strictEqual(result[0].name, 'one');
+    assert.strictEqual(result[1].name, 'two');
+  });
+  test('uniqueById when key does not exist', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, {}, { id: 1, name: 'one' }];
+    const result = uniqueById(arr);
+    assert.strictEqual(result.length, 2);
+    assert.strictEqual(result[0].name, 'one');
+    assert.deepEqual(result[1], {});
+  });
+  test('uniqueById when item is undefined', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, undefined, { id: 1, name: 'one' }];
+    const result = uniqueById(arr);
+    assert.strictEqual(result.length, 2);
+    assert.strictEqual(result[0].name, 'one');
+    assert.deepEqual(result[1], undefined);
+  });
+  test('uniqueById when item is null', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, null, { id: 1, name: 'one' }];
+    const result = uniqueById(arr);
+    assert.strictEqual(result.length, 2);
+    assert.strictEqual(result[0].name, 'one');
+    assert.deepEqual(result[1], null);
+  });
+  test('uniqueById when array is false', function (assert) {
+    let result = uniqueById(false);
+    assert.false(result);
+  });
+  test('uniqueById when array is null', function (assert) {
+    let result = uniqueById(null);
+    assert.deepEqual(result, null);
+  });
+  test('uniqueById when array is undefined', function (assert) {
+    let result = uniqueById(undefined);
+    assert.deepEqual(result, undefined);
+  });
+
+  test('uniqueValues', function (assert) {
+    const arr = ['one', 'two', 'one'];
+    const result = uniqueValues(arr);
+    assert.strictEqual(result.length, 2);
+    assert.strictEqual(result[0], 'one');
+    assert.strictEqual(result[1], 'two');
+  });
+  test('uniqueValues when item is undefined', function (assert) {
+    const arr = ['one', undefined, null, undefined, null, 'two', 'one'];
+    const result = uniqueValues(arr);
+    assert.strictEqual(result.length, 4);
+    assert.strictEqual(result[0], 'one');
+    assert.deepEqual(result[1], undefined);
+    assert.deepEqual(result[2], null);
+    assert.deepEqual(result[3], 'two');
+  });
+  test('uniqueValues when array is false', function (assert) {
+    let result = uniqueValues(false);
+    assert.false(result);
+  });
+  test('uniqueValues when array is null', function (assert) {
+    let result = uniqueValues(null);
+    assert.deepEqual(result, null);
+  });
+  test('uniqueValues when array is undefined', function (assert) {
+    let result = uniqueValues(undefined);
     assert.deepEqual(result, undefined);
   });
 });

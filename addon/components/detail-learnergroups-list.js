@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy, uniqueById } from '../utils/array-helpers';
 
 export default class DetailLearnerGroupsListComponent extends Component {
   @use cohortTrees = new AsyncProcess(() => [this.loadCohorts.bind(this)]);
@@ -22,11 +22,11 @@ export default class DetailLearnerGroupsListComponent extends Component {
     if (!this.args.learnerGroups) {
       return [];
     }
-    const cohorts = (
+    const cohorts = uniqueById(
       await map(this.args.learnerGroups.slice(), async (learnerGroup) => {
         return learnerGroup.cohort;
       })
-    ).uniq();
+    );
     return map(cohorts, async (cohort) => {
       const groups = await filter(this.args.learnerGroups.slice(), async (group) => {
         const groupCohort = await group.cohort;

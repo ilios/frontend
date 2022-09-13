@@ -2,7 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy, uniqueById } from '../utils/array-helpers';
 
 export default class User extends Model {
   @attr('string')
@@ -296,7 +296,7 @@ export default class User extends Model {
     if (!this._instructedLearnerGroupOfferings || !this._instructedOfferings) {
       return [];
     }
-    return [...this._instructedLearnerGroupOfferings, ...this._instructedOfferings].uniq();
+    return uniqueById([...this._instructedLearnerGroupOfferings, ...this._instructedOfferings]);
   }
 
   @use _instructorIlmSessions = new ResolveAsyncValue(() => [this.instructorIlmSessions]);
@@ -326,13 +326,13 @@ export default class User extends Model {
     ) {
       return [];
     }
-    return [
-      ...this._instructorIlmSessionsSessions,
-      ...this._instructedOfferingSessions,
-      ...this._instructorGroupSessions,
-    ]
-      .uniq()
-      .filter(Boolean);
+    return uniqueById(
+      [
+        ...this._instructorIlmSessionsSessions,
+        ...this._instructedOfferingSessions,
+        ...this._instructorGroupSessions,
+      ].filter(Boolean)
+    );
   }
 
   @use allInstructedCourses = new ResolveFlatMapBy(() => [this.allInstructedSessions, 'course']);
@@ -353,7 +353,7 @@ export default class User extends Model {
     if (!this._learnerGroupOfferings || !this._offerings) {
       return [];
     }
-    return [...this._learnerGroupOfferings, ...this._offerings.toArray()].uniq();
+    return uniqueById([...this._learnerGroupOfferings, ...this._offerings.toArray()]);
   }
   @use _learnerOfferingSessions = new ResolveFlatMapBy(() => [this._learnerOfferings, 'session']);
 
@@ -365,13 +365,13 @@ export default class User extends Model {
     ) {
       return [];
     }
-    return [
-      ...this._learnerOfferingSessions,
-      ...this._learnerIlmSessionSessions,
-      ...this._learnerGroupIlmSessionsSessions,
-    ]
-      .uniq()
-      .filter(Boolean);
+    return uniqueById(
+      [
+        ...this._learnerOfferingSessions,
+        ...this._learnerIlmSessionSessions,
+        ...this._learnerGroupIlmSessionsSessions,
+      ].filter(Boolean)
+    );
   }
 
   @use _learnerCourses = new ResolveFlatMapBy(() => [this._learnerSessions, 'course']);
@@ -385,12 +385,12 @@ export default class User extends Model {
     ) {
       return [];
     }
-    return [
+    return uniqueById([
       ...this._learnerCourses,
       ...this.allInstructedCourses,
       ...this._directedCourses.toArray(),
       ...this._administeredCourses.toArray(),
-    ].uniq();
+    ]);
   }
 
   @use _primaryCohort = new ResolveAsyncValue(() => [this.primaryCohort]);

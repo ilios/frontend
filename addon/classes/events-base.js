@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import { DateTime } from 'luxon';
-import { mapBy, sortByDate, sortByString } from '../utils/array-helpers';
+import { mapBy, sortByDate, sortByString, uniqueValues } from '../utils/array-helpers';
 
 export default class EventsBase extends Service {
   /**
@@ -43,7 +43,7 @@ export default class EventsBase extends Service {
     const courseTerms = await course.get('terms');
     terms.pushObjects(sessionTerms.toArray());
     terms.pushObjects(courseTerms.toArray());
-    return mapBy(terms, 'id').uniq();
+    return uniqueValues(mapBy(terms, 'id'));
   }
 
   /**

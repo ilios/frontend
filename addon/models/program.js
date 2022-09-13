@@ -2,7 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy, uniqueById } from '../utils/array-helpers';
 
 export default class Program extends Model {
   @attr('string')
@@ -49,6 +49,6 @@ export default class Program extends Model {
     if (!this._courses) {
       return [];
     }
-    return this._courses.uniq();
+    return uniqueById(this._courses);
   }
 }

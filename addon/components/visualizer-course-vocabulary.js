@@ -8,7 +8,7 @@ import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseVocabulary extends Component {
   @service router;
@@ -103,7 +103,7 @@ export default class VisualizerCourseVocabulary extends Component {
     const { label, meta } = obj;
 
     this.tooltipTitle = htmlSafe(label);
-    this.tooltipContent = meta.sessions.uniq().sort().join(', ');
+    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
   });
 
   @action

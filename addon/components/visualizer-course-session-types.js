@@ -9,7 +9,7 @@ import { map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseSessionTypes extends Component {
   @service router;
@@ -110,7 +110,7 @@ export default class VisualizerCourseSessionTypes extends Component {
     const { label, meta } = obj;
 
     const title = htmlSafe(label);
-    const sessions = meta.sessions.uniq().sort().join(', ');
+    const sessions = uniqueValues(meta.sessions).sort().join(', ');
 
     this.tooltipTitle = title;
     this.tooltipContent = sessions;

@@ -3,7 +3,7 @@ import { use } from 'ember-could-get-used-to-this';
 import moment from 'moment';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy, sortByString } from '../utils/array-helpers';
+import { mapBy, sortByString, uniqueById } from '../utils/array-helpers';
 
 export default class Offering extends Model {
   @attr('string')
@@ -109,7 +109,7 @@ export default class Offering extends Model {
       return [];
     }
     return sortByString(
-      [...this._instructors.toArray(), ...this._instructorsInGroups].uniq(),
+      uniqueById([...this._instructors.toArray(), ...this._instructorsInGroups]),
       'fullName'
     );
   }
@@ -118,7 +118,10 @@ export default class Offering extends Model {
     if (!this._learners || !this._learnersInGroups) {
       return [];
     }
-    return sortByString([...this._learners.slice(), ...this._learnersInGroups].uniq(), 'fullName');
+    return sortByString(
+      uniqueById([...this._learners.toArray(), ...this._learnersInGroups]),
+      'fullName'
+    );
   }
 
   get durationHours() {
@@ -161,9 +164,9 @@ export default class Offering extends Model {
     const instructors = (await this.instructors).toArray();
     const instructorGroups = (await this.instructorGroups).toArray();
     const instructorsInInstructorGroups = await Promise.all(mapBy(instructorGroups, 'users'));
-    return [
+    return uniqueById([
       ...instructors,
       ...instructorsInInstructorGroups.map((instructorGroup) => instructorGroup.toArray()).flat(),
-    ].uniq();
+    ]);
   }
 }

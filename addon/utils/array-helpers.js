@@ -116,3 +116,54 @@ export function sortByNumber(arr, path) {
     return a - b;
   });
 }
+
+export function uniqueBy(arr, key) {
+  if (arr !== null && typeof arr === 'object') {
+    if ('slice' in arr) {
+      arr = arr.slice();
+    }
+  }
+
+  if (!Array.isArray(arr)) {
+    return arr;
+  }
+
+  const seen = new Set();
+  const rhett = [];
+  arr.forEach((item) => {
+    if (item === undefined) {
+      rhett.push(undefined);
+      return;
+    }
+    if (item === null) {
+      rhett.push(null);
+      return;
+    }
+
+    const value = get(item, key);
+    if (seen.has(value)) {
+      return;
+    }
+    seen.add(value);
+    rhett.push(item);
+  });
+  return rhett;
+}
+
+export function uniqueById(arr) {
+  return uniqueBy(arr, 'id');
+}
+
+export function uniqueValues(arr) {
+  if (arr !== null && typeof arr === 'object') {
+    if ('slice' in arr) {
+      arr = arr.slice();
+    }
+  }
+
+  if (!Array.isArray(arr)) {
+    return arr;
+  }
+
+  return [...new Set(arr)];
+}

@@ -7,7 +7,7 @@ import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy, sortByString } from '../utils/array-helpers';
+import { mapBy, sortByString, uniqueById } from '../utils/array-helpers';
 
 export default class SessionModel extends Model {
   @attr('string')
@@ -242,7 +242,7 @@ export default class SessionModel extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortByString(this._allTermVocabularies?.uniq(), 'title');
+    return sortByString(uniqueById(this._allTermVocabularies), 'title');
   }
 
   get termCount() {
@@ -253,7 +253,7 @@ export default class SessionModel extends Model {
     if (!this.offeringLearnerGroups) {
       return [];
     }
-    return sortByString(this.offeringLearnerGroups.uniq(), 'title');
+    return sortByString(uniqueById(this.offeringLearnerGroups), 'title');
   }
   get associatedIlmLearnerGroups() {
     return this._ilmLearnerGroups?.toArray() ?? [];
@@ -265,7 +265,7 @@ export default class SessionModel extends Model {
       return [];
     }
     return sortByString(
-      [...this.offeringLearnerGroups, ...ilmLearnerGroups.toArray()].uniq(),
+      uniqueById([...this.offeringLearnerGroups, ...ilmLearnerGroups.toArray()]),
       'title'
     );
   }
@@ -298,11 +298,11 @@ export default class SessionModel extends Model {
       return [];
     }
 
-    return [
+    return uniqueById([
       ...this._offeringInstructors,
       ...this._offeringInstructorGroupInstructors,
       ...this.ilmSessionInstructors,
-    ].uniq();
+    ]);
   }
 
   get hasPrerequisites() {
@@ -398,13 +398,13 @@ export default class SessionModel extends Model {
       })
     );
 
-    return allOfferingInstructors.flat().uniq();
+    return uniqueById(allOfferingInstructors.flat());
   }
 
   async getAllInstructors() {
     const allIlmSessionInstructors = await this.getAllIlmSessionInstructors();
     const allOfferingInstructors = await this.getAllOfferingInstructors();
-    return [...allOfferingInstructors, ...allIlmSessionInstructors].uniq();
+    return uniqueById([...allOfferingInstructors, ...allIlmSessionInstructors]);
   }
 
   async getTotalSumOfferingsDuration() {

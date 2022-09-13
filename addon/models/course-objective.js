@@ -3,7 +3,7 @@ import { map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy, sortByString } from '../utils/array-helpers';
+import { mapBy, sortByString, uniqueById } from '../utils/array-helpers';
 
 export default class CourseObjective extends Model {
   @attr('string')
@@ -50,7 +50,7 @@ export default class CourseObjective extends Model {
 
   @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
   get associatedVocabularies() {
-    return sortByString(this._allTermVocabularies?.uniq(), 'title');
+    return sortByString(uniqueById(this._allTermVocabularies), 'title');
   }
 
   @use _programYearObjectives = new ResolveAsyncValue(() => [this.programYearObjectives]);
@@ -62,7 +62,7 @@ export default class CourseObjective extends Model {
    * All competencies associated with any program-year objectives linked to this course objective.
    */
   get treeCompetencies() {
-    return this.allTermCompetencies?.uniq();
+    return uniqueById(this.allTermCompetencies);
   }
 
   /**
