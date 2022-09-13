@@ -1,5 +1,6 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
+import { findById } from '../utils/array-helpers';
 
 export default class SessionRoute extends Route {
   @service dataLoader;
@@ -9,7 +10,7 @@ export default class SessionRoute extends Route {
     const course = this.modelFor('course');
     await this.dataLoader.loadCourseSessions(course.id);
     const sessions = await course.sessions;
-    return sessions.findBy('id', params.session_id);
+    return findById(sessions, params.session_id);
   }
 
   beforeModel(transition) {

@@ -3,6 +3,7 @@ import { restartableTask } from 'ember-concurrency';
 import { all, map } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import { findById } from '../../utils/array-helpers';
 
 export default class DashboardFilterTagsComponent extends Component {
   @service store;
@@ -58,7 +59,7 @@ export default class DashboardFilterTagsComponent extends Component {
   }
   getCohortTags() {
     return this.args.selectedCohortIds.map((id) => {
-      const proxy = this.args.cohortProxies.findBy('id', id);
+      const proxy = findById(this.args.cohortProxies, id);
       return {
         id,
         class: 'tag-cohort',

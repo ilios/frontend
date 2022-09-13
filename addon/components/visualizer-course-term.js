@@ -6,7 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy, uniqueValues } from '../utils/array-helpers';
+import { findBy, findById, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseTerm extends Component {
   @service router;
@@ -32,7 +32,7 @@ export default class VisualizerCourseTerm extends Component {
   get data() {
     const sessionTypeData = this.termSessionsInCourse.map((session) => {
       const minutes = Math.round(session.totalSumDuration * 60);
-      const sessionType = this.sessionTypes.findBy('id', session.belongsTo('sessionType').id());
+      const sessionType = findById(this.sessionTypes, session.belongsTo('sessionType').id());
       return {
         sessionTitle: session.title,
         sessionTypeTitle: sessionType.title,
@@ -41,7 +41,7 @@ export default class VisualizerCourseTerm extends Component {
     });
 
     const data = sessionTypeData.reduce((set, obj) => {
-      let existing = set.findBy('label', obj.sessionTypeTitle);
+      let existing = findBy(set, 'label', obj.sessionTypeTitle);
       if (!existing) {
         existing = {
           data: 0,

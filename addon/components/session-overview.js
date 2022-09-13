@@ -7,7 +7,7 @@ import { task, restartableTask, dropTask } from 'ember-concurrency';
 import moment from 'moment';
 import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
-import { sortByString } from '../utils/array-helpers';
+import { findById, sortByString } from '../utils/array-helpers';
 
 @validatable
 export default class SessionOverview extends Component {
@@ -171,7 +171,7 @@ export default class SessionOverview extends Component {
 
   @action
   setSessionType(event) {
-    this.sessionType = this.sessionTypes.findBy('id', event.target.value);
+    this.sessionType = findById(this.sessionTypes, event.target.value);
   }
 
   @action

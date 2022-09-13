@@ -7,6 +7,7 @@ import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from '../../classes/async-process';
 import ResolveAsyncValue from '../../classes/resolve-async-value';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import { findById } from '../../utils/array-helpers';
 
 export default class CourseObjectiveListComponent extends Component {
   @service store;
@@ -88,7 +89,7 @@ export default class CourseObjectiveListComponent extends Component {
         };
       });
       const competencies = objectiveObjects.reduce((set, obj) => {
-        let existing = set.findBy('id', obj.competencyId);
+        let existing = findById(set, obj.competencyId);
         if (!existing) {
           existing = {
             id: obj.competencyId,

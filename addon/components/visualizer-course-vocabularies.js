@@ -8,7 +8,7 @@ import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy } from '../utils/array-helpers';
+import { findBy, mapBy } from '../utils/array-helpers';
 
 export default class VisualizerCourseVocabularies extends Component {
   @service router;
@@ -50,7 +50,7 @@ export default class VisualizerCourseVocabularies extends Component {
     return this.dataObjects.reduce((set, obj) => {
       obj.vocabularies.forEach((vocabulary) => {
         const vocabularyTitle = vocabulary.get('title');
-        let existing = set.findBy('label', vocabularyTitle);
+        let existing = findBy(set, 'label', vocabularyTitle);
         if (!existing) {
           existing = {
             data: 0,

@@ -10,7 +10,7 @@ import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy, uniqueValues } from '../utils/array-helpers';
+import { findBy, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseInstructors extends Component {
   @service router;
@@ -75,7 +75,7 @@ export default class VisualizerCourseInstructors extends Component {
       obj.instructorsWithInstructionalTime.forEach((instructorWithInstructionalTime) => {
         const name = instructorWithInstructionalTime.instructor.get('fullName');
         const id = instructorWithInstructionalTime.instructor.get('id');
-        let existing = set.findBy('label', name);
+        let existing = findBy(set, 'label', name);
         if (!existing) {
           existing = {
             data: 0,

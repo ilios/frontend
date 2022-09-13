@@ -4,6 +4,7 @@ import { restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
+import { findBy } from '../../utils/array-helpers';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service dataLoader;
@@ -71,7 +72,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
       return this._expandedYears;
     }
     if (this.courseYears.length) {
-      const coursesThisYear = this.courseYears.findBy('year', this.academicYear);
+      const coursesThisYear = findBy(this.courseYears, 'year', this.academicYear);
       if (coursesThisYear) {
         return [this.academicYear];
       } else {

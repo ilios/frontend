@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { DateTime } from 'luxon';
 import { validatable, Length, AfterDate, NotBlank } from 'ilios-common/decorators/validation';
+import { findById } from '../utils/array-helpers';
 
 @validatable
 export default class LearningMaterialManagerComponent extends Component {
@@ -121,7 +122,7 @@ export default class LearningMaterialManagerComponent extends Component {
   }
 
   get currentStatus() {
-    return this.args.learningMaterialStatuses.findBy('id', this.statusId);
+    return findById(this.args.learningMaterialStatuses, this.statusId);
   }
 
   load = restartableTask(async (element, [learningMaterial, parentMaterial]) => {

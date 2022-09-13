@@ -1,6 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { isEmpty } from '@ember/utils';
 import { deprecate } from '@ember/debug';
+import { findBy } from '../utils/array-helpers';
 
 export default class School extends Model {
   @attr('string')
@@ -48,7 +49,7 @@ export default class School extends Model {
 
   async getConfigByName(name) {
     const configs = await this.configurations;
-    const config = configs.findBy('name', name);
+    const config = findBy(configs, 'name', name);
 
     return isEmpty(config) ? null : config;
   }

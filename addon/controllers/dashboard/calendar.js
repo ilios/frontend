@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
+import { findById } from '../../utils/array-helpers';
 
 export default class DashboardCalendarController extends Controller {
   @service currentUser;
@@ -37,8 +38,7 @@ export default class DashboardCalendarController extends Controller {
 
   get selectedSchool() {
     const { schools } = this.model;
-
-    return schools.findBy('id', this.school);
+    return findById(schools, this.school);
   }
 
   get selectedDate() {

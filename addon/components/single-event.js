@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
 import moment from 'moment';
+import { findById } from '../utils/array-helpers';
 
 export default class SingleEvent extends Component {
   @service currentUser;
@@ -59,11 +60,11 @@ export default class SingleEvent extends Component {
           };
         }
         const competencyId = objective.competencies[0];
-        const competency = competencies.findBy('id', competencyId);
+        const competency = findById(competencies, competencyId);
         const parentId = competency.parent;
         let domain = competency;
         if (!isEmpty(parentId)) {
-          domain = competencies.findBy('id', parentId);
+          domain = findById(competencies, parentId);
         }
         return {
           id: objective.id,
@@ -120,11 +121,11 @@ export default class SingleEvent extends Component {
           };
         }
         const competencyId = objective.competencies[0];
-        const competency = competencies.findBy('id', competencyId);
+        const competency = findById(competencies, competencyId);
         const parentId = competency.parent;
         let domain = competency;
         if (!isEmpty(parentId)) {
-          domain = competencies.findBy('id', parentId);
+          domain = findById(competencies, parentId);
         }
         return {
           id: objective.id,

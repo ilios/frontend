@@ -14,6 +14,7 @@ import {
 import { ValidateIf } from 'class-validator';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from '../classes/resolve-async-value';
+import { findBy, findById } from '../utils/array-helpers';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -68,10 +69,10 @@ export default class NewLearningmaterialComponent extends Component {
     }
 
     if (this.statusId) {
-      return this.args.learningMaterialStatuses.findBy('id', this.statusId);
+      return findById(this.args.learningMaterialStatuses, this.statusId);
     }
 
-    return this.args.learningMaterialStatuses.findBy('title', 'Final');
+    return findBy(this.args.learningMaterialStatuses, 'title', 'Final');
   }
 
   get selectedUserRole() {
@@ -80,7 +81,7 @@ export default class NewLearningmaterialComponent extends Component {
     }
 
     if (this.userRoleId) {
-      return this.args.learningMaterialUserRoles.findBy('id', this.userRoleId);
+      return findById(this.args.learningMaterialUserRoles, this.userRoleId);
     }
 
     return this.args.learningMaterialUserRoles.get('firstObject');

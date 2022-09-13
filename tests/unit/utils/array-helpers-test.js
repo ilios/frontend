@@ -1,4 +1,6 @@
 import {
+  findBy,
+  findById,
   mapBy,
   sortByDate,
   sortByString,
@@ -26,6 +28,8 @@ module('Unit | Utility | array-helpers', function () {
     assert.false(uniqueBy(false, 'name'));
     assert.false(uniqueById(false));
     assert.false(uniqueValues(false));
+    assert.false(findBy(false, 'name', 'jayden'));
+    assert.false(findById(false, 'jayden'));
   });
   test('when array is null', function (assert) {
     assert.strictEqual(mapBy(null, 'name'), null);
@@ -35,6 +39,8 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(uniqueBy(null, 'name'), null);
     assert.strictEqual(uniqueById(null), null);
     assert.strictEqual(uniqueValues(null), null);
+    assert.strictEqual(findBy(null, 'name', 'jackson'), null);
+    assert.strictEqual(findById(null, 'jackson'), null);
   });
   test('when array is undefined', function (assert) {
     assert.strictEqual(mapBy(undefined, 'name'), undefined);
@@ -44,6 +50,8 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(uniqueBy(undefined, 'name'), undefined);
     assert.strictEqual(uniqueById(undefined), undefined);
     assert.strictEqual(uniqueValues(undefined), undefined);
+    assert.strictEqual(findBy(undefined, 'name', 'jasper'), undefined);
+    assert.strictEqual(findById(undefined, 'jasper'), undefined);
   });
 
   test('mapBy', function (assert) {
@@ -238,5 +246,58 @@ module('Unit | Utility | array-helpers', function () {
     assert.deepEqual(result[1], undefined);
     assert.deepEqual(result[2], null);
     assert.deepEqual(result[3], 'two');
+  });
+
+  test('findBy', function (assert) {
+    const result = findBy(getDogs(), 'goodnessRanking', 10);
+    assert.ok(result);
+    assert.strictEqual(result.name, 'jayden');
+  });
+  test('findBy when key does not exist', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, {}, { id: 3, name: 'three' }];
+    const result = findBy(arr, 'id', 3);
+    assert.ok(result);
+    assert.strictEqual(result.name, 'three');
+  });
+  test('findBy when item is null', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, null, { id: 3, name: 'three' }];
+    const result = findBy(arr, 'id', 3);
+    assert.ok(result);
+    assert.strictEqual(result.name, 'three');
+  });
+  test('findBy when item is undefined', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, undefined, { id: 3, name: 'three' }];
+    const result = findBy(arr, 'id', 3);
+    assert.ok(result);
+    assert.strictEqual(result.name, 'three');
+  });
+
+  test('findById', function (assert) {
+    const arr = [
+      { id: 1, name: 'one' },
+      { id: 2, name: 'two' },
+      { id: 3, name: 'three' },
+    ];
+    const result = findById(arr, 2);
+    assert.ok(result);
+    assert.strictEqual(result.name, 'two');
+  });
+  test('findById when key does not exist', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, {}, { id: 3, name: 'three' }];
+    const result = findById(arr, 3);
+    assert.ok(result);
+    assert.strictEqual(result.name, 'three');
+  });
+  test('findById when item is null', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, null, { id: 3, name: 'three' }];
+    const result = findById(arr, 3);
+    assert.ok(result);
+    assert.strictEqual(result.name, 'three');
+  });
+  test('findById when item is undefined', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, undefined, { id: 3, name: 'three' }];
+    const result = findById(arr, 3);
+    assert.ok(result);
+    assert.strictEqual(result.name, 'three');
   });
 });

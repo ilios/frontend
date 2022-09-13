@@ -8,7 +8,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy, uniqueValues } from '../utils/array-helpers';
+import { findBy, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseInstructorSessionType extends Component {
   @service router;
@@ -55,7 +55,7 @@ export default class VisualizerCourseInstructorSessionType extends Component {
 
     const sessionTypeData = dataMap.reduce((set, obj) => {
       const name = obj.sessionTypeTitle;
-      let existing = set.findBy('label', name);
+      let existing = findBy(set, 'label', name);
       if (!existing) {
         existing = {
           data: 0,

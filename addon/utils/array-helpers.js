@@ -167,3 +167,29 @@ export function uniqueValues(arr) {
 
   return [...new Set(arr)];
 }
+
+export function findBy(arr, key, searchValue) {
+  if (arr !== null && typeof arr === 'object') {
+    if ('slice' in arr) {
+      arr = arr.slice();
+    }
+  }
+
+  if (!Array.isArray(arr)) {
+    return arr;
+  }
+
+  return arr.find((item) => {
+    if (item === undefined) {
+      return false;
+    }
+    if (item === null) {
+      return false;
+    }
+    return get(item, key) === searchValue;
+  });
+}
+
+export function findById(arr, id) {
+  return findBy(arr, 'id', id);
+}

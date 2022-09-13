@@ -5,7 +5,7 @@ import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
-import { sortByNumber, sortByString } from '../utils/array-helpers';
+import { findById, sortByNumber, sortByString } from '../utils/array-helpers';
 
 export default class SessionCopyComponent extends Component {
   @service store;
@@ -59,7 +59,7 @@ export default class SessionCopyComponent extends Component {
 
   get bestSelectedCourse() {
     if (this.selectedCourseId) {
-      const course = this.courses.findBy('id', this.selectedCourseId);
+      const course = findById(this.courses, this.selectedCourseId);
       if (course) {
         return course;
       }

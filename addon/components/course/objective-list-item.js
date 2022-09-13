@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
-import { mapBy } from '../../utils/array-helpers';
+import { findById, mapBy } from '../../utils/array-helpers';
 
 @validatable
 export default class CourseObjectiveListItemComponent extends Component {
@@ -49,7 +49,7 @@ export default class CourseObjectiveListItemComponent extends Component {
     }, []);
     const parents = await this.args.courseObjective.programYearObjectives;
     this.parentsBuffer = parents.slice().map((objective) => {
-      return objectives.findBy('id', objective.id);
+      return findById(objectives, objective.id);
     });
     this.isManagingParents = true;
   });
