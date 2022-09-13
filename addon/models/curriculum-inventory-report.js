@@ -2,6 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 import { deprecate } from '@ember/debug';
+import { mapBy } from '../utils/array-helpers';
 
 export default class CurriculumInventoryReport extends Model {
   @attr('string')
@@ -79,7 +80,7 @@ export default class CurriculumInventoryReport extends Model {
   }
 
   async getLinkedCourses() {
-    const courses = await Promise.all((await this.sequenceBlocks).toArray().mapBy('course'));
+    const courses = await Promise.all(mapBy((await this.sequenceBlocks).slice(), 'course'));
     return courses.filter(Boolean);
   }
 

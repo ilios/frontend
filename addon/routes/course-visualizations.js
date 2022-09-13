@@ -1,6 +1,7 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import { all } from 'rsvp';
+import { mapBy } from '../utils/array-helpers';
 
 export default class CourseVisualizationsRoute extends Route {
   @service store;
@@ -21,7 +22,7 @@ export default class CourseVisualizationsRoute extends Route {
     const course = model.get('id');
     const sessions = model.hasMany('sessions').ids();
     const existingSessionsInStore = this.store.peekAll('session');
-    const existingSessionIds = existingSessionsInStore.mapBy('id');
+    const existingSessionIds = mapBy(existingSessionsInStore, 'id');
     const unloadedSessions = sessions.filter((id) => !existingSessionIds.includes(id));
 
     //if we have already loaded all of these sessions we can just proceed normally

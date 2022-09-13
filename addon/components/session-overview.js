@@ -7,6 +7,7 @@ import { task, restartableTask, dropTask } from 'ember-concurrency';
 import moment from 'moment';
 import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
+import { sortByString } from '../utils/array-helpers';
 
 @validatable
 export default class SessionOverview extends Component {
@@ -42,7 +43,7 @@ export default class SessionOverview extends Component {
   }
 
   get sortedSessionTypes() {
-    return this.filteredSessionTypes.sortBy('title');
+    return sortByString(this.filteredSessionTypes, 'title');
   }
 
   load = restartableTask(async (element, [session, sessionTypes]) => {

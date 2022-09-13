@@ -8,6 +8,7 @@ import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { mapBy } from '../utils/array-helpers';
 
 export default class VisualizerCourseVocabularies extends Component {
   @service router;
@@ -35,8 +36,8 @@ export default class VisualizerCourseVocabularies extends Component {
       };
     });
     return map(sessionsWithMinutes, async ({ session, minutes }) => {
-      const terms = await session.terms;
-      const vocabularies = await all(terms.mapBy('vocabulary'));
+      const terms = (await session.terms).slice();
+      const vocabularies = await all(mapBy(terms, 'vocabulary'));
       return {
         sessionTitle: session.title,
         vocabularies,

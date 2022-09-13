@@ -7,6 +7,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { mapBy } from '../utils/array-helpers';
 
 export default class VisualizerCourseObjectives extends Component {
   @service router;
@@ -66,7 +67,7 @@ export default class VisualizerCourseObjectives extends Component {
           sessionObjectivesWithParents,
           async (sessionObjective) => {
             const parents = await sessionObjective.courseObjectives;
-            return parents.mapBy('id');
+            return mapBy(parents.slice(), 'id');
           }
         );
         const flatObjectives = courseSessionObjectives.reduce((flattened, obj) => {
@@ -106,9 +107,10 @@ export default class VisualizerCourseObjectives extends Component {
       };
     });
 
-    const totalMinutes = mappedObjectives
-      .mapBy('data')
-      .reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = mapBy(mappedObjectives, 'data').reduce(
+      (total, minutes) => total + minutes,
+      0
+    );
 
     return mappedObjectives.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
@@ -136,7 +138,7 @@ export default class VisualizerCourseObjectives extends Component {
     }
 
     const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`);
-    const sessionTitles = meta.sessionObjectives.mapBy('sessionTitle');
+    const sessionTitles = mapBy(meta.sessionObjectives, 'sessionTitle');
     const content = sessionTitles.join(', ');
 
     this.tooltipTitle = title;

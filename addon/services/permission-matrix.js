@@ -1,4 +1,5 @@
 import Service, { inject as service } from '@ember/service';
+import { mapBy } from '../utils/array-helpers';
 
 export default class PermissionMatrixService extends Service {
   @service store;
@@ -13,7 +14,7 @@ export default class PermissionMatrixService extends Service {
   }
   async _fillMatrix() {
     const schools = await this.store.findAll('school');
-    const schoolIds = schools.mapBy('id');
+    const schoolIds = mapBy(schools, 'id');
     const matrix = {};
     schoolIds.forEach((id) => {
       matrix[id] = {

@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import moment from 'moment';
 import { all, map, hash } from 'rsvp';
+import { mapBy, sortByString } from '../../utils/array-helpers';
 
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;
@@ -113,7 +114,7 @@ export default class DashboardCalendarComponent extends Component {
       };
     });
 
-    return cohortProxies.sortBy('displayTitle');
+    return sortByString(cohortProxies, 'displayTitle');
   }
 
   async getSchoolCohorts(school) {
@@ -122,19 +123,19 @@ export default class DashboardCalendarComponent extends Component {
       const programYears = await program.programYears;
       return programYears.toArray();
     });
-    const cohorts = await all(programYears.flat().mapBy('cohort'));
+    const cohorts = await all(mapBy(programYears.flat(), 'cohort'));
     return cohorts.filter(Boolean);
   }
 
   async getSessionTypes(school) {
     const types = await school.sessionTypes;
-    return types.toArray().sortBy('title');
+    return sortByString(types.slice(), 'title');
   }
 
   async getVocabularies(school) {
     const vocabularies = await school.vocabularies;
-    await all(vocabularies.mapBy('terms'));
-    return vocabularies.toArray().sortBy('title');
+    await all(mapBy(vocabularies, 'terms'));
+    return sortByString(vocabularies.slice(), 'title');
   }
 
   get filteredEvents() {
@@ -215,7 +216,7 @@ export default class DashboardCalendarComponent extends Component {
     }
     const selectedIds = this.args.selectedTermIds.map(Number);
     return this.ourEvents.filter((event) => {
-      const allTerms = [].concat(event.sessionTerms || [], event.courseTerms || []).mapBy('id');
+      const allTerms = mapBy([].concat(event.sessionTerms || [], event.courseTerms || []), 'id');
       const matchingTerms = allTerms.filter((id) => selectedIds.includes(id));
       return matchingTerms.length > 0;
     });

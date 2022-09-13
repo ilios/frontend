@@ -6,6 +6,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { map } from 'rsvp';
 import moment from 'moment';
+import { mapBy, sortByString } from '../utils/array-helpers';
 
 export default class Course extends Model {
   @attr('string')
@@ -97,7 +98,7 @@ export default class Course extends Model {
   }
 
   @use publishedSessionOfferings = new ResolveAsyncValue(() => [
-    this.publishedSessions?.mapBy('offerings'),
+    mapBy(this.publishedSessions, 'offerings'),
   ]);
 
   get publishedOfferingCount() {
@@ -119,7 +120,7 @@ export default class Course extends Model {
     return this.allTreeCompetencies?.uniq().filter(Boolean);
   }
 
-  @use competencyDomains = new ResolveAsyncValue(() => [this.competencies?.mapBy('domain')]);
+  @use competencyDomains = new ResolveAsyncValue(() => [mapBy(this.competencies, 'domain')]);
 
   @use domainsWithSubcompetencies = new AsyncProcess(() => [
     this._getDomainProxies.bind(this),
@@ -145,7 +146,7 @@ export default class Course extends Model {
       };
     });
 
-    return domainProxies.sortBy('title');
+    return sortByString(domainProxies, 'title');
   }
 
   get requiredPublicationIssues() {
@@ -179,9 +180,9 @@ export default class Course extends Model {
     return issues;
   }
 
-  @use _programYears = new ResolveAsyncValue(() => [this.cohorts.mapBy('programYear')]);
-  @use _programs = new ResolveAsyncValue(() => [this._programYears?.mapBy('program')]);
-  @use _programSchools = new ResolveAsyncValue(() => [this._programs?.mapBy('school')]);
+  @use _programYears = new ResolveAsyncValue(() => [mapBy(this.cohorts, 'programYear')]);
+  @use _programs = new ResolveAsyncValue(() => [mapBy(this._programYears, 'program')]);
+  @use _programSchools = new ResolveAsyncValue(() => [mapBy(this._programs, 'school')]);
   @use _resolvedSchool = new ResolveAsyncValue(() => [this.school]);
   get schools() {
     if (!this._programSchools || !this._resolvedSchool) {
@@ -191,7 +192,7 @@ export default class Course extends Model {
     return [...this._programSchools, this._resolvedSchool].uniq();
   }
 
-  @use _schoolVocabularies = new ResolveAsyncValue(() => [this.schools?.mapBy('vocabularies')]);
+  @use _schoolVocabularies = new ResolveAsyncValue(() => [mapBy(this.schools, 'vocabularies')]);
 
   get assignableVocabularies() {
     return this._schoolVocabularies
@@ -218,7 +219,7 @@ export default class Course extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return this._allTermVocabularies?.uniq().sortBy('title');
+    return sortByString(this._allTermVocabularies?.uniq(), 'title');
   }
 
   get termCount() {

@@ -1,5 +1,6 @@
 import Service from '@ember/service';
 import { DateTime } from 'luxon';
+import { mapBy, sortByDate, sortByString } from '../utils/array-helpers';
 
 export default class EventsBase extends Service {
   /**
@@ -42,7 +43,7 @@ export default class EventsBase extends Service {
     const courseTerms = await course.get('terms');
     terms.pushObjects(sessionTerms.toArray());
     terms.pushObjects(courseTerms.toArray());
-    return terms.mapBy('id').uniq();
+    return mapBy(terms, 'id').uniq();
   }
 
   /**
@@ -88,7 +89,7 @@ export default class EventsBase extends Service {
   async getCohortIdsForEvent(event) {
     const course = await this.getCourseForEvent(event);
     const cohorts = await course.get('cohorts');
-    return cohorts.toArray().mapBy('id');
+    return mapBy(cohorts.slice(), 'id');
   }
 
   /**
@@ -101,19 +102,21 @@ export default class EventsBase extends Service {
   createEventFromData(obj, isUserEvent) {
     obj.isBlanked = !obj.offering && !obj.ilmSession;
     obj.slug = isUserEvent ? this.getSlugForUserEvent(obj) : this.getSlugForSchoolEvent(obj);
-    obj.prerequisites = obj.prerequisites
-      .map((prereq) => {
-        const rhett = this.createEventFromData(prereq, isUserEvent);
-        rhett.startDate = obj.startDate;
-        rhett.postrequisiteName = obj.name;
-        rhett.postrequisiteSlug = obj.slug;
+    obj.prerequisites = obj.prerequisites.map((prereq) => {
+      const rhett = this.createEventFromData(prereq, isUserEvent);
+      rhett.startDate = obj.startDate;
+      rhett.postrequisiteName = obj.name;
+      rhett.postrequisiteSlug = obj.slug;
 
-        return rhett;
-      })
-      .sortBy('startDate', 'name');
-    obj.postrequisites = obj.postrequisites
-      .map((postreq) => this.createEventFromData(postreq, isUserEvent))
-      .sortBy('startDate', 'name');
+      return rhett;
+    });
+    obj.prerequisites = sortByDate(obj.prerequisites, 'startDate');
+    obj.prerequisites = sortByString(obj.prerequisites, 'name');
+    obj.postrequisites = obj.postrequisites.map((postreq) =>
+      this.createEventFromData(postreq, isUserEvent)
+    );
+    obj.postrequisites = sortByDate(obj.postrequisites, 'startDate');
+    obj.postrequisites = sortByString(obj.postrequisites, 'name');
     obj.isUserEvent = isUserEvent;
     return obj;
   }

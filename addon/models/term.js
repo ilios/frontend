@@ -1,6 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
+import { mapBy } from '../utils/array-helpers';
 
 export default class Term extends Model {
   @attr('string')
@@ -99,7 +100,7 @@ export default class Term extends Model {
       return [];
     }
     const parents = await parent.getAllParents();
-    const titles = parents.mapBy('title');
+    const titles = mapBy(parents, 'title');
     return [...titles, parent.title];
   }
 
@@ -137,7 +138,7 @@ export default class Term extends Model {
    */
   async getTitleWithDescendantTitles() {
     const allDescendants = await this.getAllDescendants();
-    const allDescendantTitles = allDescendants.mapBy('title');
+    const allDescendantTitles = mapBy(allDescendants, 'title');
     if (!allDescendantTitles.length) {
       return this.title;
     }

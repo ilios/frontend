@@ -2,6 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { mapBy } from '../utils/array-helpers';
 
 export default class User extends Model {
   @attr('string')
@@ -181,7 +182,7 @@ export default class User extends Model {
   @use _roles = new ResolveAsyncValue(() => [this.roles, []]);
 
   get _roleTitles() {
-    return this._roles.mapBy('title');
+    return mapBy(this._roles, 'title');
   }
 
   get isStudent() {
@@ -416,7 +417,7 @@ export default class User extends Model {
     const relevantGroups = learnerGroups
       .toArray()
       .filter((group) => learnerGroupTree.includes(group));
-    const relevantGroupIds = relevantGroups.mapBy('id');
+    const relevantGroupIds = mapBy(relevantGroups, 'id');
     const lowestGroup = relevantGroups.find((group) => {
       const childIds = group.hasMany('children').ids();
       const childGroupsWhoAreUserGroupMembers = childIds.filter((id) =>

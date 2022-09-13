@@ -3,6 +3,7 @@ import { use } from 'ember-could-get-used-to-this';
 import moment from 'moment';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { mapBy, sortByString } from '../utils/array-helpers';
 
 export default class Offering extends Model {
   @attr('string')
@@ -107,14 +108,17 @@ export default class Offering extends Model {
     if (!this._instructors || !this._instructorsInGroups) {
       return [];
     }
-    return [...this._instructors.toArray(), ...this._instructorsInGroups].uniq().sortBy('fullName');
+    return sortByString(
+      [...this._instructors.toArray(), ...this._instructorsInGroups].uniq(),
+      'fullName'
+    );
   }
 
   get allLearners() {
     if (!this._learners || !this._learnersInGroups) {
       return [];
     }
-    return [...this._learners.toArray(), ...this._learnersInGroups].uniq().sortBy('fullName');
+    return sortByString([...this._learners.slice(), ...this._learnersInGroups].uniq(), 'fullName');
   }
 
   get durationHours() {
@@ -156,7 +160,7 @@ export default class Offering extends Model {
   async getAllInstructors() {
     const instructors = (await this.instructors).toArray();
     const instructorGroups = (await this.instructorGroups).toArray();
-    const instructorsInInstructorGroups = await Promise.all(instructorGroups.mapBy('users'));
+    const instructorsInInstructorGroups = await Promise.all(mapBy(instructorGroups, 'users'));
     return [
       ...instructors,
       ...instructorsInInstructorGroups.map((instructorGroup) => instructorGroup.toArray()).flat(),

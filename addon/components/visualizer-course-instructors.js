@@ -10,6 +10,7 @@ import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { mapBy } from '../utils/array-helpers';
 
 export default class VisualizerCourseInstructors extends Component {
   @service router;
@@ -93,9 +94,10 @@ export default class VisualizerCourseInstructors extends Component {
       return set;
     }, []);
 
-    const totalMinutes = sessionsWithInstructors
-      .mapBy('totalInstructionalTime')
-      .reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = mapBy(sessionsWithInstructors, 'totalInstructionalTime').reduce(
+      (total, minutes) => total + minutes,
+      0
+    );
     return instructorData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.label}: ${obj.data} ${this.intl.t('general.minutes')}`;

@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import moment from 'moment';
 import { inject as service } from '@ember/service';
+import { sortByDate, sortByString } from '../utils/array-helpers';
 
 export default class MonthlyCalendarComponent extends Component {
   @service intl;
@@ -11,7 +12,7 @@ export default class MonthlyCalendarComponent extends Component {
       return [];
     }
 
-    return this.args.events.sortBy('startDate', 'endDate', 'name');
+    return sortByDate(sortByDate(sortByString(this.args.events, 'name'), 'endDate'), 'startDate');
   }
 
   get firstDayOfMonth() {

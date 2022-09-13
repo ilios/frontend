@@ -7,6 +7,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 import DeprecatedResolveCP from 'ilios-common/classes/deprecated-resolve-cp';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { mapBy } from '../utils/array-helpers';
 
 export default class LearnerGroup extends Model {
   @attr('string')
@@ -155,7 +156,7 @@ export default class LearnerGroup extends Model {
 
   async _getDescendantUsers() {
     const allDescendants = await this.getAllDescendants();
-    const descendantsUsers = await Promise.all(allDescendants.mapBy('users'));
+    const descendantsUsers = await Promise.all(mapBy(allDescendants, 'users'));
     return descendantsUsers.reduce((all, groups) => {
       all.pushObjects(groups.toArray());
 
@@ -218,8 +219,8 @@ export default class LearnerGroup extends Model {
     }
 
     return [
-      ...this.allDescendants.mapBy('title'),
-      ...this.allParents.mapBy('title'),
+      ...mapBy(this.allDescendants, 'title'),
+      ...mapBy(this.allParents, 'title'),
       this.title,
     ].join('');
   }
@@ -345,7 +346,7 @@ export default class LearnerGroup extends Model {
       return [];
     }
     const parents = await parent.getAllParents();
-    const titles = parents.mapBy('title');
+    const titles = mapBy(parents, 'title');
     return [...titles, parent.title];
   }
 
@@ -369,7 +370,7 @@ export default class LearnerGroup extends Model {
     const groups = [this, ...allParents];
     for (let i = 0; i < groups.length; i++) {
       const users = await groups[i].users;
-      const ids = users.mapBy('id');
+      const ids = mapBy(users, 'id');
       if (!ids.includes(userId)) {
         users.pushObject(user);
         modifiedGroups.pushObject(groups[i]);

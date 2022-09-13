@@ -7,6 +7,7 @@ import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { mapBy, sortByString } from '../utils/array-helpers';
 
 export default class SessionModel extends Model {
   @attr('string')
@@ -241,7 +242,7 @@ export default class SessionModel extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return this._allTermVocabularies?.uniq().sortBy('title');
+    return sortByString(this._allTermVocabularies?.uniq(), 'title');
   }
 
   get termCount() {
@@ -252,7 +253,7 @@ export default class SessionModel extends Model {
     if (!this.offeringLearnerGroups) {
       return [];
     }
-    return this.offeringLearnerGroups.uniq().sortBy('title');
+    return sortByString(this.offeringLearnerGroups.uniq(), 'title');
   }
   get associatedIlmLearnerGroups() {
     return this._ilmLearnerGroups?.toArray() ?? [];
@@ -263,7 +264,10 @@ export default class SessionModel extends Model {
     if (!this.offeringLearnerGroups || !ilmLearnerGroups) {
       return [];
     }
-    return [...this.offeringLearnerGroups, ...ilmLearnerGroups.toArray()].uniq().sortBy('title');
+    return sortByString(
+      [...this.offeringLearnerGroups, ...ilmLearnerGroups.toArray()].uniq(),
+      'title'
+    );
   }
 
   get sortedSessionObjectives() {
@@ -370,7 +374,7 @@ export default class SessionModel extends Model {
   async getShowUnlinkIcon() {
     const sessionObjectives = await this.sessionObjectives;
     const collectionOfCourseObjectives = await Promise.all(
-      sessionObjectives.mapBy('courseObjectives')
+      mapBy(sessionObjectives, 'courseObjectives')
     );
     return collectionOfCourseObjectives.any((courseObjectives) => courseObjectives.length === 0);
   }
@@ -430,7 +434,7 @@ export default class SessionModel extends Model {
     const offerings = await this.offerings;
     const offeringsWithUser = await filter(offerings.toArray(), async (offering) => {
       const instructors = await offering.getAllInstructors();
-      return instructors.mapBy('id').includes(user.id);
+      return mapBy(instructors, 'id').includes(user.id);
     });
     const offeringHours = offeringsWithUser
       .reduce((total, offering) => {
@@ -445,7 +449,7 @@ export default class SessionModel extends Model {
     let ilmMinutes = 0;
     if (ilmSession) {
       const instructors = await ilmSession.getAllInstructors();
-      if (instructors.mapBy('id').includes(user.id)) {
+      if (mapBy(instructors, 'id').includes(user.id)) {
         ilmMinutes = Math.round(parseFloat(ilmSession.hours) * 60);
       }
     }

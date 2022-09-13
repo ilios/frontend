@@ -8,6 +8,7 @@ import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { mapBy } from '../utils/array-helpers';
 
 export default class VisualizerCourseVocabulary extends Component {
   @service router;
@@ -78,7 +79,7 @@ export default class VisualizerCourseVocabulary extends Component {
       return set;
     }, []);
 
-    const totalMinutes = termData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = mapBy(termData, 'data').reduce((total, minutes) => total + minutes, 0);
     const mappedTermsWithLabel = termData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.meta.termTitle}: ${obj.data} ${this.intl.t('general.minutes')}`;

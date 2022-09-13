@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { mapBy } from '../utils/array-helpers';
 
 export default class VisualizerCourseTerm extends Component {
   @service router;
@@ -58,7 +59,7 @@ export default class VisualizerCourseTerm extends Component {
       return set;
     }, []);
 
-    const totalMinutes = data.mapBy('data').reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = mapBy(data, 'data').reduce((total, minutes) => total + minutes, 0);
 
     return data.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);

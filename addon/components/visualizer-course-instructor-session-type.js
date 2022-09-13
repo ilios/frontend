@@ -8,6 +8,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { mapBy } from '../utils/array-helpers';
 
 export default class VisualizerCourseInstructorSessionType extends Component {
   @service router;
@@ -32,7 +33,7 @@ export default class VisualizerCourseInstructorSessionType extends Component {
 
     const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
       const allInstructors = await session.getAllOfferingInstructors();
-      return allInstructors.mapBy('id').includes(this.args.user.id);
+      return mapBy(allInstructors, 'id').includes(this.args.user.id);
     });
 
     const sessionsWithSessionType = await map(sessionsWithUser.toArray(), async (session) => {
@@ -71,9 +72,10 @@ export default class VisualizerCourseInstructorSessionType extends Component {
       return set;
     }, []);
 
-    const totalMinutes = sessionTypeData
-      .mapBy('data')
-      .reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = mapBy(sessionTypeData, 'data').reduce(
+      (total, minutes) => total + minutes,
+      0
+    );
 
     return sessionTypeData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);

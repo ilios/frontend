@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
+import { sortByNumber } from '../utils/array-helpers';
 
 export default class SessionOfferingsListComponent extends Component {
   @service store;
@@ -34,7 +35,7 @@ export default class SessionOfferingsListComponent extends Component {
     for (key in dateBlocks) {
       dateBlockArray.pushObject(dateBlocks[key]);
     }
-    return dateBlockArray.sortBy('dateStamp');
+    return sortByNumber(dateBlockArray, 'dateStamp');
   }
 
   @action

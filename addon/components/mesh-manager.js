@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
+import { mapBy, sortByString } from '../utils/array-helpers';
 
 const DEBOUNCE_TIMEOUT = 250;
 const MIN_INPUT = 3;
@@ -29,7 +30,7 @@ export default class MeshManagerComponent extends Component {
     if (!this.terms || this.terms.length === 0) {
       return [];
     }
-    return this.args.terms.sortBy('name');
+    return sortByString(this.args.terms, 'name');
   }
 
   @action
@@ -46,7 +47,7 @@ export default class MeshManagerComponent extends Component {
       return;
     }
 
-    if (this.terms.mapBy('id').includes(term.id)) {
+    if (mapBy(this.terms, 'id').includes(term.id)) {
       return;
     }
     this.args.add(term);

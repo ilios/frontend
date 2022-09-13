@@ -8,6 +8,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { mapBy } from '../utils/array-helpers';
 
 export default class VisualizerCourseInstructorTerm extends Component {
   @service router;
@@ -32,7 +33,7 @@ export default class VisualizerCourseInstructorTerm extends Component {
 
     const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
       const allInstructors = await session.getAllOfferingInstructors();
-      return allInstructors.mapBy('id').includes(this.args.user.id);
+      return mapBy(allInstructors, 'id').includes(this.args.user.id);
     });
 
     const sessionsWithTerms = await map(sessionsWithUser, async (session) => {

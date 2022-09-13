@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import { map, filter } from 'rsvp';
+import { mapBy } from '../utils/array-helpers';
 
 export default class DetailCohortManagerComponent extends Component {
   @service intl;
@@ -79,6 +80,6 @@ export default class DetailCohortManagerComponent extends Component {
       return compare;
     });
 
-    return objects.mapBy('cohort');
+    return mapBy(objects, 'cohort');
   }
 }
