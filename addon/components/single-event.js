@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
 import moment from 'moment';
-import { findById } from '../utils/array-helpers';
+import { filterBy, findById } from '../utils/array-helpers';
 
 export default class SingleEvent extends Component {
   @service currentUser;
@@ -83,7 +83,7 @@ export default class SingleEvent extends Component {
 
   get courseLearningMaterials() {
     const eventLms = this.typedLearningMaterials;
-    return eventLms.filterBy('courseLearningMaterial').sort((lm1, lm2) => {
+    return filterBy(eventLms, 'courseLearningMaterial').sort((lm1, lm2) => {
       const pos1 = parseInt(lm1.position, 10) || 0;
       const pos2 = parseInt(lm2.position, 10) || 0;
 
@@ -139,9 +139,9 @@ export default class SingleEvent extends Component {
 
   get sessionLearningMaterials() {
     const eventLms = this.typedLearningMaterials;
-    return eventLms
-      .filterBy('sessionLearningMaterial')
-      .sort(this.sessionLearningMaterialSortingCalling);
+    return filterBy(eventLms, 'sessionLearningMaterial').sort(
+      this.sessionLearningMaterialSortingCalling
+    );
   }
 
   get preworkMaterials() {
@@ -154,9 +154,10 @@ export default class SingleEvent extends Component {
         slug: ev.slug,
         learningMaterials: [],
       };
-      rhett.learningMaterials = this.getTypedLearningMaterialProxies(ev.learningMaterials)
-        .filterBy('sessionLearningMaterial')
-        .sort(this.sessionLearningMaterialSortingCalling);
+      rhett.learningMaterials = filterBy(
+        this.getTypedLearningMaterialProxies(ev.learningMaterials),
+        'sessionLearningMaterial'
+      ).sort(this.sessionLearningMaterialSortingCalling);
       return rhett;
     });
   }

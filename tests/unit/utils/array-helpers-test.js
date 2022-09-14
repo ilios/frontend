@@ -1,6 +1,7 @@
 import {
   findBy,
   findById,
+  filterBy,
   mapBy,
   sortByDate,
   sortByString,
@@ -13,9 +14,27 @@ import { module, test } from 'qunit';
 
 function getDogs() {
   return [
-    { name: 'jayden', dob: new Date(2017, 11, 11), goodnessRanking: 10 },
-    { name: 'jasper', dob: new Date(2005, 11, 11), goodnessRanking: 4 },
-    { name: 'jackson', dob: new Date(2010, 11, 11), goodnessRanking: 15 },
+    {
+      name: 'jayden',
+      dob: new Date(2017, 11, 11),
+      goodnessRanking: 10,
+      breed: 'Chihuahua',
+      barksForNoReason: false,
+    },
+    {
+      name: 'jasper',
+      dob: new Date(2005, 11, 11),
+      goodnessRanking: 4,
+      breed: 'Terrier',
+      barksForNoReason: true,
+    },
+    {
+      name: 'jackson',
+      dob: new Date(2010, 11, 11),
+      goodnessRanking: 15,
+      breed: 'Chihuahua',
+      barksForNoReason: false,
+    },
   ];
 }
 
@@ -30,6 +49,7 @@ module('Unit | Utility | array-helpers', function () {
     assert.false(uniqueValues(false));
     assert.false(findBy(false, 'name', 'jayden'));
     assert.false(findById(false, 'jayden'));
+    assert.false(filterBy(false, 'breed', 'Chihuahua'));
   });
   test('when array is null', function (assert) {
     assert.strictEqual(mapBy(null, 'name'), null);
@@ -41,6 +61,7 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(uniqueValues(null), null);
     assert.strictEqual(findBy(null, 'name', 'jackson'), null);
     assert.strictEqual(findById(null, 'jackson'), null);
+    assert.strictEqual(filterBy(null, 'breed', 'Chihuahua'), null);
   });
   test('when array is undefined', function (assert) {
     assert.strictEqual(mapBy(undefined, 'name'), undefined);
@@ -52,6 +73,7 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(uniqueValues(undefined), undefined);
     assert.strictEqual(findBy(undefined, 'name', 'jasper'), undefined);
     assert.strictEqual(findById(undefined, 'jasper'), undefined);
+    assert.strictEqual(filterBy(undefined, 'breed', 'Chihuahua'), undefined);
   });
 
   test('mapBy', function (assert) {
@@ -299,5 +321,63 @@ module('Unit | Utility | array-helpers', function () {
     const result = findById(arr, 3);
     assert.ok(result);
     assert.strictEqual(result.name, 'three');
+  });
+
+  test('filterBy', function (assert) {
+    const result = filterBy(getDogs(), 'breed', 'Terrier');
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].name, 'jasper');
+    const result2 = filterBy(getDogs(), 'breed', 'Chihuahua');
+    assert.strictEqual(result2.length, 2);
+    assert.strictEqual(result2[0].name, 'jayden');
+    assert.strictEqual(result2[1].name, 'jackson');
+  });
+  test('filterBy when key does not exist', function (assert) {
+    const arr = getDogs();
+    delete arr[2].breed;
+    const result = filterBy(arr, 'breed', 'Chihuahua');
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].name, 'jayden');
+  });
+  test('filterBy when item is null', function (assert) {
+    const arr = getDogs();
+    arr[2] = null;
+    const result = filterBy(arr, 'breed', 'Chihuahua');
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].name, 'jayden');
+  });
+  test('filterBy when item is undefined', function (assert) {
+    const arr = getDogs();
+    arr[2] = undefined;
+    const result = filterBy(arr, 'breed', 'Chihuahua');
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].name, 'jayden');
+  });
+
+  test('filterBy bool', function (assert) {
+    const result = filterBy(getDogs(), 'barksForNoReason');
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].name, 'jasper');
+  });
+  test('filterBy bool when key does not exist', function (assert) {
+    const arr = getDogs();
+    delete arr[2].barksForNoReason;
+    const result = filterBy(arr, 'barksForNoReason');
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].name, 'jasper');
+  });
+  test('filterBy bool when item is null', function (assert) {
+    const arr = getDogs();
+    arr[2] = null;
+    const result = filterBy(arr, 'barksForNoReason');
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].name, 'jasper');
+  });
+  test('filterBy bool when item is undefined', function (assert) {
+    const arr = getDogs();
+    arr[2] = undefined;
+    const result = filterBy(arr, 'barksForNoReason');
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].name, 'jasper');
   });
 });

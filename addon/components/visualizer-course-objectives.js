@@ -7,7 +7,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy } from '../utils/array-helpers';
+import { filterBy, mapBy } from '../utils/array-helpers';
 
 export default class VisualizerCourseObjectives extends Component {
   @service router;
@@ -33,7 +33,7 @@ export default class VisualizerCourseObjectives extends Component {
   }
 
   get objectiveWithoutMinutes() {
-    return this.dataObjects?.filterBy('data', 0);
+    return filterBy(this.dataObjects, 'data', 0);
   }
 
   get isLoaded() {

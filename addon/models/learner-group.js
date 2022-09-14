@@ -7,7 +7,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 import DeprecatedResolveCP from 'ilios-common/classes/deprecated-resolve-cp';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy, uniqueById } from '../utils/array-helpers';
+import { filterBy, mapBy, uniqueById } from '../utils/array-helpers';
 
 export default class LearnerGroup extends Model {
   @attr('string')
@@ -294,7 +294,7 @@ export default class LearnerGroup extends Model {
       return false;
     }
 
-    const subGroupsInNeedOfAccomodation = this.allDescendants?.filterBy('needsAccommodation');
+    const subGroupsInNeedOfAccomodation = filterBy(this.allDescendants, 'needsAccommodation');
 
     return subGroupsInNeedOfAccomodation?.length > 0;
   }

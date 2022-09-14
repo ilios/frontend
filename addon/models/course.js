@@ -6,7 +6,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { map } from 'rsvp';
 import moment from 'moment';
-import { mapBy, sortByString, uniqueById } from '../utils/array-helpers';
+import { filterBy, mapBy, sortByString, uniqueById } from '../utils/array-helpers';
 
 export default class Course extends Model {
   @attr('string')
@@ -94,7 +94,7 @@ export default class Course extends Model {
   terms;
 
   get publishedSessions() {
-    return this.sessions.filterBy('isPublished');
+    return filterBy(this.sessions, 'isPublished');
   }
 
   @use publishedSessionOfferings = new ResolveAsyncValue(() => [

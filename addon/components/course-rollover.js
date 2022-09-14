@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { DateTime } from 'luxon';
-import { mapBy } from '../utils/array-helpers';
+import { filterBy, mapBy } from '../utils/array-helpers';
 
 @validatable
 export default class CourseRolloverComponent extends Component {
@@ -101,7 +101,7 @@ export default class CourseRolloverComponent extends Component {
     if (!this.allCourses) {
       return [];
     }
-    const existingCoursesWithTitle = this.allCourses.filterBy('title', this.title.trim());
+    const existingCoursesWithTitle = filterBy(this.allCourses, 'title', this.title.trim());
     return mapBy(existingCoursesWithTitle, 'year');
   }
 

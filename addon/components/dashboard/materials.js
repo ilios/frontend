@@ -8,6 +8,7 @@ import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import moment from 'moment';
+import { filterBy } from '../../utils/array-helpers';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -80,7 +81,7 @@ export default class DashboardMaterialsComponent extends Component {
 
   get materialsFilteredByCourse() {
     if (isPresent(this.args.courseIdFilter)) {
-      return this.materials.filterBy('course', this.args.courseIdFilter);
+      return filterBy(this.materials, 'course', this.args.courseIdFilter);
     }
     return this.materials;
   }
