@@ -23,7 +23,7 @@ export default class WeeklyeventsController extends Controller {
     arr.removeObject(week);
     this.week = '';
     if (shouldOpen) {
-      arr.pushObject(week);
+      arr.push(week);
       this.week = week;
     }
     arr.sort();

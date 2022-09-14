@@ -78,7 +78,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
-    model.get('sequenceBlocks').pushObject(
+    model.get('sequenceBlocks').push(
       store.createRecord('curriculumInventorySequenceBlock', {
         report: model,
       })
@@ -92,7 +92,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');
-    model.get('sequenceBlocks').pushObject(
+    model.get('sequenceBlocks').push(
       store.createRecord('curriculumInventorySequenceBlock', {
         report: model,
         course,

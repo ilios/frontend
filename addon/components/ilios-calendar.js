@@ -32,7 +32,7 @@ export default class IliosCalendarComponent extends Component {
           hashedEvents[hash] = [];
         }
         //clone our event so we don't trample on the original when we change location
-        hashedEvents[hash].pushObject(Object.assign({}, event));
+        hashedEvents[hash].push(Object.assign({}, event));
       });
       const compiledEvents = [];
       let hash;
@@ -42,7 +42,7 @@ export default class IliosCalendarComponent extends Component {
         if (arr.length > 1) {
           event.isMulti = true;
         }
-        compiledEvents.pushObject(event);
+        compiledEvents.push(event);
       }
       return compiledEvents;
     }

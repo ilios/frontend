@@ -70,7 +70,8 @@ export default class VisualizerCourseInstructorTerm extends Component {
     });
 
     const flat = dataMap.reduce((flattened, obj) => {
-      return flattened.push(obj);
+      flattened.push(...obj);
+      return flattened;
     }, []);
 
     const sessionTermData = flat.reduce((set, obj) => {
@@ -85,10 +86,10 @@ export default class VisualizerCourseInstructorTerm extends Component {
             vocabularyTitle: obj.vocabularyTitle,
           },
         };
-        set.pushObject(existing);
+        set.push(existing);
       }
       existing.data += obj.minutes;
-      existing.meta.sessions.pushObject(obj.sessionTitle);
+      existing.meta.sessions.push(obj.sessionTitle);
 
       return set;
     }, []);

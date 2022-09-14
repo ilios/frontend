@@ -139,7 +139,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('terms', resolve([this.termModel4, this.termModel5]));
     this.set('add', (term) => {
       assert.strictEqual(term, this.termModel4);
-      this.selectedTerms.pushObject(term);
+      this.selectedTerms.push(term);
     });
     this.set('remove', (term) => {
       assert.strictEqual(term, this.termModel4);

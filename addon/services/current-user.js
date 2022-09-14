@@ -255,49 +255,49 @@ export default class CurrentUserService extends Service {
   async getRolesInSchool(school, rolesToCheck = []) {
     const roles = [];
     if (rolesToCheck.includes('SCHOOL_DIRECTOR') && (await this.isDirectingSchool(school))) {
-      roles.pushObject('SCHOOL_DIRECTOR');
+      roles.push('SCHOOL_DIRECTOR');
     }
     if (
       rolesToCheck.includes('SCHOOL_ADMINISTRATOR') &&
       (await this.isAdministeringSchool(school))
     ) {
-      roles.pushObject('SCHOOL_ADMINISTRATOR');
+      roles.push('SCHOOL_ADMINISTRATOR');
     }
     if (
       rolesToCheck.includes('PROGRAM_DIRECTOR') &&
       (await this.isDirectingProgramInSchool(school))
     ) {
-      roles.pushObject('PROGRAM_DIRECTOR');
+      roles.push('PROGRAM_DIRECTOR');
     }
     if (
       rolesToCheck.includes('COURSE_DIRECTOR') &&
       (await this.isDirectingCourseInSchool(school))
     ) {
-      roles.pushObject('COURSE_DIRECTOR');
+      roles.push('COURSE_DIRECTOR');
     }
     if (
       rolesToCheck.includes('COURSE_ADMINISTRATOR') &&
       (await this.isAdministeringCourseInSchool(school))
     ) {
-      roles.pushObject('COURSE_ADMINISTRATOR');
+      roles.push('COURSE_ADMINISTRATOR');
     }
     if (
       rolesToCheck.includes('SESSION_ADMINISTRATOR') &&
       (await this.isAdministeringSessionInSchool(school))
     ) {
-      roles.pushObject('SESSION_ADMINISTRATOR');
+      roles.push('SESSION_ADMINISTRATOR');
     }
     if (
       rolesToCheck.includes('COURSE_INSTRUCTOR') &&
       (await this.isTeachingCourseInSchool(school))
     ) {
-      roles.pushObject('COURSE_INSTRUCTOR');
+      roles.push('COURSE_INSTRUCTOR');
     }
     if (
       rolesToCheck.includes('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR') &&
       (await this.isAdministeringCurriculumInventoryReportInSchool(school))
     ) {
-      roles.pushObject('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
+      roles.push('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
     }
 
     return roles;
@@ -305,22 +305,22 @@ export default class CurrentUserService extends Service {
   async getRolesInCourse(course, rolesToCheck = []) {
     const roles = [];
     if (rolesToCheck.includes('COURSE_DIRECTOR') && (await this.isDirectingCourse(course))) {
-      roles.pushObject('COURSE_DIRECTOR');
+      roles.push('COURSE_DIRECTOR');
     }
     if (
       rolesToCheck.includes('COURSE_ADMINISTRATOR') &&
       (await this.isAdministeringCourse(course))
     ) {
-      roles.pushObject('COURSE_ADMINISTRATOR');
+      roles.push('COURSE_ADMINISTRATOR');
     }
     if (
       rolesToCheck.includes('SESSION_ADMINISTRATOR') &&
       (await this.isAdministeringSessionInCourse(course))
     ) {
-      roles.pushObject('SESSION_ADMINISTRATOR');
+      roles.push('SESSION_ADMINISTRATOR');
     }
     if (rolesToCheck.includes('COURSE_INSTRUCTOR') && (await this.isTeachingCourse(course))) {
-      roles.pushObject('COURSE_INSTRUCTOR');
+      roles.push('COURSE_INSTRUCTOR');
     }
 
     return roles;
@@ -331,10 +331,10 @@ export default class CurrentUserService extends Service {
       rolesToCheck.includes('SESSION_ADMINISTRATOR') &&
       (await this.isAdministeringSession(session))
     ) {
-      roles.pushObject('SESSION_ADMINISTRATOR');
+      roles.push('SESSION_ADMINISTRATOR');
     }
     if (rolesToCheck.includes('SESSION_INSTRUCTOR') && (await this.isTeachingSession(session))) {
-      roles.pushObject('SESSION_INSTRUCTOR');
+      roles.push('SESSION_INSTRUCTOR');
     }
 
     return roles;
@@ -342,13 +342,13 @@ export default class CurrentUserService extends Service {
   async getRolesInProgram(program, rolesToCheck = []) {
     const roles = [];
     if (rolesToCheck.includes('PROGRAM_DIRECTOR') && (await this.isDirectingProgram(program))) {
-      roles.pushObject('PROGRAM_DIRECTOR');
+      roles.push('PROGRAM_DIRECTOR');
     }
     if (
       rolesToCheck.includes('PROGRAM_YEAR_DIRECTOR') &&
       (await this.isDirectingProgramYearInProgram(program))
     ) {
-      roles.pushObject('PROGRAM_YEAR_DIRECTOR');
+      roles.push('PROGRAM_YEAR_DIRECTOR');
     }
 
     return roles;
@@ -359,7 +359,7 @@ export default class CurrentUserService extends Service {
       rolesToCheck.includes('PROGRAM_YEAR_DIRECTOR') &&
       (await this.isDirectingProgramYear(programYear))
     ) {
-      roles.pushObject('PROGRAM_YEAR_DIRECTOR');
+      roles.push('PROGRAM_YEAR_DIRECTOR');
     }
 
     return roles;
@@ -370,7 +370,7 @@ export default class CurrentUserService extends Service {
       rolesToCheck.includes('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR') &&
       (await this.isAdministeringCurriculumInventoryReport(report))
     ) {
-      roles.pushObject('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
+      roles.push('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
     }
 
     return roles;

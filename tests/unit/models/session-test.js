@@ -209,9 +209,9 @@ module('Unit | Model | Session', function (hooks) {
     const offering3 = store.createRecord('offering', {
       learnerGroups: [learnerGroup4],
     });
-    session.get('offerings').pushObject(offering3);
+    session.get('offerings').push(offering3);
     const learnerGroup5 = store.createRecord('learner-group');
-    offering1.get('learnerGroups').pushObject(learnerGroup5);
+    offering1.get('learnerGroups').push(learnerGroup5);
 
     assert.strictEqual(await waitForResource(session, 'learnerGroupCount'), 5);
   });

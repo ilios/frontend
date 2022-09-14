@@ -309,7 +309,8 @@ export default class OfferingForm extends Component {
       return school.get('instructorGroups');
     });
     return allInstructorGroups.reduce((flattened, obj) => {
-      return flattened.push(obj.slice());
+      flattened.push(...obj.slice());
+      return flattened;
     }, []);
   }
 
@@ -464,7 +465,7 @@ export default class OfferingForm extends Component {
         offerings.push(obj);
       }
     });
-    recurringDayInts.pushObject(userPickedDay);
+    recurringDayInts.push(userPickedDay);
     recurringDayInts.sort();
 
     for (let i = 1; i < this.numberOfWeeks; i++) {
@@ -516,7 +517,7 @@ export default class OfferingForm extends Component {
         };
         offering.learnerGroups = [learnerGroup];
 
-        smallGroupOfferings.pushObject(offering);
+        smallGroupOfferings.push(offering);
       }
     }
 

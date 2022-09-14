@@ -47,7 +47,7 @@ const OfferingDateBlock = OfferingBlock.extend({
     const offeringGroupArray = [];
     let key;
     for (key in offeringGroups) {
-      offeringGroupArray.pushObject(offeringGroups[key]);
+      offeringGroupArray.push(offeringGroups[key]);
     }
 
     return sortByNumber(offeringGroupArray, 'timeKey');

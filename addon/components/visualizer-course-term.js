@@ -51,10 +51,10 @@ export default class VisualizerCourseTerm extends Component {
             sessions: [],
           },
         };
-        set.pushObject(existing);
+        set.push(existing);
       }
       existing.data += obj.minutes;
-      existing.meta.sessions.pushObject(obj.sessionTitle);
+      existing.meta.sessions.push(obj.sessionTitle);
 
       return set;
     }, []);

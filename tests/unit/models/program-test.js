@@ -16,7 +16,7 @@ module('Unit | Model | Program', function (hooks) {
       id: 1,
       program: model,
     });
-    model.curriculumInventoryReports.pushObject(report);
+    model.curriculumInventoryReports.push(report);
     assert.ok(model.hasCurriculumInventoryReports);
   });
 
@@ -24,7 +24,7 @@ module('Unit | Model | Program', function (hooks) {
     const model = this.store.createRecord('program', { id: 1 });
     assert.notOk(model.hasProgramYears);
     const programYear = this.store.createRecord('program-year', { id: 1, program: model });
-    model.programYears.pushObject(programYear);
+    model.programYears.push(programYear);
     assert.ok(model.hasProgramYears);
   });
 

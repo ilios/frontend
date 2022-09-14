@@ -21,7 +21,7 @@ export default class SessionsGridOfferingTable extends Component {
     const dateBlockArray = [];
     let key;
     for (key in dateBlocks) {
-      dateBlockArray.pushObject(dateBlocks[key]);
+      dateBlockArray.push(dateBlocks[key]);
     }
     return sortByNumber(dateBlockArray, 'dateStamp');
   }

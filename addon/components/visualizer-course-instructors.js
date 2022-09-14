@@ -85,10 +85,10 @@ export default class VisualizerCourseInstructors extends Component {
               sessions: [],
             },
           };
-          set.pushObject(existing);
+          set.push(existing);
         }
         existing.data += instructorWithInstructionalTime.minutes;
-        existing.meta.sessions.pushObject(obj.sessionTitle);
+        existing.meta.sessions.push(obj.sessionTitle);
       });
 
       return set;

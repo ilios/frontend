@@ -29,7 +29,7 @@ module('Unit | Model | course objective', function (hooks) {
 
     const vocab3 = store.createRecord('vocabulary', { title: 'New(ish)' });
     const term4 = store.createRecord('term', { vocabulary: vocab3 });
-    subject.get('terms').pushObject(term4);
+    subject.get('terms').push(term4);
     const vocabulariesAgain = await waitForResource(subject, 'associatedVocabularies');
     assert.strictEqual(vocabulariesAgain.length, 3);
     assert.strictEqual(vocabulariesAgain[0], vocab2);

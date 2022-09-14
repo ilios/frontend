@@ -107,7 +107,7 @@ module('Unit | Model | Course', function (hooks) {
 
     assert.strictEqual(await waitForResource(course, 'publishedOfferingCount'), 3);
     const offering5 = store.createRecord('offering');
-    session1.get('offerings').pushObject(offering5);
+    session1.get('offerings').push(offering5);
     session3.set('published', true);
 
     assert.strictEqual(await waitForResource(course, 'publishedOfferingCount'), 5);
@@ -255,7 +255,7 @@ module('Unit | Model | Course', function (hooks) {
     const program = store.createRecord('program', { school: school1 });
     const programYear = store.createRecord('programYear', { program });
     const cohort = store.createRecord('cohort', { programYear });
-    course.get('cohorts').pushObject(cohort);
+    course.get('cohorts').push(cohort);
     course.set('school', school2);
 
     const vocabularies = await waitForResource(course, 'assignableVocabularies');

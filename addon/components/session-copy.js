@@ -110,7 +110,7 @@ export default class SessionCopyComponent extends Component {
         ilmToCopy.getProperties('hours', 'dueDate')
       );
       ilm.set('session', session);
-      toSave.pushObject(ilm);
+      toSave.push(ilm);
     }
 
     const learningMaterialsToCopy = await sessionToCopy.learningMaterials;
@@ -123,7 +123,7 @@ export default class SessionCopyComponent extends Component {
       );
       learningMaterial.set('learningMaterial', lm);
       learningMaterial.set('session', session);
-      toSave.pushObject(learningMaterial);
+      toSave.push(learningMaterial);
     }
 
     const originalCourse = await sessionToCopy.course;

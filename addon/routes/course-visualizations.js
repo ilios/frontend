@@ -38,19 +38,19 @@ export default class CourseVisualizationsRoute extends Route {
     ];
     const maximumSessionLoad = 100;
     if (sessions.length < maximumSessionLoad) {
-      promises.pushObject(this.store.query('session-objective', { filters: { sessions } }));
-      promises.pushObject(this.store.query('session-type', { filters: { sessions } }));
-      promises.pushObject(this.store.query('term', { filters: { sessions } }));
+      promises.push(this.store.query('session-objective', { filters: { sessions } }));
+      promises.push(this.store.query('session-type', { filters: { sessions } }));
+      promises.push(this.store.query('term', { filters: { sessions } }));
     } else {
       for (let i = 0; i < sessions.length; i += maximumSessionLoad) {
         const slice = sessions.slice(i, i + maximumSessionLoad);
-        promises.pushObject(
+        promises.push(
           this.store.query('session-objective', {
             filters: { sessions: slice },
           })
         );
-        promises.pushObject(this.store.query('session-type', { filters: { sessions: slice } }));
-        promises.pushObject(this.store.query('term', { filters: { sessions: slice } }));
+        promises.push(this.store.query('session-type', { filters: { sessions: slice } }));
+        promises.push(this.store.query('term', { filters: { sessions: slice } }));
       }
     }
 

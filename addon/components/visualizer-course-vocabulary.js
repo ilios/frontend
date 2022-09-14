@@ -53,7 +53,8 @@ export default class VisualizerCourseVocabulary extends Component {
     });
 
     return terms.reduce((flattened, obj) => {
-      return flattened.push(obj.slice());
+      flattened.push(...obj.slice());
+      return flattened;
     }, []);
   }
 
@@ -71,10 +72,10 @@ export default class VisualizerCourseVocabulary extends Component {
             sessions: [],
           },
         };
-        set.pushObject(existing);
+        set.push(existing);
       }
       existing.data += session.minutes;
-      existing.meta.sessions.pushObject(session.title);
+      existing.meta.sessions.push(session.title);
 
       return set;
     }, []);

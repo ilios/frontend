@@ -325,7 +325,7 @@ export default class LearnerGroup extends Model {
     [this, ...allDescendants].forEach((group) => {
       if (group.hasMany('users').ids().includes(userId)) {
         group.get('users').removeObject(user);
-        modifiedGroups.pushObject(group);
+        modifiedGroups.push(group);
       }
     });
     return uniqueById(modifiedGroups);
@@ -372,8 +372,8 @@ export default class LearnerGroup extends Model {
       const users = await groups[i].users;
       const ids = mapBy(users, 'id');
       if (!ids.includes(userId)) {
-        users.pushObject(user);
-        modifiedGroups.pushObject(groups[i]);
+        users.push(user);
+        modifiedGroups.push(groups[i]);
       }
     }
     return uniqueById(modifiedGroups);

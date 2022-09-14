@@ -114,7 +114,7 @@ export default class CurriculumInventorySequenceBlock extends Model {
     if (!parent) {
       return [];
     }
-    rhett.pushObject(parent);
+    rhett.push(parent);
     const parentsAncestors = await parent.allParents;
     rhett.push(parentsAncestors);
     return rhett;
