@@ -1,5 +1,10 @@
 .session-publicationcheck {
   background-color: $lightBlue;
+  border-color: $culturedGrey;
+  border-style: solid;
+  border-top: 0;
+  border-width: 0 2px 2px;
+  padding-left: .8rem;
 
   .back-to-session {
     border-top: 1px solid $orange;
