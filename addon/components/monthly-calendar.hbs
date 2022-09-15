@@ -32,6 +32,7 @@
           <button
             type="button"
             class="month-more-events"
+            aria-label={{t "general.showMore"}}
             {{on "click" (fn @changeToDayView day.date)}}
             data-test-show-more-button
           >

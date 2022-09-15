@@ -107,25 +107,28 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
     const events = findAll('[data-test-ilios-calendar-event]');
     assert.strictEqual(events.length, 2);
-    const startOfMonthStartFormat = startOfMonth
-      .toDate()
-      .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
-    const startOfMonthEndFormat = startOfMonth
-      .clone()
-      .add(1, 'hour')
-      .toDate()
-      .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+    const startOfMonthStartFormat = this.intl.formatTime(startOfMonth.toDate(), {
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+    const startOfMonthEndFormat = this.intl.formatTime(
+      startOfMonth.clone().add(1, 'hour').toDate(),
+      {
+        hour: 'numeric',
+        minute: 'numeric',
+      }
+    );
     assert
       .dom(events[0])
       .hasText(`${startOfMonthStartFormat} - ${startOfMonthEndFormat} : start of month`);
-    const endOfMonthStartFormat = endOfMonth
-      .toDate()
-      .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
-    const endOfMonthEndFormat = endOfMonth
-      .clone()
-      .add(1, 'hour')
-      .toDate()
-      .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+    const endOfMonthStartFormat = this.intl.formatTime(endOfMonth.toDate(), {
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+    const endOfMonthEndFormat = this.intl.formatTime(endOfMonth.clone().add(1, 'hour').toDate(), {
+      hour: 'numeric',
+      minute: 'numeric',
+    });
     assert
       .dom(events[1])
       .hasText(`${endOfMonthStartFormat} - ${endOfMonthEndFormat} : end of month`);
@@ -135,11 +138,12 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const today = moment().hour(8);
     const startOfWeek = today.clone().startOf('week');
     const endOfWeek = today.clone().endOf('week').hour(22).minute(59);
-    const longDayHeading = startOfWeek.toDate().toLocaleString([], {
+
+    const longDayHeading = this.intl.formatDate(startOfWeek.toDate(), {
       month: 'short',
       day: 'numeric',
     });
-    const shortDayHeading = startOfWeek.toDate().toLocaleString([], {
+    const shortDayHeading = this.intl.formatDate(startOfWeek.toDate(), {
       day: 'numeric',
     });
     this.server.create('userevent', {
@@ -697,10 +701,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     };
     assert
       .dom(eventBLocks[0])
-      .hasText('event 0 ' + startOfTheWeek.toDate().toLocaleString([], options));
+      .hasText('event 0 ' + this.intl.formatTime(startOfTheWeek.toDate(), options));
     assert
       .dom(eventBLocks[1])
-      .hasText('event 1 ' + endOfTheWeek.toDate().toLocaleString([], options));
+      .hasText('event 1 ' + this.intl.formatTime(endOfTheWeek.toDate(), options));
   });
 
   const pickTerm = async function (i) {

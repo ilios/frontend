@@ -55,9 +55,10 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     assert.strictEqual(component.title, 'foo bar');
     assert.strictEqual(
       component.timingInfo.text,
-      `(Available: ${startDate.toLocaleString(opts)} and available until ${endDate.toLocaleString(
+      `(Available: ${this.intl.formatDate(
+        startDate,
         opts
-      )})`
+      )} and available until ${this.intl.formatDate(endDate, opts)})`
     );
   });
 
@@ -88,9 +89,10 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.strictEqual(
       component.timingInfo.text,
-      `(Available: ${startDate.toLocaleString(opts)} and available until ${endDate.toLocaleString(
+      `(Available: ${this.intl.formatDate(
+        startDate,
         opts
-      )})`
+      )} and available until ${this.intl.formatDate(endDate, opts)})`
     );
     assert.notOk(component.isRequired);
     assert.ok(component.typeIcon.isPresent);

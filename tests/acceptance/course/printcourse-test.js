@@ -166,7 +166,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     this.server.create('ilmSession', {
       sessionId: 1,
       hours: 1.5,
-      dueDate: new Date('1995-12-17T03:24:00'),
+      dueDate: new Date(1995, 11, 17, 3, 24, 0),
     });
 
     await visit('/course/1/print');

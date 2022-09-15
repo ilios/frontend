@@ -16,3 +16,19 @@ export function flatpickrDatePicker(selector, options = {}) {
     },
   };
 }
+
+export function flatpickrDateValue(selector, options = {}) {
+  return {
+    isDescriptor: true,
+
+    get() {
+      const element = findOne(this, selector, options);
+      const selectedDates = element._flatpickr.selectedDates;
+      if (selectedDates.length) {
+        return new Intl.DateTimeFormat('en-US').format(selectedDates[0]);
+      }
+
+      return null;
+    },
+  };
+}

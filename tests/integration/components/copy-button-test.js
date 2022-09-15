@@ -18,6 +18,11 @@ module('Integration | Component | copy-button', function (hooks) {
   });
 
   test('copy', async function (assert) {
+    //skip this test if we can't access the clipboard
+    if (!navigator.clipboard) {
+      assert.expect(0);
+      return;
+    }
     assert.expect(2);
     const text = 'lorem ipsum';
     // temporarily overwrite the writeText method.

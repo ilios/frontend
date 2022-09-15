@@ -86,7 +86,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       courseYear: courses[4].year,
       courseExternalId: courses[4].externalId,
       firstOfferingDate: tomorrow.toDate(),
-      endDate: new Date('2013-03-01T01:10:00'),
+      endDate: new Date(2013, 2, 1, 1, 10, 0),
     };
     const lm6 = {
       title: 'title6',

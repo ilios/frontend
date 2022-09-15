@@ -17,6 +17,11 @@ module('Integration | Component | ics feed', function (hooks) {
   });
 
   test('copy', async function (assert) {
+    //skip this test if we can't access the clipboard
+    if (!navigator.clipboard) {
+      assert.expect(0);
+      return;
+    }
     assert.expect(1);
     const instructions = 'SOME TEST INS';
     const url = 'https://iliosproject.org';

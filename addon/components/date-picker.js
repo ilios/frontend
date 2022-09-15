@@ -4,6 +4,7 @@ import { dropTask, restartableTask, waitForProperty } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import flatpickr from 'flatpickr';
 import { later } from '@ember/runloop';
+import { isTesting } from '@embroider/macros';
 
 export default class DatePickerComponent extends Component {
   @service intl;
@@ -38,7 +39,7 @@ export default class DatePickerComponent extends Component {
     this._flatPickerInstance = flatpickr(element, {
       locale,
       defaultDate: this.args.value,
-      formatDate: (dateObj) => dateObj.toLocaleDateString(currentLocale),
+      formatDate: (dateObj) => this.intl.formatDate(dateObj),
       onChange: (selectedDates) => this.args.onChange(selectedDates[0]),
       onOpen: () => {
         later(() => {
@@ -50,6 +51,7 @@ export default class DatePickerComponent extends Component {
       },
       maxDate: this.args.maxDate ?? null,
       minDate: this.args.minDate ?? null,
+      disableMobile: isTesting(),
     });
   });
 

@@ -63,9 +63,9 @@ module('Integration | Component | course summary header', function (hooks) {
     assert.dom(materialsIcon).hasClass('fa-box-archive');
     assert.dom(printIcon).hasClass('fa-print');
     assert.dom(rolloverIcon).hasClass('fa-shuffle');
-    assert.dom(start).hasText(new Date(course.startDate).toLocaleDateString());
+    assert.dom(start).hasText(this.intl.formatDate(course.startDate));
     assert.dom(externalId).hasText('abc');
-    assert.dom(end).hasText(new Date(course.endDate).toLocaleDateString());
+    assert.dom(end).hasText(this.intl.formatDate(course.endDate));
     assert.dom(level).hasText('3');
     assert.dom(status).hasText('Published');
   });
