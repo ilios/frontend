@@ -6,7 +6,7 @@
   {{#let (unique-id) as |templateId|}}
     {{#if this.load.performCount}}
       <div class="session-header">
-        <span class="title" data-test-title>
+        <h3 class="title" data-test-title>
           {{#if @editable}}
             <EditableField
               @value={{this.title}}
@@ -26,9 +26,9 @@
               <ValidationError @errors={{get-errors-for this.title}} />
             </EditableField>
           {{else}}
-            <h3>{{@session.title}}</h3>
+            {{@session.title}}
           {{/if}}
-        </span>
+        </h3>
         <span class="session-publication">
           {{#if @editable}}
             <Session::PublicationMenu @session={{@session}} @hideCheckLink={{@hideCheckLink}} />
