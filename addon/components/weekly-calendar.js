@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { action, set } from '@ember/object';
 import moment from 'moment';
-import { sortByDate, sortByString } from '../utils/array-helpers';
+import { sortBy } from '../utils/array-helpers';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;
@@ -56,7 +56,7 @@ export default class WeeklyCalendarComponent extends Component {
       return [];
     }
 
-    return sortByDate(sortByDate(sortByString(this.args.events, 'name'), 'endDate'), 'startDate');
+    return sortBy(this.args.events, ['name', 'endDate', 'startDate']);
   }
 
   get eventDays() {

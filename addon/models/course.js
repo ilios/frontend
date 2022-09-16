@@ -6,7 +6,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { map } from 'rsvp';
 import moment from 'moment';
-import { filterBy, mapBy, sortByString, uniqueById } from '../utils/array-helpers';
+import { filterBy, mapBy, sortBy, uniqueById } from '../utils/array-helpers';
 
 export default class Course extends Model {
   @attr('string')
@@ -117,7 +117,7 @@ export default class Course extends Model {
   ]);
 
   get competencies() {
-    return uniqueById(this.allTreeCompetencies).filter(Boolean);
+    return uniqueById(this.allTreeCompetencies)?.filter(Boolean);
   }
 
   @use competencyDomains = new ResolveAsyncValue(() => [mapBy(this.competencies, 'domain')]);
@@ -133,11 +133,11 @@ export default class Course extends Model {
       return;
     }
     const domainProxies = await map(uniqueById(domains), async (domain) => {
-      let subCompetencies = (await domain.children)
-        .filter((competency) => {
-          return courseCompetencies.includes(competency);
-        })
-        .sortBy('title');
+      let subCompetencies = (await domain.children).filter((competency) => {
+        return courseCompetencies.includes(competency);
+      });
+
+      subCompetencies = sortBy(subCompetencies, 'title');
 
       return {
         title: domain.title,
@@ -146,7 +146,7 @@ export default class Course extends Model {
       };
     });
 
-    return sortByString(domainProxies, 'title');
+    return sortBy(domainProxies, 'title');
   }
 
   get requiredPublicationIssues() {
@@ -195,11 +195,12 @@ export default class Course extends Model {
   @use _schoolVocabularies = new ResolveAsyncValue(() => [mapBy(this.schools, 'vocabularies')]);
 
   get assignableVocabularies() {
-    return this._schoolVocabularies
-      ?.reduce((acc, curr) => {
-        return acc.push(curr.slice());
-      }, [])
-      .sortBy('school.title', 'title');
+    return sortBy(
+      this._schoolVocabularies?.reduce((acc, curr) => {
+        return acc.push(...curr.slice());
+      }, []),
+      ['school.title', 'title']
+    );
   }
 
   @use _courseObjectives = new ResolveAsyncValue(() => [this.courseObjectives]);
@@ -219,7 +220,7 @@ export default class Course extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortByString(uniqueById(this._allTermVocabularies), 'title');
+    return sortBy(uniqueById(this._allTermVocabularies), 'title');
   }
 
   get termCount() {

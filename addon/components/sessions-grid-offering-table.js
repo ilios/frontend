@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
-import { sortByNumber } from '../utils/array-helpers';
+import { sortBy } from '../utils/array-helpers';
 
 export default class SessionsGridOfferingTable extends Component {
   get offeringBlocks() {
@@ -23,6 +23,6 @@ export default class SessionsGridOfferingTable extends Component {
     for (key in dateBlocks) {
       dateBlockArray.push(dateBlocks[key]);
     }
-    return sortByNumber(dateBlockArray, 'dateStamp');
+    return sortBy(dateBlockArray, 'dateStamp');
   }
 }

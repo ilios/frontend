@@ -7,7 +7,7 @@ import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy, sortByString, uniqueById } from '../utils/array-helpers';
+import { mapBy, sortBy, uniqueById } from '../utils/array-helpers';
 
 export default class SessionModel extends Model {
   @attr('string')
@@ -242,7 +242,7 @@ export default class SessionModel extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortByString(uniqueById(this._allTermVocabularies), 'title');
+    return sortBy(uniqueById(this._allTermVocabularies), 'title');
   }
 
   get termCount() {
@@ -253,7 +253,7 @@ export default class SessionModel extends Model {
     if (!this.offeringLearnerGroups) {
       return [];
     }
-    return sortByString(uniqueById(this.offeringLearnerGroups), 'title');
+    return sortBy(uniqueById(this.offeringLearnerGroups), 'title');
   }
   get associatedIlmLearnerGroups() {
     return this._ilmLearnerGroups?.slice() ?? [];
@@ -264,7 +264,7 @@ export default class SessionModel extends Model {
     if (!this.offeringLearnerGroups || !ilmLearnerGroups) {
       return [];
     }
-    return sortByString(
+    return sortBy(
       uniqueById([...this.offeringLearnerGroups, ...ilmLearnerGroups.slice()]),
       'title'
     );

@@ -5,7 +5,7 @@ import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
-import { filterBy, findById, sortByNumber, sortByString } from '../utils/array-helpers';
+import { filterBy, findById, sortBy } from '../utils/array-helpers';
 
 export default class SessionCopyComponent extends Component {
   @service store;
@@ -54,7 +54,7 @@ export default class SessionCopyComponent extends Component {
     if (!this.allCourses) {
       return null;
     }
-    return sortByString(filterBy(this.allCourses, 'year', this.bestSelectedYear), 'title');
+    return sortBy(filterBy(this.allCourses, 'year', this.bestSelectedYear), 'title');
   }
 
   get bestSelectedCourse() {
@@ -139,7 +139,7 @@ export default class SessionCopyComponent extends Component {
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon
     const relatedSessionObjectives = await sessionToCopy.sessionObjectives;
-    const sessionObjectivesToCopy = sortByNumber(relatedSessionObjectives, 'id').slice();
+    const sessionObjectivesToCopy = sortBy(relatedSessionObjectives, 'id').slice();
     for (let i = 0, n = sessionObjectivesToCopy.length; i < n; i++) {
       const sessionObjectiveToCopy = sessionObjectivesToCopy[i];
       const meshDescriptors = (await sessionObjectiveToCopy.meshDescriptors).slice();

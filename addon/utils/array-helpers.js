@@ -1,5 +1,5 @@
 import { get } from '@ember/object';
-import { DateTime } from 'luxon';
+import { assert } from '@ember/debug';
 
 export function mapBy(arr, path) {
   if (arr !== null && typeof arr === 'object') {
@@ -22,7 +22,8 @@ export function mapBy(arr, path) {
   });
 }
 
-export function sortByString(arr, path) {
+//stolen from https://github.com/emberjs/ember.js/blob/464e694afd611e2203759e5f76a14c7bfb023006/packages/%40ember/-internals/runtime/lib/mixins/array.ts#L1371
+export function sortBy(arr, sortKeys) {
   if (arr !== null && typeof arr === 'object') {
     if ('slice' in arr) {
       arr = arr.slice();
@@ -33,87 +34,32 @@ export function sortByString(arr, path) {
     return arr;
   }
 
-  return arr.sort((objA, objB) => {
-    const a = get(objA ?? {}, path);
-    const b = get(objB ?? {}, path);
-
-    if (a === b) {
-      return 0;
-    }
-
-    if (a === undefined || a === null) {
-      return 1;
-    }
-
-    if (b === undefined || b === null) {
-      return -1;
-    }
-
-    return a.localeCompare(b);
-  });
-}
-
-export function sortByDate(arr, path) {
-  if (arr !== null && typeof arr === 'object') {
-    if ('slice' in arr) {
-      arr = arr.slice();
-    }
-  }
-
-  if (!Array.isArray(arr)) {
-    return arr;
+  if (!Array.isArray(sortKeys)) {
+    sortKeys = [sortKeys];
   }
 
   return arr.sort((objA, objB) => {
-    const a = get(objA ?? {}, path);
-    const b = get(objB ?? {}, path);
+    for (let i = 0; i < sortKeys.length; i++) {
+      const key = sortKeys[i];
+      const a = get(objA ?? {}, key);
+      const b = get(objB ?? {}, key);
 
-    if (a === b) {
-      return 0;
+      if (a === undefined || a === null) {
+        return 1;
+      }
+
+      if (b === undefined || b === null) {
+        return -1;
+      }
+
+      // return 1 or -1 else continue to the next sortKey
+      const compareValue = compare(a, b);
+
+      if (compareValue) {
+        return compareValue;
+      }
     }
-
-    if (a === undefined || a === null) {
-      return 1;
-    }
-
-    if (b === undefined || b === null) {
-      return -1;
-    }
-    const d1 = DateTime.fromJSDate(a);
-    const d2 = DateTime.fromJSDate(b);
-
-    return d1.toMillis() - d2.toMillis();
-  });
-}
-
-export function sortByNumber(arr, path) {
-  if (arr !== null && typeof arr === 'object') {
-    if ('slice' in arr) {
-      arr = arr.slice();
-    }
-  }
-
-  if (!Array.isArray(arr)) {
-    return arr;
-  }
-
-  return arr.sort((objA, objB) => {
-    const a = get(objA ?? {}, path);
-    const b = get(objB ?? {}, path);
-
-    if (a === b) {
-      return 0;
-    }
-
-    if (a === undefined || a === null) {
-      return 1;
-    }
-
-    if (b === undefined || b === null) {
-      return -1;
-    }
-
-    return a - b;
+    return 0;
   });
 }
 
@@ -219,4 +165,96 @@ export function filterBy(arr, key, searchValue) {
 
     return searchValue === value;
   });
+}
+
+//Stolen from https://github.com/emberjs/ember.js/blob/464e694afd611e2203759e5f76a14c7bfb023006/packages/%40ember/-internals/runtime/lib/compare.ts#L42
+function spaceship(a, b) {
+  // SAFETY: `Math.sign` always returns `-1` for negative, `0` for zero, and `1`
+  // for positive numbers. (The extra precision is useful for the way we use
+  // this in the context of `compare`.)
+  return Math.sign(a - b);
+}
+
+const TYPE_ORDER = {
+  undefined: 0,
+  null: 1,
+  boolean: 2,
+  number: 3,
+  string: 4,
+  array: 5,
+  object: 6,
+  instance: 7,
+  function: 8,
+  class: 9,
+  date: 10,
+  regexp: 11,
+  filelist: 12,
+  error: 13,
+};
+
+// stolen from https://github.com/emberjs/ember.js/blob/464e694afd611e2203759e5f76a14c7bfb023006/packages/%40ember/-internals/runtime/lib/compare.ts#L99
+function compare(v, w) {
+  if (v === w) {
+    return 0;
+  }
+
+  const type1 = typeOf(v);
+  const type2 = typeOf(w);
+
+  const res = spaceship(TYPE_ORDER[type1], TYPE_ORDER[type2]);
+
+  if (res !== 0) {
+    return res;
+  }
+
+  // types are equal - so we have to check values now
+  switch (type1) {
+    case 'boolean':
+      assert('both are boolean', typeof v === 'boolean' && typeof w === 'boolean');
+      return spaceship(Number(v), Number(w));
+    case 'number':
+      assert('both are numbers', typeof v === 'number' && typeof w === 'number');
+      return spaceship(v, w);
+    case 'string':
+      assert('both are strings', typeof v === 'string' && typeof w === 'string');
+      return spaceship(v.localeCompare(w), 0);
+    case 'date':
+      assert('both are dates', v instanceof Date && w instanceof Date);
+      return spaceship(v.getTime(), w.getTime());
+
+    default:
+      return 0;
+  }
+}
+
+const TYPE_MAP = {
+  '[object Boolean]': 'boolean',
+  '[object Number]': 'number',
+  '[object String]': 'string',
+  '[object Function]': 'function',
+  '[object AsyncFunction]': 'function',
+  '[object Array]': 'array',
+  '[object Date]': 'date',
+  '[object RegExp]': 'regexp',
+  '[object Object]': 'object',
+  '[object FileList]': 'filelist',
+};
+
+const { toString } = Object.prototype;
+
+// stolen from https://github.com/emberjs/ember.js/blob/464e694afd611e2203759e5f76a14c7bfb023006/packages/%40ember/-internals/runtime/lib/type-of.ts#L101
+function typeOf(item) {
+  if (item === null) {
+    return 'null';
+  }
+  if (item === undefined) {
+    return 'undefined';
+  }
+  const ret = TYPE_MAP[toString.call(item)] || 'object';
+
+  if (ret === 'object' && item instanceof Date) {
+    return 'date';
+  }
+
+  return ret;
 }

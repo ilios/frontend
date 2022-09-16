@@ -3,7 +3,7 @@ import { use } from 'ember-could-get-used-to-this';
 import moment from 'moment';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy, sortByString, uniqueById } from '../utils/array-helpers';
+import { mapBy, sortBy, uniqueById } from '../utils/array-helpers';
 
 export default class Offering extends Model {
   @attr('string')
@@ -108,7 +108,7 @@ export default class Offering extends Model {
     if (!this._instructors || !this._instructorsInGroups) {
       return [];
     }
-    return sortByString(
+    return sortBy(
       uniqueById([...this._instructors.slice(), ...this._instructorsInGroups]),
       'fullName'
     );
@@ -118,10 +118,7 @@ export default class Offering extends Model {
     if (!this._learners || !this._learnersInGroups) {
       return [];
     }
-    return sortByString(
-      uniqueById([...this._learners.slice(), ...this._learnersInGroups]),
-      'fullName'
-    );
+    return sortBy(uniqueById([...this._learners.slice(), ...this._learnersInGroups]), 'fullName');
   }
 
   get durationHours() {

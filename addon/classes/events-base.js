@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import { DateTime } from 'luxon';
-import { mapBy, sortByDate, sortByString, uniqueValues } from '../utils/array-helpers';
+import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class EventsBase extends Service {
   /**
@@ -110,13 +110,13 @@ export default class EventsBase extends Service {
 
       return rhett;
     });
-    obj.prerequisites = sortByDate(obj.prerequisites, 'startDate');
-    obj.prerequisites = sortByString(obj.prerequisites, 'name');
+    obj.prerequisites = sortBy(obj.prerequisites, 'startDate');
+    obj.prerequisites = sortBy(obj.prerequisites, 'name');
     obj.postrequisites = obj.postrequisites.map((postreq) =>
       this.createEventFromData(postreq, isUserEvent)
     );
-    obj.postrequisites = sortByDate(obj.postrequisites, 'startDate');
-    obj.postrequisites = sortByString(obj.postrequisites, 'name');
+    obj.postrequisites = sortBy(obj.postrequisites, 'startDate');
+    obj.postrequisites = sortBy(obj.postrequisites, 'name');
     obj.isUserEvent = isUserEvent;
     return obj;
   }

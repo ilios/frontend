@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { findById, mapBy, sortByString } from '../../utils/array-helpers';
+import { findById, mapBy, sortBy } from '../../utils/array-helpers';
 
 export default class CourseManageObjectiveParentsComponent extends Component {
   @tracked userSelectedCohort;
@@ -32,6 +32,6 @@ export default class CourseManageObjectiveParentsComponent extends Component {
   }
 
   get competenciesFromSelectedCohort() {
-    return sortByString(this.selectedCohort.competencies, 'title');
+    return sortBy(this.selectedCohort.competencies, 'title');
   }
 }

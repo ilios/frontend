@@ -3,9 +3,7 @@ import {
   findById,
   filterBy,
   mapBy,
-  sortByDate,
-  sortByString,
-  sortByNumber,
+  sortBy,
   uniqueBy,
   uniqueById,
   uniqueValues,
@@ -41,9 +39,8 @@ function getDogs() {
 module('Unit | Utility | array-helpers', function () {
   test('when array is false', function (assert) {
     assert.false(mapBy(false, 'name'));
-    assert.false(sortByDate(false, 'dob'));
-    assert.false(sortByString(false, 'name'));
-    assert.false(sortByNumber(false, 'goodnessRanking'));
+    assert.false(sortBy(false, 'dob'));
+    assert.false(sortBy(false, ['name', 'goodnessRanking']));
     assert.false(uniqueBy(false, 'name'));
     assert.false(uniqueById(false));
     assert.false(uniqueValues(false));
@@ -53,9 +50,8 @@ module('Unit | Utility | array-helpers', function () {
   });
   test('when array is null', function (assert) {
     assert.strictEqual(mapBy(null, 'name'), null);
-    assert.strictEqual(sortByDate(null, 'dob'), null);
-    assert.strictEqual(sortByString(null, 'name'), null);
-    assert.strictEqual(sortByNumber(null, 'goodnessRanking'), null);
+    assert.strictEqual(sortBy(null, 'name'), null);
+    assert.strictEqual(sortBy(null, ['name', 'goodnessRanking']), null);
     assert.strictEqual(uniqueBy(null, 'name'), null);
     assert.strictEqual(uniqueById(null), null);
     assert.strictEqual(uniqueValues(null), null);
@@ -65,9 +61,8 @@ module('Unit | Utility | array-helpers', function () {
   });
   test('when array is undefined', function (assert) {
     assert.strictEqual(mapBy(undefined, 'name'), undefined);
-    assert.strictEqual(sortByDate(undefined, 'dob'), undefined);
-    assert.strictEqual(sortByString(undefined, 'name'), undefined);
-    assert.strictEqual(sortByNumber(undefined, 'goodnessRanking'), undefined);
+    assert.strictEqual(sortBy(undefined, 'name'), undefined);
+    assert.strictEqual(sortBy(undefined, ['name', 'goodnessRanking']), undefined);
     assert.strictEqual(uniqueBy(undefined, 'name'), undefined);
     assert.strictEqual(uniqueById(undefined), undefined);
     assert.strictEqual(uniqueValues(undefined), undefined);
@@ -96,94 +91,125 @@ module('Unit | Utility | array-helpers', function () {
     assert.deepEqual(mapBy(arr, 'name'), ['jayden', null, 'jackson']);
   });
 
-  test('sortByString', function (assert) {
-    const result = sortByString(getDogs(), 'name');
+  test('sortBy string', function (assert) {
+    const result = sortBy(getDogs(), 'name');
     assert.strictEqual(result[0].name, 'jackson');
     assert.strictEqual(result[1].name, 'jasper');
     assert.strictEqual(result[2].name, 'jayden');
   });
-  test('sortByString when key does not exist', function (assert) {
+  test('sortBy string when key does not exist', function (assert) {
     const arr = getDogs();
     arr[1] = {};
-    const result = sortByString(arr, 'name');
+    const result = sortBy(arr, 'name');
     assert.strictEqual(result[0].name, 'jackson');
     assert.strictEqual(result[1].name, 'jayden');
     assert.deepEqual(result[2], {});
   });
-  test('sortByString when item is undefined', function (assert) {
+  test('sortBy string when item is undefined', function (assert) {
     const arr = getDogs();
     arr[1] = undefined;
-    const result = sortByString(arr, 'name');
+    const result = sortBy(arr, 'name');
     assert.strictEqual(result[0].name, 'jackson');
     assert.strictEqual(result[1].name, 'jayden');
     assert.strictEqual(result[2], undefined);
   });
-  test('sortByString when item is null', function (assert) {
+  test('sortBy string when item is null', function (assert) {
     const arr = getDogs();
     arr[1] = null;
-    const result = sortByString(arr, 'name');
+    const result = sortBy(arr, 'name');
     assert.strictEqual(result[0].name, 'jackson');
     assert.strictEqual(result[1].name, 'jayden');
     assert.strictEqual(result[2], null);
   });
 
-  test('sortByDate', function (assert) {
-    const result = sortByDate(getDogs(), 'dob');
+  test('sortBy string multiple', function (assert) {
+    const result = sortBy(getDogs(), ['breed', 'name']);
+    assert.strictEqual(result[0].name, 'jackson');
+    assert.strictEqual(result[1].name, 'jayden');
+    assert.strictEqual(result[2].name, 'jasper');
+  });
+  test('sortBy string multiple when key does not exist', function (assert) {
+    const arr = getDogs();
+    arr[0] = {};
+    const result = sortBy(arr, ['breed', 'name']);
+    assert.strictEqual(result[0].name, 'jackson');
+    assert.strictEqual(result[1].name, 'jasper');
+    assert.deepEqual(result[2], {});
+  });
+  test('sortBy string multiple when item is undefined', function (assert) {
+    const arr = getDogs();
+    arr[0] = undefined;
+    const result = sortBy(arr, ['breed', 'name']);
+    assert.strictEqual(result[0].name, 'jackson');
+    assert.strictEqual(result[1].name, 'jasper');
+    assert.strictEqual(result[2], undefined);
+  });
+  test('sortBy string multiple when item is null', function (assert) {
+    const arr = getDogs();
+    arr[0] = null;
+    const result = sortBy(arr, ['breed', 'name']);
+    assert.strictEqual(result[0].name, 'jackson');
+    assert.strictEqual(result[1].name, 'jasper');
+    assert.strictEqual(result[2], null);
+  });
+
+  test('sortBy Date', function (assert) {
+    const result = sortBy(getDogs(), 'dob');
     assert.strictEqual(result[0].name, 'jasper');
     assert.strictEqual(result[1].name, 'jackson');
     assert.strictEqual(result[2].name, 'jayden');
   });
-  test('sortByDate when key does not exist', function (assert) {
+  test('sortBy Date when key does not exist', function (assert) {
     const arr = getDogs();
     arr[1] = {};
-    const result = sortByDate(arr, 'dob');
+    const result = sortBy(arr, 'dob');
     assert.strictEqual(result[0].name, 'jackson');
     assert.strictEqual(result[1].name, 'jayden');
     assert.deepEqual(result[2], {});
   });
-  test('sortByDate when item is undefined', function (assert) {
+  test('sortBy Date when item is undefined', function (assert) {
     const arr = getDogs();
     arr[1] = undefined;
-    const result = sortByDate(arr, 'dob');
+    const result = sortBy(arr, 'dob');
     assert.strictEqual(result[0].name, 'jackson');
     assert.strictEqual(result[1].name, 'jayden');
     assert.strictEqual(result[2], undefined);
   });
-  test('sortByDate when item is null', function (assert) {
+  test('sortBy Date when item is null', function (assert) {
     const arr = getDogs();
     arr[1] = null;
-    const result = sortByDate(arr, 'dob');
+    const result = sortBy(arr, 'dob');
     assert.strictEqual(result[0].name, 'jackson');
     assert.strictEqual(result[1].name, 'jayden');
     assert.strictEqual(result[2], null);
   });
 
-  test('sortByNumber', function (assert) {
-    const result = sortByNumber(getDogs(), 'goodnessRanking');
+  test('sortBy number', function (assert) {
+    const result = sortBy(getDogs(), 'goodnessRanking');
     assert.strictEqual(result[0].name, 'jasper');
     assert.strictEqual(result[1].name, 'jayden');
     assert.strictEqual(result[2].name, 'jackson');
   });
-  test('sortByNumber when key does not exist', function (assert) {
+  test('sortBy number when key does not exist', function (assert) {
     const arr = getDogs();
     arr[1] = {};
-    const result = sortByNumber(arr, 'goodnessRanking');
+    const result = sortBy(arr, 'goodnessRanking');
     assert.strictEqual(result[0].name, 'jayden');
     assert.strictEqual(result[1].name, 'jackson');
     assert.deepEqual(result[2], {});
   });
-  test('sortByNumber when item is undefined', function (assert) {
+  test('sortBy number when item is undefined', function (assert) {
     const arr = getDogs();
     arr[1] = undefined;
-    const result = sortByNumber(arr, 'goodnessRanking');
+    const result = sortBy(arr, 'goodnessRanking');
     assert.strictEqual(result[0].name, 'jayden');
     assert.strictEqual(result[1].name, 'jackson');
     assert.strictEqual(result[2], undefined);
   });
-  test('sortByNumber when item is null', function (assert) {
+  test('sortBy number when item is null', function (assert) {
     const arr = getDogs();
     arr[1] = null;
-    const result = sortByNumber(arr, 'goodnessRanking');
+    const result = sortBy(arr, 'goodnessRanking');
     assert.strictEqual(result[0].name, 'jayden');
     assert.strictEqual(result[1].name, 'jackson');
     assert.strictEqual(result[2], null);

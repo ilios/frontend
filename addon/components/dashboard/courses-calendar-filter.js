@@ -4,7 +4,7 @@ import { restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
-import { findBy } from '../../utils/array-helpers';
+import { findBy, sortBy } from '../../utils/array-helpers';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service dataLoader;
@@ -46,25 +46,25 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   }
 
   get courseYears() {
-    return this.courses
-      .reduce((acc, course) => {
-        let year = acc.find(({ year }) => year === course.year);
-        const label = this.academicYearCrossesCalendarYearBoundaries
-          ? `${course.year} - ${course.year + 1}`
-          : course.year.toString();
-        if (!year) {
-          year = {
-            label,
-            year: course.year,
-            courses: [],
-          };
-          acc.push(year);
-        }
-        year.courses.push(course);
+    const courseYears = this.courses.reduce((acc, course) => {
+      let year = acc.find(({ year }) => year === course.year);
+      const label = this.academicYearCrossesCalendarYearBoundaries
+        ? `${course.year} - ${course.year + 1}`
+        : course.year.toString();
+      if (!year) {
+        year = {
+          label,
+          year: course.year,
+          courses: [],
+        };
+        acc.push(year);
+      }
+      year.courses.push(course);
 
-        return acc;
-      }, [])
-      .sortBy('year');
+      return acc;
+    }, []);
+
+    return sortBy(courseYears, 'year');
   }
 
   get expandedYears() {

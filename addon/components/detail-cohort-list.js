@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import { map } from 'rsvp';
-import { mapBy, sortByString } from '../utils/array-helpers';
+import { mapBy, sortBy } from '../utils/array-helpers';
 
 export default class DetailCohortListComponent extends Component {
   @service intl;
@@ -32,9 +32,6 @@ export default class DetailCohortListComponent extends Component {
       };
     });
 
-    this.sortedCohorts = mapBy(
-      sortByString(sortByString(sortProxies, 'schoolTitle'), 'displayTitle'),
-      'cohort'
-    );
+    this.sortedCohorts = mapBy(sortBy(sortProxies, ['schoolTitle', 'displayTitle']), 'cohort');
   });
 }

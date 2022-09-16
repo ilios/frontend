@@ -1,7 +1,7 @@
 import EmberObject, { computed } from '@ember/object';
 import { sort } from '@ember/object/computed';
 import moment from 'moment';
-import { sortByNumber } from './array-helpers';
+import { sortBy } from './array-helpers';
 
 const OfferingBlock = EmberObject.extend({
   offerings: null,
@@ -50,7 +50,7 @@ const OfferingDateBlock = OfferingBlock.extend({
       offeringGroupArray.push(offeringGroups[key]);
     }
 
-    return sortByNumber(offeringGroupArray, 'timeKey');
+    return sortBy(offeringGroupArray, 'timeKey');
   }),
 });
 

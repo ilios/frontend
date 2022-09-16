@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import moment from 'moment';
 import { all, map, hash } from 'rsvp';
-import { mapBy, sortByString } from '../../utils/array-helpers';
+import { mapBy, sortBy } from '../../utils/array-helpers';
 
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;
@@ -114,7 +114,7 @@ export default class DashboardCalendarComponent extends Component {
       };
     });
 
-    return sortByString(cohortProxies, 'displayTitle');
+    return sortBy(cohortProxies, 'displayTitle');
   }
 
   async getSchoolCohorts(school) {
@@ -129,13 +129,13 @@ export default class DashboardCalendarComponent extends Component {
 
   async getSessionTypes(school) {
     const types = await school.sessionTypes;
-    return sortByString(types.slice(), 'title');
+    return sortBy(types.slice(), 'title');
   }
 
   async getVocabularies(school) {
     const vocabularies = await school.vocabularies;
     await all(mapBy(vocabularies, 'terms'));
-    return sortByString(vocabularies.slice(), 'title');
+    return sortBy(vocabularies.slice(), 'title');
   }
 
   get filteredEvents() {

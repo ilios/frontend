@@ -64,7 +64,7 @@ export default class LeadershipSearchComponent extends Component {
         }),
       },
     ];
-    results.push(mappedResults);
+    results.push(...mappedResults);
 
     return results;
   });
