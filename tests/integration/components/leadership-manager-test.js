@@ -15,7 +15,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     assert.expect(7);
     this.server.createList('user', 2);
     const users = await this.owner.lookup('service:store').findAll('user');
-    this.set('directors', [users.firstObject]);
+    this.set('directors', [users[0]]);
     this.set('administrators', users);
     this.set('studentAdvisors', [users[1]]);
 
@@ -318,7 +318,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     });
     const users = await this.owner.lookup('service:store').findAll('user');
 
-    this.set('directors', [users.firstObject]);
+    this.set('directors', [users[0]]);
     this.set('administrators', users);
 
     await render(hbs`<LeadershipManager

@@ -47,7 +47,7 @@ export default class SessionCopyComponent extends Component {
       return this.selectedYear;
     }
 
-    return this.years.get('firstObject');
+    return this.years[0];
   }
 
   get courses() {
@@ -65,7 +65,7 @@ export default class SessionCopyComponent extends Component {
       }
     }
 
-    return this.courses.get('firstObject');
+    return this.courses[0];
   }
 
   @action

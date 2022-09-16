@@ -24,7 +24,7 @@
                 {{#if term.deleted}}
                   - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
                 {{else if term.trees}}
-                  - {{term.trees.lastObject.treeNumber}}
+                  - {{get (object-at 0 (reverse term.trees)) "treeNumber"}}
                 {{/if}}
               </span>
               <FaIcon @icon="xmark" class="remove" />
@@ -38,7 +38,7 @@
               {{#if term.deleted}}
                 - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
               {{else if term.trees}}
-                - {{term.trees.lastObject.treeNumber}}
+                - {{get (object-at 0 (reverse term.trees)) "treeNumber"}}
               {{/if}}
             </span>
           {{/if}}
@@ -91,7 +91,7 @@
                 <span class="descriptor-id">
                   {{term.id}}
                   {{#if term.trees}}
-                    -{{term.trees.lastObject.treeNumber}}
+                    - {{get (object-at 0 (reverse term.trees)) "treeNumber"}}
                   {{/if}}
                 </span>
                 <ul class="mesh-concepts">

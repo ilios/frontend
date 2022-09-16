@@ -84,7 +84,7 @@ export default class NewLearningmaterialComponent extends Component {
       return findById(this.args.learningMaterialUserRoles, this.userRoleId);
     }
 
-    return this.args.learningMaterialUserRoles.get('firstObject');
+    return this.args.learningMaterialUserRoles[0];
   }
 
   get bestLink() {

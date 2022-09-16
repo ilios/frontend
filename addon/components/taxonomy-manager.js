@@ -63,7 +63,7 @@ export default class TaxonomyManager extends Component {
         return vocab;
       }
     }
-    return this.assignableVocabularies.get('firstObject');
+    return this.assignableVocabularies[0];
   }
 
   @action

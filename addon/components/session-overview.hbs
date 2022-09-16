@@ -266,7 +266,12 @@
               <label>{{t "general.prerequisites"}}:</label>
               {{#if @session.hasPrerequisites}}
                 <span>
-                  {{#each (await @session.prerequisites) as |prerequisite|~}}<LinkTo @route="session.index" @models={{array (await prerequisite.course) prerequisite}}><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#unless (eq prerequisite @session.prerequisites.lastObject)}}, {{/unless}}{{~/each}}
+                  {{#each (await @session.prerequisites) as |prerequisite|~}}
+                    <LinkTo @route="session.index" @models={{array (await prerequisite.course) prerequisite}}>
+                      <FaIcon @icon="square-up-right" /> {{prerequisite.title}}
+                    </LinkTo>
+                    {{#unless (eq prerequisite (object-at 0 (reverse @session.prerequisites)))}}, {{/unless}}
+                  {{~/each}}
                 </span>
               {{else}}
                 {{t "general.none"}}

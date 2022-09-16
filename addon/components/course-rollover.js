@@ -47,7 +47,7 @@ export default class CourseRolloverComponent extends Component {
         school,
       },
     });
-    this.changeSelectedYear(this.years.firstObject);
+    this.changeSelectedYear(this.years[0]);
   });
 
   @action

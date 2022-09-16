@@ -32,7 +32,7 @@ export default class NewSessionComponent extends Component {
     }
 
     if (!selectedSessionType) {
-      selectedSessionType = this.args.sessionTypes.firstObject;
+      selectedSessionType = this.args.sessionTypes[0];
     }
 
     return selectedSessionType;

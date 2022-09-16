@@ -57,7 +57,7 @@ const OfferingDateBlock = OfferingBlock.extend({
 const OfferingTimeBlock = OfferingBlock.extend({
   init() {
     this._super(...arguments);
-    this.set('sortOfferingsBy', ['learnerGroups.firstObject.title']);
+    this.set('sortOfferingsBy', ['learnerGroups[0].title']);
   },
   timeKey: null,
   isMultiDay: computed('startDate', 'endDate', function () {

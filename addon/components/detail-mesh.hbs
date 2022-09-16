@@ -53,7 +53,7 @@
                     ({{t "general.deprecatedAbbreviation"}})
                   </span>
                 {{else if term.trees}}
-                  - {{term.trees.lastObject.treeNumber}}
+                  - {{get (object-at 0 (reverse term.trees)) "treeNumber"}}
                 {{/if}}
               </span>
             </li>
