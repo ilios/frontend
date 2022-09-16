@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
-import { render } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/learnergroup-tree';
@@ -65,7 +65,11 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
 
   test('the group tree renders', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
-    this.set('selectedGroups', []);
+    this.set('selectedGroups', [
+      this.thirdLevelLearnerGroup2,
+      this.thirdLevelLearnerGroup3,
+      this.secondLevelLearnerGroup2,
+    ]);
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{(noop)}} />`
     );
@@ -73,18 +77,24 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.ok(component.needsAccommodation);
     assert.strictEqual(component.subgroups.length, 3);
     assert.strictEqual(component.subgroups[0].title, 'Second 1');
+    assert.notOk(component.subgroups[0].isChecked);
     assert.notOk(component.subgroups[0].needsAccommodation);
     assert.strictEqual(component.subgroups[0].subgroups.length, 2);
     assert.strictEqual(component.subgroups[0].subgroups[0].title, 'Third 1');
+    assert.notOk(component.subgroups[0].subgroups[0].isChecked);
     assert.notOk(component.subgroups[0].subgroups[0].needsAccommodation);
     assert.strictEqual(component.subgroups[0].subgroups[1].title, 'Third 2');
+    assert.ok(component.subgroups[0].subgroups[1].isChecked);
     assert.notOk(component.subgroups[0].subgroups[1].needsAccommodation);
     assert.strictEqual(component.subgroups[0].subgroups.length, 2);
     assert.strictEqual(component.subgroups[1].subgroups[0].title, 'Third 10');
+    assert.ok(component.subgroups[1].subgroups[0].isChecked);
     assert.ok(component.subgroups[1].subgroups[0].needsAccommodation);
     assert.strictEqual(component.subgroups[1].title, 'Second 2');
+    assert.notOk(component.subgroups[0].isChecked);
     assert.notOk(component.subgroups[1].needsAccommodation);
     assert.strictEqual(component.subgroups[2].title, 'Second 10');
+    assert.notOk(component.subgroups[2].isChecked);
     assert.notOk(component.subgroups[2].needsAccommodation);
   });
 
@@ -104,25 +114,6 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.ok(component.subgroups[2].isStyledAsLeaf);
   });
 
-  test('selected groups are hidden from view', async function (assert) {
-    this.set('learnerGroup', this.topLevelLearnerGroup);
-    this.set('selectedGroups', [
-      this.thirdLevelLearnerGroup2,
-      this.thirdLevelLearnerGroup3,
-      this.secondLevelLearnerGroup2,
-    ]);
-    await render(
-      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{(noop)}} />`
-    );
-    assert.notOk(component.isHidden);
-    assert.notOk(component.subgroups[0].isHidden);
-    assert.notOk(component.subgroups[0].subgroups[0].isHidden);
-    assert.ok(component.subgroups[0].subgroups[1].isHidden);
-    assert.ok(component.subgroups[1].isHidden);
-    assert.ok(component.subgroups[1].subgroups[0].isHidden);
-    assert.notOk(component.subgroups[2].isHidden);
-  });
-
   test('filter by learner group title', async function (assert) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
@@ -139,16 +130,187 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     assert.ok(component.subgroups[2].isHidden);
   });
 
-  test('add action fires', async function (assert) {
-    assert.expect(1);
+  test('add group by clicking on checkbox', async function (assert) {
+    assert.expect(2);
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
-    this.set('add', (learnerGroup) => {
+    this.set('add', (learnerGroup, cascade) => {
+      assert.ok(cascade);
       assert.strictEqual(learnerGroup, this.thirdLevelLearnerGroup2);
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />`
     );
-    await component.subgroups[0].subgroups[1].add();
+    await component.subgroups[0].subgroups[1].toggle();
+  });
+
+  test('add group by clicking on checkbox label', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', []);
+    this.set('add', (learnerGroup, cascade) => {
+      assert.ok(cascade);
+      assert.strictEqual(learnerGroup, this.thirdLevelLearnerGroup2);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />`
+    );
+    await component.subgroups[0].subgroups[1].toggleTitle();
+  });
+
+  test('shift-click on checkbox to add group without cascading selection', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', []);
+    this.set('add', (learnerGroup, cascade) => {
+      assert.notOk(cascade);
+      assert.strictEqual(learnerGroup, this.topLevelLearnerGroup);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />`
+    );
+    await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
+      shiftKey: true,
+    });
+  });
+
+  test('ctrl-click on checkbox to add group without cascading selection', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', []);
+    this.set('add', (learnerGroup, cascade) => {
+      assert.notOk(cascade);
+      assert.strictEqual(learnerGroup, this.topLevelLearnerGroup);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />`
+    );
+    await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
+      ctrlKey: true,
+    });
+  });
+
+  test('shift-click on label to add group without cascading selection', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', []);
+    this.set('add', (learnerGroup, cascade) => {
+      assert.notOk(cascade);
+      assert.strictEqual(learnerGroup, this.topLevelLearnerGroup);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />`
+    );
+    await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox-title]', {
+      shiftKey: true,
+    });
+  });
+
+  test('ctrl-click on label to add group without cascading selection', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', []);
+    this.set('add', (learnerGroup, cascade) => {
+      assert.notOk(cascade);
+      assert.strictEqual(learnerGroup, this.topLevelLearnerGroup);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />`
+    );
+    await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox-title]', {
+      ctrlKey: true,
+    });
+  });
+
+  test('remove group by clicking on checkbox', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', [this.thirdLevelLearnerGroup2]);
+    this.set('remove', (learnerGroup, cascade) => {
+      assert.ok(cascade);
+      assert.strictEqual(learnerGroup, this.thirdLevelLearnerGroup2);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />`
+    );
+    await component.subgroups[0].subgroups[1].toggle();
+  });
+
+  test('remove group by clicking on checkbox label', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', [this.thirdLevelLearnerGroup2]);
+    this.set('remove', (learnerGroup, cascade) => {
+      assert.ok(cascade);
+      assert.strictEqual(learnerGroup, this.thirdLevelLearnerGroup2);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />`
+    );
+    await component.subgroups[0].subgroups[1].toggleTitle();
+  });
+
+  test('shift-click on checkbox to remove group without cascading selection', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', [this.topLevelLearnerGroup]);
+    this.set('remove', (learnerGroup, cascade) => {
+      assert.notOk(cascade);
+      assert.strictEqual(learnerGroup, this.topLevelLearnerGroup);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />`
+    );
+    await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
+      shiftKey: true,
+    });
+  });
+
+  test('ctrl-click on checkbox to remove group without cascading selection', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', [this.topLevelLearnerGroup]);
+    this.set('remove', (learnerGroup, cascade) => {
+      assert.notOk(cascade);
+      assert.strictEqual(learnerGroup, this.topLevelLearnerGroup);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />`
+    );
+    await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
+      ctrlKey: true,
+    });
+  });
+
+  test('shift-click on label to remove group without cascading selection', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', [this.topLevelLearnerGroup]);
+    this.set('remove', (learnerGroup, cascade) => {
+      assert.notOk(cascade);
+      assert.strictEqual(learnerGroup, this.topLevelLearnerGroup);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />`
+    );
+    await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox-title]', {
+      shiftKey: true,
+    });
+  });
+
+  test('ctrl-click on label to remove group without cascading selection', async function (assert) {
+    assert.expect(2);
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', [this.topLevelLearnerGroup]);
+    this.set('remove', (learnerGroup, cascade) => {
+      assert.notOk(cascade);
+      assert.strictEqual(learnerGroup, this.topLevelLearnerGroup);
+    });
+    await render(
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />`
+    );
+    await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox-title]', {
+      ctrlKey: true,
+    });
   });
 });

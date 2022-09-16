@@ -8,10 +8,6 @@
       padding: .5rem;
     }
 
-    .tree-groups-list > li > span {
-      font-weight: bold;
-    }
-
     & > ul {
       @include ilios-list-tree;
       background-color: $white;

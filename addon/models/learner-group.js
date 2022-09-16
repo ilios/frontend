@@ -336,7 +336,25 @@ export default class LearnerGroup extends Model {
       return [];
     }
     const allParents = await parent.getAllParents();
-    return [parent, ...allParents];
+    return [...allParents, parent];
+  }
+
+  async getAllParentTitles() {
+    const parent = await this.parent;
+    if (!parent) {
+      return [];
+    }
+    const parents = await parent.getAllParents();
+    const titles = parents.mapBy('title');
+    return [...titles, parent.title];
+  }
+
+  async getTitleWithParentTitles() {
+    const parentTitles = await this.getAllParentTitles();
+    if (!parentTitles.length) {
+      return this.title;
+    }
+    return parentTitles.join(' > ') + ' > ' + this.title;
   }
 
   /**

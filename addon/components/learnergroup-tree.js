@@ -21,10 +21,6 @@ export default class LearnergroupTree extends Component {
     this.args.selectedGroups,
   ]);
 
-  get selectable() {
-    return this.hasUnSelectedChildren || !this.args.selectedGroups.includes(this.args.learnerGroup);
-  }
-
   get hasChildren() {
     return this.args.learnerGroup.hasMany('children').ids().length > 0;
   }
@@ -39,7 +35,7 @@ export default class LearnergroupTree extends Component {
   }
 
   get isHidden() {
-    return !this.filterMatch || !this.selectable;
+    return !this.filterMatch;
   }
 
   /**
@@ -58,10 +54,13 @@ export default class LearnergroupTree extends Component {
   }
 
   @action
-  add(learnerGroup) {
-    if (this.selectable) {
-      this.args.add(learnerGroup);
-    }
+  add(learnerGroup, ev) {
+    this.args.add(learnerGroup, !(ev.ctrlKey || ev.shiftKey));
+  }
+
+  @action
+  remove(learnerGroup, ev) {
+    this.args.remove(learnerGroup, !(ev.ctrlKey || ev.shiftKey));
   }
 
   @action
