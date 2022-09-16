@@ -195,12 +195,14 @@ export default class Course extends Model {
   @use _schoolVocabularies = new ResolveAsyncValue(() => [mapBy(this.schools, 'vocabularies')]);
 
   get assignableVocabularies() {
-    return sortBy(
+    const rhett = sortBy(
       this._schoolVocabularies?.reduce((acc, curr) => {
-        return acc.push(...curr.slice());
+        acc.push(...curr.slice());
+        return acc;
       }, []),
       ['school.title', 'title']
     );
+    return rhett;
   }
 
   @use _courseObjectives = new ResolveAsyncValue(() => [this.courseObjectives]);
