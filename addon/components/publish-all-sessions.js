@@ -147,7 +147,7 @@ export default class PublishAllSessionsComponent extends Component {
   async saveSomeSessions(sessions) {
     const chunk = sessions.splice(0, 6);
 
-    await all(chunk.invoke('save'));
+    await await all(chunk.map((o) => o.save()));
     this.currentSessionsSaved += chunk.length;
     if (sessions.length) {
       await this.saveSomeSessions(sessions);

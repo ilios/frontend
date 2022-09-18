@@ -134,7 +134,7 @@ export default class SessionCopyComponent extends Component {
 
     // save the session first to fill out relationships with the session id
     await session.save();
-    await all(toSave.invoke('save'));
+    await await all(toSave.map((o) => o.save()));
 
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon

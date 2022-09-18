@@ -179,7 +179,7 @@ export default class DetailCohortsComponent extends Component {
 
   async saveSomeMaterials(arr) {
     const chunk = arr.splice(0, 5);
-    const savedMaterials = await all(chunk.invoke('save'));
+    const savedMaterials = await all(chunk.map((o) => o.save()));
     let moreMaterials = [];
     if (arr.length) {
       moreMaterials = await this.saveSomeMaterials(arr);
