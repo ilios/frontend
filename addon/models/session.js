@@ -373,7 +373,9 @@ export default class SessionModel extends Model {
     const collectionOfCourseObjectives = await Promise.all(
       mapBy(sessionObjectives, 'courseObjectives')
     );
-    return collectionOfCourseObjectives.any((courseObjectives) => courseObjectives.length === 0);
+    return Boolean(
+      collectionOfCourseObjectives.find((courseObjectives) => courseObjectives.length === 0)
+    );
   }
 
   async getAllIlmSessionInstructors() {

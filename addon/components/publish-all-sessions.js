@@ -77,9 +77,11 @@ export default class PublishAllSessionsComponent extends Component {
       return false;
     }
 
-    return this.courseObjectives.slice().any((objective) => {
-      return objective.programYearObjectives.length === 0;
-    });
+    return Boolean(
+      this.courseObjectives.find((objective) => {
+        return objective.programYearObjectives.length === 0;
+      })
+    );
   }
 
   get publishableSessions() {
