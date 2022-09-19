@@ -13,16 +13,6 @@ export default class ReportingService extends Service {
   @service intl;
   @service iliosConfig;
 
-  // canViewCourses: computed('currentUser.performsNonLearnerFunction', async function () {
-  //   const currentUser = this.currentUser;
-  //   return currentUser.get('performsNonLearnerFunction');
-  // });
-  //
-  // canViewPrograms: computed('currentUser.performsNonLearnerFunction', async function () {
-  //   const currentUser = this.currentUser;
-  //   return currentUser.get('performsNonLearnerFunction');
-  // });
-
   async findResults(report) {
     const store = this.store;
     const subject = report.subject;
@@ -102,7 +92,7 @@ export default class ReportingService extends Service {
   }
 
   async coursesResults(results, year) {
-    const canView = await this.canViewCourses;
+    const canView = this.currentUser.performsNonLearnerFunction;
     const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
@@ -156,7 +146,7 @@ export default class ReportingService extends Service {
     const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-    const canView = await this.canViewCourses;
+    const canView = this.currentUser.performsNonLearnerFunction;
     const mappedResults = await map(results.toArray(), async (item) => {
       const course = await item.get('course');
       const rhett = { course };
@@ -214,7 +204,7 @@ export default class ReportingService extends Service {
   }
 
   async programsResults(results) {
-    const canView = await this.canViewPrograms;
+    const canView = this.currentUser.performsNonLearnerFunction;
     return await map(results.toArray(), async (item) => {
       const rhett = {};
       const school = await item.get('school');
@@ -239,7 +229,7 @@ export default class ReportingService extends Service {
   }
 
   async programYearsResults(results) {
-    const canView = await this.canViewPrograms;
+    const canView = this.currentUser.performsNonLearnerFunction;
     return map(results.toArray(), async (programYear) => {
       const rhett = {};
       const program = await programYear.program;
