@@ -41,7 +41,7 @@ export default class DailyCalendarComponent extends Component {
       return [];
     }
 
-    return sortBy(this.args.events, ['name', 'endDate', 'startDate']);
+    return sortBy(this.args.events, ['startDate', 'endDate', 'name']);
   }
 
   get hours() {
