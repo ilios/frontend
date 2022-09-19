@@ -45,6 +45,6 @@ export default class SessionType extends Model {
     if (!this._aamcMethods) {
       return undefined;
     }
-    return this._aamcMethods[0];
+    return this._aamcMethods.slice()[0];
   }
 }
