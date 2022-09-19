@@ -66,7 +66,7 @@ export default class SessionsGrid extends Component {
 
   @action
   confirmDelete(sessionId) {
-    this.confirmDeleteSessionIds.push(sessionId);
+    this.confirmDeleteSessionIds = [...this.confirmDeleteSessionIds, sessionId];
   }
 
   @action
