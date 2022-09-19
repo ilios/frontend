@@ -109,15 +109,12 @@ export default class CurriculumInventorySequenceBlock extends Model {
    * If this sequence block is a top-level block within its owning report, then that array is empty.
    */
   async getAllParents() {
-    const rhett = [];
     const parent = await this.parent;
     if (!parent) {
       return [];
     }
-    rhett.push(parent);
-    const parentsAncestors = await parent.allParents;
-    rhett.push(parentsAncestors);
-    return rhett;
+    const parentsAncestors = (await parent.allParents).slice();
+    return [parent, ...parentsAncestors];
   }
 
   /**
