@@ -18,7 +18,7 @@ import {
   validatable,
 } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
-import { uniqueById } from '../utils/array-helpers';
+import { mapBy, uniqueValues } from '../utils/array-helpers';
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
@@ -171,9 +171,9 @@ export default class OfferingForm extends Component {
   async addLearnerGroup(learnerGroup, cascade) {
     if (cascade) {
       const descendants = await learnerGroup.getAllDescendants();
-      this.learnerGroups = [...this.learnerGroups, ...descendants, learnerGroup].uniq();
+      this.learnerGroups = uniqueValues([...this.learnerGroups, ...descendants, learnerGroup]);
     } else {
-      this.learnerGroups = [...this.learnerGroups, learnerGroup].uniq();
+      this.learnerGroups = uniqueValues([...this.learnerGroups, learnerGroup]);
     }
   }
 
@@ -184,7 +184,9 @@ export default class OfferingForm extends Component {
       const descendants = await learnerGroup.getAllDescendants();
       groupsToRemove = [...descendants, learnerGroup];
     }
-    this.learnerGroups = this.learnerGroups.filter((g) => !groupsToRemove.includes(g)).uniq();
+    this.learnerGroups = uniqueValues(
+      this.learnerGroups.filter((g) => !groupsToRemove.includes(g))
+    );
   }
 
   @action
@@ -303,10 +305,10 @@ export default class OfferingForm extends Component {
       });
       const schools = [];
       schools.push(cohortSchools);
-      associatedSchools = uniqueById(schools.slice());
+      associatedSchools = uniqueValues(schools.slice());
     }
-    const allInstructorGroups = await map(associatedSchools, (school) => {
-      return school.get('instructorGroups');
+    const allInstructorGroups = await map(associatedSchools, (schools) => {
+      return Promise.all(mapBy(schools, 'instructorGroups'));
     });
     return allInstructorGroups.reduce((flattened, obj) => {
       flattened.push(...obj.slice());
