@@ -3,8 +3,7 @@
 
   .material-list {
     border-bottom: 1px dotted $orange;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
+    padding-top: .5rem;
 
     table {
       @include ilios-table-structure;
