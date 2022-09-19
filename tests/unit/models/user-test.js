@@ -142,13 +142,13 @@ module('Unit | Model | User', function (hooks) {
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const courses = [];
-    courses.pushObject(
+    courses.push(
       store.createRecord('course', {
         directors: [model],
         id: 1,
       })
     );
-    courses.pushObject(
+    courses.push(
       store.createRecord('course', {
         directors: [model],
         id: 2,
@@ -166,13 +166,13 @@ module('Unit | Model | User', function (hooks) {
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const courses = [];
-    courses.pushObject(
+    courses.push(
       store.createRecord('course', {
         administrators: [model],
         id: 1,
       })
     );
-    courses.pushObject(
+    courses.push(
       store.createRecord('course', {
         administrators: [model],
         id: 2,
