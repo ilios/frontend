@@ -13,14 +13,6 @@ export default class ReportingService extends Service {
   @service intl;
   @service iliosConfig;
 
-  // model: computed('currentUser.currentUserId', async function () {
-  //   return this.currentUser.getModel();
-  // }),
-  //
-  // reportsList: computed('model.reports.[]', async function () {
-  //   const user = await this.model;
-  //   return isEmpty(user) ? [] : await user.reports;
-  // }),
   // canViewCourses: computed('currentUser.performsNonLearnerFunction', async function () {
   //   const currentUser = this.currentUser;
   //   return currentUser.get('performsNonLearnerFunction');
