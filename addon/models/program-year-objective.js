@@ -2,7 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import DeprecatedResolveCP from 'ilios-common/classes/deprecated-resolve-cp';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { sortBy, uniqueById } from '../utils/array-helpers';
+import { sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class ProgramYearObjective extends Model {
   @attr('string')
@@ -46,7 +46,7 @@ export default class ProgramYearObjective extends Model {
 
   @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
   get associatedVocabularies() {
-    return sortBy(uniqueById(this._allTermVocabularies), 'title');
+    return sortBy(uniqueValues(this._allTermVocabularies), 'title');
   }
 
   @use firstProgram = new DeprecatedResolveCP(() => [

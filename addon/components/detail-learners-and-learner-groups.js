@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
+import { uniqueValues } from '../utils/array-helpers';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @service currentUser;
@@ -55,9 +56,13 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   async addLearnerGroupToBuffer(learnerGroup, cascade) {
     if (cascade) {
       const descendants = await learnerGroup.getAllDescendants();
-      this.learnerGroupBuffer = [...this.learnerGroupBuffer, ...descendants, learnerGroup].uniq();
+      this.learnerGroupBuffer = uniqueValues([
+        ...this.learnerGroupBuffer,
+        ...descendants,
+        learnerGroup,
+      ]);
     } else {
-      this.learnerGroupBuffer = [...this.learnerGroupBuffer, learnerGroup].uniq();
+      this.learnerGroupBuffer = uniqueValues([...this.learnerGroupBuffer, learnerGroup]);
     }
   }
 
@@ -68,9 +73,9 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
       const descendants = await learnerGroup.getAllDescendants();
       groupsToRemove = [...descendants, learnerGroup];
     }
-    this.learnerGroupBuffer = this.learnerGroupBuffer
-      .filter((g) => !groupsToRemove.includes(g))
-      .uniq();
+    this.learnerGroupBuffer = uniqueValues(
+      this.learnerGroupBuffer.filter((g) => !groupsToRemove.includes(g))
+    );
   }
 
   @action

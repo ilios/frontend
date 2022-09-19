@@ -2,7 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy, uniqueById } from '../utils/array-helpers';
+import { mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class User extends Model {
   @attr('string')
@@ -296,7 +296,7 @@ export default class User extends Model {
     if (!this._instructedLearnerGroupOfferings || !this._instructedOfferings) {
       return [];
     }
-    return uniqueById([...this._instructedLearnerGroupOfferings, ...this._instructedOfferings]);
+    return uniqueValues([...this._instructedLearnerGroupOfferings, ...this._instructedOfferings]);
   }
 
   @use _instructorIlmSessions = new ResolveAsyncValue(() => [this.instructorIlmSessions]);
@@ -326,7 +326,7 @@ export default class User extends Model {
     ) {
       return [];
     }
-    return uniqueById(
+    return uniqueValues(
       [
         ...this._instructorIlmSessionsSessions,
         ...this._instructedOfferingSessions,
@@ -353,7 +353,7 @@ export default class User extends Model {
     if (!this._learnerGroupOfferings || !this._offerings) {
       return [];
     }
-    return uniqueById([...this._learnerGroupOfferings, ...this._offerings.slice()]);
+    return uniqueValues([...this._learnerGroupOfferings, ...this._offerings.slice()]);
   }
   @use _learnerOfferingSessions = new ResolveFlatMapBy(() => [this._learnerOfferings, 'session']);
 
@@ -365,7 +365,7 @@ export default class User extends Model {
     ) {
       return [];
     }
-    return uniqueById(
+    return uniqueValues(
       [
         ...this._learnerOfferingSessions,
         ...this._learnerIlmSessionSessions,
@@ -385,7 +385,7 @@ export default class User extends Model {
     ) {
       return [];
     }
-    return uniqueById([
+    return uniqueValues([
       ...this._learnerCourses,
       ...this.allInstructedCourses,
       ...this._directedCourses.slice(),

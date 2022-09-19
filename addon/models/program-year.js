@@ -2,7 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { mapBy, sortBy, uniqueById } from '../utils/array-helpers';
+import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class ProgramYear extends Model {
   @attr('string')
@@ -73,7 +73,7 @@ export default class ProgramYear extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortBy(uniqueById(this._allTermVocabularies), 'title');
+    return sortBy(uniqueValues(this._allTermVocabularies), 'title');
   }
 
   /**

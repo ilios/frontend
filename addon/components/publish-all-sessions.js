@@ -6,7 +6,7 @@ import { all } from 'rsvp';
 import { dropTask, timeout } from 'ember-concurrency';
 import ResolveAsyncValue from '../classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
-import { uniqueById } from '../utils/array-helpers';
+import { uniqueValues } from '../utils/array-helpers';
 
 export default class PublishAllSessionsComponent extends Component {
   @service router;
@@ -40,7 +40,7 @@ export default class PublishAllSessionsComponent extends Component {
   get sessionsToPublish() {
     const sessionsToPublish = [...this.publishedSessions, ...this.userSelectedSessionsToPublish];
 
-    return uniqueById(
+    return uniqueValues(
       sessionsToPublish.filter((s) => !this.userSelectedSessionsToSchedule.includes(s))
     );
   }
@@ -48,7 +48,7 @@ export default class PublishAllSessionsComponent extends Component {
   get sessionsToSchedule() {
     const sessionsToPublish = [...this.unpublishedSessions, ...this.userSelectedSessionsToSchedule];
 
-    return uniqueById(
+    return uniqueValues(
       sessionsToPublish.filter((s) => !this.userSelectedSessionsToPublish.includes(s))
     );
   }

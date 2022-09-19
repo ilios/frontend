@@ -1,7 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { uniqueById } from '../utils/array-helpers';
+import { uniqueValues } from '../utils/array-helpers';
 
 export default class InstructorGroupModel extends Model {
   @attr('string')
@@ -31,7 +31,7 @@ export default class InstructorGroupModel extends Model {
     if (!this.coursesFromIlmSessions || !this.coursesFromOfferings) {
       return [];
     }
-    return uniqueById([...this.coursesFromIlmSessions, ...this.coursesFromOfferings]);
+    return uniqueValues([...this.coursesFromIlmSessions, ...this.coursesFromOfferings]);
   }
 
   /**
@@ -41,7 +41,7 @@ export default class InstructorGroupModel extends Model {
     if (!this._offeringSessions || !this._ilmSessionSessions) {
       return [];
     }
-    return uniqueById([...this._offeringSessions, ...this._ilmSessionSessions]);
+    return uniqueValues([...this._offeringSessions, ...this._ilmSessionSessions]);
   }
 
   /**

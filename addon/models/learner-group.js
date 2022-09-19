@@ -7,7 +7,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 import DeprecatedResolveCP from 'ilios-common/classes/deprecated-resolve-cp';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { filterBy, mapBy, uniqueById } from '../utils/array-helpers';
+import { filterBy, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class LearnerGroup extends Model {
   @attr('string')
@@ -74,7 +74,7 @@ export default class LearnerGroup extends Model {
     if (!this._offeringSessions || !this._ilmSessionSessions) {
       return [];
     }
-    return uniqueById([...this._offeringSessions, ...this._ilmSessionSessions].filter(Boolean));
+    return uniqueValues([...this._offeringSessions, ...this._ilmSessionSessions].filter(Boolean));
   }
 
   @use _sessionCourses = new ResolveFlatMapBy(() => [this.sessions, 'course']);
@@ -83,7 +83,7 @@ export default class LearnerGroup extends Model {
    * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
    */
   get courses() {
-    return uniqueById(this._sessionCourses) ?? [];
+    return uniqueValues(this._sessionCourses) ?? [];
   }
 
   @use subgroupNumberingOffset = new DeprecatedAsyncCP(() => [
@@ -151,7 +151,7 @@ export default class LearnerGroup extends Model {
   async getAllDescendantUsers() {
     const users = await this.users;
     const descendantUsers = await this._getDescendantUsers();
-    return uniqueById([...users.slice(), ...descendantUsers]);
+    return uniqueValues([...users.slice(), ...descendantUsers]);
   }
 
   async _getDescendantUsers() {
@@ -264,7 +264,7 @@ export default class LearnerGroup extends Model {
       return [];
     }
 
-    return uniqueById([...this._instructors.slice(), ...this._instructorGroupUsers]);
+    return uniqueValues([...this._instructors.slice(), ...this._instructorGroupUsers]);
   }
 
   @use _cohort = new ResolveAsyncValue(() => [this.cohort]);
@@ -328,7 +328,7 @@ export default class LearnerGroup extends Model {
         modifiedGroups.push(group);
       }
     });
-    return uniqueById(modifiedGroups);
+    return uniqueValues(modifiedGroups);
   }
 
   async getAllParents() {
@@ -376,6 +376,6 @@ export default class LearnerGroup extends Model {
         modifiedGroups.push(groups[i]);
       }
     }
-    return uniqueById(modifiedGroups);
+    return uniqueValues(modifiedGroups);
   }
 }

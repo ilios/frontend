@@ -6,7 +6,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { map } from 'rsvp';
 import moment from 'moment';
-import { filterBy, mapBy, sortBy, uniqueById } from '../utils/array-helpers';
+import { filterBy, mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class Course extends Model {
   @attr('string')
@@ -117,7 +117,7 @@ export default class Course extends Model {
   ]);
 
   get competencies() {
-    return uniqueById(this.allTreeCompetencies)?.filter(Boolean);
+    return uniqueValues(this.allTreeCompetencies)?.filter(Boolean);
   }
 
   @use competencyDomains = new ResolveAsyncValue(() => [mapBy(this.competencies, 'domain')]);
@@ -132,7 +132,7 @@ export default class Course extends Model {
     if (!domains || !courseCompetencies) {
       return;
     }
-    const domainProxies = await map(uniqueById(domains), async (domain) => {
+    const domainProxies = await map(uniqueValues(domains), async (domain) => {
       let subCompetencies = (await domain.children).filter((competency) => {
         return courseCompetencies.includes(competency);
       });
@@ -189,7 +189,7 @@ export default class Course extends Model {
       return [];
     }
 
-    return uniqueById([...this._programSchools, this._resolvedSchool]);
+    return uniqueValues([...this._programSchools, this._resolvedSchool]);
   }
 
   @use _schoolVocabularies = new ResolveAsyncValue(() => [mapBy(this.schools, 'vocabularies')]);
@@ -222,7 +222,7 @@ export default class Course extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortBy(uniqueById(this._allTermVocabularies), 'title');
+    return sortBy(uniqueValues(this._allTermVocabularies), 'title');
   }
 
   get termCount() {
