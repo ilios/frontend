@@ -86,7 +86,7 @@ module('Unit | Model | ProgramYear', function (hooks) {
     const term2 = store.createRecord('term', { vocabulary: vocabulary1 });
     const term3 = store.createRecord('term', { vocabulary: vocabulary1 });
     const term4 = store.createRecord('term', { vocabulary: vocabulary2 });
-    programYear.terms.push([term1, term2, term3, term4]);
+    programYear.terms.pushObjects([term1, term2, term3, term4]);
 
     const vocabularies = await waitForResource(programYear, 'associatedVocabularies');
     assert.strictEqual(vocabularies.length, 2);

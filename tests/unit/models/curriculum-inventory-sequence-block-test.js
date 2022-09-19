@@ -17,7 +17,7 @@ module('Unit | Model | CurriculumInventorySequenceBlock ', function (hooks) {
     });
     parentBlock.set('parent', grandParent);
     model.set('parent', parentBlock);
-    const ancestors = await model.allParents;
+    const ancestors = (await model.allParents).slice();
     assert.strictEqual(ancestors.length, 2);
     assert.strictEqual(ancestors[0], parentBlock);
     assert.strictEqual(ancestors[1], grandParent);
@@ -27,7 +27,7 @@ module('Unit | Model | CurriculumInventorySequenceBlock ', function (hooks) {
     const model = this.owner
       .lookup('service:store')
       .createRecord('curriculum-inventory-sequence-block');
-    const ancestors = await model.allParents;
+    const ancestors = (await model.allParents).slice();
     assert.strictEqual(ancestors.length, 0);
   });
 });

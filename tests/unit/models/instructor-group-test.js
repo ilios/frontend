@@ -19,7 +19,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
 
     model
       .get('offerings')
-      .push([
+      .pushObjects([
         store.createRecord('offering', { session: session1 }),
         store.createRecord('offering', { session: session1 }),
         store.createRecord('offering', { session: session1 }),
@@ -29,7 +29,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
       ]);
     model
       .get('ilmSessions')
-      .push([
+      .pushObjects([
         store.createRecord('ilmSession', { session: session3 }),
         store.createRecord('ilmSession', { session: session4 }),
       ]);
@@ -50,7 +50,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
 
     model
       .get('offerings')
-      .push([
+      .pushObjects([
         store.createRecord('offering', { session: session1 }),
         store.createRecord('offering', { session: session1 }),
         store.createRecord('offering', { session: session1 }),
@@ -60,7 +60,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
       ]);
     model
       .get('ilmSessions')
-      .push([
+      .pushObjects([
         store.createRecord('ilmSession', { session: session3 }),
         store.createRecord('ilmSession', { session: session4 }),
       ]);
@@ -80,7 +80,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
     const user1 = store.createRecord('user', { id: 1, instructorGroups: [instructorGroup] });
     const user2 = store.createRecord('user', { id: 2, instructorGroups: [instructorGroup] });
 
-    instructorGroup.get('users').push([user1, user2]);
+    instructorGroup.get('users').pushObjects([user1, user2]);
     assert.strictEqual(await waitForResource(instructorGroup, 'usersCount'), 2);
   });
 });

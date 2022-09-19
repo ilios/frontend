@@ -14,7 +14,7 @@ module('Integration | Component | leadership manager', function (hooks) {
   test('it renders with data', async function (assert) {
     assert.expect(7);
     this.server.createList('user', 2);
-    const users = await this.owner.lookup('service:store').findAll('user');
+    const users = (await this.owner.lookup('service:store').findAll('user')).slice();
     this.set('directors', [users[0]]);
     this.set('administrators', users);
     this.set('studentAdvisors', [users[1]]);
@@ -316,7 +316,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.server.create('user', {
       enabled: false,
     });
-    const users = await this.owner.lookup('service:store').findAll('user');
+    const users = (await this.owner.lookup('service:store').findAll('user')).slice();
 
     this.set('directors', [users[0]]);
     this.set('administrators', users);

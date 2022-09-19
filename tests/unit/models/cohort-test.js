@@ -40,7 +40,7 @@ module('Unit | Model | Cohort', function (hooks) {
       parent: topGroup2,
     });
 
-    model.get('learnerGroups').push([group1, group2, group3, group4, topGroup1, topGroup2]);
+    model.get('learnerGroups').pushObjects([group1, group2, group3, group4, topGroup1, topGroup2]);
 
     const topLevelGroups = await model.get('rootLevelLearnerGroups');
 

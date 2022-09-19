@@ -16,7 +16,7 @@ module('Unit | Model | Program', function (hooks) {
       id: 1,
       program: model,
     });
-    model.curriculumInventoryReports.push(report);
+    model.curriculumInventoryReports.pushObject(report);
     assert.ok(model.hasCurriculumInventoryReports);
   });
 
@@ -24,7 +24,7 @@ module('Unit | Model | Program', function (hooks) {
     const model = this.store.createRecord('program', { id: 1 });
     assert.notOk(model.hasProgramYears);
     const programYear = this.store.createRecord('program-year', { id: 1, program: model });
-    model.programYears.push(programYear);
+    model.programYears.pushObject(programYear);
     assert.ok(model.hasProgramYears);
   });
 
@@ -38,7 +38,7 @@ module('Unit | Model | Program', function (hooks) {
     const programYear2 = this.store.createRecord('program-year', {
       cohort: cohort2,
     });
-    model.programYears.push([programYear1, programYear2]);
+    model.programYears.pushObjects([programYear1, programYear2]);
     await waitForResource(model, '_cohorts');
     assert.strictEqual(model.cohorts.length, 2);
     assert.ok(model.cohorts.includes(cohort1));
@@ -62,7 +62,7 @@ module('Unit | Model | Program', function (hooks) {
     const programYear2 = this.store.createRecord('program-year', {
       cohort: cohort2,
     });
-    model.programYears.push([programYear1, programYear2]);
+    model.programYears.pushObjects([programYear1, programYear2]);
     await waitForResource(model, '_courses');
     assert.strictEqual(model.courses.length, 3);
     assert.ok(model.courses.includes(course1));

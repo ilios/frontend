@@ -18,14 +18,14 @@ module('Unit | Model | Offering', function (hooks) {
     const user1 = store.createRecord('user', { displayName: 'Beta' });
     const user2 = store.createRecord('user', { displayName: 'Alpha' });
     const user3 = store.createRecord('user', { displayName: 'Omega' });
-    offering.get('instructors').push(user1);
+    offering.get('instructors').pushObject(user1);
     const instructorGroup1 = store.createRecord('instructor-group', {
       users: [user2],
     });
     const instructorGroup2 = store.createRecord('instructor-group', {
       users: [user3],
     });
-    offering.get('instructorGroups').push([instructorGroup1, instructorGroup2]);
+    offering.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
 
     allInstructors = await waitForResource(offering, 'allInstructors');
 
@@ -39,11 +39,11 @@ module('Unit | Model | Offering', function (hooks) {
       lastName: 'Lazy',
     });
     const user5 = store.createRecord('user', { displayName: 'Gamma' });
-    offering.get('instructors').push(user4);
+    offering.get('instructors').pushObject(user4);
     const instructorGroup3 = store.createRecord('instructor-group', {
       users: [user5],
     });
-    offering.get('instructorGroups').push(instructorGroup3);
+    offering.get('instructorGroups').pushObject(instructorGroup3);
 
     allInstructors = await waitForResource(offering, 'allInstructors');
 
@@ -90,14 +90,14 @@ module('Unit | Model | Offering', function (hooks) {
     const user1 = store.createRecord('user', { displayName: 'Beta' });
     const user2 = store.createRecord('user', { displayName: 'Alpha' });
     const user3 = store.createRecord('user', { displayName: 'Omega' });
-    offering.get('learners').push(user1);
+    offering.get('learners').pushObject(user1);
     const learnerGroup1 = store.createRecord('learner-group', {
       users: [user2],
     });
     const learnerGroup2 = store.createRecord('learner-group', {
       users: [user3],
     });
-    offering.get('learnerGroups').push([learnerGroup1, learnerGroup2]);
+    offering.get('learnerGroups').pushObjects([learnerGroup1, learnerGroup2]);
 
     allLearners = await waitForResource(offering, 'allLearners');
 
@@ -111,11 +111,11 @@ module('Unit | Model | Offering', function (hooks) {
       lastName: 'Lazy',
     });
     const user5 = store.createRecord('user', { displayName: 'Gamma' });
-    offering.get('learners').push(user4);
+    offering.get('learners').pushObject(user4);
     const learnerGroup3 = store.createRecord('learner-group', {
       users: [user5],
     });
-    offering.get('learnerGroups').push(learnerGroup3);
+    offering.get('learnerGroups').pushObject(learnerGroup3);
 
     allLearners = await waitForResource(offering, 'allLearners');
 

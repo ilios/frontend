@@ -21,7 +21,7 @@ module('Unit | Model | session objective', function (hooks) {
     const term1 = store.createRecord('term', { vocabulary: vocab1 });
     const term2 = store.createRecord('term', { vocabulary: vocab1 });
     const term3 = store.createRecord('term', { vocabulary: vocab2 });
-    subject.get('terms').push([term1, term2, term3]);
+    subject.get('terms').pushObjects([term1, term2, term3]);
     const vocabularies = await waitForResource(subject, 'associatedVocabularies');
     assert.strictEqual(vocabularies.length, 2);
     assert.strictEqual(vocabularies[0], vocab2);

@@ -103,11 +103,11 @@ module('Unit | Model | Course', function (hooks) {
       published: false,
     });
 
-    course.get('sessions').push([session1, session2, session3]);
+    course.get('sessions').pushObjects([session1, session2, session3]);
 
     assert.strictEqual(await waitForResource(course, 'publishedOfferingCount'), 3);
     const offering5 = store.createRecord('offering');
-    session1.get('offerings').push(offering5);
+    session1.get('offerings').pushObject(offering5);
     session3.set('published', true);
 
     assert.strictEqual(await waitForResource(course, 'publishedOfferingCount'), 5);
@@ -219,7 +219,7 @@ module('Unit | Model | Course', function (hooks) {
     const cohort2 = store.createRecord('cohort', { programYear: programYear2 });
     const cohort3 = store.createRecord('cohort', { programYear: programYear3 });
 
-    course.get('cohorts').push([cohort1, cohort2, cohort3]);
+    course.get('cohorts').pushObjects([cohort1, cohort2, cohort3]);
     course.set('school', school1);
 
     const schools = await waitForResource(course, 'schools');
@@ -255,7 +255,7 @@ module('Unit | Model | Course', function (hooks) {
     const program = store.createRecord('program', { school: school1 });
     const programYear = store.createRecord('programYear', { program });
     const cohort = store.createRecord('cohort', { programYear });
-    course.get('cohorts').push(cohort);
+    course.get('cohorts').pushObject(cohort);
     course.set('school', school2);
 
     const vocabularies = await waitForResource(course, 'assignableVocabularies');
@@ -307,7 +307,7 @@ module('Unit | Model | Course', function (hooks) {
     const term2 = store.createRecord('term', { vocabulary: vocabulary1 });
     const term3 = store.createRecord('term', { vocabulary: vocabulary1 });
     const term4 = store.createRecord('term', { vocabulary: vocabulary2 });
-    course.terms.push([term1, term2, term3, term4]);
+    course.terms.pushObjects([term1, term2, term3, term4]);
 
     const vocabularies = await waitForResource(course, 'associatedVocabularies');
     assert.strictEqual(vocabularies.length, 2);

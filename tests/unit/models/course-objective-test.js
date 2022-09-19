@@ -21,7 +21,7 @@ module('Unit | Model | course objective', function (hooks) {
     const term1 = store.createRecord('term', { vocabulary: vocab1 });
     const term2 = store.createRecord('term', { vocabulary: vocab1 });
     const term3 = store.createRecord('term', { vocabulary: vocab2 });
-    subject.get('terms').push([term1, term2, term3]);
+    subject.get('terms').pushObjects([term1, term2, term3]);
     const vocabularies = await waitForResource(subject, 'associatedVocabularies');
     assert.strictEqual(vocabularies.length, 2);
     assert.strictEqual(vocabularies[0], vocab2);
@@ -29,7 +29,7 @@ module('Unit | Model | course objective', function (hooks) {
 
     const vocab3 = store.createRecord('vocabulary', { title: 'New(ish)' });
     const term4 = store.createRecord('term', { vocabulary: vocab3 });
-    subject.get('terms').push(term4);
+    subject.get('terms').pushObject(term4);
     const vocabulariesAgain = await waitForResource(subject, 'associatedVocabularies');
     assert.strictEqual(vocabulariesAgain.length, 3);
     assert.strictEqual(vocabulariesAgain[0], vocab2);
@@ -49,7 +49,9 @@ module('Unit | Model | course objective', function (hooks) {
     const programYearObjective2 = store.createRecord('program-year-objective', {
       competency: competency2,
     });
-    subject.get('programYearObjectives').push([programYearObjective1, programYearObjective2]);
+    subject
+      .get('programYearObjectives')
+      .pushObjects([programYearObjective1, programYearObjective2]);
     const treeCompetencies = await waitForResource(subject, 'treeCompetencies');
     assert.strictEqual(treeCompetencies.length, 2);
     assert.ok(treeCompetencies.includes(competency1));

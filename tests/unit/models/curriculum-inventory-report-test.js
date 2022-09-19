@@ -26,7 +26,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
       report: model,
       parent: block2,
     });
-    model.get('sequenceBlocks').push([block1, block2, block3]);
+    model.get('sequenceBlocks').pushObjects([block1, block2, block3]);
     const blocks = await model.topLevelSequenceBlocks;
     assert.strictEqual(blocks.length, 2);
     assert.ok(blocks.includes(block1));
@@ -60,7 +60,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     const block3 = store.createRecord('curriculumInventorySequenceBlock', {
       report: model,
     });
-    model.get('sequenceBlocks').push([block1, block2, block3]);
+    model.get('sequenceBlocks').pushObjects([block1, block2, block3]);
     const linkedCourses = await model.linkedCourses;
     assert.ok(linkedCourses.includes(course1));
     assert.ok(linkedCourses.includes(course2));
@@ -78,7 +78,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
-    model.get('sequenceBlocks').push(
+    model.get('sequenceBlocks').pushObject(
       store.createRecord('curriculumInventorySequenceBlock', {
         report: model,
       })
@@ -92,7 +92,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');
-    model.get('sequenceBlocks').push(
+    model.get('sequenceBlocks').pushObject(
       store.createRecord('curriculumInventorySequenceBlock', {
         report: model,
         course,
