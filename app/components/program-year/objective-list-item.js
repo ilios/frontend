@@ -27,7 +27,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @use vocabularies = new ResolveAsyncValue(() => [this.school?.vocabularies]);
 
   get assignableVocabularies() {
-    return this.vocabularies?.toArray() ?? [];
+    return this.vocabularies?.slice() ?? [];
   }
 
   get isManaging() {
@@ -71,7 +71,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @dropTask
   *manageDescriptors() {
     const meshDescriptors = yield this.args.programYearObjective.meshDescriptors;
-    this.descriptorsBuffer = meshDescriptors.toArray();
+    this.descriptorsBuffer = meshDescriptors.slice();
     this.isManagingDescriptors = true;
   }
 
@@ -79,7 +79,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   *manageTerms(vocabulary) {
     this.selectedVocabulary = vocabulary;
     const terms = yield this.args.programYearObjective.terms;
-    this.termsBuffer = terms.toArray();
+    this.termsBuffer = terms.slice();
     this.isManagingTerms = true;
   }
 

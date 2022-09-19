@@ -235,7 +235,7 @@ export default class NewMyReportComponent extends Component {
     }
     const objects = await this.store.query(model, query);
 
-    return await map(objects.toArray(), async (obj) => {
+    return await map(objects.slice(), async (obj) => {
       const po = new PrepositionObject(this.currentPrepositionalObject, obj);
       const academicYear = await po.getAcademicYear();
       const label = await po.getLabel();

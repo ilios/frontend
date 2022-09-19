@@ -28,7 +28,7 @@ export default class IliosCalendarWeekComponent extends Component {
     }
     const offerings = await all(learnerGroups.mapBy('offerings'));
     const flat = offerings.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
+      return flattened.pushObjects(obj.slice());
     }, []);
 
     return flat;

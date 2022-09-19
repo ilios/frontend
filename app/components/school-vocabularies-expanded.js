@@ -33,7 +33,7 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
   @restartableTask
   *load() {
     yield this.loadSchool(this.args.school.id);
-    const vocabularies = (yield this.args.school.vocabularies).toArray();
+    const vocabularies = (yield this.args.school.vocabularies).slice();
     this.schoolVocabularies = yield map(vocabularies, async (vocabulary) => {
       const terms = await vocabulary.terms;
       return {

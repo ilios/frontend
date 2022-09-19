@@ -21,9 +21,9 @@ export default class LearnergroupInstructorManager extends Component {
       const school = yield program.get('school');
       const availableInstructorGroups = yield school.get('instructorGroups');
 
-      this.instructors = instructors.toArray();
-      this.instructorGroups = instructorGroups.toArray();
-      this.availableInstructorGroups = availableInstructorGroups.toArray();
+      this.instructors = instructors.slice();
+      this.instructorGroups = instructorGroups.slice();
+      this.availableInstructorGroups = availableInstructorGroups.slice();
     }
   }
 

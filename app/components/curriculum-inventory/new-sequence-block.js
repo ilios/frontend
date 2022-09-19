@@ -225,7 +225,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     this.orderInSequence = 0;
     if (this.isInOrderedSequence) {
       const siblings = yield this.args.parent.children;
-      for (let i = 0, n = siblings.toArray().length + 1; i < n; i++) {
+      for (let i = 0, n = siblings.slice().length + 1; i < n; i++) {
         this.orderInSequenceOptions.push(i + 1);
       }
       this.orderInSequence = 1;

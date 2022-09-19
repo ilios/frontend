@@ -21,7 +21,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     if (!this.schoolCompetencies) {
       return [];
     }
-    const arr = [...this.schoolCompetencies.toArray(), ...this.competenciesToAdd];
+    const arr = [...this.schoolCompetencies.slice(), ...this.competenciesToAdd];
     return arr.filter((competency) => !this.competenciesToRemove.includes(competency)).uniq();
   }
 

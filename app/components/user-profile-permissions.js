@@ -19,11 +19,11 @@ export default class UserProfilePermissionsComponent extends Component {
   ]);
   @use _schools = new ResolveAsyncValue(() => [this.schoolPromise]);
   get schools() {
-    return this._schools?.toArray() ?? [];
+    return this._schools?.slice() ?? [];
   }
   @use _academicYears = new ResolveAsyncValue(() => [this.academicYearPromise]);
   get academicYears() {
-    return this._academicYears?.toArray() ?? [];
+    return this._academicYears?.slice() ?? [];
   }
   @use defaultSchool = new ResolveAsyncValue(() => [this.args.user.school]);
 
@@ -77,27 +77,27 @@ export default class UserProfilePermissionsComponent extends Component {
   @use directedPrograms = new AsyncProcess(() => [
     this.getDirectedPrograms.bind(this),
     this.bestSelectedSchool,
-    this._userDirectedPrograms?.toArray() ?? [],
+    this._userDirectedPrograms?.slice() ?? [],
   ]);
   @use _userProgramYears = new ResolveAsyncValue(() => [this.args.user.programYears]);
   @use directedProgramYears = new AsyncProcess(() => [
     this.getDirectedProgramYears.bind(this),
     this.bestSelectedSchool,
-    this._userProgramYears?.toArray() ?? [],
+    this._userProgramYears?.slice() ?? [],
   ]);
   @use _userDirectedCourses = new ResolveAsyncValue(() => [this.args.user.directedCourses]);
   @use directedCourses = new AsyncProcess(() => [
     this.getDirectedCourses.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
-    this._userDirectedCourses?.toArray() ?? [],
+    this._userDirectedCourses?.slice() ?? [],
   ]);
   @use _userAdministeredCourses = new ResolveAsyncValue(() => [this.args.user.administeredCourses]);
   @use administeredCourses = new AsyncProcess(() => [
     this.getAdministeredCourses.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
-    this._userAdministeredCourses?.toArray() ?? [],
+    this._userAdministeredCourses?.slice() ?? [],
   ]);
   @use instructedCourses = new AsyncProcess(() => [
     this.getInstructedCourses.bind(this),
@@ -112,7 +112,7 @@ export default class UserProfilePermissionsComponent extends Component {
     this.getStudentAdvisedCourses.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
-    this._userStudentAdvisedCourses?.toArray() ?? [],
+    this._userStudentAdvisedCourses?.slice() ?? [],
   ]);
   @use _userAdministeredSessions = new ResolveAsyncValue(() => [
     this.args.user.administeredSessions,
@@ -121,7 +121,7 @@ export default class UserProfilePermissionsComponent extends Component {
     this.getAdministeredSessions.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
-    this._userAdministeredSessions?.toArray() ?? [],
+    this._userAdministeredSessions?.slice() ?? [],
   ]);
   @use instructedSessions = new AsyncProcess(() => [
     this.getInstructedSessions.bind(this),
@@ -136,7 +136,7 @@ export default class UserProfilePermissionsComponent extends Component {
     this.getStudentAdvisedSessions.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
-    this._userStudentAdvisedSessions?.toArray() ?? [],
+    this._userStudentAdvisedSessions?.slice() ?? [],
   ]);
 
   async getDirectedPrograms(selectedSchool, directedPrograms) {

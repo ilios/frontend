@@ -80,7 +80,7 @@ export default class NewUserComponent extends Component {
   async loadSchools() {
     const store = this.store;
     const schools = await store.findAll('school');
-    return await filter(schools.toArray(), async (school) => {
+    return await filter(schools.slice(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
   }
@@ -100,7 +100,7 @@ export default class NewUserComponent extends Component {
     await all(programYears.getEach('program'));
 
     const objects = await all(
-      cohorts.toArray().map(async (cohort) => {
+      cohorts.slice().map(async (cohort) => {
         const obj = {
           id: cohort.get('id'),
         };

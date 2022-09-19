@@ -273,7 +273,7 @@ export default class BulkNewUsersComponent extends Component {
   @restartableTask
   *loadSchools() {
     const schools = yield this.store.findAll('school', { reload: true });
-    return filter(schools.toArray(), async (school) => {
+    return filter(schools.slice(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
   }
@@ -291,7 +291,7 @@ export default class BulkNewUsersComponent extends Component {
     yield all(programYears.getEach('program'));
 
     const objects = yield all(
-      cohorts.toArray().map(async (cohort) => {
+      cohorts.slice().map(async (cohort) => {
         const obj = {
           id: cohort.get('id'),
         };

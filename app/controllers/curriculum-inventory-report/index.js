@@ -20,7 +20,7 @@ export default class CurriculumInventoryReportIndexController extends Controller
     if (!this._sequenceBlocks) {
       return [];
     }
-    return this._sequenceBlocks.toArray().filter((block) => !block.belongsTo('parent').id());
+    return this._sequenceBlocks.slice().filter((block) => !block.belongsTo('parent').id());
   }
 
   @action

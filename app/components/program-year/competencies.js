@@ -40,7 +40,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
   }
 
   async getCompetenciesWithSelectedChildren(selectedCompetencies, competencies) {
-    return await filter(competencies.toArray(), async (competency) => {
+    return await filter(competencies.slice(), async (competency) => {
       const children = await competency.children;
       const selectedChildren = children.filter((c) => selectedCompetencies.includes(c));
       return selectedChildren.length > 0;
@@ -57,7 +57,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
   @task
   *addCompetencyToBuffer(competency) {
     this.competenciesToAdd = [...this.competenciesToAdd, competency];
-    const children = (yield competency.children).toArray();
+    const children = (yield competency.children).slice();
     this.competenciesToAdd = [...this.competenciesToAdd, ...children];
     this.competenciesToRemove = this.competenciesToRemove.filter((c) => {
       return c !== competency && !children.includes(c);
@@ -67,7 +67,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
   @task
   *removeCompetencyFromBuffer(competency) {
     this.competenciesToRemove = [...this.competenciesToRemove, competency];
-    const children = (yield competency.children).toArray();
+    const children = (yield competency.children).slice();
     this.competenciesToRemove = [...this.competenciesToRemove, ...children];
     this.competenciesToAdd = this.competenciesToAdd.filter((c) => {
       return c !== competency && !children.includes(c);

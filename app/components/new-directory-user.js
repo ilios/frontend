@@ -76,7 +76,7 @@ export default class NewDirectoryUserComponent extends Component {
 
   async loadSchools() {
     const schools = await this.store.findAll('school');
-    return filter(schools.toArray(), async (school) => {
+    return filter(schools.slice(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
   }
@@ -96,7 +96,7 @@ export default class NewDirectoryUserComponent extends Component {
     await all(programYears.getEach('program'));
 
     const objects = await all(
-      cohorts.toArray().map(async (cohort) => {
+      cohorts.slice().map(async (cohort) => {
         const obj = {
           id: cohort.get('id'),
         };

@@ -57,8 +57,8 @@ export default class SchoolSessionTypeFormComponent extends Component {
     this.title = this.args.title;
     this.selectedAssessmentOptionId = this.args.selectedAssessmentOptionId;
     this.selectedAamcMethodId = this.args.selectedAamcMethodId;
-    this.assessmentOptions = (yield this.store.findAll('assessment-option')).toArray();
-    this.aamcMethods = (yield this.store.findAll('aamc-method')).toArray();
+    this.assessmentOptions = (yield this.store.findAll('assessment-option')).slice();
+    this.aamcMethods = (yield this.store.findAll('aamc-method')).slice();
   }
 
   @action

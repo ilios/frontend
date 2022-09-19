@@ -11,7 +11,7 @@ export default class ProgramYearLeadershipExpandedComponent extends Component {
   @use programYearDirectors = new ResolveAsyncValue(() => [this.args.programYear.directors]);
 
   get directors() {
-    const directors = this.programYearDirectors?.toArray() || [];
+    const directors = this.programYearDirectors?.slice() || [];
     return [...directors, ...this.directorsToAdd].filter(
       (user) => !this.directorsToRemove.includes(user)
     );

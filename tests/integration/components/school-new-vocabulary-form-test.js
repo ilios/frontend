@@ -49,7 +49,7 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
 
   test('validation fails if title is not unique', async function (assert) {
     this.set('school', this.schoolModel);
-    const vocabularies = (await this.schoolModel.vocabularies).toArray();
+    const vocabularies = (await this.schoolModel.vocabularies).slice();
     await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{(noop)}} />`);
     assert.notOk(component.title.hasError);
     assert.expect(vocabularies[0].title, 'Vocab A');

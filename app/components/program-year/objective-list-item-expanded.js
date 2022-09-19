@@ -12,7 +12,7 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
     if (!programYearObjective) {
       return;
     }
-    const courseObjectives = (yield programYearObjective.courseObjectives).toArray();
+    const courseObjectives = (yield programYearObjective.courseObjectives).slice();
     const objectiveObjects = yield map(courseObjectives, async (courseObjective) => {
       const course = await courseObjective.course;
       return {

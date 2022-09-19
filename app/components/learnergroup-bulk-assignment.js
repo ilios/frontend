@@ -26,7 +26,7 @@ export default class LearnergroupBulkAssignmentComponent extends Component {
   @action
   async addMatch(name, groupId) {
     const group = await this.store.find('learner-group', groupId);
-    const matchedGroups = this.matchedGroups.toArray();
+    const matchedGroups = this.matchedGroups.slice();
     const match = matchedGroups.findBy('name', name);
     if (match) {
       match.group = group;

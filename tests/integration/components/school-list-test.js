@@ -74,7 +74,7 @@ module('Integration | Component | school list', function (hooks) {
     await render(hbs`<SchoolList @schools={{this.schools}} />`);
     await component.expandCollapseButton.toggle();
 
-    let schools = (await this.owner.lookup('service:store').findAll('school')).toArray();
+    let schools = (await this.owner.lookup('service:store').findAll('school')).slice();
     assert.strictEqual(schools.length, 2);
     assert.notOk(component.savedSchool.isVisible);
     component.newSchoolForm.title.set('school of rocket surgery');
@@ -82,7 +82,7 @@ module('Integration | Component | school list', function (hooks) {
     await component.newSchoolForm.submit();
     assert.ok(component.savedSchool.isVisible);
     assert.strictEqual(component.savedSchool.text, 'school of rocket surgery Saved Successfully');
-    schools = (await this.owner.lookup('service:store').findAll('school')).toArray();
+    schools = (await this.owner.lookup('service:store').findAll('school')).slice();
     assert.strictEqual(schools.length, 3);
     assert.strictEqual(schools[2].title, 'school of rocket surgery');
     assert.strictEqual(schools[2].iliosAdministratorEmail, 'rocketsurgeongeneral@hoekacademy.edu');

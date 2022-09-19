@@ -147,7 +147,7 @@ export default class ReportingService extends Service {
       'academicYearCrossesCalendarYearBoundaries'
     );
     const canView = this.currentUser.performsNonLearnerFunction;
-    const mappedResults = await map(results.toArray(), async (item) => {
+    const mappedResults = await map(results.slice(), async (item) => {
       const course = await item.get('course');
       const rhett = { course };
       rhett.value = academicYearCrossesCalendarYearBoundaries
@@ -172,7 +172,7 @@ export default class ReportingService extends Service {
       'academicYearCrossesCalendarYearBoundaries'
     );
     const intl = this.intl;
-    const filteredResults = await filter(results.toArray(), async (session) => {
+    const filteredResults = await filter(results.slice(), async (session) => {
       const course = await session.course;
       return isEmpty(year) || course.year === parseInt(year, 10);
     });
@@ -204,8 +204,16 @@ export default class ReportingService extends Service {
   }
 
   async programsResults(results) {
+<<<<<<< HEAD
     const canView = this.currentUser.performsNonLearnerFunction;
     return await map(results.toArray(), async (item) => {
+||||||| constructed merge base
+    const canView = await this.canViewPrograms;
+    const mappedResults = await map(results.toArray(), async (item) => {
+=======
+    const canView = await this.canViewPrograms;
+    const mappedResults = await map(results.slice(), async (item) => {
+>>>>>>> replace toArray() with slice().
       const rhett = {};
       const school = await item.get('school');
       rhett.value = school.get('title') + ': ' + item.get('title');
@@ -220,7 +228,7 @@ export default class ReportingService extends Service {
   async programsArrayResults(results) {
     const intl = this.intl;
     const sortedResults = results.sortBy('title');
-    const mappedResults = await map(sortedResults.toArray(), async (program) => {
+    const mappedResults = await map(sortedResults.slice(), async (program) => {
       const school = await program.get('school');
       return [program.get('title'), school.get('title')];
     });
@@ -229,8 +237,16 @@ export default class ReportingService extends Service {
   }
 
   async programYearsResults(results) {
+<<<<<<< HEAD
     const canView = this.currentUser.performsNonLearnerFunction;
     return map(results.toArray(), async (programYear) => {
+||||||| constructed merge base
+    const canView = await this.canViewPrograms;
+    return map(results.toArray(), async (programYear) => {
+=======
+    const canView = await this.canViewPrograms;
+    return map(results.slice(), async (programYear) => {
+>>>>>>> replace toArray() with slice().
       const rhett = {};
       const program = await programYear.program;
       const school = await programYear.school;
@@ -256,14 +272,11 @@ export default class ReportingService extends Service {
       };
     });
     const sortedResults = resultsWithClassOfYear.sortBy('classOfYear');
-    const mappedResults = await map(
-      sortedResults.toArray(),
-      async ({ programYear, classOfYear }) => {
-        const program = await programYear.get('program');
-        const school = await program.get('school');
-        return [classOfYear, program.get('title'), school.get('title')];
-      }
-    );
+    const mappedResults = await map(sortedResults.slice(), async ({ programYear, classOfYear }) => {
+      const program = await programYear.get('program');
+      const school = await program.get('school');
+      return [classOfYear, program.get('title'), school.get('title')];
+    });
 
     return [[intl.t('general.year'), intl.t('general.program'), intl.t('general.school')]].concat(
       mappedResults
@@ -354,7 +367,7 @@ export default class ReportingService extends Service {
   }
 
   async termsResults(results) {
-    return map(results.toArray(), async (term) => {
+    return map(results.slice(), async (term) => {
       const vocabulary = await term.get('vocabulary');
       const titleWithParentTitles = await term.get('titleWithParentTitles');
       const value = vocabulary.get('title') + ' > ' + titleWithParentTitles;

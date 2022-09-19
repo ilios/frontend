@@ -83,13 +83,13 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   *load(element, [sequenceBlock]) {
     this.report = yield sequenceBlock.report;
     this.parent = yield sequenceBlock.parent;
-    this.academicLevels = (yield this.report.academicLevels).toArray();
+    this.academicLevels = (yield this.report.academicLevels).slice();
     this.isInOrderedSequence = false;
     this.orderInSequenceOptions = [];
     if (isPresent(this.parent) && this.parent.isOrdered) {
       this.isInOrderedSequence = true;
       const siblings = yield this.parent.children;
-      for (let i = 0, n = siblings.toArray().length; i < n; i++) {
+      for (let i = 0, n = siblings.slice().length; i < n; i++) {
         const num = i + 1;
         this.orderInSequenceOptions.push(num);
       }
@@ -192,7 +192,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
         published: true,
       },
     });
-    return sessions.toArray();
+    return sessions.slice();
   }
 
   @dropTask

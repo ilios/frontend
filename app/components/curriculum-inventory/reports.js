@@ -58,7 +58,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
     if (!this.args.schools) {
       return;
     }
-    this.sortedSchools = this.args.schools.sortBy('title').toArray();
+    this.sortedSchools = this.args.schools.sortBy('title').slice();
     this.hasMoreThanOneSchool = this.sortedSchools.length > 1;
 
     if (!this.args.schoolId) {
@@ -73,7 +73,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
         this.selectedSchool
       );
       const programs = yield this.selectedSchool.programs;
-      this.programs = programs.sortBy('title').toArray();
+      this.programs = programs.sortBy('title').slice();
     }
 
     if (this.args.programId) {

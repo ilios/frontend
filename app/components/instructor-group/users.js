@@ -18,7 +18,7 @@ export default class InstructorGroupUsersComponent extends Component {
 
   @dropTask
   *manage() {
-    this.users = (yield this.args.instructorGroup.users).toArray();
+    this.users = (yield this.args.instructorGroup.users).slice();
     this.isManaging = true;
   }
   @dropTask

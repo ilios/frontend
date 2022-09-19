@@ -50,7 +50,7 @@ export default class AssignStudentsComponent extends Component {
     const programYears = yield all(cohorts.getEach('programYear'));
     yield all(programYears.getEach('program'));
 
-    cohorts = cohorts.toArray();
+    cohorts = cohorts.slice();
     const allCohorts = [];
 
     for (let i = 0; i < cohorts.length; i++) {

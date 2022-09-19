@@ -12,7 +12,7 @@ export default class UserProfileLearnergroupsComponent extends Component {
   }
 
   async getSelectedLearnerGroups(user) {
-    const learnerGroups = (await user.learnerGroups).toArray();
+    const learnerGroups = (await user.learnerGroups).slice();
     return await map(learnerGroups, async (learnerGroup) => {
       const cohort = await learnerGroup.get('cohort');
       const program = await cohort.get('program');

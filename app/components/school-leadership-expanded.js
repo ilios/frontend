@@ -24,12 +24,12 @@ export default class SchoolLeadershipExpandedComponent extends Component {
   }
 
   get directors() {
-    const arr = [...this.schoolDirectors.toArray(), ...this.directorsToAdd];
+    const arr = [...this.schoolDirectors.slice(), ...this.directorsToAdd];
     return arr.filter((user) => !this.directorsToRemove.includes(user)).uniq();
   }
 
   get administrators() {
-    const arr = [...this.schoolAdministrators.toArray(), ...this.administratorsToAdd];
+    const arr = [...this.schoolAdministrators.slice(), ...this.administratorsToAdd];
     return arr.filter((user) => !this.administratorsToRemove.includes(user)).uniq();
   }
   @action

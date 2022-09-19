@@ -47,7 +47,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
       return [];
     }
 
-    return this.allUpdates.toArray();
+    return this.allUpdates.slice();
   }
 
   get updates() {
@@ -55,7 +55,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
   }
 
   async getUpdatesForSchool(allUpdates, selectedSchool) {
-    return filter(allUpdates.toArray(), async (update) => {
+    return filter(allUpdates.slice(), async (update) => {
       const user = await update.user;
       return user.belongsTo('school').id() === selectedSchool.id;
     });

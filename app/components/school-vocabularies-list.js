@@ -14,7 +14,7 @@ export default class SchoolVocabulariesListComponent extends Component {
     if (!this.vocabulariesRelationship) {
       return [];
     }
-    return this.vocabulariesRelationship.filterBy('isNew', false).sortBy('title').toArray();
+    return this.vocabulariesRelationship.filterBy('isNew', false).sortBy('title').slice();
   }
 
   @restartableTask

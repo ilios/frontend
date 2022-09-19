@@ -21,7 +21,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
   get sortedTerms() {
     if (this.termsRelationship) {
       return this.termsRelationship
-        .toArray()
+        .slice()
         .filterBy('isTopLevel')
         .filterBy('isNew', false)
         .filterBy('isDeleted', false)
@@ -68,7 +68,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
   async validateTitleCallback() {
     const school = await this.args.vocabulary.school;
     const allVocabsInSchool = await school.vocabularies;
-    const siblings = allVocabsInSchool.toArray().filter((vocab) => {
+    const siblings = allVocabsInSchool.slice().filter((vocab) => {
       return vocab !== this.args.vocabulary;
     });
     const siblingTitles = siblings.mapBy('title');

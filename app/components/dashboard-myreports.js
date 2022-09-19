@@ -57,7 +57,7 @@ export default class DashboardMyreportsComponent extends Component {
   }
 
   async reportsWithTitles(reports) {
-    return map(reports?.toArray() ?? [], async (report) => {
+    return map(reports?.slice() ?? [], async (report) => {
       return {
         title: await buildReportTitle(report, this.store, this.intl),
         report,

@@ -91,7 +91,7 @@ export default class LearnerGroupsRootComponent extends Component {
 
   get filteredLearnerGroups() {
     if (!this.args.titleFilter) {
-      return this.rootLevelLearnerGroups.toArray();
+      return this.rootLevelLearnerGroups.slice();
     }
     const filter = this.args.titleFilter.trim().toLowerCase();
     return this.rootLevelLearnerGroups.filter((learnerGroup) => {
@@ -106,7 +106,7 @@ export default class LearnerGroupsRootComponent extends Component {
       cohort: this.selectedCohort,
     });
     if (fillWithCohort) {
-      const users = (yield this.selectedCohort.users).toArray();
+      const users = (yield this.selectedCohort.users).slice();
       group.set('users', users);
     }
     this.savedLearnerGroup = yield group.save();
@@ -134,9 +134,9 @@ export default class LearnerGroupsRootComponent extends Component {
     if (!programs) {
       return null;
     }
-    const sortingPrograms = await map(programs.toArray(), async (program) => {
+    const sortingPrograms = await map(programs.slice(), async (program) => {
       const thisYear = new Date().getFullYear();
-      const programYears = (await program.programYears).toArray();
+      const programYears = (await program.programYears).slice();
       const sorters = await map(programYears, async (programYear) => {
         const groupCount = (await programYear.cohort).hasMany('learnerGroups').ids().length;
         return {

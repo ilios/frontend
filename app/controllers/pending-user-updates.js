@@ -73,7 +73,7 @@ export default class PendingUserUpdatesController extends Controller {
     const updates = yield user.pendingUserUpdates;
     yield Promise.all(updates.invoke('destroyRecord'));
 
-    this.deletedUpdates = [...this.deletedUpdates, ...updates.toArray()];
+    this.deletedUpdates = [...this.deletedUpdates, ...updates.slice()];
     this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
     this.flashMessages.success('general.savedSuccessfully');
   }
@@ -88,7 +88,7 @@ export default class PendingUserUpdatesController extends Controller {
     const updates = yield user.pendingUserUpdates;
     yield Promise.all(updates.invoke('destroyRecord'));
 
-    this.deletedUpdates = [...this.deletedUpdates, ...updates.toArray()];
+    this.deletedUpdates = [...this.deletedUpdates, ...updates.slice()];
     this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
     this.flashMessages.success('general.savedSuccessfully');
   }

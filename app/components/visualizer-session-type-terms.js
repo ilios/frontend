@@ -11,17 +11,17 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
 
   @restartableTask
   *load(element, [sessionType, vocabulary]) {
-    const sessions = (yield sessionType.sessions).toArray();
+    const sessions = (yield sessionType.sessions).slice();
     const terms = yield map(sessions, async (session) => {
-      const sessionTerms = (await session.terms).toArray();
+      const sessionTerms = (await session.terms).slice();
       const course = await session.course;
-      const courseTerms = (await course.terms).toArray();
+      const courseTerms = (await course.terms).slice();
 
       const sessionTermsInThisVocabulary = await filter(sessionTerms, async (term) => {
         const termVocab = await term.vocabulary;
         return termVocab.id === vocabulary.id;
       });
-      const courseTermsInThisVocabulary = await filter(courseTerms.toArray(), async (term) => {
+      const courseTermsInThisVocabulary = await filter(courseTerms.slice(), async (term) => {
         const termVocab = await term.vocabulary;
         return termVocab.id === vocabulary.id;
       });

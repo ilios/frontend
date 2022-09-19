@@ -8,7 +8,7 @@ export default class CurriculumInventoryLeadershipExpandedComponent extends Comp
 
   @dropTask
   *manage() {
-    this.administratorBuffer = (yield this.args.report.administrators).toArray();
+    this.administratorBuffer = (yield this.args.report.administrators).slice();
     this.args.setIsManaging(true);
   }
 

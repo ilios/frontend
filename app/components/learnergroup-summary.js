@@ -112,8 +112,8 @@ export default class LearnergroupSummaryComponent extends Component {
 
   @action
   saveInstructors(newInstructors, newInstructorGroups) {
-    this.args.learnerGroup.set('instructors', newInstructors.toArray());
-    this.args.learnerGroup.set('instructorGroups', newInstructorGroups.toArray());
+    this.args.learnerGroup.set('instructors', newInstructors.slice());
+    this.args.learnerGroup.set('instructorGroups', newInstructorGroups.slice());
     return this.args.learnerGroup.save();
   }
 
@@ -178,7 +178,7 @@ export default class LearnergroupSummaryComponent extends Component {
     } else {
       users = yield this.args.learnerGroup.getUsersOnlyAtThisLevel();
     }
-    return yield map(users.toArray(), async (user) => {
+    return yield map(users.slice(), async (user) => {
       const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(this.treeGroups);
       return ObjectProxy.create({
         content: user,
@@ -206,8 +206,8 @@ export default class LearnergroupSummaryComponent extends Component {
   }
 
   async getCoursesForGroupWithSubgroupName(prefix, learnerGroup) {
-    const offerings = (await learnerGroup.offerings).toArray();
-    const ilms = (await learnerGroup.ilmSessions).toArray();
+    const offerings = (await learnerGroup.offerings).slice();
+    const ilms = (await learnerGroup.ilmSessions).slice();
     const arr = [].concat(offerings, ilms);
     const sessions = await Promise.all(arr.mapBy('session'));
     const filteredSessions = sessions.filter(Boolean).uniq();
@@ -224,7 +224,7 @@ export default class LearnergroupSummaryComponent extends Component {
       }
       return obj;
     });
-    const children = (await learnerGroup.children).toArray();
+    const children = (await learnerGroup.children).slice();
     const childCourses = await map(children, async (child) => {
       return await this.getCoursesForGroupWithSubgroupName(learnerGroup.title, child);
     });

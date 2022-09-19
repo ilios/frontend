@@ -6,7 +6,7 @@ export default class SchoolCompetenciesCollapsedComponent extends Component {
   @tracked competenciesRelationship;
 
   get competencies() {
-    return this.competenciesRelationship ? this.competenciesRelationship.toArray() : [];
+    return this.competenciesRelationship ? this.competenciesRelationship.slice() : [];
   }
 
   get domains() {
