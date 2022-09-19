@@ -215,7 +215,7 @@ export default class ReportingService extends Service {
 
   async programsResults(results) {
     const canView = await this.canViewPrograms;
-    const mappedResults = await map(results.toArray(), async (item) => {
+    return await map(results.toArray(), async (item) => {
       const rhett = {};
       const school = await item.get('school');
       rhett.value = school.get('title') + ': ' + item.get('title');
@@ -225,8 +225,6 @@ export default class ReportingService extends Service {
       }
       return rhett;
     });
-
-    return mappedResults;
   }
 
   async programsArrayResults(results) {
