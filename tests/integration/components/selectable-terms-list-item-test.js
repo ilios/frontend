@@ -36,7 +36,10 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     this.set('term', this.termModel);
     this.set('remove', (term) => {
       assert.strictEqual(term, this.termModel);
-      this.selectedTerms.removeObject(term);
+      this.set(
+        'selectedTerms',
+        this.selectedTerms.filter((t) => t !== term)
+      );
     });
 
     await render(hbs`<SelectableTermsListItem

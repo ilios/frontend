@@ -71,7 +71,7 @@ export default class SessionsGrid extends Component {
 
   @action
   cancelDelete(sessionId) {
-    this.confirmDeleteSessionIds.removeObject(sessionId);
+    this.confirmDeleteSessionIds = this.confirmDeleteSessionIds.filter((id) => id !== sessionId);
   }
 
   @action

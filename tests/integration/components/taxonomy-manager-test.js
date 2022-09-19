@@ -121,7 +121,10 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     });
     this.set('remove', (term) => {
       assert.strictEqual(term, this.termModel2);
-      this.selectedTerms.removeObject(term);
+      this.set(
+        'selectedTerms',
+        this.selectedTerms.filter((t) => t !== term)
+      );
     });
 
     await render(hbs`<TaxonomyManager

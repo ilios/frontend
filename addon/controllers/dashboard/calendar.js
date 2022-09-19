@@ -107,7 +107,7 @@ export default class DashboardCalendarController extends Controller {
     if (str) {
       const idArray = str.split('-');
       if (idArray.includes(id)) {
-        idArray.removeObject(id);
+        idArray.splice(idArray.indexOf(id), 1);
         this[what] = idArray.join('-');
       }
     }

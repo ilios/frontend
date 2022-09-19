@@ -324,7 +324,7 @@ export default class LearnerGroup extends Model {
     const allDescendants = await this.getAllDescendants();
     [this, ...allDescendants].forEach((group) => {
       if (group.hasMany('users').ids().includes(userId)) {
-        group.get('users').removeObject(user);
+        group.users = group.users.filter(({ id }) => id !== user.id);
         modifiedGroups.push(group);
       }
     });
