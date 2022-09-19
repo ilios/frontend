@@ -44,14 +44,6 @@ export function sortBy(arr, sortKeys) {
       const a = get(objA ?? {}, key);
       const b = get(objB ?? {}, key);
 
-      if (a === undefined || a === null) {
-        return 1;
-      }
-
-      if (b === undefined || b === null) {
-        return -1;
-      }
-
       // return 1 or -1 else continue to the next sortKey
       const compareValue = compare(a, b);
 
