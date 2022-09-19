@@ -9,7 +9,7 @@ export default class IliosCalendarWeekComponent extends Component {
   get ilmPreWorkEvents() {
     const preWork = this.args.calendarEvents.reduce((arr, ev) => {
       if (!ev.isBlanked && ev.isPublished && !ev.isScheduled) {
-        arr.push(ev.prerequisites);
+        arr = [...arr, ...ev.prerequisites];
       }
       return arr;
     }, []);

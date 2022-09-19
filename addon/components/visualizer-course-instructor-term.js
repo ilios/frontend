@@ -69,9 +69,8 @@ export default class VisualizerCourseInstructorTerm extends Component {
       });
     });
 
-    const flat = dataMap.reduce((flattened, obj) => {
-      flattened.push(...obj);
-      return flattened;
+    const flat = dataMap.reduce((flattened, arr) => {
+      return [...flattened, ...arr];
     }, []);
 
     const sessionTermData = flat.reduce((set, obj) => {

@@ -36,14 +36,11 @@ export default class EventsBase extends Service {
    * @return {Promise.<Array>}
    */
   async getTermIdsForEvent(event) {
-    const terms = [];
     const session = await this.getSessionForEvent(event);
     const sessionTerms = await session.get('terms');
     const course = await session.get('course');
     const courseTerms = await course.get('terms');
-    terms.push(sessionTerms.slice());
-    terms.push(courseTerms.slice());
-    return uniqueValues(mapBy(terms, 'id'));
+    return uniqueValues(mapBy([...sessionTerms.slice(), ...courseTerms.slice()], 'id'));
   }
 
   /**

@@ -56,17 +56,14 @@ export default class LeadershipSearchComponent extends Component {
         user,
       };
     });
-    const results = [
-      {
-        type: 'summary',
-        text: this.intl.t('general.resultsCount', {
-          count: mappedResults.length,
-        }),
-      },
-    ];
-    results.push(...mappedResults);
+    const result = {
+      type: 'summary',
+      text: this.intl.t('general.resultsCount', {
+        count: mappedResults.length,
+      }),
+    };
 
-    return results;
+    return [result, ...mappedResults];
   });
 
   clickUser = dropTask(async (user) => {

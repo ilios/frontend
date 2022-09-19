@@ -70,9 +70,8 @@ export default class VisualizerCourseObjectives extends Component {
             return mapBy(parents.slice(), 'id');
           }
         );
-        const flatObjectives = courseSessionObjectives.reduce((flattened, obj) => {
-          flattened.push(...obj.slice());
-          return flattened;
+        const flatObjectives = courseSessionObjectives.reduce((flattened, arr) => {
+          return [...flattened, ...arr];
         }, []);
 
         return {

@@ -18,7 +18,7 @@ import {
   validatable,
 } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
-import { mapBy, uniqueValues } from '../utils/array-helpers';
+import { uniqueValues } from '../utils/array-helpers';
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
@@ -300,19 +300,12 @@ export default class OfferingForm extends Component {
     if (isEmpty(cohorts)) {
       associatedSchools = [];
     } else {
-      const cohortSchools = await map(cohorts.slice(), (cohort) => {
-        return cohort.get('school');
-      });
-      const schools = [];
-      schools.push(cohortSchools);
-      associatedSchools = uniqueValues(schools.slice());
+      const cohortSchools = await map(cohorts.slice(), (cohort) => cohort.school);
+      associatedSchools = uniqueValues(cohortSchools);
     }
-    const allInstructorGroups = await map(associatedSchools, (schools) => {
-      return Promise.all(mapBy(schools, 'instructorGroups'));
-    });
-    return allInstructorGroups.reduce((flattened, obj) => {
-      flattened.push(...obj.slice());
-      return flattened;
+    const allInstructorGroups = await map(associatedSchools, (school) => school.instructorGroups);
+    return allInstructorGroups.reduce((flattened, arr) => {
+      return [...flattened, ...arr.slice()];
     }, []);
   }
 
