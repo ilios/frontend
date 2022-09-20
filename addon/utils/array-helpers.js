@@ -7,9 +7,11 @@ export function mapBy(arr, path) {
       arr = arr.slice();
     }
   }
+  assert('value passed to mapBy is an array', Array.isArray(arr));
   if (!Array.isArray(arr)) {
-    return arr;
+    return [];
   }
+
   return arr.map((item) => {
     if (item === undefined) {
       return undefined;
@@ -29,9 +31,9 @@ export function sortBy(arr, sortKeys) {
       arr = arr.slice();
     }
   }
-
+  assert('value passed to sortBy is an array', Array.isArray(arr));
   if (!Array.isArray(arr)) {
-    return arr;
+    return [];
   }
 
   if (!Array.isArray(sortKeys)) {
@@ -61,9 +63,9 @@ export function uniqueBy(arr, key) {
       arr = arr.slice();
     }
   }
-
+  assert('value passed to uniqueBy is an array', Array.isArray(arr));
   if (!Array.isArray(arr)) {
-    return arr;
+    return [];
   }
 
   const seen = new Set();
@@ -98,9 +100,9 @@ export function uniqueValues(arr) {
       arr = arr.slice();
     }
   }
-
+  assert('value passed to uniqueValues is an array', Array.isArray(arr));
   if (!Array.isArray(arr)) {
-    return arr;
+    return [];
   }
 
   return [...new Set(arr)];
@@ -112,9 +114,9 @@ export function findBy(arr, key, searchValue) {
       arr = arr.slice();
     }
   }
-
+  assert('value passed to findBy is an array', Array.isArray(arr));
   if (!Array.isArray(arr)) {
-    return arr;
+    return [];
   }
 
   return arr.find((item) => {
@@ -138,9 +140,9 @@ export function filterBy(arr, key, searchValue) {
       arr = arr.slice();
     }
   }
-
+  assert('value passed to filterBy is an array', Array.isArray(arr));
   if (!Array.isArray(arr)) {
-    return arr;
+    return [];
   }
 
   return arr.filter((item) => {

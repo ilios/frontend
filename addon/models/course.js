@@ -117,7 +117,7 @@ export default class Course extends Model {
   ]);
 
   get competencies() {
-    return uniqueValues(this.allTreeCompetencies)?.filter(Boolean);
+    return uniqueValues(this.allTreeCompetencies ?? []).filter(Boolean);
   }
 
   @use competencyDomains = new ResolveAsyncValue(() => [mapBy(this.competencies, 'domain')]);
@@ -180,9 +180,9 @@ export default class Course extends Model {
     return issues;
   }
 
-  @use _programYears = new ResolveAsyncValue(() => [mapBy(this.cohorts, 'programYear')]);
-  @use _programs = new ResolveAsyncValue(() => [mapBy(this._programYears, 'program')]);
-  @use _programSchools = new ResolveAsyncValue(() => [mapBy(this._programs, 'school')]);
+  @use _programYears = new ResolveAsyncValue(() => [mapBy(this.cohorts ?? [], 'programYear')]);
+  @use _programs = new ResolveAsyncValue(() => [mapBy(this._programYears ?? [], 'program')]);
+  @use _programSchools = new ResolveAsyncValue(() => [mapBy(this._programs ?? [], 'school')]);
   @use _resolvedSchool = new ResolveAsyncValue(() => [this.school]);
   get schools() {
     if (!this._programSchools || !this._resolvedSchool) {
@@ -199,7 +199,7 @@ export default class Course extends Model {
       this._schoolVocabularies?.reduce((acc, curr) => {
         acc.push(...curr.slice());
         return acc;
-      }, []),
+      }, []) ?? [],
       ['school.title', 'title']
     );
     return rhett;
@@ -222,7 +222,7 @@ export default class Course extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortBy(uniqueValues(this._allTermVocabularies), 'title');
+    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
   }
 
   get termCount() {

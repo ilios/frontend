@@ -42,7 +42,7 @@ export default class SessionObjectiveModel extends Model {
 
   @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
   get associatedVocabularies() {
-    return sortBy(uniqueValues(this._allTermVocabularies), 'title');
+    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
   }
 
   /**

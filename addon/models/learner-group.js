@@ -83,7 +83,7 @@ export default class LearnerGroup extends Model {
    * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
    */
   get courses() {
-    return uniqueValues(this._sessionCourses) ?? [];
+    return uniqueValues(this._sessionCourses ?? []);
   }
 
   @use subgroupNumberingOffset = new DeprecatedAsyncCP(() => [

@@ -242,7 +242,7 @@ export default class SessionModel extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortBy(uniqueValues(this._allTermVocabularies), 'title');
+    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
   }
 
   get termCount() {

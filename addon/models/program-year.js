@@ -41,7 +41,7 @@ export default class ProgramYear extends Model {
   @use _schoolVocabularies = new ResolveAsyncValue(() => [this._school?.vocabularies]);
 
   get assignableVocabularies() {
-    return sortBy(this._schoolVocabularies, 'title');
+    return sortBy(this._schoolVocabularies ?? [], 'title');
   }
 
   get classOfYear() {
@@ -73,7 +73,7 @@ export default class ProgramYear extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortBy(uniqueValues(this._allTermVocabularies), 'title');
+    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
   }
 
   /**

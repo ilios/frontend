@@ -6,7 +6,7 @@ export default class WeekGlanceEvent extends Component {
     return a.localeCompare(b);
   }
   get sessionLearningMaterials() {
-    return filterBy(this.args.event.learningMaterials, 'sessionLearningMaterial') ?? [];
+    return filterBy(this.args.event.learningMaterials ?? [], 'sessionLearningMaterial');
   }
 
   get preworkEvents() {

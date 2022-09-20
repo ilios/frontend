@@ -49,19 +49,19 @@ export default class CourseObjective extends Model {
 
   @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
   get associatedVocabularies() {
-    return sortBy(uniqueValues(this._allTermVocabularies), 'title');
+    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
   }
 
   @use _programYearObjectives = new ResolveAsyncValue(() => [this.programYearObjectives]);
   @use allTermCompetencies = new ResolveAsyncValue(() => [
-    mapBy(this._programYearObjectives?.slice(), 'competency'),
+    mapBy(this._programYearObjectives?.slice() ?? [], 'competency'),
   ]);
 
   /**
    * All competencies associated with any program-year objectives linked to this course objective.
    */
   get treeCompetencies() {
-    return uniqueValues(this.allTermCompetencies);
+    return uniqueValues(this.allTermCompetencies ?? []);
   }
 
   /**

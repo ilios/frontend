@@ -8,7 +8,7 @@ import {
   uniqueById,
   uniqueValues,
 } from 'ilios-common/utils/array-helpers';
-import { module, test } from 'qunit';
+import { module, test, todo } from 'qunit';
 
 function getDogs() {
   return [
@@ -37,38 +37,38 @@ function getDogs() {
 }
 
 module('Unit | Utility | array-helpers', function () {
-  test('when array is false', function (assert) {
-    assert.false(mapBy(false, 'name'));
-    assert.false(sortBy(false, 'dob'));
-    assert.false(sortBy(false, ['name', 'goodnessRanking']));
-    assert.false(uniqueBy(false, 'name'));
-    assert.false(uniqueById(false));
-    assert.false(uniqueValues(false));
-    assert.false(findBy(false, 'name', 'jayden'));
-    assert.false(findById(false, 'jayden'));
-    assert.false(filterBy(false, 'breed', 'Chihuahua'));
+  todo('when array is false', function (assert) {
+    assert.strictEqual(mapBy(false, 'name'), []);
+    assert.strictEqual(sortBy(false, 'dob'), []);
+    assert.strictEqual(sortBy(false, ['name', 'goodnessRanking']), []);
+    assert.strictEqual(uniqueBy(false, 'name'), []);
+    assert.strictEqual(uniqueById(false), []);
+    assert.strictEqual(uniqueValues(false), []);
+    assert.strictEqual(findBy(false, 'name', 'jayden'), []);
+    assert.strictEqual(findById(false, 'jayden'), []);
+    assert.strictEqual(filterBy(false, 'breed', 'Chihuahua'), []);
   });
-  test('when array is null', function (assert) {
-    assert.strictEqual(mapBy(null, 'name'), null);
-    assert.strictEqual(sortBy(null, 'name'), null);
-    assert.strictEqual(sortBy(null, ['name', 'goodnessRanking']), null);
-    assert.strictEqual(uniqueBy(null, 'name'), null);
-    assert.strictEqual(uniqueById(null), null);
-    assert.strictEqual(uniqueValues(null), null);
-    assert.strictEqual(findBy(null, 'name', 'jackson'), null);
-    assert.strictEqual(findById(null, 'jackson'), null);
-    assert.strictEqual(filterBy(null, 'breed', 'Chihuahua'), null);
+  todo('when array is null', function (assert) {
+    assert.strictEqual(mapBy(null, 'name'), []);
+    assert.strictEqual(sortBy(null, 'name'), []);
+    assert.strictEqual(sortBy(null, ['name', 'goodnessRanking']), []);
+    assert.strictEqual(uniqueBy(null, 'name'), []);
+    assert.strictEqual(uniqueById(null), []);
+    assert.strictEqual(uniqueValues(null), []);
+    assert.strictEqual(findBy(null, 'name', 'jackson'), []);
+    assert.strictEqual(findById(null, 'jackson'), []);
+    assert.strictEqual(filterBy(null, 'breed', 'Chihuahua'), []);
   });
-  test('when array is undefined', function (assert) {
-    assert.strictEqual(mapBy(undefined, 'name'), undefined);
-    assert.strictEqual(sortBy(undefined, 'name'), undefined);
-    assert.strictEqual(sortBy(undefined, ['name', 'goodnessRanking']), undefined);
-    assert.strictEqual(uniqueBy(undefined, 'name'), undefined);
-    assert.strictEqual(uniqueById(undefined), undefined);
-    assert.strictEqual(uniqueValues(undefined), undefined);
-    assert.strictEqual(findBy(undefined, 'name', 'jasper'), undefined);
-    assert.strictEqual(findById(undefined, 'jasper'), undefined);
-    assert.strictEqual(filterBy(undefined, 'breed', 'Chihuahua'), undefined);
+  todo('when array is undefined', function (assert) {
+    assert.strictEqual(mapBy(undefined, 'name'), []);
+    assert.strictEqual(sortBy(undefined, 'name'), []);
+    assert.strictEqual(sortBy(undefined, ['name', 'goodnessRanking']), []);
+    assert.strictEqual(uniqueBy(undefined, 'name'), []);
+    assert.strictEqual(uniqueById(undefined), []);
+    assert.strictEqual(uniqueValues(undefined), []);
+    assert.strictEqual(findBy(undefined, 'name', 'jasper'), []);
+    assert.strictEqual(findById(undefined, 'jasper'), []);
+    assert.strictEqual(filterBy(undefined, 'breed', 'Chihuahua'), []);
   });
 
   test('mapBy', function (assert) {
