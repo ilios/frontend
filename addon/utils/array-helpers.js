@@ -71,16 +71,14 @@ export function uniqueBy(arr, key) {
   const seen = new Set();
   const rhett = [];
   arr.forEach((item) => {
+    let value;
     if (item === undefined) {
-      rhett.push(undefined);
-      return;
+      value = undefined;
+    } else if (item === null) {
+      value = null;
+    } else {
+      value = get(item, key);
     }
-    if (item === null) {
-      rhett.push(null);
-      return;
-    }
-
-    const value = get(item, key);
     if (seen.has(value)) {
       return;
     }

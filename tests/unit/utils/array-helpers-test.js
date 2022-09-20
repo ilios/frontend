@@ -245,6 +245,14 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(result[0].name, 'one');
     assert.deepEqual(result[1], null);
   });
+  test('uniqueBy with multiple null and undefined', function (assert) {
+    const arr = [{ id: 1, name: 'one' }, { id: 1, name: 'one' }, null, null, undefined, undefined];
+    const result = uniqueBy(arr, 'id');
+    assert.strictEqual(result.length, 3);
+    assert.strictEqual(result[0].name, 'one');
+    assert.deepEqual(result[1], null);
+    assert.deepEqual(result[2], undefined);
+  });
 
   test('uniqueById', function (assert) {
     const arr = [
