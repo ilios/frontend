@@ -1,6 +1,5 @@
 import Service, { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
-import { computed } from '@ember/object';
 import { isEmpty, isPresent } from '@ember/utils';
 import { singularize, pluralize } from 'ember-inflector';
 import { capitalize, camelize, dasherize } from '@ember/string';
@@ -8,20 +7,11 @@ import striptags from 'striptags';
 
 const { filter, resolve, map } = RSVP;
 
-export default Service.extend({
-  store: service(),
-  currentUser: service(),
-  intl: service(),
-  iliosConfig: service(),
-
-  model: computed('currentUser.currentUserId', async function () {
-    return this.currentUser.getModel();
-  }),
-
-  reportsList: computed('model.reports.[]', async function () {
-    const user = await this.model;
-    return isEmpty(user) ? [] : await user.reports;
-  }),
+export default class ReportingService extends Service {
+  @service store;
+  @service currentUser;
+  @service intl;
+  @service iliosConfig;
 
   async findResults(report) {
     const store = this.store;
@@ -30,7 +20,7 @@ export default Service.extend({
     const objectId = report.prepositionalObjectTableRowId;
     const school = await report.school;
     return store.query(this.getModel(subject), this.getQuery(subject, object, objectId, school));
-  },
+  }
 
   async getResults(report, year) {
     const subject = report.subject;
@@ -38,7 +28,7 @@ export default Service.extend({
     const mapper = pluralize(camelize(subject)) + 'Results';
     const mappedResults = await this[mapper](results, year);
     return mappedResults.sortBy('value');
-  },
+  }
 
   async getArrayResults(report, year) {
     const subject = report.get('subject');
@@ -46,7 +36,7 @@ export default Service.extend({
     const results = await this.findResults(report);
     const mapper = pluralize(camelize(subject)) + 'ArrayResults';
     return this[mapper](results, year);
-  },
+  }
 
   getModel(subject) {
     let model = dasherize(subject);
@@ -58,7 +48,7 @@ export default Service.extend({
     }
 
     return model;
-  },
+  }
 
   getQuery(subject, object, objectId, school) {
     const query = {
@@ -99,20 +89,10 @@ export default Service.extend({
     }
 
     return query;
-  },
-
-  canViewCourses: computed('currentUser.performsNonLearnerFunction', async function () {
-    const currentUser = this.currentUser;
-    return currentUser.get('performsNonLearnerFunction');
-  }),
-
-  canViewPrograms: computed('currentUser.performsNonLearnerFunction', async function () {
-    const currentUser = this.currentUser;
-    return currentUser.get('performsNonLearnerFunction');
-  }),
+  }
 
   async coursesResults(results, year) {
-    const canView = await this.canViewCourses;
+    const canView = this.currentUser.performsNonLearnerFunction;
     const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
@@ -136,7 +116,7 @@ export default Service.extend({
         return rhett;
       })
       .filter((obj) => isEmpty(year) || obj.course.year === parseInt(year, 10));
-  },
+  }
 
   async coursesArrayResults(results, year) {
     const intl = this.intl;
@@ -160,13 +140,13 @@ export default Service.extend({
     return [
       [intl.t('general.courses'), intl.t('general.academicYear'), intl.t('general.externalId')],
     ].concat(mappedResults);
-  },
+  }
 
   async sessionsResults(results, year) {
     const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-    const canView = await this.canViewCourses;
+    const canView = this.currentUser.performsNonLearnerFunction;
     const mappedResults = await map(results.toArray(), async (item) => {
       const course = await item.get('course');
       const rhett = { course };
@@ -185,7 +165,7 @@ export default Service.extend({
     return mappedResults.filter(
       (obj) => isEmpty(year) || parseInt(obj.course.year, 10) === parseInt(year, 10)
     );
-  },
+  }
 
   async sessionsArrayResults(results, year) {
     const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
@@ -221,11 +201,11 @@ export default Service.extend({
         intl.t('general.objectives'),
       ],
     ].concat(mappedResults);
-  },
+  }
 
   async programsResults(results) {
-    const canView = await this.canViewPrograms;
-    const mappedResults = await map(results.toArray(), async (item) => {
+    const canView = this.currentUser.performsNonLearnerFunction;
+    return await map(results.toArray(), async (item) => {
       const rhett = {};
       const school = await item.get('school');
       rhett.value = school.get('title') + ': ' + item.get('title');
@@ -235,9 +215,7 @@ export default Service.extend({
       }
       return rhett;
     });
-
-    return mappedResults;
-  },
+  }
 
   async programsArrayResults(results) {
     const intl = this.intl;
@@ -248,10 +226,10 @@ export default Service.extend({
     });
 
     return [[intl.t('general.program'), intl.t('general.school')]].concat(mappedResults);
-  },
+  }
 
   async programYearsResults(results) {
-    const canView = await this.canViewPrograms;
+    const canView = this.currentUser.performsNonLearnerFunction;
     return map(results.toArray(), async (programYear) => {
       const rhett = {};
       const program = await programYear.program;
@@ -266,7 +244,7 @@ export default Service.extend({
       }
       return rhett;
     });
-  },
+  }
 
   async programYearsArrayResults(results) {
     const intl = this.intl;
@@ -290,7 +268,7 @@ export default Service.extend({
     return [[intl.t('general.year'), intl.t('general.program'), intl.t('general.school')]].concat(
       mappedResults
     );
-  },
+  }
 
   instructorsResults(results) {
     const mappedResults = results.map((result) => {
@@ -299,7 +277,7 @@ export default Service.extend({
       };
     });
     return resolve(mappedResults);
-  },
+  }
 
   async instructorsArrayResults(results) {
     const intl = this.intl;
@@ -307,7 +285,7 @@ export default Service.extend({
     const sortedResults = arr.sortBy('value');
     const mappedResults = sortedResults.map((obj) => [obj.value]);
     return [[intl.t('general.instructors')]].concat(mappedResults);
-  },
+  }
 
   titleResults(results) {
     const mappedResults = results.map((result) => {
@@ -316,7 +294,7 @@ export default Service.extend({
       };
     });
     return resolve(mappedResults);
-  },
+  }
 
   async valueResults(results, translationKey) {
     const intl = this.intl;
@@ -324,39 +302,39 @@ export default Service.extend({
     const sortedResults = arr.sortBy('value');
     const mappedResults = sortedResults.map((obj) => [obj.value]);
     return [[intl.t(translationKey)]].concat(mappedResults);
-  },
+  }
 
   instructorGroupsResults(results) {
     return this.titleResults(results);
-  },
+  }
 
   async instructorGroupsArrayResults(results) {
     return this.valueResults(results, 'general.instructorGroups');
-  },
+  }
 
   learningMaterialsResults(results) {
     return this.titleResults(results);
-  },
+  }
 
   async learningMaterialsArrayResults(results) {
     return this.valueResults(results, 'general.learningMaterials');
-  },
+  }
 
   competenciesResults(results) {
     return this.titleResults(results);
-  },
+  }
 
   async competenciesArrayResults(results) {
     return this.valueResults(results, 'general.competencies');
-  },
+  }
 
   sessionTypesResults(results) {
     return this.titleResults(results);
-  },
+  }
 
   async sessionTypesArrayResults(results) {
     return this.valueResults(results, 'general.sessionTypes');
-  },
+  }
 
   meshTermsResults(results) {
     const mappedResults = results.map((result) => {
@@ -365,7 +343,7 @@ export default Service.extend({
       };
     });
     return resolve(mappedResults);
-  },
+  }
 
   async meshTermsArrayResults(results) {
     const intl = this.intl;
@@ -373,7 +351,7 @@ export default Service.extend({
     const sortedResults = arr.sortBy('value');
     const mappedResults = sortedResults.map((obj) => [obj.value]);
     return [[intl.t('general.meshTerms')]].concat(mappedResults);
-  },
+  }
 
   async termsResults(results) {
     return map(results.toArray(), async (term) => {
@@ -382,7 +360,7 @@ export default Service.extend({
       const value = vocabulary.get('title') + ' > ' + titleWithParentTitles;
       return { value };
     });
-  },
+  }
 
   async termsArrayResults(results) {
     const intl = this.intl;
@@ -390,5 +368,5 @@ export default Service.extend({
     const sortedResults = arr.sortBy('value');
     const mappedResults = sortedResults.map((obj) => [obj.value]);
     return [[intl.t('general.vocabulary')]].concat(mappedResults);
-  },
-});
+  }
+}
