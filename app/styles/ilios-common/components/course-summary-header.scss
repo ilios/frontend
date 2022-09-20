@@ -1,5 +1,6 @@
 .course-summary-header {
-  @include ilios-overview($orange);
+  @include ilios-overview();
+  padding-left: .8rem;
 
   .course-summary-header-top {
     @include ilios-overview-header;
@@ -30,6 +31,4 @@
       @include ilios-overview-block;
     }
   }
-
-
 }

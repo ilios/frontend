@@ -1,5 +1,7 @@
-@mixin ilios-overview ($bottom-border-color) {
-  border-bottom: 1px dotted $bottom-border-color;
+@mixin ilios-overview ($bottom-border-color: false) {
+  @if $bottom-border-color {
+    border-bottom: 1px dotted $bottom-border-color;
+  }
   display: block;
   padding: .8rem 0;
 

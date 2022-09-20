@@ -2,9 +2,8 @@
   padding-left: .8rem;
 
   .material-list {
-    border-bottom: 1px dotted $orange;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
+    border-top: 1px dotted $orange;
+    padding-top: .5rem;
 
     table {
       @include ilios-table-structure;
