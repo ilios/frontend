@@ -148,11 +148,6 @@ export default class DashboardMaterialsComponent extends Component {
   }
 
   @action
-  sortString(a, b) {
-    return a.localeCompare(b);
-  }
-
-  @action
   sortBy(what) {
     if (this.args.sortBy === what) {
       what += ':desc';

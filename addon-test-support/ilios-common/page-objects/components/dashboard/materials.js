@@ -1,11 +1,9 @@
 import {
-  attribute,
   clickable,
   collection,
   create,
   fillable,
   hasClass,
-  isPresent,
   notHasClass,
   property,
   text,
@@ -14,7 +12,7 @@ import {
 import dashboardViewPicker from './view-picker';
 import controls from '../pagedlist-controls';
 import displayToggle from '../toggle-buttons';
-import status from '../user-material-status';
+import materialListItem from './material-list-item';
 
 const definition = {
   scope: '[data-test-dashboard-materials]',
@@ -82,38 +80,7 @@ const definition = {
         click: clickable('button'),
       },
     },
-    rows: collection('[data-test-learning-material]', {
-      status,
-      sessionTitle: text('[data-test-session-title]'),
-      courseTitle: text('[data-test-course-title]'),
-      title: text('[data-test-title]'),
-      isTimed: isPresent('[data-test-is-blanked]'),
-      isLink: hasClass('fa-link', '[data-test-lm-type-icon]'),
-      isCitation: hasClass('fa-paragraph', '[data-test-lm-type-icon]'),
-      isPdf: hasClass('fa-file-pdf', '[data-test-lm-type-icon]'),
-      isPowerpoint: hasClass('fa-file-powerpoint', '[data-test-lm-type-icon]'),
-      isVideo: hasClass('fa-file-video', '[data-test-lm-type-icon]'),
-      isAudio: hasClass('fa-file-audio', '[data-test-lm-type-icon]'),
-      isFile: hasClass('fa-file', '[data-test-lm-type-icon]'),
-      pdfLink: {
-        scope: '[data-test-pdf-link]',
-        url: attribute('href'),
-      },
-      pdfDownloadLink: {
-        scope: '[data-test-pdf-download-link]',
-        url: attribute('href'),
-      },
-      fileLink: {
-        scope: '[data-test-file-link]',
-        url: attribute('href'),
-      },
-      link: {
-        scope: '[data-test-link]',
-        url: attribute('href'),
-      },
-      instructors: text('[data-test-instructors]'),
-      firstOfferingDate: text('[data-test-date]'),
-    }),
+    rows: collection('[data-test-learning-material]', materialListItem),
     noResults: {
       scope: '[data-test-none]',
     },
