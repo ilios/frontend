@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolCompetenciesManagerComponent extends Component {
   get domains() {
@@ -21,11 +22,11 @@ export default class SchoolCompetenciesManagerComponent extends Component {
       );
       return {
         domain,
-        competencies: domainCompetencies.sortBy('title'),
+        competencies: sortBy(domainCompetencies, 'title'),
       };
     });
 
-    return objs.sortBy('domain.title');
+    return sortBy(objs, 'domain.title');
   }
 
   @action

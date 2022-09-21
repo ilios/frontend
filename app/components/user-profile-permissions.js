@@ -3,8 +3,9 @@ import { inject as service } from '@ember/service';
 import moment from 'moment';
 import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class UserProfilePermissionsComponent extends Component {
   @service store;
@@ -231,9 +232,8 @@ export default class UserProfilePermissionsComponent extends Component {
     } else if (this.defaultSchool) {
       return this.defaultSchool;
     } else if (this.schools.length) {
-      return this.schools.sortBy('title')[0];
+      return sortBy(this.schools, 'title')[0];
     }
-
     return null;
   }
 }

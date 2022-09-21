@@ -5,6 +5,7 @@ import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { component } from 'ilios/tests/pages/components/program-year/list';
 
 module('Integration | Component | program-year/list', function (hooks) {
@@ -96,11 +97,10 @@ module('Integration | Component | program-year/list', function (hooks) {
     await component.expandCollapse.toggle();
     await component.newProgramYear.years.select(thisYear);
     await component.newProgramYear.done.click();
-    const programYears = (await this.owner.lookup('service:store').findAll('programYear')).sortBy(
-      'id'
-    );
-    const newProgramYear = programYears.sortBy('id').lastObject;
-    const originalProgramYear = programYears[programYears.length - 2];
+    const programYears = await this.owner.lookup('service:store').findAll('programYear');
+    const sortedProgramYears = sortBy(programYears.slice(), 'id');
+    const newProgramYear = sortedProgramYears.lastObject;
+    const originalProgramYear = sortedProgramYears[sortedProgramYears.length - 2];
     assert.strictEqual(parseInt(newProgramYear.startYear, 10), thisYear);
     const terms = (await newProgramYear.terms).slice();
     const originalTerms = (await originalProgramYear.terms).slice();

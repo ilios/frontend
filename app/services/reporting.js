@@ -4,6 +4,7 @@ import { isEmpty, isPresent } from '@ember/utils';
 import { singularize, pluralize } from 'ember-inflector';
 import { capitalize, camelize, dasherize } from '@ember/string';
 import striptags from 'striptags';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 const { filter, resolve, map } = RSVP;
 
@@ -27,7 +28,7 @@ export default class ReportingService extends Service {
     const results = await this.findResults(report);
     const mapper = pluralize(camelize(subject)) + 'Results';
     const mappedResults = await this[mapper](results, year);
-    return mappedResults.sortBy('value');
+    return sortBy(mappedResults, 'value');
   }
 
   async getArrayResults(report, year) {
@@ -126,7 +127,7 @@ export default class ReportingService extends Service {
     const filteredResults = results.filter((course) => {
       return isEmpty(year) || course.year === parseInt(year, 10);
     });
-    const sortedResults = filteredResults.sortBy('title');
+    const sortedResults = sortBy(filteredResults, 'title');
     const mappedResults = sortedResults.map((course) => {
       return [
         course.get('title'),
@@ -176,7 +177,7 @@ export default class ReportingService extends Service {
       const course = await session.course;
       return isEmpty(year) || course.year === parseInt(year, 10);
     });
-    const sortedResults = filteredResults.sortBy('title');
+    const sortedResults = sortBy(filteredResults, 'title');
     const mappedResults = await map(sortedResults, async (session) => {
       const course = await session.course;
       const sessionDescriptionText = session.textDescription;
@@ -219,8 +220,8 @@ export default class ReportingService extends Service {
 
   async programsArrayResults(results) {
     const intl = this.intl;
-    const sortedResults = results.sortBy('title');
-    const mappedResults = await map(sortedResults.slice(), async (program) => {
+    const sortedResults = sortBy(results.slice(), 'title');
+    const mappedResults = await map(sortedResults, async (program) => {
       const school = await program.get('school');
       return [program.get('title'), school.get('title')];
     });
@@ -255,7 +256,7 @@ export default class ReportingService extends Service {
         classOfYear,
       };
     });
-    const sortedResults = resultsWithClassOfYear.sortBy('classOfYear');
+    const sortedResults = sortBy(resultsWithClassOfYear, 'classOfYear');
     const mappedResults = await map(sortedResults.slice(), async ({ programYear, classOfYear }) => {
       const program = await programYear.get('program');
       const school = await program.get('school');
@@ -279,7 +280,7 @@ export default class ReportingService extends Service {
   async instructorsArrayResults(results) {
     const intl = this.intl;
     const arr = await this.instructorsResults(results);
-    const sortedResults = arr.sortBy('value');
+    const sortedResults = sortBy(arr, 'value');
     const mappedResults = sortedResults.map((obj) => [obj.value]);
     return [[intl.t('general.instructors')]].concat(mappedResults);
   }
@@ -296,7 +297,7 @@ export default class ReportingService extends Service {
   async valueResults(results, translationKey) {
     const intl = this.intl;
     const arr = await this.titleResults(results);
-    const sortedResults = arr.sortBy('value');
+    const sortedResults = sortBy(arr, 'value');
     const mappedResults = sortedResults.map((obj) => [obj.value]);
     return [[intl.t(translationKey)]].concat(mappedResults);
   }
@@ -345,7 +346,7 @@ export default class ReportingService extends Service {
   async meshTermsArrayResults(results) {
     const intl = this.intl;
     const arr = await this.meshTermsResults(results);
-    const sortedResults = arr.sortBy('value');
+    const sortedResults = sortBy(arr, 'value');
     const mappedResults = sortedResults.map((obj) => [obj.value]);
     return [[intl.t('general.meshTerms')]].concat(mappedResults);
   }
@@ -362,7 +363,7 @@ export default class ReportingService extends Service {
   async termsArrayResults(results) {
     const intl = this.intl;
     const arr = await this.termsResults(results);
-    const sortedResults = arr.sortBy('value');
+    const sortedResults = sortBy(arr, 'value');
     const mappedResults = sortedResults.map((obj) => [obj.value]);
     return [[intl.t('general.vocabulary')]].concat(mappedResults);
   }

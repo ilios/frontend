@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -32,7 +33,7 @@ export default class AssignStudentsController extends Controller {
   }
 
   get sortedStudents() {
-    return this.unassignedStudentsForCurrentSchool.sortBy('fullName');
+    return sortBy(this.unassignedStudentsForCurrentSchool, 'fullName');
   }
 
   get filteredUnassignedStudents() {

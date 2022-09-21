@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
@@ -14,7 +15,7 @@ export default class ProgramYearListComponent extends Component {
 
   @use programYears = new ResolveAsyncValue(() => [this.args.program.programYears, []]);
   get sortedProgramYears() {
-    return this.programYears.sortBy('startYear');
+    return sortBy(this.programYears.slice(), 'startYear');
   }
   @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -36,7 +37,7 @@ export default class ProgramYearListComponent extends Component {
     const savedProgramYear = yield newProgramYear.save();
     if (latestProgramYear) {
       const relatedObjectives = yield latestProgramYear.programYearObjectives;
-      const programYearObjectives = relatedObjectives.sortBy('id');
+      const programYearObjectives = sortBy(relatedObjectives.slice(), 'id');
 
       const newObjectiveObjects = programYearObjectives.map((pyoToCopy) => {
         const terms = pyoToCopy

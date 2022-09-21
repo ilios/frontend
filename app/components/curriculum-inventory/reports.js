@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class CurriculumInventoryReportsComponent extends Component {
   @service currentUser;
@@ -58,7 +59,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
     if (!this.args.schools) {
       return;
     }
-    this.sortedSchools = this.args.schools.sortBy('title').slice();
+    this.sortedSchools = sortBy(this.args.schools.slice(), 'title');
     this.hasMoreThanOneSchool = this.sortedSchools.length > 1;
 
     if (!this.args.schoolId) {
@@ -73,7 +74,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
         this.selectedSchool
       );
       const programs = yield this.selectedSchool.programs;
-      this.programs = programs.sortBy('title').slice();
+      this.programs = sortBy(programs.slice(), 'title');
     }
 
     if (this.args.programId) {

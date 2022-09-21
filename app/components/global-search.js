@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
 
@@ -59,15 +60,16 @@ export default class GlobalSearchComponent extends Component {
 
   get schoolOptions() {
     if (this.results.length && this.schools.length) {
-      const emptySchools = this.schools
-        .map(({ id, title }) => {
+      const emptySchools = sortBy(
+        this.schools.map(({ id, title }) => {
           return {
             id,
             title,
             results: 0,
           };
-        })
-        .sortBy('title');
+        }),
+        'title'
+      );
       const options = this.results.reduce((set, course) => {
         const schoolOption = set.findBy('title', course.school);
         schoolOption.results++;

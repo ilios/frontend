@@ -2,24 +2,22 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolVocabulariesListComponent extends Component {
   @service store;
-  @tracked vocabulariesRelationship;
   @tracked newVocabulary;
   @tracked showRemovalConfirmationFor;
+  @use vocabularies = new ResolveAsyncValue(() => [this.args.school.vocabularies]);
 
   get sortedVocabularies() {
-    if (!this.vocabulariesRelationship) {
+    if (!this.vocabularies) {
       return [];
     }
-    return this.vocabulariesRelationship.filterBy('isNew', false).sortBy('title').slice();
-  }
-
-  @restartableTask
-  *load() {
-    this.vocabulariesRelationship = yield this.args.school.vocabularies;
+    return sortBy(this.vocabularies.slice().filterBy('isNew', false), 'title');
   }
 
   @action

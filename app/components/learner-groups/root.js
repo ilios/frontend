@@ -6,6 +6,7 @@ import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import PermissionChecker from 'ilios/classes/permission-checker';
 import { dropTask } from 'ember-concurrency';
 import { map } from 'rsvp';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import cloneLearnerGroup from 'ilios/utils/clone-learner-group';
 import { action } from '@ember/object';
 
@@ -79,7 +80,7 @@ export default class LearnerGroupsRootComponent extends Component {
       return this.programYears.findBy('id', this.args.programYearId);
     }
 
-    return this.programYears.sortBy('startYear').lastObject;
+    return sortBy(this.programYears.slice(), 'startYear').lastObject;
   }
 
   get rootLevelLearnerGroups() {
