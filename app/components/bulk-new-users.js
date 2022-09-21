@@ -10,6 +10,7 @@ import { dropTask, restartableTask } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import moment from 'moment';
 import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class BulkNewUsersComponent extends Component {
   @service flashMessages;
@@ -51,7 +52,7 @@ export default class BulkNewUsersComponent extends Component {
 
   get bestSelectedSchool() {
     if (this.schoolId) {
-      const currentSchool = this.schools.findBy('id', this.schoolId);
+      const currentSchool = findById(this.schools, this.schoolId);
 
       if (currentSchool) {
         return currentSchool;
@@ -62,7 +63,7 @@ export default class BulkNewUsersComponent extends Component {
 
   get bestSelectedCohort() {
     if (this.primaryCohortId) {
-      const currentCohort = this.cohorts.findBy('id', this.primaryCohortId);
+      const currentCohort = findById(this.cohorts, this.primaryCohortId);
 
       if (currentCohort) {
         return currentCohort;
@@ -184,7 +185,7 @@ export default class BulkNewUsersComponent extends Component {
     const selectedSchool = this.bestSelectedSchool;
     const selectedCohort = this.bestSelectedCohort;
     const roles = yield this.store.findAll('user-role');
-    const studentRole = roles.findBy('id', '4');
+    const studentRole = findById(roles.slice(), '4');
 
     const proposedUsers = this.selectedUsers;
 

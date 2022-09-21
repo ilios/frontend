@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { findBy, findById } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class CurriculumInventoryReportRolloverComponent extends Component {
@@ -39,9 +40,9 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
         title,
       });
     }
-    let selectedYear = years.findBy('year', startYear + 1);
+    let selectedYear = findBy(years, 'year', startYear + 1);
     if (!selectedYear) {
-      selectedYear = years.findBy('year', reportYear + 1);
+      selectedYear = findBy(years, 'year', reportYear + 1);
     }
 
     const program = yield this.args.report.program;
@@ -68,7 +69,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
 
   @action
   changeProgram(id) {
-    this.selectedProgram = this.programs.findBy('id', id);
+    this.selectedProgram = findById(this.programs, id);
   }
 
   @action

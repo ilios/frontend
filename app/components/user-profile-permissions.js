@@ -5,7 +5,7 @@ import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class UserProfilePermissionsComponent extends Component {
   @service store;
@@ -228,7 +228,7 @@ export default class UserProfilePermissionsComponent extends Component {
 
   get bestSelectedSchool() {
     if (this.args.selectedSchoolId) {
-      return this.schools.findBy('id', this.args.selectedSchoolId);
+      return findById(this.schools, this.args.selectedSchoolId);
     } else if (this.defaultSchool) {
       return this.defaultSchool;
     } else if (this.schools.length) {

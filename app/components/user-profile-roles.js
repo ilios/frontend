@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { findBy } from 'ilios-common/utils/array-helpers';
 
 export default class UserProfileRolesComponent extends Component {
   @service store;
@@ -62,9 +63,9 @@ export default class UserProfileRolesComponent extends Component {
 
   @dropTask
   *save() {
-    const roles = yield this.store.findAll('user-role');
-    const studentRole = roles.findBy('title', 'Student');
-    const formerStudentRole = roles.findBy('title', 'Former Student');
+    const roles = (yield this.store.findAll('user-role')).slice();
+    const studentRole = findBy(roles, 'title', 'Student');
+    const formerStudentRole = findBy(roles, 'title', 'Former Student');
     this.args.user.set('enabled', this.isEnabled);
     this.args.user.set('userSyncIgnore', this.isUserSyncIgnored);
     const userRoles = yield this.args.user.get('roles');

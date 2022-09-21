@@ -3,9 +3,10 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
-import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
+import { findById } from 'ilios-common/utils/array-helpers';
+import { use } from 'ember-could-get-used-to-this';
 
 @validatable
 export default class ProgramYearObjectiveListItemComponent extends Component {
@@ -127,7 +128,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   }
   @action
   setCompetencyBuffer(competencyId) {
-    this.competencyBuffer = this.args.programYearCompetencies.findBy('id', competencyId);
+    this.competencyBuffer = findById(this.args.programYearCompetencies.slice(), competencyId);
   }
   @action
   addDescriptorToBuffer(descriptor) {

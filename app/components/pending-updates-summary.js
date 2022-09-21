@@ -5,6 +5,7 @@ import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class PendingUpdatesSummaryComponent extends Component {
   @service currentUser;
@@ -30,7 +31,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
   get bestSelectedSchool() {
     const id = this.selectedSchoolId ?? this.user?.belongsTo('school').id();
     if (id) {
-      const school = this.args.schools.findBy('id', id);
+      const school = findById(this.args.schools.slice(), id);
       if (school) {
         return school;
       }

@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { restartableTask, dropTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolSessionTypesExpandedComponent extends Component {
   @service store;
@@ -20,7 +21,10 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
   }
 
   get managedSessionType() {
-    return this.sessionTypes?.findBy('id', this.args.managedSessionTypeId);
+    if (!this.sessionTypes) {
+      return null;
+    }
+    return findById(this.sessionTypes.slice(), this.args.managedSessionTypeId);
   }
 
   @action

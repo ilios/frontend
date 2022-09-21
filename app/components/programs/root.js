@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import PermissionChecker from 'ilios/classes/permission-checker';
+import { findById } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
 
 export default class ProgramRootComponent extends Component {
@@ -18,11 +19,11 @@ export default class ProgramRootComponent extends Component {
 
   get bestSelectedSchool() {
     if (this.selectedSchoolId) {
-      return this.args.schools.findBy('id', this.selectedSchoolId);
+      return findById(this.args.schools.slice(), this.selectedSchoolId);
     }
 
     const schoolId = this.user?.belongsTo('school').id();
-    return schoolId ? this.args.schools.findBy('id', schoolId) : this.args.schools.firstObject;
+    return schoolId ? findById(this.args.schools.slice(), schoolId) : this.args.schools.firstObject;
   }
 
   @dropTask

@@ -15,6 +15,7 @@ import {
   Lte,
   NotBlank,
 } from 'ilios-common/decorators/validation';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {
@@ -26,7 +27,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked
   @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
   endingAcademicLevel;
-  @tracked academicLevels;
+  @tracked academicLevels = [];
   @tracked childSequenceOrder;
   @tracked course;
   @tracked description;
@@ -282,7 +283,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @action
   setStartingAcademicLevel(event) {
     const id = event.target.value;
-    this.startingAcademicLevel = this.academicLevels.findBy('id', id);
+    this.startingAcademicLevel = findById(this.academicLevels, id);
   }
 
   @action
@@ -304,7 +305,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @action
   setEndingAcademicLevel(event) {
     const id = event.target.value;
-    this.endingAcademicLevel = this.academicLevels.findBy('id', id);
+    this.endingAcademicLevel = findById(this.academicLevels, id);
   }
 
   @action
@@ -362,7 +363,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     if (!value) {
       this.course = null;
     } else {
-      this.course = this.linkableCourses.findBy('id', value);
+      this.course = findById(this.linkableCourses, value);
     }
   }
 

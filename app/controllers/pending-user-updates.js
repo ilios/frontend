@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class PendingUserUpdatesController extends Controller {
   @service flashMessages;
@@ -20,7 +21,7 @@ export default class PendingUserUpdatesController extends Controller {
 
   get selectedSchool() {
     if (this.school) {
-      const school = this.model.schools.findBy('id', this.school);
+      const school = findById(this.model.schools.slice(), this.school);
       if (school) {
         return school;
       }

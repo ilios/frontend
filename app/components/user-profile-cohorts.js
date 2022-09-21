@@ -4,6 +4,7 @@ import { dropTask, restartableTask, timeout, waitForProperty } from 'ember-concu
 import { action } from '@ember/object';
 import { filter, map } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class UserProfileCohortsComponent extends Component {
   @service currentUser;
@@ -19,7 +20,7 @@ export default class UserProfileCohortsComponent extends Component {
   @tracked selectedSchoolId;
 
   get selectedSchool() {
-    return this.schools.findBy('id', this.selectedSchoolId);
+    return findById(this.schools, this.selectedSchoolId);
   }
 
   get assignableCohorts() {

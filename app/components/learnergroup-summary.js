@@ -6,6 +6,7 @@ import { isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
 import { enqueueTask, restartableTask, task } from 'ember-concurrency';
 import { Length, IsURL, validatable } from 'ilios-common/decorators/validation';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -230,7 +231,7 @@ export default class LearnergroupSummaryComponent extends Component {
     });
     const comb = [...courseObjects, ...childCourses.flat()];
     return comb.reduce((arr, obj) => {
-      let courseObj = arr.findBy('id', obj.id);
+      let courseObj = findById(arr, obj.id);
       if (!courseObj) {
         courseObj = {
           id: obj.id,

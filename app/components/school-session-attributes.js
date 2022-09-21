@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency';
+import { findBy } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolSessionAttributesComponent extends Component {
   @service store;
@@ -13,17 +14,20 @@ export default class SchoolSessionAttributesComponent extends Component {
 
   @restartableTask
   *load(element, [school]) {
-    const schoolConfigs = yield school.configurations;
-    this.showSessionAttendanceRequiredConfig = schoolConfigs.findBy(
+    const schoolConfigs = (yield school.configurations).slice();
+    this.showSessionAttendanceRequiredConfig = findBy(
+      schoolConfigs,
       'name',
       'showSessionAttendanceRequired'
     );
-    this.showSessionSupplementalConfig = schoolConfigs.findBy('name', 'showSessionSupplemental');
-    this.showSessionSpecialAttireRequiredConfig = schoolConfigs.findBy(
+    this.showSessionSupplementalConfig = findBy(schoolConfigs, 'name', 'showSessionSupplemental');
+    this.showSessionSpecialAttireRequiredConfig = findBy(
+      schoolConfigs,
       'name',
       'showSessionSpecialAttireRequired'
     );
-    this.showSessionSpecialEquipmentRequiredConfig = schoolConfigs.findBy(
+    this.showSessionSpecialEquipmentRequiredConfig = findBy(
+      schoolConfigs,
       'name',
       'showSessionSpecialEquipmentRequired'
     );

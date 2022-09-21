@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
+import { findBy } from 'ilios-common/utils/array-helpers';
 
 export default class NewProgramYearComponent extends Component {
   allYears = [];
@@ -14,7 +15,7 @@ export default class NewProgramYearComponent extends Component {
     if (!this.year) {
       return this.availableAcademicYears.firstObject;
     }
-    return this.availableAcademicYears.findBy('value', this.year);
+    return findBy(this.availableAcademicYears, 'value', this.year);
   }
 
   get availableAcademicYears() {

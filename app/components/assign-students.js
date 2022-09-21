@@ -5,6 +5,7 @@ import { all } from 'rsvp';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class AssignStudentsComponent extends Component {
   @service flashMessages;
@@ -21,7 +22,7 @@ export default class AssignStudentsComponent extends Component {
     }
 
     if (this.primaryCohortId) {
-      const currentCohort = this.cohorts.findBy('id', this.primaryCohortId);
+      const currentCohort = findById(this.cohorts, this.primaryCohortId);
       return currentCohort ?? false;
     } else {
       return this.cohorts.lastObject;

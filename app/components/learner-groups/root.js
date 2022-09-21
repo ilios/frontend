@@ -3,11 +3,11 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import PermissionChecker from 'ilios/classes/permission-checker';
+import cloneLearnerGroup from 'ilios/utils/clone-learner-group';
 import { dropTask } from 'ember-concurrency';
 import { map } from 'rsvp';
-import { sortBy } from 'ilios-common/utils/array-helpers';
-import cloneLearnerGroup from 'ilios/utils/clone-learner-group';
 import { action } from '@ember/object';
 
 export default class LearnerGroupsRootComponent extends Component {
@@ -55,7 +55,7 @@ export default class LearnerGroupsRootComponent extends Component {
   get selectedSchool() {
     const schoolId = this.args.schoolId ?? this.user?.belongsTo('school').id();
 
-    const school = this.args.schools.findBy('id', schoolId) ?? this.args.schools.firstObject;
+    const school = findById(this.args.schools.slice(), schoolId) ?? this.args.schools.firstObject;
     //trigger a pre-load of the data we need to load an individual group in this school
     this.dataLoader.loadInstructorGroupsForSchool(school.id);
     return school;
@@ -66,7 +66,7 @@ export default class LearnerGroupsRootComponent extends Component {
       return null;
     }
     if (this.args.programId) {
-      return this.programs.findBy('id', this.args.programId);
+      return findById(this.programs.slice(), this.args.programId);
     }
 
     return this.defaultSelectedProgram;
@@ -77,7 +77,7 @@ export default class LearnerGroupsRootComponent extends Component {
       return null;
     }
     if (this.args.programYearId) {
-      return this.programYears.findBy('id', this.args.programYearId);
+      return findById(this.programYears.slice(), this.args.programYearId);
     }
 
     return sortBy(this.programYears.slice(), 'startYear').lastObject;
@@ -184,7 +184,7 @@ export default class LearnerGroupsRootComponent extends Component {
 
   @dropTask
   *setProgramId(programId) {
-    const program = this.programs.findBy('id', programId);
+    const program = findById(this.programs.slice(), programId);
     const school = yield program.school;
     this.args.setSchoolId(school.id);
     this.args.setProgramId(program.id);
@@ -193,7 +193,7 @@ export default class LearnerGroupsRootComponent extends Component {
 
   @dropTask
   *setProgramYearId(programYearId) {
-    const programYear = this.programYears.findBy('id', programYearId);
+    const programYear = findById(this.programYears.slice(), programYearId);
     const program = yield programYear.program;
     const school = yield program.school;
     this.args.setSchoolId(school.id);

@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class CurriculumInventoryReportsComponent extends Component {
   @service currentUser;
@@ -20,7 +20,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
   @action
   async changeSelectedProgram(programId) {
-    const program = this.programs.findBy('id', programId);
+    const program = findById(this.programs, programId);
     const school = await program.school;
     this.args.setSchoolId(school.id);
     this.args.setProgramId(programId);
@@ -66,7 +66,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
       const user = yield this.currentUser.getModel();
       this.selectedSchool = yield user.school;
     } else {
-      this.selectedSchool = this.args.schools.findBy('id', this.args.schoolId);
+      this.selectedSchool = findById(this.args.schools.slice(), this.args.schoolId);
     }
 
     if (this.selectedSchool) {
@@ -78,7 +78,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
     }
 
     if (this.args.programId) {
-      this.selectedProgram = this.programs.findBy('id', this.args.programId);
+      this.selectedProgram = findById(this.programs, this.args.programId);
     } else {
       this.selectedProgram = this.programs.length ? this.programs[0] : null;
     }

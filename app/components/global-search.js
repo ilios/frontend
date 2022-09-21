@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { findBy, findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
 
@@ -32,7 +32,7 @@ export default class GlobalSearchComponent extends Component {
       return [];
     }
     return this.args.ignoredSchoolIds.map((id) => {
-      const school = this.schools.findBy('id', id);
+      const school = findById(this.schools.slice(), id);
       return school ? school.title : '';
     });
   }
@@ -71,7 +71,7 @@ export default class GlobalSearchComponent extends Component {
         'title'
       );
       const options = this.results.reduce((set, course) => {
-        const schoolOption = set.findBy('title', course.school);
+        const schoolOption = findBy(set, 'title', course.school);
         schoolOption.results++;
 
         return set;

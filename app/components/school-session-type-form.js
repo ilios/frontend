@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { validatable, IsHexColor, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class SchoolSessionTypeFormComponent extends Component {
@@ -34,7 +34,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
 
   get selectedAamcMethod() {
     if (this.selectedAamcMethodId) {
-      const selectedAamcMethod = this.filteredAamcMethods.findBy('id', this.selectedAamcMethodId);
+      const selectedAamcMethod = findById(this.filteredAamcMethods, this.selectedAamcMethodId);
       return selectedAamcMethod ?? null;
     }
     return null;
@@ -43,7 +43,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
   get selectedAssessmentOption() {
     if (this.assessment) {
       const assessmentOption = this.selectedAssessmentOptionId
-        ? this.assessmentOptions.findBy('id', this.selectedAssessmentOptionId)
+        ? findById(this.assessmentOptions, this.selectedAssessmentOptionId)
         : sortBy(this.assessmentOptions, 'name').get('firstObject');
       return assessmentOption ?? null;
     }

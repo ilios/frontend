@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { map } from 'rsvp';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolVocabulariesExpandedComponent extends Component {
   @service store;
@@ -68,7 +69,7 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
       return Number(this.args.managedVocabularyId) === Number(vocabulary.id);
     });
 
-    return terms.findBy('id', this.args.managedTermId);
+    return findById(terms, this.args.managedTermId);
   }
 
   @action

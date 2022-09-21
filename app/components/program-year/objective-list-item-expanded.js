@@ -3,6 +3,7 @@ import { restartableTask } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class ProgramYearObjectiveListItemExpandedComponent extends Component {
   @tracked courseObjects;
@@ -23,7 +24,7 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
       };
     });
     this.courseObjects = objectiveObjects.reduce((set, obj) => {
-      let existing = set.findBy('id', obj.courseId);
+      let existing = findById(set, obj.courseId);
       if (!existing) {
         let title = obj.courseTitle;
         if (obj.courseExternalId) {

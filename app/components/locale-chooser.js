@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class LocaleChooserComponent extends Component {
   @service intl;
@@ -12,7 +13,7 @@ export default class LocaleChooserComponent extends Component {
 
   get locale() {
     const locale = this.intl.get('primaryLocale');
-    return this.locales.findBy('id', locale);
+    return findById(this.locales, locale);
   }
 
   get locales() {
