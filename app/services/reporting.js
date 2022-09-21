@@ -204,16 +204,8 @@ export default class ReportingService extends Service {
   }
 
   async programsResults(results) {
-<<<<<<< HEAD
     const canView = this.currentUser.performsNonLearnerFunction;
-    return await map(results.toArray(), async (item) => {
-||||||| constructed merge base
-    const canView = await this.canViewPrograms;
-    const mappedResults = await map(results.toArray(), async (item) => {
-=======
-    const canView = await this.canViewPrograms;
-    const mappedResults = await map(results.slice(), async (item) => {
->>>>>>> replace toArray() with slice().
+    return await map(results.slice(), async (item) => {
       const rhett = {};
       const school = await item.get('school');
       rhett.value = school.get('title') + ': ' + item.get('title');
@@ -237,16 +229,8 @@ export default class ReportingService extends Service {
   }
 
   async programYearsResults(results) {
-<<<<<<< HEAD
     const canView = this.currentUser.performsNonLearnerFunction;
-    return map(results.toArray(), async (programYear) => {
-||||||| constructed merge base
-    const canView = await this.canViewPrograms;
-    return map(results.toArray(), async (programYear) => {
-=======
-    const canView = await this.canViewPrograms;
     return map(results.slice(), async (programYear) => {
->>>>>>> replace toArray() with slice().
       const rhett = {};
       const program = await programYear.program;
       const school = await programYear.school;
