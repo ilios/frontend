@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { currentRouteName } from '@ember/test-helpers';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
 
-const today = moment();
+const today = DateTime.fromObject({ hour: 8 });
 
 module('Acceptance | Session - Learning Materials', function (hooks) {
   setupApplicationTest(hooks);
@@ -31,7 +31,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         copyrightPermission: true,
         filename: 'something.pdf',
         absoluteFileUri: 'http://somethingsomething.com/something.pdf',
-        uploadDate: moment('2015-02-12').toDate(),
+        uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toJSDate(),
       });
       this.server.create('learningMaterial', {
         originalAuthor: 'Jennifer Johnson',
@@ -42,7 +42,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         copyrightRationale: 'reason is thus',
         filename: 'filename',
         absoluteFileUri: 'http://example.com/file',
-        uploadDate: moment('2011-03-14').toDate(),
+        uploadDate: DateTime.fromObject({ year: 2011, month: 3, day: 14, hour: 8 }).toJSDate(),
       });
       this.server.create('learningMaterial', {
         originalAuthor: 'Hunter Pence',
@@ -50,7 +50,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         statusId: 1,
         owningUserId: this.user.id,
         userRoleId: 1,
-        uploadDate: today.toDate(),
+        uploadDate: today.toJSDate(),
       });
       this.server.create('learningMaterial', {
         originalAuthor: 'Willie Mays',
@@ -58,7 +58,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         statusId: 1,
         userRoleId: 1,
         owningUserId: this.user.id,
-        uploadDate: moment('2016-12-12').toDate(),
+        uploadDate: DateTime.fromObject({ year: 2016, month: 12, day: 12, hour: 8 }).toJSDate(),
       });
       this.server.create('learningMaterial', {
         title: 'Letter to Doc Brown',
@@ -67,7 +67,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         statusId: 1,
         userRoleId: 1,
         copyrightPermission: true,
-        uploadDate: moment('2016-03-03').toDate(),
+        uploadDate: DateTime.fromObject({ year: 2016, month: 3, day: 3, hour: 8 }).toJSDate(),
         filename: 'letter.txt',
         absoluteFileUri: 'http://bttf.com/letter.txt',
       });
@@ -346,7 +346,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.uploadDate,
-        this.intl.formatDate(today.toDate())
+        this.intl.formatDate(today.toJSDate())
       );
       assert.ok(page.details.learningMaterials.manager.hasLink);
       assert.strictEqual(page.details.learningMaterials.manager.link, 'www.example.com');
@@ -624,15 +624,15 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       await page.details.learningMaterials.current[0].details();
       await page.details.learningMaterials.manager.addStartDate();
 
-      const newDate = moment().hour(10).minute(10).add(1, 'day').add(1, 'month');
-      await page.details.learningMaterials.manager.startDate.datePicker.set(newDate.toDate());
+      const newDate = DateTime.fromObject({ hour: 10, minute: 10 }).plus({ days: 1, month: 1 });
+      await page.details.learningMaterials.manager.startDate.datePicker.set(newDate.toJSDate());
       await page.details.learningMaterials.manager.startTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.startTime.timePicker.minute.select('10');
       await page.details.learningMaterials.manager.startTime.timePicker.ampm.select('am');
       await page.details.learningMaterials.manager.save();
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
-      const formattedNewDate = newDate.toDate().toLocaleString('en-us', {
+      const formattedNewDate = newDate.toJSDate().toLocaleString('en-us', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -647,21 +647,26 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
 
     test('add timed release start and end date', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      const newStartDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
-      const newEndDate = newStartDate.clone().add(1, 'minute');
+      const newStartDate = DateTime.fromObject({ hour: 10, minute: 10 }).plus({
+        days: 1,
+        month: 1,
+      });
+      const newEndDate = newStartDate.plus({ minutes: 1 });
 
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.notOk(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
       await page.details.learningMaterials.manager.addStartDate();
 
-      await page.details.learningMaterials.manager.startDate.datePicker.set(newStartDate.toDate());
+      await page.details.learningMaterials.manager.startDate.datePicker.set(
+        newStartDate.toJSDate()
+      );
       await page.details.learningMaterials.manager.startTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.startTime.timePicker.minute.select('10');
       await page.details.learningMaterials.manager.startTime.timePicker.ampm.select('am');
 
       await page.details.learningMaterials.manager.addEndDate();
-      await page.details.learningMaterials.manager.endDate.datePicker.set(newEndDate.toDate());
+      await page.details.learningMaterials.manager.endDate.datePicker.set(newEndDate.toJSDate());
       await page.details.learningMaterials.manager.endTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.endTime.timePicker.minute.select('11');
       await page.details.learningMaterials.manager.endTime.timePicker.ampm.select('am');
@@ -669,14 +674,14 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       await page.details.learningMaterials.manager.save();
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
-      const formattedStartDate = newStartDate.toDate().toLocaleString('en', {
+      const formattedStartDate = newStartDate.toJSDate().toLocaleString('en', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
       });
-      const formattedEndDate = newEndDate.toDate().toLocaleString('en', {
+      const formattedEndDate = newEndDate.toJSDate().toLocaleString('en', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -696,15 +701,15 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       await page.details.learningMaterials.current[0].details();
       await page.details.learningMaterials.manager.addEndDate();
 
-      const newDate = moment().hour(10).minute(10).add(1, 'day').add(1, 'month');
-      await page.details.learningMaterials.manager.endDate.datePicker.set(newDate.toDate());
+      const newDate = DateTime.fromObject({ hour: 10, minute: 10 }).plus({ days: 1, month: 1 });
+      await page.details.learningMaterials.manager.endDate.datePicker.set(newDate.toJSDate());
       await page.details.learningMaterials.manager.endTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.endTime.timePicker.minute.select('10');
       await page.details.learningMaterials.manager.endTime.timePicker.ampm.select('am');
       await page.details.learningMaterials.manager.save();
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
-      const formattedNewDate = newDate.toDate().toLocaleString('en-us', {
+      const formattedNewDate = newDate.toJSDate().toLocaleString('en-us', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -719,7 +724,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
 
     test('end date is after start date', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      const newDate = moment().add(1, 'day').add(1, 'month').hour(10).minute(10);
+      const newDate = DateTime.fromObject({ hour: 10, minute: 10 }).plus({ days: 1, month: 1 });
 
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.notOk(page.details.learningMaterials.current[0].isTimedRelease);
@@ -727,20 +732,20 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       assert.notOk(page.details.learningMaterials.manager.hasEndDateValidationError);
       await page.details.learningMaterials.manager.addStartDate();
 
-      await page.details.learningMaterials.manager.startDate.datePicker.set(newDate.toDate());
+      await page.details.learningMaterials.manager.startDate.datePicker.set(newDate.toJSDate());
       await page.details.learningMaterials.manager.startTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.startTime.timePicker.minute.select('10');
       await page.details.learningMaterials.manager.startTime.timePicker.ampm.select('am');
 
       await page.details.learningMaterials.manager.addEndDate();
-      await page.details.learningMaterials.manager.endDate.datePicker.set(newDate.toDate());
+      await page.details.learningMaterials.manager.endDate.datePicker.set(newDate.toJSDate());
       await page.details.learningMaterials.manager.endTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.endTime.timePicker.minute.select('10');
       await page.details.learningMaterials.manager.endTime.timePicker.ampm.select('am');
       await page.details.learningMaterials.manager.save();
 
       assert.ok(page.details.learningMaterials.manager.hasEndDateValidationError);
-      const formattedDate = newDate.toDate().toLocaleString('en-us', {
+      const formattedDate = newDate.toJSDate().toLocaleString('en-us', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -827,7 +832,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         copyrightPermission: true,
         filename: 'something.pdf',
         absoluteFileUri: 'http://somethingsomething.com/something.pdf',
-        uploadDate: moment('2015-02-12').toDate(),
+        uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toJSDate(),
       });
       this.server.create('sessionLearningMaterial', {
         learningMaterial,
