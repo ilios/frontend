@@ -128,7 +128,7 @@ export default class GlobalSearchBox extends Component {
   }
 
   listHasFocus(listArray) {
-    return listArray.any((element) => element.classList.contains('active'));
+    return Boolean(listArray.find((element) => element.classList.contains('active')));
   }
 
   hasFocusOnEdge(listArray, shouldReverse) {
