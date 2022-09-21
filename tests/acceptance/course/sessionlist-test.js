@@ -1,13 +1,12 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/sessions';
 import sessionPage from 'ilios-common/page-objects/session';
 
-moment.locale('en');
-const today = moment().hour(8);
+const today = DateTime.fromObject({ hour: 8 });
 module('Acceptance | Course - Session List', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
@@ -36,7 +35,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     this.session1 = this.server.create('session', {
       course: this.course,
       sessionType: this.sessionType,
-      updatedAt: moment('2019-07-09 17:00:00').toDate(),
+      updatedAt: DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 }).toJSDate(),
     });
     this.session2 = this.server.create('session', {
       course: this.course,
@@ -55,8 +54,8 @@ module('Acceptance | Course - Session List', function (hooks) {
     });
     this.server.create('offering', {
       session: this.session1,
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       learners: [learner1],
       learnerGroups: [learnerGroup1, learnerGroup2],
       instructors: [instructor1],
@@ -64,13 +63,13 @@ module('Acceptance | Course - Session List', function (hooks) {
     });
     this.server.create('offering', {
       session: this.session1,
-      startDate: today.clone().add(1, 'day').add(1, 'hour').format(),
-      endDate: today.clone().add(1, 'day').add(4, 'hour').format(),
+      startDate: today.plus({ day: 1, hour: 1 }).toJSDate(),
+      endDate: today.plus({ day: 1, hour: 4 }).toJSDate(),
     });
     this.server.create('offering', {
       session: this.session1,
-      startDate: today.clone().add(2, 'days').format(),
-      endDate: today.clone().add(3, 'days').add(1, 'hour').format(),
+      startDate: today.plus({ day: 2 }).toJSDate(),
+      endDate: today.plus({ day: 3 }).toJSDate(),
     });
   });
 
@@ -86,7 +85,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(sessions[0].termCount, '0');
     assert.strictEqual(
       sessions[0].firstOffering,
-      today.toDate().toLocaleString('en', {
+      today.toJSDate().toLocaleString('en', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -137,33 +136,33 @@ module('Acceptance | Course - Session List', function (hooks) {
     await sessions[0].expand();
     const { offerings } = sessions[0];
 
-    const offering1StartDate = moment(this.server.db.offerings[0].startDate);
-    const offering2StartDate = moment(this.server.db.offerings[1].startDate);
-    const offering3StartDate = moment(this.server.db.offerings[2].startDate);
+    const offering1StartDate = DateTime.fromJSDate(this.server.db.offerings[0].startDate);
+    const offering2StartDate = DateTime.fromJSDate(this.server.db.offerings[1].startDate);
+    const offering3StartDate = DateTime.fromJSDate(this.server.db.offerings[2].startDate);
 
     assert.strictEqual(offerings.dates.length, 3);
 
-    assert.strictEqual(offerings.dates[0].dayOfWeek, offering1StartDate.format('dddd'));
-    assert.strictEqual(offerings.dates[0].dayOfMonth, offering1StartDate.format('MMMM Do'));
-    assert.strictEqual(offerings.dates[1].dayOfWeek, offering2StartDate.format('dddd'));
-    assert.strictEqual(offerings.dates[1].dayOfMonth, offering2StartDate.format('MMMM Do'));
-    assert.strictEqual(offerings.dates[2].dayOfWeek, offering3StartDate.format('dddd'));
-    assert.strictEqual(offerings.dates[2].dayOfMonth, offering3StartDate.format('MMMM Do'));
+    assert.strictEqual(offerings.dates[0].dayOfWeek, offering1StartDate.toFormat('cccc'));
+    assert.strictEqual(offerings.dates[0].dayOfMonth, offering1StartDate.toFormat('MMMM dd'));
+    assert.strictEqual(offerings.dates[1].dayOfWeek, offering2StartDate.toFormat('cccc'));
+    assert.strictEqual(offerings.dates[1].dayOfMonth, offering2StartDate.toFormat('MMMM dd'));
+    assert.strictEqual(offerings.dates[2].dayOfWeek, offering3StartDate.toFormat('cccc'));
+    assert.strictEqual(offerings.dates[2].dayOfMonth, offering3StartDate.toFormat('MMMM dd'));
 
     assert.strictEqual(offerings.offerings.length, 3);
-    assert.strictEqual(offerings.offerings[0].startTime, offering1StartDate.format('LT'));
+    assert.strictEqual(offerings.offerings[0].startTime, offering1StartDate.toFormat('h:mm a'));
     assert.strictEqual(offerings.offerings[0].location, 'room 0');
     assert.strictEqual(offerings.offerings[0].learners, '(2) 1 guy M. Mc1son, 2 guy...');
     assert.strictEqual(offerings.offerings[0].learnerGroups, '(2) learner group 0, learn...');
     assert.strictEqual(offerings.offerings[0].instructors, '(3) 3 guy M. Mc3son, 4 guy...');
 
-    assert.strictEqual(offerings.offerings[1].startTime, offering2StartDate.format('LT'));
+    assert.strictEqual(offerings.offerings[1].startTime, offering2StartDate.toFormat('h:mm a'));
     assert.strictEqual(offerings.offerings[1].location, 'room 1');
     assert.strictEqual(offerings.offerings[1].learners, '');
     assert.strictEqual(offerings.offerings[1].learnerGroups, '');
     assert.strictEqual(offerings.offerings[1].instructors, '');
 
-    assert.strictEqual(offerings.offerings[2].startTime, offering3StartDate.format('LT'));
+    assert.strictEqual(offerings.offerings[2].startTime, offering3StartDate.toFormat('h:mm a'));
     assert.strictEqual(offerings.offerings[2].location, 'room 2');
     assert.strictEqual(offerings.offerings[2].learners, '');
     assert.strictEqual(offerings.offerings[2].learnerGroups, '');
@@ -331,7 +330,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(
       sessions[0].firstOffering,
-      today.toDate().toLocaleString('en', {
+      today.toJSDate().toLocaleString('en', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -342,16 +341,16 @@ module('Acceptance | Course - Session List', function (hooks) {
     await sessions[0].expand();
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];
-    const newDate = moment(new Date(2011, 8, 11)).hour(2).minute(15);
-    await form.startDate.datePicker.set(newDate.toDate());
-    await form.startTime.timePicker.hour.select(newDate.format('h'));
-    await form.startTime.timePicker.minute.select(newDate.format('m'));
-    await form.startTime.timePicker.ampm.select(newDate.format('a'));
+    const newDate = DateTime.fromObject({ year: 2011, month: 8, day: 11, hour: 14, minute: 2 });
+    await form.startDate.datePicker.set(newDate.toJSDate());
+    await form.startTime.timePicker.hour.select(newDate.toFormat('h'));
+    await form.startTime.timePicker.minute.select(newDate.toFormat('mm'));
+    await form.startTime.timePicker.ampm.select(newDate.toFormat('a'));
     await form.save();
 
     assert.strictEqual(
       sessions[0].firstOffering,
-      newDate.toDate().toLocaleString('en', {
+      newDate.toJSDate().toLocaleString('en', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -412,7 +411,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(
       sessions[0].firstOffering,
-      today.toDate().toLocaleString('en', {
+      today.toJSDate().toLocaleString('en', {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
