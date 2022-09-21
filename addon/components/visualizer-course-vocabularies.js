@@ -8,6 +8,7 @@ import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { findBy, mapBy } from '../utils/array-helpers';
 
 export default class VisualizerCourseVocabularies extends Component {
   @service router;
@@ -27,7 +28,7 @@ export default class VisualizerCourseVocabularies extends Component {
     if (!sessions) {
       return [];
     }
-    const sessionsWithMinutes = await map(sessions.toArray(), async (session) => {
+    const sessionsWithMinutes = await map(sessions.slice(), async (session) => {
       const hours = await session.getTotalSumDuration();
       return {
         session,
@@ -35,8 +36,8 @@ export default class VisualizerCourseVocabularies extends Component {
       };
     });
     return map(sessionsWithMinutes, async ({ session, minutes }) => {
-      const terms = await session.terms;
-      const vocabularies = await all(terms.mapBy('vocabulary'));
+      const terms = (await session.terms).slice();
+      const vocabularies = await all(mapBy(terms, 'vocabulary'));
       return {
         sessionTitle: session.title,
         vocabularies,
@@ -49,7 +50,7 @@ export default class VisualizerCourseVocabularies extends Component {
     return this.dataObjects.reduce((set, obj) => {
       obj.vocabularies.forEach((vocabulary) => {
         const vocabularyTitle = vocabulary.get('title');
-        let existing = set.findBy('label', vocabularyTitle);
+        let existing = findBy(set, 'label', vocabularyTitle);
         if (!existing) {
           existing = {
             data: 0,
@@ -59,10 +60,10 @@ export default class VisualizerCourseVocabularies extends Component {
               sessions: [],
             },
           };
-          set.pushObject(existing);
+          set.push(existing);
         }
         existing.data += obj.minutes;
-        existing.meta.sessions.pushObject(obj.sessionTitle);
+        existing.meta.sessions.push(obj.sessionTitle);
       });
 
       return set;

@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
+import { findById, mapBy } from '../../utils/array-helpers';
 
 @validatable
 export default class CourseObjectiveListItemComponent extends Component {
@@ -43,26 +44,26 @@ export default class CourseObjectiveListItemComponent extends Component {
 
   manageParents = dropTask(async () => {
     const objectives = this.args.cohortObjectives.reduce((set, cohortObject) => {
-      const cohortObjectives = cohortObject.competencies.mapBy('objectives');
+      const cohortObjectives = mapBy(cohortObject.competencies, 'objectives');
       return [...set, ...cohortObjectives.flat()];
     }, []);
     const parents = await this.args.courseObjective.programYearObjectives;
-    this.parentsBuffer = parents.toArray().map((objective) => {
-      return objectives.findBy('id', objective.id);
+    this.parentsBuffer = parents.slice().map((objective) => {
+      return findById(objectives, objective.id);
     });
     this.isManagingParents = true;
   });
 
   manageDescriptors = dropTask(async () => {
     const meshDescriptors = await this.args.courseObjective.meshDescriptors;
-    this.descriptorsBuffer = meshDescriptors.toArray();
+    this.descriptorsBuffer = meshDescriptors.slice();
     this.isManagingDescriptors = true;
   });
 
   manageTerms = dropTask(async (vocabulary) => {
     this.selectedVocabulary = vocabulary;
     const terms = await this.args.courseObjective.terms;
-    this.termsBuffer = terms.toArray();
+    this.termsBuffer = terms.slice();
     this.isManagingTerms = true;
   });
 
@@ -117,8 +118,8 @@ export default class CourseObjectiveListItemComponent extends Component {
   }
   @action
   removeParentsWithCohortFromBuffer(cohort) {
-    const cohortObjectives = cohort.competencies.mapBy('objectives');
-    const ids = [...cohortObjectives.flat()].mapBy('id');
+    const cohortObjectives = mapBy(cohort.competencies, 'objectives');
+    const ids = mapBy([...cohortObjectives.flat()], 'id');
     this.parentsBuffer = this.parentsBuffer.filter((obj) => {
       return !ids.includes(obj.id);
     });

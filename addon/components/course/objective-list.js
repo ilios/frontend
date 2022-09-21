@@ -7,6 +7,7 @@ import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from '../../classes/async-process';
 import ResolveAsyncValue from '../../classes/resolve-async-value';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import { findById } from '../../utils/array-helpers';
 
 export default class CourseObjectiveListComponent extends Component {
   @service store;
@@ -19,7 +20,7 @@ export default class CourseObjectiveListComponent extends Component {
 
   get courseObjectives() {
     if (this.load.lastSuccessful && this.courseObjectivesAsync) {
-      return this.courseObjectivesAsync.toArray().sort(sortableByPosition);
+      return this.courseObjectivesAsync.slice().sort(sortableByPosition);
     }
 
     return undefined;
@@ -29,7 +30,7 @@ export default class CourseObjectiveListComponent extends Component {
 
   get courseCohorts() {
     if (this.load.lastSuccessful && this.courseCohortsAsync) {
-      return this.courseCohortsAsync.toArray();
+      return this.courseCohortsAsync.slice();
     }
 
     return [];
@@ -70,7 +71,7 @@ export default class CourseObjectiveListComponent extends Component {
         'allowMultipleCourseObjectiveParents'
       );
       const objectives = await programYear.programYearObjectives;
-      const objectiveObjects = await map(objectives.toArray(), async (objective) => {
+      const objectiveObjects = await map(objectives.slice(), async (objective) => {
         let competencyId = 0;
         let competencyTitle = intl.t('general.noAssociatedCompetency');
         const competency = await objective.competency;
@@ -88,7 +89,7 @@ export default class CourseObjectiveListComponent extends Component {
         };
       });
       const competencies = objectiveObjects.reduce((set, obj) => {
-        let existing = set.findBy('id', obj.competencyId);
+        let existing = findById(set, obj.competencyId);
         if (!existing) {
           existing = {
             id: obj.competencyId,

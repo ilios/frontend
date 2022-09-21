@@ -6,6 +6,7 @@ import { render, click, find, fillIn } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 module('Integration | Component | session copy', function (hooks) {
   setupRenderingTest(hooks);
@@ -137,7 +138,7 @@ module('Integration | Component | session copy', function (hooks) {
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.strictEqual(sessions.length, 2);
-    const newSession = sessions.findBy('id', '2');
+    const newSession = findById(sessions, '2');
     assert.strictEqual(session.attireRequired, newSession.attireRequired);
     assert.strictEqual(session.equipmentRequired, newSession.equipmentRequired);
     assert.strictEqual(session.supplemental, newSession.supplemental);
@@ -150,7 +151,7 @@ module('Integration | Component | session copy', function (hooks) {
       .lookup('service:store')
       .findAll('session-learning-material');
     assert.strictEqual(sessionLearningMaterials.length, 2);
-    const newSessionLm = sessionLearningMaterials.findBy('id', '2');
+    const newSessionLm = findById(sessionLearningMaterials, '2');
     assert.strictEqual(sessionLearningMaterial.notes, newSessionLm.notes);
     assert.strictEqual(sessionLearningMaterial.required, newSessionLm.required);
     assert.strictEqual(sessionLearningMaterial.publicNotes, newSessionLm.publicNotes);
@@ -160,7 +161,7 @@ module('Integration | Component | session copy', function (hooks) {
 
     const sessionObjectives = await this.owner.lookup('service:store').findAll('session-objective');
     assert.strictEqual(sessionObjectives.length, 2);
-    const newSessionObjective = sessionObjectives.findBy('id', '2');
+    const newSessionObjective = findById(sessionObjectives, '2');
     assert.strictEqual(newSessionObjective.title, sessionObjective.title);
     assert.strictEqual(sessionObjective.position, newSessionObjective.position);
     assert.strictEqual(newSessionObjective.belongsTo('session').id(), newSession.id);
@@ -313,7 +314,7 @@ module('Integration | Component | session copy', function (hooks) {
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.strictEqual(sessions.length, 2);
-    const newSession = sessions.findBy('id', '2');
+    const newSession = findById(sessions, '2');
     assert.strictEqual(newSession.belongsTo('course').id(), course3.id);
   });
 
@@ -362,7 +363,7 @@ module('Integration | Component | session copy', function (hooks) {
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.strictEqual(sessions.length, 3);
-    const newSession = sessions.findBy('id', '3');
+    const newSession = findById(sessions, '3');
     assert.strictEqual(session.title, newSession.title);
 
     const newPostRequisite = await newSession.postrequisite;
@@ -419,7 +420,7 @@ module('Integration | Component | session copy', function (hooks) {
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.strictEqual(sessions.length, 3);
-    const newSession = sessions.findBy('id', '3');
+    const newSession = findById(sessions, '3');
     assert.strictEqual(session.title, newSession.title);
 
     const newPostRequisite = await newSession.postrequisite;
@@ -475,7 +476,7 @@ module('Integration | Component | session copy', function (hooks) {
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.strictEqual(sessions.length, 4);
-    const newSession = sessions.findBy('id', '4');
+    const newSession = findById(sessions, '4');
     assert.strictEqual(session.title, newSession.title);
 
     const newPostRequisites = await newSession.prerequisites;
@@ -537,7 +538,7 @@ module('Integration | Component | session copy', function (hooks) {
 
     const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.strictEqual(sessions.length, 4);
-    const newSession = sessions.findBy('id', '4');
+    const newSession = findById(sessions, '4');
     assert.strictEqual(session.title, newSession.title);
 
     const newPostRequisites = await newSession.prerequisites;

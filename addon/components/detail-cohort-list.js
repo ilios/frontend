@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import { map } from 'rsvp';
+import { mapBy, sortBy } from '../utils/array-helpers';
 
 export default class DetailCohortListComponent extends Component {
   @service intl;
@@ -13,7 +14,7 @@ export default class DetailCohortListComponent extends Component {
       return false;
     }
 
-    const sortProxies = await map(cohorts.toArray(), async (cohort) => {
+    const sortProxies = await map(cohorts.slice(), async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;
@@ -31,6 +32,6 @@ export default class DetailCohortListComponent extends Component {
       };
     });
 
-    this.sortedCohorts = sortProxies.sortBy('schoolTitle', 'displayTitle').mapBy('cohort');
+    this.sortedCohorts = mapBy(sortBy(sortProxies, ['schoolTitle', 'displayTitle']), 'cohort');
   });
 }

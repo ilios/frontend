@@ -14,7 +14,7 @@ export default class CourseVisualizeInstructorsRoute extends Route {
   }
 
   async afterModel(course) {
-    const sessions = (await course.sessions).toArray();
+    const sessions = (await course.sessions).slice();
     return await all([
       map(sessions, (s) => s.offerings),
       map(sessions, (s) => s.totalSumDuration),

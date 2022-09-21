@@ -1,4 +1,5 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
+import { mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class IlmSession extends Model {
   @attr('number')
@@ -34,12 +35,12 @@ export default class IlmSession extends Model {
    * @returns {Promise<Array>}
    */
   async getAllInstructors() {
-    const instructors = (await this.instructors).toArray();
-    const instructorGroups = (await this.instructorGroups).toArray();
-    const instructorsInInstructorGroups = await Promise.all(instructorGroups.mapBy('users'));
-    return [
+    const instructors = (await this.instructors).slice();
+    const instructorGroups = (await this.instructorGroups).slice();
+    const instructorsInInstructorGroups = await Promise.all(mapBy(instructorGroups, 'users'));
+    return uniqueValues([
       ...instructors,
-      ...instructorsInInstructorGroups.map((instructorGroup) => instructorGroup.toArray()).flat(),
-    ].uniq();
+      ...instructorsInInstructorGroups.map((instructorGroup) => instructorGroup.slice()).flat(),
+    ]);
   }
 }

@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { findBy, findById, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseTerm extends Component {
   @service router;
@@ -31,7 +32,7 @@ export default class VisualizerCourseTerm extends Component {
   get data() {
     const sessionTypeData = this.termSessionsInCourse.map((session) => {
       const minutes = Math.round(session.totalSumDuration * 60);
-      const sessionType = this.sessionTypes.findBy('id', session.belongsTo('sessionType').id());
+      const sessionType = findById(this.sessionTypes, session.belongsTo('sessionType').id());
       return {
         sessionTitle: session.title,
         sessionTypeTitle: sessionType.title,
@@ -40,7 +41,7 @@ export default class VisualizerCourseTerm extends Component {
     });
 
     const data = sessionTypeData.reduce((set, obj) => {
-      let existing = set.findBy('label', obj.sessionTypeTitle);
+      let existing = findBy(set, 'label', obj.sessionTypeTitle);
       if (!existing) {
         existing = {
           data: 0,
@@ -50,15 +51,15 @@ export default class VisualizerCourseTerm extends Component {
             sessions: [],
           },
         };
-        set.pushObject(existing);
+        set.push(existing);
       }
       existing.data += obj.minutes;
-      existing.meta.sessions.pushObject(obj.sessionTitle);
+      existing.meta.sessions.push(obj.sessionTitle);
 
       return set;
     }, []);
 
-    const totalMinutes = data.mapBy('data').reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = mapBy(data, 'data').reduce((total, minutes) => total + minutes, 0);
 
     return data.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
@@ -79,6 +80,6 @@ export default class VisualizerCourseTerm extends Component {
     const { label, data, meta } = obj;
 
     this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
-    this.tooltipContent = meta.sessions.uniq().sort().join(', ');
+    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
   });
 }

@@ -4,6 +4,7 @@ import { restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
+import { findBy, sortBy } from '../../utils/array-helpers';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service dataLoader;
@@ -41,29 +42,29 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   }
 
   get courses() {
-    return this.coursesRelationship ? this.coursesRelationship.toArray() : [];
+    return this.coursesRelationship ? this.coursesRelationship.slice() : [];
   }
 
   get courseYears() {
-    return this.courses
-      .reduce((acc, course) => {
-        let year = acc.find(({ year }) => year === course.year);
-        const label = this.academicYearCrossesCalendarYearBoundaries
-          ? `${course.year} - ${course.year + 1}`
-          : course.year.toString();
-        if (!year) {
-          year = {
-            label,
-            year: course.year,
-            courses: [],
-          };
-          acc.push(year);
-        }
-        year.courses.push(course);
+    const courseYears = this.courses.reduce((acc, course) => {
+      let year = acc.find(({ year }) => year === course.year);
+      const label = this.academicYearCrossesCalendarYearBoundaries
+        ? `${course.year} - ${course.year + 1}`
+        : course.year.toString();
+      if (!year) {
+        year = {
+          label,
+          year: course.year,
+          courses: [],
+        };
+        acc.push(year);
+      }
+      year.courses.push(course);
 
-        return acc;
-      }, [])
-      .sortBy('year');
+      return acc;
+    }, []);
+
+    return sortBy(courseYears, 'year');
   }
 
   get expandedYears() {
@@ -71,7 +72,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
       return this._expandedYears;
     }
     if (this.courseYears.length) {
-      const coursesThisYear = this.courseYears.findBy('year', this.academicYear);
+      const coursesThisYear = findBy(this.courseYears, 'year', this.academicYear);
       if (coursesThisYear) {
         return [this.academicYear];
       } else {

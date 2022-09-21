@@ -7,6 +7,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 import DeprecatedResolveCP from 'ilios-common/classes/deprecated-resolve-cp';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { filterBy, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class LearnerGroup extends Model {
   @attr('string')
@@ -73,7 +74,7 @@ export default class LearnerGroup extends Model {
     if (!this._offeringSessions || !this._ilmSessionSessions) {
       return [];
     }
-    return [...this._offeringSessions, ...this._ilmSessionSessions].filter(Boolean).uniq();
+    return uniqueValues([...this._offeringSessions, ...this._ilmSessionSessions].filter(Boolean));
   }
 
   @use _sessionCourses = new ResolveFlatMapBy(() => [this.sessions, 'course']);
@@ -82,7 +83,7 @@ export default class LearnerGroup extends Model {
    * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
    */
   get courses() {
-    return this._sessionCourses?.uniq() ?? [];
+    return uniqueValues(this._sessionCourses ?? []);
   }
 
   @use subgroupNumberingOffset = new DeprecatedAsyncCP(() => [
@@ -127,7 +128,7 @@ export default class LearnerGroup extends Model {
   }
 
   async getAllDescendants() {
-    const children = (await this.children).toArray();
+    const children = (await this.children).slice();
     const childDescendants = await map(children, (child) => {
       return child.getAllDescendants();
     });
@@ -150,16 +151,14 @@ export default class LearnerGroup extends Model {
   async getAllDescendantUsers() {
     const users = await this.users;
     const descendantUsers = await this._getDescendantUsers();
-    return [...users.toArray(), ...descendantUsers].uniq();
+    return uniqueValues([...users.slice(), ...descendantUsers]);
   }
 
   async _getDescendantUsers() {
     const allDescendants = await this.getAllDescendants();
-    const descendantsUsers = await Promise.all(allDescendants.mapBy('users'));
+    const descendantsUsers = await Promise.all(mapBy(allDescendants, 'users'));
     return descendantsUsers.reduce((all, groups) => {
-      all.pushObjects(groups.toArray());
-
-      return all;
+      return [...all, ...groups.slice()];
     }, []);
   }
 
@@ -173,7 +172,7 @@ export default class LearnerGroup extends Model {
   ]);
 
   async getUsersOnlyAtThisLevel() {
-    const users = (await this.users).toArray();
+    const users = (await this.users).slice();
     const descendantsUsers = await this._getDescendantUsers();
 
     return users.filter((user) => !descendantsUsers.includes(user));
@@ -218,8 +217,8 @@ export default class LearnerGroup extends Model {
     }
 
     return [
-      ...this.allDescendants.mapBy('title'),
-      ...this.allParents.mapBy('title'),
+      ...mapBy(this.allDescendants, 'title'),
+      ...mapBy(this.allParents, 'title'),
       this.title,
     ].join('');
   }
@@ -263,7 +262,7 @@ export default class LearnerGroup extends Model {
       return [];
     }
 
-    return [...this._instructors.toArray(), ...this._instructorGroupUsers].uniq();
+    return uniqueValues([...this._instructors.slice(), ...this._instructorGroupUsers]);
   }
 
   @use _cohort = new ResolveAsyncValue(() => [this.cohort]);
@@ -293,7 +292,7 @@ export default class LearnerGroup extends Model {
       return false;
     }
 
-    const subGroupsInNeedOfAccomodation = this.allDescendants?.filterBy('needsAccommodation');
+    const subGroupsInNeedOfAccomodation = filterBy(this.allDescendants, 'needsAccommodation');
 
     return subGroupsInNeedOfAccomodation?.length > 0;
   }
@@ -323,11 +322,11 @@ export default class LearnerGroup extends Model {
     const allDescendants = await this.getAllDescendants();
     [this, ...allDescendants].forEach((group) => {
       if (group.hasMany('users').ids().includes(userId)) {
-        group.get('users').removeObject(user);
-        modifiedGroups.pushObject(group);
+        group.users = group.users.filter(({ id }) => id !== user.id);
+        modifiedGroups.push(group);
       }
     });
-    return modifiedGroups.uniq();
+    return uniqueValues(modifiedGroups);
   }
 
   async getAllParents() {
@@ -345,7 +344,7 @@ export default class LearnerGroup extends Model {
       return [];
     }
     const parents = await parent.getAllParents();
-    const titles = parents.mapBy('title');
+    const titles = mapBy(parents, 'title');
     return [...titles, parent.title];
   }
 
@@ -369,12 +368,12 @@ export default class LearnerGroup extends Model {
     const groups = [this, ...allParents];
     for (let i = 0; i < groups.length; i++) {
       const users = await groups[i].users;
-      const ids = users.mapBy('id');
+      const ids = mapBy(users, 'id');
       if (!ids.includes(userId)) {
         users.pushObject(user);
-        modifiedGroups.pushObject(groups[i]);
+        modifiedGroups.push(groups[i]);
       }
     }
-    return modifiedGroups.uniq();
+    return uniqueValues(modifiedGroups);
   }
 }

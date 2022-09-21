@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
+import { mapBy, sortBy } from '../utils/array-helpers';
 
 const DEBOUNCE_TIMEOUT = 250;
 const MIN_INPUT = 3;
@@ -29,7 +30,7 @@ export default class MeshManagerComponent extends Component {
     if (!this.terms || this.terms.length === 0) {
       return [];
     }
-    return this.args.terms.sortBy('name');
+    return sortBy(this.args.terms, 'name');
   }
 
   @action
@@ -46,7 +47,7 @@ export default class MeshManagerComponent extends Component {
       return;
     }
 
-    if (this.terms.mapBy('id').includes(term.id)) {
+    if (mapBy(this.terms, 'id').includes(term.id)) {
       return;
     }
     this.args.add(term);
@@ -82,7 +83,7 @@ export default class MeshManagerComponent extends Component {
         q: this.query,
         limit: SEARCH_RESULTS_PER_PAGE + 1,
       })
-    ).toArray();
+    ).slice();
 
     this.searchPage = 1;
     this.hasMoreSearchResults = descriptors.length > SEARCH_RESULTS_PER_PAGE;
@@ -99,7 +100,7 @@ export default class MeshManagerComponent extends Component {
         limit: SEARCH_RESULTS_PER_PAGE + 1,
         offset: this.searchPage * SEARCH_RESULTS_PER_PAGE,
       })
-    ).toArray();
+    ).slice();
     this.searchPage = this.searchPage + 1;
     this.hasMoreSearchResults = descriptors.length > SEARCH_RESULTS_PER_PAGE;
     if (this.hasMoreSearchResults) {

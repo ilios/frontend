@@ -7,6 +7,7 @@ import { task, restartableTask, dropTask } from 'ember-concurrency';
 import moment from 'moment';
 import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
+import { findById, sortBy } from '../utils/array-helpers';
 
 @validatable
 export default class SessionOverview extends Component {
@@ -42,7 +43,7 @@ export default class SessionOverview extends Component {
   }
 
   get sortedSessionTypes() {
-    return this.filteredSessionTypes.sortBy('title');
+    return sortBy(this.filteredSessionTypes, 'title');
   }
 
   load = restartableTask(async (element, [session, sessionTypes]) => {
@@ -112,7 +113,7 @@ export default class SessionOverview extends Component {
       }
     }
     const school = await course.school;
-    const schoolCourses = (await school.courses).toArray();
+    const schoolCourses = (await school.courses).slice();
     let schoolCourse;
     for (schoolCourse of schoolCourses) {
       if (await this.permissionChecker.canCreateSession(schoolCourse)) {
@@ -170,7 +171,7 @@ export default class SessionOverview extends Component {
 
   @action
   setSessionType(event) {
-    this.sessionType = this.sessionTypes.findBy('id', event.target.value);
+    this.sessionType = findById(this.sessionTypes, event.target.value);
   }
 
   @action

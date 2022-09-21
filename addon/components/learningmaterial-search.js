@@ -31,7 +31,7 @@ export default class LearningMaterialSearchComponent extends Component {
       'order_by[title]': 'ASC',
     });
 
-    const lms = results.toArray();
+    const lms = results.slice();
     this.searchReturned = true;
     this.searching = false;
     this.searchPage = 1;
@@ -59,7 +59,7 @@ export default class LearningMaterialSearchComponent extends Component {
       offset: this.searchPage * this.searchResultsPerPage,
       'order_by[title]': 'ASC',
     });
-    const lms = results.toArray();
+    const lms = results.slice();
     this.searchPage = this.searchPage + 1;
     this.hasMoreSearchResults = lms.length > this.searchResultsPerPage;
     if (this.hasMoreSearchResults) {

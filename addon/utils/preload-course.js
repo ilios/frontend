@@ -1,10 +1,12 @@
+import { mapBy } from './array-helpers';
+
 export default async function preloadCourse(store, courseModel) {
   const courses = [courseModel.get('id')];
   const course = courseModel.get('id');
   const school = courseModel.belongsTo('school').id();
   const sessions = courseModel.hasMany('sessions').ids();
   const existingSessionsInStore = store.peekAll('session');
-  const existingSessionIds = existingSessionsInStore.mapBy('id');
+  const existingSessionIds = mapBy(existingSessionsInStore, 'id');
   const unloadedSessions = sessions.filter((id) => !existingSessionIds.includes(id));
 
   //if we have already loaded all of these sessions we can just proceed normally

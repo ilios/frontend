@@ -18,6 +18,7 @@ import {
   validatable,
 } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
+import { uniqueValues } from '../utils/array-helpers';
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
@@ -170,9 +171,9 @@ export default class OfferingForm extends Component {
   async addLearnerGroup(learnerGroup, cascade) {
     if (cascade) {
       const descendants = await learnerGroup.getAllDescendants();
-      this.learnerGroups = [...this.learnerGroups, ...descendants, learnerGroup].uniq();
+      this.learnerGroups = uniqueValues([...this.learnerGroups, ...descendants, learnerGroup]);
     } else {
-      this.learnerGroups = [...this.learnerGroups, learnerGroup].uniq();
+      this.learnerGroups = uniqueValues([...this.learnerGroups, learnerGroup]);
     }
   }
 
@@ -183,7 +184,9 @@ export default class OfferingForm extends Component {
       const descendants = await learnerGroup.getAllDescendants();
       groupsToRemove = [...descendants, learnerGroup];
     }
-    this.learnerGroups = this.learnerGroups.filter((g) => !groupsToRemove.includes(g)).uniq();
+    this.learnerGroups = uniqueValues(
+      this.learnerGroups.filter((g) => !groupsToRemove.includes(g))
+    );
   }
 
   @action
@@ -297,18 +300,12 @@ export default class OfferingForm extends Component {
     if (isEmpty(cohorts)) {
       associatedSchools = [];
     } else {
-      const cohortSchools = await map(cohorts.toArray(), (cohort) => {
-        return cohort.get('school');
-      });
-      const schools = [];
-      schools.pushObjects(cohortSchools);
-      associatedSchools = schools.uniq().toArray();
+      const cohortSchools = await map(cohorts.slice(), (cohort) => cohort.school);
+      associatedSchools = uniqueValues(cohortSchools);
     }
-    const allInstructorGroups = await map(associatedSchools, (school) => {
-      return school.get('instructorGroups');
-    });
-    return allInstructorGroups.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
+    const allInstructorGroups = await map(associatedSchools, (school) => school.instructorGroups);
+    return allInstructorGroups.reduce((flattened, arr) => {
+      return [...flattened, ...arr.slice()];
     }, []);
   }
 
@@ -341,10 +338,10 @@ export default class OfferingForm extends Component {
       instructors: offering.get('instructors'),
       instructorGroups: offering.get('instructorGroups'),
     });
-    this.learnerGroups = obj.learnerGroups.toArray();
-    this.learners = obj.learners.toArray();
-    this.instructors = obj.instructors.toArray();
-    this.instructorGroups = obj.instructorGroups.toArray();
+    this.learnerGroups = obj.learnerGroups.slice();
+    this.learners = obj.learners.slice();
+    this.instructors = obj.instructors.slice();
+    this.instructorGroups = obj.instructorGroups.slice();
     this.loaded = true;
   });
 
@@ -463,7 +460,7 @@ export default class OfferingForm extends Component {
         offerings.push(obj);
       }
     });
-    recurringDayInts.pushObject(userPickedDay);
+    recurringDayInts.push(userPickedDay);
     recurringDayInts.sort();
 
     for (let i = 1; i < this.numberOfWeeks; i++) {
@@ -502,8 +499,8 @@ export default class OfferingForm extends Component {
         if (isPresent(defaultLocation)) {
           room = defaultLocation;
         }
-        const instructors = (await learnerGroup.instructors).toArray();
-        const instructorGroups = (await learnerGroup.instructorGroups).toArray();
+        const instructors = (await learnerGroup.instructors).slice();
+        const instructorGroups = (await learnerGroup.instructorGroups).slice();
         const offering = {
           startDate,
           endDate,
@@ -515,7 +512,7 @@ export default class OfferingForm extends Component {
         };
         offering.learnerGroups = [learnerGroup];
 
-        smallGroupOfferings.pushObject(offering);
+        smallGroupOfferings.push(offering);
       }
     }
 

@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { all } from 'rsvp';
+import { mapBy } from '../utils/array-helpers';
 
 export default class DetailTermsListComponent extends Component {
   @tracked sortedTerms;
@@ -27,6 +28,6 @@ export default class DetailTermsListComponent extends Component {
       return titleA > titleB ? 1 : titleA < titleB ? -1 : 0;
     });
 
-    this.sortedTerms = sortedProxies.mapBy('term');
+    this.sortedTerms = mapBy(sortedProxies, 'term');
   });
 }

@@ -1,6 +1,7 @@
 import EventsBase from '../classes/events-base';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
+import { sortBy } from '../utils/array-helpers';
 
 export default class SchoolEvents extends EventsBase {
   @service store;
@@ -27,9 +28,10 @@ export default class SchoolEvents extends EventsBase {
 
     const data = await this.fetch.getJsonFromApiHost(url);
 
-    return data.events
-      .map((obj) => this.createEventFromData(obj, false))
-      .sortBy('startDate', 'name');
+    return sortBy(
+      data.events.map((obj) => this.createEventFromData(obj, false)),
+      ['startDate', 'name']
+    );
   }
 
   /**

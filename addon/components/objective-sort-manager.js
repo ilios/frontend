@@ -17,7 +17,7 @@ export default class ObjectiveSortManagerComponent extends Component {
 
   @use objectives = new ResolveAsyncValue(() => [this.args.subject.xObjectives]);
   get sortedObjectives() {
-    return this.objectives?.toArray().sort(sortableByPosition) ?? [];
+    return this.objectives?.slice().sort(sortableByPosition) ?? [];
   }
 
   get items() {
@@ -32,7 +32,7 @@ export default class ObjectiveSortManagerComponent extends Component {
 
   async saveSomeObjectives(arr) {
     const chunk = arr.splice(0, 5);
-    await all(chunk.invoke('save'));
+    await await all(chunk.map((o) => o.save()));
     if (arr.length) {
       this.currentObjectivesSaved += chunk.length;
       await this.saveSomeObjectives(arr);

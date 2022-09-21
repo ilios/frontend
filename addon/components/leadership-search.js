@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
+import { mapBy } from '../utils/array-helpers';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
@@ -13,7 +14,7 @@ export default class LeadershipSearchComponent extends Component {
   @tracked searchValue = null;
 
   get existingUserIds() {
-    return this.args.existingUsers.mapBy('id');
+    return mapBy(this.args.existingUsers, 'id');
   }
 
   searchForUsers = restartableTask(async (query) => {
@@ -55,17 +56,14 @@ export default class LeadershipSearchComponent extends Component {
         user,
       };
     });
-    const results = [
-      {
-        type: 'summary',
-        text: this.intl.t('general.resultsCount', {
-          count: mappedResults.length,
-        }),
-      },
-    ];
-    results.pushObjects(mappedResults);
+    const result = {
+      type: 'summary',
+      text: this.intl.t('general.resultsCount', {
+        count: mappedResults.length,
+      }),
+    };
 
-    return results;
+    return [result, ...mappedResults];
   });
 
   clickUser = dropTask(async (user) => {

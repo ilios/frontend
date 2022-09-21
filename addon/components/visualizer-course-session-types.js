@@ -9,6 +9,7 @@ import { map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { findBy, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseSessionTypes extends Component {
   @service router;
@@ -50,7 +51,7 @@ export default class VisualizerCourseSessionTypes extends Component {
       return [];
     }
 
-    const dataMap = await map(sessions.toArray(), async (session) => {
+    const dataMap = await map(sessions.slice(), async (session) => {
       const hours = await session.getTotalSumDuration();
       const minutes = Math.round(hours * 60);
       const sessionType = await session.sessionType;
@@ -63,7 +64,7 @@ export default class VisualizerCourseSessionTypes extends Component {
     });
 
     const mappedSessionTypes = dataMap.reduce((set, obj) => {
-      let existing = set.findBy('label', obj.sessionTypeTitle);
+      let existing = findBy(set, 'label', obj.sessionTypeTitle);
       if (!existing) {
         existing = {
           data: 0,
@@ -74,17 +75,18 @@ export default class VisualizerCourseSessionTypes extends Component {
             sessions: [],
           },
         };
-        set.pushObject(existing);
+        set.push(existing);
       }
       existing.data += obj.minutes;
-      existing.meta.sessions.pushObject(obj.sessionTitle);
+      existing.meta.sessions.push(obj.sessionTitle);
 
       return set;
     }, []);
 
-    const totalMinutes = mappedSessionTypes
-      .mapBy('data')
-      .reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = mapBy(mappedSessionTypes, 'data').reduce(
+      (total, minutes) => total + minutes,
+      0
+    );
     return mappedSessionTypes
       .map((obj) => {
         const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
@@ -108,7 +110,7 @@ export default class VisualizerCourseSessionTypes extends Component {
     const { label, meta } = obj;
 
     const title = htmlSafe(label);
-    const sessions = meta.sessions.uniq().sort().join(', ');
+    const sessions = uniqueValues(meta.sessions).sort().join(', ');
 
     this.tooltipTitle = title;
     this.tooltipContent = sessions;

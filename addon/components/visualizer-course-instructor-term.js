@@ -8,6 +8,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { findBy, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseInstructorTerm extends Component {
   @service router;
@@ -30,13 +31,13 @@ export default class VisualizerCourseInstructorTerm extends Component {
       return [];
     }
 
-    const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
+    const sessionsWithUser = await filter(sessions.slice(), async (session) => {
       const allInstructors = await session.getAllOfferingInstructors();
-      return allInstructors.mapBy('id').includes(this.args.user.id);
+      return mapBy(allInstructors, 'id').includes(this.args.user.id);
     });
 
     const sessionsWithTerms = await map(sessionsWithUser, async (session) => {
-      const terms = await map((await session.terms).toArray(), async (term) => {
+      const terms = await map((await session.terms).slice(), async (term) => {
         const vocabulary = await term.vocabulary;
         return {
           termTitle: term.title,
@@ -68,13 +69,13 @@ export default class VisualizerCourseInstructorTerm extends Component {
       });
     });
 
-    const flat = dataMap.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj);
+    const flat = dataMap.reduce((flattened, arr) => {
+      return [...flattened, ...arr];
     }, []);
 
     const sessionTermData = flat.reduce((set, obj) => {
       const name = `${obj.vocabularyTitle} > ${obj.termTitle}`;
-      let existing = set.findBy('label', name);
+      let existing = findBy(set, 'label', name);
       if (!existing) {
         existing = {
           data: 0,
@@ -84,10 +85,10 @@ export default class VisualizerCourseInstructorTerm extends Component {
             vocabularyTitle: obj.vocabularyTitle,
           },
         };
-        set.pushObject(existing);
+        set.push(existing);
       }
       existing.data += obj.minutes;
-      existing.meta.sessions.pushObject(obj.sessionTitle);
+      existing.meta.sessions.push(obj.sessionTitle);
 
       return set;
     }, []);
@@ -118,6 +119,6 @@ export default class VisualizerCourseInstructorTerm extends Component {
     const { label, meta } = obj;
 
     this.tooltipTitle = htmlSafe(label);
-    this.tooltipContent = meta.sessions.uniq().sort().join(', ');
+    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
   });
 }

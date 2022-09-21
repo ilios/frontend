@@ -1,6 +1,7 @@
 import EmberObject, { computed } from '@ember/object';
 import { sort } from '@ember/object/computed';
 import moment from 'moment';
+import { sortBy } from './array-helpers';
 
 const OfferingBlock = EmberObject.extend({
   offerings: null,
@@ -46,17 +47,17 @@ const OfferingDateBlock = OfferingBlock.extend({
     const offeringGroupArray = [];
     let key;
     for (key in offeringGroups) {
-      offeringGroupArray.pushObject(offeringGroups[key]);
+      offeringGroupArray.push(offeringGroups[key]);
     }
 
-    return offeringGroupArray.sortBy('timeKey');
+    return sortBy(offeringGroupArray, 'timeKey');
   }),
 });
 
 const OfferingTimeBlock = OfferingBlock.extend({
   init() {
     this._super(...arguments);
-    this.set('sortOfferingsBy', ['learnerGroups.firstObject.title']);
+    this.set('sortOfferingsBy', ['learnerGroups[0].title']);
   },
   timeKey: null,
   isMultiDay: computed('startDate', 'endDate', function () {

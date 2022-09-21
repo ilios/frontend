@@ -7,6 +7,7 @@ import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from '../classes/resolve-async-value';
 import SessionObject from '../classes/session-object';
 import { getOwner } from '@ember/application';
+import { mapBy } from '../utils/array-helpers';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -95,7 +96,7 @@ export default class CourseSessionsComponent extends Component {
     if (this.expandedSessionIds.length === this.sessionsWithOfferings.length) {
       this.expandedSessionIds = [];
     } else {
-      this.expandedSessionIds = this.sessionsWithOfferings.mapBy('id');
+      this.expandedSessionIds = mapBy(this.sessionsWithOfferings, 'id');
     }
   }
 }

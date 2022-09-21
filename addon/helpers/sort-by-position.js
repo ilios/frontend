@@ -6,5 +6,5 @@ export default helper(function sortByPosition([list]) {
   if (isBlank(list)) {
     return [];
   }
-  return list.toArray().sort(sortableByPosition);
+  return list.slice().sort(sortableByPosition);
 });

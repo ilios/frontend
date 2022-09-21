@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
+import { mapBy } from '../utils/array-helpers';
 
 export default class CourseMaterialsRoute extends Route {
   @service session;
@@ -25,11 +26,11 @@ export default class CourseMaterialsRoute extends Route {
 
   async loadCourseLearningMaterials(course) {
     const courseLearningMaterials = await course.learningMaterials;
-    return all(courseLearningMaterials.mapBy('learningMaterial'));
+    return all(mapBy(courseLearningMaterials, 'learningMaterial'));
   }
 
   async loadSessionLearningMaterials(course) {
     const sessions = await course.sessions;
-    return all([sessions.mapBy('learningMaterials'), sessions.mapBy('firstOfferingDate')]);
+    return all([mapBy(sessions, 'learningMaterials'), mapBy(sessions, 'firstOfferingDate')]);
   }
 }

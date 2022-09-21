@@ -10,7 +10,7 @@ export default class SessionCollapsedObjectivesComponent extends Component {
   });
 
   get objectives() {
-    return this.objectivesRelationship ? this.objectivesRelationship.toArray() : [];
+    return this.objectivesRelationship ? this.objectivesRelationship.slice() : [];
   }
 
   get objectivesWithParents() {

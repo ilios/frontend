@@ -8,6 +8,7 @@ import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import moment from 'moment';
+import { filterBy, sortBy, uniqueById } from '../../utils/array-helpers';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -80,7 +81,7 @@ export default class DashboardMaterialsComponent extends Component {
 
   get materialsFilteredByCourse() {
     if (isPresent(this.args.courseIdFilter)) {
-      return this.materials.filterBy('course', this.args.courseIdFilter);
+      return filterBy(this.materials, 'course', this.args.courseIdFilter);
     }
     return this.materials;
   }
@@ -100,7 +101,7 @@ export default class DashboardMaterialsComponent extends Component {
       });
     }
 
-    const sortedMaterials = materials.sortBy(this.sortInfo.column);
+    const sortedMaterials = sortBy(materials, this.sortInfo.column);
     if (this.sortInfo.descending) {
       return sortedMaterials.reverse();
     }
@@ -130,17 +131,16 @@ export default class DashboardMaterialsComponent extends Component {
     if (!this.materials) {
       return [];
     }
-    return this.materials
-      .map((material) => {
-        return {
-          id: material.course,
-          title: material.courseTitle,
-          externalId: material.courseExternalId,
-          year: material.courseYear,
-        };
-      })
-      .uniqBy('id')
-      .sortBy('year', 'title');
+    const arr = this.materials.map((material) => {
+      return {
+        id: material.course,
+        title: material.courseTitle,
+        externalId: material.courseExternalId,
+        year: material.courseYear,
+      };
+    });
+
+    return sortBy(uniqueById(arr), ['year', 'title']);
   }
 
   get sortedAscending() {

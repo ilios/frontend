@@ -1,6 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
+import { mapBy } from '../utils/array-helpers';
 
 export default class Term extends Model {
   @attr('string')
@@ -99,7 +100,7 @@ export default class Term extends Model {
       return [];
     }
     const parents = await parent.getAllParents();
-    const titles = parents.mapBy('title');
+    const titles = mapBy(parents, 'title');
     return [...titles, parent.title];
   }
 
@@ -115,21 +116,15 @@ export default class Term extends Model {
   }
 
   async getAllDescendants() {
-    const descendants = [];
-    const children = await this.children;
-    descendants.pushObjects(children.toArray());
+    const children = (await this.children).slice();
     const childrenDescendants = await Promise.all(
-      children.toArray().map(async (child) => {
-        return child.getAllDescendants();
-      })
+      children.map((child) => child.getAllDescendants())
     );
-    descendants.pushObjects(
-      childrenDescendants.reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, [])
-    );
-    return descendants;
+    const flatChildrenDescendants = childrenDescendants.reduce((array, set) => {
+      return [...array, ...set];
+    }, []);
+
+    return [...children, ...flatChildrenDescendants];
   }
 
   /**
@@ -137,7 +132,7 @@ export default class Term extends Model {
    */
   async getTitleWithDescendantTitles() {
     const allDescendants = await this.getAllDescendants();
-    const allDescendantTitles = allDescendants.mapBy('title');
+    const allDescendantTitles = mapBy(allDescendants, 'title');
     if (!allDescendantTitles.length) {
       return this.title;
     }

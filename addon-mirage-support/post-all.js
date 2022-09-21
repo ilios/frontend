@@ -1,3 +1,4 @@
+import { mapBy } from 'ilios-common/utils/array-helpers';
 import getName from './get-name';
 import parseJsonData from './parse-json-data';
 
@@ -15,7 +16,7 @@ const postAll = function (schema, request) {
       const attrs = parseJsonData({ data: item });
       return this.serializerOrRegistry.serialize(schema[modelName].create(attrs));
     });
-    return { data: models.mapBy('data') };
+    return { data: mapBy(models, 'data') };
   }
 
   const attrs = parseJsonData(obj);

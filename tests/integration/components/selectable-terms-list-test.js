@@ -56,12 +56,11 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     this.set('selectedTerms', []);
     this.set('vocabulary', this.vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @vocabulary={{this.vocabulary}}
-      @add={{action this.nothing}}
-      @remove={{action this.nothing}}
+      @add={{action (noop)}}
+      @remove={{action (noop)}}
     />`);
 
     assert.dom('li').exists({ count: 5 });
@@ -84,12 +83,11 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     this.set('selectedTerms', []);
     this.set('terms', resolve([this.termModel4, this.termModel5]));
-    this.set('nothing', () => {});
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @terms={{await this.terms}}
-      @add={{action this.nothing}}
-      @remove={{action this.nothing}}
+      @add={{action (noop)}}
+      @remove={{action (noop)}}
     />`);
 
     assert.dom('li').exists({ count: 5 });
@@ -116,12 +114,11 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     this.set('selectedTerms', []);
     this.set('terms', resolve([this.termModel4, this.termModel5]));
-    this.set('nothing', () => {});
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @terms={{await this.terms}}
-      @add={{action this.nothing}}
-      @remove={{action this.nothing}}
+      @add={{action (noop)}}
+      @remove={{action (noop)}}
     />`);
 
     assert.dom('li').exists({ count: 2 });
@@ -139,11 +136,14 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('terms', resolve([this.termModel4, this.termModel5]));
     this.set('add', (term) => {
       assert.strictEqual(term, this.termModel4);
-      this.selectedTerms.pushObject(term);
+      this.set('selectedTerms', [...this.selectedTerms, term]);
     });
     this.set('remove', (term) => {
       assert.strictEqual(term, this.termModel4);
-      this.selectedTerms.removeObject(term);
+      this.set(
+        'selectedTerms',
+        this.selectedTerms.filter((t) => t !== term)
+      );
     });
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
@@ -165,13 +165,12 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     this.set('selectedTerms', []);
     this.set('vocabulary', this.vocabularyModel);
-    this.set('nothing', () => {});
     this.set('termFilter', 'Gamma');
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @vocabulary={{this.vocabulary}}
-      @add={{action this.nothing}}
-      @remove={{action this.nothing}}
+      @add={{action (noop)}}
+      @remove={{action (noop)}}
       @termFilter={{this.termFilter}}
     />`);
 
@@ -188,13 +187,12 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     this.set('selectedTerms', []);
     this.set('vocabulary', this.vocabularyModel);
-    this.set('nothing', () => {});
     this.set('termFilter', 'amma');
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @vocabulary={{this.vocabulary}}
-      @add={{action this.nothing}}
-      @remove={{action this.nothing}}
+      @add={{action (noop)}}
+      @remove={{action (noop)}}
       @termFilter={{this.termFilter}}
     />`);
 

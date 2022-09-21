@@ -2,6 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class Program extends Model {
   @attr('string')
@@ -27,7 +28,7 @@ export default class Program extends Model {
     return !!this.hasMany('programYears').ids().length;
   }
 
-  @use _cohorts = new ResolveAsyncValue(() => [this.programYears?.mapBy('cohort')]);
+  @use _cohorts = new ResolveAsyncValue(() => [mapBy(this.programYears, 'cohort')]);
 
   /**
    * All cohorts associated with this program via its program years.
@@ -36,7 +37,7 @@ export default class Program extends Model {
     if (!this._cohorts) {
       return [];
     }
-    return this._cohorts.toArray();
+    return this._cohorts.slice();
   }
 
   @use _courses = new ResolveFlatMapBy(() => [this._cohorts, 'courses']);
@@ -48,6 +49,6 @@ export default class Program extends Model {
     if (!this._courses) {
       return [];
     }
-    return this._courses.uniq();
+    return uniqueValues(this._courses);
   }
 }

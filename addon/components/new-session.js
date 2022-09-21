@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { filterBy, findBy } from '../utils/array-helpers';
 
 @validatable
 export default class NewSessionComponent extends Component {
@@ -13,7 +14,7 @@ export default class NewSessionComponent extends Component {
   @tracked selectedSessionTypeId;
 
   get activeSessionTypes() {
-    return this.args.sessionTypes.filterBy('active', true);
+    return filterBy(this.args.sessionTypes, 'active');
   }
 
   get selectedSessionType() {
@@ -27,11 +28,11 @@ export default class NewSessionComponent extends Component {
 
     if (!selectedSessionType) {
       // try and default to a type names 'Lecture';
-      selectedSessionType = this.args.sessionTypes.findBy('title', 'Lecture');
+      selectedSessionType = findBy(this.args.sessionTypes, 'title', 'Lecture');
     }
 
     if (!selectedSessionType) {
-      selectedSessionType = this.args.sessionTypes.firstObject;
+      selectedSessionType = this.args.sessionTypes[0];
     }
 
     return selectedSessionType;

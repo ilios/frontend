@@ -7,6 +7,7 @@ import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class SessionModel extends Model {
   @attr('string')
@@ -177,7 +178,7 @@ export default class SessionModel extends Model {
     if (!this.hasMany('offerings').ids().length || !this._offerings) {
       return 0;
     }
-    const sortedOfferings = this._offerings.toArray().sort(function (a, b) {
+    const sortedOfferings = this._offerings.slice().sort(function (a, b) {
       const diffA = moment(a.endDate).diff(moment(a.startDate), 'minutes');
       const diffB = moment(b.endDate).diff(moment(b.startDate), 'minutes');
       if (diffA > diffB) {
@@ -241,7 +242,7 @@ export default class SessionModel extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return this._allTermVocabularies?.uniq().sortBy('title');
+    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
   }
 
   get termCount() {
@@ -252,10 +253,10 @@ export default class SessionModel extends Model {
     if (!this.offeringLearnerGroups) {
       return [];
     }
-    return this.offeringLearnerGroups.uniq().sortBy('title');
+    return sortBy(uniqueValues(this.offeringLearnerGroups), 'title');
   }
   get associatedIlmLearnerGroups() {
-    return this._ilmLearnerGroups?.toArray() ?? [];
+    return this._ilmLearnerGroups?.slice() ?? [];
   }
 
   get associatedLearnerGroups() {
@@ -263,11 +264,14 @@ export default class SessionModel extends Model {
     if (!this.offeringLearnerGroups || !ilmLearnerGroups) {
       return [];
     }
-    return [...this.offeringLearnerGroups, ...ilmLearnerGroups.toArray()].uniq().sortBy('title');
+    return sortBy(
+      uniqueValues([...this.offeringLearnerGroups, ...ilmLearnerGroups.slice()]),
+      'title'
+    );
   }
 
   get sortedSessionObjectives() {
-    return this._sessionObjectives?.toArray().sort(sortableByPosition);
+    return this._sessionObjectives?.slice().sort(sortableByPosition);
   }
 
   get ilmSessionInstructors() {
@@ -279,10 +283,7 @@ export default class SessionModel extends Model {
       return [];
     }
 
-    return [
-      ...this._ilmSessionInstructors.toArray(),
-      ...this._ilmSessionInstructorGroupInstructors,
-    ];
+    return [...this._ilmSessionInstructors.slice(), ...this._ilmSessionInstructorGroupInstructors];
   }
 
   get allInstructors() {
@@ -294,11 +295,11 @@ export default class SessionModel extends Model {
       return [];
     }
 
-    return [
+    return uniqueValues([
       ...this._offeringInstructors,
       ...this._offeringInstructorGroupInstructors,
       ...this.ilmSessionInstructors,
-    ].uniq();
+    ]);
   }
 
   get hasPrerequisites() {
@@ -370,9 +371,11 @@ export default class SessionModel extends Model {
   async getShowUnlinkIcon() {
     const sessionObjectives = await this.sessionObjectives;
     const collectionOfCourseObjectives = await Promise.all(
-      sessionObjectives.mapBy('courseObjectives')
+      mapBy(sessionObjectives, 'courseObjectives')
     );
-    return collectionOfCourseObjectives.any((courseObjectives) => courseObjectives.length === 0);
+    return Boolean(
+      collectionOfCourseObjectives.find((courseObjectives) => courseObjectives.length === 0)
+    );
   }
 
   async getAllIlmSessionInstructors() {
@@ -384,23 +387,23 @@ export default class SessionModel extends Model {
   }
 
   async getAllOfferingInstructors() {
-    const offerings = (await this.offerings).toArray();
+    const offerings = (await this.offerings).slice();
     if (!offerings.length) {
       return [];
     }
     const allOfferingInstructors = await Promise.all(
       offerings.map(async (offering) => {
-        return (await offering.getAllInstructors()).toArray();
+        return (await offering.getAllInstructors()).slice();
       })
     );
 
-    return allOfferingInstructors.flat().uniq();
+    return uniqueValues(allOfferingInstructors.flat());
   }
 
   async getAllInstructors() {
     const allIlmSessionInstructors = await this.getAllIlmSessionInstructors();
     const allOfferingInstructors = await this.getAllOfferingInstructors();
-    return [...allOfferingInstructors, ...allIlmSessionInstructors].uniq();
+    return uniqueValues([...allOfferingInstructors, ...allIlmSessionInstructors]);
   }
 
   async getTotalSumOfferingsDuration() {
@@ -428,9 +431,9 @@ export default class SessionModel extends Model {
 
   async getTotalSumOfferingsDurationByInstructor(user) {
     const offerings = await this.offerings;
-    const offeringsWithUser = await filter(offerings.toArray(), async (offering) => {
+    const offeringsWithUser = await filter(offerings.slice(), async (offering) => {
       const instructors = await offering.getAllInstructors();
-      return instructors.mapBy('id').includes(user.id);
+      return mapBy(instructors, 'id').includes(user.id);
     });
     const offeringHours = offeringsWithUser
       .reduce((total, offering) => {
@@ -445,7 +448,7 @@ export default class SessionModel extends Model {
     let ilmMinutes = 0;
     if (ilmSession) {
       const instructors = await ilmSession.getAllInstructors();
-      if (instructors.mapBy('id').includes(user.id)) {
+      if (mapBy(instructors, 'id').includes(user.id)) {
         ilmMinutes = Math.round(parseFloat(ilmSession.hours) * 60);
       }
     }

@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import moment from 'moment';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { action, set } from '@ember/object';
+import { sortBy } from '../utils/array-helpers';
 
 export default class DailyCalendarComponent extends Component {
   @service intl;
@@ -40,7 +41,7 @@ export default class DailyCalendarComponent extends Component {
       return [];
     }
 
-    return this.args.events.sortBy('startDate', 'endDate', 'name');
+    return sortBy(this.args.events, ['startDate', 'endDate', 'name']);
   }
 
   get hours() {

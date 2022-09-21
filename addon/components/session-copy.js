@@ -5,6 +5,7 @@ import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
+import { filterBy, findById, sortBy } from '../utils/array-helpers';
 
 export default class SessionCopyComponent extends Component {
   @service store;
@@ -36,7 +37,7 @@ export default class SessionCopyComponent extends Component {
       .map((year) => Number(year.id))
       .filter((year) => year >= thisYear - 1)
       .sort();
-    this.allCourses = await filter(schoolCourses.toArray(), async (co) => {
+    this.allCourses = await filter(schoolCourses.slice(), async (co) => {
       return this.permissionChecker.canCreateSession(co);
     });
   });
@@ -46,25 +47,25 @@ export default class SessionCopyComponent extends Component {
       return this.selectedYear;
     }
 
-    return this.years.get('firstObject');
+    return this.years[0];
   }
 
   get courses() {
     if (!this.allCourses) {
       return null;
     }
-    return this.allCourses.filterBy('year', this.bestSelectedYear).sortBy('title');
+    return sortBy(filterBy(this.allCourses, 'year', this.bestSelectedYear), 'title');
   }
 
   get bestSelectedCourse() {
     if (this.selectedCourseId) {
-      const course = this.courses.findBy('id', this.selectedCourseId);
+      const course = findById(this.courses, this.selectedCourseId);
       if (course) {
         return course;
       }
     }
 
-    return this.courses.get('firstObject');
+    return this.courses[0];
   }
 
   @action
@@ -98,8 +99,8 @@ export default class SessionCopyComponent extends Component {
     );
 
     session.set('course', newCourse);
-    session.set('meshDescriptors', (await sessionToCopy.meshDescriptors).toArray());
-    session.set('terms', (await sessionToCopy.terms).toArray());
+    session.set('meshDescriptors', (await sessionToCopy.meshDescriptors).slice());
+    session.set('terms', (await sessionToCopy.terms).slice());
     session.set('sessionType', await sessionToCopy.sessionType);
 
     const ilmToCopy = await sessionToCopy.ilmSession;
@@ -109,12 +110,12 @@ export default class SessionCopyComponent extends Component {
         ilmToCopy.getProperties('hours', 'dueDate')
       );
       ilm.set('session', session);
-      toSave.pushObject(ilm);
+      toSave.push(ilm);
     }
 
     const learningMaterialsToCopy = await sessionToCopy.learningMaterials;
     for (let i = 0; i < learningMaterialsToCopy.length; i++) {
-      const learningMaterialToCopy = learningMaterialsToCopy.toArray()[i];
+      const learningMaterialToCopy = learningMaterialsToCopy.slice()[i];
       const lm = await learningMaterialToCopy.learningMaterial;
       const learningMaterial = this.store.createRecord(
         'sessionLearningMaterial',
@@ -122,7 +123,7 @@ export default class SessionCopyComponent extends Component {
       );
       learningMaterial.set('learningMaterial', lm);
       learningMaterial.set('session', session);
-      toSave.pushObject(learningMaterial);
+      toSave.push(learningMaterial);
     }
 
     const originalCourse = await sessionToCopy.course;
@@ -133,16 +134,16 @@ export default class SessionCopyComponent extends Component {
 
     // save the session first to fill out relationships with the session id
     await session.save();
-    await all(toSave.invoke('save'));
+    await await all(toSave.map((o) => o.save()));
 
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon
     const relatedSessionObjectives = await sessionToCopy.sessionObjectives;
-    const sessionObjectivesToCopy = relatedSessionObjectives.sortBy('id').toArray();
+    const sessionObjectivesToCopy = sortBy(relatedSessionObjectives, 'id').slice();
     for (let i = 0, n = sessionObjectivesToCopy.length; i < n; i++) {
       const sessionObjectiveToCopy = sessionObjectivesToCopy[i];
-      const meshDescriptors = (await sessionObjectiveToCopy.meshDescriptors).toArray();
-      const terms = (await sessionObjectiveToCopy.terms).toArray();
+      const meshDescriptors = (await sessionObjectiveToCopy.meshDescriptors).slice();
+      const terms = (await sessionObjectiveToCopy.terms).slice();
       const sessionObjective = this.store.createRecord('session-objective', {
         session,
         position: sessionObjectiveToCopy.position,

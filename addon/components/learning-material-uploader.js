@@ -23,7 +23,7 @@ export default class LearningMaterialUploaderComponent extends Component {
         maxSize,
       });
       const queue = this.fileQueue.find(this.uploadQueueName);
-      queue.files.removeObject(file);
+      queue.files.splice(queue.files.indexOf(file), 1);
       return false;
     }
     const response = await file.upload(`${this.fetch.host}/upload`, {

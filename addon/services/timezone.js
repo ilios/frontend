@@ -1,5 +1,6 @@
 import Service from '@ember/service';
 import moment from 'moment';
+import { uniqueValues } from '../utils/array-helpers';
 
 /**
  * Service wrapper around moment's timezone utilities.
@@ -55,7 +56,7 @@ export default class TimezoneService extends Service {
     });
     // ensure that the current timezone is always part of the list
     timezoneNames.push(currentTimezone);
-    timezoneNames = timezoneNames.uniq().sort();
+    timezoneNames = uniqueValues(timezoneNames).sort();
     return timezoneNames;
   }
 

@@ -24,8 +24,8 @@ export default class TaxonomyManager extends Component {
     if (!this.args.vocabularies) {
       return [];
     } else {
-      return this.args.vocabularies.toArray().filter((vocab) => {
-        return vocab.get('termCount') > 0;
+      return this.args.vocabularies.slice().filter((vocab) => {
+        return vocab.termCount > 0;
       });
     }
   }
@@ -63,7 +63,7 @@ export default class TaxonomyManager extends Component {
         return vocab;
       }
     }
-    return this.assignableVocabularies.get('firstObject');
+    return this.assignableVocabularies[0];
   }
 
   @action

@@ -40,9 +40,9 @@ export default class CourseLeadershipExpandedComponent extends Component {
       directors: this.args.course.directors,
       studentAdvisors: this.args.course.studentAdvisors,
     });
-    this.administrators = obj.administrators.toArray();
-    this.directors = obj.directors.toArray();
-    this.studentAdvisors = obj.studentAdvisors.toArray();
+    this.administrators = obj.administrators.slice();
+    this.directors = obj.directors.slice();
+    this.studentAdvisors = obj.studentAdvisors.slice();
     this.args.setIsManaging(true);
   });
 

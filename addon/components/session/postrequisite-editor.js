@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
+import { sortBy } from '../../utils/array-helpers';
 
 export default class SessionPostrequisiteEditorComponent extends Component {
   @tracked filter = '';
@@ -19,9 +20,9 @@ export default class SessionPostrequisiteEditorComponent extends Component {
     const { session } = this.args;
     const course = await session.course;
     const sessions = await course.sessions;
-    this.linkablePostrequisites = sessions
-      .sortBy('title')
-      .filter((sessionInCourse) => sessionInCourse.id !== session.id);
+    this.linkablePostrequisites = sortBy(sessions, 'title').filter(
+      (sessionInCourse) => sessionInCourse.id !== session.id
+    );
   });
 
   save = task(async () => {

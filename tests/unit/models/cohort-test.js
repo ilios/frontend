@@ -45,8 +45,8 @@ module('Unit | Model | Cohort', function (hooks) {
     const topLevelGroups = await model.get('rootLevelLearnerGroups');
 
     assert.strictEqual(topLevelGroups.length, 2);
-    assert.strictEqual(topLevelGroups.objectAt(0).get('title'), 'Top Group 1');
-    assert.strictEqual(topLevelGroups.objectAt(1).get('title'), 'Top Group 2');
+    assert.strictEqual(topLevelGroups[0].get('title'), 'Top Group 1');
+    assert.strictEqual(topLevelGroups[1].get('title'), 'Top Group 2');
   });
 
   test('competencies', async function (assert) {

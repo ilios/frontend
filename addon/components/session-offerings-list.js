@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
+import { sortBy } from '../utils/array-helpers';
 
 export default class SessionOfferingsListComponent extends Component {
   @service store;
@@ -14,7 +15,7 @@ export default class SessionOfferingsListComponent extends Component {
   });
 
   get offerings() {
-    return this.offeringsRelationship ? this.offeringsRelationship.toArray() : [];
+    return this.offeringsRelationship ? this.offeringsRelationship.slice() : [];
   }
 
   get offeringBlocks() {
@@ -32,9 +33,9 @@ export default class SessionOfferingsListComponent extends Component {
     const dateBlockArray = [];
     let key;
     for (key in dateBlocks) {
-      dateBlockArray.pushObject(dateBlocks[key]);
+      dateBlockArray.push(dateBlocks[key]);
     }
-    return dateBlockArray.sortBy('dateStamp');
+    return sortBy(dateBlockArray, 'dateStamp');
   }
 
   @action

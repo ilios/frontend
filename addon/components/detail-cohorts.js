@@ -10,7 +10,7 @@ export default class DetailCohortsComponent extends Component {
 
   manage = dropTask(async () => {
     const cohorts = await this.args.course.cohorts;
-    this.bufferedCohorts = [...cohorts.toArray()];
+    this.bufferedCohorts = [...cohorts.slice()];
     this.isManaging = true;
   });
 
@@ -23,7 +23,9 @@ export default class DetailCohortsComponent extends Component {
     if (removedCohorts.length) {
       const programYearsToRemove = await map(removedCohorts, async (cohort) => cohort.programYear);
       const objectives = await course.courseObjectives;
-      await all(objectives.invoke('removeParentWithProgramYears', programYearsToRemove));
+      await all(
+        objectives.map((objective) => objective.removeParentWithProgramYears(programYearsToRemove))
+      );
     }
     course.set('cohorts', this.bufferedCohorts);
     await course.save();

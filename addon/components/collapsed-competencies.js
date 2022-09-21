@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import { findById } from '../utils/array-helpers';
 
 export default class CollapsedCompetenciesComponent extends Component {
   @service store;
@@ -22,7 +23,7 @@ export default class CollapsedCompetenciesComponent extends Component {
       if (!(schoolId in schools)) {
         schools[schoolId] = {
           competencies: [],
-          school: this.allSchools.findBy('id', schoolId),
+          school: findById(this.allSchools, schoolId),
         };
       }
       schools[schoolId].competencies.push(competency);

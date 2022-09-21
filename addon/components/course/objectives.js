@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
+import { mapBy } from '../../utils/array-helpers';
 
 export default class CourseObjectivesComponent extends Component {
   @service store;
@@ -33,7 +34,8 @@ export default class CourseObjectivesComponent extends Component {
     let position = 0;
     const courseObjectives = await this.args.course.courseObjectives;
     if (courseObjectives.length) {
-      position = courseObjectives.sortBy('position').lastObject.position + 1;
+      const positions = mapBy(courseObjectives, 'position');
+      position = Math.max(...positions) + 1;
     }
 
     newCourseObjective.set('title', title);

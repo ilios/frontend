@@ -10,6 +10,7 @@ import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { findBy, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseInstructors extends Component {
   @service router;
@@ -53,7 +54,7 @@ export default class VisualizerCourseInstructors extends Component {
       return [];
     }
 
-    const sessionsWithInstructors = await map(this.sessions.toArray(), async (session) => {
+    const sessionsWithInstructors = await map(this.sessions.slice(), async (session) => {
       const instructors = await session.getAllInstructors();
       const totalInstructionalTime = await session.getTotalSumOfferingsDuration();
       const instructorsWithInstructionalTime = await map(instructors, async (instructor) => {
@@ -74,7 +75,7 @@ export default class VisualizerCourseInstructors extends Component {
       obj.instructorsWithInstructionalTime.forEach((instructorWithInstructionalTime) => {
         const name = instructorWithInstructionalTime.instructor.get('fullName');
         const id = instructorWithInstructionalTime.instructor.get('id');
-        let existing = set.findBy('label', name);
+        let existing = findBy(set, 'label', name);
         if (!existing) {
           existing = {
             data: 0,
@@ -84,18 +85,19 @@ export default class VisualizerCourseInstructors extends Component {
               sessions: [],
             },
           };
-          set.pushObject(existing);
+          set.push(existing);
         }
         existing.data += instructorWithInstructionalTime.minutes;
-        existing.meta.sessions.pushObject(obj.sessionTitle);
+        existing.meta.sessions.push(obj.sessionTitle);
       });
 
       return set;
     }, []);
 
-    const totalMinutes = sessionsWithInstructors
-      .mapBy('totalInstructionalTime')
-      .reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = mapBy(sessionsWithInstructors, 'totalInstructionalTime').reduce(
+      (total, minutes) => total + minutes,
+      0
+    );
     return instructorData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.label}: ${obj.data} ${this.intl.t('general.minutes')}`;
@@ -113,7 +115,7 @@ export default class VisualizerCourseInstructors extends Component {
       return;
     }
     const { label, meta } = obj;
-    const sessions = meta.sessions.uniq().sort().join(', ');
+    const sessions = uniqueValues(meta.sessions).sort().join(', ');
     this.tooltipTitle = htmlSafe(label);
     this.tooltipContent = htmlSafe(sessions + '<br /><br />' + this.intl.t('general.clickForMore'));
   });

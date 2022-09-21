@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
 import { validatable, Length, BeforeDate, AfterDate } from 'ilios-common/decorators/validation';
+import { findById } from '../utils/array-helpers';
 
 @validatable
 export default class CourseOverview extends Component {
@@ -41,7 +42,7 @@ export default class CourseOverview extends Component {
       return null;
     }
 
-    return this.clerkshipTypeOptions.findBy('id', this.clerkshipTypeId);
+    return findById(this.clerkshipTypeOptions, this.clerkshipTypeId);
   }
 
   get showRollover() {

@@ -4,6 +4,7 @@ import { map, filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { mapBy } from '../utils/array-helpers';
 
 export default class CourseVisualizeInstructorComponent extends Component {
   @service iliosConfig;
@@ -19,14 +20,14 @@ export default class CourseVisualizeInstructorComponent extends Component {
     if (!this.minutes) {
       return 0;
     }
-    return this.minutes.mapBy('offeringMinutes').reduce((total, mins) => total + mins, 0);
+    return mapBy(this.minutes, 'offeringMinutes').reduce((total, mins) => total + mins, 0);
   }
 
   get totalIlmTime() {
     if (!this.minutes) {
       return 0;
     }
-    return this.minutes.mapBy('ilmMinutes').reduce((total, mins) => total + mins, 0);
+    return mapBy(this.minutes, 'ilmMinutes').reduce((total, mins) => total + mins, 0);
   }
 
   async getMinutes(sessions) {
@@ -34,9 +35,9 @@ export default class CourseVisualizeInstructorComponent extends Component {
       return [];
     }
 
-    const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
+    const sessionsWithUser = await filter(sessions.slice(), async (session) => {
       const instructors = await session.getAllInstructors();
-      return instructors.mapBy('id').includes(this.args.user.id);
+      return mapBy(instructors, 'id').includes(this.args.user.id);
     });
 
     return map(sessionsWithUser, async (session) => {

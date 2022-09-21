@@ -6,6 +6,7 @@ import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import escapeRegExp from '../utils/escape-reg-exp';
 import { dropTask } from 'ember-concurrency';
+import { sortBy } from '../utils/array-helpers';
 
 export default class SessionsGrid extends Component {
   @service router;
@@ -40,9 +41,9 @@ export default class SessionsGrid extends Component {
 
   get sortedSessions() {
     if (this.sortInfo.descending) {
-      return this.filteredSessions.sortBy(this.sortInfo.column).reverse();
+      return sortBy(this.filteredSessions, this.sortInfo.column).reverse();
     }
-    return this.filteredSessions.sortBy(this.sortInfo.column);
+    return sortBy(this.filteredSessions, this.sortInfo.column);
   }
 
   get sortInfo() {
@@ -65,12 +66,12 @@ export default class SessionsGrid extends Component {
 
   @action
   confirmDelete(sessionId) {
-    this.confirmDeleteSessionIds.pushObject(sessionId);
+    this.confirmDeleteSessionIds = [...this.confirmDeleteSessionIds, sessionId];
   }
 
   @action
   cancelDelete(sessionId) {
-    this.confirmDeleteSessionIds.removeObject(sessionId);
+    this.confirmDeleteSessionIds = this.confirmDeleteSessionIds.filter((id) => id !== sessionId);
   }
 
   @action

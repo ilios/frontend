@@ -8,6 +8,7 @@ import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { findBy, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseVocabulary extends Component {
   @service router;
@@ -27,7 +28,7 @@ export default class VisualizerCourseVocabulary extends Component {
     if (!sessions) {
       return [];
     }
-    const sessionsWithMinutes = await map(sessions.toArray(), async (session) => {
+    const sessionsWithMinutes = await map(sessions.slice(), async (session) => {
       const hours = await session.getTotalSumDuration();
       return {
         session,
@@ -36,7 +37,7 @@ export default class VisualizerCourseVocabulary extends Component {
     });
     const terms = await map(sessionsWithMinutes, async ({ session, minutes }) => {
       const sessionTerms = await session.get('terms');
-      const sessionTermsInThisVocabulary = await filter(sessionTerms.toArray(), async (term) => {
+      const sessionTermsInThisVocabulary = await filter(sessionTerms.slice(), async (term) => {
         const termVocab = await term.get('vocabulary');
         return termVocab.get('id') === this.args.vocabulary.get('id');
       });
@@ -51,15 +52,15 @@ export default class VisualizerCourseVocabulary extends Component {
       });
     });
 
-    return terms.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
+    return terms.reduce((flattened, arr) => {
+      return [...flattened, ...arr];
     }, []);
   }
 
   get data() {
     const termData = this.dataObjects.reduce((set, { term, session }) => {
       const termTitle = term.get('title');
-      let existing = set.findBy('label', termTitle);
+      let existing = findBy(set, 'label', termTitle);
       if (!existing) {
         existing = {
           data: 0,
@@ -70,15 +71,15 @@ export default class VisualizerCourseVocabulary extends Component {
             sessions: [],
           },
         };
-        set.pushObject(existing);
+        set.push(existing);
       }
       existing.data += session.minutes;
-      existing.meta.sessions.pushObject(session.title);
+      existing.meta.sessions.push(session.title);
 
       return set;
     }, []);
 
-    const totalMinutes = termData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = mapBy(termData, 'data').reduce((total, minutes) => total + minutes, 0);
     const mappedTermsWithLabel = termData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.meta.termTitle}: ${obj.data} ${this.intl.t('general.minutes')}`;
@@ -102,7 +103,7 @@ export default class VisualizerCourseVocabulary extends Component {
     const { label, meta } = obj;
 
     this.tooltipTitle = htmlSafe(label);
-    this.tooltipContent = meta.sessions.uniq().sort().join(', ');
+    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
   });
 
   @action

@@ -6,6 +6,7 @@ import { all } from 'rsvp';
 import { dropTask, timeout } from 'ember-concurrency';
 import ResolveAsyncValue from '../classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
+import { uniqueValues } from '../utils/array-helpers';
 
 export default class PublishAllSessionsComponent extends Component {
   @service router;
@@ -39,13 +40,17 @@ export default class PublishAllSessionsComponent extends Component {
   get sessionsToPublish() {
     const sessionsToPublish = [...this.publishedSessions, ...this.userSelectedSessionsToPublish];
 
-    return sessionsToPublish.filter((s) => !this.userSelectedSessionsToSchedule.includes(s)).uniq();
+    return uniqueValues(
+      sessionsToPublish.filter((s) => !this.userSelectedSessionsToSchedule.includes(s))
+    );
   }
 
   get sessionsToSchedule() {
     const sessionsToPublish = [...this.unpublishedSessions, ...this.userSelectedSessionsToSchedule];
 
-    return sessionsToPublish.filter((s) => !this.userSelectedSessionsToPublish.includes(s)).uniq();
+    return uniqueValues(
+      sessionsToPublish.filter((s) => !this.userSelectedSessionsToPublish.includes(s))
+    );
   }
 
   get allSessionsScheduled() {
@@ -72,9 +77,11 @@ export default class PublishAllSessionsComponent extends Component {
       return false;
     }
 
-    return this.courseObjectives.toArray().any((objective) => {
-      return objective.programYearObjectives.length === 0;
-    });
+    return Boolean(
+      this.courseObjectives.find((objective) => {
+        return objective.programYearObjectives.length === 0;
+      })
+    );
   }
 
   get publishableSessions() {
@@ -140,7 +147,7 @@ export default class PublishAllSessionsComponent extends Component {
   async saveSomeSessions(sessions) {
     const chunk = sessions.splice(0, 6);
 
-    await all(chunk.invoke('save'));
+    await await all(chunk.map((o) => o.save()));
     this.currentSessionsSaved += chunk.length;
     if (sessions.length) {
       await this.saveSomeSessions(sessions);

@@ -19,11 +19,10 @@ export default class WeeklyeventsController extends Controller {
 
   @action
   toggleOpenWeek(week, shouldOpen) {
-    const arr = this.expandedWeeks;
-    arr.removeObject(week);
+    const arr = this.expandedWeeks.filter((w) => w !== week);
     this.week = '';
     if (shouldOpen) {
-      arr.pushObject(week);
+      arr.push(week);
       this.week = week;
     }
     arr.sort();

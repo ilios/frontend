@@ -8,6 +8,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { findBy, mapBy, uniqueValues } from '../utils/array-helpers';
 
 export default class VisualizerCourseInstructorSessionType extends Component {
   @service router;
@@ -30,12 +31,12 @@ export default class VisualizerCourseInstructorSessionType extends Component {
       return [];
     }
 
-    const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
+    const sessionsWithUser = await filter(sessions.slice(), async (session) => {
       const allInstructors = await session.getAllOfferingInstructors();
-      return allInstructors.mapBy('id').includes(this.args.user.id);
+      return mapBy(allInstructors, 'id').includes(this.args.user.id);
     });
 
-    const sessionsWithSessionType = await map(sessionsWithUser.toArray(), async (session) => {
+    const sessionsWithSessionType = await map(sessionsWithUser.slice(), async (session) => {
       const sessionType = await session.sessionType;
       return {
         session,
@@ -54,7 +55,7 @@ export default class VisualizerCourseInstructorSessionType extends Component {
 
     const sessionTypeData = dataMap.reduce((set, obj) => {
       const name = obj.sessionTypeTitle;
-      let existing = set.findBy('label', name);
+      let existing = findBy(set, 'label', name);
       if (!existing) {
         existing = {
           data: 0,
@@ -63,17 +64,18 @@ export default class VisualizerCourseInstructorSessionType extends Component {
             sessions: [],
           },
         };
-        set.pushObject(existing);
+        set.push(existing);
       }
       existing.data += obj.minutes;
-      existing.meta.sessions.pushObject(obj.sessionTitle);
+      existing.meta.sessions.push(obj.sessionTitle);
 
       return set;
     }, []);
 
-    const totalMinutes = sessionTypeData
-      .mapBy('data')
-      .reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = mapBy(sessionTypeData, 'data').reduce(
+      (total, minutes) => total + minutes,
+      0
+    );
 
     return sessionTypeData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
@@ -94,6 +96,6 @@ export default class VisualizerCourseInstructorSessionType extends Component {
     const { label, data, meta } = obj;
 
     this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
-    this.tooltipContent = meta.sessions.uniq().sort().join(', ');
+    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
   });
 }

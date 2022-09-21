@@ -16,7 +16,7 @@ export default class CourseVisualizeSessionTypeRoute extends Route {
   }
 
   async afterModel({ course }) {
-    const sessions = (await course.sessions).toArray();
+    const sessions = (await course.sessions).slice();
     return await all([
       map(sessions, (s) => s.sessionType),
       map(sessions, (s) => s.terms),

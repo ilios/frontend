@@ -2,6 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class ProgramYear extends Model {
   @attr('string')
@@ -40,7 +41,7 @@ export default class ProgramYear extends Model {
   @use _schoolVocabularies = new ResolveAsyncValue(() => [this._school?.vocabularies]);
 
   get assignableVocabularies() {
-    return this._schoolVocabularies?.sortBy('title');
+    return sortBy(this._schoolVocabularies ?? [], 'title');
   }
 
   get classOfYear() {
@@ -63,16 +64,16 @@ export default class ProgramYear extends Model {
    * A list of program-year objectives, sorted by position.
    */
   get sortedProgramYearObjectives() {
-    return this._programYearObjectives?.toArray().sort(sortableByPosition);
+    return this._programYearObjectives?.slice().sort(sortableByPosition);
   }
 
-  @use _allTermVocabularies = new ResolveAsyncValue(() => [this.terms.mapBy('vocabulary')]);
+  @use _allTermVocabularies = new ResolveAsyncValue(() => [mapBy(this.terms, 'vocabulary')]);
 
   /**
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return this._allTermVocabularies?.uniq().sortBy('title');
+    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
   }
 
   /**

@@ -6,6 +6,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { map } from 'rsvp';
 import moment from 'moment';
+import { filterBy, mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class Course extends Model {
   @attr('string')
@@ -93,11 +94,11 @@ export default class Course extends Model {
   terms;
 
   get publishedSessions() {
-    return this.sessions.filterBy('isPublished');
+    return filterBy(this.sessions, 'isPublished');
   }
 
   @use publishedSessionOfferings = new ResolveAsyncValue(() => [
-    this.publishedSessions?.mapBy('offerings'),
+    mapBy(this.publishedSessions, 'offerings'),
   ]);
 
   get publishedOfferingCount() {
@@ -116,10 +117,10 @@ export default class Course extends Model {
   ]);
 
   get competencies() {
-    return this.allTreeCompetencies?.uniq().filter(Boolean);
+    return uniqueValues(this.allTreeCompetencies ?? []).filter(Boolean);
   }
 
-  @use competencyDomains = new ResolveAsyncValue(() => [this.competencies?.mapBy('domain')]);
+  @use competencyDomains = new ResolveAsyncValue(() => [mapBy(this.competencies, 'domain')]);
 
   @use domainsWithSubcompetencies = new AsyncProcess(() => [
     this._getDomainProxies.bind(this),
@@ -131,12 +132,12 @@ export default class Course extends Model {
     if (!domains || !courseCompetencies) {
       return;
     }
-    const domainProxies = await map(domains.uniq(), async (domain) => {
-      let subCompetencies = (await domain.children)
-        .filter((competency) => {
-          return courseCompetencies.includes(competency);
-        })
-        .sortBy('title');
+    const domainProxies = await map(uniqueValues(domains), async (domain) => {
+      let subCompetencies = (await domain.children).filter((competency) => {
+        return courseCompetencies.includes(competency);
+      });
+
+      subCompetencies = sortBy(subCompetencies, 'title');
 
       return {
         title: domain.title,
@@ -145,7 +146,7 @@ export default class Course extends Model {
       };
     });
 
-    return domainProxies.sortBy('title');
+    return sortBy(domainProxies, 'title');
   }
 
   get requiredPublicationIssues() {
@@ -179,26 +180,29 @@ export default class Course extends Model {
     return issues;
   }
 
-  @use _programYears = new ResolveAsyncValue(() => [this.cohorts.mapBy('programYear')]);
-  @use _programs = new ResolveAsyncValue(() => [this._programYears?.mapBy('program')]);
-  @use _programSchools = new ResolveAsyncValue(() => [this._programs?.mapBy('school')]);
+  @use _programYears = new ResolveAsyncValue(() => [mapBy(this.cohorts ?? [], 'programYear')]);
+  @use _programs = new ResolveAsyncValue(() => [mapBy(this._programYears ?? [], 'program')]);
+  @use _programSchools = new ResolveAsyncValue(() => [mapBy(this._programs ?? [], 'school')]);
   @use _resolvedSchool = new ResolveAsyncValue(() => [this.school]);
   get schools() {
     if (!this._programSchools || !this._resolvedSchool) {
       return [];
     }
 
-    return [...this._programSchools, this._resolvedSchool].uniq();
+    return uniqueValues([...this._programSchools, this._resolvedSchool]);
   }
 
-  @use _schoolVocabularies = new ResolveAsyncValue(() => [this.schools?.mapBy('vocabularies')]);
+  @use _schoolVocabularies = new ResolveAsyncValue(() => [mapBy(this.schools, 'vocabularies')]);
 
   get assignableVocabularies() {
-    return this._schoolVocabularies
-      ?.reduce((acc, curr) => {
-        return acc.pushObjects(curr.toArray());
-      }, [])
-      .sortBy('school.title', 'title');
+    const rhett = sortBy(
+      this._schoolVocabularies?.reduce((acc, curr) => {
+        acc.push(...curr.slice());
+        return acc;
+      }, []) ?? [],
+      ['school.title', 'title']
+    );
+    return rhett;
   }
 
   @use _courseObjectives = new ResolveAsyncValue(() => [this.courseObjectives]);
@@ -206,7 +210,7 @@ export default class Course extends Model {
    * A list of course objectives, sorted by position (asc) and then id (desc).
    */
   get sortedCourseObjectives() {
-    return this._courseObjectives?.toArray().sort(sortableByPosition);
+    return this._courseObjectives?.slice().sort(sortableByPosition);
   }
 
   get hasMultipleCohorts() {
@@ -218,7 +222,7 @@ export default class Course extends Model {
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return this._allTermVocabularies?.uniq().sortBy('title');
+    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
   }
 
   get termCount() {

@@ -7,6 +7,7 @@ import { all } from 'rsvp';
 import ObjectProxy from '@ember/object/proxy';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import scrollIntoView from 'scroll-into-view';
+import { mapBy } from '../utils/array-helpers';
 
 export default class DetailCohortsComponent extends Component {
   @service currentUser;
@@ -38,7 +39,7 @@ export default class DetailCohortsComponent extends Component {
       return [];
     }
 
-    return this.materialsRelationship.toArray();
+    return this.materialsRelationship.slice();
   }
 
   get parentMaterialIds() {
@@ -104,7 +105,8 @@ export default class DetailCohortsComponent extends Component {
     let lmSubject;
     let position = 0;
     if (this.materials && this.materials.length) {
-      position = this.materials.sortBy('position').reverse()[0].get('position') + 1;
+      const positions = mapBy(this.materials, 'position');
+      position = Math.max(...positions) + 1;
     }
     if (this.args.isCourse) {
       lmSubject = this.store.createRecord('course-learning-material', {
@@ -162,7 +164,8 @@ export default class DetailCohortsComponent extends Component {
     }
     let position = 0;
     if (this.materials && this.materials.length > 1) {
-      position = this.materials.sortBy('position').reverse()[0].get('position') + 1;
+      const positions = mapBy(this.materials, 'position');
+      position = Math.max(...positions) + 1;
     }
     newLearningMaterial.set('position', position);
     await newLearningMaterial.save();
@@ -176,7 +179,7 @@ export default class DetailCohortsComponent extends Component {
 
   async saveSomeMaterials(arr) {
     const chunk = arr.splice(0, 5);
-    const savedMaterials = await all(chunk.invoke('save'));
+    const savedMaterials = await all(chunk.map((o) => o.save()));
     let moreMaterials = [];
     if (arr.length) {
       moreMaterials = await this.saveSomeMaterials(arr);

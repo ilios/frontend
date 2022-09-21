@@ -26,7 +26,7 @@ export default class Vocabulary extends Model {
 
   async getTopLevelTerms() {
     const terms = await this.terms;
-    return filter(terms.toArray(), async (term) => {
+    return filter(terms.slice(), async (term) => {
       return !(await term.parent);
     });
   }

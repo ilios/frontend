@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { sortBy, uniqueValues } from '../utils/array-helpers';
 
 export default class SingleEventObjectiveList extends Component {
   @tracked groupByCompetencies = true;
@@ -23,7 +24,7 @@ export default class SingleEventObjectiveList extends Component {
       return obj.domain.toString();
     });
 
-    domainTitles = domainTitles.uniq();
+    domainTitles = uniqueValues(domainTitles);
 
     const domains = domainTitles.map((title) => {
       const domain = {
@@ -37,11 +38,11 @@ export default class SingleEventObjectiveList extends Component {
         .map((obj) => {
           return obj.title;
         });
-      domain.objectives = filteredObjectives.sortBy('title');
+      domain.objectives = sortBy(filteredObjectives, 'title');
 
       return domain;
     });
 
-    return domains.sortBy('title');
+    return sortBy(domains, 'title');
   }
 }

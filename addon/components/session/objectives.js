@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
+import { mapBy } from '../../utils/array-helpers';
 
 export default class SessionObjectivesComponent extends Component {
   @service store;
@@ -33,7 +34,8 @@ export default class SessionObjectivesComponent extends Component {
     let position = 0;
     const sessionObjectives = await this.args.session.sessionObjectives;
     if (sessionObjectives.length) {
-      position = sessionObjectives.sortBy('position').lastObject.position + 1;
+      const positions = mapBy(sessionObjectives, 'position');
+      position = Math.max(...positions) + 1;
     }
 
     newSessionObjective.set('title', title);

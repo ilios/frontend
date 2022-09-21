@@ -15,7 +15,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
 
   @use learningMaterials = new ResolveAsyncValue(() => [this.args.subject.learningMaterials]);
   get sortedLearningMaterials() {
-    return this.learningMaterials?.toArray().sort(sortableByPosition) ?? [];
+    return this.learningMaterials?.slice().sort(sortableByPosition) ?? [];
   }
 
   get items() {

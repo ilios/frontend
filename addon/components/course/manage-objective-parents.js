@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { findById, mapBy, sortBy } from '../../utils/array-helpers';
 
 export default class CourseManageObjectiveParentsComponent extends Component {
   @tracked userSelectedCohort;
@@ -20,17 +21,17 @@ export default class CourseManageObjectiveParentsComponent extends Component {
   @action
   chooseCohort(event) {
     const cohortId = event.target.value;
-    this.userSelectedCohort = this.args.cohortObjectives.findBy('id', cohortId);
+    this.userSelectedCohort = findById(this.args.cohortObjectives, cohortId);
   }
 
   get selectedCompetencyIdsInSelectedCohort() {
     const selectedInCohort = this.args.selected.filter(
       (obj) => obj.cohortId === this.selectedCohort.id
     );
-    return selectedInCohort.mapBy('competencyId');
+    return mapBy(selectedInCohort, 'competencyId');
   }
 
   get competenciesFromSelectedCohort() {
-    return this.selectedCohort.competencies.sortBy('title');
+    return sortBy(this.selectedCohort.competencies, 'title');
   }
 }

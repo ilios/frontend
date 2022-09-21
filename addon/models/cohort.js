@@ -50,7 +50,7 @@ export default class CohortModel extends Model {
 
   async _getRootLevelLearnerGroups(learnerGroups) {
     return (await learnerGroups)
-      .toArray()
+      .slice()
       .filter((learnerGroup) => learnerGroup.belongsTo('parent').value() === null);
   }
 

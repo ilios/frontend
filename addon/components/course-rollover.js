@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { DateTime } from 'luxon';
+import { filterBy, mapBy } from '../utils/array-helpers';
 
 @validatable
 export default class CourseRolloverComponent extends Component {
@@ -46,7 +47,7 @@ export default class CourseRolloverComponent extends Component {
         school,
       },
     });
-    this.changeSelectedYear(this.years.firstObject);
+    this.changeSelectedYear(this.years[0]);
   });
 
   @action
@@ -71,7 +72,7 @@ export default class CourseRolloverComponent extends Component {
     }
     const courseId = this.args.course.id;
 
-    const selectedCohortIds = this.selectedCohorts.mapBy('id');
+    const selectedCohortIds = mapBy(this.selectedCohorts, 'id');
 
     const data = {
       year: this.selectedYear,
@@ -100,8 +101,8 @@ export default class CourseRolloverComponent extends Component {
     if (!this.allCourses) {
       return [];
     }
-    const existingCoursesWithTitle = this.allCourses.filterBy('title', this.title.trim());
-    return existingCoursesWithTitle.mapBy('year');
+    const existingCoursesWithTitle = filterBy(this.allCourses, 'title', this.title.trim());
+    return mapBy(existingCoursesWithTitle, 'year');
   }
 
   @action
