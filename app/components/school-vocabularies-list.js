@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { filterBy, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolVocabulariesListComponent extends Component {
   @service store;
@@ -17,7 +17,7 @@ export default class SchoolVocabulariesListComponent extends Component {
     if (!this.vocabularies) {
       return [];
     }
-    return sortBy(this.vocabularies.slice().filterBy('isNew', false), 'title');
+    return sortBy(filterBy(this.vocabularies.slice(), 'isNew', false), 'title');
   }
 
   @action

@@ -4,6 +4,7 @@ import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import { filterBy } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerProgramYearObjectivesComponent extends Component {
   @service intl;
@@ -77,7 +78,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
       return {
         domainId,
         name: competencyTitle,
-        children: objectiveObjects.filterBy('competencyId', competencyId),
+        children: filterBy(objectiveObjects, 'competencyId', competencyId),
       };
     });
   }
@@ -89,7 +90,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
     return domains.uniq().map((domain) => {
       const id = domain.id;
       const name = domain.title;
-      const domainCompetencyObjects = competencyObjects.filterBy('domainId', id);
+      const domainCompetencyObjects = filterBy(competencyObjects, 'domainId', id);
 
       const children = domainCompetencyObjects.reduce((arr, { domainId, name, children }) => {
         if (id === domainId) {

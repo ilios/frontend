@@ -7,6 +7,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { filterBy } from 'ilios-common/utils/array-helpers';
 
 export default class LearnerGroupUploadDataComponent extends Component {
   @service store;
@@ -30,7 +31,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
     if (!this.data) {
       return [];
     }
-    return this.data.filterBy('isValid');
+    return filterBy(this.data, 'isValid');
   }
 
   get invalidUsers() {
