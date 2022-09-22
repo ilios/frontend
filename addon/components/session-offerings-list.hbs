@@ -11,7 +11,7 @@
           {{block.dayOfWeek}}
         </span>
         <span class="offering-block-date-dayofmonth">
-          {{block.dayOfMonth}}
+          {{format-date block.date month="long" day="numeric"}}
         </span>
       </div>
       {{#each block.offeringTimeBlocks as |offeringTimeBlock|}}
