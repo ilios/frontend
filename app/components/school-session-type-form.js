@@ -44,7 +44,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
     if (this.assessment) {
       const assessmentOption = this.selectedAssessmentOptionId
         ? findById(this.assessmentOptions, this.selectedAssessmentOptionId)
-        : sortBy(this.assessmentOptions, 'name').get('firstObject');
+        : sortBy(this.assessmentOptions, 'name')[0];
       return assessmentOption ?? null;
     }
     return null;

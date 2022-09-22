@@ -110,7 +110,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
           } else if (users.length > 1) {
             errors.push(this.intl.t('general.multipleUsersFoundWithCampusId', { campusId }));
           } else {
-            const user = users.get('firstObject');
+            const user = users.slice()[0];
             const cohorts = await user.cohorts;
             const cohortIds = mapBy(cohorts.slice(), 'id');
             if (!cohortIds.includes(cohort.id)) {

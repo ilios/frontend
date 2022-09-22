@@ -61,7 +61,7 @@ export default class InstructorGroupsRootComponent extends Component {
     }
 
     const schoolId = this.user?.belongsTo('school').id();
-    return schoolId ? findById(this.args.schools.slice(), schoolId) : this.args.schools.firstObject;
+    return schoolId ? findById(this.args.schools.slice(), schoolId) : this.args.schools.slice()[0];
   }
 
   get filteredInstructorGroups() {

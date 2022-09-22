@@ -422,9 +422,8 @@ export default class NewMyReportComponent extends Component {
       this.currentPrepositionalObject
     );
 
-    const first = list.get('firstObject');
-    if (first) {
-      this.currentPrepositionalObjectId = first.value;
+    if (list.length) {
+      this.currentPrepositionalObjectId = list[0].value;
     }
   }
 }

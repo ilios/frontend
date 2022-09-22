@@ -243,8 +243,8 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
         this.startingAcademicLevel = yield this.args.parent.startingAcademicLevel;
         this.endingAcademicLevel = yield this.args.parent.endingAcademicLevel;
       } else {
-        this.startingAcademicLevel = this.academicLevels.firstObject;
-        this.endingAcademicLevel = this.academicLevels.firstObject;
+        this.startingAcademicLevel = this.academicLevels.slice()[0];
+        this.endingAcademicLevel = this.academicLevels.slice()[0];
       }
       this.linkableCourses = yield this.getLinkableCourses(this.args.report);
     }
@@ -258,8 +258,8 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
         this.startingAcademicLevel = yield this.args.parent.startingAcademicLevel;
         this.endingAcademicLevel = yield this.args.parent.endingAcademicLevel;
       } else {
-        this.startingAcademicLevel = this.academicLevels.firstObject;
-        this.endingAcademicLevel = this.academicLevels.firstObject;
+        this.startingAcademicLevel = this.academicLevels.slice()[0];
+        this.endingAcademicLevel = this.academicLevels.slice()[0];
       }
       this.linkableCourses = yield this.getLinkableCourses(this.args.report);
     }

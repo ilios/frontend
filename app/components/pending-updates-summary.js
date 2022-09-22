@@ -36,7 +36,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
         return school;
       }
     }
-    return this.args.schools.firstObject;
+    return this.args.schools.slice()[0];
   }
 
   get areUpdatesLoaded() {

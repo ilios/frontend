@@ -55,7 +55,7 @@ export default class LearnerGroupsRootComponent extends Component {
   get selectedSchool() {
     const schoolId = this.args.schoolId ?? this.user?.belongsTo('school').id();
 
-    const school = findById(this.args.schools.slice(), schoolId) ?? this.args.schools.firstObject;
+    const school = findById(this.args.schools.slice(), schoolId) ?? this.args.schools.slice()[0];
     //trigger a pre-load of the data we need to load an individual group in this school
     this.dataLoader.loadInstructorGroupsForSchool(school.id);
     return school;

@@ -13,7 +13,7 @@ export default class NewProgramYearComponent extends Component {
 
   get selectedYear() {
     if (!this.year) {
-      return this.availableAcademicYears.firstObject;
+      return this.availableAcademicYears[0];
     }
     return findBy(this.availableAcademicYears, 'value', this.year);
   }
