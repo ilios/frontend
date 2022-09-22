@@ -5,7 +5,7 @@ import { all } from 'rsvp';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class AssignStudentsComponent extends Component {
   @service flashMessages;
@@ -81,7 +81,7 @@ export default class AssignStudentsComponent extends Component {
     const currentlySelected = this.selectedUserIds.length;
     const totalDisplayed = this.filteredStudents.length;
     this.selectedUserIds =
-      currentlySelected < totalDisplayed ? this.filteredStudents.mapBy('id') : [];
+      currentlySelected < totalDisplayed ? mapBy(this.filteredStudents, 'id') : [];
   }
 
   @action
@@ -110,7 +110,7 @@ export default class AssignStudentsComponent extends Component {
     while (studentsToModify.get('length') > 0) {
       const parts = studentsToModify.splice(0, 3);
       yield all(parts.map((part) => part.save()));
-      this.savedUserIds.pushObjects(parts.mapBy('id'));
+      this.savedUserIds.pushObjects(mapBy(parts, 'id'));
     }
     this.selectedUserIds = [];
 

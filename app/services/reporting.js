@@ -4,7 +4,7 @@ import { isEmpty, isPresent } from '@ember/utils';
 import { singularize, pluralize } from 'ember-inflector';
 import { capitalize, camelize, dasherize } from '@ember/string';
 import striptags from 'striptags';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 
 const { filter, resolve, map } = RSVP;
 
@@ -189,7 +189,7 @@ export default class ReportingService extends Service {
           ? `${course.year} - ${course.year + 1}`
           : course.year.toString(),
         sessionDescriptionText,
-        striptags(objectives.mapBy('title').join()),
+        striptags(mapBy(objectives.slice(), 'title').join()),
       ];
     });
 

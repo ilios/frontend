@@ -3,7 +3,7 @@ import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import { uniqueValues } from 'ilios-common/utils/array-helpers';
+import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerSessionTypeTermsComponent extends Component {
   @tracked tooltipContent;
@@ -65,7 +65,7 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
 
     const termData = Object.values(termObjects);
 
-    const totalLinks = termData.mapBy('data').reduce((total, count) => total + count, 0);
+    const totalLinks = mapBy(termData, 'data').reduce((total, count) => total + count, 0);
     this.data = termData.map((obj) => {
       const percent = ((obj.data / totalLinks) * 100).toFixed(1);
       obj.label = `${percent}%`;

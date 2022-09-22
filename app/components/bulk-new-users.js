@@ -10,7 +10,7 @@ import { dropTask, restartableTask } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import moment from 'moment';
 import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class BulkNewUsersComponent extends Component {
   @service flashMessages;
@@ -97,7 +97,7 @@ export default class BulkNewUsersComponent extends Component {
 
   async existingUsernames() {
     const authentications = await this.store.findAll('authentication');
-    return authentications.mapBy('username');
+    return mapBy(authentications.slice(), 'username');
   }
 
   /**
@@ -242,9 +242,9 @@ export default class BulkNewUsersComponent extends Component {
     while (records.length > 0) {
       try {
         parts = records.splice(0, 10);
-        const users = parts.mapBy('user');
+        const users = mapBy(parts, 'user');
         yield all(users.map((user) => user.save()));
-        const authentications = parts.mapBy('authentication');
+        const authentications = mapBy(parts, 'authentication');
         yield all(authentications.map((auth) => auth.save()));
       } catch (e) {
         const userErrors = parts.filter((obj) => obj.user.get('isError'));
@@ -257,7 +257,7 @@ export default class BulkNewUsersComponent extends Component {
         this.savingUserErrors.pushObjects(userErrors);
         this.savingAuthenticationErrors.pushObjects(authenticationErrors);
       } finally {
-        this.savedUserIds.pushObjects(parts.mapBy('user').mapBy('id'));
+        this.savedUserIds.pushObjects(mapBy(mapBy(parts, 'user'), 'id'));
       }
     }
 

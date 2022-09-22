@@ -5,6 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { setupAuthentication } from 'ilios-common';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 import { component } from 'ilios/tests/pages/components/user-profile-cohorts';
 
 module('Integration | Component | user profile cohorts', function (hooks) {
@@ -69,7 +70,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
         this.cohort2.id,
         'user has correct primary cohort'
       );
-      const cohortIds = data.relationships.cohorts.data.mapBy('id');
+      const cohortIds = mapBy(data.relationships.cohorts.data, 'id');
       assert.notOk(cohortIds.includes(this.cohort1.id), 'cohort1 has been removed');
       assert.ok(cohortIds.includes(this.cohort2.id), 'cohort2 is still present');
       assert.ok(cohortIds.includes(this.cohort4.id), 'cohort4 has been added');

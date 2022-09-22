@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
 
 @validatable
@@ -38,7 +39,7 @@ export default class SchoolVocabularyNewTermComponent extends Component {
     const terms = this.args.term
       ? await this.args.term.children
       : await this.args.vocabulary.topLevelTerms;
-    return !terms.mapBy('title').includes(this.title);
+    return !mapBy(terms.slice(), 'title').includes(this.title);
   }
 
   validateTitleMessageCallback() {

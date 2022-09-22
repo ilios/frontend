@@ -4,9 +4,10 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 @validatable
 export default class SchoolVocabularyTermManagerComponent extends Component {
@@ -100,7 +101,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
 
   async validateTitleCallback() {
     const terms = await this.args.term.children;
-    return !terms.mapBy('title').includes(this.title);
+    return !mapBy(terms.slice(), 'title').includes(this.title);
   }
 
   validateTitleMessageCallback() {

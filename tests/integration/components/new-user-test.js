@@ -6,6 +6,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 import { component } from 'ilios/tests/pages/components/new-user';
 
 module('Integration | Component | new user', function (hooks) {
@@ -113,7 +114,7 @@ module('Integration | Component | new user', function (hooks) {
     assert.strictEqual(newUser.phone, 'phone', 'with the correct phone');
     assert.strictEqual(newUser.email, 'test@test.com', 'with the correct email');
     const roles = await newUser.roles;
-    assert.notOk(roles.mapBy('id').includes(studentRole.id));
+    assert.notOk(mapBy(roles.slice(), 'id').includes(studentRole.id));
 
     const authentication = await newUser.authentication;
     assert.strictEqual(authentication.username, 'user123', 'with the correct username');
@@ -158,7 +159,7 @@ module('Integration | Component | new user', function (hooks) {
     assert.strictEqual(newUser.phone, 'phone', 'with the correct phone');
     assert.strictEqual(newUser.email, 'test@test.com', 'with the correct email');
     const roles = await newUser.roles;
-    assert.ok(roles.mapBy('id').includes(studentRole.id));
+    assert.ok(mapBy(roles.slice(), 'id').includes(studentRole.id));
 
     const authentication = await newUser.authentication;
     assert.strictEqual(authentication.username, 'user123', 'with the correct username');

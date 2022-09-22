@@ -5,7 +5,7 @@ import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class PendingUpdatesSummaryComponent extends Component {
   @service currentUser;
@@ -14,7 +14,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
   @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
 
   allUpdatesPromise = this.store.query('pending-user-update', {
-    filters: { schools: this.args.schools.mapBy('id') },
+    filters: { schools: mapBy(this.args.schools, 'id') },
     include: 'user',
   });
   @use allUpdates = new ResolveAsyncValue(() => [this.allUpdatesPromise]);

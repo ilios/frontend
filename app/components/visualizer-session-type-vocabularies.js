@@ -5,6 +5,7 @@ import { map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerSessionTypeVocabulariesComponent extends Component {
   @service router;
@@ -41,7 +42,7 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
     }, {});
 
     const vocabularyData = Object.values(vocabularyObjects);
-    const totalTerms = vocabularyData.mapBy('data').reduce((total, count) => total + count, 0);
+    const totalTerms = mapBy(vocabularyData, 'data').reduce((total, count) => total + count, 0);
     this.data = vocabularyData.map((obj) => {
       const percent = ((obj.data / totalTerms) * 100).toFixed(1);
       obj.label = `${percent}%`;

@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import moment from 'moment';
 import { all, map } from 'rsvp';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class IliosCalendarWeekComponent extends Component {
   @tracked selectedDate = moment().toDate();
@@ -26,7 +27,7 @@ export default class IliosCalendarWeekComponent extends Component {
       const allDescendants = await learnerGroup.get('allDescendants');
       learnerGroups.pushObjects(allDescendants);
     }
-    const offerings = await all(learnerGroups.mapBy('offerings'));
+    const offerings = await all(mapBy(learnerGroups, 'offerings'));
     const flat = offerings.reduce((flattened, obj) => {
       return flattened.pushObjects(obj.slice());
     }, []);

@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveAllValues from 'ilios/classes/resolve-all-values';
-import { uniqueValues } from 'ilios-common/utils/array-helpers';
+import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
@@ -17,7 +17,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
   @use program = new ResolveAsyncValue(() => [this.args.programYear.program]);
   @use school = new ResolveAsyncValue(() => [this.program?.school]);
   @use competencies = new ResolveAsyncValue(() => [this.school?.competencies, []]);
-  @use allDomains = new ResolveAllValues(() => [this.competencies?.mapBy('domain')]);
+  @use allDomains = new ResolveAllValues(() => [mapBy(this.competencies?.slice() ?? [], 'domain')]);
   @use programYearCompetencies = new ResolveAsyncValue(() => [
     this.args.programYear.competencies,
     [],

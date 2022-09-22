@@ -6,7 +6,7 @@ import { isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
 import { enqueueTask, restartableTask, task } from 'ember-concurrency';
 import { Length, IsURL, validatable } from 'ilios-common/decorators/validation';
-import { findById, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -210,9 +210,9 @@ export default class LearnergroupSummaryComponent extends Component {
     const offerings = (await learnerGroup.offerings).slice();
     const ilms = (await learnerGroup.ilmSessions).slice();
     const arr = [].concat(offerings, ilms);
-    const sessions = await Promise.all(arr.mapBy('session'));
+    const sessions = await Promise.all(mapBy(arr, 'session'));
     const filteredSessions = uniqueValues(sessions.filter(Boolean));
-    const courses = await Promise.all(filteredSessions.mapBy('course'));
+    const courses = await Promise.all(mapBy(filteredSessions, 'course'));
     const courseObjects = courses.map((course) => {
       const obj = {
         id: course.id,
