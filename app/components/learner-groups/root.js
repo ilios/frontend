@@ -80,7 +80,7 @@ export default class LearnerGroupsRootComponent extends Component {
       return findById(this.programYears.slice(), this.args.programYearId);
     }
 
-    return sortBy(this.programYears.slice(), 'startYear').lastObject;
+    return sortBy(this.programYears.slice(), 'startYear').reverse()[0];
   }
 
   get rootLevelLearnerGroups() {

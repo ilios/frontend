@@ -60,7 +60,7 @@ export default class NewUserComponent extends Component {
       }
     }
 
-    return this.currentSchoolCohorts.lastObject;
+    return this.currentSchoolCohorts.slice().reverse()[0];
   }
 
   @restartableTask

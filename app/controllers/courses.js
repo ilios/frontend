@@ -129,7 +129,7 @@ export default class CoursesController extends Controller {
     }
     let defaultYear = years.find((year) => Number(year.id) === currentYear);
     if (!defaultYear) {
-      defaultYear = years.lastObject;
+      defaultYear = years.slice().reverse()[0];
     }
 
     return defaultYear;

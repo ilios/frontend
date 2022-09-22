@@ -25,7 +25,7 @@ export default class AssignStudentsComponent extends Component {
       const currentCohort = findById(this.cohorts, this.primaryCohortId);
       return currentCohort ?? false;
     } else {
-      return this.cohorts.lastObject;
+      return this.cohorts.slice().reverse()[0];
     }
   }
 

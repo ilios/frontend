@@ -70,7 +70,7 @@ export default class BulkNewUsersComponent extends Component {
       }
     }
 
-    return this.cohorts.lastObject;
+    return this.cohorts.slice().reverse()[0];
   }
 
   @restartableTask

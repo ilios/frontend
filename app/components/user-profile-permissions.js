@@ -221,7 +221,7 @@ export default class UserProfilePermissionsComponent extends Component {
     }
     let selectedYear = this.academicYears.find((year) => Number(year.id) === currentYear);
     if (!selectedYear) {
-      selectedYear = this.academicYears.get('lastObject');
+      selectedYear = this.academicYears.reverse()[0];
     }
     return selectedYear;
   }

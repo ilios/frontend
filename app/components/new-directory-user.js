@@ -72,7 +72,7 @@ export default class NewDirectoryUserComponent extends Component {
       }
     }
 
-    return this.currentSchoolCohorts.lastObject;
+    return this.currentSchoolCohorts.slice().reverse()[0];
   }
 
   async loadSchools() {

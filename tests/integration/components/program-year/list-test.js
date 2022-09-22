@@ -99,7 +99,7 @@ module('Integration | Component | program-year/list', function (hooks) {
     await component.newProgramYear.done.click();
     const programYears = await this.owner.lookup('service:store').findAll('programYear');
     const sortedProgramYears = sortBy(programYears.slice(), 'id');
-    const newProgramYear = sortedProgramYears.lastObject;
+    const newProgramYear = sortedProgramYears.slice().reverse()[0];
     const originalProgramYear = sortedProgramYears[sortedProgramYears.length - 2];
     assert.strictEqual(parseInt(newProgramYear.startYear, 10), thisYear);
     const terms = (await newProgramYear.terms).slice();

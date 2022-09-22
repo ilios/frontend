@@ -23,7 +23,7 @@ export default class ProgramYearListComponent extends Component {
 
   @dropTask
   *saveNew(startYear) {
-    const latestProgramYear = this.sortedProgramYears.get('lastObject');
+    const latestProgramYear = this.sortedProgramYears.reverse()[0];
     const newProgramYear = this.store.createRecord('program-year', {
       program: this.args.program,
       startYear,
