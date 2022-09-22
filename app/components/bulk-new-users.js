@@ -84,7 +84,7 @@ export default class BulkNewUsersComponent extends Component {
   @action
   toggleUserSelection(obj) {
     if (this.selectedUsers.includes(obj)) {
-      this.selectedUsers.removeObject(obj);
+      this.selectedUsers = this.selectedUsers.filter((user) => user !== obj);
     } else {
       this.selectedUsers.pushObject(obj);
     }

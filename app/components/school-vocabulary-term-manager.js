@@ -78,8 +78,9 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     const goTo = isEmpty(parent) ? null : parent.id;
     this.args.term.deleteRecord();
     if (parent) {
-      const siblings = parent.children;
-      siblings.removeObject(this.args.term);
+      const siblings = (yield parent.children).slice();
+      siblings.splice(siblings.indexOf(this.args.term), 1);
+      parent.set('children', siblings);
     }
     yield this.args.term.save();
     this.args.manageTerm(goTo);

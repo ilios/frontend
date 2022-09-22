@@ -86,8 +86,9 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
   @dropTask
   *removeCurriculumInventoryReport(report) {
-    const reports = yield this.selectedProgram.curriculumInventoryReports;
-    reports.removeObject(report);
+    const reports = (yield this.selectedProgram.curriculumInventoryReports).slice();
+    reports.splice(reports.indexOf(report), 1);
+    this.selectedProgram.set('curriculumInventoryReports', reports);
     yield report.destroyRecord();
   }
 }

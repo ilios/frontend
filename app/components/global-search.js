@@ -97,7 +97,7 @@ export default class GlobalSearchComponent extends Component {
     const ignoredSchoolIds = this.args.ignoredSchoolIds ? [...this.args.ignoredSchoolIds] : [];
 
     if (ignoredSchoolIds.includes(id)) {
-      ignoredSchoolIds.removeObject(id);
+      ignoredSchoolIds.splice(ignoredSchoolIds.indexOf(id), 1);
     } else {
       ignoredSchoolIds.pushObject(id);
     }

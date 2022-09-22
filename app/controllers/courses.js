@@ -137,8 +137,9 @@ export default class CoursesController extends Controller {
 
   @dropTask
   *removeCourse(course) {
-    const courses = yield this.selectedSchool.courses;
-    courses.removeObject(course);
+    const courses = (yield this.selectedSchool.courses).slice();
+    courses.splice(courses.indexOf(course), 1);
+    this.selectedSchool.set('courses', courses);
     yield course.destroyRecord();
     this.deletedCourse = course;
     if (this.newCourse === course) {
