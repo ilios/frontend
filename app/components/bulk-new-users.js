@@ -243,9 +243,9 @@ export default class BulkNewUsersComponent extends Component {
       try {
         parts = records.splice(0, 10);
         const users = parts.mapBy('user');
-        yield all(users.invoke('save'));
+        yield all(users.map((user) => user.save()));
         const authentications = parts.mapBy('authentication');
-        yield all(authentications.invoke('save'));
+        yield all(authentications.map((auth) => auth.save()));
       } catch (e) {
         const userErrors = parts.filter((obj) => obj.user.get('isError'));
         const authenticationErrors = parts.filter(

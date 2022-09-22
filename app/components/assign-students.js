@@ -109,7 +109,7 @@ export default class AssignStudentsComponent extends Component {
 
     while (studentsToModify.get('length') > 0) {
       const parts = studentsToModify.splice(0, 3);
-      yield all(parts.invoke('save'));
+      yield all(parts.map((part) => part.save()));
       this.savedUserIds.pushObjects(parts.mapBy('id'));
     }
     this.selectedUserIds = [];

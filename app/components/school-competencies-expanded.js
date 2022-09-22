@@ -90,8 +90,8 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     });
 
     // delete all removed competencies first, then all removed domains
-    yield all(competenciesToRemove.invoke('destroyRecord'));
-    yield all(domainsToRemove.invoke('destroyRecord'));
+    yield all(competenciesToRemove.map((competency) => competency.destroyRecord()));
+    yield all(domainsToRemove.map((domain) => domain.destroyRecord()));
 
     // set the school on new competencies
     filterBy(this.competencies, 'isNew').forEach((competency) => {
@@ -99,7 +99,9 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     });
 
     // update all modified competencies (this will include new ones).
-    yield all(filterBy(this.competencies, 'hasDirtyAttributes').invoke('save'));
+    yield all(
+      filterBy(this.competencies, 'hasDirtyAttributes').map((competency) => competency.save())
+    );
 
     // cleanup
     this.cleanup();

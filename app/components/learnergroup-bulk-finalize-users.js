@@ -34,7 +34,7 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
       return flattened.pushObjects(arr);
     }, []);
 
-    yield all(uniqueValues(flat).invoke('save'));
+    yield all(uniqueValues(flat).map((o) => o.save()));
     this.flashMessages.success('general.savedSuccessfully');
     this.args.done();
   }

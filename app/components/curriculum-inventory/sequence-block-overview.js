@@ -261,7 +261,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.args.sequenceBlock.set('childSequenceOrder', parseInt(this.childSequenceOrder, 10));
     const savedBlock = yield this.args.sequenceBlock.save();
     const children = yield savedBlock.get('children');
-    yield children.invoke('reload');
+    yield all(children.map((child) => child.reload()));
   }
 
   @action
@@ -319,7 +319,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     const savedBlock = yield this.args.sequenceBlock.save();
     const parent = yield savedBlock.parent;
     const children = yield parent.children;
-    yield all(children.invoke('reload'));
+    yield all(children.map((child) => child.reload()));
   }
 
   @action

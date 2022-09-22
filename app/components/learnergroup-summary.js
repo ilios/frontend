@@ -125,7 +125,7 @@ export default class LearnergroupSummaryComponent extends Component {
     const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     const addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
     const groups = [].concat(removeGroups).concat(addGroups);
-    yield all(groups.invoke('save'));
+    yield all(groups.map((group) => group.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
@@ -134,7 +134,7 @@ export default class LearnergroupSummaryComponent extends Component {
   *removeUserToCohort(user) {
     const topLevelGroup = yield this.args.learnerGroup.topLevelGroup;
     const groups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-    yield all(groups.invoke('save'));
+    yield all(groups.map((group) => group.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
@@ -151,7 +151,7 @@ export default class LearnergroupSummaryComponent extends Component {
       groupsToSave.pushObjects(removeGroups);
       groupsToSave.pushObjects(addGroups);
     }
-    yield all(uniqueValues(groupsToSave).invoke('save'));
+    yield all(uniqueValues(groupsToSave).map((group) => group.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
@@ -165,7 +165,7 @@ export default class LearnergroupSummaryComponent extends Component {
       const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
       groupsToSave.pushObjects(removeGroups);
     }
-    yield all(uniqueValues(groupsToSave).invoke('save'));
+    yield all(uniqueValues(groupsToSave).map((group) => group.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }

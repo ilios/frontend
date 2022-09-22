@@ -30,7 +30,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     const updates = yield this.args.user.pendingUserUpdates;
     this.args.user.set('enabled', false);
     yield this.args.user.save();
-    yield all(updates.invoke('destroyRecord'));
+    yield all(updates.map((update) => update.destroyRecord()));
     this.flashMessages.success('general.savedSuccessfully');
   }
 
@@ -39,7 +39,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     const updates = yield this.args.user.pendingUserUpdates;
     this.args.user.set('userSyncIgnore', true);
     yield this.args.user.save();
-    yield all(updates.invoke('destroyRecord'));
+    yield all(updates.map((update) => update.destroyRecord()));
     this.flashMessages.success('general.savedSuccessfully');
   }
 }

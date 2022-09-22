@@ -63,7 +63,7 @@ export default class SchoolSessionAttributesComponent extends Component {
       }
     }
     try {
-      yield all(toSave.invoke('save'));
+      yield all(toSave.map((o) => o.save()));
     } finally {
       this.args.manage(false);
     }

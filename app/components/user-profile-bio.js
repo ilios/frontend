@@ -178,8 +178,7 @@ export default class UserProfileBioComponent extends Component {
     yield auth.save();
     yield user.save();
     const pendingUpdates = yield user.pendingUserUpdates;
-    yield all(pendingUpdates.invoke('destroyRecord'));
-
+    yield all(pendingUpdates.map((update) => update.destroyRecord()));
     this.clearErrorDisplay();
     this.cancel();
   }
