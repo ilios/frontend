@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolLeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];
@@ -25,12 +26,12 @@ export default class SchoolLeadershipExpandedComponent extends Component {
 
   get directors() {
     const arr = [...this.schoolDirectors.slice(), ...this.directorsToAdd];
-    return arr.filter((user) => !this.directorsToRemove.includes(user)).uniq();
+    return uniqueValues(arr.filter((user) => !this.directorsToRemove.includes(user)));
   }
 
   get administrators() {
     const arr = [...this.schoolAdministrators.slice(), ...this.administratorsToAdd];
-    return arr.filter((user) => !this.administratorsToRemove.includes(user)).uniq();
+    return uniqueValues(arr.filter((user) => !this.administratorsToRemove.includes(user)));
   }
   @action
   addDirector(user) {

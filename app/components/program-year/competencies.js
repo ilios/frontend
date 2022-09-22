@@ -2,10 +2,11 @@ import Component from '@glimmer/component';
 import { filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveAllValues from 'ilios/classes/resolve-all-values';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
@@ -29,14 +30,17 @@ export default class ProgramYearCompetenciesComponent extends Component {
   ]);
 
   get domains() {
-    return this.allDomains?.uniq() || [];
+    if (!this.allDomains) {
+      return [];
+    }
+    return uniqueValues(this.allDomains);
   }
 
   get selectedCompetencies() {
     const filteredCurrent = this.programYearCompetencies.filter((c) => {
       return !this.competenciesToRemove.includes(c);
     });
-    return [...this.competenciesToAdd, ...filteredCurrent].uniq();
+    return uniqueValues([...this.competenciesToAdd, ...filteredCurrent]);
   }
 
   async getCompetenciesWithSelectedChildren(selectedCompetencies, competencies) {

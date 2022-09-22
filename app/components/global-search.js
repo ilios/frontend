@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { findBy, findById, sortBy } from 'ilios-common/utils/array-helpers';
+import { findBy, findById, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
 
@@ -83,7 +83,7 @@ export default class GlobalSearchComponent extends Component {
   }
 
   get yearOptions() {
-    return this.results.mapBy('year').uniq().sort().reverse();
+    return uniqueValues(this.results.mapBy('year')).sort().reverse();
   }
 
   @action

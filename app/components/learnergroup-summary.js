@@ -6,7 +6,7 @@ import { isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
 import { enqueueTask, restartableTask, task } from 'ember-concurrency';
 import { Length, IsURL, validatable } from 'ilios-common/decorators/validation';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -151,7 +151,7 @@ export default class LearnergroupSummaryComponent extends Component {
       groupsToSave.pushObjects(removeGroups);
       groupsToSave.pushObjects(addGroups);
     }
-    yield all(groupsToSave.uniq().invoke('save'));
+    yield all(uniqueValues(groupsToSave).invoke('save'));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
@@ -165,7 +165,7 @@ export default class LearnergroupSummaryComponent extends Component {
       const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
       groupsToSave.pushObjects(removeGroups);
     }
-    yield all(groupsToSave.uniq().invoke('save'));
+    yield all(uniqueValues(groupsToSave).invoke('save'));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
@@ -211,7 +211,7 @@ export default class LearnergroupSummaryComponent extends Component {
     const ilms = (await learnerGroup.ilmSessions).slice();
     const arr = [].concat(offerings, ilms);
     const sessions = await Promise.all(arr.mapBy('session'));
-    const filteredSessions = sessions.filter(Boolean).uniq();
+    const filteredSessions = uniqueValues(sessions.filter(Boolean));
     const courses = await Promise.all(filteredSessions.mapBy('course'));
     const courseObjects = courses.map((course) => {
       const obj = {
@@ -242,7 +242,7 @@ export default class LearnergroupSummaryComponent extends Component {
         arr.push(courseObj);
       }
       courseObj.groups.pushObjects(obj.groups);
-      courseObj.groups.uniq();
+      uniqueValues(courseObj.groups);
       return arr;
     }, []);
   }

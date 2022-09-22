@@ -4,7 +4,7 @@ import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { filterBy } from 'ilios-common/utils/array-helpers';
+import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerProgramYearObjectivesComponent extends Component {
   @service intl;
@@ -87,7 +87,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
     const competencies = await programYear.competencies;
     const competencyObjects = await this.getCompetencyObjects(programYear);
     const domains = await map(competencies.slice(), async (competency) => competency.getDomain());
-    return domains.uniq().map((domain) => {
+    return uniqueValues(domains).map((domain) => {
       const id = domain.id;
       const name = domain.title;
       const domainCompetencyObjects = filterBy(competencyObjects, 'domainId', id);
@@ -146,7 +146,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
     const allSessionTitles = children.reduce(getSessionTitles, meta.sessionTitles || []);
 
     this.tooltipTitle = htmlSafe(name);
-    this.tooltipCourses = allCourseTitles.uniq();
-    this.tooltipSessions = allSessionTitles.uniq();
+    this.tooltipCourses = uniqueValues(allCourseTitles);
+    this.tooltipSessions = uniqueValues(allSessionTitles);
   }
 }

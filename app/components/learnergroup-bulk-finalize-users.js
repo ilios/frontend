@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { dropTask, timeout } from 'ember-concurrency';
 import { all, map } from 'rsvp';
 import { inject as service } from '@ember/service';
-import { findBy } from 'ilios-common/utils/array-helpers';
+import { findBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LearnergroupBulkFinalizeUsersComponent extends Component {
   @service flashMessages;
@@ -34,7 +34,7 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
       return flattened.pushObjects(arr);
     }, []);
 
-    yield all(flat.uniq().invoke('save'));
+    yield all(uniqueValues(flat).invoke('save'));
     this.flashMessages.success('general.savedSuccessfully');
     this.args.done();
   }

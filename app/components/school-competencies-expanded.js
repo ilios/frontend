@@ -4,7 +4,7 @@ import { all } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import { filterBy } from 'ilios-common/utils/array-helpers';
+import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;
@@ -23,7 +23,9 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
       return [];
     }
     const arr = [...this.schoolCompetencies.slice(), ...this.competenciesToAdd];
-    return arr.filter((competency) => !this.competenciesToRemove.includes(competency)).uniq();
+    return uniqueValues(
+      arr.filter((competency) => !this.competenciesToRemove.includes(competency))
+    );
   }
 
   get domains() {

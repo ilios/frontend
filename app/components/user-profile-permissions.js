@@ -5,7 +5,7 @@ import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { findById, sortBy } from 'ilios-common/utils/array-helpers';
+import { findById, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class UserProfilePermissionsComponent extends Component {
   @service store;
@@ -174,7 +174,7 @@ export default class UserProfilePermissionsComponent extends Component {
       const school = await course.school;
       return school === selectedSchool && selectedYearId === course.year.toString();
     });
-    return rhett.uniq();
+    return uniqueValues(rhett);
   }
 
   async getStudentAdvisedCourses(selectedSchool, selectedYearId, studentAdvisedCourses) {

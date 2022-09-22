@@ -4,6 +4,7 @@ import PermissionChecker from 'ilios/classes/permission-checker';
 import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { all, map } from 'rsvp';
@@ -49,14 +50,14 @@ export default class LearnerGroupsListItemComponent extends Component {
     const arr = [].concat(offerings, ilms);
 
     const sessions = await Promise.all(arr.mapBy('session'));
-    const filteredSessions = sessions.filter(Boolean).uniq();
+    const filteredSessions = uniqueValues(sessions.filter(Boolean));
     const courses = await Promise.all(filteredSessions.mapBy('course'));
     const children = (await learnerGroup.children).slice();
     const childCourses = await map(children, async (child) => {
       return await this.getCoursesForGroup(child);
     });
 
-    return [].concat(courses, childCourses.flat()).uniq();
+    return uniqueValues([].concat(courses, childCourses.flat()));
   }
 
   @dropTask

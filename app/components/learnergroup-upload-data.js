@@ -7,7 +7,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { filterBy, findBy } from 'ilios-common/utils/array-helpers';
+import { filterBy, findBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LearnerGroupUploadDataComponent extends Component {
   @service store;
@@ -50,7 +50,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
     if (!this.data) {
       return [];
     }
-    const uploadedSubGroups = this.data.mapBy('subGroupName').uniq().filter(Boolean);
+    const uploadedSubGroups = uniqueValues(this.data.mapBy('subGroupName')).filter(Boolean);
     const groups = await this.args.learnerGroup.getAllDescendants();
     const matchObjects = uploadedSubGroups.map((groupName) => {
       const group = findBy(groups, 'title', groupName);

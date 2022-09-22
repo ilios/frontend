@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolCompetenciesManagerComponent extends Component {
   get domains() {
@@ -10,7 +10,7 @@ export default class SchoolCompetenciesManagerComponent extends Component {
     const domains = this.args.competencies.slice().filter((competency) => {
       return !competency.belongsTo('parent').id();
     });
-    const objs = domains.uniq().map((domain) => {
+    const objs = uniqueValues(domains).map((domain) => {
       if (!domain.id) {
         return {
           domain,
