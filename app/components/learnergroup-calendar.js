@@ -22,14 +22,14 @@ export default class IliosCalendarWeekComponent extends Component {
   }
 
   async getOfferings(learnerGroup, showSubgroupEvents) {
-    const learnerGroups = [learnerGroup];
+    let learnerGroups = [learnerGroup];
     if (showSubgroupEvents) {
       const allDescendants = await learnerGroup.get('allDescendants');
-      learnerGroups.pushObjects(allDescendants);
+      learnerGroups = [...learnerGroup, ...allDescendants];
     }
     const offerings = await all(mapBy(learnerGroups, 'offerings'));
     const flat = offerings.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.slice());
+      return [...flattened, ...obj.slice()];
     }, []);
 
     return flat;

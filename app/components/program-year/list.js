@@ -30,9 +30,12 @@ export default class ProgramYearListComponent extends Component {
     });
 
     if (latestProgramYear) {
-      newProgramYear.directors.pushObjects(yield latestProgramYear.directors);
-      newProgramYear.competencies.pushObjects(yield latestProgramYear.competencies);
-      newProgramYear.terms.pushObjects(yield latestProgramYear.terms);
+      const directors = (yield latestProgramYear.directors).slice();
+      const competencies = (yield latestProgramYear.competencies).slice();
+      const terms = (yield latestProgramYear.terms).slice();
+      newProgramYear.set('directors', directors);
+      newProgramYear.set('competencies', competencies);
+      newProgramYear.set('terms', terms);
     }
     const savedProgramYear = yield newProgramYear.save();
     if (latestProgramYear) {

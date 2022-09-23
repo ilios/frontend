@@ -31,7 +31,7 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
     });
 
     const flat = treeGroups.reduce((flattened, arr) => {
-      return flattened.pushObjects(arr);
+      return [...flattened, ...arr];
     }, []);
 
     yield all(uniqueValues(flat).map((o) => o.save()));

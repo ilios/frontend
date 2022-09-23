@@ -30,8 +30,8 @@ export default async function cloneLearnerGroup(store, group, cohort, withLearne
   const newChildren = await map(children.slice(), async (child) => {
     return await cloneLearnerGroup(store, child, cohort, withLearners, newGroup);
   });
-  const flat = newChildren.reduce((flattened, obj) => {
-    return flattened.pushObjects(obj.slice());
+  const flat = newChildren.reduce((flattened, children) => {
+    return [...flattened, ...children];
   }, []);
 
   return [].concat([newGroup], flat);

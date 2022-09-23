@@ -183,7 +183,7 @@ export default class GlobalSearchBox extends Component {
           return text.substring(newQuery.length, newQuery.length + 1) === removedChar;
         });
 
-        set.pushObjects(matches);
+        set = [...set, ...matches];
       }
 
       return set;

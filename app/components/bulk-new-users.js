@@ -254,10 +254,13 @@ export default class BulkNewUsersComponent extends Component {
             isPresent(obj.authentication) &&
             obj.authentication.get('isError')
         );
-        this.savingUserErrors.pushObjects(userErrors);
-        this.savingAuthenticationErrors.pushObjects(authenticationErrors);
+        this.savingUserErrors = [...this.savingUserErrors, ...userErrors];
+        this.savingAuthenticationErrors = [
+          ...this.savingAuthenticationErrors,
+          ...authenticationErrors,
+        ];
       } finally {
-        this.savedUserIds.pushObjects(mapBy(mapBy(parts, 'user'), 'id'));
+        this.savedUserIds = [...this.savedUserIds, ...mapBy(mapBy(parts, 'user'), 'id')];
       }
     }
 

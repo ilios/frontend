@@ -143,13 +143,12 @@ export default class LearnergroupSummaryComponent extends Component {
   *addUsersToGroup(users) {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = yield learnerGroup.topLevelGroup;
-    const groupsToSave = [];
+    let groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
       const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
       const addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
-      groupsToSave.pushObjects(removeGroups);
-      groupsToSave.pushObjects(addGroups);
+      groupsToSave = [...groupsToSave, ...removeGroups, ...addGroups];
     }
     yield all(uniqueValues(groupsToSave).map((group) => group.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
@@ -159,11 +158,11 @@ export default class LearnergroupSummaryComponent extends Component {
   @enqueueTask
   *removeUsersToCohort(users) {
     const topLevelGroup = yield this.args.learnerGroup.topLevelGroup;
-    const groupsToSave = [];
+    let groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
       const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-      groupsToSave.pushObjects(removeGroups);
+      groupsToSave = [...groupsToSave, ...removeGroups];
     }
     yield all(uniqueValues(groupsToSave).map((group) => group.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
@@ -241,7 +240,7 @@ export default class LearnergroupSummaryComponent extends Component {
         };
         arr.push(courseObj);
       }
-      courseObj.groups.pushObjects(obj.groups);
+      courseObj.groups = [...courseObj.groups, ...obj.groups];
       uniqueValues(courseObj.groups);
       return arr;
     }, []);

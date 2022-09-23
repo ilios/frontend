@@ -94,7 +94,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
 
       const children = domainCompetencyObjects.reduce((arr, { domainId, name, children }) => {
         if (id === domainId) {
-          arr.pushObjects(children);
+          arr = [...arr, ...children];
         } else {
           arr.pushObject({ name, children });
         }
