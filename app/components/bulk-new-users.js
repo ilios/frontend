@@ -291,8 +291,8 @@ export default class BulkNewUsersComponent extends Component {
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = yield all(cohorts.getEach('programYear'));
-    yield all(programYears.getEach('program'));
+    const programYears = yield all(mapBy(cohorts.slice(), 'programYear'));
+    yield all(mapBy(programYears.slice(), 'program'));
 
     const objects = yield all(
       cohorts.slice().map(async (cohort) => {

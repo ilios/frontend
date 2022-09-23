@@ -5,7 +5,7 @@ import { all, filter } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import moment from 'moment';
 import { validatable, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { findBy, findById } from 'ilios-common/utils/array-helpers';
+import { findBy, findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class NewUserComponent extends Component {
@@ -97,8 +97,8 @@ export default class NewUserComponent extends Component {
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = await all(cohorts.getEach('programYear'));
-    await all(programYears.getEach('program'));
+    const programYears = await all(mapBy(cohorts.slice(), 'programYear'));
+    await all(mapBy(programYears.slice(), 'program'));
 
     const objects = await all(
       cohorts.slice().map(async (cohort) => {
