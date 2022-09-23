@@ -16,7 +16,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
     const school = this.server.create('school');
     const academicLevels = [];
     for (let i = 0; i < 10; i++) {
-      academicLevels.pushObject(
+      academicLevels.push(
         this.server.create('curriculumInventoryAcademicLevel', { name: `Year ${i + 1}` })
       );
     }

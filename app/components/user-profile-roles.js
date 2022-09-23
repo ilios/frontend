@@ -71,10 +71,10 @@ export default class UserProfileRolesComponent extends Component {
     const userRoles = yield this.args.user.get('roles');
     userRoles.clear();
     if (this.isStudent) {
-      userRoles.pushObject(studentRole);
+      this.args.user.set('userRoles', [...userRoles.slice(), studentRole]);
     }
     if (this.isFormerStudent) {
-      userRoles.pushObject(formerStudentRole);
+      this.args.user.set('userRoles', [...userRoles.slice(), formerStudentRole]);
     }
     this.resetFlipped();
     yield this.args.user.save();

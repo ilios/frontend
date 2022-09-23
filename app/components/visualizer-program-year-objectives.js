@@ -96,7 +96,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
         if (id === domainId) {
           arr = [...arr, ...children];
         } else {
-          arr.pushObject({ name, children });
+          arr.push({ name, children });
         }
 
         return arr;
@@ -132,14 +132,14 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
 
     const getCourseTitles = (courseTitles, { children, meta }) => {
       if (meta.courseTitle) {
-        courseTitles.pushObject(meta.courseTitle);
+        courseTitles.push(meta.courseTitle);
       }
       return children.reduce(getCourseTitles, courseTitles);
     };
     const allCourseTitles = children.reduce(getCourseTitles, meta.courseTitles || []);
     const getSessionTitles = (sessionTitles, { children, meta }) => {
       if (meta.sessionTitle) {
-        sessionTitles.pushObject(meta.sessionTitle);
+        sessionTitles.push(meta.sessionTitle);
       }
       return children.reduce(getSessionTitles, sessionTitles);
     };

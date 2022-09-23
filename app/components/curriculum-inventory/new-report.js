@@ -36,7 +36,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
         title = title + ' - ' + (id + 1);
       }
       const year = { id, title };
-      years.pushObject(year);
+      years.push(year);
     }
     this.years = years;
     this.selectedYear = findById(years, currentYear);

@@ -99,7 +99,7 @@ export default class GlobalSearchComponent extends Component {
     if (ignoredSchoolIds.includes(id)) {
       ignoredSchoolIds.splice(ignoredSchoolIds.indexOf(id), 1);
     } else {
-      ignoredSchoolIds.pushObject(id);
+      ignoredSchoolIds.push(id);
     }
 
     this.args.onSelectPage(1);

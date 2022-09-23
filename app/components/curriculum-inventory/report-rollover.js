@@ -35,7 +35,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
         continue;
       }
       const title = academicYearCrossesCalendarYearBoundaries ? `${i} - ${i + 1}` : i.toString();
-      years.pushObject({
+      years.push({
         year: i,
         title,
       });

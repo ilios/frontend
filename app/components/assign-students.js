@@ -66,7 +66,7 @@ export default class AssignStudentsComponent extends Component {
       obj.startYear = programYear.startYear;
       obj.duration = program.duration;
 
-      allCohorts.pushObject(obj);
+      allCohorts.push(obj);
     }
 
     const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));

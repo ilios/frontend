@@ -159,8 +159,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     const parentBlockModel = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-sequence-block', parentBlock.id);
-    parentBlockModel.children.pushObject(this.sequenceBlock1);
-    parentBlockModel.children.pushObject(this.sequenceBlock2);
+    const children = (await parentBlockModel.children).slice();
+    parentBlockModel.set('children', [...children, this.sequenceBlock1, this.sequenceBlock2]);
     this.set('parent', parentBlockModel);
 
     await render(hbs`<CurriculumInventory::SequenceBlockList

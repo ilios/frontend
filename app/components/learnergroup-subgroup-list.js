@@ -47,7 +47,7 @@ export default class LearnergroupSubgroupListComponent extends Component {
         parent: this.args.parentGroup,
         title: `${parentTitle} ${pad(padBy, offset + i, '0')}`,
       });
-      groups.pushObject(newGroup);
+      groups.push(newGroup);
     }
     const saveSomeGroups = async (groupsToSave) => {
       const chunk = groupsToSave.splice(0, 6);

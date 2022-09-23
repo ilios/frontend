@@ -59,7 +59,7 @@ export default class SchoolSessionAttributesComponent extends Component {
       const name = names[i];
       const config = yield this.args.school.setConfigValue(name, newValues[name]);
       if (config) {
-        toSave.pushObject(config);
+        toSave.push(config);
       }
     }
     try {

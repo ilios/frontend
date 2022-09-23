@@ -174,7 +174,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     });
     // Always add the currently linked course to this list, if existent.
     if (isPresent(course)) {
-      linkableCourses.pushObject(course);
+      linkableCourses.push(course);
     }
 
     return linkableCourses;

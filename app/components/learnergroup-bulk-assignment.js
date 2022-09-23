@@ -50,7 +50,8 @@ export default class LearnergroupBulkAssignmentComponent extends Component {
       parent: learnerGroup,
     });
     const savedGroup = await group.save();
-    learnerGroup.get('children').pushObject(savedGroup);
+    const children = (await learnerGroup.children).slice();
+    learnerGroup.set('children', [...children, savedGroup]);
     this.matchedGroups = [...this.matchedGroups, { name: title, group: savedGroup }];
   }
 

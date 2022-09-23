@@ -49,8 +49,8 @@ export default class CurriculumInventoryReportsComponent extends Component {
     const savedReport = await newReport.save();
     this.newReport = savedReport;
     const program = await this.selectedProgram;
-    const reports = await program.curriculumInventoryReports;
-    reports.pushObject(savedReport);
+    const reports = (await program.curriculumInventoryReports).slice();
+    program.set('curriculumInventoryReports', [...reports, savedReport]);
     this.showNewCurriculumInventoryReportForm = false;
   }
 

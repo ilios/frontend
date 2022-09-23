@@ -86,7 +86,7 @@ export default class BulkNewUsersComponent extends Component {
     if (this.selectedUsers.includes(obj)) {
       this.selectedUsers = this.selectedUsers.filter((user) => user !== obj);
     } else {
-      this.selectedUsers.pushObject(obj);
+      this.selectedUsers.push(obj);
     }
   }
 

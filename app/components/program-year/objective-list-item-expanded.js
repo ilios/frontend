@@ -35,9 +35,9 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
           title,
           objectives: [],
         };
-        set.pushObject(existing);
+        set.push(existing);
       }
-      existing.objectives.pushObject({
+      existing.objectives.push({
         title: htmlSafe(obj.title),
       });
       return set;
