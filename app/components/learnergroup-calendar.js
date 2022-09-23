@@ -25,7 +25,7 @@ export default class IliosCalendarWeekComponent extends Component {
     let learnerGroups = [learnerGroup];
     if (showSubgroupEvents) {
       const allDescendants = await learnerGroup.get('allDescendants');
-      learnerGroups = [...learnerGroup, ...allDescendants];
+      learnerGroups = [...learnerGroups, ...allDescendants];
     }
     const offerings = await all(mapBy(learnerGroups, 'offerings'));
     const flat = offerings.reduce((flattened, obj) => {
