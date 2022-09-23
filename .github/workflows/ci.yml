@@ -107,8 +107,8 @@ jobs:
   browserstack-test:
     name: Browserstack ${{ matrix.launcher }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    needs: [lint, test, build]
+    timeout-minutes: 15
+    needs: [test]
     strategy:
       fail-fast: false
       max-parallel: 2
@@ -119,10 +119,10 @@ jobs:
           - BS_IOS_SAFARI
           - BS_CHROME_ANDROID
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 16.x
           cache: npm
       - name: install dependencies
         run: npm ci
@@ -144,8 +144,8 @@ jobs:
   firefox-test:
     name: Browser Tests (Firefox)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    needs: [lint, test, build]
+    timeout-minutes: 15
+    needs: [test]
     strategy:
       fail-fast: false
       matrix:
