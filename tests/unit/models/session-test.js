@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { waitForResource } from 'ilios-common';
 
 module('Unit | Model | Session', function (hooks) {
@@ -292,12 +292,26 @@ module('Unit | Model | Session', function (hooks) {
     assert.strictEqual(total, 0);
 
     const allDayOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01').toDate(),
-      endDate: moment('2017-01-02').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toJSDate(),
     });
     const halfAnHourOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01 09:30:00').toDate(),
-      endDate: moment('2017-01-01 10:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 9,
+        minute: 30,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 10,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
     total = await waitForResource(subject, 'totalSumOfferingsDuration');
@@ -312,13 +326,27 @@ module('Unit | Model | Session', function (hooks) {
     assert.strictEqual(max, 0);
 
     const allDayOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01').toDate(),
-      endDate: moment('2017-01-02').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toJSDate(),
       session: subject,
     });
     const halfAnHourOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01 09:30:00').toDate(),
-      endDate: moment('2017-01-01 10:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 9,
+        minute: 30,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 10,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
       session: subject,
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
@@ -338,7 +366,7 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     const ilm = store.createRecord('ilmSession', {
-      dueDate: moment('2015-01-01').toDate(),
+      dueDate: DateTime.fromObject({ year: 2015, month: 1, day: 1 }).toJSDate(),
     });
     subject.set('ilmSession', ilm);
     const firstDate = await waitForResource(subject, 'firstOfferingDate');
@@ -350,10 +378,10 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     const offering1 = store.createRecord('offering', {
-      startDate: moment('2017-01-01').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
     });
     const offering2 = store.createRecord('offering', {
-      startDate: moment('2016-01-01').toDate(),
+      startDate: DateTime.fromObject({ year: 2016, month: 1, day: 1 }).toJSDate(),
     });
     subject.get('offerings').pushObjects([offering1, offering2]);
     const firstDate = await waitForResource(subject, 'firstOfferingDate');
@@ -365,13 +393,13 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     const offering1 = store.createRecord('offering', {
-      startDate: moment('2017-01-01').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
     });
     const offering2 = store.createRecord('offering', {
-      startDate: moment('2016-01-01').toDate(),
+      startDate: DateTime.fromObject({ year: 2016, month: 1, day: 1 }).toJSDate(),
     });
     const offering3 = store.createRecord('offering', {
-      startDate: moment('2015-01-01').toDate(),
+      startDate: DateTime.fromObject({ year: 2015, month: 1, day: 1 }).toJSDate(),
     });
     const offeringWithNoStartDate = store.createRecord('offering');
     subject
@@ -390,12 +418,28 @@ module('Unit | Model | Session', function (hooks) {
     const store = this.owner.lookup('service:store');
 
     const allDayOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01').toDate(),
-      endDate: moment('2017-01-02').add(30, 'minutes').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 })
+        .plus({ minutes: 30 })
+        .toJSDate(),
     });
     const halfAnHourOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01 09:30:00').toDate(),
-      endDate: moment('2017-01-01 10:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 9,
+        minute: 30,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 10,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
     const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
@@ -411,12 +455,26 @@ module('Unit | Model | Session', function (hooks) {
     const store = this.owner.lookup('service:store');
 
     const allDayOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01').toDate(),
-      endDate: moment('2017-01-02').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toJSDate(),
     });
     const halfAnHourOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01 09:30:00').toDate(),
-      endDate: moment('2017-01-01 10:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 9,
+        minute: 30,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 10,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
 
@@ -442,12 +500,28 @@ module('Unit | Model | Session', function (hooks) {
     const store = this.owner.lookup('service:store');
 
     const allDayOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01').toDate(),
-      endDate: moment('2017-01-02').add(30, 'minutes').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 })
+        .plus({ minutes: 30 })
+        .toJSDate(),
     });
     const halfAnHourOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01 09:30:00').toDate(),
-      endDate: moment('2017-01-01 10:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 9,
+        minute: 30,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 10,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
     const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
@@ -463,12 +537,26 @@ module('Unit | Model | Session', function (hooks) {
     const store = this.owner.lookup('service:store');
 
     const allDayOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01').toDate(),
-      endDate: moment('2017-01-02').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toJSDate(),
     });
     const halfAnHourOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01 09:30:00').toDate(),
-      endDate: moment('2017-01-01 10:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 9,
+        minute: 30,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 10,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
 
@@ -647,12 +735,28 @@ module('Unit | Model | Session', function (hooks) {
     const subject = store.createRecord('session');
 
     const allDayOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01').toDate(),
-      endDate: moment('2017-01-02').add(30, 'minutes').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 })
+        .plus({ minutes: 30 })
+        .toJSDate(),
     });
     const halfAnHourOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01 09:30:00').toDate(),
-      endDate: moment('2017-01-01 10:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 9,
+        minute: 30,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 10,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
     const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
@@ -667,12 +771,26 @@ module('Unit | Model | Session', function (hooks) {
     const subject = store.createRecord('session');
 
     const allDayOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01').toDate(),
-      endDate: moment('2017-01-02').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 1, day: 2 }).toJSDate(),
     });
     const halfAnHourOffering = store.createRecord('offering', {
-      startDate: moment('2017-01-01 09:30:00').toDate(),
-      endDate: moment('2017-01-01 10:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 9,
+        minute: 30,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 10,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
     });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
 
@@ -705,13 +823,41 @@ module('Unit | Model | Session', function (hooks) {
       instructors: [instructor2],
     });
     const offering1 = store.createRecord('offering', {
-      startDate: moment('2017-01-01 00:00:00').toDate(),
-      endDate: moment('2017-01-02 00:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 0,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 2,
+        hour: 0,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
       instructorGroups: [instructorGroup1],
     });
     const offering2 = store.createRecord('offering', {
-      startDate: moment('2017-01-01 09:30:00').toDate(),
-      endDate: moment('2017-01-01 10:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 9,
+        minute: 30,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 10,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
       instructors: [instructor1, instructor2],
     });
     const subject = store.createRecord('session', {
@@ -735,13 +881,41 @@ module('Unit | Model | Session', function (hooks) {
       users: [instructor1],
     });
     const offering1 = store.createRecord('offering', {
-      startDate: moment('2017-01-01 00:00:00').toDate(),
-      endDate: moment('2017-01-02 00:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 0,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 2,
+        hour: 0,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
       instructorGroups: [instructorGroup1],
     });
     const offering2 = store.createRecord('offering', {
-      startDate: moment('2017-01-01 09:30:00').toDate(),
-      endDate: moment('2017-01-01 10:00:00').toDate(),
+      startDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 9,
+        minute: 30,
+        second: 0,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2017,
+        month: 1,
+        day: 1,
+        hour: 10,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
       instructors: [instructor1, instructor2],
     });
     const subject = store.createRecord('session', {
