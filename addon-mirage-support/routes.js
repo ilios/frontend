@@ -1,7 +1,7 @@
-import moment from 'moment';
 import { getAll, filterResults } from './get-all';
 import { postAll } from './post-all';
 import parseJsonData from './parse-json-data';
+import { DateTime } from 'luxon';
 
 export default function (server) {
   const models = [
@@ -165,15 +165,13 @@ export default function (server) {
   });
 
   server.get('api/userevents/:userid', function ({ db }, request) {
-    const from = moment.unix(request.queryParams.from);
-    const to = moment.unix(request.queryParams.to);
-    const userid = parseInt(request.params.userid, 10);
+    const from = Number(request.queryParams.from);
+    const to = Number(request.queryParams.to);
+    const userid = Number(request.params.userid);
     const userEvents = db.userevents.filter((event) => {
-      return (
-        event.user === userid &&
-        (from.isSame(event.startDate) || from.isBefore(event.startDate)) &&
-        (to.isSame(event.endDate) || to.isAfter(event.endDate))
-      );
+      const st = DateTime.fromJSDate(event.startDate).toUnixInteger();
+      const et = DateTime.fromJSDate(event.endDate).toUnixInteger();
+      return Number(event.user) === userid && from <= st && to >= et;
     });
     return {
       userEvents: userEvents,
@@ -181,15 +179,13 @@ export default function (server) {
   });
 
   server.get('api/schoolevents/:schoolid', function ({ db }, request) {
-    const from = moment.unix(request.queryParams.from);
-    const to = moment.unix(request.queryParams.to);
-    const schoolId = parseInt(request.params.schoolid, 10);
+    const from = Number(request.queryParams.from);
+    const to = Number(request.queryParams.to);
+    const schoolId = Number(request.params.schoolid);
     const schoolEvents = db.schoolevents.filter((event) => {
-      return (
-        event.school === schoolId &&
-        (from.isSame(event.startDate) || from.isBefore(event.startDate)) &&
-        (to.isSame(event.endDate) || to.isAfter(event.endDate))
-      );
+      const st = DateTime.fromJSDate(event.startDate).toUnixInteger();
+      const et = DateTime.fromJSDate(event.endDate).toUnixInteger();
+      return Number(event.school) === schoolId && from <= st && to >= et;
     });
     return {
       events: schoolEvents,

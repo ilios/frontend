@@ -2,12 +2,12 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { action, set } from '@ember/object';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { sortBy } from '../utils/array-helpers';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;
-  @service moment;
+  @service localeDays;
 
   scrollView = restartableTask(async (calendarElement, [earliestHour]) => {
     //waiting ensures that setHour has time to setup hour elements
@@ -22,20 +22,20 @@ export default class WeeklyCalendarComponent extends Component {
   });
 
   get firstDayOfWeek() {
-    this.intl.locale; //access to start autotracking
-    return this.moment.moment(this.args.date).startOf('week');
+    return this.localeDays.firstDayOfThisWeek;
   }
 
   get lastDayOfWeek() {
-    return this.firstDayOfWeek.endOf('week');
+    return this.localeDays.lastDayOfThisWeek;
   }
 
   get week() {
     return [...Array(7).keys()].map((i) => {
-      const date = this.firstDayOfWeek.add(i, 'days');
+      const date = DateTime.fromJSDate(this.firstDayOfWeek).plus({ days: i });
       return {
-        date: date.toDate(),
+        date: date.toJSDate(),
         dayOfWeek: i + 1,
+        fullName: date.toFormat('dddd LL'),
       };
     });
   }
@@ -46,7 +46,7 @@ export default class WeeklyCalendarComponent extends Component {
     }
 
     return this.sortedEvents.reduce((earliestHour, event) => {
-      const hour = Number(moment(event.startDate).format('H'));
+      const hour = Number(DateTime.fromJSDate(event.startDate).toFormat('HH'));
       return hour < earliestHour ? hour : earliestHour;
     }, 24);
   }
@@ -59,32 +59,23 @@ export default class WeeklyCalendarComponent extends Component {
     return sortBy(this.args.events, ['startDate', 'endDate', 'name']);
   }
 
-  get eventDays() {
-    return this.week.map((day) => {
-      day.events = this.sortedEvents.filter((e) =>
-        moment(day.date).isSame(moment(e.startDate), 'day')
-      );
-      return day;
-    });
-  }
-
   get days() {
-    return this.eventDays.map((day) => {
-      const date = moment(day.date);
-      day.dayOfWeek = date.weekday() + 1;
-      day.fullName = date.format('dddd LL');
-
+    return this.week.map((day) => {
+      const dt = DateTime.fromJSDate(day.date);
+      day.events = this.sortedEvents.filter((e) =>
+        dt.hasSame(DateTime.fromISO(e.startDate), 'day')
+      );
       return day;
     });
   }
 
   get hours() {
     return [...Array(24).keys()].map((i) => {
-      const time = this.firstDayOfWeek.hour(i);
+      const time = DateTime.fromJSDate(this.firstDayOfWeek).set({ hour: i });
       return {
-        hour: time.format('H'),
-        longName: time.format('LT'),
-        shortName: time.format('hA'),
+        hour: time.toFormat('H'),
+        longName: this.intl.formatDate(time, { hour: 'numeric', minute: 'numeric' }),
+        shortName: this.intl.formatDate(time, { hour: 'numeric' }),
       };
     });
   }

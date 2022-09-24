@@ -1,17 +1,18 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { DateTime } from 'luxon';
 
 export default class IliosCalendarDayComponent extends Component {
-  @service moment;
+  @service localeDays;
 
   get today() {
-    return this.moment.moment(this.args.date).startOf('day');
+    return DateTime.fromISO(this.args.date).startOf('day');
   }
   get events() {
     return this.args.calendarEvents.filter(
       (event) =>
-        this.moment.moment(event.startDate).isSame(this.today, 'day') ||
-        this.moment.moment(event.endDate).isSame(this.today, 'day')
+        DateTime.fromISO(event.startDate).hasSame(this.today, 'day') ||
+        DateTime.fromISO(event.endDate).hasSame(this.today, 'day')
     );
   }
   get ilmPreWorkEvents() {
@@ -37,13 +38,12 @@ export default class IliosCalendarDayComponent extends Component {
 
   get singleDayEvents() {
     return this.nonIlmPreWorkEvents.filter((event) =>
-      this.moment.moment(event.startDate).isSame(this.moment.moment(event.endDate), 'day')
+      DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day')
     );
   }
   get multiDayEvents() {
     return this.nonIlmPreWorkEvents.filter(
-      (event) =>
-        !this.moment.moment(event.startDate).isSame(this.moment.moment(event.endDate), 'day')
+      (event) => !DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day')
     );
   }
 }
