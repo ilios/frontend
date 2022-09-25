@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { settled, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/daily-calendar';
@@ -13,29 +13,30 @@ module('Integration | Component | daily-calendar', function (hooks) {
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    this.owner.lookup('service:intl').setLocale('en-us');
-    this.owner.lookup('service:moment').setLocale('en');
-  });
-
   //reset locale for other tests
   hooks.afterEach(function () {
     this.owner.lookup('service:intl').setLocale('en-us');
-    this.owner.lookup('service:moment').setLocale('en');
   });
 
   this.createEvent = function (startDate, endDate, color) {
     this.server.create('userevent', {
-      startDate: moment(startDate).toDate(),
-      endDate: moment(endDate).toDate(),
+      startDate: DateTime.fromFormat(startDate, 'y-MM-dd h:m:s').toJSDate(),
+      endDate: DateTime.fromFormat(endDate, 'y-MM-dd h:m:s').toJSDate(),
       color: color || '#' + Math.floor(Math.random() * 16777215).toString(16),
       lastModified: endDate,
     });
   };
 
   test('it renders empty and is accessible', async function (assert) {
-    const january9th2018 = moment('2019-01-09 08:00:00');
-    this.set('date', january9th2018.toDate());
+    const january9th2019 = DateTime.fromObject({
+      year: 2019,
+      month: 1,
+      day: 9,
+      hour: 8,
+      minute: 0,
+      second: 0,
+    });
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{(array)}}
@@ -50,11 +51,18 @@ module('Integration | Component | daily-calendar', function (hooks) {
   });
 
   test('it renders with two events and is accessible', async function (assert) {
-    const january9th2018 = moment('2019-01-09 08:00:00');
+    const january9th2019 = DateTime.fromObject({
+      year: 2019,
+      month: 1,
+      day: 9,
+      hour: 8,
+      minute: 0,
+      second: 0,
+    });
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2018);
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -72,7 +80,14 @@ module('Integration | Component | daily-calendar', function (hooks) {
   });
 
   test('it renders with many events and is accessible', async function (assert) {
-    const january9th2018 = moment('2019-01-09 08:00:00');
+    const january9th2019 = DateTime.fromObject({
+      year: 2019,
+      month: 1,
+      day: 9,
+      hour: 8,
+      minute: 0,
+      second: 0,
+    });
     this.createEvent('2019-01-07 08:00:00', '2019-01-07 09:00:00', '#ffffff');
     this.createEvent('2019-01-11 08:00:00', '2019-01-11 09:00:00', '#ffffff');
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
@@ -80,7 +95,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.createEvent('2019-01-07 14:00:00', '2019-01-07 16:00:00', '#ffffff');
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2018);
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -101,14 +116,21 @@ module('Integration | Component | daily-calendar', function (hooks) {
 
   test('click on event', async function (assert) {
     assert.expect(1);
-    const january9th2018 = moment('2019-01-09 08:00:00');
+    const january9th2019 = DateTime.fromObject({
+      year: 2019,
+      month: 1,
+      day: 9,
+      hour: 8,
+      minute: 0,
+      second: 0,
+    });
     this.server.create('userevent', {
-      startDate: january9th2018.format(),
-      endDate: january9th2018.clone().add(1, 'hour').format(),
+      startDate: january9th2019.toJSDate(),
+      endDate: january9th2019.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2018);
+    this.set('date', january9th2019.toJSDate());
     this.set('selectEvent', () => {
       assert.ok(true);
     });
@@ -122,10 +144,17 @@ module('Integration | Component | daily-calendar', function (hooks) {
   });
 
   test('changing the locale changes the title', async function (assert) {
-    const december111980 = moment('1980-12-11 11:00:00');
+    const december111980 = DateTime.fromObject({
+      year: 1980,
+      month: 12,
+      day: 11,
+      hour: 11,
+      minute: 0,
+      second: 0,
+    });
     this.server.create('userevent', {
-      startDate: december111980.format(),
-      endDate: december111980.clone().add(1, 'hour').format(),
+      startDate: december111980.toJSDate(),
+      endDate: december111980.plus({ hour: 1 }).toJSDate(),
     });
     this.set('events', this.server.db.userevents);
     this.set('date', december111980);
