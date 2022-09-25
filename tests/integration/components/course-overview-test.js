@@ -6,7 +6,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/course-overview';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | course overview', function (hooks) {
   setupRenderingTest(hooks);
@@ -61,8 +61,8 @@ module('Integration | Component | course overview', function (hooks) {
 
   test('start date validation fails when after end date', async function (assert) {
     const course = this.server.create('course', {
-      startDate: moment().hour(8).format(),
-      endDate: moment().hour(9).format(),
+      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
+      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
     });
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
@@ -71,15 +71,15 @@ module('Integration | Component | course overview', function (hooks) {
     assert.ok(component.startDate.isVisible);
     await component.startDate.edit();
     assert.notOk(component.startDate.hasError);
-    await component.startDate.datePicker.set(moment().add(1, 'day').toDate());
+    await component.startDate.datePicker.set(DateTime.now().plus({ day: 1 }).toJSDate());
     await component.startDate.save();
     assert.ok(component.startDate.hasError);
   });
 
   test('end date validation fails when before start date', async function (assert) {
     const course = this.server.create('course', {
-      startDate: moment().hour(8).format(),
-      endDate: moment().hour(9).format(),
+      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
+      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
     });
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
@@ -88,7 +88,7 @@ module('Integration | Component | course overview', function (hooks) {
     assert.ok(component.endDate.isVisible);
     await component.endDate.edit();
     assert.notOk(component.endDate.hasError);
-    await component.endDate.datePicker.set(moment().hour(7).toDate());
+    await component.endDate.datePicker.set(DateTime.fromObject({ hour: 7 }).toJSDate());
     await component.endDate.save();
     assert.ok(component.endDate.hasError);
   });
