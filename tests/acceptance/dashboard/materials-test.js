@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
@@ -12,9 +12,9 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
 
-    const today = moment();
-    const tomorrow = moment().add(1, 'day');
-    const nextWeek = moment().add(1, 'week');
+    const today = DateTime.now();
+    const tomorrow = today.plus({ day: 1 });
+    const nextWeek = today.plus({ week: 1 });
     const courses = [
       this.server.create('course', {
         externalId: 'ID1234',
@@ -36,7 +36,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       courseYear: courses[0].year,
       courseExternalId: courses[0].externalId,
       instructors: ['Instructor1name', 'Instructor2name'],
-      firstOfferingDate: today.toDate(),
+      firstOfferingDate: today.toJSDate(),
     };
     const lm2 = {
       title: 'title2',
@@ -49,7 +49,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       courseYear: courses[1].year,
       courseExternalId: courses[1].externalId,
       instructors: ['Instructor1name', 'Instructor2name'],
-      firstOfferingDate: tomorrow.toDate(),
+      firstOfferingDate: tomorrow.toJSDate(),
     };
     const lm3 = {
       title: 'title3',
@@ -60,7 +60,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       course: courses[2].id,
       courseYear: courses[2].year,
       courseTitle: courses[2].title,
-      firstOfferingDate: today.toDate(),
+      firstOfferingDate: today.toJSDate(),
     };
     const lm4 = {
       title: 'title4',
@@ -74,7 +74,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       courseYear: courses[0].year,
       courseExternalId: courses[0].externalId,
       instructors: ['Instructor3name', 'Instructor4name'],
-      firstOfferingDate: tomorrow.toDate(),
+      firstOfferingDate: tomorrow.toJSDate(),
     };
     const lm5 = {
       title: 'title5',
@@ -85,7 +85,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       courseTitle: courses[4].title,
       courseYear: courses[4].year,
       courseExternalId: courses[4].externalId,
-      firstOfferingDate: tomorrow.toDate(),
+      firstOfferingDate: tomorrow.toJSDate(),
       endDate: new Date(2013, 2, 1, 1, 10, 0),
     };
     const lm6 = {
@@ -98,7 +98,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       courseYear: courses[0].year,
       courseExternalId: courses[0].externalId,
       instructors: ['Instructor3name', 'Instructor4name'],
-      firstOfferingDate: today.toDate(),
+      firstOfferingDate: today.toJSDate(),
     };
 
     const currentMaterials = [lm1, lm2, lm3, lm4, lm5, lm6];
@@ -114,7 +114,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
         courseTitle: courses[3].title,
         courseYear: courses[3].year,
         courseExternalId: courses[3].externalId,
-        firstOfferingDate: nextWeek.toDate(),
+        firstOfferingDate: nextWeek.toJSDate(),
       });
     }
 
@@ -147,10 +147,10 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       assert.strictEqual(parseInt(params.id, 10), 100);
       assert.ok('before' in queryParams);
       assert.ok('after' in queryParams);
-      const before = moment(queryParams.before, 'X');
-      const after = moment(queryParams.after, 'X');
-      assert.ok(before.isSame(this.today.clone().add(60, 'days'), 'day'));
-      assert.ok(after.isSame(this.today, 'day'));
+      const before = DateTime.fromSeconds(Number(queryParams.before));
+      const after = DateTime.fromSeconds(Number(queryParams.after));
+      assert.ok(before.hasSame(this.today.plus({ days: 60 }), 'day'));
+      assert.ok(after.hasSame(this.today, 'day'));
       return {
         userMaterials: this.currentMaterials,
       };
@@ -206,7 +206,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.table.rows[0].instructors, '');
     assert.strictEqual(
       page.materials.table.rows[0].firstOfferingDate,
-      this.tomorrow.format('M/D/YYYY')
+      this.tomorrow.toFormat('M/d/y')
     );
     assert.ok(page.materials.table.rows[1].status.isPresent);
     assert.notOk(page.materials.table.rows[1].status.isChecked);
@@ -222,7 +222,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(
       page.materials.table.rows[1].firstOfferingDate,
-      this.tomorrow.format('M/D/YYYY')
+      this.tomorrow.toFormat('M/d/y')
     );
     assert.ok(page.materials.table.rows[2].status.isPresent);
     assert.ok(page.materials.table.rows[2].status.isChecked);
@@ -238,7 +238,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(
       page.materials.table.rows[2].firstOfferingDate,
-      this.tomorrow.format('M/D/YYYY')
+      this.tomorrow.toFormat('M/d/y')
     );
 
     assert.notOk(page.materials.table.rows[3].status.isPresent);
@@ -252,7 +252,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(
       page.materials.table.rows[3].firstOfferingDate,
-      this.today.format('M/D/YYYY')
+      this.today.toFormat('M/d/y')
     );
 
     assert.ok(page.materials.table.rows[4].status.isPresent);
@@ -264,7 +264,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.table.rows[4].instructors, '');
     assert.strictEqual(
       page.materials.table.rows[4].firstOfferingDate,
-      this.today.format('M/D/YYYY')
+      this.today.toFormat('M/d/y')
     );
     assert.ok(page.materials.table.rows[5].status.isPresent);
     assert.notOk(page.materials.table.rows[5].status.isChecked);
@@ -282,7 +282,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(
       page.materials.table.rows[5].firstOfferingDate,
-      this.today.format('M/D/YYYY')
+      this.today.toFormat('M/d/y')
     );
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
@@ -377,13 +377,13 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.ok(page.materials.table.headers.firstOfferingDate.isSortedAscending);
     assert.strictEqual(
       page.materials.table.rows[0].firstOfferingDate,
-      this.today.format('M/D/YYYY')
+      this.today.toFormat('M/d/y')
     );
     await page.materials.table.headers.firstOfferingDate.click();
     assert.ok(page.materials.table.headers.firstOfferingDate.isSortedDescending);
     assert.strictEqual(
       page.materials.table.rows[0].firstOfferingDate,
-      this.nextWeek.format('M/D/YYYY')
+      this.nextWeek.toFormat('M/d/y')
     );
   });
 
