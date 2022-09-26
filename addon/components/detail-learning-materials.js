@@ -2,12 +2,13 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { all } from 'rsvp';
-import ObjectProxy from '@ember/object/proxy';
-import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import scrollIntoView from 'scroll-into-view';
-import { mapBy } from '../utils/array-helpers';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { mapBy } from 'ilios-common/utils/array-helpers';
+import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
 export default class DetailCohortsComponent extends Component {
   @service currentUser;
@@ -19,10 +20,11 @@ export default class DetailCohortsComponent extends Component {
   @tracked currentMaterialsSaved;
   @tracked displayAddNewForm = false;
   @tracked type;
-  @tracked materialsRelationship;
   @tracked learningMaterialStatuses;
   @tracked learningMaterialUserRoles;
   @tracked title;
+
+  @use lmResource = new ResolveAsyncValue(() => [this.args.subject.learningMaterials]);
 
   constructor() {
     super(...arguments);
@@ -30,29 +32,17 @@ export default class DetailCohortsComponent extends Component {
     this.learningMaterialUserRoles = this.store.peekAll('learning-material-user-role').slice();
   }
 
-  load = restartableTask(async () => {
-    this.materialsRelationship = await this.args.subject.learningMaterials;
-  });
-
   get materials() {
-    if (!this.materialsRelationship) {
+    if (!this.lmResource) {
       return [];
     }
-
-    return this.materialsRelationship.slice();
+    return this.lmResource.slice().sort(sortableByPosition);
   }
 
   get parentMaterialIds() {
     return this.materials.map((lm) => {
       return lm.belongsTo('learningMaterial').id();
     });
-  }
-
-  get proxyMaterials() {
-    const materialProxy = ObjectProxy.extend({ confirmRemoval: false });
-    return this.materials
-      .sort(sortableByPosition)
-      .map((material) => materialProxy.create({ content: material }));
   }
 
   get isManaging() {
@@ -70,11 +60,9 @@ export default class DetailCohortsComponent extends Component {
     return this.materials && this.materials.length > 1;
   }
 
-  confirmRemoval(lmProxy) {
-    lmProxy.set('showRemoveConfirmation', true);
-  }
-  cancelRemove(lmProxy) {
-    lmProxy.set('showRemoveConfirmation', false);
+  @action
+  setManagedMaterial(lm) {
+    this.managingMaterial = lm;
   }
 
   @action
@@ -85,7 +73,7 @@ export default class DetailCohortsComponent extends Component {
 
   @action
   closeLearningmaterialManager() {
-    this.managingMaterial = null;
+    this.setManagedMaterial(null);
     scrollIntoView(this.title, {
       align: { top: 0 },
     });
@@ -171,10 +159,9 @@ export default class DetailCohortsComponent extends Component {
     await newLearningMaterial.save();
   });
 
-  remove = dropTask(async (lmProxy) => {
-    const subjectLearningMaterial = lmProxy.get('content');
-    subjectLearningMaterial.deleteRecord();
-    return await subjectLearningMaterial.save();
+  remove = dropTask(async (lm) => {
+    lm.deleteRecord();
+    return await lm.save();
   });
 
   async saveSomeMaterials(arr) {

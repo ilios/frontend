@@ -1,8 +1,6 @@
 <section
   class="detail-learningmaterials {{if this.displaySearchBox "display-search-box"}}"
   data-test-detail-learning-materials
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @subject.learningMaterials}}
 >
   <div class="detail-learningmaterials-header">
     <div class="title" {{did-insert (set this.title)}}>
@@ -97,108 +95,13 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (await this.proxyMaterials) as |lmProxy|}}
-            <tr class={{if lmProxy.showRemoveConfirmation "confirm-removal"}}>
-              <td colspan="3">
-                <button
-                  type="button"
-                  class="lm-title"
-                  {{on "click" (fn (mut this.managingMaterial) lmProxy.content)}}
-                >
-                  <LmTypeIcon
-                    @type={{lmProxy.learningMaterial.type}}
-                    @mimetype={{lmProxy.learningMaterial.mimetype}}
-                  />
-                  <span data-test-title>
-                    {{lmProxy.learningMaterial.title}}
-                  </span>
-                </button>
-              </td>
-              <td class="text-center" colspan="2">
-                <UserNameInfo @user={{await (get (await lmProxy.learningMaterial) "owningUser")}} />
-              </td>
-              <td class="text-center" colspan="2">
-                {{#if lmProxy.required}}
-                  <span class="add">
-                    {{t "general.yes"}}
-                  </span>
-                {{else}}
-                  <span class="remove">
-                    {{t "general.no"}}
-                  </span>
-                {{/if}}
-              </td>
-              <td class="text-center" colspan="2">
-                {{#if lmProxy.notes}}
-                  <span class="add">
-                    {{t "general.yes"}}
-                  </span>
-                  {{#if lmProxy.publicNotes}}
-                    <FaIcon @icon="eye" @title={{t "general.visibleToStudents"}}/>
-                  {{/if}}
-                {{else}}
-                  <span class="remove">
-                    {{t "general.no"}}
-                  </span>
-                {{/if}}
-              </td>
-              <td class="text-center" colspan="2">
-                {{#if lmProxy.meshDescriptors.length}}
-                  <ul>
-                    {{#each
-                      (sort-by
-                        "name" (await lmProxy.meshDescriptors)
-                      ) as |descriptor|
-                    }}
-                      <li>
-                        {{descriptor.name}}
-                      </li>
-                    {{/each}}
-                  </ul>
-                {{else}}
-                  {{t "general.none"}}
-                {{/if}}
-              </td>
-              <td class="text-center" colspan="2">
-                {{lmProxy.learningMaterial.status.title}}
-                <span data-test-status>
-                  {{this.value}}
-                </span>
-                {{#if (or lmProxy.startDate lmProxy.endDate)}}
-                  <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
-                {{/if}}
-              </td>
-              <td class="text-left text-center" colspan="1">
-                {{#if @editable}}
-                  <button type="button" class="icon-button" {{on "click" (fn (set this.managingMaterial lmProxy.content))}}>
-                    <FaIcon @icon="pen-to-square" />
-                  </button>
-                  <button type="button" class="icon-button remove" {{on "click" (fn this.confirmRemoval lmProxy)}}>
-                    <FaIcon @icon="trash" />
-                  </button>
-                {{else}}
-                  <FaIcon @icon="trash" class="disabled" />
-                {{/if}}
-              </td>
-            </tr>
-            {{#if lmProxy.showRemoveConfirmation}}
-              <tr class="confirm-removal">
-                <td colspan="14">
-                  <div class="confirm-message">
-                    {{t "general.confirmRemoval"}}
-                    <br>
-                    <div class="confirm-buttons">
-                      <button class="remove text" type="button" {{on "click" (perform this.remove lmProxy)}}>
-                        {{t "general.yes"}}
-                      </button>
-                      <button class="done text" type="button" {{on "click" (fn this.cancelRemove lmProxy)}}>
-                        {{t "general.cancel"}}
-                      </button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            {{/if}}
+          {{#each this.materials as |lm|}}
+            <DetailLearningMaterialsItem
+              @editable={{@editable}}
+              @lm={{lm}}
+              @setManagedMaterial={{this.setManagedMaterial}}
+              @remove={{this.remove}}
+            />
           {{/each}}
         </tbody>
       </table>

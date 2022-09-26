@@ -11,10 +11,10 @@ import {
 } from 'ember-cli-page-object';
 import meshManager from './mesh-manager';
 import search from './learningmaterial-search';
-import userNameInfo from './user-name-info';
 import newLearningMaterial from './new-learningmaterial';
 import datePicker from './date-picker';
 import timePicker from './time-picker';
+import items from './detail-learning-materials-item';
 import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
 
 const definition = {
@@ -32,21 +32,7 @@ const definition = {
   canCollapse: isVisible('.detail-learningmaterials-actions .collapse-button'),
   canSort: isVisible('[data-test-sort-button]'),
   sort: clickable('[data-test-sort-button]'),
-  current: collection('.detail-learningmaterials-content table tbody tr', {
-    title: text('td [data-test-title]', { at: 0 }),
-    type: text('td [data-test-lm-type-icon] title'),
-    owner: {
-      scope: 'td:nth-of-type(2)',
-      userNameInfo,
-    },
-    required: text('td', { at: 2 }),
-    notes: text('td:eq(3) > span'),
-    mesh: text('td', { at: 4 }),
-    status: text('td', { at: 5 }),
-    isNotePublic: isVisible('.fa-eye'),
-    isTimedRelease: isVisible('.fa-clock'),
-    details: clickable('button', { at: 0 }),
-  }),
+  current: collection('[data-test-detail-learning-materials-item]', items),
   newLearningMaterial,
   manager: {
     scope: '.learningmaterial-manager',
