@@ -26,9 +26,8 @@ export default class ProgramYearObjectivesComponent extends Component {
     this.objectiveCount = programYear.hasMany('programYearObjectives').ids().length;
   }
 
-  @dropTask
-  *saveNewObjective(title) {
-    const programYearObjectives = yield this.args.programYear.programYearObjectives;
+  saveNewObjective = dropTask(async (title) => {
+    const programYearObjectives = await this.args.programYear.programYearObjectives;
     const position = programYearObjectives.length
       ? sortBy(programYearObjectives.slice(), 'position').reverse()[0].position + 1
       : 0;
@@ -38,11 +37,11 @@ export default class ProgramYearObjectivesComponent extends Component {
     newProgramYearObjective.set('position', position);
     newProgramYearObjective.set('programYear', this.args.programYear);
 
-    yield newProgramYearObjective.save();
+    await newProgramYearObjective.save();
 
     this.newObjectiveEditorOn = false;
     this.flashMessages.success('general.newObjectiveSaved');
-  }
+  });
 
   @action
   toggleNewObjectiveEditor() {

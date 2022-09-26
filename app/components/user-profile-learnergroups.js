@@ -6,10 +6,9 @@ import { tracked } from '@glimmer/tracking';
 export default class UserProfileLearnergroupsComponent extends Component {
   @tracked selectedLearnerGroups;
 
-  @restartableTask
-  *load() {
-    this.selectedLearnerGroups = yield this.getSelectedLearnerGroups(this.args.user);
-  }
+  load = restartableTask(async () => {
+    this.selectedLearnerGroups = await this.getSelectedLearnerGroups(this.args.user);
+  });
 
   async getSelectedLearnerGroups(user) {
     const learnerGroups = (await user.learnerGroups).slice();

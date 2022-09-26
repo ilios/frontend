@@ -39,24 +39,23 @@ export default class IliosCourseListComponent extends Component {
     return this.intl.t(translation);
   }
 
-  @task
-  *unlockCourse(course) {
-    const permission = yield this.permissionChecker.canUnlockCourse(course);
+  unlockCourse = task(async (course) => {
+    const permission = await this.permissionChecker.canUnlockCourse(course);
     this.startSavingCourse(course.id);
     if (permission) {
-      yield this.args.unlock(course);
+      await this.args.unlock(course);
       this.stopSavingCourse(course.id);
     }
-  }
-  @task
-  *lockCourse(course) {
-    const permission = yield this.permissionChecker.canUpdateCourse(course);
+  });
+
+  lockCourse = task(async (course) => {
+    const permission = await this.permissionChecker.canUpdateCourse(course);
     this.startSavingCourse(course.id);
     if (permission) {
-      yield this.args.lock(course);
+      await this.args.lock(course);
       this.stopSavingCourse(course.id);
     }
-  }
+  });
 
   @action
   confirmRemoval(course) {

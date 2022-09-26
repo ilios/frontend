@@ -14,11 +14,10 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
     return !!this.args.managedSessionTypeId;
   }
 
-  @restartableTask
-  *load(element, [school]) {
-    this.sessionTypes = yield school.sessionTypes;
+  load = restartableTask(async (element, [school]) => {
+    this.sessionTypes = await school.sessionTypes;
     this.isCollapsible = !this.isManaging && this.sessionTypes.length;
-  }
+  });
 
   get managedSessionType() {
     if (!this.sessionTypes) {
@@ -35,21 +34,22 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
     }
   }
 
-  @dropTask
-  *save(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
-    const sessionType = this.store.createRecord('sessionType');
-    const aamcMethods = aamcMethod ? [aamcMethod] : [];
-    sessionType.setProperties({
-      school: this.args.school,
-      title,
-      calendarColor,
-      assessment,
-      assessmentOption,
-      aamcMethods,
-      active: isActive,
-    });
+  save = dropTask(
+    async (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
+      const sessionType = this.store.createRecord('sessionType');
+      const aamcMethods = aamcMethod ? [aamcMethod] : [];
+      sessionType.setProperties({
+        school: this.args.school,
+        title,
+        calendarColor,
+        assessment,
+        assessmentOption,
+        aamcMethods,
+        active: isActive,
+      });
 
-    yield sessionType.save();
-    this.args.setSchoolNewSessionType(null);
-  }
+      await sessionType.save();
+      this.args.setSchoolNewSessionType(null);
+    }
+  );
 }

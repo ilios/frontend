@@ -37,8 +37,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
     }
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor([
       'name',
       'aamcCode',
@@ -48,7 +47,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
       'addressZipCode',
       'addressCountryCode',
     ]);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -64,18 +63,17 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
     institution.set('addressStateOrProvince', this.addressStateOrProvince);
     institution.set('addressZipCode', this.addressZipCode);
     institution.set('addressCountryCode', this.addressCountryCode);
-    yield this.args.save(institution);
+    await this.args.save(institution);
     this.clearErrorDisplay();
     this.args.manage(false);
-  }
+  });
 
-  @dropTask
-  *saveOrCancel(event) {
+  saveOrCancel = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
-      yield this.save.perform();
+      await this.save.perform();
     } else if (27 === keyCode) {
       this.args.manage(false);
     }
-  }
+  });
 }

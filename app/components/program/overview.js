@@ -11,29 +11,27 @@ export default class ProgramOverviewComponent extends Component {
   @tracked duration = this.args.program.duration;
   @Length(2, 10) @tracked shortTitle = this.args.program.shortTitle;
 
-  @dropTask
-  *changeShortTitle() {
+  changeShortTitle = dropTask(async () => {
     if (this.shortTitle !== this.args.program.shortTitle) {
       this.addErrorDisplayFor('shortTitle');
-      const isValid = yield this.isValid('shortTitle');
+      const isValid = await this.isValid('shortTitle');
       if (!isValid) {
         return false;
       }
       this.args.program.set('shortTitle', this.shortTitle);
-      yield this.args.program.save();
+      await this.args.program.save();
       this.shortTitle = this.args.program.shortTitle;
       this.removeErrorDisplayFor('shortTitle');
     }
-  }
+  });
 
-  @dropTask
-  *changeDuration() {
+  changeDuration = dropTask(async () => {
     if (this.duration !== this.args.program.duration) {
       this.args.program.set('duration', this.duration);
-      yield this.args.program.save();
+      await this.args.program.save();
       this.duration = this.args.program.duration;
     }
-  }
+  });
 
   @action
   setDuration(value) {

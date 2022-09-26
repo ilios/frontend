@@ -8,10 +8,9 @@ export default class InstructorGroupsController extends Controller {
   @tracked titleFilter;
   @tracked sortBy = 'title';
 
-  @restartableTask
-  *changeTitleFilter(value) {
+  changeTitleFilter = restartableTask(async (value) => {
     this.titleFilter = value;
-    yield timeout(250);
+    await timeout(250);
     return value;
-  }
+  });
 }

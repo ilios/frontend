@@ -41,17 +41,16 @@ export default class SchoolVocabularyManagerComponent extends Component {
     this.isActive = this.args.vocabulary.active;
   }
 
-  @dropTask
-  *changeTitle() {
+  changeTitle = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
     this.args.vocabulary.title = this.title;
-    yield this.args.vocabulary.save();
-  }
+    await this.args.vocabulary.save();
+  });
 
   @action
   revertTitleChanges() {

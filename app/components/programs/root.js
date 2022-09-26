@@ -26,11 +26,10 @@ export default class ProgramRootComponent extends Component {
     return schoolId ? findById(this.args.schools.slice(), schoolId) : this.args.schools.slice()[0];
   }
 
-  @dropTask
-  *saveNewProgram(newProgram) {
+  saveNewProgram = dropTask(async (newProgram) => {
     newProgram.set('school', this.bestSelectedSchool);
     newProgram.set('duration', 4);
-    this.newProgram = yield newProgram.save();
+    this.newProgram = await newProgram.save();
     this.showNewProgramForm = false;
-  }
+  });
 }

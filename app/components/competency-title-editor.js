@@ -18,14 +18,13 @@ export default class CompetencyTitleEditorComponent extends Component {
     this.title = this.args.competency.title;
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid('title');
+    const isValid = await this.isValid('title');
     if (!isValid) {
       return false;
     }
     this.args.competency.set('title', this.title);
     this.removeErrorDisplayFor('title');
-  }
+  });
 }

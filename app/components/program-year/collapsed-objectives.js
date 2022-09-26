@@ -8,12 +8,11 @@ export default class ProgramYearCollapsedObjectivesComponent extends Component {
   @tracked objectivesWithMesh;
   @tracked objectivesWithTerms;
 
-  @restartableTask
-  *load(element, [objectivePromise]) {
+  load = restartableTask(async (element, [objectivePromise]) => {
     if (!objectivePromise) {
       return false;
     }
-    this.objectives = yield objectivePromise;
+    this.objectives = await objectivePromise;
 
     this.objectivesWithCompetency = this.objectives.filter((objective) => {
       return !!objective.belongsTo('competency').id();
@@ -28,5 +27,5 @@ export default class ProgramYearCollapsedObjectivesComponent extends Component {
     });
 
     return true;
-  }
+  });
 }

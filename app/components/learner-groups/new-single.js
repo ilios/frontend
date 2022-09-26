@@ -9,16 +9,15 @@ export default class NewSingleLearnerGroupComponent extends Component {
   @tracked @Length(3, 60) @NotBlank() title;
   @tracked fillWithCohort = false;
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
     return this.args.save(this.title, this.fillWithCohort);
-  }
+  });
 
   @action
   async keyboard({ keyCode }) {

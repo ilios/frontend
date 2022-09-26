@@ -51,46 +51,43 @@ export default class PendingUserUpdatesController extends Controller {
     });
   }
 
-  @task
-  *updateEmailAddress(update) {
+  updateEmailAddress = task(async (update) => {
     this.updatesBeingSaved = [...this.updatesBeingSaved, update];
-    const user = yield update.user;
+    const user = await update.user;
     user.email = update.value;
-    yield user.save();
+    await user.save();
 
-    yield update.destroyRecord();
+    await update.destroyRecord();
     this.deletedUpdates = [...this.deletedUpdates, update];
     this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
     this.flashMessages.success('general.savedSuccessfully');
-  }
+  });
 
-  @task
-  *disableUser(update) {
+  disableUser = task(async (update) => {
     this.updatesBeingSaved = [...this.updatesBeingSaved, update];
-    const user = yield update.user;
+    const user = await update.user;
     user.enabled = false;
-    yield user.save();
+    await user.save();
 
-    const updates = yield user.pendingUserUpdates;
-    yield Promise.all(updates.map((update) => update.destroyRecord()));
+    const updates = await user.pendingUserUpdates;
+    await Promise.all(updates.map((update) => update.destroyRecord()));
 
     this.deletedUpdates = [...this.deletedUpdates, ...updates.slice()];
     this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
     this.flashMessages.success('general.savedSuccessfully');
-  }
+  });
 
-  @task
-  *excludeFromSync(update) {
+  excludeFromSync = task(async (update) => {
     this.updatesBeingSaved = [...this.updatesBeingSaved, update];
-    const user = yield update.user;
+    const user = await update.user;
     user.userSyncIgnore = true;
-    yield user.save();
+    await user.save();
 
-    const updates = yield user.pendingUserUpdates;
-    yield Promise.all(updates.map((update) => update.destroyRecord()));
+    const updates = await user.pendingUserUpdates;
+    await Promise.all(updates.map((update) => update.destroyRecord()));
 
     this.deletedUpdates = [...this.deletedUpdates, ...updates.slice()];
     this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
     this.flashMessages.success('general.savedSuccessfully');
-  }
+  });
 }

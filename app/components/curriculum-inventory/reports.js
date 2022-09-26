@@ -54,8 +54,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
     this.showNewCurriculumInventoryReportForm = false;
   }
 
-  @restartableTask
-  *load() {
+  load = restartableTask(async () => {
     if (!this.args.schools) {
       return;
     }
@@ -63,17 +62,17 @@ export default class CurriculumInventoryReportsComponent extends Component {
     this.hasMoreThanOneSchool = this.sortedSchools.length > 1;
 
     if (!this.args.schoolId) {
-      const user = yield this.currentUser.getModel();
-      this.selectedSchool = yield user.school;
+      const user = await this.currentUser.getModel();
+      this.selectedSchool = await user.school;
     } else {
       this.selectedSchool = findById(this.args.schools.slice(), this.args.schoolId);
     }
 
     if (this.selectedSchool) {
-      this.canCreate = yield this.permissionChecker.canCreateCurriculumInventoryReport(
+      this.canCreate = await this.permissionChecker.canCreateCurriculumInventoryReport(
         this.selectedSchool
       );
-      const programs = yield this.selectedSchool.programs;
+      const programs = await this.selectedSchool.programs;
       this.programs = sortBy(programs.slice(), 'title');
     }
 
@@ -82,13 +81,12 @@ export default class CurriculumInventoryReportsComponent extends Component {
     } else {
       this.selectedProgram = this.programs.length ? this.programs[0] : null;
     }
-  }
+  });
 
-  @dropTask
-  *removeCurriculumInventoryReport(report) {
-    const reports = (yield this.selectedProgram.curriculumInventoryReports).slice();
+  removeCurriculumInventoryReport = dropTask(async (report) => {
+    const reports = (await this.selectedProgram.curriculumInventoryReports).slice();
     reports.splice(reports.indexOf(report), 1);
     this.selectedProgram.set('curriculumInventoryReports', reports);
-    yield report.destroyRecord();
-  }
+    await report.destroyRecord();
+  });
 }

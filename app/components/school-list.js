@@ -31,10 +31,9 @@ export default class SchoolListComponent extends Component {
     this.iliosAdministratorEmail = null;
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor(['title', 'iliosAdministratorEmail']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -42,15 +41,14 @@ export default class SchoolListComponent extends Component {
       title: this.title,
       iliosAdministratorEmail: this.iliosAdministratorEmail,
     });
-    this.newSchool = yield newSchool.save();
+    this.newSchool = await newSchool.save();
     this.clearErrorDisplay();
     this.title = null;
     this.iliosAdministratorEmail = null;
     this.showNewSchoolForm = false;
-  }
+  });
 
-  @dropTask
-  *saveOrCancel(event) {
+  saveOrCancel = dropTask(async (event) => {
     const keyCode = event.keyCode;
     const target = event.target;
 
@@ -59,9 +57,9 @@ export default class SchoolListComponent extends Component {
     }
 
     if (13 === keyCode) {
-      yield this.save.perform();
+      await this.save.perform();
     } else if (27 === keyCode) {
       this.closeNewSchoolForm();
     }
-  }
+  });
 }

@@ -192,8 +192,7 @@ export default class GlobalSearchBox extends Component {
     return allMatches.filter((text) => text.indexOf(q) === 0);
   }
 
-  @restartableTask
-  *autocomplete() {
+  autocomplete = restartableTask(async () => {
     const q = cleanQuery(this.internalQuery);
 
     if (isBlank(q)) {
@@ -215,13 +214,13 @@ export default class GlobalSearchBox extends Component {
       });
     }
 
-    yield timeout(DEBOUNCE_MS);
+    await timeout(DEBOUNCE_MS);
 
-    const { autocomplete } = yield this.iliosSearch.forCurriculum(this.internalQuery, true);
+    const { autocomplete } = await this.iliosSearch.forCurriculum(this.internalQuery, true);
     this.autocompleteCache = [...this.autocompleteCache, { q: this.internalQuery, autocomplete }];
 
     return autocomplete.map((text) => {
       return { text };
     });
-  }
+  });
 }

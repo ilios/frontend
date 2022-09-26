@@ -50,17 +50,16 @@ export default class SchoolSessionTypeFormComponent extends Component {
     return null;
   }
 
-  @restartableTask
-  *load() {
+  load = restartableTask(async () => {
     this.assessment = this.args.assessment;
     this.calendarColor = this.args.calendarColor;
     this.isActive = this.args.isActive;
     this.title = this.args.title;
     this.selectedAssessmentOptionId = this.args.selectedAssessmentOptionId;
     this.selectedAamcMethodId = this.args.selectedAamcMethodId;
-    this.assessmentOptions = (yield this.store.findAll('assessment-option')).slice();
-    this.aamcMethods = (yield this.store.findAll('aamc-method')).slice();
-  }
+    this.assessmentOptions = (await this.store.findAll('assessment-option')).slice();
+    this.aamcMethods = (await this.store.findAll('aamc-method')).slice();
+  });
 
   @action
   updateAssessment(assessment) {
@@ -68,14 +67,13 @@ export default class SchoolSessionTypeFormComponent extends Component {
     this.assessment = assessment;
   }
 
-  @dropTask
-  *saveSessionType() {
+  saveSessionType = dropTask(async () => {
     this.addErrorDisplaysFor(['title', 'calendarColor']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    yield this.args.save(
+    await this.args.save(
       this.title,
       this.calendarColor,
       this.assessment,
@@ -84,17 +82,16 @@ export default class SchoolSessionTypeFormComponent extends Component {
       this.isActive
     );
     this.clearErrorDisplay();
-  }
+  });
 
-  @dropTask
-  *saveOrCancel(event) {
+  saveOrCancel = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
-      yield this.saveSessionType.perform();
+      await this.saveSessionType.perform();
       return;
     }
     if (27 === keyCode) {
       this.args.close();
     }
-  }
+  });
 }

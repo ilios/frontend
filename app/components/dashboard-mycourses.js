@@ -11,12 +11,11 @@ export default class DashboardMyCoursesComponent extends Component {
   @tracked canEditCourses = false;
   @tracked academicYearCrossesCalendarYearBoundaries = false;
 
-  @restartableTask
-  *load() {
+  load = restartableTask(async () => {
     this.canEditCourses = this.currentUser.performsNonLearnerFunction;
-    this.listOfCourses = yield this.currentUser.getActiveRelatedCoursesInThisYearAndLastYear();
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+    this.listOfCourses = await this.currentUser.getActiveRelatedCoursesInThisYearAndLastYear();
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-  }
+  });
 }

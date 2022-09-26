@@ -32,17 +32,16 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     return !this.children || !this.allParents;
   }
 
-  @dropTask
-  *changeTitle() {
+  changeTitle = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
     this.args.term.title = this.title;
     return this.args.term.save();
-  }
+  });
 
   @action
   revertTitleChanges() {
@@ -50,11 +49,10 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     this.title = this.args.term.title;
   }
 
-  @dropTask
-  *changeDescription() {
+  changeDescription = dropTask(async () => {
     this.args.term.set('description', this.description);
-    yield this.args.term.save();
-  }
+    await this.args.term.save();
+  });
 
   @action
   revertDescriptionChanges() {
@@ -72,20 +70,19 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     this.newTerm = await term.save();
   }
 
-  @dropTask
-  *deleteTerm() {
-    const parent = yield this.args.term.parent;
+  deleteTerm = dropTask(async () => {
+    const parent = await this.args.term.parent;
     const goTo = isEmpty(parent) ? null : parent.id;
     this.args.term.deleteRecord();
     if (parent) {
-      const siblings = (yield parent.children).slice();
+      const siblings = (await parent.children).slice();
       siblings.splice(siblings.indexOf(this.args.term), 1);
       parent.set('children', siblings);
     }
-    yield this.args.term.save();
+    await this.args.term.save();
     this.args.manageTerm(goTo);
     this.flashMessages.success('general.successfullyRemovedTerm');
-  }
+  });
 
   @action
   clearVocabAndTerm() {
@@ -93,12 +90,11 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     this.args.manageTerm(null);
   }
 
-  @dropTask
-  *changeIsActive(isActive) {
+  changeIsActive = dropTask(async (isActive) => {
     this.args.term.active = isActive;
-    yield this.args.term.save();
+    await this.args.term.save();
     this.isActive = this.args.term.active;
-  }
+  });
 
   async validateTitleCallback() {
     const terms = await this.args.term.children;

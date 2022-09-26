@@ -49,28 +49,26 @@ export default class ConnectionStatusComponent extends Component {
     }
   }
 
-  @restartableTask
-  *changeConnectionState(isOnline) {
+  changeConnectionState = restartableTask(async (isOnline) => {
     this.timer = 5;
     this.multiplier = 1;
     this.stopAttemptingToReconnect = false;
     this.isOnline = isOnline;
     if (!isOnline) {
-      yield this.reconnect.perform();
+      await this.reconnect.perform();
     } else {
       this.reconnect.cancelAll();
     }
-  }
+  });
 
-  @restartableTask
-  *reconnect(force) {
+  reconnect = restartableTask(async (force) => {
     if (navigator.onLine) {
       this.changeConnectionState.perform(true);
     }
     if (force) {
       this.unableToReconnect = true;
       this.timer = 5;
-      yield timeout(2000);
+      await timeout(2000);
       this.unableToReconnect = false;
     } else if (this.timer > 1) {
       this.unableToReconnect = false;
@@ -78,14 +76,14 @@ export default class ConnectionStatusComponent extends Component {
     } else {
       if (!this.stopAttemptingToReconnect) {
         this.unableToReconnect = true;
-        yield timeout(2000);
+        await timeout(2000);
       }
       const newMultiplier = this.multiplier < 8 ? this.multiplier * 2 : 10;
       this.multiplier = newMultiplier;
       this.timer = 5 * newMultiplier;
     }
 
-    yield timeout(1000);
+    await timeout(1000);
     this.reconnect.perform();
-  }
+  });
 }

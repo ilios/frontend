@@ -92,41 +92,37 @@ export default class LearnergroupCohortUserManagerComponent extends Component {
     }
   }
 
-  @enqueueTask
-  *addSingleUser(user) {
+  addSingleUser = enqueueTask(async (user) => {
     this.usersBeingMoved = [...this.usersBeingMoved, user];
     //timeout gives the spinner time to render
-    yield timeout(1);
-    yield this.args.addUserToGroup(user);
+    await timeout(1);
+    await this.args.addUserToGroup(user);
     this.usersBeingMoved = this.usersBeingMoved.filter((movingUser) => movingUser !== user);
-  }
+  });
 
-  @enqueueTask
-  *removeSingleUser(user) {
+  removeSingleUser = enqueueTask(async (user) => {
     this.usersBeingMoved = [...this.usersBeingMoved, user];
     //timeout gives the spinner time to render
-    yield timeout(1);
-    yield this.args.removeUserFromGroup(user);
+    await timeout(1);
+    await this.args.removeUserFromGroup(user);
     this.usersBeingMoved = this.usersBeingMoved.filter((movingUser) => movingUser !== user);
-  }
+  });
 
-  @enqueueTask
-  *addSelectedUsers() {
+  addSelectedUsers = enqueueTask(async () => {
     this.usersBeingMoved = [...this.usersBeingMoved, ...this.selectedUsers];
     //timeout gives the spinner time to render
-    yield timeout(1);
-    yield this.args.addUsersToGroup(this.selectedUsers);
+    await timeout(1);
+    await this.args.addUsersToGroup(this.selectedUsers);
     this.usersBeingMoved = this.usersBeingMoved.filter((user) => this.selectedUsers.includes(user));
     this.selectedUsers = [];
-  }
+  });
 
-  @enqueueTask
-  *removeSelectedUsers() {
+  removeSelectedUsers = enqueueTask(async () => {
     this.usersBeingMoved = [...this.usersBeingMoved, ...this.selectedUsers];
     //timeout gives the spinner time to render
-    yield timeout(1);
-    yield this.args.removeUsersFromGroup(this.selectedUsers);
+    await timeout(1);
+    await this.args.removeUsersFromGroup(this.selectedUsers);
     this.usersBeingMoved = this.usersBeingMoved.filter((user) => this.selectedUsers.includes(user));
     this.selectedUsers = [];
-  }
+  });
 }

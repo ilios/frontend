@@ -10,22 +10,21 @@ export default class LearnergroupInstructorManager extends Component {
   @tracked instructorGroups = [];
   @tracked isManaging = false;
 
-  @restartableTask
-  *load(element, [learnerGroup]) {
+  load = restartableTask(async (element, [learnerGroup]) => {
     if (isPresent(learnerGroup)) {
-      const instructors = yield learnerGroup.get('instructors');
-      const instructorGroups = yield learnerGroup.get('instructorGroups');
-      const cohort = yield learnerGroup.get('cohort');
-      const programYear = yield cohort.get('programYear');
-      const program = yield programYear.get('program');
-      const school = yield program.get('school');
-      const availableInstructorGroups = yield school.get('instructorGroups');
+      const instructors = await learnerGroup.get('instructors');
+      const instructorGroups = await learnerGroup.get('instructorGroups');
+      const cohort = await learnerGroup.get('cohort');
+      const programYear = await cohort.get('programYear');
+      const program = await programYear.get('program');
+      const school = await program.get('school');
+      const availableInstructorGroups = await school.get('instructorGroups');
 
       this.instructors = instructors.slice();
       this.instructorGroups = instructorGroups.slice();
       this.availableInstructorGroups = availableInstructorGroups.slice();
     }
-  }
+  });
 
   @action
   addInstructor(user) {
@@ -47,9 +46,8 @@ export default class LearnergroupInstructorManager extends Component {
     this.instructorGroups = this.instructorGroups.filter((group) => group !== instructorGroup);
   }
 
-  @dropTask
-  *saveChanges() {
-    yield this.args.save(this.instructors, this.instructorGroups);
+  saveChanges = dropTask(async () => {
+    await this.args.save(this.instructors, this.instructorGroups);
     this.isManaging = false;
-  }
+  });
 }

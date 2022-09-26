@@ -106,13 +106,12 @@ export default class GlobalSearchComponent extends Component {
     this.args.setIgnoredSchoolIds(ignoredSchoolIds);
   }
 
-  @restartableTask
-  *search(el, [query]) {
+  search = restartableTask(async (el, [query]) => {
     this.results = [];
     if (query?.length > MIN_INPUT) {
-      const { courses } = yield this.iliosSearch.forCurriculum(query);
+      const { courses } = await this.iliosSearch.forCurriculum(query);
 
       this.results = courses;
     }
-  }
+  });
 }

@@ -13,18 +13,17 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
     this.name = report?.name;
   }
 
-  @restartableTask
-  *saveName() {
+  saveName = restartableTask(async () => {
     this.addErrorDisplayFor('name');
-    const isValid = yield this.isValid('name');
+    const isValid = await this.isValid('name');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('name');
     this.args.report.set('name', this.name);
-    yield this.args.report.save();
+    await this.args.report.save();
     this.name = this.args.report.name;
-  }
+  });
 
   @action
   revertNameChanges() {

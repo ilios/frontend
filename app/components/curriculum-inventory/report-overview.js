@@ -42,15 +42,14 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     return this.year;
   }
 
-  @restartableTask
-  *load() {
+  load = restartableTask(async () => {
     const currentYear = new Date().getFullYear();
-    const program = yield this.args.report.program;
-    const school = yield program.school;
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+    const program = await this.args.report.program;
+    const school = await program.school;
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-    this.canRollover = yield this.permissionChecker.canCreateCurriculumInventoryReport(school);
+    this.canRollover = await this.permissionChecker.canCreateCurriculumInventoryReport(school);
     const yearOptions = [];
     for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
       yearOptions.push({
@@ -63,19 +62,18 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     this.year = this.args.report.year;
     this.startDate = this.args.report.startDate;
     this.endDate = this.args.report.endDate;
-  }
+  });
 
-  @dropTask
-  *changeStartDate() {
+  changeStartDate = dropTask(async () => {
     this.addErrorDisplayFor('startDate');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('startDate');
     this.args.report.startDate = this.startDate;
-    yield this.args.report.save();
-  }
+    await this.args.report.save();
+  });
 
   @action
   revertStartDateChanges() {
@@ -83,17 +81,16 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     this.startDate = this.args.report.get.startDate;
   }
 
-  @dropTask
-  *changeEndDate() {
+  changeEndDate = dropTask(async () => {
     this.addErrorDisplayFor('endDate');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('endDate');
     this.args.report.endDate = this.endDate;
-    yield this.args.report.save();
-  }
+    await this.args.report.save();
+  });
 
   @action
   revertEndDateChanges() {
@@ -101,28 +98,26 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     this.endDate = this.args.report.endDate;
   }
 
-  @dropTask
-  *changeYear() {
+  changeYear = dropTask(async () => {
     this.args.report.year = this.year;
-    yield this.args.report.save();
-  }
+    await this.args.report.save();
+  });
 
   @action
   revertYearChanges() {
     this.year = this.args.report.year;
   }
 
-  @dropTask
-  *changeDescription() {
+  changeDescription = dropTask(async () => {
     this.addErrorDisplayFor('description');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('description');
     this.args.report.description = this.description;
-    yield this.args.report.save();
-  }
+    await this.args.report.save();
+  });
 
   @action
   revertDescriptionChanges() {

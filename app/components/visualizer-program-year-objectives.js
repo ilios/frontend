@@ -16,15 +16,14 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
   @tracked programYearName;
   @tracked data;
 
-  @restartableTask
-  *load(element, [programYear]) {
-    const cohort = yield programYear.cohort;
-    const year = yield programYear.getClassOfYear();
+  load = restartableTask(async (element, [programYear]) => {
+    const cohort = await programYear.cohort;
+    const year = await programYear.getClassOfYear();
     const classOfYear = this.intl.t('general.classOf', { year });
     this.programYearName = cohort.title ?? classOfYear;
 
-    this.data = yield this.getData(programYear);
-  }
+    this.data = await this.getData(programYear);
+  });
 
   async getObjectiveObjects(programYear) {
     const buildTreeLevel = async function (parent, childrenTree, sessionTitle, courseTitle) {
@@ -118,9 +117,8 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
     };
   }
 
-  @restartableTask
-  *nodeHover(obj) {
-    yield timeout(100);
+  nodeHover = restartableTask(async (obj) => {
+    await timeout(100);
     const isIcon = this.isIcon;
     if (isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
@@ -148,5 +146,5 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
     this.tooltipTitle = htmlSafe(name);
     this.tooltipCourses = uniqueValues(allCourseTitles);
     this.tooltipSessions = uniqueValues(allSessionTitles);
-  }
+  });
 }

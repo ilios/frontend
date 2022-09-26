@@ -35,11 +35,11 @@ export default class ProgramLeadershipExpandedComponent extends Component {
     this.directorsToRemove = [];
     this.args.setIsManaging(false);
   }
-  @dropTask
-  *save() {
+
+  save = dropTask(async () => {
     this.args.program.set('directors', this.directors);
     this.args.expand();
-    yield this.args.program.save();
+    await this.args.program.save();
     this.close();
-  }
+  });
 }

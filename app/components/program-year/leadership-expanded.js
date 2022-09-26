@@ -35,11 +35,11 @@ export default class ProgramYearLeadershipExpandedComponent extends Component {
     this.directorsToRemove = [];
     this.args.setIsManaging(false);
   }
-  @dropTask
-  *save() {
+
+  save = dropTask(async () => {
     this.args.programYear.set('directors', this.directors);
     this.args.expand();
-    yield this.args.programYear.save();
+    await this.args.programYear.save();
     this.close();
-  }
+  });
 }

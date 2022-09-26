@@ -10,10 +10,9 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
   @tracked tooltipTitle;
   @tracked data = [];
 
-  @restartableTask
-  *load(element, [sessionType, vocabulary]) {
-    const sessions = (yield sessionType.sessions).slice();
-    const terms = yield map(sessions, async (session) => {
+  load = restartableTask(async (element, [sessionType, vocabulary]) => {
+    const sessions = (await sessionType.sessions).slice();
+    const terms = await map(sessions, async (session) => {
       const sessionTerms = (await session.terms).slice();
       const course = await session.course;
       const courseTerms = (await course.terms).slice();
@@ -72,11 +71,10 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
 
       return obj;
     });
-  }
+  });
 
-  @restartableTask
-  *donutHover(obj) {
-    yield timeout(100);
+  donutHover = restartableTask(async (obj) => {
+    await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
@@ -90,5 +88,5 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
 
     this.tooltipTitle = title;
     this.tooltipContent = { sessions, courses };
-  }
+  });
 }

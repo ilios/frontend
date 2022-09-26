@@ -70,11 +70,10 @@ export default class LearnergroupSubgroupListComponent extends Component {
     return learnerGroup.destroyRecord();
   }
 
-  @dropTask
-  *copyGroup(withLearners, learnerGroup) {
-    const cohort = yield learnerGroup.cohort;
-    const parentGroup = yield learnerGroup.parent;
-    const newGroups = yield cloneLearnerGroup(
+  copyGroup = dropTask(async (withLearners, learnerGroup) => {
+    const cohort = await learnerGroup.cohort;
+    const parentGroup = await learnerGroup.parent;
+    const newGroups = await cloneLearnerGroup(
       this.store,
       learnerGroup,
       cohort,
@@ -86,9 +85,9 @@ export default class LearnergroupSubgroupListComponent extends Component {
     this.totalGroupsToSave = newGroups.length;
     // save groups one at a time because we need to save in this order so parents are saved before children
     for (let i = 0; i < newGroups.length; i++) {
-      yield newGroups[i].save();
+      await newGroups[i].save();
       this.currentGroupsSaved = i + 1;
     }
     this.savedGroup = newGroups[0];
-  }
+  });
 }

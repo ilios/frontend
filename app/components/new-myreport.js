@@ -366,10 +366,9 @@ export default class NewMyReportComponent extends Component {
     }
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -403,9 +402,9 @@ export default class NewMyReportComponent extends Component {
       prepositionalObjectTableRowId: this.currentPrepositionalObjectId,
       school: this.currentSchool,
     });
-    yield report.save();
+    await report.save();
     this.args.close();
-  }
+  });
 
   @action
   changeSchool(schoolId) {
@@ -414,10 +413,9 @@ export default class NewMyReportComponent extends Component {
     this.schoolChanged = true;
   }
 
-  @restartableTask
-  *resetCurrentPrepositionalObjectId() {
+  resetCurrentPrepositionalObjectId = restartableTask(async () => {
     const list = this.filterPrepositionalObjectsByAcademicYear(
-      yield this.getPrepositionalObjectIdList(),
+      await this.getPrepositionalObjectIdList(),
       this.currentYear,
       this.currentPrepositionalObject
     );
@@ -425,7 +423,7 @@ export default class NewMyReportComponent extends Component {
     if (list.length) {
       this.currentPrepositionalObjectId = list[0].value;
     }
-  }
+  });
 }
 
 class PrepositionObject {

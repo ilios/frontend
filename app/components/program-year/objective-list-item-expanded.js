@@ -8,13 +8,12 @@ import { findById } from 'ilios-common/utils/array-helpers';
 export default class ProgramYearObjectiveListItemExpandedComponent extends Component {
   @tracked courseObjects;
 
-  @restartableTask
-  *load(element, [programYearObjective]) {
+  load = restartableTask(async (element, [programYearObjective]) => {
     if (!programYearObjective) {
       return;
     }
-    const courseObjectives = (yield programYearObjective.courseObjectives).slice();
-    const objectiveObjects = yield map(courseObjectives, async (courseObjective) => {
+    const courseObjectives = (await programYearObjective.courseObjectives).slice();
+    const objectiveObjects = await map(courseObjectives, async (courseObjective) => {
       const course = await courseObjective.course;
       return {
         title: courseObjective.title,
@@ -42,5 +41,5 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
       });
       return set;
     }, []);
-  }
+  });
 }

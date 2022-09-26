@@ -21,8 +21,7 @@ export default class ProgramYearListComponent extends Component {
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   ]);
 
-  @dropTask
-  *saveNew(startYear) {
+  saveNew = dropTask(async (startYear) => {
     const latestProgramYear = this.sortedProgramYears.reverse()[0];
     const newProgramYear = this.store.createRecord('program-year', {
       program: this.args.program,
@@ -30,16 +29,16 @@ export default class ProgramYearListComponent extends Component {
     });
 
     if (latestProgramYear) {
-      const directors = (yield latestProgramYear.directors).slice();
-      const competencies = (yield latestProgramYear.competencies).slice();
-      const terms = (yield latestProgramYear.terms).slice();
+      const directors = (await latestProgramYear.directors).slice();
+      const competencies = (await latestProgramYear.competencies).slice();
+      const terms = (await latestProgramYear.terms).slice();
       newProgramYear.set('directors', directors);
       newProgramYear.set('competencies', competencies);
       newProgramYear.set('terms', terms);
     }
-    const savedProgramYear = yield newProgramYear.save();
+    const savedProgramYear = await newProgramYear.save();
     if (latestProgramYear) {
-      const relatedObjectives = yield latestProgramYear.programYearObjectives;
+      const relatedObjectives = await latestProgramYear.programYearObjectives;
       const programYearObjectives = sortBy(relatedObjectives.slice(), 'id');
 
       const newObjectiveObjects = programYearObjectives.map((pyoToCopy) => {
@@ -100,7 +99,7 @@ export default class ProgramYearListComponent extends Component {
 
         return rhett;
       });
-      const newProgramYearObjectives = yield this.fetch.postManyToApi(
+      const newProgramYearObjectives = await this.fetch.postManyToApi(
         `programyearobjectives`,
         newObjectiveObjects
       );
@@ -108,5 +107,5 @@ export default class ProgramYearListComponent extends Component {
     }
     this.savedProgramYear = newProgramYear;
     this.editorOn = false;
-  }
+  });
 }

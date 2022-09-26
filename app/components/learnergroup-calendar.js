@@ -12,14 +12,13 @@ export default class IliosCalendarWeekComponent extends Component {
   @tracked offerings = [];
   @tracked calendarEvents = [];
 
-  @dropTask
-  *load(element, [learnerGroup, showSubgroupEvents]) {
+  load = dropTask(async (element, [learnerGroup, showSubgroupEvents]) => {
     if (!learnerGroup) {
       return;
     }
-    this.offerings = yield this.getOfferings(learnerGroup, showSubgroupEvents);
-    this.calendarEvents = yield this.getCalendarEvents(this.offerings);
-  }
+    this.offerings = await this.getOfferings(learnerGroup, showSubgroupEvents);
+    this.calendarEvents = await this.getCalendarEvents(this.offerings);
+  });
 
   async getOfferings(learnerGroup, showSubgroupEvents) {
     let learnerGroups = [learnerGroup];

@@ -53,9 +53,8 @@ export default class MyProfileComponent extends Component {
     this.generatedJwt = null;
   }
 
-  @task
-  *createNewToken() {
-    yield timeout(10); //small delay to allow rendering the spinner
+  createNewToken = task(async () => {
+    await timeout(10); //small delay to allow rendering the spinner
     const selection = this.expiresAt;
     const expiresAt = moment(selection).hour(23).minute(59).second(59);
     const now = moment();
@@ -68,15 +67,14 @@ export default class MyProfileComponent extends Component {
     const interval = `P${days}DT${hours}H${minutes}M${seconds}S`;
 
     const url = '/auth/token?ttl=' + interval;
-    const data = yield this.fetch.getJsonFromApiHost(url);
+    const data = await this.fetch.getJsonFromApiHost(url);
     this.generatedJwt = data.jwt;
-  }
+  });
 
-  @task
-  *invalidateTokens() {
-    yield timeout(10); //small delay to allow rendering the spinner
+  invalidateTokens = task(async () => {
+    await timeout(10); //small delay to allow rendering the spinner
     const url = '/auth/invalidatetokens';
-    const data = yield this.fetch.getJsonFromApiHost(url);
+    const data = await this.fetch.getJsonFromApiHost(url);
 
     if (isPresent(data.jwt)) {
       const flashMessages = this.flashMessages;
@@ -86,5 +84,5 @@ export default class MyProfileComponent extends Component {
       flashMessages.success('general.successfullyInvalidatedTokens');
       this.args.toggleShowInvalidateTokens();
     }
-  }
+  });
 }

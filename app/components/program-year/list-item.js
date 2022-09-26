@@ -64,20 +64,17 @@ export default class ProgramYearListItemComponent extends Component {
     return { canDelete, canLock, canUnlock };
   }
 
-  @dropTask
-  *lock() {
+  lock = dropTask(async () => {
     this.args.programYear.set('locked', true);
-    yield this.args.programYear.save();
-  }
+    await this.args.programYear.save();
+  });
 
-  @dropTask
-  *unlock() {
+  unlock = dropTask(async () => {
     this.args.programYear.set('locked', false);
-    yield this.args.programYear.save();
-  }
+    await this.args.programYear.save();
+  });
 
-  @dropTask
-  *remove() {
-    yield this.args.programYear.destroyRecord();
-  }
+  remove = dropTask(async () => {
+    await this.args.programYear.destroyRecord();
+  });
 }

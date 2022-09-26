@@ -45,20 +45,18 @@ export default class NewCourseComponent extends Component {
     }
   }
 
-  @restartableTask
-  *load() {
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+  load = restartableTask(async () => {
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
     if (this.args.currentYear && this.years.includes(parseInt(this.args.currentYear.id, 10))) {
       this.setYear(this.args.currentYear.id);
     }
-  }
+  });
 
-  @dropTask
-  *saveCourse() {
+  saveCourse = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -69,6 +67,6 @@ export default class NewCourseComponent extends Component {
       school: this.args.currentSchool,
       year: this.selectedYear,
     });
-    yield this.args.save(course);
-  }
+    await this.args.save(course);
+  });
 }

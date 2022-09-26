@@ -13,10 +13,9 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
   @tracked tooltipTitle;
   @tracked data = [];
 
-  @restartableTask
-  *load(element, [sessionType]) {
-    const sessions = (yield sessionType.sessions).slice();
-    const terms = yield map(sessions, async (session) => {
+  load = restartableTask(async (element, [sessionType]) => {
+    const sessions = (await sessionType.sessions).slice();
+    const terms = await map(sessions, async (session) => {
       const sessionTerms = (await session.terms).slice();
       const course = await session.course;
       const courseTerms = (await course.terms).slice();
@@ -24,7 +23,7 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
       return [...sessionTerms, ...courseTerms];
     });
 
-    const termsWithVocabularies = yield map(terms.flat(), async (term) => {
+    const termsWithVocabularies = await map(terms.flat(), async (term) => {
       const vocabulary = await term.vocabulary;
       return { term, vocabulary };
     });
@@ -49,7 +48,7 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
 
       return obj;
     });
-  }
+  });
 
   get vocabulariesWithLinkedTerms() {
     return this.data.filter((obj) => obj.data !== 0);
@@ -83,13 +82,12 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
     };
   }
 
-  @restartableTask
-  *donutHover(obj) {
-    yield timeout(100);
-    const data = yield this.getTooltipData(obj);
+  donutHover = restartableTask(async (obj) => {
+    await timeout(100);
+    const data = await this.getTooltipData(obj);
     if (data) {
       this.tooltipTitle = data.title;
       this.tooltipContent = data.content;
     }
-  }
+  });
 }

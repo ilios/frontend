@@ -19,8 +19,7 @@ export default class InstructorGroupsListItemComponent extends Component {
     return this.canDeletePermission && this.courses && this.courses.length === 0;
   }
 
-  @dropTask
-  *remove() {
-    yield this.args.instructorGroup.destroyRecord();
-  }
+  remove = dropTask(async () => {
+    await this.args.instructorGroup.destroyRecord();
+  });
 }

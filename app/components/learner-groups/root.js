@@ -100,24 +100,22 @@ export default class LearnerGroupsRootComponent extends Component {
     });
   }
 
-  @dropTask
-  *saveNewLearnerGroup(title, fillWithCohort) {
+  saveNewLearnerGroup = dropTask(async (title, fillWithCohort) => {
     const group = this.store.createRecord('learner-group', {
       title,
       cohort: this.selectedCohort,
     });
     if (fillWithCohort) {
-      const users = (yield this.selectedCohort.users).slice();
+      const users = (await this.selectedCohort.users).slice();
       group.set('users', users);
     }
-    this.savedLearnerGroup = yield group.save();
+    this.savedLearnerGroup = await group.save();
     this.showNewLearnerGroupForm = false;
-  }
+  });
 
-  @dropTask
-  *copyGroup(withLearners, groupToCopy) {
-    const cohort = yield groupToCopy.cohort;
-    const newGroups = yield cloneLearnerGroup(this.store, groupToCopy, cohort, withLearners);
+  copyGroup = dropTask(async (withLearners, groupToCopy) => {
+    const cohort = await groupToCopy.cohort;
+    const newGroups = await cloneLearnerGroup(this.store, groupToCopy, cohort, withLearners);
     this.totalGroupsToSave = newGroups.length;
     // indicate that the top group is a copy
     newGroups[0].title += ` (${this.intl.t('general.copy')})`;
@@ -125,11 +123,11 @@ export default class LearnerGroupsRootComponent extends Component {
     this.currentGroupsSaved = 0;
     // save groups one at a time because we need to save in this order so parents are saved before children
     for (let i = 0; i < newGroups.length; i++) {
-      yield newGroups[i].save();
+      await newGroups[i].save();
       this.currentGroupsSaved++;
     }
     this.savedLearnerGroup = newGroups[0];
-  }
+  });
 
   async findBestDefaultProgram(programs) {
     if (!programs) {
@@ -182,22 +180,20 @@ export default class LearnerGroupsRootComponent extends Component {
     this.args.setSchoolId(schoolId);
   }
 
-  @dropTask
-  *setProgramId(programId) {
+  setProgramId = dropTask(async (programId) => {
     const program = findById(this.programs.slice(), programId);
-    const school = yield program.school;
+    const school = await program.school;
     this.args.setSchoolId(school.id);
     this.args.setProgramId(program.id);
     this.args.setProgramYearId(null);
-  }
+  });
 
-  @dropTask
-  *setProgramYearId(programYearId) {
+  setProgramYearId = dropTask(async (programYearId) => {
     const programYear = findById(this.programYears.slice(), programYearId);
-    const program = yield programYear.program;
-    const school = yield program.school;
+    const program = await programYear.program;
+    const school = await program.school;
     this.args.setSchoolId(school.id);
     this.args.setProgramId(program.id);
     this.args.setProgramYearId(programYear.id);
-  }
+  });
 }

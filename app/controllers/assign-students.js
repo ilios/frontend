@@ -40,11 +40,10 @@ export default class AssignStudentsController extends Controller {
     return this.query ? this.filterStudents(this.sortedStudents, this.query) : this.sortedStudents;
   }
 
-  @restartableTask
-  *setQuery(q) {
-    yield timeout(DEBOUNCE_DELAY);
+  setQuery = restartableTask(async (q) => {
+    await timeout(DEBOUNCE_DELAY);
     this.query = q;
-  }
+  });
 
   filterStudents(students, query) {
     return students.filter((student) => {

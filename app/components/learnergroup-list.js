@@ -29,20 +29,18 @@ export default class LearnerGroupListComponent extends Component {
     this.toRemove = this.toRemove.filter(({ id }) => id !== learnerGroup.id);
   }
 
-  @restartableTask
-  *load() {
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+  load = restartableTask(async () => {
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-  }
+  });
 
-  @task
-  *confirmRemove(learnerGroup) {
+  confirmRemove = task(async (learnerGroup) => {
     this.preparingToRemove = [...this.preparingToRemove, learnerGroup];
-    const deletableGroup = yield this.createDeletableGroup(learnerGroup);
+    const deletableGroup = await this.createDeletableGroup(learnerGroup);
     this.toRemove = [...this.toRemove, deletableGroup];
     this.preparingToRemove = this.preparingToRemove.filter((lg) => lg !== learnerGroup);
-  }
+  });
 
   @action
   cancelCopy(learnerGroup) {
@@ -54,11 +52,10 @@ export default class LearnerGroupListComponent extends Component {
     this.toCopy = [...this.toCopy, learnerGroup];
   }
 
-  @task
-  *copy(withLearners, learnerGroup) {
-    yield this.args.copy(withLearners, learnerGroup);
+  copy = task(async (withLearners, learnerGroup) => {
+    await this.args.copy(withLearners, learnerGroup);
     this.cancelCopy(learnerGroup);
-  }
+  });
 
   @action
   setSortBy(what) {

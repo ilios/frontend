@@ -12,22 +12,19 @@ export default class IliosUsersComponent extends Component {
   @tracked newUserComponent = null;
   @tracked userSearchType = null;
 
-  @restartableTask
-  *load() {
-    this.userSearchType = yield this.iliosConfig.getUserSearchType();
+  load = restartableTask(async () => {
+    this.userSearchType = await this.iliosConfig.getUserSearchType();
     this.newUserComponent = this.userSearchType === 'ldap' ? 'new-directory-user' : 'new-user';
-    yield this.searchForUsers.perform();
-  }
+    await this.searchForUsers.perform();
+  });
 
-  @restartableTask
-  *reload() {
-    yield this.searchForUsers.perform();
-  }
+  reload = restartableTask(async () => {
+    await this.searchForUsers.perform();
+  });
 
-  @restartableTask
-  *searchForUsers() {
+  searchForUsers = restartableTask(async () => {
     const q = cleanQuery(this.args.query);
-    yield timeout(DEBOUNCE_TIMEOUT);
+    await timeout(DEBOUNCE_TIMEOUT);
     return this.store.query('user', {
       limit: this.args.limit,
       q,
@@ -35,5 +32,5 @@ export default class IliosUsersComponent extends Component {
       'order_by[lastName]': 'ASC',
       'order_by[firstName]': 'ASC',
     });
-  }
+  });
 }

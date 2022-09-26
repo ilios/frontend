@@ -12,9 +12,8 @@ export default class SchoolSessionAttributesComponent extends Component {
   @tracked showSessionSpecialAttireRequiredConfig;
   @tracked showSessionSpecialEquipmentRequiredConfig;
 
-  @restartableTask
-  *load(element, [school]) {
-    const schoolConfigs = (yield school.configurations).slice();
+  load = restartableTask(async (element, [school]) => {
+    const schoolConfigs = (await school.configurations).slice();
     this.showSessionAttendanceRequiredConfig = findBy(
       schoolConfigs,
       'name',
@@ -31,7 +30,7 @@ export default class SchoolSessionAttributesComponent extends Component {
       'name',
       'showSessionSpecialEquipmentRequired'
     );
-  }
+  });
 
   get showSessionAttendanceRequired() {
     return JSON.parse(this.showSessionAttendanceRequiredConfig?.value ?? null);
@@ -46,8 +45,7 @@ export default class SchoolSessionAttributesComponent extends Component {
     return JSON.parse(this.showSessionSpecialEquipmentRequiredConfig?.value ?? null);
   }
 
-  @dropTask
-  *save(newValues) {
+  save = dropTask(async (newValues) => {
     const names = [
       'showSessionAttendanceRequired',
       'showSessionSupplemental',
@@ -57,15 +55,15 @@ export default class SchoolSessionAttributesComponent extends Component {
     const toSave = [];
     for (let i = 0; i < names.length; i++) {
       const name = names[i];
-      const config = yield this.args.school.setConfigValue(name, newValues[name]);
+      const config = await this.args.school.setConfigValue(name, newValues[name]);
       if (config) {
         toSave.push(config);
       }
     }
     try {
-      yield all(toSave.map((o) => o.save()));
+      await all(toSave.map((o) => o.save()));
     } finally {
       this.args.manage(false);
     }
-  }
+  });
 }

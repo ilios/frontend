@@ -60,14 +60,13 @@ export default class LearnerGroupsListItemComponent extends Component {
     return uniqueValues([].concat(courses, childCourses.flat()));
   }
 
-  @dropTask
-  *remove() {
-    const descendants = yield this.args.learnerGroup.allDescendants;
-    yield all([
+  remove = dropTask(async () => {
+    const descendants = await this.args.learnerGroup.allDescendants;
+    await all([
       ...descendants.map((descendant) => descendant.destroyRecord()),
       this.args.learnerGroup.destroyRecord(),
     ]);
-  }
+  });
 
   @action
   copyWithLearners() {
@@ -85,11 +84,10 @@ export default class LearnerGroupsListItemComponent extends Component {
     this.showRemoveConfirmation = false;
   }
 
-  @dropTask
-  *showRemove() {
-    yield this.dataLoader.loadCoursesForLearnerGroup(this.args.learnerGroup.id);
+  showRemove = dropTask(async () => {
+    await this.dataLoader.loadCoursesForLearnerGroup(this.args.learnerGroup.id);
     this.areCoursesLoaded = true;
     this.showRemoveConfirmation = true;
     this.showCopyConfirmation = false;
-  }
+  });
 }

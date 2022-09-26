@@ -20,9 +20,8 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   @tracked selectedProgram;
   @tracked programs = [];
 
-  @restartableTask
-  *load() {
-    const academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+  load = restartableTask(async () => {
+    const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
     const thisYear = new Date().getFullYear();
@@ -45,9 +44,9 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
       selectedYear = findBy(years, 'year', reportYear + 1);
     }
 
-    const program = yield this.args.report.program;
-    const school = yield program.school;
-    const programs = yield school.programs;
+    const program = await this.args.report.program;
+    const school = await program.school;
+    const programs = await school.programs;
 
     this.selectedProgram = program;
     this.programs = programs.slice();
@@ -55,7 +54,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     this.selectedYear = selectedYear.year;
     this.name = this.args.report.name;
     this.description = this.args.report.description;
-  }
+  });
 
   @action
   changeName(newName) {
@@ -79,10 +78,9 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     }
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor(['name', 'description']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -93,11 +91,11 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
       program: this.selectedProgram.id,
     };
     const url = `curriculuminventoryreports/${this.args.report.id}/rollover`;
-    const newReportObj = yield this.fetch.postQueryToApi(url, data);
+    const newReportObj = await this.fetch.postQueryToApi(url, data);
     this.flashMessages.success('general.curriculumInventoryReportRolloverSuccess');
     this.store.pushPayload(newReportObj);
     const newReport = this.store.peekRecord('curriculum-inventory-report', newReportObj.data.id);
     this.clearErrorDisplay();
     return this.args.visit(newReport);
-  }
+  });
 }

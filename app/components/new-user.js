@@ -63,20 +63,18 @@ export default class NewUserComponent extends Component {
     return this.currentSchoolCohorts.slice().reverse()[0];
   }
 
-  @restartableTask
-  *load() {
-    const user = yield this.currentUser.getModel();
-    this.primarySchool = yield user.school;
-    this.schools = yield this.loadSchools();
-    this.currentSchoolCohorts = yield this.bestSelectedSchool?.cohorts;
-    this.cohorts = yield this.loadCohorts(this.bestSelectedSchool);
-  }
+  load = restartableTask(async () => {
+    const user = await this.currentUser.getModel();
+    this.primarySchool = await user.school;
+    this.schools = await this.loadSchools();
+    this.currentSchoolCohorts = await this.bestSelectedSchool?.cohorts;
+    this.cohorts = await this.loadCohorts(this.bestSelectedSchool);
+  });
 
-  @restartableTask
-  *reload() {
-    this.currentSchoolCohorts = yield this.bestSelectedSchool?.cohorts;
-    this.cohorts = yield this.loadCohorts(this.bestSelectedSchool);
-  }
+  reload = restartableTask(async () => {
+    this.currentSchoolCohorts = await this.bestSelectedSchool?.cohorts;
+    this.cohorts = await this.loadCohorts(this.bestSelectedSchool);
+  });
 
   async loadSchools() {
     const store = this.store;
@@ -122,8 +120,7 @@ export default class NewUserComponent extends Component {
     });
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor([
       'firstName',
       'middleName',
@@ -135,11 +132,11 @@ export default class NewUserComponent extends Component {
       'username',
       'password',
     ]);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    const roles = yield this.store.findAll('user-role');
+    const roles = await this.store.findAll('user-role');
     const primaryCohort = this.bestSelectedCohort;
     let user = this.store.createRecord('user', {
       firstName: this.firstName,
@@ -158,25 +155,24 @@ export default class NewUserComponent extends Component {
       const studentRole = findBy(roles.slice(), 'title', 'Student');
       user.set('roles', [studentRole]);
     }
-    user = yield user.save();
+    user = await user.save();
     const authentication = this.store.createRecord('authentication', {
       user,
       username: this.username,
       password: this.password,
     });
-    yield authentication.save();
+    await authentication.save();
     this.clearErrorDisplay();
     this.flashMessages.success('general.saved');
     this.args.transitionToUser(user.get('id'));
-  }
+  });
 
-  @dropTask
-  *saveOrCancel(event) {
+  saveOrCancel = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
-      yield this.save.perform();
+      await this.save.perform();
     } else if (27 === keyCode) {
       this.args.close();
     }
-  }
+  });
 }

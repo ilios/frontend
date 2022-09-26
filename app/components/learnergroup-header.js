@@ -18,15 +18,14 @@ export default class LearnergroupHeaderComponent extends Component {
     this.title = this.args.learnerGroup.title;
   }
 
-  @dropTask
-  *changeTitle() {
+  changeTitle = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid('title');
+    const isValid = await this.isValid('title');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
     this.args.learnerGroup.title = this.title;
-    yield this.args.learnerGroup.save();
-  }
+    await this.args.learnerGroup.save();
+  });
 }

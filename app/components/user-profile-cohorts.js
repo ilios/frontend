@@ -54,17 +54,16 @@ export default class UserProfileCohortsComponent extends Component {
     this.selectedCohorts = this.selectedCohorts.filter(({ id }) => id !== cohort.id);
   }
 
-  @restartableTask
-  *load(element, [user]) {
-    yield waitForProperty(user, 'isLoaded'); //wait for promise to resolve because save() task modifies this relationship
-    this.selectedCohorts = (yield user.cohorts).slice();
-    this.primaryCohort = yield user.primaryCohort;
+  load = restartableTask(async (element, [user]) => {
+    await waitForProperty(user, 'isLoaded'); //wait for promise to resolve because save() task modifies this relationship
+    this.selectedCohorts = (await user.cohorts).slice();
+    this.primaryCohort = await user.primaryCohort;
 
-    const sessionUser = yield this.currentUser.getModel();
-    this.selectedSchoolId = (yield sessionUser.school).id;
+    const sessionUser = await this.currentUser.getModel();
+    this.selectedSchoolId = (await sessionUser.school).id;
 
-    const allCohorts = (yield this.store.findAll('cohort')).slice();
-    this.allCohortsWithRelationships = yield map(allCohorts, async (cohort) => {
+    const allCohorts = (await this.store.findAll('cohort')).slice();
+    this.allCohortsWithRelationships = await map(allCohorts, async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;
@@ -76,22 +75,21 @@ export default class UserProfileCohortsComponent extends Component {
         school,
       };
     });
-    const allSchools = (yield this.store.findAll('school')).slice();
-    this.schools = yield filter(allSchools, async (school) => {
+    const allSchools = (await this.store.findAll('school')).slice();
+    this.schools = await filter(allSchools, async (school) => {
       return this.permissionChecker.canUpdateUserInSchool(school);
     });
-  }
+  });
 
-  @dropTask
-  *save() {
-    yield waitForProperty(this, 'load.performCount');
+  save = dropTask(async () => {
+    await waitForProperty(this, 'load.performCount');
     this.args.user.set('primaryCohort', this.primaryCohort);
     this.args.user.set('cohorts', this.selectedCohorts);
 
-    yield this.args.user.save();
+    await this.args.user.save();
     this.args.setIsManaging(false);
     this.hasSavedRecently = true;
-    yield timeout(500);
+    await timeout(500);
     this.hasSavedRecently = false;
-  }
+  });
 }

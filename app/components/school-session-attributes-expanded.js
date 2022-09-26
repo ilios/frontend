@@ -63,14 +63,13 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
     this[bufferName] = this.args[name];
   }
 
-  @dropTask
-  *save() {
-    yield this.args.saveAll({
+  save = dropTask(async () => {
+    await this.args.saveAll({
       showSessionAttendanceRequired: this.showSessionAttendanceRequired,
       showSessionSupplemental: this.showSessionSupplemental,
       showSessionSpecialAttireRequired: this.showSessionSpecialAttireRequired,
       showSessionSpecialEquipmentRequired: this.showSessionSpecialEquipmentRequired,
     });
     this.resetFlipped();
-  }
+  });
 }

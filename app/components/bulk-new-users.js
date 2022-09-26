@@ -73,13 +73,12 @@ export default class BulkNewUsersComponent extends Component {
     return this.cohorts.slice().reverse()[0];
   }
 
-  @restartableTask
-  *load() {
-    const user = yield this.currentUser.getModel();
-    this.primarySchool = yield user.school;
-    this.schools = yield this.loadSchools.perform();
-    this.cohorts = yield this.loadCohorts.perform(this.bestSelectedSchool);
-  }
+  load = restartableTask(async () => {
+    const user = await this.currentUser.getModel();
+    this.primarySchool = await user.school;
+    this.schools = await this.loadSchools.perform();
+    this.cohorts = await this.loadCohorts.perform(this.bestSelectedSchool);
+  });
 
   @action
   toggleUserSelection(obj) {
@@ -143,53 +142,49 @@ export default class BulkNewUsersComponent extends Component {
     });
   }
 
-  @restartableTask
-  *updateSelectedFile(files) {
+  updateSelectedFile = restartableTask(async (files) => {
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       if (files.length > 0) {
-        yield this.parseFile.perform(files[0]);
+        await this.parseFile.perform(files[0]);
       }
     } else {
       throw new Error(this.intl.t('general.unsupportedBrowserFailure'));
     }
-  }
+  });
 
-  @restartableTask
-  *setSchool(id) {
+  setSchool = restartableTask(async (id) => {
     this.schoolId = id;
-    this.cohorts = yield this.loadCohorts.perform(this.bestSelectedSchool);
-  }
+    this.cohorts = await this.loadCohorts.perform(this.bestSelectedSchool);
+  });
 
-  @restartableTask
-  *parseFile(file) {
-    const proposedUsers = yield this.getFileContents(file);
-    const existingUsernames = yield this.existingUsernames();
+  parseFile = restartableTask(async (file) => {
+    const proposedUsers = await this.getFileContents(file);
+    const existingUsernames = await this.existingUsernames();
     const filledOutUsers = proposedUsers.map((obj) => {
       obj.existingUsernames = existingUsernames;
 
       return obj;
     });
-    const validUsers = yield filter(filledOutUsers, async (obj) => {
+    const validUsers = await filter(filledOutUsers, async (obj) => {
       return await obj.isValid();
     });
 
     this.selectedUsers = validUsers;
     this.proposedUsers = filledOutUsers;
-  }
+  });
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.savedUserIds = [];
     const nonStudentMode = this.nonStudentMode;
     const selectedSchool = this.bestSelectedSchool;
     const selectedCohort = this.bestSelectedCohort;
-    const roles = yield this.store.findAll('user-role');
+    const roles = await this.store.findAll('user-role');
     const studentRole = findById(roles.slice(), '4');
 
     const proposedUsers = this.selectedUsers;
 
-    const validUsers = yield filter(proposedUsers, async (obj) => {
+    const validUsers = await filter(proposedUsers, async (obj) => {
       return obj.isValid();
     });
 
@@ -243,9 +238,9 @@ export default class BulkNewUsersComponent extends Component {
       try {
         parts = records.splice(0, 10);
         const users = mapBy(parts, 'user');
-        yield all(users.map((user) => user.save()));
+        await all(users.map((user) => user.save()));
         const authentications = mapBy(parts, 'authentication');
-        yield all(authentications.map((auth) => auth.save()));
+        await all(authentications.map((auth) => auth.save()));
       } catch (e) {
         const userErrors = parts.filter((obj) => obj.user.get('isError'));
         const authenticationErrors = parts.filter(
@@ -272,29 +267,27 @@ export default class BulkNewUsersComponent extends Component {
 
     this.selectedUsers = [];
     this.proposedUsers = [];
-  }
+  });
 
-  @restartableTask
-  *loadSchools() {
-    const schools = yield this.store.findAll('school', { reload: true });
+  loadSchools = restartableTask(async () => {
+    const schools = await this.store.findAll('school', { reload: true });
     return filter(schools.slice(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
-  }
+  });
 
-  @restartableTask
-  *loadCohorts(school) {
-    const cohorts = yield this.store.query('cohort', {
+  loadCohorts = restartableTask(async (school) => {
+    const cohorts = await this.store.query('cohort', {
       filters: {
         schools: [school.id],
       },
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = yield all(mapBy(cohorts.slice(), 'programYear'));
-    yield all(mapBy(programYears.slice(), 'program'));
+    const programYears = await all(mapBy(cohorts.slice(), 'programYear'));
+    await all(mapBy(programYears.slice(), 'program'));
 
-    const objects = yield all(
+    const objects = await all(
       cohorts.slice().map(async (cohort) => {
         const obj = {
           id: cohort.get('id'),
@@ -314,7 +307,7 @@ export default class BulkNewUsersComponent extends Component {
       const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
       return finalYear > lastYear;
     });
-  }
+  });
 }
 
 @validatable

@@ -12,11 +12,10 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
   @tracked competenciesToRemove = [];
   @tracked schoolCompetencies;
 
-  @restartableTask
-  *load() {
+  load = restartableTask(async () => {
     this.cleanup();
-    this.schoolCompetencies = yield this.args.school.competencies;
-  }
+    this.schoolCompetencies = await this.args.school.competencies;
+  });
 
   get competencies() {
     if (!this.schoolCompetencies) {
@@ -80,8 +79,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     this.competenciesToRemove = [...this.competenciesToRemove, competency];
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     const domainsToRemove = this.schoolCompetencies.filter((competency) => {
       return !competency.belongsTo('parent').id() && !this.competencies.includes(competency);
     });
@@ -90,8 +88,8 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     });
 
     // delete all removed competencies first, then all removed domains
-    yield all(competenciesToRemove.map((competency) => competency.destroyRecord()));
-    yield all(domainsToRemove.map((domain) => domain.destroyRecord()));
+    await all(competenciesToRemove.map((competency) => competency.destroyRecord()));
+    await all(domainsToRemove.map((domain) => domain.destroyRecord()));
 
     // set the school on new competencies
     filterBy(this.competencies, 'isNew').forEach((competency) => {
@@ -99,13 +97,13 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     });
 
     // update all modified competencies (this will include new ones).
-    yield all(
+    await all(
       filterBy(this.competencies, 'hasDirtyAttributes').map((competency) => competency.save())
     );
 
     // cleanup
     this.cleanup();
     this.args.setSchoolManageCompetencies(false);
-    this.schoolCompetencies = yield this.args.school.competencies;
-  }
+    this.schoolCompetencies = await this.args.school.competencies;
+  });
 }

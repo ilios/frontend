@@ -46,14 +46,13 @@ export default class ManageUsersSummaryComponent extends Component {
     return users;
   }
 
-  @restartableTask
-  *searchForUsers() {
+  searchForUsers = restartableTask(async () => {
     const q = cleanQuery(this.searchValue);
     if (!q) {
-      yield timeout(1);
+      await timeout(1);
       return [];
     }
-    yield timeout(DEBOUNCE_MS);
+    await timeout(DEBOUNCE_MS);
 
     if (q.length < MIN_INPUT) {
       return [
@@ -63,8 +62,8 @@ export default class ManageUsersSummaryComponent extends Component {
         },
       ];
     }
-    const searchEnabled = yield this.iliosConfig.getSearchEnabled();
-    const searchResults = searchEnabled ? yield this.indexSearch(q) : yield this.apiSearch(q);
+    const searchEnabled = await this.iliosConfig.getSearchEnabled();
+    const searchResults = searchEnabled ? await this.indexSearch(q) : await this.apiSearch(q);
 
     if (searchResults.length === 0) {
       return [
@@ -87,11 +86,10 @@ export default class ManageUsersSummaryComponent extends Component {
       },
       ...mappedResults,
     ];
-  }
+  });
 
-  @dropTask
-  *clickUser({ id }) {
-    yield this.router.transitionTo('user', id, {
+  clickUser = dropTask(async ({ id }) => {
+    await this.router.transitionTo('user', id, {
       queryParams: {
         isManagingBio: Ember.DEFAULT_VALUE,
         isManagingRoles: Ember.DEFAULT_VALUE,
@@ -101,6 +99,6 @@ export default class ManageUsersSummaryComponent extends Component {
       },
     });
     this.searchValue = null;
-    yield this.searchForUsers.perform();
-  }
+    await this.searchForUsers.perform();
+  });
 }

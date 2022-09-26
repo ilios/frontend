@@ -25,19 +25,18 @@ export default class SequenceBlockListComponent extends Component {
     this.editorOn = false;
   }
 
-  @dropTask
-  *save(block) {
+  save = dropTask(async (block) => {
     this.editorOn = false;
-    this.savedBlock = yield block.save();
+    this.savedBlock = await block.save();
     // adding/updating a sequence block will have side-effects on its siblings if the given block is nested
     // inside an "ordered" sequence block. they all get re-sorted server-side.
     // therefore, we must reload them here in order to get those updated sort order values.
     // [ST 2021/03/16]
     if (this.args.parent) {
-      yield this.store.findRecord('curriculum_inventory_sequence_block', this.args.parent.id, {
+      await this.store.findRecord('curriculum_inventory_sequence_block', this.args.parent.id, {
         include: 'children',
         reload: true,
       });
     }
-  }
+  });
 }

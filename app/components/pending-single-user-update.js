@@ -17,29 +17,26 @@ export default class PendingSingleUserUpdateComponent extends Component {
     );
   }
 
-  @dropTask
-  *updateEmailAddress(update) {
+  updateEmailAddress = dropTask(async (update) => {
     this.args.user.set('email', update.value);
-    yield this.args.user.save();
-    yield update.destroyRecord();
+    await this.args.user.save();
+    await update.destroyRecord();
     this.flashMessages.success('general.savedSuccessfully');
-  }
+  });
 
-  @dropTask
-  *disableUser() {
-    const updates = yield this.args.user.pendingUserUpdates;
+  disableUser = dropTask(async () => {
+    const updates = await this.args.user.pendingUserUpdates;
     this.args.user.set('enabled', false);
-    yield this.args.user.save();
-    yield all(updates.map((update) => update.destroyRecord()));
+    await this.args.user.save();
+    await all(updates.map((update) => update.destroyRecord()));
     this.flashMessages.success('general.savedSuccessfully');
-  }
+  });
 
-  @dropTask
-  *excludeFromSync() {
-    const updates = yield this.args.user.pendingUserUpdates;
+  excludeFromSync = dropTask(async () => {
+    const updates = await this.args.user.pendingUserUpdates;
     this.args.user.set('userSyncIgnore', true);
-    yield this.args.user.save();
-    yield all(updates.map((update) => update.destroyRecord()));
+    await this.args.user.save();
+    await all(updates.map((update) => update.destroyRecord()));
     this.flashMessages.success('general.savedSuccessfully');
-  }
+  });
 }

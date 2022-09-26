@@ -18,11 +18,10 @@ export default class SchoolLeadershipExpandedComponent extends Component {
     return (administratorIds.length > 0 || directorIds.length > 0) && !this.args.isManaging;
   }
 
-  @restartableTask
-  *load() {
-    this.schoolDirectors = yield this.args.school.directors;
-    this.schoolAdministrators = yield this.args.school.administrators;
-  }
+  load = restartableTask(async () => {
+    this.schoolDirectors = await this.args.school.directors;
+    this.schoolAdministrators = await this.args.school.administrators;
+  });
 
   get directors() {
     const arr = [...this.schoolDirectors.slice(), ...this.directorsToAdd];
@@ -54,15 +53,14 @@ export default class SchoolLeadershipExpandedComponent extends Component {
     this.administratorsToRemove = [...this.administratorsToRemove, user];
   }
 
-  @dropTask
-  *save() {
-    yield timeout(10);
+  save = dropTask(async () => {
+    await timeout(10);
     this.args.school.setProperties({
       directors: this.directors,
       administrators: this.administrators,
     });
     this.args.expand();
-    yield this.args.school.save();
+    await this.args.school.save();
     this.args.setIsManaging(false);
-  }
+  });
 }

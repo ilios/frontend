@@ -48,21 +48,19 @@ export default class UserProfileIcsComponent extends Component {
     return hashArray.map((b) => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
   }
 
-  @dropTask
-  *refreshKey() {
-    const token = yield this.randomToken(this.args.user.id);
+  refreshKey = dropTask(async () => {
+    const token = await this.randomToken(this.args.user.id);
     this.args.user.set('icsFeedKey', token);
-    yield this.args.user.save();
+    await this.args.user.save();
     this.args.setIsManaging(false);
     this.hasSavedRecently = true;
-    yield timeout(500);
+    await timeout(500);
     this.hasSavedRecently = false;
-  }
+  });
 
-  @restartableTask
-  *textCopied() {
+  textCopied = restartableTask(async () => {
     this.showCopySuccessMessage = true;
-    yield timeout(3000);
+    await timeout(3000);
     this.showCopySuccessMessage = false;
-  }
+  });
 }

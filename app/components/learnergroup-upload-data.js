@@ -74,10 +74,9 @@ export default class LearnerGroupUploadDataComponent extends Component {
     }
   }
 
-  @restartableTask
-  *parseFile(proposedUsers) {
-    const cohort = yield this.args.learnerGroup.cohort;
-    const data = yield map(
+  parseFile = restartableTask(async (proposedUsers) => {
+    const cohort = await this.args.learnerGroup.cohort;
+    const data = await map(
       proposedUsers,
       async ({ firstName, lastName, campusId, subGroupName }) => {
         const errors = [];
@@ -175,7 +174,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
     });
 
     return data;
-  }
+  });
 
   /**
    * Extract the contents of a file into an array of user like objects
@@ -214,11 +213,10 @@ export default class LearnerGroupUploadDataComponent extends Component {
     });
   }
 
-  @task
-  *continue() {
-    yield timeout(10);
-    const matchedGroups = yield this.getMatchedGroups();
+  continue = task(async () => {
+    await timeout(10);
+    const matchedGroups = await this.getMatchedGroups();
     this.args.sendValidUsers(this.validUsers);
     this.args.sendMatchedGroups(matchedGroups);
-  }
+  });
 }

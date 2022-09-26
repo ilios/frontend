@@ -44,77 +44,69 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     return this.args.programYearObjective.courseObjectives.length === 0;
   }
 
-  @dropTask
-  *saveTitleChanges() {
+  saveTitleChanges = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid('title');
+    const isValid = await this.isValid('title');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
     this.args.programYearObjective.set('title', this.title);
-    yield this.args.programYearObjective.save();
+    await this.args.programYearObjective.save();
     this.highlightSave.perform();
-  }
+  });
 
-  @dropTask
-  *saveIsActive(active) {
+  saveIsActive = dropTask(async (active) => {
     this.args.programYearObjective.set('active', active);
-    yield this.args.programYearObjective.save();
+    await this.args.programYearObjective.save();
     this.highlightSave.perform();
-  }
+  });
 
-  @dropTask
-  *manageCompetency() {
-    this.competencyBuffer = yield this.args.programYearObjective.competency;
+  manageCompetency = dropTask(async () => {
+    this.competencyBuffer = await this.args.programYearObjective.competency;
     this.isManagingCompetency = true;
-  }
-  @dropTask
-  *manageDescriptors() {
-    const meshDescriptors = yield this.args.programYearObjective.meshDescriptors;
+  });
+
+  manageDescriptors = dropTask(async () => {
+    const meshDescriptors = await this.args.programYearObjective.meshDescriptors;
     this.descriptorsBuffer = meshDescriptors.slice();
     this.isManagingDescriptors = true;
-  }
+  });
 
-  @dropTask
-  *manageTerms(vocabulary) {
+  manageTerms = dropTask(async (vocabulary) => {
     this.selectedVocabulary = vocabulary;
-    const terms = yield this.args.programYearObjective.terms;
+    const terms = await this.args.programYearObjective.terms;
     this.termsBuffer = terms.slice();
     this.isManagingTerms = true;
-  }
+  });
 
-  @restartableTask
-  *highlightSave() {
-    yield timeout(1000);
-  }
+  highlightSave = restartableTask(async () => {
+    await timeout(1000);
+  });
 
-  @dropTask
-  *saveCompetency() {
+  saveCompetency = dropTask(async () => {
     this.args.programYearObjective.set('competency', this.competencyBuffer);
-    yield this.args.programYearObjective.save();
+    await this.args.programYearObjective.save();
     this.competencyBuffer = null;
     this.isManagingCompetency = false;
     this.highlightSave.perform();
-  }
+  });
 
-  @dropTask
-  *saveDescriptors() {
+  saveDescriptors = dropTask(async () => {
     this.args.programYearObjective.set('meshDescriptors', this.descriptorsBuffer);
-    yield this.args.programYearObjective.save();
+    await this.args.programYearObjective.save();
     this.descriptorsBuffer = [];
     this.isManagingDescriptors = false;
     this.highlightSave.perform();
-  }
+  });
 
-  @dropTask
-  *saveTerms() {
+  saveTerms = dropTask(async () => {
     this.args.programYearObjective.set('terms', this.termsBuffer);
-    yield this.args.programYearObjective.save();
+    await this.args.programYearObjective.save();
     this.termsBuffer = [];
     this.isManagingTerms = false;
     this.highlightSave.perform();
-  }
+  });
 
   @action
   revertTitleChanges() {
@@ -156,8 +148,8 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.isManagingTerms = false;
     this.selectedVocabulary = null;
   }
-  @dropTask
-  *deleteObjective() {
-    yield this.args.programYearObjective.destroyRecord();
-  }
+
+  deleteObjective = dropTask(async () => {
+    await this.args.programYearObjective.destroyRecord();
+  });
 }

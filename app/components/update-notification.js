@@ -6,10 +6,9 @@ export default class UpdateNotificationComponent extends Component {
    * send a message to update every tab attached to this worker
    * this message is caught by our sw-skip-wait in-repo addon
    */
-  @restartableTask
-  *click() {
+  click = restartableTask(async () => {
     if ('serviceWorker' in navigator) {
-      const reg = yield navigator.serviceWorker.getRegistration();
+      const reg = await navigator.serviceWorker.getRegistration();
       if (reg && reg.waiting) {
         reg.waiting.postMessage('skipWaiting');
       }
@@ -17,5 +16,5 @@ export default class UpdateNotificationComponent extends Component {
     if (this.args.reload) {
       this.args.reload();
     }
-  }
+  });
 }

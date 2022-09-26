@@ -23,11 +23,10 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     this.description = this.intl.t('general.curriculumInventoryReport');
   }
 
-  @restartableTask
-  *load() {
+  load = restartableTask(async () => {
     const years = [];
     const currentYear = new Date().getFullYear();
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
     for (let id = currentYear - 5, n = currentYear + 5; id <= n; id++) {
@@ -40,12 +39,11 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     }
     this.years = years;
     this.selectedYear = findById(years, currentYear);
-  }
+  });
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor(['name', 'description']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -64,8 +62,8 @@ export default class CurriculumInventoryNewReportComponent extends Component {
       endDate,
       description: this.description,
     });
-    yield this.args.save(report);
-  }
+    await this.args.save(report);
+  });
 
   @action
   setSelectedYear(year) {
@@ -73,17 +71,16 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     this.selectedYear = findById(this.years, id);
   }
 
-  @dropTask
-  *keyboard(ev) {
+  keyboard = dropTask(async (ev) => {
     const keyCode = ev.keyCode;
 
     if (13 === keyCode) {
-      yield this.save.perform();
+      await this.save.perform();
       return;
     }
 
     if (27 === keyCode) {
       this.args.cancel();
     }
-  }
+  });
 }

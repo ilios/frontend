@@ -58,25 +58,23 @@ export default class ProgramYearCompetenciesComponent extends Component {
     this.args.setIsManaging(false);
   }
 
-  @task
-  *addCompetencyToBuffer(competency) {
+  addCompetencyToBuffer = task(async (competency) => {
     this.competenciesToAdd = [...this.competenciesToAdd, competency];
-    const children = (yield competency.children).slice();
+    const children = (await competency.children).slice();
     this.competenciesToAdd = [...this.competenciesToAdd, ...children];
     this.competenciesToRemove = this.competenciesToRemove.filter((c) => {
       return c !== competency && !children.includes(c);
     });
-  }
+  });
 
-  @task
-  *removeCompetencyFromBuffer(competency) {
+  removeCompetencyFromBuffer = task(async (competency) => {
     this.competenciesToRemove = [...this.competenciesToRemove, competency];
-    const children = (yield competency.children).slice();
+    const children = (await competency.children).slice();
     this.competenciesToRemove = [...this.competenciesToRemove, ...children];
     this.competenciesToAdd = this.competenciesToAdd.filter((c) => {
       return c !== competency && !children.includes(c);
     });
-  }
+  });
 
   @action
   collapse() {
@@ -85,16 +83,15 @@ export default class ProgramYearCompetenciesComponent extends Component {
     }
   }
 
-  @task
-  *save() {
-    yield timeout(10);
+  save = task(async () => {
+    await timeout(10);
     this.args.programYear.set('competencies', this.selectedCompetencies);
     try {
-      yield this.args.programYear.save();
+      await this.args.programYear.save();
     } finally {
       this.flashMessages.success('general.savedSuccessfully');
       this.args.setIsManaging(false);
       this.args.expand();
     }
-  }
+  });
 }

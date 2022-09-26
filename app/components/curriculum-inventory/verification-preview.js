@@ -11,12 +11,11 @@ export default class CurriculumInventoryVerificationPreviewComponent extends Com
   @tracked tables = null;
   @tracked scrollTargets = {};
 
-  @task
-  *load(element, [report]) {
+  load = task(async (element, [report]) => {
     const url = `${this.iliosConfig.apiNameSpace}/curriculuminventoryreports/${report.id}/verificationpreview`;
-    const data = yield this.fetch.getJsonFromApiHost(url);
+    const data = await this.fetch.getJsonFromApiHost(url);
     this.tables = data.preview;
-  }
+  });
 
   @action
   scrollTo(key) {

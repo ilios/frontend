@@ -10,10 +10,9 @@ export default class InstructorGroupsNewComponent extends Component {
   @service store;
   @tracked @Length(3, 60) @NotBlank() title;
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -21,8 +20,8 @@ export default class InstructorGroupsNewComponent extends Component {
     const instructorGroup = this.store.createRecord('instructor-group', {
       title: this.title,
     });
-    yield this.args.save(instructorGroup);
-  }
+    await this.args.save(instructorGroup);
+  });
 
   @action
   async keyboard({ keyCode }) {

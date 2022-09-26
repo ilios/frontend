@@ -118,25 +118,23 @@ export default class NewDirectoryUserComponent extends Component {
     });
   }
 
-  @restartableTask
-  *load() {
-    const authType = yield this.iliosConfig.getAuthenticationType();
+  load = restartableTask(async () => {
+    const authType = await this.iliosConfig.getAuthenticationType();
     this.allowCustomUserName = 'form' === authType;
-    const user = yield this.currentUser.getModel();
-    this.primarySchool = yield user.school;
-    this.schools = yield this.loadSchools();
-    this.cohorts = yield this.loadCohorts(this.primarySchool);
-    this.currentSchoolCohorts = yield this.bestSelectedSchool?.cohorts;
+    const user = await this.currentUser.getModel();
+    this.primarySchool = await user.school;
+    this.schools = await this.loadSchools();
+    this.cohorts = await this.loadCohorts(this.primarySchool);
+    this.currentSchoolCohorts = await this.bestSelectedSchool?.cohorts;
     if (isPresent(this.args.searchTerms)) {
-      yield this.findUsersInDirectory.perform(this.args.searchTerms);
+      await this.findUsersInDirectory.perform(this.args.searchTerms);
     }
-  }
+  });
 
-  @restartableTask
-  *reload() {
-    this.currentSchoolCohorts = yield this.bestSelectedSchool?.cohorts;
-    this.cohorts = yield this.loadCohorts(this.bestSelectedSchool);
-  }
+  reload = restartableTask(async () => {
+    this.currentSchoolCohorts = await this.bestSelectedSchool?.cohorts;
+    this.cohorts = await this.loadCohorts(this.bestSelectedSchool);
+  });
 
   @action
   pickUser(user) {
@@ -199,13 +197,12 @@ export default class NewDirectoryUserComponent extends Component {
     }
   }
 
-  @restartableTask
-  *findUsersInDirectory(searchTerms) {
+  findUsersInDirectory = restartableTask(async (searchTerms) => {
     this.searchResultsReturned = false;
     this.tooManyResults = false;
     if (!isEmpty(searchTerms)) {
       const url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
-      const data = yield this.fetch.getJsonFromApiHost(url);
+      const data = await this.fetch.getJsonFromApiHost(url);
       const mappedResults = data.results.map((result) => {
         result.addable =
           isPresent(result.firstName) &&
@@ -218,10 +215,9 @@ export default class NewDirectoryUserComponent extends Component {
       this.searchResults = mappedResults;
       this.searchResultsReturned = true;
     }
-  }
+  });
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor([
       'firstName',
       'middleName',
@@ -233,11 +229,11 @@ export default class NewDirectoryUserComponent extends Component {
       'username',
       'password',
     ]);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    const roles = yield this.store.findAll('user-role');
+    const roles = await this.store.findAll('user-role');
     const primaryCohort = this.bestSelectedCohort;
     let user = this.store.createRecord('user', {
       firstName: this.firstName,
@@ -256,15 +252,15 @@ export default class NewDirectoryUserComponent extends Component {
       const studentRole = findBy(roles.slice(), 'title', 'Student');
       user.set('roles', [studentRole]);
     }
-    user = yield user.save();
+    user = await user.save();
     const authentication = this.store.createRecord('authentication', {
       user,
       username: this.username,
       password: this.password,
     });
-    yield authentication.save();
+    await authentication.save();
     this.clearErrorDisplay();
     this.flashMessages.success('general.saved');
     this.args.transitionToUser(user.id);
-  }
+  });
 }

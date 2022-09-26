@@ -56,18 +56,17 @@ export default class ProgramYearObjectiveListComponent extends Component {
     return new Headers(headers);
   }
 
-  @dropTask
-  *downloadReport() {
+  downloadReport = dropTask(async () => {
     const apiPath = '/' + this.iliosConfig.apiNameSpace;
     const resourcePath = `/programyears/${this.args.programYear.id}/downloadobjectivesmapping`;
     const host = this.iliosConfig.apiHost ?? `${window.location.protocol}//${window.location.host}`;
     const url = host + apiPath + resourcePath;
-    const { saveAs } = yield import('file-saver');
+    const { saveAs } = await import('file-saver');
 
-    const response = yield fetch(url, {
+    const response = await fetch(url, {
       headers: this.authHeaders,
     });
-    const blob = yield response.blob();
+    const blob = await response.blob();
     saveAs(blob, 'report.csv');
-  }
+  });
 }

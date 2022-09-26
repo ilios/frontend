@@ -99,16 +99,15 @@ export default class DashboardMyreportsComponent extends Component {
     this.args.onReportSelect(null);
   }
 
-  @dropTask
-  *downloadReport() {
+  downloadReport = dropTask(async () => {
     const report = this.args.selectedReport;
     const title = this.selectedReportTitle;
     const year = this.args.selectedYear;
-    const data = yield this.reporting.getArrayResults(report, year);
+    const data = await this.reporting.getArrayResults(report, year);
     this.finishedBuildingReport = true;
     const csv = PapaParse.unparse(data);
     createDownloadFile(`${title}.csv`, csv, 'text/csv');
-    yield timeout(2000);
+    await timeout(2000);
     this.finishedBuildingReport = false;
-  }
+  });
 }
