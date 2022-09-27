@@ -22,11 +22,11 @@ export default class WeeklyCalendarComponent extends Component {
   });
 
   get firstDayOfWeek() {
-    return this.localeDays.firstDayOfThisWeek;
+    return this.localeDays.firstDayOfDateWeek(DateTime.fromISO(this.args.date).toJSDate());
   }
 
   get lastDayOfWeek() {
-    return this.localeDays.lastDayOfThisWeek;
+    return this.localeDays.lastDayOfDateWeek(DateTime.fromISO(this.args.date).toJSDate());
   }
 
   get week() {
