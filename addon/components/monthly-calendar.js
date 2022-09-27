@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import moment from 'moment';
 import { inject as service } from '@ember/service';
 import { sortBy } from '../utils/array-helpers';
+import { DateTime } from 'luxon';
 
 export default class MonthlyCalendarComponent extends Component {
   @service intl;
-  @service moment;
+  @service localeDays;
 
   get sortedEvents() {
     if (!this.args.events) {
@@ -16,65 +16,44 @@ export default class MonthlyCalendarComponent extends Component {
   }
 
   get firstDayOfMonth() {
-    return moment(this.args.date).startOf('month');
+    return DateTime.fromISO(this.args.date).startOf('month').toJSDate();
   }
 
-  get month() {
-    const date = this.firstDayOfMonth;
-    const lastDayOfMonth = moment(this.args.date).endOf('month');
-    const days = [];
-
-    while (date.isBefore(lastDayOfMonth)) {
-      const day = {
-        date: date.toDate(),
-        dayOfMonth: date.date(),
-      };
-      days.push(day);
-      date.add(1, 'day');
-    }
-
-    return days;
-  }
-
-  get eventDays() {
-    return this.month.map((day) => {
-      day.events = this.sortedEvents.filter((e) =>
-        moment(day.date).isSame(moment(e.startDate), 'day')
-      );
-      return day;
-    });
+  get firstDayOfFirstWeek() {
+    return this.localeDays.firstDayOfDateWeek(this.firstDayOfMonth);
   }
 
   get days() {
-    //access the locale info here so the getter will recompute when it changes
-    this.moment.locale;
-    this.intl.locale;
+    const fdom = DateTime.fromJSDate(this.firstDayOfMonth);
+    const fdow = DateTime.fromJSDate(this.firstDayOfFirstWeek);
+    const startsOnSunday = fdow.weekday === 7;
+    const offset = fdom.diff(fdow, 'days').days;
 
-    const firstDayOfWeek = this.firstDayOfMonth.clone().weekday(0);
-    const offset = this.firstDayOfMonth.diff(firstDayOfWeek, 'days');
-
-    return this.eventDays.map((day) => {
-      const date = moment(day.date);
-      day.dayOfWeek = date.weekday() + 1;
-      day.weekOfMonth = Math.ceil((date.date() + offset) / 7);
-      day.name = date.format('dddd LL');
-
-      return day;
+    return [...Array(fdom.daysInMonth).keys()].map((i) => {
+      const date = fdom.plus({ days: i });
+      return {
+        date: date.toJSDate(),
+        dayOfMonth: i + 1,
+        dayOfWeek: startsOnSunday ? date.plus({ day: 1 }).weekday : date.weekday,
+        weekOfMonth: Math.ceil((date.day + offset) / 7),
+        name: this.intl.formatDate(date.toJSDate(), {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+        }),
+        events: this.sortedEvents.filter((e) => date.hasSame(DateTime.fromISO(e.startDate), 'day')),
+      };
     });
   }
 
   get dayNames() {
-    //access the locale info here so the getter will recompute when it changes
-    this.moment.locale;
-    this.intl.locale;
-    const longDays = moment.weekdays(true);
-    const shortDays = moment.weekdaysShort(true);
-
-    return [0, 1, 2, 3, 4, 5, 6].map((i) => {
+    return [...Array(7).keys()].map((i) => {
+      const date = DateTime.fromJSDate(this.firstDayOfFirstWeek).plus({ days: i }).toJSDate();
       return {
         day: i + 1,
-        longName: longDays[i],
-        shortName: shortDays[i],
+        longName: this.intl.formatDate(date, { weekday: 'long' }),
+        shortName: this.intl.formatDate(date, { weekday: 'short' }),
       };
     });
   }
