@@ -218,7 +218,7 @@ export default class GlobalSearchBox extends Component {
     yield timeout(DEBOUNCE_MS);
 
     const { autocomplete } = yield this.iliosSearch.forCurriculum(this.internalQuery, true);
-    this.autocompleteCache.push({ q: this.internalQuery, autocomplete });
+    this.autocompleteCache = [...this.autocompleteCache, { q: this.internalQuery, autocomplete }];
 
     return autocomplete.map((text) => {
       return { text };
