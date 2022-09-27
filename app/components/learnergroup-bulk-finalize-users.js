@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { dropTask, timeout } from 'ember-concurrency';
-import { map } from 'rsvp';
+import { all, map } from 'rsvp';
 import { inject as service } from '@ember/service';
-import { all } from 'rsvp';
+import { findBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LearnergroupBulkFinalizeUsersComponent extends Component {
   @service flashMessages;
@@ -11,7 +11,7 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
     return this.args.users.map((obj) => {
       let selectedGroup = this.args.learnerGroup;
       if (obj.subGroupName) {
-        const match = this.args.matchedGroups.findBy('name', obj.subGroupName);
+        const match = findBy(this.args.matchedGroups, 'name', obj.subGroupName);
         if (match) {
           selectedGroup = match.group;
         }
@@ -31,10 +31,10 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
     });
 
     const flat = treeGroups.reduce((flattened, arr) => {
-      return flattened.pushObjects(arr);
+      return [...flattened, ...arr];
     }, []);
 
-    yield all(flat.uniq().invoke('save'));
+    yield all(uniqueValues(flat).map((o) => o.save()));
     this.flashMessages.success('general.savedSuccessfully');
     this.args.done();
   }

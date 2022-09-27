@@ -3,8 +3,9 @@ import { inject as service } from '@ember/service';
 import moment from 'moment';
 import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { findById, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class UserProfilePermissionsComponent extends Component {
   @service store;
@@ -19,11 +20,11 @@ export default class UserProfilePermissionsComponent extends Component {
   ]);
   @use _schools = new ResolveAsyncValue(() => [this.schoolPromise]);
   get schools() {
-    return this._schools?.toArray() ?? [];
+    return this._schools?.slice() ?? [];
   }
   @use _academicYears = new ResolveAsyncValue(() => [this.academicYearPromise]);
   get academicYears() {
-    return this._academicYears?.toArray() ?? [];
+    return this._academicYears?.slice() ?? [];
   }
   @use defaultSchool = new ResolveAsyncValue(() => [this.args.user.school]);
 
@@ -77,27 +78,27 @@ export default class UserProfilePermissionsComponent extends Component {
   @use directedPrograms = new AsyncProcess(() => [
     this.getDirectedPrograms.bind(this),
     this.bestSelectedSchool,
-    this._userDirectedPrograms?.toArray() ?? [],
+    this._userDirectedPrograms?.slice() ?? [],
   ]);
   @use _userProgramYears = new ResolveAsyncValue(() => [this.args.user.programYears]);
   @use directedProgramYears = new AsyncProcess(() => [
     this.getDirectedProgramYears.bind(this),
     this.bestSelectedSchool,
-    this._userProgramYears?.toArray() ?? [],
+    this._userProgramYears?.slice() ?? [],
   ]);
   @use _userDirectedCourses = new ResolveAsyncValue(() => [this.args.user.directedCourses]);
   @use directedCourses = new AsyncProcess(() => [
     this.getDirectedCourses.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
-    this._userDirectedCourses?.toArray() ?? [],
+    this._userDirectedCourses?.slice() ?? [],
   ]);
   @use _userAdministeredCourses = new ResolveAsyncValue(() => [this.args.user.administeredCourses]);
   @use administeredCourses = new AsyncProcess(() => [
     this.getAdministeredCourses.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
-    this._userAdministeredCourses?.toArray() ?? [],
+    this._userAdministeredCourses?.slice() ?? [],
   ]);
   @use instructedCourses = new AsyncProcess(() => [
     this.getInstructedCourses.bind(this),
@@ -112,7 +113,7 @@ export default class UserProfilePermissionsComponent extends Component {
     this.getStudentAdvisedCourses.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
-    this._userStudentAdvisedCourses?.toArray() ?? [],
+    this._userStudentAdvisedCourses?.slice() ?? [],
   ]);
   @use _userAdministeredSessions = new ResolveAsyncValue(() => [
     this.args.user.administeredSessions,
@@ -121,7 +122,7 @@ export default class UserProfilePermissionsComponent extends Component {
     this.getAdministeredSessions.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
-    this._userAdministeredSessions?.toArray() ?? [],
+    this._userAdministeredSessions?.slice() ?? [],
   ]);
   @use instructedSessions = new AsyncProcess(() => [
     this.getInstructedSessions.bind(this),
@@ -136,7 +137,7 @@ export default class UserProfilePermissionsComponent extends Component {
     this.getStudentAdvisedSessions.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
-    this._userStudentAdvisedSessions?.toArray() ?? [],
+    this._userStudentAdvisedSessions?.slice() ?? [],
   ]);
 
   async getDirectedPrograms(selectedSchool, directedPrograms) {
@@ -173,7 +174,7 @@ export default class UserProfilePermissionsComponent extends Component {
       const school = await course.school;
       return school === selectedSchool && selectedYearId === course.year.toString();
     });
-    return rhett.uniq();
+    return uniqueValues(rhett);
   }
 
   async getStudentAdvisedCourses(selectedSchool, selectedYearId, studentAdvisedCourses) {
@@ -220,20 +221,19 @@ export default class UserProfilePermissionsComponent extends Component {
     }
     let selectedYear = this.academicYears.find((year) => Number(year.id) === currentYear);
     if (!selectedYear) {
-      selectedYear = this.academicYears.get('lastObject');
+      selectedYear = this.academicYears.reverse()[0];
     }
     return selectedYear;
   }
 
   get bestSelectedSchool() {
     if (this.args.selectedSchoolId) {
-      return this.schools.findBy('id', this.args.selectedSchoolId);
+      return findById(this.schools, this.args.selectedSchoolId);
     } else if (this.defaultSchool) {
       return this.defaultSchool;
     } else if (this.schools.length) {
-      return this.schools.sortBy('title')[0];
+      return sortBy(this.schools, 'title')[0];
     }
-
     return null;
   }
 }

@@ -4,6 +4,7 @@ import { all } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask } from 'ember-concurrency';
+import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;
@@ -21,8 +22,10 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     if (!this.schoolCompetencies) {
       return [];
     }
-    const arr = [...this.schoolCompetencies.toArray(), ...this.competenciesToAdd];
-    return arr.filter((competency) => !this.competenciesToRemove.includes(competency)).uniq();
+    const arr = [...this.schoolCompetencies.slice(), ...this.competenciesToAdd];
+    return uniqueValues(
+      arr.filter((competency) => !this.competenciesToRemove.includes(competency))
+    );
   }
 
   get domains() {
@@ -87,16 +90,18 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     });
 
     // delete all removed competencies first, then all removed domains
-    yield all(competenciesToRemove.invoke('destroyRecord'));
-    yield all(domainsToRemove.invoke('destroyRecord'));
+    yield all(competenciesToRemove.map((competency) => competency.destroyRecord()));
+    yield all(domainsToRemove.map((domain) => domain.destroyRecord()));
 
     // set the school on new competencies
-    this.competencies.filterBy('isNew').forEach((competency) => {
+    filterBy(this.competencies, 'isNew').forEach((competency) => {
       competency.set('school', this.args.school);
     });
 
     // update all modified competencies (this will include new ones).
-    yield all(this.competencies.filterBy('hasDirtyAttributes').invoke('save'));
+    yield all(
+      filterBy(this.competencies, 'hasDirtyAttributes').map((competency) => competency.save())
+    );
 
     // cleanup
     this.cleanup();

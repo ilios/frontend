@@ -6,6 +6,7 @@ import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import PermissionChecker from 'ilios/classes/permission-checker';
+import { findById } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
@@ -107,7 +108,7 @@ export default class CoursesController extends Controller {
   get selectedSchool() {
     const { schools, primarySchool } = this.model;
     if (this.schoolId) {
-      const school = schools.findBy('id', this.schoolId);
+      const school = findById(schools.slice(), this.schoolId);
       if (school) {
         return school;
       }
@@ -128,7 +129,7 @@ export default class CoursesController extends Controller {
     }
     let defaultYear = years.find((year) => Number(year.id) === currentYear);
     if (!defaultYear) {
-      defaultYear = years.lastObject;
+      defaultYear = years.slice().reverse()[0];
     }
 
     return defaultYear;
@@ -136,8 +137,9 @@ export default class CoursesController extends Controller {
 
   @dropTask
   *removeCourse(course) {
-    const courses = yield this.selectedSchool.courses;
-    courses.removeObject(course);
+    const courses = (yield this.selectedSchool.courses).slice();
+    courses.splice(courses.indexOf(course), 1);
+    this.selectedSchool.set('courses', courses);
     yield course.destroyRecord();
     this.deletedCourse = course;
     if (this.newCourse === course) {

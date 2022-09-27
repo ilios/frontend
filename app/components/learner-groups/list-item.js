@@ -4,6 +4,7 @@ import PermissionChecker from 'ilios/classes/permission-checker';
 import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { all, map } from 'rsvp';
@@ -44,25 +45,28 @@ export default class LearnerGroupsListItemComponent extends Component {
   }
 
   async getCoursesForGroup(learnerGroup) {
-    const offerings = (await learnerGroup.offerings).toArray();
-    const ilms = (await learnerGroup.ilmSessions).toArray();
+    const offerings = (await learnerGroup.offerings).slice();
+    const ilms = (await learnerGroup.ilmSessions).slice();
     const arr = [].concat(offerings, ilms);
 
-    const sessions = await Promise.all(arr.mapBy('session'));
-    const filteredSessions = sessions.filter(Boolean).uniq();
-    const courses = await Promise.all(filteredSessions.mapBy('course'));
-    const children = (await learnerGroup.children).toArray();
+    const sessions = await Promise.all(mapBy(arr, 'session'));
+    const filteredSessions = uniqueValues(sessions.filter(Boolean));
+    const courses = await Promise.all(mapBy(filteredSessions, 'course'));
+    const children = (await learnerGroup.children).slice();
     const childCourses = await map(children, async (child) => {
       return await this.getCoursesForGroup(child);
     });
 
-    return [].concat(courses, childCourses.flat()).uniq();
+    return uniqueValues([].concat(courses, childCourses.flat()));
   }
 
   @dropTask
   *remove() {
     const descendants = yield this.args.learnerGroup.allDescendants;
-    yield all([...descendants.invoke('destroyRecord'), this.args.learnerGroup.destroyRecord()]);
+    yield all([
+      ...descendants.map((descendant) => descendant.destroyRecord()),
+      this.args.learnerGroup.destroyRecord(),
+    ]);
   }
 
   @action

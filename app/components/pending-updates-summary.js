@@ -5,6 +5,7 @@ import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class PendingUpdatesSummaryComponent extends Component {
   @service currentUser;
@@ -13,7 +14,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
   @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
 
   allUpdatesPromise = this.store.query('pending-user-update', {
-    filters: { schools: this.args.schools.mapBy('id') },
+    filters: { schools: mapBy(this.args.schools, 'id') },
     include: 'user',
   });
   @use allUpdates = new ResolveAsyncValue(() => [this.allUpdatesPromise]);
@@ -30,12 +31,12 @@ export default class PendingUpdatesSummaryComponent extends Component {
   get bestSelectedSchool() {
     const id = this.selectedSchoolId ?? this.user?.belongsTo('school').id();
     if (id) {
-      const school = this.args.schools.findBy('id', id);
+      const school = findById(this.args.schools.slice(), id);
       if (school) {
         return school;
       }
     }
-    return this.args.schools.firstObject;
+    return this.args.schools.slice()[0];
   }
 
   get areUpdatesLoaded() {
@@ -47,7 +48,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
       return [];
     }
 
-    return this.allUpdates.toArray();
+    return this.allUpdates.slice();
   }
 
   get updates() {
@@ -55,7 +56,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
   }
 
   async getUpdatesForSchool(allUpdates, selectedSchool) {
-    return filter(allUpdates.toArray(), async (update) => {
+    return filter(allUpdates.slice(), async (update) => {
       const user = await update.user;
       return user.belongsTo('school').id() === selectedSchool.id;
     });

@@ -10,6 +10,7 @@ import { dropTask, restartableTask } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import moment from 'moment';
 import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class BulkNewUsersComponent extends Component {
   @service flashMessages;
@@ -51,7 +52,7 @@ export default class BulkNewUsersComponent extends Component {
 
   get bestSelectedSchool() {
     if (this.schoolId) {
-      const currentSchool = this.schools.findBy('id', this.schoolId);
+      const currentSchool = findById(this.schools, this.schoolId);
 
       if (currentSchool) {
         return currentSchool;
@@ -62,14 +63,14 @@ export default class BulkNewUsersComponent extends Component {
 
   get bestSelectedCohort() {
     if (this.primaryCohortId) {
-      const currentCohort = this.cohorts.findBy('id', this.primaryCohortId);
+      const currentCohort = findById(this.cohorts, this.primaryCohortId);
 
       if (currentCohort) {
         return currentCohort;
       }
     }
 
-    return this.cohorts.lastObject;
+    return this.cohorts.slice().reverse()[0];
   }
 
   @restartableTask
@@ -83,9 +84,9 @@ export default class BulkNewUsersComponent extends Component {
   @action
   toggleUserSelection(obj) {
     if (this.selectedUsers.includes(obj)) {
-      this.selectedUsers.removeObject(obj);
+      this.selectedUsers = this.selectedUsers.filter((user) => user !== obj);
     } else {
-      this.selectedUsers.pushObject(obj);
+      this.selectedUsers.push(obj);
     }
   }
 
@@ -96,7 +97,7 @@ export default class BulkNewUsersComponent extends Component {
 
   async existingUsernames() {
     const authentications = await this.store.findAll('authentication');
-    return authentications.mapBy('username');
+    return mapBy(authentications.slice(), 'username');
   }
 
   /**
@@ -184,7 +185,7 @@ export default class BulkNewUsersComponent extends Component {
     const selectedSchool = this.bestSelectedSchool;
     const selectedCohort = this.bestSelectedCohort;
     const roles = yield this.store.findAll('user-role');
-    const studentRole = roles.findBy('id', '4');
+    const studentRole = findById(roles.slice(), '4');
 
     const proposedUsers = this.selectedUsers;
 
@@ -241,10 +242,10 @@ export default class BulkNewUsersComponent extends Component {
     while (records.length > 0) {
       try {
         parts = records.splice(0, 10);
-        const users = parts.mapBy('user');
-        yield all(users.invoke('save'));
-        const authentications = parts.mapBy('authentication');
-        yield all(authentications.invoke('save'));
+        const users = mapBy(parts, 'user');
+        yield all(users.map((user) => user.save()));
+        const authentications = mapBy(parts, 'authentication');
+        yield all(authentications.map((auth) => auth.save()));
       } catch (e) {
         const userErrors = parts.filter((obj) => obj.user.get('isError'));
         const authenticationErrors = parts.filter(
@@ -253,10 +254,13 @@ export default class BulkNewUsersComponent extends Component {
             isPresent(obj.authentication) &&
             obj.authentication.get('isError')
         );
-        this.savingUserErrors.pushObjects(userErrors);
-        this.savingAuthenticationErrors.pushObjects(authenticationErrors);
+        this.savingUserErrors = [...this.savingUserErrors, ...userErrors];
+        this.savingAuthenticationErrors = [
+          ...this.savingAuthenticationErrors,
+          ...authenticationErrors,
+        ];
       } finally {
-        this.savedUserIds.pushObjects(parts.mapBy('user').mapBy('id'));
+        this.savedUserIds = [...this.savedUserIds, ...mapBy(mapBy(parts, 'user'), 'id')];
       }
     }
 
@@ -273,7 +277,7 @@ export default class BulkNewUsersComponent extends Component {
   @restartableTask
   *loadSchools() {
     const schools = yield this.store.findAll('school', { reload: true });
-    return filter(schools.toArray(), async (school) => {
+    return filter(schools.slice(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
   }
@@ -287,11 +291,11 @@ export default class BulkNewUsersComponent extends Component {
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = yield all(cohorts.getEach('programYear'));
-    yield all(programYears.getEach('program'));
+    const programYears = yield all(mapBy(cohorts.slice(), 'programYear'));
+    yield all(mapBy(programYears.slice(), 'program'));
 
     const objects = yield all(
-      cohorts.toArray().map(async (cohort) => {
+      cohorts.slice().map(async (cohort) => {
         const obj = {
           id: cohort.get('id'),
         };

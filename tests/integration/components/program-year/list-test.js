@@ -5,6 +5,7 @@ import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { component } from 'ilios/tests/pages/components/program-year/list';
 
 module('Integration | Component | program-year/list', function (hooks) {
@@ -96,31 +97,30 @@ module('Integration | Component | program-year/list', function (hooks) {
     await component.expandCollapse.toggle();
     await component.newProgramYear.years.select(thisYear);
     await component.newProgramYear.done.click();
-    const programYears = (await this.owner.lookup('service:store').findAll('programYear')).sortBy(
-      'id'
-    );
-    const newProgramYear = programYears.sortBy('id').lastObject;
-    const originalProgramYear = programYears[programYears.length - 2];
+    const programYears = await this.owner.lookup('service:store').findAll('programYear');
+    const sortedProgramYears = sortBy(programYears.slice(), 'id');
+    const newProgramYear = sortedProgramYears.slice().reverse()[0];
+    const originalProgramYear = sortedProgramYears[sortedProgramYears.length - 2];
     assert.strictEqual(parseInt(newProgramYear.startYear, 10), thisYear);
-    const terms = (await newProgramYear.terms).toArray();
-    const originalTerms = (await originalProgramYear.terms).toArray();
+    const terms = (await newProgramYear.terms).slice();
+    const originalTerms = (await originalProgramYear.terms).slice();
     assert.strictEqual(terms.length, 4);
     assert.strictEqual(terms[0], originalTerms[0]);
     assert.strictEqual(terms[1], originalTerms[1]);
     assert.strictEqual(terms[2], originalTerms[2]);
     assert.strictEqual(terms[3], originalTerms[3]);
-    const competencies = (await newProgramYear.competencies).toArray();
-    const originalCompetencies = (await originalProgramYear.competencies).toArray();
+    const competencies = (await newProgramYear.competencies).slice();
+    const originalCompetencies = (await originalProgramYear.competencies).slice();
     assert.strictEqual(competencies.length, 2);
     assert.strictEqual(competencies[0], originalCompetencies[0]);
     assert.strictEqual(competencies[1], originalCompetencies[1]);
-    const directors = (await newProgramYear.directors).toArray();
-    const originalDirectors = (await originalProgramYear.directors).toArray();
+    const directors = (await newProgramYear.directors).slice();
+    const originalDirectors = (await originalProgramYear.directors).slice();
     assert.strictEqual(directors.length, 2);
     assert.strictEqual(directors[0], originalDirectors[0]);
     assert.strictEqual(directors[1], originalDirectors[1]);
-    const objectives = (await newProgramYear.programYearObjectives).toArray();
-    const originalObjectives = (await originalProgramYear.programYearObjectives).toArray();
+    const objectives = (await newProgramYear.programYearObjectives).slice();
+    const originalObjectives = (await originalProgramYear.programYearObjectives).slice();
     assert.strictEqual(objectives.length, 3);
     assert.strictEqual(objectives[0].description, originalObjectives[0].description);
     assert.strictEqual(objectives[1].description, originalObjectives[1].description);
@@ -132,16 +132,14 @@ module('Integration | Component | program-year/list', function (hooks) {
     assert.strictEqual(ancestorObjective1, originalObjectives[0]);
     assert.strictEqual(ancestorObjective2, originalObjectives[1]);
     assert.strictEqual(ancestorObjective3, originalObjectivesAncestor);
-    const objectiveMeshDescriptors = (await objectives[0].meshDescriptors).toArray();
-    const originalObjectiveMeshDescriptors = (
-      await originalObjectives[0].meshDescriptors
-    ).toArray();
+    const objectiveMeshDescriptors = (await objectives[0].meshDescriptors).slice();
+    const originalObjectiveMeshDescriptors = (await originalObjectives[0].meshDescriptors).slice();
     assert.strictEqual(objectiveMeshDescriptors.length, 3);
     assert.strictEqual(objectiveMeshDescriptors[0], originalObjectiveMeshDescriptors[0]);
     assert.strictEqual(objectiveMeshDescriptors[1], originalObjectiveMeshDescriptors[1]);
     assert.strictEqual(objectiveMeshDescriptors[2], originalObjectiveMeshDescriptors[2]);
-    const objectiveTerms = (await objectives[0].terms).toArray();
-    const originalObjectiveTerms = (await originalObjectives[0].terms).toArray();
+    const objectiveTerms = (await objectives[0].terms).slice();
+    const originalObjectiveTerms = (await originalObjectives[0].terms).slice();
     assert.strictEqual(objectiveTerms.length, 4);
     assert.strictEqual(objectiveTerms[0], originalObjectiveTerms[0]);
     assert.strictEqual(objectiveTerms[1], originalObjectiveTerms[1]);

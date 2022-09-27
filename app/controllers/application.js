@@ -52,7 +52,7 @@ export default class ApplicationController extends Controller {
 
   @action
   addError(error) {
-    this.errors.pushObject(error);
+    this.errors = [...this.errors, error];
     this.showErrorDisplay = true;
   }
 }

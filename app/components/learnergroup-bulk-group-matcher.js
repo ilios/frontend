@@ -1,15 +1,16 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import { findBy } from 'ilios-common/utils/array-helpers';
 
 export default class LearnergroupBulkGroupMatcherComponent extends Component {
   get matchedGroupId() {
-    const match = this.args.matches.findBy('name', this.args.groupName);
+    const match = findBy(this.args.matches, 'name', this.args.groupName);
     return match ? match.group.id : null;
   }
 
   get noGroupWithThisName() {
-    return !isPresent(this.args.groups.findBy('title', this.args.groupName));
+    return !isPresent(findBy(this.args.groups, 'title', this.args.groupName));
   }
 
   @action

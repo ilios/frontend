@@ -6,6 +6,7 @@ import { dasherize } from '@ember/string';
 import { validatable, Length } from 'ilios-common/decorators/validation';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { findById } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -235,7 +236,7 @@ export default class NewMyReportComponent extends Component {
     }
     const objects = await this.store.query(model, query);
 
-    return await map(objects.toArray(), async (obj) => {
+    return await map(objects.slice(), async (obj) => {
       const po = new PrepositionObject(this.currentPrepositionalObject, obj);
       const academicYear = await po.getAcademicYear();
       const label = await po.getLabel();
@@ -408,7 +409,7 @@ export default class NewMyReportComponent extends Component {
 
   @action
   changeSchool(schoolId) {
-    const school = this.allSchools.findBy('id', schoolId);
+    const school = findById(this.allSchools.slice(), schoolId);
     this.selectedSchool = school;
     this.schoolChanged = true;
   }
@@ -421,9 +422,8 @@ export default class NewMyReportComponent extends Component {
       this.currentPrepositionalObject
     );
 
-    const first = list.get('firstObject');
-    if (first) {
-      this.currentPrepositionalObjectId = first.value;
+    if (list.length) {
+      this.currentPrepositionalObjectId = list[0].value;
     }
   }
 }

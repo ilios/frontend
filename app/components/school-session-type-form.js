@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { validatable, IsHexColor, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class SchoolSessionTypeFormComponent extends Component {
@@ -33,7 +34,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
 
   get selectedAamcMethod() {
     if (this.selectedAamcMethodId) {
-      const selectedAamcMethod = this.filteredAamcMethods.findBy('id', this.selectedAamcMethodId);
+      const selectedAamcMethod = findById(this.filteredAamcMethods, this.selectedAamcMethodId);
       return selectedAamcMethod ?? null;
     }
     return null;
@@ -42,8 +43,8 @@ export default class SchoolSessionTypeFormComponent extends Component {
   get selectedAssessmentOption() {
     if (this.assessment) {
       const assessmentOption = this.selectedAssessmentOptionId
-        ? this.assessmentOptions.findBy('id', this.selectedAssessmentOptionId)
-        : this.assessmentOptions.sortBy('name').get('firstObject');
+        ? findById(this.assessmentOptions, this.selectedAssessmentOptionId)
+        : sortBy(this.assessmentOptions, 'name')[0];
       return assessmentOption ?? null;
     }
     return null;
@@ -57,8 +58,8 @@ export default class SchoolSessionTypeFormComponent extends Component {
     this.title = this.args.title;
     this.selectedAssessmentOptionId = this.args.selectedAssessmentOptionId;
     this.selectedAamcMethodId = this.args.selectedAamcMethodId;
-    this.assessmentOptions = (yield this.store.findAll('assessment-option')).toArray();
-    this.aamcMethods = (yield this.store.findAll('aamc-method')).toArray();
+    this.assessmentOptions = (yield this.store.findAll('assessment-option')).slice();
+    this.aamcMethods = (yield this.store.findAll('aamc-method')).slice();
   }
 
   @action

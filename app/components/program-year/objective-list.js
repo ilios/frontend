@@ -6,6 +6,7 @@ import { inject as service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;
@@ -25,11 +26,11 @@ export default class ProgramYearObjectiveListComponent extends Component {
   }
 
   async getDomainTrees(programYearCompetencies) {
-    const domains = programYearCompetencies.toArray().filter((competency) => {
+    const domains = programYearCompetencies.slice().filter((competency) => {
       return !competency.belongsTo('parent').id();
     });
-    const parents = await Promise.all(programYearCompetencies.mapBy('parent'));
-    const allDomains = [...domains, ...parents].uniq().filter(Boolean);
+    const parents = await Promise.all(mapBy(programYearCompetencies, 'parent'));
+    const allDomains = uniqueValues([...domains, ...parents]).filter(Boolean);
     return await map(allDomains, async (domain) => {
       const competencies = (await domain.children).map((competency) => {
         return {

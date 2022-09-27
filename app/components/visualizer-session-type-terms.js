@@ -3,6 +3,7 @@ import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerSessionTypeTermsComponent extends Component {
   @tracked tooltipContent;
@@ -11,17 +12,17 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
 
   @restartableTask
   *load(element, [sessionType, vocabulary]) {
-    const sessions = (yield sessionType.sessions).toArray();
+    const sessions = (yield sessionType.sessions).slice();
     const terms = yield map(sessions, async (session) => {
-      const sessionTerms = (await session.terms).toArray();
+      const sessionTerms = (await session.terms).slice();
       const course = await session.course;
-      const courseTerms = (await course.terms).toArray();
+      const courseTerms = (await course.terms).slice();
 
       const sessionTermsInThisVocabulary = await filter(sessionTerms, async (term) => {
         const termVocab = await term.vocabulary;
         return termVocab.id === vocabulary.id;
       });
-      const courseTermsInThisVocabulary = await filter(courseTerms.toArray(), async (term) => {
+      const courseTermsInThisVocabulary = await filter(courseTerms.slice(), async (term) => {
         const termVocab = await term.vocabulary;
         return termVocab.id === vocabulary.id;
       });
@@ -64,7 +65,7 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
 
     const termData = Object.values(termObjects);
 
-    const totalLinks = termData.mapBy('data').reduce((total, count) => total + count, 0);
+    const totalLinks = mapBy(termData, 'data').reduce((total, count) => total + count, 0);
     this.data = termData.map((obj) => {
       const percent = ((obj.data / totalLinks) * 100).toFixed(1);
       obj.label = `${percent}%`;
@@ -84,8 +85,8 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
     const { meta } = obj;
 
     const title = htmlSafe(meta.term);
-    const sessions = meta.sessions.uniq().sort().join();
-    const courses = meta.courses.uniq().sort().join();
+    const sessions = uniqueValues(meta.sessions).sort().join();
+    const courses = uniqueValues(meta.courses).sort().join();
 
     this.tooltipTitle = title;
     this.tooltipContent = { sessions, courses };

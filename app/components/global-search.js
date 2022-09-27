@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { findBy, findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
 
@@ -31,7 +32,7 @@ export default class GlobalSearchComponent extends Component {
       return [];
     }
     return this.args.ignoredSchoolIds.map((id) => {
-      const school = this.schools.findBy('id', id);
+      const school = findById(this.schools.slice(), id);
       return school ? school.title : '';
     });
   }
@@ -59,17 +60,18 @@ export default class GlobalSearchComponent extends Component {
 
   get schoolOptions() {
     if (this.results.length && this.schools.length) {
-      const emptySchools = this.schools
-        .map(({ id, title }) => {
+      const emptySchools = sortBy(
+        this.schools.map(({ id, title }) => {
           return {
             id,
             title,
             results: 0,
           };
-        })
-        .sortBy('title');
+        }),
+        'title'
+      );
       const options = this.results.reduce((set, course) => {
-        const schoolOption = set.findBy('title', course.school);
+        const schoolOption = findBy(set, 'title', course.school);
         schoolOption.results++;
 
         return set;
@@ -81,7 +83,7 @@ export default class GlobalSearchComponent extends Component {
   }
 
   get yearOptions() {
-    return this.results.mapBy('year').uniq().sort().reverse();
+    return uniqueValues(mapBy(this.results, 'year')).sort().reverse();
   }
 
   @action
@@ -95,9 +97,9 @@ export default class GlobalSearchComponent extends Component {
     const ignoredSchoolIds = this.args.ignoredSchoolIds ? [...this.args.ignoredSchoolIds] : [];
 
     if (ignoredSchoolIds.includes(id)) {
-      ignoredSchoolIds.removeObject(id);
+      ignoredSchoolIds.splice(ignoredSchoolIds.indexOf(id), 1);
     } else {
-      ignoredSchoolIds.pushObject(id);
+      ignoredSchoolIds.push(id);
     }
 
     this.args.onSelectPage(1);

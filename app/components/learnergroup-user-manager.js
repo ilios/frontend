@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { enqueueTask, timeout } from 'ember-concurrency';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class LearnergroupCohortUserManagerComponent extends Component {
   @service currentUser;
@@ -17,13 +18,14 @@ export default class LearnergroupCohortUserManagerComponent extends Component {
 
   get selectableUsers() {
     if (this.currentUser.isRoot) {
-      return this.args.users.mapBy('content');
+      return mapBy(this.args.users, 'content');
     }
-    return this.args.users
-      .filter((user) => {
+    return mapBy(
+      this.args.users.filter((user) => {
         return user.get('enabled');
-      })
-      .mapBy('content');
+      }),
+      'content'
+    );
   }
 
   get filteredUsers() {
@@ -79,7 +81,7 @@ export default class LearnergroupCohortUserManagerComponent extends Component {
 
   @action
   toggleUserSelectionAllOrNone() {
-    const filteredUsers = this.filteredUsers.mapBy('content');
+    const filteredUsers = mapBy(this.filteredUsers, 'content');
     const unselectedFilteredUsers = filteredUsers.filter((user) => {
       return !this.selectedUsers.includes(user);
     });

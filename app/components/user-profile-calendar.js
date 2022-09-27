@@ -4,6 +4,7 @@ import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class UserProfileCalendar extends Component {
   @service fetch;
@@ -28,9 +29,10 @@ export default class UserProfileCalendar extends Component {
     }
     url += '/userevents/' + this.args.user.get('id') + '?from=' + from + '&to=' + to;
     const data = yield this.fetch.getJsonFromApiHost(url);
-    this.calendarEvents = data.userEvents
-      .map((obj) => this.userEvents.createEventFromData(obj, true))
-      .sortBy('startDate', 'name');
+    this.calendarEvents = sortBy(
+      data.userEvents.map((obj) => this.userEvents.createEventFromData(obj, true)),
+      ['startDate', 'name']
+    );
   }
   @action
   goForward() {

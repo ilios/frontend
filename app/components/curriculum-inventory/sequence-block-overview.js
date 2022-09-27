@@ -15,6 +15,7 @@ import {
   Lte,
   NotBlank,
 } from 'ilios-common/decorators/validation';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {
@@ -26,7 +27,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked
   @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
   endingAcademicLevel;
-  @tracked academicLevels;
+  @tracked academicLevels = [];
   @tracked childSequenceOrder;
   @tracked course;
   @tracked description;
@@ -83,13 +84,13 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   *load(element, [sequenceBlock]) {
     this.report = yield sequenceBlock.report;
     this.parent = yield sequenceBlock.parent;
-    this.academicLevels = (yield this.report.academicLevels).toArray();
+    this.academicLevels = (yield this.report.academicLevels).slice();
     this.isInOrderedSequence = false;
     this.orderInSequenceOptions = [];
     if (isPresent(this.parent) && this.parent.isOrdered) {
       this.isInOrderedSequence = true;
       const siblings = yield this.parent.children;
-      for (let i = 0, n = siblings.toArray().length; i < n; i++) {
+      for (let i = 0, n = siblings.slice().length; i < n; i++) {
         const num = i + 1;
         this.orderInSequenceOptions.push(num);
       }
@@ -173,7 +174,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     });
     // Always add the currently linked course to this list, if existent.
     if (isPresent(course)) {
-      linkableCourses.pushObject(course);
+      linkableCourses.push(course);
     }
 
     return linkableCourses;
@@ -192,7 +193,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
         published: true,
       },
     });
-    return sessions.toArray();
+    return sessions.slice();
   }
 
   @dropTask
@@ -260,7 +261,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.args.sequenceBlock.set('childSequenceOrder', parseInt(this.childSequenceOrder, 10));
     const savedBlock = yield this.args.sequenceBlock.save();
     const children = yield savedBlock.get('children');
-    yield children.invoke('reload');
+    yield all(children.map((child) => child.reload()));
   }
 
   @action
@@ -282,7 +283,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @action
   setStartingAcademicLevel(event) {
     const id = event.target.value;
-    this.startingAcademicLevel = this.academicLevels.findBy('id', id);
+    this.startingAcademicLevel = findById(this.academicLevels, id);
   }
 
   @action
@@ -304,7 +305,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @action
   setEndingAcademicLevel(event) {
     const id = event.target.value;
-    this.endingAcademicLevel = this.academicLevels.findBy('id', id);
+    this.endingAcademicLevel = findById(this.academicLevels, id);
   }
 
   @action
@@ -318,7 +319,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     const savedBlock = yield this.args.sequenceBlock.save();
     const parent = yield savedBlock.parent;
     const children = yield parent.children;
-    yield all(children.invoke('reload'));
+    yield all(children.map((child) => child.reload()));
   }
 
   @action
@@ -362,7 +363,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     if (!value) {
       this.course = null;
     } else {
-      this.course = this.linkableCourses.findBy('id', value);
+      this.course = findById(this.linkableCourses, value);
     }
   }
 

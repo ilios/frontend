@@ -34,7 +34,7 @@ export default class UserController extends Controller {
   @use allSchools = new ResolveAsyncValue(() => [this.store.findAll('school'), []]);
 
   async canCreateInSomeSchool(schools) {
-    const schoolsWithCreateUserPermission = await filter(schools.toArray(), async (school) => {
+    const schoolsWithCreateUserPermission = await filter(schools.slice(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
     return schoolsWithCreateUserPermission.length > 0;

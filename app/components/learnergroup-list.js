@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { restartableTask, task } from 'ember-concurrency';
 import { map } from 'rsvp';
+import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LearnerGroupListComponent extends Component {
   @service intl;
@@ -80,19 +81,19 @@ export default class LearnerGroupListComponent extends Component {
   }
 
   async getCoursesForGroup(learnerGroup) {
-    const offerings = (await learnerGroup.offerings).toArray();
-    const ilms = (await learnerGroup.ilmSessions).toArray();
+    const offerings = (await learnerGroup.offerings).slice();
+    const ilms = (await learnerGroup.ilmSessions).slice();
     const arr = [].concat(offerings, ilms);
 
-    const sessions = await Promise.all(arr.mapBy('session'));
-    const filteredSessions = sessions.filter(Boolean).uniq();
-    const courses = await Promise.all(filteredSessions.mapBy('course'));
-    const children = (await learnerGroup.children).toArray();
+    const sessions = await Promise.all(mapBy(arr, 'session'));
+    const filteredSessions = uniqueValues(sessions.filter(Boolean));
+    const courses = await Promise.all(mapBy(filteredSessions, 'course'));
+    const children = (await learnerGroup.children).slice();
     const childCourses = await map(children, async (child) => {
       return await this.getCoursesForGroup(child);
     });
 
-    return [].concat(courses, childCourses.flat()).uniq();
+    return uniqueValues([].concat(courses, childCourses.flat()));
   }
 
   async createDeletableGroup(learnerGroup) {

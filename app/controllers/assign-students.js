@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -19,7 +20,7 @@ export default class AssignStudentsController extends Controller {
 
   get selectedSchool() {
     if (this.schoolId) {
-      return this.model.schools.findBy('id', this.schoolId) ?? this.model.primarySchool;
+      return findById(this.model.schools.slice(), this.schoolId) ?? this.model.primarySchool;
     }
 
     return this.model.primarySchool;
@@ -32,7 +33,7 @@ export default class AssignStudentsController extends Controller {
   }
 
   get sortedStudents() {
-    return this.unassignedStudentsForCurrentSchool.sortBy('fullName');
+    return sortBy(this.unassignedStudentsForCurrentSchool, 'fullName');
   }
 
   get filteredUnassignedStudents() {

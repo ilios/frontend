@@ -3,9 +3,10 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
-import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
+import { findById } from 'ilios-common/utils/array-helpers';
+import { use } from 'ember-could-get-used-to-this';
 
 @validatable
 export default class ProgramYearObjectiveListItemComponent extends Component {
@@ -27,7 +28,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @use vocabularies = new ResolveAsyncValue(() => [this.school?.vocabularies]);
 
   get assignableVocabularies() {
-    return this.vocabularies?.toArray() ?? [];
+    return this.vocabularies?.slice() ?? [];
   }
 
   get isManaging() {
@@ -71,7 +72,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @dropTask
   *manageDescriptors() {
     const meshDescriptors = yield this.args.programYearObjective.meshDescriptors;
-    this.descriptorsBuffer = meshDescriptors.toArray();
+    this.descriptorsBuffer = meshDescriptors.slice();
     this.isManagingDescriptors = true;
   }
 
@@ -79,7 +80,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   *manageTerms(vocabulary) {
     this.selectedVocabulary = vocabulary;
     const terms = yield this.args.programYearObjective.terms;
-    this.termsBuffer = terms.toArray();
+    this.termsBuffer = terms.slice();
     this.isManagingTerms = true;
   }
 
@@ -127,7 +128,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   }
   @action
   setCompetencyBuffer(competencyId) {
-    this.competencyBuffer = this.args.programYearCompetencies.findBy('id', competencyId);
+    this.competencyBuffer = findById(this.args.programYearCompetencies.slice(), competencyId);
   }
   @action
   addDescriptorToBuffer(descriptor) {

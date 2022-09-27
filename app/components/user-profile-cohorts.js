@@ -4,6 +4,7 @@ import { dropTask, restartableTask, timeout, waitForProperty } from 'ember-concu
 import { action } from '@ember/object';
 import { filter, map } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class UserProfileCohortsComponent extends Component {
   @service currentUser;
@@ -19,7 +20,7 @@ export default class UserProfileCohortsComponent extends Component {
   @tracked selectedSchoolId;
 
   get selectedSchool() {
-    return this.schools.findBy('id', this.selectedSchoolId);
+    return findById(this.schools, this.selectedSchoolId);
   }
 
   get assignableCohorts() {
@@ -56,13 +57,13 @@ export default class UserProfileCohortsComponent extends Component {
   @restartableTask
   *load(element, [user]) {
     yield waitForProperty(user, 'isLoaded'); //wait for promise to resolve because save() task modifies this relationship
-    this.selectedCohorts = (yield user.cohorts).toArray();
+    this.selectedCohorts = (yield user.cohorts).slice();
     this.primaryCohort = yield user.primaryCohort;
 
     const sessionUser = yield this.currentUser.getModel();
     this.selectedSchoolId = (yield sessionUser.school).id;
 
-    const allCohorts = (yield this.store.findAll('cohort')).toArray();
+    const allCohorts = (yield this.store.findAll('cohort')).slice();
     this.allCohortsWithRelationships = yield map(allCohorts, async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
@@ -75,7 +76,7 @@ export default class UserProfileCohortsComponent extends Component {
         school,
       };
     });
-    const allSchools = (yield this.store.findAll('school')).toArray();
+    const allSchools = (yield this.store.findAll('school')).slice();
     this.schools = yield filter(allSchools, async (school) => {
       return this.permissionChecker.canUpdateUserInSchool(school);
     });

@@ -5,6 +5,7 @@ import { all } from 'rsvp';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class AssignStudentsComponent extends Component {
   @service flashMessages;
@@ -21,10 +22,10 @@ export default class AssignStudentsComponent extends Component {
     }
 
     if (this.primaryCohortId) {
-      const currentCohort = this.cohorts.findBy('id', this.primaryCohortId);
+      const currentCohort = findById(this.cohorts, this.primaryCohortId);
       return currentCohort ?? false;
     } else {
-      return this.cohorts.lastObject;
+      return this.cohorts.slice().reverse()[0];
     }
   }
 
@@ -47,10 +48,10 @@ export default class AssignStudentsComponent extends Component {
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = yield all(cohorts.getEach('programYear'));
-    yield all(programYears.getEach('program'));
+    const programYears = yield all(mapBy(cohorts.slice(), 'programYear'));
+    yield all(mapBy(programYears.slice(), 'program'));
 
-    cohorts = cohorts.toArray();
+    cohorts = cohorts.slice();
     const allCohorts = [];
 
     for (let i = 0; i < cohorts.length; i++) {
@@ -65,7 +66,7 @@ export default class AssignStudentsComponent extends Component {
       obj.startYear = programYear.startYear;
       obj.duration = program.duration;
 
-      allCohorts.pushObject(obj);
+      allCohorts.push(obj);
     }
 
     const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
@@ -80,7 +81,7 @@ export default class AssignStudentsComponent extends Component {
     const currentlySelected = this.selectedUserIds.length;
     const totalDisplayed = this.filteredStudents.length;
     this.selectedUserIds =
-      currentlySelected < totalDisplayed ? this.filteredStudents.mapBy('id') : [];
+      currentlySelected < totalDisplayed ? mapBy(this.filteredStudents, 'id') : [];
   }
 
   @action
@@ -108,8 +109,8 @@ export default class AssignStudentsComponent extends Component {
 
     while (studentsToModify.get('length') > 0) {
       const parts = studentsToModify.splice(0, 3);
-      yield all(parts.invoke('save'));
-      this.savedUserIds.pushObjects(parts.mapBy('id'));
+      yield all(parts.map((part) => part.save()));
+      this.savedUserIds = [...this.savedUserIds, ...mapBy(parts, 'id')];
     }
     this.selectedUserIds = [];
 

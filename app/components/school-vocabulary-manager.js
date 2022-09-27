@@ -3,7 +3,10 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
+import { dropTask } from 'ember-concurrency';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 @validatable
 export default class SchoolVocabularyManagerComponent extends Component {
@@ -16,25 +19,26 @@ export default class SchoolVocabularyManagerComponent extends Component {
   title;
   @tracked isActive = false;
   @tracked newTerm;
-  @tracked termsRelationship;
+  @use terms = new ResolveAsyncValue(() => [this.args.vocabulary.terms]);
 
   get sortedTerms() {
-    if (this.termsRelationship) {
-      return this.termsRelationship
-        .toArray()
-        .filterBy('isTopLevel')
-        .filterBy('isNew', false)
-        .filterBy('isDeleted', false)
-        .sortBy('title');
+    if (!this.terms) {
+      return [];
     }
-    return [];
+    return sortBy(
+      filterBy(
+        filterBy(filterBy(this.terms.slice(), 'isTopLevel'), 'isNew', false),
+        'isDeleted',
+        false
+      ),
+      'title'
+    );
   }
 
-  @restartableTask
-  *load() {
+  @action
+  load() {
     this.title = this.args.vocabulary.title;
     this.isActive = this.args.vocabulary.active;
-    this.termsRelationship = yield this.args.vocabulary.terms;
   }
 
   @dropTask
@@ -68,10 +72,10 @@ export default class SchoolVocabularyManagerComponent extends Component {
   async validateTitleCallback() {
     const school = await this.args.vocabulary.school;
     const allVocabsInSchool = await school.vocabularies;
-    const siblings = allVocabsInSchool.toArray().filter((vocab) => {
+    const siblings = allVocabsInSchool.slice().filter((vocab) => {
       return vocab !== this.args.vocabulary;
     });
-    const siblingTitles = siblings.mapBy('title');
+    const siblingTitles = mapBy(siblings, 'title');
     return !siblingTitles.includes(this.title);
   }
 

@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
@@ -14,7 +15,7 @@ export default class ProgramYearListComponent extends Component {
 
   @use programYears = new ResolveAsyncValue(() => [this.args.program.programYears, []]);
   get sortedProgramYears() {
-    return this.programYears.sortBy('startYear');
+    return sortBy(this.programYears.slice(), 'startYear');
   }
   @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -22,21 +23,24 @@ export default class ProgramYearListComponent extends Component {
 
   @dropTask
   *saveNew(startYear) {
-    const latestProgramYear = this.sortedProgramYears.get('lastObject');
+    const latestProgramYear = this.sortedProgramYears.reverse()[0];
     const newProgramYear = this.store.createRecord('program-year', {
       program: this.args.program,
       startYear,
     });
 
     if (latestProgramYear) {
-      newProgramYear.directors.pushObjects(yield latestProgramYear.directors);
-      newProgramYear.competencies.pushObjects(yield latestProgramYear.competencies);
-      newProgramYear.terms.pushObjects(yield latestProgramYear.terms);
+      const directors = (yield latestProgramYear.directors).slice();
+      const competencies = (yield latestProgramYear.competencies).slice();
+      const terms = (yield latestProgramYear.terms).slice();
+      newProgramYear.set('directors', directors);
+      newProgramYear.set('competencies', competencies);
+      newProgramYear.set('terms', terms);
     }
     const savedProgramYear = yield newProgramYear.save();
     if (latestProgramYear) {
       const relatedObjectives = yield latestProgramYear.programYearObjectives;
-      const programYearObjectives = relatedObjectives.sortBy('id');
+      const programYearObjectives = sortBy(relatedObjectives.slice(), 'id');
 
       const newObjectiveObjects = programYearObjectives.map((pyoToCopy) => {
         const terms = pyoToCopy

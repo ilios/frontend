@@ -6,6 +6,7 @@ import { isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
 import { enqueueTask, restartableTask, task } from 'ember-concurrency';
 import { Length, IsURL, validatable } from 'ilios-common/decorators/validation';
+import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -112,8 +113,8 @@ export default class LearnergroupSummaryComponent extends Component {
 
   @action
   saveInstructors(newInstructors, newInstructorGroups) {
-    this.args.learnerGroup.set('instructors', newInstructors.toArray());
-    this.args.learnerGroup.set('instructorGroups', newInstructorGroups.toArray());
+    this.args.learnerGroup.set('instructors', newInstructors.slice());
+    this.args.learnerGroup.set('instructorGroups', newInstructorGroups.slice());
     return this.args.learnerGroup.save();
   }
 
@@ -124,7 +125,7 @@ export default class LearnergroupSummaryComponent extends Component {
     const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     const addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
     const groups = [].concat(removeGroups).concat(addGroups);
-    yield all(groups.invoke('save'));
+    yield all(groups.map((group) => group.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
@@ -133,7 +134,7 @@ export default class LearnergroupSummaryComponent extends Component {
   *removeUserToCohort(user) {
     const topLevelGroup = yield this.args.learnerGroup.topLevelGroup;
     const groups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-    yield all(groups.invoke('save'));
+    yield all(groups.map((group) => group.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
@@ -142,15 +143,14 @@ export default class LearnergroupSummaryComponent extends Component {
   *addUsersToGroup(users) {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = yield learnerGroup.topLevelGroup;
-    const groupsToSave = [];
+    let groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
       const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
       const addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
-      groupsToSave.pushObjects(removeGroups);
-      groupsToSave.pushObjects(addGroups);
+      groupsToSave = [...groupsToSave, ...removeGroups, ...addGroups];
     }
-    yield all(groupsToSave.uniq().invoke('save'));
+    yield all(uniqueValues(groupsToSave).map((group) => group.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
@@ -158,13 +158,13 @@ export default class LearnergroupSummaryComponent extends Component {
   @enqueueTask
   *removeUsersToCohort(users) {
     const topLevelGroup = yield this.args.learnerGroup.topLevelGroup;
-    const groupsToSave = [];
+    let groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
       const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-      groupsToSave.pushObjects(removeGroups);
+      groupsToSave = [...groupsToSave, ...removeGroups];
     }
-    yield all(groupsToSave.uniq().invoke('save'));
+    yield all(uniqueValues(groupsToSave).map((group) => group.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
@@ -178,7 +178,7 @@ export default class LearnergroupSummaryComponent extends Component {
     } else {
       users = yield this.args.learnerGroup.getUsersOnlyAtThisLevel();
     }
-    return yield map(users.toArray(), async (user) => {
+    return yield map(users.slice(), async (user) => {
       const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(this.treeGroups);
       return ObjectProxy.create({
         content: user,
@@ -206,12 +206,12 @@ export default class LearnergroupSummaryComponent extends Component {
   }
 
   async getCoursesForGroupWithSubgroupName(prefix, learnerGroup) {
-    const offerings = (await learnerGroup.offerings).toArray();
-    const ilms = (await learnerGroup.ilmSessions).toArray();
+    const offerings = (await learnerGroup.offerings).slice();
+    const ilms = (await learnerGroup.ilmSessions).slice();
     const arr = [].concat(offerings, ilms);
-    const sessions = await Promise.all(arr.mapBy('session'));
-    const filteredSessions = sessions.filter(Boolean).uniq();
-    const courses = await Promise.all(filteredSessions.mapBy('course'));
+    const sessions = await Promise.all(mapBy(arr, 'session'));
+    const filteredSessions = uniqueValues(sessions.filter(Boolean));
+    const courses = await Promise.all(mapBy(filteredSessions, 'course'));
     const courseObjects = courses.map((course) => {
       const obj = {
         id: course.id,
@@ -224,13 +224,13 @@ export default class LearnergroupSummaryComponent extends Component {
       }
       return obj;
     });
-    const children = (await learnerGroup.children).toArray();
+    const children = (await learnerGroup.children).slice();
     const childCourses = await map(children, async (child) => {
       return await this.getCoursesForGroupWithSubgroupName(learnerGroup.title, child);
     });
     const comb = [...courseObjects, ...childCourses.flat()];
     return comb.reduce((arr, obj) => {
-      let courseObj = arr.findBy('id', obj.id);
+      let courseObj = findById(arr, obj.id);
       if (!courseObj) {
         courseObj = {
           id: obj.id,
@@ -240,8 +240,8 @@ export default class LearnergroupSummaryComponent extends Component {
         };
         arr.push(courseObj);
       }
-      courseObj.groups.pushObjects(obj.groups);
-      courseObj.groups.uniq();
+      courseObj.groups = [...courseObj.groups, ...obj.groups];
+      uniqueValues(courseObj.groups);
       return arr;
     }, []);
   }

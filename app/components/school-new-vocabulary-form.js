@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
 
 @validatable
@@ -39,7 +40,7 @@ export default class SchoolNewVocabularyFormComponent extends Component {
 
   async validateTitleCallback() {
     const allVocabsInSchool = await this.args.school.vocabularies;
-    const titles = allVocabsInSchool.toArray().mapBy('title');
+    const titles = mapBy(allVocabsInSchool.slice(), 'title');
     return !titles.includes(this.title);
   }
 

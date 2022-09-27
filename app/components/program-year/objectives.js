@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { action } from '@ember/object';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class ProgramYearObjectivesComponent extends Component {
   @service store;
@@ -29,7 +30,7 @@ export default class ProgramYearObjectivesComponent extends Component {
   *saveNewObjective(title) {
     const programYearObjectives = yield this.args.programYear.programYearObjectives;
     const position = programYearObjectives.length
-      ? programYearObjectives.sortBy('position').lastObject.position + 1
+      ? sortBy(programYearObjectives.slice(), 'position').reverse()[0].position + 1
       : 0;
 
     const newProgramYearObjective = this.store.createRecord('program-year-objective');

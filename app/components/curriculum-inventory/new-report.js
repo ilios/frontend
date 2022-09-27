@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { findById } from 'ilios-common/utils/array-helpers';
 import { dropTask, restartableTask } from 'ember-concurrency';
 
 @validatable
@@ -14,7 +15,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
   @tracked @NotBlank() @Length(1, 60) name;
   @tracked @NotBlank() @Length(1, 21844) description;
   @tracked selectedYear;
-  @tracked years;
+  @tracked years = [];
   @tracked academicYearCrossesCalendarYearBoundaries;
 
   constructor() {
@@ -35,10 +36,10 @@ export default class CurriculumInventoryNewReportComponent extends Component {
         title = title + ' - ' + (id + 1);
       }
       const year = { id, title };
-      years.pushObject(year);
+      years.push(year);
     }
     this.years = years;
-    this.selectedYear = years.findBy('id', currentYear);
+    this.selectedYear = findById(years, currentYear);
   }
 
   @dropTask
@@ -69,7 +70,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
   @action
   setSelectedYear(year) {
     const id = Number(year);
-    this.selectedYear = this.years.findBy('id', id);
+    this.selectedYear = findById(this.years, id);
   }
 
   @dropTask

@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { findById } from 'ilios-common/utils/array-helpers';
 import PermissionChecker from 'ilios/classes/permission-checker';
 import { dropTask } from 'ember-concurrency';
 
@@ -56,11 +57,11 @@ export default class InstructorGroupsRootComponent extends Component {
 
   get bestSelectedSchool() {
     if (this.args.schoolId) {
-      return this.args.schools.findBy('id', this.args.schoolId);
+      return findById(this.args.schools.slice(), this.args.schoolId);
     }
 
     const schoolId = this.user?.belongsTo('school').id();
-    return schoolId ? this.args.schools.findBy('id', schoolId) : this.args.schools.firstObject;
+    return schoolId ? findById(this.args.schools.slice(), schoolId) : this.args.schools.slice()[0];
   }
 
   get filteredInstructorGroups() {

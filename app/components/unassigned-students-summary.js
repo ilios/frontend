@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class UnassignedStudentsSummaryComponent extends Component {
   @service currentUser;
@@ -18,7 +19,7 @@ export default class UnassignedStudentsSummaryComponent extends Component {
   @restartableTask
   *load(element, [schoolId]) {
     if (schoolId) {
-      this.selectedSchool = this.args.schools.findBy('id', schoolId);
+      this.selectedSchool = findById(this.args.schools.slice(), schoolId);
     } else {
       const user = yield this.currentUser.getModel();
       this.selectedSchool = yield user.school;

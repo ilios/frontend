@@ -85,18 +85,22 @@ export default class SequenceBlockSessionManagerComponent extends Component {
   @action
   changeSession(session) {
     if (this.linkedSessions.includes(session)) {
-      this.linkedSessions.removeObject(session);
+      this.linkedSessions = this.linkedSessions.filter(
+        (linkedSession) => linkedSession !== session
+      );
     } else {
-      this.linkedSessions.addObject(session);
+      this.linkedSessions = [...this.linkedSessions, session];
     }
   }
 
   @action
   excludeSession(session) {
     if (this.excludedSessions.includes(session)) {
-      this.excludedSessions.removeObject(session);
+      this.excludedSessions = this.excludedSessions.filter(
+        (excludedSession) => excludedSession !== session
+      );
     } else {
-      this.excludedSessions.addObject(session);
+      this.excludedSessions = [...this.excludedSessions, session];
     }
   }
 
@@ -105,7 +109,7 @@ export default class SequenceBlockSessionManagerComponent extends Component {
     if (this.allSelected) {
       this.linkedSessions = [];
     } else {
-      this.linkedSessions = this.sessions.toArray();
+      this.linkedSessions = this.sessions.slice();
     }
   }
 
@@ -114,7 +118,7 @@ export default class SequenceBlockSessionManagerComponent extends Component {
     if (this.allExcluded) {
       this.excludedSessions = [];
     } else {
-      this.excludedSessions = this.sessions.toArray();
+      this.excludedSessions = this.sessions.slice();
     }
   }
 
@@ -133,9 +137,9 @@ export default class SequenceBlockSessionManagerComponent extends Component {
 
   @restartableTask
   *load() {
-    this.linkedSessions = (yield this.args.sequenceBlock.sessions).toArray();
-    this.excludedSessions = (yield this.args.sequenceBlock.excludedSessions).toArray();
-    this.sessions = (yield this.args.sessions).toArray();
+    this.linkedSessions = (yield this.args.sequenceBlock.sessions).slice();
+    this.excludedSessions = (yield this.args.sequenceBlock.excludedSessions).slice();
+    this.sessions = (yield this.args.sessions).slice();
   }
 
   @dropTask

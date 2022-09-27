@@ -178,8 +178,7 @@ export default class UserProfileBioComponent extends Component {
     yield auth.save();
     yield user.save();
     const pendingUpdates = yield user.pendingUserUpdates;
-    yield all(pendingUpdates.invoke('destroyRecord'));
-
+    yield all(pendingUpdates.map((update) => update.destroyRecord()));
     this.clearErrorDisplay();
     this.cancel();
   }
@@ -203,36 +202,36 @@ export default class UserProfileBioComponent extends Component {
       const campusId = this.campusId;
       if (userData.firstName !== firstName) {
         this.firstName = userData.firstName;
-        this.updatedFieldsFromSync.pushObject('firstName');
+        this.updatedFieldsFromSync = [...this.updatedFieldsFromSync, 'firstName'];
       }
       if (userData.lastName !== lastName) {
         this.lastName = userData.lastName;
-        this.updatedFieldsFromSync.pushObject('lastName');
+        this.updatedFieldsFromSync = [...this.updatedFieldsFromSync, 'lastName'];
       }
       if (userData.displayName !== displayName) {
         this.displayName = userData.displayName;
-        this.updatedFieldsFromSync.pushObject('displayName');
+        this.updatedFieldsFromSync = [...this.updatedFieldsFromSync, 'displayName'];
       }
       if (userData.pronouns !== pronouns) {
         this.pronouns = userData.pronouns;
-        this.updatedFieldsFromSync.pushObject('pronouns');
+        this.updatedFieldsFromSync = [...this.updatedFieldsFromSync, 'pronouns'];
       }
       if (userData.email !== email) {
         this.email = userData.email;
-        this.updatedFieldsFromSync.pushObject('email');
+        this.updatedFieldsFromSync = [...this.updatedFieldsFromSync, 'email'];
       }
 
       if (userData.campusId !== campusId) {
         this.campusId = userData.campusId;
-        this.updatedFieldsFromSync.pushObject('campusId');
+        this.updatedFieldsFromSync = [...this.updatedFieldsFromSync, 'campusId'];
       }
       if (userData.phone !== phone) {
         this.phone = userData.phone;
-        this.updatedFieldsFromSync.pushObject('phone');
+        this.updatedFieldsFromSync = [...this.updatedFieldsFromSync, 'phone'];
       }
       if (userData.username !== username) {
         this.username = userData.username;
-        this.updatedFieldsFromSync.pushObject('username');
+        this.updatedFieldsFromSync = [...this.updatedFieldsFromSync, 'username'];
       }
     } catch (e) {
       this.showSyncErrorMessage = true;

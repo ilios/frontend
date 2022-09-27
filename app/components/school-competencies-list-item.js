@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolCompetenciesListItemComponent extends Component {
   @service store;
@@ -18,7 +19,7 @@ export default class SchoolCompetenciesListItemComponent extends Component {
     const filteredCurrent = this.competencyPcrses.filter((p) => {
       return !this.pcrsToRemove.includes(p);
     });
-    return [...this.pcrsToAdd, ...filteredCurrent].uniq();
+    return uniqueValues([...this.pcrsToAdd, ...filteredCurrent]);
   }
 
   get isDomain() {

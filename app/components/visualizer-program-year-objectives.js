@@ -4,6 +4,7 @@ import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerProgramYearObjectivesComponent extends Component {
   @service intl;
@@ -38,25 +39,22 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
     };
     const buildTree = async function (programYearObjective) {
       const courseObjectives = await programYearObjective.courseObjectives;
-      const courseObjectivesTree = await map(
-        courseObjectives.toArray(),
-        async (courseObjective) => {
-          const sessionObjectives = await courseObjective.sessionObjectives;
-          const sessionObjectivesTree = await map(
-            sessionObjectives.toArray(),
-            async (sessionObjective) => {
-              const session = await sessionObjective.session;
-              return buildTreeLevel(sessionObjective, [], session.title, null);
-            }
-          );
-          const course = await courseObjective.course;
-          return buildTreeLevel(courseObjective, sessionObjectivesTree, null, course.title);
-        }
-      );
+      const courseObjectivesTree = await map(courseObjectives.slice(), async (courseObjective) => {
+        const sessionObjectives = await courseObjective.sessionObjectives;
+        const sessionObjectivesTree = await map(
+          sessionObjectives.slice(),
+          async (sessionObjective) => {
+            const session = await sessionObjective.session;
+            return buildTreeLevel(sessionObjective, [], session.title, null);
+          }
+        );
+        const course = await courseObjective.course;
+        return buildTreeLevel(courseObjective, sessionObjectivesTree, null, course.title);
+      });
       return buildTreeLevel(programYearObjective, courseObjectivesTree, null, null);
     };
     const objectives = await programYear.programYearObjectives;
-    const objectivesWithCompetency = await filter(objectives.toArray(), async (objective) => {
+    const objectivesWithCompetency = await filter(objectives.slice(), async (objective) => {
       const competency = await objective.competency;
       return !!competency;
     });
@@ -71,7 +69,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
   async getCompetencyObjects(programYear) {
     const objectiveObjects = await this.getObjectiveObjects(programYear);
     const competencies = await programYear.competencies;
-    return await map(competencies.toArray(), async (competency) => {
+    return await map(competencies.slice(), async (competency) => {
       const domain = await competency.getDomain();
 
       const domainId = domain.id;
@@ -80,7 +78,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
       return {
         domainId,
         name: competencyTitle,
-        children: objectiveObjects.filterBy('competencyId', competencyId),
+        children: filterBy(objectiveObjects, 'competencyId', competencyId),
       };
     });
   }
@@ -88,17 +86,17 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
   async getDomainObjects(programYear) {
     const competencies = await programYear.competencies;
     const competencyObjects = await this.getCompetencyObjects(programYear);
-    const domains = await map(competencies.toArray(), async (competency) => competency.getDomain());
-    return domains.uniq().map((domain) => {
+    const domains = await map(competencies.slice(), async (competency) => competency.getDomain());
+    return uniqueValues(domains).map((domain) => {
       const id = domain.id;
       const name = domain.title;
-      const domainCompetencyObjects = competencyObjects.filterBy('domainId', id);
+      const domainCompetencyObjects = filterBy(competencyObjects, 'domainId', id);
 
       const children = domainCompetencyObjects.reduce((arr, { domainId, name, children }) => {
         if (id === domainId) {
-          arr.pushObjects(children);
+          arr = [...arr, ...children];
         } else {
-          arr.pushObject({ name, children });
+          arr.push({ name, children });
         }
 
         return arr;
@@ -134,21 +132,21 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
 
     const getCourseTitles = (courseTitles, { children, meta }) => {
       if (meta.courseTitle) {
-        courseTitles.pushObject(meta.courseTitle);
+        courseTitles.push(meta.courseTitle);
       }
       return children.reduce(getCourseTitles, courseTitles);
     };
     const allCourseTitles = children.reduce(getCourseTitles, meta.courseTitles || []);
     const getSessionTitles = (sessionTitles, { children, meta }) => {
       if (meta.sessionTitle) {
-        sessionTitles.pushObject(meta.sessionTitle);
+        sessionTitles.push(meta.sessionTitle);
       }
       return children.reduce(getSessionTitles, sessionTitles);
     };
     const allSessionTitles = children.reduce(getSessionTitles, meta.sessionTitles || []);
 
     this.tooltipTitle = htmlSafe(name);
-    this.tooltipCourses = allCourseTitles.uniq();
-    this.tooltipSessions = allSessionTitles.uniq();
+    this.tooltipCourses = uniqueValues(allCourseTitles);
+    this.tooltipSessions = uniqueValues(allSessionTitles);
   }
 }

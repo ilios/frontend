@@ -5,6 +5,7 @@ import { all, filter } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import moment from 'moment';
 import { validatable, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { findBy, findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class NewUserComponent extends Component {
@@ -37,7 +38,7 @@ export default class NewUserComponent extends Component {
 
   get bestSelectedSchool() {
     if (this.schoolId) {
-      const currentSchool = this.schools.findBy('id', this.schoolId);
+      const currentSchool = findById(this.schools, this.schoolId);
 
       if (currentSchool) {
         return currentSchool;
@@ -52,14 +53,14 @@ export default class NewUserComponent extends Component {
     }
 
     if (this.primaryCohortId) {
-      const currentCohort = this.currentSchoolCohorts.findBy('id', this.primaryCohortId);
+      const currentCohort = findById(this.currentSchoolCohorts.slice(), this.primaryCohortId);
 
       if (currentCohort) {
         return currentCohort;
       }
     }
 
-    return this.currentSchoolCohorts.lastObject;
+    return this.currentSchoolCohorts.slice().reverse()[0];
   }
 
   @restartableTask
@@ -80,7 +81,7 @@ export default class NewUserComponent extends Component {
   async loadSchools() {
     const store = this.store;
     const schools = await store.findAll('school');
-    return await filter(schools.toArray(), async (school) => {
+    return await filter(schools.slice(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
   }
@@ -96,11 +97,11 @@ export default class NewUserComponent extends Component {
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = await all(cohorts.getEach('programYear'));
-    await all(programYears.getEach('program'));
+    const programYears = await all(mapBy(cohorts.slice(), 'programYear'));
+    await all(mapBy(programYears.slice(), 'program'));
 
     const objects = await all(
-      cohorts.toArray().map(async (cohort) => {
+      cohorts.slice().map(async (cohort) => {
         const obj = {
           id: cohort.get('id'),
         };
@@ -154,7 +155,7 @@ export default class NewUserComponent extends Component {
     });
     if (!this.nonStudentMode) {
       user.set('primaryCohort', primaryCohort);
-      const studentRole = roles.findBy('title', 'Student');
+      const studentRole = findBy(roles.slice(), 'title', 'Student');
       user.set('roles', [studentRole]);
     }
     user = yield user.save();

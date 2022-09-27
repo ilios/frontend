@@ -346,10 +346,10 @@ module('Acceptance | learner group bulk assign', function (hooks) {
     const data = users.map((obj) => {
       return [obj.firstName, obj.lastName, obj.campusId];
     });
-    data[0].pushObject('group 1 child 0');
-    data[1].pushObject('group 1 child 1');
-    data[2].pushObject('group 1 child 1 ');
-    data[3].pushObject(' group 1 child 1');
+    data[0].push('group 1 child 0');
+    data[1].push('group 1 child 1');
+    data[2].push('group 1 child 1 ');
+    data[3].push(' group 1 child 1');
     await triggerUpload(data);
     await waitFor('[data-test-upload-data-valid-users]');
     await page.details.bulkAssignment.confirmUploadedUsers();

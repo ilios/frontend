@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
+import { findBy } from 'ilios-common/utils/array-helpers';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { restartableTask, timeout } from 'ember-concurrency';
 
@@ -127,7 +128,7 @@ export default class GlobalSearchBox extends Component {
   }
 
   listHasFocus(listArray) {
-    return listArray.any((element) => element.classList.contains('active'));
+    return Boolean(listArray.find((element) => element.classList.contains('active')));
   }
 
   hasFocusOnEdge(listArray, shouldReverse) {
@@ -163,7 +164,7 @@ export default class GlobalSearchBox extends Component {
    * @returns {array}
    */
   findCachedAutocomplete(q) {
-    const exactMatch = this.autocompleteCache.findBy('q', q);
+    const exactMatch = findBy(this.autocompleteCache, 'q', q);
     if (exactMatch) {
       return exactMatch.autocomplete;
     }
@@ -175,14 +176,14 @@ export default class GlobalSearchBox extends Component {
     const allMatches = possibleKeys.reduce((set, q) => {
       const removedChar = q.substring(q.length - 1);
       const newQuery = q.substring(0, q.length - 1);
-      const possibleMatches = this.autocompleteCache.findBy('q', newQuery);
+      const possibleMatches = findBy(this.autocompleteCache, 'q', newQuery);
 
       if (possibleMatches) {
         const matches = possibleMatches.autocomplete.filter((text) => {
           return text.substring(newQuery.length, newQuery.length + 1) === removedChar;
         });
 
-        set.pushObjects(matches);
+        set = [...set, ...matches];
       }
 
       return set;
@@ -217,7 +218,7 @@ export default class GlobalSearchBox extends Component {
     yield timeout(DEBOUNCE_MS);
 
     const { autocomplete } = yield this.iliosSearch.forCurriculum(this.internalQuery, true);
-    this.autocompleteCache.pushObject({ q: this.internalQuery, autocomplete });
+    this.autocompleteCache = [...this.autocompleteCache, { q: this.internalQuery, autocomplete }];
 
     return autocomplete.map((text) => {
       return { text };
