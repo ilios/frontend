@@ -74,8 +74,8 @@ general:
   continue: Continue
   copy: Copy
   copyNewToken: "Copy new token"
-  copyWithLearners: "Copy With Learners"
-  copyWithoutLearners: "Copy Without Learners"
+  copyWithLearners: "Copy with Learners"
+  copyWithoutLearners: "Copy without Learners"
   couldNotFindUserCampusId: "Could not find a user with the campusId {campusId}"
   countAsOneOffering: "Count as one offering"
   countTotal: "{total} total"
