@@ -1,5 +1,6 @@
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
+import { isNone } from '@ember/utils';
 import moment from 'moment';
 import scrollIntoView from 'scroll-into-view';
 import { action } from '@ember/object';
@@ -16,6 +17,10 @@ export default class WeeklyGlance extends Component {
       this.midnightAtTheEndOfThisWeek.unix()
     ),
   ]);
+
+  get eventsLoaded() {
+    return !isNone(this.weekEvents);
+  }
 
   get thursdayOfTheWeek() {
     this.intl; //we need to use the service so the CP will re-fire
