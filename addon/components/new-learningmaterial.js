@@ -98,7 +98,6 @@ export default class NewLearningmaterialComponent extends Component {
       return false;
     }
     const owningUser = await this.currentUser.getModel();
-
     const learningMaterial = this.store.createRecord('learningMaterial', {
       title: this.title,
       status: this.selectedStatus,
