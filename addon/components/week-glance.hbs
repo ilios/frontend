@@ -27,7 +27,7 @@
     </h2>
   {{/if}}
   {{#unless @collapsed}}
-    {{#unless this.load.isRunning}}
+    {{#if this.eventsLoaded}}
       {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
         {{#each this.nonIlmPreWorkEvents as |event|}}
           <WeekGlanceEvent @event={{event}} />
@@ -42,6 +42,6 @@
         <FaIcon @icon="spinner" @spin={{true}} />
         {{t "general.loadingEvents"}}
       </p>
-    {{/unless}}
+    {{/if}}
   {{/unless}}
 </div>
