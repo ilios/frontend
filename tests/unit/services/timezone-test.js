@@ -11,13 +11,13 @@ module('Unit | Service | timezone', function (hooks) {
 
   test('getCurrentTimezone', function (assert) {
     const service = this.owner.lookup('service:timezone');
-    assert.strictEqual(DateTime.local().zone.name, service.getCurrentTimezone());
+    assert.strictEqual(DateTime.local().zoneName, service.getCurrentTimezone());
   });
 
   test('getTimezoneNames', function (assert) {
     const service = this.owner.lookup('service:timezone');
     const names = service.getTimezoneNames();
-    const currentTimezone = DateTime.local().zone.name;
+    const currentTimezone = DateTime.local().zoneName;
     assert.ok(names.includes(currentTimezone));
     assert.notOk(names.includes('Etc/GMT-13'));
     assert.notOk(names.includes('Canada/Newfoundland'));

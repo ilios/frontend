@@ -468,7 +468,7 @@ module('Integration | Component | offering form', function (hooks) {
   test('shows current timezone', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const timezoneService = this.owner.lookup('service:timezone');
-    const currentTimezone = DateTime.local().zone.name;
+    const currentTimezone = DateTime.local().zoneName;
     assert.strictEqual(
       component.timezoneEditor.currentTimezone.text,
       timezoneService.formatTimezone(currentTimezone)
@@ -478,7 +478,7 @@ module('Integration | Component | offering form', function (hooks) {
   test('save date with new timezone', async function (assert) {
     assert.expect(8);
     const newTimezone = 'Pacific/Midway';
-    const currentTimezone = DateTime.local().zone.name;
+    const currentTimezone = DateTime.local().zoneName;
     const startDateTime = DateTime.fromObject({
       year: 2005,
       month: 6,
