@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { click, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/offering-form';
 
 module('Integration | Component | offering form', function (hooks) {
@@ -134,7 +134,7 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('recurring default day is disabled and checked', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} />`);
-    const dayToday = moment().day();
+    const dayToday = DateTime.fromObject({ hour: 8 }).weekday;
     await component.recurring.yesNoToggle.click();
     assert.ok(component.recurring.weekdays[dayToday].input.isSelected);
     assert.ok(component.recurring.weekdays[dayToday].input.isDisabled);
@@ -151,88 +151,52 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('before course startDate default initial startDate falls on course start date', async function (assert) {
-    const courseStartDate = moment().add(2, 'days');
-    const courseEndDate = moment().add(4, 'days');
-    this.set('courseStartDate', courseStartDate);
-    this.set('courseEndDate', courseEndDate);
+    const courseStartDate = DateTime.fromObject({ hour: 8 }).plus({ days: 2 });
+    const courseEndDate = DateTime.fromObject({ hour: 8 }).plus({ days: 4 });
+    this.set('courseStartDate', courseStartDate.toJSDate());
+    this.set('courseEndDate', courseEndDate.toJSDate());
     await render(hbs`<OfferingForm
       @close={{(noop)}}
       @courseStartDate={{this.courseStartDate}}
       @courseEndDate={{this.courseEndDate}}
     />`);
-    const selectedDate = new Date(component.startDate.datePicker.value);
-    assert.strictEqual(
-      selectedDate.getFullYear(),
-      courseStartDate.year(),
-      'Selected year initialized to course start date year.'
-    );
-    assert.strictEqual(
-      selectedDate.getMonth(),
-      courseStartDate.month(),
-      'Selected month initialized to course start date month.'
-    );
-    assert.strictEqual(
-      selectedDate.getDate(),
-      courseStartDate.date(),
-      'Selected day initialized to course start date day.'
+    const selectedDate = DateTime.fromFormat(component.startDate.datePicker.value, 'M/d/y');
+    assert.ok(
+      selectedDate.hasSame(courseStartDate, 'day'),
+      'Selected date initialized to course start date.'
     );
   });
 
   test('after course endDate default initial startDate falls on course end date', async function (assert) {
-    const courseStartDate = moment().subtract(4, 'days');
-    const courseEndDate = moment().subtract(2, 'days');
-    this.set('courseStartDate', courseStartDate);
-    this.set('courseEndDate', courseEndDate);
+    const courseStartDate = DateTime.fromObject({ hour: 8 }).minus({ days: 4 });
+    const courseEndDate = DateTime.fromObject({ hour: 8 }).minus({ days: 2 });
+    this.set('courseStartDate', courseStartDate.toJSDate());
+    this.set('courseEndDate', courseEndDate.toJSDate());
     await render(hbs`<OfferingForm
       @close={{(noop)}}
       @courseStartDate={{this.courseStartDate}}
       @courseEndDate={{this.courseEndDate}}
     />`);
-    const selectedDate = new Date(component.startDate.datePicker.value);
-    assert.strictEqual(
-      selectedDate.getFullYear(),
-      courseEndDate.year(),
-      'Selected year initialized to course start date year.'
-    );
-    assert.strictEqual(
-      selectedDate.getMonth(),
-      courseEndDate.month(),
-      'Selected month initialized to course start date month.'
-    );
-    assert.strictEqual(
-      selectedDate.getDate(),
-      courseEndDate.date(),
-      'Selected day initialized to course start date day.'
+    const selectedDate = DateTime.fromFormat(component.startDate.datePicker.value, 'M/d/y');
+    assert.ok(
+      selectedDate.hasSame(courseEndDate, 'day'),
+      'Selected date initialized to course end date.'
     );
   });
 
   test('between course startDate and endDate default initial startDate falls on today', async function (assert) {
-    const courseStartDate = moment().subtract(4, 'days');
-    const courseEndDate = moment().add(4, 'days');
-    const today = moment();
-    this.set('courseStartDate', courseStartDate);
-    this.set('courseEndDate', courseEndDate);
+    const courseStartDate = DateTime.fromObject({ hour: 8 }).minus({ days: 4 });
+    const courseEndDate = DateTime.fromObject({ hour: 8 }).plus({ days: 4 });
+    const today = DateTime.fromObject({ hour: 8 });
+    this.set('courseStartDate', courseStartDate.toJSDate());
+    this.set('courseEndDate', courseEndDate.toJSDate());
     await render(hbs`<OfferingForm
       @close={{(noop)}}
       @courseStartDate={{this.courseStartDate}}
       @courseEndDate={{this.courseEndDate}}
     />`);
-    const selectedDate = new Date(component.startDate.datePicker.value);
-    assert.strictEqual(
-      selectedDate.getFullYear(),
-      today.year(),
-      'Selected year initialized to course start date year.'
-    );
-    assert.strictEqual(
-      selectedDate.getMonth(),
-      today.month(),
-      'Selected month initialized to course start date month.'
-    );
-    assert.strictEqual(
-      selectedDate.getDate(),
-      today.date(),
-      'Selected day initialized to course start date day.'
-    );
+    const selectedDate = DateTime.fromFormat(component.startDate.datePicker.value, 'M/d/y');
+    assert.ok(selectedDate.hasSame(today, 'day'), 'Selected date initialized to today.');
   });
 
   test('close sends close', async function (assert) {
@@ -258,8 +222,9 @@ module('Integration | Component | offering form', function (hooks) {
         instructorGroups,
         instructors
       ) => {
-        assert.strictEqual(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-        assert.strictEqual(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+        const today = DateTime.fromObject({ hour: 8 });
+        assert.ok(today.hasSame(DateTime.fromJSDate(startDate), 'day'));
+        assert.ok(today.hasSame(DateTime.fromJSDate(endDate), 'day'));
         assert.strictEqual(room, null);
         assert.strictEqual(url, null);
         assert.strictEqual(learnerGroups.length, 0);
@@ -274,26 +239,23 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('save recurring one week with days selected before initial date', async function (assert) {
     assert.expect(4);
-    const wednesday = moment().add(1, 'week').day(3);
-    const thursday = wednesday.clone().add(1, 'day').day();
-    const tuesday = wednesday.clone().subtract(1, 'day').day();
-    const newStartDate = wednesday.toDate();
+    const wednesday = DateTime.fromObject({ hour: 8, weekday: 3 }).plus({ week: 1 });
+    const thursday = wednesday.plus({ days: 1 });
+    const tuesday = wednesday.minus({ days: 1 });
+    const newStartDate = wednesday.toJSDate();
     let savedCount = 0;
     this.set('save', async (startDate) => {
       assert.ok(savedCount <= 1, 'should only get two saved offerings, we got ' + (savedCount + 1));
       let expectedStartDate;
       switch (savedCount) {
         case 0:
-          expectedStartDate = wednesday.clone();
+          expectedStartDate = wednesday;
           break;
         case 1:
-          expectedStartDate = wednesday.clone().day(thursday);
+          expectedStartDate = thursday;
           break;
       }
-      assert.strictEqual(
-        moment(startDate).format('YYYY-MM-DD'),
-        expectedStartDate.format('YYYY-MM-DD')
-      );
+      assert.ok(expectedStartDate.hasSame(DateTime.fromJSDate(startDate), 'day'));
 
       savedCount++;
     });
@@ -304,17 +266,17 @@ module('Integration | Component | offering form', function (hooks) {
     />`);
     await component.recurring.yesNoToggle.click();
     await component.startDate.datePicker.set(newStartDate);
-    await component.recurring.weekdays[tuesday].input.toggle();
-    await component.recurring.weekdays[thursday].input.toggle();
+    await component.recurring.weekdays[tuesday.weekday].input.toggle();
+    await component.recurring.weekdays[thursday.weekday].input.toggle();
     await component.save();
   });
 
   test('save recurring 3 weeks should get lots of days', async function (assert) {
     assert.expect(16);
-    const wednesday = moment().add(1, 'week').day(3);
-    const thursday = wednesday.clone().add(1, 'day').day();
-    const tuesday = wednesday.clone().subtract(1, 'day').day();
-    const newStartDate = wednesday.toDate();
+    const wednesday = DateTime.fromObject({ hour: 8, weekday: 3 }).plus({ week: 1 });
+    const thursday = wednesday.plus({ days: 1 });
+    const tuesday = wednesday.minus({ days: 1 });
+    const newStartDate = wednesday.toJSDate();
     let savedCount = 0;
     this.set('save', async (startDate) => {
       assert.ok(
@@ -322,39 +284,36 @@ module('Integration | Component | offering form', function (hooks) {
         'should only get eight saved offerings, we got ' +
           (savedCount + 1) +
           ' with startDate ' +
-          moment(startDate).format('YYYY-MM-DD')
+          DateTime.fromJSDate(startDate).toISO()
       );
       let expectedStartDate;
       switch (savedCount) {
         case 0:
-          expectedStartDate = wednesday.clone();
+          expectedStartDate = wednesday;
           break;
         case 1:
-          expectedStartDate = wednesday.clone().add(1, 'day');
+          expectedStartDate = wednesday.plus({ days: 1 });
           break;
         case 2:
-          expectedStartDate = wednesday.clone().subtract(1, 'day').add(1, 'weeks');
+          expectedStartDate = wednesday.minus({ days: 1 }).plus({ weeks: 1 });
           break;
         case 3:
-          expectedStartDate = wednesday.clone().add(1, 'weeks');
+          expectedStartDate = wednesday.plus({ weeks: 1 });
           break;
         case 4:
-          expectedStartDate = wednesday.clone().add(1, 'day').add(1, 'weeks');
+          expectedStartDate = wednesday.plus({ days: 1, weeks: 1 });
           break;
         case 5:
-          expectedStartDate = wednesday.clone().subtract(1, 'day').add(2, 'weeks');
+          expectedStartDate = wednesday.minus({ days: 1 }).plus({ weeks: 2 });
           break;
         case 6:
-          expectedStartDate = wednesday.clone().add(2, 'weeks');
+          expectedStartDate = wednesday.plus({ weeks: 2 });
           break;
         case 7:
-          expectedStartDate = wednesday.clone().add(1, 'day').add(2, 'weeks');
+          expectedStartDate = wednesday.plus({ days: 1, weeks: 2 });
           break;
       }
-      assert.strictEqual(
-        expectedStartDate.format('YYYY-MM-DD'),
-        moment(startDate).format('YYYY-MM-DD')
-      );
+      assert.ok(expectedStartDate.hasSame(DateTime.fromJSDate(startDate), 'day'));
 
       savedCount++;
     });
@@ -366,53 +325,73 @@ module('Integration | Component | offering form', function (hooks) {
     await component.recurring.yesNoToggle.click();
     await component.recurring.setWeeks('3');
     await component.startDate.datePicker.set(newStartDate);
-    await component.recurring.weekdays[tuesday].input.toggle();
-    await component.recurring.weekdays[thursday].input.toggle();
+    await component.recurring.weekdays[tuesday.weekday].input.toggle();
+    await component.recurring.weekdays[thursday.weekday].input.toggle();
     await component.save();
   });
 
   test('changing start date changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
-    const format = 'M/D/YYYY, h:mm A';
-    const newStartDate = moment().add(1, 'day').toDate();
-    assert.strictEqual(moment().hour(9).minute(0).format(format), component.endDate.value);
-    await component.startDate.datePicker.set(newStartDate);
+    const format = 'M/d/yyyy, h:mm a';
+    const newStartDate = DateTime.fromObject({ hour: 9 }).plus({ days: 1 });
     assert.strictEqual(
-      moment(newStartDate).hour(9).minute(0).format(format),
+      DateTime.fromObject({ hour: 9, minute: 0 }).toFormat(format),
+      component.endDate.value
+    );
+    await component.startDate.datePicker.set(newStartDate.toJSDate());
+    assert.strictEqual(
+      newStartDate.set({ hour: 9, minute: 0 }).toFormat(format),
       component.endDate.value
     );
   });
 
   test('changing start time changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
-    const format = 'M/D/YYYY, h:mm A';
-    assert.strictEqual(moment().hour(9).minute(0).format(format), component.endDate.value);
+    assert.strictEqual(
+      component.endDate.value,
+      DateTime.fromObject({ hour: 9, minute: 0 }).toLocaleString(DateTime.DATETIME_SHORT)
+    );
     await component.startTime.timePicker.hour.select('2');
     await component.startTime.timePicker.minute.select('15');
     await component.startTime.timePicker.ampm.select('pm');
-    assert.strictEqual(moment().hour(15).minute(15).format(format), component.endDate.value);
+    assert.strictEqual(
+      component.endDate.value,
+      DateTime.fromObject({ hour: 15, minute: 15 }).toLocaleString(DateTime.DATETIME_SHORT)
+    );
   });
 
   test('changing duration changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
-    const format = 'M/D/YYYY, h:mm A';
-    assert.strictEqual(moment().hour(9).minute(0).format(format), component.endDate.value);
+    const format = 'M/d/yyyy, h:mm a';
+    assert.strictEqual(
+      DateTime.fromObject({ hour: 9, minute: 0 }).toFormat(format),
+      component.endDate.value
+    );
     await component.duration.hours.set('2');
     await component.duration.minutes.set('15');
-    assert.strictEqual(moment().hour(10).minute(15).format(format), component.endDate.value);
+    assert.strictEqual(
+      DateTime.fromObject({ hour: 10, minute: 15 }).toFormat(format),
+      component.endDate.value
+    );
   });
 
   // @see https://github.com/ilios/frontend/issues/1903
   test('changing duration and start time changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
-    const format = 'M/D/YYYY, h:mm A';
-    assert.strictEqual(moment().hour(9).minute(0).format(format), component.endDate.value);
+    const format = 'M/d/yyyy, h:mm a';
+    assert.strictEqual(
+      DateTime.fromObject({ hour: 9, minute: 0 }).toFormat(format),
+      component.endDate.value
+    );
     await component.startTime.timePicker.hour.select('2');
     await component.startTime.timePicker.minute.select('10');
     await component.startTime.timePicker.ampm.select('pm');
     await component.duration.hours.set('2');
     await component.duration.minutes.set('50');
-    assert.strictEqual(moment().hour(17).minute(0).format(format), component.endDate.value);
+    assert.strictEqual(
+      DateTime.fromObject({ hour: 17, minute: 0 }).toFormat(format),
+      component.endDate.value
+    );
   });
 
   test('duration validation fails if both minutes and hours are zero', async function (assert) {
@@ -450,8 +429,20 @@ module('Integration | Component | offering form', function (hooks) {
   test('renders when an offering is provided', async function (assert) {
     const offering = this.server.create('offering', {
       room: 'emerald bay',
-      startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
-      endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
+      startDate: DateTime.fromObject({
+        year: 2005,
+        month: 6,
+        day: 24,
+        hour: 18,
+        minute: 24,
+      }).toJSDate(),
+      endDate: DateTime.fromObject({
+        year: 2005,
+        month: 6,
+        day: 24,
+        hour: 19,
+        minute: 24,
+      }).toJSDate(),
     });
     const offeringModel = await this.owner
       .lookup('service:store')
@@ -467,28 +458,17 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(component.location.value, 'emerald bay');
     assert.strictEqual(component.duration.hours.value, '1');
     assert.strictEqual(component.duration.minutes.value, '0');
-    const selectedDate = new Date(component.startDate.datePicker.value);
-    assert.strictEqual(
-      selectedDate.getFullYear(),
-      offeringModel.startDate.getFullYear(),
-      'Selected year initialized to offering start date year.'
-    );
-    assert.strictEqual(
-      selectedDate.getMonth(),
-      offeringModel.startDate.getMonth(),
-      'Selected month initialized to offering start date month.'
-    );
-    assert.strictEqual(
-      selectedDate.getDate(),
-      offeringModel.startDate.getDate(),
-      'Selected day initialized to offering start date day.'
+    const selectedDate = DateTime.fromFormat(component.startDate.datePicker.value, 'M/d/y');
+    assert.ok(
+      selectedDate.hasSame(DateTime.fromJSDate(offering.startDate), 'day'),
+      'Selected date initialized to offering start date day.'
     );
   });
 
   test('shows current timezone', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const timezoneService = this.owner.lookup('service:timezone');
-    const currentTimezone = moment.tz.guess();
+    const currentTimezone = DateTime.local().zone.name;
     assert.strictEqual(
       component.timezoneEditor.currentTimezone.text,
       timezoneService.formatTimezone(currentTimezone)
@@ -498,20 +478,36 @@ module('Integration | Component | offering form', function (hooks) {
   test('save date with new timezone', async function (assert) {
     assert.expect(8);
     const newTimezone = 'Pacific/Midway';
-    const utc = 'Etc/UTC';
-    const currentTimezone = moment.tz.guess();
+    const currentTimezone = DateTime.local().zone.name;
+    const startDateTime = DateTime.fromObject({
+      year: 2005,
+      month: 6,
+      day: 24,
+      hour: 18,
+      minute: 24,
+    });
+    const endDateTime = DateTime.fromObject({
+      year: 2005,
+      month: 6,
+      day: 24,
+      hour: 19,
+      minute: 24,
+    });
     const offering = this.server.create('offering', {
       room: 'emerald bay',
-      startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
-      endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
+      startDate: startDateTime.toJSDate(),
+      endDate: endDateTime.toJSDate(),
     });
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', async (startDate, endDate) => {
-      assert.strictEqual(moment(startDate).tz(utc).format('Y-MM-DD HH:mm'), '2005-06-25 05:24');
-      assert.strictEqual(moment(endDate).tz(utc).format('Y-MM-DD HH:mm'), '2005-06-25 06:24');
+      assert.strictEqual(
+        DateTime.fromJSDate(startDate).toUTC().toISO(),
+        '2005-06-25T05:24:00.000Z'
+      );
+      assert.strictEqual(DateTime.fromJSDate(endDate).toUTC().toISO(), '2005-06-25T06:24:00.000Z');
     });
     const timezoneService = this.owner.lookup('service:timezone');
     await render(
