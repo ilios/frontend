@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/week-glance-event';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-const today = moment();
+const today = DateTime.fromObject({ hour: 8 });
 
 module('Integration | Component | week-glance-event', function (hooks) {
   setupRenderingTest(hooks);
@@ -18,7 +18,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
   test('it renders with some stuff', async function (assert) {
     this.set('event', {
       name: 'Learn to Learn',
-      startDate: today.format(),
+      startDate: today.toISO(),
       location: 'Room 123',
       url: 'https://zoom.example.com/123?p=456',
       sessionTypeTitle: 'Lecture',
@@ -111,7 +111,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
   test('it renders with other stuff', async function (assert) {
     this.set('event', {
       name: 'Finding the Point in Life',
-      startDate: today.format(),
+      startDate: today.toISO(),
       location: 'Room 456',
       sessionTypeTitle: 'Independent Learning',
       isBlanked: false,
@@ -162,7 +162,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
   test('it renders schedule materials', async function (assert) {
     this.set('event', {
       name: 'Schedule some materials',
-      startDate: today.format(),
+      startDate: today.toISO(),
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
@@ -179,8 +179,8 @@ module('Integration | Component | week-glance-event', function (hooks) {
           required: true,
           isBlanked: false,
           citation: 'citationtext',
-          endDate: today.clone().add(1, 'day').toDate(),
-          startDate: today.clone().subtract(1, 'day').toDate(),
+          endDate: today.plus({ days: 1 }).toJSDate(),
+          startDate: today.minus({ days: 1 }).toJSDate(),
           sessionLearningMaterial: 1,
         },
         {
@@ -189,7 +189,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
           required: true,
           isBlanked: true,
           citation: 'citationtext',
-          startDate: moment('2001-12-31').toDate(),
+          startDate: DateTime.fromObject({ year: 2001, month: 12, day: 31 }).toJSDate(),
           sessionLearningMaterial: 2,
         },
         {
@@ -198,7 +198,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
           required: true,
           isBlanked: true,
           citation: 'citationtext',
-          endDate: moment('2035-06-01').toDate(),
+          endDate: DateTime.fromObject({ year: 2035, month: 6, day: 1 }).toJSDate(),
           sessionLearningMaterial: 3,
         },
       ],
@@ -234,7 +234,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
   test('it renders prework', async function (assert) {
     this.set('event', {
       name: 'Learn to Learn',
-      startDate: today.format(),
+      startDate: today.toISO(),
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
@@ -264,7 +264,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
   test('it skips course learning materials', async function (assert) {
     this.set('event', {
       name: 'Learn to Learn',
-      startDate: today.format(),
+      startDate: today.toISO(),
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
@@ -331,7 +331,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
   test('it does not render materials if there are only course materials', async function (assert) {
     this.set('event', {
       name: 'Learn to Learn',
-      startDate: today.format(),
+      startDate: today.toISO(),
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
@@ -366,7 +366,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
   test('it does not render materials if there are none', async function (assert) {
     this.set('event', {
       name: 'Learn to Learn',
-      startDate: today.format(),
+      startDate: today.toISO(),
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
@@ -392,7 +392,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
   test('it renders markup on short session description', async function (assert) {
     this.set('event', {
       name: 'Learn to Learn',
-      startDate: today.format(),
+      startDate: today.toISO(),
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
@@ -414,7 +414,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
   test('it renders markup when long session description is expanded', async function (assert) {
     this.set('event', {
       name: 'Learn to Learn',
-      startDate: today.format(),
+      startDate: today.toISO(),
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
