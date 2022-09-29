@@ -1,6 +1,6 @@
 module.exports = function () {
   return {
-    'pro-light-svg-icons': ['clipboard-list', 'file-alt', 'lightbulb-slash'],
+    'pro-light-svg-icons': ['clipboard-list', 'lightbulb-slash'],
     'free-brands-svg-icons': ['black-tie'],
     'free-solid-svg-icons': [
       'angle-down',
@@ -14,6 +14,7 @@ module.exports = function () {
       'calendar',
       'chevron-right',
       'face-meh',
+      'file-lines',
       'gears',
       'globe',
       'graduation-cap',
