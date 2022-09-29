@@ -112,10 +112,10 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
       assert.strictEqual(page.details.learningMaterials.current[0].title, 'learning material 0');
       assert.strictEqual(
-        page.details.learningMaterials.current[0].owner.userNameInfo.fullName,
+        page.details.learningMaterials.current[0].userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
-      assert.notOk(page.details.learningMaterials.current[0].owner.userNameInfo.hasAdditionalInfo);
+      assert.notOk(page.details.learningMaterials.current[0].userNameInfo.hasAdditionalInfo);
       assert.strictEqual(page.details.learningMaterials.current[0].required, 'No');
       assert.strictEqual(page.details.learningMaterials.current[0].notes, 'No');
       assert.notOk(page.details.learningMaterials.current[0].isNotePublic);
@@ -127,18 +127,18 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
       assert.strictEqual(page.details.learningMaterials.current[1].title, 'learning material 1');
       assert.strictEqual(
-        page.details.learningMaterials.current[1].owner.userNameInfo.fullName,
+        page.details.learningMaterials.current[1].userNameInfo.fullName,
         'Clem Chowder'
       );
-      assert.ok(page.details.learningMaterials.current[1].owner.userNameInfo.hasAdditionalInfo);
-      assert.notOk(page.details.learningMaterials.current[1].owner.userNameInfo.isTooltipVisible);
-      await page.details.learningMaterials.current[1].owner.userNameInfo.expandTooltip();
+      assert.ok(page.details.learningMaterials.current[1].userNameInfo.hasAdditionalInfo);
+      assert.notOk(page.details.learningMaterials.current[1].userNameInfo.isTooltipVisible);
+      await page.details.learningMaterials.current[1].userNameInfo.expandTooltip();
       assert.strictEqual(
-        page.details.learningMaterials.current[1].owner.userNameInfo.tooltipContents,
+        page.details.learningMaterials.current[1].userNameInfo.tooltipContents,
         'Campus name of record: 1 guy M, Mc1son'
       );
-      await page.details.learningMaterials.current[1].owner.userNameInfo.closeTooltip();
-      assert.notOk(page.details.learningMaterials.current[1].owner.userNameInfo.isTooltipVisible);
+      await page.details.learningMaterials.current[1].userNameInfo.closeTooltip();
+      assert.notOk(page.details.learningMaterials.current[1].userNameInfo.isTooltipVisible);
       assert.strictEqual(page.details.learningMaterials.current[1].required, 'No');
       assert.strictEqual(page.details.learningMaterials.current[1].notes, 'No');
       assert.notOk(page.details.learningMaterials.current[1].isNotePublic);
@@ -148,10 +148,10 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
       assert.strictEqual(page.details.learningMaterials.current[2].title, 'learning material 2');
       assert.strictEqual(
-        page.details.learningMaterials.current[2].owner.userNameInfo.fullName,
+        page.details.learningMaterials.current[2].userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
-      assert.notOk(page.details.learningMaterials.current[2].owner.userNameInfo.hasAdditionalInfo);
+      assert.notOk(page.details.learningMaterials.current[2].userNameInfo.hasAdditionalInfo);
       assert.strictEqual(page.details.learningMaterials.current[2].required, 'Yes');
       assert.strictEqual(page.details.learningMaterials.current[2].notes, 'No');
       assert.notOk(page.details.learningMaterials.current[2].isNotePublic);
@@ -161,10 +161,10 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
       assert.strictEqual(page.details.learningMaterials.current[3].title, 'learning material 3');
       assert.strictEqual(
-        page.details.learningMaterials.current[3].owner.userNameInfo.fullName,
+        page.details.learningMaterials.current[3].userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
-      assert.notOk(page.details.learningMaterials.current[3].owner.userNameInfo.hasAdditionalInfo);
+      assert.notOk(page.details.learningMaterials.current[3].userNameInfo.hasAdditionalInfo);
       assert.strictEqual(page.details.learningMaterials.current[3].required, 'Yes');
       assert.strictEqual(page.details.learningMaterials.current[3].notes, 'Yes');
       assert.ok(page.details.learningMaterials.current[3].isNotePublic);
@@ -400,7 +400,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
       assert.strictEqual(page.details.learningMaterials.current[0].title, 'learning material 0');
       assert.strictEqual(
-        page.details.learningMaterials.current[0].owner.userNameInfo.fullName,
+        page.details.learningMaterials.current[0].userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
       assert.strictEqual(page.details.learningMaterials.current[0].required, 'Yes');
@@ -452,7 +452,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
       assert.strictEqual(page.details.learningMaterials.current[0].title, 'learning material 0');
       assert.strictEqual(
-        page.details.learningMaterials.current[0].owner.userNameInfo.fullName,
+        page.details.learningMaterials.current[0].userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
       assert.strictEqual(page.details.learningMaterials.current[0].required, 'No');
@@ -854,10 +854,10 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
       assert.strictEqual(page.details.learningMaterials.current[0].title, 'learning material 0');
       assert.strictEqual(
-        page.details.learningMaterials.current[0].owner.userNameInfo.fullName,
+        page.details.learningMaterials.current[0].userNameInfo.fullName,
         '0 guy M. Mc0son'
       );
-      assert.notOk(page.details.learningMaterials.current[0].owner.userNameInfo.hasAdditionalInfo);
+      assert.notOk(page.details.learningMaterials.current[0].userNameInfo.hasAdditionalInfo);
       assert.strictEqual(page.details.learningMaterials.current[0].required, 'No');
       assert.strictEqual(page.details.learningMaterials.current[0].notes, 'No');
       assert.notOk(page.details.learningMaterials.current[0].isNotePublic);

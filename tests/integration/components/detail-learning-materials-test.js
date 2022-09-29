@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { component } from 'ilios-common/page-objects/components/learning-materials';
+import { component } from 'ilios-common/page-objects/components/detail-learning-materials';
 
 module('Integration | Component | detail learning materials', function (hooks) {
   setupRenderingTest(hooks);
@@ -47,9 +47,9 @@ module('Integration | Component | detail learning materials', function (hooks) {
       @editable={{true}}
     />`);
     assert.strictEqual(component.current.length, 1);
-    assert.strictEqual(component.current[0].type, 'Citation');
+    assert.ok(component.current[0].typeIcon.isCitation);
     assert.strictEqual(component.current[0].title, 'test title');
-    assert.strictEqual(component.current[0].owner.userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.current[0].userNameInfo.fullName, '0 guy M. Mc0son');
     assert.strictEqual(component.current[0].required, 'Yes');
     assert.strictEqual(component.current[0].notes, 'Yes');
     assert.strictEqual(component.current[0].mesh, 'None');
@@ -87,16 +87,16 @@ module('Integration | Component | detail learning materials', function (hooks) {
       @isCourse={{true}}
       @editable={{true}}
     />`);
-    assert.strictEqual(component.current[0].owner.userNameInfo.fullName, 'Clem Chowder');
-    assert.notOk(component.current[0].owner.userNameInfo.isTooltipVisible);
-    await component.current[0].owner.userNameInfo.expandTooltip();
-    assert.ok(component.current[0].owner.userNameInfo.isTooltipVisible);
+    assert.strictEqual(component.current[0].userNameInfo.fullName, 'Clem Chowder');
+    assert.notOk(component.current[0].userNameInfo.isTooltipVisible);
+    await component.current[0].userNameInfo.expandTooltip();
+    assert.ok(component.current[0].userNameInfo.isTooltipVisible);
     assert.strictEqual(
-      component.current[0].owner.userNameInfo.tooltipContents,
+      component.current[0].userNameInfo.tooltipContents,
       'Campus name of record: 1 guy M, Mc1son'
     );
-    await component.current[0].owner.userNameInfo.closeTooltip();
-    assert.notOk(component.current[0].owner.userNameInfo.isTooltipVisible);
+    await component.current[0].userNameInfo.closeTooltip();
+    assert.notOk(component.current[0].userNameInfo.isTooltipVisible);
   });
 
   test('sort button visible when lm list has 2+ items and editing is allowed', async function (assert) {

@@ -1,6 +1,6 @@
 import { clickable, count, create, collection, text } from 'ember-cli-page-object';
 import objectives from './course/objectives';
-import learningMaterials from './learning-materials';
+import learningMaterials from './detail-learning-materials';
 import meshTerms from './mesh-terms';
 import taxonomies from './detail-taxonomies';
 import collapsedTaxonomies from './collapsed-taxonomies';

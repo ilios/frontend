@@ -9,7 +9,7 @@ import {
   triggerable,
 } from 'ember-cli-page-object';
 import objectives from './session/objectives';
-import learningMaterials from './learning-materials';
+import learningMaterials from './detail-learning-materials';
 import meshTerms from './mesh-terms';
 import taxonomies from './detail-taxonomies';
 import collapsedTaxonomies from './collapsed-taxonomies';
