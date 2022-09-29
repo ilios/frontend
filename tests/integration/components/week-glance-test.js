@@ -253,19 +253,20 @@ module('Integration | Component | week glance', function (hooks) {
   });
 
   test('changing passed properties re-renders', async function (assert) {
-    assert.expect(10);
+    assert.expect(8);
     const nextYear = testDate.plus({ years: 1 });
     let count = 1;
+    const service = this.owner.lookup('service:locale-days');
     class blankEventsMock extends Service {
       async getEvents(fromStamp, toStamp) {
         const from = DateTime.fromSeconds(fromStamp);
         const to = DateTime.fromSeconds(toStamp);
+        const fromTestDate = DateTime.fromJSDate(service.firstDayOfDateWeek(testDate.toJSDate()));
+        const toTestDate = DateTime.fromJSDate(service.lastDayOfDateWeek(testDate.toJSDate()));
         switch (count) {
           case 1:
-            assert.ok(from.hasSame(testDate, 'year'), 'From-date has same year as testDate.');
-            assert.ok(to.hasSame(testDate, 'year'), 'To-date has same year as testDate.');
-            assert.ok(from.hasSame(testDate, 'week'), 'From-date has same week as testDate.');
-            assert.ok(to.hasSame(testDate, 'week'), 'To-date has same wek as testDate.');
+            assert.ok(from.hasSame(fromTestDate, 'day'), 'From is at the start of test date week.');
+            assert.ok(to.hasSame(toTestDate, 'day'), 'To is at the end of test date week.');
             break;
           case 2:
             assert.ok(from.hasSame(nextYear, 'year'), 'From-date has same year as next year.');
