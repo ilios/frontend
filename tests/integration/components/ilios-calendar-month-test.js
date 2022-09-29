@@ -12,7 +12,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
 
   test('month displays with three events', async function (assert) {
     const date = DateTime.fromISO('2015-09-30T12:00:00');
-    this.set('date', date.toISO());
+    this.set('date', date.toJSDate());
     const firstEvent = createUserEventObject();
     firstEvent.name = 'Some new thing';
     firstEvent.startDate = date.toISO();
@@ -38,7 +38,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
 
   test('month displays with two events', async function (assert) {
     const date = DateTime.fromISO('2015-09-30T12:00:00');
-    this.set('date', date.toISO());
+    this.set('date', date.toJSDate());
     const firstEvent = createUserEventObject();
     firstEvent.name = 'Some new thing';
     firstEvent.startDate = date.toISO();
@@ -61,7 +61,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
   test('clicking on a day fires the correct event', async function (assert) {
     assert.expect(3);
     const date = DateTime.fromISO('2015-09-30T12:00:00');
-    this.set('date', date.toISO());
+    this.set('date', date.toJSDate());
     this.set('changeDate', (newDate) => {
       assert.ok(newDate instanceof Date);
       assert.ok(newDate.toString().includes('Tue Sep 01'));
@@ -104,7 +104,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     const event2 = createUserEventObject();
     event2.startDate = date.plus({ hour: 48 }).toISO();
     event2.endDate = date.plus({ hour: 72 }).toISO();
-    this.set('date', date.toISO());
+    this.set('date', date.toJSDate());
     this.set('events', [event, event2]);
     await render(hbs`<IliosCalendarMonth
       @date={{this.date}}

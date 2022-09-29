@@ -19,7 +19,7 @@ module('Integration | Component | ilios calendar day', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.set('date', september30th2015.toISO());
+    this.set('date', september30th2015.toJSDate());
     await render(
       hbs`<IliosCalendarDay @date={{this.date}} @selectEvent={{(noop)}} @calendarEvents={{(array)}} />`
     );

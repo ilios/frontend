@@ -1,10 +1,26 @@
 import Component from '@glimmer/component';
 import moment from 'moment';
 import { action } from '@ember/object';
+import { deprecate } from '@ember/debug';
+import { DateTime } from 'luxon';
 
 export default class IliosCalendarWeekComponent extends Component {
+  get date() {
+    if (typeof this.args.date === 'string') {
+      deprecate(`String passed to IliosCalendarWeek @date instead of Date`, false, {
+        id: 'common.dates-no-strings',
+        for: 'ilios-common',
+        until: '72',
+        since: '71',
+      });
+      return DateTime.fromISO(this.args.date).toJSDate();
+    }
+
+    return this.args.date;
+  }
+
   get weekOf() {
-    return moment(this.args.date).startOf('week').format('MMMM Do YYYY');
+    return moment(this.date).startOf('week').format('MMMM Do YYYY');
   }
   get ilmPreWorkEvents() {
     const preWork = this.args.calendarEvents.reduce((arr, ev) => {

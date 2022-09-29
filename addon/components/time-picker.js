@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 import moment from 'moment';
 import { action } from '@ember/object';
+import { deprecate } from '@ember/debug';
+import { DateTime } from 'luxon';
 
 export default class TimePicker extends Component {
   constructor() {
@@ -72,16 +74,30 @@ export default class TimePicker extends Component {
     this.ampms = ['am', 'pm'];
   }
 
+  get date() {
+    if (typeof this.args.date === 'string') {
+      deprecate(`String passed to TimePicker @date instead of Date`, false, {
+        id: 'common.dates-no-strings',
+        for: 'ilios-common',
+        until: '72',
+        since: '71',
+      });
+      return DateTime.fromISO(this.args.date).toJSDate();
+    }
+
+    return this.args.date;
+  }
+
   get hour() {
-    return moment(this.args.date).format('h');
+    return moment(this.date).format('h');
   }
 
   get minute() {
-    return moment(this.args.date).format('mm');
+    return moment(this.date).format('mm');
   }
 
   get ampm() {
-    return moment(this.args.date).format('a');
+    return moment(this.date).format('a');
   }
 
   @action
@@ -106,7 +122,7 @@ export default class TimePicker extends Component {
   changeAmPm(event) {
     const value = event.target.value;
     const currentValue = this.ampm;
-    const hour = moment(this.args.date).hours();
+    const hour = moment(this.date).hours();
 
     if (value !== currentValue) {
       if (value === 'am') {

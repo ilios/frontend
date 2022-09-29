@@ -11,9 +11,16 @@ module('Integration | Component | ilios calendar', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders in day view mode', async function (assert) {
-    const date = new Date('2015-09-30T12:00:00');
-    const today = DateTime.now().toFormat('kkkk-MM-dd');
-    this.set('date', date);
+    const date = DateTime.fromObject({
+      year: 2015,
+      month: 9,
+      day: 30,
+      hour: 12,
+      minute: 0,
+      second: 0,
+    });
+    const today = DateTime.now().toFormat('yyyy-MM-dd');
+    this.set('date', date.toJSDate());
 
     await render(hbs`<IliosCalendar
       @selectedDate={{this.date}}
@@ -42,8 +49,15 @@ module('Integration | Component | ilios calendar', function (hooks) {
   });
 
   test('it renders in week view mode', async function (assert) {
-    const date = new Date('2015-09-30T12:00:00');
-    this.set('date', date);
+    const date = DateTime.fromObject({
+      year: 2015,
+      month: 9,
+      day: 30,
+      hour: 12,
+      minute: 0,
+      second: 0,
+    });
+    this.set('date', date.toJSDate());
 
     await render(hbs`<IliosCalendar
       @selectedDate={{this.date}}
@@ -64,8 +78,15 @@ module('Integration | Component | ilios calendar', function (hooks) {
   });
 
   test('it renders in month view mode', async function (assert) {
-    const date = new Date('2015-09-30T12:00:00');
-    this.set('date', date);
+    const date = DateTime.fromObject({
+      year: 2015,
+      month: 9,
+      day: 30,
+      hour: 12,
+      minute: 0,
+      second: 0,
+    });
+    this.set('date', date.toJSDate());
 
     await render(hbs`<IliosCalendar
       @selectedDate={{this.date}}
@@ -86,8 +107,15 @@ module('Integration | Component | ilios calendar', function (hooks) {
   });
 
   test('toggle ics feed visibility', async function (assert) {
-    const date = new Date('2015-09-30T12:00:00');
-    this.set('date', date);
+    const date = DateTime.fromObject({
+      year: 2015,
+      month: 9,
+      day: 30,
+      hour: 12,
+      minute: 0,
+      second: 0,
+    });
+    this.set('date', date.toJSDate());
 
     await render(hbs`<IliosCalendar
       @selectedDate={{this.date}}

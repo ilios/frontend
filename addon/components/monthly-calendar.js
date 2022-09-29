@@ -2,21 +2,67 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { sortBy } from '../utils/array-helpers';
 import { DateTime } from 'luxon';
+import { deprecate } from '@ember/debug';
 
 export default class MonthlyCalendarComponent extends Component {
   @service intl;
   @service localeDays;
+
+  get date() {
+    if (typeof this.args.date === 'string') {
+      deprecate(`String passed to MonthlyCalendar @date instead of Date`, false, {
+        id: 'common.dates-no-strings',
+        for: 'ilios-common',
+        until: '72',
+        since: '71',
+      });
+      return DateTime.fromISO(this.args.date).toJSDate();
+    }
+
+    return this.args.date;
+  }
 
   get sortedEvents() {
     if (!this.args.events) {
       return [];
     }
 
-    return sortBy(this.args.events, ['startDate', 'endDate', 'name']);
+    const events = this.args.events.map((event) => {
+      if (typeof event.startDate === 'object') {
+        deprecate(
+          `Object passed to MonothlyCalendar @events.startDate instead of ISO string`,
+          false,
+          {
+            id: 'common.dates-no-dates',
+            for: 'ilios-common',
+            until: '72',
+            since: '71',
+          }
+        );
+        event.startDate = DateTime.fromJSDate(event.startDate).toISO();
+      }
+      if (typeof event.endDate === 'object') {
+        deprecate(
+          `Object passed to MonothlyCalendar @events.endDate instead of ISO string`,
+          false,
+          {
+            id: 'common.dates-no-dates',
+            for: 'ilios-common',
+            until: '72',
+            since: '71',
+          }
+        );
+        event.endDate = DateTime.fromJSDate(event.endDate).toISO();
+      }
+
+      return event;
+    });
+
+    return sortBy(events, ['startDate', 'endDate', 'name']);
   }
 
   get firstDayOfMonth() {
-    return DateTime.fromISO(this.args.date).startOf('month').toJSDate();
+    return DateTime.fromJSDate(this.date).startOf('month').toJSDate();
   }
 
   get firstDayOfFirstWeek() {

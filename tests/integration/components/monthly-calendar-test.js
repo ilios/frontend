@@ -22,7 +22,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{(array)}}
@@ -52,7 +52,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -84,7 +84,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -112,7 +112,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     this.set('changeToDayView', () => {
       assert.ok(true);
     });
@@ -142,7 +142,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     this.set('selectEvent', () => {
       assert.ok(true);
     });
@@ -171,7 +171,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     this.set('changeToDayView', () => {
       assert.ok(true);
     });
@@ -202,7 +202,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     this.set('changeToDayView', () => {
       assert.ok(true);
     });
@@ -230,7 +230,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       endDate: december112017.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', december112017.toISO());
+    this.set('date', december112017.toJSDate());
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -269,7 +269,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       endDate: february1st2020.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', february1st2020.toISO());
+    this.set('date', february1st2020.toJSDate());
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{this.events}}

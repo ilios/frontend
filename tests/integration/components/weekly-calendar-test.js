@@ -15,13 +15,11 @@ module('Integration | Component | weekly-calendar', function (hooks) {
 
   hooks.beforeEach(function () {
     this.owner.lookup('service:intl').setLocale('en-us');
-    this.owner.lookup('service:moment').setLocale('en');
   });
 
   //reset locale for other tests
   hooks.afterEach(function () {
     this.owner.lookup('service:intl').setLocale('en-us');
-    this.owner.lookup('service:moment').setLocale('en');
   });
 
   this.createEvent = function (startDate, endDate, color) {
@@ -42,7 +40,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{(array)}}
@@ -71,7 +69,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -108,7 +106,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     this.createEvent('2019-01-07 14:00:00', '2019-01-07 16:00:00', '#ffffff');
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -152,7 +150,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     this.set('changeToDayView', () => {
       assert.ok(true);
     });
@@ -182,7 +180,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     this.set('selectEvent', () => {
       assert.ok(true);
     });
@@ -213,7 +211,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     this.set('changeToDayView', () => {
       assert.ok(true);
     });
@@ -241,7 +239,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       endDate: december111980.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', december111980);
+    this.set('date', december111980.toJSDate());
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -259,7 +257,6 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     assert.ok(component.events[0].isFifthDayOfWeek);
 
     this.owner.lookup('service:intl').setLocale('es');
-    this.owner.lookup('service:moment').setLocale('es');
     await settled();
 
     assert.strictEqual(component.longWeekOfYear, 'Semana de 8 de diciembre de 1980');
@@ -288,7 +285,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       endDate: february252020.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', february252020);
+    this.set('date', february252020.toJSDate());
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -306,7 +303,6 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     assert.ok(component.events[0].isThirdDayOfWeek);
 
     this.owner.lookup('service:intl').setLocale('es');
-    this.owner.lookup('service:moment').setLocale('es');
     await settled();
 
     assert.strictEqual(component.longWeekOfYear, 'Semana de 24 de febrero de 2020');

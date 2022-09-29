@@ -4,6 +4,7 @@ import colorChange from '../utils/color-change';
 import { htmlSafe } from '@ember/template';
 import calendarEventTooltip from '../utils/calendar-event-tooltip';
 import { inject as service } from '@ember/service';
+import { deprecate } from '@ember/debug';
 
 export default class WeeklyCalendarEventComponent extends Component {
   @service intl;
@@ -20,6 +21,34 @@ export default class WeeklyCalendarEventComponent extends Component {
     });
 
     this.minutes = allMinutesInDay;
+  }
+
+  get startDate() {
+    if (typeof this.args.startDate === 'string') {
+      deprecate(`String passed to WeeklyCalendarEvent @event.startDate instead of Date`, false, {
+        id: 'common.dates-no-strings',
+        for: 'ilios-common',
+        until: '72',
+        since: '71',
+      });
+      return DateTime.fromISO(this.args.event.startDate).toJSDate();
+    }
+
+    return this.args.event.startDate;
+  }
+
+  get endDate() {
+    if (typeof this.args.endDate === 'string') {
+      deprecate(`String passed to WeeklyCalendarEvent @event.endDate instead of Date`, false, {
+        id: 'common.dates-no-strings',
+        for: 'ilios-common',
+        until: '72',
+        since: '71',
+      });
+      return DateTime.fromISO(this.args.event.endDate).toJSDate();
+    }
+
+    return this.args.event.endDate;
   }
 
   get isIlm() {
@@ -48,11 +77,11 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   get startDateTime() {
-    return DateTime.fromISO(this.args.event.startDate);
+    return DateTime.fromJSDate(this.startDate);
   }
 
   get endDateTime() {
-    return DateTime.fromISO(this.args.event.endDate);
+    return DateTime.fromJSDate(this.endDate);
   }
 
   get startOfDay() {
@@ -70,14 +99,14 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   getMinuteInTheDay(date) {
-    const m = DateTime.fromISO(date);
-    const midnight = DateTime.fromISO(date).startOf('day');
+    const m = DateTime.fromJSDate(date);
+    const midnight = DateTime.fromJSDate(date).startOf('day');
     return m.diff(midnight, 'minutes').minutes;
   }
 
   get span() {
-    const start = this.getMinuteInTheDay(this.args.event.startDate);
-    const end = this.getMinuteInTheDay(this.args.event.endDate);
+    const start = this.getMinuteInTheDay(this.startDate);
+    const end = this.getMinuteInTheDay(this.endDate);
 
     const minutes = this.minutes.slice(start, end - 1);
     const max = Math.max(...minutes);

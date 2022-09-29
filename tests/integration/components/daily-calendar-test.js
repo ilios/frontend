@@ -36,7 +36,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{(array)}}
@@ -62,7 +62,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -95,7 +95,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.createEvent('2019-01-07 14:00:00', '2019-01-07 16:00:00', '#ffffff');
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{this.events}}
@@ -130,7 +130,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', january9th2019.toISO());
+    this.set('date', january9th2019.toJSDate());
     this.set('selectEvent', () => {
       assert.ok(true);
     });
@@ -157,7 +157,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
       endDate: december111980.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
-    this.set('date', december111980.toISO());
+    this.set('date', december111980.toJSDate());
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{this.events}}

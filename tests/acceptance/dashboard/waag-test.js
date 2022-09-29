@@ -38,7 +38,6 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       isPublished: true,
       offering: 2,
     });
-    console.log(endOfWeek.toJSDate());
     await page.visit({ show: 'week' });
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 

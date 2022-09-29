@@ -18,5 +18,7 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'ember-modifier.no-element-property' },
     { handler: 'silence', matchId: 'ember-modifier.function-based-options' },
     { handler: 'silence', matchId: 'ember-data:model-save-promise' }, //https://github.com/emberjs/data/issues/7997
+    { handler: 'silence', matchId: 'common.dates-no-strings' },
+    { handler: 'silence', matchId: 'common.dates-no-dates' },
   ],
 };
