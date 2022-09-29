@@ -96,7 +96,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     );
     assert.strictEqual(
       blocks[0].dayOfMonth,
-      DateTime.fromJSDate(this.offering1.startDate).toFormat('MMMM dd')
+      DateTime.fromJSDate(this.offering1.startDate).toFormat('MMMM d')
     );
     assert.strictEqual(
       blocks[0].startTime,
@@ -116,7 +116,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     );
     assert.strictEqual(
       blocks[1].dayOfMonth,
-      DateTime.fromJSDate(this.offering2.startDate).toFormat('MMMM dd')
+      DateTime.fromJSDate(this.offering2.startDate).toFormat('MMMM d')
     );
     assert.strictEqual(
       blocks[1].startTime,
@@ -136,16 +136,16 @@ module('Acceptance | Session - Offerings', function (hooks) {
     );
     assert.strictEqual(
       blocks[2].dayOfMonth,
-      DateTime.fromJSDate(this.offering3.startDate).toFormat('MMMM dd')
+      DateTime.fromJSDate(this.offering3.startDate).toFormat('MMMM d')
     );
     assert.strictEqual(blocks[2].offerings.length, 1);
     assert.strictEqual(
       blocks[2].multiDayStart,
-      'Starts: ' + DateTime.fromJSDate(this.offering3.startDate).toFormat('cccc MMMM dd @ h:mm a')
+      'Starts: ' + DateTime.fromJSDate(this.offering3.startDate).toFormat('cccc MMMM d @ h:mm a')
     );
     assert.strictEqual(
       blocks[2].multiDayEnd,
-      'Ends: ' + DateTime.fromJSDate(this.offering3.endDate).toFormat('cccc MMMM dd @ h:mm a')
+      'Ends: ' + DateTime.fromJSDate(this.offering3.endDate).toFormat('cccc MMMM d @ h:mm a')
     );
   });
 

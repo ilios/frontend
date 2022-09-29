@@ -143,11 +143,11 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(offerings.dates.length, 3);
 
     assert.strictEqual(offerings.dates[0].dayOfWeek, offering1StartDate.toFormat('cccc'));
-    assert.strictEqual(offerings.dates[0].dayOfMonth, offering1StartDate.toFormat('MMMM dd'));
+    assert.strictEqual(offerings.dates[0].dayOfMonth, offering1StartDate.toFormat('MMMM d'));
     assert.strictEqual(offerings.dates[1].dayOfWeek, offering2StartDate.toFormat('cccc'));
-    assert.strictEqual(offerings.dates[1].dayOfMonth, offering2StartDate.toFormat('MMMM dd'));
+    assert.strictEqual(offerings.dates[1].dayOfMonth, offering2StartDate.toFormat('MMMM d'));
     assert.strictEqual(offerings.dates[2].dayOfWeek, offering3StartDate.toFormat('cccc'));
-    assert.strictEqual(offerings.dates[2].dayOfMonth, offering3StartDate.toFormat('MMMM dd'));
+    assert.strictEqual(offerings.dates[2].dayOfMonth, offering3StartDate.toFormat('MMMM d'));
 
     assert.strictEqual(offerings.offerings.length, 3);
     assert.strictEqual(offerings.offerings[0].startTime, offering1StartDate.toFormat('h:mm a'));
