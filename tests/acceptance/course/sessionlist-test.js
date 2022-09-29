@@ -201,7 +201,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     await sessions[0].expand();
     assert.strictEqual(
       expandedSessions[0].lastUpdated,
-      'Last Update Last Update: 07/09/2019 5:00 PM'
+      'Last Update Last Update: 7/9/2019, 5:00 PM'
     );
   });
 

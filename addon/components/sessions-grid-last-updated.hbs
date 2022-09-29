@@ -1,5 +1,5 @@
 <div class="sessions-grid-last-updated">
   <FaIcon @icon="clock-rotate-left" @title={{t "general.lastUpdate"}} />
   {{t "general.lastUpdate"}}:
-  {{this.updatedAt}}
+  {{format-date @session.updatedAt month="numeric" day="numeric" year="numeric" hour="numeric" minute="numeric"}}
 </div>
