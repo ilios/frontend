@@ -4,7 +4,7 @@ import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { tracked } from '@glimmer/tracking';
 
-export default class ReportsController extends Controller {
+export default class ReportsSubjectController extends Controller {
   @service store;
 
   @use selectedReport = new AsyncProcess(() => [this.getSelectedReport.bind(this), this.report]);
