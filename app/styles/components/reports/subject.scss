@@ -1,98 +1,55 @@
 .reports-subject {
   @include main-section;
-  margin-bottom: 1rem;
 
   .header {
-    border-bottom: 1px solid $culturedGrey;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: calc($golden-ratio-large * 1rem) 0 calc($golden-ratio-small * 1rem) 0;
-    margin: 0 .8rem;
-
-    @include for-tablet-and-up {
-      flex-direction: row;
-    }
+    @include main-list-box-header;
 
     h2 {
-      @include ilios-heading-h4;
-
-      @include for-laptop-and-up {
-        display: inline;
-      }
+      @include ilios-heading;
     }
 
     .title {
-      @include ilios-heading-h4;
+      @include main-list-box-header-title;
     }
   }
 
-  .saved-reports {
-    @include ilios-list-reset;
-    margin: .5rem;
+  .content-container {
+    margin-left: 1rem;
 
-    li {
-      display: flex;
-      justify-content: space-between;
+    .saved-reports {
+      @include ilios-list-reset;
+      margin: .5rem 0;
 
-      button {
-        @include ilios-link-button;
-        font-weight: 600;
-        margin-right: .5rem;
-        text-align: left;
+      li {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+          @include ilios-link-button;
+          font-weight: 600;
+          margin-right: .5rem;
+          text-align: left;
+        }
       }
     }
-  }
 
-  .form-title {
-    color: $orange;
-    font-weight: bold;
-    margin-bottom: .5rem;
-  }
-
-  .form-label {
-    @include font-size('small');
-    font-weight: bold;
-    text-align: left;
-
-    &.sub-label {
-      @include font-size('small');
-      font-style: italic;
-      font-weight: normal;
+    .years-filter {
+      margin: .5rem 0 1rem;
+      padding-right: .5rem;
+      text-align: right;
+      width: 100%;
     }
-  }
 
-  .input-buttons {
-    float: right;
-  }
+    .fa-trash {
+      @include icon;
+    }
 
-  .form-data input {
-    width: 100%;
-  }
+    .report-title {
+      padding-left: 1rem;
+    }
 
-  .form-container {
-    border: $culturedGrey 2px solid;
-    margin: 10px;
-    padding: 10px;
-  }
-
-  .years-filter {
-    margin: .5rem 0 1rem;
-    padding-right: .5rem;
-    text-align: right;
-    width: 100%;
-  }
-
-  .fa-trash {
-    @include icon;
-  }
-
-  .report-title {
-    padding-left: 1rem;
-  }
-
-  .report-results {
-    @include ilios-list-reset;
-    margin-left: 1rem;
+    .report-results {
+      @include ilios-list-reset;
+    }
   }
 }
