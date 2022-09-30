@@ -1,14 +1,14 @@
 {{#let (unique-id) as |templateId|}}
   <div
-    class="dashboard-myreports"
-    data-test-dashboard-myreports
+    class="reports-subject"
+    data-test-reports-subject
     ...attributes
   >
-    <div class="dashboard-block-header">
+    <div class="header">
       <h3 id="{{templateId}}-title" data-test-title>
         {{t "general.myReports"}}
       </h3>
-      <div class="dashboard-block-actions">
+      <div class="actions">
         {{#if @selectedReport}}
           <button type="button" {{on "click" this.clearReport}}>
             {{t "general.allReports"}}
@@ -39,7 +39,7 @@
     </div>
     {{#if @selectedReport}}
       <div
-        class="dashboard-block-body"
+        class="body"
         data-test-selected-report
         {{did-insert (set this.scrollTarget)}}
         {{! template-lint-disable no-invalid-interactive }}
@@ -106,7 +106,7 @@
       </div>
     {{else}}
       <div
-        class="dashboard-block-body"
+        class="body"
         aria-labelledby="{{templateId}}-title"
         tabindex="0"
       >

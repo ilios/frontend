@@ -8,7 +8,7 @@ import { authenticateSession } from 'ember-simple-auth/test-support';
 import { component } from 'ilios/tests/pages/components/dashboard-myreports';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | dashboard myreports', function (hooks) {
+module('Integration | Component | reports/subject', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -44,7 +44,7 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     });
     this.setProperties({ selectedReport: null, selectedYear: '' });
     this.setProperties({ setReport: () => {}, setReportYear: () => {} });
-    await render(hbs`<DashboardMyreports
+    await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
       @onReportSelect={{this.setReport}}
@@ -59,7 +59,7 @@ module('Integration | Component | dashboard myreports', function (hooks) {
 
   test('display none when no reports', async function (assert) {
     assert.expect(3);
-    await render(hbs`<DashboardMyreports />`);
+    await render(hbs`<Reports::Subject />`);
     assert.strictEqual(component.title, 'My Reports');
     assert.strictEqual(component.reports.length, 1);
     assert.strictEqual(component.reports[0].text, 'None');
@@ -105,7 +105,7 @@ module('Integration | Component | dashboard myreports', function (hooks) {
       this.set('selectedYear', year);
       assert.strictEqual(year, '2016', 'report year bubbles up for query params');
     });
-    await render(hbs`<DashboardMyreports
+    await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
       @onReportSelect={{this.setReport}}
@@ -149,7 +149,7 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').find('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', year);
-    await render(hbs`<DashboardMyreports
+    await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
       @onReportSelect={{(noop)}}
@@ -182,7 +182,7 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     this.setProperties({ selectedReport: null, selectedYear: '' });
     this.set('setReport', () => this.set('selectedReport', report));
     this.set('setReportYear', (year) => this.set('selectedYear', year));
-    await render(hbs`<DashboardMyreports
+    await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
       @onReportSelect={{this.setReport}}

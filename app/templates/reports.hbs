@@ -1,9 +1,7 @@
-<div class="dashboard-blocks">
-  <DashboardMyreports
-      data-test-myreports
-      @selectedReport={{this.selectedReport}}
-      @selectedYear={{this.reportYear}}
-      @onReportSelect={{set this.report}}
-      @onReportYearSelect={{set this.reportYear}}
-  />
-</div>
+<Reports::Subject
+  @selectedReport={{this.selectedReport}}
+  @selectedYear={{this.reportYear}}
+  @onReportSelect={{set this.report}}
+  @onReportYearSelect={{set this.reportYear}}
+/>
+

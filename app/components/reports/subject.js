@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { dropTask, timeout } from 'ember-concurrency';
 import PapaParse from 'papaparse';
-import createDownloadFile from '../utils/create-download-file';
+import createDownloadFile from '../../utils/create-download-file';
 import { later } from '@ember/runloop';
 import buildReportTitle from 'ilios/utils/build-report-title';
 import { map } from 'rsvp';
@@ -13,9 +13,9 @@ import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
 
-const SCROLL_KEY = 'dashboard-my-reports';
+const SCROLL_KEY = 'reports-subject';
 
-export default class DashboardMyreportsComponent extends Component {
+export default class ReportsSubjectComponent extends Component {
   @service currentUser;
   @service preserveScroll;
   @service reporting;

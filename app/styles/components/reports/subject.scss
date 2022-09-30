@@ -1,8 +1,18 @@
-.dashboard-myreports {
-  @include dashboard-block;
+.reports-subject {
+  border: 1px solid $blueMunsell;
 
-  @include for-laptop-and-up() {
-    grid-column: 1 / 2;
+  .header {
+    align-items: center;
+    background-color: $culturedGrey;
+    border: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+
+    h3 {
+      @include ilios-heading-h3;
+      color: $orange;
+    }
   }
 
   .saved-reports {

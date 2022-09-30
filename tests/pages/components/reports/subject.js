@@ -10,7 +10,7 @@ import {
 } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-dashboard-myreports]',
+  scope: '[data-test-reports-subject]',
   title: text('[data-test-title]'),
   addNewReport: clickable('[data-test-expand-collapse-button] button'),
   reports: collection('[data-test-saved-reports] li', {
