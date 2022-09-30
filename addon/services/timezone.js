@@ -1,4 +1,5 @@
 import Service from '@ember/service';
+import { DateTime } from 'luxon';
 import moment from 'moment';
 import { uniqueValues } from '../utils/array-helpers';
 
@@ -20,7 +21,7 @@ export default class TimezoneService extends Service {
    * @returns {string}
    */
   getCurrentTimezone() {
-    return moment.tz.guess();
+    return DateTime.local().zoneName;
   }
 
   /**
