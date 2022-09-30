@@ -332,15 +332,26 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('changing start date changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
-    const format = 'M/d/yyyy, h:mm a';
     const newStartDate = DateTime.fromObject({ hour: 9 }).plus({ days: 1 });
     assert.strictEqual(
-      DateTime.fromObject({ hour: 9, minute: 0 }).toFormat(format),
+      this.intl.formatDate(DateTime.fromObject({ hour: 9, minute: 0 }).toJSDate(), {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      }),
       component.endDate.value
     );
     await component.startDate.datePicker.set(newStartDate.toJSDate());
     assert.strictEqual(
-      newStartDate.set({ hour: 9, minute: 0 }).toFormat(format),
+      this.intl.formatDate(newStartDate.set({ hour: 9, minute: 0 }).toJSDate(), {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      }),
       component.endDate.value
     );
   });
@@ -349,28 +360,51 @@ module('Integration | Component | offering form', function (hooks) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
     assert.strictEqual(
       component.endDate.value,
-      DateTime.fromObject({ hour: 9, minute: 0 }).toLocaleString(DateTime.DATETIME_SHORT)
+      this.intl.formatDate(DateTime.fromObject({ hour: 9, minute: 0 }).toJSDate(), {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      })
     );
     await component.startTime.timePicker.hour.select('2');
     await component.startTime.timePicker.minute.select('15');
     await component.startTime.timePicker.ampm.select('pm');
     assert.strictEqual(
       component.endDate.value,
-      DateTime.fromObject({ hour: 15, minute: 15 }).toLocaleString(DateTime.DATETIME_SHORT)
+      this.intl.formatDate(DateTime.fromObject({ hour: 15, minute: 15 }).toJSDate(), {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      })
     );
   });
 
   test('changing duration changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
-    const format = 'M/d/yyyy, h:mm a';
     assert.strictEqual(
-      DateTime.fromObject({ hour: 9, minute: 0 }).toFormat(format),
+      this.intl.formatDate(DateTime.fromObject({ hour: 9, minute: 0 }).toJSDate(), {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      }),
       component.endDate.value
     );
     await component.duration.hours.set('2');
     await component.duration.minutes.set('15');
     assert.strictEqual(
-      DateTime.fromObject({ hour: 10, minute: 15 }).toFormat(format),
+      this.intl.formatDate(DateTime.fromObject({ hour: 10, minute: 15 }).toJSDate(), {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      }),
       component.endDate.value
     );
   });
@@ -378,9 +412,14 @@ module('Integration | Component | offering form', function (hooks) {
   // @see https://github.com/ilios/frontend/issues/1903
   test('changing duration and start time changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} />`);
-    const format = 'M/d/yyyy, h:mm a';
     assert.strictEqual(
-      DateTime.fromObject({ hour: 9, minute: 0 }).toFormat(format),
+      this.intl.formatDate(DateTime.fromObject({ hour: 9, minute: 0 }).toJSDate(), {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      }),
       component.endDate.value
     );
     await component.startTime.timePicker.hour.select('2');
@@ -389,7 +428,13 @@ module('Integration | Component | offering form', function (hooks) {
     await component.duration.hours.set('2');
     await component.duration.minutes.set('50');
     assert.strictEqual(
-      DateTime.fromObject({ hour: 17, minute: 0 }).toFormat(format),
+      this.intl.formatDate(DateTime.fromObject({ hour: 17, minute: 0 }).toJSDate(), {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      }),
       component.endDate.value
     );
   });
