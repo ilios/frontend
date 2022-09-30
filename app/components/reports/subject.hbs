@@ -111,7 +111,7 @@
         tabindex="0"
       >
         {{#if this.myReportEditorOn}}
-          <NewMyreport @close={{fn (set this.myReportEditorOn) false}} />
+          <Reports::NewSubject @close={{fn (set this.myReportEditorOn) false}} />
         {{/if}}
         {{#if (is-array this.reports)}}
           <ul class="saved-reports" data-test-saved-reports>

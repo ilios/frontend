@@ -1,4 +1,4 @@
-.new-myreport {
+.reports-new-subject {
   background-color: $slightWhite;
   border: 1px solid $culturedGrey;
   margin: .5rem;
@@ -6,11 +6,10 @@
 
   .title {
     @include ilios-heading-h5;
-    color: $orange;
     margin-bottom: .5rem;
   }
 
-  .new-myreport-content {
+  .new-subject-content {
     @include ilios-form-error;
     p {
       display: grid;

@@ -12,7 +12,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 @validatable
-export default class NewMyReportComponent extends Component {
+export default class ReportsNewSubjectComponent extends Component {
   @service currentUser;
   @service flashMessages;
   @service intl;
