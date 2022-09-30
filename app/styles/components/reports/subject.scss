@@ -45,7 +45,8 @@
     }
 
     .report-title {
-      padding-left: 1rem;
+      @include ilios-heading-h4;
+      padding-top: 1rem;
     }
 
     .report-results {
