@@ -21,6 +21,13 @@ const definition = {
       isNotSorted: hasClass('fa-sort', 'svg'),
       click: clickable('button'),
     },
+    associatedCourses: {
+      scope: 'th:nth-of-type(3)',
+      isSortedAscending: hasClass('fa-arrow-down-1-9', 'svg'),
+      isSortedDescending: hasClass('fa-arrow-down-9-1', 'svg'),
+      isNotSorted: hasClass('fa-sort', 'svg'),
+      click: clickable('button'),
+    },
   },
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',

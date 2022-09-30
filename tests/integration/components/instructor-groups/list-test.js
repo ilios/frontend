@@ -104,9 +104,33 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
   test('sort', async function (assert) {
     const school = this.server.create('school');
     const users = this.server.createList('user', 5);
-    this.server.create('instructor-group', { school, users: [users[0], users[1]] });
-    this.server.create('instructor-group', { school });
-    this.server.create('instructor-group', { school, users: [users[2], users[3], users[4]] });
+    let sessions = this.server
+      .createList('course', 5, { school })
+      .map((course) => this.server.create('session', { course }));
+
+    this.server.create('instructor-group', {
+      school,
+      users: [users[0], users[1]],
+      offerings: [
+        this.server.create('offering', { session: sessions[0] }),
+        this.server.create('offering', { session: sessions[1] }),
+      ],
+      ilmSessions: [this.server.create('ilmSession', { session: sessions[3] })],
+    });
+    this.server.create('instructor-group', {
+      school,
+      offerings: [],
+      ilmSessions: [this.server.create('ilmSession', { session: sessions[2] })],
+    });
+    this.server.create('instructor-group', {
+      school,
+      users: [users[2], users[3], users[4]],
+      offerings: [
+        this.server.create('offering', { session: sessions[0] }),
+        this.server.create('offering', { session: sessions[4] }),
+        this.server.create('offering', { session: sessions[4] }),
+      ],
+    });
 
     const instructorGroupModels = await this.owner
       .lookup('service:store')
@@ -121,6 +145,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     assert.strictEqual(component.items.length, 3);
     assert.ok(component.header.title.isSortedAscending);
     assert.ok(component.header.members.isNotSorted);
+    assert.ok(component.header.associatedCourses.isNotSorted);
     assert.strictEqual(component.items[0].title, 'instructor group 0');
     assert.strictEqual(component.items[0].users, '2');
     assert.strictEqual(component.items[1].title, 'instructor group 1');
@@ -131,6 +156,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     await component.header.title.click();
     assert.ok(component.header.title.isSortedDescending);
     assert.ok(component.header.members.isNotSorted);
+    assert.ok(component.header.associatedCourses.isNotSorted);
     assert.strictEqual(component.items[0].title, 'instructor group 2');
     assert.strictEqual(component.items[1].title, 'instructor group 1');
     assert.strictEqual(component.items[2].title, 'instructor group 0');
@@ -138,6 +164,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     await component.header.members.click();
     assert.ok(component.header.title.isNotSorted);
     assert.ok(component.header.members.isSortedAscending);
+    assert.ok(component.header.associatedCourses.isNotSorted);
     assert.strictEqual(component.items[0].title, 'instructor group 1');
     assert.strictEqual(component.items[1].title, 'instructor group 0');
     assert.strictEqual(component.items[2].title, 'instructor group 2');
@@ -145,8 +172,25 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     await component.header.members.click();
     assert.ok(component.header.title.isNotSorted);
     assert.ok(component.header.members.isSortedDescending);
+    assert.ok(component.header.associatedCourses.isNotSorted);
     assert.strictEqual(component.items[0].title, 'instructor group 2');
     assert.strictEqual(component.items[1].title, 'instructor group 0');
+    assert.strictEqual(component.items[2].title, 'instructor group 1');
+
+    await component.header.associatedCourses.click();
+    assert.ok(component.header.title.isNotSorted);
+    assert.ok(component.header.members.isNotSorted);
+    assert.ok(component.header.associatedCourses.isSortedAscending);
+    assert.strictEqual(component.items[0].title, 'instructor group 1');
+    assert.strictEqual(component.items[1].title, 'instructor group 2');
+    assert.strictEqual(component.items[2].title, 'instructor group 0');
+
+    await component.header.associatedCourses.click();
+    assert.ok(component.header.title.isNotSorted);
+    assert.ok(component.header.members.isNotSorted);
+    assert.ok(component.header.associatedCourses.isSortedDescending);
+    assert.strictEqual(component.items[0].title, 'instructor group 0');
+    assert.strictEqual(component.items[1].title, 'instructor group 2');
     assert.strictEqual(component.items[2].title, 'instructor group 1');
   });
 });

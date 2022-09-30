@@ -19,14 +19,33 @@ export default class LearnerGroupListComponent extends Component {
     this.args.setSortBy(what);
   }
 
-  @action
-  sortByTitle(instructorGroupA, instructorGroupB) {
+  get sortGroups() {
     const locale = this.intl.get('primaryLocale');
-    if ('title:desc' === this.args.sortBy) {
-      return instructorGroupB.title.localeCompare(instructorGroupA.title, locale, {
-        numeric: true,
-      });
+    if (this.args.sortBy === 'title') {
+      return (instructorGroupA, instructorGroupB) => {
+        return instructorGroupA.title.localeCompare(instructorGroupB.title, locale, {
+          numeric: true,
+        });
+      };
     }
-    return instructorGroupA.title.localeCompare(instructorGroupB.title, locale, { numeric: true });
+    if (this.args.sortBy === 'title:desc') {
+      return (instructorGroupA, instructorGroupB) => {
+        return instructorGroupB.title.localeCompare(instructorGroupA.title, locale, {
+          numeric: true,
+        });
+      };
+    }
+    if (this.args.sortBy === 'courses') {
+      return (a, b) => {
+        return a.courses.length - b.courses.length;
+      };
+    }
+    if (this.args.sortBy === 'courses:desc') {
+      return (a, b) => {
+        return b.courses.length - a.courses.length;
+      };
+    }
+
+    return this.args.sortBy;
   }
 }
