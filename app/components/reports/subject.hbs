@@ -5,8 +5,13 @@
     ...attributes
   >
     <div class="header">
-      <h2 id="{{templateId}}-title" class="title" data-test-title>
-        {{t "general.subjectReports"}}
+
+      <h2 id="title" class="title" data-test-title>
+        {{#if @selectedReport}}
+          {{this.selectedReportTitle}}
+        {{else}}
+          {{t "general.subjectReports"}}
+        {{/if}}
       </h2>
       <div class="actions">
         {{#if @selectedReport}}
@@ -45,9 +50,6 @@
         {{! template-lint-disable no-invalid-interactive }}
         {{on "scroll" this.setScroll}}
       >
-        <h3 class="report-title" data-test-report-title>
-          {{this.selectedReportTitle}}
-        </h3>
         {{#if this.showAcademicYearFilter}}
           <div class="years-filter">
             <select
@@ -113,13 +115,12 @@
         {{#if this.myReportEditorOn}}
           <Reports::NewSubject @close={{fn (set this.myReportEditorOn) false}} />
         {{/if}}
-        {{#if (is-array this.reports)}}
+        {{#if this.reportsLoaded}}
           <ul class="saved-reports" data-test-saved-reports>
             {{#each (sort-by "title" this.reports) as |obj|}}
               <li>
                 <button type="button" {{on "click" (fn @onReportSelect obj.report.id)}} data-test-report-title>
-                    <FaIcon @icon="square-up-right" />
-                    {{obj.title}}
+                  {{obj.title}}
                 </button>
                 <button
                   type="button"

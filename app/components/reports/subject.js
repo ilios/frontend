@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { isBlank } from '@ember/utils';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { dropTask, timeout } from 'ember-concurrency';
@@ -41,6 +42,10 @@ export default class ReportsSubjectComponent extends Component {
     this.args.selectedReport,
     this.args.selectedYear,
   ]);
+
+  get reportsLoaded() {
+    return !isBlank(this.reports);
+  }
 
   async getSelectedReportTitle(selectedReport) {
     if (!selectedReport) {

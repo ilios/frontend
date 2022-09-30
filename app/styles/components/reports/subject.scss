@@ -44,11 +44,6 @@
       @include icon;
     }
 
-    .report-title {
-      @include ilios-heading-h4;
-      padding-top: 1rem;
-    }
-
     .report-results {
       @include ilios-list-reset;
     }
