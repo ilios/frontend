@@ -22,6 +22,12 @@ module('Unit | Service | timezone', function (hooks) {
     const names = service.getTimezoneNames();
     const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     assert.ok(names.includes(currentTimezone));
+    if (currentTimezone === 'UTC') {
+      //we already know it's in the list because it is the current zone
+      //however we now want to remove it because it won't ever display
+      //for users, just in CI
+      names.splice(names.indexOf('UTC'));
+    }
     assert.notOk(names.includes('Etc/GMT-13'));
     assert.notOk(names.includes('Canada/Newfoundland'));
     assert.notOk(names.includes('UTC'));
