@@ -217,7 +217,6 @@ general:
   myCalendar: "Mi Calendario"
   myCourses: "Mis Cursos"
   myProfile: "Mi Perfil"
-  myReports: "Mis Reportes"
   name: Nombre
   narrative: "narrativa"
   navigationCompleteText: La navegación de la página de Ilios está completa. Ahora puede navegar por el contenido de la página como desee.
@@ -387,6 +386,7 @@ general:
   subCompetencyCount: "{count, plural, =1 {Hay 1 subcompetencia} other {Hay # subcompetencias}}"
   subgroupName: "Nombre del Subgrupo"
   subgroups: "Grupos Subordinados"
+  subjectReports: "Informes de Sujetos"
   subTerms: "Términos subordinados"
   successfullyAddedTerm: "Término Agregado Correctamente"
   successfullyInvalidatedTokens: "Todas los tokens existentes fueron con éxito invalidadas"
