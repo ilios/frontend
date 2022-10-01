@@ -50,7 +50,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each (sort-by this.sortGroups @instructorGroups) as |instructorGroup|}}
+    {{#each this.orderedGroups as |instructorGroup|}}
       <InstructorGroups::ListItem @instructorGroup={{instructorGroup}} />
     {{else}}
       <tr data-test-empty-list>
