@@ -7,11 +7,6 @@ export default class ReportsIndexRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
-    this.router.replaceWith('reports.subject', {
-      queryParams: {
-        report: null,
-        reportYear: null,
-      },
-    });
+    this.router.replaceWith('reports.subjects');
   }
 }

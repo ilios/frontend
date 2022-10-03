@@ -155,6 +155,7 @@ Router.map(function () {
   });
   this.route('search');
   this.route('reports', function () {
-    this.route('subject');
+    this.route('subject', { path: '/reports/subject/:report_id' });
+    this.route('subjects');
   });
 });

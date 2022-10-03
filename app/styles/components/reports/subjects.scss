@@ -1,4 +1,4 @@
-.reports-subject {
+.reports-subjects {
   @include main-section;
 
   .header {
@@ -16,15 +16,18 @@
   .content-container {
     margin-left: 1rem;
 
-    .years-filter {
-      margin: .5rem 0 1rem;
-      padding-right: .5rem;
-      text-align: right;
-      width: 100%;
+    .saved-reports {
+      @include ilios-list-reset;
+      margin: .5rem 0;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+      }
     }
 
-    .report-results {
-      @include ilios-list-reset;
+    .fa-trash {
+      @include icon;
     }
   }
 }

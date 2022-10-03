@@ -1,150 +1,90 @@
-{{#let (unique-id) as |templateId|}}
-  <section
-    class="reports-subject"
-    data-test-reports-subject
-    ...attributes
-  >
-    <div class="header">
-
-      <h2 id="title" class="title" data-test-title>
-        {{#if @selectedReport}}
-          {{this.selectedReportTitle}}
+<section
+  class="reports-subject"
+  data-test-reports-subject
+  ...attributes
+>
+  <div class="header">
+    <h2 id="title" class="title" data-test-title>
+      {{this.selectedReportTitle}}
+    </h2>
+    <div class="actions">
+      <LinkTo @route="reports.subjects">
+        <button type="button">{{t "general.allReports"}}</button>
+      </LinkTo>
+      <button
+        type="button"
+        disabled={{this.downloadReport.isRunning}}
+        {{on "click" (perform this.downloadReport)}}
+      >
+        {{#if this.finishedBuildingReport}}
+          <FaIcon @icon="check" />
+        {{else if this.downloadReport.isRunning}}
+          <LoadingSpinner />
         {{else}}
-          {{t "general.subjectReports"}}
+          <FaIcon @icon="download" />
         {{/if}}
-      </h2>
-      <div class="actions">
-        {{#if @selectedReport}}
-          <button type="button" {{on "click" this.clearReport}}>
-            {{t "general.allReports"}}
-          </button>
-          <button
-            type="button"
-            disabled={{this.downloadReport.isRunning}}
-            {{on "click" (perform this.downloadReport)}}
-          >
-            {{#if this.finishedBuildingReport}}
-              <FaIcon @icon="check" />
-            {{else if this.downloadReport.isRunning}}
-              <LoadingSpinner />
-            {{else}}
-              <FaIcon @icon="download" />
-            {{/if}}
-            {{t "general.downloadResults"}}
-          </button>
-        {{else}}
-          <ExpandCollapseButton
-            @value={{this.myReportEditorOn}}
-            @action={{fn (set this.myReportEditorOn) (not this.myReportEditorOn)}}
-            @expandButtonLabel={{t "general.add"}}
-            @collapseButtonLabel={{t "general.close"}}
-          />
-        {{/if}}
-      </div>
+        {{t "general.downloadResults"}}
+      </button>
     </div>
-    {{#if @selectedReport}}
-      <div
-        class="content-container"
-        data-test-selected-report
-        {{did-insert (set this.scrollTarget)}}
-        {{! template-lint-disable no-invalid-interactive }}
-        {{on "scroll" this.setScroll}}
-      >
-        {{#if this.showAcademicYearFilter}}
-          <div class="years-filter">
-            <select
-              aria-label={{t "general.academicYears"}}
-              data-test-year-filter
-              {{on "change" (pick "target.value" @onReportYearSelect)}}
+  </div>
+  <div
+    class="content-container"
+    data-test-selected-report
+  >
+    {{#if this.showAcademicYearFilter}}
+      <div class="years-filter">
+        <select
+          aria-label={{t "general.academicYears"}}
+          data-test-year-filter
+          {{on "change" (pick "target.value" @onReportYearSelect)}}
+        >
+          <option selected={{is-empty @selectedYear}} value="">
+            {{t "general.allAcademicYears"}}
+          </option>
+          {{#each
+            (sort-by
+              "title:desc" this.allAcademicYears
+            ) as |year|
+          }}
+            <option
+              value={{year.id}}
+              selected={{eq year.id @selectedYear}}
             >
-              <option selected={{is-empty @selectedYear}} value="">
-                {{t "general.allAcademicYears"}}
-              </option>
-              {{#each
-                (sort-by
-                  "title:desc" this.allAcademicYears
-                ) as |year|
-              }}
-                <option
-                  value={{year.id}}
-                  selected={{eq year.id @selectedYear}}
-                >
-                  {{year.title}}
-                </option>
-              {{/each}}
-            </select>
-          </div>
-        {{/if}}
-        {{#if (is-array this.reportResultsList)}}
-          <ul class="report-results" data-test-results {{did-insert this.scrollDown}}>
-            {{#each this.reportResultsList as |item|}}
-              {{#if item.model2}}
-                <li>
-                  <LinkTo
-                    @route={{item.route}}
-                    @models={{array item.model item.model2}}
-                  >
-                    {{item.value}}
-                  </LinkTo>
-                </li>
-              {{else if item.model}}
-                <li>
-                  <LinkTo @route={{item.route}} @model={{item.model}}>
-                    {{item.value}}
-                  </LinkTo>
-                </li>
-              {{else}}
-                <li>
-                  {{item.value}}
-                </li>
-              {{/if}}
-            {{else}}
-                <li>{{t "general.none"}}</li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <LoadingSpinner />
-        {{/if}}
-      </div>
-    {{else}}
-      <div
-        class="content-container"
-        aria-labelledby="{{templateId}}-title"
-        tabindex="0"
-      >
-        {{#if this.myReportEditorOn}}
-          <Reports::NewSubject @close={{fn (set this.myReportEditorOn) false}} />
-        {{/if}}
-        {{#if this.reportsLoaded}}
-          <ul class="saved-reports" data-test-saved-reports>
-            {{#each (sort-by "title" this.reports) as |obj|}}
-              <li>
-                <button type="button" {{on "click" (fn @onReportSelect obj.report.id)}} data-test-report-title>
-                  {{obj.title}}
-                </button>
-                <button
-                  type="button"
-                  class="link-button"
-                  {{ on "click" (fn this.deleteReport obj.report)}}
-                  data-test-remove
-                >
-                  <FaIcon
-                    @icon="trash"
-                    @title={{t "general.remove"}}
-                    class="clickable remove enabled"
-                  />
-                </button>
-              </li>
-            {{else}}
-              <li>
-                {{t "general.none"}}
-              </li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <LoadingSpinner />
-        {{/if}}
+              {{year.title}}
+            </option>
+          {{/each}}
+        </select>
       </div>
     {{/if}}
-  </section>
-{{/let}}
+    {{#if (is-array this.reportResultsList)}}
+      <ul class="report-results" data-test-results>
+        {{#each this.reportResultsList as |item|}}
+          {{#if item.model2}}
+            <li>
+              <LinkTo
+                @route={{item.route}}
+                @models={{array item.model item.model2}}
+              >
+                {{item.value}}
+              </LinkTo>
+            </li>
+          {{else if item.model}}
+            <li>
+              <LinkTo @route={{item.route}} @model={{item.model}}>
+                {{item.value}}
+              </LinkTo>
+            </li>
+          {{else}}
+            <li>
+              {{item.value}}
+            </li>
+          {{/if}}
+        {{else}}
+            <li>{{t "general.none"}}</li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <LoadingSpinner />
+    {{/if}}
+  </div>
+</section>
