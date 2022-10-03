@@ -13,8 +13,34 @@ export default class WeeklyCalendarEventComponent extends Component {
     super(...arguments);
     const allMinutesInDay = Array(60 * 24).fill(0);
     this.args.allDayEvents.forEach(({ startDate, endDate }) => {
-      const start = this.getMinuteInTheDay(startDate);
-      const end = this.getMinuteInTheDay(endDate);
+      if (typeof startDate === 'object') {
+        deprecate(
+          `Object passed to WeeklyCalendar @allDayEvents.startDate instead of ISO string`,
+          false,
+          {
+            id: 'common.dates-no-dates',
+            for: 'ilios-common',
+            until: '72',
+            since: '71',
+          }
+        );
+        startDate = DateTime.fromJSDate(startDate).toISO();
+      }
+      if (typeof endDate === 'object') {
+        deprecate(
+          `Object passed to WeeklyCalendar @allDayEvents.endDate instead of ISO string`,
+          false,
+          {
+            id: 'common.dates-no-dates',
+            for: 'ilios-common',
+            until: '72',
+            since: '71',
+          }
+        );
+        endDate = DateTime.fromJSDate(endDate).toISO();
+      }
+      const start = this.getMinuteInTheDay(DateTime.fromISO(startDate));
+      const end = this.getMinuteInTheDay(DateTime.fromISO(endDate));
       for (let i = start; i <= end; i++) {
         allMinutesInDay[i - 1]++;
       }
@@ -23,32 +49,63 @@ export default class WeeklyCalendarEventComponent extends Component {
     this.minutes = allMinutesInDay;
   }
 
-  get startDate() {
-    if (typeof this.args.startDate === 'string') {
-      deprecate(`String passed to WeeklyCalendarEvent @event.startDate instead of Date`, false, {
-        id: 'common.dates-no-strings',
-        for: 'ilios-common',
-        until: '72',
-        since: '71',
-      });
-      return DateTime.fromISO(this.args.event.startDate).toJSDate();
+  get startDateTime() {
+    if (typeof this.args.event.startDate === 'object') {
+      deprecate(
+        `Object passed to WeeklyCalendarEvent @event.startDate instead of ISO string`,
+        false,
+        {
+          id: 'common.dates-no-dates',
+          for: 'ilios-common',
+          until: '72',
+          since: '71',
+        }
+      );
+      return DateTime.fromJSDate(this.args.event.startDate);
     }
+    return DateTime.fromISO(this.args.event.startDate);
+  }
 
-    return this.args.event.startDate;
+  get endDateTime() {
+    if (typeof this.args.event.endDate === 'object') {
+      deprecate(
+        `Object passed to WeeklyCalendarEvent @event.endDate instead of ISO string`,
+        false,
+        {
+          id: 'common.dates-no-dates',
+          for: 'ilios-common',
+          until: '72',
+          since: '71',
+        }
+      );
+      return DateTime.fromJSDate(this.args.event.endDate);
+    }
+    return DateTime.fromISO(this.args.event.endDate);
+  }
+
+  get startDate() {
+    return this.startDateTime.toJSDate();
   }
 
   get endDate() {
-    if (typeof this.args.endDate === 'string') {
-      deprecate(`String passed to WeeklyCalendarEvent @event.endDate instead of Date`, false, {
-        id: 'common.dates-no-strings',
-        for: 'ilios-common',
-        until: '72',
-        since: '71',
-      });
-      return DateTime.fromISO(this.args.event.endDate).toJSDate();
-    }
+    return this.endDateTime.toJSDate();
+  }
 
-    return this.args.event.endDate;
+  get lastModifiedDateTime() {
+    if (typeof this.args.event.lastModified === 'object') {
+      deprecate(
+        `Object passed to WeeklyCalendarEvent @event.lastModified instead of ISO string`,
+        false,
+        {
+          id: 'common.dates-no-dates',
+          for: 'ilios-common',
+          until: '72',
+          since: '71',
+        }
+      );
+      return DateTime.fromJSDate(this.args.event.lastModified);
+    }
+    return DateTime.fromISO(this.args.event.lastModified);
   }
 
   get isIlm() {
@@ -69,19 +126,10 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   get recentlyUpdated() {
-    const lastModifiedDate = DateTime.fromISO(this.args.event.lastModified);
     const today = DateTime.now();
-    const { days } = today.diff(lastModifiedDate, 'days');
+    const { days } = today.diff(this.lastModifiedDateTime, 'days');
 
     return days < 6;
-  }
-
-  get startDateTime() {
-    return DateTime.fromJSDate(this.startDate);
-  }
-
-  get endDateTime() {
-    return DateTime.fromJSDate(this.endDate);
   }
 
   get startOfDay() {
@@ -98,15 +146,14 @@ export default class WeeklyCalendarEventComponent extends Component {
     return Math.floor(minutes / 5);
   }
 
-  getMinuteInTheDay(date) {
-    const m = DateTime.fromJSDate(date);
-    const midnight = DateTime.fromJSDate(date).startOf('day');
-    return m.diff(midnight, 'minutes').minutes;
+  getMinuteInTheDay(dt) {
+    const midnight = dt.startOf('day');
+    return dt.diff(midnight, 'minutes').minutes;
   }
 
   get span() {
-    const start = this.getMinuteInTheDay(this.startDate);
-    const end = this.getMinuteInTheDay(this.endDate);
+    const start = this.getMinuteInTheDay(this.startDateTime);
+    const end = this.getMinuteInTheDay(this.endDateTime);
 
     const minutes = this.minutes.slice(start, end - 1);
     const max = Math.max(...minutes);
