@@ -48,7 +48,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
 
   test('it renders empty', async function (assert) {
     await render(hbs`<InstructorGroups::List
-      @programs={{(array)}}
+      @instructorGroups={{(array)}}
       @sortBy="title"
       @setSortBy={{(noop)}}
     />`);
