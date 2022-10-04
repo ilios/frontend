@@ -17,7 +17,6 @@ general:
   all: Tous
   allAcademicYears: "Toutes Années Scolaires"
   allOtherMembers: "Tous les autres membres du {topLevelGroupTitle}"
-  allReports: "Tous Rapports"
   allSchools: "Toutes les écoles"
   allVocabularies: "Touts vocabulaires"
   anything: "Quelque chose"
@@ -42,6 +41,7 @@ general:
   backToReport: "Retour à rapport"
   backToReports: "Retour à rapports"
   backToSchools: "Retour à liste d'écoles"
+  backToSubjectReports: "Retour aux rapports par sujet"
   backToTableOfContents: "Retour à la table des matières"
   bad: Mal
   badCredentials: "Nom d'utilisateur ou mot de passe incorrect"

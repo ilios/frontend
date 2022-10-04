@@ -17,7 +17,6 @@ general:
   all: Todos
   allAcademicYears: "Todos Los Años Académicos"
   allOtherMembers: "Todos otros miembros de {topLevelGroupTitle}"
-  allReports: "todos reportes"
   allSchools: "Todas las Escuelas"
   allVocabularies: "Todos los Vocabularios"
   anything: "Caulquier Cosa"
@@ -42,7 +41,8 @@ general:
   backToReport: "Atrás a Reporte"
   backToReports: "Atrás a Reportes"
   backToSchools: "Atrás a la Lista de Escuelas"
-  backToTableOfContents: "Volver a la tabla de contenido"
+  backToSubjectReports: "Atrás a Informes de materias"
+  backToTableOfContents: "Atrás a la tabla de contenido"
   bad: Malo
   badCredentials: "Incorrecta contraseña o nombre de usuario"
   calendarOff: "Calendario Apagado"

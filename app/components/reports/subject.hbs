@@ -3,14 +3,16 @@
   data-test-reports-subject
   ...attributes
 >
+  <div class="back-to-reports">
+    <LinkTo @route="reports.subjects">
+      {{t "general.backToSubjectReports"}}
+    </LinkTo>
+  </div>
   <div class="header">
     <h2 id="title" class="title" data-test-title>
       {{this.selectedReportTitle}}
     </h2>
     <div class="actions">
-      <LinkTo @route="reports.subjects">
-        <button type="button">{{t "general.allReports"}}</button>
-      </LinkTo>
       <button
         type="button"
         disabled={{this.downloadReport.isRunning}}

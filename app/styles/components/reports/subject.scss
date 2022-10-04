@@ -1,6 +1,10 @@
 .reports-subject {
   @include main-section;
 
+  .back-to-reports {
+    margin-left: 1rem;
+  }
+
   .header {
     @include main-list-box-header;
 
