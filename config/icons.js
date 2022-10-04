@@ -1,7 +1,7 @@
 module.exports = function () {
   return {
     'pro-light-svg-icons': ['clipboard-list', 'lightbulb-slash'],
-    'free-brands-svg-icons': ['black-tie'],
+    'pro-solid-svg-icons': ['lightbulb-on'],
     'free-solid-svg-icons': [
       'angle-down',
       'angle-left',
