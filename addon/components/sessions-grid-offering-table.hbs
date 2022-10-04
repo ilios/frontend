@@ -35,7 +35,7 @@
             {{block.dayOfWeek}}
           </span>
           <span class="offering-block-date-dayofmonth" data-test-dayofmonth>
-            {{block.dayOfMonth}}
+            {{format-date block.date month="long" day="numeric"}}
           </span>
         </td>
       </tr>

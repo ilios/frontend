@@ -1,17 +1,33 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { DateTime } from 'luxon';
+import { deprecate } from '@ember/debug';
 
 export default class IliosCalendarDayComponent extends Component {
-  @service moment;
+  @service localeDays;
+
+  get date() {
+    if (typeof this.args.date === 'string') {
+      deprecate(`String passed to IliosCalendarDay @date instead of Date`, false, {
+        id: 'common.dates-no-strings',
+        for: 'ilios-common',
+        until: '72',
+        since: '71',
+      });
+      return DateTime.fromISO(this.args.date).toJSDate();
+    }
+
+    return this.args.date;
+  }
 
   get today() {
-    return this.moment.moment(this.args.date).startOf('day');
+    return DateTime.fromJSDate(this.date).startOf('day');
   }
   get events() {
     return this.args.calendarEvents.filter(
       (event) =>
-        this.moment.moment(event.startDate).isSame(this.today, 'day') ||
-        this.moment.moment(event.endDate).isSame(this.today, 'day')
+        DateTime.fromISO(event.startDate).hasSame(this.today, 'day') ||
+        DateTime.fromISO(event.endDate).hasSame(this.today, 'day')
     );
   }
   get ilmPreWorkEvents() {
@@ -37,13 +53,12 @@ export default class IliosCalendarDayComponent extends Component {
 
   get singleDayEvents() {
     return this.nonIlmPreWorkEvents.filter((event) =>
-      this.moment.moment(event.startDate).isSame(this.moment.moment(event.endDate), 'day')
+      DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day')
     );
   }
   get multiDayEvents() {
     return this.nonIlmPreWorkEvents.filter(
-      (event) =>
-        !this.moment.moment(event.startDate).isSame(this.moment.moment(event.endDate), 'day')
+      (event) => !DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day')
     );
   }
 }

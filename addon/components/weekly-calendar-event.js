@@ -1,26 +1,111 @@
 import Component from '@glimmer/component';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import colorChange from '../utils/color-change';
 import { htmlSafe } from '@ember/template';
 import calendarEventTooltip from '../utils/calendar-event-tooltip';
 import { inject as service } from '@ember/service';
+import { deprecate } from '@ember/debug';
 
 export default class WeeklyCalendarEventComponent extends Component {
   @service intl;
-  @service moment;
 
   constructor() {
     super(...arguments);
     const allMinutesInDay = Array(60 * 24).fill(0);
     this.args.allDayEvents.forEach(({ startDate, endDate }) => {
-      const start = this.getMinuteInTheDay(startDate);
-      const end = this.getMinuteInTheDay(endDate);
+      if (typeof startDate === 'object') {
+        deprecate(
+          `Object passed to WeeklyCalendar @allDayEvents.startDate instead of ISO string`,
+          false,
+          {
+            id: 'common.dates-no-dates',
+            for: 'ilios-common',
+            until: '72',
+            since: '71',
+          }
+        );
+        startDate = DateTime.fromJSDate(startDate).toISO();
+      }
+      if (typeof endDate === 'object') {
+        deprecate(
+          `Object passed to WeeklyCalendar @allDayEvents.endDate instead of ISO string`,
+          false,
+          {
+            id: 'common.dates-no-dates',
+            for: 'ilios-common',
+            until: '72',
+            since: '71',
+          }
+        );
+        endDate = DateTime.fromJSDate(endDate).toISO();
+      }
+      const start = this.getMinuteInTheDay(DateTime.fromISO(startDate));
+      const end = this.getMinuteInTheDay(DateTime.fromISO(endDate));
       for (let i = start; i <= end; i++) {
         allMinutesInDay[i - 1]++;
       }
     });
 
     this.minutes = allMinutesInDay;
+  }
+
+  get startDateTime() {
+    if (typeof this.args.event.startDate === 'object') {
+      deprecate(
+        `Object passed to WeeklyCalendarEvent @event.startDate instead of ISO string`,
+        false,
+        {
+          id: 'common.dates-no-dates',
+          for: 'ilios-common',
+          until: '72',
+          since: '71',
+        }
+      );
+      return DateTime.fromJSDate(this.args.event.startDate);
+    }
+    return DateTime.fromISO(this.args.event.startDate);
+  }
+
+  get endDateTime() {
+    if (typeof this.args.event.endDate === 'object') {
+      deprecate(
+        `Object passed to WeeklyCalendarEvent @event.endDate instead of ISO string`,
+        false,
+        {
+          id: 'common.dates-no-dates',
+          for: 'ilios-common',
+          until: '72',
+          since: '71',
+        }
+      );
+      return DateTime.fromJSDate(this.args.event.endDate);
+    }
+    return DateTime.fromISO(this.args.event.endDate);
+  }
+
+  get startDate() {
+    return this.startDateTime.toJSDate();
+  }
+
+  get endDate() {
+    return this.endDateTime.toJSDate();
+  }
+
+  get lastModifiedDateTime() {
+    if (typeof this.args.event.lastModified === 'object') {
+      deprecate(
+        `Object passed to WeeklyCalendarEvent @event.lastModified instead of ISO string`,
+        false,
+        {
+          id: 'common.dates-no-dates',
+          for: 'ilios-common',
+          until: '72',
+          since: '71',
+        }
+      );
+      return DateTime.fromJSDate(this.args.event.lastModified);
+    }
+    return DateTime.fromISO(this.args.event.lastModified);
   }
 
   get isIlm() {
@@ -36,51 +121,39 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   get tooltipContent() {
-    //access the locale info here so the getter will recompute when it changes
-    this.moment.locale;
     this.intl.locale;
     return calendarEventTooltip(this.args.event, this.intl, 'h:mma');
   }
 
   get recentlyUpdated() {
-    const lastModifiedDate = moment(this.args.event.lastModified);
-    const today = moment();
-    const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
+    const today = DateTime.now();
+    const { days } = today.diff(this.lastModifiedDateTime, 'days');
 
-    return daysSinceLastUpdate < 6 ? true : false;
-  }
-
-  get startMoment() {
-    return moment(this.args.event.startDate);
-  }
-
-  get endMoment() {
-    return moment(this.args.event.endDate);
+    return days < 6;
   }
 
   get startOfDay() {
-    return this.startMoment.startOf('day');
+    return this.startDateTime.startOf('day');
   }
 
   get startMinuteRounded() {
-    const minute = this.startMoment.diff(this.startOfDay, 'minutes');
+    const minute = this.startDateTime.diff(this.startOfDay, 'minutes').minutes;
     return Math.ceil(minute / 5);
   }
 
   get totalMinutesRounded() {
-    const minutes = this.endMoment.diff(this.startMoment, 'minutes');
+    const minutes = this.endDateTime.diff(this.startDateTime, 'minutes').minutes;
     return Math.floor(minutes / 5);
   }
 
-  getMinuteInTheDay(date) {
-    const m = moment(date);
-    const midnight = moment(date).startOf('day');
-    return m.diff(midnight, 'minutes');
+  getMinuteInTheDay(dt) {
+    const midnight = dt.startOf('day');
+    return dt.diff(midnight, 'minutes').minutes;
   }
 
   get span() {
-    const start = this.getMinuteInTheDay(this.args.event.startDate);
-    const end = this.getMinuteInTheDay(this.args.event.endDate);
+    const start = this.getMinuteInTheDay(this.startDateTime);
+    const end = this.getMinuteInTheDay(this.endDateTime);
 
     const minutes = this.minutes.slice(start, end - 1);
     const max = Math.max(...minutes);

@@ -1,8 +1,7 @@
 import { currentRouteName } from '@ember/test-helpers';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import page from 'ilios-common/page-objects/session';
@@ -55,7 +54,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(parseInt(page.details.overview.ilmHours.value, 10), ilmSession.hours);
     assert.strictEqual(
       page.details.overview.ilmDueDateAndTime.value,
-      new Date(ilmSession.dueDate).toLocaleDateString('en', {
+      this.intl.formatDate(ilmSession.dueDate, {
         month: 'numeric',
         day: 'numeric',
         year: '2-digit',
@@ -92,7 +91,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(parseInt(page.details.overview.ilmHours.value, 10), 1);
     assert.strictEqual(
       page.details.overview.ilmDueDateAndTime.value,
-      moment().add(6, 'weeks').set('hour', 17).set('minute', 0).toDate().toLocaleDateString('en', {
+      this.intl.formatDate(DateTime.fromObject({ hour: 17, minute: 0 }).plus({ weeks: 6 }), {
         month: 'numeric',
         day: 'numeric',
         year: '2-digit',
@@ -138,13 +137,15 @@ module('Acceptance | Session - Overview', function (hooks) {
       course: this.course,
       ilmSession,
     });
-    const newDate = moment(ilmSession.dueDate).add(3, 'weeks').set('hour', 23).set('minute', 55);
+    const newDate = DateTime.fromJSDate(ilmSession.dueDate)
+      .set({ hour: 23, minute: 55 })
+      .plus({ weeks: 3 });
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(
       page.details.overview.ilmDueDateAndTime.value,
-      new Date(ilmSession.dueDate).toLocaleDateString('en', {
+      this.intl.formatDate(ilmSession.dueDate, {
         month: 'numeric',
         day: 'numeric',
         year: '2-digit',
@@ -154,15 +155,17 @@ module('Acceptance | Session - Overview', function (hooks) {
       })
     );
     await page.details.overview.ilmDueDateAndTime.edit();
-    await page.details.overview.ilmDueDateAndTime.datePicker.set(newDate.toDate());
-    await page.details.overview.ilmDueDateAndTime.timePicker.hour.select(newDate.format('h'));
-    await page.details.overview.ilmDueDateAndTime.timePicker.minute.select(newDate.minute());
-    await page.details.overview.ilmDueDateAndTime.timePicker.ampm.select(newDate.format('a'));
+    await page.details.overview.ilmDueDateAndTime.datePicker.set(newDate.toJSDate());
+    await page.details.overview.ilmDueDateAndTime.timePicker.hour.select(newDate.toFormat('hh'));
+    await page.details.overview.ilmDueDateAndTime.timePicker.minute.select(newDate.toFormat('mm'));
+    await page.details.overview.ilmDueDateAndTime.timePicker.ampm.select(
+      newDate.toFormat('a').toLocaleLowerCase()
+    );
 
     await page.details.overview.ilmDueDateAndTime.save();
     assert.strictEqual(
       page.details.overview.ilmDueDateAndTime.value,
-      newDate.toDate().toLocaleDateString('en', {
+      this.intl.formatDate(newDate.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: '2-digit',
@@ -200,7 +203,14 @@ module('Acceptance | Session - Overview', function (hooks) {
     this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
-      updatedAt: moment('2019-07-09 17:00:00').toDate(),
+      updatedAt: DateTime.fromObject({
+        year: 2019,
+        month: 7,
+        day: 9,
+        hour: 17,
+        minute: 0,
+        second: 0,
+      }).toJSDate(),
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 

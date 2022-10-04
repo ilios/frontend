@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { waitForResource } from 'ilios-common';
 
 module('Unit | Model | Offering', function (hooks) {
@@ -60,20 +60,20 @@ module('Unit | Model | Offering', function (hooks) {
     const model = store.createRecord('offering', {});
     assert.strictEqual(model.get('durationHours'), 0);
     assert.strictEqual(model.get('durationMinutes'), 0);
-    model.set('startDate', moment().toDate());
-    model.set('endDate', moment().add(90, 'minutes').toDate());
+    model.set('startDate', DateTime.now().toJSDate());
+    model.set('endDate', DateTime.now().plus({ minutes: 90 }).toJSDate());
 
     assert.strictEqual(model.get('durationHours'), 1);
     assert.strictEqual(model.get('durationMinutes'), 30);
 
-    model.set('startDate', moment().toDate());
-    model.set('endDate', moment().add(30, 'minutes').toDate());
+    model.set('startDate', DateTime.now().toJSDate());
+    model.set('endDate', DateTime.now().plus({ minutes: 30 }).toJSDate());
 
     assert.strictEqual(model.get('durationHours'), 0);
     assert.strictEqual(model.get('durationMinutes'), 30);
 
-    model.set('startDate', moment().toDate());
-    model.set('endDate', moment().add(60, 'minutes').toDate());
+    model.set('startDate', DateTime.now().toJSDate());
+    model.set('endDate', DateTime.now().plus({ minutes: 60 }).toJSDate());
 
     assert.strictEqual(model.get('durationHours'), 1);
     assert.strictEqual(model.get('durationMinutes'), 0);

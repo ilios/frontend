@@ -4,7 +4,7 @@ import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { render, click, find, fillIn } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { findById } from 'ilios-common/utils/array-helpers';
 
@@ -14,8 +14,8 @@ module('Integration | Component | session copy', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    const now = moment();
-    const thisYear = now.year();
+    const now = DateTime.fromObject({ hour: 8 });
+    const thisYear = now.year;
     const lastYear = thisYear - 1;
     const nextYear = thisYear + 1;
 
@@ -73,7 +73,7 @@ module('Integration | Component | session copy', function (hooks) {
   test('copy session', async function (assert) {
     assert.expect(22);
 
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.now().year;
     this.server.create('academic-year', {
       id: thisYear,
     });
@@ -204,7 +204,7 @@ module('Integration | Component | session copy', function (hooks) {
 
   test('changing the year looks for new matching courses', async function (assert) {
     assert.expect(5);
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.now().year;
     const nextYear = thisYear + 1;
     this.server.create('academic-year', {
       id: thisYear,
@@ -257,7 +257,7 @@ module('Integration | Component | session copy', function (hooks) {
 
   test('copy session into the first course in a different year #2130', async function (assert) {
     assert.expect(4);
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.now().year;
     const nextYear = thisYear + 1;
     this.server.create('academic-year', {
       id: thisYear,
@@ -321,7 +321,7 @@ module('Integration | Component | session copy', function (hooks) {
   test('copy session into same course saves postrequisites', async function (assert) {
     assert.expect(4);
 
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.now().year;
     this.server.create('academic-year', {
       id: thisYear,
     });
@@ -373,7 +373,7 @@ module('Integration | Component | session copy', function (hooks) {
   test('copy session into different course does not save postrequisites', async function (assert) {
     assert.expect(4);
 
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.now().year;
     this.server.create('academic-year', {
       id: thisYear,
     });
@@ -430,7 +430,7 @@ module('Integration | Component | session copy', function (hooks) {
   test('copy session into same course does not save prerequisites', async function (assert) {
     assert.expect(4);
 
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.now().year;
     this.server.create('academic-year', {
       id: thisYear,
     });
@@ -486,7 +486,7 @@ module('Integration | Component | session copy', function (hooks) {
   test('copy session into different course does not save prerequisites', async function (assert) {
     assert.expect(4);
 
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.now().year;
     this.server.create('academic-year', {
       id: thisYear,
     });

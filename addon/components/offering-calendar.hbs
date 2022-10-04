@@ -1,7 +1,7 @@
 <div
   class="offering-calendar"
-  {{did-insert (perform this.load) @startDate @endDate @learnerGroups @session}}
-  {{did-update (perform this.load) @startDate @endDate @learnerGroups @session}}
+  {{did-insert (perform this.load) this.startDate this.endDate @learnerGroups @session}}
+  {{did-update (perform this.load) this.startDate this.endDate @learnerGroups @session}}
 >
   <h2 class="offering-calendar-title">
     {{t "general.calendar"}}
@@ -29,7 +29,7 @@
   </p>
   <div class="ilios-calendar">
     <IliosCalendarWeek
-      @calendarEvents={{await this.calendarEvents}}
+      @calendarEvents={{this.calendarEvents}}
       @date={{@startDate}}
       @areEventsSelectable={{false}}
       @areDaysSelectable={{false}}

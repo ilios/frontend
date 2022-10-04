@@ -1,7 +1,7 @@
 import calendarEventTooltip from 'dummy/utils/calendar-event-tooltip';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 module('Unit | Utility | calendar-event-tooltip', function (hooks) {
   setupTest(hooks);
@@ -12,11 +12,11 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
   });
 
   test('it works for blanked event', function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8 });
     const result = calendarEventTooltip(
       {
-        startDate: today.toDate(),
-        endDate: today.toDate(),
+        startDate: today.toJSDate(),
+        endDate: today.toJSDate(),
         name: 'test',
       },
       this.intl,
@@ -25,11 +25,11 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
     assert.strictEqual(result.string, 'TBD<br />08 - 08<br />test');
   });
   test('offering-based event', function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8 });
     const result = calendarEventTooltip(
       {
-        startDate: today.toDate(),
-        endDate: today.toDate(),
+        startDate: today.toJSDate(),
+        endDate: today.toJSDate(),
         name: 'test',
         location: 'room 101',
         instructors: ['Larry', 'Curly', 'Moe', 'Shemp'],
@@ -48,11 +48,11 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
   });
 
   test('ILM-based event', function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8 });
     const result = calendarEventTooltip(
       {
-        startDate: today.toDate(),
-        endDate: today.toDate(),
+        startDate: today.toJSDate(),
+        endDate: today.toJSDate(),
         name: 'test',
         location: 'room 101',
         instructors: ['Larry', 'Curly', 'Moe', 'Shemp'],

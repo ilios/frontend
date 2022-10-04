@@ -1,7 +1,7 @@
 {{#if (is-array @calendarEvents)}}
   <div class="ilios-calendar-week" data-test-ilios-calendar-week>
     <WeeklyCalendar
-      @date={{@date}}
+      @date={{this.date}}
       @events={{this.singleDayEvents}}
       @changeToDayView={{if @areDaysSelectable this.changeToDayView (noop)}}
       @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}

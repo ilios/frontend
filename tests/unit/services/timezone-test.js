@@ -1,20 +1,33 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 module('Unit | Service | timezone', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(async function () {
+    this.owner.lookup('service:moment').setLocale('en');
+  });
+
   test('getCurrentTimezone', function (assert) {
     const service = this.owner.lookup('service:timezone');
-    assert.strictEqual(moment.tz.guess(), service.getCurrentTimezone());
+    assert.strictEqual(
+      Intl.DateTimeFormat().resolvedOptions().timeZone,
+      service.getCurrentTimezone()
+    );
   });
 
   test('getTimezoneNames', function (assert) {
     const service = this.owner.lookup('service:timezone');
     const names = service.getTimezoneNames();
-    const currentTimezone = moment.tz.guess();
+    const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     assert.ok(names.includes(currentTimezone));
+    if (currentTimezone === 'UTC') {
+      //we already know it's in the list because it is the current zone
+      //however we now want to remove it because it won't ever display
+      //for users, just in CI
+      names.splice(names.indexOf('UTC'));
+    }
     assert.notOk(names.includes('Etc/GMT-13'));
     assert.notOk(names.includes('Canada/Newfoundland'));
     assert.notOk(names.includes('UTC'));
@@ -25,7 +38,9 @@ module('Unit | Service | timezone', function (hooks) {
   test('formatTimezone', function (assert) {
     const service = this.owner.lookup('service:timezone');
     const timezone = 'America/Los_Angeles';
-    const offset = moment.tz(timezone).format('Z');
+    const offset = DateTime.local()
+      .setZone(timezone)
+      .zone.formatOffset(DateTime.local().toMillis(), 'short');
     assert.strictEqual(`(${offset}) America - Los Angeles`, service.formatTimezone(timezone));
   });
 

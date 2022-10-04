@@ -1,5 +1,5 @@
 import { currentRouteName } from '@ember/test-helpers';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
@@ -30,22 +30,22 @@ module('Acceptance | Session - Publish', function (hooks) {
     });
     this.server.create('ilmSession', {
       session: this.ilmSession,
-      dueDate: moment().format(),
+      dueDate: DateTime.now().toJSDate(),
     });
     this.server.create('offering', {
       session: this.publishedSession,
-      startDate: moment().format(),
-      endDate: moment().add('6 hours').format(),
+      startDate: DateTime.now().toJSDate(),
+      endDate: DateTime.now().plus({ hours: 6 }).toJSDate(),
     });
     this.server.create('offering', {
       session: this.scheduledSession,
-      startDate: moment().format(),
-      endDate: moment().add('6 hours').format(),
+      startDate: DateTime.now().toJSDate(),
+      endDate: DateTime.now().plus({ hours: 6 }).toJSDate(),
     });
     this.server.create('offering', {
       session: this.draftSession,
-      startDate: moment().format(),
-      endDate: moment().add('6 hours').format(),
+      startDate: DateTime.now().toJSDate(),
+      endDate: DateTime.now().plus({ hours: 6 }).toJSDate(),
     });
   });
 

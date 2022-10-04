@@ -8,7 +8,7 @@ import {
   triggerEvent,
 } from '@ember/test-helpers';
 import { isEmpty } from '@ember/utils';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
@@ -86,46 +86,43 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load month calendar', async function (assert) {
-    const today = moment().hour(8);
-    const startOfMonth = today.clone().startOf('month');
-    const endOfMonth = today.clone().endOf('month').hour(22).minute(59);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    const startOfMonth = today.startOf('month');
+    const endOfMonth = today.endOf('month').set({ hour: 22, minute: 59 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'start of month',
-      startDate: startOfMonth.format(),
-      endDate: startOfMonth.clone().add(1, 'hour').format(),
-      lastModified: today.clone().subtract(1, 'year'),
+      startDate: startOfMonth.toJSDate(),
+      endDate: startOfMonth.plus({ hour: 1 }).toJSDate(),
+      lastModified: today.minus({ year: 1 }),
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'end of month',
-      startDate: endOfMonth.format(),
-      endDate: endOfMonth.clone().add(1, 'hour').format(),
-      lastModified: today.clone().subtract(1, 'year'),
+      startDate: endOfMonth.toJSDate(),
+      endDate: endOfMonth.plus({ hour: 1 }).toJSDate(),
+      lastModified: today.minus({ year: 1 }),
     });
     await visit('/dashboard/calendar?view=month');
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
     const events = findAll('[data-test-ilios-calendar-event]');
     assert.strictEqual(events.length, 2);
-    const startOfMonthStartFormat = this.intl.formatTime(startOfMonth.toDate(), {
+    const startOfMonthStartFormat = this.intl.formatTime(startOfMonth.toJSDate(), {
       hour: 'numeric',
       minute: 'numeric',
     });
-    const startOfMonthEndFormat = this.intl.formatTime(
-      startOfMonth.clone().add(1, 'hour').toDate(),
-      {
-        hour: 'numeric',
-        minute: 'numeric',
-      }
-    );
+    const startOfMonthEndFormat = this.intl.formatTime(startOfMonth.plus({ hour: 1 }).toJSDate(), {
+      hour: 'numeric',
+      minute: 'numeric',
+    });
     assert
       .dom(events[0])
       .hasText(`${startOfMonthStartFormat} - ${startOfMonthEndFormat} : start of month`);
-    const endOfMonthStartFormat = this.intl.formatTime(endOfMonth.toDate(), {
+    const endOfMonthStartFormat = this.intl.formatTime(endOfMonth.toJSDate(), {
       hour: 'numeric',
       minute: 'numeric',
     });
-    const endOfMonthEndFormat = this.intl.formatTime(endOfMonth.clone().add(1, 'hour').toDate(), {
+    const endOfMonthEndFormat = this.intl.formatTime(endOfMonth.plus({ hour: 1 }).toJSDate(), {
       hour: 'numeric',
       minute: 'numeric',
     });
@@ -135,30 +132,33 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load week calendar', async function (assert) {
-    const today = moment().hour(8);
-    const startOfWeek = today.clone().startOf('week');
-    const endOfWeek = today.clone().endOf('week').hour(22).minute(59);
+    const startOfWeek = DateTime.fromJSDate(
+      this.owner.lookup('service:locale-days').firstDayOfThisWeek
+    );
+    const endOfWeek = DateTime.fromJSDate(
+      this.owner.lookup('service:locale-days').lastDayOfThisWeek
+    ).set({ hour: 22, minute: 59 });
 
-    const longDayHeading = this.intl.formatDate(startOfWeek.toDate(), {
+    const longDayHeading = this.intl.formatDate(startOfWeek.toJSDate(), {
       month: 'short',
       day: 'numeric',
     });
-    const shortDayHeading = this.intl.formatDate(startOfWeek.toDate(), {
+    const shortDayHeading = this.intl.formatDate(startOfWeek.toJSDate(), {
       day: 'numeric',
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'start of week',
-      startDate: startOfWeek.format(),
-      endDate: startOfWeek.clone().add(1, 'hour').format(),
-      lastModified: today.clone().subtract(1, 'year'),
+      startDate: startOfWeek.toJSDate(),
+      endDate: startOfWeek.plus({ hour: 1 }).toJSDate(),
+      lastModified: DateTime.now().minus({ year: 1 }),
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'end of week',
-      startDate: endOfWeek.format(),
-      endDate: endOfWeek.clone().add(1, 'hour').format(),
-      lastModified: today.clone().subtract(1, 'year'),
+      startDate: endOfWeek.toJSDate(),
+      endDate: endOfWeek.plus({ hour: 1 }).toJSDate(),
+      lastModified: DateTime.now().minus({ year: 1 }),
     });
     await page.visit({ show: 'calendar' });
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
@@ -178,29 +178,29 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load day calendar', async function (assert) {
-    const today = moment().hour(8);
-    const tomorow = today.clone().add(1, 'day');
-    const yesterday = today.clone().subtract(1, 'day');
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    const tomorow = today.plus({ day: 1 });
+    const yesterday = today.minus({ day: 1 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'today',
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
-      lastModified: today.clone().subtract(1, 'year'),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      lastModified: today.minus({ year: 1 }),
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'tomorow',
-      startDate: tomorow.format(),
-      endDate: tomorow.clone().add(1, 'hour').format(),
-      lastModified: today.clone().subtract(1, 'year'),
+      startDate: tomorow.toJSDate(),
+      endDate: tomorow.plus({ hour: 1 }).toJSDate(),
+      lastModified: today.minus({ year: 1 }),
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'yesterday',
-      startDate: yesterday.format(),
-      endDate: yesterday.clone().add(1, 'hour').format(),
-      lastModified: today.clone().subtract(1, 'year'),
+      startDate: yesterday.toJSDate(),
+      endDate: yesterday.plus({ hour: 1 }).toJSDate(),
+      lastModified: today.minus({ year: 1 }),
     });
     await visit('/dashboard/calendar?view=day');
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
@@ -210,149 +210,147 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('click month day number and go to day', async function (assert) {
-    const aDayInTheMonth = moment().startOf('month').add(12, 'days').hour(8);
+    const aDayInTheMonth = DateTime.fromObject({ hour: 8 }).startOf('month').plus({ days: 12 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'start of month',
-      startDate: aDayInTheMonth.format(),
-      endDate: aDayInTheMonth.clone().add(1, 'hour').format(),
+      startDate: aDayInTheMonth.toJSDate(),
+      endDate: aDayInTheMonth.plus({ hour: 1 }).toJSDate(),
     });
     await visit('/dashboard/calendar?view=month');
-    const dayOfMonth = aDayInTheMonth.date();
-    await click(`[data-test-day-button="${dayOfMonth}"]`);
+    await click(`[data-test-day-button="${aDayInTheMonth.day}"]`);
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&view=day'
+      '/dashboard/calendar?date=' + aDayInTheMonth.toFormat('y-MM-dd') + '&view=day'
     );
   });
 
   test('click week day title and go to day', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'today',
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
     });
     await page.visit({ show: 'calendar', view: 'week' });
-    const dayOfWeek = today.day();
     assert.strictEqual(page.calendar.weeklyCalendar.dayHeadings.length, 7);
-    await page.calendar.weeklyCalendar.dayHeadings[dayOfWeek].selectDay();
+    await page.calendar.weeklyCalendar.dayHeadings[today.weekday].selectDay();
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.format('YYYY-MM-DD') + '&view=day'
+      '/dashboard/calendar?date=' + today.toFormat('y-MM-dd') + '&view=day'
     );
   });
 
   test('click forward on a day goes to next day', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'today',
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
     });
     await visit('/dashboard/calendar?view=day');
     await click('.calendar-time-picker li:nth-of-type(3) a');
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.add(1, 'day').format('YYYY-MM-DD') + '&view=day'
+      '/dashboard/calendar?date=' + today.plus({ day: 1 }).toFormat('y-MM-dd') + '&view=day'
     );
   });
 
   test('click forward on a week goes to next week', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'today',
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
     });
     await visit('/dashboard/calendar?view=week');
     await click('.calendar-time-picker li:nth-of-type(3) a');
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.add(1, 'week').format('YYYY-MM-DD')
+      '/dashboard/calendar?date=' + today.plus({ week: 1 }).toFormat('y-MM-dd')
     );
   });
 
   test('click forward on a month goes to next month', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'today',
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
     });
     await visit('/dashboard/calendar?view=month');
     await click('.calendar-time-picker li:nth-of-type(3) a');
     await click(findAll('.calendar-time-picker li')[2]);
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.add(1, 'month').format('YYYY-MM-DD') + '&view=month'
+      '/dashboard/calendar?date=' + today.plus({ month: 1 }).toFormat('y-MM-dd') + '&view=month'
     );
   });
 
   test('click back on a day goes to previous day', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'today',
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
     });
     await visit('/dashboard/calendar?view=day');
     await click('.calendar-time-picker li:nth-of-type(1) a');
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.subtract(1, 'day').format('YYYY-MM-DD') + '&view=day'
+      '/dashboard/calendar?date=' + today.minus({ day: 1 }).toFormat('y-MM-dd') + '&view=day'
     );
   });
 
   test('click back on a week goes to previous week', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'today',
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
     });
     await visit('/dashboard/calendar?view=week');
     await click('.calendar-time-picker li:nth-of-type(1) a');
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.subtract(1, 'week').format('YYYY-MM-DD')
+      '/dashboard/calendar?date=' + today.minus({ week: 1 }).toFormat('y-MM-dd')
     );
   });
 
   test('click back on a month goes to previous month', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
+      user: this.user.id,
       name: 'today',
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
     });
     await visit('/dashboard/calendar?view=month');
     await click('.calendar-time-picker li:nth-of-type(1) a');
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.subtract(1, 'month').format('YYYY-MM-DD') + '&view=month'
+      '/dashboard/calendar?date=' + today.minus({ month: 1 }).toFormat('y-MM-dd') + '&view=month'
     );
   });
 
   test('show user events', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       offering: 2,
     });
     await page.visit({ show: 'calendar' });
@@ -363,17 +361,17 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     return await click(find(findAll('.togglemyschedule label')[1]));
   };
   test('show school events', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('schoolevent', {
       school: 1,
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
     this.server.create('schoolevent', {
       school: 1,
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       offering: 2,
     });
     await page.visit();
@@ -390,17 +388,17 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   };
 
   test('test session type filter', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTypeId: 1,
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTypeId: 2,
     });
     await page.visit({ show: 'calendar', view: 'week' });
@@ -426,17 +424,17 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   };
 
   test('test course level filter', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       courseLevel: 1,
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       courseLevel: 1,
     });
     await page.visit({ show: 'calendar', view: 'week' });
@@ -457,17 +455,17 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   };
 
   test('test cohort filter', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       cohorts: [{ id: 1 }],
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       cohorts: [{ id: 1 }],
     });
     await page.visit({ show: 'calendar', view: 'week' });
@@ -497,23 +495,23 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   };
 
   test('test course filter', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 1,
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 2,
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 1,
     });
     await page.visit({ show: 'calendar', view: 'week' });
@@ -527,25 +525,25 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('test course and session type filter together', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 1,
       sessionTypeId: 1,
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 2,
       sessionTypeId: 2,
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 1,
       sessionTypeId: 2,
     });
@@ -671,19 +669,24 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('week summary displays the whole week', async function (assert) {
-    const startOfTheWeek = moment().day(0).hour(0).minute(2);
+    const startOfTheWeek = DateTime.fromJSDate(
+      this.owner.lookup('service:locale-days').firstDayOfThisWeek
+    ).set({ minute: 2 });
+    const endOfTheWeek = DateTime.fromJSDate(
+      this.owner.lookup('service:locale-days').lastDayOfThisWeek
+    ).set({ hour: 22, minute: 5 });
+
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: startOfTheWeek.format(),
-      endDate: startOfTheWeek.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: startOfTheWeek.toJSDate(),
+      endDate: startOfTheWeek.plus({ hour: 1 }).toJSDate(),
       offering: 1,
       isPublished: true,
     });
-    const endOfTheWeek = moment().day(6).hour(22).minute(5);
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: endOfTheWeek.format(),
-      endDate: endOfTheWeek.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: endOfTheWeek.toJSDate(),
+      endDate: endOfTheWeek.plus({ hour: 1 }).toJSDate(),
       offering: 2,
       isPublished: true,
     });
@@ -701,10 +704,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     };
     assert
       .dom(eventBLocks[0])
-      .hasText('event 0 ' + this.intl.formatTime(startOfTheWeek.toDate(), options));
+      .hasText('event 0 ' + this.intl.formatTime(startOfTheWeek.toJSDate(), options));
     assert
       .dom(eventBLocks[1])
-      .hasText('event 1 ' + this.intl.formatTime(endOfTheWeek.toDate(), options));
+      .hasText('event 1 ' + this.intl.formatTime(endOfTheWeek.toJSDate(), options));
   });
 
   const pickTerm = async function (i) {
@@ -722,17 +725,17 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     this.server.create('term', {
       vocabulary,
     });
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTerms: [{ id: 1 }],
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTerms: [{ id: 1 }],
     });
     await page.visit({ show: 'calendar', view: 'week' });
@@ -754,17 +757,17 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       vocabulary,
       sessionIds: [1],
     });
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTerms: [{ id: 1 }],
     });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTerms: [],
     });
     const filters = '.filter-tags .filter-tag';
@@ -783,11 +786,11 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('test tooltip', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
     await page.visit({ show: 'calendar', view: 'week' });
@@ -796,11 +799,11 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('visit with course filters open #5098', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       cohorts: [{ id: 1 }],
     });
     await page.visit({
@@ -813,11 +816,11 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('visit with detail filters open #5098', async function (assert) {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       cohorts: [{ id: 1 }],
     });
     await page.visit({

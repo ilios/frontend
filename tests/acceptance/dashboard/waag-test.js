@@ -1,5 +1,5 @@
 import { currentRouteName } from '@ember/test-helpers';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
@@ -8,7 +8,7 @@ import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   setupApplicationTest(hooks);
-  const today = moment().hour(8);
+  const today = DateTime.fromObject({ hour: 8 });
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
@@ -16,14 +16,15 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   });
 
   test('shows events', async function (assert) {
-    const startOfWeek = today.clone().startOf('week');
-    const endOfWeek = today.clone().endOf('week').hour(22).minute(59);
+    const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
+    const startOfWeek = DateTime.fromJSDate(firstDayOfThisWeek);
+    const endOfWeek = DateTime.fromJSDate(lastDayOfThisWeek);
     this.server.create('userevent', {
       user: Number(this.user.id),
       name: 'start of week',
-      startDate: startOfWeek.format(),
-      endDate: startOfWeek.clone().add(1, 'hour').format(),
-      lastModified: today.clone().subtract(1, 'year'),
+      startDate: startOfWeek.toJSDate(),
+      endDate: startOfWeek.plus({ hour: 1 }).toJSDate(),
+      lastModified: today.minus({ year: 1 }).toJSDate(),
       isPublished: true,
       offering: 1,
     });
@@ -31,9 +32,9 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     this.server.create('userevent', {
       user: Number(this.user.id),
       name: 'end of week',
-      startDate: endOfWeek.format(),
-      endDate: endOfWeek.clone().add(1, 'hour').format(),
-      lastModified: today.clone().subtract(1, 'year'),
+      startDate: endOfWeek.minus({ hour: 1 }).toJSDate(),
+      endDate: endOfWeek.toJSDate(),
+      lastModified: today.minus({ year: 1 }).toJSDate(),
       isPublished: true,
       offering: 2,
     });
@@ -81,9 +82,9 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
 
     this.server.create('userevent', {
       user: Number(this.user.id),
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format(),
-      lastModified: today.clone().subtract(1, 'year'),
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      lastModified: today.minus({ year: 1 }).toJSDate(),
       isPublished: true,
       offering: 1,
       prerequisites,

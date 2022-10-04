@@ -43,10 +43,10 @@ export default class DashboardCalendarController extends Controller {
 
   get selectedDate() {
     if (this.date) {
-      return moment(this.date, 'YYYY-MM-DD').format();
+      return moment(this.date, 'YYYY-MM-DD').toDate();
     }
 
-    return moment().format();
+    return moment().toDate();
   }
 
   get selectedView() {

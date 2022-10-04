@@ -30,11 +30,11 @@
     {{#if this.isIlm}}
       <span class="ilios-calendar-event-start">
         {{t "general.ilmDue"}}:
-        {{format-date @event.startDate  hour12=true hour="numeric" minute="numeric"}}
+        {{format-date this.startDate  hour12=true hour="numeric" minute="numeric"}}
       </span>
     {{else}}
       <span class="ilios-calendar-event-start">
-        {{format-date @event.startDate  hour12=true hour="numeric" minute="numeric"}}
+        {{format-date this.startDate  hour12=true hour="numeric" minute="numeric"}}
       </span>
     {{/if}}
   </span>

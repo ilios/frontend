@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/single-event';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
@@ -15,7 +15,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    const now = moment().hour(8).minute(0).second(0);
+    const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
     const course = this.server.create('course', {
       id: 1,
       title: 'test course',
@@ -53,8 +53,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       sessionDescription: 'test description',
       name: 'test session',
       courseTitle: 'test course',
-      startDate: now,
-      endDate: now.clone().add(1, 'hour'),
+      startDate: now.toJSDate(),
+      endDate: now.plus({ hour: 1 }).toJSDate(),
       location: 'here',
       url: 'https://example.edu',
       instructors: ['Great Teacher'],
@@ -207,12 +207,12 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   test('unlinked event date and title are displayed', async function (assert) {
     assert.expect(3);
 
-    const today = moment().hour(8).minute(0).second(0);
+    const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
     this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
-      startDate: today.format(),
-      endDate: today.format(),
+      startDate: today.toISO(),
+      endDate: today.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -227,7 +227,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
-      this.intl.formatDate(today.toDate(), {
+      this.intl.formatDate(today.toJSDate(), {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -240,12 +240,12 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
   test('postrequisite date and title are displayed', async function (assert) {
     assert.expect(4);
-    const today = moment().hour(8).minute(0).second(0);
-    const tomorrow = today.clone().add(1, 'day');
+    const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
+    const tomorrow = today.plus({ day: 1 });
     const postReq = {
       name: 'postrequisite session',
       courseTitle: 'course',
-      startDate: tomorrow.format(),
+      startDate: tomorrow.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -254,8 +254,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
-      startDate: today.format(),
-      endDate: today.format(),
+      startDate: today.toISO(),
+      endDate: today.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -269,7 +269,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     await render(hbs`<SingleEvent @event={{this.event}} />`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
-    const formatedDate = this.intl.formatDate(tomorrow.toDate(), {
+    const formatedDate = this.intl.formatDate(tomorrow.toJSDate(), {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -285,11 +285,11 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('prework learning materials are displayed', async function (assert) {
-    const today = moment().hour(8).minute(0).second(0);
+    const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
     const prereq1 = {
       name: 'prework 1',
       slug: 'prework1',
-      startDate: today.clone().subtract(1, 'day').format(),
+      startDate: today.minus({ days: 1 }).toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -312,7 +312,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     const prereq2 = {
       name: 'prework 2',
       slug: 'prework2',
-      startDate: today.clone().subtract(3, 'days').format(),
+      startDate: today.minus({ days: 3 }).toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -327,8 +327,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
-      startDate: today.format(),
-      endDate: today.format(),
+      startDate: today.toISO(),
+      endDate: today.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -371,12 +371,12 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   test('for non ilms postrequisite date and title are displayed along with offering date', async function (assert) {
     assert.expect(4);
 
-    const today = moment().hour(8).minute(0).second(0);
-    const tomorrow = today.clone().add(1, 'day');
+    const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
+    const tomorrow = today.plus({ day: 1 });
     const postReq = {
       name: 'postrequisite session',
       courseTitle: 'course',
-      startDate: tomorrow.format(),
+      startDate: tomorrow.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -385,8 +385,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
-      startDate: today.format(),
-      endDate: today.format(),
+      startDate: today.toISO(),
+      endDate: today.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -400,7 +400,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     await render(hbs`<SingleEvent @event={{this.event}} />`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
-    const formattedTomorrow = this.intl.formatDate(tomorrow.toDate(), {
+    const formattedTomorrow = this.intl.formatDate(tomorrow.toJSDate(), {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -408,7 +408,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       hour: 'numeric',
       minute: 'numeric',
     });
-    const formattedToday = this.intl.formatDate(today.toDate(), {
+    const formattedToday = this.intl.formatDate(today.toJSDate(), {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -454,12 +454,12 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('start and end date are the same', async function (assert) {
-    const today = moment().hour(8).minute(0).second(0);
+    const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
     this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
-      startDate: today.format(),
-      endDate: today.format(),
+      startDate: today.toISO(),
+      endDate: today.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -474,7 +474,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
-      this.intl.formatDate(today.toDate(), {
+      this.intl.formatDate(today.toJSDate(), {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -486,13 +486,13 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('start and end date fall on the same day but different times', async function (assert) {
-    const today = moment().hour(8).minute(0).second(0);
-    const laterToday = moment().hour(8).minute(1).second(0);
+    const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
+    const laterToday = DateTime.fromObject({ hour: 8, minute: 1, second: 0 });
     this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
-      startDate: today.format(),
-      endDate: laterToday.format(),
+      startDate: today.toISO(),
+      endDate: laterToday.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -507,7 +507,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
-      this.intl.formatDate(today.toDate(), {
+      this.intl.formatDate(today.toJSDate(), {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -516,7 +516,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         minute: 'numeric',
       }) +
         ' - ' +
-        this.intl.formatDate(laterToday.toDate(), {
+        this.intl.formatDate(laterToday.toJSDate(), {
           hour: 'numeric',
           minute: 'numeric',
         })
@@ -524,13 +524,13 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('start and end date fall on different days', async function (assert) {
-    const today = moment().hour(8).minute(0).second(0);
-    const notToday = moment().hour(8).minute(0).second(0).add(72, 'hours');
+    const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
+    const notToday = DateTime.fromObject({ hour: 8, minute: 0, second: 0 }).plus({ hours: 72 });
     this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
-      startDate: today.format(),
-      endDate: notToday.format(),
+      startDate: today.toISO(),
+      endDate: notToday.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -545,7 +545,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
-      this.intl.formatDate(today.toDate(), {
+      this.intl.formatDate(today.toJSDate(), {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -554,7 +554,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         minute: 'numeric',
       }) +
         ' - ' +
-        this.intl.formatDate(notToday.toDate(), {
+        this.intl.formatDate(notToday.toJSDate(), {
           weekday: 'long',
           year: 'numeric',
           month: 'long',
@@ -572,14 +572,14 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     }
     this.owner.register('service:currentUser', CurrentUserMock);
 
-    const today = moment().hour(8).minute(0).second(0);
+    const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
     this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
       course: 1,
       session: 1,
-      startDate: today.format(),
-      endDate: today.format(),
+      startDate: today.toISO(),
+      endDate: today.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -603,14 +603,14 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       }
       this.owner.register('service:currentUser', CurrentUserMock);
 
-      const today = moment().hour(8).minute(0).second(0);
+      const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
       this.server.create('userevent', {
         name: 'Learn to Learn',
         courseTitle: 'course',
         course: 1,
         session: 1,
-        startDate: today.format(),
-        endDate: today.format(),
+        startDate: today.toISO(),
+        endDate: today.toISO(),
         isBlanked: false,
         isPublished: true,
         isScheduled: false,

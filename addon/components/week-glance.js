@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import { isNone } from '@ember/utils';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import scrollIntoView from 'scroll-into-view';
 import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
@@ -10,11 +10,12 @@ import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 export default class WeeklyGlance extends Component {
   @service userEvents;
   @service intl;
+  @service localeDays;
 
   @use weekEvents = new ResolveAsyncValue(() => [
     this.userEvents.getEvents(
-      this.midnightAtTheStartOfThisWeek.unix(),
-      this.midnightAtTheEndOfThisWeek.unix()
+      this.midnightAtTheStartOfTheWeekDateTime.toUnixInteger(),
+      this.midnightAtTheEndOfTheWeekDateTime.toUnixInteger()
     ),
   ]);
 
@@ -23,22 +24,22 @@ export default class WeeklyGlance extends Component {
   }
 
   get thursdayOfTheWeek() {
-    this.intl; //we need to use the service so the CP will re-fire
-    const thursdayOfTheWeek = moment();
-    thursdayOfTheWeek.year(this.args.year);
-    thursdayOfTheWeek.day(4);
-    thursdayOfTheWeek.isoWeek(this.args.week);
-    thursdayOfTheWeek.hour(0).minute(0).second(0);
-
-    return thursdayOfTheWeek;
+    return DateTime.fromObject({
+      weekYear: this.args.year,
+      weekNumber: this.args.week,
+      weekday: 4,
+      hour: 0,
+      minute: 0,
+      second: 0,
+    }).toJSDate();
   }
 
-  get midnightAtTheStartOfThisWeek() {
-    return this.thursdayOfTheWeek.clone().subtract(4, 'days');
+  get midnightAtTheStartOfTheWeekDateTime() {
+    return DateTime.fromJSDate(this.localeDays.firstDayOfDateWeek(this.thursdayOfTheWeek));
   }
 
-  get midnightAtTheEndOfThisWeek() {
-    return this.thursdayOfTheWeek.clone().add(2, 'days').hour(23).minute(59).second(59);
+  get midnightAtTheEndOfTheWeekDateTime() {
+    return DateTime.fromJSDate(this.localeDays.lastDayOfDateWeek(this.thursdayOfTheWeek));
   }
 
   get publishedWeekEvents() {
@@ -59,17 +60,21 @@ export default class WeeklyGlance extends Component {
   }
 
   get title() {
-    if (!this.midnightAtTheStartOfThisWeek || !this.midnightAtTheEndOfThisWeek) {
+    if (!this.midnightAtTheStartOfTheWeekDateTime || !this.midnightAtTheEndOfTheWeekDateTime) {
       return '';
     }
 
-    const from = this.midnightAtTheStartOfThisWeek.format('MMMM D');
-    let to;
-    if (this.midnightAtTheStartOfThisWeek.month() !== this.midnightAtTheEndOfThisWeek.month()) {
-      to = this.midnightAtTheEndOfThisWeek.format('MMMM D');
+    const from = this.midnightAtTheStartOfTheWeekDateTime.toFormat('MMMM d');
+    let to = this.midnightAtTheEndOfTheWeekDateTime.toFormat('d');
+    if (
+      !this.midnightAtTheStartOfTheWeekDateTime.hasSame(
+        this.midnightAtTheEndOfTheWeekDateTime,
+        'month'
+      )
+    ) {
+      to = this.midnightAtTheEndOfTheWeekDateTime.toFormat('MMMM d');
       return `${from} - ${to}`;
     }
-    to = this.midnightAtTheEndOfThisWeek.format('D');
     return `${from}-${to}`;
   }
 

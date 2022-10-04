@@ -1,7 +1,7 @@
 {{#if (is-array @calendarEvents)}}
   <div class="ilios-calendar-day" data-test-ilios-calendar-day>
     <DailyCalendar
-      @date={{@date}}
+      @date={{this.date}}
       @events={{this.singleDayEvents}}
       @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}
     />

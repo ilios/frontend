@@ -17,10 +17,10 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     const color = '#00cc65';
 
     this.server.create('userevent', {
-      startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toJSDate(),
-      endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toJSDate(),
+      startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
+      endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
       color,
-      lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toJSDate(),
+      lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toISO(),
     });
   };
 

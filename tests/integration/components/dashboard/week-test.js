@@ -1,5 +1,5 @@
 import Service from '@ember/service';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
@@ -13,12 +13,35 @@ module('Integration | Component | dashboard/week', function (hooks) {
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
-  const today = moment();
+  const today = DateTime.fromObject({ hour: 8 });
 
   hooks.beforeEach(function () {
+    this.getTitle = function () {
+      const ld = this.owner.lookup('service:locale-days');
+      const startOfWeek = DateTime.fromJSDate(ld.firstDayOfDateWeek(today.toJSDate()));
+      const endOfWeek = DateTime.fromJSDate(ld.lastDayOfDateWeek(today.toJSDate()));
+
+      let expectedTitle;
+      if (!startOfWeek.hasSame(endOfWeek, 'month')) {
+        const from = startOfWeek.toFormat('MMMM d');
+        const to = endOfWeek.toFormat('MMMM d');
+        expectedTitle = `${from} - ${to}`;
+      } else {
+        const from = startOfWeek.toFormat('MMMM d');
+        const to = endOfWeek.toFormat('d');
+        expectedTitle = `${from}-${to}`;
+      }
+      expectedTitle += ' Week at a Glance';
+
+      return expectedTitle;
+    };
+  });
+
+  test('it renders with events', async function (assert) {
+    assert.expect(5);
     this.server.create('userevent', {
       name: 'Learn to Learn',
-      startDate: today.format(),
+      startDate: today.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -26,7 +49,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
     });
     this.server.create('userevent', {
       name: 'Finding the Point in Life',
-      startDate: today.format(),
+      startDate: today.toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -48,45 +71,17 @@ module('Integration | Component | dashboard/week', function (hooks) {
       isPublished: true,
       isScheduled: true,
     });
-    const events = this.server.db.userevents;
 
-    this.userEventsMock = Service.extend({
+    const { userevents } = this.server.db;
+    class UserEvents extends Service {
       async getEvents() {
-        return events.slice();
-      },
-    });
-    this.blankEventsMock = Service.extend({
-      async getEvents() {
-        return [];
-      },
-    });
-  });
-
-  const getTitle = function () {
-    const startOfWeek = today.clone().day(0).hour(0).minute(0).second(0);
-    const endOfWeek = today.clone().day(6).hour(23).minute(59).second(59);
-
-    let expectedTitle;
-    if (startOfWeek.month() != endOfWeek.month()) {
-      const from = startOfWeek.format('MMMM D');
-      const to = endOfWeek.format('MMMM D');
-      expectedTitle = `${from} - ${to}`;
-    } else {
-      const from = startOfWeek.format('MMMM D');
-      const to = endOfWeek.format('D');
-      expectedTitle = `${from}-${to}`;
+        return userevents.slice();
+      }
     }
-    expectedTitle += ' Week at a Glance';
-
-    return expectedTitle;
-  };
-
-  test('it renders with events', async function (assert) {
-    assert.expect(5);
-    this.owner.register('service:user-events', this.userEventsMock);
+    this.owner.register('service:user-events', UserEvents);
 
     await render(hbs`<Dashboard::Week />`);
-    const expectedTitle = getTitle();
+    const expectedTitle = this.getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
     assert.strictEqual(component.weekGlance.events.length, 2, 'Blank events are not shown');
@@ -96,11 +91,16 @@ module('Integration | Component | dashboard/week', function (hooks) {
 
   test('it renders blank', async function (assert) {
     assert.expect(3);
-    this.owner.register('service:user-events', this.blankEventsMock);
+    class UserEvents extends Service {
+      async getEvents() {
+        return [];
+      }
+    }
+    this.owner.register('service:user-events', UserEvents);
     this.userEvents = this.owner.lookup('service:user-events');
 
     await render(hbs`<Dashboard::Week />`);
-    const expectedTitle = getTitle();
+    const expectedTitle = this.getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
     assert.strictEqual(component.weekGlance.events.length, 0);

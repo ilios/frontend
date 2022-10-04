@@ -79,10 +79,10 @@ const OfferingTimeBlock = OfferingBlock.extend({
     return moment(this.endDate).format('LT');
   }),
   longStartText: computed('startDate', function () {
-    return moment(this.startDate).format('dddd MMMM Do [@] LT');
+    return moment(this.startDate).format('dddd MMMM D [@] LT');
   }),
   longEndText: computed('endDate', function () {
-    return moment(this.endDate).format('dddd MMMM Do [@] LT');
+    return moment(this.endDate).format('dddd MMMM D [@] LT');
   }),
   sortOfferingsBy: null,
   sortedOfferings: sort('offerings', 'sortOfferingsBy'),

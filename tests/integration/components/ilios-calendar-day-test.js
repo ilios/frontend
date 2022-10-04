@@ -4,14 +4,22 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/ilios-calendar-day';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | ilios calendar day', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    const date = new Date('2015-09-30T12:00:00');
-    this.set('date', date);
+    const september30th2015 = DateTime.fromObject({
+      year: 2015,
+      month: 9,
+      day: 30,
+      hour: 12,
+      minute: 0,
+      second: 0,
+    });
+    this.set('date', september30th2015.toJSDate());
     await render(
       hbs`<IliosCalendarDay @date={{this.date}} @selectEvent={{(noop)}} @calendarEvents={{(array)}} />`
     );
