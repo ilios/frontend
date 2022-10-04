@@ -18,7 +18,7 @@
   </div>
   <div class="content-container">
     {{#if this.editorOn}}
-      <Reports::NewSubject @close={{fn (set this.editorOn) false}} />
+      <Reports::NewSubject @close={{fn (set this.editorOn) false}} @save={{this.saveNewReport}} />
     {{/if}}
     {{#if this.reportsLoaded}}
       <ul class="saved-reports" data-test-saved-reports>

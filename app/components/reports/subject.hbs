@@ -3,7 +3,7 @@
   data-test-reports-subject
   ...attributes
 >
-  <div class="back-to-reports">
+  <div class="back-to-reports" data-test-back-to-reports>
     <LinkTo @route="reports.subjects">
       {{t "general.backToSubjectReports"}}
     </LinkTo>
@@ -17,6 +17,7 @@
         type="button"
         disabled={{this.downloadReport.isRunning}}
         {{on "click" (perform this.downloadReport)}}
+        data-test-download
       >
         {{#if this.finishedBuildingReport}}
           <FaIcon @icon="check" />
@@ -29,10 +30,7 @@
       </button>
     </div>
   </div>
-  <div
-    class="content-container"
-    data-test-selected-report
-  >
+  <div class="content-container">
     {{#if this.showAcademicYearFilter}}
       <div class="years-filter">
         <select

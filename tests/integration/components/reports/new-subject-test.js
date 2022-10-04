@@ -1,88 +1,16 @@
 import Service from '@ember/service';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, find, click, fillIn } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/reports/new-subject';
 
 module('Integration | Component | reports/new-subject', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
-
-  test('it renders', async function (assert) {
-    assert.expect(33);
-    this.server.create('school', { title: 'first' });
-    const school2 = this.server.create('school', { title: 'second' });
-    this.server.create('school', { title: 'third' });
-
-    //pre-fetch schools this is usually done at the route above this component, but
-    // for this integration test we need to do this here
-    await this.owner.lookup('service:store').findAll('school');
-
-    const user = this.server.create('user', { school: school2 });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
-
-    class CurrentUserMock extends Service {
-      async getModel() {
-        return userModel;
-      }
-    }
-
-    this.owner.register('service:current-user', CurrentUserMock);
-
-    this.set('close', () => {});
-    await render(hbs`<Reports::NewSubject @close={{this.close}} />`);
-    const title = '.title';
-    const schools = '[data-test-school] select';
-    const subjects = '[data-test-subject] select';
-
-    const schoolSelect = find(schools);
-    assert.dom(title).hasText('New Report');
-    assert.ok(schoolSelect.options[0].value, 'null');
-    assert.ok(schoolSelect.options[0].textContent.includes('All Schools'));
-    assert.ok(schoolSelect.options[1].value, '1');
-    assert.ok(schoolSelect.options[1].textContent.includes('first'));
-    assert.ok(schoolSelect.options[2].value, '2');
-    assert.ok(schoolSelect.options[2].textContent.includes('second'));
-    assert.ok(schoolSelect.options[3].value, '3');
-    assert.ok(schoolSelect.options[3].textContent.includes('third'));
-    assert.strictEqual(
-      parseInt(schoolSelect.options[schoolSelect.selectedIndex].value, 10),
-      2,
-      'primary school is selected'
-    );
-
-    const subjectSelect = find(subjects);
-    assert.ok(subjectSelect.options[0].value, 'course');
-    assert.ok(subjectSelect.options[0].textContent.includes('Courses'));
-    assert.ok(subjectSelect.options[1].value, 'session');
-    assert.ok(subjectSelect.options[1].textContent.includes('Sessions'));
-    assert.ok(subjectSelect.options[2].value, 'program');
-    assert.ok(subjectSelect.options[2].textContent.includes('Programs'));
-    assert.ok(subjectSelect.options[3].value, 'program year');
-    assert.ok(subjectSelect.options[3].textContent.includes('Program Years'));
-    assert.ok(subjectSelect.options[4].value, 'instructor');
-    assert.ok(subjectSelect.options[4].textContent.includes('Instructors'));
-    assert.ok(subjectSelect.options[5].value, 'instructor group');
-    assert.ok(subjectSelect.options[5].textContent.includes('Instructor Groups'));
-    assert.ok(subjectSelect.options[6].value, 'learning material');
-    assert.ok(subjectSelect.options[6].textContent.includes('Learning Materials'));
-    assert.ok(subjectSelect.options[7].value, 'competency');
-    assert.ok(subjectSelect.options[7].textContent.includes('Competencies'));
-    assert.ok(subjectSelect.options[8].value, 'mesh term');
-    assert.ok(subjectSelect.options[8].textContent.includes('MeSH Terms'));
-    assert.ok(subjectSelect.options[9].value, 'term');
-    assert.ok(subjectSelect.options[9].textContent.includes('Terms'));
-    assert.ok(subjectSelect.options[10].value, 'session type');
-    assert.ok(subjectSelect.options[10].textContent.includes('Session Types'));
-    assert.strictEqual(
-      subjectSelect.options[subjectSelect.selectedIndex].value,
-      'course',
-      'courses is selected'
-    );
-  });
 
   const checkObjects = async function (context, assert, subjectNum, subjectVal, expectedObjects) {
     const school = context.server.create('school', { title: 'first' });
@@ -96,22 +24,83 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     }
 
     context.owner.register('service:current-user', CurrentUserMock);
-    context.set('close', () => {});
-    await render(hbs`<Reports::NewSubject @close={{this.close}} />`);
-
-    const subject = `[data-test-subject] select`;
-    const object = `[data-test-object] select`;
-    await fillIn('[data-test-school] select', 'null');
-    const subjectSelect = find(subject);
-    assert.strictEqual(subjectSelect.options[subjectNum].value, subjectVal);
-    await fillIn(subjectSelect, subjectVal);
-
-    const objectSelect = find(object);
-    assert.strictEqual(objectSelect.options[0].value, '');
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    assert.strictEqual(component.subjects.items[subjectNum].value, subjectVal);
+    await component.subjects.choose(subjectVal);
+    await component.objects.choose('null');
+    assert.strictEqual(component.objects.items[0].value, '');
     expectedObjects.forEach((val, i) => {
-      assert.strictEqual(objectSelect.options[i + 1].value, val, `${val} is object option`);
+      assert.strictEqual(component.objects.items[i + 1].value, val, `${val} is object option`);
     });
   };
+
+  test('it renders', async function (assert) {
+    this.server.create('school', { title: 'first' });
+    const school2 = this.server.create('school', { title: 'second' });
+    this.server.create('school', { title: 'third' });
+    //pre-fetch schools this is usually done at the route above this component, but
+    // for this integration test we need to do this here
+    await this.owner.lookup('service:store').findAll('school');
+    const user = this.server.create('user', { school: school2 });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+    this.owner.register('service:current-user', CurrentUserMock);
+
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+
+    assert.strictEqual(component.componentTitle, 'New Report');
+    assert.strictEqual(component.schools.items.length, 4);
+    assert.strictEqual(component.schools.items[0].value, 'null');
+    assert.strictEqual(component.schools.items[0].text, 'All Schools');
+    assert.notOk(component.schools.items[0].isSelected);
+    assert.strictEqual(component.schools.items[1].value, '1');
+    assert.strictEqual(component.schools.items[1].text, 'first');
+    assert.notOk(component.schools.items[1].isSelected);
+    assert.strictEqual(component.schools.items[2].value, '2');
+    assert.strictEqual(component.schools.items[2].text, 'second');
+    assert.ok(component.schools.items[2].isSelected);
+    assert.strictEqual(component.schools.items[3].value, '3');
+    assert.strictEqual(component.schools.items[3].text, 'third');
+    assert.notOk(component.schools.items[3].isSelected);
+    assert.strictEqual(component.subjects.items.length, 11);
+    assert.strictEqual(component.subjects.items[0].value, 'course');
+    assert.strictEqual(component.subjects.items[0].text, 'Courses');
+    assert.ok(component.subjects.items[0].isSelected);
+    assert.strictEqual(component.subjects.items[1].value, 'session');
+    assert.strictEqual(component.subjects.items[1].text, 'Sessions');
+    assert.notOk(component.subjects.items[1].isSelected);
+    assert.strictEqual(component.subjects.items[2].value, 'program');
+    assert.strictEqual(component.subjects.items[2].text, 'Programs');
+    assert.notOk(component.subjects.items[2].isSelected);
+    assert.strictEqual(component.subjects.items[3].value, 'program year');
+    assert.strictEqual(component.subjects.items[3].text, 'Program Years');
+    assert.notOk(component.subjects.items[3].isSelected);
+    assert.strictEqual(component.subjects.items[4].value, 'instructor');
+    assert.strictEqual(component.subjects.items[4].text, 'Instructors');
+    assert.notOk(component.subjects.items[4].isSelected);
+    assert.strictEqual(component.subjects.items[5].value, 'instructor group');
+    assert.strictEqual(component.subjects.items[5].text, 'Instructor Groups');
+    assert.notOk(component.subjects.items[5].isSelected);
+    assert.strictEqual(component.subjects.items[6].value, 'learning material');
+    assert.strictEqual(component.subjects.items[6].text, 'Learning Materials');
+    assert.notOk(component.subjects.items[6].isSelected);
+    assert.strictEqual(component.subjects.items[7].value, 'competency');
+    assert.strictEqual(component.subjects.items[7].text, 'Competencies');
+    assert.notOk(component.subjects.items[7].isSelected);
+    assert.strictEqual(component.subjects.items[8].value, 'mesh term');
+    assert.strictEqual(component.subjects.items[8].text, 'MeSH Terms');
+    assert.notOk(component.subjects.items[8].isSelected);
+    assert.strictEqual(component.subjects.items[9].value, 'term');
+    assert.strictEqual(component.subjects.items[9].text, 'Terms');
+    assert.notOk(component.subjects.items[9].isSelected);
+    assert.strictEqual(component.subjects.items[10].value, 'session type');
+    assert.strictEqual(component.subjects.items[10].text, 'Session Types');
+    assert.notOk(component.subjects.items[10].isSelected);
+  });
 
   test('choosing course selects correct objects', function (assert) {
     assert.expect(8);
@@ -230,13 +219,11 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     const school = this.server.create('school', { title: 'first' });
     const user = this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
-
     class CurrentUserMock extends Service {
       async getModel() {
         return userModel;
       }
     }
-
     this.owner.register('service:current-user', CurrentUserMock);
     this.server.create('user', {
       firstName: 'Test',
@@ -245,25 +232,90 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       email: 'test@example.com',
       displayName: 'Aardvark',
     });
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    assert.notOk(component.userSearch.isVisible);
+    assert.notOk(component.selectedInstructor.isVisible);
+    await component.schools.choose('null');
+    await component.objects.choose('instructor');
+    assert.ok(component.userSearch.isVisible);
+    await component.userSearch.searchBox.set('test');
+    await component.userSearch.results.items[0].click();
+    assert.strictEqual(component.selectedInstructor.text, 'Aardvark');
+  });
 
-    const schoolSelect = '[data-test-school] select';
-    const subject = `[data-test-subject] select`;
-    const object = `[data-test-object] select`;
-    const userSearch = '.user-search';
-    const input = `${userSearch} input`;
-    const results = `${userSearch} li`;
-    const firstResult = `${results}:nth-of-type(2)`;
-    const selectedUser = `.removable-list li:nth-of-type(1)`;
-
-    this.set('close', () => {});
+  test('cancel', async function (assert) {
+    assert.expect(1);
+    const school = this.server.create('school', { title: 'first' });
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+    this.owner.register('service:current-user', CurrentUserMock);
+    this.set('close', () => {
+      assert.ok(true);
+    });
     await render(hbs`<Reports::NewSubject @close={{this.close}} />`);
-    await fillIn(schoolSelect, 'null');
-    const subjectSelect = find(subject);
-    assert.strictEqual(subjectSelect.options[subjectSelect.selectedIndex].value, 'course');
-    await fillIn(object, 'instructor');
-    assert.dom(userSearch).exists({ count: 1 });
-    await fillIn(input, 'test');
-    await click(firstResult);
-    assert.dom(selectedUser).hasText('Aardvark');
+    await component.cancel();
+  });
+
+  test('save', async function (assert) {
+    assert.expect(1);
+    const school = this.server.create('school', { title: 'first' });
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+    this.owner.register('service:current-user', CurrentUserMock);
+    this.set('save', {
+      perform(report) {
+        assert.strictEqual(report.title, 'lorem ipsum');
+      },
+    });
+    await render(hbs`<Reports::NewSubject @save={{this.save}} @close={{(noop)}} />`);
+    await component.title.set('lorem ipsum');
+    await component.save();
+  });
+
+  test('title too long', async function (assert) {
+    const school = this.server.create('school', { title: 'first' });
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+    this.owner.register('service:current-user', CurrentUserMock);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    assert.strictEqual(component.title.errors.length, 0);
+    await component.title.set('0123456789'.repeat(25));
+    await component.save();
+    assert.strictEqual(component.title.errors.length, 1);
+  });
+
+  skip('instructor missing', async function (assert) {
+    // @todo implement [ST 2022/10/04]
+    assert.ok(true);
+  });
+
+  skip('missing MeSH term', async function (assert) {
+    // @todo implement [ST 2022/10/04]
+    assert.ok(true);
+  });
+
+  skip('missing object for instructor', async function (assert) {
+    // @todo implement [ST 2022/10/04]
+    assert.ok(true);
+  });
+
+  skip('missing object for MeSH term', async function (assert) {
+    // @todo implement [ST 2022/10/04]
+    assert.ok(true);
   });
 });

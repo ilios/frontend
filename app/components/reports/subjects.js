@@ -2,8 +2,9 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { isBlank } from '@ember/utils';
+import { isNone } from '@ember/utils';
 import { use } from 'ember-could-get-used-to-this';
+import { dropTask } from 'ember-concurrency';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import buildReportTitle from 'ilios/utils/build-report-title';
@@ -25,7 +26,7 @@ export default class ReportsSubjectsComponent extends Component {
   @use reports = new AsyncProcess(() => [this.reportsWithTitles.bind(this), this.userReports]);
 
   get reportsLoaded() {
-    return !isBlank(this.reports);
+    return !isNone(this.reports);
   }
 
   async reportsWithTitles(reports) {
@@ -41,5 +42,10 @@ export default class ReportsSubjectsComponent extends Component {
   deleteReport(report) {
     report.deleteRecord();
     report.save();
+  }
+
+  @dropTask
+  *saveNewReport(report) {
+    yield report.save();
   }
 }

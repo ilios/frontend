@@ -5,8 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { authenticateSession } from 'ember-simple-auth/test-support';
-import { component } from 'ilios/tests/pages/components/dashboard-myreports';
-import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { component } from 'ilios/tests/pages/components/reports/subject';
 
 module('Integration | Component | reports/subject', function (hooks) {
   setupRenderingTest(hooks);
@@ -22,52 +21,14 @@ module('Integration | Component | reports/subject', function (hooks) {
     await authenticateSession({
       jwt: encodedData,
     });
-  });
-
-  test('list reports', async function (assert) {
-    assert.expect(4);
-    const course = this.server.create('course');
-    const session = this.server.create('session', {
-      course,
+    //override default handler to just return all courses
+    this.server.get('api/courses', (schema) => {
+      return schema.courses.all();
     });
-    this.server.create('report', {
-      title: 'report 0',
-      subject: 'courses',
-      user: this.user,
-    });
-    this.server.create('report', {
-      title: 'report 1',
-      subject: 'courses',
-      prepositionalObject: 'session',
-      prepositionalObjectTableRowId: session.id,
-      user: this.user,
-    });
-    this.setProperties({ selectedReport: null, selectedYear: '' });
-    this.setProperties({ setReport: () => {}, setReportYear: () => {} });
-    await render(hbs`<Reports::Subject
-      @selectedReport={{this.selectedReport}}
-      @selectedYear={{this.selectedYear}}
-      @onReportSelect={{this.setReport}}
-      @onReportYearSelect={{this.setReportYear}}
-    />`);
-    assert.strictEqual(component.title, 'My Reports');
-    assert.strictEqual(component.reports.length, 2);
-    assert.strictEqual(component.reports[0].title, 'report 0');
-    assert.strictEqual(component.reports[1].title, 'report 1');
-    a11yAudit(this.element);
-  });
-
-  test('display none when no reports', async function (assert) {
-    assert.expect(3);
-    await render(hbs`<Reports::Subject />`);
-    assert.strictEqual(component.title, 'My Reports');
-    assert.strictEqual(component.reports.length, 1);
-    assert.strictEqual(component.reports[0].text, 'None');
-    a11yAudit(this.element);
   });
 
   test('year filter works', async function (assert) {
-    assert.expect(9);
+    assert.expect(7);
     this.server.create('academic-year', {
       id: 2015,
     });
@@ -91,16 +52,8 @@ module('Integration | Component | reports/subject', function (hooks) {
       user: this.user,
       school,
     });
-    //override default hander to just return all courses
-    this.server.get('api/courses', (schema) => {
-      return schema.courses.all();
-    });
-
-    this.setProperties({ selectedReport: null, selectedYear: '' });
-    this.set('setReport', (reportId) => {
-      this.set('selectedReport', report);
-      assert.strictEqual(reportId, '1', 'report id bubbles up for query params');
-    });
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
+    this.set('selectedReport', reportModel);
     this.set('setReportYear', (year) => {
       this.set('selectedYear', year);
       assert.strictEqual(year, '2016', 'report year bubbles up for query params');
@@ -108,18 +61,15 @@ module('Integration | Component | reports/subject', function (hooks) {
     await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
-      @onReportSelect={{this.setReport}}
       @onReportYearSelect={{this.setReportYear}}
     />`);
-    assert.strictEqual(component.title, 'My Reports');
-    assert.strictEqual(component.reports.length, 1);
-    assert.strictEqual(component.reports[0].title, 'my report 0');
-    await component.reports[0].select();
-    assert.ok(component.selectedReport.yearsFilterExists);
-    assert.strictEqual(component.selectedReport.results.length, 2);
-    await component.selectedReport.chooseYear('2016');
-    assert.strictEqual(component.selectedReport.results.length, 1);
-    assert.strictEqual(component.selectedReport.results[0].text, '2016 course 1');
+    assert.strictEqual(component.title, 'my report 0');
+    assert.strictEqual(component.results.length, 2);
+    assert.strictEqual(component.results[0].text, '2015 course 0');
+    assert.strictEqual(component.results[1].text, '2016 course 1');
+    await component.academicYears.choose('2016');
+    assert.strictEqual(component.results.length, 1);
+    assert.strictEqual(component.results[0].text, '2016 course 1');
   });
 
   test('report results show academic year as range if applicable by configuration', async function (assert) {
@@ -129,10 +79,6 @@ module('Integration | Component | reports/subject', function (hooks) {
           academicYearCrossesCalendarYearBoundaries: true,
         },
       };
-    });
-    //override default handler to just return all courses
-    this.server.get('api/courses', (schema) => {
-      return schema.courses.all();
     });
     const year = 2016;
     this.server.create('academic-year', { id: year });
@@ -152,14 +98,12 @@ module('Integration | Component | reports/subject', function (hooks) {
     await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
-      @onReportSelect={{(noop)}}
       @onReportYearSelect={{(noop)}}
     />`);
-    assert.strictEqual(component.selectedReport.results[0].text, '2016 - 2017 course 0');
+    assert.strictEqual(component.results[0].text, '2016 - 2017 course 0');
   });
 
   test('changing year changes select #3839', async function (assert) {
-    assert.expect(5);
     this.server.create('academic-year', {
       id: 2015,
     });
@@ -174,26 +118,18 @@ module('Integration | Component | reports/subject', function (hooks) {
       user: this.user,
       school,
     });
-    //override default hander to just return all courses
-    this.server.get('api/courses', (schema) => {
-      return schema.courses.all();
-    });
-
-    this.setProperties({ selectedReport: null, selectedYear: '' });
-    this.set('setReport', () => this.set('selectedReport', report));
     this.set('setReportYear', (year) => this.set('selectedYear', year));
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
+    this.set('selectedReport', reportModel);
     await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
-      @onReportSelect={{this.setReport}}
       @onReportYearSelect={{this.setReportYear}}
     />`);
-    await component.reports[0].select();
-    assert.ok(component.selectedReport.yearsFilterExists);
-    assert.strictEqual(component.selectedReport.currentYear, '');
-    assert.strictEqual(component.selectedReport.results.length, 1);
-    await component.selectedReport.chooseYear('2015');
-    assert.strictEqual(component.selectedReport.results.length, 1);
-    assert.strictEqual(component.selectedReport.currentYear, '2015');
+    assert.strictEqual(component.academicYears.value, '');
+    assert.strictEqual(component.results.length, 1);
+    await component.academicYears.choose('2015');
+    assert.strictEqual(component.results.length, 1);
+    assert.strictEqual(component.academicYears.value, '2015');
   });
 });

@@ -224,7 +224,7 @@ export default class ReportsNewSubjectComponent extends Component {
         'term',
       ];
       if (schoolScopedModels.includes(model)) {
-        if ('session' === model || 'term' == model) {
+        if ('session' === model || 'term' === model) {
           query.filters.schools = [this.currentSchool.id];
         } else {
           query.filters.school = this.currentSchool.id;
@@ -403,14 +403,13 @@ export default class ReportsNewSubjectComponent extends Component {
       prepositionalObjectTableRowId: this.currentPrepositionalObjectId,
       school: this.currentSchool,
     });
-    yield report.save();
+    yield this.args.save.perform(report);
     this.args.close();
   }
 
   @action
   changeSchool(schoolId) {
-    const school = findById(this.allSchools.slice(), schoolId);
-    this.selectedSchool = school;
+    this.selectedSchool = findById(this.allSchools.slice(), schoolId);
     this.schoolChanged = true;
   }
 

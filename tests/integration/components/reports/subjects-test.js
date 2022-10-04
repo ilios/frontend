@@ -1,26 +1,70 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { authenticateSession } from 'ember-simple-auth/test-support';
+import { component } from 'ilios/tests/pages/components/reports/subjects';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | reports/subjects', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
+  setupMirage(hooks);
+
+  hooks.beforeEach(async function () {
+    this.user = this.server.create('user');
+    const jwtObject = {
+      user_id: this.user.id,
+    };
+    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
+    await authenticateSession({
+      jwt: encodedData,
+    });
+  });
 
   test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
+    assert.expect(4);
+    const course = this.server.create('course');
+    const session = this.server.create('session', {
+      course,
+    });
+    this.server.create('report', {
+      title: 'report 0',
+      subject: 'courses',
+      user: this.user,
+    });
+    this.server.create('report', {
+      title: 'report 1',
+      subject: 'courses',
+      prepositionalObject: 'session',
+      prepositionalObjectTableRowId: session.id,
+      user: this.user,
+    });
     await render(hbs`<Reports::Subjects />`);
+    assert.strictEqual(component.title, 'Subject Reports');
+    assert.strictEqual(component.reports.length, 2);
+    assert.strictEqual(component.reports[0].title, 'report 0');
+    assert.strictEqual(component.reports[1].title, 'report 1');
+    a11yAudit(this.element);
+  });
 
-    assert.dom(this.element).hasText('');
+  test('it renders empty', async function (assert) {
+    assert.expect(3);
+    await render(hbs`<Reports::Subjects />`);
+    assert.strictEqual(component.title, 'Subject Reports');
+    assert.strictEqual(component.reports.length, 1);
+    assert.strictEqual(component.reports[0].text, 'None');
+    a11yAudit(this.element);
+  });
 
-    // Template block usage:
-    await render(hbs`
-      <Reports::Subjects>
-        template block text
-      </Reports::Subjects>
-    `);
-
-    assert.dom(this.element).hasText('template block text');
+  test('toggle new report form', async function (assert) {
+    await render(hbs`<Reports::Subjects />`);
+    assert.notOk(component.newReport.isVisible);
+    await component.newReportFormToggle.click();
+    assert.ok(component.newReport.isVisible);
+    await component.newReportFormToggle.click();
+    assert.notOk(component.newReport.isVisible);
   });
 });
