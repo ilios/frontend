@@ -151,6 +151,23 @@
             />
           </LinkTo>
         </li>
+        <li>
+          <LinkTo
+            @route="reports"
+            title={{t "general.reports"}}
+            @current-when="reports"
+          >
+            <FaIcon @icon="file-lines" @fixedWidth={{true}} />
+            <span class="text">
+              {{t "general.reports"}}
+            </span>
+            <FaIcon
+              class="if-active"
+              @icon="chevron-right"
+              @fixedWidth={{true}}
+            />
+          </LinkTo>
+        </li>
       {{/if}}
       {{#if this.currentUser.canCreateOrUpdateUserInAnySchool}}
         <li>
@@ -198,23 +215,6 @@
           </LinkTo>
         </li>
       {{/if}}
-      <li>
-        <LinkTo
-            @route="reports"
-            title={{t "general.reports"}}
-            @current-when="reports"
-        >
-          <FaIcon @icon="file-lines" @fixedWidth={{true}} />
-          <span class="text">
-            {{t "general.reports"}}
-          </span>
-          <FaIcon
-            class="if-active"
-            @icon="chevron-right"
-            @fixedWidth={{true}}
-          />
-        </LinkTo>
-      </li>
     </ul>
   {{/if}}
 </nav>
