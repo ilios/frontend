@@ -30,19 +30,27 @@
       >
         {{t "general.members"}}
       </SortableTh>
-      <th class="text-center hide-from-small-screen">
+      <SortableTh
+        @align="center"
+        @colspan={{1}}
+        @hideFromSmallScreen={{true}}
+        @sortedAscending={{this.sortedAscending}}
+        @sortType="numeric"
+        @onClick={{fn this.setSortBy "courses"}}
+        @sortedBy={{or
+          (eq @sortBy "courses")
+          (eq @sortBy "courses:desc")
+        }}
+      >
         {{t "general.associatedCourses"}}
-      </th>
+      </SortableTh>
       <th class="text-right">
         {{t "general.actions"}}
       </th>
     </tr>
   </thead>
   <tbody>
-    {{#each (
-      sort-by (if (or (eq @sortBy "title") (eq @sortBy "title:desc")) this.sortByTitle @sortBy
-    ) @instructorGroups) as |instructorGroup|
-    }}
+    {{#each this.orderedGroups as |instructorGroup|}}
       <InstructorGroups::ListItem @instructorGroup={{instructorGroup}} />
     {{else}}
       <tr data-test-empty-list>
