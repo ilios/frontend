@@ -109,7 +109,7 @@
           </label>
           {{#if (eq this.currentPrepositionalObject "instructor")}}
             {{#if this.selectedUser}}
-              <ul class="removable-list tag-list" data-test-selected-instructor>
+              <ul class="selected-instructor" data-test-selected-instructor>
                 <li>
                   <button
                     class="link-button"
@@ -117,7 +117,7 @@
                     {{on "click" (fn this.changePrepositionalObjectId null)}}
                   >
                     {{this.selectedUser.fullName}}
-                    <FaIcon @icon="xmark" />
+                    <FaIcon @icon="xmark" class="remove"/>
                   </button>
                 </li>
               </ul>
@@ -126,20 +126,18 @@
             {{/if}}
           {{else if (eq this.currentPrepositionalObject "mesh term")}}
             {{#if this.selectedMeshTerm}}
-              <ul class="removable-list tag-list details-list" data-test-selected-mesh-term>
+              <ul class="selected-mesh-term" data-test-selected-mesh-term>
                 <li>
-                  <div class="content">
-                    <span class="title" data-test-name>
+                    <span class="term-title" data-test-name>
                       {{this.selectedMeshTerm.name}}
                     </span>
-                    <span class="details" data-test-details>
+                    <span class="term-details" data-test-details>
                       {{this.selectedMeshTerm.id}}
                       {{#if this.selectedMeshTerm.trees}}
                           -{{get (object-at 0 (reverse this.selectedMeshTerm.trees)) "treeNumber"}}
                       {{/if}}
                     </span>
-                  </div>
-                  <FaIcon @icon="xmark" />
+                    <FaIcon @icon="xmark" class="remove" />
                 </li>
               </ul>
             {{else}}

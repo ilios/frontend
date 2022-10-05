@@ -27,6 +27,22 @@
       }
     }
 
+    .selected-instructor,
+    .selected-mesh-term {
+      @include ilios-tag-list;
+      .remove {
+        margin-left: .5rem;
+      }
+    }
+
+    .term-title {
+      font-weight: bold;
+    }
+
+    .term-details {
+      font-style: italic;
+    }
+
     .input-buttons {
       float: right;
     }
