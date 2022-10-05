@@ -128,6 +128,11 @@
             {{#if this.selectedMeshTerm}}
               <ul class="selected-mesh-term" data-test-selected-mesh-term>
                 <li>
+                  <button
+                    class="link-button"
+                    type="button"
+                    {{on "click" (fn this.changePrepositionalObjectId null)}}
+                  >
                     <span class="term-title" data-test-name>
                       {{this.selectedMeshTerm.name}}
                     </span>
@@ -138,6 +143,7 @@
                       {{/if}}
                     </span>
                     <FaIcon @icon="xmark" class="remove" />
+                  </button>
                 </li>
               </ul>
             {{else}}

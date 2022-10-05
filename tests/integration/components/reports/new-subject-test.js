@@ -102,6 +102,31 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     assert.notOk(component.subjects.items[10].isSelected);
   });
 
+  test('selecting and de-selecting a MeSH term as prepositional object', async function (assert) {
+    this.server.create('mesh-descriptor');
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await component.objects.choose('mesh term');
+    assert.notOk(component.selectedMeshTerm.isVisible);
+    await component.meshManager.search.set('descriptor 0');
+    await component.meshManager.searchResults[0].add();
+    assert.strictEqual(component.selectedMeshTerm.name, 'descriptor 0');
+    await component.selectedMeshTerm.remove();
+    assert.notOk(component.selectedMeshTerm.isVisible);
+  });
+
+  test('selecting and de-selecting an instructor as prepositional object', async function (assert) {
+    this.server.create('user', { firstName: 'Rusty' });
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+
+    await component.objects.choose('instructor');
+    assert.notOk(component.selectedInstructor.isVisible);
+    await component.userSearch.searchBox.set('Rusty');
+    await component.userSearch.results.items[0].click();
+    assert.strictEqual(component.selectedInstructor.text, 'Rusty M. Mc0son');
+    await component.selectedInstructor.remove();
+    assert.notOk(component.selectedInstructor.isVisible);
+  });
+
   test('choosing course selects correct objects', function (assert) {
     assert.expect(8);
     return checkObjects(this, assert, 0, 'course', [

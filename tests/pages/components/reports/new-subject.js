@@ -44,13 +44,14 @@ const definition = {
   },
   selectedInstructor: {
     scope: '[data-test-selected-instructor]',
-    change: clickable('button'),
+    remove: clickable('button'),
   },
   userSearch,
   selectedMeshTerm: {
     scope: '[data-test-selected-mesh-term]',
     name: text('[data-test-name]'),
     details: text('[data-test-details]'),
+    remove: clickable('button'),
   },
   meshManager,
   prepositionalObjects: {
