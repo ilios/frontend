@@ -332,10 +332,6 @@ general:
   reportDescriptionPlaceholder: "Por favor entre en una breve descripción sobre este informe."
   reportDisplayTitleWithObject: "Todos {subject} para {object} en {school}"
   reportDisplayTitleWithoutObject: "Todos {subject} en {school}"
-  reportMissingInstructor: "Instructor es Necesario"
-  reportMissingMeshTerm: "Término de MeSH es Necesario"
-  reportMissingObjectForInstructor: "Asociación es Necesario Cuando Instructor es el Sujeto"
-  reportMissingObjectForMeshTerm: "Asociación es Necesario Cuando Término de MeSH es el Sujeto"
   reportName: "Nombre de Informe"
   reportNamePlaceholder: "Por favor Introduzca un Nombre de Informe"
   reports: Informes
@@ -449,3 +445,8 @@ general:
   write: Escribir
   yesPopulateGroup: "¡Sí! Añada la cohorte entera a mi nuevo grupo."
   zipCode: "Código postal"
+errors:
+  reportMissingInstructor: "Instructor es Necesario"
+  reportMissingMeshTerm: "Término de MeSH es Necesario"
+  reportMissingObjectForInstructor: "Asociación es Necesario Cuando Instructor es el Sujeto"
+  reportMissingObjectForMeshTerm: "Asociación es Necesario Cuando Término de MeSH es el Sujeto"

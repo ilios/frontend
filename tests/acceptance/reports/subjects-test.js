@@ -156,9 +156,9 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.reports.newReport.schools.choose('1');
     await page.reports.newReport.subjects.choose('course');
     await page.reports.newReport.objects.choose('mesh term');
-    await page.reports.newReport.meshManager.search.set('descriptor 0');
-    assert.strictEqual(page.reports.newReport.meshManager.searchResults.length, 1);
-    await page.reports.newReport.meshManager.searchResults[0].add();
+    await page.reports.newReport.mesh.manager.search.set('descriptor 0');
+    assert.strictEqual(page.reports.newReport.mesh.manager.searchResults.length, 1);
+    await page.reports.newReport.mesh.manager.searchResults[0].add();
     await page.reports.newReport.save();
     assert.strictEqual(page.reports.reports.length, 3);
     assert.strictEqual(page.reports.reports[0].title, 'All Courses for descriptor 0 in school 0');

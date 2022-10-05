@@ -332,10 +332,6 @@ general:
   reportDescriptionPlaceholder: "Please enter a brief description about this report."
   reportDisplayTitleWithObject: "All {subject} for {object} in {school}"
   reportDisplayTitleWithoutObject: "All {subject} in {school}"
-  reportMissingInstructor: "Instructor is Required"
-  reportMissingMeshTerm: "MeSH Term is Required"
-  reportMissingObjectForInstructor: "Association is required when Instructor is the subject"
-  reportMissingObjectForMeshTerm: "Association is required when MeSH Term is the subject"
   reportName: "Report Name"
   reportNamePlaceholder: "Please enter a report name."
   reports: Reports
@@ -449,3 +445,8 @@ general:
   write: Write
   yesPopulateGroup: "Yes!  Add entire cohort to my new group."
   zipCode: "ZIP Code"
+errors:
+  reportMissingInstructor: "Instructor is Required"
+  reportMissingMeshTerm: "MeSH Term is Required"
+  reportMissingObjectForInstructor: "Association is required when Instructor is the subject"
+  reportMissingObjectForMeshTerm: "Association is required when MeSH Term is the subject"

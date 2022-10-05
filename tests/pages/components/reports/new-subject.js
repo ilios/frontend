@@ -1,6 +1,6 @@
 import { clickable, create, collection, fillable, property, text } from 'ember-cli-page-object';
-import meshManager from 'ilios-common/page-objects/components/mesh-manager';
-import userSearch from 'ilios-common/page-objects/components/user-search';
+import manager from 'ilios-common/page-objects/components/mesh-manager';
+import search from 'ilios-common/page-objects/components/user-search';
 
 const definition = {
   scope: '[data-test-reports-new-subject]',
@@ -34,6 +34,7 @@ const definition = {
     items: collection('option', {
       isSelected: property('selected'),
     }),
+    errors: collection('.validation-error-message'),
   },
   academicYears: {
     scope: '[data-test-report-academic-years]',
@@ -46,14 +47,22 @@ const definition = {
     scope: '[data-test-selected-instructor]',
     remove: clickable('button'),
   },
-  userSearch,
+  instructors: {
+    scope: '[data-test-instructors]',
+    search,
+    errors: collection('.validation-error-message'),
+  },
   selectedMeshTerm: {
     scope: '[data-test-selected-mesh-term]',
     name: text('[data-test-name]'),
     details: text('[data-test-details]'),
     remove: clickable('button'),
   },
-  meshManager,
+  mesh: {
+    scope: '[data-test-mesh]',
+    manager,
+    errors: collection('.validation-error-message'),
+  },
   prepositionalObjects: {
     scope: '[data-test-prepositional-objects]',
     choose: fillable(),

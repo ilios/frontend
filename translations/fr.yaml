@@ -333,10 +333,6 @@ general:
   reportDescriptionPlaceholder: "Entrez S'il vous plaît dans une description brève de ce rapport."
   reportDisplayTitleWithObject: "tous {subject} pour {object} en {school}"
   reportDisplayTitleWithoutObject: "tous {subject} en {school}"
-  reportMissingInstructor: "Instructeur requis"
-  reportMissingMeshTerm: "terme de MeSH requis"
-  reportMissingObjectForInstructor: "connexion requis quand `instructeur` est le sujet"
-  reportMissingObjectForMeshTerm: "connexion requis quand `terme de MeSH` est le sujet"
   reportName: "Nom de rapport"
   reportNamePlaceholder: "Entrez S'il vous plait un nom de rapport."
   reports: Rapports
@@ -450,3 +446,8 @@ general:
   write: "Écriture"
   yesPopulateGroup: "Oui!  Ajoutez la cohorte entière à mon nouveau groupe"
   zipCode: "Code postal"
+errors:
+  reportMissingInstructor: "Instructeur requis"
+  reportMissingMeshTerm: "terme de MeSH requis"
+  reportMissingObjectForInstructor: "connexion requis quand `instructeur` est le sujet"
+  reportMissingObjectForMeshTerm: "connexion requis quand `terme de MeSH` est le sujet"

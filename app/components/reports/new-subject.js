@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { map } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { dasherize } from '@ember/string';
-import { validatable, Length } from 'ilios-common/decorators/validation';
+import { validatable, Length, Custom } from 'ilios-common/decorators/validation';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { findById } from 'ilios-common/utils/array-helpers';
@@ -14,13 +14,22 @@ import { action } from '@ember/object';
 @validatable
 export default class ReportsNewSubjectComponent extends Component {
   @service currentUser;
-  @service flashMessages;
   @service intl;
   @service store;
   @service dataLoader;
 
-  @tracked currentPrepositionalObject = null;
-  @tracked currentPrepositionalObjectId = null;
+  @Custom(
+    'validateCurrentPrepositionalObjectCallback',
+    'validateCurrentPrepositionalObjectMessageCallback'
+  )
+  @tracked
+  currentPrepositionalObject = null;
+  @Custom(
+    'validateCurrentPrepositionalObjectIdCallback',
+    'validateCurrentPrepositionalObjectIdMessageCallback'
+  )
+  @tracked
+  currentPrepositionalObjectId = null;
   @tracked currentSubject = 'course';
   @tracked isSaving = false;
   @tracked selectedSchool = null;
@@ -322,6 +331,7 @@ export default class ReportsNewSubjectComponent extends Component {
     this.currentSubject = subject;
     this.currentPrepositionalObject = null;
     this.currentPrepositionalObjectId = null;
+    this.clearErrorDisplay();
   }
 
   @action
@@ -329,6 +339,7 @@ export default class ReportsNewSubjectComponent extends Component {
     this.currentPrepositionalObject = object;
     this.currentPrepositionalObjectId = null;
     this.resetCurrentPrepositionalObjectId.perform();
+    this.clearErrorDisplay();
   }
 
   @action
@@ -336,6 +347,7 @@ export default class ReportsNewSubjectComponent extends Component {
     this.selectedYear = year;
     this.currentPrepositionalObjectId = null;
     this.resetCurrentPrepositionalObjectId.perform();
+    this.clearErrorDisplay();
   }
 
   @action
@@ -368,32 +380,16 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @dropTask
   *save() {
-    this.addErrorDisplayFor('title');
+    this.addErrorDisplaysFor([
+      'title',
+      'currentPrepositionalObject',
+      'currentPrepositionalObjectId',
+    ]);
     const isValid = yield this.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
-
-    if (this.currentSubject && !this.currentPrepositionalObject) {
-      if (this.currentSubject === 'instructor') {
-        this.flashMessages.alert('general.reportMissingObjectForInstructor');
-        return;
-      }
-      if (this.currentSubject === 'mesh term') {
-        this.flashMessages.alert('general.reportMissingObjectForMeshTerm');
-        return;
-      }
-    }
-    if (this.currentPrepositionalObject && !this.currentPrepositionalObjectId) {
-      if (this.currentPrepositionalObject === 'instructor') {
-        this.flashMessages.alert('general.reportMissingInstructor');
-      }
-      if (this.currentPrepositionalObject === 'mesh term') {
-        this.flashMessages.alert('general.reportMissingMeshTerm');
-      }
-      return;
-    }
+    this.clearErrorDisplay();
 
     const report = this.store.createRecord('report', {
       title: this.title,
@@ -423,6 +419,43 @@ export default class ReportsNewSubjectComponent extends Component {
 
     if (list.length) {
       this.currentPrepositionalObjectId = list[0].value;
+    }
+  }
+
+  @action
+  validateCurrentPrepositionalObjectIdCallback() {
+    return !(this.currentPrepositionalObject && !this.currentPrepositionalObjectId);
+  }
+
+  @action
+  validateCurrentPrepositionalObjectIdMessageCallback() {
+    if (this.currentPrepositionalObject && !this.currentPrepositionalObjectId) {
+      if (this.currentPrepositionalObject === 'instructor') {
+        return this.intl.t('errors.reportMissingInstructor');
+      }
+      if (this.currentPrepositionalObject === 'mesh term') {
+        return this.intl.t('errors.reportMissingMeshTerm');
+      }
+    }
+  }
+
+  @action
+  validateCurrentPrepositionalObjectCallback() {
+    if (this.currentSubject && !this.currentPrepositionalObject) {
+      return !['instructor', 'mesh term'].includes(this.currentSubject);
+    }
+    return true;
+  }
+
+  @action
+  validateCurrentPrepositionalObjectMessageCallback() {
+    if (this.currentSubject && !this.currentPrepositionalObject) {
+      if (this.currentSubject === 'instructor') {
+        return this.intl.t('errors.reportMissingObjectForInstructor');
+      }
+      if (this.currentSubject === 'mesh term') {
+        return this.intl.t('errors.reportMissingObjectForMeshTerm');
+      }
     }
   }
 }

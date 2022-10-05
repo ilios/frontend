@@ -12,15 +12,17 @@
         <label for="title-{{templateId}}">
           {{t "general.reportTitle"}}:
         </label>
-        <input
-          id="title-{{templateId}}"
-          type="text"
-          value={{this.title}}
-          {{on "focusout" (fn this.addErrorDisplayFor "title")}}
-          {{on "input" (pick "target.value" (set this.title))}}
-          {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-        >
-        <ValidationError @errors={{get-errors-for this.title}} />
+        <div>
+          <input
+            id="title-{{templateId}}"
+            type="text"
+            value={{this.title}}
+            {{on "focusout" (fn this.addErrorDisplayFor "title")}}
+            {{on "input" (pick "target.value" (set this.title))}}
+            {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+          >
+          <ValidationError @errors={{get-errors-for this.title}} />
+        </div>
       </p>
       <p data-test-school>
         <label for="for-{{templateId}}">
@@ -62,22 +64,25 @@
         <label for="associated-{{templateId}}">
           {{t "general.associatedWith"}}
         </label>
-        <select
-          id="associated-{{templateId}}"
-          {{on "change" (pick "target.value" this.changePrepositionalObject)}}
-        >
-          <option value="" selected={{eq null this.currentPrepositionalObject}}>
-            {{t "general.anything"}}
-          </option>
-          {{#each this.prepositionalObjectList as |o|}}
-            <option
-              value={{o.value}}
-              selected={{eq o.value this.currentPrepositionalObject}}
-            >
-              {{o.label}}
+        <div>
+          <select
+            id="associated-{{templateId}}"
+            {{on "change" (pick "target.value" this.changePrepositionalObject)}}
+          >
+            <option value="" selected={{eq null this.currentPrepositionalObject}}>
+              {{t "general.anything"}}
             </option>
-          {{/each}}
-        </select>
+            {{#each this.prepositionalObjectList as |o|}}
+              <option
+                value={{o.value}}
+                selected={{eq o.value this.currentPrepositionalObject}}
+              >
+                {{o.label}}
+              </option>
+            {{/each}}
+          </select>
+          <ValidationError @errors={{get-errors-for this.currentPrepositionalObject}} />
+        </div>
       </p>
       {{#if this.currentPrepositionalObject}}
         {{#if (includes this.currentPrepositionalObject (w "course session"))}}
@@ -122,7 +127,10 @@
                 </li>
               </ul>
             {{else}}
-              <UserSearch @addUser={{this.chooseInstructor}} />
+              <div data-test-instructors>
+                <UserSearch @addUser={{this.chooseInstructor}} />
+                <ValidationError @errors={{get-errors-for this.currentPrepositionalObjectId}} />
+              </div>
             {{/if}}
           {{else if (eq this.currentPrepositionalObject "mesh term")}}
             {{#if this.selectedMeshTerm}}
@@ -147,7 +155,10 @@
                 </li>
               </ul>
             {{else}}
-              <MeshManager @add={{this.chooseMeshTerm}} @editable={{true}} />
+              <div data-test-mesh>
+                <MeshManager @add={{this.chooseMeshTerm}} @editable={{true}} />
+                <ValidationError @errors={{get-errors-for this.currentPrepositionalObjectId}} />
+              </div>
             {{/if}}
           {{else if this.isPrepositionalObjectIdListLoaded}}
             <select
