@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { authenticateSession } from 'ember-simple-auth/test-support';
+import { setupAuthentication } from 'ilios-common';
 import { component } from 'ilios/tests/pages/components/reports/subject';
 
 module('Integration | Component | reports/subject', function (hooks) {
@@ -13,14 +13,7 @@ module('Integration | Component | reports/subject', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    this.user = this.server.create('user');
-    const jwtObject = {
-      user_id: this.user.id,
-    };
-    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
-    await authenticateSession({
-      jwt: encodedData,
-    });
+    this.user = await setupAuthentication();
     //override default handler to just return all courses
     this.server.get('api/courses', (schema) => {
       return schema.courses.all();
