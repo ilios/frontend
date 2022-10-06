@@ -66,6 +66,7 @@
               {{t "general.percentage"}}
             </SortableTh>
             <SortableTh
+              @colspan="3"
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or (eq this.sortBy "objective") (eq this.sortBy "objective:desc")}}
               @onClick={{fn this.setSortBy "objective"}}
@@ -73,6 +74,7 @@
               {{t "general.courseObjective"}}
             </SortableTh>
             <SortableTh
+              @colspan="2"
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or (eq this.sortBy "competency") (eq this.sortBy "competency:desc")}}
               @onClick={{fn this.setSortBy "competency"}}
@@ -80,6 +82,7 @@
               {{t "general.competency"}}
             </SortableTh>
             <SortableTh
+              @colspan="2"
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or (eq this.sortBy "sessionTitles") (eq this.sortBy "sessionTitles:desc")}}
               @onClick={{fn this.setSortBy "sessionTitles"}}
@@ -100,9 +103,9 @@
           {{#each (sort-by this.sortBy this.tableData) as |row|}}
             <tr>
               <td>{{row.percentage}}</td>
-              <td class="objective">{{{row.objective}}}</td>
-              <td>{{row.competency}}</td>
-              <td>{{row.sessionTitles}}</td>
+              <td class="objective" colspan="3">{{{row.objective}}}</td>
+              <td colspan="2">{{row.competency}}</td>
+              <td colspan="2">{{row.sessionTitles}}</td>
               <td>{{row.minutes}}</td>
             </tr>
           {{/each}}
