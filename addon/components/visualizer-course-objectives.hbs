@@ -105,7 +105,13 @@
               <td>{{row.percentage}}</td>
               <td class="objective" colspan="3">{{{row.objective}}}</td>
               <td colspan="2">{{row.competency}}</td>
-              <td colspan="2">{{row.sessionTitles}}</td>
+              <td colspan="2">
+                {{#each row.sessions as |session index|}}
+                  <LinkTo @route="session" @models={{array @course session}}>
+                    {{session.title~}}
+                  </LinkTo>{{if (not-eq index row.sessions.length) ","}}
+                {{/each}}
+              </td>
               <td>{{row.minutes}}</td>
             </tr>
           {{/each}}

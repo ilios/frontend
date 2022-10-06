@@ -8,7 +8,7 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { filterBy, mapBy } from 'ilios-common/utils/array-helpers';
+import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerCourseObjectives extends Component {
   @service router;
@@ -45,6 +45,7 @@ export default class VisualizerCourseObjectives extends Component {
       rhett.objective = obj.meta.courseObjective.title;
       rhett.competency = obj.meta.competency.title;
       rhett.sessionTitles = mapBy(obj.meta.sessionObjectives, 'sessionTitle').sort().join(', ');
+      rhett.sessions = sortBy(mapBy(obj.meta.sessionObjectives, 'session'), 'title');
       return rhett;
     });
   }
@@ -105,6 +106,7 @@ export default class VisualizerCourseObjectives extends Component {
 
         return {
           sessionTitle: session.title,
+          session,
           objectives: flatObjectives,
           minutes,
         };
