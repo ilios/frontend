@@ -109,7 +109,7 @@
                 {{#each row.sessions as |session index|}}
                   <LinkTo @route="session" @models={{array @course session}}>
                     {{session.title~}}
-                  </LinkTo>{{if (not-eq index row.sessions.length) ","}}
+                  </LinkTo>{{if (not-eq index (sub row.sessions.length 1)) ","}}
                 {{/each}}
               </td>
               <td>{{row.minutes}}</td>
