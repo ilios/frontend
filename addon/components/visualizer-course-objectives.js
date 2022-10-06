@@ -1,13 +1,14 @@
 import Component from '@glimmer/component';
-import { filter, map } from 'rsvp';
-import { htmlSafe } from '@ember/template';
-import { restartableTask, timeout } from 'ember-concurrency';
-import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/template';
+import { filter, map } from 'rsvp';
+import { restartableTask, timeout } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { filterBy, mapBy } from '../utils/array-helpers';
+import { filterBy, mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerCourseObjectives extends Component {
   @service router;
@@ -16,9 +17,14 @@ export default class VisualizerCourseObjectives extends Component {
 
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'percentage';
 
   @use courseSessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
   @use dataObjects = new AsyncProcess(() => [this.getDataObjects.bind(this), this.sessions]);
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
 
   get sessions() {
     if (!this.courseSessions) {
@@ -53,6 +59,14 @@ export default class VisualizerCourseObjectives extends Component {
 
   get isLoaded() {
     return !!this.dataObjects;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
   }
 
   async getDataObjects(sessions) {

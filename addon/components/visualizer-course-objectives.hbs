@@ -57,15 +57,47 @@
       <table>
         <thead>
           <tr>
-            <th>{{t "general.percentage"}}</th>
-            <th>{{t "general.courseObjective"}}</th>
-            <th>{{t "general.competency"}}</th>
-            <th>{{t "general.sessions"}}</th>
-            <th>{{t "general.minutes"}}</th>
+            <SortableTh
+              @sortedAscending={{this.sortedAscending}}
+              @sortedBy={{or (eq this.sortBy "percentage") (eq this.sortBy "percentage:desc")}}
+              @onClick={{fn this.setSortBy "percentage"}}
+              @sortType="numeric"
+            >
+              {{t "general.percentage"}}
+            </SortableTh>
+            <SortableTh
+              @sortedAscending={{this.sortedAscending}}
+              @sortedBy={{or (eq this.sortBy "objective") (eq this.sortBy "objective:desc")}}
+              @onClick={{fn this.setSortBy "objective"}}
+            >
+              {{t "general.courseObjective"}}
+            </SortableTh>
+            <SortableTh
+              @sortedAscending={{this.sortedAscending}}
+              @sortedBy={{or (eq this.sortBy "competency") (eq this.sortBy "competency:desc")}}
+              @onClick={{fn this.setSortBy "competency"}}
+            >
+              {{t "general.competency"}}
+            </SortableTh>
+            <SortableTh
+              @sortedAscending={{this.sortedAscending}}
+              @sortedBy={{or (eq this.sortBy "sessionTitles") (eq this.sortBy "sessionTitles:desc")}}
+              @onClick={{fn this.setSortBy "sessionTitles"}}
+            >
+              {{t "general.sessions"}}
+            </SortableTh>
+            <SortableTh
+              @sortedAscending={{this.sortedAscending}}
+              @sortedBy={{or (eq this.sortBy "minutes") (eq this.sortBy "minutes:desc")}}
+              @onClick={{fn this.setSortBy "minutes"}}
+              @sortType="numeric"
+            >
+              {{t "general.minutes"}}
+            </SortableTh>
           </tr>
         </thead>
         <tbody>
-          {{#each (sort-by "minutes" this.tableData) as |row|}}
+          {{#each (sort-by this.sortBy this.tableData) as |row|}}
             <tr>
               <td>{{row.percentage}}</td>
               <td class="objective">{{{row.objective}}}</td>
