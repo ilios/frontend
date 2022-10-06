@@ -35,6 +35,8 @@
 
   .data-table {
     grid-column: -1/1;
+    padding-top: 2rem;
+
     table {
       @include ilios-table-structure;
 
