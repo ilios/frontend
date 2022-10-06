@@ -44,7 +44,7 @@ export default class VisualizerCourseObjectives extends Component {
       rhett.percentage = obj.label;
       rhett.objective = obj.meta.courseObjective.title;
       rhett.competency = obj.meta.competency.title;
-      rhett.sessionTitles = mapBy(obj.meta.sessionObjectives, 'sessionTitle').join(', ');
+      rhett.sessionTitles = mapBy(obj.meta.sessionObjectives, 'sessionTitle').sort().join(', ');
       return rhett;
     });
   }
@@ -168,7 +168,7 @@ export default class VisualizerCourseObjectives extends Component {
 
     const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`);
     const sessionTitles = mapBy(meta.sessionObjectives, 'sessionTitle');
-    const content = sessionTitles.join(', ');
+    const content = sessionTitles.sort().join(', ');
 
     this.tooltipTitle = title;
     this.tooltipContent = content;
