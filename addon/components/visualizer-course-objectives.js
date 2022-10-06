@@ -41,7 +41,13 @@ export default class VisualizerCourseObjectives extends Component {
     return this.dataObjects.map((obj) => {
       const rhett = {};
       rhett.minutes = obj.data;
-      rhett.percentage = obj.label;
+      // KLUDGE!
+      // multiply by 1,000 to get everything back to full numbers.
+      // that way, we can rely on string sorting rather than having to implement our own
+      // sorting callback.
+      // [ST 2022/10/06]
+      rhett.percentage = obj.percentage * 1000;
+      rhett.percentageLabel = obj.label;
       rhett.objective = obj.meta.courseObjective.title;
       rhett.competency = obj.meta.competency.title;
       rhett.sessionTitles = mapBy(obj.meta.sessionObjectives, 'sessionTitle').sort().join(', ');
@@ -151,6 +157,7 @@ export default class VisualizerCourseObjectives extends Component {
     return mappedObjectives.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${percent}%`;
+      obj.percentage = percent;
       return obj;
     });
   }

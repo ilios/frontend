@@ -102,7 +102,7 @@
         <tbody>
           {{#each (sort-by this.sortBy this.tableData) as |row|}}
             <tr>
-              <td>{{row.percentage}}</td>
+              <td>{{row.percentageLabel}}</td>
               <td class="objective" colspan="3">{{{row.objective}}}</td>
               <td colspan="2">{{row.competency}}</td>
               <td colspan="2">
