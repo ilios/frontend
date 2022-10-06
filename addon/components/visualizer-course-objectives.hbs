@@ -52,4 +52,30 @@
       </div>
     {{/unless}}
   {{/if}}
+  {{#if (or @isIcon this.objectiveWithMinutes.length)}}
+    <div class="data-table">
+      <table>
+        <thead>
+          <tr>
+            <th>{{t "general.minutes"}}</th>
+            <th>{{t "general.percentage"}}</th>
+            <th>{{t "general.courseObjective"}}</th>
+            <th>{{t "general.competency"}}</th>
+            <th>{{t "general.sessions"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (sort-by "minutes" this.tableData) as |row|}}
+            <tr>
+              <td>{{row.minutes}}</td>
+              <td>{{row.percentage}}</td>
+              <td class="objective">{{{row.objective}}}</td>
+              <td>{{row.competency}}</td>
+              <td>{{row.sessionTitles}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
 </div>

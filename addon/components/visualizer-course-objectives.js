@@ -28,6 +28,21 @@ export default class VisualizerCourseObjectives extends Component {
     return this.courseSessions.slice();
   }
 
+  get tableData() {
+    if (!this.dataObjects) {
+      return [];
+    }
+    return this.dataObjects.map((obj) => {
+      const rhett = {};
+      rhett.minutes = obj.data;
+      rhett.percentage = obj.label;
+      rhett.objective = obj.meta.courseObjective.title;
+      rhett.competency = obj.meta.competency.title;
+      rhett.sessionTitles = mapBy(obj.meta.sessionObjectives, 'sessionTitle').join(', ');
+      return rhett;
+    });
+  }
+
   get objectiveWithMinutes() {
     return this.dataObjects?.filter((obj) => obj.data !== 0);
   }
@@ -84,7 +99,11 @@ export default class VisualizerCourseObjectives extends Component {
 
     // condensed objectives map
     const courseObjectives = await this.args.course.courseObjectives;
-    const mappedObjectives = courseObjectives.slice().map((courseObjective) => {
+    const mappedObjectives = await map(courseObjectives.slice(), async (courseObjective) => {
+      const programYearObjectives = (await courseObjective.programYearObjectives).slice();
+      const competency = programYearObjectives.length
+        ? await programYearObjectives[0].competency
+        : null;
       const minutes = sessionCourseObjectiveMap.map((obj) => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
           return obj.minutes;
@@ -96,6 +115,7 @@ export default class VisualizerCourseObjectives extends Component {
         obj.objectives.includes(courseObjective.get('id'))
       );
       const meta = {
+        competency,
         courseObjective,
         sessionObjectives,
       };
@@ -128,13 +148,8 @@ export default class VisualizerCourseObjectives extends Component {
     const { data, meta } = obj;
 
     let objectiveTitle = meta.courseObjective.title;
-    const programYearObjectives = (await meta.courseObjective.programYearObjectives).slice();
-    let competency;
-    if (programYearObjectives.length) {
-      competency = await programYearObjectives[0].competency;
-    }
-    if (competency) {
-      objectiveTitle += `(${competency.title})`;
+    if (meta.competency) {
+      objectiveTitle += `(${meta.competency.title})`;
     }
 
     const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`);

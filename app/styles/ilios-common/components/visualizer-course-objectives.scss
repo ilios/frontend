@@ -33,6 +33,23 @@
     }
   }
 
+  .data-table {
+    grid-column: -1/1;
+    table {
+      @include ilios-table-structure;
+
+      td {
+        vertical-align: top;
+      }
+
+      .objective {
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+
   &.not-icon {
     display: grid;
     grid-template-columns: 2fr 1fr;
