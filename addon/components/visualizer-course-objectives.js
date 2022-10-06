@@ -17,7 +17,7 @@ export default class VisualizerCourseObjectives extends Component {
 
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
-  @tracked sortBy = 'percentage';
+  @tracked sortBy = 'percentage:desc';
 
   @use courseSessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
   @use dataObjects = new AsyncProcess(() => [this.getDataObjects.bind(this), this.sessions]);
