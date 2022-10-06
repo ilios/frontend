@@ -8,13 +8,10 @@
 @import 'components/course-search-result';
 @import 'components/courses-list';
 @import 'components/dashboard-loading';
-@import 'components/dashboard-mycourses';
-@import 'components/dashboard-myreports';
 @import 'components/filter-tools';
 @import 'components/flash-messages';
 @import 'components/global-search';
 @import 'components/global-search-box';
-@import 'components/ilios-dashboard';
 @import 'components/ilios-header';
 @import 'components/ilios-footer';
 @import 'components/ilios-logo';
@@ -35,7 +32,6 @@
 @import 'components/new-course';
 @import 'components/new-directory-user';
 @import 'components/new-learnergroup';
-@import 'components/new-myreport';
 @import 'components/new-user';
 @import 'components/pagination-links';
 @import 'components/program-leadership-expanded';
@@ -144,3 +140,9 @@
 @import 'components/curriculum-inventory/verification-preview-table6';
 @import 'components/curriculum-inventory/verification-preview-table7';
 @import 'components/curriculum-inventory/verification-preview-table8';
+
+@import 'components/reports/new-subject';
+@import 'components/reports/subject';
+@import 'components/reports/subjects';
+
+

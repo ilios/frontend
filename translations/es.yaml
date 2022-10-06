@@ -17,7 +17,6 @@ general:
   all: Todos
   allAcademicYears: "Todos Los Años Académicos"
   allOtherMembers: "Todos otros miembros de {topLevelGroupTitle}"
-  allReports: "todos reportes"
   allSchools: "Todas las Escuelas"
   allVocabularies: "Todos los Vocabularios"
   anything: "Caulquier Cosa"
@@ -42,7 +41,8 @@ general:
   backToReport: "Atrás a Reporte"
   backToReports: "Atrás a Reportes"
   backToSchools: "Atrás a la Lista de Escuelas"
-  backToTableOfContents: "Volver a la tabla de contenido"
+  backToSubjectReports: "Atrás a Informes de materias"
+  backToTableOfContents: "Atrás a la tabla de contenido"
   bad: Malo
   badCredentials: "Incorrecta contraseña o nombre de usuario"
   calendarOff: "Calendario Apagado"
@@ -217,7 +217,6 @@ general:
   myCalendar: "Mi Calendario"
   myCourses: "Mis Cursos"
   myProfile: "Mi Perfil"
-  myReports: "Mis Reportes"
   name: Nombre
   narrative: "narrativa"
   navigationCompleteText: La navegación de la página de Ilios está completa. Ahora puede navegar por el contenido de la página como desee.
@@ -333,12 +332,9 @@ general:
   reportDescriptionPlaceholder: "Por favor entre en una breve descripción sobre este informe."
   reportDisplayTitleWithObject: "Todos {subject} para {object} en {school}"
   reportDisplayTitleWithoutObject: "Todos {subject} en {school}"
-  reportMissingInstructor: "Instructor es Necesario"
-  reportMissingMeshTerm: "Término de MeSH es Necesario"
-  reportMissingObjectForInstructor: "Asociación es Necesario Cuando Instructor es el Sujeto"
-  reportMissingObjectForMeshTerm: "Asociación es Necesario Cuando Término de MeSH es el Sujeto"
   reportName: "Nombre de Informe"
   reportNamePlaceholder: "Por favor Introduzca un Nombre de Informe"
+  reports: Informes
   reportTitle: "Título de Informe"
   requiredInTrack: "Requerido en Pista"
   resourceTypes: "Tipos de recursos"
@@ -386,6 +382,7 @@ general:
   subCompetencyCount: "{count, plural, =1 {Hay 1 subcompetencia} other {Hay # subcompetencias}}"
   subgroupName: "Nombre del Subgrupo"
   subgroups: "Grupos Subordinados"
+  subjectReports: "Informes de Sujetos"
   subTerms: "Términos subordinados"
   successfullyAddedTerm: "Término Agregado Correctamente"
   successfullyInvalidatedTokens: "Todas los tokens existentes fueron con éxito invalidadas"
@@ -448,3 +445,8 @@ general:
   write: Escribir
   yesPopulateGroup: "¡Sí! Añada la cohorte entera a mi nuevo grupo."
   zipCode: "Código postal"
+errors:
+  reportMissingInstructor: "Instructor es Necesario"
+  reportMissingMeshTerm: "Término de MeSH es Necesario"
+  reportMissingObjectForInstructor: "Asociación es Necesario Cuando Instructor es el Sujeto"
+  reportMissingObjectForMeshTerm: "Asociación es Necesario Cuando Término de MeSH es el Sujeto"

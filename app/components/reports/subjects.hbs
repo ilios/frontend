@@ -1,0 +1,54 @@
+<section
+  class="reports-subjects"
+  data-test-reports-subjects
+  ...attributes
+>
+  <div class="header">
+    <h2 id="title" class="title" data-test-title>
+        {{t "general.subjectReports"}}
+    </h2>
+    <div class="actions">
+        <ExpandCollapseButton
+          @value={{this.editorOn}}
+          @action={{fn (set this.editorOn) (not this.editorOn)}}
+          @expandButtonLabel={{t "general.add"}}
+          @collapseButtonLabel={{t "general.close"}}
+        />
+    </div>
+  </div>
+  <div class="content-container">
+    {{#if this.editorOn}}
+      <Reports::NewSubject @close={{fn (set this.editorOn) false}} @save={{this.saveNewReport}} />
+    {{/if}}
+    {{#if this.reportsLoaded}}
+      <ul class="saved-reports" data-test-saved-reports>
+        {{#each (sort-by "title" this.reports) as |obj|}}
+          <li>
+            <LinkTo @route="reports.subject" @model={{obj.report}} @query={{hash reportYear=null}} data-test-report-title>
+              {{obj.title}}
+            </LinkTo>
+            <button
+              type="button"
+              class="link-button"
+              {{ on "click" (fn this.deleteReport obj.report)}}
+              data-test-remove
+            >
+              <FaIcon
+                @icon="trash"
+                @title={{t "general.remove"}}
+                class="clickable remove enabled"
+              />
+            </button>
+          </li>
+        {{else}}
+          <li>
+            {{t "general.none"}}
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <LoadingSpinner />
+    {{/if}}
+  </div>
+</section>
+

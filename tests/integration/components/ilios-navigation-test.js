@@ -21,14 +21,15 @@ module('Integration | Component | ilios-navigation', function (hooks) {
     await a11yAudit(this.element);
 
     assert.ok(component.expandCollapse.isPresent);
-    assert.strictEqual(component.links.length, 7);
+    assert.strictEqual(component.links.length, 8);
     assert.strictEqual(component.links[0].text, 'Dashboard');
     assert.strictEqual(component.links[1].text, 'Courses and Sessions');
     assert.strictEqual(component.links[2].text, 'Learner Groups');
     assert.strictEqual(component.links[3].text, 'Instructor Groups');
     assert.strictEqual(component.links[4].text, 'Schools');
     assert.strictEqual(component.links[5].text, 'Programs');
-    assert.strictEqual(component.links[6].text, 'Curriculum Inventory');
+    assert.strictEqual(component.links[6].text, 'Reports');
+    assert.strictEqual(component.links[7].text, 'Curriculum Inventory');
   });
 
   test('navigation does not render for non-privileged user', async function (assert) {
@@ -54,14 +55,15 @@ module('Integration | Component | ilios-navigation', function (hooks) {
     await render(hbs`<IliosNavigation />`);
     await a11yAudit(this.element);
 
-    assert.strictEqual(component.links.length, 8);
+    assert.strictEqual(component.links.length, 9);
     assert.strictEqual(component.links[0].text, 'Dashboard');
     assert.strictEqual(component.links[1].text, 'Courses and Sessions');
     assert.strictEqual(component.links[2].text, 'Learner Groups');
     assert.strictEqual(component.links[3].text, 'Instructor Groups');
     assert.strictEqual(component.links[4].text, 'Schools');
     assert.strictEqual(component.links[5].text, 'Programs');
-    assert.strictEqual(component.links[6].text, 'Admin');
-    assert.strictEqual(component.links[7].text, 'Curriculum Inventory');
+    assert.strictEqual(component.links[6].text, 'Reports');
+    assert.strictEqual(component.links[7].text, 'Admin');
+    assert.strictEqual(component.links[8].text, 'Curriculum Inventory');
   });
 });

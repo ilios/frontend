@@ -1,0 +1,33 @@
+.reports-subjects {
+  @include main-section;
+
+  .header {
+    @include main-list-box-header;
+
+    h2 {
+      @include ilios-heading;
+    }
+
+    .title {
+      @include main-list-box-header-title;
+    }
+  }
+
+  .content-container {
+    margin-left: 1rem;
+
+    .saved-reports {
+      @include ilios-list-reset;
+      margin: .5rem 0;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .fa-trash {
+      @include icon;
+    }
+  }
+}

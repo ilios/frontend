@@ -1,23 +1,28 @@
 {{#let (unique-id) as |templateId|}}
-  <div class="mesh-manager new-myreport" ...attributes>
-    <div class="title">
+  <div
+    class="reports-new-subject"
+    data-test-reports-new-subject
+    ...attributes
+  >
+    <div class="title" data-test-component-title>
       {{t "general.newReport"}}
     </div>
-    <div class="new-myreport-content" data-test-new-report>
+    <div class="new-subject-content">
       <p data-test-title>
         <label for="title-{{templateId}}">
           {{t "general.reportTitle"}}:
         </label>
-        <input
-          id="title-{{templateId}}"
-          type="text"
-          value={{this.title}}
-          {{on "focusout" (fn this.addErrorDisplayFor "title")}}
-          {{on "input" (pick "target.value" (set this.title))}}
-          {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-          data-test-report-title
-        >
-        <ValidationError @errors={{get-errors-for this.title}} />
+        <div>
+          <input
+            id="title-{{templateId}}"
+            type="text"
+            value={{this.title}}
+            {{on "focusout" (fn this.addErrorDisplayFor "title")}}
+            {{on "input" (pick "target.value" (set this.title))}}
+            {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+          >
+          <ValidationError @errors={{get-errors-for this.title}} />
+        </div>
       </p>
       <p data-test-school>
         <label for="for-{{templateId}}">
@@ -26,7 +31,6 @@
         <select
           id="for-{{templateId}}"
           {{on "change" (pick "target.value" this.changeSchool)}}
-          data-test-report-school
         >
           <option value="null" selected={{eq null this.currentSchool}}>
             {{t "general.allSchools"}}
@@ -48,7 +52,6 @@
         <select
           id="all-{{templateId}}"
           {{on "change" (pick "target.value" this.changeSubject)}}
-          data-test-report-subject
         >
           {{#each this.subjectList as |o|}}
             <option value={{o.value}} selected={{eq o.value this.currentSubject}}>
@@ -61,29 +64,31 @@
         <label for="associated-{{templateId}}">
           {{t "general.associatedWith"}}
         </label>
-        <select
-          id="associated-{{templateId}}"
-          {{on "change" (pick "target.value" this.changePrepositionalObject)}}
-          data-test-report-object-type
-        >
-          <option value="" selected={{eq null this.currentPrepositionalObject}}>
-            {{t "general.anything"}}
-          </option>
-          {{#each this.prepositionalObjectList as |o|}}
-            <option
-              value={{o.value}}
-              selected={{eq o.value this.currentPrepositionalObject}}
-            >
-              {{o.label}}
+        <div>
+          <select
+            id="associated-{{templateId}}"
+            {{on "change" (pick "target.value" this.changePrepositionalObject)}}
+          >
+            <option value="" selected={{eq null this.currentPrepositionalObject}}>
+              {{t "general.anything"}}
             </option>
-          {{/each}}
-        </select>
+            {{#each this.prepositionalObjectList as |o|}}
+              <option
+                value={{o.value}}
+                selected={{eq o.value this.currentPrepositionalObject}}
+              >
+                {{o.label}}
+              </option>
+            {{/each}}
+          </select>
+          <ValidationError @errors={{get-errors-for this.currentPrepositionalObject}} />
+        </div>
       </p>
       {{#if this.currentPrepositionalObject}}
         {{#if (includes this.currentPrepositionalObject (w "course session"))}}
           <select
             aria-label={{t "general.year"}}
-            data-test-report-year-filter
+            data-test-report-academic-years
           {{on "change" (pick "target.value" this.changeSelectedYear)}}
           >
             <option selected={{is-empty this.selectedYear}} value="">
@@ -109,7 +114,7 @@
           </label>
           {{#if (eq this.currentPrepositionalObject "instructor")}}
             {{#if this.selectedUser}}
-              <ul class="removable-list tag-list">
+              <ul class="selected-instructor" data-test-selected-instructor>
                 <li>
                   <button
                     class="link-button"
@@ -117,38 +122,48 @@
                     {{on "click" (fn this.changePrepositionalObjectId null)}}
                   >
                     {{this.selectedUser.fullName}}
-                    <FaIcon @icon="xmark" />
+                    <FaIcon @icon="xmark" class="remove"/>
                   </button>
                 </li>
               </ul>
             {{else}}
-              <UserSearch @addUser={{this.chooseInstructor}} />
+              <div data-test-instructors>
+                <UserSearch @addUser={{this.chooseInstructor}} />
+                <ValidationError @errors={{get-errors-for this.currentPrepositionalObjectId}} />
+              </div>
             {{/if}}
           {{else if (eq this.currentPrepositionalObject "mesh term")}}
             {{#if this.selectedMeshTerm}}
-              <ul class="removable-list tag-list details-list">
+              <ul class="selected-mesh-term" data-test-selected-mesh-term>
                 <li>
-                  <div class="content">
-                    <span class="title">
+                  <button
+                    class="link-button"
+                    type="button"
+                    {{on "click" (fn this.changePrepositionalObjectId null)}}
+                  >
+                    <span class="term-title" data-test-name>
                       {{this.selectedMeshTerm.name}}
                     </span>
-                    <span class="details">
+                    <span class="term-details" data-test-details>
                       {{this.selectedMeshTerm.id}}
                       {{#if this.selectedMeshTerm.trees}}
                           -{{get (object-at 0 (reverse this.selectedMeshTerm.trees)) "treeNumber"}}
                       {{/if}}
                     </span>
-                  </div>
-                  <FaIcon @icon="xmark" />
+                    <FaIcon @icon="xmark" class="remove" />
+                  </button>
                 </li>
               </ul>
             {{else}}
-              <MeshManager @add={{this.chooseMeshTerm}} @editable={{true}} />
+              <div data-test-mesh>
+                <MeshManager @add={{this.chooseMeshTerm}} @editable={{true}} />
+                <ValidationError @errors={{get-errors-for this.currentPrepositionalObjectId}} />
+              </div>
             {{/if}}
           {{else if this.isPrepositionalObjectIdListLoaded}}
             <select
               id="which-is-{{templateId}}"
-              data-test-report-object
+              data-test-prepositional-objects
               {{on "change" (pick "target.value" this.changePrepositionalObjectId)}}
             >
               {{#each
@@ -185,14 +200,14 @@
         </p>
       {{/if}}
       <div class="input-buttons">
-        <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-report-save>
+        <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-save>
           {{#if this.save.isRunning}}
             <LoadingSpinner />
           {{else}}
             {{t "general.save"}}
           {{/if}}
         </button>
-        <button type="button" class="cancel text" {{on "click" @close}}>
+        <button type="button" class="cancel text" {{on "click" @close}} data-test-cancel>
           {{t "general.cancel"}}
         </button>
       </div>

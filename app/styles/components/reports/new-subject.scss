@@ -1,16 +1,15 @@
-.new-myreport {
+.reports-new-subject {
   background-color: $slightWhite;
   border: 1px solid $culturedGrey;
-  margin: .5rem;
+  margin: .5rem 0;
   padding: 1rem 1rem 3rem;
 
   .title {
     @include ilios-heading-h5;
-    color: $orange;
     margin-bottom: .5rem;
   }
 
-  .new-myreport-content {
+  .new-subject-content {
     @include ilios-form-error;
     p {
       display: grid;
@@ -22,10 +21,33 @@
         text-align: right;
       }
 
+      select, input {
+        width: 100%;
+      }
+
       .validation-error-message {
         grid-column: 1 / -1;
-        text-align: right;
       }
+    }
+
+    .selected-instructor,
+    .selected-mesh-term {
+      @include ilios-tag-list;
+      .remove {
+        margin-left: .5rem;
+      }
+    }
+
+    .term-title {
+      font-weight: bold;
+    }
+
+    .term-details {
+      font-style: italic;
+    }
+
+    .input-buttons {
+      float: right;
     }
   }
 }

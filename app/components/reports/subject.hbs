@@ -1,0 +1,90 @@
+<section
+  class="reports-subject"
+  data-test-reports-subject
+  ...attributes
+>
+  <div class="back-to-reports" data-test-back-to-reports>
+    <LinkTo @route="reports.subjects">
+      {{t "general.backToSubjectReports"}}
+    </LinkTo>
+  </div>
+  <div class="header">
+    <h2 id="title" class="title" data-test-title>
+      {{this.selectedReportTitle}}
+    </h2>
+    <div class="actions">
+      <button
+        type="button"
+        disabled={{this.downloadReport.isRunning}}
+        {{on "click" (perform this.downloadReport)}}
+        data-test-download
+      >
+        {{#if this.finishedBuildingReport}}
+          <FaIcon @icon="check" />
+        {{else if this.downloadReport.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          <FaIcon @icon="download" />
+        {{/if}}
+        {{t "general.downloadResults"}}
+      </button>
+    </div>
+  </div>
+  <div class="content-container">
+    {{#if this.showAcademicYearFilter}}
+      <div class="years-filter">
+        <select
+          aria-label={{t "general.academicYears"}}
+          data-test-year-filter
+          {{on "change" (pick "target.value" @onReportYearSelect)}}
+        >
+          <option selected={{is-empty @selectedYear}} value="">
+            {{t "general.allAcademicYears"}}
+          </option>
+          {{#each
+            (sort-by
+              "title:desc" this.allAcademicYears
+            ) as |year|
+          }}
+            <option
+              value={{year.id}}
+              selected={{eq year.id @selectedYear}}
+            >
+              {{year.title}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+    {{/if}}
+    {{#if (is-array this.reportResultsList)}}
+      <ul class="report-results" data-test-results>
+        {{#each this.reportResultsList as |item|}}
+          {{#if item.model2}}
+            <li>
+              <LinkTo
+                @route={{item.route}}
+                @models={{array item.model item.model2}}
+              >
+                {{item.value}}
+              </LinkTo>
+            </li>
+          {{else if item.model}}
+            <li>
+              <LinkTo @route={{item.route}} @model={{item.model}}>
+                {{item.value}}
+              </LinkTo>
+            </li>
+          {{else}}
+            <li>
+              {{item.value}}
+            </li>
+          {{/if}}
+        {{else}}
+            <li>{{t "general.none"}}</li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <LoadingSpinner />
+    {{/if}}
+  </div>
+</section>

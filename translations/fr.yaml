@@ -17,7 +17,6 @@ general:
   all: Tous
   allAcademicYears: "Toutes Années Scolaires"
   allOtherMembers: "Tous les autres membres du {topLevelGroupTitle}"
-  allReports: "Tous Rapports"
   allSchools: "Toutes les écoles"
   allVocabularies: "Touts vocabulaires"
   anything: "Quelque chose"
@@ -42,6 +41,7 @@ general:
   backToReport: "Retour à rapport"
   backToReports: "Retour à rapports"
   backToSchools: "Retour à liste d'écoles"
+  backToSubjectReports: "Retour aux rapports par sujet"
   backToTableOfContents: "Retour à la table des matières"
   bad: Mal
   badCredentials: "Nom d'utilisateur ou mot de passe incorrect"
@@ -217,7 +217,6 @@ general:
   myCalendar: "Mon Calendrier"
   myCourses: "Mes Cours"
   myProfile: "Mon profil"
-  myReports: "Mes Rapports"
   name: Nom
   narrative: "narrative"
   navigationCompleteText: La navigation sur la page Ilios est terminée. Vous pouvez maintenant naviguer dans le contenu de la page comme vous le souhaitez.
@@ -334,12 +333,9 @@ general:
   reportDescriptionPlaceholder: "Entrez S'il vous plaît dans une description brève de ce rapport."
   reportDisplayTitleWithObject: "tous {subject} pour {object} en {school}"
   reportDisplayTitleWithoutObject: "tous {subject} en {school}"
-  reportMissingInstructor: "Instructeur requis"
-  reportMissingMeshTerm: "terme de MeSH requis"
-  reportMissingObjectForInstructor: "connexion requis quand `instructeur` est le sujet"
-  reportMissingObjectForMeshTerm: "connexion requis quand `terme de MeSH` est le sujet"
   reportName: "Nom de rapport"
   reportNamePlaceholder: "Entrez S'il vous plait un nom de rapport."
+  reports: Rapports
   reportTitle: "Titre du Rapport"
   requiredInTrack: "Requis en piste"
   resourceTypes: "Types de ressources"
@@ -387,6 +383,7 @@ general:
   subCompetencyCount: "{count, plural, =1 {Il y a 1 sous-subcompétence} other {Il y a de # sous-subcompétences}}"
   subgroupName: "nom de sous-groupe"
   subgroups: "Sous-groupes"
+  subjectReports: "Rapports de Sujet"
   subTerms: "Sous-termes"
   successfullyAddedTerm: "Le terme soit correctement ajouté"
   successfullyInvalidatedTokens: "Tous les jetons existant ont été invalidés avec succès."
@@ -449,3 +446,8 @@ general:
   write: "Écriture"
   yesPopulateGroup: "Oui!  Ajoutez la cohorte entière à mon nouveau groupe"
   zipCode: "Code postal"
+errors:
+  reportMissingInstructor: "Instructeur requis"
+  reportMissingMeshTerm: "terme de MeSH requis"
+  reportMissingObjectForInstructor: "connexion requis quand `instructeur` est le sujet"
+  reportMissingObjectForMeshTerm: "connexion requis quand `terme de MeSH` est le sujet"

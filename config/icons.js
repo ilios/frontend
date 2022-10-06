@@ -14,6 +14,7 @@ module.exports = function () {
       'calendar',
       'chevron-right',
       'face-meh',
+      'file-lines',
       'gears',
       'globe',
       'graduation-cap',
