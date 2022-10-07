@@ -53,7 +53,7 @@
     {{/unless}}
   {{/if}}
   {{#if (and (not @isIcon) @showDataTable)}}
-    <div class="data-table">
+    <div class="data-table" data-test-data-table>
       <table>
         <thead>
           <tr>
@@ -62,6 +62,7 @@
               @sortedBy={{or (eq this.sortBy "percentage") (eq this.sortBy "percentage:desc")}}
               @onClick={{fn this.setSortBy "percentage"}}
               @sortType="numeric"
+              data-test-percentage
             >
               {{t "general.percentage"}}
             </SortableTh>
@@ -70,6 +71,7 @@
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or (eq this.sortBy "objective") (eq this.sortBy "objective:desc")}}
               @onClick={{fn this.setSortBy "objective"}}
+              data-test-objective
             >
               {{t "general.courseObjective"}}
             </SortableTh>
@@ -78,6 +80,7 @@
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or (eq this.sortBy "competency") (eq this.sortBy "competency:desc")}}
               @onClick={{fn this.setSortBy "competency"}}
+              data-test-competency
             >
               {{t "general.competency"}}
             </SortableTh>
@@ -86,6 +89,7 @@
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or (eq this.sortBy "sessionTitles") (eq this.sortBy "sessionTitles:desc")}}
               @onClick={{fn this.setSortBy "sessionTitles"}}
+              data-test-sessions
             >
               {{t "general.sessions"}}
             </SortableTh>
@@ -94,6 +98,7 @@
               @sortedBy={{or (eq this.sortBy "minutes") (eq this.sortBy "minutes:desc")}}
               @onClick={{fn this.setSortBy "minutes"}}
               @sortType="numeric"
+              data-test-minutes
             >
               {{t "general.minutes"}}
             </SortableTh>
@@ -102,17 +107,17 @@
         <tbody>
           {{#each (sort-by this.sortBy this.tableData) as |row|}}
             <tr>
-              <td>{{row.percentageLabel}}</td>
-              <td class="objective" colspan="3">{{{row.objective}}}</td>
-              <td colspan="2">{{row.competency}}</td>
-              <td colspan="2">
+              <td data-test-percentage>{{row.percentageLabel}}</td>
+              <td class="objective" colspan="3" data-test-objective>{{{row.objective}}}</td>
+              <td colspan="2" data-test-competency>{{row.competency}}</td>
+              <td colspan="2" data-test-sessions>
                 {{#each row.sessions as |session index|}}
                   <LinkTo @route="session" @models={{array @course session}}>
                     {{session.title~}}
                   </LinkTo>{{if (not-eq index (sub row.sessions.length 1)) ","}}
                 {{/each}}
               </td>
-              <td>{{row.minutes}}</td>
+              <td data-test-minutes>{{row.minutes}}</td>
             </tr>
           {{/each}}
         </tbody>
