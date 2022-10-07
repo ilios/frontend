@@ -49,7 +49,7 @@ export default class VisualizerCourseObjectives extends Component {
       rhett.percentage = obj.percentage * 1000;
       rhett.percentageLabel = obj.label;
       rhett.objective = obj.meta.courseObjective.title;
-      rhett.competency = obj.meta.competency.title;
+      rhett.competency = obj.meta.competency?.title;
       rhett.sessionTitles = mapBy(obj.meta.sessionObjectives, 'sessionTitle').sort().join(', ');
       rhett.sessions = sortBy(mapBy(obj.meta.sessionObjectives, 'session'), 'title');
       return rhett;
