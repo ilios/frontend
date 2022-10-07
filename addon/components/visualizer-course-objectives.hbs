@@ -52,7 +52,7 @@
       </div>
     {{/unless}}
   {{/if}}
-  {{#if (or @isIcon this.objectiveWithMinutes.length)}}
+  {{#if (and (not @isIcon) @showDataTable)}}
     <div class="data-table">
       <table>
         <thead>
