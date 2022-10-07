@@ -48,6 +48,7 @@ general:
   collapse: collapse
   collapseDetail: "Hide Details"
   competencies: Competencies
+  competency: Competency
   complete: "Complete"
   completeSessions: "Sessions Complete: ready to publish"
   confirmObjectiveRemoval: "Are you sure you want to delete this objective?"
@@ -71,6 +72,7 @@ general:
   courseLevel: "Course Level {level}"
   courseLevels: "Course Levels"
   courseNotFound: "course not found"
+  courseObjective: "Course Objective"
   courseObjectives: "Course Objectives"
   courseOrSessionType: "Course / Session Type"
   courseRollover: "Rollover Course"
@@ -237,6 +239,7 @@ general:
   parentGroup: "Parent group"
   parentGroups: "Parent groups"
   parentObjectives: "Parent Objectives"
+  percentage: Percentage
   perPage: "Per Page"
   pickADate: "Pick a date"
   prerequisites: "Prerequisites"

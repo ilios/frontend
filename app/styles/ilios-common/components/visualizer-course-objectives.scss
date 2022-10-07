@@ -33,6 +33,32 @@
     }
   }
 
+  .data-table {
+    grid-column: -1/1;
+    padding-top: 2rem;
+
+    table {
+      @include ilios-table-structure;
+      @include ilios-table-colors;
+      @include ilios-removable-table;
+      @include ilios-zebra-table;
+
+      thead {
+        background-color: $culturedGrey;
+      }
+
+      td {
+        vertical-align: top;
+      }
+
+      .objective {
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+
   &.not-icon {
     display: grid;
     grid-template-columns: 2fr 1fr;

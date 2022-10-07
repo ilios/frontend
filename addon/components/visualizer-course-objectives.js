@@ -1,13 +1,14 @@
 import Component from '@glimmer/component';
-import { filter, map } from 'rsvp';
-import { htmlSafe } from '@ember/template';
-import { restartableTask, timeout } from 'ember-concurrency';
-import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/template';
+import { filter, map } from 'rsvp';
+import { restartableTask, timeout } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { filterBy, mapBy } from '../utils/array-helpers';
+import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerCourseObjectives extends Component {
   @service router;
@@ -16,9 +17,14 @@ export default class VisualizerCourseObjectives extends Component {
 
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'percentage:desc';
 
   @use courseSessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
   @use dataObjects = new AsyncProcess(() => [this.getDataObjects.bind(this), this.sessions]);
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
 
   get sessions() {
     if (!this.courseSessions) {
@@ -26,6 +32,28 @@ export default class VisualizerCourseObjectives extends Component {
     }
 
     return this.courseSessions.slice();
+  }
+
+  get tableData() {
+    if (!this.dataObjects) {
+      return [];
+    }
+    return this.dataObjects.map((obj) => {
+      const rhett = {};
+      rhett.minutes = obj.data;
+      // KLUDGE!
+      // multiply by 1,000 to get everything back to full numbers.
+      // that way, we can rely on string sorting rather than having to implement our own
+      // sorting callback.
+      // [ST 2022/10/06]
+      rhett.percentage = obj.percentage * 1000;
+      rhett.percentageLabel = obj.label;
+      rhett.objective = obj.meta.courseObjective.title;
+      rhett.competency = obj.meta.competency?.title;
+      rhett.sessions = sortBy(mapBy(obj.meta.sessionObjectives, 'session'), 'title');
+      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
+      return rhett;
+    });
   }
 
   get objectiveWithMinutes() {
@@ -38,6 +66,14 @@ export default class VisualizerCourseObjectives extends Component {
 
   get isLoaded() {
     return !!this.dataObjects;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
   }
 
   async getDataObjects(sessions) {
@@ -76,6 +112,7 @@ export default class VisualizerCourseObjectives extends Component {
 
         return {
           sessionTitle: session.title,
+          session,
           objectives: flatObjectives,
           minutes,
         };
@@ -84,7 +121,11 @@ export default class VisualizerCourseObjectives extends Component {
 
     // condensed objectives map
     const courseObjectives = await this.args.course.courseObjectives;
-    const mappedObjectives = courseObjectives.slice().map((courseObjective) => {
+    const mappedObjectives = await map(courseObjectives.slice(), async (courseObjective) => {
+      const programYearObjectives = (await courseObjective.programYearObjectives).slice();
+      const competency = programYearObjectives.length
+        ? await programYearObjectives[0].competency
+        : null;
       const minutes = sessionCourseObjectiveMap.map((obj) => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
           return obj.minutes;
@@ -96,6 +137,7 @@ export default class VisualizerCourseObjectives extends Component {
         obj.objectives.includes(courseObjective.get('id'))
       );
       const meta = {
+        competency,
         courseObjective,
         sessionObjectives,
       };
@@ -115,6 +157,7 @@ export default class VisualizerCourseObjectives extends Component {
     return mappedObjectives.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${percent}%`;
+      obj.percentage = percent;
       return obj;
     });
   }
@@ -128,18 +171,13 @@ export default class VisualizerCourseObjectives extends Component {
     const { data, meta } = obj;
 
     let objectiveTitle = meta.courseObjective.title;
-    const programYearObjectives = (await meta.courseObjective.programYearObjectives).slice();
-    let competency;
-    if (programYearObjectives.length) {
-      competency = await programYearObjectives[0].competency;
-    }
-    if (competency) {
-      objectiveTitle += `(${competency.title})`;
+    if (meta.competency) {
+      objectiveTitle += `(${meta.competency.title})`;
     }
 
     const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`);
     const sessionTitles = mapBy(meta.sessionObjectives, 'sessionTitle');
-    const content = sessionTitles.join(', ');
+    const content = sessionTitles.sort().join(', ');
 
     this.tooltipTitle = title;
     this.tooltipContent = content;
