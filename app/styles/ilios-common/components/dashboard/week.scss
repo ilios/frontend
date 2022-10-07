@@ -2,8 +2,6 @@
   @include dashboard-component;
 
   .dashboard-week-content {
-    max-height: 40em;
-    overflow-y: scroll;
     padding: 0 1em 1em;
 
     .weeklylink {
