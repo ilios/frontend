@@ -14,6 +14,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import { map } from 'rsvp';
 import page from 'ilios-common/page-objects/dashboard-calendar';
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Acceptance | Dashboard Calendar', function (hooks) {
   setupApplicationTest(hooks);
@@ -83,6 +84,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     this.server.create('offering', {
       session: session3,
     });
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
   });
 
   test('load month calendar', async function (assert) {
@@ -170,6 +175,61 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       `Sunday Sun ${longDayHeading} ${shortDayHeading}`
     );
 
+    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
+    assert.ok(page.calendar.weeklyCalendar.events[0].isFirstDayOfWeek);
+    assert.strictEqual(page.calendar.weeklyCalendar.events[0].name, 'start of week');
+    assert.ok(page.calendar.weeklyCalendar.events[1].isSeventhDayOfWeek);
+    assert.strictEqual(page.calendar.weeklyCalendar.events[1].name, 'end of week');
+  });
+
+  test('load week calendar on Sunday', async function (assert) {
+    freezeDateAt(
+      DateTime.fromObject({
+        year: 2022,
+        month: 10,
+        day: 9,
+        hour: 10,
+      }).toJSDate()
+    );
+    const startOfWeek = DateTime.fromJSDate(
+      this.owner.lookup('service:locale-days').firstDayOfThisWeek
+    );
+    const endOfWeek = DateTime.fromJSDate(
+      this.owner.lookup('service:locale-days').lastDayOfThisWeek
+    ).set({ hour: 22, minute: 59 });
+
+    const longDayHeading = this.intl.formatDate(startOfWeek.toJSDate(), {
+      month: 'short',
+      day: 'numeric',
+    });
+    const shortDayHeading = this.intl.formatDate(startOfWeek.toJSDate(), {
+      day: 'numeric',
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      name: 'start of week',
+      startDate: startOfWeek.toJSDate(),
+      endDate: startOfWeek.plus({ hour: 1 }).toJSDate(),
+      lastModified: DateTime.now().minus({ year: 1 }),
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      name: 'end of week',
+      startDate: endOfWeek.toJSDate(),
+      endDate: endOfWeek.plus({ hour: 1 }).toJSDate(),
+      lastModified: DateTime.now().minus({ year: 1 }),
+    });
+    await page.visit({ show: 'calendar' });
+    assert.strictEqual(currentRouteName(), 'dashboard.calendar');
+
+    assert.strictEqual(page.calendar.weeklyCalendar.dayHeadings.length, 7);
+    assert.ok(page.calendar.weeklyCalendar.dayHeadings[0].isFirstDayOfWeek);
+    assert.strictEqual(
+      page.calendar.weeklyCalendar.dayHeadings[0].text,
+      `Sunday Sun ${longDayHeading} ${shortDayHeading}`
+    );
+
+    assert.strictEqual(page.calendar.weeklyCalendar.longWeekOfYear, 'Week of October 9, 2022');
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
     assert.ok(page.calendar.weeklyCalendar.events[0].isFirstDayOfWeek);
     assert.strictEqual(page.calendar.weeklyCalendar.events[0].name, 'start of week');
