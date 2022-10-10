@@ -14,20 +14,31 @@ export default class LocaleDaysService extends Service {
   }
 
   lastDayOfDateWeek(dateTime) {
-    const dt = DateTime.fromJSDate(dateTime).set({ hour: 0, minute: 0, second: 0 }).endOf('week');
+    const dt = DateTime.fromJSDate(dateTime);
+    const endOfWeek = dt.endOf('week');
     if (this.intl.locale[0] === 'en-us') {
-      return dt.minus({ days: 1 }).toJSDate();
+      const saturday = endOfWeek.minus({ days: 1 });
+      if (saturday.diff(dt, 'days').days < 0) {
+        return saturday.plus({ days: 7 }).toJSDate();
+      }
+      return saturday.toJSDate();
     }
 
-    return dt.toJSDate();
+    return endOfWeek.toJSDate();
   }
 
   firstDayOfDateWeek(dateTime) {
-    const dt = DateTime.fromJSDate(dateTime).set({ hour: 0, minute: 0, second: 0 }).startOf('week');
+    const dt = DateTime.fromJSDate(dateTime);
+    const startOfWeek = dt.startOf('week');
     if (this.intl.locale[0] === 'en-us') {
-      return dt.minus({ days: 1 }).toJSDate();
+      const sunday = startOfWeek.minus({ days: 1 });
+      if (dt.diff(sunday, 'days').days < 7) {
+        return sunday.toJSDate();
+      }
+
+      return sunday.plus({ days: 7 }).toJSDate();
     }
 
-    return dt.toJSDate();
+    return startOfWeek.toJSDate();
   }
 }
