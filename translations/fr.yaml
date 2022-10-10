@@ -41,7 +41,7 @@ general:
   backToReport: "Retour à rapport"
   backToReports: "Retour à rapports"
   backToSchools: "Retour à liste d'écoles"
-  backToSubjectReports: "Retour aux rapports par sujet"
+  backToSubjectReports: "Retour aux rapports pédagogiques"
   backToTableOfContents: "Retour à la table des matières"
   bad: Mal
   badCredentials: "Nom d'utilisateur ou mot de passe incorrect"
@@ -383,7 +383,7 @@ general:
   subCompetencyCount: "{count, plural, =1 {Il y a 1 sous-subcompétence} other {Il y a de # sous-subcompétences}}"
   subgroupName: "nom de sous-groupe"
   subgroups: "Sous-groupes"
-  subjectReports: "Rapports de Sujet"
+  subjectReports: "Rapports Pédagogiques"
   subTerms: "Sous-termes"
   successfullyAddedTerm: "Le terme soit correctement ajouté"
   successfullyInvalidatedTokens: "Tous les jetons existant ont été invalidés avec succès."
