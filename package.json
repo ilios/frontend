@@ -32,7 +32,7 @@
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@ilios/ember-template-lint-plugin": "^3.0.0",
-    "@sentry/ember": "^7.14.2",
+    "@sentry/ember": "^7.15.0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
