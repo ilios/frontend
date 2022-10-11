@@ -1,4 +1,4 @@
-import { visit } from '@ember/test-helpers';
+import { visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
@@ -31,6 +31,7 @@ module('Acceptance | API Version Check', function (hooks) {
     });
 
     await visit(url);
+    await waitFor('[data-test-load-finished]');
     assert.ok(component.notMismatched);
   });
 
@@ -47,6 +48,7 @@ module('Acceptance | API Version Check', function (hooks) {
     });
 
     await visit(url);
+    await waitFor('[data-test-load-finished]');
     assert.ok(component.mismatched);
   });
 });
