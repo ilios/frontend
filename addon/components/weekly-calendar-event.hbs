@@ -46,12 +46,13 @@
     </span>
   {{/unless}}
   <span class="ilios-calendar-event-name" data-test-name>
-    {{@event.name}}
     {{#if @event.isMulti}}
-      ,
+      {{@event.name}},
       <em>
         {{t "general.multiple"}}
       </em>
+    {{else}}
+      {{@event.name}}
     {{/if}}
   </span>
 </button>
