@@ -74,7 +74,7 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
       intl.t('general.sessionType')
     );
     if (isMulti) {
-      contents = contents + `<br />, ${intl.t('general.multiple')}`;
+      contents = contents + `,<br /> ${intl.t('general.multiple')}`;
     }
   } else if (event.offering) {
     if (!isMulti) {
@@ -91,7 +91,7 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
       intl.t('general.sessionType')
     );
     if (isMulti) {
-      contents = contents + `<br />, ${intl.t('general.multiple')}`;
+      contents = contents + `,<br />${intl.t('general.multiple')}`;
     }
   } else {
     // 'TBD' event
