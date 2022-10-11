@@ -207,4 +207,55 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     );
     await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].closeTooltip();
   });
+
+  test('Offerings are sorted by first learner group name', async function (assert) {
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const learnerGroup = this.server.create('learnerGroup', {
+      title: 'Alpha',
+    });
+    const learnerGroup2 = this.server.create('learnerGroup', {
+      title: 'Beta',
+    });
+    const learnerGroup3 = this.server.create('learnerGroup', {
+      title: 'Gamma',
+    });
+    const learnerGroup4 = this.server.create('learnerGroup', {
+      title: 'Delta',
+    });
+    this.server.create('offering', {
+      session,
+      learnerGroups: [learnerGroup2, learnerGroup3],
+    });
+    this.server.create('offering', {
+      session,
+      learnerGroups: [learnerGroup],
+    });
+    this.server.create('offering', {
+      session,
+      learnerGroups: [learnerGroup4],
+    });
+    await page.visit({ courseId: course.id, sessionId: session.id });
+    assert.strictEqual(page.details.offerings.dateBlocks.length, 1);
+    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings.length, 3);
+    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups.length, 1);
+    assert.strictEqual(
+      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].text,
+      'Alpha'
+    );
+    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[1].learnerGroups.length, 2);
+    assert.strictEqual(
+      page.details.offerings.dateBlocks[0].offerings[1].learnerGroups[0].text,
+      'Beta'
+    );
+    assert.strictEqual(
+      page.details.offerings.dateBlocks[0].offerings[1].learnerGroups[1].text,
+      'Gamma'
+    );
+    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[2].learnerGroups.length, 1);
+    assert.strictEqual(
+      page.details.offerings.dateBlocks[0].offerings[2].learnerGroups[0].text,
+      'Delta'
+    );
+  });
 });
