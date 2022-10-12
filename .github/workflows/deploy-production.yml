@@ -11,20 +11,6 @@ env:
   SENTRY_PROJECT: frontend
 
 jobs:
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test:ember
-        env:
-          SW_DISABLED: true
-
   deploy:
     name: Deploy and Create Sentry Release
     needs: test
