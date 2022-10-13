@@ -5,18 +5,6 @@ on:
     types: [published]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 14
-    - name: install dependencies
-      run: npm ci --ignore-scripts
-    - name: test
-      run: npm run test:ember
-
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
