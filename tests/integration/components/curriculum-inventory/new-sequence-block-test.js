@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/new-sequence-block';
 
@@ -361,8 +361,14 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.strictEqual(component.endDate.value, '');
     await component.startDate.set(newStartDate);
     await component.endDate.set(newEndDate);
-    assert.strictEqual(component.startDate.value, moment(newStartDate).format('M/D/YYYY'));
-    assert.strictEqual(component.endDate.value, moment(newEndDate).format('M/D/YYYY'));
+    assert.strictEqual(
+      component.startDate.value,
+      DateTime.fromJSDate(newStartDate).toFormat('M/d/yyyy')
+    );
+    assert.strictEqual(
+      component.endDate.value,
+      DateTime.fromJSDate(newEndDate).toFormat('M/d/yyyy')
+    );
     await component.clearDates();
     assert.strictEqual(component.startDate.value, '');
     assert.strictEqual(component.endDate.value, '');
