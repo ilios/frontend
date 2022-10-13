@@ -5,7 +5,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | user profile calendar', function (hooks) {
@@ -27,37 +27,38 @@ module('Integration | Component | user profile calendar', function (hooks) {
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 13);
 
-      const today = moment();
-      const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
-      const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
+      const today = DateTime.fromObject({ hour: 8 });
+      const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
+      const from = DateTime.fromJSDate(firstDayOfThisWeek).toUnixInteger();
+      const to = DateTime.fromJSDate(lastDayOfThisWeek).toUnixInteger();
 
       assert.ok('from' in queryParams);
-      assert.strictEqual(queryParams.from, from);
+      assert.strictEqual(Number(queryParams.from), from);
       assert.ok('to' in queryParams);
-      assert.strictEqual(queryParams.to, to);
+      assert.strictEqual(Number(queryParams.to), to);
 
       const userEvents = [
         {
           name: 'first',
-          startDate: today.format(),
+          startDate: today.toJSDate(),
           location: 123,
-          lastModified: today.format(),
+          lastModified: today.toJSDate(),
           prerequisites: [],
           postrequisites: [],
         },
         {
           name: 'second',
-          startDate: today.format(),
+          startDate: today.toJSDate(),
           location: 456,
-          lastModified: today.format(),
+          lastModified: today.toJSDate(),
           prerequisites: [],
           postrequisites: [],
         },
         {
           name: 'third',
-          startDate: today.format(),
+          startDate: today.toJSDate(),
           location: 789,
-          lastModified: today.format(),
+          lastModified: today.toJSDate(),
           prerequisites: [],
           postrequisites: [],
         },
@@ -88,25 +89,17 @@ module('Integration | Component | user profile calendar', function (hooks) {
     assert.expect(12);
 
     let called = 0;
+    const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 13);
       assert.ok('from' in queryParams);
       assert.ok('to' in queryParams);
-      let to, from;
-      if (called === 0) {
-        const today = moment();
-        from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
-        to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
-      }
-      if (called === 1) {
-        const nextWeek = moment().add(1, 'week');
-        from = moment(nextWeek).day(0).hour(0).minute(0).second(0).format('X');
-        to = moment(nextWeek).day(6).hour(23).minute(59).second(59).format('X');
-      }
+      const from = DateTime.fromJSDate(firstDayOfThisWeek).plus({ weeks: called }).toUnixInteger();
+      const to = DateTime.fromJSDate(lastDayOfThisWeek).plus({ weeks: called }).toUnixInteger();
 
-      assert.strictEqual(queryParams.from, from);
-      assert.strictEqual(queryParams.to, to);
+      assert.strictEqual(Number(queryParams.from), from);
+      assert.strictEqual(Number(queryParams.to), to);
 
       called++;
       return { userEvents: [] };
@@ -122,25 +115,18 @@ module('Integration | Component | user profile calendar', function (hooks) {
   test('clicking backward goes to last week', async function (assert) {
     assert.expect(12);
     let called = 0;
+    const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 13);
       assert.ok('from' in queryParams);
       assert.ok('to' in queryParams);
 
-      let to, from;
-      if (called === 0) {
-        const today = moment();
-        from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
-        to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
-      }
-      if (called === 1) {
-        const lastWeek = moment().subtract(1, 'week');
-        from = moment(lastWeek).day(0).hour(0).minute(0).second(0).format('X');
-        to = moment(lastWeek).day(6).hour(23).minute(59).second(59).format('X');
-      }
-      assert.strictEqual(queryParams.from, from);
-      assert.strictEqual(queryParams.to, to);
+      const from = DateTime.fromJSDate(firstDayOfThisWeek).minus({ weeks: called }).toUnixInteger();
+      const to = DateTime.fromJSDate(lastDayOfThisWeek).minus({ weeks: called }).toUnixInteger();
+
+      assert.strictEqual(Number(queryParams.from), from);
+      assert.strictEqual(Number(queryParams.to), to);
 
       called++;
       return { userEvents: [] };
