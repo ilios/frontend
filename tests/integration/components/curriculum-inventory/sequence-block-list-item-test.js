@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-list-item';
 
@@ -60,8 +60,14 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
     assert.strictEqual(component.startLevel, '5');
     assert.strictEqual(component.endLevel, '6');
     assert.strictEqual(component.orderInSequence, '3');
-    assert.strictEqual(component.startDate, moment('2021-03-17').format('L'));
-    assert.strictEqual(component.endDate, moment('2021-05-22').format('L'));
+    assert.strictEqual(
+      component.startDate,
+      this.intl.formatDate(DateTime.fromObject({ year: 2021, month: 3, day: 17 }).toJSDate())
+    );
+    assert.strictEqual(
+      component.endDate,
+      this.intl.formatDate(DateTime.fromObject({ year: 2021, month: 5, day: 22 }).toJSDate())
+    );
     assert.strictEqual(component.course, 'course 0');
     assert.ok(component.isDeletable);
   });
