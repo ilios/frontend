@@ -2,7 +2,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-details';
@@ -40,8 +40,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
       report,
       parent: parentBlock,
       duration: 12,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: DateTime.fromObject({ year: 2015, month: 1, day: 2 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2015, month: 4, day: 30 }).toJSDate(),
       childSequenceOrder: 1,
       orderInSequence: 1,
       required: 2,
