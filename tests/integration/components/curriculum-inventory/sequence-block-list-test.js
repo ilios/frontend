@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-list';
 
@@ -24,8 +24,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       year: '2016',
       program,
       name: 'Lorem Ipsum',
-      startDate: moment('2015-06-12').toDate(),
-      endDate: moment('2016-04-11').toDate(),
+      startDate: DateTime.fromObject({ year: 2015, month: 6, day: 12 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2016, month: 4, day: 11 }).toJSDate(),
       description: 'Lorem Ipsum',
     });
 
@@ -33,8 +33,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       startingAcademicLevel: academicLevel1,
       endingAcademicLevel: academicLevel2,
       title: 'Foo',
-      startDate: moment('2015-02-23').toDate(),
-      endDate: moment('2016-12-03').toDate(),
+      startDate: DateTime.fromObject({ year: 2015, month: 2, day: 23 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2016, month: 12, day: 3 }).toJSDate(),
       course,
       orderInSequence: 0,
       report,
@@ -144,11 +144,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
     assert.strictEqual(
       component.list.items[1].startDate,
-      moment(this.sequenceBlock1.startDate).format('L')
+      this.intl.formatDate(this.sequenceBlock1.startDate)
     );
     assert.strictEqual(
       component.list.items[1].endDate,
-      moment(this.sequenceBlock1.endDate).format('L')
+      this.intl.formatDate(this.sequenceBlock1.endDate)
     );
     assert.strictEqual(component.list.items[1].course, this.course.title);
     assert.ok(component.list.items[1].isDeletable);
@@ -190,11 +190,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
     assert.strictEqual(
       component.list.items[1].startDate,
-      moment(this.sequenceBlock1.startDate).format('L')
+      this.intl.formatDate(this.sequenceBlock1.startDate)
     );
     assert.strictEqual(
       component.list.items[1].endDate,
-      moment(this.sequenceBlock1.endDate).format('L')
+      this.intl.formatDate(this.sequenceBlock1.endDate)
     );
     assert.strictEqual(component.list.items[1].course, this.course.title);
     assert.ok(component.list.items[1].isDeletable);
