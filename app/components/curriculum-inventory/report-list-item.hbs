@@ -31,14 +31,14 @@
     colspan="2"
     data-test-start-date
   >
-    {{moment-format @report.startDate "L"}}
+    {{format-date @report.startDate}}
   </td>
   <td
     class="text-center hide-from-small-screen"
     colspan="2"
     data-test-end-date
   >
-    {{moment-format @report.endDate "L"}}
+    {{format-date @report.endDate}}
   </td>
   <td
     class="text-center"

@@ -4,7 +4,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/report-list-item';
 
@@ -44,8 +43,8 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     assert.strictEqual(component.name, 'CI Report');
     assert.strictEqual(component.program, 'program 0');
     assert.strictEqual(component.year, '2017');
-    assert.strictEqual(component.startDate, moment(this.report.startDate).format('L'));
-    assert.strictEqual(component.endDate, moment(this.report.endDate).format('L'));
+    assert.strictEqual(component.startDate, this.intl.formatDate(this.report.startDate));
+    assert.strictEqual(component.endDate, this.intl.formatDate(this.report.endDate));
     assert.strictEqual(component.status, 'Draft');
     assert.ok(component.isDeletable);
     assert.notOk(component.confirmRemoval.isVisible);
