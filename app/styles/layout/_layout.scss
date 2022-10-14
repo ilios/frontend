@@ -17,6 +17,10 @@
     grid-area: header;
   }
 
+  & > nav {
+    display: none;
+  }
+
   & > main {
     background-color: $white;
     grid-area: main;
@@ -59,8 +63,10 @@
     }
 
     & > nav {
+      display: grid;
       grid-area: nav;
       @include for-laptop-and-up {
+        display: block;
         z-index: 5;
       }
     }
