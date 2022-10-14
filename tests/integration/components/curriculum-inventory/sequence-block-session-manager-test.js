@@ -3,7 +3,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-session-manager';
 
@@ -15,19 +15,19 @@ module(
     setupMirage(hooks);
 
     test('it renders', async function (assert) {
-      const now = moment().toDate();
-      const in15Hours = moment().add(15, 'hours').toDate();
-      const in30Hours = moment().add(30, 'hours').toDate();
+      const now = DateTime.now();
+      const in15Hours = now.plus({ hours: 15 }).toJSDate();
+      const in30Hours = now.plus({ hours: 30 }).toJSDate();
       const offering1 = this.server.create('offering', {
-        startDate: now,
+        startDate: now.toJSDate(),
         endDate: in30Hours,
       });
       const offering2 = this.server.create('offering', {
-        startDate: now,
+        startDate: now.toJSDate(),
         endDate: in15Hours,
       });
       const offering3 = this.server.create('offering', {
-        startDate: now,
+        startDate: now.toJSDate(),
         endDate: in15Hours,
       });
       const sessionType1 = this.server.create('session-type', { title: 'Lecture' });
@@ -315,15 +315,15 @@ module(
     });
 
     test('change count as one offering', async function (assert) {
-      const now = moment().toDate();
-      const in15Hours = moment().add(15, 'hours').toDate();
-      const in30Hours = moment().add(30, 'hours').toDate();
+      const now = DateTime.now();
+      const in15Hours = now.plus({ hours: 15 }).toJSDate();
+      const in30Hours = now.plus({ hours: 30 }).toJSDate();
       const offering1 = this.server.create('offering', {
-        startDate: now,
+        startDate: now.toJSDate(),
         endDate: in30Hours,
       });
       const offering2 = this.server.create('offering', {
-        startDate: now,
+        startDate: now.toJSDate(),
         endDate: in15Hours,
       });
       const sessionType = this.server.create('session-type');
@@ -362,23 +362,23 @@ module(
     });
 
     test('check all/uncheck count offerings as one', async function (assert) {
-      const now = moment().toDate();
-      const in15Hours = moment().add(15, 'hours').toDate();
-      const in30Hours = moment().add(30, 'hours').toDate();
+      const now = DateTime.now();
+      const in15Hours = now.plus({ hours: 15 }).toJSDate();
+      const in30Hours = now.plus({ hours: 30 }).toJSDate();
       const offering1 = this.server.create('offering', {
-        startDate: now,
+        startDate: now.toJSDate(),
         endDate: in30Hours,
       });
       const offering2 = this.server.create('offering', {
-        startDate: now,
+        startDate: now.toJSDate(),
         endDate: in15Hours,
       });
       const offering3 = this.server.create('offering', {
-        startDate: now,
+        startDate: now.toJSDate(),
         endDate: in30Hours,
       });
       const offering4 = this.server.create('offering', {
-        startDate: now,
+        startDate: now.toJSDate(),
         endDate: in30Hours,
       });
       const sessionType = this.server.create('session-type');
