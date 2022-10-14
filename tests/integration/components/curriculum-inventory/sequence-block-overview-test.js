@@ -3,9 +3,18 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-overview';
+
+const jan2nd2015 = DateTime.fromObject({ year: 2015, month: 1, day: 2 });
+const feb2nd2015 = DateTime.fromObject({ year: 2015, month: 2, day: 2 });
+const mar30th2015 = DateTime.fromObject({ year: 2015, month: 3, day: 30 });
+const apr30th2015 = DateTime.fromObject({ year: 2015, month: 4, day: 30 });
+const apr232016 = DateTime.fromObject({ year: 2016, month: 4, day: 23 }).startOf('day');
+const june2nd2016 = DateTime.fromObject({ year: 2016, month: 6, day: 2 }).startOf('day');
+const oct30th2016 = DateTime.fromObject({ year: 2016, month: 10, day: 30 }).startOf('day');
+const nov2nd2016 = DateTime.fromObject({ year: 2016, month: 11, day: 2 }).startOf('day');
 
 module('Integration | Component | curriculum-inventory/sequence-block-overview', function (hooks) {
   setupRenderingTest(hooks);
@@ -41,8 +50,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
     const course = this.server.create('course', {
       title: 'Course A',
-      startDate: new Date('2015-02-02'),
-      endDate: new Date('2015-03-30'),
+      startDate: feb2nd2015.toJSDate(),
+      endDate: mar30th2015.toJSDate(),
       clerkshipType,
       level: 4,
       school: this.school,
@@ -80,8 +89,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       report: this.report,
       parent: parentBlock,
       duration: 12,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       childSequenceOrder: 1,
       orderInSequence: 1,
       course,
@@ -117,7 +126,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.ok(component.description.isEditable);
     assert.strictEqual(
       component.course.text,
-      'Course: Course A Level: 4, Start Date: 2015-02-02, End Date: 2015-03-30 - Clerkship (Block)'
+      'Course: Course A Level: 4, Start Date: 2/2/2015, End Date: 3/30/2015 - Clerkship (Block)'
     );
     assert.ok(component.course.isEditable);
     const startLevel = await sequenceBlockModel.startingAcademicLevel;
@@ -133,12 +142,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.ok(component.track.isEditable);
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + moment(sequenceBlockModel.startDate).format('L')
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
     );
     assert.ok(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + moment(sequenceBlockModel.endDate).format('L')
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
     );
     assert.ok(component.endDate.isEditable);
     assert.strictEqual(
@@ -247,8 +256,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       clerkshipType,
       published: true,
       year: '2016',
-      startDate: new Date('2016-01-01'),
-      endDate: new Date('2016-01-02'),
+      startDate: DateTime.fromObject({ year: 2016, month: 1, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2016, month: 1, day: 2 }).toJSDate(),
     });
     this.server.create('course', {
       title: 'Beta',
@@ -256,8 +265,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       clerkshipType,
       published: true,
       year: '2016',
-      startDate: new Date('2016-02-01'),
-      endDate: new Date('2016-02-02'),
+      startDate: DateTime.fromObject({ year: 2016, month: 2, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2016, month: 2, day: 2 }).toJSDate(),
     });
     const newCourse = this.server.create('course', {
       title: 'Gamma',
@@ -265,8 +274,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       clerkshipType,
       published: true,
       year: '2016',
-      startDate: new Date('2016-03-01'),
-      endDate: new Date('2016-03-02'),
+      startDate: DateTime.fromObject({ year: 2016, month: 3, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2016, month: 3, day: 2 }).toJSDate(),
     });
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
@@ -303,7 +312,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
     assert.strictEqual(
       component.course.text,
-      'Course: Alpha Level: 1, Start Date: 2016-01-01, End Date: 2016-01-02 - Clerkship (clerkship type 0)'
+      'Course: Alpha Level: 1, Start Date: 1/1/2016, End Date: 1/2/2016 - Clerkship (clerkship type 0)'
     );
     await component.course.edit();
     assert.strictEqual(component.course.options.length, 4);
@@ -311,7 +320,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.strictEqual(component.course.options[1].text, 'Alpha');
     assert.strictEqual(
       component.course.details,
-      'Level: 1, Start Date: 2016-01-01, End Date: 2016-01-02 - Clerkship (clerkship type 0)'
+      'Level: 1, Start Date: 1/1/2016, End Date: 1/2/2016 - Clerkship (clerkship type 0)'
     );
     assert.strictEqual(component.course.options[1].value, courseModel.id);
     assert.ok(component.course.options[1].isSelected);
@@ -320,12 +329,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.course.select(newCourseModel.id);
     assert.strictEqual(
       component.course.details,
-      'Level: 1, Start Date: 2016-03-01, End Date: 2016-03-02 - Clerkship (clerkship type 0)'
+      'Level: 1, Start Date: 3/1/2016, End Date: 3/2/2016 - Clerkship (clerkship type 0)'
     );
     await component.course.save();
     assert.strictEqual(
       component.course.text,
-      'Course: Gamma Level: 1, Start Date: 2016-03-01, End Date: 2016-03-02 - Clerkship (clerkship type 0)'
+      'Course: Gamma Level: 1, Start Date: 3/1/2016, End Date: 3/2/2016 - Clerkship (clerkship type 0)'
     );
     const blockCourse = await sequenceBlockModel.course;
     assert.strictEqual(blockCourse.id, newCourse.id);
@@ -497,8 +506,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       report: this.report,
       parent,
       duration: 12,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       childSequenceOrder: 1,
       orderInSequence: 1,
       required: 2,
@@ -550,8 +559,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       duration: 0,
       childSequenceOrder: 1,
       orderInSequence: 0,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       required: 2,
       track: true,
       minimum: 0,
@@ -593,8 +602,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       duration: 0,
       childSequenceOrder: 1,
       orderInSequence: 0,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       required: 2,
       track: true,
       minimum: 0,
@@ -633,8 +642,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
     const course = this.server.create('course', {
       title: 'Course A',
-      startDate: new Date('2015-02-02'),
-      endDate: new Date('2015-03-30'),
+      startDate: feb2nd2015.toJSDate(),
+      endDate: mar30th2015.toJSDate(),
       clerkshipType,
       level: 4,
       school: this.school,
@@ -661,8 +670,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       report: this.report,
       parent: parentBlock,
       duration: 12,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       childSequenceOrder: 1,
       orderInSequence: 1,
       course,
@@ -704,8 +713,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
     const course = this.server.create('course', {
       title: 'Course A',
-      startDate: new Date('2015-02-02'),
-      endDate: new Date('2015-03-30'),
+      startDate: feb2nd2015.toJSDate(),
+      endDate: mar30th2015.toJSDate(),
       clerkshipType,
       level: 4,
       school: this.school,
@@ -741,8 +750,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       report: this.report,
       parent: parentBlock,
       duration: 12,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       childSequenceOrder: 1,
       orderInSequence: 1,
       course,
@@ -778,7 +787,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.notOk(component.description.isEditable);
     assert.strictEqual(
       component.course.text,
-      'Course: Course A Level: 4, Start Date: 2015-02-02, End Date: 2015-03-30 - Clerkship (Block)'
+      'Course: Course A Level: 4, Start Date: 2/2/2015, End Date: 3/30/2015 - Clerkship (Block)'
     );
     assert.notOk(component.course.isEditable);
     assert.strictEqual(component.startLevel.text, 'Start Level: Year 1');
@@ -791,12 +800,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.notOk(component.track.isEditable);
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + moment(sequenceBlockModel.startDate).format('L')
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
     );
     assert.notOk(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + moment(sequenceBlockModel.endDate).format('L')
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
     );
     assert.notOk(component.endDate.isEditable);
     assert.strictEqual(
@@ -824,8 +833,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('flagging block as elective sets minimum value to 0', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       duration: 0,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -866,8 +875,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       duration: 10,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       childSequenceOrder: 1,
       orderInSequence: 0,
       required: 1,
@@ -926,8 +935,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('edit minimum and maximum values, then save', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -971,8 +980,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('edit minimum and maximum values, then cancel', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1016,8 +1025,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save fails when minimum is larger than maximum', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1061,8 +1070,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save fails when minimum is less than zero', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1101,8 +1110,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save fails when minimum is empty', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1141,8 +1150,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save fails when maximum is empty', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1181,8 +1190,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('minimum field is set to 0 and disabled for electives', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       duration: 10,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1218,13 +1227,13 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('edit duration and start/end date, then save', async function (assert) {
-    const newStartDate = new Date('2016-10-30T00:00:00');
-    const newEndDate = new Date('2016-11-02T00:00:00');
+    const newStartDate = oct30th2016.toJSDate();
+    const newEndDate = nov2nd2016.toJSDate();
     const newDuration = 15;
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1260,12 +1269,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.save();
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + moment(sequenceBlockModel.startDate).format('L')
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
     );
     assert.ok(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + moment(sequenceBlockModel.endDate).format('L')
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
     );
     assert.ok(component.endDate.isEditable);
     assert.strictEqual(
@@ -1278,13 +1287,13 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save with date range and a zero duration', async function (assert) {
-    const newStartDate = new Date('2016-10-30T00:00:00');
-    const newEndDate = new Date('2016-11-02T00:00:00');
+    const newStartDate = oct30th2016.toJSDate();
+    const newEndDate = nov2nd2016.toJSDate();
     const newDuration = 0;
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1320,12 +1329,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.save();
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + moment(sequenceBlockModel.startDate).format('L')
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
     );
     assert.ok(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + moment(sequenceBlockModel.endDate).format('L')
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
     );
     assert.strictEqual(component.duration.text, `Duration (in Days): Click to edit`);
     assert.strictEqual(newStartDate.getTime(), sequenceBlockModel.startDate.getTime());
@@ -1382,13 +1391,13 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('edit duration and start/end date, then cancel', async function (assert) {
-    const newStartDate = new Date('2016-10-30T00:00:00');
-    const newEndDate = new Date('2016-11-02T00:00:00');
+    const newStartDate = oct30th2016.toJSDate();
+    const newEndDate = nov2nd2016.toJSDate();
     const newDuration = 20;
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1419,12 +1428,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + moment(sequenceBlockModel.startDate).format('L')
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
     );
     assert.ok(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + moment(sequenceBlockModel.endDate).format('L')
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
     );
     assert.strictEqual(
       component.duration.text,
@@ -1437,12 +1446,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.cancel();
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + moment(sequenceBlockModel.startDate).format('L')
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
     );
     assert.ok(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + moment(sequenceBlockModel.endDate).format('L')
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
     );
     assert.strictEqual(
       component.duration.text,
@@ -1451,12 +1460,19 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   });
 
   test('save fails if end-date is older than start-date', async function (assert) {
-    const newStartDate = new Date('2016-10-30T00:00:00');
-    const newEndDate = new Date('2013-11-02T00:00:00');
+    const newStartDate = oct30th2016.toJSDate();
+    const newEndDate = DateTime.fromObject({
+      year: 2013,
+      month: 11,
+      day: 2,
+      hour: 0,
+      minute: 0,
+      second: 0,
+    }).toJSDate();
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1496,8 +1512,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save fails on missing duration', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1536,8 +1552,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save fails on invalid duration', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1620,8 +1636,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
     const course = this.server.create('course', {
       title: 'Course A',
-      startDate: new Date('2015-02-02'),
-      endDate: new Date('2015-03-30'),
+      startDate: feb2nd2015.toJSDate(),
+      endDate: mar30th2015.toJSDate(),
       clerkshipType,
       level: 4,
       school: this.school,
@@ -1629,8 +1645,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       course,
-      startDate: new Date('2015-02-02'),
-      endDate: new Date('2015-03-30'),
+      startDate: feb2nd2015.toJSDate(),
+      endDate: mar30th2015.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1675,8 +1691,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
     const course = this.server.create('course', {
       title: 'Course A',
-      startDate: new Date('2015-02-02'),
-      endDate: new Date('2015-03-30'),
+      startDate: feb2nd2015.toJSDate(),
+      endDate: mar30th2015.toJSDate(),
       clerkshipType,
       level: 4,
       school: this.school,
@@ -1684,8 +1700,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       course,
-      startDate: new Date('2015-02-02'),
-      endDate: new Date('2015-03-30'),
+      startDate: feb2nd2015.toJSDate(),
+      endDate: mar30th2015.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1772,8 +1788,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('cancel editing on escape in minimum input', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1813,8 +1829,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save on enter in minimum input', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1854,8 +1870,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('cancel editing on escape in maximum input', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1895,8 +1911,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save on enter in maximum input', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -1975,8 +1991,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('save on enter in duration input', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: new Date('2016-04-23T00:00:00'),
-      endDate: new Date('2016-06-02T00:00:00'),
+      startDate: apr232016.toJSDate(),
+      endDate: june2nd2016.toJSDate(),
       duration: 5,
       childSequenceOrder: 1,
       orderInSequence: 0,
@@ -2088,8 +2104,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
   test('zero duration renders as n/a in read-only mode', async function (assert) {
     const block = this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
+      startDate: jan2nd2015.toJSDate(),
+      endDate: apr30th2015.toJSDate(),
       duration: 0,
       childSequenceOrder: 1,
       orderInSequence: 0,

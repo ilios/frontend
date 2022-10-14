@@ -39,8 +39,8 @@
             {{#if this.course}}
               <span class="details" data-test-course-details>
                 {{t "general.level"}}: {{this.course.level}},
-                {{t "general.startDate"}}: {{moment-format this.course.startDate "YYYY-MM-DD"}},
-                {{t "general.endDate"}}: {{moment-format this.course.endDate "YYYY-MM-DD"}}
+                {{t "general.startDate"}}: {{format-date this.course.startDate}},
+                {{t "general.endDate"}}: {{format-date this.course.endDate}}
                 {{#if this.course.clerkshipType}}
                   - {{t "general.clerkship"}} ({{this.course.clerkshipType.title}})
                 {{/if}}
@@ -177,7 +177,7 @@
                     data-test-edit
                   >
                     {{#if @sequenceBlock.startDate}}
-                      {{moment-format @sequenceBlock.startDate "L"}}
+                      {{format-date @sequenceBlock.startDate}}
                     {{else}}
                       {{t "general.clickToEdit"}}
                     {{/if}}
@@ -186,7 +186,7 @@
               {{else}}
                 <span>
                   {{#if @sequenceBlock.startDate}}
-                    {{moment-format @sequenceBlock.startDate "L"}}
+                    {{format-date @sequenceBlock.startDate}}
                   {{else}}
                     {{t "general.notApplicableAbbr"}}
                   {{/if}}
@@ -204,7 +204,7 @@
                     data-test-edit
                   >
                     {{#if @sequenceBlock.endDate}}
-                      {{moment-format @sequenceBlock.endDate "L"}}
+                      {{format-date @sequenceBlock.endDate}}
                     {{else}}
                       {{t "general.clickToEdit"}}
                     {{/if}}
@@ -213,7 +213,7 @@
               {{else}}
                 <span>
                   {{#if @sequenceBlock.endDate}}
-                    {{moment-format @sequenceBlock.endDate "L"}}
+                    {{format-date @sequenceBlock.endDate}}
                   {{else}}
                     {{t "general.notApplicableAbbr"}}
                   {{/if}}
