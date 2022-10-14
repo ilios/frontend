@@ -2,7 +2,7 @@ import commonRoutes from './routes';
 import ENV from 'ilios/config/environment';
 import { discoverEmberDataModels } from 'ember-cli-mirage';
 import { createServer, Response } from 'miragejs';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 const { apiVersion } = ENV;
 
@@ -27,12 +27,10 @@ export default function (config) {
         const username = attrs.username.toLowerCase();
         if (errors.length === 0) {
           if (username === 'demo' && attrs.password === 'demo') {
-            const now = moment();
-            const nextWeek = now.clone().add(1, 'week');
+            const now = DateTime.now();
+            const nextWeek = now.plus({ weeks: 1 });
             const header = '{"alg":"none"}';
-            const body = `{"iss": "ilios","aud": "ilios","iat": "${now.format(
-              'X'
-            )}","exp": "${nextWeek.format('X')}","user_id": 4136}`;
+            const body = `{"iss": "ilios","aud": "ilios","iat": "${now.toUnixInteger()}","exp": "${nextWeek.toUnixInteger()}","user_id": 4136}`;
 
             const encodedData = window.btoa(header) + '.' + window.btoa(body) + '.';
             return {
@@ -74,12 +72,10 @@ export default function (config) {
         // return {
         //   jwt: null
         // };
-        const now = moment();
-        const nextWeek = now.clone().add(1, 'week');
+        const now = DateTime.now();
+        const nextWeek = now.plus({ weeks: 1 });
         const header = '{"alg":"none"}';
-        const body = `{"iss": "ilios","aud": "ilios","iat": "${now.format(
-          'X'
-        )}","exp": "${nextWeek.format('X')}","user_id": 4136}`;
+        const body = `{"iss": "ilios","aud": "ilios","iat": "${now.toUnixInteger()}","exp": "${nextWeek.toUnixInteger()}","user_id": 4136}`;
 
         const encodedData = window.btoa(header) + '.' + window.btoa(body) + '.';
         return {
