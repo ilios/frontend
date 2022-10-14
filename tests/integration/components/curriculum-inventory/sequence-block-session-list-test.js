@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-session-list';
 
 module(
@@ -15,9 +15,9 @@ module(
     setupMirage(hooks);
 
     test('it renders', async function (assert) {
-      const now = moment().toDate();
-      const in15Hours = moment().add(15, 'hours').toDate();
-      const in30Hours = moment().add(30, 'hours').toDate();
+      const now = DateTime.now();
+      const in15Hours = now.plus({ hours: 15 }).toJSDate();
+      const in30Hours = now.plus({ hours: 30 }).toJSDate();
 
       const offering1 = this.server.create('offering', {
         startDate: now,
