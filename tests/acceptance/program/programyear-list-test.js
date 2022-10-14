@@ -1,5 +1,5 @@
 import { currentRouteName } from '@ember/test-helpers';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
@@ -170,7 +170,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     const competencies = this.server.createList('competency', 3);
     const vocabulary = this.server.create('vocabulary', { school: this.school });
     const terms = this.server.createList('term', 3, { vocabulary });
-    const currentYear = parseInt(moment().format('YYYY'), 10);
+    const currentYear = DateTime.now().year;
     const programYear = this.server.create('programYear', {
       program: this.program,
       startYear: currentYear,

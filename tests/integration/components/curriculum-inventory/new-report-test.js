@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/new-report';
 
@@ -15,7 +15,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   test('it renders', async function (assert) {
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
-    const currentYear = parseInt(moment().format('YYYY'), 10);
+    const currentYear = DateTime.fromObject({ hour: 8 }).year;
 
     this.set('program', programModel);
     await render(
@@ -76,7 +76,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   test('academic year options labeled as range when app configuration is set to cross calendar-year boundaries', async function (assert) {
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
-    const currentYear = parseInt(moment().format('YYYY'), 10);
+    const currentYear = DateTime.fromObject({ hour: 8 }).year;
 
     this.server.get('application/config', function () {
       return {
@@ -107,7 +107,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     assert.expect(6);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
-    const currentYear = parseInt(moment().format('YYYY'), 10);
+    const currentYear = DateTime.fromObject({ hour: 8 }).year;
     const expectedSelectedYear = currentYear - 5;
 
     this.set('program', programModel);
@@ -120,12 +120,12 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
         'Selected academic year gets passed.'
       );
       assert.strictEqual(
-        moment(report.get('startDate')).format('YYYY-MM-DD'),
+        DateTime.fromJSDate(report.get('startDate')).toFormat('yyyy-MM-dd'),
         `${expectedSelectedYear}-01-01`,
         'Start date gets calculated and passed.'
       );
       assert.strictEqual(
-        moment(report.get('endDate')).format('YYYY-MM-DD'),
+        DateTime.fromJSDate(report.get('endDate')).toFormat('yyyy-MM-dd'),
         `${expectedSelectedYear}-12-31`,
         'End date gets calculated and passed.'
       );
@@ -146,7 +146,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     assert.expect(2);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
-    const currentYear = parseInt(moment().format('YYYY'), 10);
+    const currentYear = DateTime.fromObject({ hour: 8 }).year;
     const expectedSelectedYear = currentYear - 5;
 
     this.server.get('application/config', function () {
@@ -159,12 +159,12 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     this.set('program', programModel);
     this.set('save', (report) => {
       assert.strictEqual(
-        moment(report.get('startDate')).format('YYYY-MM-DD'),
+        DateTime.fromJSDate(report.get('startDate')).toFormat('yyyy-MM-dd'),
         `${expectedSelectedYear}-07-01`,
         'Start date gets calculated and passed.'
       );
       assert.strictEqual(
-        moment(report.get('endDate')).format('YYYY-MM-DD'),
+        DateTime.fromJSDate(report.get('endDate')).toFormat('yyyy-MM-dd'),
         `${expectedSelectedYear + 1}-06-30`,
         'End date gets calculated and passed.'
       );

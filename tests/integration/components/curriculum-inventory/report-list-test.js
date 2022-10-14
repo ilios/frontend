@@ -4,7 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/report-list';
 
@@ -29,8 +29,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
-      startDate: moment('2017-07-01').toDate(),
-      endDate: moment('2018-06-30').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
     });
     const reportExport = this.server.create('curriculum-inventory-export');
     const report2 = this.server.create('curriculum-inventory-report', {
@@ -38,8 +38,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       export: reportExport,
       name: 'Aardvark',
       year: 2016,
-      startDate: moment('2016-07-01').toDate(),
-      endDate: moment('2017-06-30').toDate(),
+      startDate: DateTime.fromObject({ year: 2016, month: 7, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2017, month: 6, day: 30 }).toJSDate(),
     });
 
     const reportModel1 = await this.owner
@@ -96,12 +96,12 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     assert.strictEqual(component.reports[0].year, '2016', 'Academic year shows.');
     assert.strictEqual(
       component.reports[0].startDate,
-      moment(reportModel2.startDate).format('L'),
+      this.intl.formatDate(reportModel2.startDate),
       'Start date shows.'
     );
     assert.strictEqual(
       component.reports[0].endDate,
-      moment(reportModel2.endDate).format('L'),
+      this.intl.formatDate(reportModel2.endDate),
       'End date shows.'
     );
     assert.strictEqual(component.reports[0].status, 'Finalized', 'Status shows.');
@@ -110,12 +110,12 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     assert.strictEqual(component.reports[1].year, '2017', 'Academic year shows.');
     assert.strictEqual(
       component.reports[1].startDate,
-      moment(reportModel1.startDate).format('L'),
+      this.intl.formatDate(reportModel1.startDate),
       'Start date shows.'
     );
     assert.strictEqual(
       component.reports[1].endDate,
-      moment(reportModel1.endDate).format('L'),
+      this.intl.formatDate(reportModel1.endDate),
       'End date shows.'
     );
     assert.strictEqual(component.reports[1].status, 'Draft', 'Status shows.');
@@ -126,8 +126,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
-      startDate: moment('2017-07-01').toDate(),
-      endDate: moment('2018-06-30').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -153,8 +153,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       name: 'Zeppelin',
       year: 2017,
       export: reportExport,
-      startDate: moment('2017-07-01').toDate(),
-      endDate: moment('2018-06-30').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -256,8 +256,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
-      startDate: moment('2017-07-01').toDate(),
-      endDate: moment('2018-06-30').toDate(),
+      startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
     });
 
     const reportModel1 = await this.owner

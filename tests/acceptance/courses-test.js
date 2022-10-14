@@ -1,7 +1,7 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import page from 'ilios/tests/pages/courses';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -284,7 +284,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('new course', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const year = moment().year();
+    const year = DateTime.now().year;
     this.server.create('academicYear', { id: year });
     await page.visit({ year });
     await page.toggleNewCourseForm();
@@ -297,7 +297,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('new course toggle does not show up for unprivileged users', async function (assert) {
-    const year = moment().year();
+    const year = DateTime.now().year;
     this.server.create('academicYear', { id: year });
     assert.expect(1);
     await page.visit({ year });
@@ -323,7 +323,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('new course does not appear twice when navigating back', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const year = moment().year();
+    const year = DateTime.now().year;
     this.server.create('academicYear', { id: year });
     assert.expect(4);
 
@@ -345,7 +345,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('new course can be deleted', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const year = moment().year();
+    const year = DateTime.now().year;
     this.server.create('academicYear', { id: year });
     this.server.create('userRole', {
       title: 'Developer',
@@ -404,7 +404,7 @@ module('Acceptance | Courses', function (hooks) {
     await page.visit();
     await page.toggleNewCourseForm();
 
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.now().year;
     const years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1, thisYear + 2];
 
     assert.strictEqual(page.newCourse.years.length, years.length + 1);
@@ -465,12 +465,12 @@ module('Acceptance | Courses', function (hooks) {
     const firstCourse = this.server.create('course', {
       year: 2014,
       schoolId: 1,
-      startDate: moment().toDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
     });
     const secondCourse = this.server.create('course', {
       year: 2014,
       schoolId: 1,
-      startDate: moment().add(1, 'day').toDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).plus({ days: 1 }).toJSDate(),
     });
 
     await page.visit();
@@ -490,12 +490,12 @@ module('Acceptance | Courses', function (hooks) {
     const firstCourse = this.server.create('course', {
       year: 2014,
       schoolId: 1,
-      endDate: moment().toDate(),
+      endDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
     });
     const secondCourse = this.server.create('course', {
       year: 2014,
       schoolId: 1,
-      endDate: moment().add(1, 'day').toDate(),
+      endDate: DateTime.fromObject({ hour: 8 }).plus({ days: 1 }).toJSDate(),
     });
 
     await page.visit();
@@ -621,7 +621,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('can not delete course with descendants #3620', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const year = moment().year().toString();
+    const year = DateTime.now().year.toString();
     this.server.create('academicYear', { id: year });
     const course1 = this.server.create('course', {
       year,
@@ -652,7 +652,7 @@ module('Acceptance | Courses', function (hooks) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.user.update({ administeredSchools: [this.school] });
     freezeDateAt(new Date('1/1/2021'));
-    const year = moment().year();
+    const year = DateTime.now().year;
     this.server.create('academicYear', { id: year - 1 });
     this.server.create('academicYear', { id: year });
     this.server.get('application/config', function () {
@@ -673,7 +673,7 @@ module('Acceptance | Courses', function (hooks) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.user.update({ administeredSchools: [this.school] });
     freezeDateAt(new Date('10/10/2021'));
-    const year = moment().year();
+    const year = DateTime.now().year;
     this.server.create('academicYear', { id: year - 1 });
     this.server.create('academicYear', { id: year });
     this.server.get('application/config', function () {
@@ -694,7 +694,7 @@ module('Acceptance | Courses', function (hooks) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.user.update({ administeredSchools: [this.school] });
     freezeDateAt(new Date('1/1/2021'));
-    const year = moment().year();
+    const year = DateTime.now().year;
     this.server.create('academicYear', { id: year - 1 });
     this.server.create('academicYear', { id: year });
     this.server.get('application/config', function () {
@@ -715,7 +715,7 @@ module('Acceptance | Courses', function (hooks) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.user.update({ administeredSchools: [this.school] });
     freezeDateAt(new Date('10/10/2021'));
-    const year = moment().year();
+    const year = DateTime.now().year;
     this.server.create('academicYear', { id: year - 1 });
     this.server.create('academicYear', { id: year });
     this.server.get('application/config', function () {

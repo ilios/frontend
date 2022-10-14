@@ -13,7 +13,7 @@ import {
   waitFor,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { Response } from 'miragejs';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -29,7 +29,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     this.server.create('school', { title: 'third' });
 
     const program = this.server.create('program', { id: 1, title: 'Program', duration, school });
-    const startYear = moment().format('YYYY');
+    const startYear = DateTime.now().year;
     const py1 = this.server.create('program-year', { program, startYear });
     const py2 = this.server.create('program-year', { program, startYear });
     this.server.create('cohort', { id: 2, title: 'second', programYear: py1 });

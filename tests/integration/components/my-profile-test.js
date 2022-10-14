@@ -4,7 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime, Duration } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/my-profile';
 
@@ -87,11 +87,11 @@ module('Integration | Component | my profile', function (hooks) {
 
     this.server.get(`/auth/token`, (scheme, { queryParams }) => {
       assert.ok('ttl' in queryParams);
-      const duration = moment.duration(queryParams.ttl);
-      assert.strictEqual(duration.weeks(), 2);
-      assert.ok(duration.hours() < 24);
-      assert.ok(duration.minutes() < 60);
-      assert.ok(duration.seconds() < 60);
+      const duration = Duration.fromISO(queryParams.ttl);
+      assert.strictEqual(duration.days, 14);
+      assert.ok(duration.hours < 24);
+      assert.ok(duration.minutes < 60);
+      assert.ok(duration.seconds < 60);
 
       return {
         jwt: 'new token',
@@ -168,11 +168,11 @@ module('Integration | Component | my profile', function (hooks) {
 
     this.server.get(`/auth/token`, (scheme, { queryParams }) => {
       assert.ok('ttl' in queryParams);
-      const duration = moment.duration(queryParams.ttl);
-      assert.ok(duration.days() < 41);
-      assert.ok(duration.hours() < 24);
-      assert.ok(duration.minutes() < 60);
-      assert.ok(duration.seconds() < 60);
+      const duration = Duration.fromISO(queryParams.ttl);
+      assert.strictEqual(duration.days, 41);
+      assert.ok(duration.hours < 24);
+      assert.ok(duration.minutes < 60);
+      assert.ok(duration.seconds < 60);
 
       return {
         jwt: 'new token',
@@ -191,8 +191,8 @@ module('Integration | Component | my profile', function (hooks) {
       @toggleShowInvalidateTokens={{(noop)}}
     />`);
 
-    const m = moment().add(41, 'days');
-    await component.newTokenForm.setDate(m.toDate());
+    const dt = DateTime.fromObject({ hours: 8 }).plus({ days: 41 }).toJSDate();
+    await component.newTokenForm.setDate(dt);
     await component.newTokenForm.submit();
   });
 

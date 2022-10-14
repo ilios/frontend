@@ -5,7 +5,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios/tests/pages/components/learnergroup-calendar';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | learnergroup calendar', function (hooks) {
   setupRenderingTest(hooks);
@@ -13,7 +13,7 @@ module('Integration | Component | learnergroup calendar', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const today = moment().hour(8);
+    const today = DateTime.fromObject({ hour: 8 });
     const course = this.server.create('course', {
       title: 'course title',
     });
@@ -22,14 +22,14 @@ module('Integration | Component | learnergroup calendar', function (hooks) {
       course,
     });
     const offering1 = this.server.create('offering', {
-      startDate: today.format(),
-      endDate: today.clone().add('1', 'hour').format(),
+      startDate: today.toJSON(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       location: '123',
       session,
     });
     const offering2 = this.server.create('offering', {
-      startDate: today.format(),
-      endDate: today.clone().add('1', 'hour').format(),
+      startDate: today.toJSON(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
       location: '123',
       session,
     });

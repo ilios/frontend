@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { component } from 'ilios/tests/pages/components/user-profile-permissions';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
@@ -15,7 +15,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.schools = this.server.createList('school', 2);
-    this.thisYear = parseInt(moment().format('YYYY'), 10);
+    this.thisYear = DateTime.now().year;
     this.currentAcademicYear = this.thisYear;
     this.server.create('academic-year', { id: this.thisYear - 1 });
     this.server.create('academic-year', { id: this.thisYear });

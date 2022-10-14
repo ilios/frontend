@@ -3,7 +3,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render, click, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import Service from '@ember/service';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/report-details';
@@ -34,8 +34,8 @@ module('Integration | Component | curriculum-inventory/report-details', function
       program,
       isFinalized: false,
       name: 'Lorem Ipsum',
-      startDate: moment('2015-06-12').toDate(),
-      endDate: moment('2016-04-11').toDate(),
+      startDate: DateTime.fromObject({ year: 2015, month: 6, day: 12 }),
+      endDate: DateTime.fromObject({ year: 2016, month: 4, day: 11 }),
       description: 'Lorem Ipsum',
     });
     const reportModel = await this.owner
@@ -66,8 +66,8 @@ module('Integration | Component | curriculum-inventory/report-details', function
       program,
       isFinalized: false,
       name: 'Lorem Ipsum',
-      startDate: moment('2015-06-12').toDate(),
-      endDate: moment('2016-04-11').toDate(),
+      startDate: DateTime.fromObject({ year: 2015, month: 6, day: 12 }),
+      endDate: DateTime.fromObject({ year: 2016, month: 4, day: 11 }),
       description: 'Lorem Ipsum',
     });
     const reportModel = await this.owner
@@ -125,8 +125,8 @@ module('Integration | Component | curriculum-inventory/report-details', function
       program,
       isFinalized: false,
       name: 'Lorem Ipsum',
-      startDate: moment('2015-06-12').toDate(),
-      endDate: moment('2016-04-11').toDate(),
+      startDate: DateTime.fromObject({ year: 2015, month: 6, day: 12 }),
+      endDate: DateTime.fromObject({ year: 2016, month: 4, day: 11 }),
       description: 'Lorem Ipsum',
     });
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);

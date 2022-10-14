@@ -1,7 +1,7 @@
 import { currentURL } from '@ember/test-helpers';
 import { test, module } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from '../pages/learner-group';
@@ -297,8 +297,8 @@ module('Acceptance | Learnergroup', function (hooks) {
     const session = this.server.create('session', { course });
     this.server.create('offering', {
       session,
-      startDate: moment().hour(8).toDate(),
-      endDate: moment().hour(8).add(1, 'hour').toDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
+      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
       learnerGroups: [learnerGroup],
     });
     this.server.create('offering');
@@ -329,14 +329,14 @@ module('Acceptance | Learnergroup', function (hooks) {
     });
     this.server.create('offering', {
       session,
-      startDate: moment().hour(8).toDate(),
-      endDate: moment().hour(8).add(1, 'hour').toDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
+      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
       learnerGroups: [learnerGroup],
     });
     this.server.create('offering', {
       session,
-      startDate: moment().hour(8).toDate(),
-      endDate: moment().hour(8).add(1, 'hour').toDate(),
+      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
+      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
       learnerGroups: [subgroup],
     });
     this.server.create('offering');

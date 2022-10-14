@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import queryString from 'query-string';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/report-rollover';
@@ -14,7 +14,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.fromObject({ hour: 8 }).year;
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const report = this.server.create('curriculum-inventory-report', {
@@ -48,7 +48,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
         },
       };
     });
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.fromObject({ hour: 8 }).year;
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const report = this.server.create('curriculum-inventory-report', {
@@ -75,7 +75,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     assert.expect(6);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.fromObject({ hour: 8 }).year;
     const report = this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
@@ -117,7 +117,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     assert.expect(1);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.fromObject({ hour: 8 }).year;
     const report = this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
@@ -150,7 +150,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     const school = this.server.create('school');
     const program = this.server.create('program', { school, title: 'doctor of rocket surgery' });
     const otherProgram = this.server.create('program', { school, title: 'doktor eisenbart' });
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.fromObject({ hour: 8 }).year;
     const report = this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',

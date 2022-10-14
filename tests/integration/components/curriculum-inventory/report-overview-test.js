@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/report-overview';
@@ -15,7 +15,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    const currentYear = new Date().getFullYear();
+    const currentYear = DateTime.fromObject({ hour: 8 }).year;
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
     this.program = this.server.create('program', {
       school,
@@ -28,8 +28,8 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       program: this.program,
       isFinalized: false,
       name: 'Lorem Ipsum',
-      startDate: moment(`${currentYear - 1}-06-12`).toDate(),
-      endDate: moment(`${currentYear}-04-11`).toDate(),
+      startDate: DateTime.fromObject({ year: currentYear - 1, month: 6, day: 12 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: currentYear, month: 4, day: 11 }).toJSDate(),
       description: 'Lorem Ipsum',
     });
     this.permissionCheckerMock = Service.extend({
@@ -196,8 +196,8 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       this.intl.formatDate(reportModel.startDate),
       "The report's current start date is pre-selected in date picker."
     );
-    const newVal = moment(reportModel.startDate).add(1, 'day');
-    await component.startDate.set(newVal.toDate());
+    const newVal = DateTime.fromJSDate(reportModel.startDate).plus({ days: 1 });
+    await component.startDate.set(newVal.toJSDate());
     await component.startDate.save();
     assert.strictEqual(
       component.startDate.text,
@@ -220,9 +220,9 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
     await component.startDate.edit();
-    const newVal = moment(reportModel.endDate).add(1, 'day');
+    const newVal = DateTime.fromJSDate(reportModel.endDate).plus({ days: 1 });
     assert.notOk(component.startDate.hasError, 'Initially, no validation error is visible.');
-    await component.startDate.set(newVal.toDate());
+    await component.startDate.set(newVal.toJSDate());
     await component.startDate.save();
     assert.ok(component.startDate.hasError, 'Validation failed, error message is visible.');
   });
@@ -241,8 +241,8 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       this.intl.formatDate(reportModel.endDate),
       "The report's current end date is pre-selected in date picker."
     );
-    const newVal = moment(reportModel.endDate).add(1, 'day');
-    await component.endDate.set(newVal.toDate());
+    const newVal = DateTime.fromJSDate(reportModel.endDate).plus({ days: 1 });
+    await component.endDate.set(newVal.toJSDate());
     await component.endDate.save();
     assert.strictEqual(
       component.endDate.text,
@@ -265,9 +265,9 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
     await component.endDate.edit();
-    const newVal = moment(reportModel.startDate).subtract(1, 'day');
+    const newVal = DateTime.fromJSDate(reportModel.startDate).minus({ days: 1 });
     assert.notOk(component.endDate.hasError, 'Initially, no validation error is visible.');
-    await component.endDate.set(newVal.toDate());
+    await component.endDate.set(newVal.toJSDate());
     await component.endDate.save();
     assert.ok(component.endDate.hasError, 'Validation failed, error message is visible.');
   });
