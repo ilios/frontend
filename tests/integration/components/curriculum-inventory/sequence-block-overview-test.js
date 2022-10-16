@@ -7,14 +7,14 @@ import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-overview';
 
-const jan2nd2015 = DateTime.fromObject({ year: 2015, month: 1, day: 2 });
-const feb2nd2015 = DateTime.fromObject({ year: 2015, month: 2, day: 2 });
-const mar30th2015 = DateTime.fromObject({ year: 2015, month: 3, day: 30 });
-const apr30th2015 = DateTime.fromObject({ year: 2015, month: 4, day: 30 });
-const apr232016 = DateTime.fromObject({ year: 2016, month: 4, day: 23 }).startOf('day');
-const june2nd2016 = DateTime.fromObject({ year: 2016, month: 6, day: 2 }).startOf('day');
-const oct30th2016 = DateTime.fromObject({ year: 2016, month: 10, day: 30 }).startOf('day');
-const nov2nd2016 = DateTime.fromObject({ year: 2016, month: 11, day: 2 }).startOf('day');
+const jan2nd2015 = DateTime.fromObject({ year: 2015, month: 1, day: 2, hour: 8 });
+const feb2nd2015 = DateTime.fromObject({ year: 2015, month: 2, day: 2, hour: 8 });
+const mar30th2015 = DateTime.fromObject({ year: 2015, month: 3, day: 30, hour: 8 });
+const apr30th2015 = DateTime.fromObject({ year: 2015, month: 4, day: 30, hour: 8 });
+const apr232016 = DateTime.fromObject({ year: 2016, month: 4, day: 23, hour: 8 }).startOf('day');
+const june2nd2016 = DateTime.fromObject({ year: 2016, month: 6, day: 2, hour: 8 }).startOf('day');
+const oct30th2016 = DateTime.fromObject({ year: 2016, month: 10, day: 30, hour: 8 }).startOf('day');
+const nov2nd2016 = DateTime.fromObject({ year: 2016, month: 11, day: 2, hour: 8 }).startOf('day');
 
 module('Integration | Component | curriculum-inventory/sequence-block-overview', function (hooks) {
   setupRenderingTest(hooks);
@@ -256,8 +256,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       clerkshipType,
       published: true,
       year: '2016',
-      startDate: DateTime.fromObject({ year: 2016, month: 1, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2016, month: 1, day: 2 }).toJSDate(),
+      startDate: DateTime.fromObject({ year: 2016, month: 1, day: 1, hour: 8 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2016, month: 1, day: 2, hour: 8 }).toJSDate(),
     });
     this.server.create('course', {
       title: 'Beta',
@@ -265,8 +265,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       clerkshipType,
       published: true,
       year: '2016',
-      startDate: DateTime.fromObject({ year: 2016, month: 2, day: 1 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2016, month: 2, day: 2 }).toJSDate(),
+      startDate: DateTime.fromObject({ year: 2016, month: 2, day: 1, hour: 8 }).toJSDate(),
+      endDate: DateTime.fromObject({ year: 2016, month: 2, day: 2, hour: 8 }).toJSDate(),
     });
     const newCourse = this.server.create('course', {
       title: 'Gamma',
