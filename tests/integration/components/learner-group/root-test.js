@@ -2,20 +2,33 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
+import Service from '@ember/service';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/learnergroup-summary';
+import { component } from 'ilios/tests/pages/components/learner-group/root';
 
-module('Integration | Component | learnergroup summary', function (hooks) {
+module('Integration | Component | learner-group/root', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     this.programYear = this.server.create('programYear', { program });
     this.cohort = this.server.create('cohort', { programYear: this.programYear });
+
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+      getRolesInSchool() {
+        return [];
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
   });
 
   test('renders with data', async function (assert) {
@@ -33,7 +46,6 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       lastName: 'Zoober',
       displayName: 'Aardvark',
     });
-
     const cohort = this.server.create('cohort', {
       title: 'this cohort',
       users: [user1, user2, user3, user4],
@@ -41,6 +53,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
     });
     const subGroup = this.server.create('learner-group', {
       title: 'test sub-group',
+      cohort,
     });
 
     const course = this.server.create('course');
@@ -67,7 +80,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
 
     this.set('learnerGroup', learnerGroupModel);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @canUpdate={{true}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
@@ -115,7 +128,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @canUpdate={{false}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
@@ -142,7 +155,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .lookup('service:store')
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
       @setIsBulkAssigning={{(noop)}}
@@ -163,7 +176,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .lookup('service:store')
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
       @setIsBulkAssigning={{(noop)}}
@@ -184,7 +197,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .lookup('service:store')
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
       @setIsBulkAssigning={{(noop)}}
@@ -208,7 +221,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .lookup('service:store')
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
       @setIsBulkAssigning={{(noop)}}
@@ -232,7 +245,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .lookup('service:store')
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
       @setIsBulkAssigning={{(noop)}}
@@ -256,7 +269,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @canUpdate={{true}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
@@ -283,7 +296,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @canUpdate={{true}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
@@ -320,6 +333,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       this.server.create('learner-group', {
         offerings: [offerings[i]],
         parent: learnerGroup,
+        cohort,
       });
     }
 
@@ -329,7 +343,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
 
     this.set('learnerGroup', learnerGroupModel);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
       @setIsBulkAssigning={{(noop)}}
@@ -365,7 +379,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
 
     this.set('learnerGroup', learnerGroupModel);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
       @setIsBulkAssigning={{(noop)}}
@@ -394,7 +408,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @canUpdate={{true}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
@@ -426,7 +440,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @canUpdate={{true}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
@@ -474,7 +488,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @canUpdate={{true}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
@@ -503,7 +517,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @canUpdate={{true}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
@@ -532,7 +546,7 @@ module('Integration | Component | learnergroup summary', function (hooks) {
     this.set('learnerGroup', learnerGroupModel);
     this.set('isBulkAssigning', false);
 
-    await render(hbs`<LearnergroupSummary
+    await render(hbs`<LearnerGroup::Root
       @canUpdate={{true}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}

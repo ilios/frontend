@@ -1,12 +1,19 @@
 {{#let (unique-id) as |templateId|}}
   <section
-    class="learnergroup-summary"
+    class="learner-group-root"
     {{did-insert (perform this.load) @learnerGroup @isEditing @isBulkAssigning}}
     {{did-update (perform this.load) @learnerGroup @isEditing @isBulkAssigning}}
-    data-test-learnergroup-summary
+    data-test-learner-group-root
     ...attributes
   >
     {{#unless this.load.isRunning}}
+      {{#if this.isSavingGroups}}
+        <WaitSaving
+          @showProgress={{true}}
+          @totalProgress={{this.totalGroupsToSave}}
+          @currentProgress={{this.currentGroupsSaved}}
+        />
+      {{/if}}
       <LearnergroupHeader
         @learnerGroup={{@learnerGroup}}
         @sortUsersBy={{this.sortUsersBy}}
@@ -184,11 +191,52 @@
         {{#if this.showLearnerGroupCalendar}}
           <LearnergroupCalendar @learnerGroup={{@learnerGroup}} />
         {{/if}}
-        <LearnergroupSubgroupList
-          @parentGroup={{@learnerGroup}}
-          @canCreate={{@canCreate}}
-          @canDelete={{@canDelete}}
-        />
+        <section class="subgroups" data-test-subgroups>
+          <div class="header">
+            <h3 class="title">
+              {{t "general.subgroups"}}
+              ({{this.learnerGroups.length}})
+            </h3>
+            <div class="actions">
+              {{#if @canCreate}}
+                <ExpandCollapseButton
+                  @value={{this.showNewLearnerGroupForm}}
+                  @action={{set this.showNewLearnerGroupForm (not this.showNewLearnerGroupForm)}}
+                  @expandButtonLabel={{t "general.expand"}}
+                  @collapseButtonLabel={{t "general.close"}}
+                />
+              {{/if}}
+            </div>
+          </div>
+          <div class="new">
+            {{#if this.showNewLearnerGroupForm}}
+              <LearnerGroups::New
+                @save={{perform this.saveNewLearnerGroup}}
+                @cancel={{set this.showNewLearnerGroupForm false}}
+                @generateNewLearnerGroups={{this.generateNewLearnerGroups}}
+                @multiModeSupported={{true}}
+              />
+            {{/if}}
+            {{#if this.newLearnerGroup}}
+              <div class="saved-result">
+                <LinkTo @route="learner-group" @model={{this.newLearnerGroup}}>
+                  <FaIcon @icon="square-up-right" />
+                  {{this.newLearnerGroup.title}}
+                </LinkTo>
+                {{t "general.savedSuccessfully"}}
+              </div>
+            {{/if}}
+          </div>
+          <div class="list">
+            <LearnerGroups::List
+              @learnerGroups={{this.learnerGroups}}
+              @canCopyWithLearners={{false}}
+              @copyGroup={{perform this.copyGroup}}
+              @sortBy={{this.sortGroupsBy}}
+              @setSortBy={{set this.sortGroupsBy}}
+            />
+          </div>
+        </section>
         <section class="cohortmembers">
           <LearnergroupCohortUserManager
             @users={{this.usersToPassToCohortManager}}

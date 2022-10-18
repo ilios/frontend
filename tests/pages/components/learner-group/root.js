@@ -5,21 +5,23 @@ import {
   create,
   fillable,
   isPresent,
+  isVisible,
   text,
   value,
 } from 'ember-cli-page-object';
-import header from './learnergroup-header';
-import cohortUserManager from './learnergroup-cohort-user-manager';
-import instructorManager from './learnergroup-instructor-manager';
-import bulkAssignment from './learnergroup-bulk-assign';
-import userManager from './learnergroup-user-manager';
-import subgroupList from './learnergroup-subgroup-list';
-import calendar from './learnergroup-calendar';
+import header from '../learnergroup-header';
+import cohortUserManager from '../learnergroup-cohort-user-manager';
+import instructorManager from '../learnergroup-instructor-manager';
+import bulkAssignment from '../learnergroup-bulk-assign';
+import userManager from '../learnergroup-user-manager';
+import subgroupList from '../learner-groups/list';
+import calendar from '../learnergroup-calendar';
+import newLearnerGroupForm from '../learner-groups/new';
 import toggleButtons from 'ilios-common/page-objects/components/toggle-buttons';
 import toggleYesNo from 'ilios-common/page-objects/components/toggle-yesno';
 
 const definition = {
-  scope: '[data-test-learnergroup-summary]',
+  scope: '[data-test-learner-group-root]',
   header,
   needsAccommodation: {
     scope: '[data-test-needs-accommodation]',
@@ -76,7 +78,16 @@ const definition = {
   bulkAssignment,
   userManager,
   calendar,
-  subgroupList,
+  subgroups: {
+    scope: '[data-test-subgroups]',
+    title: text('h3'),
+    toggleNewLearnerGroupForm: clickable('[data-test-expand-collapse-button] button'),
+    toggleNewLearnerGroupFormExists: isVisible('[data-test-expand-collapse-button]'),
+    newLearnerGroupForm,
+    list: subgroupList,
+    savedResult: text('.saved-result'),
+    emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
+  },
   cohortUserManager,
 };
 

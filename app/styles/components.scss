@@ -22,8 +22,6 @@
 @import 'components/learnergroup-cohort-user-manager';
 @import 'components/learnergroup-header';
 @import 'components/learnergroup-instructor-manager';
-@import 'components/learnergroup-subgroup-list';
-@import 'components/learnergroup-summary';
 @import 'components/learnergroup-user-manager';
 @import 'components/locale-chooser';
 @import 'components/login-form';
@@ -82,6 +80,8 @@
 @import 'components/visualizer-program-year-objectives';
 @import 'components/visualizer-session-type-terms';
 @import 'components/visualizer-session-type-vocabularies';
+
+@import 'components/learner-group/root';
 
 @import 'components/learner-groups/root';
 

@@ -2,29 +2,51 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
+import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
-import { enqueueTask, restartableTask, task } from 'ember-concurrency';
+import { dropTask, enqueueTask, restartableTask, task } from 'ember-concurrency';
+import { use } from 'ember-could-get-used-to-this';
+import pad from 'pad';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import cloneLearnerGroup from '../../utils/clone-learner-group';
+import countDigits from '../../utils/count-digits';
 
 const DEFAULT_URL_VALUE = 'https://';
 
 @validatable
-export default class LearnergroupSummaryComponent extends Component {
+export default class LearnerGroupRootComponent extends Component {
+  @service flashMessages;
+  @service intl;
+  @service store;
   @tracked cohortTitle = null;
-  @tracked currentGroupsSaved = 0;
   @tracked learnerGroupId = null;
   @tracked learnerGroupTitle = null;
   @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
   @tracked topLevelGroupTitle = null;
-  @tracked totalGroupsToSave = 0;
   @tracked showLearnerGroupCalendar = false;
   @tracked courses = [];
   @tracked treeGroups = [];
   @tracked usersToPassToManager = [];
   @tracked usersToPassToCohortManager = [];
+  @tracked sortGroupsBy = 'title';
+  @tracked isSavingGroups = false;
+  @tracked savedGroup;
+  @tracked showNewLearnerGroupForm = false;
+  @tracked currentGroupsSaved = 0;
+  @tracked totalGroupsToSave = 0;
+
+  @use subGroups = new ResolveAsyncValue(() => [this.args.learnerGroup.children]);
+
+  get learnerGroups() {
+    if (!this.subGroups) {
+      return [];
+    }
+    return this.subGroups.slice();
+  }
 
   get bestUrl() {
     if (this.url || this.urlChanged) {
@@ -57,6 +79,18 @@ export default class LearnergroupSummaryComponent extends Component {
     }
   }
 
+  @dropTask
+  *saveNewLearnerGroup(title) {
+    const cohort = yield this.args.learnerGroup.cohort;
+    const newLearnerGroup = this.store.createRecord('learner-group', {
+      cohort,
+      parent: this.args.learnerGroup,
+      title,
+    });
+    this.savedGroup = yield newLearnerGroup.save();
+    this.showNewLearnerGroupForm = false;
+  }
+
   @restartableTask
   *changeLocation() {
     this.addErrorDisplayFor('location');
@@ -68,6 +102,41 @@ export default class LearnergroupSummaryComponent extends Component {
     this.args.learnerGroup.set('location', this.location);
     yield this.args.learnerGroup.save();
     this.location = this.args.learnerGroup.location;
+  }
+
+  @action
+  async generateNewLearnerGroups(num) {
+    this.savedGroup = null;
+    this.currentGroupsSaved = 0;
+    this.isSaving = true;
+    this.totalGroupsToSave = num;
+    const offset = await this.args.learnerGroup.subgroupNumberingOffset;
+    const cohort = await this.args.learnerGroup.cohort;
+    const padBy = countDigits(offset + parseInt(num, 10));
+    const parentTitle = this.args.learnerGroup.title.substring(0, 60 - 1 - padBy);
+    const groups = [];
+    for (let i = 0; i < num; i++) {
+      const newGroup = this.store.createRecord('learner-group', {
+        cohort,
+        parent: this.args.learnerGroup,
+        title: `${parentTitle} ${pad(padBy, offset + i, '0')}`,
+      });
+      groups.push(newGroup);
+    }
+    const saveSomeGroups = async (groupsToSave) => {
+      const chunk = groupsToSave.splice(0, 6);
+      await all(chunk.map((group) => group.save()));
+
+      if (groupsToSave.length) {
+        this.currentGroupsSaved = this.currentGroupsSaved + chunk.length;
+        await saveSomeGroups(groupsToSave);
+      } else {
+        this.isSaving = false;
+        this.flashMessages.success('general.savedSuccessfully');
+        this.showNewLearnerGroupForm = false;
+      }
+    };
+    await saveSomeGroups(groups);
   }
 
   @action
@@ -203,6 +272,28 @@ export default class LearnergroupSummaryComponent extends Component {
   *changeNeedsAccommodation(value) {
     this.args.learnerGroup.set('needsAccommodation', value);
     yield this.args.learnerGroup.save();
+  }
+
+  @dropTask
+  *copyGroup(withLearners, learnerGroup) {
+    const cohort = yield learnerGroup.cohort;
+    const parentGroup = yield learnerGroup.parent;
+    const newGroups = yield cloneLearnerGroup(
+      this.store,
+      learnerGroup,
+      cohort,
+      withLearners,
+      parentGroup
+    );
+    // indicate that the top group is a copy
+    newGroups[0].title = newGroups[0].title + ` (${this.intl.t('general.copy')})`;
+    this.totalGroupsToSave = newGroups.length;
+    // save groups one at a time because we need to save in this order so parents are saved before children
+    for (let i = 0; i < newGroups.length; i++) {
+      yield newGroups[i].save();
+      this.currentGroupsSaved = i + 1;
+    }
+    this.savedGroup = newGroups[0];
   }
 
   async getCoursesForGroupWithSubgroupName(prefix, learnerGroup) {

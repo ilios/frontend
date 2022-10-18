@@ -1,4 +1,6 @@
-.learnergroup-summary {
+@use "sass:color";
+
+.learner-group-root {
   @include main-section;
 
   .learnergroup-overview {
@@ -58,6 +60,46 @@
       @include font-size('xxl');
       margin: auto;
       text-align: center;
+    }
+  }
+
+  .subgroups {
+    @include main-list-box;
+
+    .header {
+      @include main-list-box-header;
+
+      h3 {
+        @include ilios-heading-h3;
+      }
+
+      .title {
+        @include main-list-box-header-title;
+      }
+
+      .actions {
+        @include main-list-box-header-actions;
+      }
+    }
+
+    .list {
+      @include main-list-box-table;
+
+      .confirm-copy,
+      .confirm-copy:nth-child(even),
+      .confirm-copy:nth-child(odd)
+      {
+        background-color: color.adjust($blueMunsell, $lightness: 60%);
+        border: 2px solid $blueMunsell;
+
+        &.actions-row {
+          border-top: 0;
+        }
+
+        &.content-row {
+          border-bottom: 0;
+        }
+      }
     }
   }
 }
