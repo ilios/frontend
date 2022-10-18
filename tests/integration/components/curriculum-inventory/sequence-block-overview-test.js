@@ -124,9 +124,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       `Description: ${sequenceBlockModel.description}`,
     );
     assert.ok(component.description.isEditable);
+    const startDate = this.intl.formatDate(feb2nd2015.toJSDate());
+    const endDate = this.intl.formatDate(mar30th2015.toJSDate());
     assert.strictEqual(
       component.course.text,
-      'Course: Course A Level: 4, Start Date: 2/2/2015, End Date: 3/30/2015 - Clerkship (Block)',
+      `Course: Course A Level: 4, Start Date: ${startDate}, End Date: ${endDate} - Clerkship (Block)`,
     );
     assert.ok(component.course.isEditable);
     const startLevel = await sequenceBlockModel.startingAcademicLevel;
@@ -311,10 +313,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sortBy={{this.sortBy}}
       @setSortBy={{(noop)}}
     />`);
-
+    const startDate = this.intl.formatDate(course.startDate);
+    const endDate = this.intl.formatDate(course.endDate);
     assert.strictEqual(
       component.course.text,
-      'Course: Alpha Level: 1, Start Date: 1/1/2016, End Date: 1/2/2016 - Clerkship (clerkship type 0)',
+      `Course: Alpha Level: 1, Start Date: ${startDate}, End Date: ${endDate} - Clerkship (clerkship type 0)`,
     );
     await component.course.edit();
     assert.strictEqual(component.course.options.length, 4);
@@ -787,9 +790,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       `Description: ${sequenceBlockModel.description}`,
     );
     assert.notOk(component.description.isEditable);
+    const startDate = this.intl.formatDate(feb2nd2015.toJSDate());
+    const endDate = this.intl.formatDate(mar30th2015.toJSDate());
     assert.strictEqual(
       component.course.text,
-      'Course: Course A Level: 4, Start Date: 2/2/2015, End Date: 3/30/2015 - Clerkship (Block)',
+      `Course: Course A Level: 4, Start Date: ${startDate}, End Date: ${endDate} - Clerkship (Block)`,
     );
     assert.notOk(component.course.isEditable);
     assert.strictEqual(component.startLevel.text, 'Start Level: Year 1');
