@@ -23,6 +23,6 @@ jobs:
     - name: install dependencies
       run: npm ci
     - name: calculate
-      uses: paambaati/codeclimate-action@v3.1.0
+      uses: paambaati/codeclimate-action@v3.1.1
       with:
         coverageCommand: npm run test:ember
