@@ -31,7 +31,7 @@
       {{#if vocab.termCount}}
         <DetailTermsList
           @vocabulary={{vocab}}
-          @terms={{@subject.terms}}
+          @terms={{await @subject.terms}}
           @canEdit={{false}}
           @manage={{if @editable @manage (noop)}}
         />

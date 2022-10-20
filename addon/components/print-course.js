@@ -3,7 +3,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
-import { filterBy } from '../utils/array-helpers';
 
 export default class PrintCourseComponent extends Component {
   @service store;
@@ -37,7 +36,7 @@ export default class PrintCourseComponent extends Component {
     }
 
     if (!this.args.includeUnpublishedSessions) {
-      return filterBy(this.sessionsRelationship, 'isPublishedOrScheduled');
+      return this.sessionsRelationship.filter((session) => session.isPublishedOrScheduled);
     }
 
     return this.sessionsRelationship.slice();

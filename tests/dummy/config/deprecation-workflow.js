@@ -18,5 +18,11 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'ember-modifier.no-element-property' },
     { handler: 'silence', matchId: 'ember-modifier.function-based-options' },
     { handler: 'silence', matchId: 'ember-data:model-save-promise' }, //https://github.com/emberjs/data/issues/7997
+    { handler: 'silence', matchId: 'ember-data:deprecate-promise-proxies' }, //https://github.com/emberjs/data/issues/7997
+    { handler: 'silence', matchId: 'ember-data:deprecate-non-strict-relationships' },
+    { handler: 'silence', matchId: 'ember-data:deprecate-early-static' },
+    { handler: 'silence', matchId: 'ember-data:deprecate-array-like' },
+    { handler: 'silence', matchId: 'ember-data:deprecate-promise-many-array-behaviors' },
+    { handler: 'silence', matchId: 'ember-data:no-a-with-array-like' },
   ],
 };
