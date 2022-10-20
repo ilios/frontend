@@ -9,8 +9,7 @@
 
 All Ilios issues should be reported to our [common issue tracker](https://github.com/ilios/ilios/issues)
 
-Compatibility
-------------------------------------------------------------------------------
+## Compatibility
 
 * Ember.js v3.28 or above
 * Ember CLI v3.28 or above
@@ -28,12 +27,11 @@ open source software, ilios would be nowhere, so if you have a chance to pay the
 - [Netlify](https://www.netlify.com)
 - [BrowserStack](https://www.browserstack.com)
 
-Contributing
-------------------------------------------------------------------------------
+## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
 
-License
-------------------------------------------------------------------------------
+
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
