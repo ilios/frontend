@@ -286,21 +286,26 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('click week day title and go to day', async function (assert) {
-    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    const june24th2005 = DateTime.fromObject({
+      year: 2005,
+      month: 6,
+      day: 24,
+      hour: 8,
+    });
+    freezeDateAt(june24th2005.toJSDate());
     this.server.create('userevent', {
       user: this.user.id,
       name: 'today',
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: june24th2005.toJSDate(),
+      endDate: june24th2005.plus({ hour: 1 }).toJSDate(),
     });
     await page.visit({ show: 'calendar', view: 'week' });
     assert.strictEqual(page.calendar.weeklyCalendar.dayHeadings.length, 7);
-    const weekday = today.weekday === 7 ? 0 : today.weekday;
-    await page.calendar.weeklyCalendar.dayHeadings[weekday].selectDay();
-    assert.strictEqual(
-      currentURL(),
-      '/dashboard/calendar?date=' + today.toFormat('y-MM-dd') + '&view=day'
-    );
+    await page.calendar.weeklyCalendar.dayHeadings[0].selectDay();
+    assert.strictEqual(currentURL(), '/dashboard/calendar?date=2005-06-19&view=day');
+    await page.visit({ show: 'calendar', view: 'week' });
+    await page.calendar.weeklyCalendar.dayHeadings[5].selectDay();
+    assert.strictEqual(currentURL(), '/dashboard/calendar?date=2005-06-24&view=day');
   });
 
   test('click forward on a day goes to next day', async function (assert) {

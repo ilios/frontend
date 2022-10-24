@@ -6,6 +6,7 @@ import { click, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/offering-form';
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Integration | Component | offering form', function (hooks) {
   setupRenderingTest(hooks);
@@ -44,6 +45,10 @@ module('Integration | Component | offering form', function (hooks) {
       cohort,
     });
     this.cohort = cohort;
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
   });
 
   test('room and url input do not show by default', async function (assert) {
@@ -133,14 +138,30 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('recurring default day is disabled and checked', async function (assert) {
+    freezeDateAt(
+      DateTime.fromObject({
+        year: 2004,
+        month: 10,
+        day: 24,
+        hour: 8,
+      }).toJSDate()
+    );
     await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} />`);
-    let dayToday = DateTime.fromObject({ hour: 8 }).weekday;
-    if (dayToday === 7) {
-      dayToday = 0;
-    }
     await component.recurring.yesNoToggle.click();
-    assert.ok(component.recurring.weekdays[dayToday].input.isSelected);
-    assert.ok(component.recurring.weekdays[dayToday].input.isDisabled);
+    assert.ok(component.recurring.weekdays[0].input.isSelected);
+    assert.ok(component.recurring.weekdays[0].input.isDisabled);
+    assert.notOk(component.recurring.weekdays[1].input.isSelected);
+    assert.notOk(component.recurring.weekdays[1].input.isDisabled);
+    assert.notOk(component.recurring.weekdays[2].input.isSelected);
+    assert.notOk(component.recurring.weekdays[2].input.isDisabled);
+    assert.notOk(component.recurring.weekdays[3].input.isSelected);
+    assert.notOk(component.recurring.weekdays[3].input.isDisabled);
+    assert.notOk(component.recurring.weekdays[4].input.isSelected);
+    assert.notOk(component.recurring.weekdays[4].input.isDisabled);
+    assert.notOk(component.recurring.weekdays[5].input.isSelected);
+    assert.notOk(component.recurring.weekdays[5].input.isDisabled);
+    assert.notOk(component.recurring.weekdays[6].input.isSelected);
+    assert.notOk(component.recurring.weekdays[6].input.isDisabled);
   });
 
   test('instructor manager does not show by default', async function (assert) {
