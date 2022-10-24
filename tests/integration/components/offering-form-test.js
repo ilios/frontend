@@ -134,7 +134,10 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('recurring default day is disabled and checked', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} />`);
-    const dayToday = DateTime.fromObject({ hour: 8 }).weekday;
+    let dayToday = DateTime.fromObject({ hour: 8 }).weekday;
+    if (dayToday === 7) {
+      dayToday = 0;
+    }
     await component.recurring.yesNoToggle.click();
     assert.ok(component.recurring.weekdays[dayToday].input.isSelected);
     assert.ok(component.recurring.weekdays[dayToday].input.isDisabled);

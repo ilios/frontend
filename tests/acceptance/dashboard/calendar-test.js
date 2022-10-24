@@ -295,7 +295,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await page.visit({ show: 'calendar', view: 'week' });
     assert.strictEqual(page.calendar.weeklyCalendar.dayHeadings.length, 7);
-    await page.calendar.weeklyCalendar.dayHeadings[today.weekday].selectDay();
+    const weekday = today.weekday === 7 ? 0 : today.weekday;
+    await page.calendar.weeklyCalendar.dayHeadings[weekday].selectDay();
     assert.strictEqual(
       currentURL(),
       '/dashboard/calendar?date=' + today.toFormat('y-MM-dd') + '&view=day'
