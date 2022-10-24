@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import flatpickr from 'flatpickr';
 import { later } from '@ember/runloop';
 import { isTesting } from '@embroider/macros';
+import { next } from '@ember/runloop';
 
 export default class DatePickerComponent extends Component {
   @service intl;
@@ -40,7 +41,7 @@ export default class DatePickerComponent extends Component {
       locale,
       defaultDate: this.args.value,
       formatDate: (dateObj) => this.intl.formatDate(dateObj),
-      onChange: (selectedDates) => this.args.onChange(selectedDates[0]),
+      onChange: (selectedDates) => this.onChange(selectedDates[0]),
       onOpen: () => {
         later(() => {
           this.isOpen = true;
@@ -60,5 +61,10 @@ export default class DatePickerComponent extends Component {
     if (this._flatPickerInstance) {
       this._flatPickerInstance.destroy();
     }
+  }
+
+  async onChange(date) {
+    await this.args.onChange(date);
+    await next(() => {});
   }
 }
