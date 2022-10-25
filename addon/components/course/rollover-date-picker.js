@@ -5,6 +5,7 @@ import flatpickr from 'flatpickr';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { later } from '@ember/runloop';
+import { isTesting } from '@embroider/macros';
 
 export default class CourseRolloverDatePickerComponent extends Component {
   @service intl;
@@ -38,7 +39,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
     this.#flatPickerInstance = flatpickr(element, {
       locale,
       defaultDate: value ?? course.startDate,
-      formatDate: (dateObj) => dateObj.toLocaleDateString(currentLocale),
+      formatDate: (dateObj) => this.intl.formatDate(dateObj),
       minDate: course.startDate,
       onChange: ([selectedDate]) => {
         // if a date is forced that isn't allowed
@@ -60,6 +61,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
           return course.startDate.getUTCDay() !== date.getUTCDay();
         },
       ],
+      disableMobile: isTesting(),
     });
   });
 
