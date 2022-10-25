@@ -35,9 +35,6 @@
     "@ember/render-modifiers": "^2.0.0",
     "@embroider/macros": "^1.8.3",
     "@embroider/util": "^1.0.0",
-    "@formatjs/intl-locale": "^3.0.3",
-    "@formatjs/intl-pluralrules": "^5.0.1",
-    "@formatjs/intl-relativetimeformat": "^11.0.3",
     "@fortawesome/ember-fontawesome": "^0.4.1",
     "@fortawesome/free-brands-svg-icons": "6.2.0",
     "@fortawesome/free-regular-svg-icons": "6.2.0",
@@ -98,9 +95,6 @@
     "validator": "^13.1.1"
   },
   "peerDependencies": {
-    "@formatjs/intl-locale": "^3.0.3",
-    "@formatjs/intl-pluralrules": "^5.0.1",
-    "@formatjs/intl-relativetimeformat": "^11.0.3",
     "@fortawesome/free-brands-svg-icons": "6.2.0",
     "@fortawesome/free-regular-svg-icons": "6.2.0",
     "@fortawesome/free-solid-svg-icons": "6.2.0",
