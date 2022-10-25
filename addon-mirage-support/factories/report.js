@@ -1,6 +1,6 @@
+import { DateTime } from 'luxon';
 import { Factory } from 'miragejs';
-import moment from 'moment';
 
 export default Factory.extend({
-  createdAt: () => moment().format(),
+  createdAt: () => DateTime.fromObject({ hour: 8 }),
 });

@@ -1,11 +1,11 @@
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { Factory } from 'miragejs';
 
 export default Factory.extend({
   title: (i) => `course ${i}`,
   year: 2013,
   level: 1,
-  startDate: () => moment().hour(8).format(),
-  endDate: () => moment().hour(8).add(7, 'weeks').format(),
+  startDate: () => DateTime.fromObject({ hour: 8 }).toJSDate(),
+  endDate: () => DateTime.fromObject({ hour: 8 }).plus({ weeks: 7 }).toJSDate(),
   archived: false,
 });
