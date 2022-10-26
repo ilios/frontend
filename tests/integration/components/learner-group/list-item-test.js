@@ -83,7 +83,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
     await a11yAudit(this.element);
   });
 
-  test('can not delete with users in group', async function (assert) {
+  test('can delete with users in group', async function (assert) {
     this.server.create('user', { learnerGroups: [this.learnerGroup] });
 
     const learnerGroupModel = await this.owner
@@ -93,10 +93,10 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
     await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
     assert.strictEqual(component.title, 'learner group 0');
     assert.strictEqual(component.users, '1');
-    assert.notOk(component.canBeDeleted);
+    assert.ok(component.canBeDeleted);
   });
 
-  test('can not delete with users in subgroup', async function (assert) {
+  test('can delete with users in subgroup', async function (assert) {
     const parent = this.server.create('learner-group', { parent: this.learnerGroup });
     this.server.create('learner-group', {
       parent,
@@ -111,38 +111,64 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
     assert.strictEqual(component.title, 'learner group 0');
     assert.strictEqual(component.children, '1');
     assert.strictEqual(component.users, '0');
-    assert.notOk(component.canBeDeleted);
+    assert.ok(component.canBeDeleted);
   });
 
-  test('can start delete with associated courses', async function (assert) {
-    const courses = this.server.createList('course', 4);
-    const session1 = this.server.create('session', { course: courses[0] });
-    const session2 = this.server.create('session', { course: courses[1] });
-    const session3 = this.server.create('session', { course: courses[1] });
-    const session4 = this.server.create('session', { course: courses[3] });
+  test('can not delete group linked to offering', async function (assert) {
     this.server.create('offering', {
-      session: session1,
       learnerGroups: [this.learnerGroup],
     });
-    this.server.create('offering', {
-      session: session2,
-      learnerGroups: [this.learnerGroup],
-    });
-    this.server.create('ilm-session', {
-      session: session3,
-      learnerGroups: [this.learnerGroup],
-    });
-    this.server.create('ilm-session', {
-      session: session4,
-      learnerGroups: [this.learnerGroup],
-    });
-
     const learnerGroupModel = await this.owner
       .lookup('service:store')
       .find('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
     assert.strictEqual(component.title, 'learner group 0');
-    assert.ok(component.canBeDeleted);
+    assert.notOk(component.canBeDeleted);
+  });
+
+  test('can not delete group with sub-group linked to offering', async function (assert) {
+    const subGroup = this.server.create('learnerGroup', {
+      parent: this.learnerGroup,
+    });
+    this.server.create('offering', {
+      learnerGroups: [subGroup],
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', this.learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    assert.strictEqual(component.title, 'learner group 0');
+    assert.notOk(component.canBeDeleted);
+  });
+
+  test('can not delete group linked to ILM', async function (assert) {
+    this.server.create('ilmSession', {
+      learnerGroups: [this.learnerGroup],
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', this.learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    assert.strictEqual(component.title, 'learner group 0');
+    assert.notOk(component.canBeDeleted);
+  });
+
+  test('can not delete group with sub-group linked to ILM', async function (assert) {
+    const subGroup = this.server.create('learnerGroup', {
+      parent: this.learnerGroup,
+    });
+    this.server.create('ilmSession', {
+      learnerGroups: [subGroup],
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', this.learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    assert.strictEqual(component.title, 'learner group 0');
+    assert.notOk(component.canBeDeleted);
   });
 });

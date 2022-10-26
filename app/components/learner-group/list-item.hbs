@@ -18,18 +18,14 @@
   </td>
   <td class="text-right">
     {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
-      {{#if this.showRemove.isRunning}}
-        <LoadingSpinner />
-      {{else}}
-        <button
-          class="link-button"
-          type="button"
-          {{on "click" (perform this.showRemove)}}
-          data-test-remove
-        >
-          <FaIcon @icon="trash" @title={{t "general.remove"}} />
-        </button>
-      {{/if}}
+      <button
+        class="link-button"
+        type="button"
+        {{on "click" this.showRemove}}
+        data-test-remove
+      >
+        <FaIcon @icon="trash" @title={{t "general.remove"}} />
+      </button>
     {{else}}
       <FaIcon @icon="trash" class="disabled" />
     {{/if}}
@@ -47,57 +43,33 @@
     {{/if}}
   </td>
 </tr>
-{{#if (and this.showRemoveConfirmation this.areCoursesLoaded)}}
+{{#if this.showRemoveConfirmation}}
   <tr class="confirm-removal" data-test-confirm-removal>
     <td class="hide-from-small-screen"></td>
     <td colspan="3" class="confirm-message">
-      {{#if (gt this.courses.length 0)}}
-        {{t "general.canNotDeleteLearnerGroupWithAssociatedCourses" courseCount=this.courses.length}}
-        <ul class="course-list">
-          {{#each (sort-by "year" "title" this.courses) as |course|}}
-            <li>
-              {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{course.year}} - {{add course.year 1}}
-              {{else}}
-                {{course.year}}
-              {{/if}}
-              {{course.title}}
-            </li>
-          {{/each}}
-        </ul>
+      {{t
+        "general.confirmRemoveLearnerGroup"
+        subgroupCount=@learnerGroup.children.length
+      }}
+      <br>
+      <div class="confirm-buttons">
+        <button
+          type="button"
+          class="remove text"
+          {{on "click" (perform this.remove)}}
+          data-test-confirm
+        >
+          {{t "general.yes"}}
+        </button>
         <button
           type="button"
           class="done text"
           {{on "click" (set this.showRemoveConfirmation false)}}
           data-test-cancel
         >
-          {{t "general.ok"}}
+          {{t "general.cancel"}}
         </button>
-      {{else}}
-        {{t
-          "general.confirmRemoveLearnerGroup"
-          subgroupCount=@learnerGroup.children.length
-        }}
-        <br>
-        <div class="confirm-buttons">
-          <button
-            type="button"
-            class="remove text"
-            {{on "click" (perform this.remove)}}
-            data-test-confirm
-          >
-            {{t "general.yes"}}
-          </button>
-          <button
-            type="button"
-            class="done text"
-            {{on "click" (set this.showRemoveConfirmation false)}}
-            data-test-cancel
-          >
-            {{t "general.cancel"}}
-          </button>
-        </div>
-      {{/if}}
+      </div>
     </td>
     <td class="hide-from-small-screen"></td>
   </tr>
