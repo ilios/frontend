@@ -378,34 +378,4 @@ export default class LearnerGroup extends Model {
     }
     return uniqueValues(modifiedGroups);
   }
-
-  get hasOfferings() {
-    return !!this._offerings?.length;
-  }
-
-  @use descendantsOfferings = new ResolveFlatMapBy(() => [this.allDescendants, 'offerings']);
-
-  get hasOfferingsInGroupOrSubgroups() {
-    if (this.hasOfferings) {
-      return true;
-    }
-    return !!this.descendantsOfferings?.length;
-  }
-
-  get hasIlmSessions() {
-    return !!this._ilmSessions?.length;
-  }
-
-  @use descendantsIlmSessions = new ResolveFlatMapBy(() => [this.allDescendants, 'ilmSessions']);
-
-  get hasIlmSessionsInGroupOrSubgroups() {
-    if (this.hasIlmSessions) {
-      return true;
-    }
-    return !!this.descendantsIlmSessions?.length;
-  }
-
-  get hasOfferingsOrIlmSessionsInGroupOrSubgroups() {
-    return this.hasOfferingsInGroupOrSubgroups || this.hasIlmSessionsInGroupOrSubgroups;
-  }
 }
