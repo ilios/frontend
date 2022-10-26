@@ -5,6 +5,7 @@ import { find, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
+import { DateTime } from 'luxon';
 
 module('Integration | Component | course/rollover-date-picker', function (hooks) {
   setupRenderingTest(hooks);
@@ -23,20 +24,20 @@ module('Integration | Component | course/rollover-date-picker', function (hooks)
 
   test('onChange callback is invoked', async function (assert) {
     assert.expect(1);
-    const date = new Date(2020, 4, 6);
-    const newDate = new Date(2020, 4, 13);
+    const date = DateTime.fromObject({ year: 2020, month: 5, day: 6, hour: 8 });
+    const newDate = date.plus({ days: 7 });
     const course = this.server.create('course', {
-      startDate: date,
+      startDate: date.toJSDate(),
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     this.set('change', (changedDate) => {
-      assert.strictEqual(newDate.getTime(), changedDate.getTime());
+      assert.strictEqual(newDate.toMillis(), changedDate.getTime());
     });
     await render(
       hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{this.change}} />`
     );
     const element = find('input');
-    element._flatpickr.setDate(newDate, true);
+    element._flatpickr.setDate(newDate.toJSDate(), true);
   });
 });
