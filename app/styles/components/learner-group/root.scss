@@ -3,7 +3,7 @@
 .learner-group-root {
   @include main-section;
 
-  .learnergroup-overview {
+  .learner-group-overview {
     @include ilios-overview($orange);
 
     .block {
@@ -35,7 +35,7 @@
       }
     }
 
-    .learnergroup-overview-actions {
+    .learner-group-overview-actions {
       @include detail-container-header;
       margin-top: .25rem;
       padding-top: .5rem;

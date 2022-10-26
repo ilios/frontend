@@ -8,8 +8,8 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
-import list from './list';
-import newLearnerGroupForm from './new';
+import list from '../learner-group/list';
+import newLearnerGroupForm from '../learner-group/new';
 
 const definition = {
   scope: '[data-test-learner-groups]',

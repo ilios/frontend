@@ -7,7 +7,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from '../pages/learner-group';
 import learnerGroupsPage from '../pages/learner-groups';
 
-module('Acceptance | Learnergroup', function (hooks) {
+module('Acceptance | Learner Group', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

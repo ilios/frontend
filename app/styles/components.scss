@@ -17,19 +17,12 @@
 @import 'components/ilios-logo';
 @import 'components/ilios-navigation';
 @import 'components/ilios-users';
-@import 'components/learnergroup-bulk-assignment';
-@import 'components/learnergroup-calendar';
-@import 'components/learnergroup-cohort-user-manager';
-@import 'components/learnergroup-header';
-@import 'components/learnergroup-instructor-manager';
-@import 'components/learnergroup-user-manager';
 @import 'components/locale-chooser';
 @import 'components/login-form';
 @import 'components/manage-users-summary';
 @import 'components/my-profile';
 @import 'components/new-course';
 @import 'components/new-directory-user';
-@import 'components/new-learnergroup';
 @import 'components/new-user';
 @import 'components/pagination-links';
 @import 'components/program-leadership-expanded';
@@ -81,7 +74,14 @@
 @import 'components/visualizer-session-type-terms';
 @import 'components/visualizer-session-type-vocabularies';
 
+@import 'components/learner-group/bulk-assignment';
+@import 'components/learner-group/calendar';
+@import 'components/learner-group/cohort-user-manager';
+@import 'components/learner-group/header';
+@import 'components/learner-group/instructor-manager';
+@import 'components/learner-group/new';
 @import 'components/learner-group/root';
+@import 'components/learner-group/user-manager';
 
 @import 'components/learner-groups/root';
 

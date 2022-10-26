@@ -1,0 +1,56 @@
+.learner-group-instructor-manager {
+  @include detail-container($orange);
+  border-top: 1px dotted $orange;
+
+  .detail-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .detail-content {
+
+    .assigned-instructors {
+      @include ilios-tag-list;
+    }
+
+    .removable-instructors {
+      @include ilios-removable-list;
+      margin-bottom: 1rem;
+    }
+
+    .removable-instructor-group {
+      & > span {
+        background-color: $culturedGrey;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        padding: .2rem .4rem .2rem .6rem;
+        vertical-align: middle;
+
+        .fa-users {
+          margin-right: .5rem;
+        }
+        .remove {
+          margin-left: .5rem;
+        }
+      }
+      margin: 1rem 0;
+    }
+
+    .instructorgroup-members-list {
+      @include ilios-tag-list;
+      margin-bottom: 1rem;
+    }
+
+    .user-search {
+      margin-top: 1rem;
+    }
+  }
+}

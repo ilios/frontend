@@ -1,0 +1,65 @@
+<div
+  class="learner-group-calendar"
+  {{did-insert (perform this.load) @learnerGroup this.showSubgroupEvents}}
+  {{did-update (perform this.load) @learnerGroup this.showSubgroupEvents}}
+  data-test-learner-group-calendar
+>
+  <p class="learner-group-calendar-filter-options">
+    <span class="filter" data-test-learner-group-calendar-toggle-subgroup-events>
+      <ToggleYesno
+        @yes={{this.showSubgroupEvents}}
+        @toggle={{set this.showSubgroupEvents}}
+      />
+      <label {{on "click" (fn (set this.showSubgroupEvents) (not this.showSubgroupEvents))}}>
+        {{t "general.showSubgroupEvents"}}
+      </label>
+    </span>
+  </p>
+  <ul class="inline learner-group-calendar-time-picker">
+    <li>
+      <button
+        class="link-button"
+        type="button"
+        aria-label={{t "general.forward"}}
+        {{on "click" this.goBack}}
+        data-test-go-back
+      >
+        <FaIcon @icon="backward" />
+      </button>
+    </li>
+    <li>
+      <button
+        class="link-button"
+        type="button"
+        {{on "click" this.gotoToday}}
+        data-test-go-today
+      >
+        {{t "general.today"}}
+      </button>
+    </li>
+    <li>
+      <button
+        class="link-button"
+        type="button"
+        aria-label={{t "general.forward"}}
+        {{on "click" this.goForward}}
+        data-test-go-forward
+      >
+        <FaIcon @icon="forward" />
+      </button>
+    </li>
+  </ul>
+  <div class="ilios-calendar">
+    <IliosCalendarWeek
+      @calendarEvents={{this.calendarEvents}}
+      @date={{this.selectedDate}}
+      @areEventsSelectable={{false}}
+      @areDaysSelectable={{false}}
+    />
+  </div>
+  <span class="loading-indicator {{unless this.load.isRunning "loaded"}}">
+    <LoadingSpinner />
+    {{t "general.loadingEvents"}}
+    ...
+  </span>
+</div>

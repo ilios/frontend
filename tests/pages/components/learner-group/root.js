@@ -9,14 +9,14 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
-import header from '../learnergroup-header';
-import cohortUserManager from '../learnergroup-cohort-user-manager';
-import instructorManager from '../learnergroup-instructor-manager';
-import bulkAssignment from '../learnergroup-bulk-assign';
-import userManager from '../learnergroup-user-manager';
-import subgroupList from '../learner-groups/list';
-import calendar from '../learnergroup-calendar';
-import newLearnerGroupForm from '../learner-groups/new';
+import header from './header';
+import cohortUserManager from './cohort-user-manager';
+import instructorManager from './instructor-manager';
+import bulkAssignment from './bulk-assignment';
+import userManager from './user-manager';
+import subgroupList from './list';
+import calendar from './calendar';
+import newLearnerGroupForm from './new';
 import toggleButtons from 'ilios-common/page-objects/components/toggle-buttons';
 import toggleYesNo from 'ilios-common/page-objects/components/toggle-yesno';
 

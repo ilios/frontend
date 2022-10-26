@@ -14,12 +14,12 @@
           @currentProgress={{this.currentGroupsSaved}}
         />
       {{/if}}
-      <LearnergroupHeader
+      <LearnerGroup::Header
         @learnerGroup={{@learnerGroup}}
         @sortUsersBy={{this.sortUsersBy}}
         @canUpdate={{@canUpdate}}
       />
-      <section class="learnergroup-overview" data-test-overview>
+      <section class="learner-group-overview" data-test-overview>
         <div class="block" data-test-needs-accommodation>
           <label>{{t "general.accommodationIsRequiredForLearnersInThisGroup"}}:</label>
           <span>
@@ -111,12 +111,12 @@
             {{/each}}
           </ul>
         </div>
-        <LearnergroupInstructorManager
+        <LearnerGroup::InstructorManager
           @learnerGroup={{@learnerGroup}}
           @save={{this.saveInstructors}}
           @canUpdate={{@canUpdate}}
         />
-        <div class="learnergroup-overview-actions" data-test-overview-actions>
+        <div class="learner-group-overview-actions" data-test-overview-actions>
           <div class="title" data-test-title>
             {{#if @isEditing}}
               {{t "general.manageGroupMembership"}}
@@ -166,13 +166,13 @@
           </span>
         </div>
         {{#if @isBulkAssigning}}
-          <LearnergroupBulkAssignment
+          <LearnerGroup::BulkAssignment
             @learnerGroup={{@learnerGroup}}
             @done={{fn @setIsBulkAssigning false}}
           />
         {{else}}
-          <div class="learnergroup-overview-content">
-            <LearnergroupUserManager
+          <div class="learner-group-overview-content">
+            <LearnerGroup::UserManager
               @learnerGroupId={{this.learnerGroupId}}
               @learnerGroupTitle={{this.learnerGroupTitle}}
               @topLevelGroupTitle={{this.topLevelGroupTitle}}
@@ -189,7 +189,7 @@
           </div>
         {{/if}}
         {{#if this.showLearnerGroupCalendar}}
-          <LearnergroupCalendar @learnerGroup={{@learnerGroup}} />
+          <LearnerGroup::Calendar @learnerGroup={{@learnerGroup}} />
         {{/if}}
         <section class="subgroups" data-test-subgroups>
           <div class="header">
@@ -210,7 +210,7 @@
           </div>
           <div class="new">
             {{#if this.showNewLearnerGroupForm}}
-              <LearnerGroups::New
+              <LearnerGroup::New
                 @save={{perform this.saveNewLearnerGroup}}
                 @cancel={{set this.showNewLearnerGroupForm false}}
                 @generateNewLearnerGroups={{this.generateNewLearnerGroups}}
@@ -228,7 +228,7 @@
             {{/if}}
           </div>
           <div class="list">
-            <LearnerGroups::List
+            <LearnerGroup::List
               @learnerGroups={{this.learnerGroups}}
               @canCopyWithLearners={{false}}
               @copyGroup={{perform this.copyGroup}}
@@ -238,7 +238,7 @@
           </div>
         </section>
         <section class="cohortmembers">
-          <LearnergroupCohortUserManager
+          <LearnerGroup::CohortUserManager
             @users={{this.usersToPassToCohortManager}}
             @canUpdate={{@canUpdate}}
             @learnerGroupTitle={{this.learnerGroupTitle}}
