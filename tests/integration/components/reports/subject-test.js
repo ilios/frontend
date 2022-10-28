@@ -45,7 +45,7 @@ module('Integration | Component | reports/subject', function (hooks) {
       user: this.user,
       school,
     });
-    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
+    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('setReportYear', (year) => {
       this.set('selectedYear', year);
@@ -85,7 +85,7 @@ module('Integration | Component | reports/subject', function (hooks) {
       user: this.user,
       school,
     });
-    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
+    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     this.set('selectedYear', year);
     await render(hbs`<Reports::Subject
@@ -112,7 +112,7 @@ module('Integration | Component | reports/subject', function (hooks) {
       school,
     });
     this.set('setReportYear', (year) => this.set('selectedYear', year));
-    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
+    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
     await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}

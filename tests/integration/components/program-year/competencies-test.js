@@ -35,7 +35,7 @@ module('Integration | Component | program-year/competencies', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    const programYear = await this.owner.lookup('service:store').find('program-year', 1);
+    const programYear = await this.owner.lookup('service:store').findRecord('program-year', 1);
     this.set('programYear', programYear);
     await render(hbs`<ProgramYear::Competencies
       @programYear={{this.programYear}}
@@ -61,7 +61,7 @@ module('Integration | Component | program-year/competencies', function (hooks) {
 
   test('clicking manage fires action', async function (assert) {
     assert.expect(1);
-    const programYear = await this.owner.lookup('service:store').find('program-year', 1);
+    const programYear = await this.owner.lookup('service:store').findRecord('program-year', 1);
     this.set('programYear', programYear);
     this.set('setIsManaging', (b) => {
       assert.true(b);
@@ -80,7 +80,7 @@ module('Integration | Component | program-year/competencies', function (hooks) {
 
   test('clicking collapse fires action', async function (assert) {
     assert.expect(1);
-    const programYear = await this.owner.lookup('service:store').find('program-year', 1);
+    const programYear = await this.owner.lookup('service:store').findRecord('program-year', 1);
     this.set('programYear', programYear);
     this.set('collapse', () => {
       assert.ok(true);

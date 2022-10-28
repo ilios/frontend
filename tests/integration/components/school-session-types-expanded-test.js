@@ -28,10 +28,10 @@ module('Integration | Component | school session types expanded', function (hook
       id: 1,
       sessionTypes: [sessionType],
     });
-    this.school = await this.owner.lookup('service:store').find('school', school.id);
+    this.school = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.sessionType = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
   });
 
   test('it renders empty', async function (assert) {

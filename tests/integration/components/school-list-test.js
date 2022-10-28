@@ -15,8 +15,8 @@ module('Integration | Component | school list', function (hooks) {
   hooks.beforeEach(async function () {
     const school1 = this.server.create('school');
     const school2 = this.server.create('school');
-    this.school1 = await this.owner.lookup('service:store').find('school', school1.id);
-    this.school2 = await this.owner.lookup('service:store').find('school', school2.id);
+    this.school1 = await this.owner.lookup('service:store').findRecord('school', school1.id);
+    this.school2 = await this.owner.lookup('service:store').findRecord('school', school2.id);
   });
 
   test('it renders', async function (assert) {

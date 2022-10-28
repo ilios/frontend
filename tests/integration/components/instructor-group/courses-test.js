@@ -38,7 +38,7 @@ module('Integration | Component | instructor-group/courses', function (hooks) {
     });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroup::Courses @instructorGroup={{this.instructorGroup}} />`);
     assert.strictEqual(component.title, 'Associated Courses (3)');
@@ -57,7 +57,7 @@ module('Integration | Component | instructor-group/courses', function (hooks) {
     const instructorGroup = this.server.create('instructor-group');
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroup::Courses @instructorGroup={{this.instructorGroup}} />`);
     assert.strictEqual(component.title, 'Associated Courses (0)');

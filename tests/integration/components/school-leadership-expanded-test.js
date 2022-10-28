@@ -19,7 +19,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
       administrators: [user1, user2],
     });
 
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolLeadershipExpanded
       @school={{this.school}}
@@ -40,7 +40,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
   test('clicking the header collapses', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school', {});
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('collapse', () => {
       assert.ok(true, 'Action was fired');
@@ -60,7 +60,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
   test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school', {});
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('manage', () => {
       assert.ok(true, 'Action was fired');
@@ -80,7 +80,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
   // @link https://github.com/ilios/frontend/issues/5732
   test('managing mode', async function (assert) {
     const school = this.server.create('school');
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolLeadershipExpanded
       @school={{this.school}}

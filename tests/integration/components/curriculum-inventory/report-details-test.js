@@ -40,7 +40,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('report', report);
     await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
@@ -72,7 +72,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     this.set('canUpdate', true);
     this.set('setIsFinalized', (value) => {
@@ -129,7 +129,9 @@ module('Integration | Component | curriculum-inventory/report-details', function
       endDate: DateTime.fromObject({ year: 2016, month: 4, day: 11 }),
       description: 'Lorem Ipsum',
     });
-    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
+    const report = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', 1);
 
     this.set('report', report);
 

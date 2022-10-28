@@ -18,7 +18,7 @@ module('Integration | Component | school session attributes', function (hooks) {
       value: true,
       school,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolSessionAttributes
       @school={{this.school}}
@@ -41,7 +41,7 @@ module('Integration | Component | school session attributes', function (hooks) {
       value: true,
       school,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolSessionAttributes
       @school={{this.school}}
@@ -61,7 +61,7 @@ module('Integration | Component | school session attributes', function (hooks) {
   test('clicking expand fires action', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('expand', () => {
       assert.ok(true, 'expand triggered.');
@@ -79,7 +79,7 @@ module('Integration | Component | school session attributes', function (hooks) {
   test('clicking collapse fires action', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('collapse', () => {
       assert.ok(true, 'collapse triggered');

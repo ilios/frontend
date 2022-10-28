@@ -18,7 +18,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     });
     this.report = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
   });
 
   test('it renders', async function (assert) {

@@ -44,11 +44,13 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
 
     const reportModel1 = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report1.id);
+      .findRecord('curriculum-inventory-report', report1.id);
     const reportModel2 = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report2.id);
-    const programModel = await this.owner.lookup('service:store').find('program', this.program.id);
+      .findRecord('curriculum-inventory-report', report2.id);
+    const programModel = await this.owner
+      .lookup('service:store')
+      .findRecord('program', this.program.id);
     const reports = [reportModel1, reportModel2];
 
     this.set('reports', reports);
@@ -131,7 +133,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('reports', [reportModel]);
 
     await render(
@@ -158,7 +160,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('reports', [reportModel]);
 
     await render(
@@ -181,7 +183,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('reports', [reportModel]);
     this.set('removeAction', (obj) => {
       assert.strictEqual(report.id, obj.id, 'Report is passed to remove action.');
@@ -203,7 +205,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
 
     this.set('reports', [reportModel]);
     this.set('removeAction', () => {
@@ -227,7 +229,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
 
     let count = 0;
     const sortBys = ['name', 'name:desc', 'year', 'year:desc'];
@@ -262,7 +264,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
 
     const reportModel1 = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report1.id);
+      .findRecord('curriculum-inventory-report', report1.id);
     const reports = [reportModel1];
     this.server.get('application/config', function () {
       return {

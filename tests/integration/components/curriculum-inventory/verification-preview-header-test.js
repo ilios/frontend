@@ -20,7 +20,7 @@ module(
       });
       const report = await this.owner
         .lookup('service:store')
-        .find('curriculum-inventory-report', 1);
+        .findRecord('curriculum-inventory-report', 1);
       this.set('report', report);
       await render(hbs`<CurriculumInventory::VerificationPreviewHeader @report={{this.report}} />`);
       assert.strictEqual(component.title, 'Verification Preview for Foo Bar 2019');

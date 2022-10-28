@@ -121,7 +121,7 @@ module('Acceptance | pending user updates', function (hooks) {
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
 
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     assert.strictEqual(userModel.email, 'user@example.edu');
     assert.strictEqual(page.updates.length, 1);
     assert.strictEqual(
@@ -146,7 +146,7 @@ module('Acceptance | pending user updates', function (hooks) {
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
 
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     assert.notOk(userModel.userSyncIgnore);
     assert.strictEqual(page.updates.length, 1);
     assert.strictEqual(
@@ -171,7 +171,7 @@ module('Acceptance | pending user updates', function (hooks) {
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
 
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     assert.ok(userModel.enabled);
     assert.strictEqual(page.updates.length, 1);
     assert.strictEqual(

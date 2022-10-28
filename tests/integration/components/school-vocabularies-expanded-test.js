@@ -14,7 +14,7 @@ module('Integration | Component | school vocabularies expanded', function (hooks
   test('it renders', async function (assert) {
     const school = this.server.create('school');
     this.server.createList('vocabulary', 2, { school });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
     await render(hbs`<SchoolVocabulariesExpanded
@@ -36,7 +36,7 @@ module('Integration | Component | school vocabularies expanded', function (hooks
     assert.expect(1);
     const school = this.server.create('school');
     this.server.createList('vocabulary', 2, { school });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('collapse', () => {
       assert.ok(true, 'collapse triggered.');
     });
@@ -55,7 +55,7 @@ module('Integration | Component | school vocabularies expanded', function (hooks
   test('manage vocabulary', async function (assert) {
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('vocabularyId', vocabulary.id);
 
@@ -76,7 +76,7 @@ module('Integration | Component | school vocabularies expanded', function (hooks
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
     const term = this.server.create('term', { vocabulary });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('termId', term.id);
     this.set('vocabularyId', vocabulary.id);

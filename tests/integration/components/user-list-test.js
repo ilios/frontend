@@ -23,8 +23,8 @@ module('Integration | Component | user list', function (hooks) {
       campusId: '1112222',
     });
     const user2 = this.server.create('user', { school });
-    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
-    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     this.set('users', [userModel1, userModel2]);
     await render(hbs`<UserList @users={{this.users}} />`);
     assert.strictEqual(component.users.length, 2);

@@ -33,11 +33,11 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
       id: 'aamc-pcrs-comp-c1522',
       description: 'Far',
     });
-    this.pcrs1 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs1.id);
-    this.pcrs2 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs2.id);
-    this.pcrs3 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs3.id);
-    this.pcrs4 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs4.id);
-    this.pcrs5 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs5.id);
+    this.pcrs1 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs1.id);
+    this.pcrs2 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs2.id);
+    this.pcrs3 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs3.id);
+    this.pcrs4 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs4.id);
+    this.pcrs5 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs5.id);
     this.allPcrses = [this.pcrs1, this.pcrs2, this.pcrs3, this.pcrs4, this.pcrs5];
   });
 

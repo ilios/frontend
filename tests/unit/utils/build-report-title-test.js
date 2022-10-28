@@ -15,7 +15,7 @@ module('Unit | Utility | build-report-title', function (hooks) {
     });
 
     const store = this.owner.lookup('service:store');
-    const reportModel = await store.find('report', report.id);
+    const reportModel = await store.findRecord('report', report.id);
     const title = await buildReportTitle(reportModel, store, this.intl);
     assert.strictEqual(title, report.title);
   });
@@ -26,7 +26,7 @@ module('Unit | Utility | build-report-title', function (hooks) {
     });
 
     const store = this.owner.lookup('service:store');
-    const reportModel = await store.find('report', report.id);
+    const reportModel = await store.findRecord('report', report.id);
     const title = await buildReportTitle(reportModel, store, this.intl);
     assert.strictEqual(title, 'All Competencies in All Schools');
   });
@@ -39,7 +39,7 @@ module('Unit | Utility | build-report-title', function (hooks) {
     });
 
     const store = this.owner.lookup('service:store');
-    const reportModel = await store.find('report', report.id);
+    const reportModel = await store.findRecord('report', report.id);
     const title = await buildReportTitle(reportModel, store, this.intl);
     assert.strictEqual(title, 'All Competencies in ' + school.title);
   });
@@ -58,8 +58,8 @@ module('Unit | Utility | build-report-title', function (hooks) {
     });
 
     const store = this.owner.lookup('service:store');
-    const reportModel = await store.find('report', report.id);
-    const userModel = await store.find('user', user.id);
+    const reportModel = await store.findRecord('report', report.id);
+    const userModel = await store.findRecord('user', user.id);
     const title = await buildReportTitle(reportModel, store, this.intl);
     assert.strictEqual(title, 'All Competencies for ' + userModel.fullName + ' in ' + school.title);
   });
@@ -74,7 +74,7 @@ module('Unit | Utility | build-report-title', function (hooks) {
     });
 
     const store = this.owner.lookup('service:store');
-    const reportModel = await store.find('report', report.id);
+    const reportModel = await store.findRecord('report', report.id);
     const title = await buildReportTitle(reportModel, store, this.intl);
     assert.strictEqual(title, 'This report is no longer available.');
   });

@@ -23,7 +23,7 @@ module('Integration | Component | new user', function (hooks) {
     this.server.create('user', {
       school: this.schools[0],
     });
-    const user = await this.owner.lookup('service:store').find('user', 1);
+    const user = await this.owner.lookup('service:store').findRecord('user', 1);
 
     class CurrentUserMock extends Service {
       async getModel() {
@@ -105,7 +105,7 @@ module('Integration | Component | new user', function (hooks) {
     await component.password.set('password123');
     await component.submit();
 
-    const newUser = await this.owner.lookup('service:store').find('user', 2);
+    const newUser = await this.owner.lookup('service:store').findRecord('user', 2);
     assert.strictEqual(newUser.firstName, 'first', 'with the correct firstName');
     assert.strictEqual(newUser.middleName, 'middle', 'with the correct middleName');
     assert.strictEqual(newUser.lastName, 'last', 'with the correct lastName');
@@ -150,7 +150,7 @@ module('Integration | Component | new user', function (hooks) {
     await component.password.set('password123');
     await component.submit();
 
-    const newUser = await this.owner.lookup('service:store').find('user', 2);
+    const newUser = await this.owner.lookup('service:store').findRecord('user', 2);
     assert.strictEqual(newUser.firstName, 'first', 'with the correct firstName');
     assert.strictEqual(newUser.middleName, 'middle', 'with the correct middleName');
     assert.strictEqual(newUser.lastName, 'last', 'with the correct lastName');

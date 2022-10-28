@@ -21,20 +21,22 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
     const user = this.server.create('user', { school: school1, administeredSchools: [school1] });
     this.schoolWithMultiplePrograms = await this.owner
       .lookup('service:store')
-      .find('school', school1.id);
-    this.schoolWithOneProgram = await this.owner.lookup('service:store').find('school', school2.id);
+      .findRecord('school', school1.id);
+    this.schoolWithOneProgram = await this.owner
+      .lookup('service:store')
+      .findRecord('school', school2.id);
     this.schoolWithoutPrograms = await this.owner
       .lookup('service:store')
-      .find('school', school3.id);
+      .findRecord('school', school3.id);
     this.schools = [
       this.schoolWithMultiplePrograms,
       this.schoolWithOneProgram,
       this.schoolWithoutPrograms,
     ];
-    this.program1 = await this.owner.lookup('service:store').find('program', program1.id);
-    this.program2 = await this.owner.lookup('service:store').find('program', program2.id);
-    this.program3 = await this.owner.lookup('service:store').find('program', program3.id);
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.program1 = await this.owner.lookup('service:store').findRecord('program', program1.id);
+    this.program2 = await this.owner.lookup('service:store').findRecord('program', program2.id);
+    this.program3 = await this.owner.lookup('service:store').findRecord('program', program3.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
         return userModel;

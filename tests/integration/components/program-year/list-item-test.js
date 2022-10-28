@@ -34,7 +34,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
     const programYear = this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
@@ -51,7 +51,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
     const programYear = this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
@@ -68,7 +68,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
     const programYear = this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
@@ -85,7 +85,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
     const programYear = this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
@@ -102,7 +102,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
     const programYear = this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
@@ -124,7 +124,7 @@ module('Integration | Component | program-year/list-item', function (hooks) {
     const programYear = this.server.create('program-year', { program, cohort });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem

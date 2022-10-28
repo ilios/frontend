@@ -18,7 +18,7 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
@@ -39,7 +39,7 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
     const report = this.server.create('curriculum-inventory-report');
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
     this.set('collapse', () => {
@@ -61,7 +61,7 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
     const report = this.server.create('curriculum-inventory-report');
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
     this.set('manage', () => {

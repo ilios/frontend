@@ -17,7 +17,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
     const school = this.server.create('school');
     this.server.create('school');
     const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     for (let i = 0; i < 5; i++) {
       const user = this.server.create('user', { school });
       this.server.create('pending-user-update', { user });
@@ -47,7 +47,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
   test('it renders with one school', async function (assert) {
     const school = this.server.create('school');
     const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     for (let i = 0; i < 5; i++) {
       const user = this.server.create('user', { school });
       this.server.create('pending-user-update', { user });
@@ -77,7 +77,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
     const school = this.server.create('school');
     this.server.create('school');
     const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     class CurrentUserMock extends Service {
       async getModel() {
@@ -104,7 +104,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
   test('can switch schools', async function (assert) {
     const schools = this.server.createList('school', 3);
     const user = this.server.create('user', { school: schools[1], administeredSchools: schools });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.server.create('pending-user-update', {
       user: this.server.create('user', { school: schools[0] }),

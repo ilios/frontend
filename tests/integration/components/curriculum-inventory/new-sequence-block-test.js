@@ -61,7 +61,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(
@@ -144,10 +144,10 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const parentModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', parent.id);
+      .findRecord('curriculum-inventory-sequence-block', parent.id);
     this.set('report', reportModel);
     this.set('parentBlock', parentModel);
 
@@ -177,8 +177,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('report', reportModel);
 
     await render(
@@ -202,7 +202,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const newEndDate = new Date('2016-02-12');
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
       assert.strictEqual(block.title, newTitle);
@@ -248,8 +248,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
       assert.strictEqual(parseInt(block.belongsTo('startingAcademicLevel').id(), 10), 2);
@@ -299,10 +299,10 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const parentModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', parent.id);
+      .findRecord('curriculum-inventory-sequence-block', parent.id);
     this.set('report', reportModel);
     this.set('parentBlock', parentModel);
     this.set('save', (block) => {
@@ -332,7 +332,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.expect(1);
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.set('cancel', () => {
       assert.ok(true, 'Cancel action was invoked.');
@@ -350,7 +350,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const newEndDate = new Date('2017-02-22');
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(
@@ -377,7 +377,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   test('save fails when minimum is larger than maximum', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(
@@ -398,7 +398,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   test('save fails when minimum is less than zero', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(
@@ -414,7 +414,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   test('save fails when minimum is empty', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(
@@ -430,7 +430,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   test('save fails when maximum is empty', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(
@@ -450,7 +450,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const newDuration = 0;
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
       assert.strictEqual(block.startDate.getTime(), newStartDate.getTime());
@@ -474,7 +474,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const newDuration = 10;
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.set('save', (block) => {
       assert.strictEqual(block.startDate, undefined);
@@ -493,7 +493,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   test('save fails if end-date is older than start-date', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(
@@ -512,7 +512,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   test('save fails on missing duration', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(
@@ -531,7 +531,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   test('save fails on invalid duration', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(
@@ -550,7 +550,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   test('save fails if neither date range nor non-zero duration is provided', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(
@@ -577,8 +577,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('report', reportModel);
 
     await render(
@@ -607,8 +607,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('report', reportModel);
 
     await render(
@@ -633,7 +633,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   test('save fails if start-date is given but no end-date is provided', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
 
     await render(

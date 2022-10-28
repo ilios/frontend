@@ -29,7 +29,7 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
 
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -54,7 +54,7 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     const vocabulary = this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -77,7 +77,7 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     const vocabulary = this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -107,7 +107,7 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -133,7 +133,7 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     const vocabulary = this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -160,7 +160,7 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     const vocabulary = this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -190,7 +190,7 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
+      .findRecord('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager

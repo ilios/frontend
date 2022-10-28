@@ -52,11 +52,13 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('it renders for ldap user search', async function (assert) {
     setupApplicationConfig('ldap', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
-    const schoolModel = await this.owner.lookup('service:store').find('school', this.school.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
+    const schoolModel = await this.owner
+      .lookup('service:store')
+      .findRecord('school', this.school.id);
     const authenticationModel = await this.owner
       .lookup('service:store')
-      .find('authentication', this.authentication.id);
+      .findRecord('authentication', this.authentication.id);
     this.set('user', userModel);
 
     await render(hbs`<UserProfileBio @user={{this.user}} />`);
@@ -83,11 +85,13 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('it renders for non ldap user search', async function (assert) {
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
-    const schoolModel = await this.owner.lookup('service:store').find('school', this.school.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
+    const schoolModel = await this.owner
+      .lookup('service:store')
+      .findRecord('school', this.school.id);
     const authenticationModel = await this.owner
       .lookup('service:store')
-      .find('authentication', this.authentication.id);
+      .findRecord('authentication', this.authentication.id);
     this.set('user', userModel);
 
     await render(hbs`<UserProfileBio @user={{this.user}} />`);
@@ -117,7 +121,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('manage', (what) => {
       assert.ok(what, 'received boolean true value');
     });
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
     await render(
@@ -135,12 +139,12 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.server.create('pending-user-update', {
       user: this.user,
     });
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const updates = await userModel.pendingUserUpdates;
 
     const authenticationModel = await this.owner
       .lookup('service:store')
-      .find('authentication', this.authentication.id);
+      .findRecord('authentication', this.authentication.id);
     this.set('user', userModel);
 
     await render(
@@ -191,10 +195,10 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('can edit non-ldap without setting a password', async function (assert) {
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const authenticationModel = await this.owner
       .lookup('service:store')
-      .find('authentication', this.authentication.id);
+      .findRecord('authentication', this.authentication.id);
     this.set('user', userModel);
 
     await render(
@@ -242,10 +246,10 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('can edit user bio for non-ldap config', async function (assert) {
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     const authenticationModel = await this.owner
       .lookup('service:store')
-      .find('authentication', this.authentication.id);
+      .findRecord('authentication', this.authentication.id);
     this.set('user', userModel);
 
     await render(
@@ -297,7 +301,7 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('closing password box clears input', async function (assert) {
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
     await render(
@@ -314,7 +318,7 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('password strength 0 display', async function (assert) {
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
     await render(
@@ -330,7 +334,7 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('password strength 1 display', async function (assert) {
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
     await render(
@@ -346,7 +350,7 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('password strength 2 display', async function (assert) {
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
     await render(
@@ -363,7 +367,7 @@ module('Integration | Component | user profile bio', function (hooks) {
   test('password strength 3 display', async function (assert) {
     assert.expect(3);
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
     await render(
@@ -380,7 +384,7 @@ module('Integration | Component | user profile bio', function (hooks) {
   test('password strength 4 display', async function (assert) {
     assert.expect(3);
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
     await render(
@@ -397,7 +401,7 @@ module('Integration | Component | user profile bio', function (hooks) {
   test('sync user from directory', async function (assert) {
     assert.expect(31);
     setupApplicationConfig('ldap', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.server.get(`application/directory/find/:id`, (scheme, { params }) => {
       assert.ok('id' in params);
@@ -454,7 +458,7 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('preferred email can be blanked', async function (assert) {
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
     await render(
@@ -469,7 +473,7 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('display name can be blanked', async function (assert) {
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
     await render(
@@ -484,7 +488,7 @@ module('Integration | Component | user profile bio', function (hooks) {
 
   test('pronouns can be blanked', async function (assert) {
     setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
 
     await render(

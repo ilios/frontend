@@ -30,7 +30,7 @@ module('Integration | Component | instructor-groups/list-item', function (hooks)
   test('it renders', async function (assert) {
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', this.instructorGroup.id);
+      .findRecord('instructor-group', this.instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroups::ListItem @instructorGroup={{this.instructorGroup}} />`);
     assert.strictEqual(component.title, 'instructor group 0');
@@ -48,7 +48,7 @@ module('Integration | Component | instructor-groups/list-item', function (hooks)
     });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', this.instructorGroup.id);
+      .findRecord('instructor-group', this.instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroups::ListItem @instructorGroup={{this.instructorGroup}} />`);
     assert.strictEqual(component.title, 'instructor group 0');
@@ -81,7 +81,7 @@ module('Integration | Component | instructor-groups/list-item', function (hooks)
 
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', this.instructorGroup.id);
+      .findRecord('instructor-group', this.instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroups::ListItem @instructorGroup={{this.instructorGroup}} />`);
     assert.strictEqual(component.title, 'instructor group 0');

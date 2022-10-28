@@ -55,8 +55,10 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
       user,
       school,
     });
-    this.courseReport = await this.owner.lookup('service:store').find('report', courseReport.id);
-    this.termReport = await this.owner.lookup('service:store').find('report', termReport.id);
+    this.courseReport = await this.owner
+      .lookup('service:store')
+      .findRecord('report', courseReport.id);
+    this.termReport = await this.owner.lookup('service:store').findRecord('report', termReport.id);
   });
 
   test('course report works', async function (assert) {

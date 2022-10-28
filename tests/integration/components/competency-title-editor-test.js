@@ -15,7 +15,7 @@ module('Integration | Component | competency title editor', function (hooks) {
     const competency = this.server.create('competency', { title: 'test' });
     const competencyModel = await this.owner
       .lookup('service:store')
-      .find('competency', competency.id);
+      .findRecord('competency', competency.id);
     this.set('competency', competencyModel);
     await render(
       hbs`<CompetencyTitleEditor @competency={{this.competency}} @canUpdate={{true}} />`
@@ -27,7 +27,7 @@ module('Integration | Component | competency title editor', function (hooks) {
     const competency = this.server.create('competency', { title: 'test' });
     const competencyModel = await this.owner
       .lookup('service:store')
-      .find('competency', competency.id);
+      .findRecord('competency', competency.id);
     this.set('competency', competencyModel);
     await render(
       hbs`<CompetencyTitleEditor @competency={{this.competency}} @canUpdate={{true}} />`
@@ -42,7 +42,7 @@ module('Integration | Component | competency title editor', function (hooks) {
     const competency = this.server.create('competency', { title: 'test' });
     const competencyModel = await this.owner
       .lookup('service:store')
-      .find('competency', competency.id);
+      .findRecord('competency', competency.id);
     this.set('competency', competencyModel);
     await render(
       hbs`<CompetencyTitleEditor @competency={{this.competency}} @canUpdate={{true}} />`

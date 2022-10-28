@@ -53,16 +53,16 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     const blockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     const parentBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', parentBlock.id);
+      .findRecord('curriculum-inventory-sequence-block', parentBlock.id);
     const grandParentBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', grandParentBlock.id);
+      .findRecord('curriculum-inventory-sequence-block', grandParentBlock.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', blockModel);
     this.set('sortBy', 'title');

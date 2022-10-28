@@ -18,7 +18,7 @@ module('Integration | Component | school competencies collapsed', function (hook
     this.server.create('competency', { school });
     this.server.create('competency', { school, parent: domain2 });
     this.server.createList('competency', 3, { school, parent: domain });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
     await render(hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
@@ -36,7 +36,7 @@ module('Integration | Component | school competencies collapsed', function (hook
   test('clicking expand fires action', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
     this.set('expand', () => assert.ok(true));

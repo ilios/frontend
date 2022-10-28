@@ -18,7 +18,7 @@ module('Integration | Component | new directory user', function (hooks) {
     const user = this.server.create('user', {
       school: schools[0],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class PermissionCheckerMock extends Service {
       async canCreateUser() {
         return true;
@@ -198,7 +198,7 @@ module('Integration | Component | new directory user', function (hooks) {
 
     await component.form.submit();
 
-    const userModel = await this.owner.lookup('service:store').find('user', 5);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', 5);
     const authenticationModel = await userModel.get('authentication');
     assert.strictEqual(userModel.firstName, searchResult1.firstName);
     assert.strictEqual(userModel.middleName, null);

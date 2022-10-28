@@ -74,7 +74,7 @@ module('Integration | Component | visualizer-program-year-objectives', function 
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
     await render(hbs`<VisualizerProgramYearObjectives @programYear={{this.programYear}} />`);
 

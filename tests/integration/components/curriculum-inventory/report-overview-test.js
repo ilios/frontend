@@ -43,8 +43,10 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('it renders', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
-    const programModel = await this.owner.lookup('service:store').find('program', this.program.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
+    const programModel = await this.owner
+      .lookup('service:store')
+      .findRecord('program', this.program.id);
     this.set('report', reportModel);
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
@@ -91,8 +93,10 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('read-only', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
-    const programModel = await this.owner.lookup('service:store').find('program', this.program.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
+    const programModel = await this.owner
+      .lookup('service:store')
+      .findRecord('program', this.program.id);
     this.set('report', reportModel);
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{false}} />`
@@ -127,7 +131,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('academic-year selector options are labeled with year range if applicable by configuration', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.server.get('application/config', function () {
       return {
@@ -148,7 +152,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('report year is labeled as range in read-only mode if applicable by configuration', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.server.get('application/config', function () {
       return {
@@ -169,7 +173,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('rollover button not visible for unprivileged user', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.permissionCheckerMock.reopen({
       canCreateCurriculumInventoryReport() {
@@ -185,7 +189,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('change start date', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
@@ -214,7 +218,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('validation fails if given start date follows end date', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
@@ -230,7 +234,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('change end date', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
@@ -259,7 +263,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('validation fails if given end date precedes end date', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
@@ -275,7 +279,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('change academic year', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
@@ -306,7 +310,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
@@ -321,7 +325,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('change description', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     reportModel.description = null;
     this.set('report', reportModel);
     await render(
@@ -339,7 +343,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('description validation fails if text is too long', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     reportModel.description = null;
     await render(
@@ -357,7 +361,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('description validation fails if text is empty', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
@@ -373,7 +377,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   test('program short title is only displayed if it has a value', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     this.program.shortTitle = null;
     await render(

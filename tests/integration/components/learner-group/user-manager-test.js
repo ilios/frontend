@@ -31,11 +31,11 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       enabled: false,
       learnerGroups: [learnerGroup],
     });
-    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
-    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     // @todo gross! see if proxy can be eliminated in upstream component <LearnergroupSummary> [ ST 2020/08/07 ]
     const userModelProxy1 = ObjectProxy.create({
       content: userModel1,
@@ -104,11 +104,11 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       enabled: false,
       learnerGroups: [learnerGroup],
     });
-    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
-    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy1 = ObjectProxy.create({
       content: userModel1,
       lowestGroupInTree: learnerGroupModel,
@@ -180,12 +180,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       displayName: 'Captain J',
       learnerGroups: [learnerGroup],
     });
-    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
-    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
-    const userModel3 = await this.owner.lookup('service:store').find('user', user3.id);
+    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
+    const userModel3 = await this.owner.lookup('service:store').findRecord('user', user3.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy1 = ObjectProxy.create({
       content: userModel1,
       lowestGroupInTree: learnerGroupModel,
@@ -235,10 +235,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.expect(5);
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,
@@ -277,10 +277,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.expect(5);
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,
@@ -320,10 +320,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,
@@ -360,13 +360,13 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const learnerGroupModel2 = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup2.id);
+      .findRecord('learner-group', learnerGroup2.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel2,
@@ -401,14 +401,14 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const user2 = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
-    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const learnerGroupModel2 = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup2.id);
+      .findRecord('learner-group', learnerGroup2.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,
@@ -449,11 +449,11 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const user2 = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
-    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,
@@ -499,11 +499,11 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const user2 = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
-    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,
@@ -555,12 +555,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     const user1 = this.server.create('user', { enabled: true, displayName: 'Alpha' });
     const user2 = this.server.create('user', { enabled: true, displayName: 'Beta' });
     const user3 = this.server.create('user', { enabled: true, displayName: 'Gamma' });
-    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
-    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
-    const userModel3 = await this.owner.lookup('service:store').find('user', user3.id);
+    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
+    const userModel3 = await this.owner.lookup('service:store').findRecord('user', user3.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
 
     const userModelProxy = ObjectProxy.create({
       content: userModel1,
@@ -664,10 +664,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: false, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,
@@ -703,10 +703,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: false, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,
@@ -755,12 +755,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       email: 'jayden@example.edu',
       learnerGroups: [learnerGroup],
     });
-    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
-    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
-    const userModel3 = await this.owner.lookup('service:store').find('user', user3.id);
+    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
+    const userModel3 = await this.owner.lookup('service:store').findRecord('user', user3.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy1 = ObjectProxy.create({
       content: userModel1,
       lowestGroupInTree: learnerGroupModel,
@@ -824,13 +824,13 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const learnerGroupModel2 = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup2.id);
+      .findRecord('learner-group', learnerGroup2.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel2,
@@ -863,13 +863,13 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const learnerGroupModel2 = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup2.id);
+      .findRecord('learner-group', learnerGroup2.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel2,
@@ -902,13 +902,13 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const learnerGroupModel2 = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup2.id);
+      .findRecord('learner-group', learnerGroup2.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel2,
@@ -940,10 +940,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   test('user in group: click on name', async function (assert) {
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,
@@ -975,10 +975,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   test('user in group: click on campus id', async function (assert) {
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,
@@ -1010,10 +1010,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   test('user in group: click on email', async function (assert) {
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
       lowestGroupInTree: learnerGroupModel,

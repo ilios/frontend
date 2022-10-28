@@ -32,7 +32,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     const objective = this.server.create('programYearObjective');
     const objectiveModel = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', objective.id);
+      .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
@@ -54,7 +54,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     const objective = this.server.create('programYearObjective', { competency });
     const objectiveModel = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', objective.id);
+      .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
@@ -75,7 +75,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     const objective = this.server.create('programYearObjective', { competency });
     const objectiveModel = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', objective.id);
+      .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
@@ -99,7 +99,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     });
     const objectiveModel = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', objective.id);
+      .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
@@ -122,7 +122,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     });
     const objectiveModel = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', objective.id);
+      .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
@@ -147,7 +147,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     });
     const objectiveModel = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', objective.id);
+      .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     this.set('save', () => {
       assert.ok(true);
@@ -173,7 +173,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     });
     const objectiveModel = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', objective.id);
+      .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     this.set('cancel', () => {
       assert.ok(true);
@@ -199,7 +199,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     });
     const objectiveModel = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', objective.id);
+      .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     this.set('manage', () => {
       assert.ok(true);

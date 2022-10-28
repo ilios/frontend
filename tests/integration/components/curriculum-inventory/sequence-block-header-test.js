@@ -17,7 +17,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
     });
     this.blockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
   });
 
   test('it renders', async function (assert) {

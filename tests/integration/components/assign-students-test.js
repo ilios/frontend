@@ -37,7 +37,7 @@ module('Integration | Component | assign students', function (hooks) {
       campusId: '123ID',
       displayName: 'Aardvark',
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     const students = await this.owner.lookup('service:store').findAll('user');
 
     this.set('school', schoolModel);
@@ -67,7 +67,7 @@ module('Integration | Component | assign students', function (hooks) {
       email: 'tstemail',
       campusId: 'id123',
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     const students = await this.owner.lookup('service:store').findAll('user');
 
     this.set('school', schoolModel);
@@ -99,7 +99,7 @@ module('Integration | Component | assign students', function (hooks) {
       email: '2nd@.com',
       campusId: '123ID',
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     const students = await this.owner.lookup('service:store').findAll('user');
 
     this.set('school', schoolModel);
@@ -145,7 +145,7 @@ module('Integration | Component | assign students', function (hooks) {
       email: '2nd@.com',
       campusId: '123ID',
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     const students = await this.owner.lookup('service:store').findAll('user');
 
     this.set('school', schoolModel);
@@ -197,7 +197,7 @@ module('Integration | Component | assign students', function (hooks) {
       email: 'tstemail',
       campusId: 'id123',
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     const students = await this.owner.lookup('service:store').findAll('user');
 
     this.set('school', schoolModel);

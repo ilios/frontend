@@ -29,11 +29,11 @@ module('Integration | Component | visualizer session type terms', function (hook
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('session-type', vocabulary.id);
+      .findRecord('session-type', vocabulary.id);
     this.set('vocabulary', vocabularyModel);
     await render(
       hbs`<VisualizerSessionTypeTerms @sessionType={{this.sessionType}} @vocabulary={{this.vocabulary}} />`

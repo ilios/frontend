@@ -48,23 +48,23 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     });
     const academicLevelModel1 = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-academic-level', academicLevel1.id);
+      .findRecord('curriculum-inventory-academic-level', academicLevel1.id);
     const academicLevelModel2 = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-academic-level', academicLevel2.id);
+      .findRecord('curriculum-inventory-academic-level', academicLevel2.id);
     const academicLevelModel3 = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-academic-level', academicLevel3.id);
+      .findRecord('curriculum-inventory-academic-level', academicLevel3.id);
     const blockModel1 = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block1.id);
+      .findRecord('curriculum-inventory-sequence-block', block1.id);
     const blockModel2 = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block2.id);
+      .findRecord('curriculum-inventory-sequence-block', block2.id);
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+      .findRecord('curriculum-inventory-report', report.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.academicLevel1 = academicLevelModel1;
     this.academicLevel2 = academicLevelModel2;
@@ -158,7 +158,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     const parentBlock = this.server.create('curriculum-inventory-sequence-block');
     const parentBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', parentBlock.id);
+      .findRecord('curriculum-inventory-sequence-block', parentBlock.id);
     const children = (await parentBlockModel.children).slice();
     parentBlockModel.set('children', [...children, this.sequenceBlock1, this.sequenceBlock2]);
     this.set('parent', parentBlockModel);
@@ -268,7 +268,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     const parentBlock = this.server.create('curriculum-inventory-sequence-block');
     const parentBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', parentBlock.id);
+      .findRecord('curriculum-inventory-sequence-block', parentBlock.id);
     this.set('parent', parentBlockModel);
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @parent={{this.parent}}

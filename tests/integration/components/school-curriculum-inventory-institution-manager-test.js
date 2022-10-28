@@ -26,7 +26,7 @@ module(
         addressCountryCode: 'US',
       });
 
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       this.set('school', schoolModel);
       this.set('canUpdate', true);
@@ -59,7 +59,7 @@ module(
 
     test('empty form if no institution exists', async function (assert) {
       const school = this.server.create('school');
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       this.set('school', schoolModel);
       this.set('canUpdate', true);
@@ -85,7 +85,7 @@ module(
         school,
       });
 
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       this.set('school', schoolModel);
       this.set('canUpdate', true);
@@ -114,7 +114,7 @@ module(
         addressCountryCode: 'US',
       });
 
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       const newName = 'Rocket Surgery Academy';
       const newAamcCode = '11111';
@@ -157,7 +157,7 @@ module(
     test('save new institution', async function (assert) {
       assert.expect(8);
       const school = this.server.create('school');
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       const newName = 'Rocket Surgery Academy';
       const newAamcCode = '11111';
@@ -199,7 +199,7 @@ module(
 
     test('form validation', async function (assert) {
       const school = this.server.create('school');
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       this.set('school', schoolModel);
       this.set('canUpdate', true);
@@ -257,7 +257,7 @@ module(
         school,
       });
 
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       this.set('school', schoolModel);
       this.set('canUpdate', false);

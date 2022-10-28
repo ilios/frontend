@@ -17,7 +17,9 @@ module('Integration | Component | curriculum-inventory/verification-preview', fu
     this.server.create('curriculum-inventory-report', {
       name: 'Foo Bar 2019',
     });
-    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
+    const report = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', 1);
 
     this.server.get(
       `/api/curriculuminventoryreports/:id/verificationpreview`,

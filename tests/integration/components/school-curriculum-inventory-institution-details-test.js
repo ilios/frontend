@@ -26,7 +26,7 @@ module(
         addressCountryCode: 'US',
       });
 
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       this.set('school', schoolModel);
       this.set('canUpdate', true);
@@ -64,7 +64,7 @@ module(
         school,
       });
 
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       this.set('school', schoolModel);
       this.set('canUpdate', false);
@@ -84,7 +84,7 @@ module(
         school,
       });
 
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       this.set('school', schoolModel);
       this.set('canUpdate', true);
@@ -102,7 +102,7 @@ module(
     test('no institutional information', async function (assert) {
       assert.expect(1);
       const school = this.server.create('school');
-      const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+      const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
       this.set('school', schoolModel);
       this.set('canUpdate', true);

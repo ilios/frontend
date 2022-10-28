@@ -26,7 +26,7 @@ module('Integration | Component | program-year/header', function (hooks) {
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
     assert.strictEqual(component.backToProgram.text, 'Back to Program Years');
@@ -57,7 +57,7 @@ module('Integration | Component | program-year/header', function (hooks) {
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
     assert.strictEqual(component.matriculationYear, 'Matriculation Year 2019 - 2020');
@@ -79,7 +79,7 @@ module('Integration | Component | program-year/header', function (hooks) {
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
     assert.strictEqual(component.cohort, '(Class of 2023)');
@@ -102,7 +102,7 @@ module('Integration | Component | program-year/header', function (hooks) {
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
     assert.ok(component.isLocked);

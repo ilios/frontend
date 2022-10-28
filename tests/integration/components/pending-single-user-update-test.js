@@ -20,7 +20,7 @@ module('Integration | Component | pending single user update', function (hooks) 
       user,
       type: 'missingFromDirectory',
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
@@ -44,7 +44,7 @@ module('Integration | Component | pending single user update', function (hooks) 
       type: 'emailMismatch',
       value: 'directory-email',
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
@@ -68,7 +68,7 @@ module('Integration | Component | pending single user update', function (hooks) 
       type: 'emailMismatch',
       value: 'directory-email',
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     assert.strictEqual(this.server.db.users[0].email, 'user-email');
     assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
@@ -93,7 +93,7 @@ module('Integration | Component | pending single user update', function (hooks) 
       type: 'emailMismatch',
       value: 'directory-email',
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     assert.ok(this.server.db.users[0].enabled);
     assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
@@ -118,7 +118,7 @@ module('Integration | Component | pending single user update', function (hooks) 
       type: 'emailMismatch',
       value: 'directory-email',
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     assert.notOk(this.server.db.users[0].userSyncIgnore);
     assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);

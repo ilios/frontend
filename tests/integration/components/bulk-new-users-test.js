@@ -37,7 +37,7 @@ module('Integration | Component | bulk new users', function (hooks) {
 
     const user = this.server.create('user', { school });
     this.server.create('authentication', { user });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class PermissionCheckerMock extends Service {
       async canCreateUser() {
         return true;
