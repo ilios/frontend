@@ -18,7 +18,7 @@ module('Integration | Component | program-year/overview', function (hooks) {
     const programYear = this.server.create('programYear', { program });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('programYear', programYear.id);
+      .findRecord('programYear', programYear.id);
     this.set('program', programYearModel);
     await render(hbs`<ProgramYear::Overview
       @programYear={{this.programYear}}
@@ -36,7 +36,7 @@ module('Integration | Component | program-year/overview', function (hooks) {
     const programYear = this.server.create('programYear', { program });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('programYear', programYear.id);
+      .findRecord('programYear', programYear.id);
     this.set('program', programYearModel);
     await render(hbs`<ProgramYear::Overview
       @programYear={{this.programYear}}

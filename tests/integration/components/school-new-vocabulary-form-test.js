@@ -15,7 +15,7 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     this.server.create('vocabulary', { school, title: 'Vocab A' });
-    this.schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
   });
 
   test('it renders', async function (assert) {

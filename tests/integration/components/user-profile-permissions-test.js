@@ -26,7 +26,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const user = this.server.create('user', {
       school: this.schools[1],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
@@ -73,7 +73,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const user = this.server.create('user', {
       school: this.schools[1],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('setSchool', (schoolId) => {
       assert.strictEqual(parseInt(schoolId, 10), 1);
@@ -106,7 +106,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       year: this.currentAcademicYear + 1,
     });
 
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('setYear', (year) => {
       assert.strictEqual(parseInt(year, 10), this.currentAcademicYear + 1);
@@ -130,7 +130,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       directedSchools: [school],
       administeredSchools: [school],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
@@ -158,7 +158,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       school,
       directors: [user],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
@@ -192,7 +192,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       directors: [user],
     });
     this.server.create('cohort', { programYear });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
@@ -240,7 +240,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       session: session2,
       instructors: [user],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
@@ -303,7 +303,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       session,
       instructors: [user],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfilePermissions
       @user={{this.user}}
@@ -357,7 +357,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const user = this.server.create('user', {
       school: this.schools[1],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('currentDate', currentDate);
     await render(hbs`<UserProfilePermissions
@@ -399,7 +399,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       session,
       instructors: [user],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
 
     await render(hbs`<UserProfilePermissions @user={{this.user}} />`);
@@ -440,7 +440,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const user = this.server.create('user', {
       school: this.schools[1],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('schoolId', this.schools[1].id);
     this.set('year', this.thisYear + 1);

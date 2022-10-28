@@ -28,7 +28,7 @@ module('Integration | Component | school competencies expanded', function (hooks
       title: 'competency 1',
       parent: domain,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolCompetenciesExpanded
       @school={{this.school}}
@@ -51,7 +51,7 @@ module('Integration | Component | school competencies expanded', function (hooks
 
   test('it renders empty', async function (assert) {
     const school = this.server.create('school');
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolCompetenciesExpanded
       @school={{this.school}}

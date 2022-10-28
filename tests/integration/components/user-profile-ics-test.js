@@ -28,7 +28,7 @@ module('Integration | Component | user profile ics', function (hooks) {
 
   test('clicking manage sends the action', async function (assert) {
     assert.expect(1);
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.set('click', (what) => {
       assert.ok(what, 'received boolean true value');
@@ -40,7 +40,7 @@ module('Integration | Component | user profile ics', function (hooks) {
   });
 
   test('can refresh key', async function (assert) {
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     await render(
       hbs`<UserProfileIcs @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
@@ -58,7 +58,7 @@ module('Integration | Component | user profile ics', function (hooks) {
 
   // test disabled b/c simulated clipboard access is blocked by browser.
   skip('clicking copy displays message', async function (assert) {
-    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfileIcs @user={{this.user}} />`);
     assert.notOk(component.key.copy.successMessage.isVisible);

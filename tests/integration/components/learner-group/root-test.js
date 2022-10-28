@@ -76,7 +76,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
 
@@ -125,7 +125,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::Root
@@ -153,7 +153,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
@@ -174,7 +174,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
@@ -195,7 +195,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
@@ -219,7 +219,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
@@ -243,7 +243,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::Root
       @setIsEditing={{(noop)}}
@@ -266,7 +266,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::Root
@@ -293,7 +293,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::Root
@@ -339,7 +339,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
 
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
 
@@ -375,7 +375,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
 
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
 
@@ -405,7 +405,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::Root
@@ -437,7 +437,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::Root
@@ -485,7 +485,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::Root
@@ -514,7 +514,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::Root
@@ -542,7 +542,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     this.set('isBulkAssigning', false);
 

@@ -33,7 +33,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
 
     await render(
@@ -73,7 +73,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
     const programYear = this.server.create('programYear', { program });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
 
     await render(
@@ -93,7 +93,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
     this.server.create('programYearObjective', { programYear, position: 0 });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
 
     await render(
@@ -123,7 +123,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
     this.server.create('programYearObjective', { programYear });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
 
     await render(

@@ -25,7 +25,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
     await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
@@ -59,7 +59,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
     await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
@@ -84,7 +84,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
 
     this.server.post(
       `/api/curriculuminventoryreports/:id/rollover`,
@@ -126,7 +126,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
 
     this.server.post(`/api/curriculuminventoryreports/:id/rollover`, function (schema) {
       return this.serialize(
@@ -159,7 +159,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     const newName = 'new report';
     const newDescription = 'new description';
     const newYear = thisYear + 4;
@@ -206,7 +206,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     const report = this.server.create('curriculum-inventory-report', { program });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
     await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
@@ -219,7 +219,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     const report = this.server.create('curriculum-inventory-report', { program });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
     await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
@@ -238,7 +238,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
     await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);

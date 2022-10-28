@@ -39,7 +39,7 @@ module('Integration | Component | school-session-types-list-item', function (hoo
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypesListItem
       @sessionType={{this.sessionType}}
@@ -65,7 +65,7 @@ module('Integration | Component | school-session-types-list-item', function (hoo
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     this.set('manageSessionType', (sessionTypeId) => {
       assert.strictEqual(parseInt(sessionTypeId, 10), 1);
@@ -89,7 +89,7 @@ module('Integration | Component | school-session-types-list-item', function (hoo
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     this.set('manageSessionType', (sessionTypeId) => {
       assert.strictEqual(parseInt(sessionTypeId, 10), 1);
@@ -113,7 +113,7 @@ module('Integration | Component | school-session-types-list-item', function (hoo
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypesListItem
       @sessionType={{this.sessionType}}
@@ -134,7 +134,7 @@ module('Integration | Component | school-session-types-list-item', function (hoo
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypesListItem
       @sessionType={{this.sessionType}}
@@ -156,7 +156,7 @@ module('Integration | Component | school-session-types-list-item', function (hoo
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypesListItem
       @sessionType={{this.sessionType}}

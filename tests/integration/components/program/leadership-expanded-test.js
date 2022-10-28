@@ -25,7 +25,7 @@ module('Integration | Component | program/leadership expanded', function (hooks)
     const program = this.server.create('program', {
       directors: [user1, user2],
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
     await render(hbs`<Program::LeadershipExpanded
@@ -45,7 +45,7 @@ module('Integration | Component | program/leadership expanded', function (hooks)
   test('clicking the header collapses', async function (assert) {
     assert.expect(1);
     const program = this.server.create('program');
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
     this.set('click', () => {
@@ -65,7 +65,7 @@ module('Integration | Component | program/leadership expanded', function (hooks)
   test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     const program = this.server.create('program');
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
     this.set('click', () => {

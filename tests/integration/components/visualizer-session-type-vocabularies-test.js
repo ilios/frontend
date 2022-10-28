@@ -37,7 +37,7 @@ module('Integration | Component | visualizer session type vocabularies', functio
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<VisualizerSessionTypeVocabularies @sessionType={{this.sessionType}} />`);
 

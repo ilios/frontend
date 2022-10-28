@@ -19,7 +19,7 @@ module('Integration | Component | program-year/objective-list-item', function (h
     const programYearObjective = this.server.create('programYearObjective', { programYear });
     this.model = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', programYearObjective.id);
+      .findRecord('program-year-objective', programYearObjective.id);
   });
 
   test('it renders and is accessible', async function (assert) {

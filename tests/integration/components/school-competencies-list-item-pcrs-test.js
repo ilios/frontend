@@ -22,11 +22,11 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     const competency = this.server.create('competency', {
       aamcPcrses: [pcrs1, pcrs2],
     });
-    this.pcrsModel1 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs1.id);
-    this.pcrsModel2 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs2.id);
+    this.pcrsModel1 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs1.id);
+    this.pcrsModel2 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs2.id);
     this.competencyModel = await this.owner
       .lookup('service:store')
-      .find('competency', competency.id);
+      .findRecord('competency', competency.id);
   });
 
   test('it renders in non-managing mode', async function (assert) {

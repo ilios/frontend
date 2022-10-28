@@ -15,7 +15,7 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
     const descriptors = this.server.createList('meshDescriptor', 4);
     const descriptorModel = await this.owner
       .lookup('service:store')
-      .find('meshDescriptor', descriptors[0].id);
+      .findRecord('meshDescriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     await render(hbs`<ProgramYear::ManageObjectiveDescriptors
       @selected={{this.selected}}
@@ -44,7 +44,7 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
     const descriptors = this.server.createList('meshDescriptor', 2);
     const descriptorModel = await this.owner
       .lookup('service:store')
-      .find('meshDescriptor', descriptors[0].id);
+      .findRecord('meshDescriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     this.set('add', (descriptor) => {
       this.set('selected', [descriptorModel, descriptor]);
@@ -83,7 +83,7 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
     const descriptors = this.server.createList('meshDescriptor', 2);
     const descriptorModel = await this.owner
       .lookup('service:store')
-      .find('meshDescriptor', descriptors[0].id);
+      .findRecord('meshDescriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     this.set('remove', (descriptor) => {
       assert.strictEqual(descriptor.id, descriptorModel.id);

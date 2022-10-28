@@ -16,7 +16,7 @@ module('Integration | Component | school vocabularies list', function (hooks) {
     const vocabularies = this.server.createList('vocabulary', 2, { school });
     this.server.createList('term', 2, { vocabulary: vocabularies[0] });
     this.server.create('term', { vocabulary: vocabularies[1] });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
     await render(
@@ -34,7 +34,7 @@ module('Integration | Component | school vocabularies list', function (hooks) {
     const vocabularies = this.server.createList('vocabulary', 3, { school });
     this.server.createList('term', 2, { vocabulary: vocabularies[0] });
     this.server.create('term', { vocabulary: vocabularies[1] });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
     await render(hbs`<SchoolVocabulariesList
@@ -51,7 +51,7 @@ module('Integration | Component | school vocabularies list', function (hooks) {
   test('clicking delete removes the vocabulary', async function (assert) {
     const school = this.server.create('school');
     this.server.create('vocabulary', { school });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolVocabulariesList
       @school={{this.school}}
@@ -71,7 +71,7 @@ module('Integration | Component | school vocabularies list', function (hooks) {
     assert.expect(1);
     const school = this.server.create('school');
     const vocabularies = this.server.createList('vocabulary', 2, { school });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
     this.set('edit', (id) => {

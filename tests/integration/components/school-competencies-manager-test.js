@@ -22,13 +22,15 @@ module('Integration | Component | school competencies manager', function (hooks)
       title: 'domain1',
       children: [competency1, competency2],
     });
-    const domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+    const domainModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain.id);
     const competencyModel1 = await this.owner
       .lookup('service:store')
-      .find('competency', competency1.id);
+      .findRecord('competency', competency1.id);
     const competencyModel2 = await this.owner
       .lookup('service:store')
-      .find('competency', competency2.id);
+      .findRecord('competency', competency2.id);
     const competencies = [domainModel, competencyModel1, competencyModel2];
 
     this.set('competencies', competencies);
@@ -54,7 +56,9 @@ module('Integration | Component | school competencies manager', function (hooks)
   test('delete domain', async function (assert) {
     assert.expect(1);
     const domain = this.server.create('competency', { title: 'domain1' });
-    const domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+    const domainModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain.id);
     const competencies = [domainModel];
 
     this.set('competencies', competencies);
@@ -77,7 +81,9 @@ module('Integration | Component | school competencies manager', function (hooks)
     assert.expect(2);
     const newTitle = 'new c';
     const domain = this.server.create('competency', { title: 'domain1' });
-    const domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+    const domainModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain.id);
     const competencies = [domainModel];
 
     this.set('competencies', competencies);
@@ -102,7 +108,9 @@ module('Integration | Component | school competencies manager', function (hooks)
     assert.expect(2);
     const newTitle = 'new c';
     const domain = this.server.create('competency', { title: 'domain1' });
-    const domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+    const domainModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain.id);
     const competencies = [domainModel];
 
     this.set('competencies', competencies);

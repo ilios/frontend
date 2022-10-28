@@ -42,7 +42,7 @@ module('Integration | Component | my profile', function (hooks) {
       primaryCohort: cohort1,
       cohorts: [cohort1, cohort2, cohort3],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
@@ -66,7 +66,7 @@ module('Integration | Component | my profile', function (hooks) {
       displayName: 'test name',
       userSyncIgnore: false,
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
@@ -100,7 +100,7 @@ module('Integration | Component | my profile', function (hooks) {
 
     const school = this.server.create('school');
     const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
@@ -125,7 +125,7 @@ module('Integration | Component | my profile', function (hooks) {
 
     const school = this.server.create('school');
     const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     this.set('toggle', () => {
@@ -148,7 +148,7 @@ module('Integration | Component | my profile', function (hooks) {
 
     const school = this.server.create('school');
     const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     this.set('toggle', () => {
@@ -181,7 +181,7 @@ module('Integration | Component | my profile', function (hooks) {
 
     const school = this.server.create('school');
     const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
@@ -200,7 +200,7 @@ module('Integration | Component | my profile', function (hooks) {
     assert.expect(1);
     const school = this.server.create('school');
     const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     this.set('toggle', () => {
@@ -236,7 +236,7 @@ module('Integration | Component | my profile', function (hooks) {
     this.flashMessages = this.owner.lookup('service:flashMessages');
     const school = this.server.create('school');
     const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`<MyProfile

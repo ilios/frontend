@@ -15,7 +15,7 @@ module('Integration | Component | school session types collapsed', function (hoo
     const school = this.server.create('school');
     this.server.create('session-type', { school, assessment: true });
     this.server.create('session-type', { school, assessment: false });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
 
     await render(hbs`<SchoolSessionTypesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
@@ -27,7 +27,7 @@ module('Integration | Component | school session types collapsed', function (hoo
   test('expand', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('expand', () => {
       assert.ok(true, 'expand triggers.');

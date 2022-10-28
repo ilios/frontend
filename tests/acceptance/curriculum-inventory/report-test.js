@@ -21,7 +21,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
     this.server.create('curriculumInventorySequence', { report });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculumInventoryReport', report.id);
+      .findRecord('curriculumInventoryReport', report.id);
     await page.visit({ reportId: reportModel.id });
     assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.index');
     assert.notOk(page.blocks.newBlock.form.isVisible);
@@ -42,7 +42,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculumInventoryReport', report.id);
+      .findRecord('curriculumInventoryReport', report.id);
     await page.visit({ reportId: reportModel.id });
     assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.index');
     assert.notOk(page.details.overview.rolloverLink.isVisible);
@@ -62,7 +62,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculumInventoryReport', report.id);
+      .findRecord('curriculumInventoryReport', report.id);
     await page.visit({ reportId: reportModel.id });
     assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.index');
     assert.ok(page.details.overview.rolloverLink.isVisible);
@@ -85,7 +85,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculumInventoryReport', report.id);
+      .findRecord('curriculumInventoryReport', report.id);
     await page.visit({ reportId: reportModel.id });
     assert.ok(page.details.overview.rolloverLink.isVisible);
     assert.strictEqual(page.blocks.list.items.length, 1);

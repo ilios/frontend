@@ -26,7 +26,7 @@ module('Integration | Component | program-year/objectives', function (hooks) {
 
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::Objectives
@@ -97,7 +97,7 @@ module('Integration | Component | program-year/objectives', function (hooks) {
     this.server.create('program-year-objective', { programYear, competency: competencies[0] });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::Objectives

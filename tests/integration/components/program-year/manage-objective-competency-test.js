@@ -19,11 +19,15 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       parent: domain1,
     });
     const domain2 = this.server.create('competency', { title: 'Domain A' });
-    this.domainModel1 = await this.owner.lookup('service:store').find('competency', domain1.id);
-    this.domainModel2 = await this.owner.lookup('service:store').find('competency', domain2.id);
+    this.domainModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain1.id);
+    this.domainModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain2.id);
     this.competencyModel1 = await this.owner
       .lookup('service:store')
-      .find('competency', competency1.id);
+      .findRecord('competency', competency1.id);
   });
 
   test('it renders and is accessible', async function (assert) {

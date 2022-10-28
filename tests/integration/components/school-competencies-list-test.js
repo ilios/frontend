@@ -27,7 +27,9 @@ module('Integration | Component | school competencies list', function (hooks) {
       parent: domain,
       aamcPcrses: [pcrs3],
     });
-    const domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+    const domainModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain.id);
 
     this.set('domains', [domainModel]);
     await render(hbs`<SchoolCompetenciesList @domains={{this.domains}} />`);

@@ -13,7 +13,7 @@ module('Integration | Component | new course', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    this.school = await this.owner.lookup('service:store').find('school', school.id);
+    this.school = await this.owner.lookup('service:store').findRecord('school', school.id);
   });
 
   test('it renders', async function (assert) {
@@ -41,7 +41,7 @@ module('Integration | Component | new course', function (hooks) {
     const academicYear = this.server.create('academicYear', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
-      .find('academic-year', academicYear.id);
+      .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     await render(
       hbs`<NewCourse @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} @currentYear={{this.year}} />`
@@ -59,7 +59,7 @@ module('Integration | Component | new course', function (hooks) {
     const academicYear = this.server.create('academicYear', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
-      .find('academic-year', academicYear.id);
+      .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     await render(
       hbs`<NewCourse @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} @currentYear={{this.year}} />`
@@ -109,7 +109,7 @@ module('Integration | Component | new course', function (hooks) {
     const academicYear = this.server.create('academicYear', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
-      .find('academic-year', academicYear.id);
+      .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     this.set('save', async (course) => {
       assert.strictEqual(course.title, 'test course');
@@ -131,7 +131,7 @@ module('Integration | Component | new course', function (hooks) {
     const academicYear = this.server.create('academicYear', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
-      .find('academic-year', academicYear.id);
+      .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     this.set('save', async (course) => {
       assert.strictEqual(course.title, 'test course');
@@ -153,7 +153,7 @@ module('Integration | Component | new course', function (hooks) {
     const academicYear = this.server.create('academicYear', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
-      .find('academic-year', academicYear.id);
+      .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     this.set('save', () => {
       assert.ok(false, 'this code should never be invoked.');
@@ -173,7 +173,7 @@ module('Integration | Component | new course', function (hooks) {
     const academicYear = this.server.create('academicYear', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
-      .find('academic-year', academicYear.id);
+      .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     this.set('save', () => {
       assert.ok(false, 'this code should never be invoked.');

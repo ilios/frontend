@@ -30,7 +30,7 @@ module('Integration | Component | school session type manager', function (hooks)
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypeManager
       @canUpdate={{true}}
@@ -55,7 +55,7 @@ module('Integration | Component | school session type manager', function (hooks)
     });
     const sessionTypeModel = await this.owner
       .lookup('service:store')
-      .find('session-type', sessionType.id);
+      .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     this.set('close', () => {
       assert.ok(true, 'action was fired');

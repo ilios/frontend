@@ -44,7 +44,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
     });
     const blockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('block', blockModel);
 
     await render(
@@ -76,7 +76,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
     const block = this.server.create('curriculum-inventory-sequence-block', { orderInSequence: 3 });
     const blockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('block', blockModel);
 
     await render(
@@ -95,7 +95,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
     const block = this.server.create('curriculum-inventory-sequence-block');
     const blockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('block', blockModel);
 
     await render(
@@ -115,7 +115,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
     const block = this.server.create('curriculum-inventory-sequence-block');
     const blockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('block', blockModel);
     this.set('remove', (block) => {
       assert.strictEqual(block, blockModel);

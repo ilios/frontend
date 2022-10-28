@@ -53,7 +53,7 @@ module('Integration | Component | user profile learnergroups', function (hooks) 
     const user = this.server.create('user', {
       learnerGroups: [learnerGroup1, learnerGroup2],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfileLearnergroups @user={{this.user}} />`);
     assert.strictEqual(component.groups.length, 2);

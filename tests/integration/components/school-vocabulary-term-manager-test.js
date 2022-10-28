@@ -44,8 +44,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
 
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
 
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
@@ -87,8 +87,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
 
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
@@ -116,8 +116,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
 
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
@@ -146,8 +146,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
@@ -177,8 +177,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
@@ -216,8 +216,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
@@ -249,8 +249,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
@@ -283,8 +283,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     });
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
@@ -323,8 +323,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
 
     const vocabularyModel = await this.owner
       .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);

@@ -29,7 +29,7 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
 
     const model = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', programYearObjective.id);
+      .findRecord('program-year-objective', programYearObjective.id);
     this.set('objective', model);
 
     await render(hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`);
@@ -58,7 +58,7 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
     const programYearObjective = this.server.create('program-year-objective', { programYear });
     const model = await this.owner
       .lookup('service:store')
-      .find('program-year-objective', programYearObjective.id);
+      .findRecord('program-year-objective', programYearObjective.id);
     this.set('objective', model);
     await render(hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`);
     assert.strictEqual(component.headers[0].text, 'Courses');

@@ -25,7 +25,7 @@ module('Integration | Component | user profile roles', function (hooks) {
       root: false,
       roles: [this.studentRole],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`<UserProfileRoles @user={{this.user}} />`);
@@ -48,7 +48,7 @@ module('Integration | Component | user profile roles', function (hooks) {
       root: true,
       roles: [this.studentRole],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     await render(hbs`<UserProfileRoles @user={{this.user}} />`);
@@ -63,7 +63,7 @@ module('Integration | Component | user profile roles', function (hooks) {
       root: true,
       roles: [this.studentRole],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('click', (what) => {
       assert.ok(what, 'recieved boolean true value');
@@ -80,7 +80,7 @@ module('Integration | Component | user profile roles', function (hooks) {
       root: true,
       roles: [this.studentRole],
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfileRoles @isManaging={{true}} @user={{this.user}} />`);
 

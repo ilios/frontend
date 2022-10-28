@@ -68,7 +68,7 @@ module(
       });
       const blockModel = await this.owner
         .lookup('service:store')
-        .find('curriculum-inventory-sequence-block', block.id);
+        .findRecord('curriculum-inventory-sequence-block', block.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
       this.set('sessions', sessionModels);
@@ -192,7 +192,7 @@ module(
       const block = this.server.create('curriculum-inventory-sequence-block');
       const blockModel = await this.owner
         .lookup('service:store')
-        .find('curriculum-inventory-sequence-block', block.id);
+        .findRecord('curriculum-inventory-sequence-block', block.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
       this.set('sessions', sessionModels);
@@ -219,7 +219,7 @@ module(
       });
       const blockModel = await this.owner
         .lookup('service:store')
-        .find('curriculum-inventory-sequence-block', block.id);
+        .findRecord('curriculum-inventory-sequence-block', block.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
       this.set('sessions', sessionModels);
@@ -248,7 +248,7 @@ module(
       });
       const blockModel = await this.owner
         .lookup('service:store')
-        .find('curriculum-inventory-sequence-block', block.id);
+        .findRecord('curriculum-inventory-sequence-block', block.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
       this.set('sessions', sessionModels);
@@ -281,7 +281,7 @@ module(
       });
       const blockModel = await this.owner
         .lookup('service:store')
-        .find('curriculum-inventory-sequence-block', block.id);
+        .findRecord('curriculum-inventory-sequence-block', block.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
       this.set('sessions', sessionModels);

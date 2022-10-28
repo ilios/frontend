@@ -27,7 +27,7 @@ module('Integration | Component | school vocabularies collapsed', function (hook
     this.server.create('term', {
       vocabulary: vocabulary2,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
 
     await render(hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
@@ -46,7 +46,7 @@ module('Integration | Component | school vocabularies collapsed', function (hook
     this.server.create('vocabulary', {
       school,
     });
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
     this.set('expand', () => {

@@ -53,7 +53,7 @@ module('Integration | Component | program-year/list', function (hooks) {
       });
     });
     const program = this.server.create('program', { school, programYears });
-    this.programModel = await this.owner.lookup('service:store').find('program', program.id);
+    this.programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
   });
 
   test('it renders short year', async function (assert) {

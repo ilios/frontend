@@ -25,12 +25,12 @@ module('Integration | Component | school-competencies-list-item', function (hook
     const competency = this.server.create('competency', {
       parent: domain,
     });
-    this.pcrsModel1 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs1.id);
-    this.pcrsModel2 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs2.id);
+    this.pcrsModel1 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs1.id);
+    this.pcrsModel2 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs2.id);
     this.competencyModel = await this.owner
       .lookup('service:store')
-      .find('competency', competency.id);
-    this.domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+      .findRecord('competency', competency.id);
+    this.domainModel = await this.owner.lookup('service:store').findRecord('competency', domain.id);
   });
 
   test('it renders - domain', async function (assert) {

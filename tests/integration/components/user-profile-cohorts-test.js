@@ -37,7 +37,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
       administeredSchools: [school1, school2],
     });
 
-    this.user = await this.owner.lookup('service:store').find('user', user.id);
+    this.user = await this.owner.lookup('service:store').findRecord('user', user.id);
   });
 
   test('it renders', async function (assert) {

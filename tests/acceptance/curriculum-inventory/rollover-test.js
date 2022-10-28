@@ -28,7 +28,7 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculumInventoryReport', report.id);
+      .findRecord('curriculumInventoryReport', report.id);
     await page.visit({ reportId: reportModel.id });
     assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.rollover');
     assert.notOk(page.details.overview.rolloverLink.isVisible);

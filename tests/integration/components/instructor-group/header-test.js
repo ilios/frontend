@@ -22,7 +22,7 @@ module('Integration | Component | instructor-group/header', function (hooks) {
     });
     this.instructorGroup = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
   });
 
   test('it renders', async function (assert) {

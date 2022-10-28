@@ -47,7 +47,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learnerGroup', learnerGroup.id);
+      .findRecord('learnerGroup', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::InstructorManager
@@ -93,7 +93,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learnerGroup', learnerGroup.id);
+      .findRecord('learnerGroup', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::InstructorManager
@@ -123,7 +123,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learnerGroup', learnerGroup.id);
+      .findRecord('learnerGroup', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::InstructorManager
@@ -154,7 +154,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
 
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learnerGroup', learnerGroup.id);
+      .findRecord('learnerGroup', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::InstructorManager
@@ -201,7 +201,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learnerGroup', learnerGroup.id);
+      .findRecord('learnerGroup', learnerGroup.id);
 
     this.set('save', (users, groups) => {
       assert.strictEqual(users.length, 1);
@@ -236,7 +236,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learnerGroup', learnerGroup.id);
+      .findRecord('learnerGroup', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::InstructorManager
@@ -264,7 +264,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learnerGroup', learnerGroup.id);
+      .findRecord('learnerGroup', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::InstructorManager

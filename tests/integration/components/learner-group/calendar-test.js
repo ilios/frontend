@@ -42,7 +42,7 @@ module('Integration | Component | learner-group/calendar', function (hooks) {
     });
     this.learnerGroup = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
   });
 
   test('shows events', async function (assert) {

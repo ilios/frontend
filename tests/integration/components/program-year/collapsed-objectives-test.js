@@ -34,7 +34,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(
@@ -57,7 +57,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     const programYear = this.server.create('programYear');
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     this.set('click', () => {
@@ -77,7 +77,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(
@@ -93,7 +93,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(
@@ -109,7 +109,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(
@@ -125,7 +125,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(
@@ -141,7 +141,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(
@@ -157,7 +157,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('program-year', programYear.id);
+      .findRecord('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(

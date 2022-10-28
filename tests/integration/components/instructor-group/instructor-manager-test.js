@@ -17,9 +17,9 @@ module('Integration | Component | instructor-group/instructor-manager', function
     const user2 = this.server.create('user', { displayName: 'Aaron Aardvark' });
     const user3 = this.server.create('user');
     const store = this.owner.lookup('service:store');
-    this.user1 = await store.find('user', user1.id);
-    this.user2 = await store.find('user', user2.id);
-    this.user3 = await store.find('user', user3.id);
+    this.user1 = await store.findRecord('user', user1.id);
+    this.user2 = await store.findRecord('user', user2.id);
+    this.user3 = await store.findRecord('user', user3.id);
   });
 
   test('it renders', async function (assert) {

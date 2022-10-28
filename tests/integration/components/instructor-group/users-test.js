@@ -17,7 +17,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     const instructorGroup = this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(
       hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`
@@ -41,7 +41,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     const instructorGroup = this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(
       hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{false}} />`
@@ -63,7 +63,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     const instructorGroup = this.server.create('instructor-group');
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(
       hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`
@@ -82,7 +82,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     const instructorGroup = this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroup::Users
       @instructorGroup={{this.instructorGroup}}
@@ -109,7 +109,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     const instructorGroup = this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroup::Users
       @instructorGroup={{this.instructorGroup}}
@@ -138,7 +138,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroup::Users
       @instructorGroup={{this.instructorGroup}}
@@ -168,7 +168,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
-      .find('instructor-group', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(hbs`<InstructorGroup::Users
       @instructorGroup={{this.instructorGroup}}

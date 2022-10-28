@@ -29,7 +29,7 @@ module('Integration | Component | program-year/leadership-expanded', function (h
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('programYear', programYear.id);
+      .findRecord('programYear', programYear.id);
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::LeadershipExpanded
       @programYear={{this.programYear}}
@@ -53,7 +53,7 @@ module('Integration | Component | program-year/leadership-expanded', function (h
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('programYear', programYear.id);
+      .findRecord('programYear', programYear.id);
     this.set('programYear', programYearModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
@@ -77,7 +77,7 @@ module('Integration | Component | program-year/leadership-expanded', function (h
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .find('programYear', programYear.id);
+      .findRecord('programYear', programYear.id);
     this.set('programYear', programYearModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');

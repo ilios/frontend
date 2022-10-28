@@ -103,10 +103,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -188,10 +188,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -229,10 +229,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -290,14 +290,16 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       startingAcademicLevel: this.academicLevels[0],
       endingAcademicLevel: this.academicLevels[1],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const newCourseModel = await this.owner.lookup('service:store').find('course', newCourse.id);
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    const newCourseModel = await this.owner
+      .lookup('service:store')
+      .findRecord('course', newCourse.id);
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -356,10 +358,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -395,10 +397,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -434,10 +436,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -472,10 +474,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -524,10 +526,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -570,10 +572,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -613,10 +615,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -684,10 +686,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -764,10 +766,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -847,10 +849,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -888,10 +890,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -949,10 +951,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -994,10 +996,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -1039,10 +1041,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -1084,10 +1086,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -1124,10 +1126,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -1164,10 +1166,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -1204,10 +1206,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1246,10 +1248,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1306,10 +1308,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1358,10 +1360,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1410,10 +1412,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1485,10 +1487,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1526,10 +1528,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1566,10 +1568,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1606,10 +1608,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1659,10 +1661,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1714,10 +1716,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1762,10 +1764,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1802,10 +1804,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1843,10 +1845,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1884,10 +1886,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1925,10 +1927,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -1964,10 +1966,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -2005,10 +2007,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -2044,10 +2046,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -2081,10 +2083,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');
@@ -2118,10 +2120,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     const sequenceBlockModel = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-sequence-block', block.id);
+      .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', 'title');

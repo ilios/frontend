@@ -24,7 +24,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     });
     this.report = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     this.permissionCheckerMock = class extends Service {
       async canDeleteCurriculumInventoryReport() {
         return true;
@@ -84,7 +84,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     const reportExport = this.server.create('curriculum-inventory-export');
     this.report.export = await this.owner
       .lookup('service:store')
-      .find('curriculum-inventory-export', reportExport.id);
+      .findRecord('curriculum-inventory-export', reportExport.id);
     this.set('report', this.report);
 
     await render(

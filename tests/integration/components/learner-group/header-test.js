@@ -25,7 +25,7 @@ module('Integration | Component | learner-group/header', function (hooks) {
     });
     this.learnerGroup = await this.owner
       .lookup('service:store')
-      .find('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup.id);
   });
 
   test('it renders', async function (assert) {

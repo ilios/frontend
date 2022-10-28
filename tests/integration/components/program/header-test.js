@@ -18,7 +18,7 @@ module('Integration | Component | program/header', function (hooks) {
       school,
       title: 'Aardvark',
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
 
@@ -34,7 +34,7 @@ module('Integration | Component | program/header', function (hooks) {
       school,
       title: 'Aardvark',
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
 
@@ -50,7 +50,7 @@ module('Integration | Component | program/header', function (hooks) {
       school,
       title: 'Aardvark',
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
 
@@ -75,7 +75,7 @@ module('Integration | Component | program/header', function (hooks) {
       school,
       title: 'Aardvark',
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
 
@@ -97,7 +97,7 @@ module('Integration | Component | program/header', function (hooks) {
       school,
       title: 'Aardvark',
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
 
@@ -122,7 +122,7 @@ module('Integration | Component | program/header', function (hooks) {
       school,
       title: 'Aardvark',
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
 
@@ -145,7 +145,7 @@ module('Integration | Component | program/header', function (hooks) {
       school,
       title: 'Aardvark',
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
 

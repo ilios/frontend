@@ -178,10 +178,12 @@ module('Integration | Component | school session type form', function (hooks) {
     const formative = this.server.create('assessment-option', {
       name: 'formative',
     });
-    const aamcMethodModel = await this.owner.lookup('service:store').find('aamc-method', method.id);
+    const aamcMethodModel = await this.owner
+      .lookup('service:store')
+      .findRecord('aamc-method', method.id);
     const assessmentOptionModel = await this.owner
       .lookup('service:store')
-      .find('assessment-option', formative.id);
+      .findRecord('assessment-option', formative.id);
 
     this.set('save', (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
       assert.strictEqual(title, 'new title', 'title is correct');

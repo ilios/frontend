@@ -21,7 +21,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
     });
     this.reportModel = await this.owner
       .lookup('service:store')
-      .find('curriculumInventoryReport', this.report.id);
+      .findRecord('curriculumInventoryReport', this.report.id);
   });
 
   test('collapsed leadership', async function (assert) {

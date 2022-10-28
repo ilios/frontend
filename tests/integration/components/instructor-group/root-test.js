@@ -33,7 +33,7 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     });
     this.instructorGroup = await this.owner
       .lookup('service:store')
-      .find('instructorGroup', instructorGroup.id);
+      .findRecord('instructorGroup', instructorGroup.id);
   });
 
   test('it renders', async function (assert) {

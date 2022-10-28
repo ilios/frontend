@@ -37,7 +37,7 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     this.schools = await this.owner.lookup('service:store').findAll('school');
 
     const user = this.server.create('user', { schoolId: 2 });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
         return userModel;
