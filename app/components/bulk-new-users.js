@@ -221,7 +221,7 @@ export default class BulkNewUsersComponent extends Component {
       user.set('school', selectedSchool);
 
       if (!nonStudentMode) {
-        user.set('primaryCohort', selectedCohort);
+        user.set('primaryCohort', selectedCohort?.cohortModel);
         user.set('roles', [studentRole]);
       }
 
@@ -298,6 +298,7 @@ export default class BulkNewUsersComponent extends Component {
       cohorts.slice().map(async (cohort) => {
         const obj = {
           id: cohort.get('id'),
+          cohortModel: cohort,
         };
         const programYear = await cohort.programYear;
         const program = await programYear.program;
