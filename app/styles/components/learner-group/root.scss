@@ -1,0 +1,105 @@
+@use "sass:color";
+
+.learner-group-root {
+  @include main-section;
+
+  .learner-group-overview {
+    @include ilios-overview($orange);
+
+    .block {
+      @include ilios-overview-block;
+
+      &.associatedcourses {
+        align-items: flex-start;
+        margin-bottom: .5rem;
+        margin-top: .3rem;
+
+        label {
+          white-space: nowrap;
+        }
+        ul {
+          @include ilios-tag-list;
+
+          li {
+            margin-top: 0;
+          }
+        }
+      }
+
+      > span {
+        flex-grow: 1;
+      }
+
+      input {
+        width: 100%;
+      }
+    }
+
+    .learner-group-overview-actions {
+      @include detail-container-header;
+      margin-top: .25rem;
+      padding-top: .5rem;
+
+      .title {
+        @include detail-container-title;
+      }
+
+      .actions {
+        @include for-phone-and-up {
+          .toggle-buttons {
+            display: inline;
+          }
+        }
+      }
+    }
+  }
+
+  .cohortmembers {
+    .cohortmembers-loading {
+      display: block;
+      @include font-size('xxl');
+      margin: auto;
+      text-align: center;
+    }
+  }
+
+  .subgroups {
+    @include main-list-box;
+
+    .header {
+      @include main-list-box-header;
+
+      h3 {
+        @include ilios-heading-h3;
+      }
+
+      .title {
+        @include main-list-box-header-title;
+      }
+
+      .actions {
+        @include main-list-box-header-actions;
+      }
+    }
+
+    .list {
+      @include main-list-box-table;
+
+      .confirm-copy,
+      .confirm-copy:nth-child(even),
+      .confirm-copy:nth-child(odd)
+      {
+        background-color: color.adjust($blueMunsell, $lightness: 60%);
+        border: 2px solid $blueMunsell;
+
+        &.actions-row {
+          border-top: 0;
+        }
+
+        &.content-row {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+}

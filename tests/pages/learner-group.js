@@ -1,7 +1,7 @@
 import { create, visitable } from 'ember-cli-page-object';
-import details from './components/learnergroup-summary';
+import root from './components/learner-group/root';
 
 export default create({
   visit: visitable('/learnergroups/:learnerGroupId'),
-  details,
+  root,
 });

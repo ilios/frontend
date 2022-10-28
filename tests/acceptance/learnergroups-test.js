@@ -280,10 +280,6 @@ module('Acceptance | Learner Groups', function (hooks) {
     const cohort = this.server.create('cohort', { programYear });
     const parent = this.server.create('learnerGroup', { cohort });
     this.server.createList('learnerGroup', 2, { parent });
-    this.server.createList('offering', 2, {
-      learnerGroups: [parent],
-    });
-
     await page.visit();
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
@@ -296,7 +292,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     );
   });
 
-  test('populated learner groups are not deletable', async function (assert) {
+  test('populated learner groups are deletable', async function (assert) {
     assert.expect(3);
     this.user.update({ administeredSchools: [this.school] });
 
@@ -312,69 +308,58 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.visit();
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
-    assert.notOk(page.list.items[0].canBeDeleted);
-  });
-
-  test('learner groups with courses cannot be deleted', async function (assert) {
-    assert.expect(7);
-    this.user.update({ administeredSchools: [this.school] });
-
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('programYear', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
-    const offering = this.server.create('offering', { session });
-    this.server.create('learnerGroup', {
-      cohort,
-      offerings: [offering],
-    });
-
-    await page.visit();
-    assert.strictEqual(page.list.items.length, 1);
-    assert.strictEqual(page.list.items[0].title, 'learner group 0');
     assert.ok(page.list.items[0].canBeDeleted);
-
-    await page.list.items[0].remove();
-    assert.strictEqual(
-      page.list.confirmRemoval.text,
-      'This group is attached to one course and cannot be deleted. 2013 course 0 OK'
-    );
-    assert.notOk(page.list.confirmRemoval.canConfirm);
-    assert.ok(page.list.confirmRemoval.canCancel);
-    await page.list.confirmRemoval.cancel();
-    assert.strictEqual(page.list.items.length, 1);
   });
 
-  test('course academic year shows range if applicable by configuration', async function (assert) {
-    const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
-      return {
-        config: {
-          apiVersion,
-          academicYearCrossesCalendarYearBoundaries: true,
-        },
-      };
-    });
+  test('learner groups linked to offerings or ILMs cannot be deleted', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
+    const ilm = this.server.create('ilmSession', {
+      session,
+    });
     const offering = this.server.create('offering', { session });
     this.server.create('learnerGroup', {
+      title: 'is linked to offering',
       cohort,
       offerings: [offering],
     });
-
+    this.server.create('learnerGroup', {
+      title: 'is linked to ilm',
+      cohort,
+      ilmSessions: [ilm],
+    });
+    const parentGroup1 = this.server.create('learnerGroup', {
+      title: 'has sub-group linked to offering',
+      cohort,
+    });
+    const parentGroup2 = this.server.create('learnerGroup', {
+      title: 'has sub-group linked to ilm',
+      cohort,
+    });
+    this.server.create('learnerGroup', {
+      cohort,
+      parent: parentGroup1,
+      offerings: [offering],
+    });
+    this.server.create('learnerGroup', {
+      cohort,
+      parent: parentGroup2,
+      ilmSessions: [ilm],
+    });
     await page.visit();
-    await page.list.items[0].remove();
-    assert.strictEqual(
-      page.list.confirmRemoval.text,
-      'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK'
-    );
+    assert.strictEqual(page.list.items.length, 4);
+    assert.strictEqual(page.list.items[0].title, 'has sub-group linked to ilm');
+    assert.notOk(page.list.items[0].canBeDeleted);
+    assert.strictEqual(page.list.items[1].title, 'has sub-group linked to offering');
+    assert.notOk(page.list.items[1].canBeDeleted);
+    assert.strictEqual(page.list.items[2].title, 'is linked to ilm');
+    assert.notOk(page.list.items[2].canBeDeleted);
+    assert.strictEqual(page.list.items[3].title, 'is linked to offering');
+    assert.notOk(page.list.items[3].canBeDeleted);
   });
 
   test('click title takes you to learnergroup route', async function (assert) {
@@ -493,13 +478,13 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.list.items[1].clickTitle();
     assert.strictEqual(currentURL(), '/learnergroups/5');
 
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups.length, 2);
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].title, 'learner group 1');
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].members, '0');
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].subgroups, '1');
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].title, 'learner group 2');
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].members, '0');
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].subgroups, '0');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items.length, 2);
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[0].title, 'learner group 1');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[0].users, '0');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[0].children, '1');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[1].title, 'learner group 2');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[1].users, '0');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[1].children, '0');
   });
 
   test('copy learnergroup with learners', async function (assert) {
@@ -556,12 +541,12 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.list.items[1].clickTitle();
     assert.strictEqual(currentURL(), '/learnergroups/5');
 
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups.length, 2);
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].title, 'learner group 1');
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].members, '1');
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[0].subgroups, '1');
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].title, 'learner group 2');
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].members, '3');
-    assert.strictEqual(learnerGroupPage.details.subgroupList.groups[1].subgroups, '0');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items.length, 2);
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[0].title, 'learner group 1');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[0].users, '1');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[0].children, '1');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[1].title, 'learner group 2');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[1].users, '3');
+    assert.strictEqual(learnerGroupPage.root.subgroups.list.items[1].children, '0');
   });
 });
