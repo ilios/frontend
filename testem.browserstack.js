@@ -1,15 +1,6 @@
 const FailureOnlyPerBrowserReporter = require('testem-failure-only-reporter/grouped-by-browser');
+const defaultArgs = ['-t', '1800', '--browserstack.video', 'false', '--u', '<url>'];
 
-const defaultArgs = [
-  '-t',
-  '1800',
-  '--browserstack.video',
-  'false',
-  '--browserstack.timezone',
-  'UTC',
-  '--u',
-  '<url>',
-];
 const BrowserStackLaunchers = {
   BS_OSX_Safari: {
     exe: 'node_modules/.bin/browserstack-launch',
@@ -17,18 +8,18 @@ const BrowserStackLaunchers = {
       '--os',
       'OS X',
       '--osv',
-      'Catalina',
+      'Big Sur',
       '--b',
       'safari',
       '--bv',
-      'latest', // Will always be 13.x on Catalina
+      'latest', // Will always be 14.x on Big Sur
       ...defaultArgs,
     ],
     protocol: 'browser',
   },
   BS_MS_Edge: {
     exe: 'node_modules/.bin/browserstack-launch',
-    args: ['--os', 'Windows', '--osv', '10', '--b', 'edge', '--bv', '93', ...defaultArgs],
+    args: ['--os', 'Windows', '--osv', '10', '--b', 'edge', '--bv', '104', ...defaultArgs],
     protocol: 'browser',
   },
   BS_IOS_SAFARI: {
@@ -39,11 +30,11 @@ const BrowserStackLaunchers = {
       '--os',
       'ios',
       '--osv',
-      '14',
+      '15',
       '--b',
       'iphone',
       '--device',
-      'iPhone 11',
+      'iPhone 13 Pro',
       ...defaultArgs,
     ],
     protocol: 'browser',
