@@ -632,7 +632,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       await page.details.learningMaterials.manager.save();
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
-      const formattedNewDate = newDate.toJSDate().toLocaleString('en-us', {
+      const formattedNewDate = this.intl.formatDate(newDate.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -674,14 +674,14 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       await page.details.learningMaterials.manager.save();
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
-      const formattedStartDate = newStartDate.toJSDate().toLocaleString('en', {
+      const formattedStartDate = this.intl.formatDate(newStartDate.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
       });
-      const formattedEndDate = newEndDate.toJSDate().toLocaleString('en', {
+      const formattedEndDate = this.intl.formatDate(newEndDate.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -709,7 +709,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       await page.details.learningMaterials.manager.save();
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
-      const formattedNewDate = newDate.toJSDate().toLocaleString('en-us', {
+      const formattedNewDate = this.intl.formatDate(newDate.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -745,7 +745,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       await page.details.learningMaterials.manager.save();
 
       assert.ok(page.details.learningMaterials.manager.hasEndDateValidationError);
-      const formattedDate = newDate.toJSDate().toLocaleString('en-us', {
+      const formattedDate = this.intl.formatDate(newDate.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',

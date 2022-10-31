@@ -85,7 +85,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(sessions[0].termCount, '0');
     assert.strictEqual(
       sessions[0].firstOffering,
-      today.toJSDate().toLocaleString('en', {
+      this.intl.formatDate(today.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -330,7 +330,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(
       sessions[0].firstOffering,
-      today.toJSDate().toLocaleString('en', {
+      this.intl.formatDate(today.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -350,7 +350,7 @@ module('Acceptance | Course - Session List', function (hooks) {
 
     assert.strictEqual(
       sessions[0].firstOffering,
-      newDate.toJSDate().toLocaleString('en', {
+      this.intl.formatDate(newDate.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -411,7 +411,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(
       sessions[0].firstOffering,
-      today.toJSDate().toLocaleString('en', {
+      this.intl.formatDate(today.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
