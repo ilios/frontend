@@ -20,6 +20,7 @@ jobs:
   lint:
     name: "Lint"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v3
@@ -36,10 +37,11 @@ jobs:
   test:
     name: "Test"
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [14.x, 16.x, 18.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -56,9 +58,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [14.x, 16.x, 18.x]
     steps:
     - uses: actions/checkout@v3
     - name: Install Node
