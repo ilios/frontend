@@ -1,4 +1,4 @@
-import { clickable, create, isVisible, text } from 'ember-cli-page-object';
+import { clickable, create, isPresent, isVisible, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-program-year-list-item]',
@@ -8,19 +8,19 @@ const definition = {
   title: text('[data-test-title]'),
   competencies: {
     scope: '[data-test-competencies]',
-    hasWarning: isVisible('[data-test-warning]'),
+    hasWarning: isPresent('[data-test-warning]'),
   },
   objectives: {
     scope: '[data-test-objectives]',
-    hasWarning: isVisible('[data-test-warning]'),
+    hasWarning: isPresent('[data-test-warning]'),
   },
   directors: {
     scope: '[data-test-directors]',
-    hasWarning: isVisible('[data-test-warning]'),
+    hasWarning: isPresent('[data-test-warning]'),
   },
   terms: {
     scope: '[data-test-terms]',
-    hasWarning: isVisible('[data-test-warning]'),
+    hasWarning: isPresent('[data-test-warning]'),
   },
   canBeRemoved: isVisible('[data-test-remove]'),
   remove: clickable('[data-test-remove]'),
