@@ -690,7 +690,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       });
       assert.strictEqual(
         page.details.learningMaterials.manager.timedReleaseSummary,
-        `(Available: ${formattedStartDate} and available until ${formattedEndDate})`
+        `(Available: ${formattedStartDate} until ${formattedEndDate})`
       );
     });
 
@@ -754,7 +754,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       });
       assert.strictEqual(
         page.details.learningMaterials.manager.timedReleaseSummary,
-        `(Available: ${formattedDate} and available until ${formattedDate})`
+        `(Available: ${formattedDate} until ${formattedDate})`
       );
     });
 
