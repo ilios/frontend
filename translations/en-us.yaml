@@ -338,7 +338,7 @@ general:
   timedReleaseNoSchedule: "Available immediately when published"
   timedReleaseOnlyEndDate: "Available until {endDate}"
   timedReleaseOnlyStartDate: "Available: {startDate}"
-  timedReleaseStartAndEndDate: "Available: {startDate} and available until {endDate}"
+  timedReleaseStartAndEndDate: "Available: {startDate} until {endDate}"
   timezone: Timezone
   title: Title
   today: Today

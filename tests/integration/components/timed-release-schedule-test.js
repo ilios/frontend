@@ -39,9 +39,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
     const expectedStartDate = this.intl.formatDate(startDate.toJSDate(), localeFormatOptions);
     const expectedEndDate = this.intl.formatDate(endDate.toJSDate(), localeFormatOptions);
 
-    assert
-      .dom(this.element)
-      .hasText(`(Available: ${expectedStartDate} and available until ${expectedEndDate})`);
+    assert.dom(this.element).hasText(`(Available: ${expectedStartDate} until ${expectedEndDate})`);
   });
 
   test('it renders with only start date in the future', async function (assert) {
