@@ -5,6 +5,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options');
 const { Webpack } = require('@embroider/webpack');
 const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = function (defaults) {
   const env = EmberApp.env() || 'development';
@@ -77,7 +78,7 @@ module.exports = function (defaults) {
     ],
     packagerOptions: {
       webpackConfig: {
-        plugins: [new RetryChunkLoadPlugin()],
+        plugins: [new RetryChunkLoadPlugin() /*, new BundleAnalyzerPlugin()*/],
       },
     },
   });
