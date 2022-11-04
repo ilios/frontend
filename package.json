@@ -82,7 +82,7 @@
     "ember-responsive": "^5.0.0",
     "ember-service-worker": "^9.0.1",
     "ember-service-worker-cache-first": "^0.6.2",
-    "ember-source": "4.8.0",
+    "ember-source": "~4.8.2",
     "ember-template-lint": "^4.16.1",
     "ember-unique-id-helper-polyfill": "^1.2.2",
     "ember-web-app": "^5.0.0",
