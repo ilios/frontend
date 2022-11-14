@@ -109,7 +109,7 @@
     "sass": "^1.55.0",
     "scroll-into-view": "^1.16.2",
     "striptags": "^3.2.0",
-    "stylelint": "^14.14.1",
+    "stylelint": "^14.15.0",
     "stylelint-config-recommended-scss": "^8.0.0",
     "stylelint-scss": "^4.2.0",
     "validator": "^13.7.0",
