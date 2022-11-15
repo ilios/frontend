@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import scrollIntoView from 'scroll-into-view';
 
 export default class SessionPublicationMenuComponent extends Component {
   @service router;
@@ -121,7 +120,6 @@ export default class SessionPublicationMenuComponent extends Component {
   scrollToSessionPublication() {
     this.isOpen = false;
     this.router.transitionTo('session.publication_check', this.args.session);
-    scrollIntoView('.session-publicationcheck');
   }
   @action
   async publish() {

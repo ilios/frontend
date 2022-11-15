@@ -3,6 +3,8 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { action } from '@ember/object';
+import scrollIntoView from 'scroll-into-view';
 
 export default class CoursePublicationCheckComponent extends Component {
   @service router;
@@ -15,5 +17,10 @@ export default class CoursePublicationCheckComponent extends Component {
     });
 
     return objectivesWithoutParents.length > 0;
+  }
+
+  @action
+  scrollOnLoad(element) {
+    scrollIntoView(element);
   }
 }

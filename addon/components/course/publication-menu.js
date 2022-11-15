@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import scrollIntoView from 'scroll-into-view';
 
 export default class CoursePublicationMenuComponent extends Component {
   @service router;
@@ -117,7 +116,6 @@ export default class CoursePublicationMenuComponent extends Component {
   scrollToCoursePublication() {
     this.isOpen = false;
     this.router.transitionTo('course.publication_check', this.args.course);
-    scrollIntoView('.course-publicationcheck');
   }
   @action
   async publish() {

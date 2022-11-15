@@ -1,6 +1,7 @@
 <div
   class="session-publicationcheck"
   {{did-insert (perform this.load)}}
+  {{did-insert this.scrollOnLoad}}
   {{did-update (perform this.load) @session}}
   data-test-session-publicationcheck
 >
