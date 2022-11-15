@@ -8,43 +8,45 @@
         {{t "general.selectMeshFor" title=@targetItemTitle}}
       </h2>
     {{/if}}
-    <ul class="selected-terms">
-      {{#each this.sortedTerms as |term|}}
-        <li>
-          {{#if @editable}}
-            <button
-              type="button"
-              {{on "click" (fn @remove term)}}
-            >
+    {{#if this.sortedTerms.length}}
+      <ul class="selected-terms">
+        {{#each this.sortedTerms as |term|}}
+          <li>
+            {{#if @editable}}
+              <button
+                type="button"
+                {{on "click" (fn @remove term)}}
+              >
+                <span class="term-title">
+                  {{term.name}}
+                </span>
+                <span class="term-details">
+                  {{term.id}}
+                  {{#if term.deleted}}
+                    - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
+                  {{else if term.trees}}
+                    - {{get (object-at 0 (reverse term.trees)) "treeNumber"}}
+                  {{/if}}
+                </span>
+                <FaIcon @icon="xmark" class="remove" />
+              </button>
+            {{else}}
               <span class="term-title">
                 {{term.name}}
               </span>
               <span class="term-details">
-                {{term.id}}
+              {{term.id}}
                 {{#if term.deleted}}
                   - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
                 {{else if term.trees}}
                   - {{get (object-at 0 (reverse term.trees)) "treeNumber"}}
                 {{/if}}
               </span>
-              <FaIcon @icon="xmark" class="remove" />
-            </button>
-          {{else}}
-            <span class="term-title">
-              {{term.name}}
-            </span>
-            <span class="term-details">
-            {{term.id}}
-              {{#if term.deleted}}
-                - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
-              {{else if term.trees}}
-                - {{get (object-at 0 (reverse term.trees)) "treeNumber"}}
-              {{/if}}
-            </span>
-          {{/if}}
-        </li>
-      {{/each}}
-    </ul>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
     {{#if @editable}}
       <div class="mesh-search" data-test-mesh-search>
         <label for="mesh-search-{{templateId}}">{{t "general.searchMesh"}}:</label>
