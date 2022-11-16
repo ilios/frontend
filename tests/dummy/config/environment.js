@@ -19,12 +19,9 @@ module.exports = function (environment) {
     },
     'ember-simple-auth-token': {
       serverTokenEndpoint: '/auth/login',
-      serverTokenRefreshEndpoint: '/auth/token',
       tokenPropertyName: 'jwt',
-      refreshTokenPropertyName: 'jwt',
-      authorizationHeaderName: 'X-JWT-Authorization',
+      refreshAccessTokens: false,
       authorizationPrefix: 'Token ',
-      refreshLeeway: 300,
     },
     serverVariables: {
       tagPrefix: 'iliosconfig',
