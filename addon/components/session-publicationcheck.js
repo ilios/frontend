@@ -4,7 +4,6 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action, computed } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
-import scrollIntoView from 'scroll-into-view';
 
 export default class SessionPublicationCheckComponent extends Component {
   @service router;
@@ -31,10 +30,5 @@ export default class SessionPublicationCheckComponent extends Component {
   transitionToSession() {
     const queryParams = { sessionObjectiveDetails: true };
     this.router.transitionTo('session', this.args.session, { queryParams });
-  }
-
-  @action
-  scrollOnLoad(element) {
-    scrollIntoView(element);
   }
 }
