@@ -21,7 +21,13 @@ export default class IliosJWT extends JwtTokenAuthenticator {
       const tokenData = this.getTokenData(token);
       const expiresAt = get(tokenData, this.tokenExpireName);
 
-      this.scheduleAccessTokenRefresh(expiresAt, token);
+      if (this.refreshAccessTokens) {
+        this.scheduleAccessTokenRefresh(expiresAt, token);
+      }
+
+      if (this.tokenExpirationInvalidateSession) {
+        this.scheduleAccessTokenExpiration(expiresAt);
+      }
 
       const response = {};
       response[this.tokenPropertyName] = token;
