@@ -21,9 +21,10 @@ export default class LoginController extends Controller {
         },
       });
       if (response.ok) {
-        const obj = await response.json();
         const authenticator = 'authenticator:ilios-jwt';
-        this.session.authenticate(authenticator, { jwt: obj.jwt });
+        this.session.authenticate(authenticator, { jwt: this.jwt });
+      } else {
+        this.error = await response.text();
       }
     }
   });
