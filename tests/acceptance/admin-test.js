@@ -113,4 +113,20 @@ module('Acceptance | Admin', function (hooks) {
     await fillIn(userSearch, 'son');
     await triggerEvent(userSearch, 'keyup');
   });
+
+  test('search results exceed threshold', async function (assert) {
+    const firstName = 'Janusz';
+    this.server.createList('user', 100, { schoolId: 1, firstName });
+
+    const userSearch = '.user-search input';
+    const results = '.user-search .results li';
+    const summary = `${results}:nth-of-type(1)`;
+    const viewAll = `${summary} [data-test-view-all-results]`;
+    await visit(url);
+    await fillIn(userSearch, firstName);
+    await triggerEvent(userSearch, 'keyup');
+    assert.dom(results).exists({ count: 101 });
+    assert.dom(summary).hasText('100 results View All');
+    assert.dom(viewAll).hasAttribute('href', `/users?filter=${firstName}`);
+  });
 });

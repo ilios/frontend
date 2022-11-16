@@ -9,6 +9,7 @@ import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
+const SEARCH_RESULTS_MAX = 100;
 
 export default class ManageUsersSummaryComponent extends Component {
   @service iliosConfig;
@@ -28,7 +29,7 @@ export default class ManageUsersSummaryComponent extends Component {
   async apiSearch(q) {
     const params = {
       q,
-      limit: 100,
+      limit: SEARCH_RESULTS_MAX,
       'order_by[lastName]': 'ASC',
       'order_by[firstName]': 'ASC',
     };
@@ -84,6 +85,7 @@ export default class ManageUsersSummaryComponent extends Component {
       {
         type: 'summary',
         text: this.intl.t('general.resultsCount', { count: mappedResults.length }),
+        showLinkToAll: mappedResults.length >= SEARCH_RESULTS_MAX,
       },
       ...mappedResults,
     ];
