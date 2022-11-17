@@ -71,6 +71,15 @@
           {{#if (eq result.type "summary")}}
             <li class="summary">
               {{result.text}}
+              {{#if result.showLinkToAll}}
+                <LinkTo
+                  @route="users"
+                  @query={{hash filter=this.searchValue}}
+                  data-test-view-all-results
+                >
+                  {{t "general.viewAll"}}
+                </LinkTo>
+              {{/if}}
             </li>
           {{/if}}
           {{#if (eq result.type "user")}}
