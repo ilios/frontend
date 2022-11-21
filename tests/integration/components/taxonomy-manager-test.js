@@ -78,13 +78,12 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       resolve([this.vocabModel1, this.vocabModel2, this.vocabModel3])
     );
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
-    this.set('nothing', () => {});
 
     await render(hbs`<TaxonomyManager
       @vocabularies={{await this.assignableVocabularies}}
       @selectedTerms={{this.selectedTerms}}
-      @add={{action this.nothing}}
-      @remove={{action this.nothing}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />
 `);
 
@@ -131,8 +130,8 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     await render(hbs`<TaxonomyManager
       @vocabularies={{await this.assignableVocabularies}}
       @selectedTerms={{this.selectedTerms}}
-      @add={{action this.add}}
-      @remove={{action this.remove}}
+      @add={{this.add}}
+      @remove={{this.remove}}
     />
 `);
 
@@ -165,13 +164,12 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     this.vocabModel2.set('active', true);
     this.set('assignableVocabularies', resolve([this.vocabModel1, this.vocabModel2]));
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
-    this.set('nothing', () => {});
 
     await render(hbs`<TaxonomyManager
       @vocabularies={{await this.assignableVocabularies}}
       @selectedTerms={{this.selectedTerms}}
-      @add={{action this.nothing}}
-      @remove={{action this.nothing}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />
 `);
 
@@ -233,14 +231,13 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     );
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
     this.set('vocabulary', this.vocabModel2);
-    this.set('nothing', () => {});
 
     await render(hbs`<TaxonomyManager
       @vocabularies={{await this.assignableVocabularies}}
       @vocabulary={{this.vocabulary}}
       @selectedTerms={{this.selectedTerms}}
-      @add={{action this.nothing}}
-      @remove={{action this.nothing}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />
 `);
 
