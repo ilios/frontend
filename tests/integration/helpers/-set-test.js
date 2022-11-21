@@ -9,13 +9,14 @@ module('Integration | Helper | set', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it works when transformed', async function (assert) {
+    this.set('content', 'English');
     await render(hbs`
       <span data-test-greeting>{{this.greeting}}</span>
 
       <button type="button" {{on "click" (set this.greeting "Hello!")}}>
-        English
+        {{this.content}}
       </button>
-    
+
 `);
 
     assert.dom('[data-test-greeting]').hasText('');
@@ -26,13 +27,14 @@ module('Integration | Helper | set', function (hooks) {
   });
 
   test('it works when called directly', async function (assert) {
+    this.set('content', 'English');
     await render(hbs`
       <span data-test-greeting>{{this.greeting}}</span>
 
       <button type="button" {{on "click" (-set this "greeting" "Hello!")}}>
-        English
+        {{this.content}}
       </button>
-    
+
 `);
 
     assert.dom('[data-test-greeting]').hasText('');
