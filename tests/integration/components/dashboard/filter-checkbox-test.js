@@ -10,15 +10,16 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders unchecked', async function (assert) {
+    this.set('content', 'label text');
     await render(hbs`
       <Dashboard::FilterCheckbox
         @checked={{false}}
         @add={{(noop)}}
         @remove={{(noop)}}
       >
-        label text
+        {{this.content}}
       </Dashboard::FilterCheckbox>
-    
+
 `);
 
     assert.strictEqual(component.text, 'label text');
@@ -26,15 +27,16 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
   });
 
   test('it renders checked', async function (assert) {
+    this.set('content', 'label text');
     await render(hbs`
       <Dashboard::FilterCheckbox
         @checked={{true}}
         @add={{(noop)}}
         @remove={{(noop)}}
       >
-        label text
+       {{this.content}}
       </Dashboard::FilterCheckbox>
-    
+
 `);
     assert.strictEqual(component.text, 'label text');
     assert.ok(component.isChecked);
@@ -42,6 +44,7 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
 
   test('clicking label when checked fires remove', async function (assert) {
     assert.expect(1);
+    this.set('content', 'label text');
     this.set('remove', () => {
       assert.ok(true);
     });
@@ -51,9 +54,9 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
         @add={{(noop)}}
         @remove={{this.remove}}
       >
-        label text
+        {{this.content}}
       </Dashboard::FilterCheckbox>
-    
+
 `);
 
     await component.click();
@@ -61,6 +64,7 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
 
   test('clicking label when not checked fires add', async function (assert) {
     assert.expect(1);
+    this.set('content', 'label text');
     this.set('add', () => {
       assert.ok(true);
     });
@@ -70,9 +74,9 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
         @add={{this.add}}
         @remove={{(noop)}}
       >
-        label text
+        {{this.content}}
       </Dashboard::FilterCheckbox>
-    
+
 `);
 
     await component.click();
