@@ -24,7 +24,8 @@ module('Integration | Component | session/manage-objective-parents', function (h
       @selected={{(array)}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.courseTitle, course.title);
     assert.strictEqual(component.objectives.length, 1);
@@ -60,7 +61,8 @@ module('Integration | Component | session/manage-objective-parents', function (h
       @selected={{(array)}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.objectives.length, 3);
     assert.strictEqual(component.objectives[0].title, 'Oscar');

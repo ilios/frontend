@@ -120,7 +120,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
 
     this.set('event', ourEvent);
-    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    await render(hbs`<SingleEvent @event={{this.event}} />
+`);
 
     assert.notOk(component.summary.title.hasLink);
     assert.ok(component.sessionObjectives.objectiveList.title.expandCollapseSwitcher.isExpanded);
@@ -222,7 +223,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    await render(hbs`<SingleEvent @event={{this.event}} />
+`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
@@ -266,7 +268,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    await render(hbs`<SingleEvent @event={{this.event}} />
+`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
     const formatedDate = this.intl.formatDate(tomorrow.toJSDate(), {
@@ -347,7 +350,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
 
     this.set('ev', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.ev}} />`);
+    await render(hbs`<SingleEvent @event={{this.ev}} />
+`);
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     const { materials } = component.sessionLearningMaterials;
@@ -397,7 +401,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    await render(hbs`<SingleEvent @event={{this.event}} />
+`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
     const formattedTomorrow = this.intl.formatDate(tomorrow.toJSDate(), {
@@ -429,7 +434,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.currentUser = this.owner.lookup('service:current-user');
     this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
     this.set('evt', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.evt}} />`);
+    await render(hbs`<SingleEvent @event={{this.evt}} />
+`);
     assert.ok(component.sessionLearningMaterials.linksToAllMaterials);
   });
 
@@ -439,7 +445,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.currentUser = this.owner.lookup('service:current-user');
     this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
     this.set('evt', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.evt}} />`);
+    await render(hbs`<SingleEvent @event={{this.evt}} />
+`);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
   });
 
@@ -449,7 +456,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.currentUser = this.owner.lookup('service:current-user');
     this.server.create('userevent', { isUserEvent: false, sessionTypeTitle: 'test type' });
     this.set('evt', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.evt}} />`);
+    await render(hbs`<SingleEvent @event={{this.evt}} />
+`);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
   });
 
@@ -469,7 +477,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    await render(hbs`<SingleEvent @event={{this.event}} />
+`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
@@ -502,7 +511,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    await render(hbs`<SingleEvent @event={{this.event}} />
+`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
@@ -540,7 +550,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    await render(hbs`<SingleEvent @event={{this.event}} />
+`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
@@ -589,7 +600,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
 
     this.set('event', this.server.db.userevents[0]);
-    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    await render(hbs`<SingleEvent @event={{this.event}} />
+`);
     assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
     assert.ok(component.summary.title.hasLink);
   });
@@ -620,7 +632,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       });
 
       this.set('event', this.server.db.userevents[0]);
-      await render(hbs`<SingleEvent @event={{this.event}} />`);
+      await render(hbs`<SingleEvent @event={{this.event}} />
+`);
       assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
       assert.notOk(component.summary.title.hasLink);
     }

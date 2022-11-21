@@ -18,7 +18,8 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     await render(hbs`<UserSearchResultUser
       @user={{this.user}}
       @addUser={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
     assert.ok(component.isActive);
   });
@@ -32,7 +33,8 @@ module('Integration | Component | user-search-result-user', function (hooks) {
       @user={{this.user}}
       @addUser={{(noop)}}
       @currentlyActiveUsers={{this.activeUsers}}
-    />`);
+    />
+`);
     assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
     assert.notOk(component.isActive);
   });
@@ -49,7 +51,8 @@ module('Integration | Component | user-search-result-user', function (hooks) {
       @user={{this.user}}
       @addUser={{this.add}}
       @currentlyActiveUsers={{(array)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
     assert.ok(component.isActive);
     await component.click();

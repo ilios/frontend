@@ -9,7 +9,8 @@ module('Integration | Component | loading-spinner', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<LoadingSpinner />`);
+    await render(hbs`<LoadingSpinner />
+`);
 
     assert.dom(this.element).hasText('');
     assert.dom('svg').hasClass('fa-spinner');

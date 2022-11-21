@@ -18,7 +18,8 @@ module('Integration | Component | sessions-grid', function (hooks) {
       @sessions={{this.sessions}}
       @sortBy={{this.sortBy}}
       @setSortBy={{this.setSortBy}}
-    />`);
+    />
+`);
 
     assert.dom(this.element).hasText('No results found. Please try again.');
   });
@@ -44,7 +45,8 @@ module('Integration | Component | sessions-grid', function (hooks) {
       @sortBy={{this.sortBy}}
       @setSortBy={{this.setSortBy}}
       @expandSession={{this.expandSession}}
-    />`);
+    />
+`);
 
     await click('[data-test-expand-collapse-control] svg');
   });
@@ -70,7 +72,8 @@ module('Integration | Component | sessions-grid', function (hooks) {
       @sortBy={{this.sortBy}}
       @setSortBy={{this.setSortBy}}
       @expandSession={{this.expandSession}}
-    />`);
+    />
+`);
 
     await click('[data-test-expand-collapse-control] svg');
   });
@@ -99,10 +102,11 @@ module('Integration | Component | sessions-grid', function (hooks) {
     ]);
     await render(hbs`<SessionsGrid
       @sessions={{this.sessions}}
-      @sortBy='title'
+      @sortBy="title"
       @setSortBy={{(noop)}}
       @expandSession={{(noop)}}
-    />`);
+    />
+`);
 
     assert.dom('[data-test-session]:nth-of-type(1) [data-test-delete-disabled]').isVisible();
     assert.dom('[data-test-session]:nth-of-type(1) [data-test-delete]').isNotVisible();

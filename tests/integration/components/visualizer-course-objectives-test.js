@@ -82,7 +82,8 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
   test('it renders', async function (assert) {
     this.set('course', this.course);
     await render(
-      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />`
+      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
+`
     );
     //let the chart animations finish
     await waitFor('.loaded');
@@ -132,7 +133,8 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
   test('sort data table by percentages', async function (assert) {
     this.set('course', this.course);
     await render(
-      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />`
+      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
+`
     );
     assert.strictEqual(component.dataTable.rows[0].percentage, '77.8%');
     assert.strictEqual(component.dataTable.rows[1].percentage, '22.2%');
@@ -150,7 +152,8 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
   test('sort data-table by objectives', async function (assert) {
     this.set('course', this.course);
     await render(
-      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />`
+      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
+`
     );
     assert.strictEqual(component.dataTable.rows[0].objective, 'course objective 0');
     assert.strictEqual(component.dataTable.rows[1].objective, 'course objective 1');
@@ -168,7 +171,8 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
   test('sort data-table by competencies', async function (assert) {
     this.set('course', this.course);
     await render(
-      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />`
+      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
+`
     );
     assert.strictEqual(component.dataTable.rows[0].competency, 'competency 0');
     assert.strictEqual(component.dataTable.rows[1].competency, 'competency 1');
@@ -186,7 +190,8 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
   test('sort data-table by sessions', async function (assert) {
     this.set('course', this.course);
     await render(
-      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />`
+      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
+`
     );
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
@@ -204,7 +209,8 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
   test('sort data-table by minutes', async function (assert) {
     this.set('course', this.course);
     await render(
-      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />`
+      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
+`
     );
     assert.strictEqual(component.dataTable.rows[0].minutes, '630');
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
@@ -262,7 +268,8 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
 
     this.set('course', courseModel);
 
-    await render(hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} />`);
+    await render(hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} />
+`);
     assert.notOk(component.chart.isPresent);
     assert.ok(component.unlinkedObjectives.isPresent);
     assert.strictEqual(

@@ -41,7 +41,8 @@ module('Integration | Component | daily-calendar', function (hooks) {
       @date={{this.date}}
       @events={{(array)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.longDayOfWeek, 'Wednesday, January 9, 2019');
     assert.strictEqual(component.shortDayOfWeek, '1/9/2019');
@@ -67,7 +68,8 @@ module('Integration | Component | daily-calendar', function (hooks) {
       @date={{this.date}}
       @events={{this.events}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.longDayOfWeek, 'Wednesday, January 9, 2019');
 
@@ -100,7 +102,8 @@ module('Integration | Component | daily-calendar', function (hooks) {
       @date={{this.date}}
       @events={{this.events}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.events.length, 6);
     assert.strictEqual(component.events[0].name, 'event 0');
@@ -138,7 +141,8 @@ module('Integration | Component | daily-calendar', function (hooks) {
       @date={{this.date}}
       @events={{this.events}}
       @selectEvent={{this.selectEvent}}
-    />`);
+    />
+`);
 
     await component.events[0].click();
   });
@@ -162,7 +166,8 @@ module('Integration | Component | daily-calendar', function (hooks) {
       @date={{this.date}}
       @events={{this.events}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.longDayOfWeek, 'Thursday, December 11, 1980');
     assert.strictEqual(component.shortDayOfWeek, '12/11/1980');

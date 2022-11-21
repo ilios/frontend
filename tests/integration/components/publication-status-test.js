@@ -16,7 +16,8 @@ module('Integration | Component | publication-status', function (hooks) {
       @item={{this.item}}
       @showIcon={{true}}
       @showText={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.value, 'Published');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -27,7 +28,8 @@ module('Integration | Component | publication-status', function (hooks) {
       @item={{this.item}}
       @showIcon={{true}}
       @showText={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.value, 'Scheduled');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -38,7 +40,8 @@ module('Integration | Component | publication-status', function (hooks) {
       @item={{this.item}}
       @showIcon={{true}}
       @showText={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.value, 'Not Published');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

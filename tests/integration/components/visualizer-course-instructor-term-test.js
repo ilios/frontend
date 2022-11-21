@@ -63,7 +63,8 @@ module('Integration | Component | visualizer-course-instructor-term', function (
     this.set('instructor', userModel);
 
     await render(
-      hbs`<VisualizerCourseInstructorTerm @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} />`
+      hbs`<VisualizerCourseInstructorTerm @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} />
+`
     );
     //let the chart animations finish
     await waitFor('.loaded');

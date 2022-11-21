@@ -39,7 +39,8 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.courses.length, 1);
     assert.strictEqual(component.courses[0].title, 'title1');
@@ -120,7 +121,8 @@ module('Integration | Component | course materials', function (hooks) {
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
       @onSessionSort={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.courses.length, 3);
     assert.strictEqual(component.courses[0].title, 'title1');
@@ -197,7 +199,8 @@ module('Integration | Component | course materials', function (hooks) {
       @sessionSort={{this.sessionSort}}
       @onCourseSort={{this.cSortBy}}
       @onSessionSort={{this.sSortBy}}
-    />`);
+    />
+`);
     await component.sortCoursesBy.title();
     await component.sortCoursesBy.title();
     await component.sortCoursesBy.type();
@@ -231,7 +234,8 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('title1');
@@ -253,7 +257,8 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('file');
@@ -275,7 +280,8 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('author2');
@@ -297,7 +303,8 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('citationtext');
@@ -319,7 +326,8 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('title1');
@@ -341,7 +349,8 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('file');
@@ -363,7 +372,8 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('author2');
@@ -385,7 +395,8 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('citationtext');
@@ -402,7 +413,8 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{(noop)}}
       @sessionSort={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.courses.length, 1);
     assert.strictEqual(component.courses[0].title, 'No Course Learning Materials Available');

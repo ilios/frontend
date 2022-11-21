@@ -85,7 +85,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'Learners and Learner Groups (3/3)');
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(
@@ -138,7 +139,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     assert.ok(component.hasManageButton);
     assert.notOk(component.hasSaveButton);
     assert.notOk(component.hasCancelButton);
@@ -271,7 +273,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{false}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     assert.notOk(component.hasManageButton);
   });
 
@@ -282,7 +285,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 3);
     await component.learnerSelectionManager.selectedLearners.learners[0].remove();
@@ -296,7 +300,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
@@ -326,7 +331,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
@@ -356,7 +362,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[1]
@@ -392,7 +399,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 3);
     await component.learnerSelectionManager.search.searchBox.set('does not matter');
@@ -408,7 +416,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
@@ -452,7 +461,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
@@ -495,7 +505,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{(array)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'Learners and Learner Groups (3/3)');
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
@@ -515,7 +526,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
@@ -567,7 +579,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
@@ -619,7 +632,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
@@ -667,7 +681,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
@@ -721,7 +736,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
@@ -770,7 +786,8 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @editable={{true}}
       @ilmSession={{this.ilmSession}}
       @cohorts={{this.cohorts}}
-    />`);
+    />
+`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees

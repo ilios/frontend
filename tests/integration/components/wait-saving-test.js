@@ -10,7 +10,8 @@ module('Integration | Component | wait saving', function (hooks) {
 
   test('it renders', async function (assert) {
     assert.expect(1);
-    await render(hbs`<WaitSaving />`);
+    await render(hbs`<WaitSaving />
+`);
 
     assert.dom(this.element).hasText('saving... one moment...');
   });
@@ -21,7 +22,8 @@ module('Integration | Component | wait saving', function (hooks) {
       <WaitSaving>
         template block text
       </WaitSaving>
-    `);
+    
+`);
 
     assert.dom(this.element).hasText('template block text');
   });
@@ -32,7 +34,8 @@ module('Integration | Component | wait saving', function (hooks) {
         <WaitSaving />
       {{/if}}
       <input type="text" />
-    `);
+    
+`);
     await fillIn('input', 'text');
     assert.dom('input').isFocused();
     this.set('show', true);

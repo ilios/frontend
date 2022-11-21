@@ -21,7 +21,8 @@ module('Integration | Component | ilios calendar day', function (hooks) {
     });
     this.set('date', september30th2015.toJSDate());
     await render(
-      hbs`<IliosCalendarDay @date={{this.date}} @selectEvent={{(noop)}} @calendarEvents={{(array)}} />`
+      hbs`<IliosCalendarDay @date={{this.date}} @selectEvent={{(noop)}} @calendarEvents={{(array)}} />
+`
     );
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
     assert.strictEqual(component.calendar.longDayOfWeek, 'Wednesday, September 30, 2015');

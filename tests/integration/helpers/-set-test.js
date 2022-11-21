@@ -15,7 +15,8 @@ module('Integration | Helper | set', function (hooks) {
       <button type="button" {{on "click" (set this.greeting "Hello!")}}>
         English
       </button>
-    `);
+    
+`);
 
     assert.dom('[data-test-greeting]').hasText('');
 
@@ -31,7 +32,8 @@ module('Integration | Helper | set', function (hooks) {
       <button type="button" {{on "click" (-set this "greeting" "Hello!")}}>
         English
       </button>
-    `);
+    
+`);
 
     assert.dom('[data-test-greeting]').hasText('');
 

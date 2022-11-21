@@ -54,7 +54,8 @@ module('Integration | Component | visualizer-course-instructors', function (hook
   test('it renders', async function (assert) {
     this.set('course', this.courseModel);
 
-    await render(hbs`<VisualizerCourseInstructors @course={{this.course}} @isIcon={{false}} />`);
+    await render(hbs`<VisualizerCourseInstructors @course={{this.course}} @isIcon={{false}} />
+`);
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
@@ -72,7 +73,8 @@ module('Integration | Component | visualizer-course-instructors', function (hook
     this.set('course', this.courseModel);
 
     await render(
-      hbs`<VisualizerCourseInstructors @course={{this.course}} @filter={{this.name}} @isIcon={{false}} />`
+      hbs`<VisualizerCourseInstructors @course={{this.course}} @filter={{this.name}} @isIcon={{false}} />
+`
     );
     //let the chart animations finish
     await waitFor('.loaded');
@@ -87,7 +89,8 @@ module('Integration | Component | visualizer-course-instructors', function (hook
     this.set('course', this.courseModel);
 
     await render(
-      hbs`<VisualizerCourseInstructors @course={{this.course}} @isIcon={{false}} @chartType="donut" />`
+      hbs`<VisualizerCourseInstructors @course={{this.course}} @isIcon={{false}} @chartType="donut" />
+`
     );
     //let the chart animations finish
     await waitFor('.loaded');
@@ -112,7 +115,8 @@ module('Integration | Component | visualizer-course-instructors', function (hook
     this.owner.register('service:router', RouterMock);
     this.set('course', this.courseModel);
 
-    await render(hbs`<VisualizerCourseInstructors @course={{this.course}} @isIcon={{false}} />`);
+    await render(hbs`<VisualizerCourseInstructors @course={{this.course}} @isIcon={{false}} />
+`);
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');

@@ -12,7 +12,8 @@ module('Integration | Helper | lm-type', function (hooks) {
     assert.expect(1);
     const lm = { link: 'whatever' };
     this.set('lm', lm);
-    await render(hbs`{{lm-type this.lm}}`);
+    await render(hbs`{{lm-type this.lm}}
+`);
     assert.dom(this.element).hasText('link');
   });
 
@@ -20,7 +21,8 @@ module('Integration | Helper | lm-type', function (hooks) {
     assert.expect(1);
     const lm = { citation: 'whatever' };
     this.set('lm', lm);
-    await render(hbs`{{lm-type this.lm}}`);
+    await render(hbs`{{lm-type this.lm}}
+`);
     assert.dom(this.element).hasText('citation');
   });
 
@@ -28,7 +30,8 @@ module('Integration | Helper | lm-type', function (hooks) {
     assert.expect(1);
     const lm = { filename: 'whatever' };
     this.set('lm', lm);
-    await render(hbs`{{lm-type this.lm}}`);
+    await render(hbs`{{lm-type this.lm}}
+`);
     assert.dom(this.element).hasText('file');
   });
 });

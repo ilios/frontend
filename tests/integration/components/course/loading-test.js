@@ -18,7 +18,8 @@ module('Integration | Component | course/loading', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::Loading @course={{this.course}} />`);
+    await render(hbs`<Course::Loading @course={{this.course}} />
+`);
     assert.dom('div').hasAttribute('aria-hidden', 'true');
     assert.dom('.header').exists();
   });

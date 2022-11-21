@@ -61,7 +61,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
       @vocabulary={{this.vocabulary}}
       @add={{action (noop)}}
       @remove={{action (noop)}}
-    />`);
+    />
+`);
 
     assert.dom('li').exists({ count: 5 });
     assert.dom('li.top-level').exists({ count: 2 });
@@ -88,7 +89,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
       @terms={{await this.terms}}
       @add={{action (noop)}}
       @remove={{action (noop)}}
-    />`);
+    />
+`);
 
     assert.dom('li').exists({ count: 5 });
     assert.dom('li.top-level').exists({ count: 2 });
@@ -119,7 +121,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
       @terms={{await this.terms}}
       @add={{action (noop)}}
       @remove={{action (noop)}}
-    />`);
+    />
+`);
 
     assert.dom('li').exists({ count: 2 });
     assert.dom('li.top-level').exists({ count: 1 });
@@ -150,7 +153,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
       @terms={{await this.terms}}
       @add={{action this.add}}
       @remove={{action this.remove}}
-    />`);
+    />
+`);
 
     const term = 'li.top-level:nth-of-type(1) .selectable-terms-list-item';
     assert.dom(term).hasNoClass('selected');
@@ -172,7 +176,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
       @add={{action (noop)}}
       @remove={{action (noop)}}
       @termFilter={{this.termFilter}}
-    />`);
+    />
+`);
 
     assert.dom('li').exists({ count: 2 });
     assert.dom('li.top-level').exists({ count: 1 });
@@ -194,7 +199,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
       @add={{action (noop)}}
       @remove={{action (noop)}}
       @termFilter={{this.termFilter}}
-    />`);
+    />
+`);
 
     assert.dom('li').exists({ count: 2 });
     assert.dom('li.top-level').exists({ count: 1 });

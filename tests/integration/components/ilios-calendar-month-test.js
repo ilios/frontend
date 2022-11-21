@@ -30,7 +30,8 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       @date={{this.date}}
       @calendarEvents={{this.events}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.calendar.monthYear, 'September 2015');
     assert.strictEqual(component.calendar.events.length, 2);
     assert.ok(component.calendar.days[29].hasShowMore);
@@ -52,7 +53,8 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       @date={{this.date}}
       @calendarEvents={{this.events}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.calendar.monthYear, 'September 2015');
     assert.strictEqual(component.calendar.events.length, 2);
     assert.notOk(component.calendar.days[29].hasShowMore);
@@ -75,7 +77,8 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       @changeView={{this.changeView}}
       @calendarEvents={{(array)}}
       @areDaysSelectable={{true}}
-    />`);
+    />
+`);
     await component.calendar.days[0].selectDay();
   });
 
@@ -110,7 +113,8 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       @date={{this.date}}
       @calendarEvents={{this.events}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.multiday.events.length, 2);
     assert.strictEqual(
       component.multiday.events[0].text,

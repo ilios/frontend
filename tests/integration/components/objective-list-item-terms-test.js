@@ -41,7 +41,8 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
     await a11yAudit(this.element);
@@ -59,7 +60,8 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.list.length, 2);
     assert.strictEqual(component.list[0].title, 'Vocabulary 1 (school 0)');
     assert.strictEqual(component.list[0].terms.length, 2);
@@ -83,7 +85,8 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     await component.list[0].manage();
   });
 
@@ -107,7 +110,8 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     await component.manage();
   });
 
@@ -125,7 +129,8 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       @save={{this.save}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     await component.save();
   });
 
@@ -143,7 +148,8 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{this.cancel}}
-    />`);
+    />
+`);
     await component.cancel();
   });
 });

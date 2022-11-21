@@ -16,7 +16,8 @@ module('Integration | Component | course/rollover-date-picker', function (hooks)
     const course = this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{(noop)}} />`);
+    await render(hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{(noop)}} />
+`);
     assert.dom('input').hasValue(this.intl.formatDate(course.startDate));
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
@@ -35,7 +36,8 @@ module('Integration | Component | course/rollover-date-picker', function (hooks)
       assert.strictEqual(newDate.toMillis(), changedDate.getTime());
     });
     await render(
-      hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{this.change}} />`
+      hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{this.change}} />
+`
     );
     const element = find('input');
     element._flatpickr.setDate(newDate.toJSDate(), true);

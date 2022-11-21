@@ -16,7 +16,8 @@ module('Integration | Component | session/manage-objective-parents-item', functi
       @isSelected={{this.isSelected}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
 
     assert.dom('input[type="checkbox"]').exists();
     assert.dom('input').isChecked();

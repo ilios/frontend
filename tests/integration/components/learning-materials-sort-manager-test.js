@@ -68,7 +68,8 @@ module('Integration | Component | learning materials sort manager', function (ho
       .findRecord('learning-material', lm2.id);
     this.set('subject', courseModel);
     await render(
-      hbs`<LearningMaterialsSortManager @subject={{this.subject}} @cancel={{(noop)}} />`
+      hbs`<LearningMaterialsSortManager @subject={{this.subject}} @cancel={{(noop)}} />
+`
     );
     assert.dom('.item').exists({ count: 2 });
     assert.dom('.item:nth-of-type(1) [data-test-title]').hasText(lmModel2.title);
@@ -129,7 +130,8 @@ module('Integration | Component | learning materials sort manager', function (ho
       assert.ok(true, 'Cancel action was invoked correctly.');
     });
     await render(
-      hbs`<LearningMaterialsSortManager @subject={{this.subject}} @cancel={{this.cancel}} />`
+      hbs`<LearningMaterialsSortManager @subject={{this.subject}} @cancel={{this.cancel}} />
+`
     );
     await click('.actions .bigcancel');
   });
@@ -178,7 +180,8 @@ module('Integration | Component | learning materials sort manager', function (ho
       assert.ok(data.includes(clmModel2));
     });
     await render(
-      hbs`<LearningMaterialsSortManager @subject={{this.subject}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<LearningMaterialsSortManager @subject={{this.subject}} @save={{this.save}} @cancel={{(noop)}} />
+`
     );
     await click('.actions .bigadd');
   });

@@ -29,7 +29,8 @@ module('Integration | Component | ilios calendar multiday event', function (hook
           @selectEvent={{(noop)}}
         />
       </ul>
-    `);
+    
+`);
     assert.strictEqual(
       component.text,
       '11/11/84, 12:00 AM – 11/12/84, 12:00 AM Cheramie is born Lancaster, CA'
@@ -49,7 +50,8 @@ module('Integration | Component | ilios calendar multiday event', function (hook
         @isEventSelectable={{true}}
         @selectEvent={{this.selectEvent}}
       />
-    `);
+    
+`);
     assert.notOk(component.isDisabled);
     await component.click();
   });
@@ -61,7 +63,8 @@ module('Integration | Component | ilios calendar multiday event', function (hook
         @isEventSelectable={{true}}
         @selectEvent={{this.selectEvent}}
       />
-    `);
+    
+`);
     assert.ok(component.isDisabled);
   });
 
@@ -72,7 +75,8 @@ module('Integration | Component | ilios calendar multiday event', function (hook
         @event={{this.ev}}
         @selectEvent={{this.selectEvent}}
       />
-    `);
+    
+`);
     assert.ok(component.isDisabled);
   });
 });

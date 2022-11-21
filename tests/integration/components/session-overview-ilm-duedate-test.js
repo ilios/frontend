@@ -26,7 +26,8 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
     await render(hbs`<SessionOverviewIlmDuedate
       @ilmSession={{this.ilmSession}}
       @editable={{this.editable}}
-    />`);
+    />
+`);
 
     assert.ok(component.isVisible);
     assert.strictEqual(component.label, 'Due By:');
@@ -42,7 +43,8 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
     await render(hbs`<SessionOverviewIlmDuedate
       @ilmSession={{this.ilmSession}}
       @editable={{this.editable}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.label, 'Due By:');
     assert.strictEqual(component.value, '5/19/21, 11:55 PM');
@@ -57,7 +59,8 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
     await render(hbs`<SessionOverviewIlmDuedate
       @ilmSession={{this.ilmSession}}
       @editable={{this.editable}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.value, '5/19/21, 11:55 PM');
     await component.edit();
@@ -79,7 +82,8 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
     await render(hbs`<SessionOverviewIlmDuedate
       @ilmSession={{this.ilmSession}}
       @editable={{this.editable}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.value, '5/19/21, 11:55 PM');
     await component.edit();

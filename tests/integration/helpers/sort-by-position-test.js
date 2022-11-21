@@ -33,7 +33,8 @@ module('Integration | Helper | sort-by-position', function (hooks) {
       {{#each (sort-by-position this.objectives) as |o|}}
         <span>{{o.title}}</span>
       {{/each}}
-    `);
+    
+`);
     assert.dom('span').exists({ count: 4 });
     assert.dom('span:nth-of-type(1)').hasText('Bockwurst');
     assert.dom('span:nth-of-type(2)').hasText('Oscar');
@@ -48,7 +49,8 @@ module('Integration | Helper | sort-by-position', function (hooks) {
       {{else}}
         <span>Nada!</span>
       {{/each}}
-    `);
+    
+`);
     assert.dom('span').exists({ count: 1 });
     assert.dom('span:nth-of-type(1)').hasText('Nada!');
   });
@@ -60,7 +62,8 @@ module('Integration | Helper | sort-by-position', function (hooks) {
       {{else}}
         <span>Nada!</span>
       {{/each}}
-    `);
+    
+`);
     assert.dom('span').exists({ count: 1 });
     assert.dom('span:nth-of-type(1)').hasText('Nada!');
   });

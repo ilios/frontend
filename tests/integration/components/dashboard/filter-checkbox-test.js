@@ -18,7 +18,8 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
       >
         label text
       </Dashboard::FilterCheckbox>
-    `);
+    
+`);
 
     assert.strictEqual(component.text, 'label text');
     assert.notOk(component.isChecked);
@@ -33,7 +34,8 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
       >
         label text
       </Dashboard::FilterCheckbox>
-    `);
+    
+`);
     assert.strictEqual(component.text, 'label text');
     assert.ok(component.isChecked);
   });
@@ -51,7 +53,8 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
       >
         label text
       </Dashboard::FilterCheckbox>
-    `);
+    
+`);
 
     await component.click();
   });
@@ -69,7 +72,8 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
       >
         label text
       </Dashboard::FilterCheckbox>
-    `);
+    
+`);
 
     await component.click();
   });

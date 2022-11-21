@@ -29,7 +29,8 @@ module('Integration | Component | ilios calendar', function (hooks) {
       @changeDate={{(noop)}}
       @changeView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.daily.longDayOfWeek, 'Wednesday, September 30, 2015');
     assert.notOk(component.monthly.isVisible);
     assert.notOk(component.weekly.isVisible);
@@ -66,7 +67,8 @@ module('Integration | Component | ilios calendar', function (hooks) {
       @changeDate={{(noop)}}
       @changeView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.weekly.longWeekOfYear, 'Week of September 27, 2015');
     assert.notOk(component.monthly.isVisible);
     assert.notOk(component.daily.isVisible);
@@ -95,7 +97,8 @@ module('Integration | Component | ilios calendar', function (hooks) {
       @changeDate={{(noop)}}
       @changeView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.monthly.monthYear, 'September 2015');
     assert.notOk(component.daily.isVisible);
     assert.notOk(component.weekly.isVisible);
@@ -124,7 +127,8 @@ module('Integration | Component | ilios calendar', function (hooks) {
       @changeDate={{(noop)}}
       @changeView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
     assert.notOk(component.icsFeed.isVisible);
     await component.icsFeedToggle.click();
     assert.ok(component.icsFeed.isVisible);

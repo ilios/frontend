@@ -20,7 +20,8 @@ module('Integration | Component | ilios calendar event month', function (hooks) 
       lastModified: november111984.toJSDate(),
       name: 'test',
     });
-    await render(hbs`<IliosCalendarEventMonth @event={{this.event}} />`);
+    await render(hbs`<IliosCalendarEventMonth @event={{this.event}} />
+`);
 
     assert.dom(s).hasStyle({
       'background-color': 'rgb(0, 204, 101)',

@@ -17,7 +17,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'foo bar');
     assert.strictEqual(component.timingInfo.text, '');
     assert.notOk(component.isRequired);
@@ -51,7 +52,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'foo bar');
     assert.strictEqual(
       component.timingInfo.text,
@@ -85,7 +87,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
       @linked={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.strictEqual(
       component.timingInfo.text,
@@ -113,7 +116,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
-    />`);
+    />
+`);
     assert.ok(component.isRequired);
   });
 
@@ -128,7 +132,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
       @linked={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.ok(component.typeIcon.isPdf);
     assert.ok(component.pdfLink.url.endsWith('/foo/bar?inline'));
@@ -151,7 +156,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
       @linked={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.ok(component.typeIcon.isFile);
     assert.notOk(component.pdfLink.isPresent);
@@ -174,7 +180,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
       @linked={{false}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.ok(component.typeIcon.isFile);
     assert.notOk(component.pdfLink.isPresent);
@@ -196,7 +203,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
       @linked={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'foo bar');
     assert.ok(component.typeIcon.isLink);
     assert.notOk(component.pdfLink.isPresent);
@@ -218,7 +226,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
       @linked={{false}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'foo bar');
     assert.ok(component.typeIcon.isLink);
     assert.notOk(component.pdfLink.isPresent);
@@ -239,7 +248,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'foo bar');
     assert.ok(component.typeIcon.isCitation);
     assert.notOk(component.pdfLink.isPresent);
@@ -259,7 +269,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
-    />`);
+    />
+`);
     assert.strictEqual(component.publicNotes.text, 'read this');
   });
 });

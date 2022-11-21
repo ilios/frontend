@@ -40,7 +40,8 @@ module('Integration | Component | course/manage-objective-parents', function (ho
       @add={{(noop)}}
       @remove={{(noop)}}
       @removeFromCohort={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.hasMultipleCohorts);
     assert.strictEqual(component.selectedCohortTitle, 'cohort 0');
@@ -101,7 +102,8 @@ module('Integration | Component | course/manage-objective-parents', function (ho
       @add={{(noop)}}
       @remove={{(noop)}}
       @removeFromCohort={{(noop)}}
-    />`);
+    />
+`);
 
     assert.ok(component.hasMultipleCohorts);
     assert.strictEqual(component.selectedCohortTitle, 'cohort 0 cohort 1');
@@ -165,7 +167,8 @@ module('Integration | Component | course/manage-objective-parents', function (ho
       @add={{(noop)}}
       @remove={{(noop)}}
       @removeFromCohort={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.competencies.length, 1);
     assert.strictEqual(component.competencies[0].title, 'competency 0');

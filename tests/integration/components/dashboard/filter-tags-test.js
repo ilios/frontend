@@ -33,7 +33,8 @@ module('Integration | Component | dashboard/filter-tags', function (hooks) {
       @removeCourseId={{(noop)}}
       @removeTermId={{(noop)}}
       @clearFilters={{(noop)}}
-    />`);
+    />
+`);
 
     assert.dom().containsText('Course Level 1');
     assert.dom().containsText('Course Level 2');

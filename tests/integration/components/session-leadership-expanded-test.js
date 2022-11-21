@@ -29,7 +29,8 @@ module('Integration | Component | session leadership expanded', function (hooks)
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title, 'Session Leadership');
     assert.strictEqual(component.leadershipList.administrators.length, 2);
@@ -59,7 +60,8 @@ module('Integration | Component | session leadership expanded', function (hooks)
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />`);
+    />
+`);
     await component.collapse();
   });
 
@@ -83,7 +85,8 @@ module('Integration | Component | session leadership expanded', function (hooks)
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />`);
+    />
+`);
     await component.collapse();
   });
 
@@ -102,7 +105,8 @@ module('Integration | Component | session leadership expanded', function (hooks)
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{this.click}}
-    />`);
+    />
+`);
     await component.manage();
   });
 });

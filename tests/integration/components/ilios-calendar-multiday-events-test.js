@@ -29,7 +29,8 @@ module('Integration | Component | ilios calendar multiday events', function (hoo
   });
 
   test('it renders', async function (assert) {
-    await render(hbs`<IliosCalendarMultidayEvents @events={{this.events}} />`);
+    await render(hbs`<IliosCalendarMultidayEvents @events={{this.events}} />
+`);
     assert.strictEqual(component.title, 'Multiday Events');
     assert.strictEqual(component.events.length, 2);
     await a11yAudit(this.element);

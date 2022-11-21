@@ -39,7 +39,8 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
       @selectedTermIds={{this.selectedTermIds}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.checkboxes.length, 3);
     assert.strictEqual(component.checkboxes[0].text, 'top 1');
     assert.notOk(component.checkboxes[0].isChecked);
@@ -61,7 +62,8 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
       @selectedTermIds={{(array)}}
       @add={{this.add}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
     await component.checkboxes[0].click();
   });
 
@@ -77,7 +79,8 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
       @selectedTermIds={{this.selectedTermIds}}
       @add={{(noop)}}
       @remove={{this.remove}}
-    />`);
+    />
+`);
     await component.checkboxes[0].click();
   });
 });

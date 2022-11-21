@@ -79,7 +79,8 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       @cohorts={{this.cohorts}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.selectedLearnerGroups.heading, 'Selected Learner Groups:');
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
     assert.strictEqual(
@@ -165,7 +166,8 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       @cohorts={{this.cohorts}}
       @add={{(noop)}}
       @remove={{this.remove}}
-    />`);
+    />
+`);
     await component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].remove();
   });
 
@@ -181,7 +183,8 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       @cohorts={{this.cohorts}}
       @add={{(noop)}}
       @remove={{this.remove}}
-    />`);
+    />
+`);
     assert.ok(component.availableGroups.cohorts[0].trees[0].subgroups[0].isChecked);
     await component.availableGroups.cohorts[0].trees[0].subgroups[0].toggle();
   });
@@ -198,7 +201,8 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       @cohorts={{this.cohorts}}
       @add={{this.add}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
     assert.notOk(component.availableGroups.cohorts[0].trees[0].subgroups[0].isChecked);
     await component.availableGroups.cohorts[0].trees[0].subgroups[0].toggle();
   });

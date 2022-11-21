@@ -34,7 +34,8 @@ module('Integration | Component | learner selection manager', function (hooks) {
   test('selected learners', async function (assert) {
     this.set('learners', [this.learnerModel1, this.learnerModel2, this.learnerModel3]);
     await render(
-      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{(noop)}}/>`
+      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{(noop)}}/>
+`
     );
     assert.strictEqual(component.selectedLearners.heading, 'Selected Learners:');
     assert.strictEqual(component.selectedLearners.learners.length, 3);
@@ -61,7 +62,8 @@ module('Integration | Component | learner selection manager', function (hooks) {
   test('no selected learners', async function (assert) {
     this.set('learners', []);
     await render(
-      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{(noop)}}/>`
+      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{(noop)}}/>
+`
     );
     assert.strictEqual(component.selectedLearners.heading, 'Selected Learners:');
     assert.strictEqual(component.selectedLearners.noLearners.text, 'None');
@@ -74,7 +76,8 @@ module('Integration | Component | learner selection manager', function (hooks) {
       assert.strictEqual(user.id, this.learnerModel1.id);
     });
     await render(
-      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{this.remove}}/>`
+      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{this.remove}}/>
+`
     );
     assert.strictEqual(component.selectedLearners.heading, 'Selected Learners:');
     assert.strictEqual(component.selectedLearners.learners.length, 2);
@@ -96,7 +99,8 @@ module('Integration | Component | learner selection manager', function (hooks) {
       assert.strictEqual(user.id, learnerModel3.id);
     });
     await render(
-      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{this.add}} @remove={{(noop)}}/>`
+      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{this.add}} @remove={{(noop)}}/>
+`
     );
     await component.search.searchBox.set('Schmitt');
     assert.strictEqual(component.search.results.items.length, 1);

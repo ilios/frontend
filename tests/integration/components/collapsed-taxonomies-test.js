@@ -43,7 +43,8 @@ module('Integration | Component | collapsed taxonomies', function (hooks) {
 
     this.set('subject', sessionModel);
     this.set('click', () => {});
-    await render(hbs`<CollapsedTaxonomies @subject={{this.subject}} @expand={{this.click}} />`);
+    await render(hbs`<CollapsedTaxonomies @subject={{this.subject}} @expand={{this.click}} />
+`);
     assert.strictEqual(component.title, 'Terms (1)');
     assert.strictEqual(component.headers.length, 3);
     assert.strictEqual(component.headers[0].title, 'Vocabulary');
@@ -66,7 +67,8 @@ module('Integration | Component | collapsed taxonomies', function (hooks) {
     this.set('click', () => {
       assert.ok(true);
     });
-    await render(hbs`<CollapsedTaxonomies @subject={{this.subject}} @expand={{this.click}} />`);
+    await render(hbs`<CollapsedTaxonomies @subject={{this.subject}} @expand={{this.click}} />
+`);
     assert.strictEqual(component.title, 'Terms (1)');
     await component.expand();
   });

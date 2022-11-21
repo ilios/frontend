@@ -114,7 +114,8 @@ module('Integration | Component | week glance', function (hooks) {
       @showFullTitle={{true}}
       @year={{format-date this.today year="numeric"}}
       @week={{this.week}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title, this.getTitle(true));
 
@@ -140,7 +141,8 @@ module('Integration | Component | week glance', function (hooks) {
       @showFullTitle={{true}}
       @year={{format-date this.today year="numeric"}}
       @week={{this.week}}
-    />`);
+    />
+`);
     const title = '[data-test-week-title]';
     const body = 'p';
     const expectedTitle = this.getTitle(true);
@@ -167,7 +169,8 @@ module('Integration | Component | week glance', function (hooks) {
       @showFullTitle={{false}}
       @year={{format-date this.today year="numeric"}}
       @week={{this.week}}
-    />`);
+    />
+`);
     const title = '[data-test-week-title]';
     const expectedTitle = this.getTitle(false);
     await settled();
@@ -191,7 +194,8 @@ module('Integration | Component | week glance', function (hooks) {
       @showFullTitle={{false}}
       @year={{format-date this.today year="numeric"}}
       @week={{this.week}}
-    />`);
+    />
+`);
     const title = '[data-test-week-title]';
     const body = 'p';
     const expectedTitle = this.getTitle(false);
@@ -224,7 +228,8 @@ module('Integration | Component | week glance', function (hooks) {
       @year={{format-date this.today year="numeric"}}
       @week={{this.week}}
       @toggleCollapsed={{this.toggle}}
-    />`);
+    />
+`);
     const title = '[data-test-week-title]';
     await settled();
     await click(title);
@@ -246,7 +251,8 @@ module('Integration | Component | week glance', function (hooks) {
       @year={{format-date this.today year="numeric"}}
       @week={{this.week}}
       @toggleCollapsed={{this.toggle}}
-    />`);
+    />
+`);
     const title = '[data-test-week-title]';
     await settled();
     await click(title);
@@ -299,7 +305,8 @@ module('Integration | Component | week glance', function (hooks) {
       @showFullTitle={{true}}
       @year={{this.year}}
       @week={{this.week}}
-    />`);
+    />
+`);
     const title = '[data-test-week-title]';
     const body = 'p';
     const expectedTitle = this.getTitle(true);

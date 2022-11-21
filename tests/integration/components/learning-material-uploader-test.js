@@ -52,7 +52,8 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
       @for="test"
       @setFilename={{this.setFilename}}
       @setFileHash={{this.setFileHash}}
-    />`);
+    />
+`);
     const file = new File(['1234'], 'test.file');
     await selectFiles('[data-test-learning-material-uploader] input', file);
     assert.strictEqual(filename, 'test.file');
@@ -73,7 +74,8 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
       @for="test"
       @setFilename={{(noop)}}
       @setFileHash={{(noop)}}
-    />`);
+    />
+`);
     const file = new File(['1234'], 'test.file');
     await selectFiles('[data-test-learning-material-uploader] input', file);
     assert.dom('[data-test-learning-material-uploader]').includesText('This file is too large.');

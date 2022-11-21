@@ -61,7 +61,8 @@ module('Integration | Component | visualizer-course-session-type', function (hoo
     this.set('type', sessionTypeModel);
 
     await render(
-      hbs`<VisualizerCourseSessionType @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} />`
+      hbs`<VisualizerCourseSessionType @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} />
+`
     );
     //let the chart animations finish
     await waitFor('.loaded');

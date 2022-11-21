@@ -51,7 +51,8 @@ module('Integration | Component | visualizer-course-session-types', function (ho
   test('it renders as bar chart by default', async function (assert) {
     this.set('course', this.courseModel);
 
-    await render(hbs`<VisualizerCourseSessionTypes @course={{this.course}} @isIcon={{false}} />`);
+    await render(hbs`<VisualizerCourseSessionTypes @course={{this.course}} @isIcon={{false}} />
+`);
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
@@ -66,7 +67,8 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     this.set('course', this.courseModel);
 
     await render(
-      hbs`<VisualizerCourseSessionTypes @course={{this.course}} @isIcon={{false}} @chartType="donut" />`
+      hbs`<VisualizerCourseSessionTypes @course={{this.course}} @isIcon={{false}} @chartType="donut" />
+`
     );
     //let the chart animations finish
     await waitFor('.loaded');
@@ -82,7 +84,8 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     this.set('course', this.courseModel);
 
     await render(
-      hbs`<VisualizerCourseSessionTypes @course={{this.course}} @filter={{this.title}} @isIcon={{false}} />`
+      hbs`<VisualizerCourseSessionTypes @course={{this.course}} @filter={{this.title}} @isIcon={{false}} />
+`
     );
     //let the chart animations finish
     await waitFor('.loaded');

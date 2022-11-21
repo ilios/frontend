@@ -60,7 +60,8 @@ module('Integration | Component | instructor selection manager', function (hooks
       @addInstructorGroup={{(noop)}}
       @removeInstructor={{(noop)}}
       @removeInstructorGroup={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       component.selectedInstructors.instructors[0].userNameInfo.fullName,
@@ -142,7 +143,8 @@ module('Integration | Component | instructor selection manager', function (hooks
       @addInstructorGroup={{(noop)}}
       @removeInstructor={{this.removeInstructor}}
       @removeInstructorGroup={{(noop)}}
-    />`);
+    />
+`);
     await component.selectedInstructors.instructors[0].remove();
   });
 
@@ -162,7 +164,8 @@ module('Integration | Component | instructor selection manager', function (hooks
       @addInstructorGroup={{(noop)}}
       @removeInstructor={{(noop)}}
       @removeInstructorGroup={{this.removeGroup}}
-    />`);
+    />
+`);
     await component.selectedInstructorGroups.instructorGroups[0].remove();
   });
 
@@ -182,7 +185,8 @@ module('Integration | Component | instructor selection manager', function (hooks
       @addInstructorGroup={{this.addGroup}}
       @removeInstructor={{(noop)}}
       @removeInstructorGroup={{(noop)}}
-    />`);
+    />
+`);
     await component.search.searchBox.set('Gamma');
     await component.search.results.items[0].click();
   });
@@ -206,7 +210,8 @@ module('Integration | Component | instructor selection manager', function (hooks
       @addInstructorGroup={{(noop)}}
       @removeInstructor={{(noop)}}
       @removeInstructorGroup={{(noop)}}
-    />`);
+    />
+`);
     await component.search.searchBox.set('Aardvark');
     await component.search.results.items[0].click();
   });

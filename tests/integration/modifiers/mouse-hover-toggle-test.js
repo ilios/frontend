@@ -13,7 +13,8 @@ module('Integration | Modifier | mouse-hover-toggle', function (hooks) {
     this.set('action', (val) => {
       assert.ok(val);
     });
-    await render(hbs`<div id="theTestElement" {{mouse-hover-toggle this.action}}></div>`);
+    await render(hbs`<div id="theTestElement" {{mouse-hover-toggle this.action}}></div>
+`);
     await triggerEvent('#theTestElement', 'mouseover');
     this.set('action', (val) => {
       assert.notOk(val);

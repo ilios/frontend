@@ -28,7 +28,8 @@ module('Integration | Component | course leadership expanded', function (hooks) 
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title, 'Course Leadership');
     assert.strictEqual(component.leadershipList.directors.length, 1);
@@ -58,7 +59,8 @@ module('Integration | Component | course leadership expanded', function (hooks) 
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />`);
+    />
+`);
     await component.collapse();
   });
 
@@ -80,7 +82,8 @@ module('Integration | Component | course leadership expanded', function (hooks) 
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />`);
+    />
+`);
     await component.collapse();
   });
 
@@ -102,7 +105,8 @@ module('Integration | Component | course leadership expanded', function (hooks) 
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />`);
+    />
+`);
     await component.collapse();
   });
 
@@ -121,7 +125,8 @@ module('Integration | Component | course leadership expanded', function (hooks) 
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{this.click}}
-    />`);
+    />
+`);
     await component.manage();
   });
 });

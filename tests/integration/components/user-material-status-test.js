@@ -47,7 +47,8 @@ module('Integration | Component | user-material-status', function (hooks) {
       sessionLearningMaterial: 4,
     });
 
-    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />`);
+    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />
+`);
     assert.false(component.isChecked);
     assert.false(component.isDisabled);
     assert.dom(this.element).hasText('');
@@ -58,7 +59,8 @@ module('Integration | Component | user-material-status', function (hooks) {
       sessionLearningMaterial: 1,
     });
 
-    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />`);
+    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />
+`);
     assert.false(component.isChecked);
     assert.dom(this.element).hasText('');
   });
@@ -68,7 +70,8 @@ module('Integration | Component | user-material-status', function (hooks) {
       sessionLearningMaterial: 2,
     });
 
-    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />`);
+    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />
+`);
     assert.true(component.isIndeterminate);
     assert.dom(this.element).hasText('');
   });
@@ -78,7 +81,8 @@ module('Integration | Component | user-material-status', function (hooks) {
       sessionLearningMaterial: 3,
     });
 
-    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />`);
+    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />
+`);
     assert.true(component.isChecked);
     assert.dom(this.element).hasText('');
   });
@@ -97,7 +101,8 @@ module('Integration | Component | user-material-status', function (hooks) {
       sessionLearningMaterial: 3,
     });
 
-    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />`);
+    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} />
+`);
     assert.false(component.isPresent);
   });
 
@@ -108,7 +113,8 @@ module('Integration | Component | user-material-status', function (hooks) {
 
     await render(hbs`
       <UserMaterialStatus @learningMaterial={{this.learningMaterial}} @disabled={{true}} />
-    `);
+    
+`);
     assert.true(component.isChecked);
     assert.true(component.isDisabled);
     assert.dom(this.element).hasText('');

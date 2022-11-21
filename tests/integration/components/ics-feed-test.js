@@ -12,7 +12,8 @@ module('Integration | Component | ics feed', function (hooks) {
   test('it show instructions', async function (assert) {
     const instructions = 'SOME TEST INS';
     this.set('instructions', instructions);
-    await render(hbs`<IcsFeed @instructions={{this.instructions}} />`);
+    await render(hbs`<IcsFeed @instructions={{this.instructions}} />
+`);
     assert.strictEqual(component.instructions, instructions);
   });
 
@@ -32,7 +33,8 @@ module('Integration | Component | ics feed', function (hooks) {
     };
     this.set('url', url);
     this.set('instructions', instructions);
-    await render(hbs`<IcsFeed @instructions={{this.instructions}} @url={{this.url}} />`);
+    await render(hbs`<IcsFeed @instructions={{this.instructions}} @url={{this.url}} />
+`);
     await component.copy.click();
     // undo writeText overwrite.
     navigator.clipboard.writeText = writeText;

@@ -153,8 +153,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
 
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter=''
-        @sortBy='title'
+        @filter="''"
+        @sortBy="title"
         @offset={{0}}
         @setOffset={{(noop)}}
         @limit={{25}}
@@ -164,7 +164,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @setSortBy={{(noop)}}
         @toggleMaterialsMode={{(noop)}}
         @showAllMaterials={{false}}
-    />`);
+    />
+`);
     assert.ok(component.dashboardViewPicker.isVisible);
     assert.ok(component.header.displayToggle.firstButton.isChecked);
     assert.strictEqual(component.title, 'My Materials');
@@ -260,8 +261,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter=''
-        @sortBy='title'
+        @filter="''"
+        @sortBy="title"
         @offset={{0}}
         @setOffset={{(noop)}}
         @limit={{25}}
@@ -271,7 +272,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @setSortBy={{(noop)}}
         @toggleMaterialsMode={{(noop)}}
         @showAllMaterials={{true}}
-    />`);
+    />
+`);
 
     assert.ok(component.dashboardViewPicker.isVisible);
     assert.ok(component.header.displayToggle.secondButton.isChecked);
@@ -298,8 +300,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter=''
-        @sortBy='title'
+        @filter="''"
+        @sortBy="title"
         @offset={{0}}
         @setOffset={{(noop)}}
         @limit={{25}}
@@ -309,7 +311,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @setSortBy={{(noop)}}
         @toggleMaterialsMode={{(noop)}}
         @showAllMaterials={{true}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.courseFilter.options.length, 1);
     assert.strictEqual(component.courseFilter.options[0].text, 'All Courses');
@@ -332,8 +335,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{this.courseId}}
-        @filter=''
-        @sortBy='title'
+        @filter="''"
+        @sortBy="title"
         @offset={{0}}
         @setOffset={{(noop)}}
         @limit={{25}}
@@ -343,7 +346,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @setSortBy={{(noop)}}
         @toggleMaterialsMode={{(noop)}}
         @showAllMaterials={{false}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.courseFilter.options.length, 5);
     assert.ok(component.courseFilter.options[1].isSelected);
@@ -372,7 +376,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
         @filter={{this.filter}}
-        @sortBy='title'
+        @sortBy="title"
         @offset={{0}}
         @setOffset={{(noop)}}
         @limit={{25}}
@@ -382,7 +386,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @setSortBy={{(noop)}}
         @toggleMaterialsMode={{(noop)}}
         @showAllMaterials={{false}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.textFilter.value, 'title3');
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 1 of 1');
@@ -408,8 +413,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter=''
-        @sortBy='title'
+        @filter="''"
+        @sortBy="title"
         @offset={{this.limit}}
         @setOffset={{this.setOffset}}
         @limit={{this.offset}}
@@ -419,7 +424,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @setSortBy={{(noop)}}
         @toggleMaterialsMode={{(noop)}}
         @showAllMaterials={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(
       component.topPaginator.controls.pagerDetails.text,
       'Showing 51 - 150 of 205'
@@ -442,7 +448,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter=''
+        @filter="''"
         @sortBy={{this.sortBy}}
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -453,7 +459,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @setSortBy={{this.setSortBy}}
         @toggleMaterialsMode={{(noop)}}
         @showAllMaterials={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 25 of 205');
     assert.notOk(component.table.headers.sessionTitle.isSortedOn);
     assert.ok(component.table.headers.courseTitle.isSortedOn);
@@ -480,7 +487,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter=''
+        @filter="''"
         @sortBy={{this.sortBy}}
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -491,7 +498,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @setSortBy={{this.setSortBy}}
         @toggleMaterialsMode={{(noop)}}
         @showAllMaterials={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 25 of 205');
     assert.ok(component.table.headers.sessionTitle.isSortedOn);
     assert.ok(component.table.headers.sessionTitle.isSortedAscending);
@@ -518,7 +526,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter=''
+        @filter="''"
         @sortBy={{this.sortBy}}
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -529,7 +537,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @setSortBy={{this.setSortBy}}
         @toggleMaterialsMode={{(noop)}}
         @showAllMaterials={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 25 of 205');
     assert.notOk(component.table.headers.sessionTitle.isSortedOn);
     assert.notOk(component.table.headers.courseTitle.isSortedOn);
@@ -559,7 +568,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter=''
+        @filter="''"
         @sortBy={{this.sortBy}}
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -570,7 +579,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @setSortBy={{this.setSortBy}}
         @toggleMaterialsMode={{(noop)}}
         @showAllMaterials={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 25 of 205');
     assert.notOk(component.table.headers.sessionTitle.isSortedOn);
     assert.notOk(component.table.headers.title.isSortedOn);

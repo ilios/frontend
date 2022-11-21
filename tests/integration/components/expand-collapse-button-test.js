@@ -11,7 +11,8 @@ module('Integration | Component | expand collapse button', function (hooks) {
   test('renders with default value false', async function (assert) {
     assert.expect(1);
     this.set('action', () => {});
-    await render(hbs`<ExpandCollapseButton @action={{this.action}} />`);
+    await render(hbs`<ExpandCollapseButton @action={{this.action}} />
+`);
     assert.dom('svg').hasClass('fa-plus');
   });
 
@@ -23,7 +24,8 @@ module('Integration | Component | expand collapse button', function (hooks) {
       assert.ok(true, 'button was clicked');
       this.set('value', !this.value);
     });
-    await render(hbs`<ExpandCollapseButton @value={{this.value}} @action={{this.click}} />`);
+    await render(hbs`<ExpandCollapseButton @value={{this.value}} @action={{this.click}} />
+`);
     assert.dom('svg').hasClass('fa-plus');
 
     await click('svg');

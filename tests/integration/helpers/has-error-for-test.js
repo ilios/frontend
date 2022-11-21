@@ -18,7 +18,8 @@ module('Integration | Helper | has-error-for', function (hooks) {
     };
     this.set('obj', obj);
 
-    await render(hbs`{{has-error-for this.obj "test"}}`);
+    await render(hbs`{{has-error-for this.obj "test"}}
+`);
 
     assert.dom(this.element).hasText('true');
   });
@@ -33,7 +34,8 @@ module('Integration | Helper | has-error-for', function (hooks) {
     };
     this.set('obj', obj);
 
-    await render(hbs`{{has-error-for this.obj.test}}`);
+    await render(hbs`{{has-error-for this.obj.test}}
+`);
 
     assert.dom(this.element).hasText('true');
   });

@@ -12,21 +12,24 @@ module('Integration | Component | lm type icon', function (hooks) {
   test('link', async function (assert) {
     const lm = { type: 'link' };
     this.set('lm', lm);
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
+`);
     assert.ok(component.isLink);
   });
 
   test('citation', async function (assert) {
     const lm = { type: 'citation' };
     this.set('lm', lm);
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
+`);
     assert.ok(component.isCitation);
   });
 
   test('pdf file', async function (assert) {
     const lm = { type: 'file', mimetype: 'application/pdf' };
     this.set('lm', lm);
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
+`);
     assert.ok(component.isPdf);
   });
 
@@ -42,7 +45,8 @@ module('Integration | Component | lm type icon', function (hooks) {
 
     for (let i = 0; i < fixtures.length; i++) {
       this.set('lm', fixtures[i]);
-      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
+      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
+`);
       assert.ok(component.isPowerpoint);
     }
   });
@@ -58,7 +62,8 @@ module('Integration | Component | lm type icon', function (hooks) {
 
     for (let i = 0; i < fixtures.length; i++) {
       this.set('lm', fixtures[i]);
-      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
+      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
+`);
       assert.ok(component.isVideo);
     }
   });
@@ -74,7 +79,8 @@ module('Integration | Component | lm type icon', function (hooks) {
 
     for (let i = 0; i < fixtures.length; i++) {
       this.set('lm', fixtures[i]);
-      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
+      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
+`);
       assert.ok(component.isAudio);
     }
   });
@@ -88,7 +94,8 @@ module('Integration | Component | lm type icon', function (hooks) {
 
     for (let i = 0; i < fixtures.length; i++) {
       this.set('lm', fixtures[i].lm);
-      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
+      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
+`);
       assert.ok(component.isFile);
     }
   });
@@ -96,7 +103,8 @@ module('Integration | Component | lm type icon', function (hooks) {
   test('listItem', async function (assert) {
     const lm = { type: 'link' };
     this.set('lm', lm);
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{true}} />`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{true}} />
+`);
     assert.dom('.fa-li').exists();
   });
 
@@ -105,14 +113,16 @@ module('Integration | Component | lm type icon', function (hooks) {
     const lm = { type: 'link' };
     this.set('lm', lm);
 
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
+`);
     assert.strictEqual(
       this.element.querySelectorAll('.fa-li').length,
       0,
       'List icon class is not applied by default.'
     );
 
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{false}} />`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{false}} />
+`);
     assert.dom('.fa-li').doesNotExist();
   });
 });

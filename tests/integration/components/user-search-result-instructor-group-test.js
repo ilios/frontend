@@ -20,7 +20,8 @@ module('Integration | Component | user-search-result-instructor-group', function
     await render(hbs`<UserSearchResultInstructorGroup
       @group={{this.group}}
       @addInstructorGroup={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.text, 'instructor group 0');
     assert.ok(component.isActive);
   });
@@ -36,7 +37,8 @@ module('Integration | Component | user-search-result-instructor-group', function
       @group={{this.group}}
       @addInstructorGroup={{(noop)}}
       @currentlyActiveInstructorGroups={{this.activeGroups}}
-    />`);
+    />
+`);
     assert.strictEqual(component.text, 'instructor group 0');
     assert.notOk(component.isActive);
   });
@@ -55,7 +57,8 @@ module('Integration | Component | user-search-result-instructor-group', function
       @group={{this.group}}
       @addInstructorGroup={{this.add}}
       @currentlyActiveInstructorGroups={{(array)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.text, 'instructor group 0');
     assert.ok(component.isActive);
     await component.click();

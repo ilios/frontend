@@ -85,7 +85,8 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       @selectedTerms={{this.selectedTerms}}
       @add={{action this.nothing}}
       @remove={{action this.nothing}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.selectedTerms.length, 2);
     assert.strictEqual(component.selectedTerms[0].title, 'Foo (Medicine)');
@@ -132,7 +133,8 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       @selectedTerms={{this.selectedTerms}}
       @add={{action this.add}}
       @remove={{action this.remove}}
-    />`);
+    />
+`);
 
     assert.notOk(component.selectedTerms[0].terms[1].isPresent);
     assert.notOk(component.availableTerms[1].isSelected);
@@ -170,7 +172,8 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       @selectedTerms={{this.selectedTerms}}
       @add={{action this.nothing}}
       @remove={{action this.nothing}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.vocabulary.options.length, 2);
     assert.strictEqual(component.vocabulary.options[0].value, '1');
@@ -198,7 +201,8 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       @selectedTerms={{this.selectedTerms}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.availableTerms.length, 2);
     assert.strictEqual(component.availableTerms[0].name, 'Alpha');
@@ -237,7 +241,8 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       @selectedTerms={{this.selectedTerms}}
       @add={{action this.nothing}}
       @remove={{action this.nothing}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.vocabulary.options.length, 2);
     assert.notOk(component.vocabulary.options[0].isSelected);

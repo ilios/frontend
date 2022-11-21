@@ -25,7 +25,8 @@ module('Integration | Component | new session', function (hooks) {
   test('it renders', async function (assert) {
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     await render(
-      hbs`<NewSession @save={{(noop)}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />`
+      hbs`<NewSession @save={{(noop)}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />
+`
     );
     assert.strictEqual(component.sessionTypes.length, 2);
     assert.strictEqual(component.sessionTypes[0].title, 'session type 0');
@@ -38,7 +39,8 @@ module('Integration | Component | new session', function (hooks) {
       assert.ok(true);
     });
     await render(
-      hbs`<NewSession @save={{(noop)}} @cancel={{this.cancel}} @sessionTypes={{(array)}} />`
+      hbs`<NewSession @save={{(noop)}} @cancel={{this.cancel}} @sessionTypes={{(array)}} />
+`
     );
     await component.cancel();
   });
@@ -52,7 +54,8 @@ module('Integration | Component | new session', function (hooks) {
       assert.strictEqual(session.get('sessionType').get('title'), this.sessionType2.title);
     });
     await render(
-      hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />`
+      hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />
+`
     );
     await component.selectSessionType(2);
     await component.title.set(newTitle);
@@ -68,7 +71,8 @@ module('Integration | Component | new session', function (hooks) {
       assert.strictEqual(session.get('sessionType').get('title'), this.sessionType2.title);
     });
     await render(
-      hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />`
+      hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />
+`
     );
     await component.selectSessionType(2);
     await component.title.set(newTitle);
@@ -83,7 +87,8 @@ module('Integration | Component | new session', function (hooks) {
       assert.ok(false);
     });
     await render(
-      hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />`
+      hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />
+`
     );
     assert.notOk(component.hasError);
     await component.title.set(newTitle);
@@ -99,7 +104,8 @@ module('Integration | Component | new session', function (hooks) {
       assert.ok(false);
     });
     await render(
-      hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />`
+      hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />
+`
     );
     assert.notOk(component.hasError);
     await component.title.set(newTitle);

@@ -47,7 +47,8 @@ module('Integration | Component | detail cohort list', function (hooks) {
     const cohorts = await this.owner.lookup('service:store').findAll('cohort');
 
     this.set('cohorts', cohorts);
-    await render(hbs`<DetailCohortList @cohorts={{this.cohorts}} />`);
+    await render(hbs`<DetailCohortList @cohorts={{this.cohorts}} />
+`);
     assert.dom('th').hasText('School');
     assert.dom(findAll('th')[1]).hasText('Program');
     assert.dom(findAll('th')[2]).hasText('Cohort');

@@ -12,7 +12,8 @@ module('Integration | Component | copy-button', function (hooks) {
       <CopyButton>
         template block text
       </CopyButton>
-    `);
+    
+`);
 
     assert.strictEqual(component.text, 'template block text');
   });
@@ -41,7 +42,8 @@ module('Integration | Component | copy-button', function (hooks) {
       >
           copy this!
         </CopyButton>
-    `);
+    
+`);
     await component.click();
     // undo writeText overwrite.
     navigator.clipboard.writeText = writeText;

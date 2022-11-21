@@ -9,7 +9,8 @@ module('Integration | Modifier | scroll-into-view', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<div {{scroll-into-view}}></div>`);
+    await render(hbs`<div {{scroll-into-view}}></div>
+`);
 
     assert.ok(true);
   });

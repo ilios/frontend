@@ -9,20 +9,23 @@ module('Integration | Component | validation-error', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders with no errors', async function (assert) {
-    await render(hbs`<ValidationError @errors={{(array)}} />`);
+    await render(hbs`<ValidationError @errors={{(array)}} />
+`);
 
     assert.dom(this.element).hasText('');
   });
 
   test('it renders with errors', async function (assert) {
-    await render(hbs`<ValidationError @errors={{array "test 1" "test 2"}} />`);
+    await render(hbs`<ValidationError @errors={{array "test 1" "test 2"}} />
+`);
 
     assert.dom(this.element).hasText('test 1 test 2');
   });
 
   test('it responds to changes', async function (assert) {
     this.set('errors', ['one']);
-    await render(hbs`<ValidationError @errors={{this.errors}} />`);
+    await render(hbs`<ValidationError @errors={{this.errors}} />
+`);
 
     assert.dom(this.element).hasText('one');
 

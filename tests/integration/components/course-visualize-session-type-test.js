@@ -25,7 +25,8 @@ module('Integration | Component | course-visualize-session-type', function (hook
   test('it renders', async function (assert) {
     this.set('model', { course: this.courseModel, sessionType: this.sessionTypeModel });
 
-    await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />`);
+    await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />
+`);
 
     assert.strictEqual(component.title, 'course 0 2021');
   });
@@ -40,7 +41,8 @@ module('Integration | Component | course-visualize-session-type', function (hook
     });
     this.set('model', { course: this.courseModel, sessionType: this.sessionTypeModel });
 
-    await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />`);
+    await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />
+`);
 
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
@@ -48,7 +50,8 @@ module('Integration | Component | course-visualize-session-type', function (hook
   test('breadcrumb', async function (assert) {
     this.set('model', { course: this.courseModel, sessionType: this.sessionTypeModel });
 
-    await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />`);
+    await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />
+`);
 
     assert.strictEqual(component.breadcrumb.crumbs.length, 4);
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');

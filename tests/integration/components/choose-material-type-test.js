@@ -15,7 +15,8 @@ module('Integration | Component | choose-material-type', function (hooks) {
     await render(hbs`<ChooseMaterialType
       @choose={{action this.nothing}}
       @types={{array "file" "link" "citation"}}
-    />`);
+    />
+`);
 
     await a11yAudit(this.element);
     assert.strictEqual(component.text, 'Add');
@@ -30,7 +31,8 @@ module('Integration | Component | choose-material-type', function (hooks) {
     await render(hbs`<ChooseMaterialType
       @choose={{action this.nothing}}
       @types={{array "file" "link" "citation"}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.types.length, 0);
     await component.toggle.click();
@@ -48,7 +50,8 @@ module('Integration | Component | choose-material-type', function (hooks) {
     await render(hbs`<ChooseMaterialType
       @choose={{action this.choose}}
       @types={{array "file" "link" "citation"}}
-    />`);
+    />
+`);
     await component.toggle.click();
     await component.types[1].click();
   });
@@ -58,7 +61,8 @@ module('Integration | Component | choose-material-type', function (hooks) {
     await render(hbs`<ChooseMaterialType
       @choose={{action this.nothing}}
       @types={{array "file" "link" "citation"}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.types.length, 0);
     await component.toggle.down();
@@ -70,7 +74,8 @@ module('Integration | Component | choose-material-type', function (hooks) {
     await render(hbs`<ChooseMaterialType
       @choose={{action this.nothing}}
       @types={{array "file" "link" "citation"}}
-    />`);
+    />
+`);
 
     await component.toggle.down();
     assert.strictEqual(component.types.length, 3);

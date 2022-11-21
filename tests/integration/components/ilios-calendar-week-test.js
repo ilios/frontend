@@ -20,7 +20,8 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       second: 0,
     });
     this.set('date', date.toJSDate());
-    await render(hbs`<IliosCalendarWeek @date={{this.date}} @calendarEvents={{(array)}} />`);
+    await render(hbs`<IliosCalendarWeek @date={{this.date}} @calendarEvents={{(array)}} />
+`);
     assert.strictEqual(component.calendar.longWeekOfYear, 'Week of September 27, 2015');
     assert.strictEqual(component.calendar.events.length, 0);
   });
@@ -50,7 +51,8 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       @areDaysSelectable={{true}}
       @changeDate={{this.changeDate}}
       @changeView={{this.changeView}}
-    />`);
+    />
+`);
     component.calendar.dayHeadings[0].selectDay();
   });
 
@@ -74,7 +76,8 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       @areDaysSelectable={{false}}
       @changeDate={{this.changeDate}}
       @changeView={{(noop)}}
-    />`);
+    />
+`);
     await component.calendar.dayHeadings[0].selectDay();
   });
 });

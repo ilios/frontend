@@ -35,7 +35,8 @@ module('Integration | Component | course/loader', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::Loader @course={{this.course}} />`);
+    await render(hbs`<Course::Loader @course={{this.course}} />
+`);
     assert.dom('section').hasClass('course-loader');
     assert.dom('section').hasAttribute('aria-hidden', 'true');
   });

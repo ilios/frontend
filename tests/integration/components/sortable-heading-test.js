@@ -10,7 +10,8 @@ module('Integration | Component | sortable heading', function (hooks) {
 
   test('it renders with default options', async function (assert) {
     assert.expect(5);
-    await render(hbs`<SortableHeading>Foo</SortableHeading>`);
+    await render(hbs`<SortableHeading>Foo</SortableHeading>
+`);
     assert.dom('button').hasText('Foo');
     assert.dom('button').hasClass('text-left');
     assert.dom('button').hasNoClass('hide-from-small-screen');
@@ -41,7 +42,8 @@ module('Integration | Component | sortable heading', function (hooks) {
             @sortType={{this.sortType}}
           >
             Foo
-          </SortableHeading>`
+          </SortableHeading>
+`
     );
     assert.dom('button').hasText('Foo');
     assert.dom('button').hasClass(`text-${align}`);
@@ -55,7 +57,8 @@ module('Integration | Component | sortable heading', function (hooks) {
     this.set('click', () => {
       assert.ok(true);
     });
-    await render(hbs`<SortableHeading @onClick={{this.click}}>Foo</SortableHeading>`);
+    await render(hbs`<SortableHeading @onClick={{this.click}}>Foo</SortableHeading>
+`);
     await click(find('button'));
   });
 });

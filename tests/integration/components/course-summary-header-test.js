@@ -46,7 +46,8 @@ module('Integration | Component | course summary header', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
+    await render(hbs`<CourseSummaryHeader @course={{this.course}} />
+`);
     const title = 'h2';
     const actions = '.course-summary-actions';
     const materialsIcon = `${actions} a:nth-of-type(1) svg`;
@@ -83,7 +84,8 @@ module('Integration | Component | course summary header', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
+    await render(hbs`<CourseSummaryHeader @course={{this.course}} />
+`);
     const actions = '.course-summary-actions a';
     const printIcon = `${actions}:nth-of-type(1) svg`;
     const rolloverIcon = `${actions}:nth-of-type(2) svg`;
@@ -103,7 +105,8 @@ module('Integration | Component | course summary header', function (hooks) {
     const course = this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
+    await render(hbs`<CourseSummaryHeader @course={{this.course}} />
+`);
     const actions = '.course-summary-actions a';
     const materialsIcon = `${actions}:nth-of-type(1) svg`;
     const printIcon = `${actions}:nth-of-type(2) svg`;
@@ -126,7 +129,8 @@ module('Integration | Component | course summary header', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
+    await render(hbs`<CourseSummaryHeader @course={{this.course}} />
+`);
     const actions = '.course-summary-actions a';
     const materialsIcon = `${actions}:nth-of-type(1) svg`;
     const printIcon = `${actions}:nth-of-type(2) svg`;
