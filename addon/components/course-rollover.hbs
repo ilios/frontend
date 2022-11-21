@@ -54,7 +54,7 @@
                 selected={{is-equal year this.selectedYear}}
               >
                 {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                  {{year}} - {{inc year}}
+                  {{year}} - {{add year 1}}
                 {{else}}
                   {{year}}
                 {{/if}}
