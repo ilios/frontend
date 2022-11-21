@@ -9,7 +9,8 @@ module('Integration | Modifier | autofocus', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it focuses', async function (assert) {
-    await render(hbs`<input {{autofocus}} />
+    this.set('label', 'foo bar');
+    await render(hbs`<label><input {{autofocus}} />{{this.label}}</label>
 `);
 
     assert.dom('input').isFocused();
