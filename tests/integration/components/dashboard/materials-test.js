@@ -153,7 +153,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
 
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter="''"
+        @filter=""
         @sortBy="title"
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -261,7 +261,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter="''"
+        @filter=""
         @sortBy="title"
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -300,7 +300,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter="''"
+        @filter=""
         @sortBy="title"
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -335,7 +335,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{this.courseId}}
-        @filter="''"
+        @filter=""
         @sortBy="title"
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -413,7 +413,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter="''"
+        @filter=""
         @sortBy="title"
         @offset={{this.limit}}
         @setOffset={{this.setOffset}}
@@ -448,7 +448,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter="''"
+        @filter=""
         @sortBy={{this.sortBy}}
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -487,7 +487,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter="''"
+        @filter=""
         @sortBy={{this.sortBy}}
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -526,7 +526,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter="''"
+        @filter=""
         @sortBy={{this.sortBy}}
         @offset={{0}}
         @setOffset={{(noop)}}
@@ -568,7 +568,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
     await render(hbs`<Dashboard::Materials
         @courseIdFilter={{null}}
-        @filter="''"
+        @filter=""
         @sortBy={{this.sortBy}}
         @offset={{0}}
         @setOffset={{(noop)}}
