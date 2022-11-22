@@ -8,11 +8,12 @@ module('Integration | Component | copy-button', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
+    this.set('content', 'template block text');
     await render(hbs`
       <CopyButton>
-        template block text
+        {{this.content}}
       </CopyButton>
-    
+
 `);
 
     assert.strictEqual(component.text, 'template block text');
@@ -32,6 +33,7 @@ module('Integration | Component | copy-button', function (hooks) {
       assert.strictEqual(text, value);
     };
     this.set('text', text);
+    this.set('content', 'copy this!');
     this.set('success', () => {
       assert.ok(true);
     });
@@ -40,9 +42,9 @@ module('Integration | Component | copy-button', function (hooks) {
         @clipboardText={{this.text}}
         @success={{this.success}}
       >
-          copy this!
+          {{this.content}}
         </CopyButton>
-    
+
 `);
     await component.click();
     // undo writeText overwrite.
