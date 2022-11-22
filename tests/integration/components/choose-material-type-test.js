@@ -13,7 +13,7 @@ module('Integration | Component | choose-material-type', function (hooks) {
   test('it renders and is accessible', async function (assert) {
     this.set('nothing', () => {});
     await render(hbs`<ChooseMaterialType
-      @choose={{action this.nothing}}
+      @choose={{(noop)}}
       @types={{array "file" "link" "citation"}}
     />
 `);
@@ -29,7 +29,7 @@ module('Integration | Component | choose-material-type', function (hooks) {
   test('click opens menu', async function (assert) {
     this.set('nothing', () => {});
     await render(hbs`<ChooseMaterialType
-      @choose={{action this.nothing}}
+      @choose={{(noop)}}
       @types={{array "file" "link" "citation"}}
     />
 `);
@@ -48,7 +48,7 @@ module('Integration | Component | choose-material-type', function (hooks) {
       assert.strictEqual(type, 'link');
     });
     await render(hbs`<ChooseMaterialType
-      @choose={{action this.choose}}
+      @choose={{this.choose}}
       @types={{array "file" "link" "citation"}}
     />
 `);
@@ -59,7 +59,7 @@ module('Integration | Component | choose-material-type', function (hooks) {
   test('down opens menu', async function (assert) {
     this.set('nothing', () => {});
     await render(hbs`<ChooseMaterialType
-      @choose={{action this.nothing}}
+      @choose={{(noop)}}
       @types={{array "file" "link" "citation"}}
     />
 `);
@@ -72,7 +72,7 @@ module('Integration | Component | choose-material-type', function (hooks) {
   test('escape closes menu', async function (assert) {
     this.set('nothing', () => {});
     await render(hbs`<ChooseMaterialType
-      @choose={{action this.nothing}}
+      @choose={{(noop)}}
       @types={{array "file" "link" "citation"}}
     />
 `);
