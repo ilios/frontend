@@ -46,7 +46,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     await render(hbs`<SelectableTermsListItem
       @selectedTerms={{this.selectedTerms}}
       @term={{this.term}}
-      @remove={{action this.remove}}
+      @remove={{this.remove}}
     />
 `);
 
@@ -69,7 +69,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     await render(hbs`<SelectableTermsListItem
       @selectedTerms={{this.selectedTerms}}
       @term={{this.term}}
-      @add={{action this.add}}
+      @add={{this.add}}
     />
 `);
 
