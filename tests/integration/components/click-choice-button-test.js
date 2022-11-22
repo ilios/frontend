@@ -63,7 +63,7 @@ module('Integration | Component | click choice buttons', function (hooks) {
       called++;
     });
     await render(hbs`<ClickChoiceButtons
-      @toggle={{action this.toggle}}
+      @toggle={{this.toggle}}
       @firstChoicePicked={{this.firstChoicePicked}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"
