@@ -12,7 +12,8 @@ module('Integration | Helper | split', function (hooks) {
     {{#each (split "," "a,b,c") as |l|}}
       <span>{{l}}</span>
     {{/each}}
-    `);
+    
+`);
     assert.dom('span').exists({ count: 3 });
     assert.dom('span:nth-of-type(1)').containsText('a');
     assert.dom('span:nth-of-type(2)').containsText('b');
@@ -20,7 +21,8 @@ module('Integration | Helper | split', function (hooks) {
   });
 
   test('empty value gets empty array', async function (assert) {
-    await render(hbs`{{split "," ""}}`);
+    await render(hbs`{{split "," ""}}
+`);
 
     assert.dom('span').doesNotExist();
   });

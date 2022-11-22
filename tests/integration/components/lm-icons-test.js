@@ -11,14 +11,16 @@ module('Integration | Component | lm-icons', function (hooks) {
 
   test('it renders optional', async function (assert) {
     this.set('lm', { type: 'link' });
-    await render(hbs`<LmIcons @learningMaterial={{this.lm}} />`);
+    await render(hbs`<LmIcons @learningMaterial={{this.lm}} />
+`);
     assert.ok(component.type.isLink);
     assert.notOk(component.isRequired);
   });
 
   test('it renders required', async function (assert) {
     this.set('lm', { type: 'citation', required: true });
-    await render(hbs`<LmIcons @learningMaterial={{this.lm}} />`);
+    await render(hbs`<LmIcons @learningMaterial={{this.lm}} />
+`);
     assert.ok(component.type.isCitation);
     assert.ok(component.isRequired);
   });

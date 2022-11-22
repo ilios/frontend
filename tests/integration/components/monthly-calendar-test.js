@@ -28,7 +28,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @events={{(array)}}
       @changeToDayView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[0].isThirdDayOfWeek);
@@ -58,7 +59,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[8].isFourthDayOfWeek);
@@ -90,7 +92,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[8].isFourthDayOfWeek);
@@ -121,7 +124,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @events={{(array)}}
       @changeToDayView={{this.changeToDayView}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     await component.days[3].selectDay();
   });
@@ -151,7 +155,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{(noop)}}
       @selectEvent={{this.selectEvent}}
-    />`);
+    />
+`);
 
     await component.days[8].events[0].click();
   });
@@ -180,7 +185,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{this.changeToDayView}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     await component.days[8].showMore();
   });
@@ -211,7 +217,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{this.changeToDayView}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     await component.days[8].events[0].click();
   });
@@ -236,7 +243,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[10].isSecondDayOfWeek);
@@ -275,7 +283,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.days.length, 29);
     assert.ok(component.days[0].isSeventhDayOfWeek);

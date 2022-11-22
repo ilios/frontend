@@ -50,7 +50,8 @@ module('Integration | Component | offering-calendar', function (hooks) {
       @session={{this.session}}
       @startDate={{this.startDate}}
       @endDate={{this.endDate}}
-    />`);
+    />
+`);
     const events = '[data-test-calendar-event]';
     assert.dom(events).exists({ count: 4 });
   });

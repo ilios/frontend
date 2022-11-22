@@ -21,7 +21,8 @@ module('Integration | Component | session/objective-list-item-parents', function
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
     await a11yAudit(this.element);
@@ -45,7 +46,8 @@ module('Integration | Component | session/objective-list-item-parents', function
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.text, 'None');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -73,7 +75,8 @@ module('Integration | Component | session/objective-list-item-parents', function
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.list.length, 2);
     assert.strictEqual(component.list[0].text, 'Country & Western');
     assert.strictEqual(component.list[1].text, 'course objective 1');
@@ -103,7 +106,8 @@ module('Integration | Component | session/objective-list-item-parents', function
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.list.length, 2);
     assert.strictEqual(component.list[0].text, 'Country & Western');
     assert.strictEqual(component.list[1].text, 'course objective 1');
@@ -134,7 +138,8 @@ module('Integration | Component | session/objective-list-item-parents', function
       @save={{this.save}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     await component.save();
   });
 
@@ -161,7 +166,8 @@ module('Integration | Component | session/objective-list-item-parents', function
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{this.cancel}}
-    />`);
+    />
+`);
     await component.cancel();
   });
 
@@ -188,7 +194,8 @@ module('Integration | Component | session/objective-list-item-parents', function
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     await component.list[0].manage();
   });
 
@@ -223,7 +230,8 @@ module('Integration | Component | session/objective-list-item-parents', function
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.list.length, 3);
     assert.strictEqual(component.list[0].text, 'Oscar');
     assert.strictEqual(component.list[1].text, 'Zeppelin');

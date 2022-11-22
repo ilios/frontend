@@ -59,9 +59,10 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @vocabulary={{this.vocabulary}}
-      @add={{action (noop)}}
-      @remove={{action (noop)}}
-    />`);
+      @add={{(noop)}}
+      @remove={{(noop)}}
+    />
+`);
 
     assert.dom('li').exists({ count: 5 });
     assert.dom('li.top-level').exists({ count: 2 });
@@ -86,9 +87,10 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @terms={{await this.terms}}
-      @add={{action (noop)}}
-      @remove={{action (noop)}}
-    />`);
+      @add={{(noop)}}
+      @remove={{(noop)}}
+    />
+`);
 
     assert.dom('li').exists({ count: 5 });
     assert.dom('li.top-level').exists({ count: 2 });
@@ -117,9 +119,10 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @terms={{await this.terms}}
-      @add={{action (noop)}}
-      @remove={{action (noop)}}
-    />`);
+      @add={{(noop)}}
+      @remove={{(noop)}}
+    />
+`);
 
     assert.dom('li').exists({ count: 2 });
     assert.dom('li.top-level').exists({ count: 1 });
@@ -148,9 +151,10 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @terms={{await this.terms}}
-      @add={{action this.add}}
-      @remove={{action this.remove}}
-    />`);
+      @add={{this.add}}
+      @remove={{this.remove}}
+    />
+`);
 
     const term = 'li.top-level:nth-of-type(1) .selectable-terms-list-item';
     assert.dom(term).hasNoClass('selected');
@@ -169,10 +173,11 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @vocabulary={{this.vocabulary}}
-      @add={{action (noop)}}
-      @remove={{action (noop)}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
       @termFilter={{this.termFilter}}
-    />`);
+    />
+`);
 
     assert.dom('li').exists({ count: 2 });
     assert.dom('li.top-level').exists({ count: 1 });
@@ -191,10 +196,11 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @vocabulary={{this.vocabulary}}
-      @add={{action (noop)}}
-      @remove={{action (noop)}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
       @termFilter={{this.termFilter}}
-    />`);
+    />
+`);
 
     assert.dom('li').exists({ count: 2 });
     assert.dom('li.top-level').exists({ count: 1 });

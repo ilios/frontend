@@ -29,7 +29,8 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
 
   test('it renders', async function (assert) {
     this.set('group', this.group);
-    await render(hbs`<DetailLearnergroupsListItem @group={{this.group}} @remove={{(noop)}} />`);
+    await render(hbs`<DetailLearnergroupsListItem @group={{this.group}} @remove={{(noop)}} />
+`);
     assert.strictEqual(component.text, 'bar » baz » foo (3)');
     assert.notOk(component.isRemovable);
     assert.notOk(component.needsAccommodation);
@@ -38,7 +39,8 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
   test('it renders in edit mode', async function (assert) {
     this.set('group', this.group);
     await render(
-      hbs`<DetailLearnergroupsListItem @group={{this.group}} @isManaging={{true}} @remove={{(noop)}} />`
+      hbs`<DetailLearnergroupsListItem @group={{this.group}} @isManaging={{true}} @remove={{(noop)}} />
+`
     );
     assert.strictEqual(component.text, 'bar » baz » foo (3)');
     assert.ok(component.isRemovable);
@@ -47,7 +49,8 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
   test('needs special accommodation', async function (assert) {
     this.group.set('needsAccommodation', true);
     this.set('group', this.group);
-    await render(hbs`<DetailLearnergroupsListItem @group={{this.group}} @remove={{(noop)}} />`);
+    await render(hbs`<DetailLearnergroupsListItem @group={{this.group}} @remove={{(noop)}} />
+`);
     assert.ok(component.needsAccommodation);
     assert.strictEqual(
       component.text,
@@ -63,7 +66,8 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
       assert.ok(cascade);
     });
     await render(
-      hbs`<DetailLearnergroupsListItem @group={{this.group}} @isManaging={{true}} @remove={{this.remove}} />`
+      hbs`<DetailLearnergroupsListItem @group={{this.group}} @isManaging={{true}} @remove={{this.remove}} />
+`
     );
     await component.remove();
   });
@@ -76,7 +80,8 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
       assert.notOk(cascade);
     });
     await render(
-      hbs`<DetailLearnergroupsListItem @group={{this.group}} @isManaging={{true}} @remove={{this.remove}} />`
+      hbs`<DetailLearnergroupsListItem @group={{this.group}} @isManaging={{true}} @remove={{this.remove}} />
+`
     );
     // key modifiers are not supported by ember-cli-page-objects clickable() [ST 2022/09/08]
     await click('[data-test-remove-learnergroup]', { shiftKey: true });
@@ -91,7 +96,8 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
     });
 
     await render(
-      hbs`<DetailLearnergroupsListItem @group={{this.group}} @isManaging={{true}} @remove={{this.remove}} />`
+      hbs`<DetailLearnergroupsListItem @group={{this.group}} @isManaging={{true}} @remove={{this.remove}} />
+`
     );
     // key modifiers are not supported by ember-cli-page-objects clickable() [ST 2022/09/08]
     await click('[data-test-remove-learnergroup]', { ctrlKey: true });

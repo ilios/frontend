@@ -45,7 +45,8 @@ module('Integration | Component | week-glance/learning-material-list', function 
       @event={{this.event}}
       @preworkEvents={{this.preworkEvents}}
       @learningMaterials={{this.sessionLearningMaterials}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.prework.length, 1);
     assert.strictEqual(component.prework[0].name, 'prework 1');

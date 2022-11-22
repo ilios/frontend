@@ -17,13 +17,15 @@ module('Integration | Component | timed release schedule', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders with no start and end date', async function (assert) {
-    await render(hbs`<TimedReleaseSchedule />`);
+    await render(hbs`<TimedReleaseSchedule />
+`);
 
     assert.dom(this.element).hasText('Available immediately when published');
   });
 
   test('it renders nothing with no start and end date and showNoSchedule set to false', async function (assert) {
-    await render(hbs`<TimedReleaseSchedule @showNoSchedule={{false}} />`);
+    await render(hbs`<TimedReleaseSchedule @showNoSchedule={{false}} />
+`);
 
     assert.dom('[data-test-timed-release-schedule]').doesNotExist();
   });
@@ -34,7 +36,8 @@ module('Integration | Component | timed release schedule', function (hooks) {
     this.set('startDate', startDate.toJSDate());
     this.set('endDate', endDate.toJSDate());
     await render(
-      hbs`<TimedReleaseSchedule @startDate={{this.startDate}} @endDate={{this.endDate}} />`
+      hbs`<TimedReleaseSchedule @startDate={{this.startDate}} @endDate={{this.endDate}} />
+`
     );
     const expectedStartDate = this.intl.formatDate(startDate.toJSDate(), localeFormatOptions);
     const expectedEndDate = this.intl.formatDate(endDate.toJSDate(), localeFormatOptions);
@@ -45,7 +48,8 @@ module('Integration | Component | timed release schedule', function (hooks) {
   test('it renders with only start date in the future', async function (assert) {
     const tomorrow = DateTime.fromObject({ hour: 8 }).plus({ days: 1 });
     this.set('tomorrow', tomorrow.toJSDate());
-    await render(hbs`<TimedReleaseSchedule @startDate={{this.tomorrow}} />`);
+    await render(hbs`<TimedReleaseSchedule @startDate={{this.tomorrow}} />
+`);
     const expectedDate = this.intl.formatDate(tomorrow.toJSDate(), localeFormatOptions);
 
     assert.dom(this.element).hasText(`(Available: ${expectedDate})`);
@@ -54,7 +58,8 @@ module('Integration | Component | timed release schedule', function (hooks) {
   test('it renders empty with only start date in the past', async function (assert) {
     const yesterday = DateTime.fromObject({ hour: 8 }).minus({ days: 1 });
     this.set('yesterday', yesterday.toJSDate());
-    await render(hbs`<TimedReleaseSchedule @startDate={{this.yesterday}} />`);
+    await render(hbs`<TimedReleaseSchedule @startDate={{this.yesterday}} />
+`);
     assert.dom(this.element).hasNoText();
   });
 
@@ -62,7 +67,8 @@ module('Integration | Component | timed release schedule', function (hooks) {
     const yesterday = DateTime.fromObject({ hour: 8 }).minus({ days: 1 });
     this.set('yesterday', yesterday.toJSDate());
     await render(
-      hbs`<TimedReleaseSchedule @startDate={{this.yesterday}} @showNoSchedule={{false}} />`
+      hbs`<TimedReleaseSchedule @startDate={{this.yesterday}} @showNoSchedule={{false}} />
+`
     );
     assert.dom('[data-test-timed-release-schedule]').doesNotExist();
   });
@@ -70,7 +76,8 @@ module('Integration | Component | timed release schedule', function (hooks) {
   test('it renders with only end date in the future', async function (assert) {
     const tomorrow = DateTime.fromObject({ hour: 8 }).plus({ days: 1 });
     this.set('tomorrow', tomorrow.toJSDate());
-    await render(hbs`<TimedReleaseSchedule @endDate={{this.tomorrow}} />`);
+    await render(hbs`<TimedReleaseSchedule @endDate={{this.tomorrow}} />
+`);
     const expectedDate = this.intl.formatDate(tomorrow.toJSDate(), localeFormatOptions);
 
     assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
@@ -79,7 +86,8 @@ module('Integration | Component | timed release schedule', function (hooks) {
   test('it renders with only end date the past', async function (assert) {
     const yesterday = DateTime.fromObject({ hour: 8 }).minus({ days: 1 });
     this.set('tomorrow', yesterday.toJSDate());
-    await render(hbs`<TimedReleaseSchedule @endDate={{this.tomorrow}} />`);
+    await render(hbs`<TimedReleaseSchedule @endDate={{this.tomorrow}} />
+`);
     const expectedDate = this.intl.formatDate(yesterday.toJSDate(), localeFormatOptions);
     assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
   });

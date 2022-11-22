@@ -17,7 +17,8 @@ module('Integration | Component | click choice buttons', function (hooks) {
       @firstChoicePicked={{true}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"
-    />`);
+    />
+`);
     assert.strictEqual(component.firstButton.text, 'Left Button', 'first button has correct text');
     assert.strictEqual(
       component.secondButton.text,
@@ -37,7 +38,8 @@ module('Integration | Component | click choice buttons', function (hooks) {
       @firstChoicePicked={{false}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"
-    />`);
+    />
+`);
     assert.strictEqual(component.firstButton.text, 'Left Button', 'first button has correct text');
     assert.strictEqual(
       component.secondButton.text,
@@ -61,11 +63,12 @@ module('Integration | Component | click choice buttons', function (hooks) {
       called++;
     });
     await render(hbs`<ClickChoiceButtons
-      @toggle={{action this.toggle}}
+      @toggle={{this.toggle}}
       @firstChoicePicked={{this.firstChoicePicked}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"
-    />`);
+    />
+`);
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);
 
@@ -90,7 +93,8 @@ module('Integration | Component | click choice buttons', function (hooks) {
       @firstChoicePicked={{true}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"
-    />`);
+    />
+`);
 
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);

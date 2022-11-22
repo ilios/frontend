@@ -24,7 +24,8 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     await render(hbs`<SelectableTermsListItem
       @selectedTerms={{this.selectedTerms}}
       @term={{this.term}}
-    />`);
+    />
+`);
 
     assert.dom(this.element).hasText(this.termModel.get('title'));
   });
@@ -45,8 +46,9 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     await render(hbs`<SelectableTermsListItem
       @selectedTerms={{this.selectedTerms}}
       @term={{this.term}}
-      @remove={{action this.remove}}
-    />`);
+      @remove={{this.remove}}
+    />
+`);
 
     assert.dom('.selected').exists({ count: 1 });
     assert.dom('.actions .fa-xmark').exists({ count: 1 });
@@ -67,8 +69,9 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     await render(hbs`<SelectableTermsListItem
       @selectedTerms={{this.selectedTerms}}
       @term={{this.term}}
-      @add={{action this.add}}
-    />`);
+      @add={{this.add}}
+    />
+`);
 
     assert.dom('.selected').doesNotExist();
     assert.dom('.actions .fa-plus').exists({ count: 1 });

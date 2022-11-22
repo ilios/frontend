@@ -11,7 +11,8 @@ module('Integration | Component | not-found', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it displays not found message', async function (assert) {
-    await render(hbs`<NotFound />`);
+    await render(hbs`<NotFound />
+`);
     assert.strictEqual(
       component.text,
       "Rats! I couldn't find that. Please check your page address, and try again. Back to Dashboard"

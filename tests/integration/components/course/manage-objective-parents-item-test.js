@@ -18,7 +18,8 @@ module('Integration | Component | course/manage-objective-parents-item', functio
       @allowMultipleParents={{this.allowMultipleParents}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
 
     assert.dom('input[type="checkbox"]').exists();
     assert.dom('input').isChecked();

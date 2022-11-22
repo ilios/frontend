@@ -30,7 +30,8 @@ module('Integration | Component | ilios calendar single event objective list', f
       @listByPriorityPhrase={{this.listByPriorityPhrase}}
       @title={{this.title}}
       @isExpandedByDefault={{true}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title.expandCollapseSwitcher.text, title);
     assert.ok(component.title.expandCollapseSwitcher.isExpanded);
@@ -72,7 +73,8 @@ module('Integration | Component | ilios calendar single event objective list', f
     await render(hbs`<SingleEventObjectiveList
       @objectives={{this.objectives}}
       @isExpandedByDefault={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.noContent.text, 'None');
   });
 
@@ -88,7 +90,8 @@ module('Integration | Component | ilios calendar single event objective list', f
     await render(hbs`<SingleEventObjectiveList
       @objectives={{this.objectives}}
       @isExpandedByDefault={{true}}
-    />`);
+    />
+`);
 
     assert.notOk(component.title.displayModeSwitcher.isVisible);
     assert.ok(component.tree.domains.length, 2);
@@ -106,7 +109,8 @@ module('Integration | Component | ilios calendar single event objective list', f
     await render(hbs`<SingleEventObjectiveList
       @objectives={{this.objectives}}
       @isExpandedByDefault={{false}}
-    />`);
+    />
+`);
 
     assert.notOk(component.title.expandCollapseSwitcher.isExpanded);
     assert.ok(component.title.displayModeSwitcher.isDisabled);

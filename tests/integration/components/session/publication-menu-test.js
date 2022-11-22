@@ -16,7 +16,8 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
-    await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
+    await render(hbs`<Session::PublicationMenu @session={{this.session}} />
+`);
 
     await a11yAudit(this.element, {
       rules: {
@@ -44,7 +45,8 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
-    await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
+    await render(hbs`<Session::PublicationMenu @session={{this.session}} />
+`);
 
     await a11yAudit(this.element);
     assert.strictEqual(component.text, 'Scheduled');
@@ -60,7 +62,8 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
-    await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
+    await render(hbs`<Session::PublicationMenu @session={{this.session}} />
+`);
 
     await a11yAudit(this.element);
     assert.strictEqual(component.text, 'Published');
@@ -73,7 +76,8 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
-    await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
+    await render(hbs`<Session::PublicationMenu @session={{this.session}} />
+`);
     assert.ok(component.menuClosed);
     await component.toggle.click();
     assert.ok(component.menuOpen);
@@ -83,7 +87,8 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
-    await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
+    await render(hbs`<Session::PublicationMenu @session={{this.session}} />
+`);
     await component.toggle.click();
     assert.ok(component.menuOpen);
     assert.notOk(component.hasPublishAsIs);
@@ -100,7 +105,8 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
-    await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
+    await render(hbs`<Session::PublicationMenu @session={{this.session}} />
+`);
     await component.toggle.click();
     assert.ok(component.menuOpen);
     assert.notOk(component.hasPublishAsIs);
@@ -117,7 +123,8 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
-    await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
+    await render(hbs`<Session::PublicationMenu @session={{this.session}} />
+`);
     await component.toggle.click();
     assert.ok(component.menuOpen);
     assert.notOk(component.hasPublishAsIs);
@@ -131,7 +138,8 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
-    await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
+    await render(hbs`<Session::PublicationMenu @session={{this.session}} />
+`);
 
     assert.ok(component.menuClosed);
     await component.toggle.down();
@@ -142,7 +150,8 @@ module('Integration | Component | session/publication-menu', function (hooks) {
     this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', 1);
     this.set('session', sessionModel);
-    await render(hbs`<Session::PublicationMenu @session={{this.session}} />`);
+    await render(hbs`<Session::PublicationMenu @session={{this.session}} />
+`);
 
     await component.toggle.down();
     assert.ok(component.menuOpen);

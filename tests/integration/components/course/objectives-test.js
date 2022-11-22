@@ -40,7 +40,8 @@ module('Integration | Component | course/objectives', function (hooks) {
       @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 2);
     assert.strictEqual(
@@ -92,7 +93,8 @@ module('Integration | Component | course/objectives', function (hooks) {
       @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(
@@ -167,7 +169,8 @@ module('Integration | Component | course/objectives', function (hooks) {
       @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(
@@ -218,7 +221,8 @@ module('Integration | Component | course/objectives', function (hooks) {
       @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(component.title, 'Objectives (1)');

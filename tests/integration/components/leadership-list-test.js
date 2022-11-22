@@ -46,7 +46,8 @@ module('Integration | Component | leadership list', function (hooks) {
       @showAdministrators={{true}}
       @showDirectors={{true}}
       @showStudentAdvisors={{true}}
-    />`);
+    />
+`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
     const directorsUsernameInfo =
       'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-info]';
@@ -101,7 +102,8 @@ module('Integration | Component | leadership list', function (hooks) {
       @administrators={{this.administrators}}
       @showStudentAdvisors={{true}}
       @studentAdvisors={{this.studentAdvisors}}
-    />`);
+    />
+`);
     const administrators =
       'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
     const studentAdvisors =
@@ -125,7 +127,8 @@ module('Integration | Component | leadership list', function (hooks) {
       @directors={{this.directors}}
       @showStudentAdvisors={{true}}
       @studentAdvisors={{this.studentAdvisors}}
-    />`);
+    />
+`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
     const studentAdvisors =
       'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-fullname]';
@@ -148,7 +151,8 @@ module('Integration | Component | leadership list', function (hooks) {
       @showAdministrators={{true}}
       @administrators={{this.administrators}}
       @showStudentAdvisors={{false}}
-    />`);
+    />
+`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
     const administrators =
       'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-fullname]';
@@ -173,7 +177,8 @@ module('Integration | Component | leadership list', function (hooks) {
       @showAdministrators={{true}}
       @showDirectors={{true}}
       @showStudentAdvisors={{true}}
-      />`);
+      />
+`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
@@ -202,7 +207,8 @@ module('Integration | Component | leadership list', function (hooks) {
       @showAdministrators={{true}}
       @showDirectors={{true}}
       @showStudentAdvisors={{true}}
-    />`);
+    />
+`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';

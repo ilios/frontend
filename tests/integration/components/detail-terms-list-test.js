@@ -54,7 +54,8 @@ module('Integration | Component | detail terms list', function (hooks) {
       @vocabulary={{this.vocabulary}}
       @terms={{this.terms}}
       @canEdit={{false}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'Topics (Medicine)');
     assert.strictEqual(component.vocabularyName, 'Topics');
     assert.strictEqual(component.terms.length, 2);
@@ -106,7 +107,8 @@ module('Integration | Component | detail terms list', function (hooks) {
       @vocabulary={{this.vocabulary}}
       @terms={{this.terms}}
       @canEdit={{false}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'Topics (Medicine)');
     assert.strictEqual(component.terms.length, 0);
   });
@@ -142,7 +144,8 @@ module('Integration | Component | detail terms list', function (hooks) {
       @terms={{this.terms}}
       @remove={{this.remove}}
       @canEdit={{true}}
-    />`);
+    />
+`);
     assert.ok(component.terms[0].hasDeleteIcon);
     await component.terms[0].remove();
   });
@@ -168,7 +171,8 @@ module('Integration | Component | detail terms list', function (hooks) {
       @vocabulary={{this.vocabulary}}
       @terms={{this.terms}}
       @canEdit={{true}}
-    />`);
+    />
+`);
     assert.dom('[data-test-title] .inactive').hasText('(inactive)');
   });
 
@@ -191,7 +195,8 @@ module('Integration | Component | detail terms list', function (hooks) {
       @canEdit={{true}}
       @manage={{this.manage}}
       @canManage={{true}}
-    />`);
+    />
+`);
     await component.manage();
   });
 });

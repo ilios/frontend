@@ -9,23 +9,27 @@ module('Integration | Component | editable field', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders value', async function (assert) {
-    await render(hbs`<EditableField @value="woot!" />`);
+    await render(hbs`<EditableField @value="woot!" />
+`);
 
     assert.dom(this.element).hasText('woot!');
   });
 
   test('it renders clickPrompt', async function (assert) {
-    await render(hbs`<EditableField @clickPrompt="click me!" />`);
+    await render(hbs`<EditableField @clickPrompt="click me!" />
+`);
 
     assert.dom(this.element).hasText('click me!');
   });
 
   test('it renders content', async function (assert) {
+    this.set('content', 'template block text');
     await render(hbs`
       <EditableField @value="text">
-        template block text
+        {{this.content}}
       </EditableField>
-    `);
+
+`);
 
     assert.dom(this.element).hasText('text');
     await click('[data-test-edit]');
@@ -42,7 +46,8 @@ module('Integration | Component | editable field', function (hooks) {
       </p>
     `
     );
-    await render(hbs`<EditableField @value={{this.value}} />`);
+    await render(hbs`<EditableField @value={{this.value}} />
+`);
 
     assert.dom(this.element).hasText('');
     assert.dom(icon).exists({ count: 1 });
@@ -50,17 +55,22 @@ module('Integration | Component | editable field', function (hooks) {
 
   test('save on enter', async function (assert) {
     assert.expect(1);
+    this.set('label', 'Foo');
     this.set('value', 'lorem');
     this.set('save', () => {
       assert.ok(true, 'save action fired.');
     });
     await render(
       hbs`<EditableField
-            @save={{action this.save}} @saveOnEnter={{true}} @value={{this.value}}
+            @save={{this.save}} @saveOnEnter={{true}} @value={{this.value}}
           >
-            <input value={{this.value}} oninput={{action (mut this.value) value="target.value"}}>
+            <label>
+              <input value={{this.value}} {{on "input" (pick "target.value" (set this.value))}}>
+              {{this.label}}
+            </label>
           </EditableField>
-      `
+
+`
     );
     await click('[data-test-edit]');
     await triggerKeyEvent('.editinplace input', 'keyup', 13);
@@ -68,19 +78,24 @@ module('Integration | Component | editable field', function (hooks) {
 
   test('close on escape', async function (assert) {
     assert.expect(1);
+    this.set('label', 'Foo');
     this.set('value', 'lorem');
     this.set('revert', () => {
       assert.ok(true, 'revert action fired.');
     });
     await render(
       hbs`<EditableField
-            @close={{action this.revert}}
+            @close={{this.revert}}
             @closeOnEscape={{true}}
             @value={{this.value}}
           >
-            <input value={{this.value}} oninput={{action (mut this.value) value="target.value"}}>
+            <label>
+              <input value={{this.value}} {{on "input" (pick "target.value" (set this.value))}}>
+              {{this.label}}
+            </label>
           </EditableField>
-      `
+
+`
     );
     await click('[data-test-edit]');
     await triggerKeyEvent('.editinplace input', 'keyup', 27);
@@ -89,13 +104,15 @@ module('Integration | Component | editable field', function (hooks) {
   test('focus when editor opens on input', async function (assert) {
     assert.expect(1);
     this.set('value', 'lorem');
+    this.set('label', 'Foo');
     await render(
       hbs`<EditableField
             @value={{this.value}}
           >
-            <input>
+            <label><input>{{this.label}}</label>
           </EditableField>
-      `
+
+`
     );
     await click('[data-test-edit]');
     assert.dom('input', this.element).isFocused();
@@ -104,13 +121,16 @@ module('Integration | Component | editable field', function (hooks) {
   test('focus when editor opens on textarea', async function (assert) {
     assert.expect(1);
     this.set('value', 'lorem');
+    this.set('label', 'Foo Bar');
     await render(
       hbs`<EditableField
             @value={{this.value}}
           >
-            <textarea></textarea>
+            <label for="textarea">{{this.label}}</label>
+            <textarea id="textarea"></textarea>
           </EditableField>
-      `
+
+`
     );
     await click('[data-test-edit]');
 
@@ -121,7 +141,8 @@ module('Integration | Component | editable field', function (hooks) {
     const text = 't'.repeat(400);
     const abbreviatedText = 't'.repeat(200);
     this.set('value', text);
-    await render(hbs`<EditableField @value={{this.value}} />`);
+    await render(hbs`<EditableField @value={{this.value}} />
+`);
     assert.dom(this.element).hasText(abbreviatedText);
     await click('[data-test-expand]');
     assert.dom(this.element).hasText(text);
@@ -139,7 +160,8 @@ module('Integration | Component | editable field', function (hooks) {
             @onEditingStatusChange={{set this.status}}
           >
           </EditableField>
-      `
+
+`
     );
     assert.notOk(this.status);
     await click('[data-test-edit]');

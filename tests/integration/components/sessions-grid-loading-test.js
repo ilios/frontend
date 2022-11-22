@@ -9,7 +9,8 @@ module('Integration | Component | sessions-grid-loading', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<SessionsGridLoading @count={{5}} />`);
+    await render(hbs`<SessionsGridLoading @count={{5}} />
+`);
 
     assert.dom('[data-test-row]').exists({ count: 5 });
   });

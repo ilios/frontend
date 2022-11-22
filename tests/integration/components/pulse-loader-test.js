@@ -9,7 +9,8 @@ module('Integration | Component | pulse loader', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<PulseLoader />`);
+    await render(hbs`<PulseLoader />
+`);
     assert.dom(this.element).hasText('');
   });
 });

@@ -22,7 +22,8 @@ module('Integration | Component | leadership collapsed', function (hooks) {
       @expand={{this.click}}
       @showAdministrators={{true}}
       @showDirectors={{true}}
-    />`);
+    />
+`);
     const title = '.title';
     const table = 'table';
     const directorsRow = `${table} tbody tr:nth-of-type(1)`;
@@ -47,7 +48,8 @@ module('Integration | Component | leadership collapsed', function (hooks) {
       @expand={{this.click}}
       @showAdministrators={{true}}
       @showDirectors={{true}}
-    />`);
+    />
+`);
     const title = '.title';
 
     await click(title);
@@ -67,7 +69,8 @@ module('Integration | Component | leadership collapsed', function (hooks) {
       @directorsCount={{this.directorsCount}}
       @administratorsCount={{this.administratorsCount}}
       @expand={{this.click}}
-    />`);
+    />
+`);
     const title = '.title';
     const table = 'table';
     const administratorsRow = `${table} tbody tr:nth-of-type(1)`;
@@ -91,7 +94,8 @@ module('Integration | Component | leadership collapsed', function (hooks) {
       @directorsCount={{this.directorsCount}}
       @administratorsCount={{this.administratorsCount}}
       @expand={{this.click}}
-    />`);
+    />
+`);
     const title = '.title';
     const table = 'table';
     const directorsRow = `${table} tbody tr:nth-of-type(1)`;

@@ -29,7 +29,8 @@ module('Integration | Component | single-event-learningmaterial-list', function 
       },
     ]);
     await render(
-      hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />`
+      hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />
+`
     );
 
     assert.strictEqual(component.items.length, 3);
@@ -47,7 +48,8 @@ module('Integration | Component | single-event-learningmaterial-list', function 
   test('displays `None` when provided no content', async function (assert) {
     this.set('learningMaterials', []);
     await render(
-      hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />`
+      hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />
+`
     );
     assert.ok(component.noContent.isVisible);
     assert.ok(component.noContent.text, 'None');
@@ -108,7 +110,8 @@ module('Integration | Component | single-event-learningmaterial-list', function 
     this.set('prework', prework);
     this.set('learningMaterials', materials);
     await render(
-      hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} @prework={{this.prework}} />`
+      hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} @prework={{this.prework}} />
+`
     );
     assert.strictEqual(component.items.length, 5);
     assert.strictEqual(component.prework.length, 2);

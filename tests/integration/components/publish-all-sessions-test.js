@@ -77,7 +77,8 @@ module('Integration | Component | publish all sessions', function (hooks) {
     this.set('sessions', sessions);
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
+    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />
+`);
     assert.strictEqual(
       component.unpublishableSessions.text,
       'Sessions Incomplete: cannot publish (1)'
@@ -141,7 +142,8 @@ module('Integration | Component | publish all sessions', function (hooks) {
   test('it renders empty', async function (assert) {
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @sessions={{(array)}} @course={{this.course}} />`);
+    await render(hbs`<PublishAllSessions @sessions={{(array)}} @course={{this.course}} />
+`);
 
     assert.strictEqual(
       component.unpublishableSessions.text,
@@ -168,7 +170,8 @@ module('Integration | Component | publish all sessions', function (hooks) {
     const sessions = [this.unpublishableSession];
     this.set('sessions', sessions);
     this.set('course', this.course);
-    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
+    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />
+`);
     assert.strictEqual(
       component.review.unlinkedObjectivesWarning,
       'This course has unlinked objective(s)'
@@ -182,7 +185,8 @@ module('Integration | Component | publish all sessions', function (hooks) {
     this.set('sessions', sessions);
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
+    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />
+`);
 
     assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
@@ -211,7 +215,8 @@ module('Integration | Component | publish all sessions', function (hooks) {
     this.set('sessions', sessions);
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
+    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />
+`);
 
     assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);

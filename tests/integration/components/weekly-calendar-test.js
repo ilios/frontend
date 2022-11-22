@@ -45,7 +45,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @date={{this.date}}
       @events={{(array)}}
       @changeToDayView={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.longWeekOfYear, 'Week of January 6, 2019');
     assert.strictEqual(component.shortWeekOfYear, '1/6 — 1/12 2019');
@@ -74,7 +75,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @date={{this.date}}
       @events={{this.events}}
       @changeToDayView={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.dayHeadings.length, 7);
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
@@ -111,7 +113,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @date={{this.date}}
       @events={{this.events}}
       @changeToDayView={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.dayHeadings.length, 7);
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
@@ -159,7 +162,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @events={{(array)}}
       @changeToDayView={{this.changeToDayView}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     await component.dayHeadings[1].selectDay();
   });
@@ -189,7 +193,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{(noop)}}
       @selectEvent={{this.selectEvent}}
-    />`);
+    />
+`);
 
     await component.events[0].click();
   });
@@ -220,7 +225,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{this.changeToDayView}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     await component.events[0].click();
   });
@@ -245,7 +251,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.longWeekOfYear, 'Week of December 7, 1980');
     assert.strictEqual(component.shortWeekOfYear, '12/7 — 12/13 1980');
@@ -291,7 +298,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @events={{this.events}}
       @changeToDayView={{(noop)}}
       @selectEvent={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.longWeekOfYear, 'Week of February 23, 2020');
     assert.strictEqual(component.shortWeekOfYear, '2/23 — 2/29 2020');

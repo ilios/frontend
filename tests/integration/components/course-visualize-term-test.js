@@ -23,7 +23,8 @@ module('Integration | Component | course-visualize-term', function (hooks) {
   test('it renders', async function (assert) {
     this.set('model', { course: this.courseModel, term: this.termModel });
 
-    await render(hbs`<CourseVisualizeTerm @model={{this.model}} />`);
+    await render(hbs`<CourseVisualizeTerm @model={{this.model}} />
+`);
 
     assert.strictEqual(component.title, 'course 0 2021');
   });
@@ -38,7 +39,8 @@ module('Integration | Component | course-visualize-term', function (hooks) {
     });
     this.set('model', { course: this.courseModel, term: this.termModel });
 
-    await render(hbs`<CourseVisualizeTerm @model={{this.model}} />`);
+    await render(hbs`<CourseVisualizeTerm @model={{this.model}} />
+`);
 
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
@@ -46,7 +48,8 @@ module('Integration | Component | course-visualize-term', function (hooks) {
   test('breadcrumb', async function (assert) {
     this.set('model', { course: this.courseModel, term: this.termModel });
 
-    await render(hbs`<CourseVisualizeTerm @model={{this.model}} />`);
+    await render(hbs`<CourseVisualizeTerm @model={{this.model}} />
+`);
 
     assert.strictEqual(component.breadcrumb.crumbs.length, 5);
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');

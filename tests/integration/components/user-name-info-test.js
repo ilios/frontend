@@ -15,7 +15,8 @@ module('Integration | Component | user-name-info', function (hooks) {
     const user = this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    await render(hbs`<UserNameInfo @user={{this.user}} />`);
+    await render(hbs`<UserNameInfo @user={{this.user}} />
+`);
     assert.notOk(component.hasAdditionalInfo);
     assert.notOk(component.hasPronouns);
     assert.strictEqual(component.fullName, '0 guy M. Mc0son');
@@ -25,7 +26,8 @@ module('Integration | Component | user-name-info', function (hooks) {
     const user = this.server.create('user', { displayName: 'Clem Chowder' });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    await render(hbs`<UserNameInfo @user={{this.user}} />`);
+    await render(hbs`<UserNameInfo @user={{this.user}} />
+`);
     assert.ok(component.hasAdditionalInfo);
     assert.strictEqual(component.fullName, 'Clem Chowder');
     assert.strictEqual(component.infoIconLabel, 'Campus name of record');
@@ -41,7 +43,8 @@ module('Integration | Component | user-name-info', function (hooks) {
     const user = this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    await render(hbs`<UserNameInfo id="test-id" @user={{this.user}} />`);
+    await render(hbs`<UserNameInfo id="test-id" @user={{this.user}} />
+`);
     assert.strictEqual(component.id, 'test-id');
   });
 
@@ -51,7 +54,8 @@ module('Integration | Component | user-name-info', function (hooks) {
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    await render(hbs`<UserNameInfo @user={{this.user}} />`);
+    await render(hbs`<UserNameInfo @user={{this.user}} />
+`);
     assert.ok(component.hasPronouns);
     assert.strictEqual(component.fullName, '0 guy M. Mc0son');
     assert.strictEqual(component.pronouns, '(they/them/tay)');

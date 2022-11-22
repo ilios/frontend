@@ -80,7 +80,8 @@ module('Integration | Component | dashboard/week', function (hooks) {
     }
     this.owner.register('service:user-events', UserEvents);
 
-    await render(hbs`<Dashboard::Week />`);
+    await render(hbs`<Dashboard::Week />
+`);
     const expectedTitle = this.getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
@@ -99,7 +100,8 @@ module('Integration | Component | dashboard/week', function (hooks) {
     this.owner.register('service:user-events', UserEvents);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    await render(hbs`<Dashboard::Week />`);
+    await render(hbs`<Dashboard::Week />
+`);
     const expectedTitle = this.getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);

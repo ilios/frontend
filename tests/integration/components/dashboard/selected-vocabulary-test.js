@@ -39,7 +39,8 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
       @selectedTermIds={{this.selectedTermIds}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'Vocabulary 1');
     assert.strictEqual(component.selectedTermTree.checkboxes.length, 3);
     assert.strictEqual(component.selectedTermTree.checkboxes[0].text, 'top 1');
@@ -62,7 +63,8 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
       @selectedTermIds={{(array)}}
       @add={{this.add}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
     await component.selectedTermTree.checkboxes[0].click();
   });
 
@@ -78,7 +80,8 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
       @selectedTermIds={{this.selectedTermIds}}
       @add={{(noop)}}
       @remove={{this.remove}}
-    />`);
+    />
+`);
     await component.selectedTermTree.checkboxes[0].click();
   });
 });

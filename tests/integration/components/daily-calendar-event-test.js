@@ -51,7 +51,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{array this.event}}
-      />`);
+      />
+`);
       assert.dom(s).hasStyle(this.getStyle(97, 12, 50));
       assert.dom(s).hasText('8:00 AM event 0');
     });
@@ -62,7 +63,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(97, 12, 16));
       assert.dom(s).hasText('8:00 AM event 0');
@@ -74,7 +76,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(97, 42, 16));
       assert.dom(s).hasText('8:00 AM event 1');
@@ -86,7 +89,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(99, 22, 16));
       assert.dom(s).hasText('8:10 AM event 2');
@@ -98,7 +102,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(121, 24, 16));
       assert.dom(s).hasText('10:00 AM event 3');
@@ -110,7 +115,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(123, 22, 16));
       assert.dom(s).hasText('10:10 AM event 4');
@@ -122,7 +128,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(145, 12, 50));
       assert.dom(s).hasText('12:00 PM event 5');
@@ -151,7 +158,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(99, 22, 25));
       assert.dom(s).hasText('8:10 AM event 0');
@@ -163,7 +171,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(99, 14, 25));
       assert.dom(s).hasText('8:10 AM event 1');
@@ -175,7 +184,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(117, 10, 25));
       assert.dom(s).hasText('9:40 AM event 2');
@@ -187,7 +197,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(123, 22, 7));
       assert.dom(s).hasText('10:10 AM event 3');
@@ -199,7 +210,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
       assert.dom(s).hasText('10:40 AM event 4');
@@ -211,7 +223,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
       assert.dom(s).hasText('10:40 AM event 5');
@@ -223,7 +236,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
       assert.dom(s).hasText('10:40 AM event 6');
@@ -235,7 +249,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
       assert.dom(s).hasText('10:40 AM event 7');
@@ -247,7 +262,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
       assert.dom(s).hasText('10:40 AM event 8');
@@ -259,7 +275,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
       assert.dom(s).hasText('10:40 AM event 9');
@@ -271,7 +288,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       await render(hbs`<DailyCalendarEvent
         @event={{this.event}}
         @allDayEvents={{this.events}}
-      />`);
+      />
+`);
 
       assert.dom(s).hasStyle(this.getStyle(145, 12, 7));
       assert.dom(s).hasText('12:00 PM event 10');

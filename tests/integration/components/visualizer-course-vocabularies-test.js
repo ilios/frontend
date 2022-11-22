@@ -51,7 +51,8 @@ module('Integration | Component | visualizer-course-vocabularies', function (hoo
 
     this.set('course', courseModel);
 
-    await render(hbs`<VisualizerCourseVocabularies @course={{this.course}} @isIcon={{false}} />`);
+    await render(hbs`<VisualizerCourseVocabularies @course={{this.course}} @isIcon={{false}} />
+`);
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .slice');

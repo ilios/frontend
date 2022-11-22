@@ -40,7 +40,8 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
       @editable={{true}}
       @lm={{this.lm}}
       @setManagedMaterial={{(noop)}}
-      />`);
+      />
+`);
     assert.ok(component.typeIcon.isCitation);
     assert.strictEqual(component.title, 'test title');
     assert.strictEqual(component.userNameInfo.fullName, '0 guy M. Mc0son');
@@ -59,7 +60,8 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
       @editable={{false}}
       @lm={{this.lm}}
       @setManagedMaterial={{(noop)}}
-      />`);
+      />
+`);
     assert.ok(component.typeIcon.isCitation);
     assert.strictEqual(component.title, 'test title');
     assert.strictEqual(component.userNameInfo.fullName, '0 guy M. Mc0son');
@@ -81,7 +83,8 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
       @lm={{this.lm}}
       @setManagedMaterial={{(noop)}}
       @remove={{this.remove}}
-      />`);
+      />
+`);
     assert.notOk(component.confirmRemoval.isVisible);
     await component.actions.remove.click();
     assert.ok(component.confirmRemoval.isVisible);
@@ -102,7 +105,8 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
       @lm={{this.lm}}
       @setManagedMaterial={{(noop)}}
       @remove={{this.remove}}
-      />`);
+      />
+`);
     assert.notOk(component.confirmRemoval.isVisible);
     await component.actions.remove.click();
     assert.ok(component.confirmRemoval.isVisible);
@@ -119,7 +123,8 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
       @editable={{true}}
       @lm={{this.lm}}
       @setManagedMaterial={{this.setManagedMaterial}}
-      />`);
+      />
+`);
     await component.actions.edit.click();
   });
 
@@ -133,7 +138,8 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
       @editable={{true}}
       @lm={{this.lm}}
       @setManagedMaterial={{this.setManagedMaterial}}
-      />`);
+      />
+`);
     await component.actions.edit.click();
   });
 });

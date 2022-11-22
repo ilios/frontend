@@ -60,7 +60,8 @@ module('Integration | Component | week-glance-event', function (hooks) {
       attendanceRequired: true,
       supplemental: true,
     });
-    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />
+`);
 
     assert.strictEqual(component.title, 'Learn to Learn');
     assert.strictEqual(component.sessionType, 'Lecture');
@@ -135,7 +136,8 @@ module('Integration | Component | week-glance-event', function (hooks) {
       attendanceRequired: false,
       supplemental: false,
     });
-    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />
+`);
 
     assert.strictEqual(component.title, 'Finding the Point in Life');
     assert.strictEqual(component.sessionType, 'Independent Learning');
@@ -207,7 +209,8 @@ module('Integration | Component | week-glance-event', function (hooks) {
       attendanceRequired: true,
       supplemental: true,
     });
-    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />
+`);
 
     assert.strictEqual(component.title, 'Schedule some materials');
     assert.strictEqual(component.sessionType, 'Lecture');
@@ -249,7 +252,8 @@ module('Integration | Component | week-glance-event', function (hooks) {
         { name: 'prework 2', slug: 'e2' },
       ],
     });
-    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />
+`);
 
     assert.strictEqual(component.title, 'Learn to Learn');
     assert.strictEqual(component.learningMaterials.prework.length, 2);
@@ -305,7 +309,8 @@ module('Integration | Component | week-glance-event', function (hooks) {
       attendanceRequired: true,
       supplemental: true,
     });
-    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />
+`);
 
     assert.strictEqual(component.title, 'Learn to Learn');
     assert.strictEqual(component.learningMaterials.materials.length, 2);
@@ -356,7 +361,8 @@ module('Integration | Component | week-glance-event', function (hooks) {
       attendanceRequired: true,
       supplemental: true,
     });
-    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />
+`);
 
     await a11yAudit(this.element);
     assert.strictEqual(component.title, 'Learn to Learn');
@@ -382,7 +388,8 @@ module('Integration | Component | week-glance-event', function (hooks) {
       attendanceRequired: true,
       supplemental: true,
     });
-    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />
+`);
 
     await a11yAudit(this.element);
     assert.strictEqual(component.title, 'Learn to Learn');
@@ -406,7 +413,8 @@ module('Integration | Component | week-glance-event', function (hooks) {
       attendanceRequired: true,
       supplemental: true,
     });
-    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />
+`);
     assert.strictEqual(component.description.content.text, 'Test');
     assert.dom('[data-test-heading]').exists();
   });
@@ -428,7 +436,8 @@ module('Integration | Component | week-glance-event', function (hooks) {
       attendanceRequired: true,
       supplemental: true,
     });
-    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />
+`);
     assert.strictEqual(component.description.content.text, 'Test ' + 't'.repeat(45));
     assert.dom('[data-test-heading]').doesNotExist();
     await component.description.content.expand.click();

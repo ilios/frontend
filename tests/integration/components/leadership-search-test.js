@@ -14,7 +14,8 @@ module('Integration | Component | leadership search', function (hooks) {
     await render(hbs`<LeadershipSearch
       @existingUsers={{(array)}}
       @selectUser={{(noop)}}
-    />`);
+    />
+`);
 
     const search = 'input[type="search"]';
 
@@ -25,7 +26,8 @@ module('Integration | Component | leadership search', function (hooks) {
     await render(hbs`<LeadershipSearch
       @existingUsers={{(array)}}
       @selectUser={{(noop)}}
-    />`);
+    />
+`);
     const search = 'input[type="search"]';
     const results = 'ul';
 
@@ -42,7 +44,8 @@ module('Integration | Component | leadership search', function (hooks) {
     await render(hbs`<LeadershipSearch
       @existingUsers={{(array)}}
       @selectUser={{(noop)}}
-    />`);
+    />
+`);
     const search = 'input[type="search"]';
     const results = 'ul li';
     const resultsCount = `${results}:nth-of-type(1)`;
@@ -76,7 +79,8 @@ module('Integration | Component | leadership search', function (hooks) {
     await render(hbs`<LeadershipSearch
       @existingUsers={{(array)}}
       @selectUser={{(noop)}}
-    />`);
+    />
+`);
     const search = 'input[type="search"]';
     const results = 'ul li';
     const resultsCount = `${results}:nth-of-type(1)`;
@@ -98,7 +102,8 @@ module('Integration | Component | leadership search', function (hooks) {
     await render(hbs`<LeadershipSearch
       @existingUsers={{(array)}}
       @selectUser={{this.select}}
-    />`);
+    />
+`);
     const search = 'input[type="search"]';
     const results = 'ul li';
     const firstResult = `${results}:nth-of-type(2)`;
@@ -132,7 +137,8 @@ module('Integration | Component | leadership search', function (hooks) {
     await render(hbs`<LeadershipSearch
       @existingUsers={{this.existingUsers}}
       @selectUser={{this.select}}
-    />`);
+    />
+`);
     const search = 'input[type="search"]';
     const results = 'ul li';
     const resultsCount = `${results}:nth-of-type(1)`;

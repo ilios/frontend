@@ -27,7 +27,8 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
-      />`
+      />
+`
     );
     assert.notOk(component.hasRemoveConfirmation);
     assert.strictEqual(component.description.text, 'session objective 0');
@@ -52,7 +53,8 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
-      />`
+      />
+`
     );
     const newDescription = 'Pluto Visits Earth';
     assert.strictEqual(component.description.text, 'session objective 0');
@@ -77,7 +79,8 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
-      />`
+      />
+`
     );
     await component.parents.list[0].manage();
     assert.ok(component.parentManager.isPresent);
@@ -97,7 +100,8 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
-      />`
+      />
+`
     );
     await component.meshDescriptors.list[0].manage();
     assert.ok(component.meshManager.isPresent);
@@ -118,7 +122,8 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
-      />`
+      />
+`
     );
     assert.notOk(component.taxonomyManager.isPresent);
     await component.selectedTerms.manage();
@@ -139,7 +144,8 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
-      />`
+      />
+`
     );
     await component.remove();
     assert.ok(component.hasRemoveConfirmation);

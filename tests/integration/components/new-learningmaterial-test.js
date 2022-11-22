@@ -31,7 +31,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         @save={{(noop)}}
         @cancel={{(noop)}}
       />
-   `);
+   
+`);
     assert.strictEqual(component.owningUser.userNameInfo.fullName, 'Clem Chowder');
     assert.ok(component.owningUser.userNameInfo.hasAdditionalInfo);
     assert.notOk(component.owningUser.userNameInfo.isTooltipVisible);
@@ -55,7 +56,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         @save={{(noop)}}
         @cancel={{(noop)}}
       />
-   `);
+   
+`);
     assert.strictEqual(component.url.validationErrors.length, 0);
     await component.save();
     assert.strictEqual(component.url.validationErrors.length, 1);
@@ -80,7 +82,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         @save={{(noop)}}
         @cancel={{(noop)}}
       />
-   `);
+   
+`);
     assert.strictEqual(component.fileUpload.validationErrors.length, 0);
     await component.save();
     assert.strictEqual(component.fileUpload.validationErrors[0].text, 'Missing file');

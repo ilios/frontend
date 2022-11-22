@@ -22,7 +22,8 @@ module('Integration | Helper | has-many-ids', function (hooks) {
       },
     });
 
-    await render(hbs`{{has-many-ids this.model "foo"}}`);
+    await render(hbs`{{has-many-ids this.model "foo"}}
+`);
 
     assert.dom(this.element).hasText('1,2');
   });

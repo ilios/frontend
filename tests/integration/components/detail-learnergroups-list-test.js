@@ -65,7 +65,8 @@ module('Integration | Component | detail-learnergroups-list', function (hooks) {
     await render(hbs`<DetailLearnergroupsList
       @learnerGroups={{this.learnerGroups}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.trees.length, 2);
     assert.strictEqual(component.trees[0].title, 'program 0 cohort 0');
     assert.strictEqual(component.trees[0].items.length, 3);
@@ -91,7 +92,8 @@ module('Integration | Component | detail-learnergroups-list', function (hooks) {
       @learnerGroups={{this.learnerGroups}}
       @remove={{this.remove}}
       @isManaging={{true}}
-    />`);
+    />
+`);
     await component.trees[0].items[0].remove();
   });
 });

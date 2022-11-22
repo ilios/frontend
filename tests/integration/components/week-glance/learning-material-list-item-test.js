@@ -27,7 +27,8 @@ module('Integration | Component | week-glance/learning-material-list-item', func
       @lm={{this.lm}}
       @index={{1}}
       @showLink={{true}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title, 'lm 1');
     assert.ok(component.typeIcon.isLink);
@@ -49,7 +50,8 @@ module('Integration | Component | week-glance/learning-material-list-item', func
       @event={{this.event}}
       @lm={{this.lm}}
       @index={{1}}
-    />`);
+    />
+`);
 
     assert.notOk(component.hasLink);
   });
@@ -70,7 +72,8 @@ module('Integration | Component | week-glance/learning-material-list-item', func
       @lm={{this.lm}}
       @index={{1}}
       @showLink={{false}}
-    />`);
+    />
+`);
 
     assert.notOk(component.hasLink);
   });

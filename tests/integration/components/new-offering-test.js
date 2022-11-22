@@ -17,7 +17,8 @@ module('Integration | Component | new offering', function (hooks) {
       @courseStartDate={{this.today}}
       @courseEndDate={{this.today}}
       @close={{(noop)}}
-    />`);
+    />
+`);
 
     assert.dom('.new-offering-title').hasText('New Offering');
   });

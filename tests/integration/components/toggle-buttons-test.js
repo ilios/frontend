@@ -16,7 +16,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @firstOptionSelected={{true}}
       @firstLabel="First"
       @secondLabel="Second"
-    />`);
+    />
+`);
     assert.strictEqual(component.firstLabel.text, 'First');
     assert.ok(component.firstButton.isChecked);
     assert.strictEqual(component.secondLabel.text, 'Second');
@@ -31,7 +32,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @firstOptionSelected={{false}}
       @firstLabel="First"
       @secondLabel="Second"
-    />`);
+    />
+`);
     assert.strictEqual(component.firstLabel.text, 'First');
     assert.notOk(component.firstButton.isChecked);
     assert.strictEqual(component.secondLabel.text, 'Second');
@@ -50,7 +52,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @firstOptionSelected={{false}}
       @firstLabel="Left"
       @secondLabel="Right"
-    />`);
+    />
+`);
     await component.firstButton.click();
   });
 
@@ -64,7 +67,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @firstOptionSelected={{true}}
       @firstLabel="Left"
       @secondLabel="Right"
-    />`);
+    />
+`);
     await component.secondButton.click();
   });
 
@@ -78,7 +82,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @firstOptionSelected={{false}}
       @firstLabel="Left"
       @secondLabel="Right"
-    />`);
+    />
+`);
     await component.firstButton.click();
   });
 
@@ -92,7 +97,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @firstOptionSelected={{true}}
       @firstLabel="Left"
       @secondLabel="Right"
-    />`);
+    />
+`);
     await component.secondButton.click();
   });
 
@@ -106,7 +112,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @firstOptionSelected={{true}}
       @firstLabel="Left"
       @secondLabel="Right"
-    />`);
+    />
+`);
 
     assert.true(component.firstButton.isChecked);
     await component.firstButton.click();
@@ -123,7 +130,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @firstOptionSelected={{false}}
       @firstLabel="Left"
       @secondLabel="Right"
-    />`);
+    />
+`);
 
     assert.true(component.secondButton.isChecked);
     await component.secondButton.click();
@@ -140,7 +148,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @firstOptionSelected={{true}}
       @firstLabel="Left"
       @secondLabel="Right"
-    />`);
+    />
+`);
 
     assert.true(component.firstButton.isChecked);
     await component.firstLabel.click();
@@ -157,7 +166,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @firstOptionSelected={{false}}
       @firstLabel="Left"
       @secondLabel="Right"
-    />`);
+    />
+`);
 
     assert.true(component.secondButton.isChecked);
     await component.secondLabel.click();
