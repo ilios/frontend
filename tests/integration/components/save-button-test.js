@@ -9,21 +9,24 @@ module('Integration | Component | save-button', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<SaveButton>Save</SaveButton>
+    this.set('label', 'Save');
+    await render(hbs`<SaveButton>{{this.label}}</SaveButton>
 `);
     assert.dom().hasText('Save');
   });
 
   test('it displays save percent and spinner when saving', async function (assert) {
-    await render(hbs`<SaveButton @isSaving={{true}} @saveProgressPercent={{11}}>Save</SaveButton>
+    this.set('label', 'Save');
+    await render(hbs`<SaveButton @isSaving={{true}} @saveProgressPercent={{11}}>{{this.label}}</SaveButton>
 `);
     assert.dom('[data-icon="spinner"]').exists();
     assert.dom().hasText('11%');
   });
 
   test('icon is a check at 100%', async function (assert) {
+    this.set('label', 'Save');
     await render(
-      hbs`<SaveButton @isSaving={{true}} @saveProgressPercent={{100}}>Save</SaveButton>
+      hbs`<SaveButton @isSaving={{true}} @saveProgressPercent={{100}}>{{this.label}}</SaveButton>
 `
     );
     assert.dom('[data-icon="check"]').exists();
@@ -32,8 +35,9 @@ module('Integration | Component | save-button', function (hooks) {
 
   test('binds passed action', async function (assert) {
     assert.expect(1);
+    this.set('label', 'Save');
     this.set('click', () => assert.ok(true));
-    await render(hbs`<SaveButton data-test-save {{on "click" this.click}}>Save</SaveButton>
+    await render(hbs`<SaveButton data-test-save {{on "click" this.click}}>{{this.label}}</SaveButton>
 `);
     await click('[data-test-save]');
   });
