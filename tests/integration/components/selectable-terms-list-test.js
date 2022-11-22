@@ -59,8 +59,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @vocabulary={{this.vocabulary}}
-      @add={{action (noop)}}
-      @remove={{action (noop)}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />
 `);
 
@@ -87,8 +87,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @terms={{await this.terms}}
-      @add={{action (noop)}}
-      @remove={{action (noop)}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />
 `);
 
@@ -119,8 +119,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @terms={{await this.terms}}
-      @add={{action (noop)}}
-      @remove={{action (noop)}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />
 `);
 
@@ -151,8 +151,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @terms={{await this.terms}}
-      @add={{action this.add}}
-      @remove={{action this.remove}}
+      @add={{this.add}}
+      @remove={{this.remove}}
     />
 `);
 
@@ -173,8 +173,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @vocabulary={{this.vocabulary}}
-      @add={{action (noop)}}
-      @remove={{action (noop)}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
       @termFilter={{this.termFilter}}
     />
 `);
@@ -196,8 +196,8 @@ module('Integration | Component | selectable terms list', function (hooks) {
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
       @vocabulary={{this.vocabulary}}
-      @add={{action (noop)}}
-      @remove={{action (noop)}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
       @termFilter={{this.termFilter}}
     />
 `);
