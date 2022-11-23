@@ -54,6 +54,7 @@ export default class SearchBox extends Component {
   }
 
   searchTask = restartableTask(async () => {
+    this.moveFocus();
     await timeout(DEBOUNCE_TIMEOUT);
     await this.args.search(this.value);
   });
