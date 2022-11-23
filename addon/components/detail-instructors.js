@@ -4,6 +4,8 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { use } from 'ember-could-get-used-to-this';
 
 export default class DetailInstructorsComponent extends Component {
   @service currentUser;
@@ -11,6 +13,8 @@ export default class DetailInstructorsComponent extends Component {
   @tracked instructorGroupBuffer = [];
   @tracked instructorBuffer = [];
   @tracked availableInstructorGroups;
+  @use ilmInstructors = new ResolveAsyncValue(() => [this.args.ilmSession?.instructors]);
+  @use ilmInstructorGroups = new ResolveAsyncValue(() => [this.args.ilmSession?.instructorGroups]);
 
   constructor() {
     super(...arguments);
@@ -48,6 +52,20 @@ export default class DetailInstructorsComponent extends Component {
       return 0;
     }
     return this.args.ilmSession.instructors.length;
+  }
+
+  get selectedIlmInstructors() {
+    if (!this.ilmInstructors) {
+      return [];
+    }
+    return this.ilmInstructors.toArray();
+  }
+
+  get selectedIlmInstructorGroups() {
+    if (!this.ilmInstructorGroups) {
+      return [];
+    }
+    return this.ilmInstructorGroups.toArray();
   }
 
   get instructorGroupCount() {

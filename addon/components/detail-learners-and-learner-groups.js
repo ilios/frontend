@@ -5,12 +5,16 @@ import { inject as service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
 import { uniqueValues } from '../utils/array-helpers';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { use } from 'ember-could-get-used-to-this';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @service currentUser;
   @tracked isManaging = false;
   @tracked learnerGroupBuffer = [];
   @tracked learnerBuffer = [];
+  @use ilmLearners = new ResolveAsyncValue(() => [this.args.ilmSession?.learners]);
+  @use ilmLearnerGroups = new ResolveAsyncValue(() => [this.args.ilmSession?.learnerGroups]);
 
   manage = dropTask(async () => {
     const { ilmSession } = this.args;
@@ -45,6 +49,21 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
     }
     return this.args.ilmSession.learnerGroups.length;
   }
+
+  get selectedIlmLearners() {
+    if (!this.ilmLearners) {
+      return [];
+    }
+    return this.ilmLearners.toArray();
+  }
+
+  get selectedIlmLearnerGroups() {
+    if (!this.ilmLearnerGroups) {
+      return [];
+    }
+    return this.ilmLearnerGroups.toArray();
+  }
+
   @action
   cancel() {
     this.learnerGroupBuffer = [];
