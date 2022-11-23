@@ -18,15 +18,6 @@ module('Integration | Helper | join', function (hooks) {
     assert.dom().hasText('foo, bar, baz', 'words are joined with a comma and a space');
   });
 
-  test('The default separator is a comma', async function (assert) {
-    this.set('array', emberArray(['foo', 'bar', 'baz']));
-
-    await render(hbs`{{join this.array}}
-`);
-
-    assert.dom().hasText('foo,bar,baz', 'words are joined with a comma');
-  });
-
   test('It watches for changes', async function (assert) {
     let array = emberArray(['foo', 'bar', 'baz']);
     this.set('array', array);
