@@ -94,7 +94,7 @@
     "file-saver": "^2.0.5",
     "ilios-common": "^72.0.1",
     "loader.js": "^4.7.0",
-    "luxon": "^3.1.0",
+    "luxon": "^3.1.1",
     "miragejs": "^0.1.46",
     "mockdate": "^3.0.5",
     "moment-timezone": "^0.5.39",
