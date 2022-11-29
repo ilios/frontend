@@ -28,6 +28,12 @@
       .validation-error-message {
         grid-column: 1 / -1;
       }
+
+      .mesh-search {
+        label {
+          display: none;
+        }
+      }
     }
 
     .selected-instructor,
