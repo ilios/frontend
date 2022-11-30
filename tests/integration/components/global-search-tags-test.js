@@ -12,7 +12,8 @@ module('Integration | Component | global-search-tags', function (hooks) {
 
   test('it renders and is accessible', async function (assert) {
     this.set('tags', ['terms', 'meshdescriptors', 'id', 'learningmaterials']);
-    await render(hbs`<GlobalSearchTags @tags={{this.tags}} />`);
+    await render(hbs`<GlobalSearchTags @tags={{this.tags}} />
+`);
     assert.strictEqual(component.tags.length, 4);
     assert.strictEqual(component.tags[0].text, 'Terms');
     assert.strictEqual(component.tags[1].text, 'MeSH');

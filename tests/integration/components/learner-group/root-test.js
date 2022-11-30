@@ -89,7 +89,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.defaultLocation.text, 'Default Location: test location');
     assert.strictEqual(component.instructorManager.assignedInstructors.length, 2);
@@ -137,7 +138,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
-    />`);
+    />
+`);
 
     assert.ok(component.actions.buttons.toggle.isVisible);
     assert.notOk(component.actions.buttons.bulkAssignment.isVisible);
@@ -163,7 +165,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @isEditing={{false}}
       @isBulkAssigning={{false}}
       @canUpdate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.needsAccommodation.toggle.checked, 'true');
   });
 
@@ -184,7 +187,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @isEditing={{false}}
       @isBulkAssigning={{false}}
       @canUpdate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.needsAccommodation.toggle.checked, 'false');
   });
 
@@ -205,7 +209,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @isEditing={{false}}
       @isBulkAssigning={{false}}
       @canUpdate={{false}}
-    />`);
+    />
+`);
     assert.strictEqual(
       component.needsAccommodation.text,
       'Accommodation is required for learners in this group: Yes'
@@ -229,7 +234,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @isEditing={{false}}
       @isBulkAssigning={{false}}
       @canUpdate={{false}}
-    />`);
+    />
+`);
     assert.strictEqual(
       component.needsAccommodation.text,
       'Accommodation is required for learners in this group: No'
@@ -253,7 +259,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @isEditing={{false}}
       @isBulkAssigning={{false}}
       @canUpdate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.needsAccommodation.toggle.checked, 'false');
     await component.needsAccommodation.toggle.click();
     assert.strictEqual(component.needsAccommodation.toggle.checked, 'true');
@@ -277,7 +284,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.defaultLocation.text, 'Default Location: test location');
     await component.defaultLocation.edit();
@@ -304,7 +312,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.defaultLocation.text, 'Default Location: test location');
     await component.defaultLocation.edit();
@@ -351,7 +360,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.associatedCourses.courses.length, 1);
     assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0');
@@ -387,7 +397,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.associatedCourses.courses.length, 2);
     assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0');
@@ -416,7 +427,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
-    />`);
+    />
+`);
 
     assert.strictEqual(
       component.defaultUrl.text,
@@ -448,7 +460,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.defaultUrl.text, 'Default Virtual Learning Link: Click to edit');
     await component.defaultUrl.edit();
@@ -496,7 +509,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
-    />`);
+    />
+`);
 
     assert.notOk(component.calendar.isVisible);
     assert.strictEqual(component.actions.buttons.toggle.firstLabel.text, 'Hide Calendar');
@@ -525,7 +539,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{true}}
       @isBulkAssigning={{false}}
-    />`);
+    />
+`);
 
     assert.notOk(component.actions.buttons.toggle.isVisible);
     assert.notOk(component.actions.buttons.bulkAssignment.isVisible);
@@ -554,7 +569,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{this.isBulkAssigning}}
-    />`);
+    />
+`);
     await component.actions.buttons.bulkAssignment.click();
     assert.notOk(component.actions.buttons.toggle.isVisible);
     assert.notOk(component.actions.buttons.bulkAssignment.isVisible);

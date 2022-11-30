@@ -68,7 +68,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{true}}
       @setSchoolNewVocabulary={{(noop)}}
-    />`);
+    />
+`);
 
     assert.ok(component.schoolLeadershipExpanded.isVisible);
     assert.notOk(component.schoolLeadershipCollapsed.isVisible);
@@ -130,7 +131,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{false}}
       @setSchoolNewVocabulary={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.schoolLeadershipExpanded.isVisible);
     assert.ok(component.schoolLeadershipCollapsed.isVisible);
@@ -195,7 +197,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{false}}
       @setSchoolNewVocabulary={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title.text, 'school 0');
     assert.notOk(component.title.hasError);
@@ -256,7 +259,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{false}}
       @setSchoolNewVocabulary={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title.text, 'school 0');
     await component.title.edit();
@@ -314,7 +318,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{false}}
       @setSchoolNewVocabulary={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title.text, 'school 0');
     assert.notOk(component.title.hasError);
@@ -372,7 +377,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{false}}
       @setSchoolNewVocabulary={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title.text, 'school 0');
     assert.notOk(component.title.hasError);

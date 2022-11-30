@@ -26,7 +26,8 @@ module('Integration | Component | programs/list', function (hooks) {
     this.server.createList('program', 3, { school });
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
-    await render(hbs`<Programs::List @programs={{this.programs}} />`);
+    await render(hbs`<Programs::List @programs={{this.programs}} />
+`);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'program 0');
     assert.strictEqual(component.items[0].school, 'school 0');
@@ -37,7 +38,8 @@ module('Integration | Component | programs/list', function (hooks) {
   });
 
   test('it renders empty', async function (assert) {
-    await render(hbs`<Programs::List @programs={{(array)}} />`);
+    await render(hbs`<Programs::List @programs={{(array)}} />
+`);
     assert.strictEqual(component.items.length, 0);
     assert.ok(component.isEmpty);
   });
@@ -47,7 +49,8 @@ module('Integration | Component | programs/list', function (hooks) {
     this.server.createList('program', 3, { school });
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
-    await render(hbs`<Programs::List @programs={{this.programs}} />`);
+    await render(hbs`<Programs::List @programs={{this.programs}} />
+`);
     assert.strictEqual(this.server.db.programs.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'program 0');
@@ -62,7 +65,8 @@ module('Integration | Component | programs/list', function (hooks) {
     this.server.createList('program', 3, { school });
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
-    await render(hbs`<Programs::List @programs={{this.programs}} />`);
+    await render(hbs`<Programs::List @programs={{this.programs}} />
+`);
     assert.strictEqual(this.server.db.programs.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'program 0');

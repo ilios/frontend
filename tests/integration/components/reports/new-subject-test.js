@@ -24,7 +24,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     }
 
     context.owner.register('service:current-user', CurrentUserMock);
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />
+`);
     assert.strictEqual(component.subjects.items[subjectNum].value, subjectVal);
     await component.subjects.choose(subjectVal);
     await component.objects.choose('null');
@@ -50,7 +51,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     }
     this.owner.register('service:current-user', CurrentUserMock);
 
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />
+`);
 
     assert.strictEqual(component.componentTitle, 'New Report');
     assert.strictEqual(component.schools.items.length, 4);
@@ -104,7 +106,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
 
   test('selecting and de-selecting a MeSH term as prepositional object', async function (assert) {
     this.server.create('mesh-descriptor');
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />
+`);
     await component.objects.choose('mesh term');
     assert.notOk(component.selectedMeshTerm.isVisible);
     await component.mesh.manager.search.set('descriptor 0');
@@ -116,7 +119,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
 
   test('selecting and de-selecting an instructor as prepositional object', async function (assert) {
     this.server.create('user', { firstName: 'Rusty' });
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />
+`);
 
     await component.objects.choose('instructor');
     assert.notOk(component.selectedInstructor.isVisible);
@@ -257,7 +261,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       email: 'test@example.com',
       displayName: 'Aardvark',
     });
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />
+`);
     assert.notOk(component.instructors.search.isVisible);
     assert.notOk(component.selectedInstructor.isVisible);
     await component.schools.choose('null');
@@ -282,7 +287,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.set('close', () => {
       assert.ok(true);
     });
-    await render(hbs`<Reports::NewSubject @close={{this.close}} />`);
+    await render(hbs`<Reports::NewSubject @close={{this.close}} />
+`);
     await component.cancel();
   });
 
@@ -302,7 +308,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
         assert.strictEqual(report.title, 'lorem ipsum');
       },
     });
-    await render(hbs`<Reports::NewSubject @save={{this.save}} @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @save={{this.save}} @close={{(noop)}} />
+`);
     await component.title.set('lorem ipsum');
     await component.save();
   });
@@ -317,7 +324,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       }
     }
     this.owner.register('service:current-user', CurrentUserMock);
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />
+`);
     assert.strictEqual(component.title.errors.length, 0);
     await component.title.set('0123456789'.repeat(25));
     await component.save();
@@ -334,7 +342,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       }
     }
     this.owner.register('service:current-user', CurrentUserMock);
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />
+`);
     await component.objects.choose('instructor');
     assert.strictEqual(component.instructors.errors.length, 0);
     await component.save();
@@ -352,7 +361,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       }
     }
     this.owner.register('service:current-user', CurrentUserMock);
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />
+`);
     await component.objects.choose('mesh term');
     assert.strictEqual(component.mesh.errors.length, 0);
     await component.save();
@@ -370,7 +380,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       }
     }
     this.owner.register('service:current-user', CurrentUserMock);
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />
+`);
     await component.subjects.choose('mesh term');
     assert.strictEqual(component.objects.errors.length, 0);
     await component.save();
@@ -391,7 +402,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       }
     }
     this.owner.register('service:current-user', CurrentUserMock);
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}} />
+`);
     await component.subjects.choose('instructor');
     assert.strictEqual(component.objects.errors.length, 0);
     await component.save();

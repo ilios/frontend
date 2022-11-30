@@ -22,9 +22,7 @@
         </button>
         <button
           type="button"
-          class="error-detail-action"
-          role="button"
-          {{on "click" (set this.showDetails (not this.showDetails))}}
+          class="error-detail-action" {{on "click" (set this.showDetails (not this.showDetails))}}
         >
           {{t (if this.showDetails "general.collapseDetail" "general.expandDetail")}}
         </button>

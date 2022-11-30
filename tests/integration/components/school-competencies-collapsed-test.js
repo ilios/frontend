@@ -21,7 +21,8 @@ module('Integration | Component | school competencies collapsed', function (hook
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
-    await render(hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
+    await render(hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{(noop)}} />
+`);
 
     assert.strictEqual(component.expandButton.text, 'Competencies (3/4)');
     assert.strictEqual(component.domains.length, 3);
@@ -41,7 +42,8 @@ module('Integration | Component | school competencies collapsed', function (hook
     this.set('school', schoolModel);
     this.set('expand', () => assert.ok(true));
     await render(
-      hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{this.expand}} />`
+      hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{this.expand}} />
+`
     );
     await component.expandButton.click();
   });

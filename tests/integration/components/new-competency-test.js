@@ -15,13 +15,15 @@ module('Integration | Component | new competency', function (hooks) {
     this.set('add', (value) => {
       assert.strictEqual(value, title);
     });
-    await render(hbs`<NewCompetency @add={{this.add}} />`);
+    await render(hbs`<NewCompetency @add={{this.add}} />
+`);
     await component.title.set(title);
     await component.save();
   });
 
   test('validation fails if title is too short', async function (assert) {
-    await render(hbs`<NewCompetency @add={{(noop)}}/>`);
+    await render(hbs`<NewCompetency @add={{(noop)}}/>
+`);
     assert.notOk(component.hasError);
     await component.title.set('');
     await component.title.submit();
@@ -29,7 +31,8 @@ module('Integration | Component | new competency', function (hooks) {
   });
 
   test('validation fails if title is too long', async function (assert) {
-    await render(hbs`<NewCompetency @add={{(noop)}}/>`);
+    await render(hbs`<NewCompetency @add={{(noop)}}/>
+`);
     assert.notOk(component.hasError);
     await component.title.set('0123456789'.repeat(21));
     await component.title.submit();
@@ -37,7 +40,8 @@ module('Integration | Component | new competency', function (hooks) {
   });
 
   test('pressing escape in input element clears value and error messages', async function (assert) {
-    await render(hbs`<NewCompetency @add={{(noop)}}/>`);
+    await render(hbs`<NewCompetency @add={{(noop)}}/>
+`);
     assert.notOk(component.hasError);
     await component.title.set('0123456789'.repeat(21));
     await component.title.submit();

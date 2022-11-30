@@ -17,7 +17,8 @@ module('Integration | Component | ilios-navigation', function (hooks) {
     });
     this.owner.register('service:currentUser', currentUserMock);
 
-    await render(hbs`<IliosNavigation />`);
+    await render(hbs`<IliosNavigation />
+`);
     await a11yAudit(this.element);
 
     assert.ok(component.expandCollapse.isPresent);
@@ -38,7 +39,8 @@ module('Integration | Component | ilios-navigation', function (hooks) {
     });
     this.owner.register('service:currentUser', currentUserMock);
 
-    await render(hbs`<IliosNavigation />`);
+    await render(hbs`<IliosNavigation />
+`);
     await a11yAudit(this.element);
 
     assert.notOk(component.expandCollapse.isPresent);
@@ -52,7 +54,8 @@ module('Integration | Component | ilios-navigation', function (hooks) {
     });
     this.owner.register('service:currentUser', currentUserMock);
 
-    await render(hbs`<IliosNavigation />`);
+    await render(hbs`<IliosNavigation />
+`);
     await a11yAudit(this.element);
 
     assert.strictEqual(component.links.length, 9);

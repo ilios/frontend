@@ -34,7 +34,8 @@ module(
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
-    />`);
+    />
+`);
 
       assert.strictEqual(component.header.title, 'Curriculum Inventory Institutional Information');
       assert.ok(component.header.hasSaveButton);
@@ -67,7 +68,8 @@ module(
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
-    />`);
+    />
+`);
 
       assert.strictEqual(component.content.name.value, '');
       assert.strictEqual(component.content.aamcCode.value, '');
@@ -96,7 +98,8 @@ module(
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
       @manage={{this.manage}}
-    />`);
+    />
+`);
       await component.header.cancel();
     });
 
@@ -141,7 +144,8 @@ module(
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
       @save={{this.saveInstitution}}
-    />`);
+    />
+`);
 
       component.content.name.change(newName);
       component.content.aamcCode.change(newAamcCode);
@@ -184,7 +188,8 @@ module(
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
       @save={{this.saveInstitution}}
-    />`);
+    />
+`);
 
       component.content.name.change(newName);
       component.content.aamcCode.change(newAamcCode);
@@ -208,7 +213,8 @@ module(
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
-    />`);
+    />
+`);
 
       assert.notOk(component.content.name.hasError);
       assert.notOk(component.content.aamcCode.hasError);
@@ -266,7 +272,8 @@ module(
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
-    />`);
+    />
+`);
       assert.notOk(component.header.hasSaveButton);
     });
   }

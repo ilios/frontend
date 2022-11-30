@@ -15,7 +15,8 @@ module('Integration | Component | learner-group/new', function (hooks) {
       @save={{(noop)}}
       @cancel={{(noop)}}
       @fillModeSupported={{true}}
-    />`);
+    />
+`);
     assert.ok(component.single.isVisible);
     await a11yAudit(this.element);
   });
@@ -26,7 +27,8 @@ module('Integration | Component | learner-group/new', function (hooks) {
       @cancel={{(noop)}}
       @generateNewLearnerGroups={{(noop)}}
       @multiModeSupported={{true}}
-    />`);
+    />
+`);
     await component.chooseMultipleGroups();
     assert.ok(component.multiple.isVisible);
     await a11yAudit(this.element);

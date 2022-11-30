@@ -79,7 +79,8 @@ module(
       @sequenceBlock={{this.sequenceBlock}}
       @sortBy={{this.sortBy}}
       @setSortBy={{(noop)}}
-    />`);
+    />
+`);
       assert.strictEqual(
         component.header.countAsOneOffering.text,
         'Count as one offering',
@@ -203,7 +204,8 @@ module(
       @sequenceBlock={{this.sequenceBlock}}
       @sortBy={{this.sortBy}}
       @setSortBy={{(noop)}}
-    />`);
+    />
+`);
       assert.ok(component.header.exclude.isVisible, 'Table header is visible,');
       assert.strictEqual(component.sessions.length, 0, 'but table body is empty.');
     });
@@ -233,7 +235,8 @@ module(
       @sequenceBlock={{this.sequenceBlock}}
       @sortBy={{this.sortBy}}
       @setSortBy={{this.setSortBy}}
-    />`);
+    />
+`);
       await component.header.title.click();
     });
 
@@ -266,7 +269,8 @@ module(
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
         @setSortBy={{this.setSortBy}}
-      />`);
+      />
+`);
       await component.header.sessionType.click();
     });
 
@@ -299,7 +303,8 @@ module(
       @sequenceBlock={{this.sequenceBlock}}
       @sortBy={{this.sortBy}}
       @setSortBy={{this.setSortBy}}
-    />`);
+    />
+`);
       await component.header.offeringsCount.click();
     });
   }

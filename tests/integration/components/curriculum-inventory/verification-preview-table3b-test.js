@@ -18,7 +18,8 @@ module(
         { title: 'bar', starting_level: 4, ending_level: 5, weeks: 1.5, avg: 20.33 },
       ];
       this.set('data', data);
-      await render(hbs`<CurriculumInventory::VerificationPreviewTable3b @data={{this.data}} />`);
+      await render(hbs`<CurriculumInventory::VerificationPreviewTable3b @data={{this.data}} />
+`);
       assert.strictEqual(component.title, 'Table 3-B: Clerkship Sequence Block Instructional Time');
       assert.strictEqual(component.table.headings.length, 4);
       assert.strictEqual(component.table.headings[0].text, 'Clerkship Sequence Blocks');

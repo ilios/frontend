@@ -10,7 +10,8 @@ module('Integration | Component | instructor-groups/loading', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<InstructorGroups::Loading @count={{4}} />`);
+    await render(hbs`<InstructorGroups::Loading @count={{4}} />
+`);
     assert.dom('tbody tr').exists({ count: 4 });
     await a11yAudit(this.element);
   });

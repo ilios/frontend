@@ -28,7 +28,8 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     await render(hbs`<SchoolVocabularyNewTerm
       @vocabulary={{this.vocabulary}}
       @createTerm={{this.createTerm}}
-    />`);
+    />
+`);
 
     await component.setTitle(newTitle);
     await component.save();
@@ -45,7 +46,8 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     await render(hbs`<SchoolVocabularyNewTerm
       @vocabulary={{this.vocabulary}}
       @createTerm={{true}}
-    />`);
+    />
+`);
 
     assert.notOk(component.hasError);
     await component.setTitle('');
@@ -70,7 +72,8 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     await render(hbs`<SchoolVocabularyNewTerm
       @vocabulary={{this.vocabulary}}
       @createTerm={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.hasError);
     await component.setTitle(title);
@@ -102,7 +105,8 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
       @vocabulary={{this.vocabulary}}
       @term={{this.term}}
       @createTerm={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.hasError);
     await component.setTitle(title);

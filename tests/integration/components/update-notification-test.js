@@ -9,7 +9,8 @@ module('Integration | Component | update notification', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<UpdateNotification />`);
+    await render(hbs`<UpdateNotification />
+`);
     assert
       .dom(this.element)
       .hasText(

@@ -40,7 +40,8 @@ module('Integration | Component | instructor-group/courses', function (hooks) {
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
-    await render(hbs`<InstructorGroup::Courses @instructorGroup={{this.instructorGroup}} />`);
+    await render(hbs`<InstructorGroup::Courses @instructorGroup={{this.instructorGroup}} />
+`);
     assert.strictEqual(component.title, 'Associated Courses (3)');
     assert.strictEqual(component.courses.length, 3);
     assert.strictEqual(component.courses[0].text, 'course 0');
@@ -59,7 +60,8 @@ module('Integration | Component | instructor-group/courses', function (hooks) {
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
-    await render(hbs`<InstructorGroup::Courses @instructorGroup={{this.instructorGroup}} />`);
+    await render(hbs`<InstructorGroup::Courses @instructorGroup={{this.instructorGroup}} />
+`);
     assert.strictEqual(component.title, 'Associated Courses (0)');
     assert.strictEqual(component.courses.length, 0);
   });

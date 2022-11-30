@@ -44,7 +44,8 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    await render(hbs`<NewUser @close={{(noop)}} />`);
+    await render(hbs`<NewUser @close={{(noop)}} />
+`);
 
     await component.clickChoiceButtons.firstButton.isActive;
     assert.strictEqual(component.school.options.length, 3);
@@ -54,7 +55,8 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('errors do not show up initially', async function (assert) {
-    await render(hbs`<NewUser @close={{(noop)}} />`);
+    await render(hbs`<NewUser @close={{(noop)}} />
+`);
 
     assert.notOk(component.firstName.hasError);
     assert.notOk(component.middleName.hasError);
@@ -68,7 +70,8 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('submit empty form', async function (assert) {
-    await render(hbs`<NewUser @close={{(noop)}} />`);
+    await render(hbs`<NewUser @close={{(noop)}} />
+`);
     await component.submit();
 
     assert.ok(component.firstName.hasError);
@@ -92,7 +95,8 @@ module('Integration | Component | new user', function (hooks) {
     this.set('transitionToUser', (userId) => {
       assert.strictEqual(parseInt(userId, 10), 2);
     });
-    await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />`);
+    await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />
+`);
 
     await component.firstName.set('first');
     await component.middleName.set('middle');
@@ -137,7 +141,8 @@ module('Integration | Component | new user', function (hooks) {
     this.set('transitionToUser', (userId) => {
       assert.strictEqual(parseInt(userId, 10), 2);
     });
-    await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />`);
+    await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />
+`);
     await component.clickChoiceButtons.secondButton.click();
     await component.firstName.set('first');
     await component.middleName.set('middle');
@@ -174,7 +179,8 @@ module('Integration | Component | new user', function (hooks) {
     this.set('cancel', () => {
       assert.ok(true, 'cancel event fired.');
     });
-    await render(hbs`<NewUser @close={{this.cancel}}  />`);
+    await render(hbs`<NewUser @close={{this.cancel}}  />
+`);
     await component.cancel();
   });
 
@@ -200,7 +206,8 @@ module('Integration | Component | new user', function (hooks) {
     });
     this.server.create('cohort', { programYear: programYear3 });
 
-    await render(hbs`<NewUser @close={{(noop)}}  />`);
+    await render(hbs`<NewUser @close={{(noop)}}  />
+`);
     await component.cancel();
     await component.clickChoiceButtons.secondButton.click();
 
@@ -218,7 +225,8 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('validate email address', async function (assert) {
-    await render(hbs`<NewUser @close={{(noop)}}  />`);
+    await render(hbs`<NewUser @close={{(noop)}}  />
+`);
     await component.cancel();
     assert.notOk(component.email.hasError);
     await component.email.set('thisisnotanemailaddress');

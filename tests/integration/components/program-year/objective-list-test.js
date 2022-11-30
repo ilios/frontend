@@ -40,7 +40,8 @@ module('Integration | Component | program-year/objective-list', function (hooks)
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-      />`
+      />
+`
     );
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.headers[0].text, 'Description');
@@ -80,7 +81,8 @@ module('Integration | Component | program-year/objective-list', function (hooks)
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-      />`
+      />
+`
     );
     assert.notOk(component.sortIsVisible);
     assert.strictEqual(component.text, '');
@@ -100,7 +102,8 @@ module('Integration | Component | program-year/objective-list', function (hooks)
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-      />`
+      />
+`
     );
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.objectives.length, 1);
@@ -130,7 +133,8 @@ module('Integration | Component | program-year/objective-list', function (hooks)
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-      />`
+      />
+`
     );
     await component.objectives[0].competency.manage();
     assert.strictEqual(component.objectives[0].competencyManager.domains.length, 2);

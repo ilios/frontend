@@ -36,7 +36,8 @@ module('Integration | Component | new directory user', function (hooks) {
   });
 
   test('it renders and is accessible', async function (assert) {
-    await render(hbs`<NewDirectoryUser @close={{(noop)}} @setSearchTerms={{(noop)}} />`);
+    await render(hbs`<NewDirectoryUser @close={{(noop)}} @setSearchTerms={{(noop)}} />
+`);
     await a11yAudit();
     assert.ok(true, 'no a11y errors found.');
   });
@@ -51,7 +52,8 @@ module('Integration | Component | new directory user', function (hooks) {
       @close={{(noop)}}
       @setSearchTerms={{this.setSearchTerms}}
       @searchTerms={{this.startingSearchTerms}}
-    />`);
+    />
+`);
     await component.search.set(searchTerm);
     await component.search.submit();
   });
@@ -73,7 +75,8 @@ module('Integration | Component | new directory user', function (hooks) {
       @close={{(noop)}}
       @setSearchTerms={{(noop)}}
       @searchTerms={{this.startingSearchTerms}}
-    />`);
+    />
+`);
     assert.strictEqual(component.search.value, startingSearchTerms);
   });
 
@@ -161,7 +164,8 @@ module('Integration | Component | new directory user', function (hooks) {
       @setSearchTerms={{(noop)}}
       @transitionToUser={{this.transitionToUser}}
       @searchTerms="searchterm"
-    />`);
+    />
+`);
 
     assert.strictEqual(component.searchResults.length, 3);
     assert.ok(component.searchResults[0].userCanBeAdded);

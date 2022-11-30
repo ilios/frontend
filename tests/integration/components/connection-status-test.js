@@ -10,7 +10,8 @@ module('Integration | Component | connection status', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders offline and therefor hidden', async function (assert) {
-    await render(hbs`<ConnectionStatus />`);
+    await render(hbs`<ConnectionStatus />
+`);
     assert.dom(this.element).hasNoClass('offline');
 
     a11yAudit(this.element);

@@ -30,7 +30,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
         @editable={{true}}
         @domainTrees={{(array)}}
         @programYearCompetencies={{(array)}}
-      />`
+      />
+`
     );
     assert.notOk(component.hasRemoveConfirmation);
     assert.strictEqual(component.description.text, 'program-year objective 0');
@@ -48,7 +49,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
       hbs`<ProgramYear::ObjectiveListItem
         @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
-      />`
+      />
+`
     );
     const newDescription = 'Pluto Visits Earth';
     assert.strictEqual(component.description.text, 'program-year objective 0');
@@ -66,7 +68,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
         @editable={{true}}
         @domainTrees={{(array)}}
         @programYearCompetencies={{(array)}}
-      />`
+      />
+`
     );
     await component.competency.manage();
     assert.ok(component.competencyManager.isPresent);
@@ -81,7 +84,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
         @editable={{true}}
         @domainTrees={{(array)}}
         @programYearCompetencies={{(array)}}
-      />`
+      />
+`
     );
     await component.meshDescriptors.list[0].manage();
     assert.ok(component.meshManager.isPresent);
@@ -96,7 +100,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
         @editable={{true}}
         @domainTrees={{(array)}}
         @programYearCompetencies={{(array)}}
-      />`
+      />
+`
     );
     assert.notOk(component.taxonomyManager.isPresent);
     await component.selectedTerms.manage();
@@ -112,7 +117,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
         @editable={{true}}
         @domainTrees={{(array)}}
         @programYearCompetencies={{(array)}}
-      />`
+      />
+`
     );
     await component.remove();
     assert.ok(component.hasRemoveConfirmation);
@@ -127,7 +133,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
         @editable={{true}}
         @domainTrees={{(array)}}
         @programYearCompetencies={{(array)}}
-      />`
+      />
+`
     );
     assert.ok(component.isActive);
     await component.deactivate();
@@ -144,7 +151,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
         @editable={{true}}
         @domainTrees={{(array)}}
         @programYearCompetencies={{(array)}}
-      />`
+      />
+`
     );
     assert.ok(component.isInactive);
     await component.activate();

@@ -22,7 +22,8 @@ module(
         .lookup('service:store')
         .findRecord('curriculum-inventory-report', 1);
       this.set('report', report);
-      await render(hbs`<CurriculumInventory::VerificationPreviewHeader @report={{this.report}} />`);
+      await render(hbs`<CurriculumInventory::VerificationPreviewHeader @report={{this.report}} />
+`);
       assert.strictEqual(component.title, 'Verification Preview for Foo Bar 2019');
     });
   }

@@ -61,7 +61,8 @@ module('Integration | Component | user profile bio', function (hooks) {
       .findRecord('authentication', this.authentication.id);
     this.set('user', userModel);
 
-    await render(hbs`<UserProfileBio @user={{this.user}} />`);
+    await render(hbs`<UserProfileBio @user={{this.user}} />
+`);
 
     assert.strictEqual(component.school, `Primary School: ${schoolModel.title}`);
     assert.strictEqual(component.firstName.text, `First Name: ${userModel.firstName}`);
@@ -94,7 +95,8 @@ module('Integration | Component | user profile bio', function (hooks) {
       .findRecord('authentication', this.authentication.id);
     this.set('user', userModel);
 
-    await render(hbs`<UserProfileBio @user={{this.user}} />`);
+    await render(hbs`<UserProfileBio @user={{this.user}} />
+`);
 
     assert.strictEqual(component.school, `Primary School: ${schoolModel.title}`);
     assert.strictEqual(component.firstName.text, `First Name: ${userModel.firstName}`);
@@ -125,7 +127,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.manage}} />`
+      hbs`<UserProfileBio @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.manage}} />
+`
     );
 
     await component.manage();
@@ -148,7 +151,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     await a11yAudit();
@@ -202,7 +206,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     await a11yAudit();
@@ -253,7 +258,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     await a11yAudit();
@@ -305,7 +311,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     await component.password.edit();
@@ -322,7 +329,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     await component.password.edit();
@@ -338,7 +346,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     await component.password.edit();
@@ -354,7 +363,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     await component.password.edit();
@@ -371,7 +381,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     await component.password.edit();
@@ -388,7 +399,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     await component.password.edit();
@@ -421,7 +433,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     });
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     assert.strictEqual(component.firstName.value, 'Test Person');
@@ -462,7 +475,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
@@ -477,7 +491,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     assert.strictEqual(component.displayName.value, 'Best Name');
@@ -492,7 +507,8 @@ module('Integration | Component | user profile bio', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     assert.strictEqual(component.pronouns.value, 'they/them/tay');

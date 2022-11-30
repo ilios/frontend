@@ -42,7 +42,8 @@ module('Integration | Component | user profile cohorts', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('user', this.user);
-    await render(hbs`<UserProfileCohorts @user={{this.user}} />`);
+    await render(hbs`<UserProfileCohorts @user={{this.user}} />
+`);
     assert.strictEqual(component.primaryCohort.text, 'Primary Cohort: school 0 program 0 cohort 0');
     assert.strictEqual(component.secondaryCohorts.length, 1);
     assert.strictEqual(component.secondaryCohorts[0].title, 'school 1 program 1 cohort 1');
@@ -55,7 +56,8 @@ module('Integration | Component | user profile cohorts', function (hooks) {
       assert.ok(what, 'recieved boolean true value');
     });
     await render(
-      hbs`<UserProfileCohorts @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`
+      hbs`<UserProfileCohorts @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />
+`
     );
     await component.manage();
   });
@@ -78,7 +80,8 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     });
 
     await render(
-      hbs`<UserProfileCohorts @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileCohorts @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+`
     );
 
     assert.strictEqual(component.primaryCohort.title, 'school 0 program 0 cohort 0');
