@@ -26,7 +26,8 @@ module('Integration | Component | curriculum-inventory/report-header', function 
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(this.report.name, component.name.value, 'Report name shows.');
     assert.ok(component.name.isEditable, 'Report name is editable.');
     assert.notOk(component.finalizeButtonIsDisabled, 'Finalize button is not disabled.');
@@ -43,7 +44,8 @@ module('Integration | Component | curriculum-inventory/report-header', function 
       @report={{this.report}}
       @canUpdate={{false}}
       @finalize={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(this.report.name, component.lockedName);
     assert.ok(component.hasLockOnName, 'Lock icon is showing with name.');
     assert.notOk(component.name.isEditable, 'Report name is not editable.');
@@ -57,7 +59,8 @@ module('Integration | Component | curriculum-inventory/report-header', function 
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{(noop)}}
-    />`);
+    />
+`);
     await component.name.edit();
     assert.notOk(component.name.hasError);
     await component.name.set(newName);
@@ -72,7 +75,8 @@ module('Integration | Component | curriculum-inventory/report-header', function 
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{(noop)}}
-    />`);
+    />
+`);
     await component.name.edit();
     assert.notOk(component.name.hasError);
     await component.name.set('');
@@ -86,7 +90,8 @@ module('Integration | Component | curriculum-inventory/report-header', function 
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{(noop)}}
-    />`);
+    />
+`);
     await component.name.edit();
     assert.notOk(component.name.hasError);
     await component.name.set('ab');
@@ -100,7 +105,8 @@ module('Integration | Component | curriculum-inventory/report-header', function 
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{(noop)}}
-    />`);
+    />
+`);
     await component.name.edit();
     assert.notOk(component.name.hasError);
     await component.name.set('01234567890'.repeat(21));
@@ -117,7 +123,8 @@ module('Integration | Component | curriculum-inventory/report-header', function 
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{this.finalize}}
-    />`);
+    />
+`);
     await component.finalize();
   });
 });

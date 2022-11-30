@@ -45,7 +45,8 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       @sessionType={{this.sessionType}}
       @canDelete={{true}}
       @manageSessionType={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title.text, 'salt');
     assert.strictEqual(component.sessionCount, '2');
     assert.ok(component.isAssessment);
@@ -74,7 +75,8 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       @sessionType={{this.sessionType}}
       @canDelete={{true}}
       @manageSessionType={{this.manageSessionType}}
-    />`);
+    />
+`);
     await component.manage();
   });
 
@@ -98,7 +100,8 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       @sessionType={{this.sessionType}}
       @canDelete={{true}}
       @manageSessionType={{this.manageSessionType}}
-    />`);
+    />
+`);
     await component.title.edit();
   });
 
@@ -119,7 +122,8 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       @sessionType={{this.sessionType}}
       @canDelete={{true}}
       @manageSessionType={{(noop)}}
-    />`);
+    />
+`);
     assert.ok(component.isDeletable);
   });
 
@@ -140,7 +144,8 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       @sessionType={{this.sessionType}}
       @canDelete={{false}}
       @manageSessionType={{(noop)}}
-    />`);
+    />
+`);
     assert.notOk(component.isDeletable);
   });
 
@@ -162,7 +167,8 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       @sessionType={{this.sessionType}}
       @canDelete={{true}}
       @manageSessionType={{(noop)}}
-    />`);
+    />
+`);
     assert.notOk(component.isDeletable);
   });
 });

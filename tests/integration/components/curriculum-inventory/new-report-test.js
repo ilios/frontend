@@ -19,7 +19,8 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
 
     this.set('program', programModel);
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}} />
+`
     );
 
     assert.strictEqual(
@@ -88,7 +89,8 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     this.set('program', programModel);
 
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}} />
+`
     );
 
     assert.strictEqual(
@@ -134,7 +136,8 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     });
 
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />
+`
     );
     await component.name.set('new report');
     await component.description.set('lorem ipsum');
@@ -172,7 +175,8 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     });
 
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />
+`
     );
     await component.name.set('new report');
     await component.description.set('lorem ipsum');
@@ -190,7 +194,8 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
       assert.ok(true, 'Cancel action got invoked.');
     });
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @cancel={{this.cancel}} @save={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @cancel={{this.cancel}} @save={{(noop)}} />
+`
     );
     await component.cancel();
   });
@@ -207,7 +212,8 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     });
 
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />
+`
     );
     await component.name.set('new report');
     await component.name.submit();
@@ -218,7 +224,8 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     this.set('program', programModel);
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>
+`
     );
     assert.notOk(component.name.hasError);
   });
@@ -228,7 +235,8 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     this.set('program', programModel);
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>
+`
     );
     await component.save();
     assert.ok(component.name.hasError);
@@ -240,7 +248,8 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
 
     this.set('program', programModel);
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>
+`
     );
     await component.name.set('0123456789'.repeat(7));
     await component.save();
@@ -253,7 +262,8 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     this.set('program', programModel);
 
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>
+`
     );
 
     assert.notOk(component.description.hasError);

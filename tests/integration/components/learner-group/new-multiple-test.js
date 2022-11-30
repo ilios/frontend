@@ -14,7 +14,8 @@ module('Integration | Component | learner-group/new-multiple', function (hooks) 
     await render(hbs`<LearnerGroup::NewMultiple
       @cancel={{(noop)}}
       @generateNewLearnerGroups={{(noop)}}
-    />`);
+    />
+`);
     assert.ok(component.isVisible);
     await a11yAudit(this.element);
   });
@@ -27,7 +28,8 @@ module('Integration | Component | learner-group/new-multiple', function (hooks) 
     await render(hbs`<LearnerGroup::NewMultiple
       @generateNewLearnerGroups={{this.save}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     await component.setNumberOfGroups(13);
     await component.save();
   });

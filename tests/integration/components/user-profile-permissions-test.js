@@ -32,7 +32,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @user={{this.user}}
       @setSchool={{(noop)}}
       @setYear={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title, 'Permissions');
     assert.strictEqual(component.schools.length, 2);
@@ -82,7 +83,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @user={{this.user}}
       @setSchool={{this.setSchool}}
       @setYear={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.selectedSchool, '2');
     assert.strictEqual(component.school.title, 'School (school 1)');
     await component.changeSchool(1);
@@ -115,7 +117,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @user={{this.user}}
       @setSchool={{(noop)}}
       @setYear={{this.setYear}}
-    />`);
+    />
+`);
     assert.strictEqual(parseInt(component.selectedYear, 10), this.currentAcademicYear);
     await component.courses.toggle();
     assert.strictEqual(component.courses.directors.length, 1);
@@ -136,7 +139,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @user={{this.user}}
       @setSchool={{(noop)}}
       @setYear={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.school.director, 'Yes');
     assert.strictEqual(component.school.administrator, 'Yes');
@@ -164,7 +168,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @user={{this.user}}
       @setSchool={{(noop)}}
       @setYear={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.school.director, 'No');
     assert.strictEqual(component.school.administrator, 'No');
@@ -198,7 +203,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @user={{this.user}}
       @setSchool={{(noop)}}
       @setYear={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.school.director, 'No');
     assert.strictEqual(component.school.administrator, 'No');
@@ -246,7 +252,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @user={{this.user}}
       @setSchool={{(noop)}}
       @setYear={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.school.director, 'No');
     assert.strictEqual(component.school.administrator, 'No');
@@ -309,7 +316,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @user={{this.user}}
       @setSchool={{(noop)}}
       @setYear={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.school.director, 'No');
     assert.strictEqual(component.school.administrator, 'No');
@@ -365,7 +373,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @currentDate={{this.currentDate}}
       @setSchool={{(noop)}}
       @setYear={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(parseInt(component.selectedYear, 10), this.currentAcademicYear);
     unfreezeDate();
   });
@@ -402,7 +411,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
 
-    await render(hbs`<UserProfilePermissions @user={{this.user}} />`);
+    await render(hbs`<UserProfilePermissions @user={{this.user}} />
+`);
     assert.strictEqual(component.courses.administrators.length, 1);
     assert.strictEqual(
       component.courses.administrators[0].text,
@@ -450,7 +460,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       @selectedYearId={{this.year}}
       @setSchool={{(noop)}}
       @setYear={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.selectedSchool, this.schools[1].id);
     assert.strictEqual(parseInt(component.selectedYear, 10), this.thisYear + 1);

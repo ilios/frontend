@@ -28,7 +28,8 @@ module('Integration | Component | program-year/header', function (hooks) {
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
-    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
+    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />
+`);
     assert.strictEqual(component.backToProgram.text, 'Back to Program Years');
     assert.notOk(component.isLocked);
     assert.strictEqual(component.matriculationYear, 'Matriculation Year 2019');
@@ -59,7 +60,8 @@ module('Integration | Component | program-year/header', function (hooks) {
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
-    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
+    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />
+`);
     assert.strictEqual(component.matriculationYear, 'Matriculation Year 2019 - 2020');
   });
 
@@ -81,7 +83,8 @@ module('Integration | Component | program-year/header', function (hooks) {
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
-    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
+    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />
+`);
     assert.strictEqual(component.cohort, '(Class of 2023)');
   });
 
@@ -104,7 +107,8 @@ module('Integration | Component | program-year/header', function (hooks) {
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
-    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />`);
+    await render(hbs`<ProgramYear::Header @programYear={{this.programYear}} />
+`);
     assert.ok(component.isLocked);
   });
 });

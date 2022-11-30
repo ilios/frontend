@@ -32,7 +32,8 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
       .findRecord('program-year-objective', programYearObjective.id);
     this.set('objective', model);
 
-    await render(hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`);
+    await render(hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />
+`);
     assert.strictEqual(component.headers[0].text, 'Courses');
     assert.strictEqual(component.headers[1].text, 'Objectives');
 
@@ -60,7 +61,8 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
       .lookup('service:store')
       .findRecord('program-year-objective', programYearObjective.id);
     this.set('objective', model);
-    await render(hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`);
+    await render(hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />
+`);
     assert.strictEqual(component.headers[0].text, 'Courses');
     assert.strictEqual(component.headers[1].text, 'Objectives');
     assert.ok(component.hasNone);

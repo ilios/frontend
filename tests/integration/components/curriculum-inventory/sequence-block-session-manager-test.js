@@ -74,7 +74,8 @@ module(
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
         @setSortBy={{(noop)}}
-      />`);
+      />
+`);
 
       assert.strictEqual(
         component.header.countAsOneOffering.text,
@@ -204,7 +205,8 @@ module(
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
         @setSortBy={{(noop)}}
-      />`);
+      />
+`);
 
       assert.ok(component.header.isVisible);
       assert.strictEqual(component.sessions.length, 0);
@@ -237,7 +239,8 @@ module(
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
         @setSortBy={{this.setSortBy}}
-      />`);
+      />
+`);
 
       await component.header.title.click();
     });
@@ -273,7 +276,8 @@ module(
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
         @setSortBy={{this.setSortBy}}
-      />`);
+      />
+`);
 
       await component.header.sessionType.click();
     });
@@ -309,7 +313,8 @@ module(
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
         @setSortBy={{this.setSortBy}}
-      />`);
+      />
+`);
 
       await component.header.offeringsCount.click();
     });
@@ -348,7 +353,8 @@ module(
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
         @setSortBy={{(noop)}}
-      />`);
+      />
+`);
 
       assert.strictEqual(component.sessions[0].totalTime.text, '30.00');
       assert.ok(component.header.countAsOneOffering.isChecked);
@@ -408,7 +414,8 @@ module(
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
         @setSortBy={{(noop)}}
-      />`);
+      />
+`);
 
       assert.notOk(component.header.countAsOneOffering.isChecked);
       assert.ok(component.header.countAsOneOffering.isPartiallyChecked);
@@ -460,7 +467,8 @@ module(
         @sortBy={{this.sortBy}}
         @setSortBy={{(noop)}}
         @save={{this.save}}
-      />`);
+      />
+`);
 
       assert.notOk(component.header.exclude.isChecked);
       assert.ok(component.header.exclude.isPartiallyChecked);
@@ -513,7 +521,8 @@ module(
         @sortBy={{this.sortBy}}
         @setSortBy={{(noop)}}
         @save={{this.save}}
-      />`);
+      />
+`);
 
       assert.ok(component.sessions[0].countAsOneOffering.isChecked);
       assert.notOk(component.sessions[0].exclude.isChecked);
@@ -544,7 +553,8 @@ module(
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
         @cancel={{this.cancel}}
-      />`);
+      />
+`);
 
       await component.cancel();
     });

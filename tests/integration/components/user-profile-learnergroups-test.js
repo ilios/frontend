@@ -55,7 +55,8 @@ module('Integration | Component | user profile learnergroups', function (hooks) 
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    await render(hbs`<UserProfileLearnergroups @user={{this.user}} />`);
+    await render(hbs`<UserProfileLearnergroups @user={{this.user}} />
+`);
     assert.strictEqual(component.groups.length, 2);
     assert.strictEqual(component.groups[0].text, 'SOD: Program2 Cohort2 — LearnerGroup2');
     assert.strictEqual(component.groups[1].text, 'SOM: Program1 Cohort1 — LearnerGroup1');

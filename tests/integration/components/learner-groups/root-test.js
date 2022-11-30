@@ -65,7 +65,8 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @schools={{this.schools}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(component.list.items.length, 2);
     assert.strictEqual(component.list.items[0].title, 'learner group 2');
@@ -118,7 +119,8 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @programYearId={{this.programYearId}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.programFilter.selectedProgram, '4');
     assert.strictEqual(component.programYearFilter.selectedProgramYear, '6');
@@ -161,7 +163,8 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @programYearId={{this.programYearId}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.programFilter.selectedProgram, '4');
     assert.strictEqual(component.programYearFilter.selectedProgramYear, '6');
@@ -202,7 +205,8 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @programYearId={{this.programYearId}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.programFilter.selectedProgram, '4');
     assert.strictEqual(component.programYearFilter.selectedProgramYear, '6');
@@ -231,7 +235,8 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @titleFilter={{this.titleFilter}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(component.list.items.length, 2);
     assert.strictEqual(component.list.items[0].title, 'learner group 2');
@@ -257,7 +262,8 @@ module('Integration | Component | learner-groups/root', function (hooks) {
       @schools={{this.schools}}
       @sortBy={{this.sortBy}}
       @setSortBy={{this.setSortBy}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.list.items.length, 2);
     assert.strictEqual(component.list.items[0].title, 'learner group 2');

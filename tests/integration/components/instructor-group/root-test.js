@@ -39,7 +39,8 @@ module('Integration | Component | instructor-group/root', function (hooks) {
   test('it renders', async function (assert) {
     this.set('group', this.instructorGroup);
     await render(
-      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{true}} />`
+      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{true}} />
+`
     );
     assert.strictEqual(component.header.title.text, 'instructor group 0');
     assert.strictEqual(component.header.members, 'Members: 2');
@@ -65,7 +66,8 @@ module('Integration | Component | instructor-group/root', function (hooks) {
   test('it renders in read-only mode', async function (assert) {
     this.set('group', this.instructorGroup);
     await render(
-      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{false}} />`
+      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{false}} />
+`
     );
     assert.strictEqual(component.header.title.text, 'instructor group 0');
     assert.strictEqual(component.header.members, 'Members: 2');

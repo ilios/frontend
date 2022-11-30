@@ -9,7 +9,8 @@ module('Integration | Component | dashboard loading', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<DashboardLoading />`);
+    await render(hbs`<DashboardLoading />
+`);
 
     assert.dom(this.element).hasText('');
   });

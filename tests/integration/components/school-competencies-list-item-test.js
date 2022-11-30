@@ -39,7 +39,8 @@ module('Integration | Component | school-competencies-list-item', function (hook
       @competency={{this.competency}}
       @isDomain={{true}}
       @canUpdate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title.text, 'competency 0');
     assert.notOk(component.title.isCompetency);
     assert.ok(component.title.isDomain);
@@ -56,7 +57,8 @@ module('Integration | Component | school-competencies-list-item', function (hook
       @competency={{this.competency}}
       @isDomain={{false}}
       @canUpdate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title.text, 'competency 1');
     assert.ok(component.title.isCompetency);
     assert.notOk(component.title.isDomain);

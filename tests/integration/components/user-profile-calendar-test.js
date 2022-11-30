@@ -71,7 +71,8 @@ module('Integration | Component | user profile calendar', function (hooks) {
       id: 13,
     });
     this.set('user', user);
-    await render(hbs`<UserProfileCalendar @user={{this.user}} />`);
+    await render(hbs`<UserProfileCalendar @user={{this.user}} />
+`);
     const events = '[data-test-calendar-event]';
     const firstEventTitle = `${events}:nth-of-type(1) [data-test-name]`;
     const secondEventTitle = `${events}:nth-of-type(2) [data-test-name]`;
@@ -108,7 +109,8 @@ module('Integration | Component | user profile calendar', function (hooks) {
       id: 13,
     });
     this.set('user', user);
-    await render(hbs`<UserProfileCalendar @user={{this.user}} />`);
+    await render(hbs`<UserProfileCalendar @user={{this.user}} />
+`);
     await click('[data-test-go-forward]');
   });
 
@@ -136,7 +138,8 @@ module('Integration | Component | user profile calendar', function (hooks) {
       id: 13,
     });
     this.set('user', user);
-    await render(hbs`<UserProfileCalendar @user={{this.user}} />`);
+    await render(hbs`<UserProfileCalendar @user={{this.user}} />
+`);
     await click('[data-test-go-back]');
   });
 });

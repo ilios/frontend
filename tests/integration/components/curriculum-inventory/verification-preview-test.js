@@ -47,7 +47,8 @@ module('Integration | Component | curriculum-inventory/verification-preview', fu
     );
 
     this.set('report', report);
-    await render(hbs`<CurriculumInventory::VerificationPreview @report={{this.report}} />`);
+    await render(hbs`<CurriculumInventory::VerificationPreview @report={{this.report}} />
+`);
     assert.strictEqual(component.tableOfContents.items.length, 9);
     assert.strictEqual(
       component.tableOfContents.items[0].text,

@@ -53,7 +53,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
         @canUpdate={{true}}
         @remove={{(noop)}}
         @isInOrderedSequence={{true}}
-      />`
+      />
+`
     );
 
     assert.strictEqual(component.title, 'block 1');
@@ -85,7 +86,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
         @canUpdate={{true}}
         @remove={{(noop)}}
         @isInOrderedSequence={{false}}
-      />`
+      />
+`
     );
 
     assert.strictEqual(component.orderInSequence, 'n/a');
@@ -104,7 +106,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
         @canUpdate={{false}}
         @remove={{(noop)}}
         @isInOrderedSequence={{false}}
-      />`
+      />
+`
     );
 
     assert.notOk(component.isDeletable);
@@ -127,7 +130,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
         @canUpdate={{true}}
         @remove={{this.remove}}
         @isInOrderedSequence={{false}}
-      />`
+      />
+`
     );
 
     assert.notOk(component.confirmRemoval.isVisible);

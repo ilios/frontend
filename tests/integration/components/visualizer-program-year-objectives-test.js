@@ -76,7 +76,8 @@ module('Integration | Component | visualizer-program-year-objectives', function 
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
     this.set('programYear', programYearModel);
-    await render(hbs`<VisualizerProgramYearObjectives @programYear={{this.programYear}} />`);
+    await render(hbs`<VisualizerProgramYearObjectives @programYear={{this.programYear}} />
+`);
 
     assert.dom('svg').exists({ count: 1 });
     assert.dom('svg g.links').exists({ count: 1 });

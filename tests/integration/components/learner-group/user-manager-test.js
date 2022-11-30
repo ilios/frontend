@@ -62,7 +62,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.usersInCurrentGroup.length, 2);
     assert.strictEqual(
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
@@ -135,7 +136,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.groupMembers, 'Members of current group (2)');
     assert.strictEqual(component.allOtherMembers, 'All other members of top group (0)');
@@ -217,7 +219,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.usersNotInCurrentGroup.length, 3);
     assert.strictEqual(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Captain J');
@@ -263,7 +266,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{this.addMany}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.membersCanBeAdded);
     await component.usersInCurrentGroup[0].select();
@@ -305,7 +309,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{this.removeMany}}
-    />`);
+    />
+`);
 
     assert.notOk(component.membersCanBeRemoved);
     await component.usersInCurrentGroup[0].select();
@@ -349,7 +354,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{this.removeOne}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     await component.usersInCurrentGroup[0].remove();
   });
@@ -392,7 +398,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
     await component.usersNotInCurrentGroup[0].add();
   });
 
@@ -435,7 +442,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.ok(component.usersInCurrentGroup[0].canBeRemoved);
     assert.ok(component.usersNotInCurrentGroup[0].canBeAdded);
@@ -485,7 +493,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{this.addMany}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     await component.selectAll.toggle();
@@ -531,7 +540,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
@@ -595,7 +605,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.usersInCurrentGroup.length, 3);
     assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
@@ -689,7 +700,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.ok(component.usersInCurrentGroup[0].canBeSelected, 'Checkbox visible');
     assert.ok(component.usersInCurrentGroup[0].isDisabled, 'User is labeled as disabled.');
@@ -728,7 +740,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.usersInCurrentGroup[0].canBeSelected, 'Checkbox visible');
     assert.ok(component.usersInCurrentGroup[0].isDisabled, 'User is labeled as disabled.');
@@ -792,7 +805,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.usersInCurrentGroup.length, 3);
     assert.strictEqual(
@@ -852,7 +866,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
     await component.usersNotInCurrentGroup[0].name.click();
@@ -891,7 +906,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
     await component.usersNotInCurrentGroup[0].campusId.click();
@@ -930,7 +946,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
     await component.usersNotInCurrentGroup[0].email.click();
@@ -965,7 +982,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     await component.usersInCurrentGroup[0].name.click();
@@ -1000,7 +1018,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     await component.usersInCurrentGroup[0].campusId.click();
@@ -1035,7 +1054,8 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     await component.usersInCurrentGroup[0].email.click();

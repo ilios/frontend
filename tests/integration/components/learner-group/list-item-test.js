@@ -40,7 +40,8 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />
+`);
     assert.strictEqual(component.title, 'learner group 0');
     assert.strictEqual(component.users, '0');
     assert.strictEqual(component.children, '3');
@@ -59,7 +60,8 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />
+`);
     assert.strictEqual(component.title, 'learner group 0');
     assert.notOk(component.canBeDeleted);
     assert.ok(component.canBeCopied);
@@ -76,7 +78,8 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />
+`);
     assert.strictEqual(component.title, 'learner group 0');
     assert.ok(component.canBeDeleted);
     assert.notOk(component.canBeCopied);
@@ -90,7 +93,8 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />
+`);
     assert.strictEqual(component.title, 'learner group 0');
     assert.strictEqual(component.users, '1');
     assert.ok(component.canBeDeleted);
@@ -107,7 +111,8 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />
+`);
     assert.strictEqual(component.title, 'learner group 0');
     assert.strictEqual(component.children, '1');
     assert.strictEqual(component.users, '0');
@@ -122,7 +127,8 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />
+`);
     assert.strictEqual(component.title, 'learner group 0');
     assert.notOk(component.canBeDeleted);
   });
@@ -138,7 +144,8 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
       .lookup('service:store')
       .find('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />
+`);
     assert.strictEqual(component.title, 'learner group 0');
     assert.notOk(component.canBeDeleted);
   });
@@ -151,7 +158,8 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
       .lookup('service:store')
       .find('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />
+`);
     assert.strictEqual(component.title, 'learner group 0');
     assert.notOk(component.canBeDeleted);
   });
@@ -167,7 +175,8 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
       .lookup('service:store')
       .find('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />
+`);
     assert.strictEqual(component.title, 'learner group 0');
     assert.notOk(component.canBeDeleted);
   });

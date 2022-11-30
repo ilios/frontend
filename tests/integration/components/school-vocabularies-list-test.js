@@ -20,7 +20,8 @@ module('Integration | Component | school vocabularies list', function (hooks) {
 
     this.set('school', schoolModel);
     await render(
-      hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{(noop)}} />`
+      hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{(noop)}} />
+`
     );
     assert.strictEqual(component.vocabularies.length, 2);
     assert.strictEqual(component.vocabularies[0].title.text, 'Vocabulary 1');
@@ -41,7 +42,8 @@ module('Integration | Component | school vocabularies list', function (hooks) {
       @school={{this.school}}
       @manageVocabulary={{(noop)}}
       @canDelete={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.vocabularies.length, 3);
     assert.notOk(component.vocabularies[0].hasDeleteButton);
     assert.notOk(component.vocabularies[1].hasDeleteButton);
@@ -57,7 +59,8 @@ module('Integration | Component | school vocabularies list', function (hooks) {
       @school={{this.school}}
       @manageVocabulary={{(noop)}}
       @canDelete={{true}}
-    />`);
+    />
+`);
 
     assert.notOk(component.deletionConfirmation.isVisible);
     await component.vocabularies[0].delete();
@@ -78,7 +81,8 @@ module('Integration | Component | school vocabularies list', function (hooks) {
       assert.strictEqual(id, vocabularies[0].id);
     });
     await render(
-      hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{this.edit}} />`
+      hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{this.edit}} />
+`
     );
     await component.vocabularies[0].manage();
   });

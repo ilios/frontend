@@ -21,7 +21,8 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
     await a11yAudit(this.element);
@@ -42,7 +43,8 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.text, 'None');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -65,7 +67,8 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.list.length, 2);
     assert.strictEqual(component.list[0].title, 'descriptor 0');
     assert.strictEqual(component.list[1].title, 'descriptor 1');
@@ -90,7 +93,8 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.list.length, 2);
     assert.strictEqual(component.list[0].title, 'descriptor 0');
     assert.strictEqual(component.list[1].title, 'descriptor 1');
@@ -119,7 +123,8 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       @save={{this.save}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     await component.save();
   });
 
@@ -144,7 +149,8 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{this.cancel}}
-    />`);
+    />
+`);
     await component.cancel();
   });
 
@@ -169,7 +175,8 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />`);
+    />
+`);
     await component.list[0].manage();
   });
 });

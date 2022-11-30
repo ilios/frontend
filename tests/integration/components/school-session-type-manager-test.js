@@ -36,7 +36,8 @@ module('Integration | Component | school session type manager', function (hooks)
       @canUpdate={{true}}
       @sessionType={{this.sessionType}}
       @close={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title, 'one');
     assert.strictEqual(component.form.title.value, 'one');
@@ -64,7 +65,8 @@ module('Integration | Component | school session type manager', function (hooks)
       @canUpdate={{true}}
       @sessionType={{this.sessionType}}
       @close={{this.close}}
-    />`);
+    />
+`);
 
     await component.form.cancel.click();
   });

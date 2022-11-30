@@ -55,7 +55,8 @@ module('Integration | Component | reports/subject', function (hooks) {
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
       @onReportYearSelect={{this.setReportYear}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, 'my report 0');
     assert.strictEqual(component.results.length, 2);
     assert.strictEqual(component.results[0].text, '2015 course 0');
@@ -92,7 +93,8 @@ module('Integration | Component | reports/subject', function (hooks) {
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
       @onReportYearSelect={{(noop)}}
-    />`);
+    />
+`);
     assert.strictEqual(component.results[0].text, '2016 - 2017 course 0');
   });
 
@@ -118,7 +120,8 @@ module('Integration | Component | reports/subject', function (hooks) {
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
       @onReportYearSelect={{this.setReportYear}}
-    />`);
+    />
+`);
     assert.strictEqual(component.academicYears.value, '');
     assert.strictEqual(component.results.length, 1);
     await component.academicYears.choose('2015');

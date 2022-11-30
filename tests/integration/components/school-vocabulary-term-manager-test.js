@@ -57,7 +57,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title, `Title: ${term.title}`);
     assert.strictEqual(component.description, `Description: ${term.description}`);
@@ -100,7 +101,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.isActive.yesNoToggle.checked, 'false');
     await component.isActive.yesNoToggle.click();
     assert.strictEqual(component.isActive.yesNoToggle.checked, 'true');
@@ -129,7 +131,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.isActive.yesNoToggle.checked, 'true');
     await component.isActive.yesNoToggle.click();
     assert.strictEqual(component.isActive.yesNoToggle.checked, 'false');
@@ -159,7 +162,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, `Title: ${term.title}`);
     await component.editTitle();
     await component.changeTitle('new title');
@@ -190,7 +194,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, `Title: ${term.title}`);
     assert.notOk(component.hasError);
     await component.editTitle();
@@ -229,7 +234,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, `Title: ${term.title}`);
     assert.notOk(component.hasError);
     await component.editTitle();
@@ -262,7 +268,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, `Title: ${term.title}`);
     assert.strictEqual(component.subTerms.list.length, 0);
 
@@ -296,7 +303,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, `Title: ${term.title}`);
     assert.strictEqual(component.subTerms.list.length, 0);
 
@@ -336,7 +344,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-    />`);
+    />
+`);
     assert.strictEqual(component.title, `Title: ${term.title}`);
     assert.strictEqual(component.subTerms.list.length, 1);
 

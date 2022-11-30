@@ -41,7 +41,8 @@ module('Integration | Component | school competencies manager', function (hooks)
       @add={{(noop)}}
       @remove={{(noop)}}
       @competencies={{this.competencies}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.domains.length, 1);
     assert.strictEqual(component.domains[0].details.editor.text, 'domain1');
@@ -72,7 +73,8 @@ module('Integration | Component | school competencies manager', function (hooks)
       @add={{(noop)}}
       @remove={{this.remove}}
       @competencies={{this.competencies}}
-    />`);
+    />
+`);
 
     await component.domains[0].remove();
   });
@@ -98,7 +100,8 @@ module('Integration | Component | school competencies manager', function (hooks)
       @add={{this.add}}
       @remove={{(noop)}}
       @competencies={{this.competencies}}
-    />`);
+    />
+`);
 
     await component.newDomain.newCompetency.title.set(newTitle);
     await component.newDomain.newCompetency.save();
@@ -125,7 +128,8 @@ module('Integration | Component | school competencies manager', function (hooks)
       @add={{this.add}}
       @remove={{(noop)}}
       @competencies={{this.competencies}}
-    />`);
+    />
+`);
 
     await component.domains[0].newCompetency.title.set(newTitle);
     await component.domains[0].newCompetency.save();

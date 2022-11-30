@@ -27,7 +27,8 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />`);
+    />
+`);
     assert.ok(component.collapse.text, 'Curriculum Inventory Report Leadership');
     assert.strictEqual(component.leadershipList.administrators.length, 2);
     assert.strictEqual(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
@@ -52,7 +53,8 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />`);
+    />
+`);
     await component.collapse.click();
   });
 
@@ -74,7 +76,8 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{this.manage}}
-    />`);
+    />
+`);
     await component.manage.click();
   });
 });

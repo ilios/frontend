@@ -19,7 +19,8 @@ module(
         { id: 'AM003', title: 'bar', num_summative_assessments: 5, num_formative_assessments: 0 },
       ];
       this.set('data', data);
-      await render(hbs`<CurriculumInventory::VerificationPreviewTable7 @data={{this.data}} />`);
+      await render(hbs`<CurriculumInventory::VerificationPreviewTable7 @data={{this.data}} />
+`);
       assert.strictEqual(
         component.title,
         'Table 7: All Events with Assessments Tagged as Formative or Summative'

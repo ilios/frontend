@@ -44,7 +44,8 @@ module('Integration | Component | unassigned students summary', function (hooks)
     });
 
     this.set('schools', schoolModels);
-    await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />`);
+    await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />
+`);
 
     assert.strictEqual(component.title, 'Students Requiring Cohort Assignment');
     assert.strictEqual(component.schools.length, 2);
@@ -70,7 +71,8 @@ module('Integration | Component | unassigned students summary', function (hooks)
     });
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schoolModels);
-    await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />`);
+    await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />
+`);
 
     assert.strictEqual(component.title, 'Students Requiring Cohort Assignment');
     assert.strictEqual(component.singleSelectedSchool, 'school 0');

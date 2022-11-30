@@ -19,9 +19,7 @@
           <td>
             {{#if @showSessionAttendanceRequired}}
               <input
-                type="checkbox"
-                role="button"
-                checked={{true}}
+                type="checkbox" checked={{true}}
                 {{on "click" (fn @disable "showSessionAttendanceRequired")}}
                 aria-labelledby="attendance-required-{{templateId}}"
               >

@@ -22,7 +22,8 @@ module('Integration | Component | school vocabularies expanded', function (hooks
       @collapse={{(noop)}}
       @setSchoolManagedVocabulary={{(noop)}}
       @setSchoolManagedVocabularyTerm={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(component.title, 'Vocabularies (2)');
     assert.strictEqual(component.vocabulariesList.vocabularies.length, 2);
@@ -47,7 +48,8 @@ module('Integration | Component | school vocabularies expanded', function (hooks
       @collapse={{this.collapse}}
       @setSchoolManagedVocabulary={{(noop)}}
       @setSchoolManagedVocabularyTerm={{(noop)}}
-    />`);
+    />
+`);
 
     await component.collapse();
   });
@@ -65,7 +67,8 @@ module('Integration | Component | school vocabularies expanded', function (hooks
       @managedVocabularyId={{this.vocabularyId}}
       @setSchoolManagedVocabulary={{(noop)}}
       @setSchoolManagedVocabularyTerm={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.vocabulariesList.isVisible);
     assert.ok(component.vocabularyManager.isVisible);
@@ -88,7 +91,8 @@ module('Integration | Component | school vocabularies expanded', function (hooks
       @managedVocabularyId={{this.vocabularyId}}
       @setSchoolManagedVocabulary={{(noop)}}
       @setSchoolManagedVocabularyTerm={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.vocabulariesList.isVisible);
     assert.notOk(component.vocabularyManager.isVisible);

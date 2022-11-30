@@ -81,7 +81,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
       @canUpdate={{true}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(
       component.header.title,
@@ -169,7 +170,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @sequenceBlocks={{await this.parent.children}}
       @canUpdate={{true}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
 
     assert.strictEqual(
       component.header.title,
@@ -206,7 +208,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
       @canUpdate={{false}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.header.expandCollapse.isVisible, 'Add new button is not visible.');
     assert.notOk(component.list.items[0].isDeletable);
@@ -223,7 +226,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
       @canUpdate={{true}}
       @remove={{this.remove}}
-    />`);
+    />
+`);
 
     assert.notOk(component.list.items[0].confirmRemoval.isVisible);
     await component.list.items[0].remove();
@@ -237,7 +241,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
       @canUpdate={{true}}
       @remove={{(noop)}}
-    />`);
+    />
+`);
 
     assert.notOk(component.list.items[0].confirmRemoval.isVisible);
     await component.list.items[0].remove();
@@ -251,7 +256,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @report={{this.report}}
       @canUpdate={{true}}
       @sequenceBlocks={{(array)}}
-    />`);
+    />
+`);
     assert.strictEqual(
       component.header.title,
       'Sequence Blocks (0)',
@@ -274,7 +280,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @parent={{this.parent}}
       @report={{await this.parent.report}}
       @sequenceBlocks={{(array)}}
-    />`);
+    />
+`);
     assert.strictEqual(
       component.header.title,
       'Sequence Blocks (0)',

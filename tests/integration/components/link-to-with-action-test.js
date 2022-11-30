@@ -24,12 +24,13 @@ module('Integration | Component | link-to-with-action', function (hooks) {
       }
     }
     this.owner.register('service:router', RouterMock);
-
+    this.set('content', 'Link Text');
     await render(hbs`
       <LinkToWithAction @route="somewhere">
-        Link Text
+        {{this.content}}
       </LinkToWithAction>
-    `);
+
+`);
 
     assert.strictEqual(this.element.textContent.trim(), 'Link Text');
     assert.strictEqual(this.element.querySelector('a').getAttribute('href'), '/here/somewhere');
@@ -47,12 +48,13 @@ module('Integration | Component | link-to-with-action', function (hooks) {
     }
 
     this.owner.register('service:router', RouterMock);
-
+    this.set('content', 'More Link Text');
     await render(hbs`
       <LinkToWithAction @route="somewhere">
-        More Link Text
+        {{this.content}}
       </LinkToWithAction>
-    `);
+
+`);
 
     assert.strictEqual(this.element.textContent.trim(), 'More Link Text');
     assert.ok(this.element.querySelector('a').classList.contains('active'));

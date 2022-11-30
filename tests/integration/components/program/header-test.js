@@ -22,7 +22,8 @@ module('Integration | Component | program/header', function (hooks) {
 
     this.set('program', programModel);
 
-    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />`);
+    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />
+`);
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
   });
@@ -38,7 +39,8 @@ module('Integration | Component | program/header', function (hooks) {
 
     this.set('program', programModel);
 
-    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{false}} />`);
+    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{false}} />
+`);
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.notOk(component.title.canEdit);
   });
@@ -54,7 +56,8 @@ module('Integration | Component | program/header', function (hooks) {
 
     this.set('program', programModel);
 
-    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />`);
+    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />
+`);
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
     await component.title.edit();
@@ -79,7 +82,8 @@ module('Integration | Component | program/header', function (hooks) {
 
     this.set('program', programModel);
 
-    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />`);
+    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />
+`);
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
     await component.title.edit();
@@ -101,7 +105,8 @@ module('Integration | Component | program/header', function (hooks) {
 
     this.set('program', programModel);
 
-    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />`);
+    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />
+`);
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
     await component.title.edit();
@@ -126,7 +131,8 @@ module('Integration | Component | program/header', function (hooks) {
 
     this.set('program', programModel);
 
-    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />`);
+    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />
+`);
     assert.strictEqual(programModel.get('title'), 'Aardvark');
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
@@ -149,7 +155,8 @@ module('Integration | Component | program/header', function (hooks) {
 
     this.set('program', programModel);
 
-    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />`);
+    await render(hbs`<Program::Header @program={{this.program}} @canUpdate={{true}} />
+`);
     assert.strictEqual(programModel.get('title'), 'Aardvark');
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);

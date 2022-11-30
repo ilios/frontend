@@ -1,8 +1,6 @@
 <div
   class="connection-status {{unless this.isOnline "offline"}}"
-  aria-hidden={{this.isOnline}}
-  aria-role={{unless this.isOnline "alert"}}
-  {{did-insert this.setup}}
+  aria-hidden={{this.isOnline}} {{did-insert this.setup}}
   {{will-destroy this.teardown}}
 >
   {{#unless this.isOnline}}
