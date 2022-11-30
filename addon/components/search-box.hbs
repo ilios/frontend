@@ -14,7 +14,7 @@
     aria-label={{t "general.search"}}
     class="link-button search-icon"
     type="button"
-    {{on "click" (pipe-action this.moveFocus (perform this.searchTask))}}
+    {{on "click" (perform this.searchTask)}}
     data-test-submit-search
   >
     <FaIcon @icon="magnifying-glass" />
