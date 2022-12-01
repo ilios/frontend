@@ -45,6 +45,13 @@ export default class GlobalSearchBox extends Component {
   }
 
   @action
+  searchFromResult(result) {
+    this.autocompleteSelectedQuery = null;
+    this.internalQuery = result.text;
+    this.search();
+  }
+
+  @action
   search() {
     if (cleanQuery(this.computedQuery).length >= MIN_INPUT) {
       this.args.search(this.computedQuery);

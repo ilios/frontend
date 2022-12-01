@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class MyProfileController extends Controller {
@@ -13,4 +14,14 @@ export default class MyProfileController extends Controller {
   @tracked showInvalidateTokens = false;
   @tracked permissionsSchool = null;
   @tracked permissionsYear = null;
+
+  @action
+  toggleShowCreateNewToken() {
+    this.showCreateNewToken = !this.showCreateNewToken;
+  }
+
+  @action
+  toggleShowInvalidateTokens() {
+    this.showInvalidateTokens = !this.showInvalidateTokens;
+  }
 }
