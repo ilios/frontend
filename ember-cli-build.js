@@ -3,6 +3,9 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options');
+const { Webpack } = require('@embroider/webpack');
+const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = function (defaults) {
   const env = EmberApp.env() || 'development';
@@ -18,7 +21,7 @@ module.exports = function (defaults) {
 
     hinting: isTestBuild,
     babel: {
-      plugins: [require('ember-auto-import/babel-plugin')],
+      plugins: [require.resolve('ember-auto-import/babel-plugin')],
     },
     'ember-cli-image-transformer': {
       images: [
@@ -40,14 +43,6 @@ module.exports = function (defaults) {
     'ember-cli-qunit': {
       useLintTree: false,
     },
-    'ember-service-worker': {
-      immediateClaim: true,
-      versionStrategy: 'every-build',
-    },
-    'esw-cache-first': {
-      version: '4',
-      patterns: ['https://fonts.gstatic.com/(.+)'],
-    },
     autoImport: {
       insertScriptsAt: 'auto-import-scripts',
     },
@@ -59,5 +54,42 @@ module.exports = function (defaults) {
     },
   });
 
-  return app.toTree();
+  return require('@embroider/compat').compatBuild(app, Webpack, {
+    staticAddonTestSupportTrees: true,
+    staticAddonTrees: true,
+    staticHelpers: true,
+    staticComponents: true,
+    splitAtRoutes: [
+      /admin[a-z-]*/,
+      'assign-students',
+      /course[a-z-]*/,
+      /curriculum[a-z-]*/,
+      'dashboard.activities',
+      'dashboard.calendar',
+      'dashboard.materials',
+      'error',
+      'events',
+      'four-oh-four',
+      /instructor[a-z-]*/,
+      /learner[a-z-]*/,
+      'login',
+      'logout',
+      'myprofile',
+      'pending-user-updates',
+      'print-course',
+      /program[a-z-]*/,
+      /report[a-z-]*/,
+      /school[a-z-]*/,
+      'search',
+      /session[a-z-]*/,
+      /user[a-z-]*/,
+      'verification-preview',
+      'weeklyevents',
+    ],
+    packagerOptions: {
+      webpackConfig: {
+        plugins: [new RetryChunkLoadPlugin() /*, new BundleAnalyzerPlugin()*/],
+      },
+    },
+  });
 };

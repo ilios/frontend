@@ -62,6 +62,7 @@ module.exports = function (environment) {
     noScript: {
       placeIn: 'body-footer',
     },
+    disableServiceWorker: process.env.SW_DISABLED === 'true' ?? false,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -120,6 +121,7 @@ module.exports = function (environment) {
     ENV.flashMessageDefaults.extendedTimeout = 100;
     ENV.serverVariables.defaults['api-name-space'] = 'api';
     ENV.serverVariables.defaults['api-host'] = '';
+    ENV.disableServiceWorker = true;
     ENV.featureFlags['globalSearch'] = true;
 
     ENV.APP.autoboot = false;

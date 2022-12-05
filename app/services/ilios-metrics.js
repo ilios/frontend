@@ -30,15 +30,12 @@ export default Service.extend({
   track(page, title) {
     const setContext = async () => {
       const setupSuccessful = await this.setup();
-
       if (setupSuccessful) {
         const metrics = this.metrics;
         const user = await this.currentUser.getModel();
-
         if (user) {
           metrics.set('context.userId', user.id);
         }
-
         metrics.trackPage({ page, title });
       }
     };
