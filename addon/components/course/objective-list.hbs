@@ -4,7 +4,7 @@
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @course}}
 >
-  {{#if (and (is-array this.courseObjectives) this.isSorting)}}
+  {{#if this.isSorting}}
     <ObjectiveSortManager
       @subject={{@course}}
       @close={{set this.isSorting false}}
