@@ -2,7 +2,7 @@
   class="program-year-objective-list"
   data-test-program-year-objective-list
 >
-  {{#if (and (is-array @programYear.sortedProgramYearObjectives) this.isSorting)}}
+  {{#if this.isSorting}}
     <ObjectiveSortManager
       @subject={{@programYear}}
       @close={{set this.isSorting false}}
