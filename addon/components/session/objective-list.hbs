@@ -2,7 +2,7 @@
   class="session-objective-list"
   data-test-session-objective-list
 >
-  {{#if (and (is-array this.sessionObjectives) this.isSorting)}}
+  {{#if this.isSorting}}
     <ObjectiveSortManager
       @subject={{@session}}
       @close={{set this.isSorting false}}
