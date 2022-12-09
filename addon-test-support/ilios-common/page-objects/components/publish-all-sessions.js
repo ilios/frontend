@@ -1,4 +1,12 @@
-import { collection, create, clickable, isVisible, property, text } from 'ember-cli-page-object';
+import {
+  attribute,
+  collection,
+  create,
+  clickable,
+  isVisible,
+  property,
+  text,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-publish-all-sessions]',
@@ -8,6 +16,7 @@ const definition = {
     canExpandCollapse: isVisible('[data-test-expand-collapse]'),
     toggle: clickable('[data-test-expand-collapse]'),
     sessions: collection('tbody tr', {
+      url: attribute('href', '[data-test-title] a'),
       title: text('[data-test-title]'),
       offerings: text('[data-test-offerings]'),
       terms: text('[data-test-terms]'),
@@ -28,6 +37,7 @@ const definition = {
     canExpandCollapse: isVisible('[data-test-expand-collapse]'),
     toggle: clickable('[data-test-expand-collapse]'),
     sessions: collection('tbody tr', {
+      url: attribute('href', '[data-test-title] a'),
       title: text('[data-test-title]'),
       offerings: text('[data-test-offerings]'),
       terms: text('[data-test-terms]'),
@@ -61,6 +71,7 @@ const definition = {
         scope: '[data-test-mark-as-scheduled]',
         isChecked: property('checked'),
       },
+      url: attribute('href', '[data-test-title] a'),
       title: text('[data-test-title]'),
       offerings: text('[data-test-offerings]'),
       terms: text('[data-test-terms]'),

@@ -55,6 +55,10 @@ module('Acceptance | Session - Publish All', function (hooks) {
     assert.strictEqual(publishableSessions.title, 'Sessions Complete: ready to publish (2)');
     await publishableSessions.toggle();
     assert.strictEqual(publishableSessions.sessions.length, 2);
+    assert.strictEqual(publishableSessions.sessions[0].title, 'session 0');
+    assert.strictEqual(publishableSessions.sessions[0].url, '/courses/1/sessions/1');
+    assert.strictEqual(publishableSessions.sessions[1].title, 'session 1');
+    assert.strictEqual(publishableSessions.sessions[1].url, '/courses/1/sessions/2');
 
     assert.strictEqual(
       page.publishAllSessions.review.confirmation,
@@ -97,8 +101,12 @@ module('Acceptance | Session - Publish All', function (hooks) {
     assert.ok(overridableSessions.publishAllAsIs.isVisible);
     const { sessions: list } = overridableSessions;
     assert.strictEqual(list.length, 2);
+    assert.strictEqual(list[0].title, 'session 0');
+    assert.strictEqual(list[0].url, '/courses/1/sessions/1');
     assert.notOk(list[0].publishAsIs.isChecked);
     assert.ok(list[0].markAsScheduled.isChecked);
+    assert.strictEqual(list[1].title, 'session 1');
+    assert.strictEqual(list[1].url, '/courses/1/sessions/2');
     assert.notOk(list[1].publishAsIs.isChecked);
     assert.ok(list[1].markAsScheduled.isChecked);
 

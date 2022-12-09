@@ -37,7 +37,9 @@
             {{#each this.unPublishableSessions as |session|}}
               <tr>
                 <td data-test-title>
-                  {{session.title}}
+                  <LinkTo @route="session" @model={{session}}>
+                    {{session.title}}
+                  </LinkTo>
                 </td>
                 {{#if session.offerings.length}}
                   <td class="yes" data-test-offerings>
@@ -130,7 +132,9 @@
             {{#each this.publishableSessions as |session|}}
               <tr>
                 <td data-test-title>
-                  {{session.title}}
+                  <LinkTo @route="session" @model={{session}}>
+                    {{session.title}}
+                  </LinkTo>
                 </td>
                 {{#if session.offerings.length}}
                   <td class="yes" data-test-offerings>
@@ -262,7 +266,9 @@
                   </ul>
                 </td>
                 <td data-test-title>
-                  {{session.title}}
+                  <LinkTo @route="session" @model={{session}}>
+                    {{session.title}}
+                  </LinkTo>
                 </td>
                 {{#if session.offerings.length}}
                   <td class="yes" data-test-offerings>
