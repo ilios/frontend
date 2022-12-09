@@ -19,8 +19,11 @@
 
   .new {
     border: 1px solid $culturedGrey;
-    margin: .5rem;
     padding: 1rem;
+
+    @include for-laptop-and-up {
+      margin-left: 1rem;
+    }
 
     .new-result-title {
       @include ilios-heading-h4;
