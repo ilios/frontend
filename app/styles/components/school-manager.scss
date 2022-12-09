@@ -1,5 +1,5 @@
 .school-manager {
-  padding: .5rem .25rem;
+  @include main-section;
 
   .school-overview {
     border-bottom: 1px dotted $culturedGrey;
