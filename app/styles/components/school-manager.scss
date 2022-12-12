@@ -1,22 +1,16 @@
 .school-manager {
-  padding: .5rem .25rem;
-  border: 1px solid $blueMunsell;
-  border-radius: 5px;
-
-  .backtolink {
-    margin: .5rem 0;
-    padding: 0;
-  }
+  @include main-section;
 
   .school-overview {
     border-bottom: 1px dotted $culturedGrey;
 
     h2 {
       @include ilios-heading-h4;
+      margin-left: .8rem;
     }
   }
 
   .school-manager-content {
-    margin-left: .5rem;
+    margin-left: .8rem;
   }
 }
