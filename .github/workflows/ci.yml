@@ -36,7 +36,7 @@ jobs:
 
   test:
     name: "Test"
-    runs-on: ubuntu-20.04 #https://github.com/actions/runner-images/issues/6399
+    runs-on: ubuntu-latest
     timeout-minutes: 15
 
     strategy:
