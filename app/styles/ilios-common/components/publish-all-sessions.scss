@@ -13,6 +13,12 @@
 
     .content {
       @include detail-container-content;
+
+      tbody {
+        td {
+          vertical-align: top;
+        }
+      }
     }
   }
 
