@@ -13,6 +13,12 @@
 
     .content {
       @include detail-container-content;
+
+      tbody {
+        td {
+          vertical-align: top;
+        }
+      }
     }
   }
 
@@ -28,6 +34,8 @@
 
     ul {
       list-style-type: none;
+      margin: 0;
+      padding: 0;
     }
   }
 
