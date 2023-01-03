@@ -156,6 +156,7 @@ general:
   id: "ID"
   ignore: Ignorer
   iliosUpdatePending: "hourra! Nous avons fait Ilios mieux. Vous obtiendrez le nouveau truc sur votre connexion prochaine, ou cliquerez pour mettre à jour maintenant."
+  in: en
   includedInGrade: "Inclus dans le grade"
   instructionalMethod: "Modalité d'Instruction"
   instructionalMethods: "Modalités d'Instruction"

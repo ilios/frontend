@@ -86,27 +86,32 @@
       </p>
       {{#if this.currentPrepositionalObject}}
         {{#if (includes this.currentPrepositionalObject (w "course session"))}}
-          <select
-            aria-label={{t "general.year"}}
-            data-test-report-academic-years
-          {{on "change" (pick "target.value" this.changeSelectedYear)}}
-          >
-            <option selected={{is-empty this.selectedYear}} value="">
-              {{t "general.allAcademicYears"}}
-            </option>
-            {{#each
-              (sort-by
-                "title:desc" this.allAcademicYears
-              ) as |year|
-            }}
-              <option
-                selected={{eq year.id this.selectedYear}}
-                value={{year.id}}
-              >
-                {{year.title}}
+          <p>
+            <label>
+              {{t "general.in"}}
+            </label>
+            <select
+              aria-label={{t "general.year"}}
+              data-test-report-academic-years
+            {{on "change" (pick "target.value" this.changeSelectedYear)}}
+            >
+              <option selected={{is-empty this.selectedYear}} value="">
+                {{t "general.allAcademicYears"}}
               </option>
-            {{/each}}
-          </select>
+              {{#each
+                (sort-by
+                  "title:desc" this.allAcademicYears
+                ) as |year|
+              }}
+                <option
+                  selected={{eq year.id this.selectedYear}}
+                  value={{year.id}}
+                >
+                  {{year.title}}
+                </option>
+              {{/each}}
+            </select>
+          </p>
         {{/if}}
         <p>
           <label for="which-is-{{templateId}}">
