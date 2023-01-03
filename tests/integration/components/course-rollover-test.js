@@ -255,18 +255,9 @@ module('Integration | Component | course rollover', function (hooks) {
 
   test('rollover course with new start date', async function (assert) {
     assert.expect(7);
+    const lastYear = DateTime.now().year - 1;
     // ensure that rollover date and course start date fall on the same day of the week.
-    let courseStartDate = DateTime.fromObject({ hour: 0, minute: 0 })
-      .minus({ week: 1 })
-      .set({ day: 1 });
-    // Also, make sure that we're not crossing year boundaries here.
-    // Otherwise, ilios will propel us into the current year which we do not want right here.
-    if (courseStartDate.year !== DateTime.now().year) {
-      courseStartDate = DateTime.fromObject({ hour: 0, minute: 0 })
-        .plus({ week: 1 })
-        .set({ day: 1 });
-    }
-
+    const courseStartDate = DateTime.fromISO(`${lastYear}-W20-1`);
     const rolloverDate = courseStartDate.plus({ week: 1 });
 
     const school = this.server.create('school');
@@ -331,18 +322,9 @@ module('Integration | Component | course rollover', function (hooks) {
 
   test('rollover course prohibit non-matching day-of-week date selection', async function (assert) {
     assert.expect(4);
+    const lastYear = DateTime.now().year - 1;
     // rollover date and course start date don't fall on the same day of the week.
-    let courseStartDate = DateTime.fromObject({ hour: 0, minute: 0 })
-      .minus({ week: 1 })
-      .set({ weekday: 1 });
-    // Make sure that we're not crossing year boundaries here.
-    // Otherwise, ilios will propel us into the current year which we do not want right here.
-    if (courseStartDate.year !== DateTime.now().year) {
-      courseStartDate = DateTime.fromObject({ hour: 0, minute: 0 })
-        .plus({ week: 1 })
-        .set({ day: 1 });
-    }
-
+    const courseStartDate = DateTime.fromISO(`${lastYear}-W20-1`);
     const rolloverDate = courseStartDate.plus({ week: 1 }).set({ weekday: 3 });
 
     const school = this.server.create('school');
