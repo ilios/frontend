@@ -28,8 +28,7 @@ module('Integration | Component | programs/list-item', function (hooks) {
       .lookup('service:store')
       .findRecord('program', this.program.id);
     this.set('program', programModel);
-    await render(hbs`<Programs::ListItem @program={{this.program}} />
-`);
+    await render(hbs`<Programs::ListItem @program={{this.program}} />`);
     assert.strictEqual(component.title, 'program 0');
     assert.strictEqual(component.school, 'school 0');
     assert.ok(component.canBeRemoved);
@@ -45,8 +44,7 @@ module('Integration | Component | programs/list-item', function (hooks) {
       .lookup('service:store')
       .findRecord('program', this.program.id);
     this.set('program', programModel);
-    await render(hbs`<Programs::ListItem @program={{this.program}} />
-`);
+    await render(hbs`<Programs::ListItem @program={{this.program}} />`);
     assert.strictEqual(component.title, 'program 0');
     assert.notOk(component.canBeRemoved);
   });
@@ -57,8 +55,7 @@ module('Integration | Component | programs/list-item', function (hooks) {
       .lookup('service:store')
       .findRecord('program', this.program.id);
     this.set('program', programModel);
-    await render(hbs`<Programs::ListItem @program={{this.program}} />
-`);
+    await render(hbs`<Programs::ListItem @program={{this.program}} />`);
     assert.strictEqual(component.title, 'program 0');
     assert.notOk(component.canBeRemoved);
   });
@@ -69,8 +66,7 @@ module('Integration | Component | programs/list-item', function (hooks) {
       .lookup('service:store')
       .findRecord('program', this.program.id);
     this.set('program', programModel);
-    await render(hbs`<Programs::ListItem @program={{this.program}} />
-`);
+    await render(hbs`<Programs::ListItem @program={{this.program}} />`);
     assert.strictEqual(component.title, 'program 0');
     assert.notOk(component.canBeRemoved);
   });

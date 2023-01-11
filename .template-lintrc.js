@@ -9,4 +9,5 @@ module.exports = {
       allow: ['noop'],
     },
   },
+  ignore: ['tests/integration/**'],
 };

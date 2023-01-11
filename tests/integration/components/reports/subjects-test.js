@@ -35,8 +35,7 @@ module('Integration | Component | reports/subjects', function (hooks) {
       prepositionalObjectTableRowId: session.id,
       user: this.user,
     });
-    await render(hbs`<Reports::Subjects />
-`);
+    await render(hbs`<Reports::Subjects />`);
     assert.strictEqual(component.title, 'Subject Reports');
     assert.strictEqual(component.reports.length, 2);
     assert.strictEqual(component.reports[0].title, 'report 0');
@@ -46,8 +45,7 @@ module('Integration | Component | reports/subjects', function (hooks) {
 
   test('it renders empty', async function (assert) {
     assert.expect(3);
-    await render(hbs`<Reports::Subjects />
-`);
+    await render(hbs`<Reports::Subjects />`);
     assert.strictEqual(component.title, 'Subject Reports');
     assert.strictEqual(component.reports.length, 1);
     assert.strictEqual(component.reports[0].text, 'None');
@@ -55,8 +53,7 @@ module('Integration | Component | reports/subjects', function (hooks) {
   });
 
   test('toggle new report form', async function (assert) {
-    await render(hbs`<Reports::Subjects />
-`);
+    await render(hbs`<Reports::Subjects />`);
     assert.notOk(component.newReport.isVisible);
     await component.newReportFormToggle.click();
     assert.ok(component.newReport.isVisible);

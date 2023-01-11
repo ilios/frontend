@@ -51,8 +51,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @selected={{null}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.domains.length, 1);
     assert.strictEqual(component.domains[0].title, this.domainModel1.title);
     assert.ok(component.domains[0].notSelected);
@@ -85,8 +84,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @selected={{this.selected}}
       @add={{(noop)}}
       @remove={{this.remove}}
-    />
-`);
+    />`);
     assert.ok(component.domains[0].selected);
     await component.domains[0].toggle();
   });
@@ -111,8 +109,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @selected={{null}}
       @add={{this.add}}
       @remove={{(noop)}}
-    />
-`);
+    />`);
     assert.ok(component.domains[0].notSelected);
     await component.domains[0].toggle();
   });
@@ -138,8 +135,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @selected={{null}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.domains[0].title, this.domainModel2.title);
     assert.strictEqual(component.domains[1].title, this.domainModel1.title);
   });
@@ -166,8 +162,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @selected={{this.selected}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />
-`);
+    />`);
     assert.ok(component.domains[0].selected);
     await component.domains[0].toggle();
     assert.notOk(component.domains[0].selectable);
@@ -195,8 +190,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @selected={{this.selected}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />
-`);
+    />`);
     assert.ok(component.domains[0].competencies[0].selected);
     await component.domains[0].competencies[0].toggle();
     assert.notOk(component.domains[0].competencies[0].selectable);

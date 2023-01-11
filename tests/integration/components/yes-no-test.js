@@ -10,16 +10,14 @@ module('Integration | Component | yes-no', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders yes', async function (assert) {
-    await render(hbs`<YesNo @value={{true}} />
-`);
+    await render(hbs`<YesNo @value={{true}} />`);
     assert.strictEqual(component.text, 'Yes');
     assert.ok(component.yes);
     assert.notOk(component.no);
   });
 
   test('it renders no', async function (assert) {
-    await render(hbs`<YesNo @value={{false}} />
-`);
+    await render(hbs`<YesNo @value={{false}} />`);
     assert.strictEqual(component.text, 'No');
     assert.notOk(component.yes);
     assert.ok(component.no);

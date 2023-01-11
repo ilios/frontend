@@ -73,8 +73,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
       @canUpdate={{this.canUpdate}}
       @sortSessionsBy={{this.sortBy}}
       @setSortSessionBy={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.header.title.value, blockModel.title);
     assert.strictEqual(
       component.overview.description.text,

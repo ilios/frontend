@@ -47,8 +47,7 @@ module('Integration | Component | school session types expanded', function (hook
       @managedSessionTypeId={{null}}
       @setSchoolManagedSessionType={{(noop)}}
       @setSchoolNewSessionType={{(noop)}}
-    />
-`);
+    />`);
 
     assert.notOk(component.list.sessionTypes.isVisible);
     assert.strictEqual(component.title, 'Session Types (0)');
@@ -66,8 +65,7 @@ module('Integration | Component | school session types expanded', function (hook
       @managedSessionTypeId={{null}}
       @setSchoolManagedSessionType={{(noop)}}
       @setSchoolNewSessionType={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.list.sessionTypes.length, 1);
     assert.strictEqual(component.title, 'Session Types (1)');
@@ -86,8 +84,7 @@ module('Integration | Component | school session types expanded', function (hook
       @managedSessionTypeId={{this.sessionType.id}}
       @setSchoolManagedSessionType={{(noop)}}
       @setSchoolNewSessionType={{(noop)}}
-    />
-`);
+    />`);
 
     assert.ok(component.manager.isVisible);
   });
@@ -108,8 +105,7 @@ module('Integration | Component | school session types expanded', function (hook
       @managedSessionTypeId={{null}}
       @setSchoolManagedSessionType={{this.click}}
       @setSchoolNewSessionType={{(noop)}}
-    />
-`);
+    />`);
 
     await component.list.sessionTypes[0].manage();
   });
@@ -130,8 +126,7 @@ module('Integration | Component | school session types expanded', function (hook
       @managedSessionTypeId={{null}}
       @setSchoolManagedSessionType={{(noop)}}
       @setSchoolNewSessionType={{this.click}}
-    />
-`);
+    />`);
 
     await component.createNew();
   });
@@ -153,8 +148,7 @@ module('Integration | Component | school session types expanded', function (hook
       @managedSessionTypeId={{this.sessionType.id}}
       @setSchoolManagedSessionType={{this.click}}
       @setSchoolNewSessionType={{(noop)}}
-    />
-`);
+    />`);
 
     await component.newSessionType.cancel.click();
   });
@@ -175,8 +169,7 @@ module('Integration | Component | school session types expanded', function (hook
       @managedSessionTypeId={{null}}
       @setSchoolManagedSessionType={{(noop)}}
       @setSchoolNewSessionType={{(noop)}}
-    />
-`);
+    />`);
 
     await component.collapse();
   });

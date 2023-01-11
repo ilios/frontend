@@ -49,8 +49,7 @@ module('Integration | Component | assign students', function (hooks) {
       @limit={{10}}
       @setOffset={{(noop)}}
       @setLimit={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.cohorts.options.length, 1);
     assert.strictEqual(component.cohorts.options[0].text, 'program title test cohort');
@@ -81,8 +80,7 @@ module('Integration | Component | assign students', function (hooks) {
       @limit={{10}}
       @setOffset={{(noop)}}
       @setLimit={{(noop)}}
-    />
-`);
+    />`);
     assert.notOk(component.isToggleAllChecked);
     assert.notOk(component.students[0].isToggleChecked);
     await component.toggleAll();
@@ -114,8 +112,7 @@ module('Integration | Component | assign students', function (hooks) {
       @limit={{10}}
       @setOffset={{(noop)}}
       @setLimit={{(noop)}}
-    />
-`);
+    />`);
 
     assert.notOk(component.isToggleAllChecked, 'check all is not initially checked');
     assert.notOk(component.isToggleAllIndeterminate, 'check all is not initially indeterminate');
@@ -161,8 +158,7 @@ module('Integration | Component | assign students', function (hooks) {
       @limit={{10}}
       @setOffset={{(noop)}}
       @setLimit={{(noop)}}
-    />
-`);
+    />`);
     assert.notOk(component.isToggleAllChecked, 'check all is not initially checked');
     assert.notOk(component.students[0].isToggleChecked, 'first student is not initially checked');
     assert.notOk(component.students[1].isToggleChecked, 'second student is not initially checked');
@@ -214,8 +210,7 @@ module('Integration | Component | assign students', function (hooks) {
       @limit={{10}}
       @setOffset={{(noop)}}
       @setLimit={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(this.server.db.users[0].primaryCohortId, null);
     await component.toggleAll();

@@ -9,8 +9,7 @@ module('Integration | Component | program-year/objective-list-loading', function
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<ProgramYear::ObjectiveListLoading @count={{9}} />
-`);
+    await render(hbs`<ProgramYear::ObjectiveListLoading @count={{9}} />`);
 
     assert.dom('.grid-row').exists({ count: 9 });
   });

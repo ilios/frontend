@@ -30,8 +30,7 @@ module('Integration | Component | school vocabularies collapsed', function (hook
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
 
-    await render(hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{(noop)}} />
-`);
+    await render(hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
 
     assert.strictEqual(component.title, 'Vocabularies (2)');
     assert.strictEqual(component.vocabularies.length, 2);
@@ -54,8 +53,7 @@ module('Integration | Component | school vocabularies collapsed', function (hook
       assert.ok(true, 'expand triggered.');
     });
     await render(
-      hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{this.expand}} />
-`
+      hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{this.expand}} />`
     );
 
     await component.expand();

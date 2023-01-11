@@ -83,8 +83,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   test('it renders', async function (assert) {
     assert.expect(6);
 
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const content = this.element.textContent.trim();
     assert.notEqual(content.search(/File with user data/), -1);
@@ -101,8 +100,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   test('select student mode display cohort', async function (assert) {
     assert.expect(10);
 
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
     await click('.click-choice-buttons .second-button');
     const content = this.element.textContent.trim();
     assert.notEqual(content.search(/File with user data/), -1);
@@ -124,8 +122,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('parses file into table', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -181,8 +178,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.expect(30);
     this.server.create('user-role', { id: 4 });
 
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -250,8 +246,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.expect(28);
     this.server.create('user-role', { id: 4 });
 
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
     await click('.click-choice-buttons .second-button');
 
     const users = [
@@ -320,14 +315,12 @@ module('Integration | Component | bulk new users', function (hooks) {
     this.set('close', () => {
       assert.ok(true);
     });
-    await render(hbs`<BulkNewUsers @close={{this.close}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{this.close}} />`);
     await click('.cancel');
   });
 
   test('validate firstName', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -366,8 +359,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('validate lastName', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -406,8 +398,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('validate middleName', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -447,8 +438,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('validate email address', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -487,8 +477,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('validate campusId', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -527,8 +516,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('validate otherId', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -567,8 +555,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('validate username length', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -609,8 +596,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   test('validate username uniqueness', async function (assert) {
     const user = this.server.create('user');
     this.server.create('authentication', { user, username: 'existingName' });
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -653,8 +639,7 @@ module('Integration | Component | bulk new users', function (hooks) {
       return new Response(500);
     });
     const user = this.server.create('user');
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -682,8 +667,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     this.server.post('api/users', function () {
       return new Response(500);
     });
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -706,8 +690,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('username not required', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -731,8 +714,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('password not required if username is blank', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -759,8 +741,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.expect(2);
     const proposedNewUsers = '[data-test-proposed-new-users]';
     const waitSaving = '[data-test-wait-saving]';
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       [
@@ -786,8 +767,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('ignore header row', async function (assert) {
-    await render(hbs`<BulkNewUsers @close={{(noop)}} />
-`);
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
 
     const users = [
       ['First', 'Last', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],

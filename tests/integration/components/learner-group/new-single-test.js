@@ -14,8 +14,7 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
     await render(hbs`<LearnerGroup::NewSingle
       @save={{(noop)}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.ok(component.isVisible);
     assert.notOk(component.canFill);
     await a11yAudit(this.element);
@@ -26,8 +25,7 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
       @save={{(noop)}}
       @cancel={{(noop)}}
       @fillModeSupported={{false}}
-    />
-`);
+    />`);
     assert.ok(component.isVisible);
     assert.notOk(component.canFill);
     await a11yAudit(this.element);
@@ -43,8 +41,7 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
       @save={{this.save}}
       @cancel={{(noop)}}
       @fillModeSupported={{true}}
-    />
-`);
+    />`);
     await component.title('new group');
     await component.save();
   });
@@ -59,8 +56,7 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
       @save={{this.save}}
       @cancel={{(noop)}}
       @fillModeSupported={{true}}
-    />
-`);
+    />`);
     await component.title('new group');
     assert.ok(component.canFill);
     await component.fillWithCohort();

@@ -46,8 +46,7 @@ module(
       };
 
       this.set('data', data);
-      await render(hbs`<CurriculumInventory::VerificationPreviewTable5 @data={{this.data}} />
-`);
+      await render(hbs`<CurriculumInventory::VerificationPreviewTable5 @data={{this.data}} />`);
       assert.strictEqual(
         component.title,
         'Table 5: Non-Clerkship Sequence Block Assessment Methods'

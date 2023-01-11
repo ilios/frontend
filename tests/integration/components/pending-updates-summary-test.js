@@ -32,8 +32,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
 
     const schools = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schools);
-    await render(hbs`<PendingUpdatesSummary @schools={{this.schools}} />
-`);
+    await render(hbs`<PendingUpdatesSummary @schools={{this.schools}} />`);
     assert.strictEqual(component.title, 'Updates from the Campus Directory');
     assert.strictEqual(component.summary, 'There are 5 users needing attention');
     assert.ok(component.schoolFilter.hasMultiple);
@@ -63,8 +62,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
 
     const schools = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schools);
-    await render(hbs`<PendingUpdatesSummary @schools={{this.schools}} />
-`);
+    await render(hbs`<PendingUpdatesSummary @schools={{this.schools}} />`);
     assert.strictEqual(component.title, 'Updates from the Campus Directory');
     assert.strictEqual(component.summary, 'There are 5 users needing attention');
     assert.notOk(component.schoolFilter.hasMultiple);
@@ -90,8 +88,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
 
     const schools = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schools);
-    await render(hbs`<PendingUpdatesSummary @schools={{this.schools}} />
-`);
+    await render(hbs`<PendingUpdatesSummary @schools={{this.schools}} />`);
 
     assert.strictEqual(component.title, 'Updates from the Campus Directory');
     assert.strictEqual(component.summary, 'There are 0 users needing attention');
@@ -125,8 +122,7 @@ module('Integration | Component | pending updates summary', function (hooks) {
 
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schoolModels);
-    await render(hbs`<PendingUpdatesSummary @schools={{this.schools}} />
-`);
+    await render(hbs`<PendingUpdatesSummary @schools={{this.schools}} />`);
 
     assert.strictEqual(component.title, 'Updates from the Campus Directory');
     assert.strictEqual(component.summary, 'There are 2 users needing attention');

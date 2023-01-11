@@ -35,8 +35,7 @@ module(
       @school={{this.school}}
       @canUpdate={{this.canUpdate}}
       @manage={{this.manage}}
-    />
-`);
+    />`);
 
       assert.strictEqual(component.header.title, 'Curriculum Inventory Institutional Information');
       assert.strictEqual(component.header.manageTitle, 'Manage CIR Institutional Info');
@@ -74,8 +73,7 @@ module(
       @school={{this.school}}
       @canUpdate={{this.canUpdate}}
       @manage={{this.manage}}
-    />
-`);
+    />`);
       assert.notOk(component.header.hasManageAction);
     });
 
@@ -97,8 +95,7 @@ module(
       @school={{this.school}}
       @canUpdate={{this.canUpdate}}
       @manage={{this.manage}}
-    />
-`);
+    />`);
       await component.header.manage();
     });
 
@@ -114,8 +111,7 @@ module(
       @school={{this.school}}
       @canUpdate={{this.canUpdate}}
       @manage={{this.manage}}
-    />
-`);
+    />`);
       await assert.strictEqual(
         component.content.noInfo,
         'No institutional information has been configured for this school.'

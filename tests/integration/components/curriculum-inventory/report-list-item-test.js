@@ -37,8 +37,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     this.set('report', this.report);
 
     await render(
-      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @remove={{(noop)}}/>
-`
+      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @remove={{(noop)}}/>`
     );
 
     assert.strictEqual(component.name, 'CI Report');
@@ -58,8 +57,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
       assert.strictEqual(r, this.report);
     });
     await render(
-      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @remove={{this.remove}}/>
-`
+      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @remove={{this.remove}}/>`
     );
     assert.notOk(component.confirmRemoval.isVisible);
     await component.remove();
@@ -76,8 +74,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     this.set('report', this.report);
 
     await render(
-      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @remove={{this.remove}}/>
-`
+      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @remove={{this.remove}}/>`
     );
 
     assert.notOk(component.isDeletable);
@@ -91,8 +88,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     this.set('report', this.report);
 
     await render(
-      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @remove={{(noop)}}/>
-`
+      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @remove={{(noop)}}/>`
     );
 
     assert.strictEqual(component.status, 'Finalized');
@@ -109,8 +105,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     this.set('report', this.report);
 
     await render(
-      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @remove={{(noop)}}/>
-`
+      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @remove={{(noop)}}/>`
     );
 
     assert.strictEqual(component.year, '2017 - 2018');

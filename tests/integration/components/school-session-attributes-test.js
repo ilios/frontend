@@ -25,8 +25,7 @@ module('Integration | Component | school session attributes', function (hooks) {
       @manage={{(noop)}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
-    />
-`);
+    />`);
 
     assert.notOk(component.expanded.isVisible);
     assert.notOk(component.collapsed.attendanceRequired.isEnabled);
@@ -50,8 +49,7 @@ module('Integration | Component | school session attributes', function (hooks) {
       @manage={{(noop)}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
-    />
-`);
+    />`);
 
     assert.notOk(component.collapsed.isVisible);
     assert.notOk(component.expanded.attributes.attendanceRequired.isEnabled);
@@ -73,8 +71,7 @@ module('Integration | Component | school session attributes', function (hooks) {
       @manage={{(noop)}}
       @collapse={{(noop)}}
       @expand={{this.expand}}
-    />
-`);
+    />`);
 
     await component.collapsed.expand();
   });
@@ -93,8 +90,7 @@ module('Integration | Component | school session attributes', function (hooks) {
       @manage={{(noop)}}
       @collapse={{this.collapse}}
       @expand={{(noop)}}
-    />
-`);
+    />`);
 
     await component.expanded.collapse();
   });

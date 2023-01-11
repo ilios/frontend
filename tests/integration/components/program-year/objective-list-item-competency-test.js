@@ -21,8 +21,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
     await a11yAudit(this.element);
@@ -43,8 +42,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.text, 'None');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -66,8 +64,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.text, 'competency 1 (competency 0)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -88,8 +85,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.text, 'competency 0');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -113,8 +109,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.text, 'competency 1 (competency 0)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -137,8 +132,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.text, 'competency 0');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -166,8 +160,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @save={{this.save}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     await component.save();
   });
 
@@ -193,8 +186,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{this.cancel}}
-    />
-`);
+    />`);
     await component.cancel();
   });
 
@@ -220,8 +212,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     await component.manage();
   });
 });

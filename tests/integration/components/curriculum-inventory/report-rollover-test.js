@@ -28,8 +28,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
-    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />
-`);
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
 
     assert.strictEqual(component.years.options.length, 4);
     assert.strictEqual(component.years.options[0].text, `${thisYear + 1}`);
@@ -63,8 +62,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
-    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />
-`);
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
 
     assert.strictEqual(component.years.options.length, 4);
     assert.strictEqual(component.years.options[0].text, `${thisYear + 1} - ${thisYear + 2}`);
@@ -110,8 +108,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       assert.strictEqual(parseInt(newReport.id, 10), 14);
     });
     await render(
-      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />
-`
+      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />`
     );
     await component.save();
   });
@@ -143,8 +140,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       assert.strictEqual(parseInt(newReport.id, 10), 14);
     });
     await render(
-      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />
-`
+      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />`
     );
     await component.name.submit();
   });
@@ -189,8 +185,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{(noop)}} />
-`
+      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{(noop)}} />`
     );
 
     await component.name.set(newName);
@@ -214,8 +209,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
-    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />
-`);
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
     assert.notOk(component.name.hasValidationError);
   });
 
@@ -228,8 +222,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
-    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />
-`);
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
 
     await component.name.set('');
     await component.save();
@@ -248,8 +241,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       .findRecord('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
-    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />
-`);
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
     assert.notOk(component.description.hasValidationError);
     await component.description.set('');
     await component.save();

@@ -28,8 +28,7 @@ module('Integration | Component | user profile roles', function (hooks) {
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
-    await render(hbs`<UserProfileRoles @user={{this.user}} />
-`);
+    await render(hbs`<UserProfileRoles @user={{this.user}} />`);
 
     assert.strictEqual(component.student.value, 'Yes');
     assert.strictEqual(component.formerStudent.value, 'No');
@@ -52,8 +51,7 @@ module('Integration | Component | user profile roles', function (hooks) {
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
-    await render(hbs`<UserProfileRoles @user={{this.user}} />
-`);
+    await render(hbs`<UserProfileRoles @user={{this.user}} />`);
 
     assert.ok(component.root.yesNo.yes);
     assert.notOk(component.root.yesNo.no);
@@ -71,8 +69,7 @@ module('Integration | Component | user profile roles', function (hooks) {
       assert.ok(what, 'recieved boolean true value');
     });
     await render(
-      hbs`<UserProfileRoles @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />
-`
+      hbs`<UserProfileRoles @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`
     );
     await component.manage.click();
   });
@@ -85,8 +82,7 @@ module('Integration | Component | user profile roles', function (hooks) {
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    await render(hbs`<UserProfileRoles @isManaging={{true}} @user={{this.user}} />
-`);
+    await render(hbs`<UserProfileRoles @isManaging={{true}} @user={{this.user}} />`);
 
     assert.notOk(component.formerStudent.isChecked);
     assert.ok(component.enabled.isChecked);

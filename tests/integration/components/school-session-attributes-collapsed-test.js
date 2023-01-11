@@ -20,8 +20,7 @@ module('Integration | Component | school session attributes collapsed', function
       @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
       @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
       @expand={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.attendanceRequired.label, 'Attendance Required');
     assert.ok(component.attendanceRequired.isDisabled);
@@ -44,8 +43,7 @@ module('Integration | Component | school session attributes collapsed', function
       @showSessionSpecialAttireRequired={{true}}
       @showSessionSpecialEquipmentRequired={{true}}
       @expand={{this.expand}}
-    />
-`);
+    />`);
 
     await component.expand();
   });

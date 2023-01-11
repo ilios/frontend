@@ -38,8 +38,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
 
     this.set('programYear', programYearModel);
     await render(
-      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
-`
+      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />`
     );
 
     assert.strictEqual(component.title, 'Objectives (4)');
@@ -65,8 +64,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
       assert.ok(true);
     });
     await render(
-      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{this.click}} />
-`
+      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{this.click}} />`
     );
 
     assert.strictEqual(component.title, 'Objectives (0)');
@@ -83,8 +81,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
 
     this.set('programYear', programYearModel);
     await render(
-      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
-`
+      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />`
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.complete);
@@ -100,8 +97,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
 
     this.set('programYear', programYearModel);
     await render(
-      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
-`
+      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />`
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.none);
@@ -117,8 +113,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
 
     this.set('programYear', programYearModel);
     await render(
-      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
-`
+      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />`
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.complete);
@@ -134,8 +129,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
 
     this.set('programYear', programYearModel);
     await render(
-      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
-`
+      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />`
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.none);
@@ -151,8 +145,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
 
     this.set('programYear', programYearModel);
     await render(
-      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
-`
+      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />`
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.complete);
@@ -168,8 +161,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
 
     this.set('programYear', programYearModel);
     await render(
-      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />
-`
+      hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{(noop)}} />`
     );
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.none);

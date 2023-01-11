@@ -51,8 +51,7 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
       @selectedPcrses={{this.selectedPcrses}}
       @add={{(noop)}}
       @remove={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.pcrs.length, 5);
     assert.notOk(component.pcrs[0].isChecked);
@@ -80,8 +79,7 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
       @selectedPcrses={{(array)}}
       @add={{this.add}}
       @remove={{(noop)}}
-    />
-`);
+    />`);
     assert.notOk(component.pcrs[0].isChecked);
     await component.pcrs[0].click();
   });
@@ -99,8 +97,7 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
       @selectedPcrses={{this.selectedPcrses}}
       @add={{(noop)}}
       @remove={{this.remove}}
-    />
-`);
+    />`);
     assert.ok(component.pcrs[0].isChecked);
     await component.pcrs[0].click();
   });

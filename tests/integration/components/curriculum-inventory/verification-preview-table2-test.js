@@ -37,8 +37,7 @@ module(
       };
 
       this.set('data', data);
-      await render(hbs`<CurriculumInventory::VerificationPreviewTable2 @data={{this.data}} />
-`);
+      await render(hbs`<CurriculumInventory::VerificationPreviewTable2 @data={{this.data}} />`);
       assert.strictEqual(
         component.title,
         'Table 2: Primary Instructional Method by Non-Clerkship Sequence Block'

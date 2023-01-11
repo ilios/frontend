@@ -18,8 +18,7 @@ module('Integration | Component | global-search', function (hooks) {
       @onQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
-    />
-`);
+    />`);
     assert.dom('[data-test-global-search-box]').exists({ count: 1 });
   });
 
@@ -42,8 +41,7 @@ module('Integration | Component | global-search', function (hooks) {
       @onQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
-    />
-`);
+    />`);
     assert.ok(component.noResultsIsVisible);
     this.set('query', 'hello world');
     assert.notOk(component.noResultsIsVisible);
@@ -67,8 +65,7 @@ module('Integration | Component | global-search', function (hooks) {
       @onQuery={{this.query}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
-    />
-`);
+    />`);
     await component.searchBox.input('typed it');
     await component.searchBox.clickIcon();
   });
@@ -115,8 +112,7 @@ module('Integration | Component | global-search', function (hooks) {
       @onSelectPage={{(noop)}}
       @selectedYear={{this.selectedYear}}
       @setSelectedYear={{set this.selectedYear}}
-    />
-`);
+    />`);
     assert.strictEqual(component.academicYear, '');
     assert.strictEqual(
       component.academicYearOptions,
@@ -190,8 +186,7 @@ module('Integration | Component | global-search', function (hooks) {
       @onSelectPage={{(noop)}}
       @ignoredSchoolIds={{this.ignoredSchoolIds}}
       @setIgnoredSchoolIds={{set this.ignoredSchoolIds}}
-    />
-`);
+    />`);
     assert.strictEqual(component.searchResults.length, 4);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.searchResults[1].courseTitle, '2020 Course 2');
@@ -286,8 +281,7 @@ module('Integration | Component | global-search', function (hooks) {
       @onQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.schoolFilters.length, 3);
@@ -326,8 +320,7 @@ module('Integration | Component | global-search', function (hooks) {
       @onQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.schoolFilters.length, 0);

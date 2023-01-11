@@ -35,8 +35,7 @@ module('Integration | Component | program/leadership expanded', function (hooks)
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.title, 'Program Leadership');
     assert.strictEqual(component.leadershipList.directors.length, 2);
     assert.strictEqual(component.leadershipList.directors[0].text, 'a M. person');
@@ -59,8 +58,7 @@ module('Integration | Component | program/leadership expanded', function (hooks)
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />
-`);
+    />`);
     await component.collapse();
   });
 
@@ -80,8 +78,7 @@ module('Integration | Component | program/leadership expanded', function (hooks)
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{this.click}}
-    />
-`);
+    />`);
     await component.manage();
   });
 });

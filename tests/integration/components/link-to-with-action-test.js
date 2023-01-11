@@ -28,9 +28,7 @@ module('Integration | Component | link-to-with-action', function (hooks) {
     await render(hbs`
       <LinkToWithAction @route="somewhere">
         {{this.content}}
-      </LinkToWithAction>
-
-`);
+      </LinkToWithAction>`);
 
     assert.strictEqual(this.element.textContent.trim(), 'Link Text');
     assert.strictEqual(this.element.querySelector('a').getAttribute('href'), '/here/somewhere');
@@ -52,9 +50,7 @@ module('Integration | Component | link-to-with-action', function (hooks) {
     await render(hbs`
       <LinkToWithAction @route="somewhere">
         {{this.content}}
-      </LinkToWithAction>
-
-`);
+      </LinkToWithAction>`);
 
     assert.strictEqual(this.element.textContent.trim(), 'More Link Text');
     assert.ok(this.element.querySelector('a').classList.contains('active'));

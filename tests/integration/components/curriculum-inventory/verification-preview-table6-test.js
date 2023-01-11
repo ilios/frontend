@@ -46,8 +46,7 @@ module(
       };
 
       this.set('data', data);
-      await render(hbs`<CurriculumInventory::VerificationPreviewTable6 @data={{this.data}} />
-`);
+      await render(hbs`<CurriculumInventory::VerificationPreviewTable6 @data={{this.data}} />`);
       assert.strictEqual(component.title, 'Table 6: Clerkship Sequence Block Assessment Methods');
       assert.strictEqual(component.table.firstHeadings.length, 4);
       assert.strictEqual(component.table.firstHeadings[0].text, 'Clerkship Sequence Blocks');

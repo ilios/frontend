@@ -22,8 +22,7 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
       @add={{(noop)}}
       @remove={{(noop)}}
       @editable={{true}}
-    />
-`);
+    />`);
     const m = component.meshManager;
 
     assert.strictEqual(m.selectedTerms.length, 1);
@@ -56,8 +55,7 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
       @add={{this.add}}
       @remove={{(noop)}}
       @editable={{true}}
-    />
-`);
+    />`);
     const m = component.meshManager;
 
     assert.strictEqual(m.selectedTerms.length, 1);
@@ -97,8 +95,7 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
       @add={{(noop)}}
       @remove={{this.remove}}
       @editable={{true}}
-    />
-`);
+    />`);
     const m = component.meshManager;
 
     assert.strictEqual(m.selectedTerms.length, 1);

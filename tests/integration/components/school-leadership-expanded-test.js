@@ -28,8 +28,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.title, 'School Leadership');
     assert.strictEqual(component.leadershipList.directors.length, 1);
     assert.strictEqual(component.leadershipList.directors[0].text, '0 guy M. Mc0son');
@@ -53,8 +52,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
-    />
-`);
+    />`);
 
     await component.collapse();
   });
@@ -74,8 +72,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{this.manage}}
-    />
-`);
+    />`);
 
     await component.manage();
   });
@@ -92,8 +89,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
       @expand={{(noop)}}
       @isManaging={{true}}
       @setIsManaging={{(noop)}}
-    />
-`);
+    />`);
 
     assert.ok(component.leadershipManager.isVisible);
   });

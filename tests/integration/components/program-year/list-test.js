@@ -65,8 +65,7 @@ module('Integration | Component | program-year/list', function (hooks) {
       };
     });
     this.set('program', this.programModel);
-    await render(hbs`<ProgramYear::List @canUpdate={{false}} @program={{this.program}} />
-`);
+    await render(hbs`<ProgramYear::List @canUpdate={{false}} @program={{this.program}} />`);
 
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].link.text, '2001');
@@ -83,8 +82,7 @@ module('Integration | Component | program-year/list', function (hooks) {
       };
     });
     this.set('program', this.programModel);
-    await render(hbs`<ProgramYear::List @canUpdate={{false}} @program={{this.program}} />
-`);
+    await render(hbs`<ProgramYear::List @canUpdate={{false}} @program={{this.program}} />`);
 
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].link.text, '2001 - 2002');
@@ -95,8 +93,7 @@ module('Integration | Component | program-year/list', function (hooks) {
   test('create new program year', async function (assert) {
     const thisYear = new Date().getFullYear();
     this.set('program', this.programModel);
-    await render(hbs`<ProgramYear::List @canCreate={{true}} @program={{this.program}} />
-`);
+    await render(hbs`<ProgramYear::List @canCreate={{true}} @program={{this.program}} />`);
     await component.expandCollapse.toggle();
     await component.newProgramYear.years.select(thisYear);
     await component.newProgramYear.done.click();

@@ -50,8 +50,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @selectedAssessmentOptionId={{this.assessmentOptionId}}
       @save={{(noop)}}
       @close={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.title.value, 'one');
     assert.strictEqual(component.aamcMethod.value, '');
@@ -105,8 +104,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @assessmentOptions={{this.assessmentOptions}}
       @save={{(noop)}}
       @close={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.aamcMethod.value, '');
     assert.strictEqual(component.aamcMethod.options.length, 2);
@@ -136,8 +134,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @canEditAssessmentOption={{true}}
       @save={{(noop)}}
       @close={{(noop)}}
-    />
-`);
+    />`);
 
     assert.notOk(component.assessment.isAssessment);
     assert.notOk(component.assessmentSelector.isVisible);
@@ -152,8 +149,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @canUpdate={{true}}
       @save={{(noop)}}
       @close={{this.cancel}}
-    />
-`);
+    />`);
 
     await component.cancel.click();
   });
@@ -167,8 +163,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @canUpdate={{false}}
       @save={{(noop)}}
       @close={{this.close}}
-    />
-`);
+    />`);
 
     await component.close.click();
   });
@@ -216,8 +211,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @canUpdate={{true}}
       @save={{this.save}}
       @close={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.active.yesNoToggle.checked, 'true');
     await component.title.set('new title');
@@ -255,8 +249,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @isActive={{true}}
       @save={{(noop)}}
       @close={{(noop)}}
-    />
-`);
+    />`);
 
     assert.notOk(component.title.inputControlIsVisible);
     assert.notOk(component.aamcMethod.inputControlIsVisible);
@@ -291,8 +284,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @assessment={{true}}
       @save={{(noop)}}
       @close={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.aamcMethod.value, 'AM001');
     assert.strictEqual(component.aamcMethod.options[1].text, 'lorem ipsum (inactive)');
@@ -319,8 +311,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @assessment={{true}}
       @save={{(noop)}}
       @close={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.aamcMethod.readonlyValue, 'lorem ipsum (inactive)');
   });
@@ -337,8 +328,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @calendarColor="#ffffff"
       @save={{(noop)}}
       @close={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.calendarColor.value, '#ffffff');
     assert.notOk(component.calendarColor.hasError);

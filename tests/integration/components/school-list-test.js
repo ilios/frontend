@@ -21,8 +21,7 @@ module('Integration | Component | school list', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('schools', [this.school1, this.school2]);
-    await render(hbs`<SchoolList @schools={{this.schools}} />
-`);
+    await render(hbs`<SchoolList @schools={{this.schools}} />`);
     assert.strictEqual(component.schools.length, 2);
     assert.strictEqual(component.schools[0].title, 'school 0');
     assert.strictEqual(component.schools[1].title, 'school 1');
@@ -34,8 +33,7 @@ module('Integration | Component | school list', function (hooks) {
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
-    await render(hbs`<SchoolList @schools={{this.schools}} />
-`);
+    await render(hbs`<SchoolList @schools={{this.schools}} />`);
     assert.ok(component.expandCollapseButton.isVisible);
   });
 
@@ -45,8 +43,7 @@ module('Integration | Component | school list', function (hooks) {
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
-    await render(hbs`<SchoolList @schools={{this.schools}} />
-`);
+    await render(hbs`<SchoolList @schools={{this.schools}} />`);
     assert.notOk(component.expandCollapseButton.isVisible);
   });
 
@@ -56,8 +53,7 @@ module('Integration | Component | school list', function (hooks) {
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
-    await render(hbs`<SchoolList @schools={{this.schools}} />
-`);
+    await render(hbs`<SchoolList @schools={{this.schools}} />`);
     assert.notOk(component.newSchoolForm.isVisible);
     await component.expandCollapseButton.toggle();
     assert.ok(component.newSchoolForm.isVisible);
@@ -75,8 +71,7 @@ module('Integration | Component | school list', function (hooks) {
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
-    await render(hbs`<SchoolList @schools={{this.schools}} />
-`);
+    await render(hbs`<SchoolList @schools={{this.schools}} />`);
     await component.expandCollapseButton.toggle();
 
     let schools = (await this.owner.lookup('service:store').findAll('school')).slice();
@@ -99,8 +94,7 @@ module('Integration | Component | school list', function (hooks) {
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
-    await render(hbs`<SchoolList @schools={{this.schools}} />
-`);
+    await render(hbs`<SchoolList @schools={{this.schools}} />`);
     await component.expandCollapseButton.toggle();
     assert.notOk(component.newSchoolForm.title.hasError);
     assert.notOk(component.newSchoolForm.email.hasError);
@@ -115,8 +109,7 @@ module('Integration | Component | school list', function (hooks) {
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
-    await render(hbs`<SchoolList @schools={{this.schools}} />
-`);
+    await render(hbs`<SchoolList @schools={{this.schools}} />`);
     await component.expandCollapseButton.toggle();
     assert.notOk(component.newSchoolForm.email.hasError);
     await component.newSchoolForm.email.set('thisisnotanemailaddress');

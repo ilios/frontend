@@ -38,8 +38,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @isManaging={{false}}
       @save={{(noop)}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].text, '1 Zylinder');
     assert.strictEqual(component.items[1].text, '2 Alfons');
@@ -58,8 +57,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @isManaging={{true}}
       @save={{(noop)}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.items.length, 0);
     assert.ok(component.save.isVisible);
     assert.ok(component.cancel.isVisible);
@@ -81,8 +79,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @isManaging={{false}}
       @save={{(noop)}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     await component.items[0].edit();
   });
 
@@ -100,8 +97,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @isManaging={{true}}
       @save={{(noop)}}
       @cancel={{this.cancel}}
-    />
-`);
+    />`);
     await component.cancel.click();
   });
 
@@ -119,8 +115,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @isManaging={{true}}
       @save={{this.save}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     await component.save.click();
   });
 
@@ -134,8 +129,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @isManaging={{false}}
       @save={{(noop)}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.items.length, 1);
     assert.strictEqual(component.items[0].text, 'Click to edit');
   });
@@ -150,8 +144,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @isManaging={{false}}
       @save={{(noop)}}
       @cancel={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.items.length, 1);
     assert.strictEqual(component.items[0].text, 'None');
   });
