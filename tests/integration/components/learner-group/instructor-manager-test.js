@@ -54,8 +54,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       @learnerGroup={{this.learnerGroup}}
       @save={{(noop)}}
       @canUpdate={{true}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.title, 'Default Instructors (3)');
     assert.strictEqual(component.assignedInstructors.length, 3);
@@ -101,8 +100,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       @learnerGroup={{this.learnerGroup}}
       @save={{(noop)}}
       @canUpdate={{true}}
-    />
-`);
+    />`);
     assert.strictEqual(component.title, 'Default Instructors (0)');
     assert.strictEqual(component.selectedInstructors.length, 0);
   });
@@ -132,8 +130,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       @learnerGroup={{this.learnerGroup}}
       @save={{(noop)}}
       @canUpdate={{false}}
-    />
-`);
+    />`);
     assert.strictEqual(component.assignedInstructors.length, 2);
     assert.notOk(component.manageButton.isVisible);
   });
@@ -164,8 +161,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       @learnerGroup={{this.learnerGroup}}
       @save={{(noop)}}
       @canUpdate={{true}}
-    />
-`);
+    />`);
     assert.strictEqual(component.assignedInstructors.length, 2);
     await component.manage();
     assert.strictEqual(component.selectedInstructors.length, 2);
@@ -219,8 +215,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       @learnerGroup={{this.learnerGroup}}
       @save={{this.save}}
       @canUpdate={{true}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.assignedInstructors.length, 3);
     await component.manage();
@@ -248,8 +243,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       @learnerGroup={{this.learnerGroup}}
       @save={{(noop)}}
       @canUpdate={{true}}
-    />
-`);
+    />`);
     await component.manage();
     assert.strictEqual(component.selectedInstructorGroups.length, 0);
     await component.search('test group');
@@ -277,8 +271,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       @learnerGroup={{this.learnerGroup}}
       @save={{(noop)}}
       @canUpdate={{true}}
-    />
-`);
+    />`);
     await component.manage();
     assert.strictEqual(component.selectedInstructors.length, 0);
     await component.search('test group');

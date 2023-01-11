@@ -44,8 +44,7 @@ module('Integration | Component | program-year/competencies', function (hooks) {
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @setIsManaging={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.title, 'Competencies (3)');
     assert.ok(component.canManage);
@@ -74,8 +73,7 @@ module('Integration | Component | program-year/competencies', function (hooks) {
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @setIsManaging={{this.setIsManaging}}
-    />
-`);
+    />`);
 
     await component.manage();
   });
@@ -94,8 +92,7 @@ module('Integration | Component | program-year/competencies', function (hooks) {
       @collapse={{this.collapse}}
       @expand={{(noop)}}
       @setIsManaging={{(noop)}}
-    />
-`);
+    />`);
     await component.clickTitle();
   });
 });

@@ -49,8 +49,7 @@ module('Integration | Component | my profile', function (hooks) {
       @user={{this.user}}
       @toggleShowCreateNewToken={{(noop)}}
       @toggleShowInvalidateTokens={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.name, 'test name');
     assert.ok(component.userIsStudent);
@@ -74,8 +73,7 @@ module('Integration | Component | my profile', function (hooks) {
       @user={{this.user}}
       @toggleShowCreateNewToken={{(noop)}}
       @toggleShowInvalidateTokens={{(noop)}}
-    />
-`);
+    />`);
 
     assert.notOk(component.userIsStudent);
     assert.strictEqual(component.primarySchool, 'Unassigned');
@@ -110,8 +108,7 @@ module('Integration | Component | my profile', function (hooks) {
       @showCreateNewToken={{true}}
       @toggleShowCreateNewToken={{(noop)}}
       @toggleShowInvalidateTokens={{(noop)}}
-    />
-`);
+    />`);
 
     await component.newTokenForm.submit();
     assert.strictEqual(component.newTokenResult.value, 'new token');
@@ -138,8 +135,7 @@ module('Integration | Component | my profile', function (hooks) {
       @user={{this.user}}
       @showCreateNewToken={{true}}
       @toggleShowCreateNewToken={{this.toggle}}
-    />
-`);
+    />`);
 
     await component.newTokenForm.submit();
     assert.strictEqual(component.newTokenResult.value, 'new token');
@@ -162,8 +158,7 @@ module('Integration | Component | my profile', function (hooks) {
       @user={{this.user}}
       @toggleShowCreateNewToken={{this.toggle}}
       @toggleShowInvalidateTokens={{(noop)}}
-    />
-`);
+    />`);
 
     await component.showCreateNewTokenForm();
   });
@@ -194,8 +189,7 @@ module('Integration | Component | my profile', function (hooks) {
       @showCreateNewToken={{true}}
       @toggleShowCreateNewToken={{(noop)}}
       @toggleShowInvalidateTokens={{(noop)}}
-    />
-`);
+    />`);
 
     const dt = DateTime.fromObject({ hours: 8 }).plus({ days: 41 }).toJSDate();
     await component.newTokenForm.setDate(dt);
@@ -216,8 +210,7 @@ module('Integration | Component | my profile', function (hooks) {
       @user={{this.user}}
       @toggleShowCreateNewToken={{(noop)}}
       @toggleShowInvalidateTokens={{this.toggle}}
-    />
-`);
+    />`);
 
     await component.showInvalidateTokensForm();
   });
@@ -251,8 +244,7 @@ module('Integration | Component | my profile', function (hooks) {
       @showInvalidateTokens={{true}}
       @toggleShowCreateNewToken={{(noop)}}
       @toggleShowInvalidateTokens={{(noop)}}
-    />
-`);
+    />`);
 
     await component.invalidateTokensForm.submit();
   });

@@ -10,8 +10,7 @@ module('Integration | Component | back-to-admin-dashboard', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<BackToAdminDashboard />
-`);
+    await render(hbs`<BackToAdminDashboard />`);
     assert.strictEqual(component.text, 'Back to Admin Dashboard');
     assert.ok(component.url.endsWith('/admin'));
   });

@@ -12,8 +12,7 @@ module('Integration | Component | login-form', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    await render(hbs`<LoginForm />
-`);
+    await render(hbs`<LoginForm />`);
     assert.strictEqual(component.errors.length, 0);
     assert.ok(component.form.isPresent);
     assert.strictEqual(component.form.username.label, 'Username:');
@@ -29,8 +28,7 @@ module('Integration | Component | login-form', function (hooks) {
     this.set('account', accountName);
     this.set('error', true);
     await render(
-      hbs`<LoginForm @noAccountExistsError={{this.error}} @noAccountExistsAccount={{this.account}} />
-`
+      hbs`<LoginForm @noAccountExistsError={{this.error}} @noAccountExistsAccount={{this.account}} />`
     );
     assert.strictEqual(component.errors.length, 1);
     assert.strictEqual(
@@ -53,8 +51,7 @@ module('Integration | Component | login-form', function (hooks) {
       }
     };
     this.owner.register('service:session', sessionMock);
-    await render(hbs`<LoginForm />
-`);
+    await render(hbs`<LoginForm />`);
     assert.strictEqual(component.errors.length, 0);
     await component.form.username.set(username);
     await component.form.password.set(password);
@@ -74,8 +71,7 @@ module('Integration | Component | login-form', function (hooks) {
       }
     };
     this.owner.register('service:session', sessionMock);
-    await render(hbs`<LoginForm />
-`);
+    await render(hbs`<LoginForm />`);
     assert.strictEqual(component.errors.length, 0);
     await component.form.username.set(username);
     await component.form.password.set(password);
@@ -94,8 +90,7 @@ module('Integration | Component | login-form', function (hooks) {
       }
     };
     this.owner.register('service:session', sessionMock);
-    await render(hbs`<LoginForm />
-`);
+    await render(hbs`<LoginForm />`);
     await component.form.username.set(username);
     await component.form.password.set(password);
     await component.form.username.submit();
@@ -112,8 +107,7 @@ module('Integration | Component | login-form', function (hooks) {
       }
     };
     this.owner.register('service:session', sessionMock);
-    await render(hbs`<LoginForm />
-`);
+    await render(hbs`<LoginForm />`);
     await component.form.username.set(username);
     await component.form.password.set(password);
     await component.form.password.submit();
@@ -130,8 +124,7 @@ module('Integration | Component | login-form', function (hooks) {
       }
     };
     this.owner.register('service:session', sessionMock);
-    await render(hbs`<LoginForm />
-`);
+    await render(hbs`<LoginForm />`);
     assert.strictEqual(component.form.username.errors.length, 0);
     assert.strictEqual(component.form.password.errors.length, 0);
     await component.form.password.submit();

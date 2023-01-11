@@ -49,8 +49,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @schools={{this.schools}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.headerTitle, 'Instructor Groups (3)');
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'instructor group 3');
@@ -78,8 +77,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @schoolId={{this.schoolId}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.headerTitle, 'Instructor Groups (3)');
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.list.items.length, 3);
@@ -110,8 +108,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @titleFilter={{this.titleFilter}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.headerTitle, 'Instructor Groups (3)');
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'instructor group 3');
@@ -138,8 +135,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
       @schools={{this.schools}}
       @sortBy={{this.sortBy}}
       @setSortBy={{this.setSortBy}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'instructor group 3');

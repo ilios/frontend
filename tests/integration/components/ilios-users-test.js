@@ -25,8 +25,7 @@ module('Integration | Component | ilios users', function (hooks) {
       @setShowBulkNewUserForm={{(noop)}}
       @setSearchTerms={{(noop)}}
       @transitionToUser={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.title.text, 'Users');
   });
 
@@ -51,8 +50,7 @@ module('Integration | Component | ilios users', function (hooks) {
       @setShowBulkNewUserForm={{(noop)}}
       @setSearchTerms={{(noop)}}
       @transitionToUser={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.search.value, value);
     await component.search.set(newValue);
@@ -97,8 +95,7 @@ module('Integration | Component | ilios users', function (hooks) {
       @setShowBulkNewUserForm={{(noop)}}
       @setSearchTerms={{(noop)}}
       @transitionToUser={{(noop)}}
-    />
-`);
+    />`);
     assert.ok(component.newUserForm.isPresent, 'the new user form is present');
     assert.notOk(
       component.newDirectoryUserForm.isPresent,
@@ -146,8 +143,7 @@ module('Integration | Component | ilios users', function (hooks) {
       @setShowBulkNewUserForm={{(noop)}}
       @setSearchTerms={{(noop)}}
       @transitionToUser={{(noop)}}
-    />
-`);
+    />`);
     assert.notOk(component.newUserForm.isPresent, 'the new user form is not present');
     assert.ok(component.newDirectoryUserForm.isPresent, 'the new directory form is present');
   });
@@ -194,8 +190,7 @@ module('Integration | Component | ilios users', function (hooks) {
       @setShowBulkNewUserForm={{this.setShowBulkNewUserForm}}
       @setSearchTerms={{(noop)}}
       @transitionToUser={{(noop)}}
-    />
-`);
+    />`);
     await component.newBulkUserForm.cancel();
   });
 
@@ -240,8 +235,7 @@ module('Integration | Component | ilios users', function (hooks) {
       @setShowBulkNewUserForm={{(noop)}}
       @setSearchTerms={{(noop)}}
       @transitionToUser={{(noop)}}
-    />
-`);
+    />`);
     await component.newUserForm.cancel();
   });
 
@@ -288,8 +282,7 @@ module('Integration | Component | ilios users', function (hooks) {
       @setShowBulkNewUserForm={{this.setShowBulkNewUserForm}}
       @setSearchTerms={{(noop)}}
       @transitionToUser={{(noop)}}
-    />
-`);
+    />`);
     await component.collapseForm();
   });
 });

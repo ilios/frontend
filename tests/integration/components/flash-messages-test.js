@@ -18,8 +18,7 @@ module('Integration | Component | flash-messages', function (hooks) {
   test('it renders', async function (assert) {
     const flashMessages = this.owner.lookup('service:flash-messages');
     flashMessages.success('general.course');
-    await render(hbs`<FlashMessages />
-`);
+    await render(hbs`<FlashMessages />`);
     assert.strictEqual(component.messages.length, 1);
     assert.strictEqual(component.messages[0].text, 'Course');
   });

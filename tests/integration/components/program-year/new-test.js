@@ -21,8 +21,7 @@ module('Integration | Component | program-year/new', function (hooks) {
       @save={{(noop)}}
       @cancel={{(noop)}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.title, 'New Program Year');
     const { options } = component.years;
@@ -52,8 +51,7 @@ module('Integration | Component | program-year/new', function (hooks) {
       @save={{(noop)}}
       @cancel={{this.cancel}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
-    />
-`);
+    />`);
     await component.cancel.click();
   });
 
@@ -67,8 +65,7 @@ module('Integration | Component | program-year/new', function (hooks) {
       @save={{this.save}}
       @cancel={{(noop)}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
-    />
-`);
+    />`);
     await component.done.click();
   });
 
@@ -83,8 +80,7 @@ module('Integration | Component | program-year/new', function (hooks) {
       @save={{this.save}}
       @cancel={{(noop)}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
-    />
-`);
+    />`);
     assert.notOk(component.years.options[5].isSelected);
     await component.years.select(year);
     assert.ok(component.years.options[5].isSelected);
@@ -97,8 +93,7 @@ module('Integration | Component | program-year/new', function (hooks) {
       @save={{(noop)}}
       @cancel={{(noop)}}
       @academicYearCrossesCalendarYearBoundaries={{true}}
-    />
-`);
+    />`);
     const { options } = component.years;
     assert.strictEqual(options.length, 10);
     assert.strictEqual(options[0].text, `${this.currentYear - 5} - ${this.currentYear - 4}`);

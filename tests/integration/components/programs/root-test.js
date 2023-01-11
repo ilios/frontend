@@ -44,8 +44,7 @@ module('Integration | Component | programs/root', function (hooks) {
   test('it renders', async function (assert) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
-    await render(hbs`<Programs::Root @schools={{this.schools}} />
-`);
+    await render(hbs`<Programs::Root @schools={{this.schools}} />`);
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'program 3');
     assert.strictEqual(component.list.items[1].title, 'program 4');
@@ -60,8 +59,7 @@ module('Integration | Component | programs/root', function (hooks) {
   test('school filter works', async function (assert) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
-    await render(hbs`<Programs::Root @schools={{this.schools}} />
-`);
+    await render(hbs`<Programs::Root @schools={{this.schools}} />`);
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'program 3');

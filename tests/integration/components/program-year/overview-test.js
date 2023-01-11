@@ -22,8 +22,7 @@ module('Integration | Component | program-year/overview', function (hooks) {
     this.set('program', programYearModel);
     await render(hbs`<ProgramYear::Overview
       @programYear={{this.programYear}}
-    />
-`);
+    />`);
     assert.strictEqual(component.title, 'Overview');
     assert.notOk(component.actions.visualizations.isPresent);
     await a11yAudit(this.element);
@@ -41,8 +40,7 @@ module('Integration | Component | program-year/overview', function (hooks) {
     this.set('program', programYearModel);
     await render(hbs`<ProgramYear::Overview
       @programYear={{this.programYear}}
-    />
-`);
+    />`);
     assert.ok(component.actions.visualizations.isPresent);
   });
 });

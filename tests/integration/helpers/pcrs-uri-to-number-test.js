@@ -10,8 +10,7 @@ module('Integration | Helper | pcrs-uri-to-number', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('inputValue', 'aamc-pcrs-comp-c0103');
-    await render(hbs`{{pcrs-uri-to-number this.inputValue}}
-`);
+    await render(hbs`{{pcrs-uri-to-number this.inputValue}}`);
     assert.strictEqual(this.element.textContent.trim(), '1.3');
   });
 });

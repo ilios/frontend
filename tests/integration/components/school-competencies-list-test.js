@@ -32,8 +32,7 @@ module('Integration | Component | school competencies list', function (hooks) {
       .findRecord('competency', domain.id);
 
     this.set('domains', [domainModel]);
-    await render(hbs`<SchoolCompetenciesList @domains={{this.domains}} />
-`);
+    await render(hbs`<SchoolCompetenciesList @domains={{this.domains}} />`);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title.text, 'domain 0');
     assert.strictEqual(component.items[0].pcrs.items.length, 1);

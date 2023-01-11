@@ -20,8 +20,7 @@ module('Integration | Component | pagination-links', function (hooks) {
       @results={{this.results}}
       @size={{this.size}}
       @onSelectPage={{set this.page}}
-    />
-`);
+    />`);
     assert.ok(
       component.nextIsHidden,
       'results array length needs to be greater than size for pagination to show'

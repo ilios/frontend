@@ -41,8 +41,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.title, 'Cohort Members NOT assigned to top level group (2)');
     assert.strictEqual(component.users.length, 2);
@@ -81,8 +80,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.users.length, 3);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Captain J');
@@ -110,8 +108,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{this.addMany}}
-    />
-`);
+    />`);
 
     assert.notOk(component.membersCanBeAdded);
     await component.users[0].select();
@@ -141,8 +138,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{this.addOne}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
 
     await component.users[0].add();
   });
@@ -164,8 +160,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
 
     assert.ok(component.users[0].canBeAdded);
     await component.users[0].select();
@@ -195,8 +190,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{this.addMany}}
-    />
-`);
+    />`);
 
     assert.notOk(component.users[0].isSelected);
     assert.notOk(component.users[0].isSelected);
@@ -224,8 +218,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
 
     assert.notOk(component.users[0].isSelected);
     assert.notOk(component.users[1].isSelected);
@@ -263,8 +256,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.users.length, 3);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Alpha');
@@ -344,8 +336,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
 
     assert.ok(component.users[0].canBeSelected, 'Checkbox visible');
     assert.ok(component.users[0].name.isClickable);
@@ -374,8 +365,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
 
     assert.notOk(component.users[0].canBeSelected, 'Checkbox visible');
     assert.notOk(component.users[0].name.isClickable);
@@ -415,8 +405,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.users.length, 3);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
@@ -445,8 +434,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
     assert.notOk(component.users[0].isSelected);
     await component.users[0].name.click();
     assert.ok(component.users[0].isSelected);
@@ -465,8 +453,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
     assert.notOk(component.users[0].isSelected);
     await component.users[0].campusId.click();
     assert.ok(component.users[0].isSelected);
@@ -485,8 +472,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
-    />
-`);
+    />`);
     assert.notOk(component.users[0].isSelected);
     await component.users[0].email.click();
     assert.ok(component.users[0].isSelected);

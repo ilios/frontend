@@ -48,8 +48,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
       @setLeadershipDetails={{(noop)}}
       @setManageLeadership={{(noop)}}
       @setIsFinalized={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(component.header.name.text, reportModel.name);
     assert.strictEqual(component.overview.description.text, reportModel.description);
   });
@@ -85,8 +84,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
       @setLeadershipDetails={{(noop)}}
       @setManageLeadership={{(noop)}}
       @setIsFinalized={{this.setIsFinalized}}
-    />
-`);
+    />`);
 
     assert.notOk(
       component.finalizeConfirmation.isVisible,
@@ -143,8 +141,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
       @setLeadershipDetails={{(noop)}}
       @setManageLeadership={{(noop)}}
       @setIsFinalized={{(noop)}}
-    />
-`);
+    />`);
 
     await click('.curriculum-inventory-report-header .finalize');
     await click('.confirm-finalize .confirm-buttons .done');

@@ -34,8 +34,7 @@ module('Integration | Component | program-year/objectives', function (hooks) {
       @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 2);
     assert.strictEqual(
@@ -106,8 +105,7 @@ module('Integration | Component | program-year/objectives', function (hooks) {
       @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(

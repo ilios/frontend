@@ -37,8 +37,7 @@ module('Integration | Component | course-search-result', function (hooks) {
       ],
     };
     this.set('course', course);
-    await render(hbs`<CourseSearchResult @course={{this.course}} />
-`);
+    await render(hbs`<CourseSearchResult @course={{this.course}} />`);
     assert.strictEqual(component.courseTitle, '1980 Course 1');
     assert.strictEqual(component.schoolTitle, 'Medicine');
     assert.strictEqual(component.sessions[0].text, 'Session 1');

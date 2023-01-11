@@ -17,8 +17,7 @@ module('Integration | Component | ilios-header', function (hooks) {
     await render(hbs`
       {{page-title this.title}}
       <IliosHeader />
-    
-`);
+    `);
     assert.ok(component.isPresent);
     assert.strictEqual(component.title, 'test');
 

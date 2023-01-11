@@ -23,8 +23,7 @@ module('Integration | Component | pending single user update', function (hooks) 
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
-    await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />
-`);
+    await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
     assert.strictEqual(component.updates.length, 1);
     assert.strictEqual(
       component.updates[0].explanation,
@@ -48,8 +47,7 @@ module('Integration | Component | pending single user update', function (hooks) 
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
-    await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />
-`);
+    await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
     assert.strictEqual(component.updates.length, 1);
     assert.strictEqual(
       component.updates[0].explanation,
@@ -75,8 +73,7 @@ module('Integration | Component | pending single user update', function (hooks) 
     assert.strictEqual(this.server.db.users[0].email, 'user-email');
     assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
     this.set('user', userModel);
-    await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />
-`);
+    await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
     assert.strictEqual(component.updates.length, 1);
     assert.ok(component.updates[0].hasUpdateEmailButton);
     await component.updates[0].updateEmail();
@@ -101,8 +98,7 @@ module('Integration | Component | pending single user update', function (hooks) 
     assert.ok(this.server.db.users[0].enabled);
     assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
     this.set('user', userModel);
-    await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />
-`);
+    await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
     assert.strictEqual(component.updates.length, 1);
     assert.ok(component.updates[0].hasUpdateEmailButton);
     await component.updates[0].disable();
@@ -127,8 +123,7 @@ module('Integration | Component | pending single user update', function (hooks) 
     assert.notOk(this.server.db.users[0].userSyncIgnore);
     assert.strictEqual(this.server.db.pendingUserUpdates.length, 1);
     this.set('user', userModel);
-    await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />
-`);
+    await render(hbs`<PendingSingleUserUpdate @user={{this.user}} />`);
     assert.strictEqual(component.updates.length, 1);
     assert.ok(component.updates[0].hasUpdateEmailButton);
     await component.updates[0].excludeFromSync();

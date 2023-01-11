@@ -11,8 +11,7 @@ module('Integration | Component | locale-chooser', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders and is accessible', async function (assert) {
-    await render(hbs`<LocaleChooser />
-`);
+    await render(hbs`<LocaleChooser />`);
 
     await a11yAudit(this.element);
     assert.strictEqual(component.text, 'English (en)');
@@ -23,8 +22,7 @@ module('Integration | Component | locale-chooser', function (hooks) {
   });
 
   test('click opens menu', async function (assert) {
-    await render(hbs`<LocaleChooser />
-`);
+    await render(hbs`<LocaleChooser />`);
 
     assert.strictEqual(component.locales.length, 0);
     await component.toggle.click();
@@ -32,8 +30,7 @@ module('Integration | Component | locale-chooser', function (hooks) {
   });
 
   test('down opens menu', async function (assert) {
-    await render(hbs`<LocaleChooser />
-`);
+    await render(hbs`<LocaleChooser />`);
 
     assert.strictEqual(component.locales.length, 0);
     await component.toggle.down();
@@ -41,8 +38,7 @@ module('Integration | Component | locale-chooser', function (hooks) {
   });
 
   test('escape closes menu', async function (assert) {
-    await render(hbs`<LocaleChooser />
-`);
+    await render(hbs`<LocaleChooser />`);
 
     await component.toggle.down();
     assert.strictEqual(component.locales.length, 3);
@@ -51,8 +47,7 @@ module('Integration | Component | locale-chooser', function (hooks) {
   });
 
   test('click closes menu', async function (assert) {
-    await render(hbs`<LocaleChooser />
-`);
+    await render(hbs`<LocaleChooser />`);
 
     await component.toggle.down();
     assert.strictEqual(component.locales.length, 3);
@@ -61,8 +56,7 @@ module('Integration | Component | locale-chooser', function (hooks) {
   });
 
   test('change locale closes menu', async function (assert) {
-    await render(hbs`<LocaleChooser />
-`);
+    await render(hbs`<LocaleChooser />`);
 
     await component.toggle.click();
     await component.locales[1].click();

@@ -36,8 +36,7 @@ module('Integration | Component | visualizer session type terms', function (hook
       .findRecord('session-type', vocabulary.id);
     this.set('vocabulary', vocabularyModel);
     await render(
-      hbs`<VisualizerSessionTypeTerms @sessionType={{this.sessionType}} @vocabulary={{this.vocabulary}} />
-`
+      hbs`<VisualizerSessionTypeTerms @sessionType={{this.sessionType}} @vocabulary={{this.vocabulary}} />`
     );
 
     assert.dom('svg').exists({ count: 1 });

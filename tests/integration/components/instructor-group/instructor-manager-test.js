@@ -26,8 +26,7 @@ module('Integration | Component | instructor-group/instructor-manager', function
     const instructors = [this.user1, this.user2, this.user3];
     this.set('instructors', instructors);
     await render(
-      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{(noop)}} />
-`
+      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{(noop)}} />`
     );
     assert.strictEqual(component.selectedInstructors.label, 'Selected Instructors:');
     assert.strictEqual(component.selectedInstructors.users.length, 3);
@@ -52,8 +51,7 @@ module('Integration | Component | instructor-group/instructor-manager', function
   test('it renders without selected instructors', async function (assert) {
     this.set('instructors', []);
     await render(
-      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{(noop)}} />
-`
+      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{(noop)}} />`
     );
     assert.strictEqual(component.selectedInstructors.label, 'Selected Instructors:');
     assert.strictEqual(component.selectedInstructors.users.length, 0);
@@ -68,8 +66,7 @@ module('Integration | Component | instructor-group/instructor-manager', function
     });
     this.set('instructors', []);
     await render(
-      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{this.add}} @remove={{(noop)}} />
-`
+      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{this.add}} @remove={{(noop)}} />`
     );
     await component.availableInstructors.userSearch.searchBox.set('guy');
     assert.strictEqual(component.availableInstructors.userSearch.results.items.length, 3);
@@ -88,8 +85,7 @@ module('Integration | Component | instructor-group/instructor-manager', function
     const instructors = [this.user1, this.user2];
     this.set('instructors', instructors);
     await render(
-      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{this.remove}} />
-`
+      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{this.remove}} />`
     );
     assert.strictEqual(component.selectedInstructors.users.length, 2);
     assert.strictEqual(

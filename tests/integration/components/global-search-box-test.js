@@ -23,15 +23,13 @@ module('Integration | Component | global search box', function (hooks) {
   });
 
   test('it renders and is accessible', async function (assert) {
-    await render(hbs`<GlobalSearchBox @search={{(noop)}} />
-`);
+    await render(hbs`<GlobalSearchBox @search={{(noop)}} />`);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
   test('clicking search icon focuses input', async function (assert) {
-    await render(hbs`<GlobalSearchBox @search={{(noop)}} />
-`);
+    await render(hbs`<GlobalSearchBox @search={{(noop)}} />`);
     assert.notOk(component.inputHasFocus);
     await component.clickIcon();
     assert.ok(component.inputHasFocus);
@@ -40,15 +38,13 @@ module('Integration | Component | global search box', function (hooks) {
   test('clicking search searches if there is content', async function (assert) {
     assert.expect(1);
     this.set('search', (value) => assert.strictEqual(value, 'typed it'));
-    await render(hbs`<GlobalSearchBox @search={{this.search}} />
-`);
+    await render(hbs`<GlobalSearchBox @search={{this.search}} />`);
     await component.input('typed it');
     await component.clickIcon();
   });
 
   test('displays initial passed down value', async function (assert) {
-    await render(hbs`<GlobalSearchBox @query="course" />
-`);
+    await render(hbs`<GlobalSearchBox @query="course" />`);
     assert.strictEqual(component.inputValue, 'course');
   });
 
@@ -71,8 +67,7 @@ module('Integration | Component | global search box', function (hooks) {
     this.set('search', (value) => {
       assert.strictEqual(value, input);
     });
-    await render(hbs`<GlobalSearchBox @search={{this.search}} />
-`);
+    await render(hbs`<GlobalSearchBox @search={{this.search}} />`);
     await component.input(input);
     await component.triggerInput();
     assert.strictEqual(component.autocompleteResults.length, 3);
@@ -84,16 +79,14 @@ module('Integration | Component | global search box', function (hooks) {
       assert.strictEqual(value, 'typed it');
       assert.ok(true, 'search action gets called');
     });
-    await render(hbs`<GlobalSearchBox @search={{this.search}} />
-`);
+    await render(hbs`<GlobalSearchBox @search={{this.search}} />`);
     await component.input('typed it');
     await component.keyUp.enter();
     assert.strictEqual(component.autocompleteResults.length, 0);
   });
 
   test('escape calls clears query', async function (assert) {
-    await render(hbs`<GlobalSearchBox @search={{(noop)}} />
-`);
+    await render(hbs`<GlobalSearchBox @search={{(noop)}} />`);
     await component.input('typed it');
     assert.strictEqual(component.autocompleteResults.length, 3);
     await component.keyUp.escape();
@@ -108,8 +101,7 @@ module('Integration | Component | global search box', function (hooks) {
       assert.strictEqual(value, inputValue);
       assert.ok(true, 'search action gets called');
     });
-    await render(hbs`<GlobalSearchBox @search={{this.search}} />
-`);
+    await render(hbs`<GlobalSearchBox @search={{this.search}} />`);
     await component.input('typed it');
     await component.keyUp.down();
     assert.ok(component.resultsRow1HasActiveClass);
@@ -166,8 +158,7 @@ module('Integration | Component | global search box', function (hooks) {
 
   test('can empty with backspace', async function (assert) {
     this.set('query', 'test value');
-    await render(hbs`<GlobalSearchBox @query={{this.query}} />
-`);
+    await render(hbs`<GlobalSearchBox @query={{this.query}} />`);
     assert.strictEqual(component.inputValue, 'test value');
     await component.input('typed it');
     assert.strictEqual(component.inputValue, 'typed it');
@@ -177,8 +168,7 @@ module('Integration | Component | global search box', function (hooks) {
 
   test('can empty with backspace after choosing autocomplete', async function (assert) {
     this.set('query', 'test value');
-    await render(hbs`<GlobalSearchBox @query={{this.query}} />
-`);
+    await render(hbs`<GlobalSearchBox @query={{this.query}} />`);
     assert.strictEqual(component.inputValue, 'test value');
     await component.input('typed it');
     assert.strictEqual(component.inputValue, 'typed it');
@@ -194,8 +184,7 @@ module('Integration | Component | global search box', function (hooks) {
     this.set('search', () => {
       assert.ok(false, 'search should not be called');
     });
-    await render(hbs`<GlobalSearchBox @search={{this.search}} />
-`);
+    await render(hbs`<GlobalSearchBox @search={{this.search}} />`);
     await component.input(input);
     await component.triggerInput();
     assert.strictEqual(component.autocompleteResults.length, 1);

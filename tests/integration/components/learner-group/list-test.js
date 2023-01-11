@@ -44,8 +44,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
       @learnerGroups={{this.learnerGroups}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -88,8 +87,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
       @learnerGroups={{this.learnerGroups}}
       @sortBy={{this.sortBy}}
       @setSortBy={{set this.sortBy}}
-    />
-`);
+    />`);
 
     assert.strictEqual(component.items.length, 3);
     assert.ok(component.header.title.isSortedAscending);
@@ -154,8 +152,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
       @learnerGroups={{this.learnerGroups}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(this.server.db.learnerGroups.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -174,8 +171,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
       @learnerGroups={{this.learnerGroups}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
     assert.strictEqual(this.server.db.learnerGroups.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -201,8 +197,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
       @copyGroup={{this.copyGroup}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.copyWithLearners();
@@ -223,8 +218,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
       @copyGroup={{this.copyGroup}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.copyWithoutLearners();
@@ -245,8 +239,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
       @copyGroup={{this.copyGroup}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
     await component.items[0].copy();
     assert.notOk(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.copyWithoutLearners();
@@ -266,8 +259,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
       @copyGroup={{this.copyGroup}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.isPresent);
     assert.ok(component.confirmCopy.canCopyWithLearners);
@@ -289,8 +281,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
       @copyGroup={{this.copyGroup}}
       @sortBy="title"
       @setSortBy={{(noop)}}
-    />
-`);
+    />`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.isPresent);
     assert.notOk(component.confirmCopy.canCopyWithLearners);
