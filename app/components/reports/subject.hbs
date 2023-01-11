@@ -56,35 +56,9 @@
         </select>
       </div>
     {{/if}}
-    {{#if (is-array this.reportResultsList)}}
-      <ul class="report-results" data-test-results>
-        {{#each this.reportResultsList as |item|}}
-          {{#if item.model2}}
-            <li>
-              <LinkTo
-                @route={{item.route}}
-                @models={{array item.model item.model2}}
-              >
-                {{item.value}}
-              </LinkTo>
-            </li>
-          {{else if item.model}}
-            <li>
-              <LinkTo @route={{item.route}} @model={{item.model}}>
-                {{item.value}}
-              </LinkTo>
-            </li>
-          {{else}}
-            <li>
-              {{item.value}}
-            </li>
-          {{/if}}
-        {{else}}
-            <li>{{t "general.none"}}</li>
-        {{/each}}
-      </ul>
-    {{else}}
-      <LoadingSpinner />
-    {{/if}}
+    <this.subjectComponent
+      @report={{@selectedReport}}
+      @year={{@selectedYear}}
+    />
   </div>
 </section>

@@ -8,6 +8,8 @@ import buildReportTitle from 'ilios/utils/build-report-title';
 import createDownloadFile from 'ilios/utils/create-download-file';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { ensureSafeComponent } from '@embroider/util';
+import CourseComponent from './subject/course';
 
 export default class ReportsSubjectComponent extends Component {
   @service currentUser;
@@ -26,24 +28,20 @@ export default class ReportsSubjectComponent extends Component {
     this.args.selectedReport,
   ]);
 
-  @use reportResultsList = new AsyncProcess(() => [
-    this.getReportResults.bind(this),
-    this.args.selectedReport,
-    this.args.selectedYear,
-  ]);
+  get subjectComponent() {
+    switch (this.args.selectedReport.subject) {
+      case 'course':
+        return ensureSafeComponent(CourseComponent, this);
+    }
+
+    return null;
+  }
 
   async getSelectedReportTitle(selectedReport) {
     if (!selectedReport) {
       return '';
     }
     return buildReportTitle(selectedReport, this.store, this.intl);
-  }
-
-  async getReportResults(selectedReport, selectedYear) {
-    if (!selectedReport) {
-      return [];
-    }
-    return this.reporting.getResults(selectedReport, selectedYear);
   }
 
   get showAcademicYearFilter() {
