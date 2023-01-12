@@ -10,6 +10,7 @@ import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { ensureSafeComponent } from '@embroider/util';
 import CourseComponent from './subject/course';
+import SessionComponent from './subject/session';
 
 export default class ReportsSubjectComponent extends Component {
   @service currentUser;
@@ -32,6 +33,8 @@ export default class ReportsSubjectComponent extends Component {
     switch (this.args.selectedReport.subject) {
       case 'course':
         return ensureSafeComponent(CourseComponent, this);
+      case 'session':
+        return ensureSafeComponent(SessionComponent, this);
     }
 
     return null;
