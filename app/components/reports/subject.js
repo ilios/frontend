@@ -13,6 +13,7 @@ import CourseComponent from './subject/course';
 import SessionComponent from './subject/session';
 import ProgramComponent from './subject/program';
 import ProgramYearComponent from './subject/program-year';
+import InstructorComponent from './subject/instructor';
 
 export default class ReportsSubjectComponent extends Component {
   @service currentUser;
@@ -41,6 +42,8 @@ export default class ReportsSubjectComponent extends Component {
         return ensureSafeComponent(ProgramComponent, this);
       case 'program year':
         return ensureSafeComponent(ProgramYearComponent, this);
+      case 'instructor':
+        return ensureSafeComponent(InstructorComponent, this);
     }
 
     return null;

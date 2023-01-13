@@ -1,8 +1,7 @@
-import { attribute, clickable, create, collection, isPresent, text } from 'ember-cli-page-object';
+import { attribute, create, collection, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-reports-subject-course]',
-  download: clickable('[data-test-download]'),
   results: collection('[data-test-results] li', {
     courseTitle: text('[data-test-title]'),
     link: attribute('href', 'a'),
