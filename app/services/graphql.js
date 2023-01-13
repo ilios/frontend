@@ -24,7 +24,7 @@ export default class GraphqlService extends Service {
       : window.location.protocol + '//' + window.location.host;
   }
 
-  async query(q) {
+  async #query(q) {
     const url = `${this.host}/api/graphql`;
     const headers = this.authHeaders;
     headers['Content-Type'] = 'application/json';
@@ -35,5 +35,10 @@ export default class GraphqlService extends Service {
       body: JSON.stringify({ query: q }),
     });
     return response.json();
+  }
+
+  async find(endpoint, filters, attributes) {
+    const filterString = filters.length ? '(' + filters.join(', ') + ')' : '';
+    return this.#query(`query { ${endpoint}${filterString} { ${attributes} } }`);
   }
 }
