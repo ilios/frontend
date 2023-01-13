@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ilios/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import Service from '@ember/service';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/reports/subject/course';
 import { setupAuthentication } from 'ilios-common';
@@ -11,33 +10,23 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  let validateFilterString;
-
-  hooks.beforeEach(async function () {
-    validateFilterString = () => {};
-    class GraphQlMock extends Service {
-      async query(filterString) {
-        validateFilterString(filterString);
-        return {
-          data: {
-            courses: [
-              { id: 1, title: 'First Course', year: 2023 },
-              { id: 2, title: 'Second Course', year: 2020 },
-            ],
-          },
-        };
-      }
-    }
-
-    this.owner.register('service:graphql', GraphQlMock);
-  });
+  const responseData = {
+    data: {
+      courses: [
+        { id: 1, title: 'First Course', year: 2023 },
+        { id: 2, title: 'Second Course', year: 2020 },
+      ],
+    },
+  };
 
   test('it renders for user with permissions', async function (assert) {
     await setupAuthentication({}, true);
     assert.expect(10);
-    validateFilterString = function (filterString) {
-      assert.strictEqual(filterString.trim(), 'query { courses { id, title, year } }');
-    };
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses { id, title, year } }');
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'course',
     });
@@ -58,9 +47,11 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   test('it renders for user with no permissions', async function (assert) {
     await setupAuthentication();
     assert.expect(8);
-    validateFilterString = function (filterString) {
-      assert.strictEqual(filterString.trim(), 'query { courses { id, title, year } }');
-    };
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses { id, title, year } }');
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'course',
     });
@@ -77,12 +68,18 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('it reads academic year config', async function (assert) {
+    assert.expect(6);
     this.server.get('application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
         },
       };
+    });
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses { id, title, year } }');
+      return responseData;
     });
     const { id } = this.server.create('report', {
       subject: 'course',
@@ -99,9 +96,11 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
   test('year filter works', async function (assert) {
     assert.expect(4);
-    validateFilterString = function (filterString) {
-      assert.strictEqual(filterString.trim(), 'query { courses { id, title, year } }');
-    };
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses { id, title, year } }');
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'course',
     });
@@ -115,12 +114,11 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
   test('filter by school', async function (assert) {
     assert.expect(1);
-    validateFilterString = function (filterString) {
-      assert.strictEqual(
-        filterString.trim(),
-        'query { courses(schools: [33]) { id, title, year } }'
-      );
-    };
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses(schools: [33]) { id, title, year } }');
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'course',
       school: this.server.create('school', { id: 33 }),
@@ -131,12 +129,11 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
   test('filter by program', async function (assert) {
     assert.expect(1);
-    validateFilterString = function (filterString) {
-      assert.strictEqual(
-        filterString.trim(),
-        'query { courses(programs: [13]) { id, title, year } }'
-      );
-    };
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses(programs: [13]) { id, title, year } }');
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'program',
@@ -148,12 +145,14 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
   test('filter by school and program', async function (assert) {
     assert.expect(1);
-    validateFilterString = function (filterString) {
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
-        filterString.trim(),
+        query,
         'query { courses(schools: [24], programs: [13]) { id, title, year } }'
       );
-    };
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'course',
       school: this.server.create('school', { id: 24 }),

@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ilios/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import Service from '@ember/service';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/reports/subject/session';
 import { setupAuthentication } from 'ilios-common';
@@ -11,45 +10,32 @@ module('Integration | Component | reports/subject/session', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  let validateFilterString;
-
-  hooks.beforeEach(async function () {
-    validateFilterString = () => {};
-    class GraphQlMock extends Service {
-      async query(filterString) {
-        validateFilterString(filterString);
-        return {
-          data: {
-            sessions: [
-              { id: 1, title: 'First Session', course: { id: 1, year: 2023, title: 'Course' } },
-              {
-                id: 2,
-                title: 'Second Session',
-                course: { id: 1, year: 2023, title: 'Course' },
-              },
-              {
-                id: 3,
-                title: 'Third Session',
-                course: { id: 2, year: 2020, title: 'Course 2' },
-              },
-            ],
-          },
-        };
-      }
-    }
-
-    this.owner.register('service:graphql', GraphQlMock);
-  });
+  const responseData = {
+    data: {
+      sessions: [
+        { id: 1, title: 'First Session', course: { id: 1, year: 2023, title: 'Course' } },
+        {
+          id: 2,
+          title: 'Second Session',
+          course: { id: 1, year: 2023, title: 'Course' },
+        },
+        {
+          id: 3,
+          title: 'Third Session',
+          course: { id: 2, year: 2020, title: 'Course 2' },
+        },
+      ],
+    },
+  };
 
   test('it renders for user with permissions', async function (assert) {
     await setupAuthentication({}, true);
     assert.expect(23);
-    validateFilterString = function (filterString) {
-      assert.strictEqual(
-        filterString.trim(),
-        'query { sessions { id, title, course { id, year, title } } }'
-      );
-    };
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'session',
     });
@@ -83,12 +69,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
   test('it renders for user with no permissions', async function (assert) {
     await setupAuthentication();
     assert.expect(17);
-    validateFilterString = function (filterString) {
-      assert.strictEqual(
-        filterString.trim(),
-        'query { sessions { id, title, course { id, year, title } } }'
-      );
-    };
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'session',
     });
@@ -114,12 +99,18 @@ module('Integration | Component | reports/subject/session', function (hooks) {
   });
 
   test('it reads academic year config', async function (assert) {
+    assert.expect(11);
     this.server.get('application/config', function () {
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
         },
       };
+    });
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      return responseData;
     });
     const { id } = this.server.create('report', {
       subject: 'session',
@@ -141,12 +132,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
   test('year filter works', async function (assert) {
     assert.expect(6);
-    validateFilterString = function (filterString) {
-      assert.strictEqual(
-        filterString.trim(),
-        'query { sessions { id, title, course { id, year, title } } }'
-      );
-    };
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'session',
     });
@@ -162,12 +152,14 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
   test('filter by school', async function (assert) {
     assert.expect(1);
-    validateFilterString = function (filterString) {
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
-        filterString.trim(),
+        query,
         'query { sessions(schools: [33]) { id, title, course { id, year, title } } }'
       );
-    };
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'session',
       school: this.server.create('school', { id: 33 }),
@@ -178,12 +170,14 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
   test('filter by program', async function (assert) {
     assert.expect(1);
-    validateFilterString = function (filterString) {
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
-        filterString.trim(),
+        query,
         'query { sessions(programs: [13]) { id, title, course { id, year, title } } }'
       );
-    };
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'session',
       prepositionalObject: 'program',
@@ -195,12 +189,14 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
   test('filter by school and program', async function (assert) {
     assert.expect(1);
-    validateFilterString = function (filterString) {
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
-        filterString.trim(),
+        query,
         'query { sessions(schools: [24], programs: [13]) { id, title, course { id, year, title } } }'
       );
-    };
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'session',
       school: this.server.create('school', { id: 24 }),
@@ -213,12 +209,14 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
   test('filter by course', async function (assert) {
     assert.expect(1);
-    validateFilterString = function (filterString) {
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
-        filterString.trim(),
+        query,
         'query { sessions(course: 13) { id, title, course { id, year, title } } }'
       );
-    };
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'session',
       prepositionalObject: 'course',
@@ -230,12 +228,14 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
   test('filter by session type', async function (assert) {
     assert.expect(1);
-    validateFilterString = function (filterString) {
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
       assert.strictEqual(
-        filterString.trim(),
+        query,
         'query { sessions(sessionType: 13) { id, title, course { id, year, title } } }'
       );
-    };
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'session',
       prepositionalObject: 'sessionType',
