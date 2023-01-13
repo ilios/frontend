@@ -11,6 +11,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import { ensureSafeComponent } from '@embroider/util';
 import CourseComponent from './subject/course';
 import SessionComponent from './subject/session';
+import ProgramComponent from './subject/program';
 
 export default class ReportsSubjectComponent extends Component {
   @service currentUser;
@@ -35,6 +36,8 @@ export default class ReportsSubjectComponent extends Component {
         return ensureSafeComponent(CourseComponent, this);
       case 'session':
         return ensureSafeComponent(SessionComponent, this);
+      case 'program':
+        return ensureSafeComponent(ProgramComponent, this);
     }
 
     return null;

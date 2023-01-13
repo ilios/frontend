@@ -1,0 +1,28 @@
+<div data-test-reports-subject-program>
+  {{#if this.finishedLoading}}
+    <ul class="report-results" data-test-results>
+      {{#each this.sortedPrograms as |program|}}
+        <li>
+          {{#if this.showSchool}}
+            <span data-test-school>
+              {{program.school.title}}
+            </span>
+          {{/if}}
+          <span data-test-title>
+            {{#if this.canView}}
+              <LinkTo @route="program" @model={{program.id}}>
+                {{program.title}}
+              </LinkTo>
+            {{else}}
+              {{program.title}}
+            {{/if}}
+          </span>
+        </li>
+      {{else}}
+        <li>{{t "general.none"}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>
