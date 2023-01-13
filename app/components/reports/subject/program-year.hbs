@@ -1,0 +1,31 @@
+<div data-test-reports-subject-program-year>
+  {{#if this.finishedLoading}}
+    <ul class="report-results" data-test-results>
+      {{#each this.sortedProgramYears as |obj|}}
+        <li>
+          {{#if this.showSchool}}
+            <span data-test-school>
+              {{obj.program.school.title}} -
+            </span>
+          {{/if}}
+          <span data-test-program>
+            {{obj.program.title}}:
+          </span>
+          <span data-test-title>
+            {{#if this.canView}}
+              <LinkTo @route="program-year" @models={{array obj.program.id obj.id}}>
+                {{obj.classOfYear}}
+              </LinkTo>
+            {{else}}
+              {{obj.classOfYear}}
+            {{/if}}
+          </span>
+        </li>
+      {{else}}
+        <li>{{t "general.none"}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>

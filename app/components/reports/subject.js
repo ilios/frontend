@@ -12,6 +12,7 @@ import { ensureSafeComponent } from '@embroider/util';
 import CourseComponent from './subject/course';
 import SessionComponent from './subject/session';
 import ProgramComponent from './subject/program';
+import ProgramYearComponent from './subject/program-year';
 
 export default class ReportsSubjectComponent extends Component {
   @service currentUser;
@@ -38,6 +39,8 @@ export default class ReportsSubjectComponent extends Component {
         return ensureSafeComponent(SessionComponent, this);
       case 'program':
         return ensureSafeComponent(ProgramComponent, this);
+      case 'program year':
+        return ensureSafeComponent(ProgramYearComponent, this);
     }
 
     return null;
