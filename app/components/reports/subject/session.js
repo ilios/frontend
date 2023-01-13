@@ -59,19 +59,10 @@ export default class ReportsSubjectSessionComponent extends Component {
     }
     if (prepositionalObject && prepositionalObjectTableRowId) {
       let what = pluralize(camelize(prepositionalObject));
-      switch (what) {
-        case 'mesh term':
-          filters.push(`meshDescriptors: [${prepositionalObjectTableRowId}]`);
-          break;
-        case 'sessionTypes':
-          filters.push(`sessionType: ${prepositionalObjectTableRowId}`);
-          break;
-        case 'courses':
-          filters.push(`course: ${prepositionalObjectTableRowId}`);
-          break;
-        default:
-          filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
+      if (prepositionalObject === 'mesh term') {
+        what = 'meshDescriptors';
       }
+      filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
     const result = await this.graphql.find(
       'sessions',
