@@ -1,6 +1,6 @@
 {
   "name": "ilios-common",
-  "version": "72.2.0",
+  "version": "72.3.0",
   "description": "Common shared code for ilios ember apps.",
   "keywords": [
     "ember-addon"
