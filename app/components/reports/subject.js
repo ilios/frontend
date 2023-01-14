@@ -16,6 +16,7 @@ import ProgramYearComponent from './subject/program-year';
 import InstructorComponent from './subject/instructor';
 import InstructorGroupComponent from './subject/instructor-group';
 import LearningMaterialComponent from './subject/learning-material';
+import CompetencyComponent from './subject/competency';
 
 export default class ReportsSubjectComponent extends Component {
   @service currentUser;
@@ -50,6 +51,8 @@ export default class ReportsSubjectComponent extends Component {
         return ensureSafeComponent(InstructorGroupComponent, this);
       case 'learning material':
         return ensureSafeComponent(LearningMaterialComponent, this);
+      case 'competency':
+        return ensureSafeComponent(CompetencyComponent, this);
     }
 
     return null;
