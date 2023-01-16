@@ -1,0 +1,15 @@
+<div data-test-reports-subject-mesh-term>
+  {{#if this.finishedLoading}}
+    <ul class="report-results" data-test-results>
+      {{#each this.data as |name|}}
+        <li>
+          {{name}}
+        </li>
+      {{else}}
+        <li>{{t "general.none"}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>
