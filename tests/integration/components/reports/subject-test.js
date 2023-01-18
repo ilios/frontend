@@ -21,7 +21,7 @@ module('Integration | Component | reports/subject', function (hooks) {
   });
 
   test('year filter works', async function (assert) {
-    assert.expect(7);
+    assert.expect(8);
     this.server.create('academic-year', {
       id: 2015,
     });
@@ -51,6 +51,21 @@ module('Integration | Component | reports/subject', function (hooks) {
       this.set('selectedYear', year);
       assert.strictEqual(year, '2016', 'report year bubbles up for query params');
     });
+    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      const { query } = JSON.parse(requestBody);
+
+      assert.strictEqual(
+        query,
+        'query { courses(schools: [1], schools: [1]) { id, title, year, externalId } }'
+      );
+      return {
+        data: {
+          courses: db.courses.map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
     await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
@@ -62,7 +77,7 @@ module('Integration | Component | reports/subject', function (hooks) {
     assert.strictEqual(component.results[1].text, '2016 course 1');
     await component.academicYears.choose('2016');
     assert.strictEqual(component.results.length, 1);
-    assert.strictEqual(component.results[0].text, '2016 course 1');
+    assert.strictEqual(component.results[0].text, 'course 1');
   });
 
   test('report results show academic year as range if applicable by configuration', async function (assert) {
@@ -87,13 +102,23 @@ module('Integration | Component | reports/subject', function (hooks) {
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
-    this.set('selectedYear', year);
+    this.server.post('api/graphql', ({ db }) => {
+      return {
+        data: {
+          courses: db.courses.map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
     await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
       @onReportYearSelect={{(noop)}}
     />`);
     assert.strictEqual(component.results[0].text, '2016 - 2017 course 0');
+    this.set('selectedYear', year);
+    assert.strictEqual(component.results[0].text, 'course 0');
   });
 
   test('changing year changes select #3839', async function (assert) {
@@ -114,6 +139,15 @@ module('Integration | Component | reports/subject', function (hooks) {
     this.set('setReportYear', (year) => this.set('selectedYear', year));
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
+    this.server.post('api/graphql', ({ db }) => {
+      return {
+        data: {
+          courses: db.courses.map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
     await render(hbs`<Reports::Subject
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
