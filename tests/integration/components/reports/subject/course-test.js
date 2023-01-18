@@ -88,8 +88,8 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     await render(hbs`<Reports::Subject::Course @report={{this.report}} />`);
 
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].year, '2020-2021');
-    assert.strictEqual(component.results[1].year, '2023-2024');
+    assert.strictEqual(component.results[0].year, '2020 - 2021');
+    assert.strictEqual(component.results[1].year, '2023 - 2024');
     assert.strictEqual(component.results[0].courseTitle, 'Second Course (ext ID 1)');
     assert.strictEqual(component.results[1].courseTitle, 'First Course');
   });

@@ -119,9 +119,9 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     await render(hbs`<Reports::Subject::Session @report={{this.report}} />`);
 
     assert.strictEqual(component.results.length, 3);
-    assert.strictEqual(component.results[0].year, '2020-2021');
-    assert.strictEqual(component.results[1].year, '2023-2024');
-    assert.strictEqual(component.results[2].year, '2023-2024');
+    assert.strictEqual(component.results[0].year, '2020 - 2021');
+    assert.strictEqual(component.results[1].year, '2023 - 2024');
+    assert.strictEqual(component.results[2].year, '2023 - 2024');
     assert.strictEqual(component.results[0].courseTitle, 'Course 2:');
     assert.strictEqual(component.results[1].courseTitle, 'Course:');
     assert.strictEqual(component.results[1].courseTitle, 'Course:');
