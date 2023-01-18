@@ -14,7 +14,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     data: {
       courses: [
         { id: 1, title: 'First Course', year: 2023 },
-        { id: 2, title: 'Second Course', year: 2020 },
+        { id: 2, title: 'Second Course', year: 2020, externalId: 'ext ID 1' },
       ],
     },
   };
@@ -24,7 +24,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.expect(10);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { courses { id, title, year } }');
+      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -38,7 +38,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.ok(component.results[1].hasLink);
     assert.strictEqual(component.results[0].year, '2020');
     assert.strictEqual(component.results[1].year, '2023');
-    assert.strictEqual(component.results[0].courseTitle, 'Second Course');
+    assert.strictEqual(component.results[0].courseTitle, 'Second Course (ext ID 1)');
     assert.strictEqual(component.results[1].courseTitle, 'First Course');
     assert.strictEqual(component.results[0].link, '/courses/2');
     assert.strictEqual(component.results[1].link, '/courses/1');
@@ -49,7 +49,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.expect(8);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { courses { id, title, year } }');
+      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -63,7 +63,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.notOk(component.results[1].hasLink);
     assert.strictEqual(component.results[0].year, '2020');
     assert.strictEqual(component.results[1].year, '2023');
-    assert.strictEqual(component.results[0].courseTitle, 'Second Course');
+    assert.strictEqual(component.results[0].courseTitle, 'Second Course (ext ID 1)');
     assert.strictEqual(component.results[1].courseTitle, 'First Course');
   });
 
@@ -78,7 +78,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     });
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { courses { id, title, year } }');
+      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -90,7 +90,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.strictEqual(component.results.length, 2);
     assert.strictEqual(component.results[0].year, '2020-2021');
     assert.strictEqual(component.results[1].year, '2023-2024');
-    assert.strictEqual(component.results[0].courseTitle, 'Second Course');
+    assert.strictEqual(component.results[0].courseTitle, 'Second Course (ext ID 1)');
     assert.strictEqual(component.results[1].courseTitle, 'First Course');
   });
 
@@ -98,7 +98,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.expect(4);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { courses { id, title, year } }');
+      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -116,7 +116,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { courses(schools: [33]) { id, title, year } }');
+      assert.strictEqual(query, 'query { courses(schools: [33]) { id, title, year, externalId } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -131,7 +131,10 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { courses(programs: [13]) { id, title, year } }');
+      assert.strictEqual(
+        query,
+        'query { courses(programs: [13]) { id, title, year, externalId } }'
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -149,7 +152,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(schools: [24], programs: [13]) { id, title, year } }'
+        'query { courses(schools: [24], programs: [13]) { id, title, year, externalId } }'
       );
       return responseData;
     });

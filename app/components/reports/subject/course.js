@@ -64,7 +64,7 @@ export default class ReportsSubjectCourseComponent extends Component {
       }
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
-    const result = await this.graphql.find('courses', filters, 'id, title, year');
+    const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
 
     return result.data.courses;
   }

@@ -16,9 +16,15 @@
             {{#if this.canViewCourse}}
               <LinkTo @route="course" @model={{course.id}}>
                 {{course.title}}
+                {{#if course.externalId}}
+                  ({{course.externalId}})
+                {{/if}}
               </LinkTo>
             {{else}}
               {{course.title}}
+              {{#if course.externalId}}
+                ({{course.externalId}})
+              {{/if}}
             {{/if}}
           </span>
         </li>
