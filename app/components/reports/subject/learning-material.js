@@ -14,26 +14,34 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
     return Array.isArray(this.data);
   }
 
-  async getReportResults(report) {
-    const { subject, prepositionalObject, prepositionalObjectTableRowId } = report;
-
-    if (subject !== 'learning material') {
-      throw new Error(`Report for ${subject} sent to ReportsSubjectLearningMaterialComponent`);
-    }
+  async getGraphQLFilters(report) {
+    const { prepositionalObject, prepositionalObjectTableRowId } = report;
 
     const school = await report.school;
 
-    let filters = [];
+    let rhett = [];
     if (school) {
-      filters.push(`schools: [${school.id}]`);
+      rhett.push(`schools: [${school.id}]`);
     }
     if (prepositionalObject && prepositionalObjectTableRowId) {
       let what = pluralize(camelize(prepositionalObject));
       if (what === 'course') {
         what = 'fullCourses';
       }
-      filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
+      rhett.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
+
+    return rhett;
+  }
+
+  async getReportResults(report) {
+    const { subject } = report;
+
+    if (subject !== 'learning material') {
+      throw new Error(`Report for ${subject} sent to ReportsSubjectLearningMaterialComponent`);
+    }
+
+    const filters = await this.getGraphQLFilters(report);
     const result = await this.graphql.find('learningMaterials', filters, 'id, title');
     return result.data.learningMaterials.map(({ title }) => title).sort();
   }

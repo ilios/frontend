@@ -44,26 +44,32 @@ export default class ReportsSubjectSessionComponent extends Component {
     return Array.isArray(this.data);
   }
 
-  async getReportResults(report) {
-    const { subject, prepositionalObject, prepositionalObjectTableRowId } = report;
-
-    if (subject !== 'session') {
-      throw new Error(`Report for ${subject} sent to ReportsSubjectSessionComponent`);
-    }
-
+  async getGraphQLFilters(report) {
+    const { prepositionalObject, prepositionalObjectTableRowId } = report;
     const school = await report.school;
-
-    let filters = [];
+    const rhett = [];
     if (school) {
-      filters.push(`schools: [${school.id}]`);
+      rhett.push(`schools: [${school.id}]`);
     }
     if (prepositionalObject && prepositionalObjectTableRowId) {
       let what = pluralize(camelize(prepositionalObject));
       if (prepositionalObject === 'mesh term') {
         what = 'meshDescriptors';
       }
-      filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
+      rhett.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
+
+    return rhett;
+  }
+
+  async getReportResults(report) {
+    const { subject } = report;
+
+    if (subject !== 'session') {
+      throw new Error(`Report for ${subject} sent to ReportsSubjectSessionComponent`);
+    }
+
+    const filters = await this.getGraphQLFilters(report);
     const result = await this.graphql.find(
       'sessions',
       filters,
