@@ -19,6 +19,7 @@ import LearningMaterialComponent from './subject/learning-material';
 import CompetencyComponent from './subject/competency';
 import MeshTermComponent from './subject/mesh-term';
 import TermComponent from './subject/term';
+import SessionTypeComponent from './subject/session-type';
 
 export default class ReportsSubjectComponent extends Component {
   @service currentUser;
@@ -59,6 +60,8 @@ export default class ReportsSubjectComponent extends Component {
         return ensureSafeComponent(MeshTermComponent, this);
       case 'term':
         return ensureSafeComponent(TermComponent, this);
+      case 'session type':
+        return ensureSafeComponent(SessionTypeComponent, this);
     }
 
     return null;
