@@ -34,7 +34,7 @@
         {{on "change" (pick "target.value" @setYear)}}
         data-test-select-year
       >
-        {{#each (sort-by "title" this.academicYears) as |year|}}
+        {{#each (reverse (sort-by "title" this.academicYears)) as |year|}}
           <option value={{year.id}} selected={{eq year.id this.selectedYearId}}>
             {{year.title}}
           </option>
