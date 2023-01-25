@@ -41,9 +41,9 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.selectedSchool, '2');
 
     assert.strictEqual(component.years.length, 3);
-    assert.strictEqual(component.years[0].text, `${this.thisYear - 1} - ${this.thisYear}`);
+    assert.strictEqual(component.years[0].text, `${this.thisYear + 1} - ${this.thisYear + 2}`);
     assert.strictEqual(component.years[1].text, `${this.thisYear} - ${this.thisYear + 1}`);
-    assert.strictEqual(component.years[2].text, `${this.thisYear + 1} - ${this.thisYear + 2}`);
+    assert.strictEqual(component.years[2].text, `${this.thisYear - 1} - ${this.thisYear}`);
     assert.strictEqual(parseInt(component.selectedYear, 10), this.currentAcademicYear);
 
     assert.strictEqual(component.school.title, 'School (school 1)');
