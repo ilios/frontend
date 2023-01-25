@@ -14,18 +14,20 @@
       {{this.tooltipContent}}
     </IliosTooltip>
   {{/if}}
-  {{#if this.recentlyUpdated}}
-    <FaIcon
-      @icon="circle-exclamation"
-      class="recently-updated-icon"
-      @title={{t "general.newUpdates"}}
-    />
-  {{/if}}
-  {{#if (not @event.isPublished)}}
-    <FaIcon @icon="file-signature" />
-  {{else if @event.isScheduled}}
-    <FaIcon @icon="clock" />
-  {{/if}}
+  <span class="ilios-calendar-event-icons">
+    {{#if this.recentlyUpdated}}
+      <FaIcon
+        @icon="circle-exclamation"
+        class="recently-updated-icon"
+        @title={{t "general.newUpdates"}}
+      />
+    {{/if}}
+    {{#if (not @event.isPublished)}}
+      <FaIcon @icon="file-signature" />
+    {{else if @event.isScheduled}}
+      <FaIcon @icon="clock" />
+    {{/if}}
+  </span>
   <span class="ilios-calendar-event-time">
     {{#if this.isIlm}}
       <span class="ilios-calendar-event-start">
