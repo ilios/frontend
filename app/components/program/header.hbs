@@ -1,6 +1,6 @@
 {{#let (unique-id) as |id|}}
   <div class="program-header" ...attributes data-test-program-header>
-    <span class="title" data-test-title>
+    <h2 class="title" data-test-title>
       {{#if @canUpdate}}
         <EditableField
           @value={{this.title}}
@@ -22,6 +22,6 @@
       {{else}}
         <h2>{{@program.title}}</h2>
       {{/if}}
-    </span>
+    </h2>
   </div>
 {{/let}}
