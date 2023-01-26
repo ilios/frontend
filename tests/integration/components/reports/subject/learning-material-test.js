@@ -86,4 +86,23 @@ module('Integration | Component | reports/subject/learning-material', function (
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::LearningMaterial @report={{this.report}} />`);
   });
+
+  test('filter by mesh', async function (assert) {
+    assert.expect(1);
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(
+        query,
+        'query { learningMaterials(meshDescriptors: [ABC]) { id, title } }'
+      );
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'learning material',
+      prepositionalObject: 'mesh term',
+      prepositionalObjectTableRowId: 'ABC',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::LearningMaterial @report={{this.report}} />`);
+  });
 });

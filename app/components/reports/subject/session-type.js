@@ -14,23 +14,34 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
     return Array.isArray(this.data);
   }
 
+  async getGraphQLFilters(report) {
+    const { prepositionalObject, prepositionalObjectTableRowId } = report;
+
+    const school = await report.school;
+
+    let rhett = [];
+    if (school) {
+      rhett.push(`schools: [${school.id}]`);
+    }
+    if (prepositionalObject && prepositionalObjectTableRowId) {
+      let what = pluralize(camelize(prepositionalObject));
+      if (prepositionalObject === 'mesh term') {
+        what = 'meshDescriptors';
+      }
+      rhett.push(`${what}: [${prepositionalObjectTableRowId}]`);
+    }
+
+    return rhett;
+  }
+
   async getReportResults(report) {
-    const { subject, prepositionalObject, prepositionalObjectTableRowId } = report;
+    const { subject } = report;
 
     if (subject !== 'session type') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectSessionTypeComponent`);
     }
 
-    const school = await report.school;
-
-    let filters = [];
-    if (school) {
-      filters.push(`schools: [${school.id}]`);
-    }
-    if (prepositionalObject && prepositionalObjectTableRowId) {
-      const what = pluralize(camelize(prepositionalObject));
-      filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
-    }
+    const filters = await this.getGraphQLFilters(report);
     const result = await this.graphql.find('sessionTypes', filters, 'title');
     return result.data.sessionTypes.map(({ title }) => title).sort();
   }

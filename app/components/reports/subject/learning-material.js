@@ -28,6 +28,9 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
       if (what === 'course') {
         what = 'fullCourses';
       }
+      if (prepositionalObject === 'mesh term') {
+        what = 'meshDescriptors';
+      }
       rhett.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
 

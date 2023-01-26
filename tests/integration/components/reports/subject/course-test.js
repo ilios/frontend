@@ -165,4 +165,23 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Course @report={{this.report}} />`);
   });
+
+  test('filter by mesh', async function (assert) {
+    assert.expect(1);
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(
+        query,
+        'query { courses(meshDescriptors: [ABC]) { id, title, year, externalId } }'
+      );
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'course',
+      prepositionalObject: 'mesh term',
+      prepositionalObjectTableRowId: 'ABC',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Course @report={{this.report}} />`);
+  });
 });
