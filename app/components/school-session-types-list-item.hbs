@@ -7,11 +7,13 @@
     <button class="link-button" type="button" {{on "click" (fn @manageSessionType @sessionType.id)}}>
       {{@sessionType.title}}
     </button>
-    {{#unless @sessionType.active}}
-      <em data-test-inactive>
-        ({{t "general.inactive"}})
-      </em>
-    {{/unless}}
+  </td>
+  <td data-test-active>
+    {{#if @sessionType.active}}
+      <FaIcon @prefix="fas" @icon="lightbulb-on" @title={{t "general.active"}} />
+    {{else}}
+      <FaIcon @prefix="fal" @icon="lightbulb-slash" @title={{t "general.inactive"}} />
+    {{/if}}
   </td>
   <td class="hide-from-small-screen" data-test-sessions-count>
     {{@sessionType.sessionCount}}
@@ -28,11 +30,6 @@
   </td>
   <td class="hide-from-small-screen" colspan="2" data-test-assessment-method-description>
     {{get (await @sessionType.firstAamcMethod) "description"}}
-    {{#if (not (get (await @sessionType.firstAamcMethod) "active"))}}
-      <em>
-        ({{t "general.inactive"}})
-      </em>
-    {{/if}}
   </td>
   <td class="calendar-color hide-from-small-screen">
     {{! template-lint-disable no-inline-styles style-concatenation no-triple-curlies}}

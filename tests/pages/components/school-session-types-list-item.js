@@ -6,6 +6,8 @@ const definition = {
     scope: '[data-test-title]',
     edit: clickable('button'),
   },
+  isActive: isVisible('[data-icon="lightbulb-on"]', { scope: '[data-test-active]' }),
+  isInactive: isVisible('[data-icon="lightbulb-slash"]', { scope: '[data-test-active]' }),
   sessionCount: text('[data-test-sessions-count]'),
   isAssessment: hasClass('yes', '[data-test-is-assessment] svg'),
   assessmentOption: text('[data-test-assessment-option]'),

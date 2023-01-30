@@ -64,21 +64,21 @@ module('Integration | Component | school session types list', function (hooks) {
 
     assert.strictEqual(component.sessionTypes.length, 3);
     assert.strictEqual(component.sessionTypes[0].title.text, 'first');
+    assert.ok(component.sessionTypes[0].isActive);
     assert.strictEqual(component.sessionTypes[0].sessionCount, '2');
     assert.notOk(component.sessionTypes[0].isAssessment);
     assert.strictEqual(component.sessionTypes[0].aamcMethod, aamcMethod1.description);
     assert.strictEqual(component.sessionTypes[0].assessmentOption, '');
     assert.strictEqual(component.sessionTypes[0].calendarColor, 'background-color: #cccccc');
     assert.strictEqual(component.sessionTypes[1].title.text, 'second');
+    assert.ok(component.sessionTypes[1].isActive);
     assert.strictEqual(component.sessionTypes[1].sessionCount, '0');
     assert.ok(component.sessionTypes[1].isAssessment);
-    assert.strictEqual(
-      component.sessionTypes[1].aamcMethod,
-      aamcMethod2.description + ' (inactive)'
-    );
+    assert.strictEqual(component.sessionTypes[1].aamcMethod, aamcMethod2.description);
     assert.strictEqual(component.sessionTypes[1].assessmentOption, 'formative');
     assert.strictEqual(component.sessionTypes[1].calendarColor, 'background-color: #123456');
-    assert.strictEqual(component.sessionTypes[2].title.text, 'not needed anymore (inactive)');
+    assert.strictEqual(component.sessionTypes[2].title.text, 'not needed anymore');
+    assert.ok(component.sessionTypes[2].isInactive);
     assert.strictEqual(component.sessionTypes[2].sessionCount, '2');
     assert.notOk(component.sessionTypes[2].isAssessment);
     assert.strictEqual(component.sessionTypes[2].aamcMethod, aamcMethod1.description);

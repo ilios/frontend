@@ -47,6 +47,7 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       @manageSessionType={{(noop)}}
     />`);
     assert.strictEqual(component.title.text, 'salt');
+    assert.ok(component.isActive);
     assert.strictEqual(component.sessionCount, '2');
     assert.ok(component.isAssessment);
     assert.strictEqual(component.aamcMethod, aamcMethod1.description);

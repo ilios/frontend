@@ -7,8 +7,8 @@ import { sortBy as sortArray } from 'ilios-common/utils/array-helpers';
 import { map } from 'rsvp';
 
 export default class SchoolSessionTypesListComponent extends Component {
-  @tracked sort = 'title';
-  @tracked sortedAscending = true;
+  @tracked sort = 'active';
+  @tracked sortedAscending = false;
   @use sortedSessionTypes = new AsyncProcess(() => [
     this.sortSessionTypes,
     this.args.sessionTypes,
@@ -28,7 +28,7 @@ export default class SchoolSessionTypesListComponent extends Component {
 
   async sortSessionTypes(sessionTypes, isSortedAscending, sortBy) {
     let items = sessionTypes.toArray();
-    if (['title', 'calendarColor', 'assessment', 'sessionCount'].includes(sortBy)) {
+    if (['active', 'assessment', 'calendarColor', 'sessionCount', 'title'].includes(sortBy)) {
       items = sortArray(sessionTypes, sortBy);
     }
 

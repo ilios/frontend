@@ -12,6 +12,13 @@
         </SortableTh>
         <SortableTh
           @sortedAscending={{this.sortedAscending}}
+          @sortedBy={{eq this.sortBy "active"}}
+          @onClick={{fn this.setSortBy "active"}}
+        >
+          {{t "general.active"}}
+        </SortableTh>
+        <SortableTh
+          @sortedAscending={{this.sortedAscending}}
           @sortedBy={{eq this.sortBy "sessionCount"}}
           @onClick={{fn this.setSortBy "sessionCount"}}
           class="hide-from-small-screen"
