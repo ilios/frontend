@@ -2,31 +2,60 @@
   <table>
     <thead>
       <tr>
-        <th colspan="3">
+        <SortableTh
+          @colspan={{3}}
+          @sortedAscending={{this.sortedAscending}}
+          @sortedBy={{eq this.sortBy "title"}}
+          @onClick={{fn this.setSortBy "title"}}
+        >
           {{t "general.title"}}
-        </th>
-        <th class="hide-from-small-screen">
+        </SortableTh>
+        <SortableTh
+          @sortedAscending={{this.sortedAscending}}
+          @sortedBy={{eq this.sortBy "sessionCount"}}
+          @onClick={{fn this.setSortBy "sessionCount"}}
+          class="hide-from-small-screen"
+        >
           {{t "general.sessions"}}
-        </th>
-        <th>
+        </SortableTh>
+        <SortableTh
+          @sortedAscending={{this.sortedAscending}}
+          @sortedBy={{eq this.sortBy "assessment"}}
+          @onClick={{fn this.setSortBy "assessment"}}
+          class="hide-from-small-screen"
+        >
           {{t "general.assessment"}}
-        </th>
-        <th class="hide-from-small-screen" colspan="2">
+        </SortableTh>
+        <SortableTh
+          @colspan={{2}}
+          @sortedAscending={{this.sortedAscending}}
+          @sortedBy={{eq this.sortBy "assessmentOption"}}
+          @onClick={{fn this.setSortBy "assessmentOption"}}
+          class="hide-from-small-screen"
+        >
           {{t "general.assessmentOption"}}
-        </th>
-        <th class="hide-from-small-screen" colspan="2">
+        </SortableTh>
+        <th
+          class="hide-from-small-screen"
+          colspan="2"
+        >
           {{t "general.aamcMethod"}}
         </th>
-        <th class="hide-from-small-screen">
+        <SortableTh
+          @sortedAscending={{this.sortedAscending}}
+          @sortedBy={{eq this.sortBy "calendarColor"}}
+          @onClick={{fn this.setSortBy "calendarColor"}}
+          class="hide-from-small-screen"
+        >
           {{t "general.color"}}
-        </th>
+        </SortableTh>
         <th>
           {{t "general.actions"}}
         </th>
       </tr>
     </thead>
     <tbody>
-      {{#each (sort-by "active:desc" "title" @sessionTypes) as |sessionType|}}
+      {{#each this.sortedSessionTypes as |sessionType|}}
         <SchoolSessionTypesListItem
           @sessionType={{sessionType}}
           @canDelete={{@canDelete}}
