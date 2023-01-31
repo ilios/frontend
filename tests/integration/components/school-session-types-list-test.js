@@ -216,6 +216,18 @@ module('Integration | Component | school session types list', function (hooks) {
     assert.strictEqual(component.sessionTypes[1].assessmentOption, '');
     assert.strictEqual(component.sessionTypes[2].assessmentOption, '');
 
+    await component.sortByAamcMethod();
+    assert.ok(component.isSortedByAamcMethodAscending);
+    assert.strictEqual(component.sessionTypes[0].aamcMethod, 'Dolor Et');
+    assert.strictEqual(component.sessionTypes[1].aamcMethod, 'Lorem Ipsum');
+    assert.strictEqual(component.sessionTypes[2].aamcMethod, 'Lorem Ipsum');
+
+    await component.sortByAamcMethod();
+    assert.ok(component.isSortedByAamcMethodDescending);
+    assert.strictEqual(component.sessionTypes[0].aamcMethod, 'Lorem Ipsum');
+    assert.strictEqual(component.sessionTypes[1].aamcMethod, 'Lorem Ipsum');
+    assert.strictEqual(component.sessionTypes[2].aamcMethod, 'Dolor Et');
+
     await component.sortByColor();
     assert.ok(component.isSortedByColorAscending);
     assert.strictEqual(component.sessionTypes[0].calendarColor, 'background-color: #123456');

@@ -10,6 +10,7 @@ const definition = {
   sortBySessions: clickable('button', { scope: '[data-test-headings] th:nth-of-type(3)' }),
   sortByAssessment: clickable('button', { scope: '[data-test-headings] th:nth-of-type(4)' }),
   sortByAssessmentOption: clickable('button', { scope: '[data-test-headings] th:nth-of-type(5)' }),
+  sortByAamcMethod: clickable('button', { scope: '[data-test-headings] th:nth-of-type(6)' }),
   sortByColor: clickable('button', { scope: '[data-test-headings] th:nth-of-type(7)' }),
   isSortedByTitleAscending: hasClass('fa-arrow-down-a-z', '[data-test-headings] th:eq(0) svg'),
   isSortedByTitleDescending: hasClass('fa-arrow-down-z-a', '[data-test-headings] th:eq(0) svg'),
@@ -35,6 +36,11 @@ const definition = {
   isSortedByAssessmentOptionDescending: hasClass(
     'fa-arrow-down-z-a',
     '[data-test-headings] th:eq(4) svg'
+  ),
+  isSortedByAamcMethodAscending: hasClass('fa-arrow-down-a-z', '[data-test-headings] th:eq(5) svg'),
+  isSortedByAamcMethodDescending: hasClass(
+    'fa-arrow-down-z-a',
+    '[data-test-headings] th:eq(5) svg'
   ),
   isSortedByColorAscending: hasClass('fa-arrow-down-a-z', '[data-test-headings] th:eq(6) svg'),
   isSortedByColorDescending: hasClass('fa-arrow-down-z-a', '[data-test-headings] th:eq(6) svg'),

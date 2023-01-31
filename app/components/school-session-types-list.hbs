@@ -43,12 +43,15 @@
         >
           {{t "general.assessmentOption"}}
         </SortableTh>
-        <th
+        <SortableTh
+          @colspan={{2}}
+          @sortedAscending={{this.sortedAscending}}
+          @sortedBy={{eq this.sortBy "aamcMethod"}}
+          @onClick={{fn this.setSortBy "aamcMethod"}}
           class="hide-from-small-screen"
-          colspan="2"
         >
           {{t "general.aamcMethod"}}
-        </th>
+        </SortableTh>
         <SortableTh
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{eq this.sortBy "calendarColor"}}

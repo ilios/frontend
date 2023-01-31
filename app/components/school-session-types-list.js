@@ -44,6 +44,23 @@ export default class SchoolSessionTypesListComponent extends Component {
       items = items.map((item) => item.sessionType);
     }
 
+    if ('aamcMethod' === sortBy) {
+      const sortProxies = await map(items, async (sessionType) => {
+        const aamcMethods = (await sessionType.aamcMethods).toArray();
+        let aamcMethodDescription = '';
+
+        if (aamcMethods.length) {
+          aamcMethodDescription = aamcMethods[0].description;
+        }
+        return {
+          sessionType,
+          aamcMethodDescription,
+        };
+      });
+      items = sortArray(sortProxies, 'aamcMethodDescription');
+      items = items.map((item) => item.sessionType);
+    }
+
     if (!isSortedAscending) {
       items.reverse();
     }
