@@ -22,8 +22,8 @@ export default class SchoolSessionTypesListComponent extends Component {
 
   @action
   setSortBy(what) {
+    this.sortedAscending = this.sort === what ? !this.sortedAscending : true;
     this.sort = what;
-    this.sortedAscending = !this.sortedAscending;
   }
 
   async sortSessionTypes(sessionTypes, isSortedAscending, sortBy) {

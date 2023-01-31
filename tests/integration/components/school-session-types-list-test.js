@@ -147,4 +147,85 @@ module('Integration | Component | school session types list', function (hooks) {
     await component.sessionTypes[1].confirmRemoval.confirm();
     assert.strictEqual(this.server.db.sessionTypes.length, 2);
   });
+
+  test('sort', async function (assert) {
+    this.set('sessionTypes', this.sessionTypes);
+    await render(hbs`<SchoolSessionTypesList
+      @sessionTypes={{this.sessionTypes}}
+      @manageSessionType={{(noop)}}
+      @canDelete={{true}}
+    />`);
+
+    // default sort order is sorted by active, descending
+    assert.ok(component.isSortedByActiveStatusDescending);
+    assert.ok(component.sessionTypes[0].isActive);
+    assert.ok(component.sessionTypes[1].isActive);
+    assert.notOk(component.sessionTypes[2].isActive);
+
+    await component.sortByActiveStatus();
+    assert.ok(component.isSortedByActiveStatusAscending);
+    assert.notOk(component.sessionTypes[0].isActive);
+    assert.ok(component.sessionTypes[1].isActive);
+    assert.ok(component.sessionTypes[2].isActive);
+
+    await component.sortByTitle();
+    assert.ok(component.isSortedByTitleAscending);
+    assert.strictEqual(component.sessionTypes[0].title.text, 'first');
+    assert.strictEqual(component.sessionTypes[1].title.text, 'not needed anymore');
+    assert.strictEqual(component.sessionTypes[2].title.text, 'second');
+
+    await component.sortByTitle();
+    assert.ok(component.isSortedByTitleDescending);
+    assert.strictEqual(component.sessionTypes[0].title.text, 'second');
+    assert.strictEqual(component.sessionTypes[1].title.text, 'not needed anymore');
+    assert.strictEqual(component.sessionTypes[2].title.text, 'first');
+
+    await component.sortBySessions();
+    assert.ok(component.isSortedBySessionsAscending);
+    assert.strictEqual(component.sessionTypes[0].sessionCount, '0');
+    assert.strictEqual(component.sessionTypes[1].sessionCount, '2');
+    assert.strictEqual(component.sessionTypes[2].sessionCount, '2');
+
+    await component.sortBySessions();
+    assert.ok(component.isSortedBySessionsDescending);
+    assert.strictEqual(component.sessionTypes[0].sessionCount, '2');
+    assert.strictEqual(component.sessionTypes[1].sessionCount, '2');
+    assert.strictEqual(component.sessionTypes[2].sessionCount, '0');
+
+    await component.sortByAssessment();
+    assert.ok(component.isSortedByAssessmentAscending);
+    assert.notOk(component.sessionTypes[0].isAssessment);
+    assert.notOk(component.sessionTypes[1].isAssessment);
+    assert.ok(component.sessionTypes[2].isAssessment);
+
+    await component.sortByAssessment();
+    assert.ok(component.isSortedByAssessmentDescending);
+    assert.ok(component.sessionTypes[0].isAssessment);
+    assert.notOk(component.sessionTypes[1].isAssessment);
+    assert.notOk(component.sessionTypes[2].isAssessment);
+
+    await component.sortByAssessmentOption();
+    assert.ok(component.isSortedByAssessmentOptionAscending);
+    assert.strictEqual(component.sessionTypes[0].assessmentOption, '');
+    assert.strictEqual(component.sessionTypes[1].assessmentOption, '');
+    assert.strictEqual(component.sessionTypes[2].assessmentOption, 'formative');
+
+    await component.sortByAssessmentOption();
+    assert.ok(component.isSortedByAssessmentOptionDescending);
+    assert.strictEqual(component.sessionTypes[0].assessmentOption, 'formative');
+    assert.strictEqual(component.sessionTypes[1].assessmentOption, '');
+    assert.strictEqual(component.sessionTypes[2].assessmentOption, '');
+
+    await component.sortByColor();
+    assert.ok(component.isSortedByColorAscending);
+    assert.strictEqual(component.sessionTypes[0].calendarColor, 'background-color: #123456');
+    assert.strictEqual(component.sessionTypes[1].calendarColor, 'background-color: #cccccc');
+    assert.strictEqual(component.sessionTypes[2].calendarColor, 'background-color: #ffffff');
+
+    await component.sortByColor();
+    assert.ok(component.isSortedByColorDescending);
+    assert.strictEqual(component.sessionTypes[0].calendarColor, 'background-color: #ffffff');
+    assert.strictEqual(component.sessionTypes[1].calendarColor, 'background-color: #cccccc');
+    assert.strictEqual(component.sessionTypes[2].calendarColor, 'background-color: #123456');
+  });
 });

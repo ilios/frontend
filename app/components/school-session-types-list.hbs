@@ -21,6 +21,7 @@
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{eq this.sortBy "sessionCount"}}
           @onClick={{fn this.setSortBy "sessionCount"}}
+          @sortType="numeric"
           class="hide-from-small-screen"
         >
           {{t "general.sessions"}}
