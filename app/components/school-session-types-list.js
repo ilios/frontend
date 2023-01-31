@@ -28,23 +28,8 @@ export default class SchoolSessionTypesListComponent extends Component {
 
   async sortSessionTypes(sessionTypes, isSortedAscending, sortBy) {
     let items = sessionTypes.toArray();
-    if (['active', 'assessment', 'calendarColor', 'sessionCount', 'title'].includes(sortBy)) {
-      items = sortArray(sessionTypes, sortBy);
-    }
 
-    if ('assessmentOption' === sortBy) {
-      const sortProxies = await map(items, async (sessionType) => {
-        const assessmentOption = await sessionType.assessmentOption;
-        return {
-          sessionType,
-          assessmentOptionName: assessmentOption?.name,
-        };
-      });
-      items = sortArray(sortProxies, 'assessmentOptionName');
-      items = items.map((item) => item.sessionType);
-    }
-
-    if ('aamcMethod' === sortBy) {
+    const sortByAamcMethod = async function (items) {
       const sortProxies = await map(items, async (sessionType) => {
         const aamcMethods = (await sessionType.aamcMethods).toArray();
         let aamcMethodDescription = '';
@@ -58,7 +43,35 @@ export default class SchoolSessionTypesListComponent extends Component {
         };
       });
       items = sortArray(sortProxies, 'aamcMethodDescription');
-      items = items.map((item) => item.sessionType);
+      return items.map((item) => item.sessionType);
+    };
+
+    const sortByAssessmentOption = async function (items) {
+      const sortProxies = await map(items, async (sessionType) => {
+        const assessmentOption = await sessionType.assessmentOption;
+        return {
+          sessionType,
+          assessmentOptionName: assessmentOption?.name,
+        };
+      });
+      items = sortArray(sortProxies, 'assessmentOptionName');
+      return items.map((item) => item.sessionType);
+    };
+
+    switch (sortBy) {
+      case 'active':
+      case 'assessment':
+      case 'calendarColor':
+      case 'sessionCount':
+      case 'title':
+        items = sortArray(sessionTypes, sortBy);
+        break;
+      case 'assessmentOption':
+        items = await sortByAssessmentOption(items);
+        break;
+      case 'aamcMethod':
+        items = await sortByAamcMethod(items);
+        break;
     }
 
     if (!isSortedAscending) {
