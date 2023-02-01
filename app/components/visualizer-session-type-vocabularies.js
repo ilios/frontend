@@ -5,18 +5,43 @@ import { map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { mapBy } from 'ilios-common/utils/array-helpers';
+import { use } from 'ember-could-get-used-to-this';
+import AsyncProcess from 'ilios-common/classes/async-process';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class VisualizerSessionTypeVocabulariesComponent extends Component {
   @service router;
-  @tracked tooltipContent;
-  @tracked tooltipTitle;
-  @tracked data = [];
+  @service intl;
+  @tracked tooltipContent = null;
+  @tracked tooltipTitle = null;
 
-  @restartableTask
-  *load(element, [sessionType]) {
-    const sessions = (yield sessionType.sessions).slice();
-    const terms = yield map(sessions, async (session) => {
+  @use sessions = new ResolveAsyncValue(() => [this.args.sessionType.sessions, []]);
+  @use loadedData = new AsyncProcess(() => [this.loadData.bind(this), this.sessions]);
+
+  get isLoaded() {
+    return !!this.loadedData;
+  }
+
+  get vocabulariesWithLinkedTerms() {
+    if (!this.loadedData) {
+      return [];
+    }
+    return this.loadedData.filter((obj) => obj.data !== 0);
+  }
+
+  get data() {
+    if (!this.loadedData) {
+      return [];
+    }
+    return this.loadedData;
+  }
+
+  async loadData(sessions) {
+    if (!sessions) {
+      return [];
+    }
+
+    const terms = await map(sessions, async (session) => {
       const sessionTerms = (await session.terms).slice();
       const course = await session.course;
       const courseTerms = (await course.terms).slice();
@@ -24,7 +49,7 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
       return [...sessionTerms, ...courseTerms];
     });
 
-    const termsWithVocabularies = yield map(terms.flat(), async (term) => {
+    const termsWithVocabularies = await map(terms.flat(), async (term) => {
       const vocabulary = await term.vocabulary;
       return { term, vocabulary };
     });
@@ -42,17 +67,26 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
     }, {});
 
     const vocabularyData = Object.values(vocabularyObjects);
-    const totalTerms = mapBy(vocabularyData, 'data').reduce((total, count) => total + count, 0);
-    this.data = vocabularyData.map((obj) => {
-      const percent = ((obj.data / totalTerms) * 100).toFixed(1);
-      obj.label = `${percent}%`;
 
+    return vocabularyData.map((obj) => {
+      obj.label = obj.meta.vocabulary.title;
       return obj;
     });
   }
 
-  get vocabulariesWithLinkedTerms() {
-    return this.data.filter((obj) => obj.data !== 0);
+  @restartableTask
+  *donutHover(obj) {
+    yield timeout(100);
+    if (this.args.isIcon || !obj || obj.empty) {
+      this.tooltipTitle = null;
+      this.tooltipContent = null;
+      return;
+    }
+
+    const { meta } = obj;
+
+    this.tooltipTitle = htmlSafe(meta.vocabulary.title);
+    this.tooltipContent = this.intl.t('general.clickForMore');
   }
 
   @action
@@ -66,30 +100,5 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
       this.args.sessionType.id,
       obj.meta.vocabulary.id
     );
-  }
-
-  getTooltipData(obj) {
-    if (this.args.isIcon || !obj || obj.empty) {
-      return '';
-    }
-    const { meta } = obj;
-
-    const vocabularyTitle = meta.vocabulary.title;
-    const title = htmlSafe(vocabularyTitle);
-
-    return {
-      title,
-      content: title,
-    };
-  }
-
-  @restartableTask
-  *donutHover(obj) {
-    yield timeout(100);
-    const data = yield this.getTooltipData(obj);
-    if (data) {
-      this.tooltipTitle = data.title;
-      this.tooltipContent = data.content;
-    }
   }
 }

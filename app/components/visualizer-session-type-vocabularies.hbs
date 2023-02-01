@@ -1,13 +1,12 @@
 <span
-  class="{{unless this.isIcon "not-icon"}} visualizer-session-type-vocabularies"
-  {{did-insert (perform this.load) @sessionType}}
-  {{did-update (perform this.load) @sessionType}}
+  class="visualizer-session-type-vocabularies not-icon"
+  data-test-visualizer-session-type-vocabularies
   ...attributes
 >
-  {{#if this.load.lastSuccessful}}
+  {{#if this.isLoaded}}
     {{#if (or @isIcon (gt this.vocabulariesWithLinkedTerms.length 0))}}
       <SimpleChart
-        @name="pie"
+        @name="donut"
         @isIcon={{@isIcon}}
         @data={{this.vocabulariesWithLinkedTerms}}
         @onClick={{this.donutClick}}
