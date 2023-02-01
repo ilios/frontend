@@ -4,14 +4,8 @@
   width: 1rem;
 
   &.not-icon {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    height: auto;
-    width: auto;
-
-    .simple-chart {
-      height: 80vh;
-    }
+    height: 75vh;
+    width: 75vw;
 
     .simple-chart-tooltip {
       .title {

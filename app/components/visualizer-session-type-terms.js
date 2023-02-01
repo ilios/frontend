@@ -1,19 +1,38 @@
 import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { use } from 'ember-could-get-used-to-this';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class VisualizerSessionTypeTermsComponent extends Component {
-  @tracked tooltipContent;
-  @tracked tooltipTitle;
-  @tracked data = [];
+  @service router;
+  @service intl;
+  @tracked tooltipContent = null;
+  @tracked tooltipTitle = null;
 
-  @restartableTask
-  *load(element, [sessionType, vocabulary]) {
-    const sessions = (yield sessionType.sessions).slice();
-    const terms = yield map(sessions, async (session) => {
+  @use loadedData = new AsyncProcess(() => [
+    this.loadData.bind(this),
+    this.args.sessionType,
+    this.args.vocabulary,
+  ]);
+
+  get isLoaded() {
+    return !!this.loadedData;
+  }
+
+  get data() {
+    if (!this.loadedData) {
+      return [];
+    }
+    return this.loadedData;
+  }
+
+  async loadData(sessionType, vocabulary) {
+    const sessions = (await sessionType.sessions).slice();
+    const terms = await map(sessions, async (session) => {
       const sessionTerms = (await session.terms).slice();
       const course = await session.course;
       const courseTerms = (await course.terms).slice();
@@ -51,27 +70,39 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
           data: 0,
           meta: {
             term: term.title,
-            courses: [],
-            sessions: [],
+            courses: {},
+            sessions: {},
           },
         };
       }
-      termObjects[id].data++;
-      termObjects[id].meta.courses.push(course?.title);
-      termObjects[id].meta.sessions.push(session?.title);
-
+      if (course) {
+        termObjects[id].meta.courses[course.id] = {
+          id: course.id,
+          title: course.title,
+        };
+      }
+      if (session) {
+        termObjects[id].meta.sessions[session.id] = {
+          id: session.id,
+          title: session.title,
+        };
+      }
       return termObjects;
     }, {});
 
     const termData = Object.values(termObjects);
 
-    const totalLinks = mapBy(termData, 'data').reduce((total, count) => total + count, 0);
-    this.data = termData.map((obj) => {
-      const percent = ((obj.data / totalLinks) * 100).toFixed(1);
-      obj.label = `${percent}%`;
-
-      return obj;
-    });
+    return termData
+      .map((obj) => {
+        obj.meta.courses = Object.values(obj.meta.courses);
+        obj.meta.sessions = Object.values(obj.meta.sessions);
+        obj.data = obj.meta.courses.length + obj.meta.sessions.length;
+        obj.label = `${obj.meta.term} (${obj.data})`;
+        return obj;
+      })
+      .sort((first, second) => {
+        return first.data - second.data;
+      });
   }
 
   @restartableTask
@@ -82,13 +113,17 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { meta } = obj;
 
-    const title = htmlSafe(meta.term);
-    const sessions = uniqueValues(meta.sessions).sort().join();
-    const courses = uniqueValues(meta.courses).sort().join();
+    const title = htmlSafe(obj.label);
+    const sessions = obj.meta.sessions.map((obj) => obj.title);
+    const courses = obj.meta.courses.map((obj) => obj.title);
 
     this.tooltipTitle = title;
-    this.tooltipContent = { sessions, courses };
+    this.tooltipContent = {
+      courses: courses.sort().join(),
+      coursesCount: courses.length,
+      sessions: sessions.sort().join(),
+      sessionsCount: sessions.length,
+    };
   }
 }

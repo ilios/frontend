@@ -24,9 +24,7 @@
   </div>
   <h2>{{t "general.vocabulariesBySessionType"}}</h2>
   <h3>
-    <LinkTo @route="school" @model={{@model.school}} @query={{hash schoolSessionTypeDetails=true}}>
       {{@model.title}}
-    </LinkTo>
   </h3>
   <div class="visualizations">
     <VisualizerSessionTypeVocabularies @sessionType={{@model}} />

@@ -1,10 +1,9 @@
 <span
   class="{{unless @isIcon "not-icon"}} visualizer-session-type-terms"
-  {{did-insert (perform this.load) @sessionType @vocabulary}}
-  {{did-update (perform this.load) @sessionType @vocabulary}}
+  data-test-visualizer-session-type-terms
   ...attributes
 >
-  {{#if this.load.lastSuccessful}}
+  {{#if this.isLoaded}}
     {{#if (or @isIcon (gt this.data.length 0))}}
         <SimpleChart
           @name="donut"
@@ -16,13 +15,13 @@
           {{#if this.tooltipContent}}
             <chart.tooltip @title={{this.tooltipTitle}}>
               <h5>
-                {{t "general.courses"}}
+                {{t "general.courses"}} ({{this.tooltipContent.coursesCount}})
               </h5>
               <p>
                 {{this.tooltipContent.courses}}
               </p>
               <h5>
-                {{t "general.sessions"}}
+                {{t "general.sessions"}} ({{this.tooltipContent.sessionsCount}})
               </h5>
               <p>
                 {{this.tooltipContent.sessions}}
