@@ -441,6 +441,7 @@ general:
   validUsers: "Valid Users"
   verificationPreviewFor: "Verification Preview for {name}"
   viewAll: "View All"
+  vocabulariesBySessionType: "Vocabularies by Session Type"
   weak: Weak
   whichIs: "which is"
   write: Write

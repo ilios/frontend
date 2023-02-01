@@ -441,6 +441,7 @@ general:
   validUsers: "Usuarios Válidos"
   verificationPreviewFor: "Vista previa de verificación para {name}"
   viewAll: "Ver Todos"
+  vocabulariesBySessionType: "Vocabularios por Tipo de Sesión"
   weak: "Débil"
   whichIs: "cuál es"
   write: Escribir
