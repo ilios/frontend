@@ -7,7 +7,7 @@
   $breadcrumb-arrow-color: $breadcrumb-border-color;
   $breadcrumb-background: $slightWhite;
   $breadcrumb-color: $tealBlue;
-  $breadcrumb-color-hover: $orange;
+  $breadcrumb-link-color-hover: $orange;
   $breadcrumb-color-active: $breadcrumb-color;
 
   display: inline-block;
@@ -17,7 +17,7 @@
   a {
     &:focus,
     &:hover {
-      color: $breadcrumb-color-hover;
+      color: $breadcrumb-link-color-hover;
     }
   }
 
