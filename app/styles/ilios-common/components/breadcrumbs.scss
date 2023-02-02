@@ -6,7 +6,6 @@
   $breadcrumb-height: 2rem;
   $breadcrumb-arrow-color: $breadcrumb-border-color;
   $breadcrumb-background: $slightWhite;
-  $breadcrumb-inactive-hover-color: $breadcrumb-background;
   $breadcrumb-color: $tealBlue;
   $breadcrumb-color-hover: $orange;
   $breadcrumb-color-active: $breadcrumb-color;
@@ -40,7 +39,6 @@
 
     &:focus,
     &:hover {
-      background-color: $breadcrumb-inactive-hover-color;
       color: $breadcrumb-color-hover;
     }
 
