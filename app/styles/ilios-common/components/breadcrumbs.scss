@@ -8,7 +8,6 @@
   $breadcrumb-background: $slightWhite;
   $breadcrumb-color: $tealBlue;
   $breadcrumb-link-color-hover: $orange;
-  $breadcrumb-color-active: $breadcrumb-color;
 
   display: inline-block;
   margin: .8rem;
@@ -72,10 +71,8 @@
 
     &:last-child,
     &:last-child:hover {
-      background-color: $breadcrumb-background;
       border-bottom-right-radius: 3px;
       border-top-right-radius: 3px;
-      color: $breadcrumb-color-active;
       cursor: default;
       padding-right: math.div($breadcrumb-height, 2);
     }
