@@ -14,6 +14,13 @@
   margin: .8rem;
   text-align: left;
 
+  a {
+    &:focus,
+    &:hover {
+      color: $breadcrumb-color-hover;
+    }
+  }
+
   /* stylelint-disable property-disallowed-list */
   span {
     background-color: $breadcrumb-background;
@@ -35,11 +42,6 @@
       border-left: $breadcrumb-border;
       border-top-left-radius: 3px;
       padding-left: math.div($breadcrumb-height, 2);
-    }
-
-    &:focus,
-    &:hover {
-      color: $breadcrumb-color-hover;
     }
 
     &::after,
