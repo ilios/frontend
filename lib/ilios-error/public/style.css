@@ -7,7 +7,7 @@
 }
 #ilios-loading-error .supported-browsers {
   border: 1px solid blue;
-  margin-top: 1rem;
+  margin: 1rem 0;
   padding: 1rem 2rem;
 }
 #ilios-loading-error ul {
