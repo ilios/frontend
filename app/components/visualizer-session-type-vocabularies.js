@@ -15,22 +15,15 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @use sessions = new ResolveAsyncValue(() => [this.args.sessionType.sessions, []]);
+  @use sessions = new ResolveAsyncValue(() => [this.args.sessionType.sessions, null]);
   @use loadedData = new AsyncProcess(() => [this.loadData.bind(this), this.sessions]);
 
   get isLoaded() {
     return !!this.loadedData;
   }
 
-  get vocabulariesWithLinkedTerms() {
-    if (!this.loadedData) {
-      return [];
-    }
-    return this.loadedData.filter((obj) => obj.data !== 0);
-  }
-
   get data() {
-    if (!this.loadedData) {
+    if (!this.isLoaded) {
       return [];
     }
     return this.loadedData;
@@ -38,7 +31,7 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
 
   async loadData(sessions) {
     if (!sessions) {
-      return [];
+      return null;
     }
 
     const terms = await map(sessions, async (session) => {
@@ -68,10 +61,12 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
 
     const vocabularyData = Object.values(vocabularyObjects);
 
-    return vocabularyData.map((obj) => {
-      obj.label = obj.meta.vocabulary.title;
-      return obj;
-    });
+    return vocabularyData
+      .map((obj) => {
+        obj.label = obj.meta.vocabulary.title;
+        return obj;
+      })
+      .filter((obj) => obj.data !== 0);
   }
 
   @restartableTask

@@ -4,11 +4,11 @@
   ...attributes
 >
   {{#if this.isLoaded}}
-    {{#if (or @isIcon (gt this.vocabulariesWithLinkedTerms.length 0))}}
+    {{#if (or @isIcon (gt this.data.length 0))}}
       <SimpleChart
         @name="donut"
         @isIcon={{@isIcon}}
-        @data={{this.vocabulariesWithLinkedTerms}}
+        @data={{this.data}}
         @onClick={{this.donutClick}}
         @hover={{perform this.donutHover}}
         @leave={{perform this.donutHover}} as |chart|
@@ -26,5 +26,7 @@
         </h4>
       </div>
     {{/if}}
+  {{else}}
+    <FaIcon @icon="spinner" @spin={{true}} />
   {{/if}}
 </span>
