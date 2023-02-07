@@ -5,7 +5,7 @@ import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | visualizer session type terms', function (hooks) {
+module('Integration | Component | school-visualizer-session-type-terms', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -36,7 +36,7 @@ module('Integration | Component | visualizer session type terms', function (hook
       .findRecord('session-type', vocabulary.id);
     this.set('vocabulary', vocabularyModel);
     await render(
-      hbs`<VisualizerSessionTypeTerms @sessionType={{this.sessionType}} @vocabulary={{this.vocabulary}} />`
+      hbs`<School::VisualizerSessionTypeTerms @sessionType={{this.sessionType}} @vocabulary={{this.vocabulary}} />`
     );
 
     assert.dom('svg').exists({ count: 1 });
