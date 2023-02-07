@@ -34,12 +34,10 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
       return null;
     }
 
-    const terms = await map(sessions, async (session) => {
-      const sessionTerms = (await session.terms).slice();
-      const course = await session.course;
-      const courseTerms = (await course.terms).slice();
+    const sessionType = await sessions[0].sessionType;
 
-      return [...sessionTerms, ...courseTerms];
+    const terms = await map(sessions, async (session) => {
+      return (await session.terms).slice();
     });
 
     const termsWithVocabularies = await map(terms.flat(), async (term) => {
@@ -47,15 +45,15 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
       return { term, vocabulary };
     });
 
-    const vocabularyObjects = termsWithVocabularies.reduce((vocabularies, { vocabulary }) => {
+    const vocabularyObjects = termsWithVocabularies.reduce((vocabularies, { term, vocabulary }) => {
       const id = vocabulary.id;
       if (!(id in vocabularies)) {
         vocabularies[id] = {
-          data: 0,
-          meta: { vocabulary },
+          vocabulary,
+          termIds: new Set(),
         };
       }
-      vocabularies[id].data++;
+      vocabularies[id].termIds.add(term.id);
       return vocabularies;
     }, {});
 
@@ -63,8 +61,14 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
 
     return vocabularyData
       .map((obj) => {
-        obj.label = obj.meta.vocabulary.title;
-        return obj;
+        return {
+          label: obj.vocabulary.title,
+          data: obj.termIds.size,
+          meta: {
+            vocabulary: obj.vocabulary,
+            sessionType,
+          },
+        };
       })
       .filter((obj) => obj.data !== 0);
   }
@@ -81,7 +85,11 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
     const { meta } = obj;
 
     this.tooltipTitle = htmlSafe(meta.vocabulary.title);
-    this.tooltipContent = this.intl.t('general.clickForMore');
+    this.tooltipContent = this.intl.t('general.xTermsFromVocabYusedWithSessionTypeZ', {
+      termsCount: obj.data,
+      vocabulary: meta.vocabulary.title,
+      sessionType: meta.sessionType.title,
+    });
   }
 
   @action
