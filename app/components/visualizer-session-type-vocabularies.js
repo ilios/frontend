@@ -34,6 +34,10 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
       return null;
     }
 
+    if (!sessions.length) {
+      return [];
+    }
+
     const sessionType = await sessions[0].sessionType;
 
     const sessionsWithTerms = await map(sessions, async (session) => {
@@ -86,7 +90,10 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
           },
         };
       })
-      .filter((obj) => obj.data !== 0);
+      .filter((obj) => obj.data !== 0)
+      .sort((first, second) => {
+        return first.data - second.data;
+      });
   }
 
   @restartableTask
