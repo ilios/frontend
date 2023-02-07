@@ -400,6 +400,7 @@ general:
   table8AllResourceTypes: "Tableau 8: Tous les types de ressources"
   term: Terme
   termsBySessionType: "Termes par Type de Seance"
+  termXappliedToYSessionsWithSessionTypeZ: "Le terme \"{term}\" du vocabulaire \"{vocabulary}\" s'applique à {sessionsCount, plural, =1 {1 session} other {# sessions}} avec le type de session \"{sessionType}\"."
   thereAreXTerms: "{count, plural, =1 {Il y a 1 terme} other {Il y a # termes}}"
   thisReportIsNoLongerAvailable: "Ce rapport n'est plus disponsible."
   thisTermHasSubTerms: "Ce terme a des sous-termes."

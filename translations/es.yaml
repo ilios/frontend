@@ -399,6 +399,7 @@ general:
   table8AllResourceTypes: "Tabla 8: Todos los tipos de recursos"
   term: "Término"
   termsBySessionType: "Términos por Tipo de Sesión"
+  termXappliedToYSessionsWithSessionTypeZ: "El término \"{term}\" del vocabulario \"{vocabulary}\" se aplica a {sessionsCount, plural, =1 {1 sesión} other {# sesiones}} con el tipo de sesión \"{sessionType}\"."
   thereAreXTerms: "{count, plural, =1 {Hay 1 término} other {Hay # términos}}"
   thisReportIsNoLongerAvailable: "Este informe ya no está disponible."
   thisTermHasSubTerms: "Este término tiene subtérminos."

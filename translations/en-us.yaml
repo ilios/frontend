@@ -399,6 +399,7 @@ general:
   table8AllResourceTypes: "Table 8: All Resource Types"
   term: Term
   termsBySessionType: "Terms by Session Type"
+  termXappliedToYSessionsWithSessionTypeZ: "The term \"{term}\" from the \"{vocabulary}\" vocabulary is applied to {sessionsCount, plural, =1 {1 session} other {# sessions}} with session-type \"{sessionType}\"."
   thereAreXTerms: "{count, plural, =1 {There is 1 term} other {There are # terms}}"
   thisReportIsNoLongerAvailable: "This report is no longer available."
   thisTermHasSubTerms: "This term has sub-terms."

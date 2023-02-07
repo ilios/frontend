@@ -6,6 +6,7 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class VisualizerSessionTypeTermsComponent extends Component {
   @service router;
@@ -13,9 +14,11 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
+  @use sessions = new ResolveAsyncValue(() => [this.args.sessionType.sessions, null]);
+
   @use loadedData = new AsyncProcess(() => [
     this.loadData.bind(this),
-    this.args.sessionType,
+    this.sessions,
     this.args.vocabulary,
   ]);
 
@@ -30,75 +33,61 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
     return this.loadedData;
   }
 
-  async loadData(sessionType, vocabulary) {
-    const sessions = (await sessionType.sessions).slice();
-    const terms = await map(sessions, async (session) => {
-      const sessionTerms = (await session.terms).slice();
-      const course = await session.course;
-      const courseTerms = (await course.terms).slice();
+  async loadData(sessions, vocabulary) {
+    if (!sessions) {
+      return null;
+    }
 
-      const sessionTermsInThisVocabulary = await filter(sessionTerms, async (term) => {
+    if (!sessions.length) {
+      return [];
+    }
+
+    const sessionType = await sessions[0].sessionType;
+
+    const termsWithSession = await map(sessions, async (session) => {
+      const sessionTerms = (await session.terms).slice();
+
+      const terms = await filter(sessionTerms, async (term) => {
         const termVocab = await term.vocabulary;
         return termVocab.id === vocabulary.id;
       });
-      const courseTermsInThisVocabulary = await filter(courseTerms.slice(), async (term) => {
-        const termVocab = await term.vocabulary;
-        return termVocab.id === vocabulary.id;
-      });
-      const sessionTermsObjects = sessionTermsInThisVocabulary.map((term) => {
+
+      return terms.map((term) => {
         return {
           term,
           session,
-          course: null,
         };
       });
-      const courseTermsObjects = courseTermsInThisVocabulary.map((term) => {
-        return {
-          term,
-          course,
-          session: null,
-        };
-      });
-
-      return [...sessionTermsObjects, ...courseTermsObjects];
     });
 
-    const termObjects = terms.flat().reduce((termObjects, { term, session, course }) => {
-      const id = term.id;
-      if (!(id in termObjects)) {
-        termObjects[id] = {
-          data: 0,
-          meta: {
-            term: term.title,
-            courses: {},
-            sessions: {},
-          },
-        };
-      }
-      if (course) {
-        termObjects[id].meta.courses[course.id] = {
-          id: course.id,
-          title: course.title,
-        };
-      }
-      if (session) {
-        termObjects[id].meta.sessions[session.id] = {
-          id: session.id,
-          title: session.title,
-        };
-      }
-      return termObjects;
-    }, {});
+    const termObjects = termsWithSession
+      .filter((termsWithSession) => termsWithSession.length)
+      .flat()
+      .reduce((obj, termWithSession) => {
+        const id = termWithSession.term.id;
+        if (!(id in obj)) {
+          obj[id] = {
+            term: termWithSession.term,
+            sessionIds: new Set(),
+          };
+        }
+        obj[id].sessionIds.add(termWithSession.session.id);
+        return obj;
+      }, {});
 
     const termData = Object.values(termObjects);
 
     return termData
       .map((obj) => {
-        obj.meta.courses = Object.values(obj.meta.courses);
-        obj.meta.sessions = Object.values(obj.meta.sessions);
-        obj.data = obj.meta.courses.length + obj.meta.sessions.length;
-        obj.label = `${obj.meta.term} (${obj.data})`;
-        return obj;
+        return {
+          data: obj.sessionIds.size,
+          label: obj.term.title,
+          meta: {
+            term: obj.term,
+            sessionType,
+            vocabulary,
+          },
+        };
       })
       .sort((first, second) => {
         return first.data - second.data;
@@ -114,16 +103,12 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
       return;
     }
 
-    const title = htmlSafe(obj.label);
-    const sessions = obj.meta.sessions.map((obj) => obj.title);
-    const courses = obj.meta.courses.map((obj) => obj.title);
-
-    this.tooltipTitle = title;
-    this.tooltipContent = {
-      courses: courses.sort().join(),
-      coursesCount: courses.length,
-      sessions: sessions.sort().join(),
-      sessionsCount: sessions.length,
-    };
+    this.tooltipTitle = htmlSafe(obj.label);
+    this.tooltipContent = this.intl.t('general.termXappliedToYSessionsWithSessionTypeZ', {
+      term: obj.meta.term.title,
+      vocabulary: obj.meta.vocabulary.title,
+      sessionsCount: obj.data,
+      sessionType: obj.meta.sessionType.title,
+    });
   }
 }

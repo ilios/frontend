@@ -14,18 +14,7 @@
         >
           {{#if this.tooltipContent}}
             <chart.tooltip @title={{this.tooltipTitle}}>
-              <h5>
-                {{t "general.courses"}} ({{this.tooltipContent.coursesCount}})
-              </h5>
-              <p>
-                {{this.tooltipContent.courses}}
-              </p>
-              <h5>
-                {{t "general.sessions"}} ({{this.tooltipContent.sessionsCount}})
-              </h5>
-              <p>
-                {{this.tooltipContent.sessions}}
-              </p>
+              {{this.tooltipContent}}
             </chart.tooltip>
           {{/if}}
         </SimpleChart>
@@ -36,5 +25,7 @@
           </h4>
         </div>
       {{/if}}
+  {{else}}
+    <FaIcon @icon="spinner" @spin={{true}} />
   {{/if}}
 </span>
