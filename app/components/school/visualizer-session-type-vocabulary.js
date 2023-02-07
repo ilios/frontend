@@ -8,7 +8,7 @@ import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
-export default class SchoolVisualizerSessionTypeTermsComponent extends Component {
+export default class SchoolVisualizerSessionTypeVocabularyComponent extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;

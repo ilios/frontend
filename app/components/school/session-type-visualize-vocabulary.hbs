@@ -1,6 +1,6 @@
 <section
-  class="school-session-type-visualize-terms"
-  data-test-school-session-type-visualize-terms
+  class="school-session-type-visualize-vocabulary"
+  data-test-school-session-type-visualize-vocabulary
   ...attributes
 >
   <div class="breadcrumbs" data-test-breadcrumb>
@@ -32,6 +32,6 @@
     {{@model.sessionType.title}} ({{@model.vocabulary.title}})
   </h3>
   <div class="visualizations">
-    <School::VisualizerSessionTypeTerms @sessionType={{@model.sessionType}} @vocabulary={{@model.vocabulary}} />
+    <School::VisualizerSessionTypeVocabulary @sessionType={{@model.sessionType}} @vocabulary={{@model.vocabulary}} />
   </div>
 </section>

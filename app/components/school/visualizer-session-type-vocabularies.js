@@ -123,7 +123,7 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
     }
 
     this.router.transitionTo(
-      'session-type-visualize-terms',
+      'session-type-visualize-vocabulary',
       this.args.sessionType.id,
       obj.meta.vocabulary.id
     );
