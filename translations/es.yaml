@@ -445,7 +445,7 @@ general:
   weak: "Débil"
   whichIs: "cuál es"
   write: Escribir
-  xTermsFromVocabYusedWithSessionTypeZ: "{termsCount, plural, =1 {1 término} other {# términos}} from vocabulary \"{vocabulary}\" {termsCount, plural, =1 {se aplica a las sesiones} other {se aplican a sesiones}} on el tipo de sesión \"{sessionType}\"."
+  xTermsFromVocabYusedWithSessionTypeZ: "{termsCount, plural, =1 {1 término} other {# términos}} del vocabulario \"{vocabulary}\" {termsCount, plural, =1 {se aplica } other {se aplican}} a {sessionsCount, plural, =1 {1 sesión} other {# sesiónes}} on el tipo de sesión \"{sessionType}\"."
   yesPopulateGroup: "¡Sí! Añada la cohorte entera a mi nuevo grupo."
   zipCode: "Código postal"
 errors:

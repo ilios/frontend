@@ -36,26 +36,41 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
 
     const sessionType = await sessions[0].sessionType;
 
-    const terms = await map(sessions, async (session) => {
-      return (await session.terms).slice();
+    const sessionsWithTerms = await map(sessions, async (session) => {
+      const terms = (await session.terms).slice();
+      return terms.map((term) => {
+        return { session, term };
+      });
     });
 
-    const termsWithVocabularies = await map(terms.flat(), async (term) => {
-      const vocabulary = await term.vocabulary;
-      return { term, vocabulary };
-    });
-
-    const vocabularyObjects = termsWithVocabularies.reduce((vocabularies, { term, vocabulary }) => {
-      const id = vocabulary.id;
-      if (!(id in vocabularies)) {
-        vocabularies[id] = {
+    const termsWithSessionAndVocabulary = await map(
+      sessionsWithTerms.flat(),
+      async ({ session, term }) => {
+        const vocabulary = await term.vocabulary;
+        return {
+          term,
+          session,
           vocabulary,
-          termIds: new Set(),
         };
       }
-      vocabularies[id].termIds.add(term.id);
-      return vocabularies;
-    }, {});
+    );
+
+    const vocabularyObjects = termsWithSessionAndVocabulary.reduce(
+      (vocabularies, { term, session, vocabulary }) => {
+        const id = vocabulary.id;
+        if (!(id in vocabularies)) {
+          vocabularies[id] = {
+            vocabulary,
+            termIds: new Set(),
+            sessionIds: new Set(),
+          };
+        }
+        vocabularies[id].sessionIds.add(session.id);
+        vocabularies[id].termIds.add(term.id);
+        return vocabularies;
+      },
+      {}
+    );
 
     const vocabularyData = Object.values(vocabularyObjects);
 
@@ -66,6 +81,7 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
           data: obj.termIds.size,
           meta: {
             vocabulary: obj.vocabulary,
+            sessionsCount: obj.sessionIds.size,
             sessionType,
           },
         };
@@ -88,6 +104,7 @@ export default class VisualizerSessionTypeVocabulariesComponent extends Componen
     this.tooltipContent = this.intl.t('general.xTermsFromVocabYusedWithSessionTypeZ', {
       termsCount: obj.data,
       vocabulary: meta.vocabulary.title,
+      sessionsCount: meta.sessionsCount,
       sessionType: meta.sessionType.title,
     });
   }

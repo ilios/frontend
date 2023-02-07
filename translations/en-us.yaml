@@ -445,7 +445,7 @@ general:
   weak: Weak
   whichIs: "which is"
   write: Write
-  xTermsFromVocabYusedWithSessionTypeZ: "{termsCount, plural, =1 {1 term} other {# terms}} from the \"{vocabulary}\" vocabulary {termsCount, plural, =1 {is} other {are}} applied to sessions with session-type \"{sessionType}\"."
+  xTermsFromVocabYusedWithSessionTypeZ: "{termsCount, plural, =1 {1 term} other {# terms}} from the \"{vocabulary}\" vocabulary {termsCount, plural, =1 {is} other {are}} applied to {sessionsCount, plural, =1 {1 session} other {# sessions}} with session-type \"{sessionType}\"."
   yesPopulateGroup: "Yes!  Add entire cohort to my new group."
   zipCode: "ZIP Code"
 errors:

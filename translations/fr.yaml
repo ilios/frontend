@@ -446,7 +446,7 @@ general:
   weak: Faible
   whichIs: "qui est"
   write: "Écriture"
-  xTermsFromVocabYusedWithSessionTypeZ: "{termsCount, plural, =1 {1 term} other {# termes}} du vocabulaire \"{vocabulary}\" {termsCount, plural, =1 {est appliqué} other {sont appliqués}} aux sessions avec le type de session \"{sessionType}\"."
+  xTermsFromVocabYusedWithSessionTypeZ: "{termsCount, plural, =1 {1 term} other {# termes}} du vocabulaire \"{vocabulary}\" {termsCount, plural, =1 {est appliqué} other {sont appliqués}} à {sessionsCount, plural, =1 {1 session} other {# sessions}} avec le type de session \"{sessionType}\"."
   yesPopulateGroup: "Oui!  Ajoutez la cohorte entière à mon nouveau groupe"
   zipCode: "Code postal"
 errors:
