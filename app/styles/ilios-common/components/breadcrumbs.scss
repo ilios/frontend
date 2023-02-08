@@ -6,14 +6,19 @@
   $breadcrumb-height: 2rem;
   $breadcrumb-arrow-color: $breadcrumb-border-color;
   $breadcrumb-background: $slightWhite;
-  $breadcrumb-inactive-hover-color: $breadcrumb-background;
   $breadcrumb-color: $tealBlue;
-  $breadcrumb-color-hover: $orange;
-  $breadcrumb-color-active: $breadcrumb-color;
+  $breadcrumb-link-color-hover: $orange;
 
   display: inline-block;
   margin: .8rem;
   text-align: left;
+
+  a {
+    &:focus,
+    &:hover {
+      color: $breadcrumb-link-color-hover;
+    }
+  }
 
   /* stylelint-disable property-disallowed-list */
   span {
@@ -36,12 +41,6 @@
       border-left: $breadcrumb-border;
       border-top-left-radius: 3px;
       padding-left: math.div($breadcrumb-height, 2);
-    }
-
-    &:focus,
-    &:hover {
-      background-color: $breadcrumb-inactive-hover-color;
-      color: $breadcrumb-color-hover;
     }
 
     &::after,
@@ -72,10 +71,8 @@
 
     &:last-child,
     &:last-child:hover {
-      background-color: $breadcrumb-background;
       border-bottom-right-radius: 3px;
       border-top-right-radius: 3px;
-      color: $breadcrumb-color-active;
       cursor: default;
       padding-right: math.div($breadcrumb-height, 2);
     }
