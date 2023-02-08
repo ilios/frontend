@@ -4,15 +4,17 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/reports/subject/learning-material';
+import { setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | reports/subject/learning-material', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+  setupIntl(hooks, 'en-us');
 
   const responseData = {
     data: {
       learningMaterials: [
-        { id: 1, title: 'First' },
+        { id: 1, title: 'first' },
         { id: 2, title: 'Second' },
       ],
     },
@@ -32,7 +34,7 @@ module('Integration | Component | reports/subject/learning-material', function (
     await render(hbs`<Reports::Subject::LearningMaterial @report={{this.report}} />`);
 
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].title, 'First');
+    assert.strictEqual(component.results[0].title, 'first');
     assert.strictEqual(component.results[1].title, 'Second');
   });
 

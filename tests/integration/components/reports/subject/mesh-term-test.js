@@ -4,16 +4,18 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/reports/subject/mesh-term';
+import { setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+  setupIntl(hooks, 'en-us');
 
   const responseData = {
     data: {
       meshDescriptors: [
         { id: 2, name: 'Second Term' },
-        { id: 1, name: 'First Term' },
+        { id: 1, name: 'first Term' },
       ],
     },
   };
@@ -32,7 +34,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
     await render(hbs`<Reports::Subject::MeshTerm @report={{this.report}} />`);
 
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].name, 'First Term');
+    assert.strictEqual(component.results[0].name, 'first Term');
     assert.strictEqual(component.results[1].name, 'Second Term');
   });
 

@@ -7,11 +7,18 @@ import { camelize } from '@ember/string';
 
 export default class ReportsSubjectMeshTermComponent extends Component {
   @service graphql;
+  @service intl;
 
   @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);
 
   get finishedLoading() {
     return Array.isArray(this.data);
+  }
+
+  get sortedData() {
+    return this.data?.sort((a, b) => {
+      return a.localeCompare(b, this.intl.primaryLocale);
+    });
   }
 
   async getReportResults(report) {
@@ -32,6 +39,6 @@ export default class ReportsSubjectMeshTermComponent extends Component {
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
     const result = await this.graphql.find('meshDescriptors', filters, 'id, name');
-    return result.data.meshDescriptors.map(({ name }) => name).sort();
+    return result.data.meshDescriptors.map(({ name }) => name);
   }
 }

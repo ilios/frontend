@@ -7,11 +7,18 @@ import { camelize } from '@ember/string';
 
 export default class ReportsSubjectLearningMaterialComponent extends Component {
   @service graphql;
+  @service intl;
 
   @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);
 
   get finishedLoading() {
     return Array.isArray(this.data);
+  }
+
+  get sortedData() {
+    return this.data?.sort((a, b) => {
+      return a.localeCompare(b, this.intl.primaryLocale);
+    });
   }
 
   async getGraphQLFilters(report) {
@@ -46,6 +53,6 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
 
     const filters = await this.getGraphQLFilters(report);
     const result = await this.graphql.find('learningMaterials', filters, 'id, title');
-    return result.data.learningMaterials.map(({ title }) => title).sort();
+    return result.data.learningMaterials.map(({ title }) => title);
   }
 }

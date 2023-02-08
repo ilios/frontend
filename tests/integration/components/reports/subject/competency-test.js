@@ -4,15 +4,17 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/reports/subject/competency';
+import { setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | reports/subject/competency', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+  setupIntl(hooks, 'en-us');
 
   const responseData = {
     data: {
       competencies: [
-        { id: 1, title: 'First' },
+        { id: 1, title: 'first' },
         { id: 2, title: 'Second' },
       ],
     },
@@ -32,7 +34,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
     await render(hbs`<Reports::Subject::Competency @report={{this.report}} />`);
 
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].title, 'First');
+    assert.strictEqual(component.results[0].title, 'first');
     assert.strictEqual(component.results[1].title, 'Second');
   });
 

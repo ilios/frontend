@@ -7,11 +7,18 @@ import { camelize } from '@ember/string';
 
 export default class ReportsSubjectCompetencyComponent extends Component {
   @service graphql;
+  @service intl;
 
   @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);
 
   get finishedLoading() {
     return Array.isArray(this.data);
+  }
+
+  get sortedData() {
+    return this.data?.sort((a, b) => {
+      return a.localeCompare(b, this.intl.primaryLocale);
+    });
   }
 
   async getReportResults(report) {
@@ -32,6 +39,6 @@ export default class ReportsSubjectCompetencyComponent extends Component {
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
     const result = await this.graphql.find('competencies', filters, 'id, title');
-    return result.data.competencies.map(({ title }) => title).sort();
+    return result.data.competencies.map(({ title }) => title);
   }
 }

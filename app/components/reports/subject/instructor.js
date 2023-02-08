@@ -7,6 +7,7 @@ import { camelize, capitalize } from '@ember/string';
 
 export default class ReportsSubjectInstructorComponent extends Component {
   @service graphql;
+  @service intl;
 
   @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);
 
@@ -15,7 +16,9 @@ export default class ReportsSubjectInstructorComponent extends Component {
   }
 
   get sortedResults() {
-    return this.mappedResults?.sort();
+    return this.mappedResults?.sort((a, b) => {
+      return a.localeCompare(b, this.intl.primaryLocale);
+    });
   }
 
   get mappedResults() {

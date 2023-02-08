@@ -4,14 +4,16 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/reports/subject/instructor-group';
+import { setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | reports/subject/instructor-group', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+  setupIntl(hooks, 'en-us');
 
   const responseData = {
     data: {
-      instructorGroups: [{ title: 'First Group' }, { title: 'Second Group' }],
+      instructorGroups: [{ title: 'first Group' }, { title: 'Second Group' }],
     },
   };
 
@@ -29,7 +31,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
     await render(hbs`<Reports::Subject::InstructorGroup @report={{this.report}} />`);
 
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].title, 'First Group');
+    assert.strictEqual(component.results[0].title, 'first Group');
     assert.strictEqual(component.results[1].title, 'Second Group');
   });
 

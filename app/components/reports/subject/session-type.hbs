@@ -1,7 +1,7 @@
 <div data-test-reports-subject-session-type>
   {{#if this.finishedLoading}}
     <ul class="report-results" data-test-results>
-      {{#each this.data as |title|}}
+      {{#each this.sortedData as |title|}}
         <li>
           {{title}}
         </li>

@@ -4,14 +4,16 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/reports/subject/session-type';
+import { setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | reports/subject/session-type', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+  setupIntl(hooks, 'en-us');
 
   const responseData = {
     data: {
-      sessionTypes: [{ title: 'First Type' }, { title: 'Second Type' }],
+      sessionTypes: [{ title: 'first Type' }, { title: 'Second Type' }],
     },
   };
 
@@ -29,7 +31,7 @@ module('Integration | Component | reports/subject/session-type', function (hooks
     await render(hbs`<Reports::Subject::SessionType @report={{this.report}} />`);
 
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].title, 'First Type');
+    assert.strictEqual(component.results[0].title, 'first Type');
     assert.strictEqual(component.results[1].title, 'Second Type');
   });
 

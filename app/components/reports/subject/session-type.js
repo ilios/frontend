@@ -7,11 +7,18 @@ import { camelize } from '@ember/string';
 
 export default class ReportsSubjectSessionTypeComponent extends Component {
   @service graphql;
+  @service intl;
 
   @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);
 
   get finishedLoading() {
     return Array.isArray(this.data);
+  }
+
+  get sortedData() {
+    return this.data?.sort((a, b) => {
+      return a.localeCompare(b, this.intl.primaryLocale);
+    });
   }
 
   async getGraphQLFilters(report) {
@@ -43,6 +50,6 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
 
     const filters = await this.getGraphQLFilters(report);
     const result = await this.graphql.find('sessionTypes', filters, 'title');
-    return result.data.sessionTypes.map(({ title }) => title).sort();
+    return result.data.sessionTypes.map(({ title }) => title);
   }
 }
