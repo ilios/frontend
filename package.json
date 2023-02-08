@@ -36,7 +36,7 @@
     "@embroider/macros": "^1.8.3",
     "@embroider/util": "^1.0.0",
     "@fortawesome/ember-fontawesome": "^0.4.1",
-    "@fortawesome/free-brands-svg-icons": "6.2.1",
+    "@fortawesome/free-brands-svg-icons": "6.3.0",
     "@fortawesome/free-regular-svg-icons": "6.2.1",
     "@fortawesome/free-solid-svg-icons": "6.2.1",
     "@fortawesome/pro-duotone-svg-icons": "6.2.1",
@@ -94,7 +94,7 @@
     "validator": "^13.1.1"
   },
   "peerDependencies": {
-    "@fortawesome/free-brands-svg-icons": "6.2.1",
+    "@fortawesome/free-brands-svg-icons": "6.3.0",
     "@fortawesome/free-regular-svg-icons": "6.2.1",
     "@fortawesome/free-solid-svg-icons": "6.2.1",
     "@fortawesome/pro-duotone-svg-icons": "6.2.1",
