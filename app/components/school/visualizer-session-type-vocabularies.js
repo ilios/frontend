@@ -83,10 +83,14 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
         return {
           label: obj.vocabulary.title,
           data: obj.termIds.size,
+          description: this.intl.t('general.xTermsFromVocabYusedWithSessionTypeZ', {
+            termsCount: obj.termIds.size,
+            vocabulary: obj.vocabulary.title,
+            sessionsCount: obj.sessionIds.size,
+            sessionType: sessionType.title,
+          }),
           meta: {
             vocabulary: obj.vocabulary,
-            sessionsCount: obj.sessionIds.size,
-            sessionType,
           },
         };
       })
@@ -105,15 +109,8 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
       return;
     }
 
-    const { meta } = obj;
-
-    this.tooltipTitle = htmlSafe(meta.vocabulary.title);
-    this.tooltipContent = this.intl.t('general.xTermsFromVocabYusedWithSessionTypeZ', {
-      termsCount: obj.data,
-      vocabulary: meta.vocabulary.title,
-      sessionsCount: meta.sessionsCount,
-      sessionType: meta.sessionType.title,
-    });
+    this.tooltipTitle = htmlSafe(obj.label);
+    this.tooltipContent = obj.description;
   }
 
   @action

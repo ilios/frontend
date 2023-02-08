@@ -82,11 +82,12 @@ export default class SchoolVisualizerSessionTypeVocabularyComponent extends Comp
         return {
           data: obj.sessionIds.size,
           label: obj.term.title,
-          meta: {
-            term: obj.term,
-            sessionType,
-            vocabulary,
-          },
+          description: this.intl.t('general.termXappliedToYSessionsWithSessionTypeZ', {
+            term: obj.term.title,
+            vocabulary: vocabulary.title,
+            sessionsCount: obj.sessionIds.size,
+            sessionType: sessionType.title,
+          }),
         };
       })
       .sort((first, second) => {
@@ -104,11 +105,6 @@ export default class SchoolVisualizerSessionTypeVocabularyComponent extends Comp
     }
 
     this.tooltipTitle = htmlSafe(obj.label);
-    this.tooltipContent = this.intl.t('general.termXappliedToYSessionsWithSessionTypeZ', {
-      term: obj.meta.term.title,
-      vocabulary: obj.meta.vocabulary.title,
-      sessionsCount: obj.data,
-      sessionType: obj.meta.sessionType.title,
-    });
+    this.tooltipContent = obj.description;
   }
 }
