@@ -222,7 +222,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { courses(schools: [1], meshDescriptors: [D1234]) { id, title, year, externalId } }'
+        'query { courses(schools: [1], meshDescriptors: ["D1234"]) { id, title, year, externalId } }'
       );
       return {
         data: {

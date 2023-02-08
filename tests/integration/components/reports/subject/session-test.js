@@ -251,7 +251,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(meshDescriptors: [ABC]) { id, title, course { id, year, title } } }'
+        'query { sessions(meshDescriptors: ["ABC"]) { id, title, course { id, year, title } } }'
       );
       return responseData;
     });

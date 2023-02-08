@@ -172,7 +172,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(meshDescriptors: [ABC]) { id, title, year, externalId } }'
+        'query { courses(meshDescriptors: ["ABC"]) { id, title, year, externalId } }'
       );
       return responseData;
     });

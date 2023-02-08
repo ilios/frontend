@@ -22,7 +22,7 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
   }
 
   async getGraphQLFilters(report) {
-    const { prepositionalObject, prepositionalObjectTableRowId } = report;
+    let { prepositionalObject, prepositionalObjectTableRowId } = report;
 
     const school = await report.school;
 
@@ -34,6 +34,7 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
       let what = pluralize(camelize(prepositionalObject));
       if (prepositionalObject === 'mesh term') {
         what = 'meshDescriptors';
+        prepositionalObjectTableRowId = `"${prepositionalObjectTableRowId}"`;
       }
       rhett.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }

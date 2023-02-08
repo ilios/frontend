@@ -87,7 +87,7 @@ module('Integration | Component | reports/subject/session-type', function (hooks
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessionTypes(meshDescriptors: [ABC]) { title } }');
+      assert.strictEqual(query, 'query { sessionTypes(meshDescriptors: ["ABC"]) { title } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
