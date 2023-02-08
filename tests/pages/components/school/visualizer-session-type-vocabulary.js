@@ -7,6 +7,7 @@ const definition = {
     scope: '.simple-chart',
     slices: collection('svg .slice'),
     labels: collection('.slice text'),
+    descriptions: collection('.slice desc'),
   },
 };
 
