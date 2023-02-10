@@ -52,6 +52,9 @@ module.exports = function (defaults) {
     'ember-simple-auth': {
       useSessionSetupMethod: true, //can be removed in ESA v5.x
     },
+    minifyCSS: {
+      enabled: false,
+    },
   });
 
   if (process.env.BUILD_WITH_EMBROIDER) {
