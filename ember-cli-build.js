@@ -19,7 +19,9 @@ module.exports = function (defaults) {
       enabled: true,
     },
     minifyCSS: {
-      enabled: false,
+      options: {
+        advanced: false,
+      },
     },
 
     hinting: isTestBuild,
