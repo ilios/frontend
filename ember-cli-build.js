@@ -18,6 +18,9 @@ module.exports = function (defaults) {
     sourcemaps: {
       enabled: true,
     },
+    minifyCSS: {
+      enabled: false,
+    },
 
     hinting: isTestBuild,
     babel: {
