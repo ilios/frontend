@@ -52,44 +52,52 @@ module.exports = function (defaults) {
     'ember-simple-auth': {
       useSessionSetupMethod: true, //can be removed in ESA v5.x
     },
-  });
-
-  return require('@embroider/compat').compatBuild(app, Webpack, {
-    staticAddonTestSupportTrees: true,
-    staticAddonTrees: true,
-    staticHelpers: true,
-    staticComponents: true,
-    // splitAtRoutes: [ //temporarily disabled route splitting for https://github.com/ilios/ilios/issues/4508
-    //   /admin[a-z-]*/,
-    //   'assign-students',
-    //   /course[a-z-]*/,
-    //   /curriculum[a-z-]*/,
-    //   'dashboard.activities',
-    //   'dashboard.calendar',
-    //   'dashboard.materials',
-    //   'error',
-    //   'events',
-    //   'four-oh-four',
-    //   /instructor[a-z-]*/,
-    //   /learner[a-z-]*/,
-    //   'login',
-    //   'logout',
-    //   'myprofile',
-    //   'pending-user-updates',
-    //   'print-course',
-    //   /program[a-z-]*/,
-    //   /report[a-z-]*/,
-    //   /school[a-z-]*/,
-    //   'search',
-    //   /session[a-z-]*/,
-    //   /user[a-z-]*/,
-    //   'verification-preview',
-    //   'weeklyevents',
-    // ],
-    packagerOptions: {
-      webpackConfig: {
-        plugins: [new RetryChunkLoadPlugin() /*, new BundleAnalyzerPlugin()*/],
-      },
+    minifyCSS: {
+      enabled: false,
     },
   });
+
+  if (process.env.BUILD_WITH_EMBROIDER) {
+    return require('@embroider/compat').compatBuild(app, Webpack, {
+      staticAddonTestSupportTrees: true,
+      staticAddonTrees: true,
+      staticHelpers: true,
+      staticComponents: true,
+      splitAtRoutes: [
+        //temporarily disabled route splitting for https://github.com/ilios/ilios/issues/4508
+        /admin[a-z-]*/,
+        'assign-students',
+        /course[a-z-]*/,
+        /curriculum[a-z-]*/,
+        'dashboard.activities',
+        'dashboard.calendar',
+        'dashboard.materials',
+        'error',
+        'events',
+        'four-oh-four',
+        /instructor[a-z-]*/,
+        /learner[a-z-]*/,
+        'login',
+        'logout',
+        'myprofile',
+        'pending-user-updates',
+        'print-course',
+        /program[a-z-]*/,
+        /report[a-z-]*/,
+        /school[a-z-]*/,
+        'search',
+        /session[a-z-]*/,
+        /user[a-z-]*/,
+        'verification-preview',
+        'weeklyevents',
+      ],
+      packagerOptions: {
+        webpackConfig: {
+          plugins: [new RetryChunkLoadPlugin() /*, new BundleAnalyzerPlugin()*/],
+        },
+      },
+    });
+  } else {
+    return app.toTree();
+  }
 };
