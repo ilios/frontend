@@ -5,6 +5,8 @@ import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
 import moment from 'moment';
 import { findById } from '../utils/array-helpers';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from '../classes/resolve-async-value';
 
 export default class SingleEvent extends Component {
   @service currentUser;
@@ -14,6 +16,8 @@ export default class SingleEvent extends Component {
 
   @tracked isSessionMaterialsListExpanded = true;
   @tracked isCourseMaterialsListExpanded = false;
+
+  @use userIsStudent = new ResolveAsyncValue(() => [this.currentUser.getIsStudent()]);
 
   get courseId() {
     return this.args.event.course;

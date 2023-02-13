@@ -429,7 +429,11 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('link to all materials if user is student and event is user-event', async function (assert) {
-    const MockCurrentUserService = Service.extend({ userIsStudent: true });
+    class MockCurrentUserService extends Service {
+      async getIsStudent() {
+        return true;
+      }
+    }
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
     this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
@@ -440,7 +444,11 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('no link to all materials if user is not a student and event is user-event', async function (assert) {
-    const MockCurrentUserService = Service.extend({ userIsStudent: false });
+    class MockCurrentUserService extends Service {
+      async getIsStudent() {
+        return false;
+      }
+    }
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
     this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
