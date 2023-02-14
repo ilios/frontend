@@ -22,15 +22,27 @@ export default class ReportsSubjectsComponent extends Component {
   @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
   @use userReports = new ResolveAsyncValue(() => [this.user?.reports]);
   @use allAcademicYears = new ResolveAsyncValue(() => [this.store.findAll('academic-year')]);
-
-  @use reports = new AsyncProcess(() => [this.reportsWithTitles.bind(this), this.userReports]);
+  @use titledReports = new AsyncProcess(() => [
+    this.reportsWithTitles.bind(this),
+    this.userReports,
+  ]);
 
   get reportsLoaded() {
-    return !isNone(this.reports);
+    return !isNone(this.titledReports);
+  }
+
+  get reports() {
+    if (isNone(this.titledReports)) {
+      return [];
+    }
+    return this.titledReports;
   }
 
   async reportsWithTitles(reports) {
-    return map(reports?.slice() ?? [], async (report) => {
+    if (isNone(reports)) {
+      return null;
+    }
+    return map(reports.slice(), async (report) => {
       return {
         title: await buildReportTitle(report, this.store, this.intl),
         report,
