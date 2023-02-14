@@ -1,354 +1,190 @@
 import Service, { inject as service } from '@ember/service';
-import RSVP from 'rsvp';
-import { isEmpty, isPresent } from '@ember/utils';
-import { singularize, pluralize } from 'ember-inflector';
-import { capitalize, camelize, dasherize } from '@ember/string';
+import { pluralize } from 'ember-inflector';
+import { camelize } from '@ember/string';
 import striptags from 'striptags';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
-
-const { filter, resolve, map } = RSVP;
+import { map } from 'rsvp';
 
 export default class ReportingService extends Service {
   @service store;
   @service currentUser;
   @service intl;
   @service iliosConfig;
-
-  async findResults(report) {
-    const store = this.store;
-    const subject = report.subject;
-    const object = report.prepositionalObject;
-    const objectId = report.prepositionalObjectTableRowId;
-    const school = await report.school;
-    return store.query(this.getModel(subject), this.getQuery(subject, object, objectId, school));
-  }
-
-  async getResults(report, year) {
-    const subject = report.subject;
-    const results = await this.findResults(report);
-    const mapper = pluralize(camelize(subject)) + 'Results';
-    const mappedResults = await this[mapper](results, year);
-    return sortBy(mappedResults, 'value');
-  }
+  @service graphql;
 
   async getArrayResults(report, year) {
-    const subject = report.get('subject');
+    const { subject } = report;
 
-    const results = await this.findResults(report);
     const mapper = pluralize(camelize(subject)) + 'ArrayResults';
-    return this[mapper](results, year);
+    return this[mapper](report, year);
   }
 
-  getModel(subject) {
-    let model = dasherize(subject);
-    if (model === 'instructor') {
-      model = 'user';
+  async #getFilters(report, year) {
+    const { prepositionalObject, prepositionalObjectTableRowId } = report;
+    const school = await report.school;
+
+    let filters = [];
+    if (school) {
+      filters.push(`schools: [${school.id}]`);
     }
-    if (model === 'mesh-term') {
-      model = 'mesh-descriptor';
+    if (year) {
+      filters.push(`year: ${year}`);
     }
-
-    return model;
-  }
-
-  getQuery(subject, object, objectId, school) {
-    const query = {
-      filters: {},
-    };
-
-    if (object && objectId) {
-      let what = pluralize(camelize(object));
-      if (object === 'mesh term') {
+    if (prepositionalObject && prepositionalObjectTableRowId) {
+      let what = pluralize(camelize(prepositionalObject));
+      if (prepositionalObject === 'mesh term') {
         what = 'meshDescriptors';
       }
-
-      if (subject === 'session') {
-        const sessionSingulars = ['sessionTypes', 'courses'];
-        if (sessionSingulars.includes(what)) {
-          what = singularize(what);
-        }
-      }
-      if (subject === 'instructor') {
-        const specialInstructed = ['learningMaterials', 'sessionTypes', 'courses', 'sessions'];
-        if (specialInstructed.includes(what)) {
-          what = 'instructed' + capitalize(what);
-        }
-      }
-      if (subject === 'learning material' && object === 'course') {
-        what = 'fullCourses';
-      }
-      query.filters[what] = objectId;
-    } else {
-      if (
-        subject !== 'mesh term' &&
-        subject !== 'instructor' &&
-        subject !== 'learning material' &&
-        school
-      ) {
-        query.filters['schools'] = [school.id];
-      }
+      filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
 
-    return query;
+    return filters;
   }
 
-  async coursesResults(results, year) {
-    const canView = this.currentUser.performsNonLearnerFunction;
-    const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
+  async coursesArrayResults(report, year) {
+    const filters = await this.#getFilters(report, year);
+    const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
+
+    const crosses = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-    return results
-      .map((course) => {
-        const rhett = {
-          course,
-          value: academicYearCrossesCalendarYearBoundaries
-            ? `${course.year} - ${course.year + 1} ${course.title}`
-            : `${course.year} ${course.title}`,
-        };
-
-        if (isPresent(course.externalId)) {
-          rhett.value += ` (${course.externalId})`;
-        }
-        if (canView) {
-          rhett.route = 'course';
-          rhett.model = course;
-        }
-
-        return rhett;
-      })
-      .filter((obj) => isEmpty(year) || obj.course.year === parseInt(year, 10));
-  }
-
-  async coursesArrayResults(results, year) {
-    const intl = this.intl;
-    const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
-    );
-    const filteredResults = results.filter((course) => {
-      return isEmpty(year) || course.year === parseInt(year, 10);
-    });
-    const sortedResults = sortBy(filteredResults, 'title');
-    const mappedResults = sortedResults.map((course) => {
-      return [
-        course.get('title'),
-        academicYearCrossesCalendarYearBoundaries
-          ? `${course.year} - ${course.year + 1}`
-          : course.year.toString(),
-        course.get('externalId'),
-      ];
+    const sortedResults = sortBy(result.data.courses, 'title');
+    const mappedResults = sortedResults.map(({ title, year, externalId }) => {
+      return [title, crosses ? `${year} - ${year + 1}` : `${year}`, externalId];
     });
 
     return [
-      [intl.t('general.courses'), intl.t('general.academicYear'), intl.t('general.externalId')],
+      [
+        this.intl.t('general.courses'),
+        this.intl.t('general.academicYear'),
+        this.intl.t('general.externalId'),
+      ],
     ].concat(mappedResults);
   }
 
-  async sessionsResults(results, year) {
-    const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
+  async sessionsArrayResults(report, year) {
+    const filters = await this.#getFilters(report, year);
+    const attributes = [
+      'id',
+      'title',
+      'description',
+      'sessionObjectives { title }',
+      'course { title, year }',
+    ];
+    const result = await this.graphql.find('sessions', filters, attributes.join(','));
+
+    const crosses = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-    const canView = this.currentUser.performsNonLearnerFunction;
-    const mappedResults = await map(results.slice(), async (item) => {
-      const course = await item.get('course');
-      const rhett = { course };
-      rhett.value = academicYearCrossesCalendarYearBoundaries
-        ? `${course.year} - ${course.year + 1} ${course.title} ${item.title}`
-        : `${course.year} ${course.title} ${item.title}`;
-      if (canView) {
-        rhett.route = 'session';
-        rhett.model = course;
-        rhett.model2 = item;
-      }
-
-      return rhett;
-    });
-
-    return mappedResults.filter(
-      (obj) => isEmpty(year) || parseInt(obj.course.year, 10) === parseInt(year, 10)
-    );
-  }
-
-  async sessionsArrayResults(results, year) {
-    const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
-    );
-    const intl = this.intl;
-    const filteredResults = await filter(results.slice(), async (session) => {
-      const course = await session.course;
-      return isEmpty(year) || course.year === parseInt(year, 10);
-    });
-    const sortedResults = sortBy(filteredResults, 'title');
-    const mappedResults = await map(sortedResults, async (session) => {
-      const course = await session.course;
-      const sessionDescriptionText = session.textDescription;
-      const objectives = await session.sessionObjectives;
+    const sortedResults = sortBy(result.data.sessions, 'title');
+    const mappedResults = sortedResults.map(({ title, course, sessionObjectives, description }) => {
       return [
-        session.get('title'),
-        course.get('title'),
-        academicYearCrossesCalendarYearBoundaries
-          ? `${course.year} - ${course.year + 1}`
-          : course.year.toString(),
-        sessionDescriptionText,
-        striptags(mapBy(objectives.slice(), 'title').join()),
+        title,
+        course.title,
+        crosses ? `${course.year} - ${course.year + 1}` : `${course.year}`,
+        striptags(description),
+        striptags(mapBy(sessionObjectives.slice(), 'title').join()),
       ];
     });
 
     return [
       [
-        intl.t('general.session'),
-        intl.t('general.course'),
-        intl.t('general.academicYear'),
-        intl.t('general.description'),
-        intl.t('general.objectives'),
+        this.intl.t('general.session'),
+        this.intl.t('general.course'),
+        this.intl.t('general.academicYear'),
+        this.intl.t('general.description'),
+        this.intl.t('general.objectives'),
       ],
     ].concat(mappedResults);
   }
 
-  async programsResults(results) {
-    const canView = this.currentUser.performsNonLearnerFunction;
-    return await map(results.slice(), async (item) => {
-      const rhett = {};
-      const school = await item.get('school');
-      rhett.value = school.get('title') + ': ' + item.get('title');
-      if (canView) {
-        rhett.route = 'program';
-        rhett.model = item;
-      }
-      return rhett;
-    });
-  }
-
-  async programsArrayResults(results) {
-    const intl = this.intl;
-    const sortedResults = sortBy(results.slice(), 'title');
-    const mappedResults = await map(sortedResults, async (program) => {
-      const school = await program.get('school');
-      return [program.get('title'), school.get('title')];
+  async programsArrayResults(report) {
+    const filters = await this.#getFilters(report);
+    const attributes = ['id', 'title', 'school { title }'];
+    const result = await this.graphql.find('programs', filters, attributes.join(','));
+    const sortedResults = sortBy(result.data.program, 'title');
+    const mappedResults = sortedResults.map(({ title, school }) => {
+      return [title, school.title];
     });
 
-    return [[intl.t('general.program'), intl.t('general.school')]].concat(mappedResults);
+    return [[this.intl.t('general.program'), this.intl.t('general.school')]].concat(mappedResults);
   }
 
-  async programYearsResults(results) {
-    const canView = this.currentUser.performsNonLearnerFunction;
-    return map(results.slice(), async (programYear) => {
-      const rhett = {};
-      const program = await programYear.program;
-      const school = await programYear.school;
-      const classOfYear = await programYear.getClassOfYear();
+  async programYearsArrayResults(report) {
+    const filters = await this.#getFilters(report);
+    const attributes = ['id', 'startYear', 'program { title, duration, school { title } }'];
+    const result = await this.graphql.find('programYears', filters, attributes.join(','));
+    const resultsWithClassOfYear = result.data.programYears.map((obj) => {
+      const classOfYear = Number(obj.startYear) + Number(obj.program.duration);
+      obj.classOfYear = String(classOfYear);
 
-      rhett.value = school.get('title') + ' ' + program.get('title') + ' ' + classOfYear;
-      if (canView) {
-        rhett.route = 'programYear';
-        rhett.model = program;
-        rhett.model2 = programYear;
-      }
-      return rhett;
-    });
-  }
-
-  async programYearsArrayResults(results) {
-    const intl = this.intl;
-    const resultsWithClassOfYear = await map(results, async (programYear) => {
-      const classOfYear = await programYear.getClassOfYear();
-      return {
-        programYear,
-        classOfYear,
-      };
+      return obj;
     });
     const sortedResults = sortBy(resultsWithClassOfYear, 'classOfYear');
-    const mappedResults = await map(sortedResults.slice(), async ({ programYear, classOfYear }) => {
-      const program = await programYear.get('program');
-      const school = await program.get('school');
-      return [classOfYear, program.get('title'), school.get('title')];
+    const mappedResults = sortedResults.map(({ program, classOfYear }) => {
+      return [classOfYear, program.title, program.school.title];
     });
 
-    return [[intl.t('general.year'), intl.t('general.program'), intl.t('general.school')]].concat(
-      mappedResults
-    );
+    return [
+      [this.intl.t('general.year'), this.intl.t('general.program'), this.intl.t('general.school')],
+    ].concat(mappedResults);
   }
 
-  instructorsResults(results) {
-    const mappedResults = results.map((result) => {
-      return {
-        value: result.get('fullName'),
-      };
-    });
-    return resolve(mappedResults);
+  async instructorsArrayResults(report) {
+    const filters = await this.#getFilters(report);
+    const attributes = ['id', 'firstName', 'middleName', 'lastName', 'displayName'];
+    const result = await this.graphql.find('users', filters, attributes.join(','));
+    const names = result.data.users
+      .map(({ firstName, middleName, lastName, displayName }) => {
+        if (displayName) {
+          return displayName;
+        }
+
+        const middleInitial = middleName ? middleName.charAt(0) : false;
+
+        if (middleInitial) {
+          return `${firstName} ${middleInitial}. ${lastName}`;
+        } else {
+          return `${firstName} ${lastName}`;
+        }
+      })
+      .sort();
+
+    return [[this.intl.t('general.instructors')]].concat(names);
   }
 
-  async instructorsArrayResults(results) {
-    const intl = this.intl;
-    const arr = await this.instructorsResults(results);
-    const sortedResults = sortBy(arr, 'value');
-    const mappedResults = sortedResults.map((obj) => [obj.value]);
-    return [[intl.t('general.instructors')]].concat(mappedResults);
+  async valueResults(endpoint, report, translationKey) {
+    const filters = await this.#getFilters(report);
+    const attributes = ['id', 'title'];
+    const result = await this.graphql.find(endpoint, filters, attributes.join(','));
+    const sortedResults = sortBy(result.data[endpoint], 'title');
+    const mappedResults = sortedResults.map((obj) => [obj.title]);
+    return [[this.intl.t(translationKey)]].concat(mappedResults);
   }
 
-  titleResults(results) {
-    const mappedResults = results.map((result) => {
-      return {
-        value: result.get('title'),
-      };
-    });
-    return resolve(mappedResults);
+  async instructorGroupsArrayResults(report) {
+    return this.valueResults('instructorGroups', report, 'general.instructorGroups');
   }
 
-  async valueResults(results, translationKey) {
-    const intl = this.intl;
-    const arr = await this.titleResults(results);
-    const sortedResults = sortBy(arr, 'value');
-    const mappedResults = sortedResults.map((obj) => [obj.value]);
-    return [[intl.t(translationKey)]].concat(mappedResults);
+  async learningMaterialsArrayResults(report) {
+    return this.valueResults('learningMaterials', report, 'general.learningMaterials');
   }
 
-  instructorGroupsResults(results) {
-    return this.titleResults(results);
+  async competenciesArrayResults(report) {
+    return this.valueResults('competencies', report, 'general.competencies');
   }
 
-  async instructorGroupsArrayResults(results) {
-    return this.valueResults(results, 'general.instructorGroups');
+  async sessionTypesArrayResults(report) {
+    return this.valueResults('sessionTypes', report, 'general.sessionTypes');
   }
 
-  learningMaterialsResults(results) {
-    return this.titleResults(results);
-  }
-
-  async learningMaterialsArrayResults(results) {
-    return this.valueResults(results, 'general.learningMaterials');
-  }
-
-  competenciesResults(results) {
-    return this.titleResults(results);
-  }
-
-  async competenciesArrayResults(results) {
-    return this.valueResults(results, 'general.competencies');
-  }
-
-  sessionTypesResults(results) {
-    return this.titleResults(results);
-  }
-
-  async sessionTypesArrayResults(results) {
-    return this.valueResults(results, 'general.sessionTypes');
-  }
-
-  meshTermsResults(results) {
-    const mappedResults = results.map((result) => {
-      return {
-        value: result.get('name'),
-      };
-    });
-    return resolve(mappedResults);
-  }
-
-  async meshTermsArrayResults(results) {
-    const intl = this.intl;
-    const arr = await this.meshTermsResults(results);
-    const sortedResults = sortBy(arr, 'value');
-    const mappedResults = sortedResults.map((obj) => [obj.value]);
-    return [[intl.t('general.meshTerms')]].concat(mappedResults);
+  async meshTermsArrayResults(report) {
+    const filters = await this.#getFilters(report);
+    const attributes = ['id', 'name'];
+    const result = await this.graphql.find('meshDescriptors', filters, attributes.join(','));
+    const sortedResults = sortBy(result.data.meshDescriptors, 'name');
+    const mappedResults = sortedResults.map((obj) => [obj.name]);
+    return [[this.intl.t('general.meshTerms')]].concat(mappedResults);
   }
 
   async termsResults(results) {
@@ -360,11 +196,19 @@ export default class ReportingService extends Service {
     });
   }
 
-  async termsArrayResults(results) {
-    const intl = this.intl;
-    const arr = await this.termsResults(results);
-    const sortedResults = sortBy(arr, 'value');
-    const mappedResults = sortedResults.map((obj) => [obj.value]);
-    return [[intl.t('general.vocabulary')]].concat(mappedResults);
+  async termsArrayResults(report) {
+    const filters = await this.#getFilters(report);
+    const result = await this.graphql.find('terms', filters, 'id');
+    let terms = await this.store.query('term', {
+      filters: {
+        ids: [result.data.terms.map(({ id }) => id)],
+      },
+    });
+    const titles = map(terms.slice(), async (term) => {
+      const vocabulary = await term.get('vocabulary');
+      const titleWithParentTitles = await term.getTitleWithParentTitles();
+      return vocabulary.title + ' > ' + titleWithParentTitles;
+    }).sort();
+    return [[this.intl.t('general.vocabulary')]].concat(titles);
   }
 }

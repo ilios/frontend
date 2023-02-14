@@ -1,0 +1,42 @@
+<div data-test-reports-subject-session>
+  {{#if this.finishedLoading}}
+    <ul class="report-results" data-test-results>
+      {{#each this.sortedSessions as |obj|}}
+        <li>
+          {{#if this.showYear}}
+            <span data-test-year>
+              {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                {{obj.year}} - {{add obj.year 1}}
+              {{else}}
+                {{obj.year}}
+              {{/if}}
+            </span>
+          {{/if}}
+          <span data-test-course-title>
+            {{#if this.canViewCourse}}
+              <LinkTo @route="course" @model={{obj.courseId}}>
+                {{obj.courseTitle}}:
+              </LinkTo>
+            {{else}}
+              {{obj.courseTitle}}:
+            {{/if}}
+          </span>
+
+          <span data-test-session-title>
+            {{#if this.canViewCourse}}
+              <LinkTo @route="session" @models={{array obj.courseId obj.id}}>
+                {{obj.title}}
+              </LinkTo>
+            {{else}}
+              {{obj.title}}
+            {{/if}}
+          </span>
+        </li>
+      {{else}}
+        <li>{{t "general.none"}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>

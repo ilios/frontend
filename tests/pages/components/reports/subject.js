@@ -14,7 +14,7 @@ const definition = {
   backToReports: {
     scope: '[data-test-back-to-reports]',
   },
-  title: text('[data-test-title]'),
+  title: text('[data-test-report-header] [data-test-title]'),
   download: clickable('[data-test-download]'),
   academicYears: {
     scope: '[data-test-year-filter]',

@@ -75,6 +75,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('create new report', async function (assert) {
+    assert.expect(12);
     await page.visit();
     assert.strictEqual(page.reports.reports.length, 2);
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
@@ -90,14 +91,32 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.reports.reports[0].title, 'aardvark');
     assert.strictEqual(page.reports.reports[1].title, 'All Sessions for term 0 in school 0');
     assert.strictEqual(page.reports.reports[2].title, 'my report 0');
+    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      const { query } = JSON.parse(requestBody);
+      const course = db.courses[0];
+      const { id, title } = db.sessions[0];
+
+      assert.strictEqual(
+        query,
+        'query { sessions(schools: [1], courses: [1]) { id, title, course { id, year, title } } }'
+      );
+      return {
+        data: {
+          sessions: [
+            { id, title, course: { id: course.id, title: course.title, year: course.year } },
+          ],
+        },
+      };
+    });
     await page.reports.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
     assert.strictEqual(reportPage.report.title, 'aardvark');
     assert.strictEqual(reportPage.report.results.length, 1);
-    assert.strictEqual(reportPage.report.results[0].text, '2015 course 0 session 0');
+    assert.strictEqual(reportPage.report.results[0].text, 'course 0: session 0');
   });
 
   test('filter courses by year in new report form', async function (assert) {
+    assert.expect(14);
     await page.visit();
     assert.strictEqual(page.reports.reports.length, 2);
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
@@ -115,14 +134,32 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for course 1 in school 0');
     assert.strictEqual(page.reports.reports[1].title, 'All Sessions for term 0 in school 0');
     assert.strictEqual(page.reports.reports[2].title, 'my report 0');
+    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      const { query } = JSON.parse(requestBody);
+      const course = db.courses[1];
+      const { id, title } = db.sessions[1];
+
+      assert.strictEqual(
+        query,
+        'query { sessions(schools: [1], courses: [2]) { id, title, course { id, year, title } } }'
+      );
+      return {
+        data: {
+          sessions: [
+            { id, title, course: { id: course.id, title: course.title, year: course.year } },
+          ],
+        },
+      };
+    });
     await page.reports.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
     assert.strictEqual(reportPage.report.title, 'All Sessions for course 1 in school 0');
     assert.strictEqual(reportPage.report.results.length, 1);
-    assert.strictEqual(reportPage.report.results[0].text, '2016 course 1 session 1');
+    assert.strictEqual(reportPage.report.results[0].text, 'course 1: session 1');
   });
 
   test('filter session by year in new report form', async function (assert) {
+    assert.expect(14);
     await page.visit();
     assert.strictEqual(page.reports.reports.length, 2);
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
@@ -140,6 +177,21 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
     assert.strictEqual(page.reports.reports[1].title, 'All Terms for session 1 in school 0');
     assert.strictEqual(page.reports.reports[2].title, 'my report 0');
+    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      const { query } = JSON.parse(requestBody);
+      const { id, title } = db.terms[0];
+      const vocab = db.vocabularies[0];
+
+      assert.strictEqual(
+        query,
+        'query { terms(schools: [1], sessions: [2]) { id, title, vocabulary { id, title } } }'
+      );
+      return {
+        data: {
+          terms: [{ id, title, vocabulary: { id: vocab.id, title: vocab.title } }],
+        },
+      };
+    });
     await page.reports.reports[1].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
     assert.strictEqual(reportPage.report.title, 'All Terms for session 1 in school 0');
@@ -148,6 +200,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('get all courses associated with mesh term #3419', async function (assert) {
+    assert.expect(14);
     await page.visit();
     assert.strictEqual(page.reports.reports.length, 2);
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
@@ -164,6 +217,21 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.reports.reports[0].title, 'All Courses for descriptor 0 in school 0');
     assert.strictEqual(page.reports.reports[1].title, 'All Sessions for term 0 in school 0');
     assert.strictEqual(page.reports.reports[2].title, 'my report 0');
+    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      const { query } = JSON.parse(requestBody);
+
+      assert.strictEqual(
+        query,
+        'query { courses(schools: [1], meshDescriptors: ["D1234"]) { id, title, year, externalId } }'
+      );
+      return {
+        data: {
+          courses: db.courses.map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
     await page.reports.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
     assert.strictEqual(reportPage.report.title, 'All Courses for descriptor 0 in school 0');
@@ -208,6 +276,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('course external Id in report', async function (assert) {
+    assert.expect(13);
     await page.visit();
     assert.strictEqual(page.reports.reports.length, 2);
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
@@ -220,6 +289,18 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.reports.reports[0].title, 'All Courses in All Schools');
     assert.strictEqual(page.reports.reports[1].title, 'All Sessions for term 0 in school 0');
     assert.strictEqual(page.reports.reports[2].title, 'my report 0');
+    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      const { query } = JSON.parse(requestBody);
+
+      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
+      return {
+        data: {
+          courses: db.courses.map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
     await page.reports.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
     assert.strictEqual(reportPage.report.title, 'All Courses in All Schools');

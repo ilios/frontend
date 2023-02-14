@@ -1,0 +1,15 @@
+<div data-test-reports-subject-competency>
+  {{#if this.finishedLoading}}
+    <ul class="report-results" data-test-results>
+      {{#each this.sortedData as |title|}}
+        <li>
+          {{title}}
+        </li>
+      {{else}}
+        <li>{{t "general.none"}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>

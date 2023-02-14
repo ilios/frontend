@@ -1,0 +1,15 @@
+<div data-test-reports-subject-term>
+  {{#if this.finishedLoading}}
+    <ul class="report-results" data-test-results>
+      {{#each this.sortedData as |obj|}}
+        <li>
+          {{obj.vocabulary.title}} &gt; {{obj.title}}
+        </li>
+      {{else}}
+        <li>{{t "general.none"}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>
