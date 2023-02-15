@@ -1,14 +1,17 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { dropTask, timeout } from 'ember-concurrency';
+import { isNone } from '@ember/utils';
+import { ensureSafeComponent } from '@embroider/util';
 import PapaParse from 'papaparse';
+import { dropTask, timeout } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import buildReportTitle from 'ilios/utils/build-report-title';
 import createDownloadFile from 'ilios/utils/create-download-file';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { ensureSafeComponent } from '@embroider/util';
+import { validatable, Length } from 'ilios-common/decorators/validation';
 import CourseComponent from './subject/course';
 import SessionComponent from './subject/session';
 import ProgramComponent from './subject/program';
@@ -21,22 +24,50 @@ import MeshTermComponent from './subject/mesh-term';
 import TermComponent from './subject/term';
 import SessionTypeComponent from './subject/session-type';
 
+@validatable
 export default class ReportsSubjectComponent extends Component {
   @service currentUser;
   @service preserveScroll;
   @service reporting;
   @service store;
   @service intl;
-
   @tracked finishedBuildingReport = false;
   @tracked myReportEditorOn = false;
+  @tracked @Length(1, 240) title = '';
 
   @use allAcademicYears = new ResolveAsyncValue(() => [this.store.findAll('academic-year')]);
-
-  @use selectedReportTitle = new AsyncProcess(() => [
+  @use constructedReportTitle = new AsyncProcess(() => [
     this.getSelectedReportTitle.bind(this),
     this.args.selectedReport,
   ]);
+
+  get reportTitleLoaded() {
+    return !isNone(this.constructedReportTitle);
+  }
+
+  get reportTitle() {
+    if (isNone(this.constructedReportTitle)) {
+      return '';
+    }
+    return this.constructedReportTitle;
+  }
+
+  @dropTask
+  *changeTitle() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid('title');
+    if (!isValid) {
+      return false;
+    }
+    this.removeErrorDisplayFor('title');
+    this.args.selectedReport.title = this.title;
+    yield this.args.selectedReport.save();
+  }
+
+  @action
+  revertTitleChanges() {
+    this.title = this.reportTitle;
+  }
 
   get subjectComponent() {
     switch (this.args.selectedReport.subject) {
