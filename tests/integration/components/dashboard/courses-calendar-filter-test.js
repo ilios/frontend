@@ -38,15 +38,15 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
 `);
 
     assert.strictEqual(component.years.length, 3);
-    assert.strictEqual(parseInt(component.years[0].title, 10), thisYear - 1);
+    assert.strictEqual(parseInt(component.years[0].title, 10), thisYear + 1);
     assert.strictEqual(parseInt(component.years[1].title, 10), thisYear);
-    assert.strictEqual(parseInt(component.years[2].title, 10), thisYear + 1);
+    assert.strictEqual(parseInt(component.years[2].title, 10), thisYear - 1);
 
     assert.strictEqual(component.years[0].courses.length, 0);
     assert.strictEqual(component.years[1].courses.length, 0);
     assert.strictEqual(component.years[2].courses.length, 2);
-    assert.strictEqual(component.years[2].courses[0].title, 'course 2 (1)');
-    assert.strictEqual(component.years[2].courses[1].title, 'course 3 (1)');
+    assert.strictEqual(component.years[2].courses[0].title, 'course 4');
+    assert.strictEqual(component.years[2].courses[1].title, 'course 5');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -84,9 +84,9 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     />
 `);
 
-    assert.strictEqual(component.years[0].title, `${thisYear - 1} - ${thisYear}`);
+    assert.strictEqual(component.years[0].title, `${thisYear + 1} - ${thisYear + 2}`);
     assert.strictEqual(component.years[1].title, `${thisYear} - ${thisYear + 1}`);
-    assert.strictEqual(component.years[2].title, `${thisYear + 1} - ${thisYear + 2}`);
+    assert.strictEqual(component.years[2].title, `${thisYear - 1} - ${thisYear}`);
   });
 
   test('clicking year toggles', async function (assert) {
@@ -117,8 +117,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     assert.strictEqual(component.years[0].courses.length, 0);
     assert.strictEqual(component.years[1].courses.length, 0);
     assert.strictEqual(component.years[2].courses.length, 2);
-    assert.strictEqual(component.years[2].courses[0].title, 'course 4');
-    assert.strictEqual(component.years[2].courses[1].title, 'course 5');
+    assert.strictEqual(component.years[2].courses[0].title, 'course 0');
+    assert.strictEqual(component.years[2].courses[1].title, 'course 1');
 
     await component.years[0].toggle();
     await component.years[1].toggle();
@@ -127,8 +127,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     assert.strictEqual(component.years.length, 3);
 
     assert.strictEqual(component.years[0].courses.length, 2);
-    assert.strictEqual(component.years[0].courses[0].title, 'course 0');
-    assert.strictEqual(component.years[0].courses[1].title, 'course 1');
+    assert.strictEqual(component.years[0].courses[0].title, 'course 4');
+    assert.strictEqual(component.years[0].courses[1].title, 'course 5');
 
     assert.strictEqual(component.years[1].courses.length, 2);
     assert.strictEqual(component.years[1].courses[0].title, 'course 2');
@@ -157,13 +157,13 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
 `);
 
     assert.strictEqual(component.years.length, 2);
-    assert.strictEqual(component.years[0].title, `2014`);
-    assert.strictEqual(component.years[1].title, `2015`);
+    assert.strictEqual(component.years[0].title, `2015`);
+    assert.strictEqual(component.years[1].title, `2014`);
 
     assert.strictEqual(component.years[0].courses.length, 0);
     assert.strictEqual(component.years[1].courses.length, 2);
-    assert.strictEqual(component.years[1].courses[0].title, 'course 0');
-    assert.strictEqual(component.years[1].courses[1].title, 'course 1');
+    assert.strictEqual(component.years[1].courses[0].title, 'course 2');
+    assert.strictEqual(component.years[1].courses[1].title, 'course 3');
   });
 
   test('selected courses are checked', async function (assert) {

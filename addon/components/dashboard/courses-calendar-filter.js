@@ -64,7 +64,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
       return acc;
     }, []);
 
-    return sortBy(courseYears, 'year');
+    return sortBy(courseYears, 'year').reverse();
   }
 
   get expandedYears() {
