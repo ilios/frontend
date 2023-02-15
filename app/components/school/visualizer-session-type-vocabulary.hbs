@@ -1,10 +1,9 @@
 <span
-  class="{{unless @isIcon "not-icon"}} visualizer-session-type-terms"
-  {{did-insert (perform this.load) @sessionType @vocabulary}}
-  {{did-update (perform this.load) @sessionType @vocabulary}}
+  class="{{unless @isIcon "not-icon"}} school-visualizer-session-type-vocabulary"
+  data-test-school-visualizer-session-type-vocabulary
   ...attributes
 >
-  {{#if this.load.lastSuccessful}}
+  {{#if this.isLoaded}}
     {{#if (or @isIcon (gt this.data.length 0))}}
         <SimpleChart
           @name="donut"
@@ -15,27 +14,18 @@
         >
           {{#if this.tooltipContent}}
             <chart.tooltip @title={{this.tooltipTitle}}>
-              <h5>
-                {{t "general.courses"}}
-              </h5>
-              <p>
-                {{this.tooltipContent.courses}}
-              </p>
-              <h5>
-                {{t "general.sessions"}}
-              </h5>
-              <p>
-                {{this.tooltipContent.sessions}}
-              </p>
+              {{this.tooltipContent}}
             </chart.tooltip>
           {{/if}}
         </SimpleChart>
       {{else}}
-        <div class="with-hours">
+        <div class="with-hours" data-test-no-data>
           <h4>
             <FaIcon @icon="face-meh" class="meh-o" />
           </h4>
         </div>
       {{/if}}
+  {{else}}
+    <FaIcon @icon="spinner" @spin={{true}} />
   {{/if}}
 </span>

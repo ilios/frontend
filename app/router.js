@@ -146,8 +146,8 @@ Router.map(function () {
   this.route('session-type-visualize-vocabularies', {
     path: 'data/sessiontype/:session_type_id/vocabularies',
   });
-  this.route('session-type-visualize-terms', {
-    path: 'data/sessiontype/:session_type_id/vocabularies/:vocabulary_id',
+  this.route('session-type-visualize-vocabulary', {
+    path: 'data/sessiontype/:session_type_id/vocabulary/:vocabulary_id',
   });
   this.route('weeklyevents');
   this.route('program-year-visualize-objectives', {

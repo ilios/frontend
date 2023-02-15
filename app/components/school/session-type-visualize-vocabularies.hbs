@@ -1,0 +1,32 @@
+<section
+  class="school-session-type-visualize-vocabularies"
+  data-test-school-session-type-visualize-vocabularies
+  ...attributes
+>
+  <div class="breadcrumbs" data-test-breadcrumb>
+    <span>
+      <LinkTo @route="school" @model={{@model.school}} @query={{hash schoolSessionTypeDetails=true}}>
+        {{@model.school.title}}
+      </LinkTo>
+    </span>
+    <span>
+      {{t "general.visualizations"}}
+    </span>
+    <span>
+      {{t "general.sessionTypes"}}
+    </span>
+    <span>
+      {{@model.title}}
+    </span>
+    <span>
+      {{t "general.vocabularies"}}
+    </span>
+  </div>
+  <h2 data-test-primary-title>{{t "general.vocabulariesBySessionType"}}</h2>
+  <h3 data-test-secondary-title>
+      {{@model.title}}
+  </h3>
+  <div class="visualizations">
+    <School::VisualizerSessionTypeVocabularies @sessionType={{@model}} />
+  </div>
+</section>

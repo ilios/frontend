@@ -71,8 +71,6 @@
 @import 'components/user-profile-roles';
 @import 'components/user-profile-schools';
 @import 'components/visualizer-program-year-objectives';
-@import 'components/visualizer-session-type-terms';
-@import 'components/visualizer-session-type-vocabularies';
 
 @import 'components/learner-group/bulk-assignment';
 @import 'components/learner-group/calendar';
@@ -145,4 +143,8 @@
 @import 'components/reports/subject';
 @import 'components/reports/subjects';
 
+@import 'components/school/session-type-visualize-vocabularies';
+@import 'components/school/session-type-visualize-vocabulary';
+@import 'components/school/visualizer-session-type-vocabularies';
+@import 'components/school/visualizer-session-type-vocabulary';
 
