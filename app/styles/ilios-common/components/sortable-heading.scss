@@ -1,3 +1,5 @@
+@use "../mixins" as m;
+
 .sortable-heading {
-  @include ilios-button-reset;
+  @include m.ilios-button-reset;
 }

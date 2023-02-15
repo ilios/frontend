@@ -1,22 +1,25 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 @use "sass:color";
 
 .detail-terms-list {
   margin-bottom: 1rem;
 
   .inactive {
-    color: $crimson;
+    color: c.$crimson;
     font-weight: bolder;
   }
 
   .selected-taxonomy-terms {
-    @include ilios-tag-list;
+    @include m.ilios-tag-list;
 
     &.removable-list {
-      @include ilios-removable-list;
+      @include m.ilios-removable-list;
     }
 
     .muted {
-      color: color.adjust($raisinBlack, $lightness: 30%);
+      color: color.adjust(c.$raisinBlack, $lightness: 30%);
     }
   }
 }

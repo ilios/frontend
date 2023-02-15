@@ -1,3 +1,5 @@
+@use "media";
+
 /* stylelint-disable property-disallowed-list */
 :root {
   --fs-smallest: max(0.5rem, 9px);
@@ -9,10 +11,10 @@
   --fs-xxl: 2.074rem;
   --fs-xxxl: 2.488rem;
   --fs-huge: 15rem;
-  @include for-tablet-and-up {
+  @include media.for-tablet-and-up {
     --fs-huge: 25rem;
   }
-  @include for-laptop-and-up {
+  @include media.for-laptop-and-up {
     --fs-huge: 30rem;
   }
 
@@ -20,10 +22,10 @@
   
   font-size: 16px;
   //scale based on viewport width between 16px and 20px
-  @include for-laptop-and-up {
+  @include media.for-laptop-and-up {
     font-size: calc(10px + .5vw);
   }
-  @include for-desktop-and-up {
+  @include media.for-desktop-and-up {
     font-size: 20px;
   }
 }

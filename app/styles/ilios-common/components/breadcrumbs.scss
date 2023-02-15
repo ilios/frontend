@@ -1,13 +1,14 @@
+@use "../colors" as c;
 @use "sass:math";
 
 .breadcrumbs {
-  $breadcrumb-border-color: $tealBlue;
+  $breadcrumb-border-color: c.$tealBlue;
   $breadcrumb-border: 1px solid $breadcrumb-border-color;
   $breadcrumb-height: 2rem;
   $breadcrumb-arrow-color: $breadcrumb-border-color;
-  $breadcrumb-background: $slightWhite;
-  $breadcrumb-color: $tealBlue;
-  $breadcrumb-link-color-hover: $orange;
+  $breadcrumb-background: c.$slightWhite;
+  $breadcrumb-color: c.$tealBlue;
+  $breadcrumb-link-color-hover: c.$orange;
 
   display: inline-block;
   margin: .8rem;

@@ -1,7 +1,9 @@
+@use "../colors" as c;
+
 @use "sass:color";
 
 .detail-learnergroups-list-item {
   .muted {
-    color: color.adjust($raisinBlack, $lightness: 30%);
+    color: color.adjust(c.$raisinBlack, $lightness: 30%);
   }
 }

@@ -1,7 +1,10 @@
+@use "../../colors" as c;
+@use "../../mixins" as m;
+
 @use "sass:color";
 
 .dashboard-calendar {
-  @include dashboard-component;
+  @include m.dashboard-component;
 
   .dashboard-calendar-content {
     padding: .5em;
@@ -13,7 +16,7 @@
       }
 
       .calendar-clear-filters {
-        @include ilios-link;
+        @include m.ilios-link;
         float: left;
         margin-top: 1.5em;
       }
@@ -29,36 +32,36 @@
         margin-right: 5em;
 
         select {
-          @include ilios-select;
+          @include m.ilios-select;
         }
       }
 
       .calendar-filter-list {
-        border: 1px solid $blueMunsell;
+        border: 1px solid c.$blueMunsell;
         float: left;
-        @include font-size('small');
+        @include m.font-size('small');
         margin-bottom: 1em;
         width: 33%;
 
         h5 {
-          @include ilios-heading-h5;
+          @include m.ilios-heading-h5;
           display: block;
-          background-color: $culturedGrey;
-          border-bottom: .5px solid $davysGrey;
+          background-color: c.$culturedGrey;
+          border-bottom: .5px solid c.$davysGrey;
           padding: .25em;
           width: 100%;
         }
 
         h6 {
-          @include ilios-heading-h6;
+          @include m.ilios-heading-h6;
           padding-bottom: .25em;
         }
 
         ul {
-          @include ilios-list-reset;
+          @include m.ilios-list-reset;
 
           li {
-            color: $blueMunsell;
+            color: c.$blueMunsell;
             cursor: pointer;
           }
         }
@@ -95,53 +98,53 @@
     }
 
     .filters-list {
-      background: $culturedGrey;
+      background: c.$culturedGrey;
       clear: both;
       margin-bottom: 1em;
       padding: 5px;
 
       .filters-header {
-        border-bottom: 1px solid $davysGrey;
-        @include font-size('small');
+        border-bottom: 1px solid c.$davysGrey;
+        @include m.font-size('small');
       }
 
       .filter-tags {
         .filter-tag {
-          @include ilios-button-reset;
-          @include font-size('small');
+          @include m.ilios-button-reset;
+          @include m.font-size('small');
           border-radius: 3px;
           display: inline-block;
           padding: 2px 5px;
         }
 
         .fa-close {
-          color: $culturedGrey;
+          color: c.$culturedGrey;
         }
 
         .tag-session-type {
-          background-color: color.adjust($blueMunsell, $lightness: 30%);
+          background-color: color.adjust(c.$blueMunsell, $lightness: 30%);
         }
 
         .tag-course-level {
-          background-color: color.adjust($blueMunsell, $lightness: 40%);
+          background-color: color.adjust(c.$blueMunsell, $lightness: 40%);
         }
 
         .tag-cohort {
-          background-color: color.adjust($blueMunsell, $lightness: 50%);
+          background-color: color.adjust(c.$blueMunsell, $lightness: 50%);
         }
 
         .tag-course {
-          background-color: color.adjust($blueMunsell, $lightness: 60%);
+          background-color: color.adjust(c.$blueMunsell, $lightness: 60%);
         }
 
         .tag-term {
-          background-color: color.adjust($blueMunsell, $lightness: 40%);
+          background-color: color.adjust(c.$blueMunsell, $lightness: 40%);
         }
 
         .filters-clear-filters {
-          @include ilios-button-reset;
-          @include font-size('small');
-          color: $blueMunsell;
+          @include m.ilios-button-reset;
+          @include m.font-size('small');
+          color: c.$blueMunsell;
         }
       }
     }

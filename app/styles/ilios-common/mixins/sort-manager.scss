@@ -1,3 +1,6 @@
+@use "../colors" as c;
+@use "font-size";
+
 @mixin sort-manager () {
   .actions {
     display: flex;
@@ -8,13 +11,13 @@
     }
 
     .bigadd {
-      background-color: $fernGreen;
-      color: $white;
+      background-color: c.$fernGreen;
+      color: c.$white;
     }
 
     .bigcancel {
-      background-color: $crimson;
-      color: $white;
+      background-color: c.$crimson;
+      color: c.$white;
     }
   }
 
@@ -25,7 +28,7 @@
   .sortable-items {
     list-style-type: none;
     .item {
-      background-color: $culturedGrey;
+      background-color: c.$culturedGrey;
       border-radius: 4px;
       box-sizing: border-box;
       cursor: pointer;
@@ -33,12 +36,12 @@
       opacity: 1;
       padding: 1rem;
       vertical-align: middle;
-  
+
       .fa {
         vertical-align: top;
       }
       .details {
-        @include font-size('small');
+        @include font-size.font-size('small');
       }
 
       .title {
@@ -50,13 +53,13 @@
         opacity: 0.3;
       }
       &.dragged-above {
-        border-top: .7rem solid $orange;
+        border-top: .7rem solid c.$orange;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         padding: .3rem 1rem 1rem 1rem;
       }
       &.dragged-below {
-        border-bottom: .7rem solid $orange;
+        border-bottom: .7rem solid c.$orange;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         padding: 1rem 1rem .3rem 1rem;

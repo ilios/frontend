@@ -1,25 +1,28 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .new-session {
-  border: 1px solid $culturedGrey;
+  border: 1px solid c.$culturedGrey;
   margin: .5rem;
   padding: 1rem;
 
   .title {
-    @include detail-container-title;
+    @include m.detail-container-title;
   }
 
   .new-session-content {
-    @include ilios-form;
+    @include m.ilios-form;
 
     .item {
-      @include ilios-form-item;
+      @include m.ilios-form-item;
 
       &.last {
-        @include ilios-form-last-item;
+        @include m.ilios-form-last-item;
       }
     }
 
     .buttons {
-      @include ilios-form-buttons;
+      @include m.ilios-form-buttons;
     }
   }
 }

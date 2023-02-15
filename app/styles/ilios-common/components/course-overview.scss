@@ -1,5 +1,8 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .course-overview {
-  @include course-overview;
+  @include m.course-overview;
 
   .courseexternalid {
     input {
@@ -9,7 +12,7 @@
   }
 
   .universallocator {
-    color: $davysGrey;
+    color: c.$davysGrey;
   }
 
 }

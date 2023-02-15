@@ -1,9 +1,11 @@
+@use "../mixins" as m;
+
 .session-overview-ilm-duedate {
   .editor {
     flex-direction: column;
   }
 
-  @include for-tablet-and-up {
+  @include m.for-tablet-and-up {
     .editor {
       flex-direction: row;
     }

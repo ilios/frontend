@@ -1,6 +1,9 @@
+@use "../../colors" as c;
+@use "../../mixins" as m;
+
 .week-glance-learning-materials {
   ul {
-    @include ilios-list-reset;
+    @include m.ilios-list-reset;
     padding: 0 .25rem;
     margin: 0;
 
@@ -15,8 +18,8 @@
     }
 
     .fa-external-link-square {
-      color: $orange;
-      @include font-size('small');
+      color: c.$orange;
+      @include m.font-size('small');
     }
 
     .public-notes {
@@ -24,7 +27,7 @@
     }
 
     .timed-release-info {
-      @include font-size('small');
+      @include m.font-size('small');
     }
 
     .week-glance-learning-material-list-item {

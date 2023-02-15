@@ -1,11 +1,13 @@
+@use "../colors" as c;
+
 .ilios-tooltip {
   padding: 0 1em;
   z-index: 100;
 
   .content {
-    background: $slightWhite;
+    background: c.$slightWhite;
     padding: .25rem .5rem;
-    border: 1px solid $davysGrey;
+    border: 1px solid c.$davysGrey;
     border-radius: 4px;
     max-width: 80%;
 
@@ -20,8 +22,8 @@
     .arrow::before {
       content: '';
       transform: rotate(45deg);
-      background: $davysGrey;
-      border: 1px solid $davysGrey;
+      background: c.$davysGrey;
+      border: 1px solid c.$davysGrey;
     }
   }
   &[data-popper-placement^='top'] .arrow {

@@ -1,18 +1,21 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .publish-all-sessions {
-  background-color: $slightWhite;
-  border: 1px solid $culturedGrey;
+  background-color: c.$slightWhite;
+  border: 1px solid c.$culturedGrey;
   padding-left: 1rem;
 
   section {
-    @include detail-container($orange);
+    @include m.detail-container(c.$orange);
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
       text-align: left;
     }
 
     .content {
-      @include detail-container-content;
+      @include m.detail-container-content;
 
       tbody {
         td {
@@ -40,38 +43,38 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid $fernGreen;
+    border: 1px solid c.$fernGreen;
     clear: both;
-    @include font-size('large');
+    @include m.font-size('large');
     margin: 1rem;
     padding: 1rem;
     text-align: center;
 
     .unlinked-warning {
-      color: $gold;
-      @include font-size('base');
+      color: c.$gold;
+      @include m.font-size('base');
     }
 
     .fa-chart-column {
-      color: $blueMunsell;
-      @include font-size('small');
+      color: c.$blueMunsell;
+      @include m.font-size('small');
     }
 
     p {
-      color: $fernGreen;
+      color: c.$fernGreen;
       font-weight: bold;
       margin: 0;
       margin-bottom: 1rem;
     }
 
     button {
-      background: $fernGreen;
-      color: $white;
+      background: c.$fernGreen;
+      color: c.$white;
     }
   }
 
   .fa-link-slash {
-    color: $black;
-    @include font-size('small');
+    color: c.$black;
+    @include m.font-size('small');
   }
 }

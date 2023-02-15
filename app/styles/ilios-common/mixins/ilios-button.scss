@@ -1,19 +1,23 @@
+@use "../colors" as c;
+@use "font-size";
+@use "media";
+
 @mixin ilios-button () {
   appearance: none;
-  background-color: $tealBlue;
+  background-color: c.$tealBlue;
   border: 0;
   border-radius: 3px;
   box-sizing: border-box;
-  color: $white;
+  color: c.$white;
   cursor: pointer;
   display: inline-block;
   padding: .3em 1em;
   vertical-align: middle;
   white-space: nowrap;
 
-  @include font-size('base');
+  @include font-size.font-size('base');
   //at small sizes scale to keep button text in the button
-  @include for-phone-only {
+  @include media.for-phone-only {
     /* stylelint-disable property-disallowed-list */
     font-size: 3vw;
   }
@@ -33,5 +37,5 @@
 
 @mixin ilios-link-button () {
   @include ilios-button-reset;
-  color: $blueMunsell;
+  color: c.$blueMunsell;
 }

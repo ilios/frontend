@@ -1,14 +1,16 @@
+@use "../../mixins" as m;
+
 .dashboard-courses-calendar-filter {
 
   .year {
     margin: .5rem 0;
 
     button {
-      @include ilios-button-reset;
+      @include m.ilios-button-reset;
     }
 
     ul {
-      @include ilios-list-reset;
+      @include m.ilios-list-reset;
 
       li {
         margin-left: .25em;

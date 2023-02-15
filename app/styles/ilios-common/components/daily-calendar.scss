@@ -1,3 +1,6 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 @use "sass:math";
 
 .daily-calendar {
@@ -5,7 +8,7 @@
   $minute-rows: math.div(24 * 60, 5); //every 5 minutes
   --hour-space: 2.9rem;
 
-  @include for-tablet-and-up {
+  @include m.for-tablet-and-up {
     --hour-space: 5.5rem;
   }
 
@@ -17,7 +20,7 @@
   height: 75vh;
 
   .day-of-week {
-    @include ilios-heading-h4;
+    @include m.ilios-heading-h4;
     grid-column: 1;
     grid-row: 1;
     justify-self: center;
@@ -31,7 +34,7 @@
       display: none;
     }
 
-    @include for-tablet-and-up {
+    @include m.for-tablet-and-up {
       .long {
         display: inline;
       }
@@ -52,13 +55,13 @@
     overflow-y: scroll;
 
     .events {
-      @include ilios-list-reset;
+      @include m.ilios-list-reset;
       display: grid;
       grid-column: 2;
       grid-row: 1 / -1;
       grid-template-columns: repeat(50, 1fr);
       grid-template-rows: repeat($minute-rows, $hour-height);
-      border: 1px solid $culturedGrey;
+      border: 1px solid c.$culturedGrey;
       @for $day from 1 through 7 {
         &.day-#{$day} {
           grid-column: ($day + 1);
@@ -77,7 +80,7 @@
 
     .hour-border,
     .half-hour-border {
-      border-top: 1px solid $culturedGrey;
+      border-top: 1px solid c.$culturedGrey;
       grid-column: 2 / -1;
     }
 

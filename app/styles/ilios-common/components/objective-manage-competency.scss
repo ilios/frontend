@@ -1,5 +1,7 @@
+@use "../mixins" as m;
+
 .objective-manage-competency {
   ul {
-    @include ilios-list-reset;
+    @include m.ilios-list-reset;
   }
 }

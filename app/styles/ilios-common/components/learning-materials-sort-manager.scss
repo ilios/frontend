@@ -1,5 +1,7 @@
+@use "../mixins" as m;
+
 .learning-materials-sort-manager {
-  @include sort-manager;
+  @include m.sort-manager;
 }
 
 

@@ -1,6 +1,8 @@
+@use "font-size";
+
 @mixin ilios-select () {
   box-sizing: border-box;
-  @include font-size('base');
+  @include font-size.font-size('base');
   height: 2em;
   padding: 4px 4px 4px 8px;
 }

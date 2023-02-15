@@ -1,3 +1,6 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .toggle-yesno {
   --height: 1.1em;
   --switch-diff: 2px;
@@ -8,15 +11,15 @@
   height: var(--height);
   position: relative;
   width: var(--width);
-  background-color: $rosewood;
+  background-color: c.$rosewood;
   padding: 0;
 
   &.yes {
-    background-color: $fernGreen;
+    background-color: c.$fernGreen;
   }
 
   .switch-handle {
-    background: $white;
+    background: c.$white;
     border-radius: 10px;
     height: var(--switch);
     left: var(--switch-diff);
@@ -29,7 +32,7 @@
     align-content: center;
 
     svg {
-      @include font-size("small");
+      @include m.font-size("small");
     }
   }
 

@@ -1,7 +1,9 @@
+@use "../colors" as c;
+
 @mixin loading-box () {
   animation: fadein;
-  background-color: $culturedGrey;
-  border: 1px dotted $davysGrey;
+  background-color: c.$culturedGrey;
+  border: 1px dotted c.$davysGrey;
   transition: opacity 2s ease-out;
 
   @keyframes fadein {

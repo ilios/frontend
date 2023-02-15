@@ -1,21 +1,24 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .detail-instructors {
-  @include detail-container($tealBlue);
+  @include m.detail-container(c.$tealBlue);
 
   .detail-instructors-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
   }
 
   .detail-instructors-content {
-    @include detail-container-content;
-    @include ilios-form;
+    @include m.detail-container-content;
+    @include m.ilios-form;
     grid-template-columns: 1fr;
 
     .display-selected-instructor-groups,

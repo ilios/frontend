@@ -1,3 +1,8 @@
+@use "../colors" as c;
+@use "ilios-heading";
+@use "ilios-table";
+@use "media";
+
 @mixin detail-container ($bottom-border-color) {
   border-bottom: 1px dotted $bottom-border-color;
   margin: 0;
@@ -6,7 +11,7 @@
 }
 
 @mixin detail-container-title-style () {
-  @include ilios-heading-h5;
+  @include ilios-heading.ilios-heading-h5;
 
   &.collapsible {
     &::after {
@@ -25,7 +30,7 @@
   display: flex;
   justify-content: space-between;
 
-  @include for-phone-only {
+  @include media.for-phone-only {
     align-items: center;
     flex-direction: column;
     justify-content: space-around;
@@ -43,19 +48,19 @@
   & > * {
     margin-right: .5rem;
 
-    @include for-phone-only {
+    @include media.for-phone-only {
       margin-top: .25em;
     }
   }
 
   .bigadd {
-    background-color: $fernGreen;
-    color: $white;
+    background-color: c.$fernGreen;
+    color: c.$white;
   }
 
   .bigcancel {
-    background-color: $crimson;
-    color: $white;
+    background-color: c.$crimson;
+    color: c.$white;
   }
 }
 
@@ -64,7 +69,7 @@
   padding: .5rem 0;
 
   table {
-    @include ilios-table-structure;
-    @include ilios-removable-table;
+    @include ilios-table.ilios-table-structure;
+    @include ilios-table.ilios-removable-table;
   }
 }

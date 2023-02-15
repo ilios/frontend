@@ -1,19 +1,22 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .single-event {
-  @include main-section;
+  @include m.main-section;
   display: grid;
 
   h2 {
-    @include ilios-heading-h4;
+    @include m.ilios-heading-h4;
     margin: 1em 0;
 
     .fa-box-archive {
-      @include font-size('base');
+      @include m.font-size('base');
     }
   }
 
   .pre-work {
     h2 {
-      @include ilios-heading-h5;
+      @include m.ilios-heading-h5;
       margin: 0;
     }
   }
@@ -30,14 +33,14 @@
       }
 
       .recently-updated-icon {
-        color: $rosewood;
+        color: c.$rosewood;
         position: absolute;
         right: 2px;
         top: 2px;
       }
 
       .recently-updated-icon-event {
-        color: $rosewood;
+        color: c.$rosewood;
       }
     }
 
@@ -60,14 +63,14 @@
 
   .single-event-learningmaterial-list {
     .expanded {
-      @include ilios-button-reset;
+      @include m.ilios-button-reset;
       &::after {
         content: '\25BC';
       }
     }
 
     .expandable {
-      @include ilios-button-reset;
+      @include m.ilios-button-reset;
       &::after {
         content: '\25BA';
       }
@@ -75,7 +78,7 @@
   }
 
   .single-event-learningmaterial-filesize {
-    @include font-size('small');
+    @include m.font-size('small');
     font-style: italic;
   }
 }

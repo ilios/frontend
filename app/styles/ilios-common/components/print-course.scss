@@ -1,16 +1,19 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .print-course {
   .header {
-    background-color: $culturedGrey;
+    background-color: c.$culturedGrey;
     padding: 0 1rem;
     width: 100%;
 
     h2 {
-      @include ilios-heading-h2;
+      @include m.ilios-heading-h2;
       display: inline-block;
     }
 
     h4 {
-      @include ilios-heading-h4;
+      @include m.ilios-heading-h4;
       display: inline-block;
       margin-left: 1rem;
     }
@@ -23,28 +26,28 @@
 
 
   .block {
-    @include detail-container($orange);
-    background-color: $white;
+    @include m.detail-container(c.$orange);
+    background-color: c.$white;
     padding: 0 1rem;
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
 
     .content {
-      @include detail-container-content;
+      @include m.detail-container-content;
     }
 
     .static-list {
-      @include ilios-static-list;
+      @include m.ilios-static-list;
     }
   }
 
   .offering-instructors {
-    @include ilios-list-reset;
+    @include m.ilios-list-reset;
   }
 }

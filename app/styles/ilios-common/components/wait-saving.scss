@@ -1,3 +1,5 @@
+@use "../colors" as c;
+
 .wait-saving {
   z-index: 102;
   position: fixed;
@@ -11,7 +13,7 @@
   align-content: center;
 
   .content {
-    background-color: $slightWhite;
+    background-color: c.$slightWhite;
     padding: 2em;
     border-radius: 1em;
 

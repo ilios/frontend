@@ -1,45 +1,48 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 @use "sass:color";
 
 .course-loading {
-  @include loading-text;
-  @include loading-shimmer;
+  @include m.loading-text;
+  @include m.loading-shimmer;
 
   .header {
-    @include course-header;
+    @include m.course-header;
   }
   .overview {
-    @include course-overview;
+    @include m.course-overview;
 
     .title {
-      @include loading-text;
+      @include m.loading-text;
     }
   }
 }
 
 .course-sessions.course-sessions-loading {
   border-bottom: 0;
-  @include loading-shimmer;
+  @include m.loading-shimmer;
   
   .course-sessions-header {
     height: 2rem;
-    @include for-phone-only {
+    @include m.for-phone-only {
       height: 3rem;
     }
   }
 
   .title {
-    @include loading-text;
+    @include m.loading-text;
   }
 
   .sessions-grid-header {
-    @include loading-text;
-    background-color: color.adjust($davysGrey, $lightness: 50%);
+    @include m.loading-text;
+    background-color: color.adjust(c.$davysGrey, $lightness: 50%);
     height: 2rem;
   }
 }
 
 .course-loading, .course-loader {
-  @include main-section;
+  @include m.main-section;
   
   .mock-detail-box {
     display: flex;
@@ -47,11 +50,11 @@
     width: 100%;
 
     span {
-      background-color: color.adjust($davysGrey, $lightness: 50%);
+      background-color: color.adjust(c.$davysGrey, $lightness: 50%);
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       padding: .25rem 4rem;
-      color: color.adjust($davysGrey, $lightness: 50%);
+      color: color.adjust(c.$davysGrey, $lightness: 50%);
 
       .expand-collapse-icon {
         margin-left: .5rem;

@@ -1,9 +1,12 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .sessions-grid-header {
-  @include sessions-grid;
-  background-color: $tealBlue;
-  border-bottom: 1px solid $davysGrey;
-  color: $white;
-  @include font-size('small');
+  @include m.sessions-grid;
+  background-color: c.$tealBlue;
+  border-bottom: 1px solid c.$davysGrey;
+  color: c.$white;
+  @include m.font-size('small');
   font-weight: normal;
   position: sticky;
   top: 0;

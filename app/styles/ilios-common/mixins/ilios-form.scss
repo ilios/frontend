@@ -1,3 +1,11 @@
+@use "../colors" as c;
+@use "font-size";
+@use "ilios-button";
+@use "ilios-input";
+@use "ilios-select";
+@use "ilios-textarea";
+@use "media";
+
 @mixin ilios-form () {
   align-items: start;
   display: grid;
@@ -6,11 +14,11 @@
   margin-bottom: 1rem;
   padding: .5rem 1rem .5rem .5rem;
 
-  @include for-laptop-and-up {
+  @include media.for-laptop-and-up {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @include for-desktop-and-up {
+  @include media.for-desktop-and-up {
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -18,24 +26,24 @@
     @include ilios-label;
   }
 
-  #{$form-input-text-types} {
-    @include ilios-input;
+  #{ilios-input.$form-input-text-types} {
+    @include ilios-input.ilios-input;
   }
 
   select {
-    @include ilios-select;
+    @include ilios-select.ilios-select;
   }
 
   textarea {
-    @include ilios-textarea;
+    @include ilios-textarea.ilios-textarea;
   }
 
-  #{$form-input-text-types},
+  #{ilios-input.$form-input-text-types},
   textarea,
   select {
     display: block;
     width: 100%;
-    @include for-tablet-and-up {
+    @include media.for-tablet-and-up {
       min-width: 33%;
     }
   }
@@ -59,38 +67,38 @@
   padding: 0;
 
   button {
-    @include ilios-button;
+    @include ilios-button.ilios-button;
     border-style: solid;
     border-width: 1px;
     margin-right: 1rem;
     transition: all 0.08s linear;
 
     &:enabled:hover {
-      color: $white;
+      color: c.$white;
     }
 
     &.done {
-      background-color: $white;
-      border-color: $fernGreen;
-      color: $raisinBlack;
+      background-color: c.$white;
+      border-color: c.$fernGreen;
+      color: c.$raisinBlack;
 
       &:enabled {
         &:hover,
         &:active,
         &.active {
-          background-color: $fernGreen;
-          color: $white;
+          background-color: c.$fernGreen;
+          color: c.$white;
         }
       }
     }
 
     &.cancel {
-      background-color: $white;
-      border-color: $crimson;
-      color: $crimson;
+      background-color: c.$white;
+      border-color: c.$crimson;
+      color: c.$crimson;
 
       &:enabled:hover {
-        background-color: $crimson;
+        background-color: c.$crimson;
       }
     }
   }
@@ -101,7 +109,7 @@
   font-weight: bold;
 
   .label-description {
-    @include font-size('small');
+    @include font-size.font-size('small');
     font-weight: normal;
 
   }
@@ -109,13 +117,13 @@
 
 @mixin ilios-form-error {
   .validation-error-message {
-    color: $crimson;
-    @include font-size('small');
+    color: c.$crimson;
+    @include font-size.font-size('small');
   }
 
   input {
     &.has-error {
-      border-color: $crimson;
+      border-color: c.$crimson;
     }
   }
 }

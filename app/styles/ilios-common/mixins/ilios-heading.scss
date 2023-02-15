@@ -1,5 +1,8 @@
+@use "../colors" as c;
+@use "font-size";
+
 @mixin ilios-heading () {
-  color: $raisinBlack;
+  color: c.$raisinBlack;
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 600;
   margin: 0;
@@ -8,30 +11,30 @@
 
 @mixin ilios-heading-h1() {
   @include ilios-heading;
-  @include font-size('xxxl');
+  @include font-size.font-size('xxxl');
 }
 
 @mixin ilios-heading-h2() {
   @include ilios-heading;
-  @include font-size('xxl');
+  @include font-size.font-size('xxl');
 }
 
 @mixin ilios-heading-h3() {
   @include ilios-heading;
-  @include font-size('xl');
+  @include font-size.font-size('xl');
 }
 
 @mixin ilios-heading-h4() {
   @include ilios-heading;
-  @include font-size('large');
+  @include font-size.font-size('large');
 }
 
 @mixin ilios-heading-h5() {
   @include ilios-heading;
-  @include font-size('medium');
+  @include font-size.font-size('medium');
 }
 
 @mixin ilios-heading-h6() {
   @include ilios-heading;
-  @include font-size('base');
+  @include font-size.font-size('base');
 }

@@ -1,3 +1,6 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .visualizer-course-objectives {
   display: inline-block;
   height: 1rem;
@@ -9,7 +12,7 @@
     }
 
     .meh {
-      @include font-size("huge");
+      @include m.font-size("huge");
     }
   }
 
@@ -19,7 +22,7 @@
     }
 
     h4 {
-      @include ilios-heading-h4;
+      @include m.ilios-heading-h4;
     }
 
     li {
@@ -38,13 +41,13 @@
     padding-top: 2rem;
 
     table {
-      @include ilios-table-structure;
-      @include ilios-table-colors;
-      @include ilios-removable-table;
-      @include ilios-zebra-table;
+      @include m.ilios-table-structure;
+      @include m.ilios-table-colors;
+      @include m.ilios-removable-table;
+      @include m.ilios-zebra-table;
 
       thead {
-        background-color: $culturedGrey;
+        background-color: c.$culturedGrey;
       }
 
       td {

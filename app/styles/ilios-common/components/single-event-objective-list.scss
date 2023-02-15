@@ -1,12 +1,15 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .single-event-objective-list {
 
   button {
     &.active {
-      background-color: $fernGreen;
+      background-color: c.$fernGreen;
     }
     &.disabled {
       cursor: default;
-      background-color: $davysGrey;
+      background-color: c.$davysGrey;
     }
   }
 
@@ -14,14 +17,14 @@
     cursor: pointer;
 
     .expanded {
-      @include ilios-button-reset;
+      @include m.ilios-button-reset;
       &::after {
         content: '\25BC';
       }
     }
 
     .expandable {
-      @include ilios-button-reset;
+      @include m.ilios-button-reset;
       &::after {
         content: '\25BA';
       }
@@ -43,7 +46,7 @@
     }
 
     .details {
-      @include font-size('small');
+      @include m.font-size('small');
       font-weight: bold;
     }
   }
@@ -74,7 +77,7 @@
   }
 
   .objective {
-    border-bottom: 1px dotted $orange;
+    border-bottom: 1px dotted c.$orange;
     &:last-of-type {
       border-bottom: 0;
     }

@@ -1,3 +1,5 @@
+@use "../mixins" as m;
+
 .objective-sort-manager {
-  @include sort-manager;
+  @include m.sort-manager;
 }

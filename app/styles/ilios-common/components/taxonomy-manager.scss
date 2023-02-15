@@ -1,6 +1,9 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .taxonomy-manager {
   .selected-terms {
-    border: 1px solid $davysGrey;
+    border: 1px solid c.$davysGrey;
     padding: 10px;
   }
 
@@ -10,20 +13,20 @@
     justify-content: space-between;
     padding-top: 1rem;
 
-    @include for-laptop-and-up {
+    @include m.for-laptop-and-up {
       flex-direction: row;
     }
 
     label {
-      @include ilios-label;
+      @include m.ilios-label;
     }
 
     input {
-      @include ilios-input;
+      @include m.ilios-input;
       margin: 1rem 0 .5rem;
       min-width: 25rem;
 
-      @include for-laptop-and-up {
+      @include m.for-laptop-and-up {
         margin: 0;
       }
     }
@@ -34,7 +37,7 @@
     overflow-x: scroll;
 
     & > ul {
-      @include ilios-list-reset;
+      @include m.ilios-list-reset;
       margin-bottom: 1rem;
     }
   }

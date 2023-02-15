@@ -1,5 +1,8 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .offering-calendar {
-  border: 1px solid $black;
+  border: 1px solid c.$black;
   border-radius: 5px;
   box-sizing: border-box;
   clear: both;
@@ -9,14 +12,14 @@
   position: relative;
 
   h2 {
-    @include font-size('medium');
+    @include m.font-size('medium');
     margin-bottom: 1rem;
     text-align: center;
     width: 100%;
   }
 
   .loding-indicator {
-    @include ilios-heading-h1;
+    @include m.ilios-heading-h1;
     left: 4rem;
     opacity: 75;
     position: absolute;
@@ -37,7 +40,7 @@
       width: 100%;
 
       label {
-        @include ilios-label;
+        @include m.ilios-label;
         cursor: pointer;
       }
     }

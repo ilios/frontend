@@ -1,8 +1,10 @@
+@use "../mixins" as m;
+
 .new-offering {
   margin-top: 2rem;
 
   .new-offering-title {
-    @include ilios-heading-h5;
+    @include m.ilios-heading-h5;
     text-align: center;
   }
 
@@ -11,7 +13,7 @@
     text-align: center;
 
     label {
-      @include ilios-label;
+      @include m.ilios-label;
     }
 
     .click-choice-buttons {

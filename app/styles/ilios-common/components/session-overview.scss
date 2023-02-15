@@ -1,23 +1,27 @@
+@use "../colors" as c;
+@use "../constants";
+@use "../mixins" as m;
+
 .session-header {
 
-  background-color: $culturedGrey;
+  background-color: c.$culturedGrey;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: calc($golden-ratio-large * 1rem) 0 calc($golden-ratio-small * 1rem) 0;
+  padding: calc(constants.$golden-ratio-large * 1rem) 0 calc(constants.$golden-ratio-small * 1rem) 0;
 
-  @include for-tablet-and-up {
+  @include m.for-tablet-and-up {
     flex-direction: row;
   }
 
   .session-publication {
-    @include for-laptop-and-up {
+    @include m.for-laptop-and-up {
       text-align: right;
     }
   }
 
   .title {
-    @include ilios-heading-h5;
+    @include m.ilios-heading-h5;
     flex-grow: 2;
 
     input {
@@ -27,40 +31,40 @@
 }
 
 .session-overview {
-  @include ilios-overview($tealBlue);
-  border-bottom: 1px dotted $tealBlue;
+  @include m.ilios-overview(c.$tealBlue);
+  border-bottom: 1px dotted c.$tealBlue;
 
   .last-update {
-    color: $davysGrey;
+    color: c.$davysGrey;
     margin-right: 1rem;
     text-align: right;
   }
 
   .session-overview-header {
-    @include ilios-overview-header;
+    @include m.ilios-overview-header;
 
     .title {
-      @include ilios-overview-title;
+      @include m.ilios-overview-title;
 
     }
 
     .session-overview-actions {
 
-      @include ilios-overview-actions;
+      @include m.ilios-overview-actions;
 
       a {
-        @include font-size('medium');
+        @include m.font-size('medium');
         margin-right: .5rem;
       }
     }
   }
 
   .session-overview-content {
-    @include ilios-overview-content;
+    @include m.ilios-overview-content;
   }
 
   .block {
-    @include ilios-overview-block;
+    @include m.ilios-overview-block;
   }
 
   .sessiontype {
@@ -68,7 +72,7 @@
 
     select {
       max-width: 80%;
-      @include for-phone-only {
+      @include m.for-phone-only {
         max-width: 125px;
       }
     }
@@ -90,7 +94,7 @@
 
   .sessiondescription,
   .instructional-notes {
-    @include ilios-browser-defaults;
+    @include m.ilios-browser-defaults;
     grid-column: 1 / -1;
     margin-top: 1em;
   }
@@ -100,14 +104,14 @@
   }
 
   .fa-copy {
-    color: $fernGreen;
+    color: c.$fernGreen;
   }
 
   .post-requisite-edit {
-    @include ilios-link-button;
+    @include m.ilios-link-button;
   }
 
-  @include for-desktop-and-up {
+  @include m.for-desktop-and-up {
     .session-overview-ilm-duedate {
       grid-column: 2 / -1;
     }

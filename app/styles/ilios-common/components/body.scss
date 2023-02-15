@@ -1,3 +1,6 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 html {
   box-sizing: border-box;
 }
@@ -9,8 +12,8 @@ html {
 }
 
 body {
-  background-color: $slightWhite;
-  color: $raisinBlack;
+  background-color: c.$slightWhite;
+  color: c.$raisinBlack;
   font-family: Nunito, serif;
   margin: 0;
   padding: 0;
@@ -18,39 +21,39 @@ body {
 
 a,
 .link {
-  @include ilios-link;
+  @include m.ilios-link;
 }
 
 button {
-  @include ilios-button;
+  @include m.ilios-button;
 }
 
 h1 {
-  @include ilios-heading-h1;
+  @include m.ilios-heading-h1;
 }
 
 h2 {
-  @include ilios-heading-h2;
+  @include m.ilios-heading-h2;
 }
 
 h3 {
-  @include ilios-heading-h3;
+  @include m.ilios-heading-h3;
 }
 
 h4 {
-  @include ilios-heading-h4;
+  @include m.ilios-heading-h4;
 }
 
 h5 {
-  @include ilios-heading-h5;
+  @include m.ilios-heading-h5;
 }
 
 h6 {
-  @include ilios-heading-h6;
+  @include m.ilios-heading-h6;
 }
 
 select {
-  color: $raisinBlack;
+  color: c.$raisinBlack;
   font-family: 'Nunito Sans', sans-serif;
 }
 
@@ -62,7 +65,7 @@ ul {
 
 p {
   margin-bottom: 1rem;
-  @include paragraph-line-height;
+  @include m.paragraph-line-height;
 
   a {
     text-decoration: underline;
@@ -71,22 +74,22 @@ p {
 
 .add,
 .yes {
-  color: $fernGreen;
+  color: c.$fernGreen;
 }
 
 .remove,
 .no {
-  color: $crimson;
+  color: c.$crimson;
 }
 
 .error,
 .is-error {
-  color: $crimson;
+  color: c.$crimson;
 }
 
 .warning,
 .is-warning {
-  color: $gold;
+  color: c.$gold;
 }
 
 .clickable,
@@ -96,19 +99,19 @@ p {
 
 .editable,
 .is-editable {
-  color: $tealBlue;
+  color: c.$tealBlue;
 }
 
 .published {
-  color: $fernGreen;
+  color: c.$fernGreen;
 }
 
 .notpublished {
-  color: $gold;
+  color: c.$gold;
 }
 
 .scheduled {
-  color: $sepia;
+  color: c.$sepia;
 }
 
 .backtolink {
@@ -117,5 +120,5 @@ p {
 }
 
 .link-button {
-  @include ilios-link-button;
+  @include m.ilios-link-button;
 }

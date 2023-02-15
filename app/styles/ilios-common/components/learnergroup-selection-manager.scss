@@ -1,7 +1,10 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .learnergroup-selection-manager {
 
   .cohort-learner-groups {
-    border: 1px solid $blueMunsell;
+    border: 1px solid c.$blueMunsell;
 
     h5 {
       margin-bottom: .5rem;
@@ -9,8 +12,8 @@
     }
 
     & > ul {
-      @include ilios-list-tree;
-      background-color: $white;
+      @include m.ilios-list-tree;
+      background-color: c.$white;
       height: 15rem;
       margin-bottom: 1rem;
       overflow-y: scroll;

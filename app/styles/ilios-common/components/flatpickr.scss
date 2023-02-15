@@ -1,18 +1,21 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .flatpickr-months {
   .flatpickr-month,
   .flatpickr-next-month,
   .flatpickr-prev-month {
-    color: $white;
-    background: $orange;
+    color: c.$white;
+    background: c.$orange;
 
     svg {
-      fill: $white;
+      fill: c.$white;
     }
   }
 
   .flatpickr-current-month {
     display: flex;
-    @include font-size('medium');
+    @include m.font-size('medium');
     justify-content: center;
     .flatpickr-monthDropdown-months {
       appearance: none;
@@ -23,7 +26,7 @@
       text-align-last: right;
 
       option {
-        color: $raisinBlack;
+        color: c.$raisinBlack;
       }
     }
 
@@ -41,10 +44,10 @@
 .flatpickr-weekdays,
 span.flatpickr-weekday,
 .flatpickr-day.selected {
-  color: $white;
-  background: $orange;
+  color: c.$white;
+  background: c.$orange;
 }
 
 .flatpickr-day.selected {
-  border-color: $orange;
+  border-color: c.$orange;
 }

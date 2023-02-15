@@ -1,8 +1,11 @@
+@use "../../colors" as c;
+@use "../../mixins" as m;
+
 .dashboard-materials {
-  @include dashboard-component;
+  @include m.dashboard-component;
 
   .title {
-    @include ilios-heading-h3;
+    @include m.ilios-heading-h3;
     margin-top: .5rem;
     text-align: center;
   }
@@ -14,12 +17,12 @@
     }
 
     .material-list {
-      border-bottom: 1px dotted $orange;
+      border-bottom: 1px dotted c.$orange;
       display: grid;
       margin-bottom: 2rem;
       padding-bottom: 1rem;
 
-      @include for-tablet-and-up {
+      @include m.for-tablet-and-up {
         grid-template-columns: 1fr 1fr;
       }
     }
@@ -35,17 +38,17 @@
     }
 
     .lm-type-icon {
-      color: $davysGrey;
+      color: c.$davysGrey;
     }
 
     .timed-release-info {
-      @include font-size('small');
+      @include m.font-size('small');
     }
 
     table {
-      @include ilios-table-structure;
-      @include ilios-table-colors;
-      @include ilios-zebra-table;
+      @include m.ilios-table-structure;
+      @include m.ilios-table-colors;
+      @include m.ilios-zebra-table;
       grid-column: 1 / -1;
 
       .no-results {
@@ -54,7 +57,7 @@
     }
 
     .fa-spinner.orange {
-      color: $orange;
+      color: c.$orange;
     }
 
     .paginator {

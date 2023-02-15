@@ -1,14 +1,16 @@
+@use "../mixins" as m;
+
 .selected-instructor-groups {
   .instructor-group-title {
-    @include ilios-tag-list;
+    @include m.ilios-tag-list;
     font-weight: bold;
 
     button {
-      @include ilios-button-reset;
+      @include m.ilios-button-reset;
     }
   }
 
   .instructorgroup-members-list {
-    @include ilios-tag-list;
+    @include m.ilios-tag-list;
   }
 }

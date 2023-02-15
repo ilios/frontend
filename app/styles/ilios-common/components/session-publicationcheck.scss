@@ -1,36 +1,39 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .session-publicationcheck {
-  background-color: $lightBlue;
-  border-color: $culturedGrey;
+  background-color: c.$lightBlue;
+  border-color: c.$culturedGrey;
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
   padding-left: .8rem;
 
   .back-to-session {
-    border-top: 1px solid $orange;
+    border-top: 1px solid c.$orange;
     padding: 1rem 0;
   }
 
   .results {
-    background-color: $lightBlue;
-    @include detail-container($orange);
+    background-color: c.$lightBlue;
+    @include m.detail-container(c.$orange);
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
 
     .session-publicationcheck-content {
-      @include detail-container-content;
+      @include m.detail-container-content;
 
       thead {
-        background-color: $blueMunsell;
-        color: $white;
+        background-color: c.$blueMunsell;
+        color: c.$white;
       }
     }
   }
 
   .fa-link-slash {
-    color: $black;
-    @include font-size('small');
+    color: c.$black;
+    @include m.font-size('small');
   }
 }

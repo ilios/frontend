@@ -1,17 +1,20 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .ilios-calendar-multiday-events {
-  border: 1px dotted $blueMunsell;
+  border: 1px dotted c.$blueMunsell;
   margin-top: 1em;
   padding: 1em 0;
 
   .title {
-    @include font-size('medium');
+    @include m.font-size('medium');
     font-weight: bold;
     margin-top: 0;
     padding-left: 1rem;
   }
 
   ul {
-    @include ilios-list-reset;
+    @include m.ilios-list-reset;
     padding: 1rem;
   }
 }

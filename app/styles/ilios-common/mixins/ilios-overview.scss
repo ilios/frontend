@@ -1,3 +1,8 @@
+@use "../colors" as c;
+@use "font-size";
+@use "ilios-form";
+@use "media";
+
 @mixin ilios-overview ($bottom-border-color: false) {
   @if $bottom-border-color {
     border-bottom: 1px dotted $bottom-border-color;
@@ -6,7 +11,7 @@
   padding: .8rem 0;
 
   label {
-    @include ilios-label;
+    @include ilios-form.ilios-label;
     margin: 0 .5rem 0 0;
   }
 }
@@ -26,8 +31,8 @@
 }
 
 @mixin ilios-overview-title () {
-  color: $tealBlue;
-  @include font-size('base');
+  color: c.$tealBlue;
+  @include font-size.font-size('base');
   font-weight: bold;
 }
 
@@ -45,12 +50,12 @@
   display: grid;
   padding-top: 1rem;
 
-  @include for-tablet-and-up {
+  @include media.for-tablet-and-up {
     grid-row-gap: .5rem;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
 
-  @include for-laptop-and-up {
+  @include media.for-laptop-and-up {
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   }
 }
