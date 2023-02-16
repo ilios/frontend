@@ -22,15 +22,15 @@
               @onEdit={{fn this.setIsEditing true}}
               as |displayText expand collapse isTruncated expanded|
             >
-              <span
-                class="clickable editable"
+              <button
+                class="link-button editable"
                 aria-label={{t "general.edit"}}
                 data-test-edit
-                role="button"
+                type="button"
                 {{on "click" (fn this.setIsEditing true)}}
               >
                 {{displayText}}
-              </span>
+              </button>
               {{#if isTruncated}}
                 <FaIcon @icon="ellipsis" @transform="down-6" />
                 <button
@@ -60,15 +60,15 @@
             </TruncateText>
           {{/if}}
         {{else}}
-          <span
-            class="clickable editable"
+          <button
+            class="link-button editable"
             aria-label={{t "general.edit"}}
             data-test-edit
-            role="button"
+            type="button"
             {{on "click" (fn this.setIsEditing true)}}
           >
             {{@clickPrompt}}
-          </span>
+          </button>
         {{/if}}
       </span>
     {{else}}
