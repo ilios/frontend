@@ -7,7 +7,6 @@ import { ensureSafeComponent } from '@embroider/util';
 import PapaParse from 'papaparse';
 import { dropTask, timeout } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
-import buildReportTitle from 'ilios/utils/build-report-title';
 import createDownloadFile from 'ilios/utils/create-download-file';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
@@ -102,7 +101,7 @@ export default class ReportsSubjectComponent extends Component {
     if (!selectedReport) {
       return '';
     }
-    return buildReportTitle(selectedReport, this.store, this.intl);
+    return this.reporting.buildReportTitle(selectedReport, this.store, this.intl);
   }
 
   get showAcademicYearFilter() {

@@ -7,7 +7,6 @@ import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import buildReportTitle from 'ilios/utils/build-report-title';
 import { map } from 'rsvp';
 
 export default class ReportsSubjectsComponent extends Component {
@@ -44,7 +43,7 @@ export default class ReportsSubjectsComponent extends Component {
     }
     return map(reports.slice(), async (report) => {
       return {
-        title: await buildReportTitle(report, this.store, this.intl),
+        title: await this.reporting.buildReportTitle(report, this.store, this.intl),
         report,
       };
     });
