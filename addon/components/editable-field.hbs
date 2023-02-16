@@ -30,6 +30,13 @@
                 {{on "click" (fn this.setIsEditing true)}}
               >
                 {{displayText}}
+                {{#if @showIcon}}
+                  <FaIcon
+                    data-test-edit-icon
+                    @icon="pen-to-square"
+                    class="enabled"
+                  />
+                {{/if}}
               </button>
               {{#if isTruncated}}
                 <FaIcon @icon="ellipsis" @transform="down-6" />
