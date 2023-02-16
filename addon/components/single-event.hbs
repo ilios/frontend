@@ -111,7 +111,7 @@
         >
           {{t "general.materials"}}
         </button>
-        {{#if (and @event.isUserEvent (await this.currentUser.userIsStudent))}}
+        {{#if (and @event.isUserEvent this.userIsStudent)}}
           <button
             class="link-button"
             type="button"
