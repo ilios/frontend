@@ -23,6 +23,7 @@
             aria-label={{t "general.reportTitle"}}
             type="text"
             value={{this.reportTitle}}
+            placeholder={{this.constructedReportTitle}}
             disabled={{isSaving}}
             {{on "input" (pick "target.value" (set this.title))}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
