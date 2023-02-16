@@ -227,10 +227,6 @@ export default class ReportingService extends Service {
   }
 
   async buildReportTitle(report, store, intl) {
-    const title = report.title;
-    if (title) {
-      return title;
-    }
     const subject = report.subject;
     const key = subjectTranslations[subject];
     const subjectTranslation = intl.t(key);

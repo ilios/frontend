@@ -36,15 +36,19 @@ export default class ReportsSubjectComponent extends Component {
 
   @use allAcademicYears = new ResolveAsyncValue(() => [this.store.findAll('academic-year')]);
   @use constructedReportTitle = new AsyncProcess(() => [
-    this.getSelectedReportTitle.bind(this),
+    this.constructReportTitle.bind(this),
     this.args.selectedReport,
   ]);
 
-  get reportTitleLoaded() {
+  get constructedReportTitleLoaded() {
     return !isNone(this.constructedReportTitle);
   }
 
   get reportTitle() {
+    if (this.args.selectedReport.title) {
+      return this.args.selectedReport.title;
+    }
+
     if (isNone(this.constructedReportTitle)) {
       return '';
     }
@@ -97,10 +101,7 @@ export default class ReportsSubjectComponent extends Component {
     return null;
   }
 
-  async getSelectedReportTitle(selectedReport) {
-    if (!selectedReport) {
-      return '';
-    }
+  async constructReportTitle(selectedReport) {
     return this.reporting.buildReportTitle(selectedReport, this.store, this.intl);
   }
 

@@ -42,8 +42,10 @@ export default class ReportsSubjectsComponent extends Component {
       return null;
     }
     return map(reports.slice(), async (report) => {
+      const title =
+        report.title || (await this.reporting.buildReportTitle(report, this.store, this.intl));
       return {
-        title: await this.reporting.buildReportTitle(report, this.store, this.intl),
+        title,
         report,
       };
     });

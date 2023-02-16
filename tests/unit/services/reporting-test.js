@@ -12,17 +12,6 @@ module('Unit | Service | reporting', function (hooks) {
     this.service = this.owner.lookup('service:reporting');
   });
 
-  test('buildReportTitle() - custom title', async function (assert) {
-    const report = this.server.create('report', {
-      title: 'Lorem Ipsum',
-    });
-
-    const store = this.owner.lookup('service:store');
-    const reportModel = await store.findRecord('report', report.id);
-    const title = await this.service.buildReportTitle(reportModel, store, this.intl);
-    assert.strictEqual(title, report.title);
-  });
-
   test('buildReportTitle() - all competencies in all schools', async function (assert) {
     const report = this.server.create('report', {
       subject: 'competency',
