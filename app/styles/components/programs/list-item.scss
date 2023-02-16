@@ -1,8 +1,11 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .list-item {
   .actions {
     button {
-      @include ilios-button-reset;
-      color: $crimson;
+      @include m.ilios-button-reset;
+      color: c.$crimson;
     }
   }
 }

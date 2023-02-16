@@ -1,15 +1,18 @@
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
+
 .reports-subjects {
-  @include main-section;
+  @include cm.main-section;
 
   .header {
-    @include main-list-box-header;
+    @include m.main-list-box-header;
 
     h2 {
-      @include ilios-heading;
+      @include cm.ilios-heading;
     }
 
     .title {
-      @include main-list-box-header-title;
+      @include m.main-list-box-header-title;
     }
   }
 
@@ -17,7 +20,7 @@
     margin-left: 1rem;
 
     .saved-reports {
-      @include ilios-list-reset;
+      @include cm.ilios-list-reset;
       margin: .5rem 0;
 
       li {
@@ -27,7 +30,7 @@
     }
 
     .fa-trash {
-      @include icon;
+      @include cm.icon;
     }
   }
 }

@@ -1,6 +1,8 @@
+@use "../../ilios-common/mixins" as m;
+
 .curriculum-inventory-sequence-block-session-manager {
   .actions {
-    @include detail-container-actions;
+    @include m.detail-container-actions;
   }
 
   .list {
@@ -9,9 +11,9 @@
         margin-right: .5rem;
       }
 
-      @include ilios-table-structure;
-      @include ilios-table-colors;
-      @include ilios-zebra-table;
+      @include m.ilios-table-structure;
+      @include m.ilios-table-colors;
+      @include m.ilios-zebra-table;
     }
   }
 }

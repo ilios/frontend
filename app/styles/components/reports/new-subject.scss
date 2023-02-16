@@ -1,23 +1,26 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .reports-new-subject {
-  background-color: $slightWhite;
-  border: 1px solid $culturedGrey;
+  background-color: c.$slightWhite;
+  border: 1px solid c.$culturedGrey;
   margin: .5rem 0;
   padding: 1rem 1rem 3rem;
 
   .title {
-    @include ilios-heading-h5;
+    @include m.ilios-heading-h5;
     margin-bottom: .5rem;
   }
 
   .new-subject-content {
-    @include ilios-form-error;
+    @include m.ilios-form-error;
     p {
       display: grid;
       grid-gap: .5rem;
       grid-template-columns: 1fr 4fr;
 
       label {
-        @include ilios-label;
+        @include m.ilios-label;
         text-align: right;
       }
 
@@ -38,7 +41,7 @@
 
     .selected-instructor,
     .selected-mesh-term {
-      @include ilios-tag-list;
+      @include m.ilios-tag-list;
       .remove {
         margin-left: .5rem;
       }

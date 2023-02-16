@@ -1,5 +1,8 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .curriculum-inventory-new-report {
-  border: 1px solid $culturedGrey;
+  border: 1px solid c.$culturedGrey;
   margin: .5rem;
   padding: 1rem;
 
@@ -8,15 +11,15 @@
   }
 
   .form {
-    @include ilios-form;
+    @include m.ilios-form;
     grid-template-columns: repeat(2, 1fr);
 
     .item {
-      @include ilios-form-item;
+      @include m.ilios-form-item;
     }
 
     .buttons {
-      @include ilios-form-buttons;
+      @include m.ilios-form-buttons;
     }
   }
 }

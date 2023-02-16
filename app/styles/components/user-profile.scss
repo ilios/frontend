@@ -1,5 +1,9 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
+
 .user-profile {
-  @include main-section;
+  @include cm.main-section;
   
   h1 {
     margin-bottom: 1rem;
@@ -7,19 +11,19 @@
   }
 
   .blocks {
-    @include admin-blocks;
+    @include m.admin-blocks;
   }
 
   .user-roles {
     text-align: center;
 
     .user-is-student {
-      color: $fernGreen;
+      color: c.$fernGreen;
     }
   }
 
   label {
-    @include ilios-label;
+    @include cm.ilios-label;
   }
 }
 
@@ -29,7 +33,7 @@
   }
 
   ul {
-    @include ilios-list-reset;
+    @include cm.ilios-list-reset;
   }
 }
 
@@ -39,6 +43,6 @@
   }
 
   .refresh-key {
-    background-color: $fernGreen;
+    background-color: c.$fernGreen;
   }
 }

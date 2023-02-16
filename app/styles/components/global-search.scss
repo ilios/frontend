@@ -1,3 +1,6 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .global-search {
   display: grid;
   grid-template-areas:
@@ -7,7 +10,7 @@
   grid-column-gap: 0;
   grid-row-gap: 1rem;
 
-  @include for-tablet-and-up {
+  @include m.for-tablet-and-up {
     grid-template-areas:
     'search search'
     'results filters';
@@ -23,7 +26,7 @@
   .filters {
     grid-area: filters;
 
-    @include for-tablet-and-up {
+    @include m.for-tablet-and-up {
       border: 0;
       display: flex;
       flex-direction: column;
@@ -55,7 +58,7 @@
   }
 
   .results {
-    border-right: 1px solid $raisinBlack;
+    border-right: 1px solid c.$raisinBlack;
     grid-area: results;
     list-style-type: none;
     padding: 0 2rem;
@@ -65,7 +68,7 @@
       text-transform: capitalize;
 
       .fa-spinner.orange {
-        color: $orange;
+        color: c.$orange;
       }
     }
   }

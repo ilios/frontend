@@ -1,5 +1,9 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
+
 .my-profile {
-  @include main-section;
+  @include cm.main-section;
   
   .name {
     margin: .25rem 0 0;
@@ -7,7 +11,7 @@
   }
 
   .is-student {
-    color: $fernGreen;
+    color: c.$fernGreen;
     display: block;
     text-align: center;
     width: 100%;
@@ -19,23 +23,23 @@
   }
 
   .blocks {
-    @include admin-blocks;
+    @include m.admin-blocks;
     margin-top: 1rem;
 
     label {
-      @include ilios-label;
+      @include cm.ilios-label;
     }
 
     ul {
-      @include ilios-list-reset;
+      @include cm.ilios-list-reset;
       margin-left: 1rem;
     }
   }
 
   .token-maintenance {
 
-    border-top: 1px dotted $orange;
-    @include font-size('small');
+    border-top: 1px dotted c.$orange;
+    @include cm.font-size('small');
     margin-top: 1rem;
     padding: 1rem;
 
@@ -45,7 +49,7 @@
     }
 
     label {
-      @include ilios-label;
+      @include cm.ilios-label;
     }
 
     .new-token-form {
@@ -57,7 +61,7 @@
 
     .new-token-result {
       label {
-        @include ilios-heading-h5;
+        @include cm.ilios-heading-h5;
       }
 
       input {

@@ -1,11 +1,14 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .curriculum-inventory-verification-preview-header {
-  background-color: $culturedGrey;
+  background-color: c.$culturedGrey;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: .8rem;
 
-  @include for-tablet-and-up {
+  @include m.for-tablet-and-up {
     flex-direction: row;
   }
 
@@ -13,7 +16,7 @@
     display: flex;
     flex-direction: column;
 
-    @include for-tablet-and-up {
+    @include m.for-tablet-and-up {
       flex-direction: row;
     }
   }

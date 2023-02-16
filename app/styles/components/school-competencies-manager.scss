@@ -1,7 +1,10 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .school-competencies-manager {
   .domain {
-    background-color: $culturedGrey;
-    border: 1px solid $black;
+    background-color: c.$culturedGrey;
+    border: 1px solid c.$black;
     margin: 1rem;
     padding: 1rem;
 
@@ -11,7 +14,7 @@
     }
 
     ul {
-      @include ilios-list-reset;
+      @include m.ilios-list-reset;
       margin-left: 2rem;
     }
 
@@ -25,6 +28,6 @@
   }
 
   .fa-trash {
-    @include icon;
+    @include m.icon;
   }
 }

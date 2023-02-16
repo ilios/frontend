@@ -1,11 +1,14 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .user-profile-roles {
 
   hr {
-    border-top: .5px solid $raisinBlack;
+    border-top: .5px solid c.$raisinBlack;
   }
 
   .actions {
-    @include detail-container-actions;
+    @include m.detail-container-actions;
   }
 
   .form {

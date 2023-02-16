@@ -1,7 +1,11 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/constants";
+@use "../ilios-common/mixins" as m;
+
 /* stylelint-disable property-disallowed-list */
 @use "sass:color";
 .ilios-navigation {
-  background-color: $davysGrey;
+  background-color: c.$davysGrey;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 2rem auto;
@@ -22,14 +26,14 @@
       margin: 0;
       line-height: 1.1;
 
-      @include for-laptop-and-up {
-        @include font-size('small');
+      @include m.for-laptop-and-up {
+        @include m.font-size('small');
         height: auto;
         text-align: left;
 
         &:first-of-type {
           padding-top: 2px;
-          border-top: 2px solid $davysGrey;
+          border-top: 2px solid c.$davysGrey;
         }
       }
 
@@ -49,17 +53,17 @@
       justify-content: center;
 
       .expander {
-        color: $slightWhite;
+        color: c.$slightWhite;
 
         &:hover {
-          background-color: $blueMunsell;
+          background-color: c.$blueMunsell;
         }
       }
     }
   }
 
   &.expanded {
-    @include for-smaller-than-laptop {
+    @include m.for-smaller-than-laptop {
       ul {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -80,15 +84,15 @@
     height: inherit;
   }
 
-  @include for-smaller-than-laptop {
+  @include m.for-smaller-than-laptop {
     a.active {
-      background-color: $blueMunsell;
+      background-color: c.$blueMunsell;
     }
   }
 
-  @include for-laptop-and-up {
+  @include m.for-laptop-and-up {
     display: block;
-    border-bottom: calc(20px * $golden-ratio-large) solid $orange;
+    border-bottom: calc(20px * constants.$golden-ratio-large) solid c.$orange;
 
     ul {
       display: inline;
@@ -113,7 +117,7 @@
     font-weight: 400;
     padding: .25rem .5rem;
 
-    @include for-laptop-and-up {
+    @include m.for-laptop-and-up {
       display: grid;
       grid-template-columns: 1.3em 1fr 1.5em;
       justify-content: start;
@@ -126,7 +130,7 @@
       }
 
       .if-active {
-        color: $blueMunsell;
+        color: c.$blueMunsell;
         justify-self: end;
         font-weight: bold;
       }
@@ -135,7 +139,7 @@
         .if-active {
           display: inline;
         }
-        color: $blueMunsell;
+        color: c.$blueMunsell;
 
         .text {
           color: hsl(0, 0%, 92%);
@@ -144,7 +148,7 @@
     }
 
     &:hover {
-      background-color: $blueMunsell;
+      background-color: c.$blueMunsell;
       color: hsl(0, 0%, 92%);
 
       .if-active {

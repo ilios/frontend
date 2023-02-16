@@ -1,11 +1,13 @@
+@use "../ilios-common/mixins" as m;
+
 .school-new-vocabulary-form {
   .form {
-    @include ilios-form;
+    @include m.ilios-form;
     display: block;
     width: 80%;
 
     .item {
-      @include ilios-form-item;
+      @include m.ilios-form-item;
       height: 4rem;
 
       label {
@@ -14,7 +16,7 @@
     }
 
     .buttons {
-      @include ilios-form-buttons;
+      @include m.ilios-form-buttons;
       padding-top: 2rem;
     }
   }

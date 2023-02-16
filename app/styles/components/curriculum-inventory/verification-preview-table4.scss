@@ -1,8 +1,11 @@
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
+
 .curriculum-inventory-verification-preview-table4 {
   padding: 0 .8rem;
   table {
-    @include ilios-table-structure;
-    @include ilios-table-colors;
-    @include verification-preview-table;
+    @include cm.ilios-table-structure;
+    @include cm.ilios-table-colors;
+    @include m.verification-preview-table;
   }
 }

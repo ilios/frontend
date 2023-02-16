@@ -1,33 +1,36 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .learner-group-instructor-manager {
-  @include detail-container($orange);
-  border-top: 1px dotted $orange;
+  @include m.detail-container(c.$orange);
+  border-top: 1px dotted c.$orange;
 
   .detail-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
   }
 
   .detail-content {
 
     .assigned-instructors {
-      @include ilios-tag-list;
+      @include m.ilios-tag-list;
     }
 
     .removable-instructors {
-      @include ilios-removable-list;
+      @include m.ilios-removable-list;
       margin-bottom: 1rem;
     }
 
     .removable-instructor-group {
       & > span {
-        background-color: $culturedGrey;
+        background-color: c.$culturedGrey;
         border-radius: 4px;
         cursor: pointer;
         font-weight: bold;
@@ -45,7 +48,7 @@
     }
 
     .instructorgroup-members-list {
-      @include ilios-tag-list;
+      @include m.ilios-tag-list;
       margin-bottom: 1rem;
     }
 

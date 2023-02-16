@@ -1,25 +1,28 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .program-year-objective-list-item-expanded {
-  @include ilios-table-structure;
+  @include m.ilios-table-structure;
   margin: 1em 0;
   grid-column: 1 / -1;
 
   thead {
-    background-color: $culturedGrey;
+    background-color: c.$culturedGrey;
   }
 
   tbody tr {
     &:nth-of-type(even) {
-      background-color: $culturedGrey;
+      background-color: c.$culturedGrey;
     }
     ul {
-      @include ilios-list-reset;
+      @include m.ilios-list-reset;
 
       p {
         margin: 0;
       }
 
       li {
-        border-top: 1px solid $davysGrey;
+        border-top: 1px solid c.$davysGrey;
         padding-top: 1rem;
       }
 

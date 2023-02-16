@@ -1,5 +1,7 @@
+@use "../ilios-common/mixins" as m;
+
 .unassigned-students-summary {
   .manage-link {
-    @include ilios-button;
+    @include m.ilios-button;
   }
 }

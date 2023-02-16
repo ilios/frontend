@@ -1,4 +1,7 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .program-year-objectives {
-  @include detail-container($orange);
-  @include objectives;
+  @include m.detail-container(c.$orange);
+  @include m.objectives;
 }

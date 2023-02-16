@@ -1,41 +1,44 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .programyear-overview {
-  @include ilios-overview($orange);
-  background: $slightWhite;
-  border-top: 1px dotted $orange;
+  @include m.ilios-overview(c.$orange);
+  background: c.$slightWhite;
+  border-top: 1px dotted c.$orange;
   border-bottom: 0;
   margin: 0 1.5rem;
   padding: 0 .8rem 1rem .8rem;
   .programyear-overview-header {
-    @include ilios-overview-header;
+    @include m.ilios-overview-header;
 
     h5 {
-      @include ilios-overview-title;
+      @include m.ilios-overview-title;
       margin-top: .5rem;
     }
 
     .programyear-overview-actions {
-      @include ilios-overview-actions;
+      @include m.ilios-overview-actions;
 
       a {
-        color: $blueMunsell;
-        @include font-size('medium');
+        color: c.$blueMunsell;
+        @include m.font-size('medium');
       }
     }
   }
 
   .programyear-overview-content {
-    @include ilios-overview-content;
+    @include m.ilios-overview-content;
     align-items: start;
     padding-top: 1rem;
 
     .removable-directors {
-      @include ilios-removable-list;
+      @include m.ilios-removable-list;
 
       margin-bottom: .5rem;
     }
 
     .directors {
-      @include ilios-tag-list;
+      @include m.ilios-tag-list;
 
       margin-bottom: .5rem;
     }

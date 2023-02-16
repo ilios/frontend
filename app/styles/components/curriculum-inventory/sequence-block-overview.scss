@@ -1,10 +1,13 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .curriculum-inventory-sequence-block-overview {
   .curriculum-inventory-sequence-block-overview-wrapper {
-    @include ilios-overview($orange);
+    @include m.ilios-overview(c.$orange);
     padding: .8rem;
 
     .block {
-      @include ilios-overview-block;
+      @include m.ilios-overview-block;
 
       &.academic-level {
         padding-top: .5rem;
@@ -21,7 +24,7 @@
         }
 
         .details {
-          @include font-size('small');
+          @include m.font-size('small');
         }
       }
 
@@ -31,7 +34,7 @@
         margin-bottom: 1rem;
 
         textarea {
-          @include ilios-textarea;
+          @include m.ilios-textarea;
         }
       }
 
@@ -50,12 +53,12 @@
       }
 
       &.title {
-        @include ilios-overview-title;
+        @include m.ilios-overview-title;
       }
     }
 
     .curriculum-inventory-sequence-block-overview-content {
-      @include ilios-overview-content;
+      @include m.ilios-overview-content;
     }
   }
 
@@ -70,9 +73,9 @@
       }
 
       table {
-        @include ilios-table-structure;
-        @include ilios-table-colors;
-        @include ilios-zebra-table;
+        @include m.ilios-table-structure;
+        @include m.ilios-table-colors;
+        @include m.ilios-zebra-table;
       }
     }
   }
@@ -84,20 +87,20 @@
 
   .curriculum-inventory-sequence-block-dates-duration-editor,
   .curriculum-inventory-sequence-block-min-max-editor {
-    @include ilios-form;
+    @include m.ilios-form;
     grid-column: 1 / -1;
     margin-top: 2rem;
 
     .item {
-      @include ilios-form-item;
+      @include m.ilios-form-item;
 
       &.last {
-        @include ilios-form-last-item;
+        @include m.ilios-form-last-item;
       }
     }
 
     .buttons {
-      @include ilios-form-buttons;
+      @include m.ilios-form-buttons;
     }
   }
 }

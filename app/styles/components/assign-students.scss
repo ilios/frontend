@@ -1,27 +1,30 @@
+@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
+
 .assign-students {
-  @include main-section;
+  @include cm.main-section;
 
   .filters {
-    @include main-list-filters;
+    @include m.main-list-filters;
 
     .schoolsfilter,
     .titlefilter {
-      @include main-list-filter;
+      @include m.main-list-filter;
     }
   }
 
   .students {
-    @include main-list-box;
+    @include m.main-list-box;
 
     .header {
-      @include main-list-box-header;
+      @include m.main-list-box-header;
 
       h2 {
-        @include ilios-heading;
+        @include cm.ilios-heading;
       }
 
       .title {
-        @include main-list-box-header-title;
+        @include m.main-list-box-header-title;
       }
     }
 
@@ -31,18 +34,18 @@
       flex-direction: column;
       padding: .5rem;
 
-      @include for-laptop-and-up {
+      @include cm.for-laptop-and-up {
         flex-direction: row;
       }
 
       label {
-        @include ilios-label;
+        @include cm.ilios-label;
         margin-right: .5rem;
       }
     }
   }
 
   .list {
-    @include main-list-box-table;
+    @include m.main-list-box-table;
   }
 }

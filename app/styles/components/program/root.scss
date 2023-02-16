@@ -1,5 +1,7 @@
+@use "../../ilios-common/mixins" as m;
+
 .program {
-  @include main-section;
+  @include m.main-section;
   margin-bottom: 1rem;
 
   .leadership-collapsed {

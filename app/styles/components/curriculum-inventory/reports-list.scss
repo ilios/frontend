@@ -1,44 +1,47 @@
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
+
 .curriculum-inventory-reports {
-  @include main-section;
+  @include cm.main-section;
 
   .filters {
-    @include main-list-filters;
+    @include m.main-list-filters;
 
-    @include for-laptop-and-up {
+    @include cm.for-laptop-and-up {
       justify-content: flex-start;
     }
 
     .schoolsfilter,
     .programsfilter {
-      @include main-list-filter;
+      @include m.main-list-filter;
     }
   }
 
   .new .saved-result {
-    @include main-list-saved-new;
+    @include m.main-list-saved-new;
   }
 
   .reports {
-    @include main-list-box;
+    @include m.main-list-box;
 
     .header {
-      @include main-list-box-header;
+      @include m.main-list-box-header;
 
       h2 {
-        @include ilios-heading;
+        @include cm.ilios-heading;
       }
 
       .title {
-        @include main-list-box-header-title;
+        @include m.main-list-box-header-title;
       }
 
       .actions {
-        @include main-list-box-header-actions;
+        @include m.main-list-box-header-actions;
       }
     }
   }
 
   .list {
-    @include main-list-box-table;
+    @include m.main-list-box-table;
   }
 }

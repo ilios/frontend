@@ -1,5 +1,8 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .new-directory-user {
-  border-bottom: 1px solid $culturedGrey;
+  border-bottom: 1px solid c.$culturedGrey;
   margin: .5rem;
   padding: 1rem;
 
@@ -8,7 +11,7 @@
   }
 
   .form {
-    @include ilios-form;
+    @include m.ilios-form;
 
     .choose-form-type {
       align-items: baseline;
@@ -22,11 +25,11 @@
     }
 
     .item {
-      @include ilios-form-item;
+      @include m.ilios-form-item;
     }
 
     .buttons {
-      @include ilios-form-buttons;
+      @include m.ilios-form-buttons;
     }
   }
 
@@ -35,8 +38,8 @@
     overflow: scroll;
 
     table {
-      @include ilios-table-structure;
-      @include ilios-table-colors;
+      @include m.ilios-table-structure;
+      @include m.ilios-table-colors;
     }
   }
 }

@@ -1,13 +1,16 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .program-year-objective-list {
-  @include objective-list;
+  @include m.objective-list;
   .grid-row {
     grid-template-columns: 1fr 10fr 6fr 6fr 6fr 1fr;
 
     .expand-row {
-      @include ilios-button-reset;
+      @include m.ilios-button-reset;
       display: flex;
       justify-content: flex-start;
-      border-bottom: 1px solid $davysGrey;
+      border-bottom: 1px solid c.$davysGrey;
       padding: .5em .25em;
     }
   }
@@ -16,19 +19,19 @@
 
     &.is-inactive {
       .grid-item {
-        background-color: $culturedGrey;
+        background-color: c.$culturedGrey;
       }
     }
     .actions {
       display: flex;
       justify-content: flex-end;
       button {
-        @include ilios-button-reset;
+        @include m.ilios-button-reset;
         height: 1rem;
         width: 1rem;
 
         &.active {
-          color: $blueMunsell;
+          color: c.$blueMunsell;
         }
       }
 

@@ -1,3 +1,5 @@
+@use "../../ilios-common/mixins" as m;
+
 .school-session-type-visualize-vocabulary {
-  @include data-visualization;
+  @include m.data-visualization;
 }

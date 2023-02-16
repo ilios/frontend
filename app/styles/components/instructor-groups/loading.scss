@@ -1,3 +1,5 @@
+@use "../../mixins" as m;
+
 .instructor-groups-loading {
-  @include main-list-loading-table;
+  @include m.main-list-loading-table;
 }

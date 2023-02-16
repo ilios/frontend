@@ -1,8 +1,11 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .ilios-header {
-  background-color: $orange;
+  background-color: c.$orange;
 
   h1 {
-    @include visually-hidden;
+    @include m.visually-hidden;
   }
   
   // Elements on the far right
@@ -23,7 +26,7 @@
     "search search search";
     row-gap: .25rem;
 
-    @include for-tablet-and-up {
+    @include m.for-tablet-and-up {
       grid-template-areas: "search locale user";
     }
 
@@ -38,14 +41,14 @@
       grid-area: search;
       height: 100%;
 
-      @include for-phone-only {
+      @include m.for-phone-only {
         width: 10rem;
       }
 
       .autocomplete {
         width: 25rem;
 
-        @include for-smaller-than-laptop {
+        @include m.for-smaller-than-laptop {
           right: 0rem;
         }
 
@@ -56,7 +59,7 @@
       }
 
       input[type='search'] {
-        border: 1px solid $white;
+        border: 1px solid c.$white;
       }
     }
 

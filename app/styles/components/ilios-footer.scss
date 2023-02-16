@@ -1,7 +1,11 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
+
 @use "sass:color";
 
 .ilios-footer {
-  background-color: $orange;
+  background-color: c.$orange;
   display: flex;
   height: 20px;
   justify-content: flex-end;
@@ -9,12 +13,12 @@
 
   .version {
     align-items: center;
-    background-color: color.adjust($slightWhite, $lightness: -3%);
-    border: 1px solid $header-menu-background-color;
+    background-color: color.adjust(c.$slightWhite, $lightness: -3%);
+    border: 1px solid m.$header-menu-background-color;
     border-radius: .2rem;
-    color: $raisinBlack;
+    color: c.$raisinBlack;
     display: flex;
-    @include font-size('smallest');
+    @include cm.font-size('smallest');
     font-weight: 100;
     justify-content: center;
     margin: .25rem;

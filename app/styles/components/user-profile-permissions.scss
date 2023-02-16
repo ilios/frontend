@@ -1,3 +1,5 @@
+@use "../ilios-common/colors" as c;
+
 .user-profile-permissions {
   span {
     white-space: nowrap;
@@ -32,7 +34,7 @@
     }
 
     &.expanded {
-      border-bottom: 1px solid $black;
+      border-bottom: 1px solid c.$black;
       h5 {
         &::after {
           content: '\25BC';

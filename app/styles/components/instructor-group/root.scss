@@ -1,3 +1,5 @@
+@use "../../ilios-common/mixins" as m;
+
 .instructor-group-root {
   padding: .5rem .25rem;
 
@@ -7,7 +9,7 @@
 
   .instructor-group-loading {
     display: block;
-    @include font-size('xl');
+    @include m.font-size('xl');
     margin: auto;
     text-align: center;
   }

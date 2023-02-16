@@ -1,20 +1,23 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .school-curriculum-inventory-institution-details {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
 
   .school-curriculum-inventory-institution-details-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
   }
 
   .school-curriculum-inventory-institution-details-content {
-    @include detail-container-content;
+    @include m.detail-container-content;
 
     label {
       font-weight: bold;

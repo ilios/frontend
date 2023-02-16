@@ -1,9 +1,12 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 noscript {
   p {
-    background-color: $slightWhite;
-    border: 2px dashed $orange;
-    color: $raisinBlack;
-    @include font-size('xxl');
+    background-color: c.$slightWhite;
+    border: 2px dashed c.$orange;
+    color: c.$raisinBlack;
+    @include m.font-size('xxl');
     font-weight: bold;
     margin: 2rem;
     padding: 2rem;

@@ -1,10 +1,12 @@
+@use "../ilios-common/mixins" as m;
+
 .user-profile-cohorts {
 
   .user-profile-cohorts-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
   }
 
@@ -22,11 +24,11 @@
   }
 
   h4 {
-    @include ilios-heading-h5;
+    @include m.ilios-heading-h5;
   }
 
   ul {
-    @include ilios-list-reset;
+    @include m.ilios-list-reset;
   }
 
   i {

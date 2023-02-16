@@ -1,3 +1,5 @@
+@use "../../ilios-common/mixins" as m;
+
 .program-year-visualize-objectives {
-  @include data-visualization;
+  @include m.data-visualization;
 }

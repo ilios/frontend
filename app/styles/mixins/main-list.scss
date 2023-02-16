@@ -1,15 +1,18 @@
+@use "../ilios-common/mixins" as cm;
+@use "../ilios-common/colors" as c;
+
 @mixin main-list-filters () {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
 
-  @include for-laptop-and-up {
+  @include cm.for-laptop-and-up {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
   }
 
-  @include for-desktop-and-up {
+  @include cm.for-desktop-and-up {
     justify-content: flex-start;
   }
 }
@@ -18,23 +21,23 @@
   padding: 0 1rem 1rem 1rem;
   white-space: nowrap;
 
-  @include for-laptop-and-up {
+  @include cm.for-laptop-and-up {
     padding-bottom: 0;
     width: 25%;
   }
 
-  @include for-desktop-and-up {
+  @include cm.for-desktop-and-up {
     margin-right: 2rem;
     width: auto;
   }
 
   select {
-    @include ilios-select;
+    @include cm.ilios-select;
     width: 90%;
   }
 
   input {
-    @include ilios-input;
+    @include cm.ilios-input;
     width: 100%;
   }
 
@@ -46,13 +49,13 @@
 }
 
 @mixin main-list-box-header () {
-  border-bottom: 1px solid $culturedGrey;
+  border-bottom: 1px solid c.$culturedGrey;
   display: flex;
   flex-direction: column;
   padding: .5rem 0;
   text-align: center;
 
-  @include for-laptop-and-up {
+  @include cm.for-laptop-and-up {
     flex-direction: row;
     justify-content: space-between;
     margin-left: 1rem;
@@ -60,21 +63,21 @@
 }
 
 @mixin main-list-box-header-title {
-  @include ilios-heading-h4;
-  @include text-align-bottom;
+  @include cm.ilios-heading-h4;
+  @include cm.text-align-bottom;
   margin-bottom: .5rem;
-  @include for-laptop-and-up {
+  @include cm.for-laptop-and-up {
     margin-bottom: 0;
   }
 }
 
 @mixin main-list-box-header-actions {
-  @include for-laptop-and-up {
+  @include cm.for-laptop-and-up {
     padding-right: 1rem;
     text-align: right;
   }
 
-  @include for-phone-only {
+  @include cm.for-phone-only {
     & > * {
       margin-top: .25em;
     }
@@ -82,7 +85,7 @@
 }
 
 @mixin main-list-saved-new () {
-  border: 1px solid $fernGreen;
+  border: 1px solid c.$fernGreen;
   margin: 1rem;
   padding: 1rem;
 }
@@ -93,13 +96,13 @@
   padding: 1rem;
 
   table {
-    @include ilios-table-structure;
-    @include ilios-table-colors;
-    @include ilios-removable-table;
-    @include ilios-zebra-table;
+    @include cm.ilios-table-structure;
+    @include cm.ilios-table-colors;
+    @include cm.ilios-removable-table;
+    @include cm.ilios-zebra-table;
 
     thead {
-      background-color: $culturedGrey;
+      background-color: c.$culturedGrey;
     }
   }
 }

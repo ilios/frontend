@@ -1,5 +1,7 @@
+@use "../ilios-common/colors" as c;
+
 .programyear-details {
-  background-color: $slightWhite;
+  background-color: c.$slightWhite;
   margin: 0 1.5rem;
   padding: .8rem;
 }

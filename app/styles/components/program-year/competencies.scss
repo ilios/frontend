@@ -1,26 +1,29 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .program-year-competencies {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
 
   .header {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
   }
 
   .content {
-    @include detail-container-content;
+    @include m.detail-container-content;
   }
 
   .competency-list,
   .managed-competency-list {
-    @include ilios-list-tree;
-    border: 1px solid $culturedGrey;
+    @include m.ilios-list-tree;
+    border: 1px solid c.$culturedGrey;
     border-radius: 3px;
     margin: 2rem;
 

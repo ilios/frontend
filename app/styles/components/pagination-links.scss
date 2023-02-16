@@ -1,14 +1,17 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .pagination-links {
-  color: $raisinBlack;
+  color: c.$raisinBlack;
   margin: 2rem 0;
   text-align: center;
 
   .link-button {
-    @include ilios-link-button;
+    @include m.ilios-link-button;
     text-transform: uppercase;
 
     &:disabled {
-      color: $davysGrey;
+      color: c.$davysGrey;
       cursor: default;
     }
 
@@ -19,7 +22,7 @@
     }
 
     svg {
-      @include font-size('medium');
+      @include m.font-size('medium');
       margin-left: .25rem;
       position: relative;
       top: 2px;
@@ -35,28 +38,28 @@
   }
 
   .page-button {
-    background: $slightWhite;
-    border: 1px solid $davysGrey;
-    color: $davysGrey;
+    background: c.$slightWhite;
+    border: 1px solid c.$davysGrey;
+    color: c.$davysGrey;
     display: inline-block;
     min-width: 2rem;
     outline: none;
     padding: .125rem 0;
 
     &:hover {
-      background: $orange;
-      border: 1px solid $orange;
-      color: $white;
+      background: c.$orange;
+      border: 1px solid c.$orange;
+      color: c.$white;
     }
 
-    @include for-phone-only {
+    @include m.for-phone-only {
       display: none;
     }
 
     &:disabled {
-      background: $white;
+      background: c.$white;
       border: none;
-      color: $raisinBlack;
+      color: c.$raisinBlack;
       cursor: default;
     }
   }

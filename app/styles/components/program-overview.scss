@@ -1,14 +1,17 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .program-overview {
-  @include ilios-overview($culturedGrey);
+  @include m.ilios-overview(c.$culturedGrey);
   margin: 0 .8rem;
 
   h2 {
-    @include ilios-overview-title;
+    @include m.ilios-overview-title;
     margin-top: .5rem;
   }
 
   .program-overview-content {
-    @include ilios-overview-content;
+    @include m.ilios-overview-content;
     padding-top: .5rem;
   }
 }

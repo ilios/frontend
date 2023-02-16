@@ -1,11 +1,14 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .program-publication-check {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
 
   .detail-title {
-    @include detail-container-title;
+    @include m.detail-container-title;
   }
 
   .detail-content {
-    @include detail-container-content;
+    @include m.detail-container-content;
   }
 }

@@ -1,20 +1,23 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .curriculum-inventory-sequence-block-header {
-  background-color: $culturedGrey;
+  background-color: c.$culturedGrey;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: .8rem;
 
-  @include for-tablet-and-up {
+  @include m.for-tablet-and-up {
     flex-direction: row;
   }
 
   h2 {
-    @include ilios-heading-h4;
+    @include m.ilios-heading-h4;
   }
 
   .title {
-    @include ilios-heading-h4;
+    @include m.ilios-heading-h4;
     flex-grow: 2;
 
     input {

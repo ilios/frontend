@@ -1,10 +1,12 @@
+@use "../../ilios-common/mixins" as m;
+
 .instructor-group-instructor-manager {
-  @include detail-container-content;
-  @include ilios-form;
+  @include m.detail-container-content;
+  @include m.ilios-form;
   grid-template-columns: 1fr;
 
   .instructor-list {
-    @include ilios-removable-list;
+    @include m.ilios-removable-list;
   }
 
   .available-instructors,

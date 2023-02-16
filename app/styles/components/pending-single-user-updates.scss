@@ -1,10 +1,13 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .pending-single-user-updates {
   width: 100%;
   display: flex;
   justify-content: space-around;
 
   .update {
-    border: 1px solid $orange;
+    border: 1px solid c.$orange;
     border-radius: 1rem;
     display: block;
     margin: 1rem auto;
@@ -25,13 +28,13 @@
       flex-direction: column;
       align-items: flex-start;
 
-      @include for-tablet-and-up {
+      @include m.for-tablet-and-up {
         flex-direction: row;
         justify-content: space-around;
       }
 
       button {
-        @include ilios-button-reset;
+        @include m.ilios-button-reset;
         margin-right: 1rem;
       }
     }
