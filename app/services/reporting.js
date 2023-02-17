@@ -226,14 +226,14 @@ export default class ReportingService extends Service {
     return [[this.intl.t('general.vocabulary')]].concat(titles);
   }
 
-  async buildReportTitle(report, store, intl) {
+  async buildReportTitle(report) {
     const subject = report.subject;
     const key = subjectTranslations[subject];
-    const subjectTranslation = intl.t(key);
+    const subjectTranslation = this.intl.t(key);
     const prepositionalObject = report.prepositionalObject;
 
     const school = await report.school;
-    const schoolTitle = school ? school.title : intl.t('general.allSchools');
+    const schoolTitle = school ? school.title : this.intl.t('general.allSchools');
 
     if (prepositionalObject) {
       let model = dasherize(prepositionalObject);
@@ -247,9 +247,9 @@ export default class ReportingService extends Service {
 
       let record;
       try {
-        record = await store.findRecord(model, prepositionalObjectTableRowId);
+        record = await this.store.findRecord(model, prepositionalObjectTableRowId);
       } catch (e) {
-        return intl.t('general.thisReportIsNoLongerAvailable');
+        return this.intl.t('general.thisReportIsNoLongerAvailable');
       }
 
       let object;
@@ -261,14 +261,14 @@ export default class ReportingService extends Service {
         object = record.title;
       }
 
-      return intl.t('general.reportDisplayTitleWithObject', {
+      return this.intl.t('general.reportDisplayTitleWithObject', {
         subject: subjectTranslation,
         object,
         school: schoolTitle,
       });
     }
 
-    return intl.t('general.reportDisplayTitleWithoutObject', {
+    return this.intl.t('general.reportDisplayTitleWithoutObject', {
       subject: subjectTranslation,
       school: schoolTitle,
     });

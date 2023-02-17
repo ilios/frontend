@@ -29,7 +29,6 @@ export default class ReportsSubjectComponent extends Component {
   @service preserveScroll;
   @service reporting;
   @service store;
-  @service intl;
   @tracked finishedBuildingReport = false;
   @tracked myReportEditorOn = false;
   @tracked @Length(1, 240) title = '';
@@ -102,7 +101,7 @@ export default class ReportsSubjectComponent extends Component {
   }
 
   async constructReportTitle(selectedReport) {
-    return this.reporting.buildReportTitle(selectedReport, this.store, this.intl);
+    return this.reporting.buildReportTitle(selectedReport);
   }
 
   get showAcademicYearFilter() {

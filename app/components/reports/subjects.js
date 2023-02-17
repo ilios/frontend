@@ -13,7 +13,6 @@ export default class ReportsSubjectsComponent extends Component {
   @service currentUser;
   @service reporting;
   @service store;
-  @service intl;
 
   @tracked finishedBuildingReport = false;
   @tracked editorOn = false;
@@ -42,8 +41,7 @@ export default class ReportsSubjectsComponent extends Component {
       return null;
     }
     return map(reports.slice(), async (report) => {
-      const title =
-        report.title || (await this.reporting.buildReportTitle(report, this.store, this.intl));
+      const title = report.title || (await this.reporting.buildReportTitle(report));
       return {
         title,
         report,
