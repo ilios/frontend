@@ -18,7 +18,7 @@ module('Unit | Model | SessionType', function (hooks) {
     const model = this.store.createRecord('session-type');
     assert.strictEqual(model.safeCalendarColor, '');
     model.set('calendarColor', '#ffffff');
-    assert.strictEqual(model.safeCalendarColor.string, '#ffffff');
+    assert.strictEqual(model.safeCalendarColor.toString(), '#ffffff');
   });
 
   test('sessionCount', async function (assert) {
