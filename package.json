@@ -60,7 +60,7 @@
     "ember-click-outside": "^5.0.0",
     "ember-concurrency": "^2.3.2",
     "ember-could-get-used-to-this": "^1.0.1",
-    "ember-data": "4.7.3",
+    "ember-data": "4.11.3",
     "ember-event-helpers": "^0.1.0",
     "ember-feature-flags": "^6.0.0",
     "ember-file-upload": "^7.0.2",
