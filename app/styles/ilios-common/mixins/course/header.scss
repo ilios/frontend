@@ -1,24 +1,31 @@
+@use "../../colors" as c;
+@use "../../constants";
+@use "../font-size";
+@use "../ilios-heading";
+@use "../ilios-input";
+@use "../media";
+
 @mixin course-header {
-  border-bottom: 1px solid $culturedGrey;
+  border-bottom: 1px solid c.$culturedGrey;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: calc($golden-ratio-small * 1rem);
+  padding-bottom: calc(constants.$golden-ratio-small * 1rem);
 
-  @include for-tablet-and-up {
+  @include media.for-tablet-and-up {
     flex-direction: row;
     align-items: flex-end;
     height: 2rem;
   }
 
   h2, h3 {
-    @include ilios-heading-h4;
-    @include text-align-bottom;
+    @include ilios-heading.ilios-heading-h4;
+    @include font-size.text-align-bottom;
   }
 
   .academic-year {
     margin-top: .5rem;
-    @include for-tablet-and-up {
+    @include media.for-tablet-and-up {
       margin-left: .5rem;
       margin-top: 0;
     }
@@ -29,16 +36,16 @@
     flex-direction: column;
     flex-grow: 2;
 
-    @include for-tablet-and-up {
+    @include media.for-tablet-and-up {
       flex-direction: row;
     }
 
     .editinplace {
-      @include ilios-heading-h4;
-      @include text-align-bottom;
+      @include ilios-heading.ilios-heading-h4;
+      @include font-size.text-align-bottom;
 
       &.is-editing {
-        @include for-laptop-and-up {
+        @include media.for-laptop-and-up {
           flex-grow: 2;
         }
 
@@ -48,14 +55,14 @@
         }
 
         input {
-          @include ilios-input;
+          @include ilios-input.ilios-input;
         }
       }
     }
   }
 
   .course-publication {
-    @include for-laptop-and-up {
+    @include media.for-laptop-and-up {
       text-align: right;
     }
   }

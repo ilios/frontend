@@ -1,5 +1,7 @@
+@use "../mixins" as m;
+
 .course-visualize-instructor {
-  @include data-visualization;
+  @include m.data-visualization;
 
   .visualizations {
     .visualizer-course-instructor-session-type,
@@ -7,7 +9,7 @@
       height: 80vh;
       width: 80vw;
 
-      @include for-laptop-and-up {
+      @include m.for-laptop-and-up {
         height: 40vh;
         width: 40vw;
       }

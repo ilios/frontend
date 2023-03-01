@@ -1,19 +1,22 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 @use "sass:color";
 
 .sessions-grid-offering-table {
-  @include ilios-table-structure;
-  @include ilios-table-colors($blueMunsell);
+  @include m.ilios-table-structure;
+  @include m.ilios-table-colors(c.$blueMunsell);
 
   margin: auto;
   width: 95%;
 
   thead {
-    color: $white;
+    color: c.$white;
     position: sticky;
     top: 2rem;
 
     th {
-      @include font-size('small');
+      @include m.font-size('small');
       font-weight: normal;
       padding: .2rem .5rem;
     }
@@ -23,7 +26,7 @@
     padding: .2rem .5rem;
 
     &.expanded-offering-manager {
-      background-color: $lightBlue;
+      background-color: c.$lightBlue;
       padding: 0;
     }
 
@@ -43,17 +46,17 @@
   }
 
   .offering-block-date {
-    border-top: 1px solid $culturedGrey;
+    border-top: 1px solid c.$culturedGrey;
     font-weight: bold;
   }
 
   .sessions-grid-offering {
     transition: background-color .5s ease-out;
     &.even {
-      background-color: color.adjust($lightBlue, $lightness: -10%);
+      background-color: color.adjust(c.$lightBlue, $lightness: -10%);
     }
     &.was-updated {
-      background-color: color.adjust($fernGreen, $lightness: 30%);
+      background-color: color.adjust(c.$fernGreen, $lightness: 30%);
     }
     .room {
       overflow-wrap: anywhere;
@@ -69,8 +72,8 @@
   }
 
   .offering-form {
-    background-color: $white;
-    border: 1px solid $culturedGrey;
+    background-color: c.$white;
+    border: 1px solid c.$culturedGrey;
     padding: .5rem;
   }
 }

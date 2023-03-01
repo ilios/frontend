@@ -1,16 +1,19 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .detail-cohort-manager {
   button {
-    @include ilios-button-reset;
+    @include m.ilios-button-reset;
   }
 
   .selected-cohorts {
-    @include ilios-removable-list;
+    @include m.ilios-removable-list;
   }
 
   .selectable-cohorts {
-    @include ilios-selectable-list;
-    background-color: $white;
-    border: 1px solid $blueMunsell;
+    @include m.ilios-selectable-list;
+    background-color: c.$white;
+    border: 1px solid c.$blueMunsell;
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;

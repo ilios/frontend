@@ -1,15 +1,22 @@
+@use "../colors" as c;
+@use "detail-container";
+@use "font-size";
+@use "ilios-heading";
+@use "ilios-table";
+@use "media";
+
 @mixin collapsed-container ($border-color) {
-  @include detail-container($border-color);
+  @include detail-container.detail-container($border-color);
   display: grid;
 
-  @include for-tablet-and-up {
+  @include media.for-tablet-and-up {
     grid-row-gap: .5rem;
     grid-template-columns: 1fr 3fr;
   }
 }
 
 @mixin collapsed-container-title () {
-  @include ilios-heading-h5;
+  @include ilios-heading.ilios-heading-h5;
   cursor: pointer;
 
   &::after {
@@ -18,16 +25,16 @@
 }
 
 @mixin collapsed-container-content () {
-  @include for-laptop-and-up {
+  @include media.for-laptop-and-up {
     margin: 0;
     padding-top: 0;
   }
 }
 
 @mixin collapsed-container-table () {
-  @include ilios-table-structure;
-  @include ilios-table-colors;
-  @include font-size('small');
+  @include ilios-table.ilios-table-structure;
+  @include ilios-table.ilios-table-colors;
+  @include font-size.font-size('small');
 
   table,
   tr {
@@ -43,16 +50,16 @@
 
   thead,
   th {
-    background-color: $blueMunsell;
-    color: $white;
+    background-color: c.$blueMunsell;
+    color: c.$white;
   }
 
   td:first-of-type {
-    color: $orange;
+    color: c.$orange;
     font-weight: bold;
   }
 
   .maybe {
-    color: $gold;
+    color: c.$gold;
   }
 }

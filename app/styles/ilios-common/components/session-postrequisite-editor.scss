@@ -1,15 +1,19 @@
+@use "../colors" as c;
+@use "../constants";
+@use "../mixins" as m;
+
 .session-postrequisite-editor {
   .table-wrapper {
     max-height: 20rem;
     overflow: auto;
     table {
-      @include ilios-table-structure;
-      @include ilios-zebra-table;
+      @include m.ilios-table-structure;
+      @include m.ilios-zebra-table;
       margin: 0;
       position: relative;
       th {
-        background-color: $tealBlue;
-        color: $white;
+        background-color: c.$tealBlue;
+        color: c.$white;
         position: sticky;
         top: 0;
       }
@@ -19,15 +23,15 @@
 
       tbody tr {
         &.active {
-          background-color: $fernGreen;
-          color: $white;
+          background-color: c.$fernGreen;
+          color: c.$white;
         }
         &:hover {
-          outline: 1px solid $fernGreen;
+          outline: 1px solid c.$fernGreen;
         }
 
         button {
-          @include ilios-button-reset;
+          @include m.ilios-button-reset;
           text-align: left;
           width: 100%;
         }
@@ -35,29 +39,29 @@
     }
   }
   button.remove {
-    @include ilios-link-button;
-    color: $crimson;
+    @include m.ilios-link-button;
+    color: c.$crimson;
   }
   .info {
     display: flex;
     flex-direction: column;
     margin-bottom: .5rem;
 
-    @include for-tablet-and-up {
+    @include m.for-tablet-and-up {
       flex-direction: row;
       justify-content: space-between;
 
       span {
-        width: $golden-ratio-large;
+        width: constants.$golden-ratio-large;
       }
       input {
-        width: calc($golden-ratio-small * 100%);
+        width: calc(constants.$golden-ratio-small * 100%);
       }
     }
 
 
   }
   .buttons {
-    @include ilios-form-buttons;
+    @include m.ilios-form-buttons;
   }
 }

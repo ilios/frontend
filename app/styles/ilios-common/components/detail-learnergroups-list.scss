@@ -1,17 +1,20 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .detail-learnergroups-list {
   .trees {
     display: grid;
   }
 
   fieldset {
-    @include ilios-fieldset;
+    @include m.ilios-fieldset;
 
     ul {
-      @include ilios-removable-list;
+      @include m.ilios-removable-list;
 
       .top-level-group {
-        background-color: $gold;
-        color: $black;
+        background-color: c.$gold;
+        color: c.$black;
       }
     }
 
@@ -20,12 +23,12 @@
       justify-content: flex-end;
 
       button {
-        @include ilios-button-reset;
+        @include m.ilios-button-reset;
       }
     }
 
     .remove-learnergroup {
-      @include ilios-button-reset;
+      @include m.ilios-button-reset;
     }
   }
 }

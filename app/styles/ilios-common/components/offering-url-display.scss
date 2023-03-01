@@ -1,10 +1,13 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .offering-url-display {
   .copy-btn {
-    @include ilios-link-button;
+    @include m.ilios-link-button;
     margin-left: .25em;
 
     &.copying {
-      color: $fernGreen;
+      color: c.$fernGreen;
     }
   }
 }
@@ -16,7 +19,7 @@
     display: none;
   }
   .content {
-    background-color: $fernGreen;
-    color: $white;
+    background-color: c.$fernGreen;
+    color: c.$white;
   }
 }

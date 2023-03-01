@@ -1,4 +1,7 @@
+@use "../../colors" as c;
+@use "../../mixins" as m;
+
 .session-objectives {
-  @include detail-container($orange);
-  @include objectives;
+  @include m.detail-container(c.$orange);
+  @include m.objectives;
 }

@@ -1,23 +1,26 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .detail-mesh {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
 
   .detail-mesh-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
   }
 
   .title {
-    @include detail-container-title;
+    @include m.detail-container-title;
   }
 
   .actions {
-    @include detail-container-actions;
+    @include m.detail-container-actions;
   }
 
   .content {
-    @include detail-container-content;
+    @include m.detail-container-content;
 
     .selected-mesh-terms {
-      @include ilios-tag-list;
+      @include m.ilios-tag-list;
 
       .term-title {
         font-weight: bold;

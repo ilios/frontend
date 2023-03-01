@@ -1,3 +1,5 @@
+@use "../../mixins" as m;
+
 .course-objective-list-item-parents {
-  @include objective-list-item(.5em);
+  @include m.objective-list-item(.5em);
 }

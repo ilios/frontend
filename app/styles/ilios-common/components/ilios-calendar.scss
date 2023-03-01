@@ -1,3 +1,6 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .ilios-calendar {
   .ilios-calendar-calendar {
     clear: both;
@@ -21,12 +24,12 @@
     float: right;
 
     .highlight {
-      color: $orange;
-      @include font-size('medium');
+      color: c.$orange;
+      @include m.font-size('medium');
     }
 
     .on {
-      color: $fernGreen;
+      color: c.$fernGreen;
     }
   }
 
@@ -51,7 +54,7 @@
   }
 
   .ilios-calendar-ics-feed {
-    border: 1px dotted $orange;
+    border: 1px dotted c.$orange;
     margin: auto;
     margin-bottom: 1em;
     padding: 2em;
@@ -64,12 +67,12 @@
       padding: 0;
 
       &.yes {
-        color: $fernGreen;
+        color: c.$fernGreen;
       }
     }
 
     button {
-      @include ilios-button;
+      @include m.ilios-button;
     }
 
   }

@@ -1,23 +1,26 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 @use "sass:color";
 .week-glance {
   .title {
-    @include ilios-heading-h3;
+    @include m.ilios-heading-h3;
     margin-bottom: 1em;
 
     &.collapsible {
-      @include ilios-button-reset;
-      @include font-size('xl');
+      @include m.ilios-button-reset;
+      @include m.font-size('xl');
       &.collapsed {
         &::after {
           content: '\25BA';
-          @include font-size('medium');
+          @include m.font-size('medium');
         }
       }
 
       &.expanded {
         &::after {
           content: '\25BC';
-          @include font-size('medium');
+          @include m.font-size('medium');
         }
       }
     }
@@ -26,10 +29,10 @@
   .event {
     padding: 0 .25rem;
     margin: 1rem 0;
-    border-left: 3px solid $lightBlue;
+    border-left: 3px solid c.$lightBlue;
 
     &:nth-of-type(even) {
-      border-left: 3px solid $lavenderBlush;
+      border-left: 3px solid c.$lavenderBlush;
     }
 
     p {
@@ -38,7 +41,7 @@
     }
 
     .event-title {
-      @include ilios-heading-h5;
+      @include m.ilios-heading-h5;
       font-weight: 700;
       margin-bottom: 0;
 

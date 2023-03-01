@@ -1,15 +1,18 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 @use "sass:color";
 
 .user-search {
   position: relative;
 
   .results {
-    @include ilios-list-reset;
-    background: $white;
-    border: 1px solid $slightWhite;
+    @include m.ilios-list-reset;
+    background: c.$white;
+    border: 1px solid c.$slightWhite;
     border-radius: 3px;
-    box-shadow: 0 2px 2px color.adjust($black, $alpha: -.8);
-    color: $raisinBlack;
+    box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -.8);
+    color: c.$raisinBlack;
     left: 0;
     max-height: 15rem;
     overflow: scroll;
@@ -18,28 +21,28 @@
     z-index: 100;
 
     li {
-      border-bottom: 1px solid $culturedGrey;
+      border-bottom: 1px solid c.$culturedGrey;
       padding: .6rem;
       padding-left: 1rem;
 
       &.active:hover {
-        background-color: color.adjust($blueMunsell, $lightness: 50%);
+        background-color: color.adjust(c.$blueMunsell, $lightness: 50%);
         cursor: pointer;
       }
 
       &.inactive {
-        color: color.adjust($culturedGrey, $lightness: -20%);
+        color: color.adjust(c.$culturedGrey, $lightness: -20%);
         cursor: default;
         font-style: italic;
       }
 
       &.results-count {
-        color: $fernGreen;
+        color: c.$fernGreen;
       }
     }
 
     .email {
-      color: $davysGrey;
+      color: c.$davysGrey;
       font-style: italic;
       padding-right: .2rem;
     }

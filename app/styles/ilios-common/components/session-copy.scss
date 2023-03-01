@@ -1,27 +1,30 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .session-copy {
   h3 {
-    @include ilios-heading-h3;
+    @include m.ilios-heading-h3;
     margin-bottom: 1rem;
   }
 
   .copy-form {
-    @include ilios-form;
-    border: 1px solid $blueMunsell;
+    @include m.ilios-form;
+    border: 1px solid c.$blueMunsell;
     display: block;
     margin-top: 1rem;
     padding: 1rem;
 
     .item {
-      @include ilios-form-item;
+      @include m.ilios-form-item;
     }
 
     .buttons {
-      @include ilios-form-buttons;
+      @include m.ilios-form-buttons;
 
       button:disabled {
-        background-color: $davysGrey;
-        border-color: $davysGrey;
-        color: $white;
+        background-color: c.$davysGrey;
+        border-color: c.$davysGrey;
+        color: c.$white;
         cursor: default;
       }
     }
@@ -31,7 +34,7 @@
     font-weight: 400;
     margin: 0 1rem 2rem;
 
-    @include for-laptop-and-up {
+    @include m.for-laptop-and-up {
       padding: .5rem 6rem 0 4rem;
     }
   }

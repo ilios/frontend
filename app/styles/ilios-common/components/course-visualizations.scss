@@ -1,5 +1,7 @@
+@use "../mixins" as m;
+
 .course-visualizations {
-  @include data-visualization;
+  @include m.data-visualization;
 
   .visualizations {
     .visualizer-course-instructors,

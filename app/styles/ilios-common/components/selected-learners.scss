@@ -1,10 +1,12 @@
+@use "../mixins" as m;
+
 .selected-learners {
   .learners-list {
-    @include ilios-removable-list;
+    @include m.ilios-removable-list;
   }
   margin-bottom: 1rem;
 
   button {
-    @include ilios-button-reset;
+    @include m.ilios-button-reset;
   }
 }

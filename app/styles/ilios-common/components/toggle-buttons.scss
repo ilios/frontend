@@ -1,16 +1,19 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .toggle-buttons {
   display: flex;
 
   input {
-    @include ilios-off-screen;
+    @include m.ilios-off-screen;
   }
 
   label {
-    background-color: $white;
-    color: $tealBlue;
-    border: 1px solid rgba($black, .2);
+    background-color: c.$white;
+    color: c.$tealBlue;
+    border: 1px solid rgba(c.$black, .2);
     display: inline-block;
-    @include font-size('small');
+    @include m.font-size('small');
     font-weight: 600;
     min-width: 3em;
     padding: .25em .5em;
@@ -31,8 +34,8 @@
   }
 
   input:checked + label {
-    background-color: $tealBlue;
-    color: $white;
+    background-color: c.$tealBlue;
+    color: c.$white;
   }
 
 }

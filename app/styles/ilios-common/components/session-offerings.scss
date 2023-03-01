@@ -1,39 +1,42 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .session-offerings {
-  @include detail-container($tealBlue);
+  @include m.detail-container(c.$tealBlue);
 
   .offering-section-top {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
   }
 
 
 
   .session-offerings-content {
-    @include detail-container-content;
+    @include m.detail-container-content;
   }
 
   .session-offerings-header {
-    background-color: $culturedGrey;
+    background-color: c.$culturedGrey;
     display: grid;
     font-weight: bold;
     grid-template-columns: repeat(5, 1fr);
 
     div {
-      background-color: $tealBlue;
-      border-right: 1px solid $white;
-      color: $white;
+      background-color: c.$tealBlue;
+      border-right: 1px solid c.$white;
+      color: c.$white;
       overflow: hidden;
       padding: .5rem .25rem;
       white-space: nowrap;
 
-      @include for-tablet-and-up {
+      @include m.for-tablet-and-up {
         padding: .5rem;
       }
     }

@@ -1,5 +1,7 @@
+@use "../../mixins" as m;
+
 .dashboard-week {
-  @include dashboard-component;
+  @include m.dashboard-component;
 
   .dashboard-week-content {
     padding: 0 1em 1em;
@@ -8,7 +10,7 @@
       display: flex;
       justify-content: flex-end;
 
-      @include for-tablet-and-up {
+      @include m.for-tablet-and-up {
         float: right;
       }
 

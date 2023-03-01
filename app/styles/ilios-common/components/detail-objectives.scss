@@ -1,31 +1,34 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .detail-objectives {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
 
   .detail-objectives-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
   }
 
   .title {
-    @include detail-container-title;
+    @include m.detail-container-title;
   }
 
   .detail-objectives-actions {
-    @include detail-container-actions;
+    @include m.detail-container-actions;
   }
 
   .detail-objectives-content {
-    @include detail-container-content;
+    @include m.detail-container-content;
     margin: 0;
   }
 
   .new-objective {
-    border: 1px solid $culturedGrey;
+    border: 1px solid c.$culturedGrey;
     margin: .5rem;
     padding: 1rem;
 
     .new-objective-form {
       .buttons {
-        @include ilios-form-buttons;
+        @include m.ilios-form-buttons;
       }
     }
   }

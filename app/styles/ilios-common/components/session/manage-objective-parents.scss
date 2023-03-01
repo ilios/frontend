@@ -1,9 +1,12 @@
+@use "../../colors" as c;
+@use "../../mixins" as m;
+
 .session-manage-objective-parents {
   margin: 1em 2em;
   grid-column: 1 / -1;
 
   .parent-picker {
-    @include ilios-list-reset;
+    @include m.ilios-list-reset;
     height: auto;
     padding-left: .5rem;
 
@@ -13,7 +16,7 @@
   }
 
   .no-groups {
-    color: $gold;
+    color: c.$gold;
     font-weight: bold;
   }
 }

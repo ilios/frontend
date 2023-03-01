@@ -1,3 +1,6 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .sessions-grid {
   .no-results {
     margin: .5rem 0;
@@ -7,17 +10,17 @@
 
   .session {
     &:nth-of-type(even) {
-      background-color: $culturedGrey;
+      background-color: c.$culturedGrey;
     }
 
     &.is-expanded {
-      border: 1px solid $blueMunsell;
-      background-color: $lightBlue;
+      border: 1px solid c.$blueMunsell;
+      background-color: c.$lightBlue;
       margin: .5rem 0;
     }
 
     .session-row {
-      @include sessions-grid;
+      @include m.sessions-grid;
       padding: .25rem 0;
     }
 
@@ -27,14 +30,14 @@
 
       .instructional-notes,
       .prerequisites {
-        color: $fernGreen;
+        color: c.$fernGreen;
         margin-right: .25rem;
       }
     }
 
     .confirm-removal {
-      background-color: $lavenderBlush;
-      color: $crimson;
+      background-color: c.$lavenderBlush;
+      color: c.$crimson;
       font-weight: bold;
       margin: 0;
       padding: 1rem 8rem;
@@ -42,13 +45,13 @@
       width: 100%;
 
       .confirm-buttons {
-        @include ilios-form-buttons;
+        @include m.ilios-form-buttons;
         padding-top: 1rem;
       }
     }
   }
 
   .fa-trash {
-    @include icon;
+    @include m.icon;
   }
 }

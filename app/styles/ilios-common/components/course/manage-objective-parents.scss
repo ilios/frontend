@@ -1,9 +1,12 @@
+@use "../../colors" as c;
+@use "../../mixins" as m;
+
 .course-manage-objective-parents {
   margin: 1em 2em;
   grid-column: 1 / -1;
 
   .parent-picker {
-    @include ilios-list-reset;
+    @include m.ilios-list-reset;
     height: auto;
 
     .competency {
@@ -14,10 +17,10 @@
         padding: 0;
       }
       &.selected {
-        border-left: 10px solid $orange;
+        border-left: 10px solid c.$orange;
 
         .competency-title {
-          color: $fernGreen;
+          color: c.$fernGreen;
           font-weight: bold;
         }
       }
@@ -38,7 +41,7 @@
   }
 
   .no-cohorts {
-    color: $gold;
+    color: c.$gold;
     font-weight: bold;
   }
 }

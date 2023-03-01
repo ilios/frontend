@@ -1,6 +1,9 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .single-event-learningmaterial-list {
   .static-list {
-    @include ilios-static-list;
+    @include m.ilios-static-list;
     padding: .25rem;
     margin: 0;
 
@@ -17,7 +20,7 @@
 
       li:last-of-type {
         li:last-of-type {
-          border-bottom: 1px dashed $davysGrey;
+          border-bottom: 1px dashed c.$davysGrey;
           padding-bottom: .25rem;
         }
       }
@@ -25,12 +28,12 @@
   }
 
   .single-event-learningmaterial-item-timing-info {
-    @include font-size('small');
+    @include m.font-size('small');
     font-weight: normal;
 
   }
   .single-event-learningmaterial-item-notes {
-    @include font-size('small');
+    @include m.font-size('small');
     .fa-icon {
       margin-right: 5px;
     }

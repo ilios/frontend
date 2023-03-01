@@ -1,6 +1,8 @@
+@use "../colors" as c;
+
 .session-details {
-  background-color: $lightBlue;
-  border-color: $culturedGrey;
+  background-color: c.$lightBlue;
+  border-color: c.$culturedGrey;
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
@@ -9,8 +11,8 @@
   table {
     thead,
     th {
-      background-color: $tealBlue;
-      color: $white;
+      background-color: c.$tealBlue;
+      color: c.$white;
     }
   }
 }

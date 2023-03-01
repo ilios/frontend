@@ -1,3 +1,7 @@
+@use "../colors" as c;
+@use "font-size";
+@use "media";
+
 @use "sass:color";
 
 @mixin ilios-table-structure () {
@@ -54,7 +58,7 @@
   }
 
   &.condensed {
-    @include font-size('small');
+    @include font-size.font-size('small');
 
     tr,
     td,
@@ -67,7 +71,7 @@
   .hide-from-small-screen {
     display: none;
 
-    @include for-laptop-and-up {
+    @include media.for-laptop-and-up {
       display: table-cell;
     }
   }
@@ -75,7 +79,7 @@
   .hide-from-large-screen {
     display: none;
 
-    @include for-smaller-than-laptop {
+    @include media.for-smaller-than-laptop {
       display: table-cell;
     }
   }
@@ -91,13 +95,13 @@
 }
 
 
-@mixin ilios-table-colors ($backgroundColor: $slightWhite) {
+@mixin ilios-table-colors ($backgroundColor: c.$slightWhite) {
   thead {
     background-color: $backgroundColor;
   }
 
   th {
-    border-bottom: 1px solid color.adjust($culturedGrey, $lightness: -15%);
+    border-bottom: 1px solid color.adjust(c.$culturedGrey, $lightness: -15%);
     background-color: $backgroundColor;
   }
 }
@@ -105,10 +109,10 @@
 @mixin ilios-removable-table () {
   tbody {
     .confirm-removal {
-      background-color: $lavenderBlush;
+      background-color: c.$lavenderBlush;
 
       .confirm-message {
-        color: $crimson;
+        color: c.$crimson;
         font-weight: bold;
         padding-left: 8em;
         padding-right: 8em;
@@ -123,16 +127,16 @@
 
 
       &:hover {
-        background-color: $lavenderBlush;
+        background-color: c.$lavenderBlush;
       }
 
       .remove {
-        background-color: $white;
-        color: $crimson;
+        background-color: c.$white;
+        color: c.$crimson;
 
         &:hover {
-          background-color: $crimson;
-          color: $white;
+          background-color: c.$crimson;
+          color: c.$white;
         }
       }
     }
@@ -141,6 +145,6 @@
 
 @mixin ilios-zebra-table () {
   tbody tr:nth-child(even) {
-    background-color: color.adjust($culturedGrey, $lightness: 4%);
+    background-color: color.adjust(c.$culturedGrey, $lightness: 4%);
   }
 }

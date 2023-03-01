@@ -1,5 +1,7 @@
+@use "ilios-input";
+
 @mixin ilios-textarea {
-  @include ilios-input;
+  @include ilios-input.ilios-input;
   display: inline-block;
   height: 20vh;
   width: 40vw;

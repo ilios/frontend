@@ -1,3 +1,6 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .session-offerings-list {
   display: grid;
 
@@ -14,20 +17,20 @@
       grid-column: 1 / -1;
 
       .offering-block-date-dayofweek {
-        color: $orange;
+        color: c.$orange;
         display: block;
-        @include font-size('medium');
+        @include m.font-size('medium');
         font-weight: bold;
         width: 100%;
       }
 
       .offering-block-date-dayofmonth {
-        color: $davysGrey;
+        color: c.$davysGrey;
         }
       }
 
     .offering-block-time {
-      border-bottom: 1px dotted $davysGrey;
+      border-bottom: 1px dotted c.$davysGrey;
       display: grid;
       grid-column: 1 / -1;
       grid-template-columns: repeat(5, 1fr);
@@ -42,7 +45,7 @@
       }
 
       .offering-manager {
-        border-bottom: 1px dotted $davysGrey;
+        border-bottom: 1px dotted c.$davysGrey;
         &:last-of-type {
           border-bottom: 0;
         }
@@ -52,7 +55,7 @@
       .offering-block-time-time-starttime,
       .offering-block-time-time-ends,
       .offering-block-time-time-endtime {
-        color: $davysGrey;
+        color: c.$davysGrey;
         display: block;
         font-weight: bold;
       }

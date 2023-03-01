@@ -1,6 +1,9 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .selectable-terms-list-item {
-  @include ilios-button-reset;
-  border: 1px $culturedGrey solid;
+  @include m.ilios-button-reset;
+  border: 1px c.$culturedGrey solid;
   border-radius: 4px;
   display: block;
   margin-top: 5px;
@@ -10,7 +13,7 @@
   width: 100%;
 
   &.selected {
-    background-color: $culturedGrey;
+    background-color: c.$culturedGrey;
   }
 
   .actions {

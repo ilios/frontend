@@ -1,3 +1,6 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .monthly-calendar {
   display: flex;
   flex-direction: column;
@@ -5,7 +8,7 @@
   align-items: center;
 
   .month-year {
-    @include ilios-heading-h4;
+    @include m.ilios-heading-h4;
     margin: 0 0 .25rem 0;
     padding: 0;
   }
@@ -30,7 +33,7 @@
         display: none;
       }
 
-      @include for-tablet-and-up {
+      @include m.for-tablet-and-up {
         .long-name {
           display: inline;
         }
@@ -41,7 +44,7 @@
     }
 
     .day {
-      border: 1px solid $culturedGrey;
+      border: 1px solid c.$culturedGrey;
       padding: 5px;
       @for $week from 1 through 6 {
         @for $day from 1 through 7 {
@@ -58,17 +61,17 @@
         padding: 0;
 
         button {
-          @include ilios-link-button;
+          @include m.ilios-link-button;
           width: 100%;
           text-align: left;
         }
       }
 
       .month-event {
-        @include ilios-button-reset;
+        @include m.ilios-button-reset;
         cursor: default;
         display: block;
-        border: 1px solid $culturedGrey;
+        border: 1px solid c.$culturedGrey;
         border-radius: 3px;
         height: 1.5em;
         overflow: hidden;
@@ -83,12 +86,12 @@
 
         span {
           background-color: transparent;
-          @include font-size('smallest');
+          @include m.font-size('smallest');
           font-weight: normal;
         }
 
         .ilios-calendar-event-time {
-          color: $black;
+          color: c.$black;
           display: inline;
         }
 
@@ -99,17 +102,17 @@
       }
 
       .month-more-events {
-        @include ilios-link-button;
+        @include m.ilios-link-button;
         display: block;
         width: 100%;
-        @include font-size('small');
+        @include m.font-size('small');
         text-align: right;
         margin-top: .5rem;
 
         .text {
           display: none;
 
-          @include for-tablet-and-up {
+          @include m.for-tablet-and-up {
             display: inline;
           }
         }

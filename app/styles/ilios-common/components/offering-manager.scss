@@ -1,5 +1,8 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .offering-manager {
-  @include font-size('small');
+  @include m.font-size('small');
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin-bottom: .5rem;
@@ -7,7 +10,7 @@
 
   .offering-manager-learner-groups {
     ul {
-      @include ilios-list-reset;
+      @include m.ilios-list-reset;
     }
   }
 
@@ -16,17 +19,17 @@
     flex-direction: column;
     overflow-wrap: anywhere;
     .copy-btn {
-      @include ilios-link-button;
+      @include m.ilios-link-button;
 
       &.copying {
-        color: $fernGreen;
+        color: c.$fernGreen;
       }
     }
   }
 
   .offering-manager-instructors {
     ul {
-      @include ilios-list-reset;
+      @include m.ilios-list-reset;
     }
   }
 
@@ -37,17 +40,17 @@
   }
 
   &.show-remove-confirmation {
-    background-color: $lavenderBlush;
-    border: 1px solid $crimson;
+    background-color: c.$lavenderBlush;
+    border: 1px solid c.$crimson;
   }
 
   .confirm-removal {
-    background-color: $lavenderBlush;
+    background-color: c.$lavenderBlush;
     grid-column: 1 / -1;
 
     .confirm-message {
-      background-color: $lavenderBlush;
-      color: $crimson;
+      background-color: c.$lavenderBlush;
+      color: c.$crimson;
       font-weight: bold;
       margin: 0;
       padding: 1rem 8rem;
@@ -60,16 +63,16 @@
     }
 
     &:hover {
-      background-color: $lavenderBlush;
+      background-color: c.$lavenderBlush;
     }
 
     .remove {
-      background-color: $white;
-      color: $crimson;
+      background-color: c.$white;
+      color: c.$crimson;
     }
   }
 
   .fa-trash, .fa-pen-to-square {
-    @include icon;
+    @include m.icon;
   }
 }

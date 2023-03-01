@@ -1,3 +1,5 @@
+@use "../../mixins" as m;
+
 .back-to-courses {
-  @include main-section;
+  @include m.main-section;
 }

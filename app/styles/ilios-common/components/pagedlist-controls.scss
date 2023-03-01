@@ -1,10 +1,12 @@
+@use "../mixins" as m;
+
 .pagedlist-controls {
   float: right;
 
   .fa-backward-fast,
   .fa-fast-forward,
   .fa-play {
-    @include icon;
+    @include m.icon;
   }
 
   .forward {

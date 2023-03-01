@@ -1,28 +1,31 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .course-sessions {
-  @include detail-container($orange);
-  @include main-section;
+  @include m.detail-container(c.$orange);
+  @include m.main-section;
   border-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 
   .course-sessions-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
     height: 2rem;
-    @include for-phone-only {
+    @include m.for-phone-only {
       height: 3rem;
     }
   }
 
   .title {
-    @include detail-container-title;
+    @include m.detail-container-title;
   }
 
   .actions {
-    @include detail-container-actions;
+    @include m.detail-container-actions;
   }
 
   .save-result {
-    border: 1px solid $fernGreen;
+    border: 1px solid c.$fernGreen;
     margin: 1rem;
     padding: .75rem;
   }
@@ -35,14 +38,14 @@
 
     input {
       width: 90%;
-      @include for-tablet-and-up {
+      @include m.for-tablet-and-up {
         width: 300px;
       }
     }
   }
 
   .course-sessions-table {
-    @include ilios-table-colors;
+    @include m.ilios-table-colors;
 
     border-collapse: collapse;
     margin-top: .25rem;

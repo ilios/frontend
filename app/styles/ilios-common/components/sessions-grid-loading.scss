@@ -1,9 +1,12 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .sessions-grid-loading {
   div {
-    @include sessions-grid;
+    @include m.sessions-grid;
 
     &:nth-child(even) {
-      background-color: $culturedGrey;
+      background-color: c.$culturedGrey;
     }
   }
   span {

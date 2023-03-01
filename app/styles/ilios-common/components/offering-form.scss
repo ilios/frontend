@@ -1,3 +1,6 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .offering-form {
   .toggle-offering-calendar {
     display: flex;
@@ -5,11 +8,11 @@
   }
 
   .form {
-    @include ilios-form;
+    @include m.ilios-form;
     grid-template-columns: 1fr;
     margin-top: 1em;
 
-    @include for-laptop-and-up {
+    @include m.for-laptop-and-up {
       grid-template-columns: 2fr 1fr 1fr;
 
       .instructor-management,
@@ -43,7 +46,7 @@
       grid-gap: .25rem 1rem;
       margin-bottom: 1rem;
       legend {
-        @include ilios-heading;
+        @include m.ilios-heading;
         padding: 0 .5rem;
       }
     }
@@ -83,13 +86,13 @@
 
           button.cancel {
             background: transparent;
-            color: $crimson;
+            color: c.$crimson;
             margin: 0;
             padding: 0 .2rem;
 
             &:enabled:hover {
-              color: $white;
-              background-color: $crimson;
+              color: c.$white;
+              background-color: c.$crimson;
             }
           }
         }
@@ -101,7 +104,7 @@
         display: flex;
         flex-direction: column;
 
-        @include for-laptop-and-up {
+        @include m.for-laptop-and-up {
           flex-direction: row;
         }
       }
@@ -119,7 +122,7 @@
         width: 5rem;
 
         &:invalid {
-          border: 1px $crimson solid;
+          border: 1px c.$crimson solid;
         }
       }
     }
@@ -149,9 +152,9 @@
     }
 
     .validation-error-message {
-      color: $crimson;
+      color: c.$crimson;
       display: block;
-      @include font-size('small');
+      @include m.font-size('small');
       font-style: italic;
       margin-top: .5rem;
     }
@@ -172,7 +175,7 @@
     }
 
     .buttons {
-      @include ilios-form-buttons;
+      @include m.ilios-form-buttons;
     }
   }
 }

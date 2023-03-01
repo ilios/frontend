@@ -1,23 +1,26 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .objective-manager {
 
   .objectivetitle {
-    @include ilios-browser-defaults;
+    @include m.ilios-browser-defaults;
   }
 
   h2 {
-    background-color: $slightWhite;
+    background-color: c.$slightWhite;
     margin-bottom: 1rem;
     padding: .5rem;
   }
 
   .selected {
-    background-color: $orange;
-    color: $white;
+    background-color: c.$orange;
+    color: c.$white;
   }
 
   .parent-picker {
     ul {
-      @include ilios-list-reset;
+      @include m.ilios-list-reset;
       height: auto;
     }
 
@@ -32,12 +35,12 @@
   }
 
   .no-group {
-    color: $orange;
+    color: c.$orange;
     font-weight: bold;
   }
 
   h5 {
-    @include font-size('small');
+    @include m.font-size('small');
     font-weight: bold;
     margin: .8rem;
     padding: .2rem .5rem;

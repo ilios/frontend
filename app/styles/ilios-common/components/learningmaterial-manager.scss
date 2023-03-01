@@ -1,28 +1,31 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .learningmaterial-manager {
   margin-left: 2rem;
   min-height: 25vh;
 
-  @include ilios-form;
+  @include m.ilios-form;
 
   .item {
-    @include ilios-form-item;
+    @include m.ilios-form-item;
   }
 
   .buttons {
-    @include ilios-form-buttons;
+    @include m.ilios-form-buttons;
   }
 
   .copy-btn {
-    background-color: $fernGreen;
+    background-color: c.$fernGreen;
   }
 
   .notes,
   .description {
-    @include ilios-browser-defaults;
+    @include m.ilios-browser-defaults;
   }
 
   .loading {
-    @include ilios-heading-h1;
+    @include m.ilios-heading-h1;
     display: block;
     padding: 5vh 0;
     text-align: center;
@@ -30,9 +33,9 @@
   }
 
   h2 {
-    @include ilios-heading;
-    color: $raisinBlack;
-    @include font-size('base');
+    @include m.ilios-heading;
+    color: c.$raisinBlack;
+    @include m.font-size('base');
     font-weight: bold;
   }
 
@@ -59,19 +62,19 @@
     }
 
     .add-date {
-      border: 1px solid $fernGreen;
-      color: $fernGreen;
+      border: 1px solid c.$fernGreen;
+      color: c.$fernGreen;
     }
 
     .remove-date {
-      border: 1px solid $crimson;
-      color: $crimson;
+      border: 1px solid c.$crimson;
+      color: c.$crimson;
     }
   }
 
   .weblink {
     span {
-      @include text-wrap;
+      @include m.text-wrap;
     }
   }
 }

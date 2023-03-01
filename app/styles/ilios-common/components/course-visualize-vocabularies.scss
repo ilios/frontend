@@ -1,3 +1,5 @@
+@use "../mixins" as m;
+
 .course-visualize-vocabularies {
-  @include data-visualization;
+  @include m.data-visualization;
 }

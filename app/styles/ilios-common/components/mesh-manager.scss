@@ -1,27 +1,30 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .mesh-manager {
 
   .deprecated {
-    color: $crimson;
+    color: c.$crimson;
     font-weight: bolder;
   }
 
   .results,
   .mesh-search-results {
-    @include ilios-list-reset;
+    @include m.ilios-list-reset;
   }
 
   .mesh-search-results {
-    @include ilios-selectable-list;
+    @include m.ilios-selectable-list;
 
-    background-color: $white;
-    border: 1px solid $blueMunsell;
+    background-color: c.$white;
+    border: 1px solid c.$blueMunsell;
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
     width: 80%;
 
     button {
-      @include ilios-button-reset;
+      @include m.ilios-button-reset;
       text-align: left;
     }
 
@@ -32,7 +35,7 @@
 
     .descriptor-id {
       display: block;
-      @include font-size('small');
+      @include m.font-size('small');
     }
 
     .mesh-concepts {
@@ -46,14 +49,14 @@
   }
 
   .selected-terms {
-    @include ilios-tag-list;
+    @include m.ilios-tag-list;
     margin-bottom: 2rem;
 
     li {
       display: flex;
 
       button {
-        @include ilios-button-reset;
+        @include m.ilios-button-reset;
       }
       .remove {
         margin-left: .5em;
@@ -72,11 +75,11 @@
 
   .mesh-search {
     input[type='search'] {
-      @include ilios-input;
+      @include m.ilios-input;
     }
 
     label {
-      @include ilios-label;
+      @include m.ilios-label;
     }
   }
 }

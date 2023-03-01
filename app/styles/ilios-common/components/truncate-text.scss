@@ -1,5 +1,7 @@
+@use "../mixins" as m;
+
 .truncate-text {
   .expand-buttons {
-    @include ilios-link-button;
+    @include m.ilios-link-button;
   }
 }

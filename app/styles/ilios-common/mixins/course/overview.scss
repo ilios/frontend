@@ -1,32 +1,36 @@
+@use "../../colors" as c;
+@use "../font-size";
+@use "../ilios-overview";
+
 @mixin course-overview() {
-  @include ilios-overview($orange);
+  @include ilios-overview.ilios-overview(c.$orange);
 
   .title {
-    @include ilios-overview-title;
+    @include ilios-overview.ilios-overview-title;
   }
 
   .course-overview-header {
-    @include ilios-overview-header;
+    @include ilios-overview.ilios-overview-header;
   }
 
   .course-overview-actions {
-    @include ilios-overview-actions;
+    @include ilios-overview.ilios-overview-actions;
 
     a, span {
-      @include font-size('medium');
+      @include font-size.font-size('medium');
       margin-right: .5rem;
     }
 
     span {
-      color: $blueMunsell;
+      color: c.$blueMunsell;
     }
   }
 
   .block {
-    @include ilios-overview-block;
+    @include ilios-overview.ilios-overview-block;
   }
 
   .course-overview-content {
-    @include ilios-overview-content;
+    @include ilios-overview.ilios-overview-content;
   }
 }

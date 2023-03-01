@@ -1,15 +1,17 @@
+@use "../colors" as c;
+
 @use "sass:color";
 @use "sass:math";
 
 .progress-bar {
-  $progress-border-color: $culturedGrey;
+  $progress-border-color: c.$culturedGrey;
   $progress-border: 1px solid $progress-border-color;
-  $progress-meter-border-color: $orange;
+  $progress-meter-border-color: c.$orange;
   $progress-meter-border: 1px solid color.adjust($progress-meter-border-color, $lightness: -15%);
   $progress-meter-color: $progress-meter-border-color;
-  $progress-background: color.adjust($slightWhite, $lightness: -5%);
+  $progress-background: color.adjust(c.$slightWhite, $lightness: -5%);
   $progress-animation-duration: .7s;
-  $progress-color: $white;
+  $progress-color: c.$white;
   $box-shadow-color: color.adjust($progress-background, $lightness: -50%);
 
   background-color: $progress-background;
@@ -37,6 +39,6 @@
     color: $progress-color;
     margin: 0;
     padding: .1rem .5rem;
-    text-shadow: 0 0 1px $black;
+    text-shadow: 0 0 1px c.$black;
   }
 }

@@ -1,13 +1,16 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .weekly-calendar-event {
-  @include ilios-button-reset;
+  @include m.ilios-button-reset;
   cursor: default;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
   justify-content: start;
-  color: $raisinBlack;
-  @include font-size('small');
-  border: 1px solid $white;
+  color: c.$raisinBlack;
+  @include m.font-size('small');
+  border: 1px solid c.$white;
   margin: 1px;
   padding: .25rem;
   text-align: left;
@@ -19,9 +22,9 @@
   }
 
   .ilios-calendar-event-time {
-    color: $rosewood;
+    color: c.$rosewood;
     display: block;
-    @include font-size('small');
+    @include m.font-size('small');
     font-weight: bold;
     padding-bottom: .5em;
   }
@@ -32,6 +35,6 @@
   }
 
   &.ilm {
-    border-top: 2px dotted $black;
+    border-top: 2px dotted c.$black;
   }
 }

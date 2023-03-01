@@ -1,13 +1,15 @@
+@use "../colors" as c;
+
 .click-choice-buttons {
   button {
-    background-color: $culturedGrey;
-    border: 1px outset $davysGrey;
-    color: $raisinBlack;
+    background-color: c.$culturedGrey;
+    border: 1px outset c.$davysGrey;
+    color: c.$raisinBlack;
 
     &.active {
-      background-color: $tealBlue;
-      border: 1px inset $tealBlue;
-      color: $white;
+      background-color: c.$tealBlue;
+      border: 1px inset c.$tealBlue;
+      color: c.$white;
     }
   }
 }

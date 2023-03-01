@@ -1,16 +1,19 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .course-publicationcheck {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
 
   .title {
-    @include detail-container-title;
+    @include m.detail-container-title;
   }
 
   .course-publicationcheck-content {
-    @include detail-container-content;
+    @include m.detail-container-content;
   }
 
   .fa-link-slash {
-    color: $black;
-    @include font-size('small');
+    color: c.$black;
+    @include m.font-size('small');
   }
 }

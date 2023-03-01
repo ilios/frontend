@@ -1,6 +1,9 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
 .editinplace {
   .editable {
-    color: $blueMunsell;
+    color: c.$blueMunsell;
     cursor: pointer;
 
     &.prompt {
@@ -9,15 +12,15 @@
   }
 
   .editor {
-    @include ilios-form-error;
+    @include m.ilios-form-error;
     align-items: center;
     display: flex;
 
-    #{$form-input-text-types} {
-      background: $white;
-      border: 1px solid $culturedGrey;
+    #{m.$form-input-text-types} {
+      background: c.$white;
+      border: 1px solid c.$culturedGrey;
       border-radius: 3px;
-      color: $raisinBlack;
+      color: c.$raisinBlack;
       cursor: pointer;
       display: inline;
       outline: none;
@@ -26,7 +29,7 @@
     }
 
     .html-editor {
-      #{$form-input-text-types} {
+      #{m.$form-input-text-types} {
         z-index: 2;
       }
     }
@@ -41,22 +44,22 @@
         padding: 0 .2rem;
 
         &:enabled:hover {
-          color: $white;
+          color: c.$white;
         }
 
         &.done {
-          color: $fernGreen;
+          color: c.$fernGreen;
 
           &:enabled:hover {
-            background-color: $fernGreen;
+            background-color: c.$fernGreen;
           }
         }
 
         &.cancel {
-          color: $crimson;
+          color: c.$crimson;
 
           &:enabled:hover {
-            background-color: $crimson;
+            background-color: c.$crimson;
           }
         }
       }
@@ -64,11 +67,11 @@
   }
 
   .fa-pen-to-square {
-    @include icon;
+    @include m.icon;
   }
 
   .expand-text-button {
-    @include ilios-link-button;
+    @include m.ilios-link-button;
     display: inline;
   }
 }

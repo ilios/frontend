@@ -1,22 +1,24 @@
+@use "../mixins" as m;
+
 .course-summary-header {
-  @include ilios-overview();
+  @include m.ilios-overview();
   padding-left: .8rem;
 
   .course-summary-header-top {
-    @include ilios-overview-header;
+    @include m.ilios-overview-header;
 
     h2 {
-      @include ilios-overview-title;
-      @include ilios-heading-h3;
+      @include m.ilios-overview-title;
+      @include m.ilios-heading-h3;
     }
 
     .course-summary-actions {
-      @include ilios-overview-actions;
+      @include m.ilios-overview-actions;
       margin-top: 0;
       text-align: right;
 
       a {
-        @include font-size('medium');
+        @include m.font-size('medium');
         margin-right: .5rem;
       }
     }
@@ -25,10 +27,10 @@
 
 
   .course-summary-content {
-    @include ilios-overview-content;
+    @include m.ilios-overview-content;
 
     .block {
-      @include ilios-overview-block;
+      @include m.ilios-overview-block;
     }
   }
 }
