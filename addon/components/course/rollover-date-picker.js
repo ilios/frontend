@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { later } from '@ember/runloop';
 import { isTesting } from '@embroider/macros';
+import { DateTime } from 'luxon';
 
 export default class CourseRolloverDatePickerComponent extends Component {
   @service intl;
@@ -21,6 +22,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
       this.#flatPickerInstance.destroy();
     }
     const currentLocale = this.intl.locale[0];
+    const courseDT = DateTime.fromJSDate(course.startDate);
     let locale;
     switch (currentLocale) {
       case 'fr':
@@ -58,7 +60,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
       },
       disable: [
         function (date) {
-          return course.startDate.getUTCDay() !== date.getUTCDay();
+          return DateTime.fromJSDate(date).weekday !== courseDT.weekday;
         },
       ],
       disableMobile: isTesting(),
@@ -67,11 +69,15 @@ export default class CourseRolloverDatePickerComponent extends Component {
 
   @action
   close() {
-    this?.#flatPickerInstance.close();
+    if (this.#flatPickerInstance) {
+      this.#flatPickerInstance.close();
+    }
   }
 
   willDestroy() {
     super.willDestroy(...arguments);
-    this.#flatPickerInstance.destroy();
+    if (this.#flatPickerInstance) {
+      this.#flatPickerInstance.destroy();
+    }
   }
 }
