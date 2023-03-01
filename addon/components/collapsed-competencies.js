@@ -1,24 +1,20 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { findById } from '../utils/array-helpers';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class CollapsedCompetenciesComponent extends Component {
   @service store;
-  @tracked competenciesRelationship;
-  @tracked allSchools;
 
-  load = restartableTask(async (element, [subject]) => {
-    this.competenciesRelationship = await subject.competencies;
-    this.allSchools = await this.store.findAll('school');
-  });
+  @use allSchools = new ResolveAsyncValue(() => [this.store.findAll('school')]);
+  @use competencies = new ResolveAsyncValue(() => [this.args.subject.competencies]);
 
   get summary() {
-    if (!this.allSchools || !this.competenciesRelationship) {
+    if (!this.allSchools || !this.competencies) {
       return [];
     }
-    const schools = this.competenciesRelationship.reduce((schools, competency) => {
+    const schools = this.competencies.reduce((schools, competency) => {
       const schoolId = competency.belongsTo('school').id();
       if (!(schoolId in schools)) {
         schools[schoolId] = {
