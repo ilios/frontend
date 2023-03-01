@@ -1,6 +1,6 @@
 name: Release Notes
 
-on: 
+on:
   push:
     tags:
     - '*'
@@ -13,27 +13,25 @@ jobs:
       with:
         fetch-depth: 0
     - name: Get Previous Tag
-      id: previousTag
       run: |
         PREVIOUS_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))
         echo ${PREVIOUS_TAG}
-        echo ::set-output name=tag::${PREVIOUS_TAG}
+        echo "previous_tag=${PREVIOUS_TAG}" >> $GITHUB_ENV
     - name: Get New Tag
-      id: nextTag
       run: |
         NEW_TAG=${GITHUB_REF#refs/tags/}
         echo ${NEW_TAG}
-        echo ::set-output name=tag::${NEW_TAG}
+        echo "new_tag=${NEW_TAG}" >> $GITHUB_ENV
     - uses: actions/setup-node@v3
     - name: Generate Release Notes
       id: notes
       run: |
-        NOTES=$(npx generate-github-release-notes ilios common ${{ steps.previousTag.outputs.tag }} ${{steps.nextTag.outputs.tag}})
+        NOTES=$(npx generate-github-release-notes ilios common ${{ env.previous_tag }} ${{env.new_tag}})
         echo ${NOTES}
         # remove line breaks from notes so they can be passed around
         NOTES="${NOTES//$'\n'/'%0A'}"
-        echo "::set-output name=releaseNotes::$NOTES"
+        echo "release_notes=${NOTES}" >> $GITHUB_ENV
     - uses: ncipollo/release-action@v1
       with:
-        body: ${{steps.notes.outputs.releaseNotes}}
+        body: ${{env.release_notes}}
         token: ${{ secrets.ZORGBORT_TOKEN }}
