@@ -11,8 +11,15 @@ module('Integration | Component | editable field', function (hooks) {
   test('it renders value', async function (assert) {
     await render(hbs`<EditableField @value="woot!" />
 `);
-
     assert.dom(this.element).hasText('woot!');
+    assert.dom('[data-test-edit-icon]', this.element).isNotVisible();
+  });
+
+  test('edit icon is present', async function (assert) {
+    await render(hbs`<EditableField @value="woot!" @showIcon={{true}} />
+`);
+    assert.dom(this.element).hasText('woot!');
+    assert.dom('[data-test-edit-icon]', this.element).isVisible();
   });
 
   test('it renders clickPrompt', async function (assert) {
