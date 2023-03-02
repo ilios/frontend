@@ -1,13 +1,11 @@
 <section
   class="collapsed-competencies"
-  {{did-insert (perform this.load) @subject}}
-  {{did-update (perform this.load) @subject @subject.competencies}}
   data-test-collapsed-competencies
 >
   <div class="title" role="button" {{on "click" @expand}} data-test-title>
-    {{t "general.competencies"}} ({{get (await @subject.competencies) "length"}})
+    {{t "general.competencies"}} ({{this.competencies.length}})
   </div>
-  {{#unless this.load.lastSuccessful}}
+  {{#unless this.competencies}}
     <LoadingSpinner />
   {{else}}
     <div class="content">
