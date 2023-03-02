@@ -7,6 +7,7 @@ import { action } from '@ember/object';
 import { later } from '@ember/runloop';
 import { isTesting } from '@embroider/macros';
 import { DateTime } from 'luxon';
+import { next } from '@ember/runloop';
 
 export default class CourseRolloverDatePickerComponent extends Component {
   @service intl;
@@ -43,13 +44,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
       defaultDate: value ?? course.startDate,
       formatDate: (dateObj) => this.intl.formatDate(dateObj),
       minDate: course.startDate,
-      onChange: ([selectedDate]) => {
-        // if a date is forced that isn't allowed
-        if (!selectedDate) {
-          selectedDate = course.startDate;
-        }
-        this.args.onChange(selectedDate);
-      },
+      onChange: ([selectedDate]) => this.onChange(selectedDate),
       onOpen: () => {
         later(() => {
           this.isOpen = true;
@@ -79,5 +74,14 @@ export default class CourseRolloverDatePickerComponent extends Component {
     if (this.#flatPickerInstance) {
       this.#flatPickerInstance.destroy();
     }
+  }
+
+  async onChange(date) {
+    // if a date is forced that isn't allowed
+    if (!date) {
+      date = this.args.course.startDate;
+    }
+    await this.args.onChange(date);
+    await next(() => {});
   }
 }
