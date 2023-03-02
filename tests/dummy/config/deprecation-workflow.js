@@ -9,7 +9,6 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'common.competency-is-not-domain' },
     { handler: 'silence', matchId: 'common.school-cohorts' },
     { handler: 'silence', matchId: 'common.curriculum-inventory-report-is-finalized' },
-    { handler: 'silence', matchId: 'ember-modifier.function-based-options' },
     { handler: 'silence', matchId: 'ember-data:deprecate-promise-proxies' }, //https://github.com/emberjs/data/issues/7997
     { handler: 'silence', matchId: 'ember-data:deprecate-non-strict-relationships' },
     { handler: 'silence', matchId: 'ember-data:deprecate-early-static' },
