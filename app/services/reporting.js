@@ -19,6 +19,21 @@ const subjectTranslations = {
   'session type': 'general.sessionTypes',
 };
 
+const objectTranslations = {
+  'session type': 'general.sessionType',
+  competency: 'general.competency',
+  course: 'general.course',
+  instructor: 'general.instructor',
+  'instructor group': 'general.instructorGroup',
+  'learning material': 'general.learningMaterial',
+  'mesh term': 'general.meshTerm',
+  program: 'general.program',
+  'program year': 'general.programYear',
+  session: 'general.session',
+  school: 'general.school',
+  term: 'general.term',
+};
+
 export default class ReportingService extends Service {
   @service store;
   @service currentUser;
@@ -269,6 +284,57 @@ export default class ReportingService extends Service {
     }
 
     return this.intl.t('general.reportDisplayTitleWithoutObject', {
+      subject: subjectTranslation,
+      school: schoolTitle,
+    });
+  }
+
+  async buildReportDescription(report) {
+    const subject = report.subject;
+    const subjectKey = subjectTranslations[subject];
+    const subjectTranslation = this.intl.t(subjectKey);
+    const prepositionalObject = report.prepositionalObject;
+
+    const school = await report.school;
+    const schoolTitle = school ? school.title : this.intl.t('general.allSchools');
+
+    if (prepositionalObject) {
+      let model = dasherize(prepositionalObject);
+      if (model === 'instructor') {
+        model = 'user';
+      }
+      if (model === 'mesh-term') {
+        model = 'mesh-descriptor';
+      }
+
+      const prepositionalObjectTableRowId = report.get('prepositionalObjectTableRowId');
+      let record;
+      try {
+        record = await this.store.findRecord(model, prepositionalObjectTableRowId);
+      } catch (e) {
+        return this.intl.t('general.thisReportIsNoLongerAvailable');
+      }
+
+      const objectKey = objectTranslations[prepositionalObject];
+      const objectTranslation = this.intl.t(objectKey);
+      let object;
+      if (model === 'user') {
+        object = record.fullName;
+      } else if (model === 'mesh-descriptor') {
+        object = record.name;
+      } else {
+        object = record.title;
+      }
+
+      return this.intl.t('general.reportDisplayDescriptionWithObject', {
+        subject: subjectTranslation,
+        object,
+        objectType: objectTranslation,
+        school: schoolTitle,
+      });
+    }
+
+    return this.intl.t('general.reportDisplayDescriptionWithoutObject', {
       subject: subjectTranslation,
       school: schoolTitle,
     });

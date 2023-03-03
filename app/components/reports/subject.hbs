@@ -53,6 +53,13 @@
     </div>
   </div>
   <div class="content-container">
+    <div class="description" data-test-report-description>
+      {{#if this.reportDescriptionLoaded}}
+        {{this.reportDescription}}
+      {{else}}
+        <LoadingSpinner />
+      {{/if}}
+    </div>
     {{#if this.showAcademicYearFilter}}
       <div class="years-filter">
         <select

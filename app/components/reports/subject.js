@@ -39,8 +39,17 @@ export default class ReportsSubjectComponent extends Component {
     this.args.selectedReport,
   ]);
 
+  @use constructedReportDescription = new AsyncProcess(() => [
+    this.constructReportDescription.bind(this),
+    this.args.selectedReport,
+  ]);
+
   get constructedReportTitleLoaded() {
     return !isNone(this.constructedReportTitle);
+  }
+
+  get reportDescriptionLoaded() {
+    return !isNone(this.constructedReportDescription);
   }
 
   get reportTitle() {
@@ -52,6 +61,13 @@ export default class ReportsSubjectComponent extends Component {
       return '';
     }
     return this.constructedReportTitle;
+  }
+
+  get reportDescription() {
+    if (isNone(this.constructedReportDescription)) {
+      return '';
+    }
+    return this.constructedReportDescription;
   }
 
   @dropTask
@@ -102,6 +118,10 @@ export default class ReportsSubjectComponent extends Component {
 
   async constructReportTitle(selectedReport) {
     return this.reporting.buildReportTitle(selectedReport);
+  }
+
+  async constructReportDescription(selectedReport) {
+    return this.reporting.buildReportDescription(selectedReport);
   }
 
   get showAcademicYearFilter() {
