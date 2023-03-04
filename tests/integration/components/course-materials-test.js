@@ -173,16 +173,16 @@ module('Integration | Component | course materials', function (hooks) {
       'originalAuthor:desc',
     ];
     const sSortList = [
-      'title',
-      'title:desc',
-      'type',
-      'type:desc',
-      'author',
-      'author:desc',
-      'sessionTitle',
-      'sessionTitle:desc',
-      'firstOfferingDate',
-      'firstOfferingDate:desc',
+      'lm.title',
+      'lm.title:desc',
+      'lm.type',
+      'lm.type:desc',
+      'lm.originalAuthor',
+      'lm.originalAuthor:desc',
+      'session.title',
+      'session.title:desc',
+      'session.firstOfferingDate',
+      'session.firstOfferingDate:desc',
     ];
     this.set('cSortBy', (prop) => {
       assert.strictEqual(prop, cSortList[cCount]);
@@ -197,7 +197,7 @@ module('Integration | Component | course materials', function (hooks) {
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate',
+      sessionSort: 'session.firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials
