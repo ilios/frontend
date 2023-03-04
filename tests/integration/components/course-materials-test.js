@@ -164,7 +164,14 @@ module('Integration | Component | course materials', function (hooks) {
     const course = await setupPage(this);
     let cCount = 0,
       sCount = 0;
-    const cSortList = ['title:desc', 'title', 'type', 'type:desc', 'author', 'author:desc'];
+    const cSortList = [
+      'title:desc',
+      'title',
+      'type',
+      'type:desc',
+      'originalAuthor',
+      'originalAuthor:desc',
+    ];
     const sSortList = [
       'title',
       'title:desc',

@@ -36,10 +36,10 @@
           <SortableTh
             @sortedAscending={{this.clmSortedAscending}}
             @sortedBy={{or
-              (eq @courseSort "author")
-              (eq @courseSort "author:desc")
+              (eq @courseSort "originalAuthor")
+              (eq @courseSort "originalAuthor:desc")
             }}
-            @onClick={{fn this.courseSortBy "author"}}
+            @onClick={{fn this.courseSortBy "originalAuthor"}}
           >
             {{t "general.author"}}
           </SortableTh>
