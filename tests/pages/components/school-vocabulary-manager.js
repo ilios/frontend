@@ -4,7 +4,7 @@ import newTermForm from './school-vocabulary-new-term';
 const definition = {
   scope: '[data-test-school-vocabulary-manager]',
   title: text('[data-test-title]'),
-  editTitle: clickable('[data-test-title] .clickable'),
+  editTitle: clickable('[data-test-title] [data-test-edit]'),
   changeTitle: fillable('[data-test-title] input'),
   saveTitle: clickable('[data-test-title] .done'),
   hasError: isPresent('[data-test-title] .validation-error-message'),

@@ -4,7 +4,7 @@ const definition = {
   scope: '[data-test-competency-title-editor]',
   title: {
     scope: '[data-test-title]',
-    edit: clickable('.clickable'),
+    edit: clickable('[data-test-edit]'),
     value: value('input'),
     set: fillable('input'),
     save: clickable('.done'),

@@ -15,7 +15,7 @@ const definition = {
   scope: '[data-test-school-manager]',
   title: {
     scope: '[data-test-school-title]',
-    edit: clickable('.clickable'),
+    edit: clickable('[data-test-edit]'),
     set: fillable('input'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
