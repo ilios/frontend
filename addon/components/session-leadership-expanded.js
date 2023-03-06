@@ -25,13 +25,20 @@ export default class CourseLeadershipExpandedComponent extends Component {
     this.studentAdvisors = this.studentAdvisors.filter((obj) => obj !== user);
   }
 
-  manage = dropTask(async () => {
+  async setBuffers() {
     const obj = await hash({
       administrators: this.args.session.administrators,
       studentAdvisors: this.args.session.studentAdvisors,
     });
     this.administrators = obj.administrators.slice();
     this.studentAdvisors = obj.studentAdvisors.slice();
+  }
+
+  load = dropTask(async () => {
+    await this.setBuffers();
+  });
+
+  manage = dropTask(async () => {
     this.args.setIsManaging(true);
   });
 
@@ -43,6 +50,11 @@ export default class CourseLeadershipExpandedComponent extends Component {
     });
     this.args.expand();
     await this.args.session.save();
+    this.args.setIsManaging(false);
+  });
+
+  cancel = dropTask(async () => {
+    await this.setBuffers();
     this.args.setIsManaging(false);
   });
 }
