@@ -27,7 +27,7 @@
             <FaIcon @icon="arrow-rotate-left" />
           </button>
         {{else if @canUpdate}}
-          <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
+          <button type="button" {{on "click" this.manage}} data-test-manage>
             {{t "general.manageLeadership"}}
           </button>
         {{/if}}
