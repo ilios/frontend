@@ -1,47 +1,28 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
 import { map, filter } from 'rsvp';
 import { mapBy } from '../utils/array-helpers';
+import { use } from 'ember-could-get-used-to-this';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class DetailCohortManagerComponent extends Component {
   @service intl;
   @service store;
   @service permissionChecker;
-
   @tracked filter = '';
-  @tracked availableCohortProxies = null;
+  @use proxies = new AsyncProcess(() => [this.loadCohorts.bind(this), this.args.course]);
 
-  load = restartableTask(async (event, [school]) => {
-    if (!school) {
-      return false;
+  get isLoaded() {
+    return !!this.proxies;
+  }
+
+  get availableCohortProxies() {
+    if (!this.proxies) {
+      return [];
     }
-    const allCohorts = await this.store.findAll('cohort');
-    const cohortProxies = await map(allCohorts.slice(), async (cohort) => {
-      const programYear = await cohort.programYear;
-      const program = await programYear.program;
-      const school = await program.school;
-
-      return { school, program, programYear, cohort };
-    });
-
-    this.availableCohortProxies = await filter(cohortProxies, async (obj) => {
-      if (obj.school === school) {
-        return true;
-      }
-      if (await this.permissionChecker.canUpdateAllCoursesInSchool(obj.school)) {
-        return true;
-      }
-      if (await this.permissionChecker.canUpdateProgramYear(obj.programYear)) {
-        return true;
-      }
-
-      return false;
-    });
-
-    return true;
-  });
+    return this.proxies;
+  }
 
   get unselectedAvailableCohortProxies() {
     if (!this.availableCohortProxies) {
@@ -81,5 +62,27 @@ export default class DetailCohortManagerComponent extends Component {
     });
 
     return mapBy(objects, 'cohort');
+  }
+
+  async loadCohorts(course) {
+    const school = await course.school;
+    const allCohorts = await this.store.findAll('cohort');
+    const cohortProxies = await map(allCohorts.slice(), async (cohort) => {
+      const programYear = await cohort.programYear;
+      const program = await programYear.program;
+      const school = await program.school;
+
+      return { school, program, programYear, cohort };
+    });
+
+    return filter(cohortProxies, async (obj) => {
+      if (obj.school === school) {
+        return true;
+      }
+      if (await this.permissionChecker.canUpdateAllCoursesInSchool(obj.school)) {
+        return true;
+      }
+      return !!(await this.permissionChecker.canUpdateProgramYear(obj.programYear));
+    });
   }
 }
