@@ -34,30 +34,26 @@
       </div>
     </div>
     <div class="session-leadership-expanded-content">
-      {{#if (and (is-fulfilled @session.administrators) (is-fulfilled @session.studentAdvisors) )}}
-        {{#if @isManaging}}
-          <LeadershipManager
-            @showDirectors={{false}}
-            @administrators={{this.administrators}}
-            @showAdministrators={{true}}
-            @removeAdministrator={{this.removeAdministrator}}
-            @addAdministrator={{this.addAdministrator}}
-            @studentAdvisors={{this.studentAdvisors}}
-            @showStudentAdvisors={{true}}
-            @removeStudentAdvisor={{this.removeStudentAdvisor}}
-            @addStudentAdvisor={{this.addStudentAdvisor}}
-          />
-        {{else}}
-          <LeadershipList
-            @administrators={{this.administrators}}
-            @studentAdvisors={{this.studentAdvisors}}
-            @showAdministrators={{true}}
-            @showDirectors={{false}}
-            @showStudentAdvisors={{true}}
-          />
-        {{/if}}
+      {{#if @isManaging}}
+        <LeadershipManager
+          @showDirectors={{false}}
+          @administrators={{this.administrators}}
+          @showAdministrators={{true}}
+          @removeAdministrator={{this.removeAdministrator}}
+          @addAdministrator={{this.addAdministrator}}
+          @studentAdvisors={{this.studentAdvisors}}
+          @showStudentAdvisors={{true}}
+          @removeStudentAdvisor={{this.removeStudentAdvisor}}
+          @addStudentAdvisor={{this.addStudentAdvisor}}
+        />
       {{else}}
-        <LoadingSpinner />
+        <LeadershipList
+          @administrators={{this.administrators}}
+          @studentAdvisors={{this.studentAdvisors}}
+          @showAdministrators={{true}}
+          @showDirectors={{false}}
+          @showStudentAdvisors={{true}}
+        />
       {{/if}}
     </div>
   {{/if}}
