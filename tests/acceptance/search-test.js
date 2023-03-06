@@ -194,10 +194,10 @@ module('Acceptance | search', function (hooks) {
 
     await page.visit();
     await page.globalSearch.searchBox.input(input);
-    await page.globalSearch.searchBox.clickIcon();
-    assert.strictEqual(page.globalSearch.searchResults.length, 0);
     assert.strictEqual(page.globalSearch.searchBox.autocompleteResults.length, 1);
     assert.strictEqual(page.globalSearch.searchBox.autocompleteResults[0].text, 'keep typing...');
+    await page.globalSearch.searchBox.clickIcon();
+    assert.strictEqual(page.globalSearch.searchResults.length, 0);
   });
 
   test('search requires three chars in URL #4769', async function (assert) {

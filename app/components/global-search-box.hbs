@@ -26,7 +26,7 @@
     <FaIcon @icon="magnifying-glass"/>
   </button>
   {{#if this.hasResults}}
-    <ClickOutside @onClickOutside={{set this.autocompleteResults null}}>
+    <div {{on-click-outside (set this.results null)}}>
       <ul class="autocomplete" data-test-autocomplete>
         {{#each this.results as |result|}}
           <li class="autocomplete-row">
@@ -42,6 +42,6 @@
           </li>
         {{/each}}
       </ul>
-    </ClickOutside>
+    </div>
   {{/if}}
 </div>

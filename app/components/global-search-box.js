@@ -19,13 +19,10 @@ export default class GlobalSearchBox extends Component {
   @tracked autocompleteSelectedQuery;
   @tracked internalQuery;
   @tracked searchInputElement;
+  @tracked results = null;
 
   get hasResults() {
     return !!this.results?.length;
-  }
-
-  get results() {
-    return this.autocomplete.lastSuccessful?.value;
   }
 
   get computedQuery() {
@@ -204,22 +201,26 @@ export default class GlobalSearchBox extends Component {
     const q = cleanQuery(this.internalQuery);
 
     if (isBlank(q)) {
+      this.results = [];
       return [];
     }
 
     if (q.length < MIN_INPUT) {
-      return [
+      this.results = [
         {
           text: this.intl.t('general.moreInputRequiredPrompt'),
         },
       ];
+
+      return this.results;
     }
 
     const cachedResults = this.findCachedAutocomplete(this.internalQuery);
     if (cachedResults.length) {
-      return cachedResults.map((text) => {
+      this.results = cachedResults.map((text) => {
         return { text };
       });
+      return this.results;
     }
 
     yield timeout(DEBOUNCE_MS);
@@ -227,8 +228,9 @@ export default class GlobalSearchBox extends Component {
     const { autocomplete } = yield this.iliosSearch.forCurriculum(this.internalQuery, true);
     this.autocompleteCache = [...this.autocompleteCache, { q: this.internalQuery, autocomplete }];
 
-    return autocomplete.map((text) => {
+    this.results = autocomplete.map((text) => {
       return { text };
     });
+    return this.results;
   }
 }

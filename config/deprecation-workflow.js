@@ -26,6 +26,5 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'ember-data:no-a-with-array-like' },
     { handler: 'silence', matchId: 'ember-data:deprecate-store-find' },
     { handler: 'silence', matchId: 'common.dates-no-dates' },
-    { handler: 'silence', matchId: 'ember-click-outside.component' },
   ],
 };
