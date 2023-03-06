@@ -1,7 +1,5 @@
 <section
   class="detail-cohort-manager"
-  {{did-insert (perform this.load) @school}}
-  {{did-update (perform this.load) @school}}
 >
   <ul class="selected-cohorts">
     {{#each (sort-by "title" @selectedCohorts) as |cohort|}}
@@ -21,7 +19,7 @@
     {{/each}}
   </ul>
   <ul class="selectable-cohorts">
-    {{#if this.load.lastSuccessful.value}}
+    {{#if this.isLoaded}}
       {{#each this.sortedAvailableCohorts as |cohort|}}
         <li>
           <button

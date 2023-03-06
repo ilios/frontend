@@ -33,7 +33,7 @@
   <div class="detail-cohorts-content">
     {{#if this.isManaging}}
       <DetailCohortManager
-        @school={{await @course.school}}
+        @course={{@course}}
         @selectedCohorts={{this.bufferedCohorts}}
         @add={{this.addCohortToBuffer}}
         @remove={{this.removeCohortFromBuffer}}
