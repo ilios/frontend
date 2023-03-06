@@ -1,37 +1,39 @@
 <div
   class="curriculum-inventory-leadership-expanded"
   data-test-curriculum-inventory-leadership-expanded
-  ...attributes
+  {{did-insert (perform this.load) @report}}
 >
-  <div class="curriculum-inventory-leadership-expanded-header" data-test-header>
-    <div class="title collapsible clickable" role="button" {{on "click" @collapse}} data-test-collapse>
-      {{t "general.curriculumInventoryReportLeadership"}}
+  {{#if this.load.isRunning}}
+      <LoadingSpinner />
+  {{else}}
+    <div class="curriculum-inventory-leadership-expanded-header" data-test-header>
+      <div class="title collapsible clickable" role="button" {{on "click" @collapse}} data-test-collapse>
+        {{t "general.curriculumInventoryReportLeadership"}}
+      </div>
+      <div class="actions">
+        {{#if @isManaging}}
+          <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>
+            <FaIcon
+              @icon={{if this.save.isRunning "spinner" "check"}}
+              @spin={{this.save.isRunning}}
+            />
+          </button>
+          <button type="button" class="bigcancel" {{on "click" (perform this.cancel)}} data-test-cancel>
+            <FaIcon @icon="arrow-rotate-left" />
+          </button>
+        {{else if @canUpdate}}
+          <button type="button" {{on "click" this.manage}} data-test-manage>
+            {{t "general.manageLeadership"}}
+          </button>
+        {{/if}}
+      </div>
     </div>
-    <div class="actions">
-      {{#if @isManaging}}
-        <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>
-          <FaIcon
-            @icon={{if this.save.isRunning "spinner" "check"}}
-            @spin={{this.save.isRunning}}
-          />
-        </button>
-        <button type="button" class="bigcancel" {{on "click" (fn @setIsManaging false)}} data-test-cancel>
-          <FaIcon @icon="arrow-rotate-left" />
-        </button>
-      {{else if @canUpdate}}
-        <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
-          {{t "general.manageLeadership"}}
-        </button>
-      {{/if}}
-    </div>
-  </div>
-  <div class="curriculum-inventory-leadership-expanded-content" data-test-content>
-    {{#if (is-fulfilled @report.administrators)}}
+    <div class="curriculum-inventory-leadership-expanded-content" data-test-content>
       {{#if @isManaging}}
         <LeadershipManager
           @showAdministrators={{true}}
           @showDirectors={{false}}
-          @administrators={{this.administratorBuffer}}
+          @administrators={{this.administrators}}
           @removeAdministrator={{this.removeAdministrator}}
           @addAdministrator={{this.addAdministrator}}
         />
@@ -39,11 +41,9 @@
         <LeadershipList
           @showAdministrators={{true}}
           @showDirectors={{false}}
-          @administrators={{await @report.administrators}}
+          @administrators={{this.administrators}}
         />
       {{/if}}
-    {{else}}
-      <LoadingSpinner />
-    {{/if}}
-  </div>
+    </div>
+  {{/if}}
 </div>
