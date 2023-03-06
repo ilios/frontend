@@ -7,6 +7,7 @@ import {
   isPresent,
   property,
   text,
+  value,
 } from 'ember-cli-page-object';
 
 const definition = {
@@ -14,7 +15,15 @@ const definition = {
   backToReports: {
     scope: '[data-test-back-to-reports]',
   },
-  title: text('[data-test-report-header] [data-test-title]'),
+  title: {
+    scope: '[data-test-report-title]',
+    edit: clickable('[data-test-edit]'),
+    set: fillable('input'),
+    value: value('input'),
+    errors: collection('.validation-error-message'),
+    cancel: clickable('.cancel'),
+    save: clickable('.done'),
+  },
   description: text('[data-test-report-description]'),
   download: clickable('[data-test-download]'),
   academicYears: {
