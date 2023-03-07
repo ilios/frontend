@@ -164,18 +164,25 @@ module('Integration | Component | course materials', function (hooks) {
     const course = await setupPage(this);
     let cCount = 0,
       sCount = 0;
-    const cSortList = ['title:desc', 'title', 'type', 'type:desc', 'author', 'author:desc'];
-    const sSortList = [
-      'title',
+    const cSortList = [
       'title:desc',
+      'title',
       'type',
       'type:desc',
-      'author',
-      'author:desc',
-      'sessionTitle',
-      'sessionTitle:desc',
-      'firstOfferingDate',
-      'firstOfferingDate:desc',
+      'originalAuthor',
+      'originalAuthor:desc',
+    ];
+    const sSortList = [
+      'lm.title',
+      'lm.title:desc',
+      'lm.type',
+      'lm.type:desc',
+      'lm.originalAuthor',
+      'lm.originalAuthor:desc',
+      'session.title',
+      'session.title:desc',
+      'session.firstOfferingDate',
+      'session.firstOfferingDate:desc',
     ];
     this.set('cSortBy', (prop) => {
       assert.strictEqual(prop, cSortList[cCount]);
@@ -190,7 +197,7 @@ module('Integration | Component | course materials', function (hooks) {
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate',
+      sessionSort: 'session.firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials

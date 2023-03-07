@@ -36,7 +36,7 @@ export default class CourseMaterialsComponent extends Component {
   @use courseMaterialLms = new ResolveFlatMapBy(() => [this.courseMaterials, 'learningMaterial']);
   @use sessionMaterialObjects = new AsyncProcess(() => [
     this.buildSessionMaterials.bind(this),
-    this.sessionMaterials ?? [],
+    this.sessionMaterials,
   ]);
 
   get isLoading() {
@@ -119,10 +119,13 @@ export default class CourseMaterialsComponent extends Component {
   });
 
   /**
-   * Resovle session and LM so they can be used synchronousy
+   * Resolve session and LMs, so they can be used synchronous
    * in the filter.
    */
   async buildSessionMaterials(materials) {
+    if (!materials) {
+      return null;
+    }
     return map(materials, async (slm) => {
       const lm = await slm.get('learningMaterial');
       const session = await slm.session;
