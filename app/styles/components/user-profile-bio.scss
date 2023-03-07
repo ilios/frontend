@@ -1,8 +1,11 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 @use "sass:color";
 
 .user-profile-bio {
   .actions {
-    @include detail-container-actions;
+    @include m.detail-container-actions;
   }
 
   .error {
@@ -10,23 +13,23 @@
   }
 
   .primary-school {
-    @include font-size('medium');
+    @include m.font-size('medium');
     padding: 0 .5rem;
   }
 
   .form {
-    @include ilios-form;
+    @include m.ilios-form;
     grid-template-columns: 1fr;
 
     .item {
-      @include ilios-form-item;
+      @include m.ilios-form-item;
 
       &.last {
-        @include ilios-form-last-item;
+        @include m.ilios-form-last-item;
       }
 
       &.synced-from-directory input {
-        background-color: color.adjust($fernGreen, $lightness: 40%);
+        background-color: color.adjust(c.$fernGreen, $lightness: 40%);
         transition: background-color 500ms ease;
       }
     }
@@ -36,7 +39,7 @@
     display: flex;
 
     button {
-      background-color: $blueMunsell;
+      background-color: c.$blueMunsell;
       height: 2rem;
       margin-bottom: .25rem;
       margin-left: .5rem;
@@ -51,8 +54,8 @@
 
   meter {
     background: none;
-    background-color: $white;
-    border: .5px solid $raisinBlack;
+    background-color: c.$white;
+    border: .5px solid c.$raisinBlack;
     height: .75rem;
     margin: .25rem 0;
     width: 60%;
@@ -64,47 +67,47 @@
 
   meter::-webkit-meter-bar {
     background: none;
-    background-color: $white;
+    background-color: c.$white;
   }
 
-  meter[value='0']::-webkit-meter-optimum-value { background: $crimson; }
-  meter[value='1']::-webkit-meter-optimum-value { background: $crimson; }
-  meter[value='2']::-webkit-meter-optimum-value { background: $orange; }
-  meter[value='3']::-webkit-meter-optimum-value { background: $gold; }
-  meter[value='4']::-webkit-meter-optimum-value { background: $fernGreen; }
+  meter[value='0']::-webkit-meter-optimum-value { background: c.$crimson; }
+  meter[value='1']::-webkit-meter-optimum-value { background: c.$crimson; }
+  meter[value='2']::-webkit-meter-optimum-value { background: c.$orange; }
+  meter[value='3']::-webkit-meter-optimum-value { background: c.$gold; }
+  meter[value='4']::-webkit-meter-optimum-value { background: c.$fernGreen; }
 
-  meter[value='0']:-moz-meter-bar { background: $crimson; }
-  meter[value='1']:-moz-meter-bar { background: $crimson; }
-  meter[value='2']:-moz-meter-bar { background: $orange; }
-  meter[value='3']:-moz-meter-bar { background: $gold; }
-  meter[value='4']:-moz-meter-bar { background: $fernGreen; }
+  meter[value='0']:-moz-meter-bar { background: c.$crimson; }
+  meter[value='1']:-moz-meter-bar { background: c.$crimson; }
+  meter[value='2']:-moz-meter-bar { background: c.$orange; }
+  meter[value='3']:-moz-meter-bar { background: c.$gold; }
+  meter[value='4']:-moz-meter-bar { background: c.$fernGreen; }
 
   .password-strength {
     display: inline-block;
-    @include font-size('base');
+    @include m.font-size('base');
     font-variant: small-caps;
     text-align: right;
     width: 10%;
 
     &.strength-0 {
-      color: $crimson;
+      color: c.$crimson;
       width: 20%;
     }
 
     &.strength-1 {
-      color: $crimson;
+      color: c.$crimson;
     }
 
     &.strength-2 {
-      color: $orange;
+      color: c.$orange;
     }
 
     &.strength-3 {
-      color: $gold;
+      color: c.$gold;
     }
 
     &.strength-4 {
-      color: $fernGreen;
+      color: c.$fernGreen;
     }
   }
 }

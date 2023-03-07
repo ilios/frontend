@@ -1,8 +1,12 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/constants";
+@use "../ilios-common/mixins" as m;
+
 .ilios-logo {
-    background-color: $orange;
+    background-color: c.$orange;
     
-    @include for-laptop-and-up {
-      padding-bottom: calc($golden-ratio-small * 1rem);
+    @include m.for-laptop-and-up {
+      padding-bottom: calc(constants.$golden-ratio-small * 1rem);
     }
 
     img {

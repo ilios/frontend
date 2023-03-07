@@ -1,25 +1,28 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .course-search-result {
   max-width: 40rem;
   padding: .5rem 0;
 
   .course-flag {
-    background: $orange;
+    background: c.$orange;
     border-radius: 2px;
     bottom: 2px;
-    color: $white;
+    color: c.$white;
     display: inline-block;
-    @include font-size('smallest');
+    @include m.font-size('smallest');
     padding: 2px 3px 1px;
     position: relative;
   }
 
   .school-flag {
-    background: $orange;
+    background: c.$orange;
     border-radius: 2px;
     bottom: 2px;
-    color: $white;
+    color: c.$white;
     display: inline-block;
-    @include font-size('smallest');
+    @include m.font-size('smallest');
     padding: 2px 3px 1px;
     position: relative;
   }
@@ -29,21 +32,21 @@
     padding: .25rem .75rem 0;
 
     .sessions {
-      color: $davysGrey;
-      @include font-size('small');
+      color: c.$davysGrey;
+      @include m.font-size('small');
     }
   }
 
   .session-title-link {
-    @include font-size('small');
+    @include m.font-size('small');
   }
 
   .show-more {
-    @include font-size('small');
+    @include m.font-size('small');
     text-transform: capitalize;
 
     .fa-angle-down {
-      @include font-size('base');
+      @include m.font-size('base');
       margin-right: .125rem;
       position: relative;
       top: 2px;
@@ -55,13 +58,13 @@
     overflow: hidden;
 
     .global-search-tag {
-      background: $slightWhite;
-      border: 1px solid $davysGrey;
+      background: c.$slightWhite;
+      border: 1px solid c.$davysGrey;
       border-radius: .125rem;
-      color: $raisinBlack;
+      color: c.$raisinBlack;
       display: inline-block;
       float: left;
-      @include font-size('smallest');
+      @include m.font-size('smallest');
       margin-right: .375rem;
       padding: .125rem;
     }

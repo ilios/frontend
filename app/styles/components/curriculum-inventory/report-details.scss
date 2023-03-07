@@ -1,16 +1,19 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .curriculum-inventory-report-details {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
   margin: 0 .8rem;
 
   .title {
-    @include detail-container-title;
+    @include m.detail-container-title;
   }
 
   .confirm-finalize {
-    background-color: $lavenderBlush;
+    background-color: c.$lavenderBlush;
 
     .confirm-message {
-      color: $crimson;
+      color: c.$crimson;
       font-weight: bold;
       padding: 1rem 10%;
       text-align: center;
@@ -22,12 +25,12 @@
 
 
     &:hover {
-      background-color: $lavenderBlush;
+      background-color: c.$lavenderBlush;
     }
 
     .finalize {
-      background-color: $white;
-      color: $crimson;
+      background-color: c.$white;
+      color: c.$crimson;
     }
   }
 }

@@ -1,6 +1,9 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 // class name prefixed with ilios to avoid conflicts with addon provided css
 .ilios-update-notification {
-  @include ilios-button-reset;
+  @include m.ilios-button-reset;
   $height: 2.5rem;
-  @include critical-notice($blueMunsell, $culturedGrey, $height);
+  @include m.critical-notice(c.$blueMunsell, c.$culturedGrey, $height);
 }

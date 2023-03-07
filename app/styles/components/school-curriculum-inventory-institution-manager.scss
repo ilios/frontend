@@ -1,35 +1,38 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .school-curriculum-inventory-institution-manager {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
 
   .school-curriculum-inventory-institution-manager-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
   }
 
   .school-curriculum-inventory-institution-manager-content {
-    @include detail-container-content;
+    @include m.detail-container-content;
 
     .form {
-      @include ilios-form;
+      @include m.ilios-form;
       grid-template-columns: 1fr;
       margin-top: 1em;
 
-      @include for-laptop-and-up {
+      @include m.for-laptop-and-up {
         grid-template-columns: 1fr 1fr;
       }
     }
 
     .validation-error-message {
-      color: $crimson;
+      color: c.$crimson;
       display: block;
-      @include font-size('small');
+      @include m.font-size('small');
       font-style: italic;
       margin-top: .25rem;
     }

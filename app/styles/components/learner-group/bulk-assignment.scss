@@ -1,7 +1,10 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 @use "sass:color";
 
 .learner-group-bulk-assignment {
-  border-bottom: 1px solid $orange;
+  border-bottom: 1px solid c.$orange;
   margin-bottom: 2rem;
   padding: 1rem;
 
@@ -12,8 +15,8 @@
       width: 100%;
 
       i {
-        color: $blueMunsell;
-        @include font-size('xxl');
+        color: c.$blueMunsell;
+        @include m.font-size('xxl');
         font-weight: 600;
         margin: 0;
         padding: 0;
@@ -21,13 +24,13 @@
     }
 
     .issue {
-      color: $davysGrey;
+      color: c.$davysGrey;
       margin-left: 1rem;
     }
   }
 
   .group-matcher {
-    border: 1px solid $davysGrey;
+    border: 1px solid c.$davysGrey;
 
     th:nth-child(1),
     td:nth-child(1) {
@@ -39,24 +42,24 @@
     }
 
     .learner-group-bulk-group-matcher {
-      border: 1px solid $davysGrey;
+      border: 1px solid c.$davysGrey;
 
       select {
         width: 100%;
       }
 
       &.matched {
-        background-color: color.adjust($fernGreen, $lightness: 15%);
+        background-color: color.adjust(c.$fernGreen, $lightness: 15%);
       }
 
       &.not-matched {
-        background-color: color.adjust($gold, $lightness: 15%);
+        background-color: color.adjust(c.$gold, $lightness: 15%);
       }
     }
   }
 
   table {
-    @include ilios-table-structure;
-    @include ilios-table-colors;
+    @include m.ilios-table-structure;
+    @include m.ilios-table-colors;
   }
 }

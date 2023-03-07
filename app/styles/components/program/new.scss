@@ -1,5 +1,8 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .new-program {
-  border: 1px solid $culturedGrey;
+  border: 1px solid c.$culturedGrey;
   margin: .5rem;
   padding: 1rem;
 
@@ -8,17 +11,17 @@
   }
 
   .form {
-    @include ilios-form;
+    @include m.ilios-form;
 
     .title {
-      @include ilios-form-item;
+      @include m.ilios-form-item;
       input {
         min-width: 400px;
       }
     }
 
     .buttons {
-      @include ilios-form-buttons;
+      @include m.ilios-form-buttons;
     }
   }
 }

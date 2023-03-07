@@ -1,19 +1,23 @@
-.filter-tools {
-  $filter-tools-border-color: $culturedGrey;
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
 
-  @include clearfix;
+.filter-tools {
+  $filter-tools-border-color: c.$culturedGrey;
+
+  @include m.clearfix;
   border-radius: 3px;
   padding: 1rem 0 1rem .5rem;
 
 
   .filter {
-    @include font-size('base');
+    @include cm.font-size('base');
     margin-bottom: 1rem;
     margin-top: 1rem;
     min-height: 2.25rem;
     vertical-align: middle;
 
-    @include for-laptop-and-up {
+    @include cm.for-laptop-and-up {
       margin-bottom: 0;
 
       select {

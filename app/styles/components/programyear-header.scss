@@ -1,3 +1,6 @@
+@use "../ilios-common/constants";
+@use "../ilios-common/mixins" as m;
+
 .programyear-header {
   .backtolink {
     margin: .5rem;
@@ -7,10 +10,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: calc($golden-ratio-large * 1rem) 0 calc($golden-ratio-small * 1rem) 0;
+    padding: calc(constants.$golden-ratio-large * 1rem) 0 calc(constants.$golden-ratio-small * 1rem) 0;
     margin: 0 .8rem 0 1.3rem;
 
-    @include for-tablet-and-up {
+    @include m.for-tablet-and-up {
       flex-direction: row;
     }
 
@@ -20,21 +23,21 @@
       display: flex;
       flex-direction: column;
 
-      @include for-tablet-and-up {
+      @include m.for-tablet-and-up {
         flex-direction: row;
       }
 
       .editable,
       h5 {
         display: block;
-        @include font-size('large');
+        @include m.font-size('large');
 
-        @include for-laptop-and-up {
+        @include m.for-laptop-and-up {
           display: inline;
         }
       }
 
-      @include for-tablet-and-up {
+      @include m.for-tablet-and-up {
         h5 {
           margin-left: 1rem;
         }
@@ -42,7 +45,7 @@
     }
 
     .programyear-publication {
-      @include for-laptop-and-up {
+      @include m.for-laptop-and-up {
         text-align: right;
       }
     }

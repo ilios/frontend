@@ -1,10 +1,13 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .new-user {
-  border: 1px solid $culturedGrey;
+  border: 1px solid c.$culturedGrey;
   margin: .5rem;
   padding: 1rem;
 
   .new-user-form {
-    @include ilios-form;
+    @include m.ilios-form;
 
     .choose-form-type {
       align-items: baseline;
@@ -18,15 +21,15 @@
     }
 
     .item {
-      @include ilios-form-item;
+      @include m.ilios-form-item;
 
       &.last {
-        @include ilios-form-last-item;
+        @include m.ilios-form-last-item;
       }
     }
 
     .buttons {
-      @include ilios-form-buttons;
+      @include m.ilios-form-buttons;
     }
   }
 }

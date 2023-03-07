@@ -1,24 +1,27 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .school-session-types-expanded {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
 
   .school-session-types-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
   }
 
   .school-session-types-expanded-content {
-    @include detail-container-content;
+    @include m.detail-container-content;
 
     table {
-      @include ilios-table-structure;
-      @include ilios-table-colors;
+      @include m.ilios-table-structure;
+      @include m.ilios-table-colors;
     }
   }
 }

@@ -1,5 +1,5 @@
-@import 'mixins/main-list';
-@import 'mixins/admin-blocks';
-@import 'mixins/header-menu';
-@import 'mixins/verification-preview-table';
-@import 'mixins/clearfix';
+@forward 'mixins/main-list';
+@forward 'mixins/admin-blocks';
+@forward 'mixins/header-menu';
+@forward 'mixins/verification-preview-table';
+@forward 'mixins/clearfix';

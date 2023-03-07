@@ -1,25 +1,28 @@
+@use "../ilios-common/mixins" as cm;
+@use "../ilios-common/colors" as c;
+
 @use "sass:color";
 
 @mixin admin-blocks () {
   display: grid;
   grid-gap: .5rem;
-  
-  @include for-laptop-and-up {
+
+  @include cm.for-laptop-and-up {
     grid-template-columns: 1fr 1fr;
   }
 
   .small-component,
   .large-component {
-    background-color: $culturedGrey;
-    border: 1px solid $blueMunsell;
+    background-color: c.$culturedGrey;
+    border: 1px solid c.$blueMunsell;
     border-radius: 5px;
     margin-bottom: 1rem;
     min-height: 5rem;
     padding: .5rem;
 
     &.alert {
-      background-color: $white;
-      border: 3px solid $gold;
+      background-color: c.$white;
+      border: 3px solid c.$gold;
     }
 
     h3 {
@@ -32,7 +35,7 @@
     }
 
     button {
-      @include font-size('base');
+      @include cm.font-size('base');
     }
 
     .inline-data {
@@ -45,7 +48,7 @@
   }
 
   .has-saved {
-    background-color: color.adjust($fernGreen, $lightness: 30%);
+    background-color: color.adjust(c.$fernGreen, $lightness: 30%);
     transition: background-color .5s ease-out;
   }
 

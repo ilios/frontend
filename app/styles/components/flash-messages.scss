@@ -1,3 +1,5 @@
+@use "../ilios-common/colors" as c;
+
 @use "sass:color";
 
 .flash-messages {
@@ -11,7 +13,7 @@
 
   @mixin flash($color) {
     background-color: $color;
-    color: $white;
+    color: c.$white;
     display: block;
     opacity: 1;
     padding: .5rem;
@@ -34,19 +36,19 @@
   }
 
   .alert-success {
-    @include flash($fernGreen);
+    @include flash(c.$fernGreen);
   }
 
   .alert-warning {
-    @include flash($gold);
+    @include flash(c.$gold);
   }
 
   .alert-info {
-    @include flash($blueMunsell);
+    @include flash(c.$blueMunsell);
   }
 
   .alert-alert {
-    @include flash($crimson);
+    @include flash(c.$crimson);
   }
 
   .alert:last-of-type {

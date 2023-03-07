@@ -1,52 +1,56 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
+
 .school-list {
-  @include main-section;
+  @include cm.main-section;
 
   .schools {
-    @include main-list-box;
+    @include m.main-list-box;
 
     .header {
-      @include main-list-box-header;
+      @include m.main-list-box-header;
 
       h2 {
-        @include ilios-heading;
+        @include cm.ilios-heading;
       }
 
       .title {
-        @include main-list-box-header-title;
+        @include m.main-list-box-header-title;
       }
     }
   }
 
   .new {
-    border: 1px solid $culturedGrey;
+    border: 1px solid c.$culturedGrey;
     padding: 1rem;
 
-    @include for-laptop-and-up {
+    @include cm.for-laptop-and-up {
       margin-left: 1rem;
     }
 
     .new-result-title {
-      @include ilios-heading-h4;
+      @include cm.ilios-heading-h4;
     }
 
     .form {
-      @include ilios-form;
+      @include cm.ilios-form;
 
       .item {
-        @include ilios-form-item;
+        @include cm.ilios-form-item;
       }
 
       .buttons {
-        @include ilios-form-buttons;
+        @include cm.ilios-form-buttons;
       }
     }
   }
 
   .savedschool {
-    @include main-list-saved-new;
+    @include m.main-list-saved-new;
   }
 
   .list {
-    @include main-list-box-table;
+    @include m.main-list-box-table;
   }
 }

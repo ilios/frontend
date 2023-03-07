@@ -1,27 +1,31 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
+
 .learner-group-user-manager {
-  @include detail-container($tealBlue);
+  @include cm.detail-container(c.$tealBlue);
   border-bottom: 0;
   display: grid;
   grid-template-columns: 3fr 1fr;
 
   .title {
-    @include detail-container-title-style;
+    @include cm.detail-container-title-style;
   }
 
   .actions {
     input {
-      @include ilios-input;
+      @include cm.ilios-input;
       width: 15rem;
     }
   }
 
   .learner-group-user-manager-content {
-    @include detail-container-content;
+    @include cm.detail-container-content;
     grid-column: 1 / -1;
 
     .list {
-      @include main-list-box-table;
-      @include ilios-zebra-table;
+      @include m.main-list-box-table;
+      @include cm.ilios-zebra-table;
       grid-column: 1 / -1;
       max-height: 540px;
       overflow: auto;
@@ -29,7 +33,7 @@
   }
 
   .inline-button {
-    @include ilios-button-reset;
+    @include cm.ilios-button-reset;
     text-align: left;
     width: 100%;
   }

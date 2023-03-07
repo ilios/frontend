@@ -1,3 +1,5 @@
+@use "../../mixins" as m;
+
 .list {
-  @include main-list-box-table;
+  @include m.main-list-box-table;
 }

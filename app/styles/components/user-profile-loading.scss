@@ -1,3 +1,6 @@
+@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
+
 .user-profile-loading {
   padding: 1rem;
 
@@ -9,10 +12,10 @@
   }
 
   .blocks {
-    @include admin-blocks;
+    @include m.admin-blocks;
 
     .loading {
-      @include loading-box;
+      @include cm.loading-box;
       animation-duration: 4s;
       height: 25rem;
     }

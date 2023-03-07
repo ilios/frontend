@@ -1,24 +1,27 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .user-profile-schools {
 
   .user-profile-schools-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
   }
 
   table {
-    @include ilios-table-structure;
-    @include ilios-table-colors;
+    @include m.ilios-table-structure;
+    @include m.ilios-table-colors;
   }
 
   .primary-school {
-    @include font-size('medium');
+    @include m.font-size('medium');
   }
 
   .more-permissions-notice {
-    color: $raisinBlack;
+    color: c.$raisinBlack;
     font-style: italic;
     font-weight: bold;
     text-align: center;

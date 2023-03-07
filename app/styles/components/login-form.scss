@@ -1,13 +1,15 @@
+@use "../ilios-common/mixins" as m;
+
 .login-form {
   margin: .5rem;
   padding: 1rem;
   width: 90%;
 
-  @include for-tablet-and-up {
+  @include m.for-tablet-and-up {
     width: 60%;
   }
 
-  @include for-laptop-and-up {
+  @include m.for-laptop-and-up {
     width: 40%;
   }
 
@@ -16,16 +18,16 @@
   }
 
   form {
-    @include ilios-form;
+    @include m.ilios-form;
 
     .item {
-      @include ilios-form-item;
+      @include m.ilios-form-item;
       flex-direction: column;
       grid-column: 1 / -1;
     }
 
     .buttons {
-      @include ilios-form-buttons;
+      @include m.ilios-form-buttons;
 
       button {
         width: 6rem;

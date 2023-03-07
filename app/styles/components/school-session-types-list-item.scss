@@ -1,7 +1,10 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .school-session-types-list-item {
   .calendar-color {
     .box {
-      border: 1px solid $black;
+      border: 1px solid c.$black;
       display: inline-block;
       height: 1.5rem;
       width: 1.5rem;
@@ -9,7 +12,7 @@
   }
 
   .fa-chart-column, .fa-pen-to-square, .fa-trash {
-    @include icon;
+    @include m.icon;
   }
 
   .link-button {

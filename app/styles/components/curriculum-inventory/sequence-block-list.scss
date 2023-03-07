@@ -1,24 +1,28 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
+
 .curriculum-inventory-sequence-block-list {
-  @include main-section;
+  @include cm.main-section;
 
   .header {
-    @include main-list-box-header;
+    @include m.main-list-box-header;
 
     h2 {
-      @include ilios-heading;
+      @include cm.ilios-heading;
     }
 
     .title {
-      @include main-list-box-header-title;
+      @include m.main-list-box-header-title;
     }
 
     .actions {
-      @include main-list-box-header-actions;
+      @include m.main-list-box-header-actions;
     }
   }
 
   .list {
-    @include main-list-box-table;
+    @include m.main-list-box-table;
 
     i {
       margin-left: .25rem;
@@ -29,7 +33,7 @@
   }
 
   .saved-result {
-    border: 1px solid $fernGreen;
+    border: 1px solid c.$fernGreen;
     margin: 1rem;
     padding: .75rem;
   }

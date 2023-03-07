@@ -1,8 +1,10 @@
+@use "../ilios-common/mixins" as m;
+
 .simple-chart-tooltip {
   left: 13rem !important;
   width: 45%;
 
-  @include for-smaller-than-laptop {
+  @include m.for-smaller-than-laptop {
     left: 0 !important;
     margin-left: 2.5%;
     width: 90%;

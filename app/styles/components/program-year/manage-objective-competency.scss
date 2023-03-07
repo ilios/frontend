@@ -1,23 +1,26 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .program-year-manage-objective-competency {
   margin: 1em 2em;
   grid-column: 1 / -1;
 
   .parent-picker {
-    @include ilios-list-reset;
+    @include m.ilios-list-reset;
     height: auto;
 
     .domain {
-      border-left: 10px solid $slightWhite;
+      border-left: 10px solid c.$slightWhite;
 
       .domain-title {
         margin: .5rem 0 0 .5rem;
         padding: 0;
       }
       &.selected {
-        border-left: 10px solid $orange;
+        border-left: 10px solid c.$orange;
 
         .domain-title {
-          color: $fernGreen;
+          color: c.$fernGreen;
           font-weight: bold;
         }
       }
@@ -38,7 +41,7 @@
   }
 
   .no-cohorts {
-    color: $gold;
+    color: c.$gold;
     font-weight: bold;
   }
 }

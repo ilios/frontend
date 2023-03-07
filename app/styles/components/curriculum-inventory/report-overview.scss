@@ -1,32 +1,35 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .curriculum-inventory-report-overview {
-  @include ilios-overview($orange);
-  border-bottom: 1px dotted $orange;
+  @include m.ilios-overview(c.$orange);
+  border-bottom: 1px dotted c.$orange;
   display: block;
 
   .report-overview-header {
-    @include ilios-overview-header;
+    @include m.ilios-overview-header;
 
     .title {
-      @include ilios-overview-title;
+      @include m.ilios-overview-title;
     }
 
     .report-overview-actions {
-      @include ilios-overview-actions;
+      @include m.ilios-overview-actions;
 
       a, span {
-        color: $blueMunsell;
-        @include font-size('medium');
+        color: c.$blueMunsell;
+        @include m.font-size('medium');
         margin-right: .5rem;
       }
     }
   }
 
   .block {
-    @include ilios-overview-block;
+    @include m.ilios-overview-block;
   }
 
   .curriculum-inventory-report-overview-content {
-    @include ilios-overview-content;
+    @include m.ilios-overview-content;
   }
 
   .description {
@@ -34,7 +37,7 @@
     margin-bottom: 2rem;
 
     textarea {
-      @include ilios-textarea;
+      @include m.ilios-textarea;
     }
   }
 }

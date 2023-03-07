@@ -1,19 +1,22 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .curriculum-inventory-leadership-expanded {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
 
   .curriculum-inventory-leadership-expanded-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
 
     .actions {
-      @include detail-container-actions;
+      @include m.detail-container-actions;
     }
   }
 
   .curriculum-inventory-leadership-expanded-content {
-    @include detail-container-content;
+    @include m.detail-container-content;
   }
 }

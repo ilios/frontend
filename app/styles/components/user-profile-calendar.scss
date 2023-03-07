@@ -1,5 +1,8 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .user-profile-calendar {
-  border: 1px solid $black;
+  border: 1px solid c.$black;
   border-radius: 5px;
   grid-column: 1 / -1;
   margin-bottom: 1rem;
@@ -9,12 +12,12 @@
   position: relative;
 
   h2 {
-    @include ilios-heading;
+    @include m.ilios-heading;
     margin-bottom: 1rem;
   }
 
   .calendar-time-picker {
-    @include ilios-list-reset;
+    @include m.ilios-list-reset;
 
     margin-bottom: .5rem;
 
@@ -25,7 +28,7 @@
   }
 
   .loading-indicator {
-    @include ilios-heading-h1;
+    @include m.ilios-heading-h1;
     left: 4rem;
     opacity: 75;
     position: absolute;

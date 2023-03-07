@@ -1,24 +1,27 @@
+@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
+
 .pending-user-updates {
-  @include main-section;
+  @include cm.main-section;
 
   .filters {
-    @include main-list-filters;
+    @include m.main-list-filters;
 
     .schoolsfilter,
     .titlefilter {
-      @include main-list-filter;
+      @include m.main-list-filter;
     }
   }
 
   .updates {
-    @include main-list-box;
+    @include m.main-list-box;
   }
 
   .list {
-    @include main-list-box-table;
+    @include m.main-list-box-table;
 
     button {
-      @include ilios-button-reset;
+      @include cm.ilios-button-reset;
       white-space: nowrap;
     }
   }

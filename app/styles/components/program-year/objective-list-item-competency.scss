@@ -1,3 +1,5 @@
+@use "../../ilios-common/mixins" as m;
+
 .program-year-objective-list-item-competency {
-  @include objective-list-item(.5em);
+  @include m.objective-list-item(.5em);
 }

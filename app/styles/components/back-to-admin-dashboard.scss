@@ -1,3 +1,5 @@
+@use "../ilios-common/mixins" as m;
+
 .back-to-admin-dashboard {
-  @include main-section;
+  @include m.main-section;
 }

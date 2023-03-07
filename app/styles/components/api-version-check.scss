@@ -1,5 +1,8 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .api-version-check-warning {
-  background-color: rgba($orange, .95);
+  background-color: rgba(c.$orange, .95);
 }
 
 .api-version-check-container {
@@ -9,7 +12,7 @@
     padding: 2rem;
 
     h1 {
-      @include ilios-heading-h1;
+      @include m.ilios-heading-h1;
     }
 
     p {

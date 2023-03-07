@@ -1,17 +1,20 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .course-director-manager {
   .actions {
     display: flex;
     justify-content: flex-end;
 
     .bigadd {
-      background-color: $fernGreen;
-      color: $white;
+      background-color: c.$fernGreen;
+      color: c.$white;
       margin-right: .25rem;
     }
 
     .bigcancel {
-      background-color: $crimson;
-      color: $white;
+      background-color: c.$crimson;
+      color: c.$white;
     }
   }
 
@@ -19,7 +22,7 @@
     padding-bottom: .5rem;
 
     ul {
-      @include ilios-removable-list;
+      @include m.ilios-removable-list;
     }
   }
 

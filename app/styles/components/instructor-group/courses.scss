@@ -1,23 +1,26 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
 .instructor-group-courses {
-  @include detail-container($orange);
+  @include m.detail-container(c.$orange);
   margin-left: 0.8rem;
 
   .instructor-group-courses-header {
-    @include detail-container-header;
+    @include m.detail-container-header;
 
     .title {
-      @include detail-container-title;
+      @include m.detail-container-title;
     }
   }
 
   .instructor-group-courses-content {
-    @include detail-container-content;
+    @include m.detail-container-content;
 
     .instructor-group-courses-list {
-      @include ilios-tag-list;
+      @include m.ilios-tag-list;
 
       a {
-        color: $black;
+        color: c.$black;
       }
     }
   }

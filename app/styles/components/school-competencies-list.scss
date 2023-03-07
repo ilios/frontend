@@ -1,3 +1,6 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 @use "sass:color";
 
 .school-competencies-list {
@@ -12,7 +15,7 @@
     margin-right: .5rem;
 
     .grid-item {
-      border-bottom: 1px solid $davysGrey;
+      border-bottom: 1px solid c.$davysGrey;
       padding: .5rem .25rem;
 
       &.competency {
@@ -20,7 +23,7 @@
       }
 
       ul {
-        @include ilios-list-reset;
+        @include m.ilios-list-reset;
 
         li {
           padding-bottom: 1rem;
@@ -36,13 +39,13 @@
       }
 
       .bigadd {
-        background-color: $fernGreen;
-        color: $white;
+        background-color: c.$fernGreen;
+        color: c.$white;
       }
 
       .bigcancel {
-        background-color: $crimson;
-        color: $white;
+        background-color: c.$crimson;
+        color: c.$white;
         margin-left: .5rem;
       }
 
@@ -60,26 +63,26 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: color.adjust($fernGreen, $lightness: 60%);
+      background-color: color.adjust(c.$fernGreen, $lightness: 60%);
     }
 
     &.is-managing {
-      border: 2px solid $blueMunsell;
+      border: 2px solid c.$blueMunsell;
       .grid-item {
-        background-color: $culturedGrey;
+        background-color: c.$culturedGrey;
         border: 0;
       }
     }
 
     &.confirm-removal {
-      background-color: $lavenderBlush;
+      background-color: c.$lavenderBlush;
 
       .grid-item {
         border: 0;
       }
 
       .confirm-message {
-        color: $crimson;
+        color: c.$crimson;
         grid-column: 1 / -1;
         font-weight: bold;
         text-align: center;
@@ -87,11 +90,11 @@
       }
 
       .remove {
-        background-color: $white;
-        color: $crimson;
+        background-color: c.$white;
+        color: c.$crimson;
 
         &:hover {
-          background-color: $crimson;
+          background-color: c.$crimson;
           color: white;
         }
       }

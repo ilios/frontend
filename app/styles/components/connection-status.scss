@@ -1,6 +1,9 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .connection-status {
   $height: 2.5rem;
-  @include critical-notice($gold, $raisinBlack, $height);
+  @include m.critical-notice(c.$gold, c.$raisinBlack, $height);
 
   display: none;
 
@@ -17,9 +20,9 @@
     height: $height;
 
     button {
-      background-color: $raisinBlack;
+      background-color: c.$raisinBlack;
       border: 0;
-      color: $white;
+      color: c.$white;
       display: inline-block;
       height: 100%;
     }

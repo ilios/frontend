@@ -1,4 +1,7 @@
+@use "../ilios-common/mixins" as cm;
+@use "../mixins" as m;
+
 .admin-dashboard {
-  @include main-section;
-  @include admin-blocks;
+  @include cm.main-section;
+  @include m.admin-blocks;
 }

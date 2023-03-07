@@ -1,9 +1,11 @@
+@use "../mixins" as m;
+
 .locale-chooser {
-  @include header-menu;
+  @include m.header-menu;
 
   .menu {
     button {
-      @include header-menu-item;
+      @include m.header-menu-item;
     }
   }
 }

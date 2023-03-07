@@ -1,13 +1,17 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
+
 @use "sass:color";
 
 .learner-group-root {
-  @include main-section;
+  @include cm.main-section;
 
   .learner-group-overview {
-    @include ilios-overview($orange);
+    @include cm.ilios-overview(c.$orange);
 
     .block {
-      @include ilios-overview-block;
+      @include cm.ilios-overview-block;
 
       &.associatedcourses {
         align-items: flex-start;
@@ -18,7 +22,7 @@
           white-space: nowrap;
         }
         ul {
-          @include ilios-tag-list;
+          @include cm.ilios-tag-list;
 
           li {
             margin-top: 0;
@@ -36,16 +40,16 @@
     }
 
     .learner-group-overview-actions {
-      @include detail-container-header;
+      @include cm.detail-container-header;
       margin-top: .25rem;
       padding-top: .5rem;
 
       .title {
-        @include detail-container-title;
+        @include cm.detail-container-title;
       }
 
       .actions {
-        @include for-phone-and-up {
+        @include cm.for-phone-and-up {
           .toggle-buttons {
             display: inline;
           }
@@ -57,40 +61,40 @@
   .cohortmembers {
     .cohortmembers-loading {
       display: block;
-      @include font-size('xxl');
+      @include cm.font-size('xxl');
       margin: auto;
       text-align: center;
     }
   }
 
   .subgroups {
-    @include main-list-box;
+    @include m.main-list-box;
 
     .header {
-      @include main-list-box-header;
+      @include m.main-list-box-header;
 
       h3 {
-        @include ilios-heading-h3;
+        @include cm.ilios-heading-h3;
       }
 
       .title {
-        @include main-list-box-header-title;
+        @include m.main-list-box-header-title;
       }
 
       .actions {
-        @include main-list-box-header-actions;
+        @include m.main-list-box-header-actions;
       }
     }
 
     .list {
-      @include main-list-box-table;
+      @include m.main-list-box-table;
 
       .confirm-copy,
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd)
       {
-        background-color: color.adjust($blueMunsell, $lightness: 60%);
-        border: 2px solid $blueMunsell;
+        background-color: color.adjust(c.$blueMunsell, $lightness: 60%);
+        border: 2px solid c.$blueMunsell;
 
         &.actions-row {
           border-top: 0;

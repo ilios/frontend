@@ -1,5 +1,8 @@
+@use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
+
 .new-course {
-  border: 1px solid $culturedGrey;
+  border: 1px solid c.$culturedGrey;
   margin: .5rem;
   padding: 1rem;
 
@@ -8,14 +11,14 @@
   }
 
   & > div {
-    @include ilios-form;
+    @include m.ilios-form;
   }
 
   .item {
-    @include ilios-form-item;
+    @include m.ilios-form-item;
   }
 
   .buttons {
-    @include ilios-form-buttons;
+    @include m.ilios-form-buttons;
   }
 }
