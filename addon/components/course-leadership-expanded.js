@@ -13,28 +13,38 @@ export default class CourseLeadershipExpandedComponent extends Component {
   addDirector(user) {
     this.directors = [...this.directors, user];
   }
+
   @action
   removeDirector(user) {
     this.directors = this.directors.filter((obj) => obj !== user);
   }
+
   @action
   addAdministrator(user) {
     this.administrators = [...this.administrators, user];
   }
+
   @action
   removeAdministrator(user) {
     this.administrators = this.administrators.filter((obj) => obj !== user);
   }
+
   @action
   addStudentAdvisor(user) {
     this.studentAdvisors = [...this.studentAdvisors, user];
   }
+
   @action
   removeStudentAdvisor(user) {
     this.studentAdvisors = this.studentAdvisors.filter((obj) => obj !== user);
   }
 
-  manage = dropTask(async () => {
+  @action
+  manage() {
+    this.args.setIsManaging(true);
+  }
+
+  async setBuffers() {
     const obj = await hash({
       administrators: this.args.course.administrators,
       directors: this.args.course.directors,
@@ -43,7 +53,10 @@ export default class CourseLeadershipExpandedComponent extends Component {
     this.administrators = obj.administrators.slice();
     this.directors = obj.directors.slice();
     this.studentAdvisors = obj.studentAdvisors.slice();
-    this.args.setIsManaging(true);
+  }
+
+  load = dropTask(async () => {
+    await this.setBuffers();
   });
 
   save = dropTask(async () => {
@@ -55,6 +68,11 @@ export default class CourseLeadershipExpandedComponent extends Component {
     });
     this.args.expand();
     await this.args.course.save();
+    this.args.setIsManaging(false);
+  });
+
+  cancel = dropTask(async () => {
+    await this.setBuffers();
     this.args.setIsManaging(false);
   });
 }

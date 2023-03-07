@@ -1,61 +1,60 @@
 <div
   class="session-leadership-expanded"
   data-test-session-leadership-expanded
+  {{did-insert (perform this.load) @session}}
 >
-  <div class="session-leadership-expanded-header">
-    <h3
-      class="title {{unless @isManaging "collapsible clickable"}}"
-      role="button"
-      {{on "click" (unless @isManaging @collapse (noop))}}
-      data-test-title
-    >
-      {{t "general.sessionLeadership"}}
-    </h3>
-    <div class="actions">
-      {{#if @isManaging}}
-        <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
-          <FaIcon
-            @icon={{if this.save.isRunning "spinner" "check"}}
-            @spin={{this.save.isRunning}}
-          />
-        </button>
-        <button class="bigcancel" type="button" {{on "click" (fn @setIsManaging false)}} data-test-cancel>
-          <FaIcon @icon="arrow-rotate-left" />
-        </button>
-      {{else if @canUpdate}}
-        <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
-          {{t "general.manageLeadership"}}
-        </button>
-      {{/if}}
+  {{#if this.load.isRunning}}
+      <LoadingSpinner />
+  {{else}}
+    <div class="session-leadership-expanded-header">
+      <h3
+        class="title {{unless @isManaging "collapsible clickable"}}"
+        role="button"
+        {{on "click" (unless @isManaging @collapse (noop))}}
+        data-test-title
+      >
+        {{t "general.sessionLeadership"}}
+      </h3>
+      <div class="actions">
+        {{#if @isManaging}}
+          <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
+            <FaIcon
+              @icon={{if this.save.isRunning "spinner" "check"}}
+              @spin={{this.save.isRunning}}
+            />
+          </button>
+          <button class="bigcancel" type="button" {{on "click" (perform this.cancel)}} data-test-cancel>
+            <FaIcon @icon="arrow-rotate-left" />
+          </button>
+        {{else if @canUpdate}}
+          <button type="button" {{on "click" this.manage}} data-test-manage>
+            {{t "general.manageLeadership"}}
+          </button>
+        {{/if}}
+      </div>
     </div>
-  </div>
-  <div class="session-leadership-expanded-content">
-    {{#if (and (is-fulfilled @session.administrators) (is-fulfilled @session.studentAdvisors) )}}
+    <div class="session-leadership-expanded-content">
       {{#if @isManaging}}
-        {{#unless this.manage.isRunning}}
-          <LeadershipManager
-            @showDirectors={{false}}
-            @administrators={{this.administrators}}
-            @showAdministrators={{true}}
-            @removeAdministrator={{this.removeAdministrator}}
-            @addAdministrator={{this.addAdministrator}}
-            @studentAdvisors={{this.studentAdvisors}}
-            @showStudentAdvisors={{true}}
-            @removeStudentAdvisor={{this.removeStudentAdvisor}}
-            @addStudentAdvisor={{this.addStudentAdvisor}}
-          />
-        {{/unless}}
+        <LeadershipManager
+          @showDirectors={{false}}
+          @administrators={{this.administrators}}
+          @showAdministrators={{true}}
+          @removeAdministrator={{this.removeAdministrator}}
+          @addAdministrator={{this.addAdministrator}}
+          @studentAdvisors={{this.studentAdvisors}}
+          @showStudentAdvisors={{true}}
+          @removeStudentAdvisor={{this.removeStudentAdvisor}}
+          @addStudentAdvisor={{this.addStudentAdvisor}}
+        />
       {{else}}
         <LeadershipList
-          @administrators={{await @session.administrators}}
-          @studentAdvisors={{await @session.studentAdvisors}}
+          @administrators={{this.administrators}}
+          @studentAdvisors={{this.studentAdvisors}}
           @showAdministrators={{true}}
           @showDirectors={{false}}
           @showStudentAdvisors={{true}}
         />
       {{/if}}
-    {{else}}
-      <LoadingSpinner />
-    {{/if}}
-  </div>
+    </div>
+  {{/if}}
 </div>

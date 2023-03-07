@@ -12,27 +12,38 @@ export default class CourseLeadershipExpandedComponent extends Component {
   addAdministrator(user) {
     this.administrators = [...this.administrators, user];
   }
+
   @action
   removeAdministrator(user) {
     this.administrators = this.administrators.filter((obj) => obj !== user);
   }
+
   @action
   addStudentAdvisor(user) {
     this.studentAdvisors = [...this.studentAdvisors, user];
   }
+
   @action
   removeStudentAdvisor(user) {
     this.studentAdvisors = this.studentAdvisors.filter((obj) => obj !== user);
   }
 
-  manage = dropTask(async () => {
+  @action
+  manage() {
+    this.args.setIsManaging(true);
+  }
+
+  async setBuffers() {
     const obj = await hash({
       administrators: this.args.session.administrators,
       studentAdvisors: this.args.session.studentAdvisors,
     });
     this.administrators = obj.administrators.slice();
     this.studentAdvisors = obj.studentAdvisors.slice();
-    this.args.setIsManaging(true);
+  }
+
+  load = dropTask(async () => {
+    await this.setBuffers();
   });
 
   save = dropTask(async () => {
@@ -43,6 +54,11 @@ export default class CourseLeadershipExpandedComponent extends Component {
     });
     this.args.expand();
     await this.args.session.save();
+    this.args.setIsManaging(false);
+  });
+
+  cancel = dropTask(async () => {
+    await this.setBuffers();
     this.args.setIsManaging(false);
   });
 }
