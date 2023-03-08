@@ -18,13 +18,6 @@
     display: flex;
     flex-direction: column;
     overflow-wrap: anywhere;
-    .copy-btn {
-      @include m.ilios-link-button;
-
-      &.copying {
-        color: c.$fernGreen;
-      }
-    }
   }
 
   .offering-manager-instructors {

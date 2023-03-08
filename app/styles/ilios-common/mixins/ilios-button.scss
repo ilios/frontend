@@ -38,4 +38,5 @@
 @mixin ilios-link-button () {
   @include ilios-button-reset;
   color: c.$blueMunsell;
+  text-align: left;
 }
