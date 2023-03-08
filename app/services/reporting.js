@@ -326,11 +326,20 @@ export default class ReportingService extends Service {
         object = record.title;
       }
 
+      let year = '';
+      if (model === 'course') {
+        const crosses = await this.iliosConfig.itemFromConfig(
+          'academicYearCrossesCalendarYearBoundaries'
+        );
+        year = crosses ? `(${record.year} - ${record.year + 1})` : `(${record.year})`;
+      }
+
       return this.intl.t('general.reportDisplayDescriptionWithObject', {
         subject: subjectTranslation,
         object,
         objectType: objectTranslation,
         school: schoolTitle,
+        year,
       });
     }
 

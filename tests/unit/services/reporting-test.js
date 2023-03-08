@@ -114,7 +114,72 @@ module('Unit | Service | reporting', function (hooks) {
     const title = await this.service.buildReportDescription(reportModel, store, this.intl);
     assert.strictEqual(
       title,
-      `This report shows all Courses associated with Instructor "${userModel.fullName}" in ${school.title}.`
+      `This report shows all Courses associated with Instructor "${userModel.fullName}"  in ${school.title}.`
+    );
+  });
+
+  test('buildReportDescription() - all terms for course X in school Y', async function (assert) {
+    const school = this.server.create('school', { title: 'School of Schools' });
+    const course = this.server.create('course', { school, year: 2023 });
+    const vocabulary = this.server.create('vocabulary', { school });
+    this.server.create('term', {
+      title: 'foo bar',
+      courses: [course],
+      vocabulary,
+    });
+    const report = this.server.create('report', {
+      school,
+      prepositionalObject: 'course',
+      subject: 'term',
+      prepositionalObjectTableRowId: course.id,
+    });
+
+    const store = this.owner.lookup('service:store');
+    const reportModel = await store.findRecord('report', report.id);
+    const courseModel = await store.findRecord('course', course.id);
+    const schoolModel = await store.findRecord('school', school.id);
+    const title = await this.service.buildReportDescription(reportModel, store, this.intl);
+    assert.strictEqual(
+      title,
+      `This report shows all Terms associated with Course "${courseModel.title}" (${courseModel.year}) in ${schoolModel.title}.`
+    );
+  });
+
+  test('buildReportDescription() - all terms for course X in school Y with year-range', async function (assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+          apiVersion,
+        },
+      };
+    });
+    const school = this.server.create('school', { title: 'School of Schools' });
+    const course = this.server.create('course', { school, year: 2023 });
+    const vocabulary = this.server.create('vocabulary', { school });
+    this.server.create('term', {
+      title: 'foo bar',
+      courses: [course],
+      vocabulary,
+    });
+    const report = this.server.create('report', {
+      school,
+      prepositionalObject: 'course',
+      subject: 'term',
+      prepositionalObjectTableRowId: course.id,
+    });
+
+    const store = this.owner.lookup('service:store');
+    const reportModel = await store.findRecord('report', report.id);
+    const courseModel = await store.findRecord('course', course.id);
+    const schoolModel = await store.findRecord('school', school.id);
+    const title = await this.service.buildReportDescription(reportModel, store, this.intl);
+    assert.strictEqual(
+      title,
+      `This report shows all Terms associated with Course "${courseModel.title}" (${
+        courseModel.year
+      } - ${courseModel.year + 1}) in ${schoolModel.title}.`
     );
   });
 

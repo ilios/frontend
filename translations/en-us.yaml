@@ -331,7 +331,7 @@ general:
   removePrimaryCohort: "Remove Primary Cohort"
   reportConfirmRemove: "Are you sure you want to delete this report? This action cannot be undone."
   reportDescriptionPlaceholder: "Please enter a brief description about this report."
-  reportDisplayDescriptionWithObject: "This report shows all {subject} associated with {objectType} \"{object}\" in {school}."
+  reportDisplayDescriptionWithObject: "This report shows all {subject} associated with {objectType} \"{object}\" {year} in {school}."
   reportDisplayDescriptionWithoutObject: "This report shows all {subject} in {school}."
   reportDisplayTitleWithObject: "All {subject} for {object} in {school}"
   reportDisplayTitleWithoutObject: "All {subject} in {school}"
