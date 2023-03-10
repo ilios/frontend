@@ -57,8 +57,8 @@
         @save={{perform this.saveNewLearningMaterial}}
         @cancel={{this.closeNewLearningmaterial}}
       />
-    {{else if (get (await @subject.learningMaterials) "length")}}
-      {{#if (and @editable (await this.hasMoreThanOneLearningMaterial))}}
+    {{else if this.materials.length}}
+      {{#if (and @editable this.hasMoreThanOneLearningMaterial)}}
         <button
           class="sort-materials-btn"
           type="button"
