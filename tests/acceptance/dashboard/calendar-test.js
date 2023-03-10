@@ -777,7 +777,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   const pickTerm = async function (i) {
-    return await click(find(`.vocabularyfilter li:nth-of-type(${i}) [data-test-target]`));
+    return await click(find(`.vocabularyfilter [data-test-filter-checkbox-target-id="${i}"]`));
   };
 
   test('test term filter', async function (assert) {
@@ -809,7 +809,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
     await pickTerm(1);
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-
     await pickTerm(1);
     await pickTerm(2);
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 0);

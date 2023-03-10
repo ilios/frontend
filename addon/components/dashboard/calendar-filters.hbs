@@ -21,6 +21,7 @@
                 @checked={{includes type.id @selectedSessionTypeIds}}
                 @add={{fn @addSessionTypeId type.id}}
                 @remove={{fn @removeSessionTypeId type.id}}
+                @targetId={{type.id}}
               >
                 {{type.title}}
               </Dashboard::FilterCheckbox>
@@ -70,6 +71,7 @@
                 @checked={{includes type.id @selectedSessionTypeIds}}
                 @add={{fn @addSessionTypeId type.id}}
                 @remove={{fn @removeSessionTypeId type.id}}
+                @targetId={{type.id}}
               >
                 {{type.title}}
               </Dashboard::FilterCheckbox>
@@ -96,6 +98,7 @@
               @checked={{includes level @selectedCourseLevels}}
               @add={{fn @addCourseLevel level}}
               @remove={{fn @removeCourseLevel level}}
+              @targetId={{level}}
             >
               {{level}}
             </Dashboard::FilterCheckbox>

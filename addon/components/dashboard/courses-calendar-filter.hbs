@@ -45,6 +45,7 @@
                     @checked={{includes course.id @selectedCourseIds}}
                     @add={{fn @add course.id}}
                     @remove={{fn @remove course.id}}
+                    @targetId={{course.id}}
                   >
                     {{course.title}}
                     {{#if course.externalId}}

@@ -5,7 +5,7 @@ const definition = {
   scope: "[data-test-selected-term-tree-level='0']",
   checkboxes: collection('[data-test-filter-checkbox]', checkbox),
   children: collection("[data-test-selected-term-tree-level='1']", {
-    children: collection("[data-test-selected-term-tree-level='1']"),
+    children: collection("[data-test-selected-term-tree-level='2']"),
   }),
 };
 

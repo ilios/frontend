@@ -10,20 +10,23 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders unchecked', async function (assert) {
+    const id = '100';
     this.set('content', 'label text');
+    this.set('id', id);
     await render(hbs`
       <Dashboard::FilterCheckbox
         @checked={{false}}
         @add={{(noop)}}
         @remove={{(noop)}}
+        @targetId={{this.id}}
       >
         {{this.content}}
       </Dashboard::FilterCheckbox>
-
 `);
 
     assert.strictEqual(component.text, 'label text');
     assert.notOk(component.isChecked);
+    assert.strictEqual(component.id, id);
   });
 
   test('it renders checked', async function (assert) {
