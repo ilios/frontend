@@ -1,7 +1,7 @@
 <div
   class="learningmaterial-manager"
-  {{did-insert (perform this.load) @learningMaterial (await @learningMaterial.learningMaterial)}}
-  {{did-update (perform this.load) @learningMaterial (await @learningMaterial.learningMaterial)}}
+  {{did-insert (perform this.load) @learningMaterial}}
+  {{did-update (perform this.load) @learningMaterial}}
 >
   {{#if this.load.isRunning}}
     <LoadingSpinner class="loading" />

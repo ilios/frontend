@@ -125,10 +125,11 @@ export default class LearningMaterialManagerComponent extends Component {
     return findById(this.args.learningMaterialStatuses, this.statusId);
   }
 
-  load = restartableTask(async (element, [learningMaterial, parentMaterial]) => {
-    if (!learningMaterial || !parentMaterial) {
+  load = restartableTask(async (element, [learningMaterial]) => {
+    if (!learningMaterial) {
       return;
     }
+    const parentMaterial = await learningMaterial.learningMaterial;
     this.notes = learningMaterial.notes;
     this.required = learningMaterial.required;
     this.publicNotes = learningMaterial.publicNotes;
