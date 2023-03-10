@@ -12,9 +12,19 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
+  hooks.beforeEach(async function () {
+    const meshDescriptors = this.server.createList('meshDescriptor', 2);
+    this.meshDescriptor1 = await this.owner
+      .lookup('service:store')
+      .findRecord('meshDescriptor', meshDescriptors[0].id);
+    this.meshDescriptor2 = await this.owner
+      .lookup('service:store')
+      .findRecord('meshDescriptor', meshDescriptors[1].id);
+  });
+
   test('it renders and is accessible when managing', async function (assert) {
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @courseOjective={{null}}
+      @meshDescriptors={{(array)}}
       @editable={{false}}
       @manage={{(noop)}}
       @isManaging={{true}}
@@ -30,14 +40,8 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   });
 
   test('it renders and is accessible empty and un-editable', async function (assert) {
-    const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', { course });
-    const courseObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('courseObjective', courseObjective.id);
-    this.set('courseObjective', courseObjectiveModel);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @courseObjective={{this.courseObjective}}
+      @meshDescriptors={{(array)}}
       @editable={{false}}
       @manage={{(noop)}}
       @isManaging={{false}}
@@ -52,18 +56,9 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   });
 
   test('it renders and is accessible un-editable', async function (assert) {
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
-    const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', {
-      course,
-      meshDescriptors,
-    });
-    const courseObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('courseObjective', courseObjective.id);
-    this.set('courseObjective', courseObjectiveModel);
+    this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @courseObjective={{this.courseObjective}}
+      @meshDescriptors={{this.meshDescriptors}}
       @editable={{false}}
       @manage={{(noop)}}
       @isManaging={{false}}
@@ -80,18 +75,9 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   });
 
   test('it renders and is accessible editable', async function (assert) {
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
-    const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', {
-      course,
-      meshDescriptors,
-    });
-    const courseObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('courseObjective', courseObjective.id);
-    this.set('courseObjective', courseObjectiveModel);
+    this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @courseObjective={{this.courseObjective}}
+      @meshDescriptors={{this.meshDescriptors}}
       @editable={{true}}
       @manage={{(noop)}}
       @isManaging={{false}}
@@ -109,21 +95,12 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
 
   test('clicking save fires save', async function (assert) {
     assert.expect(1);
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
-    const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', {
-      course,
-      meshDescriptors,
-    });
-    const courseObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('courseObjective', courseObjective.id);
-    this.set('courseObjective', courseObjectiveModel);
     this.set('save', () => {
       assert.ok(true);
     });
+    this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @courseObjective={{this.courseObjective}}
+      @meshDescriptors={{this.meshDescriptors}}
       @editable={{true}}
       @manage={{(noop)}}
       @isManaging={{true}}
@@ -137,21 +114,12 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
 
   test('clicking cancel fires cancel', async function (assert) {
     assert.expect(1);
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
-    const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', {
-      course,
-      meshDescriptors,
-    });
-    const courseObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('courseObjective', courseObjective.id);
-    this.set('courseObjective', courseObjectiveModel);
     this.set('cancel', () => {
       assert.ok(true);
     });
+    this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @courseObjective={{this.courseObjective}}
+      @meshDescriptors={{this.meshDescriptors}}
       @editable={{true}}
       @manage={{(noop)}}
       @isManaging={{true}}
@@ -165,21 +133,12 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
 
   test('clicking descriptor fires manage', async function (assert) {
     assert.expect(1);
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
-    const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', {
-      course,
-      meshDescriptors,
-    });
-    const courseObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('courseObjective', courseObjective.id);
-    this.set('courseObjective', courseObjectiveModel);
     this.set('manage', () => {
       assert.ok(true);
     });
+    this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @courseObjective={{this.courseObjective}}
+      @meshDescriptors={{this.meshDescriptors}}
       @editable={{true}}
       @manage={{this.manage}}
       @isManaging={{false}}

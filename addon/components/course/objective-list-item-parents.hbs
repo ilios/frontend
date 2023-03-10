@@ -25,7 +25,7 @@
     </button>
   {{else}}
     <ul>
-      {{#each (sort-by "title" (await @courseObjective.programYearObjectives)) as |parent|}}
+      {{#each (sort-by "title" @parents) as |parent|}}
         {{#if @editable}}
           <li data-test-parent>
             <button

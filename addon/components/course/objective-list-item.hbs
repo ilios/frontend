@@ -23,7 +23,7 @@
     {{/if}}
   </div>
   <Course::ObjectiveListItemParents
-    @courseObjective={{@courseObjective}}
+    @parents={{this.parents}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageParents}}
     @isManaging={{this.isManagingParents}}
@@ -43,7 +43,7 @@
   />
 
   <Course::ObjectiveListItemDescriptors
-    @courseObjective={{@courseObjective}}
+    @meshDescriptors={{this.meshDescriptors}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageDescriptors}}
     @isManaging={{this.isManagingDescriptors}}
