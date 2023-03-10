@@ -19,7 +19,7 @@
     </button>
   </td>
   <td class="text-center" colspan="2">
-    <UserNameInfo @user={{await (get (await @lm.learningMaterial) "owningUser")}} />
+    <UserNameInfo @user={{this.owningUser}} />
   </td>
   <td class="text-center" colspan="2" data-test-required>
     {{#if @lm.required}}
