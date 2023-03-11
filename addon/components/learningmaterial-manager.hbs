@@ -41,7 +41,7 @@
             {{/each}}
           </select>
         {{else}}
-          {{get (await this.currentStatus) "title"}}
+          {{this.currentStatus.title}}
         {{/if}}
       </div>
       <div class="item required">
