@@ -39,7 +39,7 @@
         @remove={{this.removeCohortFromBuffer}}
       />
     {{else}}
-      <DetailCohortList @cohorts={{await @course.cohorts}} />
+      <DetailCohortList @cohorts={{this.cohorts}} />
     {{/if}}
   </div>
 </section>
