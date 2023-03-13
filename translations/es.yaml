@@ -210,6 +210,7 @@ general:
   noAvailableLearners: "No aprendedores disponible; Este curso no contiene ninguna clase de la graduación."
   noCohorts: "No hay ningún clase de la graduación en este curso"
   noCourseLearningMaterialsAvailable: "Ningunos Materiales Didácticos del Curso Disponibles"
+  noEvents: no eventos
   none: "Ningún"
   noOfferings: "Esta sesión no tiene ningunos ofrecimientos"
   noResultsFound: "Ningún resultado encontrado. Por favor intente otra vez."

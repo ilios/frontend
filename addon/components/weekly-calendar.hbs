@@ -26,7 +26,7 @@
       {{/each}}
     </div>
     {{#each this.days as |day|}}
-      <div class="events day-{{day.dayOfWeek}}">
+      <div class="events day-{{day.dayOfWeek}}" data-test-events-day>
         <h3 class="day-name" data-test-day-name>
           <button
             type="button"
@@ -42,6 +42,8 @@
             @allDayEvents={{day.events}}
             @selectEvent={{fn this.selectEvent event}}
           />
+        {{else}}
+          <span class="no-events" data-test-no-events>{{t "general.noEvents"}}</span>
         {{/each}}
       </div>
     {{/each}}

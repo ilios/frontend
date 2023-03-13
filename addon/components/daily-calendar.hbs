@@ -30,6 +30,8 @@
           @allDayEvents={{this.sortedEvents}}
           @selectEvent={{fn @selectEvent event}}
         />
+      {{else}}
+        <span class="no-events" data-test-no-events>{{t "general.noEvents"}}</span>
       {{/each}}
     </div>
     {{#each this.hours as |hour|}}

@@ -14,6 +14,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
   setupMirage(hooks);
 
   test('it renders empty and is accessible', async function (assert) {
+    assert.expect(66);
     const january9th2019 = DateTime.fromObject({
       year: 2019,
       month: 1,
@@ -34,6 +35,11 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[0].isThirdDayOfWeek);
     assert.ok(component.days[0].isFirstWeek);
+
+    for (let i = 0; i < 31; i++) {
+      assert.strictEqual(component.days[i].events.length, 0);
+      assert.ok(component.days[i].hasNoEvents);
+    }
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -67,6 +73,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     assert.ok(component.days[8].isSecondWeek);
     assert.strictEqual(component.days[8].events.length, 2);
     assert.notOk(component.days[8].hasShowMore);
+    assert.notOk(component.days[8].hasNoEvents);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -100,6 +107,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     assert.ok(component.days[8].isSecondWeek);
     assert.strictEqual(component.days[8].events.length, 2);
     assert.ok(component.days[8].hasShowMore);
+    assert.notOk(component.days[8].hasNoEvents);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
