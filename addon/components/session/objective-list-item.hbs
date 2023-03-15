@@ -23,7 +23,7 @@
     {{/if}}
   </div>
   <Session::ObjectiveListItemParents
-    @sessionObjective={{@sessionObjective}}
+    @parents={{this.parents}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageParents}}
     @isManaging={{this.isManagingParents}}
@@ -43,7 +43,7 @@
   />
 
   <Session::ObjectiveListItemDescriptors
-    @sessionObjective={{@sessionObjective}}
+    @meshDescriptors={{this.meshDescriptors}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageDescriptors}}
     @isManaging={{this.isManagingDescriptors}}

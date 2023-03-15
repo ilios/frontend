@@ -4,6 +4,8 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 @validatable
 export default class SessionObjectiveListItemComponent extends Component {
@@ -17,6 +19,9 @@ export default class SessionObjectiveListItemComponent extends Component {
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
+
+  @use parents = new ResolveAsyncValue(() => [this.args.sessionObjective.courseObjectives]);
+  @use meshDescriptors = new ResolveAsyncValue(() => [this.args.sessionObjective.meshDescriptors]);
 
   @action
   load(element, [sessionObjective]) {
