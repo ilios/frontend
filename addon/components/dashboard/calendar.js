@@ -4,9 +4,10 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import moment from 'moment';
-import { all, map, hash } from 'rsvp';
+import { map } from 'rsvp';
 import { mapBy, sortBy } from '../../utils/array-helpers';
-
+import { use } from 'ember-could-get-used-to-this';
+import AsyncProcess from 'ilios-common/classes/async-process';
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;
   @service schoolEvents;
@@ -16,17 +17,15 @@ export default class DashboardCalendarComponent extends Component {
   @service iliosConfig;
   @service dataLoader;
 
-  @tracked cohortProxies = null;
-  @tracked sessionTypes = null;
-  @tracked vocabularies = null;
-
   @tracked usersPrimarySchool;
   @tracked absoluteIcsUri;
 
   @tracked ourEvents = [];
-  @tracked filterTags = [];
 
-  courseLevels = ['1', '2', '3', '4', '5'];
+  @use cohortProxies = new AsyncProcess(() => [
+    this.getCohortProxies.bind(this),
+    this.bestSelectedSchool,
+  ]);
 
   get fromTimeStamp() {
     return moment(this.args.selectedDate)
@@ -63,25 +62,6 @@ export default class DashboardCalendarComponent extends Component {
     this.absoluteIcsUri = server + '/ics/' + icsFeedKey;
   });
 
-  load = restartableTask(async (event, [school]) => {
-    if (!school) {
-      return;
-    }
-    this.cohortProxies = null;
-    this.sessionTypes = null;
-    this.vocabularies = null;
-    await this.dataLoader.loadSchoolForCalendar(school.id);
-    const promises = {
-      cohortProxies: this.getCohortProxies(school),
-      sessionTypes: this.getSessionTypes(school),
-      vocabularies: this.getVocabularies(school),
-    };
-    const results = await hash(promises);
-    this.cohortProxies = results.cohortProxies;
-    this.sessionTypes = results.sessionTypes;
-    this.vocabularies = results.vocabularies;
-  });
-
   loadEvents = restartableTask(async (event, [school, fromTimeStamp, toTimeStamp]) => {
     if (!school || !fromTimeStamp || !toTimeStamp) {
       return;
@@ -94,9 +74,12 @@ export default class DashboardCalendarComponent extends Component {
   });
 
   async getCohortProxies(school) {
+    if (!school) {
+      return;
+    }
     const cohorts = await this.getSchoolCohorts(school);
     const cohortProxies = await map(cohorts, async (cohort) => {
-      let displayTitle = cohort.get('title');
+      let displayTitle = cohort.title;
       const programYear = await cohort.programYear;
       const classOfYear = await programYear.getClassOfYear();
       if (!displayTitle) {
@@ -118,24 +101,14 @@ export default class DashboardCalendarComponent extends Component {
   }
 
   async getSchoolCohorts(school) {
+    await this.dataLoader.loadSchoolForCalendar(school.id);
     const programs = await school.programs;
     const programYears = await map(programs.slice(), async (program) => {
       const programYears = await program.programYears;
       return programYears.slice();
     });
-    const cohorts = await all(mapBy(programYears.flat(), 'cohort'));
+    const cohorts = await Promise.all(mapBy(programYears.flat(), 'cohort'));
     return cohorts.filter(Boolean);
-  }
-
-  async getSessionTypes(school) {
-    const types = await school.sessionTypes;
-    return sortBy(types.slice(), 'title');
-  }
-
-  async getVocabularies(school) {
-    const vocabularies = await school.vocabularies;
-    await all(mapBy(vocabularies, 'terms'));
-    return sortBy(vocabularies.slice(), 'title');
   }
 
   get filteredEvents() {
