@@ -46,6 +46,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
 
     assert.strictEqual(component.longDayOfWeek, 'Wednesday, January 9, 2019');
     assert.strictEqual(component.shortDayOfWeek, '1/9/2019');
+    assert.ok(component.hasNoEvents);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -76,6 +77,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
     assert.strictEqual(component.events.length, 2);
     assert.strictEqual(component.events[0].name, 'event 0');
     assert.strictEqual(component.events[1].name, 'event 1');
+    assert.notOk(component.hasNoEvents);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -112,6 +114,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
     assert.strictEqual(component.events[3].name, 'event 5');
     assert.strictEqual(component.events[4].name, 'event 1');
     assert.strictEqual(component.events[5].name, 'event 3');
+    assert.notOk(component.hasNoEvents);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

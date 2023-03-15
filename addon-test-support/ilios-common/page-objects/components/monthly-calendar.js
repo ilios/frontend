@@ -19,6 +19,7 @@ const definition = {
     events: collection('[data-test-ilios-calendar-event]'),
     hasShowMore: isPresent('[data-test-show-more-button]'),
     showMore: clickable('[data-test-show-more-button]'),
+    hasNoEvents: isPresent('[data-test-no-events]'),
   }),
   events: collection('[data-test-ilios-calendar-event-month]'),
 };

@@ -27,6 +27,8 @@
               @selectEvent={{fn @selectEvent event}}
             />
           {{/if}}
+        {{else}}
+          <span class="no-events" data-test-no-events>{{t "general.noEvents"}}</span>
         {{/each}}
         {{#if (gt day.events.length 2)}}
           <button

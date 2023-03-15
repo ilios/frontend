@@ -32,6 +32,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
   };
 
   test('it renders empty and is accessible', async function (assert) {
+    assert.expect(21);
     const january9th2019 = DateTime.fromObject({
       year: 2019,
       month: 1,
@@ -53,6 +54,12 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     assert.strictEqual(component.dayHeadings.length, 7);
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(component.dayHeadings[0].text, 'Sunday Sun Jan 6 6');
+    assert.strictEqual(component.days.length, 7);
+
+    for (let i = 0; i < 7; i++) {
+      assert.strictEqual(component.days[i].events.length, 0);
+      assert.ok(component.days[i].hasNoEvents);
+    }
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -87,6 +94,21 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     assert.strictEqual(component.events[0].name, 'event 0');
     assert.ok(component.events[1].isFourthDayOfWeek);
     assert.strictEqual(component.events[1].name, 'event 1');
+
+    assert.strictEqual(component.days[0].events.length, 0);
+    assert.ok(component.days[0].hasNoEvents);
+    assert.strictEqual(component.days[1].events.length, 0);
+    assert.ok(component.days[1].hasNoEvents);
+    assert.strictEqual(component.days[2].events.length, 0);
+    assert.ok(component.days[2].hasNoEvents);
+    assert.strictEqual(component.days[3].events.length, 2);
+    assert.notOk(component.days[3].hasNoEvents);
+    assert.strictEqual(component.days[4].events.length, 0);
+    assert.ok(component.days[4].hasNoEvents);
+    assert.strictEqual(component.days[5].events.length, 0);
+    assert.ok(component.days[5].hasNoEvents);
+    assert.strictEqual(component.days[6].events.length, 0);
+    assert.ok(component.days[6].hasNoEvents);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -138,6 +160,21 @@ module('Integration | Component | weekly-calendar', function (hooks) {
 
     assert.ok(component.events[5].isSixthDayOfWeek);
     assert.strictEqual(component.events[5].name, 'event 3');
+
+    assert.strictEqual(component.days[0].events.length, 0);
+    assert.ok(component.days[0].hasNoEvents);
+    assert.strictEqual(component.days[1].events.length, 2);
+    assert.notOk(component.days[1].hasNoEvents);
+    assert.strictEqual(component.days[2].events.length, 0);
+    assert.ok(component.days[2].hasNoEvents);
+    assert.strictEqual(component.days[3].events.length, 2);
+    assert.notOk(component.days[3].hasNoEvents);
+    assert.strictEqual(component.days[4].events.length, 0);
+    assert.ok(component.days[4].hasNoEvents);
+    assert.strictEqual(component.days[5].events.length, 2);
+    assert.notOk(component.days[5].hasNoEvents);
+    assert.strictEqual(component.days[6].events.length, 0);
+    assert.ok(component.days[6].hasNoEvents);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

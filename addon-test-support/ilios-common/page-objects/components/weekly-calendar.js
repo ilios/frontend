@@ -1,4 +1,4 @@
-import { clickable, create, collection, hasClass, text } from 'ember-cli-page-object';
+import { clickable, create, collection, hasClass, text, isPresent } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-weekly-calendar]',
@@ -23,6 +23,11 @@ const definition = {
     isFifthDayOfWeek: hasClass('day-5'),
     isSixthDayOfWeek: hasClass('day-6'),
     isSeventhDayOfWeek: hasClass('day-7'),
+    hasNoEvents: isPresent('[data-test-no-events]'),
+  }),
+  days: collection('[data-test-events-day]', {
+    events: collection('[data-test-weekly-calendar-event]'),
+    hasNoEvents: isPresent('[data-test-no-events]'),
   }),
 };
 

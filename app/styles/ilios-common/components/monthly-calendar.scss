@@ -56,6 +56,10 @@
         }
       }
 
+      .no-events {
+        @include m.visually-hidden();
+      }
+
       .day-number {
         margin: 0 0 .25rem 0;
         padding: 0;

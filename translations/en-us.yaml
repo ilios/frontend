@@ -210,6 +210,7 @@ general:
   noAvailableLearners: "No learners available; No cohort is attached to this course."
   noCohorts: "There are no cohorts in this course"
   noCourseLearningMaterialsAvailable: "No Course Learning Materials Available"
+  noEvents: No Events
   none: None
   noOfferings: "This session has no offerings"
   noResultsFound: "No results found. Please try again."
