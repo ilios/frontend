@@ -41,7 +41,7 @@
         @learningMaterial={{this.managingMaterial}}
         @editable={{@editable}}
         @closeManager={{this.closeLearningmaterialManager}}
-        @learningMaterialStatuses={{await this.learningMaterialStatuses}}
+        @learningMaterialStatuses={{this.learningMaterialStatuses}}
       />
     {{else if this.isSorting}}
       <LearningMaterialsSortManager
@@ -52,13 +52,13 @@
     {{else if this.displayAddNewForm}}
       <NewLearningmaterial
         @type={{this.type}}
-        @learningMaterialStatuses={{await this.learningMaterialStatuses}}
-        @learningMaterialUserRoles={{await this.learningMaterialUserRoles}}
+        @learningMaterialStatuses={{this.learningMaterialStatuses}}
+        @learningMaterialUserRoles={{this.learningMaterialUserRoles}}
         @save={{perform this.saveNewLearningMaterial}}
         @cancel={{this.closeNewLearningmaterial}}
       />
-    {{else if (get (await @subject.learningMaterials) "length")}}
-      {{#if (and @editable (await this.hasMoreThanOneLearningMaterial))}}
+    {{else if this.materials.length}}
+      {{#if (and @editable this.hasMoreThanOneLearningMaterial)}}
         <button
           class="sort-materials-btn"
           type="button"

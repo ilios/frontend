@@ -19,7 +19,7 @@
     </button>
   </td>
   <td class="text-center" colspan="2">
-    <UserNameInfo @user={{await (get (await @lm.learningMaterial) "owningUser")}} />
+    <UserNameInfo @user={{this.owningUser}} />
   </td>
   <td class="text-center" colspan="2" data-test-required>
     {{#if @lm.required}}
@@ -47,20 +47,18 @@
     {{/if}}
   </td>
   <td class="text-center" colspan="2" data-test-mesh>
-    {{#if @lm.meshDescriptors.length}}
-      <ul>
-        {{#each
-          (sort-by
-            "name" (await @lm.meshDescriptors)
-          ) as |descriptor|
-        }}
-          <li>
-            {{descriptor.name}}
-          </li>
-        {{/each}}
-      </ul>
-    {{else}}
-      {{t "general.none"}}
+    {{#if this.meshDescriptorsLoaded}}
+      {{#if this.meshDescriptors.length}}
+        <ul>
+          {{#each (sort-by "name" this.meshDescriptors) as |descriptor|}}
+            <li>
+              {{descriptor.name}}
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        {{t "general.none"}}
+      {{/if}}
     {{/if}}
   </td>
   <td class="text-center" colspan="2">
