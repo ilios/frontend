@@ -242,54 +242,33 @@ export default class ReportingService extends Service {
   }
 
   async buildReportTitle(report) {
-    const subject = report.subject;
-    const key = subjectTranslations[subject];
-    const subjectTranslation = this.intl.t(key);
-    const prepositionalObject = report.prepositionalObject;
-
-    const school = await report.school;
-    const schoolTitle = school ? school.title : this.intl.t('general.allSchools');
-
-    if (prepositionalObject) {
-      let model = dasherize(prepositionalObject);
-      if (model === 'instructor') {
-        model = 'user';
-      }
-      if (model === 'mesh-term') {
-        model = 'mesh-descriptor';
-      }
-      const prepositionalObjectTableRowId = report.get('prepositionalObjectTableRowId');
-
-      let record;
-      try {
-        record = await this.store.findRecord(model, prepositionalObjectTableRowId);
-      } catch (e) {
-        return this.intl.t('general.thisReportIsNoLongerAvailable');
-      }
-
-      let object;
-      if (model === 'user') {
-        object = record.fullName;
-      } else if (model === 'mesh-descriptor') {
-        object = record.name;
-      } else {
-        object = record.title;
-      }
-
-      return this.intl.t('general.reportDisplayTitleWithObject', {
-        subject: subjectTranslation,
-        object,
-        school: schoolTitle,
-      });
+    try {
+      const props = await this.getDescriptiveProperties(report);
+      return report.prepositionalObject
+        ? this.intl.t('general.reportDisplayTitleWithObject', props)
+        : this.intl.t('general.reportDisplayTitleWithoutObject', props);
+    } catch (e) {
+      return this.intl.t('general.thisReportIsNoLongerAvailable');
     }
-
-    return this.intl.t('general.reportDisplayTitleWithoutObject', {
-      subject: subjectTranslation,
-      school: schoolTitle,
-    });
   }
 
   async buildReportDescription(report) {
+    try {
+      const props = await this.getDescriptiveProperties(report);
+      return report.prepositionalObject
+        ? this.intl.t('general.reportDisplayDescriptionWithObject', props)
+        : this.intl.t('general.reportDisplayDescriptionWithoutObject', props);
+    } catch (e) {
+      return this.intl.t('general.thisReportIsNoLongerAvailable');
+    }
+  }
+
+  /**
+   * Utility method that powers buildReportDescription() and buildReportTitle()
+   * @throws Exception
+   * @return Object
+   */
+  async getDescriptiveProperties(report) {
     const subject = report.subject;
     const subjectKey = subjectTranslations[subject];
     const subjectTranslation = this.intl.t(subjectKey);
@@ -308,13 +287,8 @@ export default class ReportingService extends Service {
       }
 
       const prepositionalObjectTableRowId = report.get('prepositionalObjectTableRowId');
-      let record;
-      try {
-        record = await this.store.findRecord(model, prepositionalObjectTableRowId);
-      } catch (e) {
-        return this.intl.t('general.thisReportIsNoLongerAvailable');
-      }
 
+      const record = await this.store.findRecord(model, prepositionalObjectTableRowId);
       const objectKey = objectTranslations[prepositionalObject];
       const objectTranslation = this.intl.t(objectKey);
       let object;
@@ -334,18 +308,18 @@ export default class ReportingService extends Service {
         year = crosses ? `(${record.year} - ${record.year + 1})` : `(${record.year})`;
       }
 
-      return this.intl.t('general.reportDisplayDescriptionWithObject', {
+      return {
         subject: subjectTranslation,
         object,
         objectType: objectTranslation,
         school: schoolTitle,
         year,
-      });
+      };
     }
 
-    return this.intl.t('general.reportDisplayDescriptionWithoutObject', {
+    return {
       subject: subjectTranslation,
       school: schoolTitle,
-    });
+    };
   }
 }
