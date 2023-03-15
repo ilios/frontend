@@ -1,9 +1,38 @@
 import Service, { inject as service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
-import { camelize } from '@ember/string';
+import { camelize, dasherize } from '@ember/string';
 import striptags from 'striptags';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { map } from 'rsvp';
+
+const subjectTranslations = {
+  course: 'general.courses',
+  session: 'general.sessions',
+  program: 'general.programs',
+  'program year': 'general.programYears',
+  instructor: 'general.instructors',
+  'instructor group': 'general.instructorGroups',
+  'learning material': 'general.learningMaterials',
+  competency: 'general.competencies',
+  'mesh term': 'general.meshTerms',
+  term: 'general.terms',
+  'session type': 'general.sessionTypes',
+};
+
+const objectTranslations = {
+  'session type': 'general.sessionType',
+  competency: 'general.competency',
+  course: 'general.course',
+  instructor: 'general.instructor',
+  'instructor group': 'general.instructorGroup',
+  'learning material': 'general.learningMaterial',
+  'mesh term': 'general.meshTerm',
+  program: 'general.program',
+  'program year': 'general.programYear',
+  session: 'general.session',
+  school: 'general.school',
+  term: 'general.term',
+};
 
 export default class ReportingService extends Service {
   @service store;
@@ -210,5 +239,87 @@ export default class ReportingService extends Service {
       return vocabulary.title + ' > ' + titleWithParentTitles;
     }).sort();
     return [[this.intl.t('general.vocabulary')]].concat(titles);
+  }
+
+  async buildReportTitle(report) {
+    try {
+      const props = await this.getDescriptiveProperties(report);
+      return report.prepositionalObject
+        ? this.intl.t('general.reportDisplayTitleWithObject', props)
+        : this.intl.t('general.reportDisplayTitleWithoutObject', props);
+    } catch (e) {
+      return this.intl.t('general.thisReportIsNoLongerAvailable');
+    }
+  }
+
+  async buildReportDescription(report) {
+    try {
+      const props = await this.getDescriptiveProperties(report);
+      return report.prepositionalObject
+        ? this.intl.t('general.reportDisplayDescriptionWithObject', props)
+        : this.intl.t('general.reportDisplayDescriptionWithoutObject', props);
+    } catch (e) {
+      return this.intl.t('general.thisReportIsNoLongerAvailable');
+    }
+  }
+
+  /**
+   * Utility method that powers buildReportDescription() and buildReportTitle()
+   * @throws Exception
+   * @return Object
+   */
+  async getDescriptiveProperties(report) {
+    const subject = report.subject;
+    const subjectKey = subjectTranslations[subject];
+    const subjectTranslation = this.intl.t(subjectKey);
+    const prepositionalObject = report.prepositionalObject;
+
+    const school = await report.school;
+    const schoolTitle = school ? school.title : this.intl.t('general.allSchools');
+
+    if (prepositionalObject) {
+      let model = dasherize(prepositionalObject);
+      if (model === 'instructor') {
+        model = 'user';
+      }
+      if (model === 'mesh-term') {
+        model = 'mesh-descriptor';
+      }
+
+      const prepositionalObjectTableRowId = report.get('prepositionalObjectTableRowId');
+
+      const record = await this.store.findRecord(model, prepositionalObjectTableRowId);
+      const objectKey = objectTranslations[prepositionalObject];
+      const objectTranslation = this.intl.t(objectKey);
+      let object;
+      if (model === 'user') {
+        object = record.fullName;
+      } else if (model === 'mesh-descriptor') {
+        object = record.name;
+      } else {
+        object = record.title;
+      }
+
+      let year = '';
+      if (model === 'course') {
+        const crosses = await this.iliosConfig.itemFromConfig(
+          'academicYearCrossesCalendarYearBoundaries'
+        );
+        year = crosses ? `(${record.year} - ${record.year + 1})` : `(${record.year})`;
+      }
+
+      return {
+        subject: subjectTranslation,
+        object,
+        objectType: objectTranslation,
+        school: schoolTitle,
+        year,
+      };
+    }
+
+    return {
+      subject: subjectTranslation,
+      school: schoolTitle,
+    };
   }
 }

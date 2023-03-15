@@ -332,6 +332,8 @@ general:
   removePrimaryCohort: "Supprîmer Cohorte Primaire"
   reportConfirmRemove: "Êtes-vous sûrs que vous voulez supprimer ce rapport? Cette action ne peut pas être défaite."
   reportDescriptionPlaceholder: "Entrez S'il vous plaît dans une description brève de ce rapport."
+  reportDisplayDescriptionWithObject: "This report shows all {subject} associated with {objectType} \"{object}\" {year} in {school}."
+  reportDisplayDescriptionWithoutObject: "Ce rapport montre tous les {subject} de {school}."
   reportDisplayTitleWithObject: "tous {subject} pour {object} en {school}"
   reportDisplayTitleWithoutObject: "tous {subject} en {school}"
   reportName: "Nom de rapport"

@@ -1,5 +1,6 @@
 @use "../../ilios-common/mixins" as cm;
-@use "../../mixins" as m;
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/constants";
 
 .reports-subject {
   @include cm.main-section;
@@ -9,19 +10,37 @@
   }
 
   .header {
-    @include m.main-list-box-header;
+    border-bottom: 1px solid c.$culturedGrey;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: calc(constants.$golden-ratio-large * 1rem) 0 calc(constants.$golden-ratio-small * 1rem) 0;
+    margin: 0 .8rem;
 
-    h2 {
-      @include cm.ilios-heading;
+    @include cm.for-tablet-and-up {
+      flex-direction: row;
     }
 
-    .title {
-      @include m.main-list-box-header-title;
+    h2 {
+      @include cm.ilios-heading-h4;
+      flex-grow: 2;
+
+      .is-editing,
+      input {
+        width: 90%;
+      }
     }
   }
 
   .content-container {
     margin-left: 1rem;
+
+
+    .description {
+      font-style: italic;
+      padding-bottom: 1rem;
+      padding-top: .5rem;
+    }
 
     .years-filter {
       margin: .5rem 0 1rem;

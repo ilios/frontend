@@ -86,7 +86,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     this.server.post('api/graphql', async () => this.getReportData(['1']));
     await page.visit({ reportId: this.courseReport.id });
     assert.strictEqual(currentURL(), '/reports/subjects/1');
-    assert.strictEqual(page.report.title, 'my report 0');
+    assert.strictEqual(page.report.title.text, 'my report 0');
     assert.strictEqual(page.report.results.length, 1);
     assert.strictEqual(page.report.results[0].text, 'course 0: session 0');
   });
@@ -94,7 +94,11 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   test('term report works', async function (assert) {
     await page.visit({ reportId: this.termReport.id });
     assert.strictEqual(currentURL(), '/reports/subjects/2');
-    assert.strictEqual(page.report.title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.report.title.text, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(
+      page.report.description,
+      'This report shows all Sessions associated with Term "term 0" in school 0.'
+    );
     assert.strictEqual(page.report.results.length, 2);
     assert.strictEqual(page.report.results[0].text, '2015 course 0: session 0');
     assert.strictEqual(page.report.results[1].text, '2016 course 1: session 1');

@@ -21,7 +21,7 @@ module('Integration | Component | reports/subject', function (hooks) {
   });
 
   test('year filter works', async function (assert) {
-    assert.expect(8);
+    assert.expect(9);
     this.server.create('academic-year', {
       id: 2015,
     });
@@ -40,13 +40,14 @@ module('Integration | Component | reports/subject', function (hooks) {
     const report = this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
-      prepositionalObject: 'school',
-      prepositionalObjectTableRowId: school.id,
+      prepositionalObject: 'instructor',
+      prepositionalObjectTableRowId: this.user.id,
       user: this.user,
       school,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
+    this.set('selectedYear', '');
     this.set('setReportYear', (year) => {
       this.set('selectedYear', year);
       assert.strictEqual(year, '2016', 'report year bubbles up for query params');
@@ -56,7 +57,7 @@ module('Integration | Component | reports/subject', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { courses(schools: [1], schools: [1]) { id, title, year, externalId } }'
+        'query { courses(schools: [1], instructors: [100]) { id, title, year, externalId } }'
       );
       return {
         data: {
@@ -71,7 +72,11 @@ module('Integration | Component | reports/subject', function (hooks) {
       @selectedYear={{this.selectedYear}}
       @onReportYearSelect={{this.setReportYear}}
     />`);
-    assert.strictEqual(component.title, 'my report 0');
+    assert.strictEqual(component.title.text, 'my report 0');
+    assert.strictEqual(
+      component.description,
+      'This report shows all Courses associated with Instructor "0 guy M. Mc0son" in school 0.'
+    );
     assert.strictEqual(component.results.length, 2);
     assert.strictEqual(component.results[0].text, '2015 course 0');
     assert.strictEqual(component.results[1].text, '2016 course 1');
@@ -91,17 +96,21 @@ module('Integration | Component | reports/subject', function (hooks) {
     const year = 2016;
     this.server.create('academic-year', { id: year });
     const school = this.server.create('school');
-    this.server.create('course', { school, year });
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('program-year', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    this.server.create('course', { school, year, cohorts: [cohort] });
     const report = this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
-      prepositionalObject: 'school',
-      prepositionalObjectTableRowId: school.id,
+      prepositionalObject: 'program',
+      prepositionalObjectTableRowId: program.id,
       user: this.user,
       school,
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
+    this.set('selectedYear', '');
     this.server.post('api/graphql', ({ db }) => {
       return {
         data: {
@@ -116,6 +125,10 @@ module('Integration | Component | reports/subject', function (hooks) {
       @selectedYear={{this.selectedYear}}
       @onReportYearSelect={{(noop)}}
     />`);
+    assert.strictEqual(
+      component.description,
+      'This report shows all Courses associated with Program "program 0" in school 0.'
+    );
     assert.strictEqual(component.results[0].text, '2016 - 2017 course 0');
     this.set('selectedYear', year);
     assert.strictEqual(component.results[0].text, 'course 0');
@@ -139,6 +152,7 @@ module('Integration | Component | reports/subject', function (hooks) {
     this.set('setReportYear', (year) => this.set('selectedYear', year));
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('selectedReport', reportModel);
+    this.set('selectedYear', '');
     this.server.post('api/graphql', ({ db }) => {
       return {
         data: {
@@ -153,10 +167,173 @@ module('Integration | Component | reports/subject', function (hooks) {
       @selectedYear={{this.selectedYear}}
       @onReportYearSelect={{this.setReportYear}}
     />`);
+    assert.strictEqual(component.description, 'This report shows all Courses in school 0.');
     assert.strictEqual(component.academicYears.value, '');
     assert.strictEqual(component.results.length, 1);
     await component.academicYears.choose('2015');
     assert.strictEqual(component.results.length, 1);
     assert.strictEqual(component.academicYears.value, '2015');
+  });
+
+  test('edit report title, then save', async function (assert) {
+    this.server.create('academic-year', {
+      id: 2015,
+    });
+    this.server.create('academic-year', {
+      id: 2016,
+    });
+    const school = this.server.create('school');
+    this.server.create('course', {
+      school,
+      year: 2015,
+    });
+    this.server.create('course', {
+      school,
+      year: 2016,
+    });
+    const report = this.server.create('report', {
+      title: 'my report 0',
+      subject: 'course',
+      prepositionalObject: 'instructor',
+      prepositionalObjectTableRowId: this.user.id,
+      user: this.user,
+      school,
+    });
+    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
+    this.set('selectedReport', reportModel);
+    this.set('selectedYear', '');
+    this.server.post('api/graphql', ({ db }) => {
+      return {
+        data: {
+          courses: db.courses.map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
+    await render(hbs`<Reports::Subject
+      @selectedReport={{this.selectedReport}}
+      @selectedYear={{this.selectedYear}}
+      @onReportYearSelect={{(noop)}}
+    />`);
+    assert.strictEqual(component.title.text, 'my report 0');
+    assert.strictEqual(
+      component.description,
+      'This report shows all Courses associated with Instructor "0 guy M. Mc0son" in school 0.'
+    );
+    assert.strictEqual(component.title.text, 'my report 0');
+    await component.title.edit();
+    assert.strictEqual(component.title.value, 'my report 0');
+    await component.title.set('lorem ipsum');
+    await component.title.save();
+    assert.strictEqual(component.title.text, 'lorem ipsum');
+  });
+
+  test('edit report title, then cancel', async function (assert) {
+    this.server.create('academic-year', {
+      id: 2015,
+    });
+    this.server.create('academic-year', {
+      id: 2016,
+    });
+    const school = this.server.create('school');
+    this.server.create('course', {
+      school,
+      year: 2015,
+    });
+    this.server.create('course', {
+      school,
+      year: 2016,
+    });
+    const report = this.server.create('report', {
+      title: 'my report 0',
+      subject: 'course',
+      prepositionalObject: 'instructor',
+      prepositionalObjectTableRowId: this.user.id,
+      user: this.user,
+      school,
+    });
+    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
+    this.set('selectedReport', reportModel);
+    this.set('selectedYear', '');
+    this.server.post('api/graphql', ({ db }) => {
+      return {
+        data: {
+          courses: db.courses.map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
+    await render(hbs`<Reports::Subject
+      @selectedReport={{this.selectedReport}}
+      @selectedYear={{this.selectedYear}}
+      @onReportYearSelect={{(noop)}}
+    />`);
+    assert.strictEqual(component.title.text, 'my report 0');
+    assert.strictEqual(
+      component.description,
+      'This report shows all Courses associated with Instructor "0 guy M. Mc0son" in school 0.'
+    );
+    assert.strictEqual(component.title.text, 'my report 0');
+    await component.title.edit();
+    assert.strictEqual(component.title.value, 'my report 0');
+    await component.title.set('lorem ipsum');
+    await component.title.cancel();
+    assert.strictEqual(component.title.text, 'my report 0');
+  });
+
+  test('edit and remove report title, then save', async function (assert) {
+    this.server.create('academic-year', {
+      id: 2015,
+    });
+    this.server.create('academic-year', {
+      id: 2016,
+    });
+    const school = this.server.create('school');
+    this.server.create('course', {
+      school,
+      year: 2015,
+    });
+    this.server.create('course', {
+      school,
+      year: 2016,
+    });
+    const report = this.server.create('report', {
+      title: 'my report 0',
+      subject: 'course',
+      prepositionalObject: 'instructor',
+      prepositionalObjectTableRowId: this.user.id,
+      user: this.user,
+      school,
+    });
+    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
+    this.set('selectedReport', reportModel);
+    this.set('selectedYear', '');
+    this.server.post('api/graphql', ({ db }) => {
+      return {
+        data: {
+          courses: db.courses.map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
+    await render(hbs`<Reports::Subject
+      @selectedReport={{this.selectedReport}}
+      @selectedYear={{this.selectedYear}}
+      @onReportYearSelect={{(noop)}}
+    />`);
+    assert.strictEqual(component.title.text, 'my report 0');
+    assert.strictEqual(
+      component.description,
+      'This report shows all Courses associated with Instructor "0 guy M. Mc0son" in school 0.'
+    );
+    assert.strictEqual(component.title.text, 'my report 0');
+    await component.title.edit();
+    assert.strictEqual(component.title.value, 'my report 0');
+    await component.title.set('');
+    await component.title.save();
+    assert.strictEqual(component.title.text, 'All Courses for 0 guy M. Mc0son in school 0');
   });
 });

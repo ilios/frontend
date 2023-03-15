@@ -9,8 +9,29 @@
     </LinkTo>
   </div>
   <div class="header" data-test-report-header>
-    <h2 id="title" class="title" data-test-title>
-      {{this.selectedReportTitle}}
+    <h2 class="title" data-test-report-title>
+      {{#if this.constructedReportTitleLoaded}}
+        <EditableField
+          data-test-title
+          @value={{this.reportTitle}}
+          @save={{perform this.changeTitle}}
+          @close={{this.revertTitleChanges}}
+          @saveOnEnter={{true}}
+          @showIcon={{true}}
+          @closeOnEscape={{true}} as |isSaving|
+        >
+          <input
+            aria-label={{t "general.reportTitle"}}
+            type="text"
+            value={{this.reportTitle}}
+            placeholder={{this.constructedReportTitle}}
+            disabled={{isSaving}}
+            {{on "input" (pick "target.value" (set this.title))}}
+            {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+          >
+          <ValidationError @errors={{get-errors-for this.title}} />
+        </EditableField>
+      {{/if}}
     </h2>
     <div class="actions">
       <button
@@ -31,6 +52,11 @@
     </div>
   </div>
   <div class="content-container">
+    <div class="description" data-test-report-description>
+      {{#if this.reportDescriptionLoaded}}
+        {{this.reportDescription}}
+      {{/if}}
+    </div>
     {{#if this.showAcademicYearFilter}}
       <div class="years-filter">
         <select

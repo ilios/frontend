@@ -110,7 +110,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
     await page.reports.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(reportPage.report.title, 'aardvark');
+    assert.strictEqual(reportPage.report.title.text, 'aardvark');
     assert.strictEqual(reportPage.report.results.length, 1);
     assert.strictEqual(reportPage.report.results[0].text, 'course 0: session 0');
   });
@@ -153,7 +153,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
     await page.reports.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(reportPage.report.title, 'All Sessions for course 1 in school 0');
+    assert.strictEqual(reportPage.report.title.text, 'All Sessions for course 1 in school 0');
     assert.strictEqual(reportPage.report.results.length, 1);
     assert.strictEqual(reportPage.report.results[0].text, 'course 1: session 1');
   });
@@ -194,7 +194,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
     await page.reports.reports[1].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(reportPage.report.title, 'All Terms for session 1 in school 0');
+    assert.strictEqual(reportPage.report.title.text, 'All Terms for session 1 in school 0');
     assert.strictEqual(reportPage.report.results.length, 1);
     assert.strictEqual(reportPage.report.results[0].text, 'Vocabulary 1 > term 0');
   });
@@ -234,7 +234,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
     await page.reports.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(reportPage.report.title, 'All Courses for descriptor 0 in school 0');
+    assert.strictEqual(reportPage.report.title.text, 'All Courses for descriptor 0 in school 0');
     assert.strictEqual(reportPage.report.results.length, 2);
     assert.strictEqual(reportPage.report.results[0].text, '2015 course 0 (Theoretical Phys Ed)');
     assert.strictEqual(reportPage.report.results[1].text, '2016 course 1');
@@ -303,7 +303,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
     await page.reports.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(reportPage.report.title, 'All Courses in All Schools');
+    assert.strictEqual(reportPage.report.title.text, 'All Courses in All Schools');
     assert.strictEqual(reportPage.report.results.length, 2);
     assert.strictEqual(reportPage.report.results[0].text, '2015 course 0 (Theoretical Phys Ed)');
     assert.strictEqual(reportPage.report.results[1].text, '2016 course 1');
