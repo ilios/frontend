@@ -11,39 +11,15 @@
       @search={{fn (mut this.filter)}}
       placeholder={{t "general.filterPlaceholder"}}
     />
-    <div class="cohorts-container">
+    <div class="cohorts-container" data-test-cohorts>
       {{#each (sort-by "title" (await @cohorts)) as |cohort|}}
-        <div class="cohort-learner-groups" data-test-cohorts>
-          {{#if
-            (and
-              (is-fulfilled cohort.programYear)
-              (is-fulfilled cohort.programYear.program)
-              (is-fulfilled cohort.rootLevelLearnerGroups)
-            )
-          }}
-            <h5 class="cohort-title" data-test-title>
-              {{cohort.programYear.program.title}}
-              {{cohort.title}}
-            </h5>
-            <ul class="tree-groups-list" data-test-tree-groups-list>
-              {{#each
-                (sort-by
-                  this.sortByTitle (await cohort.rootLevelLearnerGroups)
-                ) as |learnerGroup|
-              }}
-                <LearnergroupTree
-                  @learnerGroup={{learnerGroup}}
-                  @selectedGroups={{@learnerGroups}}
-                  @filter={{this.filter}}
-                  @add={{@add}}
-                  @remove={{@remove}}
-                />
-              {{/each}}
-            </ul>
-          {{else}}
-            <LoadingSpinner />
-          {{/if}}
-        </div>
+        <LearnergroupSelectionCohortManager
+          @cohort={{cohort}}
+          @learnerGroups={{@learnerGroups}}
+          @add={{@add}}
+          @remove={{@remove}}
+          @filter={{this.filter}}
+        />
       {{/each}}
     </div>
   </div>
