@@ -2,24 +2,23 @@
     data-test-selected-term-tree
     data-test-selected-term-tree-level={{this.level}}
 >
-  {{#each (sort-by "title" @terms) as |term|}}
-    <li class="clickable">
-      <Dashboard::FilterCheckbox
-        @checked={{includes term.id @selectedTermIds}}
-        @add={{fn @add term.id}}
-        @remove={{fn @remove term.id}}
-      >
-        {{term.title}}
-      </Dashboard::FilterCheckbox>
-      {{#if (gt (get (await term.children) "length") 0)}}
-        <Dashboard::SelectedTermTree
-          @terms={{await term.children}}
-          @selectedTermIds={{@selectedTermIds}}
-          @add={{@add}}
-          @remove={{@remove}}
-          @level={{add this.level 1}}
-        />
-      {{/if}}
-    </li>
-  {{/each}}
+  <li class="clickable">
+    <Dashboard::FilterCheckbox
+      @checked={{includes @term.id @selectedTermIds}}
+      @add={{fn @add @term.id}}
+      @remove={{fn @remove @term.id}}
+      @targetId={{@term.id}}
+    >
+      {{@term.title}}
+    </Dashboard::FilterCheckbox>
+    {{#each (sort-by "title" this.children) as |term|}}
+      <Dashboard::SelectedTermTree
+        @term={{term}}
+        @selectedTermIds={{@selectedTermIds}}
+        @add={{@add}}
+        @remove={{@remove}}
+        @level={{add this.level 1}}
+      />
+    {{/each}}
+  </li>
 </ul>

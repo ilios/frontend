@@ -11,6 +11,7 @@
           @checked={{includes obj.id @selectedIds}}
           @add={{fn @add obj.id}}
           @remove={{fn @remove obj.id}}
+          @targetId={{obj.id}}
         >
           {{obj.displayTitle}} {{obj.programTitle}}
         </Dashboard::FilterCheckbox>
