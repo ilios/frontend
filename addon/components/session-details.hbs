@@ -29,12 +29,12 @@
   {{/if}}
   {{#if @session.isIndependentLearning}}
     <DetailLearnersAndLearnerGroups
-      @ilmSession={{await @session.ilmSession}}
+      @session={{@session}}
       @editable={{@editable}}
       @cohorts={{await @session.course.cohorts}}
     />
     <DetailInstructors
-      @ilmSession={{await @session.ilmSession}}
+      @session={{@session}}
       @editable={{@editable}}
     />
   {{/if}}

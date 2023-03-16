@@ -13,8 +13,9 @@ export default class DetailInstructorsComponent extends Component {
   @tracked instructorGroupBuffer = [];
   @tracked instructorBuffer = [];
   @tracked availableInstructorGroups;
-  @use ilmInstructors = new ResolveAsyncValue(() => [this.args.ilmSession?.instructors]);
-  @use ilmInstructorGroups = new ResolveAsyncValue(() => [this.args.ilmSession?.instructorGroups]);
+  @use ilmSession = new ResolveAsyncValue(() => [this.args.session.ilmSession]);
+  @use ilmInstructors = new ResolveAsyncValue(() => [this.ilmSession?.instructors]);
+  @use ilmInstructorGroups = new ResolveAsyncValue(() => [this.ilmSession?.instructorGroups]);
 
   constructor() {
     super(...arguments);
@@ -28,7 +29,7 @@ export default class DetailInstructorsComponent extends Component {
   });
 
   manage = dropTask(async () => {
-    const { ilmSession } = this.args;
+    const ilmSession = await this.args.session.ilmSession;
     const { instructorGroups, instructors } = await hash({
       instructorGroups: ilmSession.instructorGroups,
       instructors: ilmSession.instructors,
@@ -40,7 +41,7 @@ export default class DetailInstructorsComponent extends Component {
   });
 
   save = dropTask(async () => {
-    const { ilmSession } = this.args;
+    const ilmSession = await this.args.session.ilmSession;
     ilmSession.set('instructorGroups', this.instructorGroupBuffer);
     ilmSession.set('instructors', this.instructorBuffer);
     await ilmSession.save();
@@ -48,10 +49,10 @@ export default class DetailInstructorsComponent extends Component {
   });
 
   get instructorCount() {
-    if (!this.args.ilmSession) {
+    if (!this.ilmSession) {
       return 0;
     }
-    return this.args.ilmSession.instructors.length;
+    return this.ilmSession.instructors.length;
   }
 
   get selectedIlmInstructors() {
@@ -69,10 +70,10 @@ export default class DetailInstructorsComponent extends Component {
   }
 
   get instructorGroupCount() {
-    if (!this.args.ilmSession) {
+    if (!this.ilmSession) {
       return 0;
     }
-    return this.args.ilmSession.instructorGroups.length;
+    return this.ilmSession.instructorGroups.length;
   }
   @action
   cancel() {
