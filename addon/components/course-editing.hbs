@@ -39,7 +39,7 @@
     @editable={{@editable}}
   />
   {{#if
-    (or (eq (get (await @course.competencies) "length") 0) @courseCompetencyDetails)
+    (or (eq (get @course.competencies "length") 0) @courseCompetencyDetails)
   }}
     <DetailCompetencies
       @course={{@course}}
