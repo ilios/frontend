@@ -48,7 +48,15 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       title: 'Top Group 3',
       cohort: cohort2,
     });
+
+    const course = this.server.create('course', {
+      cohorts: [cohort1, cohort2],
+    });
+    const session = this.server.create('session', {
+      course,
+    });
     const ilmSession = this.server.create('ilmSession', {
+      session,
       learners: [learners[0], learners[1], learners[2]],
       learnerGroups: [secondLevelLearnerGroup1, secondLevelLearnerGroup2, topLevelLearnerGroup3],
     });
@@ -75,15 +83,16 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.learner2 = await store.findRecord('user', learners[1].id);
     this.learner3 = await store.findRecord('user', learners[2].id);
     this.learner4 = await store.findRecord('user', learners[3].id);
+    this.session = await store.findRecord('session', session.id);
     this.ilmSession = await store.findRecord('ilmSession', ilmSession.id);
   });
 
   test('it renders', async function (assert) {
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -133,11 +142,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   });
 
   test('manage', async function (assert) {
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -267,11 +276,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   });
 
   test('read-only', async function (assert) {
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{false}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -279,11 +288,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   });
 
   test('remove selected learner', async function (assert) {
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -294,11 +303,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   });
 
   test('remove learner-group from list', async function (assert) {
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -325,11 +334,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   });
 
   test('remove learner-group from picker', async function (assert) {
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -356,11 +365,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   });
 
   test('add available learner-group', async function (assert) {
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -388,7 +397,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
 
   test('add learner', async function (assert) {
     assert.expect(4);
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
 
     this.server.get('api/users', (schema, { queryParams }) => {
@@ -397,7 +406,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     });
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -410,11 +419,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   });
 
   test('cancel', async function (assert) {
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -455,11 +464,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   });
 
   test('save', async function (assert) {
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -500,10 +509,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   });
 
   test('it updates when relationships change #1550', async function (assert) {
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{(array)}}
     />
 `);
@@ -520,11 +529,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
 
   test('adding a group with children adds them as well', async function (assert) {
     this.ilmSession.set('learnerGroups', []);
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -573,11 +582,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       this.secondLevelLearnerGroup1,
       this.secondLevelLearnerGroup2,
     ]);
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -626,11 +635,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       this.secondLevelLearnerGroup1,
       this.secondLevelLearnerGroup2,
     ]);
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -675,11 +684,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
 
   test('selectively adding a group with children does not add the children', async function (assert) {
     this.ilmSession.set('learnerGroups', []);
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -730,11 +739,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       this.secondLevelLearnerGroup1,
       this.secondLevelLearnerGroup2,
     ]);
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);
@@ -780,11 +789,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       this.secondLevelLearnerGroup1,
       this.secondLevelLearnerGroup2,
     ]);
-    this.set('ilmSession', this.ilmSession);
+    this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
       @editable={{true}}
-      @ilmSession={{this.ilmSession}}
+      @session={{this.session}}
       @cohorts={{this.cohorts}}
     />
 `);

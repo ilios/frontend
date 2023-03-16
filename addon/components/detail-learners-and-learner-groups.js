@@ -13,11 +13,15 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @tracked isManaging = false;
   @tracked learnerGroupBuffer = [];
   @tracked learnerBuffer = [];
-  @use ilmLearners = new ResolveAsyncValue(() => [this.args.ilmSession?.learners]);
-  @use ilmLearnerGroups = new ResolveAsyncValue(() => [this.args.ilmSession?.learnerGroups]);
+
+  @use ilmSession = new ResolveAsyncValue(() => [this.args.session.ilmSession]);
+  @use course = new ResolveAsyncValue(() => [this.args.session.course]);
+  @use cohorts = new ResolveAsyncValue(() => [this.course?.cohorts]);
+  @use ilmLearners = new ResolveAsyncValue(() => [this.ilmSession?.learners]);
+  @use ilmLearnerGroups = new ResolveAsyncValue(() => [this.ilmSession?.learnerGroups]);
 
   manage = dropTask(async () => {
-    const { ilmSession } = this.args;
+    const ilmSession = await this.args.session.ilmSession;
     const { learnerGroups, learners } = await hash({
       learnerGroups: ilmSession.learnerGroups,
       learners: ilmSession.learners,
@@ -29,7 +33,7 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   });
 
   save = dropTask(async () => {
-    const { ilmSession } = this.args;
+    const ilmSession = await this.args.session.ilmSession;
     ilmSession.set('learnerGroups', this.learnerGroupBuffer);
     ilmSession.set('learners', this.learnerBuffer);
     await ilmSession.save();
@@ -37,17 +41,17 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   });
 
   get learnerCount() {
-    if (!this.args.ilmSession) {
+    if (!this.ilmSession) {
       return 0;
     }
-    return this.args.ilmSession.learners.length;
+    return this.ilmSession.learners.length;
   }
 
   get learnerGroupCount() {
-    if (!this.args.ilmSession) {
+    if (!this.ilmSession) {
       return 0;
     }
-    return this.args.ilmSession.learnerGroups.length;
+    return this.ilmSession.learnerGroups.length;
   }
 
   get selectedIlmLearners() {
