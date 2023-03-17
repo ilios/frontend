@@ -3,16 +3,13 @@
   <div class="available-learner-groups" data-test-available-learner-groups>
     <label data-test-heading>
       {{t "general.availableLearnerGroups"}}:
-      {{#unless (is-fulfilled @cohorts)}}
-        <LoadingSpinner />
-      {{/unless}}
     </label>
     <SearchBox
       @search={{fn (mut this.filter)}}
       placeholder={{t "general.filterPlaceholder"}}
     />
     <div class="cohorts-container" data-test-cohorts>
-      {{#each (sort-by "title" (await @cohorts)) as |cohort|}}
+      {{#each (sort-by "title" @cohorts) as |cohort|}}
         <LearnergroupSelectionCohortManager
           @cohort={{cohort}}
           @learnerGroups={{@learnerGroups}}

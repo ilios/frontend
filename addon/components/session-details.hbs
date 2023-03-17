@@ -31,7 +31,7 @@
     <DetailLearnersAndLearnerGroups
       @session={{@session}}
       @editable={{@editable}}
-      @cohorts={{await @session.course.cohorts}}
+      @cohorts={{this.cohorts}}
     />
     <DetailInstructors
       @session={{@session}}
