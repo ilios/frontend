@@ -12,7 +12,7 @@ export default class SessionsGridOffering extends Component {
   @Length(1, 255) @NotBlank() @tracked room;
   @tracked isEditing = false;
   @tracked wasUpdated = false;
-  @use session = new ResolveAsyncValue(() => [this.args.offering?.session]);
+  @use session = new ResolveAsyncValue(() => [this.args.offering.session]);
   @use course = new ResolveAsyncValue(() => [this.session?.course]);
   @use cohorts = new ResolveAsyncValue(() => [this.args.course?.cohorts]);
 
