@@ -15,7 +15,7 @@ export default class OfferingManagerComponent extends Component {
   @use learnerGroups = new ResolveAsyncValue(() => [this.args.offering.learnerGroups]);
   @use session = new ResolveAsyncValue(() => [this.args.offering?.session]);
   @use course = new ResolveAsyncValue(() => [this.session?.course]);
-  @use cohorts = new ResolveAsyncValue(() => [this.args.course?.cohorts]);
+  @use cohorts = new ResolveAsyncValue(() => [this.course?.cohorts]);
 
   @action
   save(startDate, endDate, room, url, learnerGroups, learners, instructorGroups, instructors) {
