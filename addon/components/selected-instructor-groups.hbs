@@ -26,13 +26,7 @@
             {{/if}}
           </li>
         </ul>
-        <ul class="instructorgroup-members-list" data-test-selected-instructor-group-members>
-          {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
-            <li data-test-selected-instructor-group-member>
-              <UserNameInfo @user={{user}} />
-            </li>
-          {{/each}}
-        </ul>
+        <SelectedInstructorGroupMembers @instructorGroup={{instructorGroup}} />
       </div>
     {{else}}
       <div data-test-no-selected-instructor-groups>{{t "general.none"}}</div>

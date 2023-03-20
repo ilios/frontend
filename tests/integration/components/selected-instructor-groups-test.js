@@ -55,28 +55,28 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     assert.strictEqual(component.instructorGroups.length, 3);
     assert.strictEqual(component.instructorGroups[0].title, 'instructor group 0');
     assert.ok(component.instructorGroups[0].isRemovable);
-    assert.strictEqual(component.instructorGroups[0].members.length, 2);
+    assert.strictEqual(component.instructorGroups[0].members.members.length, 2);
     assert.strictEqual(
-      component.instructorGroups[0].members[0].userNameInfo.fullName,
+      component.instructorGroups[0].members.members[0].userNameInfo.fullName,
       'Jane A. Doe'
     );
-    assert.notOk(component.instructorGroups[0].members[0].userNameInfo.hasAdditionalInfo);
+    assert.notOk(component.instructorGroups[0].members.members[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(
-      component.instructorGroups[0].members[1].userNameInfo.fullName,
+      component.instructorGroups[0].members.members[1].userNameInfo.fullName,
       'Joe M. Doe'
     );
-    assert.notOk(component.instructorGroups[0].members[1].userNameInfo.hasAdditionalInfo);
+    assert.notOk(component.instructorGroups[0].members.members[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.instructorGroups[1].title, 'instructor group 1');
     assert.ok(component.instructorGroups[1].isRemovable);
-    assert.strictEqual(component.instructorGroups[1].members.length, 1);
+    assert.strictEqual(component.instructorGroups[1].members.members.length, 1);
     assert.strictEqual(
-      component.instructorGroups[1].members[0].userNameInfo.fullName,
+      component.instructorGroups[1].members.members[0].userNameInfo.fullName,
       'Clem Chowder'
     );
-    assert.ok(component.instructorGroups[1].members[0].userNameInfo.hasAdditionalInfo);
+    assert.ok(component.instructorGroups[1].members.members[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.instructorGroups[2].title, 'instructor group 2');
     assert.ok(component.instructorGroups[2].isRemovable);
-    assert.strictEqual(component.instructorGroups[2].members.length, 0);
+    assert.strictEqual(component.instructorGroups[2].members.members.length, 0);
     assert.notOk(component.noGroups.isVisible);
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
@@ -92,28 +92,28 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     assert.strictEqual(component.instructorGroups.length, 3);
     assert.strictEqual(component.instructorGroups[0].title, 'instructor group 0');
     assert.notOk(component.instructorGroups[0].isRemovable);
-    assert.strictEqual(component.instructorGroups[0].members.length, 2);
+    assert.strictEqual(component.instructorGroups[0].members.members.length, 2);
     assert.strictEqual(
-      component.instructorGroups[0].members[0].userNameInfo.fullName,
+      component.instructorGroups[0].members.members[0].userNameInfo.fullName,
       'Jane A. Doe'
     );
-    assert.notOk(component.instructorGroups[0].members[0].userNameInfo.hasAdditionalInfo);
+    assert.notOk(component.instructorGroups[0].members.members[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(
-      component.instructorGroups[0].members[1].userNameInfo.fullName,
+      component.instructorGroups[0].members.members[1].userNameInfo.fullName,
       'Joe M. Doe'
     );
-    assert.notOk(component.instructorGroups[0].members[1].userNameInfo.hasAdditionalInfo);
+    assert.notOk(component.instructorGroups[0].members.members[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.instructorGroups[1].title, 'instructor group 1');
     assert.notOk(component.instructorGroups[1].isRemovable);
-    assert.strictEqual(component.instructorGroups[1].members.length, 1);
+    assert.strictEqual(component.instructorGroups[1].members.members.length, 1);
     assert.strictEqual(
-      component.instructorGroups[1].members[0].userNameInfo.fullName,
+      component.instructorGroups[1].members.members[0].userNameInfo.fullName,
       'Clem Chowder'
     );
-    assert.ok(component.instructorGroups[1].members[0].userNameInfo.hasAdditionalInfo);
+    assert.ok(component.instructorGroups[1].members.members[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.instructorGroups[2].title, 'instructor group 2');
     assert.notOk(component.instructorGroups[2].isRemovable);
-    assert.strictEqual(component.instructorGroups[2].members.length, 0);
+    assert.strictEqual(component.instructorGroups[2].members.members.length, 0);
     assert.notOk(component.noGroups.isVisible);
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
