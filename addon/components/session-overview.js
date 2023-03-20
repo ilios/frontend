@@ -8,6 +8,8 @@ import moment from 'moment';
 import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
 import { findById, sortBy } from '../utils/array-helpers';
+import ResolveAsyncValue from '../classes/resolve-async-value';
+import { use } from 'ember-could-get-used-to-this';
 
 @validatable
 export default class SessionOverview extends Component {
@@ -34,6 +36,8 @@ export default class SessionOverview extends Component {
   @tracked showSpecialAttireRequired = false;
   @tracked showSpecialEquipmentRequired = false;
   @tracked isIndependentLearning = false;
+
+  @use prerequisites = new ResolveAsyncValue(() => [this.args.session.prerequisites]);
 
   get filteredSessionTypes() {
     const selectedSessionTypeId = isEmpty(this.sessionType) ? -1 : this.sessionType.id;
