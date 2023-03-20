@@ -19,6 +19,10 @@ export default class SessionsGridOffering extends Component {
   @use courseEndDate = new ResolveAsyncValue(() => [this.course?.endDate]);
   @use learnerGroups = new ResolveAsyncValue(() => [this.args.offering.learnerGroups]);
 
+  get cohortsLoaded() {
+    return !!this.cohorts;
+  }
+
   @action
   revertRoomChanges() {
     this.room = this.args.offering.room;
