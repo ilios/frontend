@@ -11,13 +11,13 @@
         @showRoom={{true}}
         @showInstructors={{true}}
         @cohorts={{this.cohorts}}
-        @courseStartDate={{await @offering.session.course.startDate}}
-        @courseEndDate={{await @offering.session.course.startDate}}
+        @courseStartDate={{this.courseStartDate}}
+        @courseEndDate={{this.courseEndDate}}
         @close={{this.close}}
         @save={{perform this.save}}
         @smallGroupMode={{false}}
         @offering={{@offering}}
-        @session={{await @offering.session}}
+        @session={{this.session}}
         @scrollToBottom={{false}}
 
       />
@@ -66,16 +66,14 @@
         colspan="2"
         title={{join
         ", "
-        (map-by "fullName" (sort-by "fullName" (await @offering.allLearners)))
+        (map-by "fullName" (sort-by "fullName" @offering.allLearners))
     }}
     >
-      {{#if (get (await @offering.allLearners) "length")}}
-        <strong>({{get (await @offering.allLearners) "length"}})</strong>
+      {{#if @offering.allLearners.length}}
+        <strong>({{@offering.allLearners.length}})</strong>
       {{/if}}
       {{truncate
-        (join
-          ", " (map-by "fullName" (sort-by "fullName" (await @offering.allLearners)))
-        )
+        (join ", " (map-by "fullName" (sort-by "fullName" @offering.allLearners)))
         25
       }}
     </td>
@@ -83,16 +81,14 @@
       colspan="2"
       title={{join
         ", "
-        (map-by "title" (sort-by "title" (await @offering.learnerGroups)))
+        (map-by "title" (sort-by "title" this.learnerGroups))
       }}
     >
-      {{#if (get (await @offering.learnerGroups) "length")}}
-        <strong>({{get (await @offering.learnerGroups) "length"}})</strong>
+      {{#if this.learnerGroups.length}}
+        <strong>({{this.learnerGroups.length}})</strong>
       {{/if}}
       {{truncate
-        (join
-          ", " (map-by "title" (sort-by "title" (await @offering.learnerGroups)))
-        )
+        (join ", " (map-by "title" (sort-by "title" this.learnerGroups)))
         25
       }}
     </td>
@@ -100,19 +96,14 @@
       colspan="2"
       title={{join
         ", "
-        (map-by "fullName" (sort-by "fullName" (await @offering.allInstructors)))
+        (map-by "fullName" (sort-by "fullName" @offering.allInstructors))
       }}
     >
-      {{#if (get (await @offering.allInstructors) "length")}}
-        <strong>({{get (await @offering.allInstructors) "length"}})</strong>
+      {{#if @offering.allInstructors.length}}
+        <strong>({{@offering.allInstructors.length}})</strong>
       {{/if}}
       {{truncate
-        (join
-          ", "
-          (map-by
-            "fullName" (sort-by "fullName" (await @offering.allInstructors))
-          )
-        )
+        (join ", " (map-by "fullName" (sort-by "fullName" @offering.allInstructors)))
         25
       }}
     </td>
