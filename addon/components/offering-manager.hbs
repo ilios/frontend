@@ -30,27 +30,22 @@
               {{#if learnerGroup.needsAccommodation}}
                 <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
               {{/if}}
-              {{#if
-                (and
-                  (not learnerGroup.isTopLevelGroup)
-                  (is-fulfilled learnerGroup.allParents)
-                )
-              }}
+              {{#unless learnerGroup.isTopLevelGroup}}
                 {{#if (and
                   (get this (concat "learnerGroupElement" learnerGroup.id))
                   (includes learnerGroup.id this.hoveredGroups)
                 )}}
                   <IliosTooltip @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}>
                     <strong>
-                      {{if (eq (get (await learnerGroup.allParents) "length") 1)
+                      {{if (eq learnerGroup.allParents.length 1)
                         (t "general.parentGroup")
                         (t "general.parentGroups")
                       }}:
                     </strong>
-                    {{join " » " (reverse (map-by "title" (await learnerGroup.allParents)))}}
+                    {{join " » " (reverse (map-by "title" learnerGroup.allParents))}}
                   </IliosTooltip>
                 {{/if}}
-              {{/if}}
+              {{/unless}}
             </li>
           {{else}}
             <li>
@@ -65,7 +60,7 @@
       </div>
       <div class="offering-manager-instructors">
         <ul>
-          {{#each (await @offering.allInstructors) as |user|}}
+          {{#each @offering.allInstructors as |user|}}
             <li data-test-instructor>
               <UserNameInfo @user={{user}} />
             </li>
