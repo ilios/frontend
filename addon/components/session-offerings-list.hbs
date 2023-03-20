@@ -4,7 +4,7 @@
   {{did-update (perform this.load) @session}}
   data-test-session-offerings-list
 >
-  {{#each (await this.offeringBlocks) as |block|}}
+  {{#each this.offeringBlocks as |block|}}
     <div class="offering-block">
       <div class="offering-block-date">
         <span class="offering-block-date-dayofweek">

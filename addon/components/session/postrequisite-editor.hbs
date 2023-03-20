@@ -74,11 +74,11 @@
                 type="button"
                 {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
               >
-                {{#if (await postrequisite.firstOfferingDate)}}
+                {{#if postrequisite.firstOfferingDate}}
                   {{#if postrequisite.ilmSession}}
-                    <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{format-date (await postrequisite.firstOfferingDate)}}
+                    <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{format-date postrequisite.firstOfferingDate}}
                   {{else}}
-                    {{format-date (await postrequisite.firstOfferingDate) month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
+                    {{format-date postrequisite.firstOfferingDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
                   {{/if}}
                 {{/if}}
               </button>
