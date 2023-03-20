@@ -3,119 +3,120 @@
   data-test-offering-manager
   ...attributes
 >
-  {{#if (and this.isEditing this.cohortsLoaded)}}
-    <OfferingForm
-      @showRoom={{true}}
-      @showInstructors={{true}}
-      @cohorts={{this.cohorts}}
-      @courseStartDate={{this.courseStartDate}}
-      @courseEndDate={{this.courseEndDate}}
-      @close={{toggle "isEditing" this}}
-      @save={{this.save}}
-      @smallGroupMode={{false}}
-      @offering={{@offering}}
-      @session={{this.session}}
-      @scrollToBottom={{false}}
-    />
-  {{else}}
-    <div class="offering-manager-learner-groups">
-      <ul>
-        {{#each this.sortedLearnerGroups as |learnerGroup|}}
-          <li
-            {{did-insert this.setLearnerGroupElement learnerGroup.id}}
-            {{mouse-hover-toggle (fn this.toggleHover learnerGroup.id)}}
-          >
-            {{learnerGroup.title}}
-            {{#if learnerGroup.needsAccommodation}}
-              <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
-            {{/if}}
-            {{#if
-              (and
-                (not learnerGroup.isTopLevelGroup)
-                (is-fulfilled learnerGroup.allParents)
-              )
-            }}
-              {{#if (and
-                (get this (concat "learnerGroupElement" learnerGroup.id))
-                (includes learnerGroup.id this.hoveredGroups)
-              )}}
-                <IliosTooltip @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}>
-                  <strong>
-                    {{if (eq (get (await learnerGroup.allParents) "length") 1)
-                      (t "general.parentGroup")
-                      (t "general.parentGroups")
-                    }}:
-                  </strong>
-                  {{join " » " (reverse (map-by "title" (await learnerGroup.allParents)))}}
-                </IliosTooltip>
+  {{#if this.cohortsLoaded}}
+    {{#if this.isEditing}}
+      <OfferingForm
+        @showRoom={{true}}
+        @showInstructors={{true}}
+        @cohorts={{this.cohorts}}
+        @courseStartDate={{this.courseStartDate}}
+        @courseEndDate={{this.courseEndDate}}
+        @close={{toggle "isEditing" this}}
+        @save={{this.save}}
+        @smallGroupMode={{false}}
+        @offering={{@offering}}
+        @session={{this.session}}
+        @scrollToBottom={{false}}
+      />
+    {{else}}
+      <div class="offering-manager-learner-groups">
+        <ul>
+          {{#each this.sortedLearnerGroups as |learnerGroup|}}
+            <li
+              {{did-insert this.setLearnerGroupElement learnerGroup.id}}
+              {{mouse-hover-toggle (fn this.toggleHover learnerGroup.id)}}
+            >
+              {{learnerGroup.title}}
+              {{#if learnerGroup.needsAccommodation}}
+                <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
               {{/if}}
-            {{/if}}
-          </li>
-        {{else}}
-          <li>
-            <FaIcon @icon="users" />
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-    <div class="offering-manager-location">
-      <TruncateText @text={{@offering.room}} @length={{10}} data-test-location />
-      <OfferingUrlDisplay @url={{@offering.url}} data-test-url />
-    </div>
-    <div class="offering-manager-instructors">
-      <ul>
-        {{#each (await @offering.allInstructors) as |user|}}
-          <li data-test-instructor>
-            <UserNameInfo @user={{user}} />
-          </li>
-        {{else}}
-          <li>
-            <FaIcon @icon="user-plus" />
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-    {{#if @editable}}
-      <div class="offering-manager-actions">
-        <button
-          class="link-button edit"
-          type="button"
-          {{on "click" (toggle "isEditing" this)}}
-        >
-          <FaIcon @icon="pen-to-square" class="enabled" />
-        </button>
-        {{#if @editable}}
-          <button
-            class="link-button remove"
-            type="button"
-            {{on "click" (set this.showRemoveConfirmation true)}}
-          >
-            <FaIcon @icon="trash" class="enabled" />
-          </button>
-        {{else}}
-          <FaIcon @icon="trash" class="disabled" />
-        {{/if}}
+              {{#if
+                (and
+                  (not learnerGroup.isTopLevelGroup)
+                  (is-fulfilled learnerGroup.allParents)
+                )
+              }}
+                {{#if (and
+                  (get this (concat "learnerGroupElement" learnerGroup.id))
+                  (includes learnerGroup.id this.hoveredGroups)
+                )}}
+                  <IliosTooltip @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}>
+                    <strong>
+                      {{if (eq (get (await learnerGroup.allParents) "length") 1)
+                        (t "general.parentGroup")
+                        (t "general.parentGroups")
+                      }}:
+                    </strong>
+                    {{join " » " (reverse (map-by "title" (await learnerGroup.allParents)))}}
+                  </IliosTooltip>
+                {{/if}}
+              {{/if}}
+            </li>
+          {{else}}
+            <li>
+              <FaIcon @icon="users" />
+            </li>
+          {{/each}}
+        </ul>
       </div>
-    {{/if}}
-    {{#if this.showRemoveConfirmation}}
-      <div class="confirm-removal">
-        <div class="confirm-message">
-          {{t
-            "general.confirmRemove"
-            learnerGroupCount=@offering.learnerGroups.length
-          }}
-          <br>
-          <div class="confirm-buttons">
-            <button type="button" class="remove text" {{on "click" (fn @remove @offering)}}>
-              {{t "general.yes"}}
+      <div class="offering-manager-location">
+        <TruncateText @text={{@offering.room}} @length={{10}} data-test-location />
+        <OfferingUrlDisplay @url={{@offering.url}} data-test-url />
+      </div>
+      <div class="offering-manager-instructors">
+        <ul>
+          {{#each (await @offering.allInstructors) as |user|}}
+            <li data-test-instructor>
+              <UserNameInfo @user={{user}} />
+            </li>
+          {{else}}
+            <li>
+              <FaIcon @icon="user-plus" />
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{#if @editable}}
+        <div class="offering-manager-actions">
+          <button
+            class="link-button edit"
+            type="button"
+            {{on "click" (toggle "isEditing" this)}}
+          >
+            <FaIcon @icon="pen-to-square" class="enabled" />
+          </button>
+          {{#if @editable}}
+            <button
+              class="link-button remove"
+              type="button"
+              {{on "click" (set this.showRemoveConfirmation true)}}
+            >
+              <FaIcon @icon="trash" class="enabled" />
             </button>
-            <button type="button" class="cancel text" {{on "click" (set this.showRemoveConfirmation false)}}>
-              {{t "general.cancel"}}
-            </button>
+          {{else}}
+            <FaIcon @icon="trash" class="disabled" />
+          {{/if}}
+        </div>
+      {{/if}}
+      {{#if this.showRemoveConfirmation}}
+        <div class="confirm-removal">
+          <div class="confirm-message">
+            {{t
+              "general.confirmRemove"
+              learnerGroupCount=@offering.learnerGroups.length
+            }}
+            <br>
+            <div class="confirm-buttons">
+              <button type="button" class="remove text" {{on "click" (fn @remove @offering)}}>
+                {{t "general.yes"}}
+              </button>
+              <button type="button" class="cancel text" {{on "click" (set this.showRemoveConfirmation false)}}>
+                {{t "general.cancel"}}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      {{/if}}
     {{/if}}
   {{/if}}
-
 </div>
