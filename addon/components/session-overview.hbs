@@ -208,7 +208,7 @@
             </div>
             {{#unless @session.hasPostrequisite}}
               <SessionOverviewIlmDuedate
-                @ilmSession={{await @session.ilmSession}}
+                @ilmSession={{this.ilmSession}}
                 @editable={{@editable}}
                 class="block"
               />
