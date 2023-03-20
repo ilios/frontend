@@ -3,18 +3,18 @@
   data-test-offering-manager
   ...attributes
 >
-  {{#if (and this.isEditing (is-fulfilled @offering.session.course.cohorts))}}
+  {{#if (and this.isEditing this.cohortsLoaded)}}
     <OfferingForm
       @showRoom={{true}}
       @showInstructors={{true}}
       @cohorts={{this.cohorts}}
-      @courseStartDate={{await @offering.session.course.startDate}}
-      @courseEndDate={{await @offering.session.course.startDate}}
+      @courseStartDate={{this.courseStartDate}}
+      @courseEndDate={{this.courseEndDate}}
       @close={{toggle "isEditing" this}}
       @save={{this.save}}
       @smallGroupMode={{false}}
       @offering={{@offering}}
-      @session={{await @offering.session}}
+      @session={{this.session}}
       @scrollToBottom={{false}}
     />
   {{else}}
