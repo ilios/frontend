@@ -38,6 +38,8 @@ export default class SessionOverview extends Component {
   @tracked isIndependentLearning = false;
 
   @use prerequisites = new ResolveAsyncValue(() => [this.args.session.prerequisites]);
+  @use postrequisite = new ResolveAsyncValue(() => [this.args.session.postrequisite]);
+  @use postrequisiteCourse = new ResolveAsyncValue(() => [this.postrequisite?.course]);
   @use ilmSession = new ResolveAsyncValue(() => [this.args.session.ilmSession]);
 
   get filteredSessionTypes() {
