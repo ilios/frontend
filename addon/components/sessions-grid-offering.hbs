@@ -10,7 +10,7 @@
       <OfferingForm
         @showRoom={{true}}
         @showInstructors={{true}}
-        @cohorts={{await @offering.session.course.cohorts}}
+        @cohorts={{this.cohorts}}
         @courseStartDate={{await @offering.session.course.startDate}}
         @courseEndDate={{await @offering.session.course.startDate}}
         @close={{this.close}}

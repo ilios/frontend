@@ -1,6 +1,6 @@
 import { collection, create, text } from 'ember-cli-page-object';
 import selectedLearnerGroups from './selected-learner-groups';
-import learnergroupTree from './learnergroup-tree';
+import learnergroupSelectionCohortManager from './learnergroup-selection-cohort-manager';
 import search from './search-box';
 
 const definition = {
@@ -10,10 +10,10 @@ const definition = {
     scope: '[data-test-available-learner-groups]',
     heading: text('[data-test-heading]'),
     search,
-    cohorts: collection('[data-test-cohorts]', {
-      title: text('[data-test-title]', { at: 0 }),
-      trees: collection('[data-test-learnergroup-tree-root=true]', learnergroupTree),
-    }),
+    cohorts: collection(
+      '[data-test-learnergroup-selection-cohort-manager]',
+      learnergroupSelectionCohortManager
+    ),
   },
 };
 

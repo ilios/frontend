@@ -1,0 +1,24 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.learnergroup-selection-cohort-manager {
+  border: 1px solid c.$blueMunsell;
+
+  h5 {
+    margin-bottom: .5rem;
+    padding: .5rem;
+  }
+
+  & > ul {
+    @include m.ilios-list-tree;
+    background-color: c.$white;
+    height: 15rem;
+    margin-bottom: 1rem;
+    overflow-y: scroll;
+    padding: .5rem 0;
+
+    ul {
+      padding: 0;
+    }
+  }
+}

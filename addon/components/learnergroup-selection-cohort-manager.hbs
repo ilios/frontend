@@ -1,0 +1,24 @@
+<div
+  class="learnergroup-selection-cohort-manager"
+  data-test-learnergroup-selection-cohort-manager
+>
+  {{#if this.learnerGroupsLoaded}}
+    <h5 class="cohort-title" data-test-title-cohort-title>
+      {{@cohort.programYear.program.title}}
+      {{@cohort.title}}
+    </h5>
+    <ul class="tree-groups-list" data-test-tree-groups-list>
+      {{#each (sort-by this.sortByTitle this.rootLevelLearnerGroups) as |learnerGroup|}}
+        <LearnergroupTree
+          @learnerGroup={{learnerGroup}}
+          @selectedGroups={{@learnerGroups}}
+          @filter={{@filter}}
+          @add={{@add}}
+          @remove={{@remove}}
+        />
+      {{/each}}
+    </ul>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>
