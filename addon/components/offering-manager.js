@@ -12,8 +12,6 @@ export default class OfferingManagerComponent extends Component {
   @tracked showRemoveConfirmation = false;
   @tracked hoveredGroups = [];
 
-  foo = undefined;
-
   @use learnerGroups = new ResolveAsyncValue(() => [this.args.offering.learnerGroups]);
   @use session = new ResolveAsyncValue(() => [this.args.offering?.session]);
   @use course = new ResolveAsyncValue(() => [this.session?.course]);
