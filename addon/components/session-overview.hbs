@@ -52,7 +52,7 @@
           </div>
 
           <div class="session-overview-actions">
-            {{#if (and (is-fulfilled this.showCopy) (await this.showCopy))}}
+            {{#if this.showCopy}}
               <LinkTo
                 @route="session.copy"
                 @models={{array @session.course @session}}
@@ -208,7 +208,7 @@
             </div>
             {{#unless @session.hasPostrequisite}}
               <SessionOverviewIlmDuedate
-                @ilmSession={{await @session.ilmSession}}
+                @ilmSession={{this.ilmSession}}
                 @editable={{@editable}}
                 class="block"
               />
@@ -225,7 +225,7 @@
                 {{else}}
                   <label>
                     {{#if @session.hasPostrequisite}}
-                      <LinkTo @route="session.index" @models={{array (await @session.postrequisite.course) (await @session.postrequisite)}}>
+                      <LinkTo @route="session.index" @models={{array this.postrequisiteCourse this.postrequisite}}>
                         <FaIcon @icon="square-up-right" /> {{t "general.duePriorTo"}}:
                       </LinkTo>
                     {{else}}
@@ -248,7 +248,7 @@
               {{else}}
                 <label>
                   {{#if @session.hasPostrequisite}}
-                    <LinkTo @route="session.index" @models={{array (await @session.postrequisite.course) (await @session.postrequisite)}}>
+                    <LinkTo @route="session.index" @models={{array this.postrequisiteCourse this.postrequisite}}>
                       <FaIcon @icon="square-up-right" /> {{t "general.duePriorTo"}}:
                     </LinkTo>>
                   {{else}}
@@ -266,7 +266,7 @@
               <label>{{t "general.prerequisites"}}:</label>
               {{#if @session.hasPrerequisites}}
                 <span>
-                  {{#each (await @session.prerequisites) as |prerequisite index|~}}<LinkTo @route="session.index" @models={{array (await prerequisite.course) prerequisite}}><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#unless (eq index (sub @session.prerequisites.length 1))}}, {{/unless}}{{~/each}}
+                  {{#each this.prerequisites as |prerequisite index|~}}<LinkTo @route="session.index" @models={{array prerequisite.course prerequisite}}><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#unless (eq index (sub this.prerequisites.length 1))}}, {{/unless}}{{~/each}}
                 </span>
               {{else}}
                 {{t "general.none"}}

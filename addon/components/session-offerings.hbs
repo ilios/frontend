@@ -16,8 +16,8 @@
     <NewOffering
       @session={{@session}}
       @cohorts={{this.cohorts}}
-      @courseStartDate={{await @session.course.startDate}}
-      @courseEndDate={{await @session.course.endDate}}
+      @courseStartDate={{this.course.startDate}}
+      @courseEndDate={{this.course.endDate}}
       @close={{@toggleShowNewOfferingForm}}
     />
   {{/if}}
