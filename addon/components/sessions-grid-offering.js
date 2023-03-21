@@ -15,8 +15,6 @@ export default class SessionsGridOffering extends Component {
   @use session = new ResolveAsyncValue(() => [this.args.offering.session]);
   @use course = new ResolveAsyncValue(() => [this.session?.course]);
   @use cohorts = new ResolveAsyncValue(() => [this.course?.cohorts]);
-  @use courseStartDate = new ResolveAsyncValue(() => [this.course?.startDate]);
-  @use courseEndDate = new ResolveAsyncValue(() => [this.course?.endDate]);
   @use learnerGroups = new ResolveAsyncValue(() => [this.args.offering.learnerGroups]);
 
   get cohortsLoaded() {
