@@ -1,5 +1,5 @@
 import { clickable, collection, create, isVisible, text } from 'ember-cli-page-object';
-import userNameInfo from './user-name-info';
+import members from './selected-instructor-group-members';
 const definition = {
   scope: '[data-test-selected-instructor-groups]',
   heading: text('[data-test-heading]'),
@@ -7,9 +7,7 @@ const definition = {
     title: text('[data-test-instructor-group-title]'),
     isRemovable: isVisible('[data-test-instructor-group-title] button'),
     remove: clickable('[data-test-instructor-group-title] button'),
-    members: collection('[data-test-selected-instructor-group-member]', {
-      userNameInfo,
-    }),
+    members,
   }),
   noGroups: {
     scope: '[data-test-no-selected-instructor-groups]',

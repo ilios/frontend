@@ -87,41 +87,50 @@ module('Integration | Component | instructor selection manager', function (hooks
     assert.notOk(component.selectedInstructors.instructors[2].userNameInfo.isTooltipVisible);
     assert.strictEqual(component.selectedInstructorGroups.instructorGroups.length, 2);
     assert.strictEqual(component.selectedInstructorGroups.instructorGroups[0].title, 'Alpha');
-    assert.strictEqual(component.selectedInstructorGroups.instructorGroups[0].members.length, 2);
     assert.strictEqual(
-      component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo.fullName,
+      component.selectedInstructorGroups.instructorGroups[0].members.members.length,
+      2
+    );
+    assert.strictEqual(
+      component.selectedInstructorGroups.instructorGroups[0].members.members[0].userNameInfo
+        .fullName,
       'Aardvark'
     );
     assert.notOk(
-      component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo
+      component.selectedInstructorGroups.instructorGroups[0].members.members[0].userNameInfo
         .isTooltipVisible
     );
-    await component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo.expandTooltip();
+    await component.selectedInstructorGroups.instructorGroups[0].members.members[0].userNameInfo.expandTooltip();
     assert.ok(
-      component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo
+      component.selectedInstructorGroups.instructorGroups[0].members.members[0].userNameInfo
         .isTooltipVisible
     );
     assert.strictEqual(
-      component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo
+      component.selectedInstructorGroups.instructorGroups[0].members.members[0].userNameInfo
         .tooltipContents,
       'Campus name of record: 2 guy M, Mc2son'
     );
-    await component.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo.closeTooltip();
+    await component.selectedInstructorGroups.instructorGroups[0].members.members[0].userNameInfo.closeTooltip();
     assert.strictEqual(
-      component.selectedInstructorGroups.instructorGroups[0].members[1].userNameInfo.fullName,
+      component.selectedInstructorGroups.instructorGroups[0].members.members[1].userNameInfo
+        .fullName,
       'Jane A. Doe'
     );
     assert.notOk(
-      component.selectedInstructorGroups.instructorGroups[0].members[1].userNameInfo
+      component.selectedInstructorGroups.instructorGroups[0].members.members[1].userNameInfo
         .isTooltipVisible
     );
-    assert.strictEqual(component.selectedInstructorGroups.instructorGroups[1].members.length, 1);
     assert.strictEqual(
-      component.selectedInstructorGroups.instructorGroups[1].members[0].userNameInfo.fullName,
+      component.selectedInstructorGroups.instructorGroups[1].members.members.length,
+      1
+    );
+    assert.strictEqual(
+      component.selectedInstructorGroups.instructorGroups[1].members.members[0].userNameInfo
+        .fullName,
       'Joe M. Doe'
     );
     assert.notOk(
-      component.selectedInstructorGroups.instructorGroups[1].members[0].userNameInfo
+      component.selectedInstructorGroups.instructorGroups[1].members.members[0].userNameInfo
         .isTooltipVisible
     );
     assert.strictEqual(component.selectedInstructorGroups.instructorGroups[1].title, 'Beta');

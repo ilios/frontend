@@ -44,15 +44,15 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       'instructor group 0'
     );
     assert.strictEqual(
-      page.details.instructors.selectedInstructorGroups.instructorGroups[0].members.length,
+      page.details.instructors.selectedInstructorGroups.instructorGroups[0].members.members.length,
       2
     );
     assert.strictEqual(
-      page.details.instructors.selectedInstructorGroups.instructorGroups[0].members[0].text,
+      page.details.instructors.selectedInstructorGroups.instructorGroups[0].members.members[0].text,
       '7 guy M. Mc7son'
     );
     assert.strictEqual(
-      page.details.instructors.selectedInstructorGroups.instructorGroups[0].members[1].text,
+      page.details.instructors.selectedInstructorGroups.instructorGroups[0].members.members[1].text,
       '8 guy M. Mc8son'
     );
     assert.strictEqual(
@@ -60,19 +60,19 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       'instructor group 1'
     );
     assert.strictEqual(
-      page.details.instructors.selectedInstructorGroups.instructorGroups[1].members.length,
+      page.details.instructors.selectedInstructorGroups.instructorGroups[1].members.members.length,
       3
     );
     assert.strictEqual(
-      page.details.instructors.selectedInstructorGroups.instructorGroups[1].members[0].text,
+      page.details.instructors.selectedInstructorGroups.instructorGroups[1].members.members[0].text,
       '10 guy M. Mc10son'
     );
     assert.strictEqual(
-      page.details.instructors.selectedInstructorGroups.instructorGroups[1].members[1].text,
+      page.details.instructors.selectedInstructorGroups.instructorGroups[1].members.members[1].text,
       '11 guy M. Mc11son'
     );
     assert.strictEqual(
-      page.details.instructors.selectedInstructorGroups.instructorGroups[1].members[2].text,
+      page.details.instructors.selectedInstructorGroups.instructorGroups[1].members.members[2].text,
       '9 guy M. Mc9son'
     );
     assert.strictEqual(
@@ -80,7 +80,7 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       'instructor group 2'
     );
     assert.strictEqual(
-      page.details.instructors.selectedInstructorGroups.instructorGroups[2].members.length,
+      page.details.instructors.selectedInstructorGroups.instructorGroups[2].members.members.length,
       0
     );
 
@@ -115,13 +115,16 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       manager.selectedInstructorGroups.instructorGroups[0].title,
       'instructor group 0'
     );
-    assert.strictEqual(manager.selectedInstructorGroups.instructorGroups[0].members.length, 2);
     assert.strictEqual(
-      manager.selectedInstructorGroups.instructorGroups[0].members[0].userNameInfo.fullName,
+      manager.selectedInstructorGroups.instructorGroups[0].members.members.length,
+      2
+    );
+    assert.strictEqual(
+      manager.selectedInstructorGroups.instructorGroups[0].members.members[0].userNameInfo.fullName,
       '7 guy M. Mc7son'
     );
     assert.strictEqual(
-      manager.selectedInstructorGroups.instructorGroups[0].members[1].userNameInfo.fullName,
+      manager.selectedInstructorGroups.instructorGroups[0].members.members[1].userNameInfo.fullName,
       '8 guy M. Mc8son'
     );
     assert.strictEqual(
@@ -129,23 +132,29 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       'instructor group 1'
     );
     assert.strictEqual(
-      manager.selectedInstructorGroups.instructorGroups[1].members[0].userNameInfo.fullName,
+      manager.selectedInstructorGroups.instructorGroups[1].members.members[0].userNameInfo.fullName,
       '10 guy M. Mc10son'
     );
     assert.strictEqual(
-      manager.selectedInstructorGroups.instructorGroups[1].members[1].userNameInfo.fullName,
+      manager.selectedInstructorGroups.instructorGroups[1].members.members[1].userNameInfo.fullName,
       '11 guy M. Mc11son'
     );
     assert.strictEqual(
-      manager.selectedInstructorGroups.instructorGroups[1].members[2].userNameInfo.fullName,
+      manager.selectedInstructorGroups.instructorGroups[1].members.members[2].userNameInfo.fullName,
       '9 guy M. Mc9son'
     );
-    assert.strictEqual(manager.selectedInstructorGroups.instructorGroups[1].members.length, 3);
+    assert.strictEqual(
+      manager.selectedInstructorGroups.instructorGroups[1].members.members.length,
+      3
+    );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[2].text,
       'instructor group 2'
     );
-    assert.strictEqual(manager.selectedInstructorGroups.instructorGroups[2].members.length, 0);
+    assert.strictEqual(
+      manager.selectedInstructorGroups.instructorGroups[2].members.members.length,
+      0
+    );
     assert.strictEqual(manager.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       manager.selectedInstructors.instructors[0].userNameInfo.fullName,

@@ -1,0 +1,5 @@
+@use "../mixins" as m;
+
+.selected-instructor-group-members {
+  @include m.ilios-tag-list;
+}
