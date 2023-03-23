@@ -44,7 +44,6 @@ jobs:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Enable auto-merge for Dependabot PRs
         if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency)}}
-        run: gh pr merge --merge --auto "$pr_number"
+        run: gh pr merge --merge --auto
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          pr_number: ${{ github.event.pull_request.number }}
