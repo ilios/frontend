@@ -12,6 +12,10 @@ export default class SelectableTermsListItem extends Component {
     return selectedTerms.includes(term);
   }
 
+  get level() {
+    return this.args.level ?? 0;
+  }
+
   get showTooltip() {
     return this.args?.term.description?.length && this.theElement && this.isHovering;
   }

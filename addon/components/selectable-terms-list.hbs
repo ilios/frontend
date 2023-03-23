@@ -1,29 +1,28 @@
-<ul
-  class="selectable-terms-list"
-  {{did-insert (perform this.loadFilteredTerms)}}
-  {{did-update (perform this.loadFilteredTerms) this.topLevelTermsRelationshipPromise @termFilter @terms}}
+<ul class="selectable-terms-list"
+    data-test-selectable-terms-list
+    data-test-selectable-terms-list-level={{this.level}}
 >
-  {{#unless this.loadFilteredTerms.isRunning}}
-    {{#each (sort-by "title" this.terms) as |term|}}
-      {{#if term.active}}
-        <li class={{if (await term.parent) "nested" "top-level"}}>
-          <SelectableTermsListItem
+  {{#each (sort-by "title" this.terms) as |term|}}
+    {{#if term.active}}
+      <li class="nested">
+        <SelectableTermsListItem
+          @selectedTerms={{@selectedTerms}}
+          @term={{term}}
+          @add={{@add}}
+          @remove={{@remove}}
+          @level={{this.level}}
+        />
+        {{#if term.hasChildren}}
+          <SelectableTermsList
             @selectedTerms={{@selectedTerms}}
-            @term={{term}}
+            @parent={{term}}
             @add={{@add}}
             @remove={{@remove}}
+            @termFilter={{@termFilter}}
+            @level={{add this.level 1}}
           />
-          {{#if term.hasChildren}}
-            <SelectableTermsList
-              @selectedTerms={{@selectedTerms}}
-              @terms={{await term.children}}
-              @add={{@add}}
-              @remove={{@remove}}
-              @termFilter={{@termFilter}}
-            />
-          {{/if}}
-        </li>
-      {{/if}}
-    {{/each}}
-  {{/unless}}
+        {{/if}}
+      </li>
+    {{/if}}
+  {{/each}}
 </ul>

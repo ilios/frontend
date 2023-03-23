@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
-import { click, find, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { resolve } from 'rsvp';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/selectable-terms-list';
 
 module('Integration | Component | selectable terms list', function (hooks) {
   setupRenderingTest(hooks);
@@ -40,109 +40,73 @@ module('Integration | Component | selectable terms list', function (hooks) {
       vocabulary,
       children: [term3],
     });
+    const root = this.server.create('term', {
+      title: 'root',
+      active: true,
+      vocabulary,
+      children: [term4, term5],
+    });
 
-    this.vocabularyModel = await this.owner
-      .lookup('service:store')
-      .findRecord('vocabulary', vocabulary.id);
-    this.termModel1 = await this.owner.lookup('service:store').findRecord('term', term1.id);
-    this.termModel2 = await this.owner.lookup('service:store').findRecord('term', term2.id);
-    this.termModel3 = await this.owner.lookup('service:store').findRecord('term', term3.id);
-    this.termModel4 = await this.owner.lookup('service:store').findRecord('term', term4.id);
-    this.termModel5 = await this.owner.lookup('service:store').findRecord('term', term5.id);
+    this.rootTerm = await this.owner.lookup('service:store').findRecord('term', root.id);
+    this.term1 = await this.owner.lookup('service:store').findRecord('term', term1.id);
+    this.term2 = await this.owner.lookup('service:store').findRecord('term', term2.id);
+    this.term3 = await this.owner.lookup('service:store').findRecord('term', term3.id);
+    this.term4 = await this.owner.lookup('service:store').findRecord('term', term4.id);
+    this.term5 = await this.owner.lookup('service:store').findRecord('term', term5.id);
   });
 
-  test('it renders when given a vocabulary as input ', async function (assert) {
-    assert.expect(7);
-
+  test('it renders', async function (assert) {
     this.set('selectedTerms', []);
-    this.set('vocabulary', this.vocabularyModel);
+    this.set('term', this.rootTerm);
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
-      @vocabulary={{this.vocabulary}}
+      @parent={{this.term}}
       @add={{(noop)}}
       @remove={{(noop)}}
     />
 `);
-
-    assert.dom('li').exists({ count: 5 });
-    assert.dom('li.top-level').exists({ count: 2 });
-    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
-    assert.dom('li.top-level:nth-of-type(2) .selectable-terms-list-item').hasText('Second');
-    assert
-      .dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('Alpha');
-    assert
-      .dom('li.top-level:nth-of-type(1) li:nth-of-type(2) .selectable-terms-list-item')
-      .hasText('Beta');
-    assert
-      .dom('li.top-level:nth-of-type(2) li:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('Gamma');
-  });
-
-  test('it renders when given a list of terms as input ', async function (assert) {
-    assert.expect(7);
-
-    this.set('selectedTerms', []);
-    this.set('terms', resolve([this.termModel4, this.termModel5]));
-    await render(hbs`<SelectableTermsList
-      @selectedTerms={{this.selectedTerms}}
-      @terms={{await this.terms}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
-
-    assert.dom('li').exists({ count: 5 });
-    assert.dom('li.top-level').exists({ count: 2 });
-    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
-    assert.dom('li.top-level:nth-of-type(2) .selectable-terms-list-item').hasText('Second');
-    assert
-      .dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('Alpha');
-    assert
-      .dom('li.top-level:nth-of-type(1) li:nth-of-type(2) .selectable-terms-list-item')
-      .hasText('Beta');
-    assert
-      .dom('li.top-level:nth-of-type(2) li:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('Gamma');
+    assert.strictEqual(component.items.length, 2);
+    assert.strictEqual(component.items[0].title, 'First');
+    assert.strictEqual(component.items[1].title, 'Second');
+    assert.strictEqual(component.lists.length, 2);
+    assert.strictEqual(component.lists[0].items.length, 2);
+    assert.strictEqual(component.lists[0].items[0].title, 'Alpha');
+    assert.strictEqual(component.lists[0].items[1].title, 'Beta');
+    assert.strictEqual(component.lists[1].items.length, 1);
+    assert.strictEqual(component.lists[1].items[0].title, 'Gamma');
   });
 
   test('inactive terms are not rendered', async function (assert) {
-    assert.expect(4);
-
-    this.termModel2.set('active', false);
-    this.termModel3.set('active', false);
-    this.termModel5.set('active', false);
+    this.term2.set('active', false);
+    this.term3.set('active', false);
+    this.term5.set('active', false);
 
     this.set('selectedTerms', []);
-    this.set('terms', resolve([this.termModel4, this.termModel5]));
+    this.set('term', this.rootTerm);
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
-      @terms={{await this.terms}}
+      @parent={{this.term}}
       @add={{(noop)}}
       @remove={{(noop)}}
     />
 `);
-
-    assert.dom('li').exists({ count: 2 });
-    assert.dom('li.top-level').exists({ count: 1 });
-    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
-    assert
-      .dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('Alpha');
+    assert.strictEqual(component.items.length, 1);
+    assert.strictEqual(component.items[0].title, 'First');
+    assert.strictEqual(component.lists.length, 1);
+    assert.strictEqual(component.lists[0].items.length, 1);
+    assert.strictEqual(component.lists[0].items[0].title, 'Alpha');
   });
 
   test('select/deselect term', async function (assert) {
     assert.expect(5);
-
     this.set('selectedTerms', []);
-    this.set('terms', resolve([this.termModel4, this.termModel5]));
+    this.set('term', this.rootTerm);
     this.set('add', (term) => {
-      assert.strictEqual(term, this.termModel4);
+      assert.strictEqual(term, this.term4);
       this.set('selectedTerms', [...this.selectedTerms, term]);
     });
     this.set('remove', (term) => {
-      assert.strictEqual(term, this.termModel4);
+      assert.strictEqual(term, this.term4);
       this.set(
         'selectedTerms',
         this.selectedTerms.filter((t) => t !== term)
@@ -150,63 +114,51 @@ module('Integration | Component | selectable terms list', function (hooks) {
     });
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
-      @terms={{await this.terms}}
+      @parent={{this.term}}
       @add={{this.add}}
       @remove={{this.remove}}
     />
 `);
-
-    const term = 'li.top-level:nth-of-type(1) .selectable-terms-list-item';
-    assert.dom(term).hasNoClass('selected');
-    await click(find(term));
-    assert.dom(term).hasClass('selected');
-    await click(find(term));
-    assert.dom(term).hasNoClass('selected');
+    assert.notOk(component.items[0].isSelected);
+    await component.items[0].click();
+    assert.ok(component.items[0].isSelected);
+    await component.items[0].click();
+    assert.notOk(component.items[0].isSelected);
   });
 
   test('filter terms', async function (assert) {
-    assert.expect(4);
-
     this.set('selectedTerms', []);
-    this.set('vocabulary', this.vocabularyModel);
+    this.set('term', this.rootTerm);
     this.set('termFilter', 'Gamma');
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
-      @vocabulary={{this.vocabulary}}
+      @parent={{this.term}}
       @add={{(noop)}}
       @remove={{(noop)}}
       @termFilter={{this.termFilter}}
     />
 `);
-
-    assert.dom('li').exists({ count: 2 });
-    assert.dom('li.top-level').exists({ count: 1 });
-    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('Second');
-    assert
-      .dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('Gamma');
+    assert.strictEqual(component.items.length, 1);
+    assert.strictEqual(component.items[0].title, 'Second');
+    assert.strictEqual(component.lists[0].items.length, 1);
+    assert.strictEqual(component.lists[0].items[0].title, 'Gamma');
   });
 
   test('filter terms - partial match', async function (assert) {
-    assert.expect(4);
-
     this.set('selectedTerms', []);
-    this.set('vocabulary', this.vocabularyModel);
+    this.set('term', this.rootTerm);
     this.set('termFilter', 'amma');
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
-      @vocabulary={{this.vocabulary}}
+      @parent={{this.term}}
       @add={{(noop)}}
       @remove={{(noop)}}
       @termFilter={{this.termFilter}}
     />
 `);
-
-    assert.dom('li').exists({ count: 2 });
-    assert.dom('li.top-level').exists({ count: 1 });
-    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('Second');
-    assert
-      .dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('Gamma');
+    assert.strictEqual(component.items.length, 1);
+    assert.strictEqual(component.items[0].title, 'Second');
+    assert.strictEqual(component.lists[0].items.length, 1);
+    assert.strictEqual(component.lists[0].items[0].title, 'Gamma');
   });
 });

@@ -4,7 +4,10 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { restartableTask, timeout } from 'ember-concurrency';
+import { filter } from 'rsvp';
+import { use } from 'ember-could-get-used-to-this';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class TaxonomyManager extends Component {
   @service store;
@@ -12,12 +15,36 @@ export default class TaxonomyManager extends Component {
   @service flashMessages;
   @tracked termFilter = '';
   @tracked vocabId = null;
+  @use filteredTopLevelTerms = new AsyncProcess(() => [
+    this.getFilteredTopLevelTermsFromSelectedVocabulary.bind(this),
+    this.selectedVocabulary,
+    this.termFilter,
+  ]);
 
   @action
   load(element, [vocabulary]) {
     if (vocabulary) {
       this.vocabId = vocabulary.id;
     }
+  }
+
+  async getFilteredTopLevelTermsFromSelectedVocabulary(vocabulary, termFilter) {
+    if (!vocabulary) {
+      return [];
+    }
+    const terms = await vocabulary.getTopLevelTerms();
+    if (termFilter) {
+      const exp = new RegExp(termFilter, 'gi');
+      return await filter(terms, async (term) => {
+        const searchString = await term.getTitleWithDescendantTitles();
+        return searchString.match(exp);
+      });
+    }
+    return terms;
+  }
+
+  get terms() {
+    return this.filteredTopLevelTerms ?? [];
   }
 
   get nonEmptyVocabularies() {
