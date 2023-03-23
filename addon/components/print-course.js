@@ -3,6 +3,8 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import ResolveAsyncValue from '../classes/resolve-async-value';
+import { use } from 'ember-could-get-used-to-this';
 
 export default class PrintCourseComponent extends Component {
   @service store;
@@ -10,13 +12,17 @@ export default class PrintCourseComponent extends Component {
 
   @tracked sortTitle;
   @tracked sortDirectorsBy;
-  @tracked courseLearningMaterialsRelationship;
-  @tracked sessionsRelationship;
   @tracked academicYearCrossesCalendarYearBoundaries = false;
 
+  @use competencies = new ResolveAsyncValue(() => [this.args.course.competencies, []]);
+  @use directors = new ResolveAsyncValue(() => [this.args.course.directors, []]);
+  @use courseLearningMaterialsRelationship = new ResolveAsyncValue(() => [
+    this.args.course.learningMaterials,
+  ]);
+  @use sessionsRelationship = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use meshDescriptors = new ResolveAsyncValue(() => [this.args.course.meshDescriptors, []]);
+
   load = dropTask(async () => {
-    this.courseLearningMaterialsRelationship = await this.args.course.learningMaterials;
-    this.sessionsRelationship = await this.args.course.sessions;
     this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
