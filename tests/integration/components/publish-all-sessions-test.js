@@ -13,18 +13,15 @@ module('Integration | Component | publish all sessions', function (hooks) {
 
   hooks.beforeEach(async function () {
     const programYearObjective = this.server.create('programYearObjective');
-    const course = this.server.create('course');
     const term = this.server.create('term');
     const meshDescriptor = this.server.create('meshDescriptor');
-    this.server.create('courseObjective', {
-      course,
+    const linkedCourseObjective = this.server.create('courseObjective', {
       programYearObjectives: [programYearObjective],
     });
-    const courseObjective = this.server.create('courseObjective', { course });
+    const unlinkedCourseObjective = this.server.create('courseObjective');
     const unpublishableSession = this.server.create('session', {
       title: 'session 1',
       published: false,
-      course,
       meshDescriptors: [meshDescriptor],
       terms: [term],
     });
@@ -45,7 +42,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
     });
     this.server.create('sessionObjective', {
       session: completeSession,
-      courseObjectives: [courseObjective],
+      courseObjectives: [linkedCourseObjective],
     });
     this.server.create('sessionObjective', {
       session: fullyPublishedByIncompleteSession,
@@ -56,28 +53,23 @@ module('Integration | Component | publish all sessions', function (hooks) {
       session: fullyPublishedByIncompleteSession,
     });
     this.server.create('sessionObjective', { session: completeSession });
+    const course = this.server.create('course', {
+      courseObjectives: [linkedCourseObjective, unlinkedCourseObjective],
+      sessions: [
+        unpublishableSession,
+        completeSession,
+        publishableSession,
+        fullyPublishedByIncompleteSession,
+      ],
+    });
     const store = this.owner.lookup('service:store');
-    this.publishableSession = await store.findRecord('session', publishableSession.id);
-    this.unpublishableSession = await store.findRecord('session', unpublishableSession.id);
-    this.completeSession = await store.findRecord('session', completeSession.id);
-    this.fullyPublishedByIncompleteSession = await store.findRecord(
-      'session',
-      fullyPublishedByIncompleteSession.id
-    );
     this.course = await store.findRecord('course', course.id);
   });
 
   test('it renders', async function (assert) {
-    const sessions = [
-      this.unpublishableSession,
-      this.completeSession,
-      this.publishableSession,
-      this.fullyPublishedByIncompleteSession,
-    ];
-    this.set('sessions', sessions);
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />
+    await render(hbs`<PublishAllSessions @course={{this.course}} />
 `);
     assert.strictEqual(
       component.unpublishableSessions.text,
@@ -140,9 +132,12 @@ module('Integration | Component | publish all sessions', function (hooks) {
   });
 
   test('it renders empty', async function (assert) {
-    this.set('course', this.course);
+    const store = this.owner.lookup('service:store');
+    const course = this.server.create('course');
+    const model = await store.findRecord('course', course.id);
+    this.set('course', model);
 
-    await render(hbs`<PublishAllSessions @sessions={{(array)}} @course={{this.course}} />
+    await render(hbs`<PublishAllSessions @course={{this.course}} />
 `);
 
     assert.strictEqual(
@@ -165,12 +160,9 @@ module('Integration | Component | publish all sessions', function (hooks) {
   });
 
   test('shows course objective warning', async function (assert) {
-    assert.expect(3);
-
-    const sessions = [this.unpublishableSession];
-    this.set('sessions', sessions);
     this.set('course', this.course);
-    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />
+
+    await render(hbs`<PublishAllSessions @course={{this.course}} />
 `);
     assert.strictEqual(
       component.review.unlinkedObjectivesWarning,
@@ -181,13 +173,14 @@ module('Integration | Component | publish all sessions', function (hooks) {
   });
 
   test('publish all overridable #2478', async function (assert) {
-    const sessions = [this.publishableSession, this.fullyPublishedByIncompleteSession];
-    this.set('sessions', sessions);
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />
+    await render(hbs`<PublishAllSessions @course={{this.course}} />
 `);
-
+    assert.strictEqual(
+      component.review.confirmation,
+      'Publish 2, schedule 1, and ignore 1 sessions'
+    );
     assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
     assert.ok(component.overridableSessions.publishAllAsIs.isVisible);
@@ -197,7 +190,6 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.ok(list[0].markAsScheduled.isChecked);
     assert.ok(list[1].publishAsIs.isChecked);
     assert.notOk(list[1].markAsScheduled.isChecked);
-
     await component.overridableSessions.publishAllAsIs.click();
     assert.ok(list[0].publishAsIs.isChecked);
     assert.notOk(list[0].markAsScheduled.isChecked);
@@ -206,18 +198,19 @@ module('Integration | Component | publish all sessions', function (hooks) {
 
     assert.strictEqual(
       component.review.confirmation,
-      'Publish 2, schedule 0, and ignore 0 sessions'
+      'Publish 3, schedule 0, and ignore 1 sessions'
     );
   });
 
   test('schedule all overridable #2478', async function (assert) {
-    const sessions = [this.publishableSession, this.fullyPublishedByIncompleteSession];
-    this.set('sessions', sessions);
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />
+    await render(hbs`<PublishAllSessions @course={{this.course}} />
 `);
-
+    assert.strictEqual(
+      component.review.confirmation,
+      'Publish 2, schedule 1, and ignore 1 sessions'
+    );
     assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
     assert.ok(component.overridableSessions.publishAllAsIs.isVisible);
@@ -236,7 +229,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
 
     assert.strictEqual(
       component.review.confirmation,
-      'Publish 0, schedule 2, and ignore 0 sessions'
+      'Publish 1, schedule 2, and ignore 1 sessions'
     );
   });
 });

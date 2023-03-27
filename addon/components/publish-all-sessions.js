@@ -22,10 +22,7 @@ export default class PublishAllSessionsComponent extends Component {
   @tracked userSelectedSessionsToSchedule = [];
 
   @use courseObjectives = new ResolveAsyncValue(() => [this.args.course.courseObjectives]);
-
-  get sessions() {
-    return this.args.sessions ?? [];
-  }
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
 
   get publishedSessions() {
     return this.overridableSessions.filter((s) => {
