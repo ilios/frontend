@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { restartableTask, dropTask, timeout } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import scrollIntoView from 'scroll-into-view';
-import ResolveAsyncValue from '../classes/resolve-async-value';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
 
 @validatable

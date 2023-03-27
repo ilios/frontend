@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { action, set } from '@ember/object';
 import { DateTime } from 'luxon';
-import { sortBy } from '../utils/array-helpers';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { deprecate } from '@ember/debug';
 
 export default class WeeklyCalendarComponent extends Component {

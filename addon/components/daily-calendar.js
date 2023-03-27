@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { action, set } from '@ember/object';
-import { sortBy } from '../utils/array-helpers';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { DateTime } from 'luxon';
 import { deprecate } from '@ember/debug';
 

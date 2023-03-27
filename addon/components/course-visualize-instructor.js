@@ -4,7 +4,7 @@ import { map, filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeInstructorComponent extends Component {
   @service iliosConfig;

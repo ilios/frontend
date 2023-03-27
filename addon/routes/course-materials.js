@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseMaterialsRoute extends Route {
   @service session;

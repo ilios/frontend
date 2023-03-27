@@ -1,5 +1,5 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import escapeRegExp from '../utils/escape-reg-exp';
+import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
@@ -7,7 +7,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 import DeprecatedResolveCP from 'ilios-common/classes/deprecated-resolve-cp';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy, uniqueValues } from '../utils/array-helpers';
+import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LearnerGroup extends Model {
   @attr('string')

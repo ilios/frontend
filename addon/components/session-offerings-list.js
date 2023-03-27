@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
-import { sortBy } from '../utils/array-helpers';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SessionOfferingsListComponent extends Component {
   @service store;

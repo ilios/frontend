@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { restartableTask, timeout } from 'ember-concurrency';
-import escapeRegExp from '../utils/escape-reg-exp';
+import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { set } from '@ember/object';
 
 export default class CourseVisualizeInstructorsController extends Controller {

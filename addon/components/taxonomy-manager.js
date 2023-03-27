@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { restartableTask, timeout } from 'ember-concurrency';
-import escapeRegExp from '../utils/escape-reg-exp';
+import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 
 export default class TaxonomyManager extends Component {
   @service store;

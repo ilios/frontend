@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { DateTime } from 'luxon';
-import { filterBy, mapBy } from '../utils/array-helpers';
+import { filterBy, mapBy } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class CourseRolloverComponent extends Component {

@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action, computed } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
-import ResolveAsyncValue from '../classes/resolve-async-value';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
 
 export default class SessionPublicationCheckComponent extends Component {

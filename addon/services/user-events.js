@@ -1,7 +1,7 @@
-import EventsBase from '../classes/events-base';
+import EventsBase from 'ilios-common/classes/events-base';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
-import { sortBy } from '../utils/array-helpers';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class UserEvents extends EventsBase {
   @service store;

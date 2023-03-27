@@ -1,7 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { isEmpty } from '@ember/utils';
 import { deprecate } from '@ember/debug';
-import { findBy } from '../utils/array-helpers';
+import { findBy } from 'ilios-common/utils/array-helpers';
 
 export default class School extends Model {
   @attr('string')

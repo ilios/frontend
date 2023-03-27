@@ -1,6 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { Resource } from 'ember-could-get-used-to-this';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class ResolveFlatMapBy extends Resource {
   @tracked data;

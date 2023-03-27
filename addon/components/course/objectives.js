@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { mapBy } from '../../utils/array-helpers';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseObjectivesComponent extends Component {
   @service store;

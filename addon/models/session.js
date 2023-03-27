@@ -7,7 +7,7 @@ import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
+import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SessionModel extends Model {
   @attr('string')

@@ -2,7 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
+import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class ProgramYear extends Model {
   @attr('string')

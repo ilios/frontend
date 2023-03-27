@@ -1,5 +1,8 @@
 import IliosSerializer from './ilios';
-import { jsonApiUtcSerializeDate, jsonApiUtcNormalizeDate } from '../utils/json-api-utc-date';
+import {
+  jsonApiUtcSerializeDate,
+  jsonApiUtcNormalizeDate,
+} from 'ilios-common/utils/json-api-utc-date';
 
 export default class CurriculumInventoryReportSerializer extends IliosSerializer {
   serialize(snapshot, options) {

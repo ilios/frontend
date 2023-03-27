@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
-import ResolveAsyncValue from '../classes/resolve-async-value';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
 
 export default class PrintCourseComponent extends Component {

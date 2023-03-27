@@ -6,7 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { findBy, findById, mapBy, uniqueValues } from '../utils/array-helpers';
+import { findBy, findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerCourseTerm extends Component {
   @service router;

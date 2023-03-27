@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { sortBy } from '../utils/array-helpers';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { DateTime } from 'luxon';
 import { deprecate } from '@ember/debug';
 

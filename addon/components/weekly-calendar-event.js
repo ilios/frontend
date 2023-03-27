@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { DateTime } from 'luxon';
-import colorChange from '../utils/color-change';
+import colorChange from 'ilios-common/utils/color-change';
 import { htmlSafe } from '@ember/template';
-import calendarEventTooltip from '../utils/calendar-event-tooltip';
+import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 import { inject as service } from '@ember/service';
 import { deprecate } from '@ember/debug';
 

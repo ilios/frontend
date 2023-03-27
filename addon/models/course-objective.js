@@ -2,7 +2,7 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
+import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseObjective extends Model {
   @attr('string')

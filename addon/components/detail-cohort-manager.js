@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { map, filter } from 'rsvp';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 

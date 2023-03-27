@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
-import { sortBy } from '../../utils/array-helpers';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SessionPostrequisiteEditorComponent extends Component {
   @tracked filter = '';

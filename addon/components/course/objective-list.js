@@ -4,10 +4,10 @@ import { restartableTask } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { inject as service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from '../../classes/async-process';
-import ResolveAsyncValue from '../../classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
-import { findById } from '../../utils/array-helpers';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class CourseObjectiveListComponent extends Component {
   @service store;

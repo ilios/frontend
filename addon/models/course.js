@@ -6,7 +6,7 @@ import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { map } from 'rsvp';
 import moment from 'moment';
-import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
+import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class Course extends Model {
   @attr('string')

@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
