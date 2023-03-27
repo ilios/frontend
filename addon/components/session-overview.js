@@ -53,9 +53,10 @@ export default class SessionOverview extends Component {
     return sortBy(this.filteredSessionTypes, 'title');
   }
 
-  load = restartableTask(async (element, [session, sessionTypes]) => {
+  load = restartableTask(async (element, [session]) => {
     const course = await session.course;
     const school = await course.school;
+    const sessionTypes = (await school.sessionTypes).slice();
     const {
       ilmSession,
       sessionType,

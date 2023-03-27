@@ -1,7 +1,7 @@
 <div
   data-test-session-overview
-  {{did-insert (perform this.load) @session @sessionTypes}}
-  {{did-update (perform this.load) @session @sessionTypes}}
+  {{did-insert (perform this.load) @session}}
+  {{did-update (perform this.load) @session}}
 >
   {{#let (unique-id) as |templateId|}}
     {{#if this.load.performCount}}

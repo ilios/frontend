@@ -6,7 +6,6 @@
 <SessionDetails
   @session={{@model}}
   @editable={{this.canUpdate}}
-  @sessionTypes={{await @model.course.school.sessionTypes}}
   @sessionObjectiveDetails={{this.sessionObjectiveDetails}}
   @sessionTaxonomyDetails={{this.sessionTaxonomyDetails}}
   @setSessionObjectiveDetails={{set this.sessionObjectiveDetails}}
