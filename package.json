@@ -167,8 +167,8 @@
     "webpack": "^5.75.0"
   },
   "engines": {
-    "node": "14.* || 16.* || >= 18",
-    "npm": ">= 7"
+    "node": "16.* || >= 18",
+    "npm": ">= 8"
   },
   "ember": {
     "edition": "octane"
