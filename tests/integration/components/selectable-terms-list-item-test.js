@@ -1,9 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/selectable-terms-list-item';
 
 module('Integration | Component | selectable terms list item', function (hooks) {
   setupRenderingTest(hooks);
@@ -16,8 +17,6 @@ module('Integration | Component | selectable terms list item', function (hooks) 
   });
 
   test('it renders', async function (assert) {
-    assert.expect(1);
-
     this.set('selectedTerms', [this.termModel]);
     this.set('term', this.termModel);
 
@@ -27,11 +26,11 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     />
 `);
 
-    assert.dom(this.element).hasText(this.termModel.get('title'));
+    assert.strictEqual(component.text, this.termModel.get('title'));
   });
 
   test('selected term', async function (assert) {
-    assert.expect(4);
+    assert.expect(3);
 
     this.set('selectedTerms', [this.termModel]);
     this.set('term', this.termModel);
@@ -50,14 +49,13 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     />
 `);
 
-    assert.dom('.selected').exists({ count: 1 });
-    assert.dom('.actions .fa-xmark').exists({ count: 1 });
-    await click('.fa-xmark');
-    assert.dom('.selected').exists({ count: 0 });
+    assert.ok(component.isSelected);
+    await component.click();
+    assert.notOk(component.isSelected);
   });
 
   test('unselected term', async function (assert) {
-    assert.expect(4);
+    assert.expect(3);
 
     this.set('selectedTerms', []);
     this.set('term', this.termModel);
@@ -73,9 +71,8 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     />
 `);
 
-    assert.dom('.selected').doesNotExist();
-    assert.dom('.actions .fa-plus').exists({ count: 1 });
-    await click('.fa-plus');
-    assert.dom('.selected').exists({ count: 1 });
+    assert.notOk(component.isSelected);
+    await component.click();
+    assert.ok(component.isSelected);
   });
 });

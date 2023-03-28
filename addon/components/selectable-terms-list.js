@@ -1,31 +1,32 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
 import { filter } from 'rsvp';
+import { use } from 'ember-could-get-used-to-this';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class SelectableTermsList extends Component {
-  @tracked terms = [];
+  @use filteredTerms = new AsyncProcess(() => [
+    this.getFilteredTerms.bind(this),
+    this.args.parent,
+    this.args.termFilter,
+  ]);
 
-  get topLevelTermsRelationshipPromise() {
-    return this.args.vocabulary ? this.args.vocabulary.getTopLevelTerms() : null;
-  }
-
-  loadFilteredTerms = restartableTask(async () => {
-    let terms = [];
-    if (this.topLevelTermsRelationshipPromise) {
-      terms = (await this.topLevelTermsRelationshipPromise).slice();
-    } else if (this.args.terms) {
-      terms = this.args.terms.slice();
-    }
-
-    if (this.args.termFilter) {
-      const exp = new RegExp(this.args.termFilter, 'gi');
-      this.terms = await filter(terms, async (term) => {
+  async getFilteredTerms(parent, termFilter) {
+    const terms = (await parent.children).slice();
+    if (termFilter) {
+      const exp = new RegExp(termFilter, 'gi');
+      return await filter(terms.slice(), async (term) => {
         const searchString = await term.getTitleWithDescendantTitles();
         return searchString.match(exp);
       });
-    } else {
-      this.terms = terms;
     }
-  });
+    return terms;
+  }
+
+  get terms() {
+    return this.filteredTerms ?? [];
+  }
+
+  get level() {
+    return this.args.level ?? 0;
+  }
 }

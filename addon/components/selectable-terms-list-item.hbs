@@ -1,6 +1,8 @@
 <button
   class="selectable-terms-list-item {{if this.isSelected "selected"}}"
   type="button"
+  data-test-selectable-terms-list-item
+  data-test-selectable-terms-list-item-level={{this.level}}
   {{on "click" this.click}}
   {{mouse-hover-toggle (set this.isHovering)}}
   {{did-insert (set this.theElement)}}

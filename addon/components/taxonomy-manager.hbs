@@ -44,13 +44,29 @@
         >
       </div>
       <div class="terms-picker tag-tree">
-        <SelectableTermsList
-          @selectedTerms={{@selectedTerms}}
-          @vocabulary={{this.selectedVocabulary}}
-          @termFilter={{this.termFilter}}
-          @add={{@add}}
-          @remove={{@remove}}
-        />
+        <ul class="selectable-terms-list">
+          {{#each (sort-by "title" this.terms) as |term|}}
+            {{#if term.active}}
+              <li class="top-level">
+                <SelectableTermsListItem
+                  @selectedTerms={{@selectedTerms}}
+                  @term={{term}}
+                  @add={{@add}}
+                  @remove={{@remove}}
+                />
+                {{#if term.hasChildren}}
+                  <SelectableTermsList
+                    @selectedTerms={{@selectedTerms}}
+                    @parent={{term}}
+                    @add={{@add}}
+                    @remove={{@remove}}
+                    @termFilter={{this.termFilter}}
+                  />
+                {{/if}}
+              </li>
+            {{/if}}
+          {{/each}}
+        </ul>
       </div>
     {{/if}}
   {{/let}}
