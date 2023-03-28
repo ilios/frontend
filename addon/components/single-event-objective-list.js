@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { sortBy, uniqueValues } from '../utils/array-helpers';
+import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SingleEventObjectiveList extends Component {
   @tracked groupByCompetencies = true;

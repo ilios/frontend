@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
-import { findById, mapBy } from '../../utils/array-helpers';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 

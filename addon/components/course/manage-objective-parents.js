@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { findById, mapBy, sortBy } from '../../utils/array-helpers';
+import { findById, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseManageObjectiveParentsComponent extends Component {
   @tracked userSelectedCohort;

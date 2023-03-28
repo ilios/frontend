@@ -18,7 +18,7 @@ import {
   validatable,
 } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
-import { uniqueValues } from '../utils/array-helpers';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';

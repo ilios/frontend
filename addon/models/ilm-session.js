@@ -1,5 +1,5 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { mapBy, uniqueValues } from '../utils/array-helpers';
+import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class IlmSession extends Model {
   @attr('number')

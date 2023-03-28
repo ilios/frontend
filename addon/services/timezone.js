@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 import { DateTime } from 'luxon';
 import moment from 'moment';
-import { uniqueValues } from '../utils/array-helpers';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 
 /**
  * Service wrapper around moment's timezone utilities.

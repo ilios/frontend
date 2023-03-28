@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
-import { uniqueValues } from '../utils/array-helpers';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
 

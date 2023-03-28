@@ -7,8 +7,8 @@ import { task, restartableTask, dropTask } from 'ember-concurrency';
 import moment from 'moment';
 import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
-import { findById, sortBy } from '../utils/array-helpers';
-import ResolveAsyncValue from '../classes/resolve-async-value';
+import { findById, sortBy } from 'ilios-common/utils/array-helpers';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
 
 @validatable

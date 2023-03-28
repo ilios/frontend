@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import moment from 'moment';
 import { map } from 'rsvp';
-import { mapBy, sortBy } from '../../utils/array-helpers';
+import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 export default class DashboardCalendarComponent extends Component {

@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { DateTime } from 'luxon';
 import { validatable, Length, AfterDate, NotBlank } from 'ilios-common/decorators/validation';
-import { findById } from '../utils/array-helpers';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class LearningMaterialManagerComponent extends Component {

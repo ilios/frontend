@@ -9,7 +9,7 @@ import { map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { findBy, mapBy, uniqueValues } from '../utils/array-helpers';
+import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerCourseSessionTypes extends Component {
   @service router;

@@ -4,9 +4,9 @@ import { isEmpty } from '@ember/utils';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
-import escapeRegExp from '../utils/escape-reg-exp';
+import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { dropTask } from 'ember-concurrency';
-import { sortBy } from '../utils/array-helpers';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SessionsGrid extends Component {
   @service router;

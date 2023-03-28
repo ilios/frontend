@@ -3,8 +3,8 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import moment from 'moment';
-import colorChange from '../utils/color-change';
-import calendarEventTooltip from '../utils/calendar-event-tooltip';
+import colorChange from 'ilios-common/utils/color-change';
+import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 
 export default class IliosCalendarEventMonthComponent extends Component {
   @service intl;

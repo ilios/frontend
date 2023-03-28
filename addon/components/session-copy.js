@@ -5,7 +5,7 @@ import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
-import { findById, sortBy } from '../utils/array-helpers';
+import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SessionCopyComponent extends Component {
   @service store;

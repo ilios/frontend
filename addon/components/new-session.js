@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { findBy } from '../utils/array-helpers';
+import { findBy } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class NewSessionComponent extends Component {

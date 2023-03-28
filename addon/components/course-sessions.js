@@ -4,10 +4,10 @@ import { task, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from '../classes/resolve-async-value';
-import SessionObject from '../classes/session-object';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import SessionObject from 'ilios-common/classes/session-object';
 import { getOwner } from '@ember/application';
-import { mapBy } from '../utils/array-helpers';
+import { mapBy } from 'ilios-common/utils/array-helpers';
 
 const DEBOUNCE_DELAY = 250;
 

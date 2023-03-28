@@ -1,6 +1,6 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import { findById } from '../utils/array-helpers';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class SessionRoute extends Route {
   @service dataLoader;

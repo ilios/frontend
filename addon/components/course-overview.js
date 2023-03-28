@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
 import { validatable, Length, BeforeDate, AfterDate } from 'ilios-common/decorators/validation';
-import { findById } from '../utils/array-helpers';
+import { findById } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class CourseOverview extends Component {

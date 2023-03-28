@@ -8,7 +8,7 @@ import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { findBy, mapBy } from '../utils/array-helpers';
+import { findBy, mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerCourseVocabularies extends Component {
   @service router;

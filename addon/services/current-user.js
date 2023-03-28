@@ -2,7 +2,7 @@ import { isEmpty } from '@ember/utils';
 import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
-import jwtDecode from '../utils/jwt-decode';
+import jwtDecode from 'ilios-common/utils/jwt-decode';
 
 export default class CurrentUserService extends Service {
   @service store;

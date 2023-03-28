@@ -4,9 +4,9 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { all } from 'rsvp';
 import { dropTask, timeout } from 'ember-concurrency';
-import ResolveAsyncValue from '../classes/resolve-async-value';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
-import { uniqueValues } from '../utils/array-helpers';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class PublishAllSessionsComponent extends Component {
   @service router;

@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import { DateTime } from 'luxon';
-import { mapBy, sortBy, uniqueValues } from '../utils/array-helpers';
+import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class EventsBase extends Service {
   /**

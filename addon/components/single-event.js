@@ -4,9 +4,9 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
 import moment from 'moment';
-import { findById } from '../utils/array-helpers';
+import { findById } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from '../classes/resolve-async-value';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class SingleEvent extends Component {
   @service currentUser;

@@ -1,7 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { sortBy, uniqueValues } from '../utils/array-helpers';
+import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SessionObjectiveModel extends Model {
   @attr('string')
