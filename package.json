@@ -103,7 +103,7 @@
     "@fortawesome/pro-solid-svg-icons": "6.4.0",
     "@popperjs/core": "^2.1.1",
     "class-validator": "^0.14.0",
-    "ember-source": "^3.28.0 || ^4.0.0",
+    "ember-source": "~4.11.0",
     "flatpickr": "^4.0.0",
     "froala-editor": "^4.0.13",
     "luxon": "^3.0.1",
