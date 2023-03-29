@@ -198,11 +198,7 @@
               <option value={{obj.id}} selected={{eq obj.id this.endingAcademicLevel.id}}>{{obj.name}}</option>
             {{/each}}
           </select>
-          {{#each (await (compute this.getErrorsFor "endingAcademicLevel")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.endingAcademicLevel}} />
         </div>
         <div class="item child-sequence-order" data-test-child-sequence-order>
           <label for="child-sequence-order-{{templateId}}">
