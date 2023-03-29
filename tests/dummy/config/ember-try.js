@@ -83,5 +83,8 @@ module.exports = async function () {
         },
       }),
     ],
+    buildManagerOptions() {
+      return ['--force'];
+    },
   };
 };
