@@ -214,7 +214,7 @@
             {{/each}}
           </select>
         </div>
-        {{#if (and @parent (await @parent.isOrdered))}}
+        {{#if (and @parent @parent.isOrdered)}}
           <div class="item order-in-sequence" data-test-order-in-sequence>
             <label for="order-in-sequence-{{templateId}}">
               {{t "general.orderInSequence"}}:
