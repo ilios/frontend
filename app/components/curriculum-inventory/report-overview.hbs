@@ -91,25 +91,27 @@
           <label for="year-{{templateId}}">
             {{t "general.academicYear"}}:
           </label>
-          {{#if (and @canUpdate (not (await @report.hasLinkedCourses)))}}
-            <EditableField
-              @value={{this.yearLabel}}
-              @save={{perform this.changeYear}}
-              @close={{this.revertYearChanges}}
-            >
-              <select
-                id="year-{{templateId}}"
-                {{on "change" (pick "target.value" (set this.year))}}
+          {{#if this.linkedCoursesLoaded}}
+            {{#if (and @canUpdate (not this.hasLinkedCourses))}}
+              <EditableField
+                @value={{this.yearLabel}}
+                @save={{perform this.changeYear}}
+                @close={{this.revertYearChanges}}
               >
-                {{#each this.yearOptions as |obj|}}
-                  <option value={{obj.id}} selected={{eq obj.id this.year}}>{{obj.title}}</option>
-                {{/each}}
-              </select>
-            </EditableField>
-          {{else}}
-            <span>
-              {{this.yearLabel}}
-            </span>
+                <select
+                  id="year-{{templateId}}"
+                  {{on "change" (pick "target.value" (set this.year))}}
+                >
+                  {{#each this.yearOptions as |obj|}}
+                    <option value={{obj.id}} selected={{eq obj.id this.year}}>{{obj.title}}</option>
+                  {{/each}}
+                </select>
+              </EditableField>
+            {{else}}
+              <span>
+                {{this.yearLabel}}
+              </span>
+            {{/if}}
           {{/if}}
         </div>
         <div class="block program" data-test-program>

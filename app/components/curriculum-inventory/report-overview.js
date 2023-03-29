@@ -4,6 +4,8 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import scrollTo from 'ilios-common/utils/scroll-to';
 import { dropTask, restartableTask } from 'ember-concurrency';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import {
   validatable,
   AfterDate,
@@ -26,6 +28,16 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   @tracked yearOptions = [];
   @tracked academicYearCrossesCalendarYearBoundaries = false;
   @tracked canRollover = false;
+
+  @use linkedCourses = new ResolveAsyncValue(() => [this.args.report.getLinkedCourses()]);
+
+  get linkedCoursesLoaded() {
+    return !!this.linkedCourses;
+  }
+
+  get hasLinkedCourses() {
+    return !!this.linkedCourses?.length;
+  }
 
   get showRollover() {
     if (this.router.currentRouteName === 'curriculum-inventory-report.rollover') {
