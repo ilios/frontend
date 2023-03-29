@@ -1,6 +1,5 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 import { hbs } from 'ember-cli-htmlbars';
-import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -34,7 +33,7 @@ module('Integration | Helper | slice', function (hooks) {
 
 `);
     assert.dom().hasText('4,6', 'sliced values');
-    run(() => array.replace(2, 1, [5]));
+    this.set('array', [2, 4, 5]);
     assert.dom().hasText('4,5', 'sliced values');
   });
 
