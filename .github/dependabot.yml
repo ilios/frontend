@@ -9,6 +9,7 @@ updates:
   open-pull-requests-limit: 10
   ignore:
   - dependency-name: broccoli-asset-rev
+  - dependency-name: concurrently
   - dependency-name: "@ember/optional-features"
   - dependency-name: "@ember/test-helpers"
   - dependency-name: "@embroider/test-setup"
