@@ -1,8 +1,8 @@
 <section
   class="curriculum-inventory-sequence-block-overview"
   data-test-curriculum-inventory-sequence-block-overview
-  {{did-insert (perform this.load) (await @sequenceBlock)}}
-  {{did-update (perform this.load) (await @sequenceBlock) (await @sequenceBlock.course)}}
+  {{did-insert (perform this.load) @sequenceBlock}}
+  {{did-update (perform this.load) @sequenceBlock @sequenceBlock.course}}
   ...attributes
 >
   {{#let (unique-id) as |templateId|}}
