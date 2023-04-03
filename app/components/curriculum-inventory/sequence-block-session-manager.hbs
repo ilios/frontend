@@ -109,33 +109,17 @@
                     </label>
                   </td>
                   <td class="text-left" colspan="3">
-                    {{#if (is-pending session.sessionType)}}
-                      <LoadingSpinner />
-                    {{else}}
-                      {{get (await session.sessionType) "title"}}
-                    {{/if}}
+                    {{session.sessionType.title}}
                   </td>
                   <td class="text-center" colspan="1">
                     {{#if (includes session this.linkedSessions)}}
-                      {{#if (is-pending session.maxDuration)}}
-                        <LoadingSpinner />
-                      {{else}}
-                        {{await session.maxDuration}}
-                      {{/if}}
+                      {{session.maxDuration}}
                     {{else}}
-                      {{#if (is-pending session.totalSumDuration)}}
-                        <LoadingSpinner />
-                      {{else}}
-                        {{await session.totalSumDuration}}
-                      {{/if}}
-                    {{/if}}
+                      {{session.totalSumDuration}}
+                     {{/if}}
                   </td>
                   <td class="text-center" colspan="1">
-                    {{#if (is-pending session.offerings)}}
-                      <LoadingSpinner />
-                    {{else}}
-                      {{get (await session.offerings) "length"}}
-                    {{/if}}
+                    {{session.offerings.length}}
                   </td>
                 </tr>
               {{/let}}
