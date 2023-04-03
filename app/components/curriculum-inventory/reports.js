@@ -2,8 +2,10 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { use } from 'ember-could-get-used-to-this';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class CurriculumInventoryReportsComponent extends Component {
   @service currentUser;
@@ -17,6 +19,12 @@ export default class CurriculumInventoryReportsComponent extends Component {
   @tracked programs = [];
   @tracked selectedProgram = null;
   @tracked canCreate = false;
+
+  @use reports = new ResolveAsyncValue(() => [this.selectedProgram?.curriculumInventoryReports]);
+
+  get curriculumInventoryReports() {
+    return this.reports ? this.reports.slice() : [];
+  }
 
   @action
   async changeSelectedProgram(programId) {

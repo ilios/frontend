@@ -13,7 +13,7 @@
             {{#each this.sortedSchools as |school|}}
               <option
                 value={{school.id}}
-                selected={{eq school (await this.selectedSchool)}}
+                selected={{eq school this.selectedSchool}}
               >
                 {{school.title}}
               </option>
@@ -76,7 +76,7 @@
       </section>
       <div class="list">
         <CurriculumInventory::ReportList
-          @reports={{if this.selectedProgram (await this.selectedProgram.curriculumInventoryReports) null}}
+          @reports={{this.curriculumInventoryReports}}
           @sortBy={{@sortReportsBy}}
           @remove={{perform this.removeCurriculumInventoryReport}}
           @setSortBy={{@setSortBy}}
