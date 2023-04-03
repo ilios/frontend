@@ -11,10 +11,10 @@
     </LinkTo>
   </td>
   <td class="text-center" colspan="1" data-test-starting-academic-level>
-    {{get (await @sequenceBlock.startingAcademicLevel) "level"}}
+    {{@sequenceBlock.startingAcademicLevel.level}}
   </td>
   <td class="text-center" colspan="1" data-test-ending-academic-level>
-    {{get (await @sequenceBlock.endingAcademicLevel) "level"}}
+    {{@sequenceBlock.endingAcademicLevel.level}}
   </td>
   <td class="text-center" colspan="2" data-test-order-in-sequence>
     {{#if @isInOrderedSequence}}
@@ -38,11 +38,7 @@
     {{/if}}
   </td>
   <td class="text-center hide-from-small-screen" colspan="2" data-test-course>
-    {{#if (await @sequenceBlock.course)}}
-      {{get (await @sequenceBlock.course) "title"}}
-    {{else}}
-      {{t "general.notApplicableAbbr"}}
-    {{/if}}
+    {{this.courseTitle}}
   </td>
   <td class="text-center" colspan="1">
     {{#if (and @canUpdate (not this.showRemoveConfirmation))}}
