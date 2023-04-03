@@ -1,6 +1,4 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { use } from 'ember-could-get-used-to-this';
-import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 import { deprecate } from '@ember/debug';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
@@ -41,24 +39,6 @@ export default class CurriculumInventoryReport extends Model {
   @hasMany('user', { async: true, inverse: 'administeredCurriculumInventoryReports' })
   administrators;
 
-  @use topLevelSequenceBlocks = new DeprecatedAsyncCP(() => [
-    this.getTopLevelSequenceBlocks.bind(this),
-    'curriculumInventoryReport.topLevelSequenceBlocks',
-    this.sequenceBlocks,
-  ]);
-
-  @use linkedCourses = new DeprecatedAsyncCP(() => [
-    this.getLinkedCourses.bind(this),
-    'curriculumInventoryReport.linkedCourses',
-    this.sequenceBlocks,
-  ]);
-
-  @use hasLinkedCourses = new DeprecatedAsyncCP(() => [
-    this._hasLinkedCourses.bind(this),
-    'curriculumInventoryReport._hasLinkedCourses',
-    this.sequenceBlocks,
-  ]);
-
   get isFinalized() {
     deprecate(
       `curriculumInventoryReport.isFinalized called, check export attribute directly instead.`,
@@ -82,13 +62,5 @@ export default class CurriculumInventoryReport extends Model {
   async getLinkedCourses() {
     const courses = await Promise.all(mapBy((await this.sequenceBlocks).slice(), 'course'));
     return courses.filter(Boolean);
-  }
-
-  /**
-   * @deprecated
-   */
-  async _hasLinkedCourses() {
-    const linkedCourses = await this.getLinkedCourses();
-    return !!linkedCourses.length;
   }
 }
