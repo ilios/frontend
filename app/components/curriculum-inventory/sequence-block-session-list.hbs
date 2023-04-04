@@ -54,14 +54,14 @@
           <tr>
             <td class="text-center" colspan="2">
               {{if
-                (includes session (await @sequenceBlock.sessions))
+                (includes session this.sessions)
                 (t "general.yes")
                 (t "general.no")
               }}
             </td>
             <td class="text-center" colspan="2">
               {{if
-                (includes session (await @sequenceBlock.excludedSessions))
+                (includes session this.excludedSessions)
                 (t "general.yes")
                 (t "general.no")
               }}
@@ -75,33 +75,17 @@
               {{session.title}}
             </td>
             <td class="text-left" colspan="3">
-              {{#if (is-pending session.sessionType)}}
-                <LoadingSpinner />
+                {{session.sessionType.title}}
+            </td>
+            <td class="text-center" colspan="1">
+              {{#if (includes session this.sessions)}}
+                  {{session.maxDuration}}
               {{else}}
-                {{get (await session.sessionType) "title"}}
+                  {{session.totalSumDuration}}
               {{/if}}
             </td>
             <td class="text-center" colspan="1">
-              {{#if (includes session (await @sequenceBlock.sessions))}}
-                {{#if (is-pending session.maxDuration)}}
-                  <LoadingSpinner />
-                {{else}}
-                  {{await session.maxDuration}}
-                {{/if}}
-              {{else}}
-                {{#if (is-pending session.totalSumDuration)}}
-                  <LoadingSpinner />
-                {{else}}
-                  {{await session.totalSumDuration}}
-                {{/if}}
-              {{/if}}
-            </td>
-            <td class="text-center" colspan="1">
-              {{#if (is-pending session.offerings)}}
-                <LoadingSpinner />
-              {{else}}
-                {{get (await session.offerings) "length"}}
-              {{/if}}
+                {{session.offerings.length}}
             </td>
           </tr>
         {{/each}}

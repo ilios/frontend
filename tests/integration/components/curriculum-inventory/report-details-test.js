@@ -41,7 +41,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
     const reportModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report.id);
-    this.set('report', report);
+    this.set('report', reportModel);
     await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
       @canUpdate={{true}}
