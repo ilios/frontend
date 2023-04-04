@@ -46,7 +46,7 @@
     "browserslist": "^4.21.5",
     "caniuse-db": "^1.0.30001469",
     "class-validator": "^0.14.0",
-    "concurrently": "^7.6.0",
+    "concurrently": "^8.0.1",
     "dotenv": "^16.0.3",
     "ember-a11y-refocus": "3.0.2",
     "ember-a11y-testing": "^5.2.0",
