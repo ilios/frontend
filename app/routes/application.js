@@ -25,4 +25,9 @@ export default class ApplicationRoute extends Route {
       await user.roles;
     }
   }
+
+  async activate() {
+    //remove our loading animation once the application is loaded
+    document.getElementById('ilios-loading-indicator')?.remove();
+  }
 }
