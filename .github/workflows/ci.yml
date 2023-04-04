@@ -1,33 +1,49 @@
-name: Continuous Integration
+name: CI
 
 on:
   push:
     branches:
+      - main
       - master
-  pull_request:
+  pull_request: {}
   schedule:
-    - cron: '23 1 * * 4' # weekly, on Thursday morning
+  - cron: '23 1 * * 4' # weekly, on Thursday morning
 
-env:
-  CI: true
+concurrency:
+  group: ci-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  test:
-    name: Lint and Tests
+  lint:
+    name: "Lint"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js 16
-      uses: actions/setup-node@v1
-      with:
-        node-version: 16
-    - name: install dependencies
-      run: npm ci
-    - name: lint style
-      run: npm run lint:style
-    - name: lint hbs
-      run: npm run lint:hbs
-    - name: lint js
-      run: npm run lint:js
-    - name: test
-      run: npm run test:ember
+      - uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+      - name: Install Dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+
+  test:
+    name: "Test"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Tests
+        run: npm test
