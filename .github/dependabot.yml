@@ -14,6 +14,7 @@ updates:
   - dependency-name: "@glimmer/tracking"
   - dependency-name: babel-eslint
   - dependency-name: broccoli-asset-rev
+  - dependency-name: concurrently
   - dependency-name: ember-auto-import
   - dependency-name: ember-cli
   - dependency-name: ember-cli-app-version
@@ -38,7 +39,6 @@ updates:
   - dependency-name: eslint-plugin-prettier
   - dependency-name: eslint-plugin-qunit
   - dependency-name: loader.js
-  - dependency-name: npm-run-all
   - dependency-name: prettier
   - dependency-name: qunit
   - dependency-name: qunit-dom
