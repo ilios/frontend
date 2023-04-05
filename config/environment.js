@@ -5,7 +5,7 @@ module.exports = function (environment) {
     modulePrefix: 'lti-app',
     environment,
     rootURL: '/',
-    locationType: 'none',
+    locationType: 'history',
     'ember-simple-auth': {
       authorizer: 'authorizer:token',
       authenticationRoute: 'login-error',
