@@ -11,7 +11,7 @@
     {{@instructorGroup.users.length}}
   </td>
   <td class="text-center hide-from-small-screen" data-test-courses>
-    {{get (await @instructorGroup.courses) "length"}}
+    {{@instructorGroup.courses.length}}
   </td>
   <td class="text-right">
     {{#if this.canDelete}}
@@ -35,7 +35,7 @@
       <div class="confirm-message">
         {{t
           "general.confirmRemoveInstructorGroup"
-          instructorCount=(get (await @instructorGroup.users) "length")
+          instructorCount=@instructorGroup.users.length
         }}
         <br>
         <div class="confirm-buttons">
