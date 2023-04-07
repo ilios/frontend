@@ -29,12 +29,7 @@
   <tr class="confirm-removal" data-test-confirm-removal>
     <td colspan={{if (media "isLaptopAndUp") "7" "5"}}>
       <div class="confirm-message" data-test-message>
-        {{#if (is-fulfilled @program.courses)}}
-          {{t
-            "general.confirmRemoveProgram"
-            courseCount=(get (await @program.courses) "length")
-            programYearCount=(get (await @program.programYears) "length")
-          }}
+          {{t "general.confirmRemoveProgram"}}
           <br>
           <div class="confirm-buttons">
             <button
@@ -54,9 +49,6 @@
               {{t "general.cancel"}}
             </button>
           </div>
-        {{else}}
-          <LoadingSpinner @tagName="div" />
-        {{/if}}
       </div>
     </td>
   </tr>
