@@ -1,5 +1,6 @@
 import { clickable, collection, create, fillable, hasClass, text } from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import membersList from './instructor-group-members-list';
 
 const definition = {
   scope: '[data-test-learner-group-instructor-manager]',
@@ -26,9 +27,7 @@ const definition = {
   selectedInstructorGroups: collection('[data-test-selected-instructor-group]', {
     title: text('[data-test-instructor-group-title]'),
     remove: clickable('[data-test-instructor-group-title]'),
-    members: collection('[data-test-instructor-group-member]', {
-      userNameInfo,
-    }),
+    membersList,
   }),
   search: fillable('.search-box input'),
   searchResults: collection('.results [data-test-result]', {

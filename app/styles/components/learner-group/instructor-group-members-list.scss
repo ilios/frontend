@@ -1,0 +1,6 @@
+@use "../../ilios-common/mixins" as m;
+
+.learner-group-instructor-group-members-list {
+  @include m.ilios-tag-list;
+  margin-bottom: 1rem;
+}
