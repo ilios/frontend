@@ -12,13 +12,7 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
   @tracked instructorGroups = [];
   @tracked isManaging = false;
 
-  @use allInstructorsResource = new ResolveAsyncValue(() => [
-    this.args.learnerGroup.allInstructors,
-  ]);
-
-  get allInstructors() {
-    return this.allInstructorsResource ? this.allInstructorsResource.slice() : [];
-  }
+  @use allInstructors = new ResolveAsyncValue(() => [this.args.learnerGroup.allInstructors, []]);
 
   @restartableTask
   *load(element, [learnerGroup]) {

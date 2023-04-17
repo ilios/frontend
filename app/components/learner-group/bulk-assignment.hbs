@@ -34,7 +34,7 @@
               @unsetMatch={{this.removeMatch}}
               @createGroup={{this.createGroup}}
               @matches={{this.matchedGroups}}
-              @groups={{sort-by "title" this.allDescendants}}
+              @groups={{sort-by "title" @learnerGroup.allDescendants}}
             />
           {{/each}}
         </tbody>
