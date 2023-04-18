@@ -24,13 +24,13 @@ export default class Offering extends Model {
   @attr('date')
   updatedAt;
 
-  @belongsTo('session', { async: true })
+  @belongsTo('session', { async: true, inverse: 'offerings' })
   session;
 
-  @hasMany('learner-group', { async: true })
+  @hasMany('learner-group', { async: true, inverse: 'offerings' })
   learnerGroups;
 
-  @hasMany('instructor-group', { async: true })
+  @hasMany('instructor-group', { async: true, inverse: 'offerings' })
   instructorGroups;
 
   @hasMany('user', { async: true, inverse: 'offerings' })

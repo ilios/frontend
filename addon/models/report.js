@@ -16,9 +16,9 @@ export default class Report extends Model {
   @attr('string')
   prepositionalObjectTableRowId;
 
-  @belongsTo('user', { async: true })
+  @belongsTo('user', { async: true, inverse: 'reports' })
   user;
 
-  @belongsTo('school', { async: true })
+  @belongsTo('school', { async: true, inverse: 'reports' })
   school;
 }

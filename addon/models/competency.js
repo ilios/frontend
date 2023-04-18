@@ -10,7 +10,7 @@ export default class CompetencyModel extends Model {
   @attr('string')
   title;
 
-  @belongsTo('school', { async: true })
+  @belongsTo('school', { async: true, inverse: 'competencies' })
   school;
   @belongsTo('competency', { async: true, inverse: 'children' })
   parent;
@@ -18,13 +18,13 @@ export default class CompetencyModel extends Model {
   @hasMany('competency', { async: true, inverse: 'parent' })
   children;
 
-  @hasMany('aamc-pcrs', { async: true })
+  @hasMany('aamc-pcrs', { async: true, inverse: 'competencies' })
   aamcPcrses;
 
-  @hasMany('program-year', { async: true })
+  @hasMany('program-year', { async: true, inverse: 'competencies' })
   programYears;
 
-  @hasMany('program-year-objectives', { async: true })
+  @hasMany('program-year-objectives', { async: true, inverse: 'competency' })
   programYearObjectives;
 
   get childCount() {

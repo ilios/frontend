@@ -7,6 +7,6 @@ export default class Authentication extends Model {
   @attr('string')
   username;
 
-  @belongsTo('user')
+  @belongsTo('user', { async: true, inverse: 'authentication' })
   user;
 }

@@ -10,7 +10,7 @@ export default class CurriculumInventoryAcademicLevel extends Model {
   @attr('number')
   level;
 
-  @belongsTo('curriculum-inventory-report', { async: true })
+  @belongsTo('curriculum-inventory-report', { async: true, inverse: 'academicLevel' })
   report;
 
   @hasMany('curriculum-inventory-sequence-block', {

@@ -10,7 +10,7 @@ export default class Term extends Model {
   @attr('string')
   description;
 
-  @belongsTo('vocabulary', { async: true })
+  @belongsTo('vocabulary', { async: true, inverse: 'terms' })
   vocabulary;
 
   @belongsTo('term', { inverse: 'children', async: true })
@@ -19,28 +19,28 @@ export default class Term extends Model {
   @hasMany('term', { inverse: 'parent', async: true })
   children;
 
-  @hasMany('programYear', { async: true })
+  @hasMany('programYear', { async: true, inverse: 'terms' })
   programYears;
 
-  @hasMany('session', { async: true })
+  @hasMany('session', { async: true, inverse: 'terms' })
   sessions;
 
-  @hasMany('course', { async: true })
+  @hasMany('course', { async: true, inverse: 'terms' })
   courses;
 
-  @hasMany('aamcResourceType', { async: true })
+  @hasMany('aamcResourceType', { async: true, inverse: null })
   aamcResourceTypes;
 
   @attr('boolean')
   active;
 
-  @hasMany('course-objective', { async: true })
+  @hasMany('course-objective', { async: true, inverse: 'terms' })
   courseObjectives;
 
-  @hasMany('program-year-objective', { async: true })
+  @hasMany('program-year-objective', { async: true, inverse: 'terms' })
   programYearObjectives;
 
-  @hasMany('session-objective', { async: true })
+  @hasMany('session-objective', { async: true, inverse: 'terms' })
   sessionObjectives;
 
   @use titleWithParentTitles = new DeprecatedAsyncCP(() => [

@@ -10,6 +10,6 @@ export default class MeshQualifier extends Model {
   @attr('date')
   updatedAt;
 
-  @hasMany('mesh-descriptor', { async: true })
+  @hasMany('mesh-descriptor', { async: true, inverse: 'meshQualifier' })
   descriptors;
 }

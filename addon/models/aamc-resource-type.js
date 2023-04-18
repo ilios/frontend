@@ -7,6 +7,6 @@ export default class AamcResourceType extends Model {
   @attr('string')
   description;
 
-  @hasMany('term', { async: true })
+  @hasMany('term', { async: true, inverse: 'aamcResourceTypes' })
   competencies;
 }

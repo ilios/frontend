@@ -13,13 +13,13 @@ export default class SessionObjectiveModel extends Model {
   @attr('boolean', { defaultValue: true })
   active;
 
-  @belongsTo('session', { async: true })
+  @belongsTo('session', { async: true, inverse: 'sessionObjectives' })
   session;
 
-  @hasMany('term', { async: true })
+  @hasMany('term', { async: true, inverse: 'sessionObjectives' })
   terms;
 
-  @hasMany('mesh-descriptor', { async: true })
+  @hasMany('mesh-descriptor', { async: true, inverse: 'sessionObjectives' })
   meshDescriptors;
 
   @belongsTo('session-objective', {

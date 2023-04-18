@@ -22,10 +22,10 @@ export default class MeshConcept extends Model {
   @attr('date')
   updatedAt;
 
-  @hasMany('mesh-term', { async: true })
+  @hasMany('mesh-term', { async: true, inverse: 'concepts' })
   terms;
 
-  @hasMany('mesh-descriptor', { async: true })
+  @hasMany('mesh-descriptor', { async: true, inverse: 'concepts' })
   descriptors;
 
   get truncatedScopeNote() {

@@ -7,7 +7,7 @@ export default class SchoolConfig extends Model {
   @attr('string')
   value;
 
-  @belongsTo('school', { async: true })
+  @belongsTo('school', { async: true, inverse: 'configurations' })
   school;
 
   get parsedValue() {

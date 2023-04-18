@@ -40,25 +40,25 @@ export default class SessionModel extends Model {
   @attr('boolean')
   published;
 
-  @belongsTo('session-type', { async: true })
+  @belongsTo('session-type', { async: true, inverse: 'sessions' })
   sessionType;
 
-  @belongsTo('course', { async: true })
+  @belongsTo('course', { async: true, inverse: 'sessions' })
   course;
 
-  @belongsTo('ilm-session', { async: true })
+  @belongsTo('ilm-session', { async: true, inverse: 'session' })
   ilmSession;
 
-  @hasMany('session-objective', { async: true })
+  @hasMany('session-objective', { async: true, inverse: 'session' })
   sessionObjectives;
 
-  @hasMany('mesh-descriptor', { async: true })
+  @hasMany('mesh-descriptor', { async: true, inverse: 'sessions' })
   meshDescriptors;
 
-  @hasMany('session-learning-material', { async: true })
+  @hasMany('session-learning-material', { async: true, inverse: 'session' })
   learningMaterials;
 
-  @hasMany('offering', { async: true })
+  @hasMany('offering', { async: true, inverse: 'session' })
   offerings;
 
   @hasMany('user', {
@@ -85,7 +85,7 @@ export default class SessionModel extends Model {
   })
   prerequisites;
 
-  @hasMany('term', { async: true })
+  @hasMany('term', { async: true, inverse: 'sessions' })
   terms;
 
   @use _offerings = new ResolveAsyncValue(() => [this.offerings]);

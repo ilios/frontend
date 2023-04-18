@@ -4,6 +4,6 @@ export default class AssessmentOption extends Model {
   @attr('string')
   name;
 
-  @hasMany('session-type', { async: true })
+  @hasMany('session-type', { async: true, inverse: 'assessmentOption' })
   sessionTypes;
 }

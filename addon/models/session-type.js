@@ -16,16 +16,16 @@ export default class SessionType extends Model {
   @attr('boolean')
   assessment;
 
-  @belongsTo('assessment-option', { async: true })
+  @belongsTo('assessment-option', { async: true, inverse: 'sessionTypes' })
   assessmentOption;
 
-  @belongsTo('school', { async: true })
+  @belongsTo('school', { async: true, inverse: 'sessionTypes' })
   school;
 
-  @hasMany('aamc-method', { async: true })
+  @hasMany('aamc-method', { async: true, inverse: 'sessionTypes' })
   aamcMethods;
 
-  @hasMany('session', { async: true })
+  @hasMany('session', { async: true, inverse: 'sessionType' })
   sessions;
 
   get safeCalendarColor() {

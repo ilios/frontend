@@ -21,19 +21,25 @@ export default class CurriculumInventoryReport extends Model {
   @attr('string')
   absoluteFileUri;
 
-  @belongsTo('curriculum-inventory-export', { async: true })
+  @belongsTo('curriculum-inventory-export', { async: true, inverse: 'report' })
   export;
 
-  @belongsTo('curriculum-inventory-sequence', { async: true })
+  @belongsTo('curriculum-inventory-sequence', { async: true, inverse: 'report' })
   sequence;
 
-  @hasMany('curriculum-inventory-sequence-block', { async: true })
+  @hasMany('curriculum-inventory-sequence-block', {
+    async: true,
+    inverse: 'report',
+  })
   sequenceBlocks;
 
-  @belongsTo('program', { async: true })
+  @belongsTo('program', { async: true, inverse: 'curriculumInventoryReports' })
   program;
 
-  @hasMany('curriculum-inventory-academic-level', { async: true })
+  @hasMany('curriculum-inventory-academic-level', {
+    async: true,
+    inverse: 'report',
+  })
   academicLevels;
 
   @hasMany('user', { async: true, inverse: 'administeredCurriculumInventoryReports' })

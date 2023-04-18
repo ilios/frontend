@@ -14,13 +14,13 @@ export default class CourseObjective extends Model {
   @attr('boolean', { defaultValue: true })
   active;
 
-  @belongsTo('course', { async: true })
+  @belongsTo('course', { async: true, inverse: 'courseObjectives' })
   course;
 
-  @hasMany('term', { async: true })
+  @hasMany('term', { async: true, inverse: 'courseObjectives' })
   terms;
 
-  @hasMany('mesh-descriptor', { async: true })
+  @hasMany('mesh-descriptor', { async: true, inverse: 'courseObjectives' })
   meshDescriptors;
 
   @belongsTo('course-objective', {

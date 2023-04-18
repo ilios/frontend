@@ -19,12 +19,12 @@ export default class CourseLearningMaterial extends Model {
   @attr('date')
   endDate;
 
-  @belongsTo('course', { async: true })
+  @belongsTo('course', { async: true, inverse: 'learningMaterials' })
   course;
 
-  @belongsTo('learning-material', { async: true })
+  @belongsTo('learning-material', { async: true, inverse: 'courseLearningMaterials' })
   learningMaterial;
 
-  @hasMany('mesh-descriptors', { async: true })
+  @hasMany('mesh-descriptors', { async: true, inverse: 'courseLearningMaterials' })
   meshDescriptors;
 }

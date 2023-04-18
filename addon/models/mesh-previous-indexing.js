@@ -4,6 +4,6 @@ export default class MeshPreviousIndexing extends Model {
   @attr('string')
   previousIndexing;
 
-  @belongsTo('mesh-descriptor', { async: true })
+  @belongsTo('mesh-descriptor', { async: true, inverse: 'previousIndexing' })
   descriptor;
 }

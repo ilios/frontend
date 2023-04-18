@@ -12,25 +12,25 @@ export default class School extends Model {
   iliosAdministratorEmail;
   @attr('string')
   changeAlertRecipients;
-  @hasMany('competencies', { async: true })
+  @hasMany('competencies', { async: true, inverse: 'school' })
   competencies;
-  @hasMany('course', { async: true })
+  @hasMany('course', { async: true, inverse: 'school' })
   courses;
-  @hasMany('program', { async: true })
+  @hasMany('program', { async: true, inverse: 'school' })
   programs;
-  @hasMany('vocabulary', { async: true })
+  @hasMany('vocabulary', { async: true, inverse: 'school' })
   vocabularies;
-  @hasMany('instructor-group', { async: true })
+  @hasMany('instructor-group', { async: true, inverse: 'school' })
   instructorGroups;
-  @belongsTo('curriculum-inventory-institution', { async: true })
+  @belongsTo('curriculum-inventory-institution', { async: true, inverse: 'school' })
   curriculumInventoryInstitution;
-  @hasMany('session-type', { async: true })
+  @hasMany('session-type', { async: true, inverse: 'school' })
   sessionTypes;
   @hasMany('user', { async: true, inverse: 'directedSchools' })
   directors;
   @hasMany('user', { async: true, inverse: 'administeredSchools' })
   administrators;
-  @hasMany('school-config', { async: true })
+  @hasMany('school-config', { async: true, inverse: 'school' })
   configurations;
 
   get cohorts() {

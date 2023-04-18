@@ -4,6 +4,6 @@ export default class CurriculumInventorySequence extends Model {
   @attr('string')
   description;
 
-  @belongsTo('curriculum-inventory-report', { async: true })
+  @belongsTo('curriculum-inventory-report', { async: true, inverse: 'curriculumInentorySequence' })
   report;
 }
