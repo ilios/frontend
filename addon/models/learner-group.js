@@ -22,7 +22,7 @@ export default class LearnerGroup extends Model {
   @attr('boolean')
   needsAccommodation;
 
-  @belongsTo('cohort', { async: true })
+  @belongsTo('cohort', { async: true, inverse: 'learnerGroups' })
   cohort;
 
   @belongsTo('learner-group', { async: true, inverse: 'children' })
@@ -31,13 +31,13 @@ export default class LearnerGroup extends Model {
   @hasMany('learner-group', { async: true, inverse: 'parent' })
   children;
 
-  @hasMany('ilm-session', { async: true })
+  @hasMany('ilm-session', { async: true, inverse: 'learnerGroups' })
   ilmSessions;
 
-  @hasMany('offering', { async: true })
+  @hasMany('offering', { async: true, inverse: 'learnerGroups' })
   offerings;
 
-  @hasMany('instructor-group', { async: true })
+  @hasMany('instructor-group', { async: true, inverse: 'learnerGroups' })
   instructorGroups;
 
   @hasMany('user', { async: true, inverse: 'learnerGroups' })

@@ -39,10 +39,10 @@ export default class Course extends Model {
   @attr('boolean')
   published;
 
-  @belongsTo('course-clerkship-type', { async: true })
+  @belongsTo('course-clerkship-type', { async: true, inverse: 'courses' })
   clerkshipType;
 
-  @belongsTo('school', { async: true })
+  @belongsTo('school', { async: true, inverse: 'courses' })
   school;
 
   @hasMany('user', {
@@ -63,19 +63,19 @@ export default class Course extends Model {
   })
   studentAdvisors;
 
-  @hasMany('cohort', { async: true })
+  @hasMany('cohort', { async: true, inverse: 'courses' })
   cohorts;
 
-  @hasMany('course-objective', { async: true })
+  @hasMany('course-objective', { async: true, inverse: 'course' })
   courseObjectives;
 
-  @hasMany('mesh-descriptor', { async: true })
+  @hasMany('mesh-descriptor', { async: true, inverse: 'courses' })
   meshDescriptors;
 
-  @hasMany('course-learning-material', { async: true })
+  @hasMany('course-learning-material', { async: true, inverse: 'course' })
   learningMaterials;
 
-  @hasMany('session', { async: true })
+  @hasMany('session', { async: true, inverse: 'course' })
   sessions;
 
   @belongsTo('course', {
@@ -90,7 +90,7 @@ export default class Course extends Model {
   })
   descendants;
 
-  @hasMany('term', { async: true })
+  @hasMany('term', { async: true, inverse: 'courses' })
   terms;
 
   get publishedSessions() {

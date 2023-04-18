@@ -14,16 +14,16 @@ export default class ProgramYearObjective extends Model {
   @attr('boolean', { defaultValue: true })
   active;
 
-  @belongsTo('competency', { async: true })
+  @belongsTo('competency', { async: true, inverse: 'programYearObjectives' })
   competency;
 
-  @belongsTo('program-year', { async: true })
+  @belongsTo('program-year', { async: true, inverse: 'programYearObjectives' })
   programYear;
 
-  @hasMany('term', { async: true })
+  @hasMany('term', { async: true, inverse: 'programYearObjectives' })
   terms;
 
-  @hasMany('mesh-descriptor', { async: true })
+  @hasMany('mesh-descriptor', { async: true, inverse: 'programYearObjectives' })
   meshDescriptors;
 
   @belongsTo('program-year-objective', {

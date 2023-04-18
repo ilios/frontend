@@ -10,6 +10,6 @@ export default class PendingUserUpdate extends Model {
   @attr('string')
   value;
 
-  @belongsTo('user', { async: true })
+  @belongsTo('user', { async: true, inverse: 'pendingUserUpdates' })
   user;
 }

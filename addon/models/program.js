@@ -11,13 +11,13 @@ export default class Program extends Model {
   shortTitle;
   @attr('number', { defaultValue: 1 })
   duration;
-  @belongsTo('school', { async: true })
+  @belongsTo('school', { async: true, inverse: 'programs' })
   school;
   @hasMany('program-year', { async: true, inverse: 'program' })
   programYears;
   @hasMany('user', { async: true, inverse: 'directedPrograms' })
   directors;
-  @hasMany('curriculum-inventory-report', { async: true })
+  @hasMany('curriculum-inventory-report', { async: true, inverse: 'program' })
   curriculumInventoryReports;
 
   get hasCurriculumInventoryReports() {

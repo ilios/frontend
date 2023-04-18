@@ -14,22 +14,22 @@ export default class ProgramYear extends Model {
   @attr('boolean')
   archived;
 
-  @belongsTo('program', { async: true })
+  @belongsTo('program', { async: true, inverse: 'programYears' })
   program;
 
-  @belongsTo('cohort', { async: true })
+  @belongsTo('cohort', { async: true, inverse: 'programYear' })
   cohort;
 
-  @hasMany('user', { async: true })
+  @hasMany('user', { async: true, inverse: 'programYears' })
   directors;
 
-  @hasMany('competency', { async: true })
+  @hasMany('competency', { async: true, inverse: 'programYears' })
   competencies;
 
-  @hasMany('program-year-objective', { async: true })
+  @hasMany('program-year-objective', { async: true, inverse: 'programYear' })
   programYearObjectives;
 
-  @hasMany('term', { async: true })
+  @hasMany('term', { async: true, inverse: 'programYears' })
   terms;
 
   get xObjectives() {

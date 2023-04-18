@@ -10,13 +10,13 @@ export default class Vocabulary extends Model {
   @attr('string')
   title;
 
-  @belongsTo('school', { async: true })
+  @belongsTo('school', { async: true, inverse: 'vocabularies' })
   school;
 
   @attr('boolean')
   active;
 
-  @hasMany('term', { async: true })
+  @hasMany('term', { async: true, inverse: 'vocabulary' })
   terms;
 
   @use topLevelTerms = new DeprecatedAsyncCP(() => [

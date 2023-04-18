@@ -7,9 +7,9 @@ export default class UserSessionMaterialStatusModel extends Model {
   @attr('date')
   updatedAt;
 
-  @belongsTo('user', { async: true })
+  @belongsTo('user', { async: true, inverse: 'sessionMaterialStatuses' })
   user;
 
-  @belongsTo('session-learning-material', { async: true })
+  @belongsTo('session-learning-material', { async: true, inverse: null })
   material;
 }

@@ -4,6 +4,6 @@ export default class MeshTree extends Model {
   @attr('string')
   treeNumber;
 
-  @belongsTo('mesh-descriptor', { async: true })
+  @belongsTo('mesh-descriptor', { async: true, inverse: 'trees' })
   descriptor;
 }

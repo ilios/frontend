@@ -4,6 +4,6 @@ export default class AamcPcrs extends Model {
   @attr('string')
   description;
 
-  @hasMany('competency', { async: true })
+  @hasMany('competency', { async: true, inverse: 'aamcPcrses' })
   competencies;
 }

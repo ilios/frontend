@@ -25,15 +25,15 @@ export default class LearningMaterial extends Model {
   link;
   @attr('string')
   absoluteFileUri;
-  @belongsTo('learning-material-user-role', { async: true })
+  @belongsTo('learning-material-user-role', { async: true, inverse: null })
   userRole;
-  @belongsTo('learning-material-status', { async: true })
+  @belongsTo('learning-material-status', { async: true, inverse: null })
   status;
-  @belongsTo('user', { async: true })
+  @belongsTo('user', { async: true, inverse: null })
   owningUser;
-  @hasMany('session-learning-material', { async: true })
+  @hasMany('session-learning-material', { async: true, inverse: 'learningMaterial' })
   sessionLearningMaterials;
-  @hasMany('course-learning-material', { async: true })
+  @hasMany('course-learning-material', { async: true, inverse: 'learningMaterial' })
   courseLearningMaterials;
 
   get type() {

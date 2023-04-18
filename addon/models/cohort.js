@@ -6,16 +6,16 @@ export default class CohortModel extends Model {
   @attr('string')
   title;
 
-  @belongsTo('program-year', { async: true })
+  @belongsTo('program-year', { async: true, inverse: 'cohort' })
   programYear;
 
-  @hasMany('course', { async: true })
+  @hasMany('course', { async: true, inverse: 'cohorts' })
   courses;
 
-  @hasMany('learner-group', { async: true })
+  @hasMany('learner-group', { async: true, inverse: 'cohort' })
   learnerGroups;
 
-  @hasMany('user', { async: true })
+  @hasMany('user', { async: true, inverse: 'cohorts' })
   users;
 
   @use rootLevelLearnerGroups = new DeprecatedAsyncCP(() => [

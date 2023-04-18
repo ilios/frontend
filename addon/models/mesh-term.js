@@ -25,6 +25,6 @@ export default class MeshTerm extends Model {
   @attr('date')
   updatedAt;
 
-  @hasMany('mesh-concept', { async: true })
+  @hasMany('mesh-concept', { async: true, inverse: 'meshTerms' })
   concepts;
 }

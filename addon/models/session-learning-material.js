@@ -19,12 +19,12 @@ export default class SessionLearningMaterial extends Model {
   @attr('date')
   endDate;
 
-  @belongsTo('session', { async: true })
+  @belongsTo('session', { async: true, inverse: 'learningMaterials' })
   session;
 
-  @belongsTo('learning-material', { async: true })
+  @belongsTo('learning-material', { async: true, inverse: 'sessionLearningMaterials' })
   learningMaterial;
 
-  @hasMany('mesh-descriptors', { async: true })
+  @hasMany('mesh-descriptors', { async: true, inverse: 'sessionLearningMaterials' })
   meshDescriptors;
 }

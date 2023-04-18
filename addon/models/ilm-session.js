@@ -8,13 +8,13 @@ export default class IlmSession extends Model {
   @attr('date')
   dueDate;
 
-  @belongsTo('session', { async: true })
+  @belongsTo('session', { async: true, inverse: 'ilmSession' })
   session;
 
-  @hasMany('learner-group', { async: true })
+  @hasMany('learner-group', { async: true, inverse: 'ilmSessions' })
   learnerGroups;
 
-  @hasMany('instructor-group', { async: true })
+  @hasMany('instructor-group', { async: true, inverse: 'ilmSessions' })
   instructorGroups;
 
   @hasMany('user', {

@@ -53,13 +53,13 @@ export default class User extends Model {
   @attr('boolean')
   root;
 
-  @hasMany('report', { async: true })
+  @hasMany('report', { async: true, inverse: 'user' })
   reports;
 
-  @belongsTo('school', { async: true })
+  @belongsTo('school', { async: true, inverse: null })
   school;
 
-  @belongsTo('authentication', { async: true })
+  @belongsTo('authentication', { async: true, inverse: 'user' })
   authentication;
 
   @hasMany('course', {
@@ -128,10 +128,10 @@ export default class User extends Model {
   })
   instructedOfferings;
 
-  @hasMany('program-year', { async: true })
+  @hasMany('program-year', { async: true, inverse: 'directors' })
   programYears;
 
-  @hasMany('user-role', { async: true })
+  @hasMany('user-role', { async: true, inverse: null })
   roles;
 
   @hasMany('school', {
@@ -167,7 +167,7 @@ export default class User extends Model {
   @belongsTo('cohort', { async: true, inverse: null })
   primaryCohort;
 
-  @hasMany('pending-user-update', { async: true })
+  @hasMany('pending-user-update', { async: true, inverse: 'user' })
   pendingUserUpdates;
 
   @hasMany('curriculum-inventory-report', {
@@ -176,7 +176,7 @@ export default class User extends Model {
   })
   administeredCurriculumInventoryReports;
 
-  @hasMany('user-session-material-status', { async: true })
+  @hasMany('user-session-material-status', { async: true, inverse: 'user' })
   sessionMaterialStatuses;
 
   @use _roles = new ResolveAsyncValue(() => [this.roles, []]);

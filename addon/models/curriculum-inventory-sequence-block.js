@@ -54,16 +54,19 @@ export default class CurriculumInventorySequenceBlock extends Model {
   @hasMany('curriculum-inventory-sequence-block', { async: true, inverse: 'parent' })
   children;
 
-  @belongsTo('curriculum-inventory-report', { async: true })
+  @belongsTo('curriculum-inventory-report', {
+    async: true,
+    inverse: 'sequenceBlocks',
+  })
   report;
 
-  @hasMany('session', { async: true })
+  @hasMany('session', { async: true, inverse: null })
   sessions;
 
-  @hasMany('session', { async: true })
+  @hasMany('session', { async: true, inverse: null })
   excludedSessions;
 
-  @belongsTo('course', { async: true })
+  @belongsTo('course', { async: true, inverse: null })
   course;
 
   @use allParents = new DeprecatedAsyncCP(() => [

@@ -7,19 +7,19 @@ export default class InstructorGroupModel extends Model {
   @attr('string')
   title;
 
-  @belongsTo('school', { async: true })
+  @belongsTo('school', { async: true, inverse: 'instructorGroups' })
   school;
 
-  @hasMany('learner-group', { async: true })
+  @hasMany('learner-group', { async: true, inverse: 'instructorGroups' })
   learnerGroups;
 
-  @hasMany('ilm-session', { async: true })
+  @hasMany('ilm-session', { async: true, inverse: 'instructorGroups' })
   ilmSessions;
 
-  @hasMany('user', { async: true })
+  @hasMany('user', { async: true, inverse: 'instructorGroups' })
   users;
 
-  @hasMany('offering', { async: true })
+  @hasMany('offering', { async: true, inverse: 'instructorGroups' })
   offerings;
 
   @use _offeringSessions = new ResolveFlatMapBy(() => [this.offerings, 'session']);

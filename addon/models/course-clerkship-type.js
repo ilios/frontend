@@ -4,6 +4,6 @@ export default class CourseClerkshipType extends Model {
   @attr('string')
   title;
 
-  @hasMany('course', { async: true })
+  @hasMany('course', { async: true, inverse: 'clerkshipType' })
   courses;
 }
