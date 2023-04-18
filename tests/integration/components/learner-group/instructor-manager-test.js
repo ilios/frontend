@@ -76,9 +76,9 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     assert.notOk(component.selectedInstructors[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.selectedInstructorGroups.length, 1);
     assert.strictEqual(component.selectedInstructorGroups[0].title, 'test group');
-    assert.strictEqual(component.selectedInstructorGroups[0].members.length, 1);
+    assert.strictEqual(component.selectedInstructorGroups[0].membersList.users.length, 1);
     assert.strictEqual(
-      component.selectedInstructorGroups[0].members[0].userNameInfo.fullName,
+      component.selectedInstructorGroups[0].membersList.users[0].userNameInfo.fullName,
       'test person2'
     );
     assert.ok(component.saveButton.isVisible);

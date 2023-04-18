@@ -12,7 +12,7 @@
   </td>
   <td class="text-center hide-from-small-screen" data-test-children>
     <span data-test-children-count>{{@learnerGroup.childrenCount}}</span>
-    {{#if (await @learnerGroup.hasSubgroupsInNeedOfAccommodation)}}
+    {{#if @learnerGroup.hasSubgroupsInNeedOfAccommodation}}
       <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}} data-test-needs-accommodation />
     {{/if}}
   </td>
