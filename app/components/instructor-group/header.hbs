@@ -47,9 +47,7 @@
     <span>
       <LinkTo
         @route="instructor-groups"
-        @query={{hash
-          schoolId=(get (await @instructorGroup.school) "id")
-        }}
+        @query={{hash schoolId=@instructorGroup.school.id}}
       >
         {{@instructorGroup.school.title}}
       </LinkTo>

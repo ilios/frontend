@@ -5,7 +5,7 @@
         {{t "general.instructorsManageTitle"}}
       {{else}}
         {{t "general.instructors"}}
-        ({{get (await @instructorGroup.users) "length"}})
+        ({{@instructorGroup.users.length}})
       {{/if}}
     </h3>
     <div class="actions">
@@ -30,7 +30,7 @@
     {{#if this.isManaging}}
       {{#unless this.manage.isRunning}}
         <InstructorGroup::InstructorManager
-          @instructors={{this.users}}
+          @instructors={{this.usersBuffer}}
           @add={{this.addUser}}
           @remove={{this.removeUser}}
         />
@@ -39,7 +39,7 @@
       <ul class="instructor-group-users-list" data-test-users-list>
         {{#each
           (sort-by
-            "fullName" (await @instructorGroup.users)
+            "fullName" this.users
           ) as |user|
         }}
           <li data-test-user>
