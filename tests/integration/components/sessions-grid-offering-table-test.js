@@ -31,7 +31,7 @@ module('Integration | Component | sessions-grid-offering-table', function (hooks
       startDate: DateTime.fromObject({ hour: 9 }).plus({ day: 1 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 10 }).plus({ day: 1 }).toJSDate(),
     });
-    const offerings = this.owner.lookup('service:store').findAll('offering');
+    const offerings = await this.owner.lookup('service:store').findAll('offering');
     this.set('offerings', offerings);
 
     await render(hbs`<SessionsGridOfferingTable @offerings={{this.offerings}} />

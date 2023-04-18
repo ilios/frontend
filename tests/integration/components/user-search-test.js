@@ -56,7 +56,7 @@ module('Integration | Component | user search', function (hooks) {
 
   test('search for groups', async function (assert) {
     this.server.createList('instructor-group', 2);
-    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
+    const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     await render(hbs`<UserSearch @availableInstructorGroups={{this.availableInstructorGroups}} />
 `);
@@ -86,7 +86,7 @@ module('Integration | Component | user search', function (hooks) {
   test('click group fires add group', async function (assert) {
     assert.expect(5);
     this.server.createList('instructor-group', 2);
-    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
+    const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('action', (group) => {
       assert.strictEqual(group, instructorGroups.slice()[0]);
     });
@@ -184,7 +184,7 @@ module('Integration | Component | user search', function (hooks) {
 
   test('reads currentlyActiveInstructorGroups from a promise', async function (assert) {
     this.server.create('instructor-group');
-    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
+    const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     this.set('currentlyActiveInstructorGroups', instructorGroups);
     await render(hbs`<UserSearch
