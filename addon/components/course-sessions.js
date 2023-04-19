@@ -5,8 +5,6 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import SessionObject from 'ilios-common/classes/session-object';
-import { getOwner } from '@ember/application';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 const DEBOUNCE_DELAY = 250;
@@ -51,13 +49,6 @@ export default class CourseSessionsComponent extends Component {
       const ids = session.hasMany('offerings').ids();
       return ids.length > 0;
     });
-  }
-
-  get sessionObjects() {
-    if (!this.sessions) {
-      return false;
-    }
-    return this.sessions.map((session) => new SessionObject(getOwner(this), session));
   }
 
   get filterByDebounced() {
