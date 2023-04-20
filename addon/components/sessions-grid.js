@@ -4,46 +4,153 @@ import { isEmpty } from '@ember/utils';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
-import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
+import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
+import { DateTime } from 'luxon';
+import { filter, map } from 'rsvp';
+import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
+import AsyncProcess from 'ilios-common/classes/async-process';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SessionsGrid extends Component {
   @service router;
   @service preserveScroll;
+  @service intl;
   @tracked confirmDeleteSessionIds = [];
 
-  get filteredSessions() {
-    if (isEmpty(this.args.sessions)) {
+  @use sortedSessions = new AsyncProcess(() => [
+    this.sortSessions.bind(this),
+    this.args.sessions,
+    this.args.filterBy,
+    this.sortInfo,
+  ]);
+
+  async sortSessions(sessions, filterBy, sortInfo) {
+    const filteredSessions = await this.filterSessions(sessions, filterBy);
+    switch (sortInfo.column) {
+      case 'sessionTypeTitle':
+        return this.sortBySessionTypeTitle(filteredSessions, sortInfo);
+      case 'learnerGroupCount':
+        return this.sortByLearnerGroupCount(filteredSessions, sortInfo);
+      case 'firstOfferingDate':
+        return this.sortByFirstOfferingDate(filteredSessions, sortInfo);
+      case 'status':
+        return this.sortByStatus(filteredSessions, sortInfo);
+      default:
+        if (sortInfo.descending) {
+          return sortBy(filteredSessions, sortInfo.column).reverse();
+        }
+        return sortBy(filteredSessions, sortInfo.column);
+    }
+  }
+
+  sessionStatus(session) {
+    let status = this.intl.t('general.notPublished');
+    if (session.published) {
+      status = this.intl.t('general.published');
+    }
+    if (session.publishedAsTbd) {
+      status = this.intl.t('general.scheduled');
+    }
+    return status.toString();
+  }
+
+  sortByStatus(sessions, sortInfo) {
+    const sortProxies = sessions.map((session) => {
+      return {
+        session,
+        status: this.sessionStatus(session),
+      };
+    });
+    const sortedSessions = sortBy(sortProxies, 'status').map((proxy) => proxy.session);
+    return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
+  }
+
+  async sortBySessionTypeTitle(sessions, sortInfo) {
+    const sortProxies = await map(sessions, async (session) => {
+      const sessionType = await session.sessionType;
+      const sessionTypeTitle = sessionType?.title;
+      return {
+        session,
+        title: sessionTypeTitle,
+      };
+    });
+    const sortedSessions = sortBy(sortProxies, 'title').map((proxy) => proxy.session);
+    return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
+  }
+
+  async sortByLearnerGroupCount(sessions, sortInfo) {
+    const sortProxies = await map(sessions, async (session) => {
+      const offerings = await session.offerings;
+      const learnerGroups = await map(offerings, async (offering) => {
+        const learnerGroups = await offering.learnerGroups;
+        return learnerGroups.slice();
+      });
+      return {
+        session,
+        learnerGroupCount: learnerGroups.flat().length,
+      };
+    });
+    const sortedSessions = sortBy(sortProxies, 'learnerGroupCount').map((proxy) => proxy.session);
+    return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
+  }
+
+  async sortByFirstOfferingDate(sessions, sortInfo) {
+    const sortProxies = await map(sessions, async (session) => {
+      const firstOfferingDate = await this.getFirstOfferingDate(session);
+      return {
+        session,
+        firstOfferingDate,
+      };
+    });
+    const sortedSessions = sortBy(sortProxies, 'firstOfferingDate').map((proxy) => proxy.session);
+    return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
+  }
+
+  async getFirstOfferingDate(session) {
+    if (session.isIndependentLearning) {
+      return (await session.ilmSession).dueDate;
+    }
+    const offerings = await session.offerings;
+    return offerings
+      .slice()
+      .filter((offering) => Boolean(offering.startDate))
+      .sort((a, b) => {
+        const aDate = DateTime.fromJSDate(a.startDate);
+        const bDate = DateTime.fromJSDate(b.startDate);
+        if (aDate === bDate) {
+          return 0;
+        }
+        return aDate > bDate ? 1 : -1;
+      })[0]?.startDate;
+  }
+
+  async filterSessions(sessions, filterBy) {
+    if (isEmpty(sessions)) {
       return [];
     }
-    if (isEmpty(this.args.filterBy)) {
-      return this.args.sessions;
+    if (isEmpty(filterBy)) {
+      return sessions;
     }
 
-    const filterExpressions = this.args.filterBy.split(' ').map(function (string) {
+    const filterExpressions = filterBy.split(' ').map(function (string) {
       const clean = escapeRegExp(string);
       return new RegExp(clean, 'gi');
     });
 
-    return this.args.sessions.filter((session) => {
+    return filter(sessions, async (session) => {
       let matchedSearchTerms = 0;
-
+      const sessionType = await session.sessionType;
+      const sessionTypeTitle = sessionType?.title;
+      const searchString = session.title + sessionTypeTitle + this.sessionStatus(session);
       for (let i = 0; i < filterExpressions.length; i++) {
-        if (session.searchString.match(filterExpressions[i])) {
+        if (searchString.match(filterExpressions[i])) {
           matchedSearchTerms++;
         }
       }
       //if the number of matching search terms is equal to the number searched, return true
       return matchedSearchTerms === filterExpressions.length;
     });
-  }
-
-  get sortedSessions() {
-    if (this.sortInfo.descending) {
-      return sortBy(this.filteredSessions, this.sortInfo.column).reverse();
-    }
-    return sortBy(this.filteredSessions, this.sortInfo.column);
   }
 
   get sortInfo() {
@@ -75,9 +182,9 @@ export default class SessionsGrid extends Component {
   }
 
   @action
-  expandSession(sessionObject) {
-    if (sessionObject.offeringCount) {
-      this.args.expandSession(sessionObject.session);
+  expandSession(session) {
+    if (session.offeringCount) {
+      this.args.expandSession(session);
     }
   }
 

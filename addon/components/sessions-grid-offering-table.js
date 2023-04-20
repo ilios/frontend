@@ -1,8 +1,12 @@
 import Component from '@glimmer/component';
+import { use } from 'ember-could-get-used-to-this';
+import PermissionChecker from 'ilios-common/classes/permission-checker';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SessionsGridOfferingTable extends Component {
+  @use canUpdate = new PermissionChecker(() => ['canUpdateSession', this.args.session]);
+
   get offeringBlocks() {
     if (!this.args.offerings) {
       return [];

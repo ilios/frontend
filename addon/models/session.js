@@ -249,6 +249,14 @@ export default class SessionModel extends Model {
     return this.hasMany('terms').ids().length;
   }
 
+  get offeringCount() {
+    return this.hasMany('offerings').ids().length;
+  }
+
+  get objectiveCount() {
+    return this.hasMany('sessionObjectives').ids().length;
+  }
+
   get associatedOfferingLearnerGroups() {
     if (!this.offeringLearnerGroups) {
       return [];
@@ -304,6 +312,10 @@ export default class SessionModel extends Model {
 
   get hasPrerequisites() {
     return this.prerequisites.length > 0;
+  }
+
+  get prerequisiteCount() {
+    return this.hasMany('prerequisites').ids().length;
   }
 
   get hasPostrequisite() {

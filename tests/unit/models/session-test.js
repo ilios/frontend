@@ -952,4 +952,19 @@ module('Unit | Model | Session', function (hooks) {
     total = await subject.getTotalSumIlmDurationByInstructor(instructor3);
     assert.strictEqual(total, 0);
   });
+
+  test('offeringCount', function (assert) {
+    // @todo implement [ST 2023/04/19]
+    assert.ok(false);
+  });
+
+  test('objectiveCount', function (assert) {
+    // @todo implement [ST 2023/04/19]
+    assert.ok(false);
+  });
+
+  test('prerequisiteCount', function (assert) {
+    // @todo implement [ST 2023/04/19]
+    assert.ok(false);
+  });
 });
