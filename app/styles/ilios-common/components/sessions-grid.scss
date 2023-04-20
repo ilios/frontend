@@ -19,22 +19,6 @@
       margin: .5rem 0;
     }
 
-    .session-row {
-      @include m.sessions-grid;
-      padding: .25rem 0;
-    }
-
-    .session-grid-status {
-      display: flex;
-      justify-content: flex-end;
-
-      .instructional-notes,
-      .prerequisites {
-        color: c.$fernGreen;
-        margin-right: .25rem;
-      }
-    }
-
     .confirm-removal {
       background-color: c.$lavenderBlush;
       color: c.$crimson;
