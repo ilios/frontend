@@ -1,9 +1,11 @@
-import { clickable, create, notHasClass, isPresent, text } from 'ember-cli-page-object';
+import { clickable, create, isVisible, notHasClass, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-sessions-grid-row]',
   expand: clickable('[data-test-expand-collapse-control] [data-test-expand]'),
   collapse: clickable('[data-test-expand-collapse-control] [data-test-collapse]'),
+  isCollapsed: isVisible('[data-test-expand-collapse-control] [data-test-expand]'),
+  isExpanded: isVisible('[data-test-expand-collapse-control] [data-test-collapse]'),
   canExpand: notHasClass('disabled', '[data-test-expand-collapse-control] [data-test-expand]'),
   expandTitle: text('[data-test-expand-collapse-control] title'),
   title: text('span', { at: 1 }),
