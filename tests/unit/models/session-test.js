@@ -954,17 +954,35 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('offeringCount', function (assert) {
-    // @todo implement [ST 2023/04/19]
-    assert.ok(false);
+    assert.expect(2);
+    const session = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
+    assert.strictEqual(session.offeringCount, 0);
+    const offering1 = store.createRecord('offering', { id: 1, session });
+    const offering2 = store.createRecord('offering', { id: 2, session });
+    session.get('offerings').pushObjects([offering1, offering2]);
+    assert.strictEqual(session.offeringCount, 2);
   });
 
   test('objectiveCount', function (assert) {
-    // @todo implement [ST 2023/04/19]
-    assert.ok(false);
+    assert.expect(2);
+    const session = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
+    assert.strictEqual(session.objectiveCount, 0);
+    const sessionObjective1 = store.createRecord('sessionObjective', { id: 1, session });
+    const sessionObjective2 = store.createRecord('sessionObjective', { id: 2, session });
+    session.get('sessionObjectives').pushObjects([sessionObjective1, sessionObjective2]);
+    assert.strictEqual(session.objectiveCount, 2);
   });
 
   test('prerequisiteCount', function (assert) {
-    // @todo implement [ST 2023/04/19]
-    assert.ok(false);
+    assert.expect(2);
+    const session = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
+    assert.strictEqual(session.prerequisiteCount, 0);
+    const prerequisite1 = store.createRecord('session', { id: 2, postrequisite: session });
+    const prerequisite2 = store.createRecord('session', { id: 3, postrequisite: session });
+    session.get('prerequisites').pushObjects([prerequisite1, prerequisite2]);
+    assert.strictEqual(session.prerequisiteCount, 2);
   });
 });
