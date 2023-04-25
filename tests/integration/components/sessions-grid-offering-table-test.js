@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
+import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -15,6 +16,16 @@ module('Integration | Component | sessions-grid-offering-table', function (hooks
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
   test('it renders', async function (assert) {
+    class PermissionCheckerStub extends Service {
+      canDeleteSession() {
+        return true;
+      }
+      canUpdateSession() {
+        return true;
+      }
+    }
+
+    this.owner.register('service:permissionChecker', PermissionCheckerStub);
     const session = this.server.create('session');
     this.server.createList('offering', 3, {
       session,
@@ -31,10 +42,10 @@ module('Integration | Component | sessions-grid-offering-table', function (hooks
       startDate: DateTime.fromObject({ hour: 9 }).plus({ day: 1 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 10 }).plus({ day: 1 }).toJSDate(),
     });
-    const offerings = await this.owner.lookup('service:store').findAll('offering');
-    this.set('offerings', offerings);
+    const model = await this.owner.lookup('service:store').findRecord('session', session.id);
+    this.set('model', model);
 
-    await render(hbs`<SessionsGridOfferingTable @offerings={{this.offerings}} />
+    await render(hbs`<SessionsGridOfferingTable @session={{this.model}} />
 `);
 
     assert.strictEqual(page.table.dates.length, 2);

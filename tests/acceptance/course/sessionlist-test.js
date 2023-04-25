@@ -78,13 +78,13 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions } = page.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
-    assert.strictEqual(sessions[0].title, 'session 0');
-    assert.strictEqual(sessions[0].type, 'session type 0');
-    assert.strictEqual(sessions[0].groupCount, '2');
-    assert.strictEqual(sessions[0].objectiveCount, '0');
-    assert.strictEqual(sessions[0].termCount, '0');
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[0].row.type, 'session type 0');
+    assert.strictEqual(sessions[0].row.groupCount, '2');
+    assert.strictEqual(sessions[0].row.objectiveCount, '0');
+    assert.strictEqual(sessions[0].row.termCount, '0');
     assert.strictEqual(
-      sessions[0].firstOffering,
+      sessions[0].row.firstOffering,
       this.intl.formatDate(today.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
@@ -93,39 +93,39 @@ module('Acceptance | Course - Session List', function (hooks) {
         minute: 'numeric',
       })
     );
-    assert.strictEqual(sessions[0].offeringCount, '3');
-    assert.notOk(sessions[0].hasInstructionalNotes);
-    assert.notOk(sessions[0].hasPrerequisites);
+    assert.strictEqual(sessions[0].row.offeringCount, '3');
+    assert.notOk(sessions[0].row.hasInstructionalNotes);
+    assert.notOk(sessions[0].row.hasPrerequisites);
 
-    assert.strictEqual(sessions[1].title, 'session 1');
-    assert.strictEqual(sessions[1].type, 'session type 0');
-    assert.strictEqual(sessions[1].groupCount, '0');
-    assert.strictEqual(sessions[1].objectiveCount, '0');
-    assert.strictEqual(sessions[1].termCount, '0');
-    assert.strictEqual(sessions[1].firstOffering, '');
-    assert.strictEqual(sessions[1].offeringCount, '0');
-    assert.notOk(sessions[1].hasInstructionalNotes);
-    assert.notOk(sessions[1].hasPrerequisites);
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    assert.strictEqual(sessions[1].row.type, 'session type 0');
+    assert.strictEqual(sessions[1].row.groupCount, '0');
+    assert.strictEqual(sessions[1].row.objectiveCount, '0');
+    assert.strictEqual(sessions[1].row.termCount, '0');
+    assert.strictEqual(sessions[1].row.firstOffering, '');
+    assert.strictEqual(sessions[1].row.offeringCount, '0');
+    assert.notOk(sessions[1].row.hasInstructionalNotes);
+    assert.notOk(sessions[1].row.hasPrerequisites);
 
-    assert.strictEqual(sessions[2].title, 'session 2');
-    assert.strictEqual(sessions[2].type, 'session type 0');
-    assert.strictEqual(sessions[2].groupCount, '0');
-    assert.strictEqual(sessions[2].objectiveCount, '0');
-    assert.strictEqual(sessions[2].termCount, '0');
-    assert.strictEqual(sessions[2].firstOffering, '');
-    assert.strictEqual(sessions[2].offeringCount, '0');
-    assert.ok(sessions[2].hasInstructionalNotes);
-    assert.notOk(sessions[2].hasPrerequisites);
+    assert.strictEqual(sessions[2].row.title, 'session 2');
+    assert.strictEqual(sessions[2].row.type, 'session type 0');
+    assert.strictEqual(sessions[2].row.groupCount, '0');
+    assert.strictEqual(sessions[2].row.objectiveCount, '0');
+    assert.strictEqual(sessions[2].row.termCount, '0');
+    assert.strictEqual(sessions[2].row.firstOffering, '');
+    assert.strictEqual(sessions[2].row.offeringCount, '0');
+    assert.ok(sessions[2].row.hasInstructionalNotes);
+    assert.notOk(sessions[2].row.hasPrerequisites);
 
-    assert.strictEqual(sessions[3].title, 'session3\\');
-    assert.strictEqual(sessions[3].type, 'session type 0');
-    assert.strictEqual(sessions[3].groupCount, '0');
-    assert.strictEqual(sessions[3].objectiveCount, '0');
-    assert.strictEqual(sessions[3].termCount, '0');
-    assert.strictEqual(sessions[3].firstOffering, '');
-    assert.strictEqual(sessions[3].offeringCount, '0');
-    assert.notOk(sessions[3].hasInstructionalNotes);
-    assert.ok(sessions[3].hasPrerequisites);
+    assert.strictEqual(sessions[3].row.title, 'session3\\');
+    assert.strictEqual(sessions[3].row.type, 'session type 0');
+    assert.strictEqual(sessions[3].row.groupCount, '0');
+    assert.strictEqual(sessions[3].row.objectiveCount, '0');
+    assert.strictEqual(sessions[3].row.termCount, '0');
+    assert.strictEqual(sessions[3].row.firstOffering, '');
+    assert.strictEqual(sessions[3].row.offeringCount, '0');
+    assert.notOk(sessions[3].row.hasInstructionalNotes);
+    assert.ok(sessions[3].row.hasPrerequisites);
   });
 
   test('expanded offering', async function (assert) {
@@ -133,7 +133,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions } = page.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
-    await sessions[0].expand();
+    await sessions[0].row.expand();
     const { offerings } = sessions[0];
 
     const offering1StartDate = DateTime.fromJSDate(this.server.db.offerings[0].startDate);
@@ -174,13 +174,13 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions } = page.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
-    assert.ok(sessions[0].canExpand);
-    assert.strictEqual(sessions[1].expandTitle, 'This session has no offerings');
-    assert.notOk(sessions[1].canExpand);
-    assert.strictEqual(sessions[2].expandTitle, 'This session has no offerings');
-    assert.notOk(sessions[2].canExpand);
-    assert.strictEqual(sessions[3].expandTitle, 'This session has no offerings');
-    assert.notOk(sessions[3].canExpand);
+    assert.ok(sessions[0].row.canExpand);
+    assert.strictEqual(sessions[1].row.expandTitle, 'This session has no offerings');
+    assert.notOk(sessions[1].row.canExpand);
+    assert.strictEqual(sessions[2].row.expandTitle, 'This session has no offerings');
+    assert.notOk(sessions[2].row.canExpand);
+    assert.strictEqual(sessions[3].row.expandTitle, 'This session has no offerings');
+    assert.notOk(sessions[3].row.canExpand);
   });
 
   test('close offering details', async function (assert) {
@@ -188,9 +188,9 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(expandedSessions.length, 0);
-    await sessions[0].expand();
+    await sessions[0].row.expand();
     assert.strictEqual(expandedSessions.length, 1);
-    await sessions[0].collapse();
+    await sessions[0].row.collapse();
     assert.strictEqual(expandedSessions.length, 0);
   });
 
@@ -198,7 +198,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.expect(1);
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
-    await sessions[0].expand();
+    await sessions[0].row.expand();
     assert.strictEqual(
       expandedSessions[0].lastUpdated,
       'Last Update Last Update: 7/9/2019, 5:00 PM'
@@ -243,7 +243,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(expandedSessions.length, 0);
-    await sessions[0].expand();
+    await sessions[0].row.expand();
     assert.strictEqual(expandedSessions.length, 1);
     await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
     assert.strictEqual(expandedSessions.length, 4);
@@ -259,10 +259,10 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(expandedSessions.length, 0);
-    await sessions[0].expand();
-    await sessions[1].expand();
-    await sessions[2].expand();
-    await sessions[3].expand();
+    await sessions[0].row.expand();
+    await sessions[1].row.expand();
+    await sessions[2].row.expand();
+    await sessions[3].row.expand();
     assert.strictEqual(expandedSessions.length, 4);
     assert.ok(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
     await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
@@ -282,13 +282,13 @@ module('Acceptance | Course - Session List', function (hooks) {
 
     assert.strictEqual(page.courseSessions.header.title, 'Sessions (5)');
     assert.strictEqual(sessions.length, 5);
-    assert.strictEqual(sessions[4].title, 'xx new session');
-    assert.strictEqual(sessions[4].type, 'session type 1');
-    assert.strictEqual(sessions[4].groupCount, '0');
-    assert.strictEqual(sessions[4].objectiveCount, '0');
-    assert.strictEqual(sessions[4].termCount, '0');
-    assert.strictEqual(sessions[4].firstOffering, '');
-    assert.strictEqual(sessions[4].offeringCount, '0');
+    assert.strictEqual(sessions[4].row.title, 'xx new session');
+    assert.strictEqual(sessions[4].row.type, 'session type 1');
+    assert.strictEqual(sessions[4].row.groupCount, '0');
+    assert.strictEqual(sessions[4].row.objectiveCount, '0');
+    assert.strictEqual(sessions[4].row.termCount, '0');
+    assert.strictEqual(sessions[4].row.firstOffering, '');
+    assert.strictEqual(sessions[4].row.offeringCount, '0');
   });
 
   test('cancel session', async function (assert) {
@@ -329,7 +329,7 @@ module('Acceptance | Course - Session List', function (hooks) {
 
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(
-      sessions[0].firstOffering,
+      sessions[0].row.firstOffering,
       this.intl.formatDate(today.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
@@ -338,7 +338,7 @@ module('Acceptance | Course - Session List', function (hooks) {
         minute: 'numeric',
       })
     );
-    await sessions[0].expand();
+    await sessions[0].row.expand();
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];
     const newDate = DateTime.fromObject({ year: 2011, month: 8, day: 11, hour: 14, minute: 2 });
@@ -349,7 +349,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     await form.save();
 
     assert.strictEqual(
-      sessions[0].firstOffering,
+      sessions[0].row.firstOffering,
       this.intl.formatDate(newDate.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
@@ -365,22 +365,22 @@ module('Acceptance | Course - Session List', function (hooks) {
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
-    assert.strictEqual(sessions[0].title, 'session 0');
+    assert.strictEqual(sessions[0].row.title, 'session 0');
     await page.courseSessions.filter('\\');
     assert.strictEqual(sessions.length, 1);
-    assert.strictEqual(sessions[0].title, 'session3\\');
+    assert.strictEqual(sessions[0].row.title, 'session3\\');
   });
 
   test('delete session', async function (assert) {
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
-    assert.strictEqual(sessions[0].title, 'session 0');
-    assert.strictEqual(sessions[1].title, 'session 1');
-    await sessions[0].trash();
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    await sessions[0].row.trash();
     await sessions[0].confirm();
     assert.strictEqual(sessions.length, 3);
-    assert.strictEqual(sessions[0].title, 'session 1');
+    assert.strictEqual(sessions[0].row.title, 'session 1');
   });
 
   test('back and forth #3771', async function (assert) {
@@ -395,7 +395,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(sessions.length, sessionCount + 4);
 
     for (let i = 1; i < 10; i++) {
-      await sessions[i].visit();
+      await sessions[i].row.visit();
       assert.strictEqual(currentRouteName(), 'session.index');
       await sessionPage.backToSessions.click();
       assert.strictEqual(currentRouteName(), 'course.index');
@@ -410,7 +410,7 @@ module('Acceptance | Course - Session List', function (hooks) {
 
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(
-      sessions[0].firstOffering,
+      sessions[0].row.firstOffering,
       this.intl.formatDate(today.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
@@ -419,7 +419,7 @@ module('Acceptance | Course - Session List', function (hooks) {
         minute: 'numeric',
       })
     );
-    await sessions[0].expand();
+    await sessions[0].row.expand();
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];
     await form.url.set('https://zoom.example.edu');
@@ -434,23 +434,23 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions } = page.courseSessions.sessionsGrid;
     const header = page.courseSessions.sessionsGridHeader;
     assert.strictEqual(sessions.length, 4);
-    assert.strictEqual(sessions[0].title, 'session 0');
-    assert.strictEqual(sessions[1].title, 'session 1');
-    assert.strictEqual(sessions[2].title, 'session 2');
-    assert.strictEqual(sessions[3].title, 'session3\\');
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    assert.strictEqual(sessions[2].row.title, 'session 2');
+    assert.strictEqual(sessions[3].row.title, 'session3\\');
     await header.title.click();
     assert.strictEqual(currentURL(), '/courses/1?sortSessionsBy=title%3Adesc');
     assert.strictEqual(sessions.length, 4);
-    assert.strictEqual(sessions[0].title, 'session3\\');
-    assert.strictEqual(sessions[1].title, 'session 2');
-    assert.strictEqual(sessions[2].title, 'session 1');
-    assert.strictEqual(sessions[3].title, 'session 0');
+    assert.strictEqual(sessions[0].row.title, 'session3\\');
+    assert.strictEqual(sessions[1].row.title, 'session 2');
+    assert.strictEqual(sessions[2].row.title, 'session 1');
+    assert.strictEqual(sessions[3].row.title, 'session 0');
     await header.title.click();
     assert.strictEqual(currentURL(), '/courses/1?sortSessionsBy=title');
     assert.strictEqual(sessions.length, 4);
-    assert.strictEqual(sessions[0].title, 'session 0');
-    assert.strictEqual(sessions[1].title, 'session 1');
-    assert.strictEqual(sessions[2].title, 'session 2');
-    assert.strictEqual(sessions[3].title, 'session3\\');
+    assert.strictEqual(sessions[0].row.title, 'session 0');
+    assert.strictEqual(sessions[1].row.title, 'session 1');
+    assert.strictEqual(sessions[2].row.title, 'session 2');
+    assert.strictEqual(sessions[3].row.title, 'session3\\');
   });
 });

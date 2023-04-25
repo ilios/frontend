@@ -3,153 +3,25 @@
   data-test-sessions-grid
   {{did-insert this.scrollDown}}
 >
-  {{#each this.sortedSessions as |obj|}}
+  {{#each this.sortedSessions as |session|}}
     <div
       class="{{if
-          (includes obj.session.id @expandedSessionIds)
+          (includes session.id @expandedSessionIds)
           "is-expanded"
           "not-expanded"
         }}
          session"
-      data-test-expanded-session={{includes obj.session.id @expandedSessionIds}}
+      data-test-expanded-session={{includes session.id @expandedSessionIds}}
       data-test-session
     >
-      <div class="session-row">
-        <span class="expand-collapse-control" data-test-expand-collapse-control>
-          {{#if (includes obj.session.id @expandedSessionIds)}}
-            <button
-              class="link-button"
-              type="button"
-              data-test-collapse
-              {{on "click" (fn @closeSession obj.session)}}
-            >
-              <FaIcon
-                @icon="caret-down"
-              />
-            </button>
-          {{else}}
-            <button
-              class="link-button {{if (eq obj.offeringCount 0) "disabled"}}"
-              disabled={{if (eq obj.offeringCount 0) "disabled"}}
-              type="button"
-              data-test-expand
-              {{on "click" (fn this.expandSession obj)}}
-            >
-              <FaIcon
-                @icon="caret-right"
-                @title={{if (eq obj.offeringCount 0) (t "general.noOfferings")}}
-              />
-            </button>
-          {{/if}}
-        </span>
-        <span class="session-grid-title">
-          <LinkTo @route="session" @models={{array obj.course obj.session}}>
-            {{truncate obj.title 100 true}}
-          </LinkTo>
-        </span>
-        <span class="session-grid-type">
-          {{obj.sessionTypeTitle}}
-        </span>
-        <span class="session-grid-groups">
-          {{obj.learnerGroupCount}}
-        </span>
-        <span class="session-grid-objectives">
-          {{obj.objectiveCount}}
-        </span>
-        <span class="session-grid-terms">
-          {{obj.termCount}}
-        </span>
-        <span class="session-grid-first-offering">
-          {{#if obj.firstOfferingDate}}
-            {{#if obj.isIlm}}
-              {{#if obj.postrequisite}}
-                <strong>
-                  {{t "general.ilm"}}:
-                  <FaIcon @icon="user-clock" />
-                  {{t "general.duePriorTo"}}:
-                </strong>
-                <LinkTo
-                  @route="session"
-                  @models={{array obj.course.id obj.postrequisite.id}}
-                >
-                  {{truncate obj.postrequisite.title 18 true}}
-                </LinkTo>
-              {{else}}
-                <strong>
-                  {{t "general.ilm"}}:
-                  {{t "general.dueBy"}}
-                </strong>
-                {{format-date obj.firstOfferingDate}}
-              {{/if}}
-            {{else if obj.postrequisite}}
-              <strong>
-                <FaIcon @icon="user-clock" />
-                {{t "general.duePriorTo"}}:
-              </strong>
-              <LinkTo
-                @route="session"
-                @models={{array obj.course.id obj.postrequisite.id}}
-              >
-                {{truncate obj.postrequisite.title 18 true}}
-              </LinkTo>
-            {{else}}
-              {{format-date obj.firstOfferingDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
-            {{/if}}
-          {{/if}}
-        </span>
-        <span class="session-grid-offerings">
-          {{obj.offeringCount}}
-        </span>
-        <span class="session-grid-status" data-test-status>
-          {{#if (and obj.canUpdate obj.prerequisiteCount)}}
-            <FaIcon
-              @icon="arrow-right-to-bracket"
-              @ariaHidden={{false}}
-              class="prerequisites"
-              @prefix="fad"
-              @flip="horizontal"
-              @title={{t "general.prerequisites"}}
-              data-test-prerequisites
-            />
-          {{/if}}
-          {{#if (and obj.canUpdate obj.instructionalNotes.length)}}
-            <FaIcon
-              @icon="clipboard-list"
-              @ariaHidden={{false}}
-              class="instructional-notes"
-              @prefix="fal"
-              @title={{t "general.instructionalNotes"}}
-            />
-          {{/if}}
-          <PublicationStatus @item={{obj}} @showIcon={{true}} @showText={{false}} />
-        </span>
-        <span class="session-grid-actions" data-test-actions>
-          {{#if (and obj.canUpdate (not obj.prerequisiteCount))}}
-            <button
-              class="link-button"
-              type="button"
-              {{on "click" (fn this.confirmDelete obj.session.id)}}
-              data-test-delete
-            >
-              <FaIcon
-                @icon="trash"
-                @ariaHidden={{false}}
-                class="remove enabled"
-                @title={{t "general.remove"}}
-              />
-            </button>
-          {{else}}
-            <FaIcon
-              @icon="trash"
-              @ariaHidden={{false}}
-              class="disabled"
-              data-test-delete-disabled
-              @title={{t "general.remove"}}
-            />
-          {{/if}}
-        </span>
-      </div>
-      {{#if (includes obj.session.id this.confirmDeleteSessionIds)}}
+      <SessionsGridRow
+        @session={{session}}
+        @confirmDelete={{this.confirmDelete}}
+        @closeSession={{@closeSession}}
+        @expandSession={{this.expandSession}}
+        @expandedSessionIds={{@expandedSessionIds}}
+      />
+      {{#if (includes session.id this.confirmDeleteSessionIds)}}
         <div class="confirm-removal" data-test-confirm-removal>
           {{t "general.confirmSessionRemoval"}}
           <div class="confirm-buttons">
@@ -158,7 +30,7 @@
               type="button"
               data-test-yes
               disabled={{this.removeSession.isRunning}}
-              {{on "click" (perform this.removeSession obj.session)}}
+              {{on "click" (perform this.removeSession session)}}
             >
               {{#if this.removeSession.isRunning}}
                 <LoadingSpinner />
@@ -169,18 +41,17 @@
             <button
               class="done"
               type="button"
-              {{on "click" (fn this.cancelDelete obj.session.id)}}
+              {{on "click" (fn this.cancelDelete session.id)}}
             >
               {{t "general.cancel"}}
             </button>
           </div>
         </div>
       {{/if}}
-      {{#if (includes obj.session.id @expandedSessionIds)}}
-        <SessionsGridLastUpdated @session={{obj.session}} />
+      {{#if (includes session.id @expandedSessionIds)}}
+        <SessionsGridLastUpdated @session={{session}} />
         <SessionsGridOfferingTable
-          @canUpdate={{obj.canUpdate}}
-          @offerings={{obj.offerings}}
+          @session={{session}}
         />
       {{/if}}
     </div>

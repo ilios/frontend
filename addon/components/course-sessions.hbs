@@ -64,9 +64,9 @@
       }}
       @toggleExpandAll={{this.toggleExpandAll}}
     />
-    {{#if this.sessionObjects}}
+    {{#if this.sessions}}
       <SessionsGrid
-        @sessions={{this.sessionObjects}}
+        @sessions={{this.sessions}}
         @sortBy={{@sortBy}}
         @filterBy={{@filterBy}}
         @expandedSessionIds={{this.expandedSessionIds}}
