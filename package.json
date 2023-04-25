@@ -160,8 +160,8 @@
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
     "sass": "^1.13.4",
-    "stylelint": "^14.3.0",
-    "stylelint-config-recommended-scss": "^8.0.0",
+    "stylelint": "^15.6.0",
+    "stylelint-config-recommended-scss": "^11.0.0",
     "stylelint-scss": "^4.1.0",
     "testem-failure-only-reporter": "^1.0.0",
     "webpack": "^5.75.0"
