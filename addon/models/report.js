@@ -19,6 +19,6 @@ export default class Report extends Model {
   @belongsTo('user', { async: true, inverse: 'reports' })
   user;
 
-  @belongsTo('school', { async: true, inverse: 'reports' })
+  @belongsTo('school', { async: true, inverse: null })
   school;
 }
