@@ -76,9 +76,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
   });
 
   test('it renders with top-level sequence blocks', async function (assert) {
+    this.set('blocks', await this.report.getTopLevelSequenceBlocks());
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @report={{this.report}}
-      @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
+      @sequenceBlocks={{this.blocks}}
       @canUpdate={{true}}
       @remove={{(noop)}}
     />`);
@@ -201,9 +202,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
   });
 
   test('read-only mode', async function (assert) {
+    this.set('blocks', await this.report.getTopLevelSequenceBlocks());
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @report={{this.report}}
-      @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
+      @sequenceBlocks={{this.blocks}}
       @canUpdate={{false}}
       @remove={{(noop)}}
     />`);
@@ -218,9 +220,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     this.set('remove', (block) => {
       assert.strictEqual(block, this.sequenceBlock2);
     });
+    this.set('blocks', await this.report.getTopLevelSequenceBlocks());
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @report={{this.report}}
-      @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
+      @sequenceBlocks={{this.blocks}}
       @canUpdate={{true}}
       @remove={{this.remove}}
     />`);
@@ -232,9 +235,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
   });
 
   test('cancel delete', async function (assert) {
+    this.set('blocks', await this.report.getTopLevelSequenceBlocks());
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @report={{this.report}}
-      @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
+      @sequenceBlocks={{this.blocks}}
       @canUpdate={{true}}
       @remove={{(noop)}}
     />`);
