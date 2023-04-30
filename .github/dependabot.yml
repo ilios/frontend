@@ -7,6 +7,7 @@ updates:
     time: "02:30"
     timezone: America/Los_Angeles
   open-pull-requests-limit: 10
+  versioning-strategy: increase-if-necessary
   ignore:
   - dependency-name: broccoli-asset-rev
   - dependency-name: concurrently
