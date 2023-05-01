@@ -162,7 +162,7 @@
     "sass": "^1.13.4",
     "stylelint": "^15.6.0",
     "stylelint-config-recommended-scss": "^11.0.0",
-    "stylelint-scss": "^4.1.0",
+    "stylelint-scss": "^5.0.0",
     "testem-failure-only-reporter": "^1.0.0",
     "webpack": "^5.75.0"
   },
