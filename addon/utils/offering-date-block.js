@@ -1,45 +1,48 @@
-import EmberObject, { computed } from '@ember/object';
-import { sort } from '@ember/object/computed';
 import moment from 'moment';
 import { sortBy } from './array-helpers';
 
-const OfferingBlock = EmberObject.extend({
-  offerings: null,
-  init() {
-    this._super(...arguments);
-    this.offerings = [];
-  },
+class OfferingBlock {
+  offerings = [];
+
   addOffering(offering) {
     this.offerings = [...this.offerings, offering];
-  },
-});
+  }
+}
 
-const OfferingDateBlock = OfferingBlock.extend({
-  dateKey: null,
+class OfferingDateBlock extends OfferingBlock {
+  dateKey = null;
+
+  constructor(dateKey) {
+    super();
+    this.dateKey = dateKey;
+  }
+
   //convert our day of the year key into a date at midnight
-  date: computed('dateKey', function () {
+  get date() {
     const year = this.dateKey.substring(0, 4);
     const dayOfYear = this.dateKey.substring(4);
     const date = new Date(year, 0);
     return new Date(date.setDate(dayOfYear));
-  }),
-  dateStamp: computed('date', function () {
+  }
+
+  get dateStamp() {
     return moment(this.date).format('X');
-  }),
-  dayOfWeek: computed('date', function () {
+  }
+
+  get dayOfWeek() {
     return moment(this.date).format('dddd');
-  }),
-  dayOfMonth: computed('date', function () {
+  }
+
+  get dayOfMonth() {
     return moment(this.date).format('MMMM Do');
-  }),
-  offeringTimeBlocks: computed('offerings.@each.{startDate,endDate}', function () {
+  }
+
+  get offeringTimeBlocks() {
     const offeringGroups = {};
     this.offerings.forEach(function (offering) {
       const key = offering.get('timeKey');
       if (!(key in offeringGroups)) {
-        offeringGroups[key] = OfferingTimeBlock.create({
-          timeKey: key,
-        });
+        offeringGroups[key] = new OfferingTimeBlock(key);
       }
       offeringGroups[key].addOffering(offering);
     });
@@ -51,54 +54,69 @@ const OfferingDateBlock = OfferingBlock.extend({
     }
 
     return sortBy(offeringGroupArray, 'timeKey');
-  }),
-});
+  }
+}
 
-const OfferingTimeBlock = OfferingBlock.extend({
-  init() {
-    this._super(...arguments);
-    this.set('sortOfferingsBy', ['learnerGroups.firstObject.title']);
-  },
-  timeKey: null,
-  isMultiDay: computed('startDate', 'endDate', function () {
+class OfferingTimeBlock extends OfferingBlock {
+  sortOfferingsBy = 'learnerGroups.firstObject.title';
+  timeKey = null;
+
+  constructor(timeKey) {
+    super();
+    this.timeKey = timeKey;
+  }
+
+  get isMultiDay() {
     return this.startDate.format('DDDDYYYY') !== this.endDate.format('DDDDYYYY');
-  }),
+  }
+
   //pull our times out of the key
-  startDate: computed('timeKey', function () {
+  get startDate() {
     const key = this.timeKey.substring(0, 11);
     return moment(key, 'YYYYDDDHHmm');
-  }),
-  endDate: computed('timeKey', function () {
+  }
+
+  get endDate() {
     const key = this.timeKey.substring(11);
     return moment(key, 'YYYYDDDHHmm');
-  }),
-  startTime: computed('startDate', function () {
+  }
+
+  get startTime() {
     return moment(this.startDate).format('LT');
-  }),
-  endTime: computed('endDate', function () {
+  }
+
+  get endTime() {
     return moment(this.endDate).format('LT');
-  }),
-  longStartText: computed('startDate', function () {
+  }
+
+  get longStartText() {
     return moment(this.startDate).format('dddd MMMM D [@] LT');
-  }),
-  longEndText: computed('endDate', function () {
+  }
+
+  get longEndText() {
     return moment(this.endDate).format('dddd MMMM D [@] LT');
-  }),
-  sortOfferingsBy: null,
-  sortedOfferings: sort('offerings', 'sortOfferingsBy'),
-  durationHours: computed('totalMinutes', function () {
+  }
+
+  get sortedOfferings() {
+    // @todo implement [ST 2023/05/01]
+    // return sortBy(this.offerings, this.sortOfferingsBy)
+    return this.offerings;
+  }
+
+  get durationHours() {
     return Math.floor(this.totalMinutes / 60);
-  }),
-  durationMinutes: computed('totalMinutes', function () {
+  }
+
+  get durationMinutes() {
     return this.totalMinutes % 60;
-  }),
-  totalMinutes: computed('startDate', 'endDate', function () {
+  }
+
+  get totalMinutes() {
     const startDate = this.startDate;
     const endDate = this.endDate;
     const diff = endDate.diff(startDate);
-    const duration = moment.duration(diff).as('minutes');
-    return duration;
-  }),
-});
+    return moment.duration(diff).as('minutes');
+  }
+}
 
 export default OfferingDateBlock;

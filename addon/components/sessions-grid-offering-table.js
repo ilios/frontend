@@ -17,9 +17,7 @@ export default class SessionsGridOfferingTable extends Component {
     this.offerings.slice().forEach((offering) => {
       const key = offering.get('dateKey');
       if (!(key in dateBlocks)) {
-        dateBlocks[key] = OfferingDateBlock.create({
-          dateKey: key,
-        });
+        dateBlocks[key] = new OfferingDateBlock(key);
       }
       dateBlocks[key].addOffering(offering);
     });
