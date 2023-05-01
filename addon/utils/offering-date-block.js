@@ -97,12 +97,6 @@ class OfferingTimeBlock extends OfferingBlock {
     return moment(this.endDate).format('dddd MMMM D [@] LT');
   }
 
-  get sortedOfferings() {
-    // @todo implement [ST 2023/05/01]
-    // return sortBy(this.offerings, this.sortOfferingsBy)
-    return this.offerings;
-  }
-
   get durationHours() {
     return Math.floor(this.totalMinutes / 60);
   }

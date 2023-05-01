@@ -1,0 +1,9 @@
+<div class="offering-block-time-offerings" data-test-offerings>
+  {{#each this.sortedOfferings as |offering|}}
+    <OfferingManager
+      @offering={{offering}}
+      @remove={{@removeOffering}}
+      @editable={{@editable}}
+    />
+  {{/each}}
+</div>
