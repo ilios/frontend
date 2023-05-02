@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { sortBy } from './array-helpers';
 
 class OfferingBlock {
@@ -26,15 +26,15 @@ class OfferingDateBlock extends OfferingBlock {
   }
 
   get dateStamp() {
-    return moment(this.date).format('X');
+    return DateTime.fromJSDate(this.date).toFormat('X');
   }
 
   get dayOfWeek() {
-    return moment(this.date).format('dddd');
+    return DateTime.fromJSDate(this.date).toFormat('EEEE');
   }
 
   get dayOfMonth() {
-    return moment(this.date).format('MMMM Do');
+    return DateTime.fromJSDate(this.date).toFormat('MMMM d');
   }
 
   get offeringTimeBlocks() {
@@ -58,7 +58,6 @@ class OfferingDateBlock extends OfferingBlock {
 }
 
 class OfferingTimeBlock extends OfferingBlock {
-  sortOfferingsBy = 'learnerGroups.firstObject.title';
   timeKey = null;
 
   constructor(timeKey) {
@@ -67,34 +66,34 @@ class OfferingTimeBlock extends OfferingBlock {
   }
 
   get isMultiDay() {
-    return this.startDate.format('DDDDYYYY') !== this.endDate.format('DDDDYYYY');
+    return this.startDate.toFormat('oooYYYY') !== this.endDate.toFormat('oooYYYY');
   }
 
   //pull our times out of the key
   get startDate() {
     const key = this.timeKey.substring(0, 11);
-    return moment(key, 'YYYYDDDHHmm');
+    return DateTime.fromFormat(key, 'yoooHHmm');
   }
 
   get endDate() {
     const key = this.timeKey.substring(11);
-    return moment(key, 'YYYYDDDHHmm');
+    return DateTime.fromFormat(key, 'yoooHHmm');
   }
 
   get startTime() {
-    return moment(this.startDate).format('LT');
+    return this.startDate.toFormat('t');
   }
 
   get endTime() {
-    return moment(this.endDate).format('LT');
+    return this.endDate.toFormat('t');
   }
 
   get longStartText() {
-    return moment(this.startDate).format('dddd MMMM D [@] LT');
+    return this.startDate.toFormat('EEEE MMMM d @ t');
   }
 
   get longEndText() {
-    return moment(this.endDate).format('dddd MMMM D [@] LT');
+    return this.endDate.toFormat('EEEE MMMM d @ t');
   }
 
   get durationHours() {
@@ -106,11 +105,9 @@ class OfferingTimeBlock extends OfferingBlock {
   }
 
   get totalMinutes() {
-    const startDate = this.startDate;
-    const endDate = this.endDate;
-    const diff = endDate.diff(startDate);
-    return moment.duration(diff).as('minutes');
+    return this.endDate.diff(this.startDate, 'minutes').minutes;
   }
 }
 
 export default OfferingDateBlock;
+export { OfferingBlock, OfferingDateBlock, OfferingTimeBlock };
