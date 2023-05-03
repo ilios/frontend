@@ -2,12 +2,20 @@ import Component from '@glimmer/component';
 import { all } from 'rsvp';
 import { inject as service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class PendingSingleUserUpdateComponent extends Component {
   @service flashMessages;
-  @use updates = new ResolveAsyncValue(() => [this.args.user.pendingUserUpdates, []]);
+
+  @cached
+  get updatesData() {
+    return new TrackedAsyncData(this.args.user.pendingUserUpdates);
+  }
+
+  get updates() {
+    return this.updatesData.isResolved ? this.updatesData.value : [];
+  }
 
   get isSaving() {
     return (

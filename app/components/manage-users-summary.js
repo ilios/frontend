@@ -4,8 +4,8 @@ import { inject as service } from '@ember/service';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
@@ -20,7 +20,14 @@ export default class ManageUsersSummaryComponent extends Component {
 
   @tracked searchValue;
 
-  @use userSearchType = new ResolveAsyncValue(() => [this.iliosConfig.getUserSearchType()]);
+  @cached
+  get userSearchTypeData() {
+    return new TrackedAsyncData(this.iliosConfig.getUserSearchType());
+  }
+
+  get userSearchType() {
+    return this.userSearchTypeData.isResolved ? this.userSearchTypeData.value : null;
+  }
 
   /**
    * Find users using the user API

@@ -5,7 +5,8 @@ import { inject as service } from '@ember/service';
 import { isNone } from '@ember/utils';
 import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { map } from 'rsvp';
 
@@ -17,9 +18,33 @@ export default class ReportsSubjectsComponent extends Component {
   @tracked finishedBuildingReport = false;
   @tracked editorOn = false;
 
-  @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
-  @use userReports = new ResolveAsyncValue(() => [this.user?.reports]);
-  @use allAcademicYears = new ResolveAsyncValue(() => [this.store.findAll('academic-year')]);
+  @cached
+  get userData() {
+    return new TrackedAsyncData(this.currentUser.getModel());
+  }
+
+  get user() {
+    return this.userData.isResolved ? this.userData.value : null;
+  }
+
+  @cached
+  get userReportsData() {
+    return new TrackedAsyncData(this.user?.reports);
+  }
+
+  get userReports() {
+    return this.userReportsData.isResolved ? this.userReportsData.value : null;
+  }
+
+  @cached
+  get allAcademicYearsData() {
+    return new TrackedAsyncData(this.store.findAll('academic-year'));
+  }
+
+  get allAcademicYears() {
+    return this.allAcademicYearsData.isResolved ? this.allAcademicYearsData.value : null;
+  }
+
   @use titledReports = new AsyncProcess(() => [
     this.reportsWithTitles.bind(this),
     this.userReports,

@@ -3,7 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import PermissionChecker from 'ilios/classes/permission-checker';
 import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class InstructorGroupsListItemComponent extends Component {
   @tracked showRemoveConfirmation = false;
@@ -13,7 +14,14 @@ export default class InstructorGroupsListItemComponent extends Component {
     this.args.instructorGroup,
   ]);
 
-  @use courses = new ResolveAsyncValue(() => [this.args.instructorGroup.courses]);
+  @cached
+  get coursesData() {
+    return new TrackedAsyncData(this.args.instructorGroup.courses);
+  }
+
+  get courses() {
+    return this.coursesData.isResolved ? this.coursesData.value : null;
+  }
 
   get canDelete() {
     return this.canDeletePermission && this.courses && this.courses.length === 0;

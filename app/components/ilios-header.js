@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { defaultValidator } from 'ember-a11y-refocus';
 
@@ -12,7 +12,14 @@ export default class IliosHeaderComponent extends Component {
   @service iliosConfig;
   @service pageTitle;
 
-  @use searchEnabled = new ResolveAsyncValue(() => [this.iliosConfig.getSearchEnabled()]);
+  @cached
+  get searchEnabledData() {
+    return new TrackedAsyncData(this.iliosConfig.getSearchEnabled());
+  }
+
+  get searchEnabled() {
+    return this.searchEnabledData.isResolved ? this.searchEnabledData.value : null;
+  }
 
   get showSearch() {
     return (

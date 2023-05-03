@@ -2,17 +2,49 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 @validatable
 export default class LearnerGroupHeaderComponent extends Component {
   @tracked @NotBlank() @Length(3, 60) title;
-  @use cohort = new ResolveAsyncValue(() => [this.args.learnerGroup.cohort]);
-  @use programYear = new ResolveAsyncValue(() => [this.cohort?.programYear]);
-  @use program = new ResolveAsyncValue(() => [this.programYear?.program]);
-  @use school = new ResolveAsyncValue(() => [this.program?.school]);
+
+  @cached
+  get cohortData() {
+    return new TrackedAsyncData(this.args.learnerGroup.cohort);
+  }
+
+  get cohort() {
+    return this.cohortData.isResolved ? this.cohortData.value : null;
+  }
+
+  @cached
+  get programYearData() {
+    return new TrackedAsyncData(this.cohort?.programYear);
+  }
+
+  get programYear() {
+    return this.programYearData.isResolved ? this.programYearData.value : null;
+  }
+
+  @cached
+  get programData() {
+    return new TrackedAsyncData(this.programYear?.program);
+  }
+
+  get program() {
+    return this.programData.isResolved ? this.programData.value : null;
+  }
+
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.program?.school);
+  }
+
+  get school() {
+    return this.schoolData.isResolved ? this.schoolData.value : null;
+  }
 
   get usersOnlyAtThisLevel() {
     return this.args.learnerGroup.usersOnlyAtThisLevel

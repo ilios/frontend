@@ -5,8 +5,8 @@ import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { ValidateIf } from 'class-validator';
 import { validatable, IsEmail, NotBlank, Length } from 'ilios-common/decorators/validation';
 
@@ -38,7 +38,14 @@ export default class UserProfileBioComponent extends Component {
   @tracked updatedFieldsFromSync = [];
   @tracked passwordStrengthScore = 0;
 
-  @use userSearchType = new ResolveAsyncValue(() => [this.iliosConfig.getUserSearchType()]);
+  @cached
+  get userSearchTypeData() {
+    return new TrackedAsyncData(this.iliosConfig.getUserSearchType());
+  }
+
+  get userSearchType() {
+    return this.userSearchTypeData.isResolved ? this.userSearchTypeData.value : null;
+  }
 
   get canEditUsernameAndPassword() {
     if (!this.userSearchType) {

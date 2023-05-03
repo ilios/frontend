@@ -4,7 +4,8 @@ import { map } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { dasherize } from '@ember/string';
 import { validatable, Length, Custom } from 'ilios-common/decorators/validation';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
@@ -41,10 +42,42 @@ export default class ReportsNewSubjectComponent extends Component {
 
   loadedPrepositionalObjects = new Map();
 
-  @use userModel = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
-  @use usersPrimarySchool = new ResolveAsyncValue(() => [this.userModel?.school]);
-  @use allSchools = new ResolveAsyncValue(() => [this.store.findAll('school'), []]);
-  @use allAcademicYears = new ResolveAsyncValue(() => [this.store.findAll('academic-year'), []]);
+  @cached
+  get userModelData() {
+    return new TrackedAsyncData(this.currentUser.getModel());
+  }
+
+  get userModel() {
+    return this.userModelData.isResolved ? this.userModelData.value : null;
+  }
+
+  @cached
+  get usersPrimarySchoolData() {
+    return new TrackedAsyncData(this.userModel?.school);
+  }
+
+  get usersPrimarySchool() {
+    return this.usersPrimarySchoolData.isResolved ? this.usersPrimarySchoolData.value : null;
+  }
+
+  @cached
+  get allSchoolsData() {
+    return new TrackedAsyncData(this.store.findAll('school'));
+  }
+
+  get allSchools() {
+    return this.allSchoolsData.isResolved ? this.allSchoolsData.value : [];
+  }
+
+  @cached
+  get allAcademicYearsData() {
+    return new TrackedAsyncData(this.store.findAll('academic-year'));
+  }
+
+  get allAcademicYears() {
+    return this.allAcademicYearsData.isResolved ? this.allAcademicYearsData.value : [];
+  }
+
   @use prepositionalObjectIdList = new AsyncProcess(() => [
     this.getPrepositionalObjectIdList.bind(this),
     this.currentPrepositionalObject,

@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { sortBy } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 
@@ -13,13 +13,31 @@ export default class ProgramYearListComponent extends Component {
   @tracked savedProgramYear;
   @service fetch;
 
-  @use programYears = new ResolveAsyncValue(() => [this.args.program.programYears, []]);
+  @cached
+  get programYearsData() {
+    return new TrackedAsyncData(this.args.program.programYears);
+  }
+
+  get programYears() {
+    return this.programYearsData.isResolved ? this.programYearsData.value : [];
+  }
+
   get sortedProgramYears() {
     return sortBy(this.programYears.slice(), 'startYear');
   }
-  @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
-  ]);
+
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    );
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : null;
+  }
 
   @dropTask
   *saveNew(startYear) {

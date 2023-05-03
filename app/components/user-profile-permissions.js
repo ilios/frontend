@@ -4,7 +4,8 @@ import moment from 'moment';
 import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { findById, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class UserProfilePermissionsComponent extends Component {
@@ -14,26 +15,76 @@ export default class UserProfilePermissionsComponent extends Component {
   schoolPromise = this.store.findAll('school');
   academicYearPromise = this.store.findAll('academic-year');
 
-  @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
-    false,
-  ]);
-  @use _schools = new ResolveAsyncValue(() => [this.schoolPromise]);
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    );
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
+  }
+
+  @cached
+  get _schoolsData() {
+    return new TrackedAsyncData(this.schoolPromise);
+  }
+
+  get _schools() {
+    return this._schoolsData.isResolved ? this._schoolsData.value : null;
+  }
+
   get schools() {
     return this._schools?.slice() ?? [];
   }
-  @use _academicYears = new ResolveAsyncValue(() => [this.academicYearPromise]);
+
+  @cached
+  get _academicYearsData() {
+    return new TrackedAsyncData(this.academicYearPromise);
+  }
+
+  get _academicYears() {
+    return this._academicYearsData.isResolved ? this._academicYearsData.value : null;
+  }
+
   get academicYears() {
     return this._academicYears?.slice() ?? [];
   }
-  @use defaultSchool = new ResolveAsyncValue(() => [this.args.user.school]);
 
-  @use _directedSchools = new ResolveAsyncValue(() => [this.args.user.directedSchools]);
+  @cached
+  get defaultSchoolData() {
+    return new TrackedAsyncData(this.args.user.school);
+  }
+
+  get defaultSchool() {
+    return this.defaultSchoolData.isResolved ? this.defaultSchoolData.value : null;
+  }
+
+  @cached
+  get _directedSchoolsData() {
+    return new TrackedAsyncData(this.args.user.directedSchools);
+  }
+
+  get _directedSchools() {
+    return this._directedSchoolsData.isResolved ? this._directedSchoolsData.value : null;
+  }
+
   get isDirectingSchool() {
     return this._directedSchools?.includes(this.bestSelectedSchool);
   }
 
-  @use _administeredSchools = new ResolveAsyncValue(() => [this.args.user.administeredSchools]);
+  @cached
+  get _administeredSchoolsData() {
+    return new TrackedAsyncData(this.args.user.administeredSchools);
+  }
+
+  get _administeredSchools() {
+    return this._administeredSchoolsData.isResolved ? this._administeredSchoolsData.value : null;
+  }
+
   get isAdministeringSchool() {
     return this._administeredSchools?.includes(this.bestSelectedSchool);
   }
@@ -74,26 +125,63 @@ export default class UserProfilePermissionsComponent extends Component {
     return this.bestSelectedYear?.id;
   }
 
-  @use _userDirectedPrograms = new ResolveAsyncValue(() => [this.args.user.directedPrograms]);
+  @cached
+  get _userDirectedProgramsData() {
+    return new TrackedAsyncData(this.args.user.directedPrograms);
+  }
+
+  get _userDirectedPrograms() {
+    return this._userDirectedProgramsData.isResolved ? this._userDirectedProgramsData.value : null;
+  }
+
   @use directedPrograms = new AsyncProcess(() => [
     this.getDirectedPrograms.bind(this),
     this.bestSelectedSchool,
     this._userDirectedPrograms?.slice() ?? [],
   ]);
-  @use _userProgramYears = new ResolveAsyncValue(() => [this.args.user.programYears]);
+
+  @cached
+  get _userProgramYearsData() {
+    return new TrackedAsyncData(this.args.user.programYears);
+  }
+
+  get _userProgramYears() {
+    return this._userProgramYearsData.isResolved ? this._userProgramYearsData.value : null;
+  }
+
   @use directedProgramYears = new AsyncProcess(() => [
     this.getDirectedProgramYears.bind(this),
     this.bestSelectedSchool,
     this._userProgramYears?.slice() ?? [],
   ]);
-  @use _userDirectedCourses = new ResolveAsyncValue(() => [this.args.user.directedCourses]);
+
+  @cached
+  get _userDirectedCoursesData() {
+    return new TrackedAsyncData(this.args.user.directedCourses);
+  }
+
+  get _userDirectedCourses() {
+    return this._userDirectedCoursesData.isResolved ? this._userDirectedCoursesData.value : null;
+  }
+
   @use directedCourses = new AsyncProcess(() => [
     this.getDirectedCourses.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
     this._userDirectedCourses?.slice() ?? [],
   ]);
-  @use _userAdministeredCourses = new ResolveAsyncValue(() => [this.args.user.administeredCourses]);
+
+  @cached
+  get _userAdministeredCoursesData() {
+    return new TrackedAsyncData(this.args.user.administeredCourses);
+  }
+
+  get _userAdministeredCourses() {
+    return this._userAdministeredCoursesData.isResolved
+      ? this._userAdministeredCoursesData.value
+      : null;
+  }
+
   @use administeredCourses = new AsyncProcess(() => [
     this.getAdministeredCourses.bind(this),
     this.bestSelectedSchool,
@@ -106,18 +194,36 @@ export default class UserProfilePermissionsComponent extends Component {
     this.selectedYearId,
     this.args.user.allInstructedCourses,
   ]);
-  @use _userStudentAdvisedCourses = new ResolveAsyncValue(() => [
-    this.args.user.studentAdvisedCourses,
-  ]);
+
+  @cached
+  get _userStudentAdvisedCoursesData() {
+    return new TrackedAsyncData(this.args.user.studentAdvisedCourses);
+  }
+
+  get _userStudentAdvisedCourses() {
+    return this._userStudentAdvisedCoursesData.isResolved
+      ? this._userStudentAdvisedCoursesData.value
+      : null;
+  }
+
   @use studentAdvisedCourses = new AsyncProcess(() => [
     this.getStudentAdvisedCourses.bind(this),
     this.bestSelectedSchool,
     this.selectedYearId,
     this._userStudentAdvisedCourses?.slice() ?? [],
   ]);
-  @use _userAdministeredSessions = new ResolveAsyncValue(() => [
-    this.args.user.administeredSessions,
-  ]);
+
+  @cached
+  get _userAdministeredSessionsData() {
+    return new TrackedAsyncData(this.args.user.administeredSessions);
+  }
+
+  get _userAdministeredSessions() {
+    return this._userAdministeredSessionsData.isResolved
+      ? this._userAdministeredSessionsData.value
+      : null;
+  }
+
   @use administeredSessions = new AsyncProcess(() => [
     this.getAdministeredSessions.bind(this),
     this.bestSelectedSchool,
@@ -130,9 +236,18 @@ export default class UserProfilePermissionsComponent extends Component {
     this.selectedYearId,
     this.args.user.allInstructedSessions,
   ]);
-  @use _userStudentAdvisedSessions = new ResolveAsyncValue(() => [
-    this.args.user.studentAdvisedSessions,
-  ]);
+
+  @cached
+  get _userStudentAdvisedSessionsData() {
+    return new TrackedAsyncData(this.args.user.studentAdvisedSessions);
+  }
+
+  get _userStudentAdvisedSessions() {
+    return this._userStudentAdvisedSessionsData.isResolved
+      ? this._userStudentAdvisedSessionsData.value
+      : null;
+  }
+
   @use studentAdvisedSessions = new AsyncProcess(() => [
     this.getStudentAdvisedSessions.bind(this),
     this.bestSelectedSchool,

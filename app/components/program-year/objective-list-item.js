@@ -3,10 +3,10 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
 
 @validatable
 export default class ProgramYearObjectiveListItemComponent extends Component {
@@ -22,10 +22,41 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
 
-  @use programYear = new ResolveAsyncValue(() => [this.args.programYearObjective.programYear]);
-  @use program = new ResolveAsyncValue(() => [this.programYear?.program]);
-  @use school = new ResolveAsyncValue(() => [this.program?.school]);
-  @use vocabularies = new ResolveAsyncValue(() => [this.school?.vocabularies]);
+  @cached
+  get programYearData() {
+    return new TrackedAsyncData(this.args.programYearObjective.programYear);
+  }
+
+  get programYear() {
+    return this.programYearData.isResolved ? this.programYearData.value : null;
+  }
+
+  @cached
+  get programData() {
+    return new TrackedAsyncData(this.programYear?.program);
+  }
+
+  get program() {
+    return this.programData.isResolved ? this.programData.value : null;
+  }
+
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.program?.school);
+  }
+
+  get school() {
+    return this.schoolData.isResolved ? this.schoolData.value : null;
+  }
+
+  @cached
+  get vocabulariesData() {
+    return new TrackedAsyncData(this.school?.vocabularies);
+  }
+
+  get vocabularies() {
+    return this.vocabulariesData.isResolved ? this.vocabulariesData.value : null;
+  }
 
   get assignableVocabularies() {
     return this.vocabularies?.slice() ?? [];

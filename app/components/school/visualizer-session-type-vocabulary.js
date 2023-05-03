@@ -6,7 +6,8 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class SchoolVisualizerSessionTypeVocabularyComponent extends Component {
   @service router;
@@ -14,7 +15,14 @@ export default class SchoolVisualizerSessionTypeVocabularyComponent extends Comp
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @use sessions = new ResolveAsyncValue(() => [this.args.sessionType.sessions, null]);
+  @cached
+  get sessionsData() {
+    return new TrackedAsyncData(this.args.sessionType.sessions);
+  }
+
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value : null;
+  }
 
   @use loadedData = new AsyncProcess(() => [
     this.loadData.bind(this),

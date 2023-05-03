@@ -1,14 +1,21 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class CurriculumInventorySequenceBlockListItemComponent extends Component {
   @service intl;
   @tracked showConfirmRemoval;
 
-  @use course = new ResolveAsyncValue(() => [this.args.sequenceBlock.course]);
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.course);
+  }
+
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
 
   get courseTitle() {
     if (this.course) {

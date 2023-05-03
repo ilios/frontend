@@ -8,7 +8,8 @@ import PapaParse from 'papaparse';
 import { dropTask, timeout } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import createDownloadFile from 'ilios/utils/create-download-file';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { validatable, Length } from 'ilios-common/decorators/validation';
 import CourseComponent from './subject/course';
@@ -33,7 +34,15 @@ export default class ReportsSubjectComponent extends Component {
   @tracked myReportEditorOn = false;
   @tracked @Length(1, 240) title = '';
 
-  @use allAcademicYears = new ResolveAsyncValue(() => [this.store.findAll('academic-year')]);
+  @cached
+  get allAcademicYearsData() {
+    return new TrackedAsyncData(this.store.findAll('academic-year'));
+  }
+
+  get allAcademicYears() {
+    return this.allAcademicYearsData.isResolved ? this.allAcademicYearsData.value : null;
+  }
+
   @use constructedReportTitle = new AsyncProcess(() => [
     this.constructReportTitle.bind(this),
     this.args.selectedReport,

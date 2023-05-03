@@ -3,7 +3,8 @@ import { filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import ResolveAllValues from 'ilios/classes/resolve-all-values';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
@@ -14,14 +15,46 @@ export default class ProgramYearCompetenciesComponent extends Component {
   @service flashMessages;
   @tracked competenciesToAdd = [];
   @tracked competenciesToRemove = [];
-  @use program = new ResolveAsyncValue(() => [this.args.programYear.program]);
-  @use school = new ResolveAsyncValue(() => [this.program?.school]);
-  @use competencies = new ResolveAsyncValue(() => [this.school?.competencies, []]);
+
+  @cached
+  get programData() {
+    return new TrackedAsyncData(this.args.programYear.program);
+  }
+
+  get program() {
+    return this.programData.isResolved ? this.programData.value : null;
+  }
+
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.program?.school);
+  }
+
+  get school() {
+    return this.schoolData.isResolved ? this.schoolData.value : null;
+  }
+
+  @cached
+  get competenciesData() {
+    return new TrackedAsyncData(this.school?.competencies);
+  }
+
+  get competencies() {
+    return this.competenciesData.isResolved ? this.competenciesData.value : [];
+  }
+
   @use allDomains = new ResolveAllValues(() => [mapBy(this.competencies?.slice() ?? [], 'domain')]);
-  @use programYearCompetencies = new ResolveAsyncValue(() => [
-    this.args.programYear.competencies,
-    [],
-  ]);
+
+  @cached
+  get programYearCompetenciesData() {
+    return new TrackedAsyncData(this.args.programYear.competencies);
+  }
+
+  get programYearCompetencies() {
+    return this.programYearCompetenciesData.isResolved
+      ? this.programYearCompetenciesData.value
+      : [];
+  }
 
   @use competenciesWithSelectedChildren = new AsyncProcess(() => [
     this.getCompetenciesWithSelectedChildren,

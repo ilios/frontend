@@ -4,10 +4,10 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
 
 @validatable
 export default class SchoolVocabularyTermManagerComponent extends Component {
@@ -25,8 +25,23 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   @tracked description = this.args.term.description;
   @tracked newTerm;
 
-  @use children = new ResolveAsyncValue(() => [this.args.term.children]);
-  @use allParents = new ResolveAsyncValue(() => [this.args.term.getAllParents()]);
+  @cached
+  get childrenData() {
+    return new TrackedAsyncData(this.args.term.children);
+  }
+
+  get children() {
+    return this.childrenData.isResolved ? this.childrenData.value : null;
+  }
+
+  @cached
+  get allParentsData() {
+    return new TrackedAsyncData(this.args.term.getAllParents());
+  }
+
+  get allParents() {
+    return this.allParentsData.isResolved ? this.allParentsData.value : null;
+  }
 
   get isLoading() {
     return !this.children || !this.allParents;

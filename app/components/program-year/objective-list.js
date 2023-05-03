@@ -4,7 +4,8 @@ import { dropTask } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { inject as service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
@@ -14,7 +15,16 @@ export default class ProgramYearObjectiveListComponent extends Component {
 
   @tracked isSorting = false;
 
-  @use programYearCompetencies = new ResolveAsyncValue(() => [this.args.programYear.competencies]);
+  @cached
+  get programYearCompetenciesData() {
+    return new TrackedAsyncData(this.args.programYear.competencies);
+  }
+
+  get programYearCompetencies() {
+    return this.programYearCompetenciesData.isResolved
+      ? this.programYearCompetenciesData.value
+      : null;
+  }
 
   @use domainTrees = new AsyncProcess(() => [
     this.getDomainTrees.bind(this),

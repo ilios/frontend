@@ -5,8 +5,8 @@ import { restartableTask, task, timeout } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { filterBy, findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LearnerGroupUploadDataComponent extends Component {
@@ -15,7 +15,16 @@ export default class LearnerGroupUploadDataComponent extends Component {
   @service intl;
 
   @tracked file;
-  @use data = new ResolveAsyncValue(() => [this.parseFile.perform(this.parsedFileData)]);
+
+  @cached
+  get dataData() {
+    return new TrackedAsyncData(this.parseFile.perform(this.parsedFileData));
+  }
+
+  get data() {
+    return this.dataData.isResolved ? this.dataData.value : null;
+  }
+
   @tracked parsedFileData = [];
 
   get sampleData() {

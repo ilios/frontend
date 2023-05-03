@@ -3,7 +3,8 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 
@@ -11,13 +12,30 @@ export default class PendingUpdatesSummaryComponent extends Component {
   @service currentUser;
   @service store;
   @tracked selectedSchoolId;
-  @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
+
+  @cached
+  get userData() {
+    return new TrackedAsyncData(this.currentUser.getModel());
+  }
+
+  get user() {
+    return this.userData.isResolved ? this.userData.value : null;
+  }
 
   allUpdatesPromise = this.store.query('pending-user-update', {
     filters: { schools: mapBy(this.args.schools, 'id') },
     include: 'user',
   });
-  @use allUpdates = new ResolveAsyncValue(() => [this.allUpdatesPromise]);
+
+  @cached
+  get allUpdatesData() {
+    return new TrackedAsyncData(this.allUpdatesPromise);
+  }
+
+  get allUpdates() {
+    return this.allUpdatesData.isResolved ? this.allUpdatesData.value : null;
+  }
+
   @use updatesForSchool = new AsyncProcess(() => [
     this.getUpdatesForSchool,
     this.allUpdatesArray,

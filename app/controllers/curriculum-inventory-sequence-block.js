@@ -2,8 +2,8 @@ import { tracked } from '@glimmer/tracking';
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class CurriculumInventorySequenceBlockController extends Controller {
   @service store;
@@ -11,8 +11,23 @@ export default class CurriculumInventorySequenceBlockController extends Controll
   @tracked sortSessionsBy = 'title';
   @tracked canUpdate = false;
 
-  @use report = new ResolveAsyncValue(() => [this.model.report]);
-  @use children = new ResolveAsyncValue(() => [this.model.children]);
+  @cached
+  get reportData() {
+    return new TrackedAsyncData(this.model.report);
+  }
+
+  get report() {
+    return this.reportData.isResolved ? this.reportData.value : null;
+  }
+
+  @cached
+  get childrenData() {
+    return new TrackedAsyncData(this.model.children);
+  }
+
+  get children() {
+    return this.childrenData.isResolved ? this.childrenData.value : null;
+  }
 
   @action
   async removeChildSequenceBlock(block) {

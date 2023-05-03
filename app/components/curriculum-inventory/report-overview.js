@@ -4,8 +4,8 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import scrollTo from 'ilios-common/utils/scroll-to';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import {
   validatable,
   AfterDate,
@@ -29,7 +29,14 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   @tracked academicYearCrossesCalendarYearBoundaries = false;
   @tracked canRollover = false;
 
-  @use linkedCourses = new ResolveAsyncValue(() => [this.args.report.getLinkedCourses()]);
+  @cached
+  get linkedCoursesData() {
+    return new TrackedAsyncData(this.args.report.getLinkedCourses());
+  }
+
+  get linkedCourses() {
+    return this.linkedCoursesData.isResolved ? this.linkedCoursesData.value : null;
+  }
 
   get linkedCoursesLoaded() {
     return !!this.linkedCourses;

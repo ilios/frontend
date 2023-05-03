@@ -2,9 +2,9 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { findBy, findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
 
 const MIN_INPUT = 3;
@@ -22,7 +22,15 @@ export default class GlobalSearchComponent extends Component {
     return Boolean(this.results.length);
   }
 
-  @use allSchools = new ResolveAsyncValue(() => [this.store.findAll('school')]);
+  @cached
+  get allSchoolsData() {
+    return new TrackedAsyncData(this.store.findAll('school'));
+  }
+
+  get allSchools() {
+    return this.allSchoolsData.isResolved ? this.allSchoolsData.value : null;
+  }
+
   get schools() {
     return this.allSchools ?? [];
   }

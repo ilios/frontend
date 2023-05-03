@@ -5,8 +5,8 @@ import { inject as service } from '@ember/service';
 import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 @validatable
 export default class SchoolVocabularyManagerComponent extends Component {
@@ -19,7 +19,15 @@ export default class SchoolVocabularyManagerComponent extends Component {
   title;
   @tracked isActive = false;
   @tracked newTerm;
-  @use terms = new ResolveAsyncValue(() => [this.args.vocabulary.terms]);
+
+  @cached
+  get termsData() {
+    return new TrackedAsyncData(this.args.vocabulary.terms);
+  }
+
+  get terms() {
+    return this.termsData.isResolved ? this.termsData.value : null;
+  }
 
   get sortedTerms() {
     if (!this.terms) {

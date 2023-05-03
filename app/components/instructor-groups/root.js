@@ -2,7 +2,8 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { findById } from 'ilios-common/utils/array-helpers';
 import PermissionChecker from 'ilios/classes/permission-checker';
 import { dropTask } from 'ember-concurrency';
@@ -15,18 +16,37 @@ export default class InstructorGroupsRootComponent extends Component {
   @tracked newInstructorGroup;
   @tracked instructorGroupPromises = new Map();
 
-  @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
+  @cached
+  get userData() {
+    return new TrackedAsyncData(this.currentUser.getModel());
+  }
+
+  get user() {
+    return this.userData.isResolved ? this.userData.value : null;
+  }
+
   @use canCreate = new PermissionChecker(() => [
     'canCreateInstructorGroup',
     this.bestSelectedSchool,
   ]);
-  @use loadedSchool = new ResolveAsyncValue(() => [
-    this.getSchoolPromise(this.bestSelectedSchool.id),
-  ]);
-  @use instructorGroups = new ResolveAsyncValue(() => [
-    this.bestSelectedSchool.instructorGroups,
-    [],
-  ]);
+
+  @cached
+  get loadedSchoolData() {
+    return new TrackedAsyncData(this.getSchoolPromise(this.bestSelectedSchool.id));
+  }
+
+  get loadedSchool() {
+    return this.loadedSchoolData.isResolved ? this.loadedSchoolData.value : null;
+  }
+
+  @cached
+  get instructorGroupsData() {
+    return new TrackedAsyncData(this.bestSelectedSchool.instructorGroups);
+  }
+
+  get instructorGroups() {
+    return this.instructorGroupsData.isResolved ? this.instructorGroupsData.value : [];
+  }
 
   get isLoaded() {
     return Boolean(this.loadedSchool);

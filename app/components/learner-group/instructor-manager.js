@@ -3,8 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { isPresent } from '@ember/utils';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class LearnerGroupInstructorManagerComponent extends Component {
   @tracked availableInstructorGroups = [];
@@ -12,7 +12,14 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
   @tracked instructorGroups = [];
   @tracked isManaging = false;
 
-  @use allInstructors = new ResolveAsyncValue(() => [this.args.learnerGroup.allInstructors, []]);
+  @cached
+  get allInstructorsData() {
+    return new TrackedAsyncData(this.args.learnerGroup.allInstructors);
+  }
+
+  get allInstructors() {
+    return this.allInstructorsData.isResolved ? this.allInstructorsData.value : [];
+  }
 
   @restartableTask
   *load(element, [learnerGroup]) {
