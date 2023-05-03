@@ -36,17 +36,8 @@ jobs:
         uses: dependabot/fetch-metadata@v1.4.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: Output Checks
-        run: |
-          echo ${{steps.metadata.outputs.dependency-names}}
-          echo ${{matrix.safe-dependency}}
-          echo ${{steps.metadata.outputs.update-type}}
-          echo ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency)}}
-          echo ${{steps.metadata.outputs.update-type == 'version-update:semver-minor'}}
-          echo ${{steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
-      - uses: actions/checkout@v3
       - name: Enable auto-merge for Dependabot PRs
         if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') }}
-        run: gh pr merge --auto --merge
+        run: gh pr merge --merge --auto ${{ github.event.number }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
