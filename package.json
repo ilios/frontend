@@ -51,6 +51,7 @@
     "ember-a11y-refocus": "3.0.2",
     "ember-a11y-testing": "^5.2.0",
     "ember-ajax": "^5.1.2",
+    "ember-async-data": "^1.0.1",
     "ember-auto-import": "^2.4.3",
     "ember-cli": "~4.11.0",
     "ember-cli-app-version": "^6.0.0",
