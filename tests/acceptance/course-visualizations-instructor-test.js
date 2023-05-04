@@ -76,7 +76,7 @@ module('Acceptance | course visualizations - instructor', function (hooks) {
     assert.strictEqual(page.root.breadcrumb.crumbs[2].link, '/data/courses/1/instructors');
     assert.strictEqual(page.root.breadcrumb.crumbs[3].text, '1 guy M. Mc1son');
     // wait for charts to load
-    await waitFor('.loaded');
+    await waitFor('.loaded', { count: 2 });
     await waitFor('svg .bars');
     await waitFor('svg .chart');
     await percySnapshot(assert);

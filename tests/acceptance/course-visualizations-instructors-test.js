@@ -67,7 +67,6 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
       year: 2022,
     });
     await page.visit({ courseId: course.id });
-    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/data/courses/1/instructors');
     assert.strictEqual(page.root.title, 'course 0 2022');
     assert.strictEqual(page.root.breadcrumb.crumbs.length, 3);
@@ -79,6 +78,7 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
+    await percySnapshot(assert);
     assert.strictEqual(page.root.instructorsChart.chart.bars.length, 2);
     assert.strictEqual(page.root.instructorsChart.chart.labels.length, 2);
     assert.strictEqual(
