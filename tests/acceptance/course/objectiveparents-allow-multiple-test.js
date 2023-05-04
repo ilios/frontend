@@ -3,6 +3,7 @@ import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
   setupApplicationTest(hooks);
@@ -47,6 +48,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
       details: true,
       courseObjectiveDetails: true,
     });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
 
     assert.strictEqual(

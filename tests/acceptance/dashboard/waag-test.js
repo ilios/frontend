@@ -5,6 +5,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/dashboard-week';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,6 +17,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   });
 
   test('shows events', async function (assert) {
+    assert.expect(4);
     const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
     const startOfWeek = DateTime.fromJSDate(firstDayOfThisWeek);
     const endOfWeek = DateTime.fromJSDate(lastDayOfThisWeek);
@@ -39,6 +41,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       offering: 2,
     });
     await page.visit({ show: 'week' });
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 
     assert.strictEqual(page.week.weekGlance.events.length, 2);
@@ -47,6 +50,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   });
 
   test('shows all pre work', async function (assert) {
+    assert.expect(13);
     const prerequisites = [1, 2, 3].map((id) => {
       return {
         user: Number(this.user.id),
@@ -90,6 +94,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       prerequisites,
     });
     await page.visit();
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 
     assert.strictEqual(page.week.weekGlance.events.length, 1);

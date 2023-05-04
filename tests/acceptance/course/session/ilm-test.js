@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Independent Learning', function (hooks) {
   setupApplicationTest(hooks);
@@ -27,11 +28,14 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('initial selected instructors', async function (assert) {
+    assert.expect(18);
     await page.visit({
       courseId: 1,
       sessionId: 1,
       sessionLearnergroupDetails: true,
     });
+    await percySnapshot(assert);
+
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.instructors.title, 'Instructors and Instructor Groups (3/3)');
 

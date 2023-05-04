@@ -15,6 +15,7 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import { map } from 'rsvp';
 import page from 'ilios-common/page-objects/dashboard-calendar';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Dashboard Calendar', function (hooks) {
   setupApplicationTest(hooks);
@@ -91,6 +92,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load month calendar', async function (assert) {
+    assert.expect(4);
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     const startOfMonth = today.startOf('month');
     const endOfMonth = today.endOf('month').set({ hour: 22, minute: 59 });
@@ -109,6 +111,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       lastModified: today.minus({ year: 1 }),
     });
     await visit('/dashboard/calendar?view=month');
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
     const events = findAll('[data-test-ilios-calendar-event]');
     assert.strictEqual(events.length, 2);
@@ -137,6 +140,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load week calendar', async function (assert) {
+    assert.expect(9);
     const startOfWeek = DateTime.fromJSDate(
       this.owner.lookup('service:locale-days').firstDayOfThisWeek
     );
@@ -166,6 +170,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       lastModified: DateTime.now().minus({ year: 1 }),
     });
     await page.visit({ show: 'calendar' });
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
 
     assert.strictEqual(page.calendar.weeklyCalendar.dayHeadings.length, 7);
@@ -183,6 +188,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load week calendar on Sunday', async function (assert) {
+    assert.expect(10);
     freezeDateAt(
       DateTime.fromObject({
         year: 2022,
@@ -220,6 +226,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       lastModified: DateTime.now().minus({ year: 1 }),
     });
     await page.visit({ show: 'calendar' });
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
 
     assert.strictEqual(page.calendar.weeklyCalendar.dayHeadings.length, 7);
@@ -238,6 +245,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load day calendar', async function (assert) {
+    assert.expect(3);
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     const tomorow = today.plus({ day: 1 });
     const yesterday = today.minus({ day: 1 });
@@ -263,6 +271,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       lastModified: today.minus({ year: 1 }),
     });
     await visit('/dashboard/calendar?view=day');
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
 
     assert.strictEqual(page.calendar.dailyCalendar.events.length, 1);
@@ -406,6 +415,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('show user events', async function (assert) {
+    assert.expect(1);
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
       user: this.user.id,
@@ -420,6 +430,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       offering: 2,
     });
     await page.visit({ show: 'calendar' });
+    await percySnapshot(assert);
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
   });
 
@@ -427,6 +438,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     return await click(find(findAll('.togglemyschedule label')[1]));
   };
   test('show school events', async function (assert) {
+    assert.expect(1);
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('schoolevent', {
       school: 1,
@@ -442,6 +454,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await page.visit();
     await chooseSchoolEvents();
+    await percySnapshot(assert);
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
   });
 
@@ -626,6 +639,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('clear all filters', async function (assert) {
+    assert.expect(9);
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
     });
@@ -650,8 +664,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.dom(sessiontype).isChecked('filter is checked');
     assert.dom(course).isChecked('filter is checked');
     assert.dom(term).isChecked('filter is checked');
+    await percySnapshot(assert);
 
     await click(clearFilter);
+    await percySnapshot(assert);
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
     assert.dom(sessiontype).isNotChecked('filter is unchecked');
     assert.dom(course).isNotChecked('filter is unchecked');
@@ -735,6 +751,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('week summary displays the whole week', async function (assert) {
+    assert.expect(3);
     const startOfTheWeek = DateTime.fromJSDate(
       this.owner.lookup('service:locale-days').firstDayOfThisWeek
     ).set({ minute: 2 });
@@ -760,6 +777,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const events = `${dashboard} .event`;
 
     await visit('/dashboard/week');
+    await percySnapshot(assert);
 
     const eventBLocks = findAll(events);
     assert.strictEqual(eventBLocks.length, 2);
@@ -851,6 +869,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('test tooltip', async function (assert) {
+    assert.expect(1);
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
       user: this.user.id,
@@ -860,6 +879,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await page.visit({ show: 'calendar', view: 'week' });
     await triggerEvent('[data-test-weekly-calendar-event]', 'mouseover');
+    await percySnapshot(assert);
     assert.dom('[data-test-ilios-calendar-event-tooltip]').exists();
   });
 

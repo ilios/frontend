@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Learner Groups', function (hooks) {
   setupApplicationTest(hooks);
@@ -50,6 +51,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
     });
 
     test('initial selected learner groups', async function (assert) {
+      assert.expect(10);
       this.server.create('ilmSession', {
         sessionId: 1,
         learnerGroupIds: [1, 2, 4],
@@ -57,6 +59,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       });
 
       await page.visit({ courseId: 1, sessionId: 1 });
+      await percySnapshot(assert);
 
       assert.strictEqual(currentRouteName(), 'session.index');
       const { selectedLearners, selectedLearnerGroups } =

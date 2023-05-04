@@ -5,6 +5,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import { enableFeature } from 'ember-feature-flags/test-support';
 import page from 'ilios-common/page-objects/session';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Overview', function (hooks) {
   setupApplicationTest(hooks);
@@ -20,6 +21,7 @@ module('Acceptance | Session - Overview', function (hooks) {
   });
 
   test('check fields', async function (assert) {
+    assert.expect(4);
     await setupAuthentication({
       school: this.school,
       administeredSchools: [this.school],
@@ -30,6 +32,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       instructionalNotes: 'session notes',
     });
     await page.visit({ courseId: 1, sessionId: 1 });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.overview.sessionType.value, 'session type 0');
     assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
     assert.strictEqual(page.details.overview.instructionalNotes.value, 'session notes');

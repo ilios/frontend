@@ -27,6 +27,7 @@
     "test:ember-compatibility": "ember try:each",
     "test:ember:browserstack": "ember test --test-port=7774 --host=127.0.0.1 --config-file=testem.browserstack.js",
     "test:browserstack": "npm-run-all browserstack:connect test:ember:browserstack browserstack:disconnect browserstack:results",
+    "test:percy": "percy exec -- npm run test:ember",
     "browserstack:connect": "ember browserstack:connect",
     "browserstack:disconnect": "ember browserstack:disconnect",
     "browserstack:results": "ember browserstack:results"
@@ -125,6 +126,8 @@
     "@ember/test-helpers": "^2.9.3",
     "@embroider/test-setup": "^2.1.1",
     "@ilios/ember-template-lint-plugin": "^3.0.0",
+    "@percy/cli": "^1.24.0",
+    "@percy/ember": "^4.2.0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^7.6.0",

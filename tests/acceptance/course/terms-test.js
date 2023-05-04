@@ -3,6 +3,7 @@ import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Terms', function (hooks) {
   setupApplicationTest(hooks);
@@ -34,6 +35,7 @@ module('Acceptance | Course - Terms', function (hooks) {
   test('taxonomy summary', async function (assert) {
     assert.expect(9);
     await page.visit({ courseId: this.course.id, details: true });
+    await percySnapshot(assert);
     assert.strictEqual(
       page.details.collapsedTaxonomies.title,
       'Terms (' + this.course.terms.length + ')'
@@ -73,6 +75,7 @@ module('Acceptance | Course - Terms', function (hooks) {
       details: true,
       courseTaxonomyDetails: true,
     });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.taxonomies.vocabularies.length, 1);
     await page.details.taxonomies.manage();
 

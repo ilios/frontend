@@ -4,6 +4,7 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-instructors';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | course visualizations - instructors', function (hooks) {
   setupApplicationTest(hooks);
@@ -12,6 +13,7 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
   });
 
   test('it renders', async function (assert) {
+    assert.expect(12);
     const instructor1 = this.server.create('user');
     const instructor2 = this.server.create('user');
     const vocabulary1 = this.server.create('vocabulary');
@@ -65,6 +67,7 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
       year: 2022,
     });
     await page.visit({ courseId: course.id });
+    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/data/courses/1/instructors');
     assert.strictEqual(page.root.title, 'course 0 2022');
     assert.strictEqual(page.root.breadcrumb.crumbs.length, 3);
