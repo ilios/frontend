@@ -47,13 +47,11 @@
               </span>
             </div>
           {{/if}}
-          <div class="offering-block-time-offerings" data-test-offerings>
-            <SessionOfferingsTimeBlockOfferings
-              @offeringTimeBlock={{offeringTimeBlock}}
-              @removeOffering={{this.removeOffering}}
-              @editable={{@editable}}
-            />
-          </div>
+          <SessionOfferingsTimeBlockOfferings
+            @offeringTimeBlock={{offeringTimeBlock}}
+            @removeOffering={{this.removeOffering}}
+            @editable={{@editable}}
+          />
         </div>
       {{/each}}
     </div>

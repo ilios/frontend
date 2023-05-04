@@ -53,30 +53,33 @@ export default create({
       hasEndTime: isVisible('.offering-block-time-time-endtime'),
       multiDayStart: text('.offering-block-time-time-starts'),
       multiDayEnd: text('.offering-block-time-time-ends'),
-      offerings: collection('[data-test-offerings] [data-test-offering-manager]', {
-        learnerGroups: collection('.offering-manager-learner-groups li', {
-          title: text(),
-          expandTooltip: triggerable('mouseover'),
-          closeTooltip: triggerable('mouseout'),
-          tooltipContents: text('.ilios-tooltip', { resetScope: true }),
-          isTooltipVisible: isVisible('.ilios-tooltip', {
-            resetScope: true,
+      offerings: collection(
+        '[data-test-session-offerings-time-block-offerings] [data-test-offering-manager]',
+        {
+          learnerGroups: collection('.offering-manager-learner-groups li', {
+            title: text(),
+            expandTooltip: triggerable('mouseover'),
+            closeTooltip: triggerable('mouseout'),
+            tooltipContents: text('.ilios-tooltip', { resetScope: true }),
+            isTooltipVisible: isVisible('.ilios-tooltip', {
+              resetScope: true,
+            }),
           }),
-        }),
-        location: text('[data-test-location]'),
-        url: property('href', '[data-test-url] a'),
-        hasUrl: isVisible('[data-test-url]'),
-        instructors: collection('.offering-manager-instructors [data-test-instructor]', {
-          userNameInfo,
-        }),
-        edit: clickable('.edit'),
-        remove: clickable('.remove'),
-        hasRemoveConfirm: hasClass('show-remove-confirmation'),
-        removeConfirmMessage: text('.confirm-message'),
-        confirmRemoval: clickable('.remove', { scope: '.confirm-buttons' }),
-        cancelRemoval: clickable('.cancel', { scope: '.confirm-buttons' }),
-        offeringForm,
-      }),
+          location: text('[data-test-location]'),
+          url: property('href', '[data-test-url] a'),
+          hasUrl: isVisible('[data-test-url]'),
+          instructors: collection('.offering-manager-instructors [data-test-instructor]', {
+            userNameInfo,
+          }),
+          edit: clickable('.edit'),
+          remove: clickable('.remove'),
+          hasRemoveConfirm: hasClass('show-remove-confirmation'),
+          removeConfirmMessage: text('.confirm-message'),
+          confirmRemoval: clickable('.remove', { scope: '.confirm-buttons' }),
+          cancelRemoval: clickable('.cancel', { scope: '.confirm-buttons' }),
+          offeringForm,
+        }
+      ),
     }),
     offeringForm,
     smallGroup: clickable('.choose-offering-type button', { at: 0 }),
