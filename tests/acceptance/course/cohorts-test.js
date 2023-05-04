@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'ilios-common/page-objects/course';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Cohorts', function (hooks) {
   setupApplicationTest(hooks);
@@ -46,6 +47,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
   test('list cohorts', async function (assert) {
     assert.expect(4);
     await page.visit({ courseId: this.course.id, details: true });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.cohorts.current.length, 1);
     assert.strictEqual(page.details.cohorts.current[0].school, 'school 0');
     assert.strictEqual(page.details.cohorts.current[0].program, 'program 0');
@@ -56,6 +58,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     assert.expect(4);
     await page.visit({ courseId: this.course.id, details: true });
     await page.details.cohorts.manage();
+    await percySnapshot(assert);
     assert.strictEqual(page.details.cohorts.selected.length, 1);
     assert.strictEqual(page.details.cohorts.selected[0].name, 'school 0 | program 0 | cohort 0');
     assert.strictEqual(page.details.cohorts.selectable.length, 1);

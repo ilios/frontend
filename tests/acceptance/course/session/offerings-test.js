@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Offerings', function (hooks) {
   setupApplicationTest(hooks);
@@ -78,6 +79,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   test('basics', async function (assert) {
     assert.expect(2);
     await page.visit({ courseId: 1, sessionId: 1 });
+    await percySnapshot(assert);
 
     assert.strictEqual(page.details.offerings.header.title, 'Offerings (3)');
     assert.strictEqual(page.details.offerings.dateBlocks.length, 3);

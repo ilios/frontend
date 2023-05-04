@@ -4,6 +4,7 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-session-type';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | course visualizations - session-type', function (hooks) {
   setupApplicationTest(hooks);
@@ -12,6 +13,7 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
   });
 
   test('it renders', async function (assert) {
+    assert.expect(16);
     const sessionType = this.server.create('sessionType');
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');
@@ -65,6 +67,7 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
+    await percySnapshot(assert);
     assert.strictEqual(page.root.title, 'course 0 2022');
     assert.strictEqual(page.root.sessionTypeChart.chart.bars.length, 3);
     assert.strictEqual(page.root.sessionTypeChart.chart.labels.length, 3);

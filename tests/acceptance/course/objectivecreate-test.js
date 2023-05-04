@@ -2,6 +2,8 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course';
+import percySnapshot from '@percy/ember';
+
 module('Acceptance | Course - Objective Create', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
@@ -28,6 +30,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       details: true,
       courseObjectiveDetails: true,
     });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,

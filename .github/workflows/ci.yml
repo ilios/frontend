@@ -112,6 +112,24 @@ jobs:
           npm run browserstack:disconnect
           npm run browserstack:results
 
+  percy:
+    name: Percy Visual Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [test]
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: npm
+    - name: install dependencies
+      run: npm ci
+    - name: test
+      run: npm run test:percy
+      env:
+        PERCY_TOKEN: 0de8ba013a51dea7cb1e9e94813a8370339285c967dcc84de59fb8cc13015456
+
   firefox-test:
     name: Browser Tests (Firefox)
     runs-on: ubuntu-latest

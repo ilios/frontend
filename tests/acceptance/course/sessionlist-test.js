@@ -7,6 +7,8 @@ import page from 'ilios-common/page-objects/sessions';
 import sessionPage from 'ilios-common/page-objects/session';
 
 const today = DateTime.fromObject({ hour: 8 });
+import percySnapshot from '@percy/ember';
+
 module('Acceptance | Course - Session List', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
@@ -74,7 +76,9 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('session list', async function (assert) {
+    assert.expect(37);
     await page.visit({ courseId: this.course.id, details: true });
+    await percySnapshot(assert);
     const { sessions } = page.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
@@ -129,7 +133,9 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('expanded offering', async function (assert) {
+    assert.expect(24);
     await page.visit({ courseId: this.course.id, details: true });
+    await percySnapshot(assert);
     const { sessions } = page.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
@@ -170,7 +176,9 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('no offerings', async function (assert) {
+    assert.expect(8);
     await page.visit({ courseId: this.course.id, details: true });
+    await percySnapshot(assert);
     const { sessions } = page.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
@@ -206,6 +214,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('expand all sessions', async function (assert) {
+    assert.expect(7);
     this.server.create('offering', { session: this.session2 });
     this.server.create('offering', { session: this.session3 });
     this.server.create('offering', { session: this.session4 });
@@ -215,9 +224,11 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(expandedSessions.length, 0);
     assert.notOk(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
     await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
+    await percySnapshot(assert);
     assert.strictEqual(expandedSessions.length, 4);
     assert.ok(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
     await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
+    await percySnapshot(assert);
     assert.strictEqual(expandedSessions.length, 0);
     assert.notOk(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
   });

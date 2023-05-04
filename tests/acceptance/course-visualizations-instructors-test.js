@@ -4,6 +4,7 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-instructors';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | course visualizations - instructors', function (hooks) {
   setupApplicationTest(hooks);
@@ -12,6 +13,7 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
   });
 
   test('it renders', async function (assert) {
+    assert.expect(12);
     const instructor1 = this.server.create('user');
     const instructor2 = this.server.create('user');
     const vocabulary1 = this.server.create('vocabulary');
@@ -76,6 +78,7 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
+    await percySnapshot(assert);
     assert.strictEqual(page.root.instructorsChart.chart.bars.length, 2);
     assert.strictEqual(page.root.instructorsChart.chart.labels.length, 2);
     assert.strictEqual(

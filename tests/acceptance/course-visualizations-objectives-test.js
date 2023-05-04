@@ -3,6 +3,7 @@ import { currentURL, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-objectives';
 import { setupAuthentication } from 'ilios-common';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | course visualizations - objectives', function (hooks) {
   setupApplicationTest(hooks);
@@ -11,6 +12,7 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
   });
 
   test('it renders', async function (assert) {
+    assert.expect(14);
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
     const courseObjectives = this.server.createList('courseObjective', 3, {
@@ -68,6 +70,7 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .chart');
+    await percySnapshot(assert);
     assert.strictEqual(page.root.objectivesChart.chart.slices.length, 2);
     assert.strictEqual(page.root.objectivesChart.chart.slices[0].text, '77.8%');
     assert.strictEqual(page.root.objectivesChart.chart.slices[1].text, '22.2%');

@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session-publication-check';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
@@ -21,6 +22,7 @@ module('Acceptance | Session - Publication Check', function (hooks) {
   });
 
   test('full session count', async function (assert) {
+    assert.expect(6);
     const session = this.server.create('session', {
       course: this.course,
       terms: [this.term],
@@ -30,6 +32,7 @@ module('Acceptance | Session - Publication Check', function (hooks) {
     this.server.create('sessionObjective', { session });
     this.server.create('offering', { session });
     await page.visit({ courseId: this.course.id, sessionId: session.id });
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'session.publication_check');
     assert.strictEqual(page.sessionTitle, 'session 0');
     assert.strictEqual(page.offerings, 'Yes (1)');

@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'ilios-common/page-objects/course';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Leadership', function (hooks) {
   setupApplicationTest(hooks);
@@ -26,6 +27,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
   test('collapsed leadership', async function (assert) {
     assert.expect(10);
     await page.visit({ courseId: this.course.id, details: true });
+    await percySnapshot(assert);
 
     assert.strictEqual(page.details.leadershipCollapsed.title, 'Course Leadership');
     assert.strictEqual(page.details.leadershipCollapsed.headers.length, 1);
@@ -53,6 +55,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
       details: true,
       courseLeadershipDetails: true,
     });
+    await percySnapshot(assert);
 
     assert.strictEqual(page.details.leadershipExpanded.title, 'Course Leadership');
     const { directors, administrators, studentAdvisors } =

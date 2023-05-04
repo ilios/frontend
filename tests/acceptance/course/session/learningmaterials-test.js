@@ -6,6 +6,7 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
 
 const today = DateTime.fromObject({ hour: 8 });
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Learning Materials', function (hooks) {
   setupApplicationTest(hooks);
@@ -106,7 +107,9 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     });
 
     test('list learning materials', async function (assert) {
+      assert.expect(39);
       await page.visit({ courseId: 1, sessionId: 1 });
+      await percySnapshot(assert);
       assert.strictEqual(currentRouteName(), 'session.index');
 
       assert.strictEqual(page.details.learningMaterials.current.length, 4);
@@ -850,7 +853,9 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     });
 
     test('list learning materials', async function (assert) {
+      assert.expect(10);
       await page.visit({ courseId: 1, sessionId: 1 });
+      await percySnapshot(assert);
       assert.strictEqual(currentRouteName(), 'session.index');
 
       assert.strictEqual(page.details.learningMaterials.current.length, 1);

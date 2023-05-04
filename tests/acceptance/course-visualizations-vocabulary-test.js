@@ -4,6 +4,7 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-vocabulary';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | course visualizations - vocabulary', function (hooks) {
   setupApplicationTest(hooks);
@@ -12,6 +13,7 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
   });
 
   test('it renders', async function (assert) {
+    assert.expect(17);
     const vocabulary = this.server.create('vocabulary');
     const term1 = this.server.create('term', {
       vocabulary,
@@ -69,6 +71,7 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
+    await percySnapshot(assert);
     assert.strictEqual(page.root.termsChart.chart.bars.length, 3);
     assert.strictEqual(page.root.termsChart.chart.labels.length, 3);
     assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1: 30 Minutes');
