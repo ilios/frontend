@@ -19,7 +19,6 @@ module('Acceptance | Learner Groups', function (hooks) {
   test('visiting /learnergroups', async function (assert) {
     assert.expect(1);
     await page.visit();
-    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'learner-groups');
   });
 
@@ -202,6 +201,7 @@ module('Acceptance | Learner Groups', function (hooks) {
 
     assert.ok(page.list.isEmpty);
     await page.toggleNewLearnerGroupForm();
+    await percySnapshot(assert);
     assert.ok(page.newLearnerGroupForm.single.isVisible);
     await page.newLearnerGroupForm.single.title(newTitle);
     assert.notOk(page.newLearnerGroupForm.single.willFill);
@@ -253,6 +253,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.list.items[0].children, '1');
     assert.ok(page.list.items[0].canBeDeleted);
     await page.list.items[0].remove();
+    await percySnapshot(assert);
     await page.list.confirmRemoval.confirm();
     assert.strictEqual(page.headerTitle, 'Learner Groups (0)');
     assert.ok(page.list.isEmpty);
@@ -319,6 +320,7 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('learner groups linked to offerings or ILMs cannot be deleted', async function (assert) {
+    assert.expect(9);
     this.user.update({ administeredSchools: [this.school] });
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
@@ -358,6 +360,7 @@ module('Acceptance | Learner Groups', function (hooks) {
       ilmSessions: [ilm],
     });
     await page.visit();
+    await percySnapshot(assert);
     assert.strictEqual(page.list.items.length, 4);
     assert.strictEqual(page.list.items[0].title, 'has sub-group linked to ilm');
     assert.notOk(page.list.items[0].canBeDeleted);
@@ -469,7 +472,9 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.list.items[0].copy();
     assert.ok(page.list.confirmCopy.canCopyWithoutLearners);
     assert.ok(page.list.confirmCopy.canCopyWithLearners);
+    await percySnapshot(assert);
     await page.list.confirmCopy.copyWithoutLearners();
+    await percySnapshot(assert);
 
     assert.strictEqual(page.list.items.length, 2);
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
@@ -532,7 +537,9 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.list.items[0].copy();
     assert.ok(page.list.confirmCopy.canCopyWithoutLearners);
     assert.ok(page.list.confirmCopy.canCopyWithLearners);
+    await percySnapshot(assert);
     await page.list.confirmCopy.copyWithLearners();
+    await percySnapshot(assert);
 
     assert.strictEqual(page.list.items.length, 2);
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
