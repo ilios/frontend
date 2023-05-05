@@ -5,6 +5,7 @@ import page from 'ilios/tests/pages/instructor-groups';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Instructor Groups', function (hooks) {
   setupApplicationTest(hooks);
@@ -22,6 +23,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('list groups', async function (assert) {
+      assert.expect(8);
       this.server.createList('user', 5);
       this.server.createList('course', 2, { school: this.school });
       this.server.create('session', {
@@ -47,6 +49,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
       });
 
       await page.visit();
+      await percySnapshot(assert);
       assert.strictEqual(page.headerTitle, 'Instructor Groups (2)');
       assert.strictEqual(page.list.items.length, 2);
       assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
@@ -258,6 +261,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     await page.visit();
+    await percySnapshot(assert);
     assert.strictEqual(page.schoolFilter.schools.length, 2);
     assert.strictEqual(page.schoolFilter.schools[0].text, 'school 0');
     assert.strictEqual(page.schoolFilter.schools[1].text, 'school 1');

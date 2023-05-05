@@ -4,8 +4,9 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from '../pages/assign-students';
+import percySnapshot from '@percy/ember';
 
-// @todo flesh this acceptance test out [ST 2020/08/14]
+// @todo flesh this acceptance test out [ST 2020/08/14]import percySnapshot from '@percy/ember';
 module('Acceptance | assign students', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -29,7 +30,9 @@ module('Acceptance | assign students', function (hooks) {
   });
 
   test('visiting /admin/assignstudents', async function (assert) {
+    assert.expect(3);
     await page.visit();
+    await percySnapshot(assert);
     assert.strictEqual(page.schoolFilter.text, 'school 0');
     assert.strictEqual(page.schoolFilter.options.length, 0);
     assert.strictEqual(currentURL(), '/admin/assignstudents');

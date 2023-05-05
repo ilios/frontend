@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
@@ -24,7 +25,9 @@ module('Acceptance | Program - Publication Check', function (hooks) {
   });
 
   test('full program count', async function (assert) {
+    assert.expect(5);
     await visit('/programs/' + this.fullProgram.id + '/publicationcheck');
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'program.publication-check');
     assert
       .dom('.program-publication-check .detail-content table tbody td:nth-of-type(1)')

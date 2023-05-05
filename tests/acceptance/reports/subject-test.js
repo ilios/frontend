@@ -4,6 +4,7 @@ import { setupAuthentication } from 'ilios-common';
 import page from 'ilios/tests/pages/reports-subject';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Reports - Subject Report', function (hooks) {
   setupApplicationTest(hooks);
@@ -83,8 +84,10 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   });
 
   test('course report works', async function (assert) {
+    assert.expect(4);
     this.server.post('api/graphql', async () => this.getReportData(['1']));
     await page.visit({ reportId: this.courseReport.id });
+    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/1');
     assert.strictEqual(page.report.title.text, 'my report 0');
     assert.strictEqual(page.report.results.length, 1);
@@ -92,7 +95,9 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   });
 
   test('term report works', async function (assert) {
+    assert.expect(6);
     await page.visit({ reportId: this.termReport.id });
+    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/2');
     assert.strictEqual(page.report.title.text, 'All Sessions for term 0 in school 0');
     assert.strictEqual(

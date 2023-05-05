@@ -3,6 +3,7 @@ import { visit, currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | login', function (hooks) {
   setupApplicationTest(hooks);
@@ -11,6 +12,7 @@ module('Acceptance | login', function (hooks) {
   test('visiting /login', async function (assert) {
     assert.expect(2);
     await visit('/login');
+    await percySnapshot(assert);
 
     assert.strictEqual(currentURL(), '/login');
     await a11yAudit();

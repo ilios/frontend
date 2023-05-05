@@ -4,6 +4,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/pending-user-updates';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | pending user updates', function (hooks) {
   setupApplicationTest(hooks);
@@ -17,14 +18,17 @@ module('Acceptance | pending user updates', function (hooks) {
   });
 
   test('one school', async function (assert) {
+    assert.expect(2);
     const school = this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
+    await percySnapshot(assert);
     assert.strictEqual(page.schoolFilter.text, 'school 0');
     assert.notOk(page.schoolFilter.isSelectable);
   });
 
   test('multiple schools, default school selection', async function (assert) {
+    assert.expect(8);
     const schools = this.server.createList('school', 3);
     const usersInSchool1 = this.server.createList('user', 2, { school: schools[0] });
     const userInSchool2 = this.server.create('user', { school: schools[1] });
@@ -45,6 +49,7 @@ module('Acceptance | pending user updates', function (hooks) {
     });
     await setupAuthentication({ school: schools[0], administeredSchools: schools });
     await page.visit();
+    await percySnapshot(assert);
     assert.ok(page.schoolFilter.isSelectable);
     assert.strictEqual(page.schoolFilter.options.length, 3);
     assert.ok(page.schoolFilter.options[0].selected);

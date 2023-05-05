@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | FourOhFour', function (hooks) {
   setupApplicationTest(hooks);
@@ -13,7 +14,9 @@ module('Acceptance | FourOhFour', function (hooks) {
   });
 
   test('visiting /four-oh-four', async function (assert) {
+    assert.expect(2);
     await visit('/four-oh-four');
+    await percySnapshot(assert);
 
     assert.strictEqual(currentRouteName(), 'four-oh-four');
     assert

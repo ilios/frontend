@@ -4,6 +4,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/program';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program - Overview', function (hooks) {
   setupApplicationTest(hooks);
@@ -14,21 +15,25 @@ module('Acceptance | Program - Overview', function (hooks) {
   });
 
   test('non editable fields', async function (assert) {
+    assert.expect(3);
     this.server.create('program', {
       school: this.school,
     });
     await page.visit({ programId: 1 });
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'program.index');
     assert.strictEqual(page.root.overview.shortTitle.text, 'Program Title (short): short_0');
     assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 4');
   });
 
   test('editable fields', async function (assert) {
+    assert.expect(3);
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
       school: this.school,
     });
     await page.visit({ programId: 1 });
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'program.index');
     assert.strictEqual(page.root.overview.shortTitle.text, 'Program Title (short): short_0');
     assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 4');

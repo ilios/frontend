@@ -5,6 +5,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 const url = '/users';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Users', function (hooks) {
   setupApplicationTest(hooks);
@@ -22,9 +23,11 @@ module('Acceptance | Users', function (hooks) {
   }
 
   test('can see list of users and transition to user route', async function (assert) {
+    assert.expect(6);
     const firstStudent = 'tbody tr td:nth-of-type(2) a';
 
     await visit(url);
+    await percySnapshot(assert);
     assert.strictEqual(getCellContent(0), '', 'user is a student');
     assert.strictEqual(getCellContent(1), '0 guy M. Mc0son', 'name is shown');
     assert.strictEqual(getCellContent(2), '123', 'campus ID is shown');
@@ -54,14 +57,17 @@ module('Acceptance | Users', function (hooks) {
   });
 
   test('can search for a user and transition to user route', async function (assert) {
+    assert.expect(3);
     this.server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
 
     const userSearch = '.user-search input';
     const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(2) a';
 
     await visit(url);
+    await percySnapshot(assert);
     await fillIn(userSearch, 'Test Name');
     await triggerEvent(userSearch, 'input');
+    await percySnapshot(assert);
 
     assert.strictEqual(getCellContent(1), 'Test M. Name', 'content is visible');
     assert.strictEqual(currentURL(), '/users?filter=Test%20Name', 'no query params for search');

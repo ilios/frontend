@@ -6,6 +6,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from '../pages/learner-group';
 import learnerGroupsPage from '../pages/learner-groups';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Learner Group', function (hooks) {
   setupApplicationTest(hooks);
@@ -82,6 +83,7 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('generate new subgroups', async function (assert) {
+    assert.expect(23);
     this.user.update({ administeredSchools: [this.school] });
     const programYear = this.server.create('programYear', { program: this.program });
     const cohort = this.server.create('cohort', { programYear });
@@ -104,11 +106,13 @@ module('Acceptance | Learner Group', function (hooks) {
     });
 
     await page.visit({ learnerGroupId: 1 });
+    await percySnapshot(assert);
     assert.strictEqual(page.root.subgroups.list.items.length, 2);
     assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 1');
     assert.strictEqual(page.root.subgroups.list.items[1].title, 'learner group 2');
 
     await page.root.subgroups.toggleNewLearnerGroupForm();
+    await percySnapshot(assert);
 
     assert.ok(page.root.subgroups.newLearnerGroupForm.singleGroupSelected);
     assert.notOk(page.root.subgroups.newLearnerGroupForm.multipleGroupSelected);
@@ -130,6 +134,7 @@ module('Acceptance | Learner Group', function (hooks) {
     await page.root.subgroups.newLearnerGroupForm.chooseMultipleGroups();
     await page.root.subgroups.newLearnerGroupForm.multiple.setNumberOfGroups(2);
     await page.root.subgroups.newLearnerGroupForm.multiple.save();
+    await percySnapshot(assert);
 
     assert.strictEqual(page.root.subgroups.list.items.length, 9);
     assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 0 1');

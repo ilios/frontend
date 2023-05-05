@@ -3,6 +3,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/program-year';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program Year - Objectives', function (hooks) {
   setupApplicationTest(hooks);
@@ -70,6 +71,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.expect(25);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
@@ -145,7 +147,9 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('list not editable', async function (assert) {
+    assert.expect(18);
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,

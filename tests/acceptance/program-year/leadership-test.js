@@ -3,6 +3,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupAuthentication } from 'ilios-common';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/program-year';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program Year - Leadership', function (hooks) {
   setupApplicationTest(hooks);
@@ -24,7 +25,9 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
   });
 
   test('collapsed leadership', async function (assert) {
+    assert.expect(6);
     await page.visit({ programId: 1, programYearId: 1 });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.collapsedLeadership.title, 'Program Year Leadership');
     assert.strictEqual(page.details.collapsedLeadership.headers.length, 1);
     assert.strictEqual(page.details.collapsedLeadership.headers[0].title, 'Summary');
@@ -34,7 +37,9 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
   });
 
   test('list leadership', async function (assert) {
+    assert.expect(4);
     await page.visit({ programId: 1, programYearId: 1, pyLeadershipDetails: true });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.expandedLeadership.title, 'Program Year Leadership');
     const { directors } = page.details.expandedLeadership.leadershipList;
     assert.strictEqual(directors.length, 2);

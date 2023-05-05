@@ -5,6 +5,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/program';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program - ProgramYear List', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,6 +17,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('check list', async function (assert) {
+    assert.expect(8);
     this.user.update({ administeredSchools: [this.school] });
     const thisYear = new Date().getFullYear();
     const cohorts = this.server.createList('cohort', 4);
@@ -41,6 +43,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
       archived: true,
     });
     await page.visit({ programId: this.program.id });
+    await percySnapshot(assert);
     assert.strictEqual(page.programYears.items.length, 3);
     assert.strictEqual(page.programYears.items[0].link.text, `${thisYear - 2}`);
     assert.strictEqual(page.programYears.items[0].title, 'cohort 1');
@@ -49,6 +52,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     assert.strictEqual(page.programYears.items[2].link.text, `${thisYear}`);
     assert.strictEqual(page.programYears.items[2].title, 'cohort 0');
     await page.programYears.expandCollapse.toggle();
+    await percySnapshot(assert);
     assert.strictEqual(page.programYears.newProgramYear.years.options.length, 6);
   });
 
@@ -206,6 +210,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('privileged users can lock and unlock program-year', async function (assert) {
+    assert.expect(5);
     this.user.update({ administeredSchools: [this.school] });
     const cohorts = this.server.createList('cohort', 2);
     this.server.create('programYear', {
@@ -223,6 +228,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
       directorIds: [this.user.id],
     });
     await page.visit({ programId: this.program.id });
+    await percySnapshot(assert);
     assert.strictEqual(page.programYears.items.length, 2);
     assert.ok(page.programYears.items[0].isLocked);
     assert.ok(page.programYears.items[1].isUnlocked);

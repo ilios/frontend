@@ -5,6 +5,7 @@ import page from 'ilios/tests/pages/reports-subjects';
 import reportPage from 'ilios/tests/pages/reports-subject';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Reports - Subject Reports', function (hooks) {
   setupApplicationTest(hooks);
@@ -68,7 +69,9 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('shows reports', async function (assert) {
+    assert.expect(3);
     await page.visit();
+    await percySnapshot(assert);
     assert.strictEqual(page.reports.reports.length, 2);
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
     assert.strictEqual(page.reports.reports[1].title, 'my report 0');
@@ -86,7 +89,9 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.reports.newReport.subjects.choose('session');
     await page.reports.newReport.objects.choose('course');
     await page.reports.newReport.prepositionalObjects.choose('1');
+    await percySnapshot(assert);
     await page.reports.newReport.save();
+    await percySnapshot(assert);
     assert.strictEqual(page.reports.reports.length, 3);
     assert.strictEqual(page.reports.reports[0].title, 'aardvark');
     assert.strictEqual(page.reports.reports[1].title, 'All Sessions for term 0 in school 0');
@@ -109,6 +114,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       };
     });
     await page.reports.reports[0].select();
+    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/3');
     assert.strictEqual(reportPage.report.title.text, 'aardvark');
     assert.strictEqual(reportPage.report.results.length, 1);

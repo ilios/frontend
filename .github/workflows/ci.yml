@@ -73,3 +73,21 @@ jobs:
       run: npm ci
     - name: test build
       run: npm run build
+
+  percy:
+    name: Percy Visual Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [test]
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: npm
+    - name: install dependencies
+      run: npm ci
+    - name: test
+      run: npm run percy:test
+      env:
+        PERCY_TOKEN: d047c88195000471f31972e862cdaa4d80358db3a3bd8c9bee509d4feebd365e

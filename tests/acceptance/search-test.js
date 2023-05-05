@@ -5,6 +5,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { setupAuthentication } from 'ilios-common';
 import page from 'ilios/tests/pages/search';
 import dashboardPage from 'ilios/tests/pages/dashboard';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | search', function (hooks) {
   setupApplicationTest(hooks);
@@ -205,6 +206,7 @@ module('Acceptance | search', function (hooks) {
     const input = 'br';
 
     await page.visit({ q: input });
+    await percySnapshot(assert);
     assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
     await page.globalSearch.searchBox.clickIcon();
     assert.strictEqual(page.globalSearch.searchResults.length, 0);
@@ -237,6 +239,7 @@ module('Acceptance | search', function (hooks) {
       q: 'something',
       ignoredSchools: '1-3',
     });
+    await percySnapshot(assert);
     assert.strictEqual(page.globalSearch.searchResults.length, 1);
     assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(page.globalSearch.schoolFilters.length, 3);

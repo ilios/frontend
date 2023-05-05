@@ -3,6 +3,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios/tests/pages/program-year';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks) {
   setupApplicationTest(hooks);
@@ -26,6 +27,7 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
     assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
+    await percySnapshot(assert);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
       1
