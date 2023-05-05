@@ -13,10 +13,12 @@ module('Acceptance | search', function (hooks) {
 
   hooks.beforeEach(async function () {
     await setupAuthentication({}, true);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
       return {
         config: {
           searchEnabled: true,
+          apiVersion,
         },
       };
     });
