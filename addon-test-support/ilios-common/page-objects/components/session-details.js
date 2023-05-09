@@ -1,13 +1,4 @@
-import {
-  clickable,
-  collection,
-  create,
-  hasClass,
-  isVisible,
-  property,
-  text,
-  triggerable,
-} from 'ember-cli-page-object';
+import { clickable, collection, create, isVisible, text } from 'ember-cli-page-object';
 import objectives from './session/objectives';
 import learningMaterials from './detail-learning-materials';
 import meshTerms from './mesh-terms';
@@ -19,8 +10,8 @@ import leadershipCollapsed from './leadership-collapsed';
 import leadershipExpanded from './session-leadership-expanded';
 import detailInstructors from './detail-instructors';
 import detailLearnersAndLearnerGroups from './detail-learners-and-learner-groups';
-import userNameInfo from './user-name-info';
 import overview from './session-overview';
+import timeBlockOfferings from './session-offerings-time-block-offerings';
 
 export default create({
   scope: '[data-test-session-details]',
@@ -53,30 +44,7 @@ export default create({
       hasEndTime: isVisible('.offering-block-time-time-endtime'),
       multiDayStart: text('.offering-block-time-time-starts'),
       multiDayEnd: text('.offering-block-time-time-ends'),
-      offerings: collection('[data-test-offerings] [data-test-offering-manager]', {
-        learnerGroups: collection('.offering-manager-learner-groups li', {
-          title: text(),
-          expandTooltip: triggerable('mouseover'),
-          closeTooltip: triggerable('mouseout'),
-          tooltipContents: text('.ilios-tooltip', { resetScope: true }),
-          isTooltipVisible: isVisible('.ilios-tooltip', {
-            resetScope: true,
-          }),
-        }),
-        location: text('[data-test-location]'),
-        url: property('href', '[data-test-url] a'),
-        hasUrl: isVisible('[data-test-url]'),
-        instructors: collection('.offering-manager-instructors [data-test-instructor]', {
-          userNameInfo,
-        }),
-        edit: clickable('.edit'),
-        remove: clickable('.remove'),
-        hasRemoveConfirm: hasClass('show-remove-confirmation'),
-        removeConfirmMessage: text('.confirm-message'),
-        confirmRemoval: clickable('.remove', { scope: '.confirm-buttons' }),
-        cancelRemoval: clickable('.cancel', { scope: '.confirm-buttons' }),
-        offeringForm,
-      }),
+      timeBlockOfferings,
     }),
     offeringForm,
     smallGroup: clickable('.choose-offering-type button', { at: 0 }),

@@ -32,7 +32,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     });
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.details.offerings.dateBlocks[0].offerings[0].edit();
+    await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].edit();
 
     const { offeringForm: form } = page.details.offerings;
     await form.instructorSelectionManager.search.searchBox.set('guy 3');
@@ -58,7 +58,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     });
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.details.offerings.dateBlocks[0].offerings[0].edit();
+    await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].edit();
 
     const { offeringForm: form } = page.details.offerings;
     assert.strictEqual(form.instructorSelectionManager.selectedInstructors.instructors.length, 0);
@@ -102,37 +102,46 @@ module('Acceptance | Session - Offering Management', function (hooks) {
       instructors: [instructor1, instructor2],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[0].instructors.length, 2);
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[0].instructors[0].userNameInfo.fullName,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors.length,
+      2
+    );
+    assert.strictEqual(
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors[0]
+        .userNameInfo.fullName,
       '1 guy M. Mc1son'
     );
     assert.notOk(
-      page.details.offerings.dateBlocks[0].offerings[0].instructors[0].userNameInfo
-        .hasAdditionalInfo
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors[0]
+        .userNameInfo.hasAdditionalInfo
     );
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.fullName,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors[1]
+        .userNameInfo.fullName,
       'Clem Chowder'
     );
     assert.ok(
-      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo
-        .hasAdditionalInfo
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors[1]
+        .userNameInfo.hasAdditionalInfo
     );
     assert.notOk(
-      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors[1]
+        .userNameInfo.isTooltipVisible
     );
-    await page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.expandTooltip();
+    await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors[1].userNameInfo.expandTooltip();
     assert.ok(
-      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors[1]
+        .userNameInfo.isTooltipVisible
     );
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.tooltipContents,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors[1]
+        .userNameInfo.tooltipContents,
       'Campus name of record: 2 guy M, Mc2son'
     );
-    await page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.closeTooltip();
+    await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors[1].userNameInfo.closeTooltip();
     assert.notOk(
-      page.details.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].instructors[1]
+        .userNameInfo.isTooltipVisible
     );
   });
 
@@ -162,50 +171,66 @@ module('Acceptance | Session - Offering Management', function (hooks) {
       learnerGroups: [subSubLearnerGroup, subLearnerGroup2, learnerGroup2],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups.length, 3);
+    assert.strictEqual(
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups.length,
+      3
+    );
     assert.notOk(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[0]
+        .isTooltipVisible
     );
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].title,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[0].title,
       'Other Top Group'
     );
     assert.notOk(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[0]
+        .isTooltipVisible
     );
-    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].expandTooltip();
+    await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[0].expandTooltip();
     assert.notOk(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[0]
+        .isTooltipVisible,
       'no tooltip on top-level group'
     );
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].title,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[1].title,
       'Sub-Group 2'
     );
     assert.notOk(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].isTooltipVisible
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[1]
+        .isTooltipVisible
     );
-    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].expandTooltip();
-    assert.ok(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].isTooltipVisible);
+    await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[1].expandTooltip();
+    assert.ok(
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[1]
+        .isTooltipVisible
+    );
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].tooltipContents,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[1]
+        .tooltipContents,
       'Parent group: Top Group'
     );
-    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[1].closeTooltip();
+    await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[1].closeTooltip();
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].title,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[2].title,
       'Sub-sub Group'
     );
     assert.notOk(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[2]
+        .isTooltipVisible
     );
-    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].expandTooltip();
-    assert.ok(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].isTooltipVisible);
+    await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[2].expandTooltip();
+    assert.ok(
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[2]
+        .isTooltipVisible
+    );
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].tooltipContents,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[2]
+        .tooltipContents,
       'Parent groups: Top Group » Sub-Group'
     );
-    await page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[2].closeTooltip();
+    await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[2].closeTooltip();
   });
 
   test('Offerings are sorted by first learner group name', async function (assert) {
@@ -237,24 +262,33 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     });
     await page.visit({ courseId: course.id, sessionId: session.id });
     assert.strictEqual(page.details.offerings.dateBlocks.length, 1);
-    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings.length, 3);
-    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[0].learnerGroups.length, 1);
+    assert.strictEqual(page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings.length, 3);
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[0].learnerGroups[0].text,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups.length,
+      1
+    );
+    assert.strictEqual(
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].learnerGroups[0].text,
       'Alpha'
     );
-    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[1].learnerGroups.length, 2);
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[1].learnerGroups[0].text,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[1].learnerGroups.length,
+      2
+    );
+    assert.strictEqual(
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[1].learnerGroups[0].text,
       'Beta'
     );
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[1].learnerGroups[1].text,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[1].learnerGroups[1].text,
       'Gamma'
     );
-    assert.strictEqual(page.details.offerings.dateBlocks[0].offerings[2].learnerGroups.length, 1);
     assert.strictEqual(
-      page.details.offerings.dateBlocks[0].offerings[2].learnerGroups[0].text,
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[2].learnerGroups.length,
+      1
+    );
+    assert.strictEqual(
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[2].learnerGroups[0].text,
       'Delta'
     );
   });
