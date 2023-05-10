@@ -111,16 +111,6 @@ export default class LearnerGroupUserManagerComponent extends Component {
   }
 
   @enqueueTask
-  *addSelectedUsers() {
-    this.usersBeingMoved = [...this.usersBeingMoved, ...this.selectedUsers];
-    //timeout gives the spinner time to render
-    yield timeout(1);
-    yield this.args.addUsersToGroup(this.selectedUsers);
-    this.usersBeingMoved = this.usersBeingMoved.filter((user) => this.selectedUsers.includes(user));
-    this.selectedUsers = [];
-  }
-
-  @enqueueTask
   *removeSelectedUsers() {
     this.usersBeingMoved = [...this.usersBeingMoved, ...this.selectedUsers];
     //timeout gives the spinner time to render
