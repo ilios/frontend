@@ -7,6 +7,7 @@ const url = '/';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios-common/page-objects/components/api-version-notice';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | API Version Check', function (hooks) {
   setupApplicationTest(hooks);
@@ -32,6 +33,7 @@ module('Acceptance | API Version Check', function (hooks) {
 
     await visit(url);
     await waitFor('[data-test-load-finished]');
+    await percySnapshot(assert);
     assert.ok(component.notMismatched);
   });
 
@@ -49,6 +51,7 @@ module('Acceptance | API Version Check', function (hooks) {
 
     await visit(url);
     await waitFor('[data-test-load-finished]');
+    await percySnapshot(assert);
     assert.ok(component.mismatched);
   });
 });

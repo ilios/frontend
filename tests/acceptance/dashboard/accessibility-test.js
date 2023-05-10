@@ -4,6 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupAuthentication } from 'ilios-common';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | dashboard accessibility', function (hooks) {
   setupApplicationTest(hooks);
@@ -15,7 +16,9 @@ module('Acceptance | dashboard accessibility', function (hooks) {
   });
 
   test('meets a11y standards in default view', async function (assert) {
+    assert.expect(2);
     await visit('/dashboard/week');
+    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/dashboard/week');
     await a11yAudit();
     assert.ok(true);

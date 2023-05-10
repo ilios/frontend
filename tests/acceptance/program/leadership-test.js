@@ -3,6 +3,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupAuthentication } from 'ilios-common';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/program';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program - Leadership', function (hooks) {
   setupApplicationTest(hooks);
@@ -21,7 +22,9 @@ module('Acceptance | Program - Leadership', function (hooks) {
   });
 
   test('collapsed leadership', async function (assert) {
+    assert.expect(6);
     await page.visit({ programId: 1 });
+    await percySnapshot(assert);
     assert.strictEqual(page.root.leadershipCollapsed.title, 'Program Leadership');
     assert.strictEqual(page.root.leadershipCollapsed.headers.length, 1);
     assert.strictEqual(page.root.leadershipCollapsed.headers[0].title, 'Summary');
@@ -31,7 +34,9 @@ module('Acceptance | Program - Leadership', function (hooks) {
   });
 
   test('list leadership', async function (assert) {
+    assert.expect(4);
     await page.visit({ programId: 1, leadershipDetails: true });
+    await percySnapshot(assert);
     assert.strictEqual(page.root.leadershipExpanded.title, 'Program Leadership');
     const { directors } = page.root.leadershipExpanded.leadershipList;
     assert.strictEqual(directors.length, 2);
@@ -58,6 +63,7 @@ module('Acceptance | Program - Leadership', function (hooks) {
   });
 
   test('manage leadership', async function (assert) {
+    assert.expect(6);
     await page.visit({ programId: 1, leadershipDetails: true });
     await page.root.leadershipExpanded.manage();
     const manager = page.root.leadershipExpanded.leadershipManager;
@@ -68,6 +74,7 @@ module('Acceptance | Program - Leadership', function (hooks) {
     await selectedDirectors[1].remove();
     await manager.directorSearch.search('guy');
     await manager.directorSearch.results[0].add();
+    await percySnapshot(assert);
     assert.strictEqual(selectedDirectors.length, 2);
     assert.strictEqual(selectedDirectors[0].text, '0 guy M. Mc0son');
     assert.strictEqual(selectedDirectors[1].text, '3 guy M. Mc3son');

@@ -7,6 +7,7 @@ import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import page from '../pages/instructor-group';
 
 const url = '/instructorgroups/1';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Instructor Group', function (hooks) {
   setupApplicationTest(hooks);
@@ -53,7 +54,9 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('it renders', async function (assert) {
+    assert.expect(15);
     await visit(url);
+    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'instructor-group');
     assert.strictEqual(page.root.header.title.text, 'instructor group 0');
     assert.strictEqual(page.root.header.members, 'Members: 2');

@@ -3,6 +3,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/program-year';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program Year - Terms', function (hooks) {
   setupApplicationTest(hooks);
@@ -36,17 +37,20 @@ module('Acceptance | Program Year - Terms', function (hooks) {
   });
 
   test('list terms', async function (assert) {
+    assert.expect(3);
     await page.visit({
       programId: this.program.id,
       programYearId: this.programYear.id,
       pyTaxonomyDetails: true,
     });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.detailTaxonomies.vocabularies.length, 1);
     assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms.length, 1);
     assert.strictEqual(page.details.detailTaxonomies.vocabularies[0].terms[0].name, 'term 0');
   });
 
   test('manage terms', async function (assert) {
+    assert.expect(7);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       programId: this.program.id,
@@ -54,6 +58,7 @@ module('Acceptance | Program Year - Terms', function (hooks) {
       pyTaxonomyDetails: true,
     });
     await page.details.detailTaxonomies.manage();
+    await percySnapshot(assert);
     assert.strictEqual(page.details.detailTaxonomies.manager.selectedTerms.length, 1);
     assert.strictEqual(
       page.details.detailTaxonomies.manager.selectedTerms[0].title,

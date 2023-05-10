@@ -3,12 +3,14 @@ import { visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { setupAuthentication } from 'ilios-common';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | header', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   test('privileged users can view search', async function (assert) {
+    assert.expect(1);
     this.server.get('application/config', function () {
       return {
         config: {
@@ -18,10 +20,12 @@ module('Acceptance | header', function (hooks) {
     });
     await setupAuthentication({}, true);
     await visit('/');
+    await percySnapshot(assert);
     assert.dom('.global-search-box').exists();
   });
 
   test('when search is disabled on the server it does not display', async function (assert) {
+    assert.expect(1);
     this.server.get('application/config', function () {
       return {
         config: {
@@ -31,6 +35,7 @@ module('Acceptance | header', function (hooks) {
     });
     await setupAuthentication({}, true);
     await visit('/');
+    await percySnapshot(assert);
     assert.dom('.global-search-box').doesNotExist();
   });
 

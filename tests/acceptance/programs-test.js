@@ -5,6 +5,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/programs';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Programs', function (hooks) {
   setupApplicationTest(hooks);
@@ -17,7 +18,9 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('visiting /programs', async function (assert) {
+      assert.expect(1);
       await page.visit();
+      await percySnapshot(assert);
       assert.strictEqual(currentRouteName(), 'programs');
     });
 
@@ -32,8 +35,10 @@ module('Acceptance | Programs', function (hooks) {
 
       await visit(url);
       await click(expandButton);
+      await percySnapshot(assert);
       await fillIn(input, 'Test Title');
       await click(saveButton);
+      await percySnapshot(assert);
       function getContent(i) {
         return find(`tbody tr td:nth-of-type(${i + 1})`).textContent.trim();
       }

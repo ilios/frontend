@@ -4,6 +4,7 @@ import { triggerEvent, waitFor } from '@ember/test-helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from '../../pages/learner-group';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   setupApplicationTest(hooks);
@@ -59,7 +60,9 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   };
 
   test('upload users', async function (assert) {
+    assert.expect(12);
     await page.visit({ learnerGroupId: 1 });
+    await percySnapshot(assert);
     await page.root.actions.buttons.bulkAssignment.click();
     this.server.create('user', {
       firstName: 'jasper',
@@ -79,6 +82,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     ];
     await triggerUpload(users);
     await waitFor('[data-test-upload-data-valid-users]');
+    await percySnapshot(assert);
 
     assert.strictEqual(page.root.bulkAssignment.validUploadedUsers.length, 2);
     assert.ok(page.root.bulkAssignment.validUploadedUsers[0].isValid);
@@ -139,6 +143,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   });
 
   test('upload user errors', async function (assert) {
+    assert.expect(8);
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
     this.server.create('user', {
@@ -216,6 +221,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
       'User already exists in top-level group group 1 or one of its subgroups.'
     );
     assert.notOk(page.root.bulkAssignment.showConfirmUploadButton);
+    await percySnapshot(assert);
   });
 
   test('choose small group match', async function (assert) {
@@ -249,6 +255,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   });
 
   test('finalize and save', async function (assert) {
+    assert.expect(18);
     this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
@@ -295,11 +302,13 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.strictEqual(this.server.db.learnerGroups[0].userIds, null);
     assert.strictEqual(this.server.db.learnerGroups[1].userIds, null);
     assert.strictEqual(this.server.db.learnerGroups[2].userIds, null);
+    await percySnapshot(assert);
 
     await page.root.bulkAssignment.submitFinalData();
     assert.deepEqual(this.server.db.learnerGroups[0].userIds, ['2', '3']);
     assert.deepEqual(this.server.db.learnerGroups[1].userIds, null);
     assert.deepEqual(this.server.db.learnerGroups[2].userIds, ['3']);
+    await percySnapshot(assert);
   });
 
   test('create a new group when requested', async function (assert) {

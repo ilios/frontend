@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 import page from 'ilios/tests/pages/courses';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Courses', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,7 +17,9 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('visiting /courses', async function (assert) {
+    assert.expect(1);
     await page.visit();
+    await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/courses');
   });
 
@@ -49,6 +52,7 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('filters by title', async function (assert) {
+    assert.expect(35);
     this.server.create('academicYear', { id: 2014 });
     const firstCourse = this.server.create('course', {
       title: 'specialfirstcourse',
@@ -83,6 +87,7 @@ module('Acceptance | Courses', function (hooks) {
       archived: true,
     });
     await page.visit();
+    await percySnapshot(assert);
     assert.strictEqual(page.courses.courses.length, 5);
     assert.strictEqual(page.courses.courses[0].title, regexCourse.title);
     assert.strictEqual(page.courses.courses[1].title, lastCourse.title);
@@ -112,6 +117,7 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(page.headerTitle, 'Courses (2)');
 
     await page.filterByTitle('course');
+    await percySnapshot(assert);
     assert.strictEqual(page.courses.courses.length, 4);
     assert.strictEqual(page.courses.courses[0].title, lastCourse.title);
     assert.strictEqual(page.courses.courses[1].title, regularCourse.title);

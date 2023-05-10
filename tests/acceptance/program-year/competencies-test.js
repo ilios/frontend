@@ -4,6 +4,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/program-year';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program Year - Competencies', function (hooks) {
   setupApplicationTest(hooks);
@@ -38,7 +39,9 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   });
 
   test('list', async function (assert) {
+    assert.expect(6);
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.competencies.title, 'Competencies (2)');
     assert.strictEqual(page.details.competencies.list.domains.length, 1);
     assert.strictEqual(page.details.competencies.list.domains[0].title, 'competency 0');
@@ -54,8 +57,10 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   });
 
   test('list with permission to edit', async function (assert) {
+    assert.expect(6);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
+    await percySnapshot(assert);
     assert.strictEqual(page.details.competencies.title, 'Competencies (2)');
     assert.strictEqual(page.details.competencies.list.domains.length, 1);
     assert.strictEqual(page.details.competencies.list.domains[0].title, 'competency 0');

@@ -3,6 +3,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/school';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | School - Session Attributes', function (hooks) {
   setupApplicationTest(hooks);
@@ -14,6 +15,7 @@ module('Acceptance | School - Session Attributes', function (hooks) {
   });
 
   test('check fields collapsed', async function (assert) {
+    assert.expect(8);
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
@@ -25,6 +27,7 @@ module('Acceptance | School - Session Attributes', function (hooks) {
       value: true,
     });
     await page.visit({ schoolId: this.school.id });
+    await percySnapshot(assert);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.collapsed.attendanceRequired.label,
       'Attendance Required'
@@ -48,6 +51,7 @@ module('Acceptance | School - Session Attributes', function (hooks) {
   });
 
   test('check fields expanded', async function (assert) {
+    assert.expect(8);
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
@@ -59,6 +63,7 @@ module('Acceptance | School - Session Attributes', function (hooks) {
       value: true,
     });
     await page.visit({ schoolId: this.school.id, schoolSessionAttributesDetails: true });
+    await percySnapshot(assert);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.label,
       'Attendance Required'
@@ -88,6 +93,7 @@ module('Acceptance | School - Session Attributes', function (hooks) {
   });
 
   test('manage session attributes', async function (assert) {
+    assert.expect(16);
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
@@ -103,6 +109,7 @@ module('Acceptance | School - Session Attributes', function (hooks) {
       schoolSessionAttributesDetails: true,
       schoolManageSessionAttributes: true,
     });
+    await percySnapshot(assert);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.label,
       'Attendance Required'
@@ -132,6 +139,7 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     await page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.check();
     await page.manager.schoolSessionAttributes.expanded.manager.supplemental.check();
     await page.manager.schoolSessionAttributes.expanded.manager.specialEquipmentRequired.check();
+    await percySnapshot(assert);
     await page.manager.schoolSessionAttributes.expanded.save();
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.label,

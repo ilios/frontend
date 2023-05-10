@@ -6,6 +6,7 @@ const url = '/admin';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Admin', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,6 +17,7 @@ module('Acceptance | Admin', function (hooks) {
   });
 
   test('can transition to `users` route', async function (assert) {
+    assert.expect(1);
     const button = '.manage-users-summary a:nth-of-type(1)';
 
     await visit(url);
@@ -24,6 +26,7 @@ module('Acceptance | Admin', function (hooks) {
   });
 
   test('can search for users', async function (assert) {
+    assert.expect(4);
     this.server.createList('user', 20, { schoolId: 1 });
     this.server.createList('authentication', 20);
 
@@ -34,8 +37,10 @@ module('Acceptance | Admin', function (hooks) {
     const name = '.user-display-name';
 
     await visit(url);
+    await percySnapshot(assert);
     await fillIn(userSearch, 'son');
     await triggerEvent(userSearch, 'keyup');
+    await percySnapshot(assert);
     assert.dom(secondResultUsername).hasText('1 guy M. Mc1son', 'user name is correct');
     assert.dom(secondResultEmail).hasText('user@example.edu', 'user email is correct');
 
