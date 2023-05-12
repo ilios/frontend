@@ -1,4 +1,3 @@
-/* eslint-disable ember/no-computed-properties-in-native-classes */
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
