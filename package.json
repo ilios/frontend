@@ -75,6 +75,7 @@
     "ember-modifier": "^4.0.0",
     "ember-moment": "^10.0.0",
     "ember-promise-helpers": "2.0.0",
+    "ember-simple-auth": "^6.0.0-rc.1",
     "ember-simple-auth-token": "^5.0.0",
     "ember-simple-charts": "^10.3.0",
     "ember-test-selectors": "^6.0.0",
