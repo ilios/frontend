@@ -16,12 +16,12 @@ $form-input-text-types: 'input[type="text"], input[type="password"], input[type=
   z-index: 5;
 
   #{$form-input-text-types} {
-    background-position: right 4px bottom .75em;
+    background-position: right 4px bottom 0.75em;
     height: 2.5em;
   }
 
-  &[type='checkbox'],
-  &[type='radio'] {
+  &[type="checkbox"],
+  &[type="radio"] {
     display: inline;
     width: 2.5em;
   }

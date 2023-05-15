@@ -9,7 +9,7 @@
 
   .month-year {
     @include m.ilios-heading-h4;
-    margin: 0 0 .25rem 0;
+    margin: 0 0 0.25rem 0;
     padding: 0;
   }
 
@@ -61,7 +61,7 @@
       }
 
       .day-number {
-        margin: 0 0 .25rem 0;
+        margin: 0 0 0.25rem 0;
         padding: 0;
 
         button {
@@ -89,7 +89,7 @@
 
         span {
           background-color: transparent;
-          @include m.font-size('smallest');
+          @include m.font-size("smallest");
           font-weight: normal;
         }
 
@@ -108,9 +108,9 @@
         @include m.ilios-link-button;
         display: block;
         width: 100%;
-        @include m.font-size('small');
+        @include m.font-size("small");
         text-align: right;
-        margin-top: .5rem;
+        margin-top: 0.5rem;
 
         .text {
           display: none;

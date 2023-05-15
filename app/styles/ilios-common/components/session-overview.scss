@@ -3,12 +3,12 @@
 @use "../mixins" as m;
 
 .session-header {
-
   background-color: c.$culturedGrey;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: calc(constants.$golden-ratio-large * 1rem) 0 calc(constants.$golden-ratio-small * 1rem) 0;
+  padding: calc(constants.$golden-ratio-large * 1rem) 0
+    calc(constants.$golden-ratio-small * 1rem) 0;
 
   @include m.for-tablet-and-up {
     flex-direction: row;
@@ -45,16 +45,14 @@
 
     .title {
       @include m.ilios-overview-title;
-
     }
 
     .session-overview-actions {
-
       @include m.ilios-overview-actions;
 
       a {
-        @include m.font-size('medium');
-        margin-right: .5rem;
+        @include m.font-size("medium");
+        margin-right: 0.5rem;
       }
     }
   }

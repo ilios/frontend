@@ -2,7 +2,6 @@
 @use "../mixins" as m;
 
 .mesh-manager {
-
   .deprecated {
     color: c.$crimson;
     font-weight: bolder;
@@ -35,7 +34,7 @@
 
     .descriptor-id {
       display: block;
-      @include m.font-size('small');
+      @include m.font-size("small");
     }
 
     .mesh-concepts {
@@ -43,7 +42,7 @@
       list-style: disc inside;
 
       .truncated::after {
-        content: ' \2026';
+        content: " \2026";
       }
     }
   }
@@ -59,10 +58,9 @@
         @include m.ilios-button-reset;
       }
       .remove {
-        margin-left: .5em;
+        margin-left: 0.5em;
       }
     }
-
 
     .term-title {
       font-weight: bold;
@@ -74,7 +72,7 @@
   }
 
   .mesh-search {
-    input[type='search'] {
+    input[type="search"] {
       @include m.ilios-input;
     }
 

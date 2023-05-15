@@ -6,13 +6,13 @@
 @use "ilios-textarea";
 @use "media";
 
-@mixin ilios-form () {
+@mixin ilios-form() {
   align-items: start;
   display: grid;
-  grid-gap: .25rem 1rem;
+  grid-gap: 0.25rem 1rem;
   grid-template-columns: 1fr;
   margin-bottom: 1rem;
-  padding: .5rem 1rem .5rem .5rem;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
 
   @include media.for-laptop-and-up {
     grid-template-columns: repeat(2, 1fr);
@@ -49,21 +49,21 @@
   }
 }
 
-@mixin ilios-form-item () {
+@mixin ilios-form-item() {
   @include ilios-form-error;
   display: flex;
   flex-direction: column;
   min-height: 4rem;
 }
 
-@mixin ilios-form-last-item () {
+@mixin ilios-form-last-item() {
   display: block;
   grid-column: 1 / -1;
 }
 
-@mixin ilios-form-buttons () {
+@mixin ilios-form-buttons() {
   grid-column: 1 / -1;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   padding: 0;
 
   button {
@@ -102,23 +102,21 @@
       }
     }
   }
-
 }
 
-@mixin ilios-label () {
+@mixin ilios-label() {
   font-weight: bold;
 
   .label-description {
-    @include font-size.font-size('small');
+    @include font-size.font-size("small");
     font-weight: normal;
-
   }
 }
 
 @mixin ilios-form-error {
   .validation-error-message {
     color: c.$crimson;
-    @include font-size.font-size('small');
+    @include font-size.font-size("small");
   }
 
   input {

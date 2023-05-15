@@ -23,7 +23,7 @@
 
     input {
       @include m.ilios-input;
-      margin: 1rem 0 .5rem;
+      margin: 1rem 0 0.5rem;
       min-width: 25rem;
 
       @include m.for-laptop-and-up {

@@ -15,7 +15,7 @@
 
   .flatpickr-current-month {
     display: flex;
-    @include m.font-size('medium');
+    @include m.font-size("medium");
     justify-content: center;
     .flatpickr-monthDropdown-months {
       appearance: none;
@@ -37,8 +37,6 @@
       }
     }
   }
-
-
 }
 
 .flatpickr-weekdays,

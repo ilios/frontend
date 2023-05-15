@@ -2,7 +2,6 @@
 @use "../mixins" as m;
 
 .single-event-objective-list {
-
   button {
     &.active {
       background-color: c.$fernGreen;
@@ -19,14 +18,14 @@
     .expanded {
       @include m.ilios-button-reset;
       &::after {
-        content: '\25BC';
+        content: "\25BC";
       }
     }
 
     .expandable {
       @include m.ilios-button-reset;
       &::after {
-        content: '\25BA';
+        content: "\25BA";
       }
     }
   }
@@ -37,16 +36,17 @@
     padding: 0;
 
     > li {
-      padding-bottom: .5rem;
+      padding-bottom: 0.5rem;
 
-      > div, p {
+      > div,
+      p {
         margin: 0;
-        padding: .5rem 0;
+        padding: 0.5rem 0;
       }
     }
 
     .details {
-      @include m.font-size('small');
+      @include m.font-size("small");
       font-weight: bold;
     }
   }
@@ -61,15 +61,16 @@
 
       > ul {
         list-style-type: none;
-        margin: 0 0 .5rem 1rem;
+        margin: 0 0 0.5rem 1rem;
         padding: 0;
 
         > li {
           font-weight: normal;
 
-          > div, p {
+          > div,
+          p {
             margin: 0;
-            padding: .5rem 0;
+            padding: 0.5rem 0;
           }
         }
       }

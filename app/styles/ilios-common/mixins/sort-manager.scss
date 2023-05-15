@@ -1,13 +1,13 @@
 @use "../colors" as c;
 @use "font-size";
 
-@mixin sort-manager () {
+@mixin sort-manager() {
   .actions {
     display: flex;
     justify-content: flex-end;
 
     button {
-      margin-left: .5rem;
+      margin-left: 0.5rem;
     }
 
     .bigadd {
@@ -22,7 +22,7 @@
   }
 
   .content {
-    padding-top: .5rem;
+    padding-top: 0.5rem;
   }
 
   .sortable-items {
@@ -32,7 +32,7 @@
       border-radius: 4px;
       box-sizing: border-box;
       cursor: pointer;
-      margin: 10px .3rem 0 0;
+      margin: 10px 0.3rem 0 0;
       opacity: 1;
       padding: 1rem;
       vertical-align: middle;
@@ -41,30 +41,30 @@
         vertical-align: top;
       }
       .details {
-        @include font-size.font-size('small');
+        @include font-size.font-size("small");
       }
 
       .title {
         display: inline-block;
       }
 
-
       &.dragging-item {
         opacity: 0.3;
       }
       &.dragged-above {
-        border-top: .7rem solid c.$orange;
+        border-top: 0.7rem solid c.$orange;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
-        padding: .3rem 1rem 1rem 1rem;
+        padding: 0.3rem 1rem 1rem 1rem;
       }
       &.dragged-below {
-        border-bottom: .7rem solid c.$orange;
+        border-bottom: 0.7rem solid c.$orange;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-        padding: 1rem 1rem .3rem 1rem;
+        padding: 1rem 1rem 0.3rem 1rem;
       }
-      &.dragged-below, &.dragged-above {
+      &.dragged-below,
+      &.dragged-above {
         &.dragging-item {
           border: none;
           padding: 1rem;
@@ -77,5 +77,3 @@
     }
   }
 }
-
-

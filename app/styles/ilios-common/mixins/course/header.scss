@@ -18,15 +18,16 @@
     height: 2rem;
   }
 
-  h2, h3 {
+  h2,
+  h3 {
     @include ilios-heading.ilios-heading-h4;
     @include font-size.text-align-bottom;
   }
 
   .academic-year {
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     @include media.for-tablet-and-up {
-      margin-left: .5rem;
+      margin-left: 0.5rem;
       margin-top: 0;
     }
   }

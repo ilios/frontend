@@ -6,7 +6,7 @@
 
   .content {
     background: c.$slightWhite;
-    padding: .25rem .5rem;
+    padding: 0.25rem 0.5rem;
     border: 1px solid c.$davysGrey;
     border-radius: 4px;
     max-width: 80%;
@@ -20,25 +20,25 @@
     }
 
     .arrow::before {
-      content: '';
+      content: "";
       transform: rotate(45deg);
       background: c.$davysGrey;
       border: 1px solid c.$davysGrey;
     }
   }
-  &[data-popper-placement^='top'] .arrow {
+  &[data-popper-placement^="top"] .arrow {
     bottom: -4px;
   }
 
-  &[data-popper-placement^='bottom'] .arrow {
+  &[data-popper-placement^="bottom"] .arrow {
     top: -4px;
   }
 
-  &[data-popper-placement^='left'] .arrow {
+  &[data-popper-placement^="left"] .arrow {
     right: -4px;
   }
 
-  &[data-popper-placement^='right'] .arrow {
+  &[data-popper-placement^="right"] .arrow {
     left: -4px;
   }
 }

@@ -5,36 +5,36 @@
 @use "ilios-table";
 @use "media";
 
-@mixin collapsed-container ($border-color) {
+@mixin collapsed-container($border-color) {
   @include detail-container.detail-container($border-color);
   display: grid;
 
   @include media.for-tablet-and-up {
-    grid-row-gap: .5rem;
+    grid-row-gap: 0.5rem;
     grid-template-columns: 1fr 3fr;
   }
 }
 
-@mixin collapsed-container-title () {
+@mixin collapsed-container-title() {
   @include ilios-heading.ilios-heading-h5;
   cursor: pointer;
 
   &::after {
-    content: '\25BA';
+    content: "\25BA";
   }
 }
 
-@mixin collapsed-container-content () {
+@mixin collapsed-container-content() {
   @include media.for-laptop-and-up {
     margin: 0;
     padding-top: 0;
   }
 }
 
-@mixin collapsed-container-table () {
+@mixin collapsed-container-table() {
   @include ilios-table.ilios-table-structure;
   @include ilios-table.ilios-table-colors;
-  @include font-size.font-size('small');
+  @include font-size.font-size("small");
 
   table,
   tr {

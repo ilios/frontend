@@ -6,11 +6,11 @@
 
 @use "sass:color";
 
-@mixin objectives () {
+@mixin objectives() {
   .header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
 
     span {
       display: flex;
@@ -18,10 +18,10 @@
       justify-content: flex-end;
 
       .expand-collapse-button {
-        margin: 0 .5em;
+        margin: 0 0.5em;
       }
 
-      .visualizer-course-objectives  {
+      .visualizer-course-objectives {
         width: 2rem;
         height: 2rem;
       }
@@ -35,7 +35,7 @@
 
       &.collapsible {
         button::after {
-          content: '\25BC';
+          content: "\25BC";
         }
       }
     }
@@ -44,18 +44,18 @@
   .new-objective {
     border: 1px solid c.$culturedGrey;
     margin: 1rem;
-    padding: .5rem;
+    padding: 0.5rem;
 
     .title {
-      margin-bottom: .25em;
+      margin-bottom: 0.25em;
     }
 
     .new-objective-form {
-      margin-left: .5em;
+      margin-left: 0.5em;
 
       label {
         font-weight: bold;
-        margin: .25em;
+        margin: 0.25em;
       }
       .buttons {
         @include ilios-form.ilios-form-buttons;
@@ -64,7 +64,7 @@
   }
 }
 
-@mixin objective-list () {
+@mixin objective-list() {
   .headers {
     font-weight: bold;
   }
@@ -72,11 +72,11 @@
     display: grid;
     grid-template-columns: 5fr 3fr 3fr 3fr 1fr;
     grid-template-rows: auto;
-    margin-right: .5em;
+    margin-right: 0.5em;
 
     .grid-item {
       border-bottom: 1px solid c.$davysGrey;
-      padding: .5em .25em;
+      padding: 0.5em 0.25em;
     }
 
     &:last-of-type {
@@ -95,8 +95,13 @@
         }
       }
 
-      animation : shimmer 2s infinite;
-      background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+      animation: shimmer 2s infinite;
+      background: linear-gradient(
+        to right,
+        #eff1f3 4%,
+        #e2e2e2 25%,
+        #eff1f3 36%
+      );
       background-size: 1000px 100%;
 
       .grid-item {
@@ -184,7 +189,7 @@
   .bigcancel {
     background-color: c.$crimson;
     color: c.$white;
-    margin-left: .5em;
+    margin-left: 0.5em;
   }
 
   .detail-terms-list {

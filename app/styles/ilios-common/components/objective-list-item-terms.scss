@@ -1,5 +1,5 @@
 @use "../mixins" as m;
 
 .objective-list-item-terms {
-  @include m.objective-list-item(.25em);
+  @include m.objective-list-item(0.25em);
 }

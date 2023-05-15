@@ -4,7 +4,7 @@
 .offering-url-display {
   .copy-btn {
     @include m.ilios-link-button;
-    margin-left: .25em;
+    margin-left: 0.25em;
 
     &.copying {
       color: c.$fernGreen;

@@ -43,9 +43,9 @@
   li {
     background-color: c.$culturedGrey;
     border-radius: 4px;
-    margin-right: .3em;
+    margin-right: 0.3em;
     margin-top: 10px;
-    padding: .2em .4em .2em .6em;
+    padding: 0.2em 0.4em 0.2em 0.6em;
     vertical-align: middle;
   }
 }
@@ -110,8 +110,9 @@
     cursor: pointer;
     display: flex;
 
-    .remove, .info {
-      margin-left: .5em;
+    .remove,
+    .info {
+      margin-left: 0.5em;
     }
   }
 }
@@ -126,7 +127,7 @@
       border: 1px c.$culturedGrey solid;
       border-radius: 4px;
       margin-top: 5px;
-      padding: .2em .4em .2em .6em;
+      padding: 0.2em 0.4em 0.2em 0.6em;
       vertical-align: middle;
 
       &.selected {
@@ -151,10 +152,9 @@
     background-color: c.$culturedGrey;
     border-radius: 4px;
     font-weight: bold;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     padding: 1rem;
   }
-
 }
 
 @mixin ilios-list-tree() {

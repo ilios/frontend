@@ -6,11 +6,11 @@
 
   .title {
     @include m.ilios-heading-h3;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     text-align: center;
   }
   .dashboard-materials-content {
-    padding: .5rem;
+    padding: 0.5rem;
 
     .header {
       margin: 0 1em 1em 0;
@@ -42,7 +42,7 @@
     }
 
     .timed-release-info {
-      @include m.font-size('small');
+      @include m.font-size("small");
     }
 
     table {

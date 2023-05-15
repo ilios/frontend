@@ -1,7 +1,7 @@
 @use "sass:color";
 @use "../colors" as c;
 
-@mixin ilios-link () {
+@mixin ilios-link() {
   color: c.$tealBlue;
   cursor: pointer;
   font-weight: 600;

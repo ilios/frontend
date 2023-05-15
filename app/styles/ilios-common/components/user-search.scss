@@ -11,18 +11,18 @@
     background: c.$white;
     border: 1px solid c.$slightWhite;
     border-radius: 3px;
-    box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -.8);
+    box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
     color: c.$raisinBlack;
     left: 0;
     max-height: 15rem;
     overflow: scroll;
     top: 2rem;
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
     z-index: 100;
 
     li {
       border-bottom: 1px solid c.$culturedGrey;
-      padding: .6rem;
+      padding: 0.6rem;
       padding-left: 1rem;
 
       &.active:hover {
@@ -44,7 +44,7 @@
     .email {
       color: c.$davysGrey;
       font-style: italic;
-      padding-right: .2rem;
+      padding-right: 0.2rem;
     }
   }
 }

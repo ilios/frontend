@@ -6,13 +6,13 @@
   background-color: c.$tealBlue;
   border-bottom: 1px solid c.$davysGrey;
   color: c.$white;
-  @include m.font-size('small');
+  @include m.font-size("small");
   font-weight: normal;
   position: sticky;
   top: 0;
 
   .sortable-heading {
-    padding: .5rem 0;
+    padding: 0.5rem 0;
   }
 
   .expand-collapse-control {

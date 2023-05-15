@@ -2,7 +2,7 @@
 
 .course-summary-header {
   @include m.ilios-overview();
-  padding-left: .8rem;
+  padding-left: 0.8rem;
 
   .course-summary-header-top {
     @include m.ilios-overview-header;
@@ -18,13 +18,11 @@
       text-align: right;
 
       a {
-        @include m.font-size('medium');
-        margin-right: .5rem;
+        @include m.font-size("medium");
+        margin-right: 0.5rem;
       }
     }
   }
-
-
 
   .course-summary-content {
     @include m.ilios-overview-content;

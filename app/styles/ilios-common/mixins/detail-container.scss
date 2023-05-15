@@ -3,30 +3,30 @@
 @use "ilios-table";
 @use "media";
 
-@mixin detail-container ($bottom-border-color) {
+@mixin detail-container($bottom-border-color) {
   border-bottom: 1px dotted $bottom-border-color;
   margin: 0;
   min-height: 2rem;
   padding: 1rem 0;
 }
 
-@mixin detail-container-title-style () {
+@mixin detail-container-title-style() {
   @include ilios-heading.ilios-heading-h5;
 
   &.collapsible {
     &::after {
-      content: '\25BC';
+      content: "\25BC";
     }
   }
 
   &.collapsed {
     &::after {
-      content: '\25BA';
+      content: "\25BA";
     }
   }
 }
 
-@mixin detail-container-header () {
+@mixin detail-container-header() {
   display: flex;
   justify-content: space-between;
 
@@ -37,19 +37,19 @@
   }
 }
 
-@mixin detail-container-title () {
+@mixin detail-container-title() {
   @include detail-container-title-style;
 }
 
-@mixin detail-container-actions () {
+@mixin detail-container-actions() {
   display: flex;
   justify-content: flex-end;
 
   & > * {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
 
     @include media.for-phone-only {
-      margin-top: .25em;
+      margin-top: 0.25em;
     }
   }
 
@@ -64,9 +64,9 @@
   }
 }
 
-@mixin detail-container-content () {
+@mixin detail-container-content() {
   clear: both;
-  padding: .5rem 0;
+  padding: 0.5rem 0;
 
   table {
     @include ilios-table.ilios-table-structure;

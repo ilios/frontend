@@ -10,7 +10,7 @@
     margin: 1em 0;
 
     .fa-box-archive {
-      @include m.font-size('base');
+      @include m.font-size("base");
     }
   }
 
@@ -65,20 +65,20 @@
     .expanded {
       @include m.ilios-button-reset;
       &::after {
-        content: '\25BC';
+        content: "\25BC";
       }
     }
 
     .expandable {
       @include m.ilios-button-reset;
       &::after {
-        content: '\25BA';
+        content: "\25BA";
       }
     }
   }
 
   .single-event-learningmaterial-filesize {
-    @include m.font-size('small');
+    @include m.font-size("small");
     font-style: italic;
   }
 }
