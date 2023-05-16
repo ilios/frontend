@@ -292,7 +292,7 @@ export default class User extends Model {
     'offerings',
   ]);
 
-  get _instructedOfferings() {
+  get _allInstructedOfferings() {
     if (!this._instructedLearnerGroupOfferings || !this._instructedOfferings) {
       return [];
     }
@@ -313,7 +313,7 @@ export default class User extends Model {
   }
 
   @use _instructedOfferingSessions = new ResolveFlatMapBy(() => [
-    this._instructedOfferings,
+    this._allInstructedOfferings,
     'session',
   ]);
   @use _instructorGroupSessions = new ResolveFlatMapBy(() => [this._instructorGroups, 'sessions']);

@@ -805,7 +805,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('allInstructedSessions gets ALL instructed sessions', async function (assert) {
-    assert.expect(5);
+    assert.expect(6);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const session1 = store.createRecord('session');
@@ -837,7 +837,16 @@ module('Unit | Model | User', function (hooks) {
       instructorGroups: [instructorGroup2],
     });
 
-    const sessions = [session1, session2, session3, session4];
+    const session5 = store.createRecord('session');
+    const learnerGroup1 = store.createRecord('learner-group', {
+      instructors: [model],
+    });
+    store.createRecord('offering', {
+      session: session5,
+      learnerGroups: [learnerGroup1],
+    });
+
+    const sessions = [session1, session2, session3, session4, session5];
     const allInstructedSessions = await waitForResource(model, 'allInstructedSessions');
     assert.strictEqual(allInstructedSessions.length, sessions.length);
     sessions.forEach((session) => {
