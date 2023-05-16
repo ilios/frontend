@@ -9,6 +9,8 @@ updates:
   open-pull-requests-limit: 10
   versioning-strategy: increase-if-necessary
   ignore:
+  - dependency-name: "@babel/eslint-parser"
+  - dependency-name: "@babel/plugin-proposal-decorators"
   - dependency-name: broccoli-asset-rev
   - dependency-name: concurrently
   - dependency-name: "@ember/optional-features"
@@ -38,6 +40,8 @@ updates:
   - dependency-name: eslint-plugin-node
   - dependency-name: loader.js
   - dependency-name: qunit-dom
+  - dependency-name: stylelint
+  - dependency-name: stylelint-prettier
   - dependency-name: webpack
 - package-ecosystem: github-actions
   directory: "/"
