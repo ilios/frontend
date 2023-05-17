@@ -198,4 +198,11 @@ export default class LearnerGroupUserManagerComponent extends Component {
     );
     this.selectedGroupUsers = [];
   }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    //undo selections
+    this.selectedGroupUsers = [];
+    this.selectedNonGroupUsers = [];
+  }
 }
