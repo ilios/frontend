@@ -1,0 +1,40 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
+
+.learner-group-members {
+  @include cm.detail-container(c.$tealBlue);
+  border-bottom: 0;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+
+  .title {
+    @include cm.detail-container-title-style;
+  }
+
+  .actions {
+    input {
+      @include cm.ilios-input;
+      width: 15rem;
+    }
+  }
+
+  .learner-group-members-content {
+    @include cm.detail-container-content;
+    grid-column: 1 / -1;
+
+    .list {
+      @include m.main-list-box-table;
+      @include cm.ilios-zebra-table;
+      grid-column: 1 / -1;
+      max-height: 540px;
+      overflow: auto;
+    }
+  }
+
+  .inline-button {
+    @include cm.ilios-button-reset;
+    text-align: left;
+    width: 100%;
+  }
+}

@@ -1,5 +1,8 @@
 {{#let (unique-id) as |templateId|}}
-  <div class="learner-group-user-manager" ...attributes data-test-learner-group-user-manager>
+  <div
+    class="learner-group-members"
+    data-test-learner-group-members
+  >
     {{#if this.usersInGroup.length}}
       <div class="actions">
         <Input
@@ -9,9 +12,9 @@
           data-test-filter
         />
       </div>
-      <div class="learner-group-user-manager-content">
+      <div class="learner-group-members-content">
         <div class="list">
-          <table data-test-assigned-users>
+          <table>
             <thead>
             <tr>
               <th class="text-left" colspan="1">
@@ -32,7 +35,7 @@
               </th>
             </tr>
             </thead>
-            <tbody data-test-users-in-current-group>
+            <tbody>
             {{#each (sort-by @sortBy this.filteredUsers) as |user index|}}
               <tr class={{unless user.enabled "disabled-user-account" ""}}>
                 <td class="text-left" colspan="1">
