@@ -37,7 +37,7 @@ updates:
   - dependency-name: ember-try
   - dependency-name: eslint
   - dependency-name: eslint-plugin-ember
-  - dependency-name: eslint-plugin-node
+  - dependency-name: eslint-plugin-n
   - dependency-name: loader.js
   - dependency-name: qunit-dom
   - dependency-name: stylelint
