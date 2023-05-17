@@ -14,13 +14,19 @@ const definition = {
   filter: fillable('[data-test-filter]'),
   groupMembers: text('[data-test-group-members]'),
   allOtherMembers: text('[data-test-all-other-members]'),
-  selectAll: {
-    scope: '[data-test-headers] th:eq(0) input',
+  selectAllUsersInGroup: {
+    scope: '[data-test-assigned-users] th:eq(0) input',
     toggle: clickable(),
     isChecked: property('checked'),
     isIndeterminate: property('indeterminate'),
   },
-  usersInCurrentGroup: collection('[data-test-users-in-current-group] tr', {
+  selectAllUsersNotInGroup: {
+    scope: '[data-test-assignable-users] th:eq(0) input',
+    toggle: clickable(),
+    isChecked: property('checked'),
+    isIndeterminate: property('indeterminate'),
+  },
+  usersInCurrentGroup: collection('[data-test-assigned-users] tbody tr', {
     isSelected: property('checked', 'td:eq(0) input'),
     canBeSelected: isPresent('td:eq(0) input'),
     select: clickable('td:eq(0) input'),
@@ -44,7 +50,7 @@ const definition = {
     remove: clickable('[data-test-remove-user]'),
     canBeRemoved: isPresent('[data-test-remove-user]'),
   }),
-  usersNotInCurrentGroup: collection('[data-test-users-not-in-current-group] tr', {
+  usersNotInCurrentGroup: collection('[data-test-assignable-users] tbody tr', {
     isSelected: property('checked', 'td:eq(0) input'),
     canBeSelected: isPresent('td:eq(0) input'),
     select: clickable('td:eq(0) input'),

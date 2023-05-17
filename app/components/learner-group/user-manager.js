@@ -70,24 +70,34 @@ export default class LearnerGroupUserManagerComponent extends Component {
   }
 
   get hasSomeSelectedGroupUsers() {
-    return this.hasSelectedGroupUsers && this.groupUsers.length !== this.selectedGroupUsers.length;
+    return (
+      this.hasSelectedGroupUsers &&
+      !mapBy(this.groupUsers, 'content').every((user) => this.selectedGroupUsers.includes(user))
+    );
   }
 
   get hasSomeSelectedNonGroupUsers() {
     return (
       this.hasSelectedNonGroupUsers &&
-      this.nonGroupUsers.length !== this.selectedNonGroupUsers.length
+      !mapBy(this.nonGroupUsers, 'content').every((user) =>
+        this.selectedNonGroupUsers.includes(user)
+      )
     );
   }
 
   get hasAllSelectedGroupUsers() {
-    return this.hasSelectedGroupUsers && this.groupUsers.length === this.selectedGroupUsers.length;
+    return (
+      this.hasSelectedGroupUsers &&
+      mapBy(this.groupUsers, 'content').every((user) => this.selectedGroupUsers.includes(user))
+    );
   }
 
   get hasAllSelectedNonGroupUsers() {
     return (
       this.hasSelectedNonGroupUsers &&
-      this.nonGroupUsers.length === this.selectedNonGroupUsers.length
+      mapBy(this.nonGroupUsers, 'content').every((user) =>
+        this.selectedNonGroupUsers.includes(user)
+      )
     );
   }
 
@@ -124,27 +134,25 @@ export default class LearnerGroupUserManagerComponent extends Component {
   @action
   toggleAllGroupUsersSelection() {
     if (!this.groupUsers.length) {
-      return false;
+      return;
     }
     if (this.hasAllSelectedGroupUsers) {
       this.selectedGroupUsers = [];
     } else {
       this.selectedGroupUsers = [...mapBy(this.groupUsers, 'content')];
     }
-    return false;
   }
 
   @action
   toggleAllNonGroupUsersSelection() {
     if (!this.nonGroupUsers.length) {
-      return false;
+      return;
     }
     if (this.hasAllSelectedNonGroupUsers) {
       this.selectedNonGroupUsers = [];
     } else {
       this.selectedNonGroupUsers = [...mapBy(this.nonGroupUsers, 'content')];
     }
-    return false;
   }
 
   @enqueueTask
