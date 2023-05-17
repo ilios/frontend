@@ -50,9 +50,6 @@ export default class LearnerGroupUserManagerComponent extends Component {
   }
 
   get groupUsers() {
-    if (!this.args.isEditing) {
-      return this.filteredUsers;
-    }
     return this.filteredUsers.filter(
       (user) => user.get('lowestGroupInTree').id === this.args.learnerGroupId
     );
