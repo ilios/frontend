@@ -24,7 +24,6 @@
     }
   }
 
-
   .block {
     @include m.detail-container(c.$orange);
     background-color: c.$white;

@@ -1,13 +1,13 @@
 @use "ilios-common/mixins" as m;
 @use "ilios-common/colors" as c;
-@import 'ilios-common/styles';
+@import "ilios-common/styles";
 .application-wrapper {
   display: grid;
   grid-template-areas:
-  'logo header'
-  'nav nav'
-  'main main'
-  'footer footer';
+    "logo header"
+    "nav nav"
+    "main main"
+    "footer footer";
   grid-template-rows: 42px 2rem 1fr 20px;
 
   height: 100vh;
@@ -20,12 +20,12 @@
 
   @include m.for-laptop-and-up {
     grid-template-areas:
-    'logo header'
-    'logo main'
-    'nav main'
-    'footer footer';
+      "logo header"
+      "logo main"
+      "nav main"
+      "footer footer";
     grid-template-columns: 200px 1fr;
-    grid-template-rows: 42px calc(42px * .382) auto 20px;
+    grid-template-rows: 42px calc(42px * 0.382) auto 20px;
   }
 
   & > nav {
@@ -33,25 +33,24 @@
     background-color: c.$davysGrey;
   }
 
-
   & > .logo {
-   grid-area: logo;
-   background-color: c.$orange;
+    grid-area: logo;
+    background-color: c.$orange;
   }
 
   & > header {
-   grid-area: header;
-   background-color: c.$orange;
+    grid-area: header;
+    background-color: c.$orange;
   }
 
   & > main {
-   background-color: c.$white;
-   grid-area: main;
-   margin: 0 5px;
+    background-color: c.$white;
+    grid-area: main;
+    margin: 0 5px;
   }
 
   & > footer {
-   grid-area: footer;
+    grid-area: footer;
   }
 
   .token-login {

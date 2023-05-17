@@ -19,15 +19,15 @@
       .offering-block-date-dayofweek {
         color: c.$orange;
         display: block;
-        @include m.font-size('medium');
+        @include m.font-size("medium");
         font-weight: bold;
         width: 100%;
       }
 
       .offering-block-date-dayofmonth {
         color: c.$davysGrey;
-        }
       }
+    }
 
     .offering-block-time {
       border-bottom: 1px dotted c.$davysGrey;

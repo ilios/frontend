@@ -5,7 +5,7 @@
   display: block;
   position: relative;
 
-  input[type='search'] {
+  input[type="search"] {
     @include m.ilios-input;
 
     &.search-input {
@@ -20,6 +20,6 @@
     margin-right: 2px;
     padding-left: 6px;
     position: absolute;
-    top: .2rem;
+    top: 0.2rem;
   }
 }

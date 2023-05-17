@@ -11,7 +11,7 @@
   $breadcrumb-link-color-hover: c.$orange;
 
   display: inline-block;
-  margin: .8rem;
+  margin: 0.8rem;
   text-align: left;
 
   a {
@@ -29,7 +29,7 @@
     color: $breadcrumb-color;
     cursor: pointer;
     display: inline-block;
-    font-size: .8rem;
+    font-size: 0.8rem;
     line-height: $breadcrumb-height;
     margin-bottom: 2px;
     margin-right: -5px;
@@ -50,7 +50,7 @@
       border-bottom: math.div($breadcrumb-height, 2) solid transparent;
       border-left: math.div($breadcrumb-height, 4) solid transparent;
       border-top: math.div($breadcrumb-height, 2) solid transparent;
-      content: '';
+      content: "";
       display: block;
       left: 100%;
       margin: auto;

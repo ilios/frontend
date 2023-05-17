@@ -4,17 +4,16 @@
 @use "font-size";
 @use "media";
 
-@mixin user-search-results () {
-
+@mixin user-search-results() {
   background: c.$white;
   border: 1px solid c.$slightWhite;
   border-radius: 3px;
-  box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -.8);
+  box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
   color: c.$raisinBlack;
   max-height: 23rem;
   overflow-y: scroll;
   position: absolute;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   width: 100%;
   z-index: 100;
 
@@ -26,7 +25,7 @@
     border-bottom: 1px solid c.$culturedGrey;
     color: c.$blueMunsell;
     display: block;
-    padding: .1rem;
+    padding: 0.1rem;
     width: 100%;
 
     &.inactive {
@@ -56,7 +55,7 @@
     }
 
     .name i {
-      @include font-size.font-size('small');
+      @include font-size.font-size("small");
     }
 
     .email {
@@ -64,6 +63,4 @@
       font-style: italic;
     }
   }
-
-
 }

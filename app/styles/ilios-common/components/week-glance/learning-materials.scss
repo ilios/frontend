@@ -4,11 +4,11 @@
 .week-glance-learning-materials {
   ul {
     @include m.ilios-list-reset;
-    padding: 0 .25rem;
+    padding: 0 0.25rem;
     margin: 0;
 
     li {
-      margin: .2rem 0;
+      margin: 0.2rem 0;
     }
 
     &.prework {
@@ -19,7 +19,7 @@
 
     .fa-external-link-square {
       color: c.$orange;
-      @include m.font-size('small');
+      @include m.font-size("small");
     }
 
     .public-notes {
@@ -27,7 +27,7 @@
     }
 
     .timed-release-info {
-      @include m.font-size('small');
+      @include m.font-size("small");
     }
 
     .week-glance-learning-material-list-item {

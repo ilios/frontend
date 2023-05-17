@@ -16,14 +16,14 @@
     top: 2rem;
 
     th {
-      @include m.font-size('small');
+      @include m.font-size("small");
       font-weight: normal;
-      padding: .2rem .5rem;
+      padding: 0.2rem 0.5rem;
     }
   }
 
   td {
-    padding: .2rem .5rem;
+    padding: 0.2rem 0.5rem;
 
     &.expanded-offering-manager {
       background-color: c.$lightBlue;
@@ -40,8 +40,8 @@
   }
 
   .offering-block {
-    &>td {
-      padding-top: .5rem;
+    & > td {
+      padding-top: 0.5rem;
     }
   }
 
@@ -51,7 +51,7 @@
   }
 
   .sessions-grid-offering {
-    transition: background-color .5s ease-out;
+    transition: background-color 0.5s ease-out;
     &.even {
       background-color: color.adjust(c.$lightBlue, $lightness: -10%);
     }
@@ -74,6 +74,6 @@
   .offering-form {
     background-color: c.$white;
     border: 1px solid c.$culturedGrey;
-    padding: .5rem;
+    padding: 0.5rem;
   }
 }

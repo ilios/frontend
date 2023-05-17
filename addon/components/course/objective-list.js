@@ -42,13 +42,6 @@ export default class CourseObjectiveListComponent extends Component {
     this.intl,
   ]);
 
-  get cohortObjectives() {
-    if (!this.load.lastSuccessful) {
-      return null;
-    }
-    return this?.cohortObjectiveAsync;
-  }
-
   get courseObjectiveCount() {
     if (this.courseObjectives) {
       return this.courseObjectives.length;

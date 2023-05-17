@@ -7,7 +7,7 @@
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
-  padding-left: .8rem;
+  padding-left: 0.8rem;
 
   .back-to-session {
     border-top: 1px solid c.$orange;
@@ -34,6 +34,6 @@
 
   .fa-link-slash {
     color: c.$black;
-    @include m.font-size('small');
+    @include m.font-size("small");
   }
 }

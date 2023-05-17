@@ -8,7 +8,7 @@
   .parent-picker {
     @include m.ilios-list-reset;
     height: auto;
-    padding-left: .5rem;
+    padding-left: 0.5rem;
 
     .selected {
       font-weight: bold;

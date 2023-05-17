@@ -28,7 +28,7 @@
     margin: 0 1rem 2rem;
 
     @include m.for-laptop-and-up {
-      padding: .5rem 6rem 0 4rem;
+      padding: 0.5rem 6rem 0 4rem;
     }
   }
 
@@ -37,11 +37,10 @@
   }
 
   .included {
-
     .title {
       display: block;
       font-weight: bold;
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
     }
 
     .include {
@@ -62,7 +61,7 @@
     .title {
       display: block;
       font-weight: bold;
-      margin-bottom: .5em;
+      margin-bottom: 0.5em;
     }
   }
 }

@@ -1,6 +1,6 @@
 @use "../colors" as c;
 
-@mixin loading-box () {
+@mixin loading-box() {
   animation: fadein;
   background-color: c.$culturedGrey;
   border: 1px dotted c.$davysGrey;
@@ -12,7 +12,7 @@
     }
 
     40% {
-      opacity: .3;
+      opacity: 0.3;
     }
 
     100% {

@@ -2,11 +2,11 @@
 @use "../mixins" as m;
 
 .offering-manager {
-  @include m.font-size('small');
+  @include m.font-size("small");
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-bottom: .5rem;
-  padding-bottom: .5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
 
   .offering-manager-learner-groups {
     ul {
@@ -28,7 +28,7 @@
 
   .offering-manager-actions {
     .remove {
-      padding-left: .5rem;
+      padding-left: 0.5rem;
     }
   }
 
@@ -65,7 +65,8 @@
     }
   }
 
-  .fa-trash, .fa-pen-to-square {
+  .fa-trash,
+  .fa-pen-to-square {
     @include m.icon;
   }
 }

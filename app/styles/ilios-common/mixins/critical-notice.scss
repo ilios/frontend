@@ -1,4 +1,4 @@
-@mixin critical-notice ($background-color, $color, $height) {
+@mixin critical-notice($background-color, $color, $height) {
   background-color: $background-color;
   color: $color;
   display: block;

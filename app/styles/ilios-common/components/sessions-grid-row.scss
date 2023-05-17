@@ -3,7 +3,7 @@
 
 .sessions-grid-row {
   @include m.sessions-grid;
-  padding: .25rem 0;
+  padding: 0.25rem 0;
 
   .session-grid-status {
     display: flex;
@@ -12,8 +12,7 @@
     .instructional-notes,
     .prerequisites {
       color: c.$fernGreen;
-      margin-right: .25rem;
+      margin-right: 0.25rem;
     }
   }
 }
-

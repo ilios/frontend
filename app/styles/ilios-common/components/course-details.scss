@@ -5,7 +5,7 @@
   @include m.main-section;
 
   $collapse-control-shadow-grey: #e2e2e2;
-  $collapse-control-shadow-black: rgba(0, 0, 0, .34);
+  $collapse-control-shadow-black: rgba(0, 0, 0, 0.34);
 
   .detail-collapsed-control {
     @include m.ilios-button-reset;
@@ -17,13 +17,14 @@
       background-color: c.$orange;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
-      box-shadow: 0 2px $collapse-control-shadow-grey, inset 0 1px 2px $collapse-control-shadow-black;
+      box-shadow: 0 2px $collapse-control-shadow-grey,
+        inset 0 1px 2px $collapse-control-shadow-black;
       color: c.$white;
       cursor: pointer;
-      padding: .25rem 4rem;
+      padding: 0.25rem 4rem;
 
       .expand-collapse-icon {
-        margin-left: .5rem;
+        margin-left: 0.5rem;
       }
     }
   }

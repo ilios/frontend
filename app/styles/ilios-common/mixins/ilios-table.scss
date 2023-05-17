@@ -4,9 +4,9 @@
 
 @use "sass:color";
 
-@mixin ilios-table-structure () {
+@mixin ilios-table-structure() {
   border-collapse: collapse;
-  margin: .7rem 0;
+  margin: 0.7rem 0;
   table-layout: fixed;
   width: 100%;
 
@@ -21,7 +21,7 @@
   tr,
   td,
   th {
-    padding: .25rem .1rem;
+    padding: 0.25rem 0.1rem;
     vertical-align: middle;
   }
 
@@ -58,13 +58,13 @@
   }
 
   &.condensed {
-    @include font-size.font-size('small');
+    @include font-size.font-size("small");
 
     tr,
     td,
     th {
       margin: 0;
-      padding: 0 .1rem;
+      padding: 0 0.1rem;
     }
   }
 
@@ -94,8 +94,7 @@
   }
 }
 
-
-@mixin ilios-table-colors ($backgroundColor: c.$slightWhite) {
+@mixin ilios-table-colors($backgroundColor: c.$slightWhite) {
   thead {
     background-color: $backgroundColor;
   }
@@ -106,7 +105,7 @@
   }
 }
 
-@mixin ilios-removable-table () {
+@mixin ilios-removable-table() {
   tbody {
     .confirm-removal {
       background-color: c.$lavenderBlush;
@@ -125,7 +124,6 @@
         padding-top: 1.1em;
       }
 
-
       &:hover {
         background-color: c.$lavenderBlush;
       }
@@ -143,7 +141,7 @@
   }
 }
 
-@mixin ilios-zebra-table () {
+@mixin ilios-zebra-table() {
   tbody tr:nth-child(even) {
     background-color: color.adjust(c.$culturedGrey, $lightness: 4%);
   }

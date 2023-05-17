@@ -16,9 +16,10 @@
   .course-overview-actions {
     @include ilios-overview.ilios-overview-actions;
 
-    a, span {
-      @include font-size.font-size('medium');
-      margin-right: .5rem;
+    a,
+    span {
+      @include font-size.font-size("medium");
+      margin-right: 0.5rem;
     }
 
     span {

@@ -21,7 +21,6 @@ jobs:
         - "ember-cli-mirage"
         - "ember-cli-page-object"
         - "ember-test-selectors"
-        - "babel-eslint"
         - "ember-a11y-testing"
         - "ember-cli-bundle-analyzer"
         - "ember-cli-dependency-checker"
@@ -30,8 +29,6 @@ jobs:
         - "ember-template-lint"
         - "ember-qunit-nice-errors"
         - "eslint"
-        - "prettier"
-        - "stylelint"
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - name: Dependabot metadata

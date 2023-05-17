@@ -43,17 +43,17 @@
     .scheduling {
       align-items: start;
       display: grid;
-      grid-gap: .25rem 1rem;
+      grid-gap: 0.25rem 1rem;
       margin-bottom: 1rem;
       legend {
         @include m.ilios-heading;
-        padding: 0 .5rem;
+        padding: 0 0.5rem;
       }
     }
 
     .end-date-time {
       .text {
-        padding-top: .5rem;
+        padding-top: 0.5rem;
       }
     }
 
@@ -72,9 +72,8 @@
     }
 
     .timezone {
-
       .current-timezone {
-        padding-top: .5rem;
+        padding-top: 0.5rem;
       }
 
       .picker {
@@ -88,7 +87,7 @@
             background: transparent;
             color: c.$crimson;
             margin: 0;
-            padding: 0 .2rem;
+            padding: 0 0.2rem;
 
             &:enabled:hover {
               color: c.$white;
@@ -116,7 +115,7 @@
       display: flex;
 
       input {
-        margin-right: .5rem;
+        margin-right: 0.5rem;
         min-width: 5rem;
         outline: none;
         width: 5rem;
@@ -128,7 +127,7 @@
     }
 
     .make-recurring-days {
-      margin: .5rem 0;
+      margin: 0.5rem 0;
 
       div {
         align-items: center;
@@ -154,9 +153,9 @@
     .validation-error-message {
       color: c.$crimson;
       display: block;
-      @include m.font-size('small');
+      @include m.font-size("small");
       font-style: italic;
-      margin-top: .5rem;
+      margin-top: 0.5rem;
     }
 
     .available-instructors,
@@ -166,11 +165,11 @@
     .selected-instructor-groups,
     .selected-learner-groups,
     .selected-learners {
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
 
       label {
         display: inline-block;
-        margin-bottom: .5rem;
+        margin-bottom: 0.5rem;
       }
     }
 
@@ -179,4 +178,3 @@
     }
   }
 }
-

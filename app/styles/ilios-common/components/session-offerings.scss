@@ -16,8 +16,6 @@
     }
   }
 
-
-
   .session-offerings-content {
     @include m.detail-container-content;
   }
@@ -33,11 +31,11 @@
       border-right: 1px solid c.$white;
       color: c.$white;
       overflow: hidden;
-      padding: .5rem .25rem;
+      padding: 0.5rem 0.25rem;
       white-space: nowrap;
 
       @include m.for-tablet-and-up {
-        padding: .5rem;
+        padding: 0.5rem;
       }
     }
   }

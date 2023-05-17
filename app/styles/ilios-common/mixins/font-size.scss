@@ -19,11 +19,11 @@
   }
 
   line-height: calc(4px + 2ex);
-  
+
   font-size: 16px;
   //scale based on viewport width between 16px and 20px
   @include media.for-laptop-and-up {
-    font-size: calc(10px + .5vw);
+    font-size: calc(10px + 0.5vw);
   }
   @include media.for-desktop-and-up {
     font-size: 20px;

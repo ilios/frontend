@@ -11,7 +11,7 @@
       opacity: 75;
       position: absolute;
       top: 2em;
-      transition: all .5s ease-in-out;
+      transition: all 0.5s ease-in-out;
 
       &.loaded {
         opacity: 0;
@@ -25,7 +25,7 @@
 
     .highlight {
       color: c.$orange;
-      @include m.font-size('medium');
+      @include m.font-size("medium");
     }
 
     .on {
@@ -74,7 +74,6 @@
     button {
       @include m.ilios-button;
     }
-
   }
 
   .no-content {

@@ -2,7 +2,6 @@
 @use "../mixins" as m;
 
 .objective-manager {
-
   .objectivetitle {
     @include m.ilios-browser-defaults;
   }
@@ -10,7 +9,7 @@
   h2 {
     background-color: c.$slightWhite;
     margin-bottom: 1rem;
-    padding: .5rem;
+    padding: 0.5rem;
   }
 
   .selected {
@@ -26,7 +25,7 @@
 
     li {
       list-style-position: outside;
-      padding: .2rem 0 .3rem 1.5rem;
+      padding: 0.2rem 0 0.3rem 1.5rem;
 
       ul {
         margin-left: 1.5rem;
@@ -40,9 +39,9 @@
   }
 
   h5 {
-    @include m.font-size('small');
+    @include m.font-size("small");
     font-weight: bold;
-    margin: .8rem;
-    padding: .2rem .5rem;
+    margin: 0.8rem;
+    padding: 0.2rem 0.5rem;
   }
 }

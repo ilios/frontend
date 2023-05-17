@@ -7,7 +7,7 @@
   @include m.dashboard-component;
 
   .dashboard-calendar-content {
-    padding: .5em;
+    padding: 0.5em;
 
     .calendar-controls {
       .calendar-options-control {
@@ -39,7 +39,7 @@
       .calendar-filter-list {
         border: 1px solid c.$blueMunsell;
         float: left;
-        @include m.font-size('small');
+        @include m.font-size("small");
         margin-bottom: 1em;
         width: 33%;
 
@@ -47,14 +47,14 @@
           @include m.ilios-heading-h5;
           display: block;
           background-color: c.$culturedGrey;
-          border-bottom: .5px solid c.$davysGrey;
-          padding: .25em;
+          border-bottom: 0.5px solid c.$davysGrey;
+          padding: 0.25em;
           width: 100%;
         }
 
         h6 {
           @include m.ilios-heading-h6;
-          padding-bottom: .25em;
+          padding-bottom: 0.25em;
         }
 
         ul {
@@ -105,13 +105,13 @@
 
       .filters-header {
         border-bottom: 1px solid c.$davysGrey;
-        @include m.font-size('small');
+        @include m.font-size("small");
       }
 
       .filter-tags {
         .filter-tag {
           @include m.ilios-button-reset;
-          @include m.font-size('small');
+          @include m.font-size("small");
           border-radius: 3px;
           display: inline-block;
           padding: 2px 5px;
@@ -143,7 +143,7 @@
 
         .filters-clear-filters {
           @include m.ilios-button-reset;
-          @include m.font-size('small');
+          @include m.font-size("small");
           color: c.$blueMunsell;
         }
       }

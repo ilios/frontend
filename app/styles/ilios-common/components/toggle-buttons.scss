@@ -11,12 +11,12 @@
   label {
     background-color: c.$white;
     color: c.$tealBlue;
-    border: 1px solid rgba(c.$black, .2);
+    border: 1px solid rgba(c.$black, 0.2);
     display: inline-block;
-    @include m.font-size('small');
+    @include m.font-size("small");
     font-weight: 600;
     min-width: 3em;
-    padding: .25em .5em;
+    padding: 0.25em 0.5em;
     text-align: center;
     text-shadow: none;
 
@@ -37,5 +37,4 @@
     background-color: c.$tealBlue;
     color: c.$white;
   }
-
 }
