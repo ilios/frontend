@@ -91,3 +91,33 @@ jobs:
       run: npm run percy:test
       env:
         PERCY_TOKEN: d047c88195000471f31972e862cdaa4d80358db3a3bd8c9bee509d4feebd365e
+
+  test-with-embroider:
+    name: Test With Embroider
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BUILD_WITH_EMBROIDER: true
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
+  build-with-embroider:
+    name: Build With Embroider
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BUILD_WITH_EMBROIDER: true
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: npm
+    - run: npm ci
+    - run: npm run build
