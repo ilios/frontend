@@ -170,7 +170,7 @@
             @learnerGroup={{@learnerGroup}}
             @done={{fn @setIsBulkAssigning false}}
           />
-        {{else}}
+        {{else if @isEditing}}
           <div class="learner-group-overview-content">
             <LearnerGroup::UserManager
               @learnerGroupId={{this.learnerGroupId}}
@@ -180,11 +180,19 @@
               @users={{this.usersToPassToManager}}
               @sortBy={{this.sortUsersBy}}
               @setSortBy={{@setSortUsersBy}}
-              @isEditing={{@isEditing}}
               @addUserToGroup={{perform this.addUserToGroup}}
               @removeUserFromGroup={{perform this.removeUserToCohort}}
               @addUsersToGroup={{perform this.addUsersToGroup}}
               @removeUsersFromGroup={{perform this.removeUsersToCohort}}
+            />
+          </div>
+        {{else}}
+          <div class="learner-group-overview-content">
+            <LearnerGroup::Members
+              @learnerGroupId={{this.learnerGroupId}}
+              @setSortBy={{@setSortUsersBy}}
+              @sortBy={{this.sortUsersBy}}
+              @users={{this.usersToPassToManager}}
             />
           </div>
         {{/if}}

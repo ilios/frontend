@@ -13,79 +13,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
-    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
-    const user1 = this.server.create('user', {
-      firstName: 'Jasper',
-      lastName: 'Dog',
-      campusId: '1234',
-      email: 'testemail',
-      enabled: true,
-      learnerGroups: [learnerGroup],
-    });
-    const user2 = this.server.create('user', {
-      firstName: 'Jackson',
-      lastName: 'Doggy',
-      campusId: '123',
-      email: 'testemail2',
-      enabled: false,
-      learnerGroups: [learnerGroup],
-    });
-    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
-    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
-    const learnerGroupModel = await this.owner
-      .lookup('service:store')
-      .findRecord('learner-group', learnerGroup.id);
-    // @todo gross! see if proxy can be eliminated in upstream component <LearnergroupSummary> [ ST 2020/08/07 ]
-    const userModelProxy1 = ObjectProxy.create({
-      content: userModel1,
-      lowestGroupInTree: learnerGroupModel,
-      lowestGroupInTreeTitle: learnerGroupModel.title,
-    });
-    const userModelProxy2 = ObjectProxy.create({
-      content: userModel2,
-      lowestGroupInTree: learnerGroupModel,
-      lowestGroupInTreeTitle: learnerGroupModel.title,
-    });
-    this.set('users', [userModelProxy1, userModelProxy2]);
-    this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @isEditing={{false}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
-    assert.strictEqual(component.usersInCurrentGroup.length, 2);
-    assert.strictEqual(
-      component.usersInCurrentGroup[0].name.userNameInfo.fullName,
-      'Jasper M. Dog'
-    );
-    assert.strictEqual(component.usersInCurrentGroup[0].campusId.text, '1234');
-    assert.strictEqual(component.usersInCurrentGroup[0].email.text, 'testemail');
-    assert.notOk(component.usersInCurrentGroup[0].name.isClickable);
-    assert.notOk(component.usersInCurrentGroup[0].campusId.isClickable);
-    assert.notOk(component.usersInCurrentGroup[0].email.isClickable);
-    assert.notOk(component.usersInCurrentGroup[0].isDisabled);
-    assert.strictEqual(
-      component.usersInCurrentGroup[1].name.userNameInfo.fullName,
-      'Jackson M. Doggy'
-    );
-    assert.strictEqual(component.usersInCurrentGroup[1].campusId.text, '123');
-    assert.strictEqual(component.usersInCurrentGroup[1].email.text, 'testemail2');
-    assert.notOk(component.usersInCurrentGroup[1].name.isClickable);
-    assert.notOk(component.usersInCurrentGroup[1].campusId.isClickable);
-    assert.notOk(component.usersInCurrentGroup[1].email.isClickable);
-    assert.ok(component.usersInCurrentGroup[1].isDisabled);
-  });
-
   test('it renders when editing', async function (assert) {
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user1 = this.server.create('user', {
@@ -130,7 +57,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -212,7 +138,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="fullName"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -234,15 +159,19 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   test('add multiple users', async function (assert) {
     assert.expect(5);
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
-    const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
+    const subGroup = this.server.create('learnerGroup', { parent: learnerGroup });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', learnerGroup.id);
+    const subGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', subGroup.id);
     const userModelProxy = ObjectProxy.create({
       content: userModel,
-      lowestGroupInTree: learnerGroupModel,
-      lowestGroupInTreeTitle: learnerGroupModel.title,
+      lowestGroupInTree: subGroupModel,
+      lowestGroupInTreeTitle: subGroupModel.title,
     });
 
     this.set('users', [userModelProxy]);
@@ -258,7 +187,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{this.addMany}}
@@ -266,7 +194,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     />`);
 
     assert.notOk(component.membersCanBeAdded);
-    await component.usersInCurrentGroup[0].select();
+    await component.usersNotInCurrentGroup[0].select();
     assert.ok(component.membersCanBeAdded);
     assert.strictEqual(component.addButtonText, 'Move learner to this group');
     await component.add();
@@ -300,7 +228,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -344,7 +271,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{this.removeOne}}
       @addUsersToGroup={{(noop)}}
@@ -387,7 +313,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{this.addOne}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -430,7 +355,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -441,10 +365,11 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersNotInCurrentGroup[0].canBeAdded);
     await component.usersInCurrentGroup[0].select();
     assert.notOk(component.usersInCurrentGroup[0].canBeRemoved);
+    await component.usersNotInCurrentGroup[0].select();
     assert.notOk(component.usersNotInCurrentGroup[0].canBeAdded);
   });
 
-  test('check all', async function (assert) {
+  test('check all users in group', async function (assert) {
     assert.expect(7);
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
@@ -466,7 +391,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     });
 
     this.set('users', [userModelProxy, userModelProxy2]);
-    this.set('addMany', ([userA, userB]) => {
+    this.set('removeMany', ([userA, userB]) => {
       assert.strictEqual(userModel, userA);
       assert.strictEqual(userModel2, userB);
     });
@@ -480,17 +405,69 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{this.removeMany}}
+    />`);
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    await component.selectAllUsersInGroup.toggle();
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
+    assert.strictEqual(component.removeButtonText, 'Remove 2 learners to this cohort');
+    await component.remove();
+  });
+
+  test('check all users not in group', async function (assert) {
+    assert.expect(7);
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const subGroup = this.server.create('learnerGroup', { parent: learnerGroup });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
+    const user2 = this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+    const subGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', subGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: subGroupModel,
+      lowestGroupInTreeTitle: subGroupModel.title,
+    });
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: subGroupModel,
+      lowestGroupInTreeTitle: subGroupModel.title,
+    });
+
+    this.set('users', [userModelProxy, userModelProxy2]);
+    this.set('addMany', ([userA, userB]) => {
+      assert.strictEqual(userModel, userA);
+      assert.strictEqual(userModel2, userB);
+    });
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::UserManager
+      @learnerGroupId={{this.learnerGroup.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{(noop)}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{this.addMany}}
       @removeUsersFromGroup={{(noop)}}
     />`);
-    assert.notOk(component.usersInCurrentGroup[0].isSelected);
-    assert.notOk(component.usersInCurrentGroup[0].isSelected);
-    await component.selectAll.toggle();
-    assert.ok(component.usersInCurrentGroup[0].isSelected);
-    assert.ok(component.usersInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
+    await component.selectAllUsersNotInGroup.toggle();
+    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
+    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
     assert.strictEqual(component.addButtonText, 'Move 2 learners to this group');
     await component.add();
   });
@@ -526,7 +503,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -535,22 +511,22 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
-    assert.notOk(component.selectAll.isChecked);
-    assert.notOk(component.selectAll.isIndeterminate);
+    assert.notOk(component.selectAllUsersInGroup.isChecked);
+    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
     await component.usersInCurrentGroup[0].select();
-    assert.notOk(component.selectAll.isChecked);
-    assert.ok(component.selectAll.isIndeterminate);
+    assert.notOk(component.selectAllUsersInGroup.isChecked);
+    assert.ok(component.selectAllUsersInGroup.isIndeterminate);
     await component.usersInCurrentGroup[1].select();
-    assert.ok(component.selectAll.isChecked);
-    assert.notOk(component.selectAll.isIndeterminate);
+    assert.ok(component.selectAllUsersInGroup.isChecked);
+    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
     assert.ok(component.usersInCurrentGroup[0].isSelected);
     assert.ok(component.usersInCurrentGroup[1].isSelected);
-    await component.selectAll.toggle();
+    await component.selectAllUsersInGroup.toggle();
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
   });
 
-  test('filtering and bulk-selection', async function (assert) {
+  test('filtering and bulk-selection of users in group', async function (assert) {
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user1 = this.server.create('user', { enabled: true, displayName: 'Alpha' });
     const user2 = this.server.create('user', { enabled: true, displayName: 'Beta' });
@@ -590,7 +566,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -604,56 +579,165 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
     assert.notOk(component.usersInCurrentGroup[2].isSelected);
-    assert.notOk(component.selectAll.isChecked);
-    assert.notOk(component.selectAll.isIndeterminate);
+    assert.notOk(component.selectAllUsersInGroup.isChecked);
+    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
 
     await component.filter('Zzzz');
     assert.strictEqual(component.usersInCurrentGroup.length, 0);
-    assert.notOk(component.selectAll.isChecked);
-    assert.notOk(component.selectAll.isIndeterminate);
+    assert.notOk(component.selectAllUsersInGroup.isChecked);
+    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
 
     await component.filter('');
     assert.strictEqual(component.usersInCurrentGroup.length, 3);
-    assert.notOk(component.selectAll.isChecked);
-    assert.notOk(component.selectAll.isIndeterminate);
+    assert.notOk(component.selectAllUsersInGroup.isChecked);
+    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
 
     await component.usersInCurrentGroup[2].select();
-    assert.notOk(component.selectAll.isChecked);
-    assert.ok(component.selectAll.isIndeterminate);
+    assert.notOk(component.selectAllUsersInGroup.isChecked);
+    assert.ok(component.selectAllUsersInGroup.isIndeterminate);
 
     await component.filter('Alpha');
-    assert.notOk(component.selectAll.isChecked);
-    assert.ok(component.selectAll.isIndeterminate);
+    assert.notOk(component.selectAllUsersInGroup.isChecked);
+    assert.ok(component.selectAllUsersInGroup.isIndeterminate);
     assert.strictEqual(component.usersInCurrentGroup.length, 1);
     assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
 
-    await component.selectAll.toggle();
-    assert.ok(component.selectAll.isChecked);
-    assert.ok(component.selectAll.isIndeterminate);
+    await component.selectAllUsersInGroup.toggle();
+    assert.ok(component.selectAllUsersInGroup.isChecked);
+    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
     assert.ok(component.usersInCurrentGroup[0].isSelected);
 
     await component.filter('');
     assert.strictEqual(component.usersInCurrentGroup.length, 3);
-    assert.ok(component.selectAll.isChecked);
-    assert.ok(component.selectAll.isIndeterminate);
+    assert.notOk(component.selectAllUsersInGroup.isChecked);
+    assert.ok(component.selectAllUsersInGroup.isIndeterminate);
     assert.ok(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
-    assert.ok(component.usersInCurrentGroup[2].isSelected);
+    assert.notOk(component.usersInCurrentGroup[2].isSelected);
 
-    await component.selectAll.toggle();
-    assert.ok(component.selectAll.isChecked);
-    assert.notOk(component.selectAll.isIndeterminate);
+    await component.selectAllUsersInGroup.toggle();
+    assert.ok(component.selectAllUsersInGroup.isChecked);
+    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
     assert.ok(component.usersInCurrentGroup[0].isSelected);
     assert.ok(component.usersInCurrentGroup[1].isSelected);
     assert.ok(component.usersInCurrentGroup[2].isSelected);
 
-    await component.selectAll.toggle();
-    assert.notOk(component.selectAll.isChecked);
-    assert.notOk(component.selectAll.isIndeterminate);
+    await component.selectAllUsersInGroup.toggle();
+    assert.notOk(component.selectAllUsersInGroup.isChecked);
+    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
     assert.notOk(component.usersInCurrentGroup[2].isSelected);
+  });
+
+  test('filtering and bulk-selection of users not in group', async function (assert) {
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const subGroup = this.server.create('learnerGroup', { parent: learnerGroup });
+    const user1 = this.server.create('user', { enabled: true, displayName: 'Alpha' });
+    const user2 = this.server.create('user', { enabled: true, displayName: 'Beta' });
+    const user3 = this.server.create('user', { enabled: true, displayName: 'Gamma' });
+    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
+    const userModel3 = await this.owner.lookup('service:store').findRecord('user', user3.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+    const subGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', subGroup.id);
+
+    const userModelProxy = ObjectProxy.create({
+      content: userModel1,
+      lowestGroupInTree: subGroupModel,
+      lowestGroupInTreeTitle: subGroupModel.title,
+    });
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: subGroupModel,
+      lowestGroupInTreeTitle: subGroupModel.title,
+    });
+
+    const userModelProxy3 = ObjectProxy.create({
+      content: userModel3,
+      lowestGroupInTree: subGroupModel,
+      lowestGroupInTreeTitle: subGroupModel.title,
+    });
+
+    this.set('users', [userModelProxy, userModelProxy2, userModelProxy3]);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnerGroup::UserManager
+      @learnerGroupId={{this.learnerGroup.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
+    />`);
+
+    assert.strictEqual(component.usersNotInCurrentGroup.length, 3);
+    assert.strictEqual(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
+    assert.strictEqual(component.usersNotInCurrentGroup[1].name.userNameInfo.fullName, 'Beta');
+    assert.strictEqual(component.usersNotInCurrentGroup[2].name.userNameInfo.fullName, 'Gamma');
+    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersNotInCurrentGroup[1].isSelected);
+    assert.notOk(component.usersNotInCurrentGroup[2].isSelected);
+    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
+    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
+
+    await component.filter('Zzzz');
+    assert.strictEqual(component.usersNotInCurrentGroup.length, 0);
+    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
+    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
+
+    await component.filter('');
+    assert.strictEqual(component.usersNotInCurrentGroup.length, 3);
+    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
+    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
+
+    await component.usersNotInCurrentGroup[2].select();
+    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
+    assert.ok(component.selectAllUsersNotInGroup.isIndeterminate);
+
+    await component.filter('Alpha');
+    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
+    assert.ok(component.selectAllUsersNotInGroup.isIndeterminate);
+    assert.strictEqual(component.usersNotInCurrentGroup.length, 1);
+    assert.strictEqual(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
+    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
+
+    await component.selectAllUsersNotInGroup.toggle();
+    assert.ok(component.selectAllUsersNotInGroup.isChecked);
+    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
+    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
+
+    await component.filter('');
+    assert.strictEqual(component.usersNotInCurrentGroup.length, 3);
+    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
+    assert.ok(component.selectAllUsersNotInGroup.isIndeterminate);
+    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersNotInCurrentGroup[1].isSelected);
+    assert.notOk(component.usersNotInCurrentGroup[2].isSelected);
+
+    await component.selectAllUsersNotInGroup.toggle();
+    assert.ok(component.selectAllUsersNotInGroup.isChecked);
+    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
+    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
+    assert.ok(component.usersNotInCurrentGroup[1].isSelected);
+    assert.ok(component.usersNotInCurrentGroup[2].isSelected);
+
+    await component.selectAllUsersNotInGroup.toggle();
+    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
+    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
+    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersNotInCurrentGroup[1].isSelected);
+    assert.notOk(component.usersNotInCurrentGroup[2].isSelected);
   });
 
   test('root users can manage disabled users', async function (assert) {
@@ -684,7 +768,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -723,7 +806,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -787,7 +869,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{false}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -847,7 +928,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -886,7 +966,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -925,7 +1004,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -960,7 +1038,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -995,7 +1072,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}
@@ -1030,7 +1106,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @users={{this.users}}
       @sortBy="id"
       @setSortBy={{(noop)}}
-      @isEditing={{true}}
       @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{(noop)}}

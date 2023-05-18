@@ -9,8 +9,10 @@ export default class LearnerGroupUserManagerComponent extends Component {
   @service currentUser;
 
   @tracked filter = '';
-  @tracked selectedUsers = [];
-  @tracked usersBeingMoved = [];
+  @tracked selectedGroupUsers = [];
+  @tracked selectedNonGroupUsers = [];
+  @tracked usersBeingAddedToGroup = [];
+  @tracked usersBeingRemovedFromGroup = [];
 
   get sortedAscending() {
     return this.args.sortBy.search(/desc/) === -1;
@@ -47,18 +49,55 @@ export default class LearnerGroupUserManagerComponent extends Component {
     });
   }
 
-  get usersInCurrentGroup() {
-    if (!this.args.isEditing) {
-      return this.filteredUsers;
-    }
+  get groupUsers() {
     return this.filteredUsers.filter(
       (user) => user.get('lowestGroupInTree').id === this.args.learnerGroupId
     );
   }
 
-  get usersNotInCurrentGroup() {
+  get nonGroupUsers() {
     return this.filteredUsers.filter(
       (user) => user.get('lowestGroupInTree').id !== this.args.learnerGroupId
+    );
+  }
+
+  get hasSelectedGroupUsers() {
+    return !!this.selectedGroupUsers.length;
+  }
+
+  get hasSelectedNonGroupUsers() {
+    return !!this.selectedNonGroupUsers.length;
+  }
+
+  get hasSomeSelectedGroupUsers() {
+    return (
+      this.hasSelectedGroupUsers &&
+      !mapBy(this.groupUsers, 'content').every((user) => this.selectedGroupUsers.includes(user))
+    );
+  }
+
+  get hasSomeSelectedNonGroupUsers() {
+    return (
+      this.hasSelectedNonGroupUsers &&
+      !mapBy(this.nonGroupUsers, 'content').every((user) =>
+        this.selectedNonGroupUsers.includes(user)
+      )
+    );
+  }
+
+  get hasAllSelectedGroupUsers() {
+    return (
+      this.hasSelectedGroupUsers &&
+      mapBy(this.groupUsers, 'content').every((user) => this.selectedGroupUsers.includes(user))
+    );
+  }
+
+  get hasAllSelectedNonGroupUsers() {
+    return (
+      this.hasSelectedNonGroupUsers &&
+      mapBy(this.nonGroupUsers, 'content').every((user) =>
+        this.selectedNonGroupUsers.includes(user)
+      )
     );
   }
 
@@ -71,62 +110,104 @@ export default class LearnerGroupUserManagerComponent extends Component {
   }
 
   @action
-  toggleUserSelection(user) {
-    if (this.selectedUsers.includes(user)) {
-      this.selectedUsers = this.selectedUsers.filter((selectedUser) => selectedUser !== user);
+  toggleGroupUserSelection(user) {
+    if (this.selectedGroupUsers.includes(user)) {
+      this.selectedGroupUsers = this.selectedGroupUsers.filter(
+        (selectedUser) => selectedUser !== user
+      );
     } else {
-      this.selectedUsers = [...this.selectedUsers, user];
+      this.selectedGroupUsers = [...this.selectedGroupUsers, user];
     }
   }
 
   @action
-  toggleUserSelectionAllOrNone() {
-    const filteredUsers = mapBy(this.filteredUsers, 'content');
-    const unselectedFilteredUsers = filteredUsers.filter((user) => {
-      return !this.selectedUsers.includes(user);
-    });
-    if (this.filteredUsers && unselectedFilteredUsers.length) {
-      this.selectedUsers = [...this.selectedUsers, ...unselectedFilteredUsers];
+  toggleNonGroupUserSelection(user) {
+    if (this.selectedNonGroupUsers.includes(user)) {
+      this.selectedNonGroupUsers = this.selectedNonGroupUsers.filter(
+        (selectedUser) => selectedUser !== user
+      );
     } else {
-      this.selectedUsers = [];
+      this.selectedNonGroupUsers = [...this.selectedNonGroupUsers, user];
+    }
+  }
+
+  @action
+  toggleAllGroupUsersSelection() {
+    if (!this.groupUsers.length) {
+      return;
+    }
+    if (this.hasAllSelectedGroupUsers) {
+      this.selectedGroupUsers = [];
+    } else {
+      this.selectedGroupUsers = [...mapBy(this.groupUsers, 'content')];
+    }
+  }
+
+  @action
+  toggleAllNonGroupUsersSelection() {
+    if (!this.nonGroupUsers.length) {
+      return;
+    }
+    if (this.hasAllSelectedNonGroupUsers) {
+      this.selectedNonGroupUsers = [];
+    } else {
+      this.selectedNonGroupUsers = [...mapBy(this.nonGroupUsers, 'content')];
     }
   }
 
   @enqueueTask
-  *addSingleUser(user) {
-    this.usersBeingMoved = [...this.usersBeingMoved, user];
+  *addUserToGroup(user) {
+    this.usersBeingAddedToGroup = [...this.usersBeingAddedToGroup, user];
     //timeout gives the spinner time to render
     yield timeout(1);
     yield this.args.addUserToGroup(user);
-    this.usersBeingMoved = this.usersBeingMoved.filter((movingUser) => movingUser !== user);
+    this.usersBeingAddedToGroup = this.usersBeingAddedToGroup.filter(
+      (movingUser) => movingUser !== user
+    );
   }
 
   @enqueueTask
-  *removeSingleUser(user) {
-    this.usersBeingMoved = [...this.usersBeingMoved, user];
+  *removeUserFromGroup(user) {
+    this.usersBeingRemovedFromGroup = [...this.usersBeingRemovedFromGroup, user];
     //timeout gives the spinner time to render
     yield timeout(1);
     yield this.args.removeUserFromGroup(user);
-    this.usersBeingMoved = this.usersBeingMoved.filter((movingUser) => movingUser !== user);
+    this.usersBeingRemovedFromGroup = this.usersBeingRemovedFromGroup.filter(
+      (movingUser) => movingUser !== user
+    );
   }
 
   @enqueueTask
-  *addSelectedUsers() {
-    this.usersBeingMoved = [...this.usersBeingMoved, ...this.selectedUsers];
+  *addUsersToGroup() {
+    this.usersBeingAddedToGroup = [...this.usersBeingAddedToGroup, ...this.selectedNonGroupUsers];
     //timeout gives the spinner time to render
     yield timeout(1);
-    yield this.args.addUsersToGroup(this.selectedUsers);
-    this.usersBeingMoved = this.usersBeingMoved.filter((user) => this.selectedUsers.includes(user));
-    this.selectedUsers = [];
+    yield this.args.addUsersToGroup(this.selectedNonGroupUsers);
+    this.usersBeingAddedToGroup = this.usersBeingAddedToGroup.filter((user) =>
+      this.selectedNonGroupUsers.includes(user)
+    );
+    this.selectedNonGroupUsers = [];
   }
 
   @enqueueTask
-  *removeSelectedUsers() {
-    this.usersBeingMoved = [...this.usersBeingMoved, ...this.selectedUsers];
+  *removeUsersFromGroup() {
+    this.usersBeingRemovedFromGroup = [
+      ...this.usersBeingRemovedFromGroup,
+      ...this.selectedGroupUsers,
+    ];
     //timeout gives the spinner time to render
     yield timeout(1);
-    yield this.args.removeUsersFromGroup(this.selectedUsers);
-    this.usersBeingMoved = this.usersBeingMoved.filter((user) => this.selectedUsers.includes(user));
-    this.selectedUsers = [];
+    yield this.args.removeUsersFromGroup(this.selectedGroupUsers);
+    this.usersBeingRemovedFromGroup = this.usersBeingRemovedFromGroup.filter((user) =>
+      this.selectedGroupUsers.includes(user)
+    );
+    this.selectedGroupUsers = [];
+  }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    //undo selections
+    this.selectedGroupUsers = [];
+    this.selectedNonGroupUsers = [];
   }
 }
