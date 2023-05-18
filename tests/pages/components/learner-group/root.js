@@ -14,6 +14,7 @@ import cohortUserManager from './cohort-user-manager';
 import instructorManager from './instructor-manager';
 import bulkAssignment from './bulk-assignment';
 import userManager from './user-manager';
+import members from './members';
 import subgroupList from './list';
 import calendar from './calendar';
 import newLearnerGroupForm from './new';
@@ -78,6 +79,7 @@ const definition = {
   bulkAssignment,
   userManager,
   calendar,
+  members,
   subgroups: {
     scope: '[data-test-subgroups]',
     title: text('h3'),

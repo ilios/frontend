@@ -289,7 +289,7 @@ module('Acceptance | Learner Group', function (hooks) {
     assert.strictEqual(learnerGroupsPage.list.items[0].title, 'learner group 0');
     await learnerGroupsPage.list.items[0].clickTitle();
     assert.strictEqual(currentURL(), '/learnergroups/1');
-    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 5);
+    assert.strictEqual(page.root.members.users.length, 5);
     assert.strictEqual(page.root.cohortUserManager.users.length, 5);
   });
 
@@ -379,7 +379,7 @@ module('Acceptance | Learner Group', function (hooks) {
 
     await page.visit({ learnerGroupId: 2 });
     assert.strictEqual(currentURL(), '/learnergroups/2');
-    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
+    assert.strictEqual(page.root.members.users.length, 1);
     await page.root.actions.buttons.manageUsers.click();
     assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
     assert.strictEqual(page.root.userManager.usersNotInCurrentGroup.length, 2);
