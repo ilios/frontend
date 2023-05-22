@@ -128,6 +128,7 @@ const definition = {
     value: value('input'),
     isDisabled: property('disabled', 'input'),
     hasError: isVisible('.validation-error-message'),
+    errors: text('.validation-error-message'),
     hasBeenSyncedFromDirectory: hasClass('synced-from-directory'),
     submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
     cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),

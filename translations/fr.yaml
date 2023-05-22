@@ -453,6 +453,7 @@ general:
   yesPopulateGroup: "Oui!  Ajoutez la cohorte entière à mon nouveau groupe"
   zipCode: "Code postal"
 errors:
+  duplicateUsername: "Ce nom d'utilisateur est déjà pris par un autre compte utilisateur."
   reportMissingInstructor: "Instructeur requis"
   reportMissingMeshTerm: "terme de MeSH requis"
   reportMissingObjectForInstructor: "connexion requis quand `instructeur` est le sujet"

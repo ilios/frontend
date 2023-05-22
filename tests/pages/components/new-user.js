@@ -5,6 +5,7 @@ import {
   fillable,
   isVisible,
   property,
+  text,
   triggerable,
   value,
 } from 'ember-cli-page-object';
@@ -75,6 +76,7 @@ const definition = {
     set: fillable('input'),
     value: value('input'),
     hasError: isVisible('.validation-error-message'),
+    errors: text('.validation-error-message'),
     submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
     cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
   },

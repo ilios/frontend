@@ -4,11 +4,12 @@ import { inject as service } from '@ember/service';
 import { all, filter } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import moment from 'moment';
-import { validatable, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { validatable, Custom, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findBy, findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 @validatable
 export default class NewUserComponent extends Component {
+  @service intl;
   @service store;
   @service currentUser;
   @service flashMessages;
@@ -20,7 +21,11 @@ export default class NewUserComponent extends Component {
   @tracked @Length(1, 16) campusId = null;
   @tracked @Length(1, 16) otherId = null;
   @tracked @IsEmail() @Length(1, 100) @NotBlank() email = null;
-  @tracked @Length(1, 100) @NotBlank() username = null;
+  @tracked
+  @Length(1, 100)
+  @NotBlank()
+  @Custom('validateUsernameCallback', 'validateUsernameMessageCallback')
+  username = null;
   @tracked @NotBlank() password = null;
   @tracked @Length(1, 20) phone = null;
   @tracked schoolId = null;
@@ -120,6 +125,17 @@ export default class NewUserComponent extends Component {
       const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
       return finalYear > lastYear;
     });
+  }
+
+  async validateUsernameCallback() {
+    const auths = await this.store.query('authentication', {
+      filters: { username: this.username },
+    });
+    return !auths.length;
+  }
+
+  validateUsernameMessageCallback() {
+    return this.intl.t('errors.duplicateUsername');
   }
 
   @dropTask
