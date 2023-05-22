@@ -37,13 +37,13 @@ export default class UserProfilePermissionsComponent extends Component {
     return new TrackedAsyncData(this.args.user.administeredSchools);
   }
 
-  crossesBoundryConfig = new TrackedAsyncData(
+  crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
   );
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
-    return this.crossesBoundryConfig.isResolved ? this.crossesBoundryConfig.value : false;
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }
 
   get schools() {

@@ -14,7 +14,7 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service iliosConfig;
   @service currentUser;
 
-  crossesBoundryConfig = new TrackedAsyncData(
+  crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
   );
 
@@ -22,7 +22,7 @@ export default class ReportsSubjectCourseComponent extends Component {
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
-    return this.crossesBoundryConfig.isResolved ? this.crossesBoundryConfig.value : false;
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }
 
   get canViewCourse() {

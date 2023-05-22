@@ -43,7 +43,7 @@ export default class CoursesController extends Controller {
     this.dataLoader,
   ]);
   userModelData = new TrackedAsyncData(this.currentUser.getModel());
-  crossesBoundryConfig = new TrackedAsyncData(
+  crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
   );
 
@@ -62,7 +62,7 @@ export default class CoursesController extends Controller {
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
-    return this.crossesBoundryConfig.isResolved ? this.crossesBoundryConfig.value : false;
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }
 
   get userModel() {

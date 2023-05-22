@@ -6,12 +6,12 @@ import { cached } from '@glimmer/tracking';
 export default class ProgramYearHeaderComponent extends Component {
   @service iliosConfig;
 
-  crossesBoundryConfig = new TrackedAsyncData(
+  crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
   );
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
-    return this.crossesBoundryConfig.isResolved ? this.crossesBoundryConfig.value : false;
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }
 }

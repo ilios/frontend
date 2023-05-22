@@ -13,7 +13,7 @@ export default class ProgramYearListComponent extends Component {
   @tracked savedProgramYear;
   @service fetch;
 
-  crossesBoundryConfig = new TrackedAsyncData(
+  crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
   );
 
@@ -32,7 +32,7 @@ export default class ProgramYearListComponent extends Component {
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
-    return this.crossesBoundryConfig.isResolved ? this.crossesBoundryConfig.value : false;
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }
 
   @dropTask
