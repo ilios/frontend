@@ -9,7 +9,6 @@ module('Integration | Component | sortable th', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders with default options', async function (assert) {
-    assert.expect(6);
     this.set('label', 'Foo');
     await render(hbs`<SortableTh>{{this.label}}</SortableTh>
 `);
@@ -17,6 +16,7 @@ module('Integration | Component | sortable th', function (hooks) {
     assert.dom('th').hasClass('text-left');
     assert.dom('th').hasNoClass('hide-from-small-screen');
     assert.dom('th').hasAttribute('colspan', '1');
+    assert.dom('th').hasAttribute('aria-sort', 'none');
     assert.dom('th button').hasAttribute('title', '');
     assert.dom('svg').hasClass('fa-sort');
   });
@@ -73,6 +73,26 @@ module('Integration | Component | sortable th', function (hooks) {
 `
     );
     assert.dom('svg').hasClass('fa-arrow-down-9-1');
+    assert.dom('th').hasAttribute('aria-sort', 'descending');
+  });
+
+  test('sorted ascending', async function (assert) {
+    this.set('sortedBy', true);
+    this.set('sortedAscending', true);
+    this.set('sortType', 'numeric');
+    this.set('label', 'Foo');
+    await render(
+      hbs`<SortableTh
+            @sortedBy={{this.sortedBy}}
+            @sortedAscending={{this.sortedAscending}}
+            @sortType={{this.sortType}}
+          >
+            {{this.label}}
+          </SortableTh>
+`
+    );
+    assert.dom('svg').hasClass('fa-arrow-down-1-9');
+    assert.dom('th').hasAttribute('aria-sort', 'ascending');
   });
 
   test('no sort order specified defaults to ascending sort', async function (assert) {
@@ -84,6 +104,7 @@ module('Integration | Component | sortable th', function (hooks) {
 `
     );
     assert.dom('svg').hasClass('fa-arrow-down-1-9');
+    assert.dom('th').hasAttribute('aria-sort', 'ascending');
   });
 
   test('click event fires', async function (assert) {
