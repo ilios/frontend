@@ -2,8 +2,8 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolCompetenciesListItemComponent extends Component {
@@ -12,8 +12,24 @@ export default class SchoolCompetenciesListItemComponent extends Component {
   @tracked isManaging = false;
   @tracked pcrsToRemove = [];
   @tracked pcrsToAdd = [];
-  @use competencyPcrses = new ResolveAsyncValue(() => [this.args.competency?.aamcPcrses, []]);
-  @use allPcrses = new ResolveAsyncValue(() => [this.store.findAll('aamcPcrs'), []]);
+
+  @cached
+  get competencyPcrsesData() {
+    return new TrackedAsyncData(this.args.competency?.aamcPcrses);
+  }
+
+  get competencyPcrses() {
+    return this.competencyPcrsesData.isResolved ? this.competencyPcrsesData.value : [];
+  }
+
+  @cached
+  get allPcrsesData() {
+    return new TrackedAsyncData(this.store.findAll('aamcPcrs'));
+  }
+
+  get allPcrses() {
+    return this.allPcrsesData.isResolved ? this.allPcrsesData.value : [];
+  }
 
   get selectedPcrses() {
     const filteredCurrent = this.competencyPcrses.filter((p) => {

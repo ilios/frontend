@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import { filter } from 'rsvp';
+import { filter, map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import ResolveAllValues from 'ilios/classes/resolve-all-values';
-import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
@@ -14,14 +14,32 @@ export default class ProgramYearCompetenciesComponent extends Component {
   @service flashMessages;
   @tracked competenciesToAdd = [];
   @tracked competenciesToRemove = [];
-  @use program = new ResolveAsyncValue(() => [this.args.programYear.program]);
-  @use school = new ResolveAsyncValue(() => [this.program?.school]);
-  @use competencies = new ResolveAsyncValue(() => [this.school?.competencies, []]);
-  @use allDomains = new ResolveAllValues(() => [mapBy(this.competencies?.slice() ?? [], 'domain')]);
-  @use programYearCompetencies = new ResolveAsyncValue(() => [
-    this.args.programYear.competencies,
-    [],
-  ]);
+
+  @cached
+  get upstreamRelationshipsData() {
+    return new TrackedAsyncData(this.resolveUpstreamRelationships(this.args.programYear));
+  }
+
+  @cached
+  get upstreamRelationships() {
+    return this.upstreamRelationshipsData.isResolved ? this.upstreamRelationshipsData.value : null;
+  }
+
+  get program() {
+    return this.upstreamRelationships?.program;
+  }
+
+  get school() {
+    return this.upstreamRelationships?.school;
+  }
+
+  get competencies() {
+    return this.upstreamRelationships?.competencies || [];
+  }
+
+  get programYearCompetencies() {
+    return this.upstreamRelationships?.programYearCompetencies || [];
+  }
 
   @use competenciesWithSelectedChildren = new AsyncProcess(() => [
     this.getCompetenciesWithSelectedChildren,
@@ -30,10 +48,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
   ]);
 
   get domains() {
-    if (!this.allDomains) {
-      return [];
-    }
-    return uniqueValues(this.allDomains);
+    return uniqueValues(this.upstreamRelationships?.domains || []);
   }
 
   get selectedCompetencies() {
@@ -41,6 +56,16 @@ export default class ProgramYearCompetenciesComponent extends Component {
       return !this.competenciesToRemove.includes(c);
     });
     return uniqueValues([...this.competenciesToAdd, ...filteredCurrent]);
+  }
+
+  async resolveUpstreamRelationships(programYear) {
+    const program = await programYear.program;
+    const school = await program.school;
+    const competencies = await school.competencies;
+    const domains = await map(competencies.slice(), async (c) => c.domain);
+    const programYearCompetencies = await programYear.competencies;
+
+    return { program, school, competencies, domains, programYearCompetencies };
   }
 
   async getCompetenciesWithSelectedChildren(selectedCompetencies, competencies) {

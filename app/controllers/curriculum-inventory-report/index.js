@@ -1,8 +1,8 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class CurriculumInventoryReportIndexController extends Controller {
   queryParams = ['leadershipDetails', 'manageLeadership'];
@@ -10,7 +10,15 @@ export default class CurriculumInventoryReportIndexController extends Controller
   @tracked leadershipDetails = false;
   @tracked manageLeadership = false;
   @tracked isFinalized = this.model.belongsTo('export').id();
-  @use _sequenceBlocks = new ResolveAsyncValue(() => [this.model.sequenceBlocks]);
+
+  @cached
+  get _sequenceBlocksData() {
+    return new TrackedAsyncData(this.model.sequenceBlocks);
+  }
+
+  get _sequenceBlocks() {
+    return this._sequenceBlocksData.isResolved ? this._sequenceBlocksData.value : null;
+  }
 
   get canUpdate() {
     return this.hasUpdatePermissions && !this.isFinalized;

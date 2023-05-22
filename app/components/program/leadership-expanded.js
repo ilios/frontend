@@ -1,17 +1,22 @@
 import Component from '@glimmer/component';
 import { dropTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class ProgramLeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];
   @tracked directorsToRemove = [];
-  @use programDirectors = new ResolveAsyncValue(() => [this.args.program.directors]);
 
+  @cached
+  get programDirectors() {
+    return new TrackedAsyncData(this.args.program.directors);
+  }
+
+  @cached
   get directors() {
-    const directors = this.programDirectors?.slice() || [];
+    const directors = this.programDirectors.isResolved ? this.programDirectors.value.slice() : [];
     return [...directors, ...this.directorsToAdd].filter(
       (user) => !this.directorsToRemove.includes(user)
     );

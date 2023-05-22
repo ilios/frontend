@@ -2,14 +2,21 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, timeout } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class InstructorGroupUsersComponent extends Component {
   @tracked usersBuffer = [];
   @tracked isManaging = false;
 
-  @use users = new ResolveAsyncValue(() => [this.args.instructorGroup.users, []]);
+  @cached
+  get usersData() {
+    return new TrackedAsyncData(this.args.instructorGroup.users);
+  }
+
+  get users() {
+    return this.usersData.isResolved ? this.usersData.value : [];
+  }
 
   @action
   addUser(user) {

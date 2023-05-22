@@ -3,15 +3,21 @@ import { schedule } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class UserMenuComponent extends Component {
   @service intl;
   @service currentUser;
   @tracked isOpen = false;
   @tracked element;
-  @use model = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
+
+  userModel = new TrackedAsyncData(this.currentUser.getModel());
+
+  @cached
+  get model() {
+    return this.userModel.isResolved ? this.userModel.value : null;
+  }
 
   @action
   toggleMenu() {

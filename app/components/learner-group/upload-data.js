@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { map } from 'rsvp';
-import { restartableTask, task, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { filterBy, findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LearnerGroupUploadDataComponent extends Component {
@@ -15,8 +15,16 @@ export default class LearnerGroupUploadDataComponent extends Component {
   @service intl;
 
   @tracked file;
-  @use data = new ResolveAsyncValue(() => [this.parseFile.perform(this.parsedFileData)]);
   @tracked parsedFileData = [];
+
+  @cached
+  get uploadData() {
+    return new TrackedAsyncData(this.parseFile(this.parsedFileData));
+  }
+
+  get data() {
+    return this.uploadData.isResolved ? this.uploadData.value : null;
+  }
 
   get sampleData() {
     const sampleUploadFields = ['First', 'Last', 'CampusID', 'Sub Group Name'];
@@ -74,10 +82,9 @@ export default class LearnerGroupUploadDataComponent extends Component {
     }
   }
 
-  @restartableTask
-  *parseFile(proposedUsers) {
-    const cohort = yield this.args.learnerGroup.cohort;
-    const data = yield map(
+  async parseFile(proposedUsers) {
+    const cohort = await this.args.learnerGroup.cohort;
+    const data = await map(
       proposedUsers,
       async ({ firstName, lastName, campusId, subGroupName }) => {
         const errors = [];

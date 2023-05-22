@@ -2,8 +2,8 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { appVersion } from 'ilios/helpers/app-version';
 
 export default class ApplicationController extends Controller {
@@ -17,11 +17,12 @@ export default class ApplicationController extends Controller {
   @tracked errors = [];
   @tracked showErrorDisplay = false;
 
-  @use appVersion = new ResolveAsyncValue(() => [this.iliosConfig.getAppVersion()]);
+  appVersion = new TrackedAsyncData(this.iliosConfig.getAppVersion());
 
+  @cached
   get iliosVersionTag() {
-    if (this.appVersion) {
-      return `v${this.appVersion}`;
+    if (this.appVersion.isResolved) {
+      return `v${this.appVersion.value}`;
     }
 
     return '';

@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import PermissionChecker from 'ilios/classes/permission-checker';
 import { use } from 'ember-could-get-used-to-this';
 import { inject as service } from '@ember/service';
@@ -12,8 +13,24 @@ export default class ProgramYearListItemComponent extends Component {
 
   @tracked showRemoveConfirmation = false;
 
-  @use program = new ResolveAsyncValue(() => [this.args.programYear.program]);
-  @use cohort = new ResolveAsyncValue(() => [this.args.programYear.cohort]);
+  @cached
+  get programData() {
+    return new TrackedAsyncData(this.args.programYear.program);
+  }
+
+  get program() {
+    return this.programData.isResolved ? this.programData.value : null;
+  }
+
+  @cached
+  get cohortData() {
+    return new TrackedAsyncData(this.args.programYear.cohort);
+  }
+
+  get cohort() {
+    return this.cohortData.isResolved ? this.cohortData.value : null;
+  }
+
   @use canDeletePermission = new PermissionChecker(() => [
     'canDeleteProgramYear',
     this.args.programYear,

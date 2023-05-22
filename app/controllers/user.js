@@ -4,7 +4,8 @@ import { filter } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import PermissionChecker from 'ilios/classes/permission-checker';
 
 export default class UserController extends Controller {
@@ -31,7 +32,15 @@ export default class UserController extends Controller {
 
   @use canUpdate = new PermissionChecker(() => ['canUpdateUser', this.model]);
   @use canCreate = new AsyncProcess(() => [this.canCreateInSomeSchool.bind(this), this.allSchools]);
-  @use allSchools = new ResolveAsyncValue(() => [this.store.findAll('school'), []]);
+
+  @cached
+  get allSchoolsData() {
+    return new TrackedAsyncData(this.store.findAll('school'));
+  }
+
+  get allSchools() {
+    return this.allSchoolsData.isResolved ? this.allSchoolsData.value : [];
+  }
 
   async canCreateInSomeSchool(schools) {
     const schoolsWithCreateUserPermission = await filter(schools.slice(), async (school) => {

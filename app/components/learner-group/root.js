@@ -6,9 +6,9 @@ import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
 import { dropTask, enqueueTask, restartableTask, task } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
 import pad from 'pad';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import cloneLearnerGroup from '../../utils/clone-learner-group';
@@ -39,7 +39,14 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked currentGroupsSaved = 0;
   @tracked totalGroupsToSave = 0;
 
-  @use subGroups = new ResolveAsyncValue(() => [this.args.learnerGroup.children]);
+  @cached
+  get subGroupsData() {
+    return new TrackedAsyncData(this.args.learnerGroup.children);
+  }
+
+  get subGroups() {
+    return this.subGroupsData.isResolved ? this.subGroupsData.value : null;
+  }
 
   get learnerGroups() {
     if (!this.subGroups) {

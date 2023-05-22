@@ -2,7 +2,8 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import PermissionChecker from 'ilios/classes/permission-checker';
 import cloneLearnerGroup from 'ilios/utils/clone-learner-group';
@@ -21,16 +22,60 @@ export default class LearnerGroupsRootComponent extends Component {
   @tracked currentGroupsSaved;
 
   learnerGroupPromises = new Map();
-
-  @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
+  userModel = new TrackedAsyncData(this.currentUser.getModel());
   @use canCreate = new PermissionChecker(() => ['canCreateLearnerGroup', this.selectedSchool]);
-  @use programs = new ResolveAsyncValue(() => [this.selectedSchool.programs]);
-  @use defaultSelectedProgram = new ResolveAsyncValue(() => [
-    this.findBestDefaultProgram(this.programs),
-  ]);
-  @use programYears = new ResolveAsyncValue(() => [this.selectedProgram?.programYears]);
-  @use selectedCohort = new ResolveAsyncValue(() => [this.cohortLoadingPromise]);
-  @use learnerGroups = new ResolveAsyncValue(() => [this.selectedCohort?.learnerGroups]);
+
+  @cached
+  get user() {
+    return this.userModel.isResolved ? this.userModel.value : null;
+  }
+
+  @cached
+  get programsData() {
+    return new TrackedAsyncData(this.selectedSchool.programs);
+  }
+
+  get programs() {
+    return this.programsData.isResolved ? this.programsData.value : null;
+  }
+
+  @cached
+  get defaultSelectedProgramData() {
+    return new TrackedAsyncData(this.findBestDefaultProgram(this.programs));
+  }
+
+  get defaultSelectedProgram() {
+    return this.defaultSelectedProgramData.isResolved
+      ? this.defaultSelectedProgramData.value
+      : null;
+  }
+
+  @cached
+  get programYearsData() {
+    return new TrackedAsyncData(this.selectedProgram?.programYears);
+  }
+
+  get programYears() {
+    return this.programYearsData.isResolved ? this.programYearsData.value : null;
+  }
+
+  @cached
+  get selectedCohortData() {
+    return new TrackedAsyncData(this.cohortLoadingPromise);
+  }
+
+  get selectedCohort() {
+    return this.selectedCohortData.isResolved ? this.selectedCohortData.value : null;
+  }
+
+  @cached
+  get learnerGroupsData() {
+    return new TrackedAsyncData(this.selectedCohort?.learnerGroups);
+  }
+
+  get learnerGroups() {
+    return this.learnerGroupsData.isResolved ? this.learnerGroupsData.value : null;
+  }
 
   get newLearnerGroup() {
     //ensure we only show groups that haven't been deleted
