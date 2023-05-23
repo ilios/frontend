@@ -1,14 +1,17 @@
 import Component from '@glimmer/component';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class MeshDescriptorLastTreeNumber extends Component {
-  @use trees = new ResolveAsyncValue(() => [this.args.descriptor.trees]);
+  @cached
+  get trees() {
+    return new TrackedAsyncData(this.args.descriptor.trees);
+  }
 
   get value() {
-    if (!this.trees || !this.trees.length) {
+    if (!this.trees.isResolved || !this.trees.value.length) {
       return '';
     }
-    return this.trees.toArray().reverse()[0].treeNumber;
+    return this.trees.value.slice().reverse()[0].treeNumber;
   }
 }

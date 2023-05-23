@@ -5,8 +5,8 @@ import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { all } from 'rsvp';
 import scrollIntoView from 'scroll-into-view';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
@@ -24,7 +24,10 @@ export default class DetailCohortsComponent extends Component {
   @tracked learningMaterialUserRoles;
   @tracked title;
 
-  @use lmResource = new ResolveAsyncValue(() => [this.args.subject.learningMaterials]);
+  @cached
+  get lmData() {
+    return new TrackedAsyncData(this.args.subject.learningMaterials);
+  }
 
   constructor() {
     super(...arguments);
@@ -32,11 +35,12 @@ export default class DetailCohortsComponent extends Component {
     this.learningMaterialUserRoles = this.store.peekAll('learning-material-user-role').slice();
   }
 
+  @cached
   get materials() {
-    if (!this.lmResource) {
+    if (!this.lmData.isResolved) {
       return [];
     }
-    return this.lmResource.slice().sort(sortableByPosition);
+    return this.lmData.value.slice().sort(sortableByPosition);
   }
 
   get parentMaterialIds() {

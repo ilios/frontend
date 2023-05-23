@@ -8,8 +8,8 @@ import moment from 'moment';
 import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 @validatable
 export default class SessionOverview extends Component {
@@ -37,10 +37,41 @@ export default class SessionOverview extends Component {
   @tracked showSpecialEquipmentRequired = false;
   @tracked isIndependentLearning = false;
 
-  @use prerequisites = new ResolveAsyncValue(() => [this.args.session.prerequisites]);
-  @use postrequisite = new ResolveAsyncValue(() => [this.args.session.postrequisite]);
-  @use postrequisiteCourse = new ResolveAsyncValue(() => [this.postrequisite?.course]);
-  @use ilmSession = new ResolveAsyncValue(() => [this.args.session.ilmSession]);
+  @cached
+  get prerequisitesData() {
+    return new TrackedAsyncData(this.args.session.prerequisites);
+  }
+
+  @cached
+  get postrequisiteData() {
+    return new TrackedAsyncData(this.args.session.postrequisite);
+  }
+
+  @cached
+  get postrequisiteCourseData() {
+    return new TrackedAsyncData(this.postrequisite?.course);
+  }
+
+  @cached
+  get ilmSessionData() {
+    return new TrackedAsyncData(this.args.session.ilmSession);
+  }
+
+  get prerequisites() {
+    return this.prerequisitesData.isResolved ? this.prerequisitesData.value : null;
+  }
+
+  get postrequisite() {
+    return this.postrequisiteData.isResolved ? this.postrequisiteData.value : null;
+  }
+
+  get postrequisiteCourse() {
+    return this.postrequisiteCourseData.isResolved ? this.postrequisiteCourseData.value : null;
+  }
+
+  get ilmSession() {
+    return this.ilmSessionData.isResolved ? this.ilmSessionData.value : null;
+  }
 
   get filteredSessionTypes() {
     const selectedSessionTypeId = isEmpty(this.sessionType) ? -1 : this.sessionType.id;

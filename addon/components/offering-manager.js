@@ -3,8 +3,8 @@ import { action, set } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class OfferingManagerComponent extends Component {
   @service intl;
@@ -12,10 +12,41 @@ export default class OfferingManagerComponent extends Component {
   @tracked showRemoveConfirmation = false;
   @tracked hoveredGroups = [];
 
-  @use learnerGroups = new ResolveAsyncValue(() => [this.args.offering.learnerGroups]);
-  @use session = new ResolveAsyncValue(() => [this.args.offering?.session]);
-  @use course = new ResolveAsyncValue(() => [this.session?.course]);
-  @use cohorts = new ResolveAsyncValue(() => [this.course?.cohorts]);
+  @cached
+  get learnerGroupsData() {
+    return new TrackedAsyncData(this.args.offering.learnerGroups);
+  }
+
+  @cached
+  get sessionData() {
+    return new TrackedAsyncData(this.args.offering?.session);
+  }
+
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.session?.course);
+  }
+
+  @cached
+  get cohortsData() {
+    return new TrackedAsyncData(this.course?.cohorts);
+  }
+
+  get learnerGroups() {
+    return this.learnerGroupsData.isResolved ? this.learnerGroupsData.value : null;
+  }
+
+  get session() {
+    return this.sessionData.isResolved ? this.sessionData.value : null;
+  }
+
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
+
+  get cohorts() {
+    return this.cohortsData.isResolved ? this.cohortsData.value : null;
+  }
 
   get cohortsLoaded() {
     return !!this.cohorts;

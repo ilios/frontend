@@ -4,8 +4,8 @@ import { dropTask } from 'ember-concurrency';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { all } from 'rsvp';
 import { action } from '@ember/object';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class ObjectiveSortManagerComponent extends Component {
   @tracked totalObjectivesToSave;
@@ -15,9 +15,16 @@ export default class ObjectiveSortManagerComponent extends Component {
   @tracked draggedBelowItem;
   @tracked sortedItems;
 
-  @use objectives = new ResolveAsyncValue(() => [this.args.subject.xObjectives]);
+  @cached
+  get objectives() {
+    return new TrackedAsyncData(this.args.subject.xObjectives);
+  }
+
   get sortedObjectives() {
-    return this.objectives?.slice().sort(sortableByPosition) ?? [];
+    if (!this.objectives.isResolved) {
+      return [];
+    }
+    return this.objectives.value.slice().sort(sortableByPosition);
   }
 
   get items() {

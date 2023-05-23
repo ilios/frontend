@@ -6,7 +6,8 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 
@@ -19,11 +20,33 @@ export default class CourseMaterialsComponent extends Component {
 
   typesWithUrl = ['file', 'link'];
 
-  @use courseMaterials = new ResolveAsyncValue(() => [this.args.course.learningMaterials]);
-  @use loadedCourseSessions = new ResolveAsyncValue(() => [
-    this.dataLoader.loadCourseSessions(this.args.course.id),
-  ]);
-  @use courseSessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @cached
+  get courseMaterialsData() {
+    return new TrackedAsyncData(this.args.course.learningMaterials);
+  }
+
+  @cached
+  get loadedCourseSessionsData() {
+    return new TrackedAsyncData(this.dataLoader.loadCourseSessions(this.args.course.id));
+  }
+
+  @cached
+  get courseSessionsData() {
+    return new TrackedAsyncData(this.args.course.sessions);
+  }
+
+  get courseMaterials() {
+    return this.courseMaterialsData.isResolved ? this.courseMaterialsData.value : null;
+  }
+
+  get loadedCourseSessions() {
+    return this.loadedCourseSessionsData.isResolved ? this.loadedCourseSessionsData.value : null;
+  }
+
+  get courseSessions() {
+    return this.courseSessionsData.isResolved ? this.courseSessionsData.value : null;
+  }
+
   get sessions() {
     if (!this.loadedCourseSessions) {
       return false;

@@ -6,7 +6,8 @@ import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 
@@ -19,7 +20,15 @@ export default class VisualizerCourseObjectives extends Component {
   @tracked tooltipTitle = null;
   @tracked sortBy = 'percentage:desc';
 
-  @use courseSessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @cached
+  get courseSessionsData() {
+    return new TrackedAsyncData(this.args.course.sessions);
+  }
+
+  get courseSessions() {
+    return this.courseSessionsData.isResolved ? this.courseSessionsData.value : null;
+  }
+
   @use dataObjects = new AsyncProcess(() => [this.getDataObjects.bind(this), this.sessions]);
 
   get sortedAscending() {

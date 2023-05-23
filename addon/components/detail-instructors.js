@@ -4,8 +4,8 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class DetailInstructorsComponent extends Component {
   @service currentUser;
@@ -13,9 +13,33 @@ export default class DetailInstructorsComponent extends Component {
   @tracked instructorGroupBuffer = [];
   @tracked instructorBuffer = [];
   @tracked availableInstructorGroups;
-  @use ilmSession = new ResolveAsyncValue(() => [this.args.session.ilmSession]);
-  @use ilmInstructors = new ResolveAsyncValue(() => [this.ilmSession?.instructors]);
-  @use ilmInstructorGroups = new ResolveAsyncValue(() => [this.ilmSession?.instructorGroups]);
+
+  @cached
+  get ilmSessionData() {
+    return new TrackedAsyncData(this.args.session.ilmSession);
+  }
+
+  @cached
+  get ilmInstructorsData() {
+    return new TrackedAsyncData(this.ilmSession?.instructors);
+  }
+
+  @cached
+  get ilmInstructorGroupsData() {
+    return new TrackedAsyncData(this.ilmSession?.instructorGroups);
+  }
+
+  get ilmSession() {
+    return this.ilmSessionData.isResolved ? this.ilmSessionData.value : null;
+  }
+
+  get ilmInstructors() {
+    return this.ilmInstructorsData.isResolved ? this.ilmInstructorsData.value : null;
+  }
+
+  get ilmInstructorGroups() {
+    return this.ilmInstructorGroupsData.isResolved ? this.ilmInstructorGroupsData.value : null;
+  }
 
   constructor() {
     super(...arguments);

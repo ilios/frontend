@@ -2,18 +2,32 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { map, filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeInstructorComponent extends Component {
   @service iliosConfig;
 
-  @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
-  ]);
+  crossesBoundaryConfig = new TrackedAsyncData(
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+  );
 
-  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @cached
+  get sessionsData() {
+    return new TrackedAsyncData(this.args.course.sessions);
+  }
+
+  @cached
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : null;
+  }
+
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value : null;
+  }
+
   @use minutes = new AsyncProcess(() => [this.getMinutes.bind(this), this.sessions]);
 
   get totalInstructionalTime() {

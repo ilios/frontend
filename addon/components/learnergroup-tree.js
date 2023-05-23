@@ -3,7 +3,8 @@ import { action } from '@ember/object';
 import { filter } from 'rsvp';
 import { inject as service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class LearnergroupTree extends Component {
@@ -13,7 +14,14 @@ export default class LearnergroupTree extends Component {
     return this.args.isRoot ?? true;
   }
 
-  @use children = new ResolveAsyncValue(() => [this.args.learnerGroup.children]);
+  @cached
+  get childrenData() {
+    return new TrackedAsyncData(this.args.learnerGroup.children);
+  }
+
+  get children() {
+    return this.childrenData.isResolved ? this.childrenData.value : null;
+  }
 
   @use hasUnSelectedChildren = new AsyncProcess(() => [
     this.getHasUnSelectedChildren.bind(this),

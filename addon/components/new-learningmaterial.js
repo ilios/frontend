@@ -12,8 +12,8 @@ import {
   IsURL,
 } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 
 const DEFAULT_URL_VALUE = 'https://';
@@ -49,7 +49,12 @@ export default class NewLearningmaterialComponent extends Component {
   @ValidateIf((o) => o.isCitation) @NotBlank() @tracked citation;
   @tracked fileUploadErrorMessage = false;
 
-  @use currentUserModel = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
+  userModel = new TrackedAsyncData(this.currentUser.getModel());
+
+  @cached
+  get currentUserModel() {
+    return this.userModel.isResolved ? this.userModel.value : null;
+  }
 
   get isFile() {
     return this.args.type === 'file';

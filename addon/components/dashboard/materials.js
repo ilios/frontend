@@ -6,7 +6,8 @@ import { isPresent } from '@ember/utils';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import moment from 'moment';
 import { filterBy, sortBy, uniqueById } from 'ilios-common/utils/array-helpers';
 
@@ -24,9 +25,15 @@ export default class DashboardMaterialsComponent extends Component {
     this.loadMaterials.bind(this),
     this.args.showAllMaterials,
   ]);
-  @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
-  ]);
+
+  crossesBoundaryConfig = new TrackedAsyncData(
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+  );
+
+  @cached
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : null;
+  }
 
   async loadMaterials() {
     const user = await this.currentUser.getModel();

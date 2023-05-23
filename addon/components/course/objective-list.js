@@ -5,7 +5,8 @@ import { map } from 'rsvp';
 import { inject as service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { findById } from 'ilios-common/utils/array-helpers';
 
@@ -16,7 +17,19 @@ export default class CourseObjectiveListComponent extends Component {
 
   @tracked isSorting = false;
 
-  @use courseObjectivesAsync = new ResolveAsyncValue(() => [this.args.course.courseObjectives]);
+  @cached
+  get courseObjectivesAsyncData() {
+    return new TrackedAsyncData(this.args.course.courseObjectives);
+  }
+
+  @cached
+  get courseCohortsAsyncData() {
+    return new TrackedAsyncData(this.args.course.cohorts);
+  }
+
+  get courseObjectivesAsync() {
+    return this.courseObjectivesAsyncData.isResolved ? this.courseObjectivesAsyncData.value : null;
+  }
 
   get courseObjectives() {
     if (this.load.lastSuccessful && this.courseObjectivesAsync) {
@@ -26,7 +39,9 @@ export default class CourseObjectiveListComponent extends Component {
     return undefined;
   }
 
-  @use courseCohortsAsync = new ResolveAsyncValue(() => [this.args.course.cohorts]);
+  get courseCohortsAsync() {
+    return this.courseCohortsAsyncData.isResolved ? this.courseCohortsAsyncData.value : null;
+  }
 
   get courseCohorts() {
     if (this.load.lastSuccessful && this.courseCohortsAsync) {

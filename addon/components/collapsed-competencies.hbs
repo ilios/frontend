@@ -3,9 +3,9 @@
   data-test-collapsed-competencies
 >
   <div class="title" role="button" {{on "click" @expand}} data-test-title>
-    {{t "general.competencies"}} ({{this.competencies.length}})
+    {{t "general.competencies"}} ({{@subject.competencies.length}})
   </div>
-  {{#unless this.competencies}}
+  {{#if this.isLoading}}
     <LoadingSpinner />
   {{else}}
     <div class="content">
@@ -34,5 +34,5 @@
         </tbody>
       </table>
     </div>
-  {{/unless}}
+  {{/if}}
 </section>
