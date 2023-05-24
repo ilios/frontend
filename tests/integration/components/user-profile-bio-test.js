@@ -500,4 +500,27 @@ module('Integration | Component | user profile bio', function (hooks) {
     await component.save();
     assert.strictEqual(userModel.pronouns, '');
   });
+
+  test('validate username', async function (assert) {
+    const user = this.server.create('user');
+    this.server.create('authentication', { username: 'geflarknik', user });
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
+    this.set('user', userModel);
+
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+    );
+    assert.notOk(component.username.hasError);
+    await component.username.set('geflarknik');
+    await component.username.submit();
+    assert.ok(component.username.hasError);
+    assert.strictEqual(
+      component.username.errors,
+      'This username is already taken by another user account.'
+    );
+    await component.username.set('geflarknik2');
+    await component.username.submit();
+    assert.notOk(component.username.hasError);
+  });
 });

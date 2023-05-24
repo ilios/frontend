@@ -228,4 +228,21 @@ module('Integration | Component | new user', function (hooks) {
     await component.email.submit();
     assert.notOk(component.email.hasError);
   });
+
+  test('validate username', async function (assert) {
+    const user = this.server.create('user');
+    this.server.create('authentication', { username: 'geflarknik', user });
+    await render(hbs`<NewUser @close={{(noop)}}  />`);
+    assert.notOk(component.username.hasError);
+    await component.username.set('geflarknik');
+    await component.username.submit();
+    assert.ok(component.username.hasError);
+    assert.strictEqual(
+      component.username.errors,
+      'This username is already taken by another user account.'
+    );
+    await component.username.set('geflarknik2');
+    await component.username.submit();
+    assert.notOk(component.username.hasError);
+  });
 });
