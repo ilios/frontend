@@ -7,7 +7,6 @@ import { all } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import { mapBy } from 'ilios-common/utils/array-helpers';
 import { ValidateIf } from 'class-validator';
 import { validatable, Custom, IsEmail, NotBlank, Length } from 'ilios-common/decorators/validation';
 
@@ -69,8 +68,7 @@ export default class UserProfileBioComponent extends Component {
     const auths = await this.store.query('authentication', {
       filters: { username: this.username },
     });
-    const users = await all(mapBy(auths.slice(), 'user'));
-    return !users.some((user) => this.args.user.id !== user.id);
+    return !auths.some((auth) => auth.belongsTo('user').id() !== this.args.user.id);
   }
 
   validateUsernameMessageCallback() {
