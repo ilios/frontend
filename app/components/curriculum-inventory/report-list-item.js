@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import PermissionChecker from 'ilios/classes/permission-checker';
 import { use } from 'ember-could-get-used-to-this';
 import { inject as service } from '@ember/service';
@@ -10,14 +11,19 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
   @service permissionChecker;
   @tracked showConfirmRemoval;
   isFinalized = this.args.report.belongsTo('export').id();
+  academicYearConfig = new TrackedAsyncData(
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+  );
 
   @use canDelete = new PermissionChecker(() => [
     'canDeleteCurriculumInventoryReport',
     this.args.report,
   ]);
-  @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
-  ]);
+
+  @cached
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearConfig.isResolved ? this.academicYearConfig.value : null;
+  }
 
   get yearLabel() {
     if (this.academicYearCrossesCalendarYearBoundaries) {

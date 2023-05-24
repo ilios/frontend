@@ -1,35 +1,45 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { isNone } from '@ember/utils';
 import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
 import { all, filter } from 'rsvp';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import PermissionChecker from 'ilios/classes/permission-checker';
 
 export default class LearnerGroupListItemComponent extends Component {
   @tracked showRemoveConfirmation = false;
   @tracked showCopyConfirmation = false;
 
-  @use school = new ResolveAsyncValue(() => [
-    this.args.learnerGroup.get('cohort.programYear.program.school'),
-  ]);
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.getSchool(this.args.learnerGroup));
+  }
+
+  @cached
+  get isLinkedData() {
+    return new TrackedAsyncData(this.isLinkedToOfferingsOrIlms(this.args.learnerGroup));
+  }
+
+  get school() {
+    return this.schoolData.isResolved ? this.schoolData.value : null;
+  }
+
   @use canDeletePermission = new PermissionChecker(() => [
     'canDeleteLearnerGroup',
     this.args.learnerGroup,
   ]);
-  @use hasLearnersInGroupOrSubgroups = new ResolveAsyncValue(() => [
-    this.args.learnerGroup.hasLearnersInGroupOrSubgroups,
-    true,
-  ]);
+
   @use canCreatePermission = new PermissionChecker(() => ['canCreateLearnerGroup', this.school]);
-  @use isLinked = new ResolveAsyncValue(() => [
-    this.isLinkedToOfferingsOrIlms(this.args.learnerGroup),
-  ]);
+
+  @cached
+  get isLinked() {
+    return this.isLinkedData.isResolved ? this.isLinkedData.value : null;
+  }
 
   get canDelete() {
-    if (isNone(this.isLinked)) {
+    if (this.isLinked) {
       return false;
     }
     return this.canDeletePermission && !this.isLinked;
@@ -37,6 +47,13 @@ export default class LearnerGroupListItemComponent extends Component {
 
   get canCreate() {
     return this.school && this.canCreatePermission;
+  }
+
+  async getSchool(learnerGroup) {
+    const cohort = await learnerGroup.cohort;
+    const programYear = await cohort.programYear;
+    const program = await programYear.program;
+    return program.school;
   }
 
   async isLinkedToOfferingsOrIlms(learnerGroup) {

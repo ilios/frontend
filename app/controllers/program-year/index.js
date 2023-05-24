@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class ProgramYearIndexController extends Controller {
   queryParams = [
@@ -21,5 +21,13 @@ export default class ProgramYearIndexController extends Controller {
   @tracked managePyCompetencies = false;
   @tracked managePyLeadership = false;
 
-  @use program = new ResolveAsyncValue(() => [this.model.program]);
+  @cached
+  get programData() {
+    return new TrackedAsyncData(this.model?.program);
+  }
+
+  @cached
+  get program() {
+    return this.programData.isResolved ? this.programData.value : null;
+  }
 }

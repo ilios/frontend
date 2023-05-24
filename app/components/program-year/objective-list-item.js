@@ -3,10 +3,10 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
 
 @validatable
 export default class ProgramYearObjectiveListItemComponent extends Component {
@@ -22,10 +22,30 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
 
-  @use programYear = new ResolveAsyncValue(() => [this.args.programYearObjective.programYear]);
-  @use program = new ResolveAsyncValue(() => [this.programYear?.program]);
-  @use school = new ResolveAsyncValue(() => [this.program?.school]);
-  @use vocabularies = new ResolveAsyncValue(() => [this.school?.vocabularies]);
+  @cached
+  get upstreamRelationshipsData() {
+    return new TrackedAsyncData(this.resolveUpstreamRelationships(this.args.programYearObjective));
+  }
+
+  get upstreamRelationships() {
+    return this.upstreamRelationshipsData.isResolved ? this.upstreamRelationshipsData.value : null;
+  }
+
+  get programYear() {
+    return this.upstreamRelationships?.programYear;
+  }
+
+  get program() {
+    return this.upstreamRelationships?.program;
+  }
+
+  get school() {
+    return this.upstreamRelationships?.school;
+  }
+
+  get vocabularies() {
+    return this.upstreamRelationships?.vocabularies;
+  }
 
   get assignableVocabularies() {
     return this.vocabularies?.slice() ?? [];
@@ -42,6 +62,15 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
 
   get canDelete() {
     return this.args.programYearObjective.courseObjectives.length === 0;
+  }
+
+  async resolveUpstreamRelationships(programYearObjective) {
+    const programYear = await programYearObjective.programYear;
+    const program = await programYear.program;
+    const school = await program.school;
+    const vocabularies = await school.vocabularies;
+
+    return { programYear, program, school, vocabularies };
   }
 
   @dropTask

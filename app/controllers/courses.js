@@ -3,7 +3,8 @@ import { inject as service } from '@ember/service';
 import { restartableTask, dropTask, timeout } from 'ember-concurrency';
 import moment from 'moment';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import PermissionChecker from 'ilios/classes/permission-checker';
 import { findById } from 'ilios-common/utils/array-helpers';
@@ -41,17 +42,42 @@ export default class CoursesController extends Controller {
     this.selectedSchool,
     this.dataLoader,
   ]);
+  userModelData = new TrackedAsyncData(this.currentUser.getModel());
+  crossesBoundaryConfig = new TrackedAsyncData(
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+  );
 
-  @use coursesInSelectedSchool = new ResolveAsyncValue(() => [
-    this.preloadedCoursesInSelectedSchool ? this.selectedSchool?.courses : [],
-  ]);
+  @cached
+  get coursesInSelectedSchoolData() {
+    return new TrackedAsyncData(
+      this.preloadedCoursesInSelectedSchool ? this.selectedSchool?.courses : []
+    );
+  }
 
-  @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
-  ]);
+  get coursesInSelectedSchool() {
+    return this.coursesInSelectedSchoolData.isResolved
+      ? this.coursesInSelectedSchoolData.value
+      : null;
+  }
 
-  @use userModel = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
-  @use allRelatedCourses = new ResolveAsyncValue(() => [this.userModel?.allRelatedCourses]);
+  @cached
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
+  }
+
+  get userModel() {
+    return this.userModelData.isResolved ? this.userModelData.value : null;
+  }
+
+  @cached
+  get allRelatedCoursesData() {
+    return new TrackedAsyncData(this.userModel?.allRelatedCourses);
+  }
+
+  get allRelatedCourses() {
+    return this.allRelatedCoursesData.isResolved ? this.allRelatedCoursesData.value : null;
+  }
+
   @use canCreateCourse = new PermissionChecker(() => ['canCreateCourse', this.selectedSchool]);
 
   get hasMoreThanOneSchool() {

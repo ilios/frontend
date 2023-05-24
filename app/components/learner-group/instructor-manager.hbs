@@ -86,9 +86,9 @@
           @currentlyActiveInstructorGroups={{this.instructorGroups}}
         />
       {{else}}
-        {{#if this.allInstructors.length}}
+        {{#if @learnerGroup.allInstructors.length}}
           <ul class="assigned-instructors">
-            {{#each (sort-by "fullName" this.allInstructors) as |instructor|}}
+            {{#each (sort-by "fullName" @learnerGroup.allInstructors) as |instructor|}}
               <li data-test-assigned-instructor>
                 <UserNameInfo @user={{instructor}} />
               </li>

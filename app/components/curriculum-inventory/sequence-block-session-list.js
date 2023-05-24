@@ -1,14 +1,26 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class SequenceBlockSessionListComponent extends Component {
-  @use sessions = new ResolveAsyncValue(() => [this.args.sequenceBlock.sessions, []]);
-  @use excludedSessions = new ResolveAsyncValue(() => [
-    this.args.sequenceBlock.excludedSessions,
-    [],
-  ]);
+  @cached
+  get sessionsData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.sessions);
+  }
+
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value : [];
+  }
+
+  @cached
+  get excludedSessionsData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.excludedSessions);
+  }
+
+  get excludedSessions() {
+    return this.excludedSessionsData.isResolved ? this.excludedSessionsData.value : [];
+  }
 
   get sortedAscending() {
     const sortBy = this.args.sortBy;

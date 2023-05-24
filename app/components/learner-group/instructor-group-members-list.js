@@ -1,7 +1,14 @@
 import Component from '@glimmer/component';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class LearnerGroupInstructorGroupMembersListComponent extends Component {
-  @use members = new ResolveAsyncValue(() => [this.args.instructorGroup.users, []]);
+  @cached
+  get membersData() {
+    return new TrackedAsyncData(this.args.instructorGroup.users);
+  }
+
+  get members() {
+    return this.membersData.isResolved ? this.membersData.value : [];
+  }
 }
