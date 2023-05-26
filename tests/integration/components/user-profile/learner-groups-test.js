@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'ilios/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/user-profile-learnergroups';
+import { component } from 'ilios/tests/pages/components/user-profile/learner-groups';
 
-module('Integration | Component | user profile learnergroups', function (hooks) {
+module('Integration | Component | user-profile/learner-groups', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -55,7 +55,7 @@ module('Integration | Component | user profile learnergroups', function (hooks) 
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    await render(hbs`<UserProfileLearnergroups @user={{this.user}} />`);
+    await render(hbs`<UserProfile::LearnerGroups @user={{this.user}} />`);
     assert.strictEqual(component.groups.length, 2);
     assert.strictEqual(component.groups[0].text, 'SOD: Program2 Cohort2 — LearnerGroup2');
     assert.strictEqual(component.groups[1].text, 'SOM: Program1 Cohort1 — LearnerGroup1');
