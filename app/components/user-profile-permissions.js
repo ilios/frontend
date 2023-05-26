@@ -1,4 +1,6 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
 import { filter } from 'rsvp';
@@ -11,6 +13,27 @@ import { findById, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers
 export default class UserProfilePermissionsComponent extends Component {
   @service store;
   @service iliosConfig;
+
+  @tracked programCollapsed = false;
+  @tracked programYearCollapsed = false;
+  @tracked courseCollapsed = false;
+  @tracked sessionCollapsed = false;
+
+  get programExpanded() {
+    return !this.programCollapsed;
+  }
+
+  get programYearExpanded() {
+    return !this.programYearCollapsed;
+  }
+
+  get courseExpanded() {
+    return !this.courseCollapsed;
+  }
+
+  get sessionExpanded() {
+    return !this.sessionCollapsed;
+  }
 
   @cached
   get schoolData() {
@@ -336,5 +359,24 @@ export default class UserProfilePermissionsComponent extends Component {
       return sortBy(this.schools, 'title')[0];
     }
     return null;
+  }
+
+  @action
+  changeSchool(schoolId) {
+    this.resetCollapsers();
+    this.args.setSchool(schoolId);
+  }
+
+  @action
+  changeYear(year) {
+    this.resetCollapsers();
+    this.args.setYear(year);
+  }
+
+  resetCollapsers() {
+    this.programCollapsed = false;
+    this.programYearCollapsed = false;
+    this.courseCollapsed = false;
+    this.sessionCollapsed = false;
   }
 }

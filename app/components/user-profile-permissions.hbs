@@ -15,7 +15,7 @@
         <FaIcon @icon="building-columns" @fixedWidth={{true}} />
         <select
           aria-label={{t "general.schools"}}
-          {{on "change" (pick "target.value" @setSchool)}}
+          {{on "change" (pick "target.value" this.changeSchool)}}
           data-test-select-school
         >
           {{#each (sort-by "title" this.schools) as |school|}}
@@ -32,7 +32,7 @@
         <FaIcon @icon="calendar" @fixedWidth={{true}} />
         <select
           aria-label={{t "general.academicYears"}}
-          {{on "change" (pick "target.value" @setYear)}}
+          {{on "change" (pick "target.value" this.changeYear)}}
           data-test-select-year
         >
           {{#each (reverse (sort-by "title" this.academicYears)) as |year|}}
@@ -68,19 +68,21 @@
         <h5 data-test-title>
           <label for="expand-collapse-program-permissions-{{templateId}}">
             {{t "general.programs"}}
-            ({{get this.directedPrograms "length"}})
+            ({{this.directedPrograms.length}})
           </label>
-          <button
-            aria-expanded={{if this.programCollapsed "false" "true"}}
-            class="toggle-button {{if this.programCollapsed "collapsed" "expanded"}}"
-            id="expand-collapse-program-permissions-{{templateId}}"
-            type="button"
-            {{on "click" (toggle "programCollapsed" this)}}
-          >
-             <FaIcon @icon={{if this.programCollapsed "caret-right" "caret-down"}} class="disabled" />
-          </button>
+          {{#if this.directedPrograms.length}}
+            <button
+              aria-expanded={{if this.programCollapsed "false" "true"}}
+              class="toggle-button {{if this.programCollapsed "collapsed" "expanded"}}"
+              id="expand-collapse-program-permissions-{{templateId}}"
+              type="button"
+              {{on "click" (set this.programCollapsed (not this.programCollapsed))}}
+            >
+              <FaIcon @icon={{if this.programCollapsed "caret-right" "caret-down"}} class="disabled" />
+            </button>
+          {{/if}}
         </h5>
-        {{#unless this.programCollapsed}}
+        {{#if (and this.directedPrograms.length this.programExpanded)}}
           <h6>
             {{t "general.director"}}
           </h6>
@@ -95,7 +97,7 @@
               </li>
             {{/each}}
           </ul>
-        {{/unless}}
+        {{/if}}
       </p>
       <p data-test-program-year-permissions>
         <h5 data-test-title>
@@ -103,17 +105,19 @@
             {{t "general.programYears"}}
             ({{this.directedProgramYears.length}})
           </label>
-          <button
-            aria-expanded={{if this.programYearCollapsed "false" "true"}}
-            class="toggle-button {{if this.programYearCollapsed "collapsed" "expanded"}}"
-            id="expand-collapse-program-years-permissions-{{templateId}}"
-            type="button"
-            {{on "click" (toggle "programYearCollapsed" this)}}
-          >
-            <FaIcon @icon={{if this.programYearCollapsed "caret-right" "caret-down"}} class="disabled" />
-          </button>
+          {{#if this.directedProgramYears.length}}
+            <button
+              aria-expanded={{if this.programYearCollapsed "false" "true"}}
+              class="toggle-button {{if this.programYearCollapsed "collapsed" "expanded"}}"
+              id="expand-collapse-program-years-permissions-{{templateId}}"
+              type="button"
+              {{on "click" (set this.programYearCollapsed (not this.programYearCollapsed))}}
+            >
+              <FaIcon @icon={{if this.programYearCollapsed "caret-right" "caret-down"}} class="disabled" />
+            </button>
+          {{/if}}
         </h5>
-        {{#unless this.programYearCollapsed}}
+        {{#if (and this.directedProgramYears.length this.programYearExpanded)}}
           <h6>
             {{t "general.director"}}
           </h6>
@@ -135,7 +139,7 @@
               </li>
             {{/each}}
           </ul>
-        {{/unless}}
+        {{/if}}
       </p>
       <p data-test-course-permissions>
         <h5 data-test-title>
@@ -143,17 +147,19 @@
             {{t "general.courses"}}
             ({{this.courseCount}})
           </label>
-          <button
-            aria-expanded={{if this.courseCollapsed "false" "true"}}
-            class="toggle-button {{if this.courseCollapsed "collapsed" "expanded"}}"
-            id="expand-collapse-courses-permissions-{{templateId}}"
-            type="button"
-            {{on "click" (toggle "courseCollapsed" this)}}
-          >
-            <FaIcon @icon={{if this.courseCollapsed "caret-right" "caret-down"}} class="disabled" />
-          </button>
+          {{#if this.courseCount}}
+            <button
+              aria-expanded={{if this.courseCollapsed "false" "true"}}
+              class="toggle-button {{if this.courseCollapsed "collapsed" "expanded"}}"
+              id="expand-collapse-courses-permissions-{{templateId}}"
+              type="button"
+              {{on "click" (set this.courseCollapsed (not this.courseCollapsed))}}
+            >
+              <FaIcon @icon={{if this.courseCollapsed "caret-right" "caret-down"}} class="disabled" />
+            </button>
+          {{/if}}
         </h5>
-        {{#unless this.courseCollapsed}}
+        {{#if (and this.courseCount this.courseExpanded)}}
           <h6>
             {{t "general.director"}}
           </h6>
@@ -237,25 +243,32 @@
               </li>
             {{/each}}
           </ul>
-        {{/unless}}
+        {{/if}}
       </p>
       <p data-test-session-permissions>
         <h5 data-test-title>
-          <label for="expand-collapse-sessions-permissions-{{templateId}}">
+          {{#if this.sessionCount}}
+            <label for="expand-collapse-sessions-permissions-{{templateId}}">
+              {{t "general.sessions"}}
+              ({{this.sessionCount}})
+            </label>
+            {{#if this.sessionCount}}
+              <button
+                aria-expanded={{if this.sessionCollapsed "false" "true"}}
+                class="toggle-button {{if this.sessionCollapsed "collapsed" "expanded"}}"
+                id="expand-collapse-sessions-permissions-{{templateId}}"
+                type="button"
+                {{on "click" (set this.sessionCollapsed (not this.sessionCollapsed))}}
+              >
+                <FaIcon @icon={{if this.sessionCollapsed "caret-right" "caret-down"}} class="disabled" />
+              </button>
+            {{/if}}
+          {{else}}
             {{t "general.sessions"}}
             ({{this.sessionCount}})
-          </label>
-          <button
-            aria-expanded={{if this.sessionCollapsed "false" "true"}}
-            class="toggle-button {{if this.sessionCollapsed "collapsed" "expanded"}}"
-            id="expand-collapse-sessions-permissions-{{templateId}}"
-            type="button"
-            {{on "click" (toggle "sessionCollapsed" this)}}
-          >
-            <FaIcon @icon={{if this.sessionCollapsed "caret-right" "caret-down"}} class="disabled" />
-          </button>
+          {{/if}}
         </h5>
-        {{#unless this.sessionCollapsed}}
+        {{#if (and this.sessionCount this.sessionExpanded)}}
           <h6>
             {{t "general.administrator"}}
           </h6>
@@ -330,7 +343,7 @@
               </li>
             {{/each}}
           </ul>
-        {{/unless}}
+        {{/if}}
       </p>
     {{/if}}
   </div>
