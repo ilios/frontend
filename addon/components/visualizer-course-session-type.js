@@ -7,7 +7,8 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
@@ -17,8 +18,24 @@ export default class VisualizerCourseSessionType extends Component {
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
-  @use sessionTypeSessions = new ResolveAsyncValue(() => [this.args.sessionType.sessions, []]);
+  @cached
+  get sessionsData() {
+    return new TrackedAsyncData(this.args.course.sessions);
+  }
+
+  @cached
+  get sessionTypeSessionsData() {
+    return new TrackedAsyncData(this.args.sessionType.sessions);
+  }
+
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value : [];
+  }
+
+  get sessionTypeSessions() {
+    return this.sessionTypeSessionsData.isResolved ? this.sessionTypeSessionsData.value : [];
+  }
+
   @use dataObjects = new AsyncProcess(() => [
     this.getDataObjects.bind(this),
     this.sessionsAndSessionTypeSessions,

@@ -2,7 +2,7 @@
   class="learning-materials-sort-manager"
   data-test-detail-learning-materials-sort-manager
 >
-  {{#if (is-array this.learningMaterials)}}
+  {{#if this.learningMaterials.isResolved}}
     <div class="actions">
       <button class="bigadd" type="button" {{on "click" (perform this.callSave)}} data-test-save>
         <FaIcon

@@ -1,15 +1,22 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class CoursePublicationCheckComponent extends Component {
   @service router;
 
-  @use courseObjectives = new ResolveAsyncValue(() => [this.args.course.courseObjectives, []]);
+  @cached
+  get courseObjectives() {
+    return new TrackedAsyncData(this.args.course.courseObjectives);
+  }
 
+  @cached
   get showUnlinkIcon() {
-    const objectivesWithoutParents = this.courseObjectives.filter((objective) => {
+    if (!this.courseObjectives.isResolved) {
+      return false;
+    }
+    const objectivesWithoutParents = this.courseObjectives.value.filter((objective) => {
       return objective.programYearObjectives.length === 0;
     });
 

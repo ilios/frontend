@@ -3,8 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class DetailTaxonomiesComponent extends Component {
   @service store;
@@ -12,7 +12,15 @@ export default class DetailTaxonomiesComponent extends Component {
   @service flashMessages;
   @tracked bufferedTerms = [];
   @tracked isManaging = false;
-  @use terms = new ResolveAsyncValue(() => [this.args.subject.terms]);
+
+  @cached
+  get termsData() {
+    return new TrackedAsyncData(this.args.subject.terms);
+  }
+
+  get terms() {
+    return this.termsData.isResolved ? this.termsData.value : null;
+  }
 
   get showCollapsible() {
     const terms = this.args.subject.hasMany('terms').ids();

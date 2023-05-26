@@ -3,8 +3,8 @@ import { inject as service } from '@ember/service';
 import { task, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 const DEBOUNCE_DELAY = 250;
@@ -18,12 +18,44 @@ export default class CourseSessionsComponent extends Component {
   @tracked filterByLocalCache = [];
   @tracked showNewSessionForm = false;
 
-  @use loadedCourseSessions = new ResolveAsyncValue(() => [
-    this.dataLoader.loadCourseSessions(this.args.course.id),
-  ]);
-  @use sessionTypes = new ResolveAsyncValue(() => [this.school?.sessionTypes, []]);
-  @use courseSessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
-  @use school = new ResolveAsyncValue(() => [this.args.course.school]);
+  @cached
+  get loadedCourseSessionsData() {
+    return new TrackedAsyncData(this.dataLoader.loadCourseSessions(this.args.course.id));
+  }
+
+  @cached
+  get sessionTypesData() {
+    if (!this.school) {
+      return null;
+    }
+    return new TrackedAsyncData(this.school.sessionTypes);
+  }
+
+  @cached
+  get courseSessionsData() {
+    return new TrackedAsyncData(this.args.course.sessions);
+  }
+
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.args.course.school);
+  }
+
+  get loadedCourseSessions() {
+    return this.loadedCourseSessionsData.isResolved ? this.loadedCourseSessionsData.value : null;
+  }
+
+  get sessionTypes() {
+    return this.sessionTypesData?.isResolved ? this.sessionTypesData.value : [];
+  }
+
+  get courseSessions() {
+    return this.courseSessionsData.isResolved ? this.courseSessionsData.value : null;
+  }
+
+  get school() {
+    return this.schoolData.isResolved ? this.schoolData.value : null;
+  }
 
   get sessions() {
     if (!this.loadedCourseSessions) {

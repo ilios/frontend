@@ -1,8 +1,23 @@
 import Component from '@glimmer/component';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class SessionDetailsComponent extends Component {
-  @use course = new ResolveAsyncValue(() => [this.args.session.course]);
-  @use cohorts = new ResolveAsyncValue(() => [this.course?.cohorts]);
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.args.session.course);
+  }
+
+  @cached
+  get cohortsData() {
+    return new TrackedAsyncData(this.course?.cohorts);
+  }
+
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
+
+  get cohorts() {
+    return this.cohortsData.isResolved ? this.cohortsData.value : null;
+  }
 }

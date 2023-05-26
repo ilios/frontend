@@ -3,8 +3,8 @@ import { dropTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { action } from '@ember/object';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class LearningMaterialsSortManagerComponent extends Component {
   @tracked sortableObjectList;
@@ -13,9 +13,16 @@ export default class LearningMaterialsSortManagerComponent extends Component {
   @tracked draggedBelowItem;
   @tracked sortedItems;
 
-  @use learningMaterials = new ResolveAsyncValue(() => [this.args.subject.learningMaterials]);
+  @cached
+  get learningMaterials() {
+    return new TrackedAsyncData(this.args.subject.learningMaterials);
+  }
+
   get sortedLearningMaterials() {
-    return this.learningMaterials?.slice().sort(sortableByPosition) ?? [];
+    if (!this.learningMaterials.isResolved) {
+      return [];
+    }
+    return this.learningMaterials.value.slice().sort(sortableByPosition);
   }
 
   get items() {

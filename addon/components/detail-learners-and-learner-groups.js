@@ -5,8 +5,8 @@ import { inject as service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @service currentUser;
@@ -14,11 +14,50 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @tracked learnerGroupBuffer = [];
   @tracked learnerBuffer = [];
 
-  @use ilmSession = new ResolveAsyncValue(() => [this.args.session.ilmSession]);
-  @use course = new ResolveAsyncValue(() => [this.args.session.course]);
-  @use cohorts = new ResolveAsyncValue(() => [this.course?.cohorts]);
-  @use ilmLearners = new ResolveAsyncValue(() => [this.ilmSession?.learners]);
-  @use ilmLearnerGroups = new ResolveAsyncValue(() => [this.ilmSession?.learnerGroups]);
+  @cached
+  get ilmSessionData() {
+    return new TrackedAsyncData(this.args.session.ilmSession);
+  }
+
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.args.session.course);
+  }
+
+  @cached
+  get cohortsData() {
+    return new TrackedAsyncData(this.course?.cohorts);
+  }
+
+  @cached
+  get ilmLearnersData() {
+    return new TrackedAsyncData(this.ilmSession?.learners);
+  }
+
+  @cached
+  get ilmLearnerGroupsData() {
+    return new TrackedAsyncData(this.ilmSession?.learnerGroups);
+  }
+
+  get ilmSession() {
+    return this.ilmSessionData.isResolved ? this.ilmSessionData.value : null;
+  }
+
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
+
+  get cohorts() {
+    return this.cohortsData.isResolved ? this.cohortsData.value : null;
+  }
+
+  get ilmLearners() {
+    return this.ilmLearnersData.isResolved ? this.ilmLearnersData.value : null;
+  }
+
+  get ilmLearnerGroups() {
+    return this.ilmLearnerGroupsData.isResolved ? this.ilmLearnerGroupsData.value : null;
+  }
 
   manage = dropTask(async () => {
     const ilmSession = await this.args.session.ilmSession;

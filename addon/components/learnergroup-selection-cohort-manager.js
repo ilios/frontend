@@ -1,25 +1,24 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class LearnergroupSelectionCohortManagerComponent extends Component {
   @service intl;
 
-  @use learnerGroups = new ResolveAsyncValue(() => [this.args.cohort.learnerGroups]);
-
-  get learnerGroupsLoaded() {
-    return !!this.learnerGroups;
+  @cached
+  get learnerGroups() {
+    return new TrackedAsyncData(this.args.cohort.learnerGroups);
   }
 
   get rootLevelLearnerGroups() {
-    if (!this.learnerGroups) {
+    if (!this.learnerGroups.isResolved) {
       return [];
     }
-    return this.learnerGroups
-      .slice()
-      .filter((learnerGroup) => learnerGroup.belongsTo('parent').value() === null);
+    return this.learnerGroups.value.filter(
+      (learnerGroup) => learnerGroup.belongsTo('parent').value() === null
+    );
   }
 
   @action

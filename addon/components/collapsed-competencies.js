@@ -1,25 +1,32 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { findById } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class CollapsedCompetenciesComponent extends Component {
   @service store;
 
-  @use allSchools = new ResolveAsyncValue(() => [this.store.findAll('school')]);
-  @use competencies = new ResolveAsyncValue(() => [this.args.subject.competencies]);
+  @cached
+  get schools() {
+    return new TrackedAsyncData(this.store.findAll('school'));
+  }
+
+  get isLoading() {
+    return !this.schools.isResolved;
+  }
 
   get summary() {
-    if (!this.allSchools || !this.competencies) {
+    if (this.isLoading) {
       return [];
     }
-    const schools = this.competencies.reduce((schools, competency) => {
+    const allSchools = this.schools.value;
+    const schools = this.args.subject.competencies.reduce((schools, competency) => {
       const schoolId = competency.belongsTo('school').id();
       if (!(schoolId in schools)) {
         schools[schoolId] = {
           competencies: [],
-          school: findById(this.allSchools, schoolId),
+          school: findById(allSchools, schoolId),
         };
       }
       schools[schoolId].competencies.push(competency);

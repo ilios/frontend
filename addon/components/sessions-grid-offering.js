@@ -4,18 +4,50 @@ import { action } from '@ember/object';
 import { restartableTask, dropTask, timeout } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import scrollIntoView from 'scroll-into-view';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 @validatable
 export default class SessionsGridOffering extends Component {
   @Length(1, 255) @NotBlank() @tracked room;
   @tracked isEditing = false;
   @tracked wasUpdated = false;
-  @use session = new ResolveAsyncValue(() => [this.args.offering.session]);
-  @use course = new ResolveAsyncValue(() => [this.session?.course]);
-  @use cohorts = new ResolveAsyncValue(() => [this.course?.cohorts]);
-  @use learnerGroups = new ResolveAsyncValue(() => [this.args.offering.learnerGroups]);
+
+  @cached
+  get sessionData() {
+    return new TrackedAsyncData(this.args.offering.session);
+  }
+
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.session?.course);
+  }
+
+  @cached
+  get cohortsData() {
+    return new TrackedAsyncData(this.course?.cohorts);
+  }
+
+  @cached
+  get learnerGroupsData() {
+    return new TrackedAsyncData(this.args.offering.learnerGroups);
+  }
+
+  get session() {
+    return this.sessionData.isResolved ? this.sessionData.value : null;
+  }
+
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
+
+  get cohorts() {
+    return this.cohortsData.isResolved ? this.cohortsData.value : null;
+  }
+
+  get learnerGroups() {
+    return this.learnerGroupsData.isResolved ? this.learnerGroupsData.value : null;
+  }
 
   get cohortsLoaded() {
     return !!this.cohorts;

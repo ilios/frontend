@@ -4,20 +4,27 @@ import { isNone } from '@ember/utils';
 import { DateTime } from 'luxon';
 import scrollIntoView from 'scroll-into-view';
 import { action } from '@ember/object';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class WeeklyGlance extends Component {
   @service userEvents;
   @service intl;
   @service localeDays;
 
-  @use weekEvents = new ResolveAsyncValue(() => [
-    this.userEvents.getEvents(
-      this.midnightAtTheStartOfTheWeekDateTime.toUnixInteger(),
-      this.midnightAtTheEndOfTheWeekDateTime.toUnixInteger()
-    ),
-  ]);
+  @cached
+  get weekEventsData() {
+    return new TrackedAsyncData(
+      this.userEvents.getEvents(
+        this.midnightAtTheStartOfTheWeekDateTime.toUnixInteger(),
+        this.midnightAtTheEndOfTheWeekDateTime.toUnixInteger()
+      )
+    );
+  }
+
+  get weekEvents() {
+    return this.weekEventsData.isResolved ? this.weekEventsData.value : null;
+  }
 
   get eventsLoaded() {
     return !isNone(this.weekEvents);

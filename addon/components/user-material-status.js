@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
@@ -12,11 +12,31 @@ export default class UserMaterialStatusComponent extends Component {
 
   @tracked tmpStatus = null;
 
-  @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
-  @use sessionMaterialStatuses = new ResolveAsyncValue(() => [this.user?.sessionMaterialStatuses]);
-  @use isEnabled = new ResolveAsyncValue(() => [
-    this.iliosConfig.itemFromConfig('materialStatusEnabled'),
-  ]);
+  userModel = new TrackedAsyncData(this.currentUser.getModel());
+
+  @cached
+  get sessionMaterialStatusesData() {
+    return new TrackedAsyncData(this.user?.sessionMaterialStatuses);
+  }
+
+  @cached
+  get isEnabledData() {
+    return new TrackedAsyncData(this.iliosConfig.itemFromConfig('materialStatusEnabled'));
+  }
+
+  get user() {
+    return this.userModel.isResolved ? this.userModel.value : null;
+  }
+
+  get sessionMaterialStatuses() {
+    return this.sessionMaterialStatusesData.isResolved
+      ? this.sessionMaterialStatusesData.value
+      : null;
+  }
+
+  get isEnabled() {
+    return this.isEnabledData.isResolved ? this.isEnabledData.value : null;
+  }
 
   get isStatusLoaded() {
     return Boolean(this.sessionMaterialStatuses);

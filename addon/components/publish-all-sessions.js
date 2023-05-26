@@ -4,8 +4,8 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { all } from 'rsvp';
 import { dropTask, timeout } from 'ember-concurrency';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class PublishAllSessionsComponent extends Component {
@@ -21,8 +21,23 @@ export default class PublishAllSessionsComponent extends Component {
   @tracked userSelectedSessionsToPublish = [];
   @tracked userSelectedSessionsToSchedule = [];
 
-  @use courseObjectives = new ResolveAsyncValue(() => [this.args.course.courseObjectives]);
-  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions, []]);
+  @cached
+  get courseObjectivesData() {
+    return new TrackedAsyncData(this.args.course.courseObjectives);
+  }
+
+  @cached
+  get sessionsData() {
+    return new TrackedAsyncData(this.args.course.sessions);
+  }
+
+  get courseObjectives() {
+    return this.courseObjectivesData.isResolved ? this.courseObjectivesData.value : null;
+  }
+
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value : [];
+  }
 
   get publishedSessions() {
     return this.overridableSessions.filter((s) => {

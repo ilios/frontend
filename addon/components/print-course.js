@@ -3,8 +3,8 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { use } from 'ember-could-get-used-to-this';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class PrintCourseComponent extends Component {
   @service store;
@@ -14,13 +14,52 @@ export default class PrintCourseComponent extends Component {
   @tracked sortDirectorsBy;
   @tracked academicYearCrossesCalendarYearBoundaries = false;
 
-  @use competencies = new ResolveAsyncValue(() => [this.args.course.competencies, []]);
-  @use directors = new ResolveAsyncValue(() => [this.args.course.directors, []]);
-  @use courseLearningMaterialsRelationship = new ResolveAsyncValue(() => [
-    this.args.course.learningMaterials,
-  ]);
-  @use sessionsRelationship = new ResolveAsyncValue(() => [this.args.course.sessions]);
-  @use meshDescriptors = new ResolveAsyncValue(() => [this.args.course.meshDescriptors, []]);
+  @cached
+  get competenciesData() {
+    return new TrackedAsyncData(this.args.course.competencies);
+  }
+
+  @cached
+  get directorsData() {
+    return new TrackedAsyncData(this.args.course.directors);
+  }
+
+  @cached
+  get courseLearningMaterialsRelationshipData() {
+    return new TrackedAsyncData(this.args.course.learningMaterials);
+  }
+
+  @cached
+  get sessionsRelationshipData() {
+    return new TrackedAsyncData(this.args.course.sessions);
+  }
+
+  @cached
+  get meshDescriptorsData() {
+    return new TrackedAsyncData(this.args.course.meshDescriptors);
+  }
+
+  get competencies() {
+    return this.competenciesData.isResolved ? this.competenciesData.value : [];
+  }
+
+  get directors() {
+    return this.directorsData.isResolved ? this.directorsData.value : [];
+  }
+
+  get courseLearningMaterialsRelationship() {
+    return this.courseLearningMaterialsRelationshipData.isResolved
+      ? this.courseLearningMaterialsRelationshipData.value
+      : null;
+  }
+
+  get sessionsRelationship() {
+    return this.sessionsRelationshipData.isResolved ? this.sessionsRelationshipData.value : null;
+  }
+
+  get meshDescriptors() {
+    return this.meshDescriptorsData.isResolved ? this.meshDescriptorsData.value : [];
+  }
 
   load = dropTask(async () => {
     this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(

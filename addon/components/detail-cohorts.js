@@ -3,14 +3,21 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { map, all } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class DetailCohortsComponent extends Component {
   @tracked isManaging = false;
   @tracked bufferedCohorts = [];
 
-  @use cohorts = new ResolveAsyncValue(() => [this.args.course.cohorts]);
+  @cached
+  get cohortsData() {
+    return new TrackedAsyncData(this.args.course.cohorts);
+  }
+
+  get cohorts() {
+    return this.cohortsData.isResolved ? this.cohortsData.value : null;
+  }
 
   manage = dropTask(async () => {
     const cohorts = await this.args.course.cohorts;

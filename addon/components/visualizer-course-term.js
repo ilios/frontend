@@ -4,7 +4,8 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { findBy, findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
@@ -14,7 +15,15 @@ export default class VisualizerCourseTerm extends Component {
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
 
-  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @cached
+  get sessionsData() {
+    return new TrackedAsyncData(this.args.course.sessions);
+  }
+
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value : null;
+  }
+
   @use sessionTypes = new ResolveFlatMapBy(() => [this.sessions, 'sessionType']);
 
   get isLoaded() {
