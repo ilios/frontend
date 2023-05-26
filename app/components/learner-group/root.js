@@ -117,7 +117,7 @@ export default class LearnerGroupRootComponent extends Component {
     this.currentGroupsSaved = 0;
     this.isSaving = true;
     this.totalGroupsToSave = num;
-    const offset = await this.args.learnerGroup.subgroupNumberingOffset;
+    const offset = await this.args.learnerGroup.getSubgroupNumberingOffset();
     const cohort = await this.args.learnerGroup.cohort;
     const padBy = countDigits(offset + parseInt(num, 10));
     const parentTitle = this.args.learnerGroup.title.substring(0, 60 - 1 - padBy);
