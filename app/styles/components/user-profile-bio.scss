@@ -4,6 +4,11 @@
 @use "sass:color";
 
 .user-profile-bio {
+
+  label {
+    @include m.ilios-label;
+  }
+
   .actions {
     @include m.detail-container-actions;
   }

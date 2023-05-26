@@ -4,7 +4,7 @@
 
 .my-profile {
   @include cm.main-section;
-  
+
   .name {
     margin: .25rem 0 0;
     text-align: center;
@@ -26,13 +26,15 @@
     @include m.admin-blocks;
     margin-top: 1rem;
 
-    label {
-      @include cm.ilios-label;
-    }
-
     ul {
       @include cm.ilios-list-reset;
       margin-left: 1rem;
+    }
+  }
+
+  .my-profile-schools {
+    label {
+      @include cm.ilios-label;
     }
   }
 
@@ -58,6 +60,7 @@
         width: 7rem;
       }
     }
+
 
     .new-token-result {
       label {

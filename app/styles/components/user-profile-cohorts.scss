@@ -23,6 +23,10 @@
     margin-bottom: 2rem;
   }
 
+  label {
+    @include m.ilios-label;
+  }
+
   h4 {
     @include m.ilios-heading-h5;
   }
