@@ -38,7 +38,7 @@ export default class SchoolVocabularyNewTermComponent extends Component {
   async validateTitleCallback() {
     const terms = this.args.term
       ? await this.args.term.children
-      : await this.args.vocabulary.topLevelTerms;
+      : await this.args.vocabulary.getTopLevelTerms();
     return !mapBy(terms.slice(), 'title').includes(this.title);
   }
 
