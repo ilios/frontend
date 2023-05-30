@@ -44,16 +44,24 @@
       </div>
     </div>
     <section class="new">
-      {{#if @showNewUserForm}}
-        <this.newUserComponent
-          @close={{fn @setShowNewUserForm false}}
-          @transitionToUser={{@transitionToUser}}
-          @searchTerms={{@searchTerms}}
-          @setSearchTerms={{@setSearchTerms}}
-        />
-      {{/if}}
-      {{#if @showBulkNewUserForm}}
-        <BulkNewUsers @close={{fn @setShowBulkNewUserForm false}} />
+      {{#if (or @showNewUserForm @showBulkNewUserForm)}}
+        {{#let (load this.loadAllSchoolCohortsPromise) as |p|}}
+          {{#if p.isResolved}}
+            {{#if @showNewUserForm}}
+              <this.newUserComponent
+                @close={{fn @setShowNewUserForm false}}
+                @transitionToUser={{@transitionToUser}}
+                @searchTerms={{@searchTerms}}
+                @setSearchTerms={{@setSearchTerms}}
+              />
+            {{/if}}
+            {{#if @showBulkNewUserForm}}
+              <BulkNewUsers @close={{fn @setShowBulkNewUserForm false}} />
+            {{/if}}
+          {{else}}
+            <LoadingSpinner />
+          {{/if}}
+        {{/let}}
       {{/if}}
     </section>
     {{#if this.searchForUsers.lastSuccessful}}

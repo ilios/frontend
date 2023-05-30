@@ -134,6 +134,10 @@ module('Integration | Component | new user', function (hooks) {
     });
     const cohort = this.server.create('cohort', { programYear });
 
+    //load all created data into the store
+    await this.owner.lookup('service:store').findAll('program');
+    await this.owner.lookup('service:store').findAll('programYear');
+    await this.owner.lookup('service:store').findAll('cohort');
     this.set('transitionToUser', (userId) => {
       assert.strictEqual(parseInt(userId, 10), 2);
     });
@@ -199,6 +203,11 @@ module('Integration | Component | new user', function (hooks) {
       startYear: new Date().getFullYear() - 5,
     });
     this.server.create('cohort', { programYear: programYear3 });
+
+    //load all created data into the store
+    await this.owner.lookup('service:store').findAll('program');
+    await this.owner.lookup('service:store').findAll('programYear');
+    await this.owner.lookup('service:store').findAll('cohort');
 
     await render(hbs`<NewUser @close={{(noop)}}  />`);
     await component.cancel();

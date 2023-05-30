@@ -20,6 +20,13 @@ export default class IliosUsersComponent extends Component {
     return this.searchTypeConfig.isResolved ? this.searchTypeConfig.value : null;
   }
 
+  @cached
+  get loadAllSchoolCohortsPromise() {
+    return this.store.findAll('cohort', {
+      include: 'programYear.program.school',
+    });
+  }
+
   get newUserComponent() {
     const component = this.userSearchType === 'ldap' ? NewDirectoryUser : NewUser;
     return ensureSafeComponent(component, this);
