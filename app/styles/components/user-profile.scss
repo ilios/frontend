@@ -4,7 +4,7 @@
 
 .user-profile {
   @include cm.main-section;
-  
+
   h1 {
     margin-bottom: 1rem;
     text-align: center;
@@ -20,10 +20,6 @@
     .user-is-student {
       color: c.$fernGreen;
     }
-  }
-
-  label {
-    @include cm.ilios-label;
   }
 }
 

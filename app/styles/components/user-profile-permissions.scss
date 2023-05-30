@@ -1,4 +1,5 @@
 @use "../ilios-common/colors" as c;
+@use "../ilios-common/mixins" as m;
 
 .user-profile-permissions {
   span {
@@ -7,40 +8,20 @@
 
   p {
     padding: .25rem;
-    h5 {
-      cursor: pointer;
+
+    button {
+      @include m.ilios-button-reset;
     }
+
     h6 {
       margin: .5rem 0 0 .5rem;
     }
+
     ul {
       margin: 0 0 .5rem 1rem;
       list-style-position: inside;
       list-style-type: circle;
       padding: 0;
-    }
-
-    &.collapsed {
-      h5 {
-        &::after {
-          content: '\25BA';
-        }
-      }
-      h6,
-      ul,
-      .hide-on-collapse {
-        display: none;
-      }
-    }
-
-    &.expanded {
-      border-bottom: 1px solid c.$black;
-      h5 {
-        &::after {
-          content: '\25BC';
-        }
-      }
-
     }
   }
 }
