@@ -2,31 +2,17 @@
 @use "../mixins" as m;
 
 .single-event-objective-list {
-  button {
+  .expand-collapse-toggle-btn {
+    @include m.ilios-button-reset;
+  }
+
+  .display-mode-toggle-btn {
     &.active {
       background-color: c.$fernGreen;
     }
     &.disabled {
       cursor: default;
       background-color: c.$davysGrey;
-    }
-  }
-
-  .title {
-    cursor: pointer;
-
-    .expanded {
-      @include m.ilios-button-reset;
-      &::after {
-        content: "\25BC";
-      }
-    }
-
-    .expandable {
-      @include m.ilios-button-reset;
-      &::after {
-        content: "\25BA";
-      }
     }
   }
 

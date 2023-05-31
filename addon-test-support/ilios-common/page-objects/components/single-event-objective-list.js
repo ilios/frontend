@@ -1,4 +1,12 @@
-import { clickable, collection, create, hasClass, property, text } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  attribute,
+  hasClass,
+  property,
+  text,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-single-event-objective-list]',
@@ -6,7 +14,8 @@ const definition = {
     scope: '[data-test-title]',
     expandCollapseSwitcher: {
       scope: '[data-test-expand-collapse]',
-      isExpanded: hasClass('expanded'),
+      ariaLabel: attribute('aria-label'),
+      ariaExpanded: attribute('aria-expanded'),
       toggle: clickable(),
     },
     displayModeSwitcher: {

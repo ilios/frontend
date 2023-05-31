@@ -1,12 +1,4 @@
-import {
-  attribute,
-  clickable,
-  create,
-  collection,
-  hasClass,
-  isPresent,
-  text,
-} from 'ember-cli-page-object';
+import { attribute, clickable, create, collection, isPresent, text } from 'ember-cli-page-object';
 import objectiveList from './single-event-objective-list';
 import materials from './single-event-learningmaterial-list';
 
@@ -33,7 +25,8 @@ const definition = {
     scope: '[data-test-session-materials]',
     expandCollapseSwitcher: {
       scope: '[data-test-expand-collapse]',
-      isExpanded: hasClass('expanded'),
+      ariaExpanded: attribute('aria-expanded'),
+      ariaLabel: attribute('aria-label'),
       toggle: clickable(),
     },
     linksToAllMaterials: isPresent('[data-test-link-to-all-materials]'),
@@ -45,9 +38,11 @@ const definition = {
   },
   courseLearningMaterials: {
     scope: '[data-test-course-materials]',
+    title: text('h2 [data-test-title]'),
     expandCollapseSwitcher: {
       scope: '[data-test-expand-collapse]',
-      isExpanded: hasClass('expanded'),
+      ariaExpanded: attribute('aria-expanded'),
+      ariaLabel: attribute('aria-label'),
       toggle: clickable(),
     },
     linksToAllMaterials: isPresent('[data-test-link-to-all-materials]'),

@@ -131,8 +131,11 @@ general:
   groupName: "Group Name"
   groups: Groups
   hideCalendar: "Hide Calendar"
+  hideCourseMaterials: "Hide course materials"
   hideFilters: "Hide Filters"
   hideIcsFeed: Hide ICS Feed Options
+  hideObjectives: "Hide objectives"
+  hideSessionMaterials: "Hide session materials"
   hour: Hour
   hours: Hours
   icsInstructions: "To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!"
@@ -299,12 +302,15 @@ general:
   sessionTypes: "Session Types"
   sessionTypesFor: "Session Types for {subject}"
   showCalendar: "Show Calendar"
+  showCourseMaterials: "Show course materials"
   showFilters: "Show Filters"
   showIcsFeed: Show ICS Feed Options
   showLearnerGroupEvents: "Show all events for assigned learner groups"
   showMore: "Show more"
   showNotesToStudents: "Show Notes to Students"
+  showObjectives: "Show objectives"
   showSessionEvents: "Show all other '<em>'{sessionTitle}'</em>' events"
+  showSessionMaterials: "Show session materials"
   smallGroupMessage: "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the \"offering\" button above."
   smallGroups: "Small Groups"
   sortMaterials: "Sort Materials"

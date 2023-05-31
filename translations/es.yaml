@@ -131,8 +131,11 @@ general:
   groupName: "Nombre De Grupo"
   groups: Grupos
   hideCalendar: "Esconda Calendario"
+  hideCourseMaterials: "Ocultar materiales del curso"
   hideFilters: "Esconde Filtros"
   hideIcsFeed: Ocultar Opciones de Fuente de Datos ICS
+  hideObjectives: "Ocultar objetivos"
+  hideSessionMaterials: "Ocultar materiales de sesión"
   hour: Hora
   hours: Horas
   icsInstructions: "Para agregar tu calendario a otra aplicación o servicio, utiliza esta URL.  Esta URL es como una contraseña.  ¡Cualquiera persona que la sepa puede ver tu calendario!"
@@ -299,12 +302,15 @@ general:
   sessionTypes: "Tipos de Sesiones"
   sessionTypesFor: "Tipos de Sesiones para {subject}"
   showCalendar: "Muestre Calendario"
+  showCourseMaterials: "Mostrar materiales del curso"
   showFilters: "Enseñe Filtros"
   showIcsFeed: Mostrar Opciones de Fuente de Datos ICS
   showLearnerGroupEvents: "Mostrar todos los eventos para grupos de alumnos asignados"
   showMore: "Mostrar más"
   showNotesToStudents: "Mostrar Notas a Los Estudiantes"
+  showObjectives: "Mostrar objetivos"
   showSessionEvents: "Mostrar todos los '<em>'{sessionTitle}'</em>' eventos"
+  showSessionMaterials: "Mostrar materiales de la sesión"
   smallGroupMessage: "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de \"ofrecimiento\" de arriba."
   smallGroups: "Grupos Pequeños"
   sortMaterials: "Clasificar los materiales"
