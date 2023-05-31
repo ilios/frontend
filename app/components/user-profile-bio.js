@@ -1,12 +1,11 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { ValidateIf } from 'class-validator';
 import { validatable, Custom, IsEmail, NotBlank, Length } from 'ilios-common/decorators/validation';
 
@@ -64,11 +63,23 @@ export default class UserProfileBioComponent extends Component {
     this.passwordStrengthScore = obj.score;
   }
 
-  async validateUsernameCallback() {
-    const auths = await this.store.query('authentication', {
-      filters: { username: this.username },
-    });
-    return !auths.some((auth) => auth.belongsTo('user').id() !== this.args.user.id);
+  @cached
+  get authsData() {
+    return new TrackedAsyncData(
+      this.store.query('authentication', {
+        filters: { username: this.username },
+      })
+    );
+  }
+
+  get isUsernameTaken() {
+    return this.authsData.isResolved
+      ? !this.authsData.value.some((auth) => auth.belongsTo('user').id() !== this.args.user.id)
+      : true;
+  }
+
+  validateUsernameCallback() {
+    return this.isUsernameTaken;
   }
 
   validateUsernameMessageCallback() {

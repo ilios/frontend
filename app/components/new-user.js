@@ -127,11 +127,21 @@ export default class NewUserComponent extends Component {
     return this.currentSchoolCohorts.slice().reverse()[0];
   }
 
-  async validateUsernameCallback() {
-    const auths = await this.store.query('authentication', {
-      filters: { username: this.username },
-    });
-    return !auths.length;
+  @cached
+  get authsData() {
+    return new TrackedAsyncData(
+      this.store.query('authentication', {
+        filters: { username: this.username },
+      })
+    );
+  }
+
+  get isUsernameTaken() {
+    return this.authsData.isResolved ? !this.authsData.value.length : true;
+  }
+
+  validateUsernameCallback() {
+    return this.isUsernameTaken;
   }
 
   validateUsernameMessageCallback() {
