@@ -5,6 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/single-event-learningmaterial-list-item';
+import createTypedLearningMaterialProxy from 'dummy/utils/create-typed-learning-material-proxy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | single-event-learningmaterial-list-item', function (hooks) {
@@ -43,12 +44,12 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       hour: 'numeric',
       minute: 'numeric',
     };
-    const lm = {
+    const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
       isBlanked: true,
       startDate: startDate.toJSDate(),
       endDate: endDate.toJSDate(),
-    };
+    });
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
@@ -75,14 +76,14 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       hour: 'numeric',
       minute: 'numeric',
     };
-    const lm = {
+    const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
       startDate: startDate.toJSDate(),
       endDate: endDate.toJSDate(),
       mimetype: 'application/pdf',
       filesize: 1111,
       absoluteFileUri: '/foo/bar',
-    };
+    });
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
@@ -109,10 +110,10 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('required', async function (assert) {
-    const lm = {
+    const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
       required: true,
-    };
+    });
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
@@ -122,12 +123,12 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('pdf', async function (assert) {
-    const lm = {
+    const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
       mimetype: 'application/pdf',
       filesize: 1111,
       absoluteFileUri: '/foo/bar',
-    };
+    });
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
@@ -146,12 +147,12 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('file', async function (assert) {
-    const lm = {
+    const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
       mimetype: 'whatever/thisis',
       filesize: 1111,
       absoluteFileUri: '/foo/bar',
-    };
+    });
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
@@ -170,12 +171,12 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('file and not linked', async function (assert) {
-    const lm = {
+    const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
       mimetype: 'whatever/thisis',
       filesize: 1111,
       absoluteFileUri: '/foo/bar',
-    };
+    });
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
@@ -194,11 +195,10 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('link', async function (assert) {
-    const lm = {
+    const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
-      type: 'link',
       link: 'https://iliosproject.org/',
-    };
+    });
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
@@ -217,11 +217,10 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('link and not linked', async function (assert) {
-    const lm = {
+    const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
-      type: 'link',
       link: 'https://iliosproject.org/',
-    };
+    });
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
@@ -240,11 +239,10 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('citation', async function (assert) {
-    const lm = {
+    const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
-      type: 'citation',
       citation: 'Lorem Ipsum',
-    };
+    });
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}
@@ -262,10 +260,10 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('public notes', async function (assert) {
-    const lm = {
+    const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
       publicNotes: 'read this',
-    };
+    });
     this.set('lm', lm);
     await render(hbs`<SingleEventLearningmaterialListItem
       @learningMaterial={{this.lm}}

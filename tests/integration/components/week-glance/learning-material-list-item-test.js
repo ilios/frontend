@@ -5,6 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 import { component } from 'ilios-common/page-objects/components/week-glance/learning-material';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import createTypedLearningMaterialProxy from 'dummy/utils/create-typed-learning-material-proxy';
 
 module('Integration | Component | week-glance/learning-material-list-item', function (hooks) {
   setupRenderingTest(hooks);
@@ -15,9 +16,9 @@ module('Integration | Component | week-glance/learning-material-list-item', func
     const lm = {
       title: 'lm 1',
       link: 'https://example.com',
-      type: 'link',
     };
-    this.set('lm', lm);
+    const proxy = createTypedLearningMaterialProxy(lm);
+    this.set('lm', proxy);
     this.set('event', {
       learningMaterials: [lm],
     });
@@ -39,9 +40,9 @@ module('Integration | Component | week-glance/learning-material-list-item', func
     const lm = {
       title: 'lm 1',
       link: 'https://example.com',
-      type: 'link',
     };
-    this.set('lm', lm);
+    const proxy = createTypedLearningMaterialProxy(lm);
+    this.set('lm', proxy);
     this.set('event', {
       learningMaterials: [lm],
     });
@@ -60,9 +61,9 @@ module('Integration | Component | week-glance/learning-material-list-item', func
     const lm = {
       title: 'lm 1',
       link: 'https://example.com',
-      type: 'link',
     };
-    this.set('lm', lm);
+    const proxy = createTypedLearningMaterialProxy(lm);
+    this.set('lm', proxy);
     this.set('event', {
       learningMaterials: [lm],
     });
@@ -74,7 +75,6 @@ module('Integration | Component | week-glance/learning-material-list-item', func
       @showLink={{false}}
     />
 `);
-
     assert.notOk(component.hasLink);
   });
 });
