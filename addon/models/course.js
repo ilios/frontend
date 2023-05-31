@@ -120,7 +120,14 @@ export default class Course extends Model {
     return uniqueValues(this.allTreeCompetencies ?? []).filter(Boolean);
   }
 
-  @use competencyDomains = new ResolveAsyncValue(() => [mapBy(this.competencies, 'domain')]);
+  @use competencyDomains = new AsyncProcess(() => [
+    this._getCompetencyDomains.bind(this),
+    this.competencies,
+  ]);
+
+  async _getCompetencyDomains(competencies) {
+    return map(competencies, (c) => c.getDomain());
+  }
 
   @use domainsWithSubcompetencies = new AsyncProcess(() => [
     this._getDomainProxies.bind(this),

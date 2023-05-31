@@ -300,7 +300,11 @@ export default class OfferingForm extends Component {
     if (isEmpty(cohorts)) {
       associatedSchools = [];
     } else {
-      const cohortSchools = await map(cohorts.slice(), (cohort) => cohort.school);
+      const cohortSchools = await map(cohorts.slice(), async (cohort) => {
+        const programYear = await cohort.programYear;
+        const program = await programYear.program;
+        return program.school;
+      });
       associatedSchools = uniqueValues(cohortSchools);
     }
     const allInstructorGroups = await map(associatedSchools, (school) => school.instructorGroups);

@@ -21,8 +21,9 @@ export default class DetailCohortListComponent extends Component {
       const schoolTitle = school.title;
       let displayTitle = cohort.title;
       if (!displayTitle) {
-        const classOfYear = await cohort.classOfYear;
-        displayTitle = this.intl.t('general.classOf', { year: classOfYear });
+        const programYear = await cohort.programYear;
+        const year = await programYear.getClassOfYear();
+        displayTitle = this.intl.t('general.classOf', { year });
       }
 
       return {
