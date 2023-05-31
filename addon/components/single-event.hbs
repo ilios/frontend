@@ -105,6 +105,7 @@
       <h2>
         <button
           class={{if this.isSessionMaterialsListExpanded "expanded" "expandable"}}
+          aria-expanded={{if this.isSessionMaterialsListExpanded "true" "false"}}
           type="button"
           {{on "click" (set this.isSessionMaterialsListExpanded (not this.isSessionMaterialsListExpanded))}}
           data-test-expand-collapse
@@ -145,6 +146,7 @@
       <h2>
         <button
           class={{if this.isCourseMaterialsListExpanded "expanded" "expandable"}}
+          aria-expanded={{if this.isCourseMaterialsListExpanded "true" "false"}}
           type="button"
           {{on "click" (set this.isCourseMaterialsListExpanded (not this.isCourseMaterialsListExpanded))}}
           data-test-expand-collapse

@@ -5,6 +5,7 @@
   <h2 class="title" data-test-title>
     <button
       class={{if this.isExpanded "expanded" "expandable"}}
+      aria-expanded={{if this.isExpanded "true" "false"}}
       type="button"
       {{on "click" (set this.isExpanded (not this.isExpanded))}}
       data-test-expand-collapse
