@@ -3,12 +3,14 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
-import { all, filter } from 'rsvp';
+import { filter } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import moment from 'moment';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { findBy, findById, mapBy } from 'ilios-common/utils/array-helpers';
+import { findBy, findById } from 'ilios-common/utils/array-helpers';
 import { ValidateIf } from 'class-validator';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
+import { DateTime } from 'luxon';
 
 @validatable
 export default class NewDirectoryUserComponent extends Component {
@@ -20,7 +22,6 @@ export default class NewDirectoryUserComponent extends Component {
   @service flashMessages;
   @service permissionChecker;
 
-  @tracked allowCustomUserName = false;
   @tracked isSearching = false;
   @tracked searchResults = [];
   @tracked searchResultsReturned = false;
@@ -37,15 +38,87 @@ export default class NewDirectoryUserComponent extends Component {
   @tracked phone;
   @tracked schoolId = null;
   @tracked primaryCohortId = null;
-  @tracked primarySchool = null;
-  @tracked currentSchoolCohorts = [];
-  @tracked cohorts = [];
-  @tracked schools = [];
   @tracked isSaving = false;
   @tracked nonStudentMode = true;
 
-  get isLoading() {
-    return this.load.isRunning || this.reload.isRunning;
+  userModel = new TrackedAsyncData(this.currentUser.getModel());
+  authTypeConfig = new TrackedAsyncData(this.iliosConfig.getAuthenticationType());
+
+  @cached
+  get allowCustomUserName() {
+    if (!this.authTypeConfig.isResolved) {
+      return false;
+    }
+
+    return this.authTypeConfig.value === 'form';
+  }
+
+  get allSchools() {
+    return this.store.peekAll('school');
+  }
+
+  @cached
+  get user() {
+    return this.userModel.isResolved ? this.userModel.value : null;
+  }
+
+  @cached
+  get schoolsWithCreatePermissions() {
+    return new TrackedAsyncData(
+      filter(this.allSchools, async (school) => {
+        return this.permissionChecker.canCreateUser(school);
+      })
+    );
+  }
+
+  @cached
+  get schools() {
+    return this.schoolsWithCreatePermissions.isResolved
+      ? this.schoolsWithCreatePermissions.value
+      : [];
+  }
+
+  get primarySchool() {
+    return findBy(this.allSchools, this.user.belongsTo('school').id());
+  }
+
+  @cached
+  get currentSchoolCohorts() {
+    const programIds = this.store
+      .peekAll('program')
+      .filter((program) => program.belongsTo('school').id() === this.bestSelectedSchool?.id)
+      .map((program) => program.id);
+    const programYearIds = this.store
+      .peekAll('program-year')
+      .filter((programYear) => programIds.includes(programYear.belongsTo('program').id()))
+      .map((programYear) => programYear.id);
+
+    return this.store
+      .peekAll('cohort')
+      .filter((cohort) => programYearIds.includes(cohort.belongsTo('programYear').id()));
+  }
+
+  @cached
+  get cohorts() {
+    const programYears = this.store.peekAll('program-year');
+    const programs = this.store.peekAll('program');
+    const objects = this.currentSchoolCohorts.map((cohort) => {
+      const programYear = programYears.find((p) => p.id === cohort.belongsTo('programYear').id());
+      const program = programs.find((p) => p.id === programYear.belongsTo('program').id());
+
+      return {
+        id: cohort.id,
+        title: `${program.title} ${cohort.title}`,
+        startYear: programYear.startYear,
+        duration: program.duration,
+      };
+    });
+
+    const lastYear = DateTime.now().year - 1;
+    return objects.filter((obj) => {
+      const finalYear = Number(obj.startYear) + Number(obj.duration);
+      return finalYear > lastYear;
+    });
   }
 
   get bestSelectedSchool() {
@@ -60,10 +133,6 @@ export default class NewDirectoryUserComponent extends Component {
   }
 
   get bestSelectedCohort() {
-    if (!this.currentSchoolCohorts) {
-      return null;
-    }
-
     if (this.primaryCohortId) {
       const currentCohort = findById(this.currentSchoolCohorts.slice(), this.primaryCohortId);
 
@@ -75,67 +144,11 @@ export default class NewDirectoryUserComponent extends Component {
     return this.currentSchoolCohorts.slice().reverse()[0];
   }
 
-  async loadSchools() {
-    const schools = await this.store.findAll('school');
-    return filter(schools.slice(), async (school) => {
-      return this.permissionChecker.canCreateUser(school);
-    });
-  }
-
-  async loadCohorts(school) {
-    if (!school) {
-      return;
-    }
-    const cohorts = await this.store.query('cohort', {
-      filters: {
-        schools: [school.id],
-      },
-    });
-
-    //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = await all(mapBy(cohorts.slice(), 'programYear'));
-    await all(mapBy(programYears.slice(), 'program'));
-
-    const objects = await all(
-      cohorts.slice().map(async (cohort) => {
-        const obj = {
-          id: cohort.get('id'),
-        };
-        const programYear = await cohort.programYear;
-        const program = await programYear.program;
-        obj.title = program.title + ' ' + cohort.title;
-        obj.startYear = programYear.startYear;
-        obj.duration = program.duration;
-
-        return obj;
-      })
-    );
-
-    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-    return objects.filter((obj) => {
-      const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
-      return finalYear > lastYear;
-    });
-  }
-
   @restartableTask
   *load() {
-    const authType = yield this.iliosConfig.getAuthenticationType();
-    this.allowCustomUserName = 'form' === authType;
-    const user = yield this.currentUser.getModel();
-    this.primarySchool = yield user.school;
-    this.schools = yield this.loadSchools();
-    this.cohorts = yield this.loadCohorts(this.primarySchool);
-    this.currentSchoolCohorts = yield this.bestSelectedSchool?.cohorts;
-    if (isPresent(this.args.searchTerms)) {
+    if (this.args.searchTerms) {
       yield this.findUsersInDirectory.perform(this.args.searchTerms);
     }
-  }
-
-  @restartableTask
-  *reload() {
-    this.currentSchoolCohorts = yield this.bestSelectedSchool?.cohorts;
-    this.cohorts = yield this.loadCohorts(this.bestSelectedSchool);
   }
 
   @action

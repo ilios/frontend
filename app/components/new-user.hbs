@@ -1,11 +1,5 @@
 {{#let (unique-id) as |templateId|}}
-  <div
-    class="new-user"
-    data-test-new-user
-    {{did-insert (perform this.load)}}
-    {{did-update (perform this.reload) this.schoolId}}
-    ...attributes
-  >
+  <div class="new-user" data-test-new-user ...attributes>
     <h3>
       {{t "general.newUser"}}
     </h3>
@@ -142,40 +136,32 @@
         <label for="primary-school-{{templateId}}">
           {{t "general.primarySchool"}}:
         </label>
-        {{#if this.isLoading}}
-          <LoadingSpinner />
-        {{else}}
-          <select id="primary-school-{{templateId}}" {{on "change" (pick "target.value" (set this.schoolId))}}>
-            {{#each (sort-by "title" this.schools) as |school|}}
-              <option
-                value={{school.id}}
-                selected={{eq school this.bestSelectedSchool}}
-              >
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{/if}}
+        <select id="primary-school-{{templateId}}" {{on "change" (pick "target.value" (set this.schoolId))}}>
+          {{#each (sort-by "title" this.schools) as |school|}}
+            <option
+              value={{school.id}}
+              selected={{eq school this.bestSelectedSchool}}
+            >
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
       </div>
       {{#unless this.nonStudentMode}}
         <div class="item last" data-test-cohort>
           <label for="primary-cohort-{{templateId}}">
             {{t "general.primaryCohort"}}:
           </label>
-          {{#if this.isLoading}}
-            <LoadingSpinner />
-          {{else}}
-            <select id="primary-cohort-{{templateId}}" {{on "change" (pick "target.value" (set this.primaryCohortId))}}>
-              {{#each (sort-by "title" this.cohorts) as |cohort|}}
-                <option
-                  value={{cohort.id}}
-                  selected={{eq cohort.id this.bestSelectedCohort?.id}}
-                >
-                  {{cohort.title}}
-                </option>
-              {{/each}}
-            </select>
-          {{/if}}
+          <select id="primary-cohort-{{templateId}}" {{on "change" (pick "target.value" (set this.primaryCohortId))}}>
+            {{#each (sort-by "title" this.cohorts) as |cohort|}}
+              <option
+                value={{cohort.id}}
+                selected={{eq cohort.id this.bestSelectedCohort.id}}
+              >
+                {{cohort.title}}
+              </option>
+            {{/each}}
+          </select>
         </div>
       {{/unless}}
       <div class="buttons">
