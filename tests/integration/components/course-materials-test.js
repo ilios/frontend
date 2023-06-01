@@ -19,7 +19,6 @@ module('Integration | Component | course materials', function (hooks) {
       description: 'description1',
       originalAuthor: 'author1',
       link: 'url1',
-      type: 'link',
     });
     const courseLm1 = this.server.create('course-learning-material', {
       learningMaterial: lm1,

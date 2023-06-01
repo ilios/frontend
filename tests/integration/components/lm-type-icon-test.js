@@ -4,13 +4,14 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/lm-type-icon';
+import createTypedLearningMaterialProxy from 'dummy/utils/create-typed-learning-material-proxy';
 
 module('Integration | Component | lm type icon', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
   test('link', async function (assert) {
-    const lm = { type: 'link' };
+    const lm = createTypedLearningMaterialProxy({ link: 'https://iliosproject.org' });
     this.set('lm', lm);
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
 `);
@@ -18,7 +19,7 @@ module('Integration | Component | lm type icon', function (hooks) {
   });
 
   test('citation', async function (assert) {
-    const lm = { type: 'citation' };
+    const lm = createTypedLearningMaterialProxy({ citation: 'Lorem Ipsum' });
     this.set('lm', lm);
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
 `);
@@ -26,7 +27,10 @@ module('Integration | Component | lm type icon', function (hooks) {
   });
 
   test('pdf file', async function (assert) {
-    const lm = { type: 'file', mimetype: 'application/pdf' };
+    const lm = createTypedLearningMaterialProxy({
+      absoluteFileUri: '/dev/null',
+      mimetype: 'application/pdf',
+    });
     this.set('lm', lm);
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
 `);
@@ -36,15 +40,15 @@ module('Integration | Component | lm type icon', function (hooks) {
   test('powerpoint file', async function (assert) {
     assert.expect(5);
     const fixtures = [
-      { type: 'file', mimetype: 'ppt' },
-      { type: 'file', mimetype: 'keynote' },
-      { type: 'file', mimetype: 'pps' },
-      { type: 'file', mimetype: 'pptx' },
-      { type: 'file', mimetype: 'powerpoint' },
+      { absoluteFileUri: '/dev/null', mimetype: 'ppt' },
+      { absoluteFileUri: '/dev/null', mimetype: 'keynote' },
+      { absoluteFileUri: '/dev/null', mimetype: 'pps' },
+      { absoluteFileUri: '/dev/null', mimetype: 'pptx' },
+      { absoluteFileUri: '/dev/null', mimetype: 'powerpoint' },
     ];
 
     for (let i = 0; i < fixtures.length; i++) {
-      this.set('lm', fixtures[i]);
+      this.set('lm', createTypedLearningMaterialProxy(fixtures[i]));
       await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
 `);
       assert.ok(component.isPowerpoint);
@@ -54,14 +58,14 @@ module('Integration | Component | lm type icon', function (hooks) {
   test('video file', async function (assert) {
     assert.expect(4);
     const fixtures = [
-      { type: 'file', mimetype: 'video/mp4' },
-      { type: 'file', mimetype: 'video/mpg' },
-      { type: 'file', mimetype: 'video/mpeg' },
-      { type: 'file', mimetype: 'video/mov' },
+      { absoluteFileUri: '/dev/null', mimetype: 'video/mp4' },
+      { absoluteFileUri: '/dev/null', mimetype: 'video/mpg' },
+      { absoluteFileUri: '/dev/null', mimetype: 'video/mpeg' },
+      { absoluteFileUri: '/dev/null', mimetype: 'video/mov' },
     ];
 
     for (let i = 0; i < fixtures.length; i++) {
-      this.set('lm', fixtures[i]);
+      this.set('lm', createTypedLearningMaterialProxy(fixtures[i]));
       await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
 `);
       assert.ok(component.isVideo);
@@ -71,10 +75,10 @@ module('Integration | Component | lm type icon', function (hooks) {
   test('audio file', async function (assert) {
     assert.expect(4);
     const fixtures = [
-      { type: 'file', mimetype: 'audio/wav' },
-      { type: 'file', mimetype: 'audio/mp3' },
-      { type: 'file', mimetype: 'audio/aac' },
-      { type: 'file', mimetype: 'audio/flac' },
+      { absoluteFileUri: '/dev/null', mimetype: 'audio/wav' },
+      { absoluteFileUri: '/dev/null', mimetype: 'audio/mp3' },
+      { absoluteFileUri: '/dev/null', mimetype: 'audio/aac' },
+      { absoluteFileUri: '/dev/null', mimetype: 'audio/flac' },
     ];
 
     for (let i = 0; i < fixtures.length; i++) {
@@ -88,8 +92,8 @@ module('Integration | Component | lm type icon', function (hooks) {
   test('file of unknown mime-type', async function (assert) {
     assert.expect(2);
     const fixtures = [
-      { type: 'file', mimetype: '' },
-      { type: 'file', mimetype: 'xyz' },
+      { absoluteFileUri: '/dev/null', mimetype: '' },
+      { absoluteFileUri: '/dev/null', mimetype: 'xyz' },
     ];
 
     for (let i = 0; i < fixtures.length; i++) {
@@ -101,7 +105,7 @@ module('Integration | Component | lm type icon', function (hooks) {
   });
 
   test('listItem', async function (assert) {
-    const lm = { type: 'link' };
+    const lm = createTypedLearningMaterialProxy({ link: 'https://iliosproject.org' });
     this.set('lm', lm);
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{true}} />
 `);
@@ -110,7 +114,7 @@ module('Integration | Component | lm type icon', function (hooks) {
 
   test('no listItem', async function (assert) {
     assert.expect(2);
-    const lm = { type: 'link' };
+    const lm = createTypedLearningMaterialProxy({ link: 'https://iliosproject.org' });
     this.set('lm', lm);
 
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} />

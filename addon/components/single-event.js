@@ -2,9 +2,10 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { isBlank, isEmpty } from '@ember/utils';
+import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import { findById } from 'ilios-common/utils/array-helpers';
+import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 
@@ -245,28 +246,9 @@ export default class SingleEvent extends Component {
     return 0;
   }
 
-  getTypedLearningMaterialProxies(learningMaterials) {
-    const lms = learningMaterials || [];
-    const handler = {
-      get: function (obj, prop) {
-        if ('type' === prop) {
-          if (obj.isBlanked) {
-            return 'unknown';
-          }
-          if (!isBlank(obj.citation)) {
-            return 'citation';
-          } else if (!isBlank(obj.link)) {
-            return 'link';
-          } else {
-            return 'file';
-          }
-        }
-        return obj[prop];
-      },
-    };
-
+  getTypedLearningMaterialProxies(lms) {
     return lms.map((lm) => {
-      return new Proxy(lm, handler);
+      return createTypedLearningMaterialProxy(lm);
     });
   }
 

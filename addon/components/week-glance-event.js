@@ -1,13 +1,14 @@
 import Component from '@glimmer/component';
+import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
 
 export default class WeekGlanceEvent extends Component {
   sortString(a, b) {
     return a.localeCompare(b);
   }
   get sessionLearningMaterials() {
-    return (
-      this.args.event.learningMaterials?.filter((lm) => Boolean(lm.sessionLearningMaterial)) ?? []
-    );
+    const lms =
+      this.args.event.learningMaterials?.filter((lm) => Boolean(lm.sessionLearningMaterial)) ?? [];
+    return this.getTypedLearningMaterialProxies(lms);
   }
 
   get preworkEvents() {
@@ -29,26 +30,8 @@ export default class WeekGlanceEvent extends Component {
 
   getTypedLearningMaterialProxies(learningMaterials) {
     const lms = learningMaterials || [];
-    const handler = {
-      get: function (obj, prop) {
-        if ('type' === prop) {
-          if (obj.isBlanked) {
-            return 'unknown';
-          }
-          if (obj.citation) {
-            return 'citation';
-          } else if (obj.link) {
-            return 'link';
-          } else {
-            return 'file';
-          }
-        }
-        return obj[prop];
-      },
-    };
-
     return lms.map((lm) => {
-      return new Proxy(lm, handler);
+      return createTypedLearningMaterialProxy(lm);
     });
   }
 

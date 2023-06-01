@@ -32,7 +32,6 @@ module('Integration | Component | week-glance-event', function (hooks) {
       learningMaterials: [
         {
           title: 'Citation LM',
-          type: 'citation',
           required: true,
           publicNotes: 'This is cool.',
           citation: 'citationtext',
@@ -40,14 +39,12 @@ module('Integration | Component | week-glance-event', function (hooks) {
         },
         {
           title: 'Link LM',
-          type: 'link',
           required: false,
           link: 'http://myhost.com/url2',
           sessionLearningMaterial: 2,
         },
         {
           title: 'File LM',
-          type: 'file',
           filename: 'This is a PDF',
           mimetype: 'application/pdf',
           required: true,
@@ -122,7 +119,6 @@ module('Integration | Component | week-glance-event', function (hooks) {
         {
           title: 'Great Slides',
           required: true,
-          type: 'file',
           filename: 'This is another PDF',
           mimetype: 'application/pdf',
           absoluteFileUri: 'http://myhost.com/url1',
@@ -177,7 +173,6 @@ module('Integration | Component | week-glance-event', function (hooks) {
       learningMaterials: [
         {
           title: 'In the window',
-          type: 'citation',
           required: true,
           isBlanked: false,
           citation: 'citationtext',
@@ -187,7 +182,6 @@ module('Integration | Component | week-glance-event', function (hooks) {
         },
         {
           title: 'Too Early',
-          type: 'citation',
           required: true,
           isBlanked: true,
           citation: 'citationtext',
@@ -196,7 +190,6 @@ module('Integration | Component | week-glance-event', function (hooks) {
         },
         {
           title: 'Too Late',
-          type: 'citation',
           required: true,
           isBlanked: true,
           citation: 'citationtext',
@@ -281,7 +274,6 @@ module('Integration | Component | week-glance-event', function (hooks) {
       learningMaterials: [
         {
           title: 'Citation LM',
-          type: 'citation',
           required: true,
           publicNotes: 'This is cool.',
           citation: 'citationtext',
@@ -289,14 +281,12 @@ module('Integration | Component | week-glance-event', function (hooks) {
         },
         {
           title: 'Link LM',
-          type: 'link',
           required: false,
           link: 'http://myhost.com/url2',
           sessionLearningMaterial: 1,
         },
         {
           title: 'File LM',
-          type: 'file',
           filename: 'This is a PDF',
           mimetype: 'application/pdf',
           required: true,
@@ -349,7 +339,6 @@ module('Integration | Component | week-glance-event', function (hooks) {
       learningMaterials: [
         {
           title: 'Citation LM',
-          type: 'citation',
           required: true,
           publicNotes: 'This is cool.',
           citation: 'citationtext',

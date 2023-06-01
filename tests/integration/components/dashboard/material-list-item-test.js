@@ -20,7 +20,6 @@ module('Integration | Component | dashboard/material-list-item', function (hooks
       absoluteFileUri: 'http://myhost.com/url1',
       sessionTitle: 'session1title',
       course: 1,
-      type: 'file',
       mimetype: 'application/pdf',
       courseTitle: 'course title',
       courseYear: '2022',
