@@ -1,8 +1,6 @@
 import Model, { belongsTo, hasMany, attr } from '@ember-data/model';
 import Inflector from 'ember-inflector';
 import { filter } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
-import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 
 Inflector.inflector.irregular('vocabulary', 'vocabularies');
 
@@ -18,11 +16,6 @@ export default class Vocabulary extends Model {
 
   @hasMany('term', { async: true, inverse: 'vocabulary' })
   terms;
-
-  @use topLevelTerms = new DeprecatedAsyncCP(() => [
-    this.getTopLevelTerms.bind(this),
-    'vocabulary.topLevelTerms',
-  ]);
 
   async getTopLevelTerms() {
     const terms = await this.terms;

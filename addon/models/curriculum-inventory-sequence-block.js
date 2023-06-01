@@ -1,6 +1,4 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { use } from 'ember-could-get-used-to-this';
-import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 
 export default class CurriculumInventorySequenceBlock extends Model {
   @attr('string')
@@ -69,18 +67,6 @@ export default class CurriculumInventorySequenceBlock extends Model {
   @belongsTo('course', { async: true, inverse: null })
   course;
 
-  @use allParents = new DeprecatedAsyncCP(() => [
-    this.getAllParents.bind(this),
-    'curriculumInventorySequenceBlock.allParents',
-    this.parent,
-  ]);
-
-  @use isFinalized = new DeprecatedAsyncCP(() => [
-    this._isFinalized.bind(this),
-    'curriculumInventorySequenceBlock.isFinalized',
-    this.report,
-  ]);
-
   get isRequired() {
     return 1 === parseInt(this.required, 10);
   }
@@ -118,12 +104,5 @@ export default class CurriculumInventorySequenceBlock extends Model {
     }
     const parentsAncestors = (await parent.getAllParents()).slice();
     return [parent, ...parentsAncestors];
-  }
-
-  /**
-   * @deprecated
-   */
-  async _isFinalized(report) {
-    return !!(await report)?.isFinalized;
   }
 }

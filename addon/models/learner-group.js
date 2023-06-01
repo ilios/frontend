@@ -4,8 +4,6 @@ import { map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
-import DeprecatedResolveCP from 'ilios-common/classes/deprecated-resolve-cp';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
@@ -85,13 +83,6 @@ export default class LearnerGroup extends Model {
   get courses() {
     return uniqueValues(this._sessionCourses ?? []);
   }
-
-  @use subgroupNumberingOffset = new DeprecatedAsyncCP(() => [
-    this.getSubgroupNumberingOffset.bind(this),
-    'learnerGroup.subgroupNumberingOffset',
-    this.children,
-    this.title,
-  ]);
 
   /**
    * Get the offset for numbering generated subgroups.
@@ -264,11 +255,6 @@ export default class LearnerGroup extends Model {
 
     return uniqueValues([...this._instructors.slice(), ...this._instructorGroupUsers]);
   }
-
-  @use _cohort = new ResolveAsyncValue(() => [this.cohort]);
-  @use _programYear = new ResolveAsyncValue(() => [this._cohort?.programYear]);
-  @use _program = new ResolveAsyncValue(() => [this._programYear?.program]);
-  @use school = new DeprecatedResolveCP(() => [this._program?.school, 'learnerGroup.school']);
 
   @use _descendantUsers = new ResolveFlatMapBy(() => [this.allDescendants, 'users']);
 

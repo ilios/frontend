@@ -1,6 +1,6 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
-import DeprecatedResolveCP from 'ilios-common/classes/deprecated-resolve-cp';
+
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
@@ -48,16 +48,6 @@ export default class ProgramYearObjective extends Model {
   get associatedVocabularies() {
     return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
   }
-
-  @use firstProgram = new DeprecatedResolveCP(() => [
-    this.programYear.get('program'),
-    'programYearObjective.firstProgram',
-  ]);
-
-  @use firstCohort = new DeprecatedResolveCP(() => [
-    this.programYear.get('cohort'),
-    'programYearObjective.firstCohort',
-  ]);
 
   /**
    * @todo check if this method is obsolete, if so remove it [ST 2020/07/08]
