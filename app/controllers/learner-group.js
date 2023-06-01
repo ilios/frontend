@@ -8,33 +8,30 @@ import { inject as service } from '@ember/service';
 
 export default class LearnerGroupController extends Controller {
   @service permissionChecker;
-
   queryParams = [{ isEditing: 'edit' }, { isBulkAssigning: 'bulkupload', sortUsersBy: 'usersBy' }];
 
-  @cached
-  get schoolData() {
-    return new TrackedAsyncData(this.model.school);
-  }
-
-  get school() {
-    return this.schoolData.isResolved ? this.schoolData.value : null;
-  }
+  @tracked isEditing = false;
+  @tracked isBulkAssigning = false;
+  @tracked sortUsersBy = 'fullName';
 
   @use canUpdate = new PermissionChecker(() => ['canUpdateLearnerGroup', this.model]);
   @use canDelete = new PermissionChecker(() => ['canDeleteLearnerGroup', this.model]);
 
   @cached
   get canCreateData() {
-    return new TrackedAsyncData(
-      this.school ? this.permissionChecker.canCreateLearnerGroup(this.school) : false
-    );
+    return new TrackedAsyncData(this.checkCanCreate(this.model));
   }
 
   get canCreate() {
-    return this.canCreateData.isResolved ? this.canCreateData.value : null;
+    return this.canCreateData.isResolved ? this.canCreateData.value : false;
   }
 
-  @tracked isEditing = false;
-  @tracked isBulkAssigning = false;
-  @tracked sortUsersBy = 'fullName';
+  async checkCanCreate(learnerGroup) {
+    const cohort = await learnerGroup.cohort;
+    const programYear = await cohort.programYear;
+    const program = await programYear.program;
+    const school = await program.school;
+
+    return await this.permissionChecker.canCreateLearnerGroup(school);
+  }
 }
