@@ -36,9 +36,9 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
   test('check if report is finalized', function (assert) {
     const store = this.owner.lookup('service:store');
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
-    assert.notOk(model.isFinalized);
+    assert.notOk(model.belongsTo('export')?.id());
     store.createRecord('curriculumInventoryExport', { id: 1, report: model });
-    assert.ok(model.isFinalized);
+    assert.ok(model.belongsTo('export')?.id());
   });
 
   test('get linked courses', async function (assert) {

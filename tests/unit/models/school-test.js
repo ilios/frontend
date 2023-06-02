@@ -44,44 +44,4 @@ module('Unit | Model | School', function (hooks) {
     const testNull = await school.getConfigValue('test-null');
     assert.deepEqual(testNull, null);
   });
-
-  test('cohorts', async function (assert) {
-    assert.ok(true);
-    const school = this.server.create('school');
-    const model = await this.store.findRecord('school', school.id);
-    let cohorts = await model.cohorts;
-    assert.strictEqual(cohorts.length, 0);
-    const program1 = this.server.create('program', {
-      school,
-    });
-    const program2 = this.server.create('program', {
-      school,
-    });
-    const programYear1 = this.server.create('program-year', {
-      program: program1,
-    });
-    const programYear2 = this.server.create('program-year', {
-      program: program2,
-    });
-    const programYear3 = this.server.create('program-year', {
-      program: program2,
-    });
-    const programYear4 = this.server.create('program-year', {
-      program: program2,
-    });
-    this.server.create('cohort', {
-      programYear: programYear1,
-    });
-    this.server.create('cohort', {
-      programYear: programYear2,
-    });
-    this.server.create('cohort', {
-      programYear: programYear3,
-    });
-    this.server.create('cohort', {
-      programYear: programYear4,
-    });
-    cohorts = await model.cohorts;
-    assert.strictEqual(cohorts.length, 4);
-  });
 });

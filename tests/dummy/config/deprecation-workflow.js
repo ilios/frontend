@@ -3,12 +3,12 @@
 window.deprecationWorkflow = window.deprecationWorkflow || {};
 window.deprecationWorkflow.config = {
   workflow: [
-    { handler: 'silence', matchId: 'common.async-computed' },
-    { handler: 'silence', matchId: 'common.resolve-computed' },
-    { handler: 'silence', matchId: 'common.competency-is-domain' },
-    { handler: 'silence', matchId: 'common.competency-is-not-domain' },
-    { handler: 'silence', matchId: 'common.school-cohorts' },
-    { handler: 'silence', matchId: 'common.curriculum-inventory-report-is-finalized' },
+    { handler: 'throw', matchId: 'common.async-computed' },
+    { handler: 'throw', matchId: 'common.resolve-computed' },
+    { handler: 'throw', matchId: 'common.competency-is-domain' },
+    { handler: 'throw', matchId: 'common.competency-is-not-domain' },
+    { handler: 'throw', matchId: 'common.school-cohorts' },
+    { handler: 'throw', matchId: 'common.curriculum-inventory-report-is-finalized' },
     { handler: 'silence', matchId: 'ember-data:deprecate-early-static' },
     { handler: 'silence', matchId: 'ember-data:deprecate-array-like' },
     { handler: 'silence', matchId: 'ember-data:deprecate-promise-many-array-behaviors' },

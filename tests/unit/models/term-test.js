@@ -50,7 +50,7 @@ module('Unit | Model | term', function (hooks) {
     assert.strictEqual(titles[1], 'Parent');
   });
 
-  test('titleWithParentTitles', async function (assert) {
+  test('getTitleWithParentTitles', async function (assert) {
     assert.expect(1);
     const model = this.store.createRecord('term');
     model.set('title', 'bitte');
@@ -59,7 +59,7 @@ module('Unit | Model | term', function (hooks) {
       title: 'bier',
     });
     this.store.createRecord('term', { children: [parent], title: 'ein' });
-    const title = await model.get('titleWithParentTitles');
+    const title = await model.getTitleWithParentTitles();
     assert.strictEqual(title, 'ein > bier > bitte');
   });
 

@@ -140,55 +140,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     assert.ok(groups.includes(subGroup4));
   });
 
-  test('check subgroupNumberingOffset on group with no sub-groups', async function (assert) {
-    assert.expect(1);
-    const groupTitle = 'Lorem Ipsum';
-    const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
-    learnerGroup.set('title', groupTitle);
-    const offset = await waitForResource(learnerGroup, 'subgroupNumberingOffset');
-    assert.strictEqual(offset, 1, 'no subgroups. offset is 1.');
-  });
-
-  test('check subgroupNumberingOffset on group with sub-groups', async function (assert) {
-    assert.expect(1);
-    const groupTitle = 'Lorem Ipsum';
-    const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learner-group');
-    learnerGroup.set('title', groupTitle);
-    store.createRecord('learner-group', {
-      parent: learnerGroup,
-      title: groupTitle + ' 1',
-    });
-    store.createRecord('learner-group', {
-      parent: learnerGroup,
-      title: groupTitle + ' 3',
-    });
-    const offset = await waitForResource(learnerGroup, 'subgroupNumberingOffset');
-    assert.strictEqual(offset, 4, 'highest number is 3. 3 + 1 = 4. offset is 4.');
-  });
-
-  test('check subgroupNumberingOffset on group with sub-groups and mis-matched sub-group title', async function (assert) {
-    assert.expect(1);
-    const groupTitle = 'Lorem Ipsum';
-    const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learner-group');
-    learnerGroup.set('title', groupTitle);
-    store.createRecord('learner-group', {
-      parent: learnerGroup,
-      title: groupTitle + ' 1',
-    });
-    store.createRecord('learner-group', {
-      parent: learnerGroup,
-      title: groupTitle + ' 3',
-    });
-    store.createRecord('learner-group', {
-      parent: learnerGroup,
-      title: 'not the parent title 4',
-    });
-    const offset = await waitForResource(learnerGroup, 'subgroupNumberingOffset');
-    assert.strictEqual(offset, 4, 'subgroup with title-mismatch is ignored, offset is 4 not 5.');
-  });
-
   test('check getSubgroupNumberingOffset on group with no sub-groups', async function (assert) {
     assert.expect(1);
     const groupTitle = 'Lorem Ipsum';
@@ -676,19 +627,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: learnerGroup,
     });
     assert.notOk(subGroup.isTopLevelGroup);
-  });
-
-  test('school', async function (assert) {
-    assert.expect(1);
-    const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learner-group');
-    const school = store.createRecord('school');
-    const program = store.createRecord('program', { school });
-    const programYear = store.createRecord('program-year', { program });
-    const cohort = store.createRecord('cohort', { programYear });
-    learnerGroup.set('cohort', cohort);
-    const owningSchool = await waitForResource(learnerGroup, 'school');
-    assert.strictEqual(owningSchool, school);
   });
 
   test('usersCount', async function (assert) {

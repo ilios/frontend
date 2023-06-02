@@ -1,6 +1,5 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { use } from 'ember-could-get-used-to-this';
-import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
+
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class Term extends Model {
@@ -42,11 +41,6 @@ export default class Term extends Model {
 
   @hasMany('session-objective', { async: true, inverse: 'terms' })
   sessionObjectives;
-
-  @use titleWithParentTitles = new DeprecatedAsyncCP(() => [
-    this.getTitleWithParentTitles.bind(this),
-    'term.titleWithParentTitles',
-  ]);
 
   get associatedLengths() {
     return [
