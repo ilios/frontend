@@ -7,6 +7,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { DateTime } from 'luxon';
 import { component } from 'ilios/tests/pages/components/user-profile-permissions';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | user-profile-permissions', function (hooks) {
   setupRenderingTest(hooks);
@@ -70,6 +71,9 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.sessions.administrators.length, 0);
     assert.strictEqual(component.sessions.instructors.length, 0);
     assert.strictEqual(component.sessions.studentAdvisors.length, 0);
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('change school', async function (assert) {
@@ -172,6 +176,9 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     await component.programs.toggle();
     assert.ok(component.programs.isExpanded);
     assert.strictEqual(component.programs.directors.length, 1);
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders with program year data', async function (assert) {
@@ -205,6 +212,9 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     await component.programYears.toggle();
     assert.ok(component.programYears.isExpanded);
     assert.strictEqual(component.programYears.directors.length, 1);
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders with course data', async function (assert) {
@@ -284,6 +294,9 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.courses.directors.length, 1);
     assert.strictEqual(component.courses.instructors.length, 1);
     assert.strictEqual(component.courses.studentAdvisors.length, 1);
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders with session data', async function (assert) {
@@ -350,6 +363,9 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.sessions.administrators.length, 1);
     assert.strictEqual(component.sessions.instructors.length, 1);
     assert.strictEqual(component.sessions.studentAdvisors.length, 1);
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('if academic year does not cross year boundaries, and its the first half of the year then last year is selected', async function (assert) {
