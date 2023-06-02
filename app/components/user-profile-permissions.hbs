@@ -44,10 +44,10 @@
       </span>
 
       <p data-test-school-permissions>
-        <h5 data-test-title>
+        <h4 data-test-title>
           {{t "general.school"}}
           ({{this.bestSelectedSchool.title}})
-        </h5>
+        </h4>
         <span class="hide-on-collapse" data-test-director>
           <strong>
             {{t "general.director"}}:
@@ -65,7 +65,7 @@
       </p>
 
       <p data-test-program-permissions>
-        <h5 data-test-title>
+        <h4 data-test-title>
           <label for="expand-collapse-program-permissions-{{templateId}}">
             {{t "general.programs"}}
             ({{this.directedPrograms.length}})
@@ -81,11 +81,11 @@
               <FaIcon @icon={{if this.programCollapsed "caret-right" "caret-down"}} class="disabled" />
             </button>
           {{/if}}
-        </h5>
+        </h4>
         {{#if (and this.directedPrograms.length this.programExpanded)}}
-          <h6>
+          <h5>
             {{t "general.director"}}
-          </h6>
+          </h5>
           <ul data-test-directors>
             {{#each (sort-by "title" this.directedPrograms) as |program|}}
               <li data-test-program>
@@ -96,7 +96,7 @@
         {{/if}}
       </p>
       <p data-test-program-year-permissions>
-        <h5 data-test-title>
+        <h4 data-test-title>
           <label for="expand-collapse-program-years-permissions-{{templateId}}">
             {{t "general.programYears"}}
             ({{this.directedProgramYears.length}})
@@ -112,11 +112,11 @@
               <FaIcon @icon={{if this.programYearCollapsed "caret-right" "caret-down"}} class="disabled" />
             </button>
           {{/if}}
-        </h5>
+        </h4>
         {{#if (and this.directedProgramYears.length this.programYearExpanded)}}
-          <h6>
+          <h5>
             {{t "general.director"}}
-          </h6>
+          </h5>
           <ul data-test-directors>
             {{#each
               (sort-by
@@ -134,7 +134,7 @@
         {{/if}}
       </p>
       <p data-test-course-permissions>
-        <h5 data-test-title>
+        <h4 data-test-title>
           <label for="expand-collapse-courses-permissions-{{templateId}}">
             {{t "general.courses"}}
             ({{this.courseCount}})
@@ -150,11 +150,11 @@
               <FaIcon @icon={{if this.courseCollapsed "caret-right" "caret-down"}} class="disabled" />
             </button>
           {{/if}}
-        </h5>
+        </h4>
         {{#if (and this.courseCount this.courseExpanded)}}
-          <h6>
+          <h5>
             {{t "general.director"}}
-          </h6>
+          </h5>
           <ul data-test-directors>
             {{#each (sort-by "title" this.directedCourses) as |course|}}
               <li data-test-course>
@@ -172,9 +172,9 @@
               </li>
             {{/each}}
           </ul>
-          <h6>
+          <h5>
             {{t "general.administrator"}}
-          </h6>
+          </h5>
           <ul data-test-administrators>
             {{#each (sort-by "title" this.administeredCourses) as |course|}}
               <li data-test-course>
@@ -193,9 +193,9 @@
               </li>
             {{/each}}
           </ul>
-          <h6>
+          <h5>
             {{t "general.instructor"}}
-          </h6>
+          </h5>
           <ul data-test-instructors>
             {{#each (sort-by "title" this.instructedCourses) as |course|}}
               <li data-test-course>
@@ -214,9 +214,9 @@
               </li>
             {{/each}}
           </ul>
-          <h6>
+          <h5>
             {{t "general.studentAdvisors"}}
-          </h6>
+          </h5>
           <ul data-test-student-advisors>
             {{#each this.studentAdvisedCourses as |course|}}
               <li data-test-course>
@@ -238,7 +238,7 @@
         {{/if}}
       </p>
       <p data-test-session-permissions>
-        <h5 data-test-title>
+        <h4 data-test-title>
           {{#if this.sessionCount}}
             <label for="expand-collapse-sessions-permissions-{{templateId}}">
               {{t "general.sessions"}}
@@ -259,11 +259,11 @@
             {{t "general.sessions"}}
             ({{this.sessionCount}})
           {{/if}}
-        </h5>
+        </h4>
         {{#if (and this.sessionCount this.sessionExpanded)}}
-          <h6>
+          <h5>
             {{t "general.administrator"}}
-          </h6>
+          </h5>
           <ul data-test-administrators="">
             {{#each this.administeredSessions as |session|}}
             {{! template-lint-disable no-bare-strings }}
@@ -285,9 +285,9 @@
               </li>
             {{/each}}
           </ul>
-          <h6>
+          <h5>
             {{t "general.instructor"}}
-          </h6>
+          </h5>
           <ul data-test-instructors>
             {{#each
               (sort-by
@@ -312,9 +312,9 @@
               </li>
             {{/each}}
           </ul>
-          <h6>
+          <h5>
             {{t "general.studentAdvisors"}}
-          </h6>
+          </h5>
           <ul data-test-student-advisors>
             {{#each this.studentAdvisedSessions as |session|}}
               <li data-test-course>
