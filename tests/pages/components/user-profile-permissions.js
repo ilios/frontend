@@ -1,10 +1,10 @@
 import {
+  attribute,
   clickable,
   create,
   collection,
   isPresent,
   fillable,
-  hasClass,
   value,
   text,
 } from 'ember-cli-page-object';
@@ -29,7 +29,8 @@ const definition = {
     title: text('[data-test-title]'),
     directors: collection('[data-test-directors] [data-test-program]'),
     toggle: clickable('button'),
-    isExpanded: hasClass('expanded', 'button'),
+    ariaLabel: attribute('aria-label', 'button'),
+    ariaExpanded: attribute('aria-expanded', 'button'),
     canBeToggled: isPresent('button'),
   },
   programYears: {
@@ -37,7 +38,8 @@ const definition = {
     title: text('[data-test-title]'),
     directors: collection('[data-test-directors] [data-test-program]'),
     toggle: clickable('button'),
-    isExpanded: hasClass('expanded', 'button'),
+    ariaLabel: attribute('aria-label', 'button'),
+    ariaExpanded: attribute('aria-expanded', 'button'),
     canBeToggled: isPresent('button'),
   },
   courses: {
@@ -52,7 +54,8 @@ const definition = {
     studentAdvisors: collection('[data-test-student-advisors] [data-test-course]'),
     notStudentAdvising: isPresent('[data-test-student-advisors] [data-test-none]'),
     toggle: clickable('button'),
-    isExpanded: hasClass('expanded', 'button'),
+    ariaLabel: attribute('aria-label', 'button'),
+    ariaExpanded: attribute('aria-expanded', 'button'),
     canBeToggled: isPresent('button'),
   },
   sessions: {
@@ -65,7 +68,8 @@ const definition = {
     studentAdvisors: collection('[data-test-student-advisors] [data-test-course]'),
     notStudentAdvising: isPresent('[data-test-student-advisors] [data-test-none]'),
     toggle: clickable('button'),
-    isExpanded: hasClass('expanded', 'button'),
+    ariaLabel: attribute('aria-label', 'button'),
+    ariaExpanded: attribute('aria-expanded', 'button'),
     canBeToggled: isPresent('button'),
   },
 };
