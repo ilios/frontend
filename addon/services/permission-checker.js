@@ -328,7 +328,7 @@ export default class PermissionCheckerService extends Service {
     return this.canChangeInSchool(school, 'CAN_DELETE_INSTRUCTOR_GROUPS');
   }
   async canUpdateCurriculumInventoryReport(curriculumInventoryReport) {
-    if (!curriculumInventoryReport.belongsTo('export')?.id()) {
+    if (curriculumInventoryReport.belongsTo('export')?.id()) {
       return false;
     }
 
@@ -348,12 +348,12 @@ export default class PermissionCheckerService extends Service {
     return this.permissionMatrix.hasPermission(school, capability, rolesInReport);
   }
   async canDeleteCurriculumInventoryReport(curriculumInventoryReport) {
-    if (!curriculumInventoryReport.belongsTo('export')?.id()) {
+    if (curriculumInventoryReport.belongsTo('export')?.id()) {
       return false;
     }
 
-    const program = await curriculumInventoryReport.get('program');
-    const school = await program.get('school');
+    const program = await curriculumInventoryReport.program;
+    const school = await program.school;
     if (await this.canChangeInSchool(school, 'CAN_DELETE_ALL_CURRICULUM_INVENTORY_REPORTS')) {
       return true;
     }
