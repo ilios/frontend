@@ -7,6 +7,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { DateTime } from 'luxon';
 import { component } from 'ilios/tests/pages/components/user-profile-permissions';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | user-profile-permissions', function (hooks) {
   setupRenderingTest(hooks);
@@ -70,6 +71,9 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.sessions.administrators.length, 0);
     assert.strictEqual(component.sessions.instructors.length, 0);
     assert.strictEqual(component.sessions.studentAdvisors.length, 0);
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('change school', async function (assert) {
@@ -163,15 +167,21 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     />`);
 
     assert.strictEqual(component.programs.title, 'Programs (1)');
-    assert.ok(component.programs.isExpanded);
+    assert.strictEqual(component.programs.ariaExpanded, 'true');
+    assert.strictEqual(component.programs.ariaLabel, 'Hide roles in programs');
     assert.strictEqual(component.programs.directors.length, 1);
     assert.strictEqual(component.programs.directors[0].text, 'program 0');
     await component.programs.toggle();
-    assert.notOk(component.programs.isExpanded);
+    assert.strictEqual(component.programs.ariaExpanded, 'false');
+    assert.strictEqual(component.programs.ariaLabel, 'Show roles in programs');
     assert.strictEqual(component.programs.directors.length, 0);
     await component.programs.toggle();
-    assert.ok(component.programs.isExpanded);
+    assert.strictEqual(component.programs.ariaExpanded, 'true');
+    assert.strictEqual(component.programs.ariaLabel, 'Hide roles in programs');
     assert.strictEqual(component.programs.directors.length, 1);
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders with program year data', async function (assert) {
@@ -196,15 +206,21 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     />`);
 
     assert.strictEqual(component.programYears.title, 'Program Years (1)');
-    assert.ok(component.programYears.isExpanded);
+    assert.strictEqual(component.programYears.ariaExpanded, 'true');
+    assert.strictEqual(component.programYears.ariaLabel, 'Hide roles in program years');
     assert.strictEqual(component.programYears.directors.length, 1);
     assert.strictEqual(component.programYears.directors[0].text, 'program 0 cohort 0');
     await component.programYears.toggle();
-    assert.notOk(component.programYears.isExpanded);
+    assert.strictEqual(component.programYears.ariaExpanded, 'false');
+    assert.strictEqual(component.programYears.ariaLabel, 'Show roles in program years');
     assert.strictEqual(component.programYears.directors.length, 0);
     await component.programYears.toggle();
-    assert.ok(component.programYears.isExpanded);
+    assert.strictEqual(component.programYears.ariaExpanded, 'true');
+    assert.strictEqual(component.programYears.ariaLabel, 'Hide roles in program years');
     assert.strictEqual(component.programYears.directors.length, 1);
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders with course data', async function (assert) {
@@ -242,7 +258,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     />`);
 
     assert.strictEqual(component.courses.title, 'Courses (4)');
-    assert.ok(component.courses.isExpanded);
+    assert.strictEqual(component.courses.ariaExpanded, 'true');
+    assert.strictEqual(component.courses.ariaLabel, 'Hide roles in courses');
     assert.strictEqual(component.courses.directors.length, 1);
     assert.strictEqual(component.courses.directors[0].text, `${this.currentAcademicYear} course 0`);
     assert.strictEqual(component.courses.administrators.length, 1);
@@ -273,17 +290,22 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     );
     assert.ok(component.sessions.notStudentAdvising);
     await component.courses.toggle();
-    assert.notOk(component.courses.isExpanded);
+    assert.strictEqual(component.courses.ariaExpanded, 'false');
+    assert.strictEqual(component.courses.ariaLabel, 'Show roles in courses');
     assert.strictEqual(component.courses.administrators.length, 0);
     assert.strictEqual(component.courses.directors.length, 0);
     assert.strictEqual(component.courses.instructors.length, 0);
     assert.strictEqual(component.courses.studentAdvisors.length, 0);
     await component.courses.toggle();
-    assert.ok(component.courses.isExpanded);
+    assert.strictEqual(component.courses.ariaExpanded, 'true');
+    assert.strictEqual(component.courses.ariaLabel, 'Hide roles in courses');
     assert.strictEqual(component.courses.administrators.length, 1);
     assert.strictEqual(component.courses.directors.length, 1);
     assert.strictEqual(component.courses.instructors.length, 1);
     assert.strictEqual(component.courses.studentAdvisors.length, 1);
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders with session data', async function (assert) {
@@ -325,7 +347,8 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.ok(component.courses.notStudentAdvising);
     assert.strictEqual(component.sessions.title, 'Sessions (3)');
     assert.strictEqual(component.sessions.administrators.length, 1);
-    assert.ok(component.sessions.isExpanded);
+    assert.strictEqual(component.sessions.ariaExpanded, 'true');
+    assert.strictEqual(component.sessions.ariaLabel, 'Hide roles in sessions');
     assert.strictEqual(
       component.sessions.administrators[0].text,
       `${this.currentAcademicYear} course 0 » session 0`
@@ -341,15 +364,20 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       `${this.currentAcademicYear} course 0 » session 0`
     );
     await component.sessions.toggle();
-    assert.notOk(component.sessions.isExpanded);
+    assert.strictEqual(component.sessions.ariaExpanded, 'false');
+    assert.strictEqual(component.sessions.ariaLabel, 'Show roles in sessions');
     assert.strictEqual(component.sessions.administrators.length, 0);
     assert.strictEqual(component.sessions.instructors.length, 0);
     assert.strictEqual(component.sessions.studentAdvisors.length, 0);
     await component.sessions.toggle();
-    assert.ok(component.sessions.isExpanded);
+    assert.strictEqual(component.sessions.ariaExpanded, 'true');
+    assert.strictEqual(component.sessions.ariaLabel, 'Hide roles in sessions');
     assert.strictEqual(component.sessions.administrators.length, 1);
     assert.strictEqual(component.sessions.instructors.length, 1);
     assert.strictEqual(component.sessions.studentAdvisors.length, 1);
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('if academic year does not cross year boundaries, and its the first half of the year then last year is selected', async function (assert) {

@@ -150,6 +150,10 @@ general:
   good: Bon
   goToUser: "Présentant enregistrement d'utilisateur en Ilios"
   groupMembers: "Membres du groupe courant"
+  hideRolesInCourses: "Masquer les rôles dans les cours"
+  hideRolesInPrograms: "Masquer les rôles dans les programmes"
+  hideRolesInProgramYears: "Masquer les rôles dans les années du programme"
+  hideRolesInSessions: "Masquer les rôles dans les sessions"
   home: Accueil
   icsAdminInstructions: "Pour ajouter le calendrier d'un utilisateur à des services ou applications autre, devront utiliser cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir le calendrier de cet utilisateur!"
   icsFeed: "Données de ICS"
@@ -370,6 +374,10 @@ general:
   sessionTitlePlaceholder: "Ajoutez un titre pour ce session"
   sessionTypeConfirmRemoval: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
   showResultsFor: "Afficher les résultats pour"
+  showRolesInCourses: "Afficher les rôles dans les cours"
+  showRolesInPrograms: "Afficher les rôles dans les programmes"
+  showRolesInProgramYears: "Afficher les rôles dans les années du programme"
+  showRolesInSessions: "Afficher les rôles dans les sessions"
   showSubgroupEvents: "Afficher les événements pour tous les sous-groupes"
   singleDay: "Seule Journée"
   singleGroup: "Seul groupe"
