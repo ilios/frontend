@@ -4,6 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/single-event-objective-list';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Integration | Component | ilios calendar single event objective list', function (hooks) {
   setupRenderingTest(hooks);
@@ -34,7 +35,8 @@ module('Integration | Component | ilios calendar single event objective list', f
 `);
 
     assert.strictEqual(component.title.expandCollapseSwitcher.text, title);
-    assert.ok(component.title.expandCollapseSwitcher.isExpanded);
+    assert.strictEqual(component.title.expandCollapseSwitcher.ariaExpanded, 'true');
+    assert.strictEqual(component.title.expandCollapseSwitcher.ariaLabel, 'Hide objectives');
     assert.strictEqual(component.title.displayModeSwitcher.text, listByPriorityPhrase);
     assert.ok(component.title.displayModeSwitcher.isListMode);
     assert.ok(component.tree.isVisible);
@@ -50,7 +52,6 @@ module('Integration | Component | ilios calendar single event objective list', f
     assert.notOk(component.noContent.isVisible);
 
     await component.title.displayModeSwitcher.toggle();
-
     assert.strictEqual(component.title.displayModeSwitcher.text, groupByCompetenciesPhrase);
     assert.notOk(component.title.displayModeSwitcher.isListMode);
     assert.notOk(component.tree.isVisible);
@@ -65,6 +66,9 @@ module('Integration | Component | ilios calendar single event objective list', f
     assert.strictEqual(component.list.objectives[3].title, 'traffic');
     assert.strictEqual(component.list.objectives[3].domain, 'annoying things');
     assert.notOk(component.list.noContent.isVisible);
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('displays `None` when provided no content', async function (assert) {
@@ -112,7 +116,8 @@ module('Integration | Component | ilios calendar single event objective list', f
     />
 `);
 
-    assert.notOk(component.title.expandCollapseSwitcher.isExpanded);
+    assert.strictEqual(component.title.expandCollapseSwitcher.ariaExpanded, 'false');
+    assert.strictEqual(component.title.expandCollapseSwitcher.ariaLabel, 'Show objectives');
     assert.ok(component.title.displayModeSwitcher.isDisabled);
     assert.notOk(component.tree.isVisible);
     assert.notOk(component.noContent.isVisible);

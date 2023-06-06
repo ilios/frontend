@@ -61,20 +61,8 @@
     font-style: italic;
   }
 
-  .single-event-learningmaterial-list {
-    .expanded {
-      @include m.ilios-button-reset;
-      &::after {
-        content: "\25BC";
-      }
-    }
-
-    .expandable {
-      @include m.ilios-button-reset;
-      &::after {
-        content: "\25BA";
-      }
-    }
+  .expand-collapse-toggle-btn {
+    @include m.ilios-button-reset;
   }
 
   .single-event-learningmaterial-filesize {

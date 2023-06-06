@@ -104,12 +104,15 @@
     <div class="single-event-learningmaterial-list" data-test-session-materials>
       <h2>
         <button
-          class={{if this.isSessionMaterialsListExpanded "expanded" "expandable"}}
+          class="expand-collapse-toggle-btn"
+          aria-expanded={{if this.isSessionMaterialsListExpanded "true" "false"}}
+          aria-label={{if this.isSessionMaterialsListExpanded (t "general.hideSessionMaterials") (t "general.showSessionMaterials")}}
           type="button"
           {{on "click" (set this.isSessionMaterialsListExpanded (not this.isSessionMaterialsListExpanded))}}
           data-test-expand-collapse
         >
           {{t "general.materials"}}
+          <FaIcon @icon={{if this.isSessionMaterialsListExpanded "caret-down" "caret-right"}} />
         </button>
         {{#if (and @event.isUserEvent this.userIsStudent)}}
           <button
@@ -141,15 +144,18 @@
         @isExpandedByDefault={{true}}
       />
     </div>
-    <div class="single-event-learningmaterial-list" data-test-course-materials>
+    <div data-test-course-materials>
       <h2>
         <button
-          class={{if this.isCourseMaterialsListExpanded "expanded" "expandable"}}
+          class="expand-collapse-toggle-btn"
+          aria-expanded={{if this.isCourseMaterialsListExpanded "true" "false"}}
+          aria-label={{if this.isCourseMaterialsListExpanded (t "general.hideCourseMaterials") (t "general.showCourseMaterials")}}
           type="button"
           {{on "click" (set this.isCourseMaterialsListExpanded (not this.isCourseMaterialsListExpanded))}}
           data-test-expand-collapse
         >
           {{t "general.courseLearningMaterials"}}
+          <FaIcon @icon={{if this.isCourseMaterialsListExpanded "caret-down" "caret-right"}} />
         </button>
       </h2>
       {{#if this.isCourseMaterialsListExpanded}}
