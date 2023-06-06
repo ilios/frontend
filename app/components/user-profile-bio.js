@@ -7,7 +7,7 @@ import { all } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { ValidateIf } from 'class-validator';
-import { validatable, Custom, IsEmail, NotBlank, Length } from 'ilios-common/decorators/validation';
+import { validatable, IsEmail, NotBlank, Length } from 'ilios-common/decorators/validation';
 
 @validatable
 export default class UserProfileBioComponent extends Component {
@@ -35,9 +35,9 @@ export default class UserProfileBioComponent extends Component {
   @tracked
   @Length(1, 100)
   @NotBlank()
-  @Custom('validateUsernameCallback', 'validateUsernameMessageCallback')
   username;
   @tracked showSyncErrorMessage = false;
+  @tracked showUsernameTakenErrorMessage = false;
   @tracked changeUserPassword = false;
   @tracked updatedFieldsFromSync = [];
   @tracked passwordStrengthScore = 0;
@@ -63,27 +63,11 @@ export default class UserProfileBioComponent extends Component {
     this.passwordStrengthScore = obj.score;
   }
 
-  @cached
-  get authsData() {
-    return new TrackedAsyncData(
-      this.store.query('authentication', {
-        filters: { username: this.username },
-      })
-    );
-  }
-
-  get isUsernameTaken() {
-    return this.authsData.isResolved
-      ? !this.authsData.value.some((auth) => auth.belongsTo('user').id() !== this.args.user.id)
-      : true;
-  }
-
-  validateUsernameCallback() {
-    return this.isUsernameTaken;
-  }
-
-  validateUsernameMessageCallback() {
-    return this.intl.t('errors.duplicateUsername');
+  async isUsernameTaken(username, userId) {
+    const auths = await this.store.query('authentication', {
+      filters: { username },
+    });
+    return auths.some((auth) => auth.belongsTo('user').id() !== userId);
   }
 
   @action
@@ -130,6 +114,7 @@ export default class UserProfileBioComponent extends Component {
     this.passwordStrengthScore = 0;
     this.changeUserPassword = false;
     this.updatedFieldsFromSync = [];
+    this.showUsernameTakenErrorMessage = false;
     this.args.setIsManaging(false);
   }
 
@@ -180,6 +165,14 @@ export default class UserProfileBioComponent extends Component {
     if (!isValid) {
       return false;
     }
+
+    const isUsernameTaken = yield this.isUsernameTaken(this.username, this.args.user.id);
+    if (isUsernameTaken) {
+      this.clearErrorDisplay();
+      this.showUsernameTakenErrorMessage = true;
+      return false;
+    }
+
     const user = this.args.user;
     user.set('firstName', this.firstName);
     user.set('middleName', this.middleName);

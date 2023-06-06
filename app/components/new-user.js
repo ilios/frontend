@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { filter } from 'rsvp';
 import { dropTask } from 'ember-concurrency';
-import { validatable, Custom, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { validatable, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
@@ -26,7 +26,6 @@ export default class NewUserComponent extends Component {
   @tracked
   @Length(1, 100)
   @NotBlank()
-  @Custom('validateUsernameCallback', 'validateUsernameMessageCallback')
   username = null;
   @tracked @NotBlank() password = null;
   @tracked @Length(1, 20) phone = null;
@@ -34,6 +33,7 @@ export default class NewUserComponent extends Component {
   @tracked primaryCohortId = null;
   @tracked isSaving = false;
   @tracked nonStudentMode = true;
+  @tracked showUsernameTakenErrorMessage = false;
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
   get allSchools() {
@@ -127,25 +127,11 @@ export default class NewUserComponent extends Component {
     return this.currentSchoolCohorts.slice().reverse()[0];
   }
 
-  @cached
-  get authsData() {
-    return new TrackedAsyncData(
-      this.store.query('authentication', {
-        filters: { username: this.username },
-      })
-    );
-  }
-
-  get isUsernameTaken() {
-    return this.authsData.isResolved ? !this.authsData.value.length : true;
-  }
-
-  validateUsernameCallback() {
-    return this.isUsernameTaken;
-  }
-
-  validateUsernameMessageCallback() {
-    return this.intl.t('errors.duplicateUsername');
+  async isUsernameTaken(username) {
+    const auths = await this.store.query('authentication', {
+      filters: { username },
+    });
+    return !!auths.length;
   }
 
   @dropTask
@@ -163,6 +149,12 @@ export default class NewUserComponent extends Component {
     ]);
     const isValid = yield this.isValid();
     if (!isValid) {
+      return false;
+    }
+    const isUsernameTaken = yield this.isUsernameTaken(this.username);
+    if (isUsernameTaken) {
+      this.clearErrorDisplay();
+      this.showUsernameTakenErrorMessage = true;
       return false;
     }
     const roles = yield this.store.findAll('user-role');

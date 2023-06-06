@@ -115,9 +115,15 @@
           type="text"
           value={{this.username}}
           {{on "input" (pick "target.value" (set this.username))}}
+          {{on "input" (set this.showUsernameTakenErrorMessage false)}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "username") (perform this.saveOrCancel))}}
         >
         <ValidationError @errors={{get-errors-for this.username}} />
+        {{#if this.showUsernameTakenErrorMessage}}
+          <span class="validation-error-message" data-test-duplicate-username>
+            {{t "errors.duplicateUsername"}}
+          </span>
+        {{/if}}
       </div>
       <div class="item" data-test-password>
         <label for="password-{{templateId}}">
