@@ -191,4 +191,75 @@ module('Unit | Service | permission-checker', function (hooks) {
     const canDeleteLearnerGroup = await service.canUpdateLearnerGroup(model);
     assert.notOk(canDeleteLearnerGroup);
   });
+
+  test('can delete curriculum inventory report as school administrator', async function (assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', { program });
+    const model = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', report.id);
+
+    const currentUserMock = Service.extend({
+      isRoot: false,
+      async getRolesInSchool(sch) {
+        assert.strictEqual(sch.id, school.id);
+        return ['SCHOOL_ADMINISTRATOR'];
+      },
+    });
+    this.owner.register('service:currentUser', currentUserMock);
+
+    const service = this.owner.lookup('service:permission-checker');
+    const canDeleteCurriculumInventoryReport = await service.canDeleteCurriculumInventoryReport(
+      model
+    );
+    assert.ok(canDeleteCurriculumInventoryReport);
+  });
+
+  test('can delete own curriculum inventory report', async function (assert) {
+    assert.expect(3);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', { program });
+    const model = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', report.id);
+
+    const currentUserMock = Service.extend({
+      isRoot: false,
+      async getRolesInSchool(sch) {
+        assert.strictEqual(sch.id, school.id);
+        return [];
+      },
+      async getRolesInCurriculumInventoryReport(rpt) {
+        assert.strictEqual(rpt.id, model.id);
+        return ['CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR'];
+      },
+    });
+    this.owner.register('service:currentUser', currentUserMock);
+
+    const service = this.owner.lookup('service:permission-checker');
+    const canDeleteCurriculumInventoryReport = await service.canDeleteCurriculumInventoryReport(
+      model
+    );
+    assert.ok(canDeleteCurriculumInventoryReport);
+  });
+
+  test('can not delete finalized curriculum inventory report', async function (assert) {
+    assert.expect(1);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const ciExport = this.server.create('curriculum-inventory-export');
+    const report = this.server.create('curriculum-inventory-report', { program, export: ciExport });
+    const model = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', report.id);
+
+    const service = this.owner.lookup('service:permission-checker');
+    const canDeleteCurriculumInventoryReport = await service.canDeleteCurriculumInventoryReport(
+      model
+    );
+    assert.notOk(canDeleteCurriculumInventoryReport);
+  });
 });
