@@ -112,7 +112,7 @@
           data-test-expand-collapse
         >
           {{t "general.materials"}}
-          <FaIcon @icon={{if this.isSessionMaterialsListExpanded "caret-down" "caret-right"}} class="disabled" />
+          <FaIcon @icon={{if this.isSessionMaterialsListExpanded "caret-down" "caret-right"}} />
         </button>
         {{#if (and @event.isUserEvent this.userIsStudent)}}
           <button
@@ -155,7 +155,7 @@
           data-test-expand-collapse
         >
           {{t "general.courseLearningMaterials"}}
-          <FaIcon @icon={{if this.isCourseMaterialsListExpanded "caret-down" "caret-right"}} class="disabled" />
+          <FaIcon @icon={{if this.isCourseMaterialsListExpanded "caret-down" "caret-right"}} />
         </button>
       </h2>
       {{#if this.isCourseMaterialsListExpanded}}
