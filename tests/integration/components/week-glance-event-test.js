@@ -415,7 +415,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
-      sessionDescription: '<h1 data-test-heading>Test</h1> ' + 't'.repeat(200),
+      sessionDescription: '<h1 data-test-heading>Test</h1> ' + 't'.repeat(400),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -430,7 +430,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.strictEqual(component.description.content.text, 'Test ' + 't'.repeat(45));
     assert.dom('[data-test-heading]').doesNotExist();
     await component.description.content.expand.click();
-    assert.strictEqual(component.description.content.text, 'Test ' + 't'.repeat(200));
+    assert.strictEqual(component.description.content.text, 'Test ' + 't'.repeat(400));
     assert.dom('[data-test-heading]').exists();
   });
 });
