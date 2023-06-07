@@ -1,7 +1,7 @@
 <div class="single-event" data-test-single-event>
   {{#if @event}}
     <div class="single-event-summary" data-test-summary>
-      <h1 data-test-title>
+      <h2 data-test-title>
         {{#if this.recentlyUpdated}}
           <FaIcon
             @icon="circle-exclamation"
@@ -21,7 +21,7 @@
             {{@event.name}}
           {{/if}}
         </em>
-      </h1>
+      </h2>
       <div class="single-event-offered-at" data-test-offered-at>
         {{#if (gt @event.postrequisites.length 0)}}
           <p>
@@ -102,7 +102,7 @@
       {{/if}}
     </div>
     <div class="single-event-learningmaterial-list" data-test-session-materials>
-      <h2>
+      <h3>
         <button
           class="expand-collapse-toggle-btn"
           aria-expanded={{if this.isSessionMaterialsListExpanded "true" "false"}}
@@ -127,7 +127,7 @@
             />
           </button>
         {{/if}}
-      </h2>
+      </h3>
       {{#if this.isSessionMaterialsListExpanded}}
         <SingleEventLearningmaterialList
           @learningMaterials={{this.sessionLearningMaterials}}
@@ -145,7 +145,7 @@
       />
     </div>
     <div data-test-course-materials>
-      <h2>
+      <h3>
         <button
           class="expand-collapse-toggle-btn"
           aria-expanded={{if this.isCourseMaterialsListExpanded "true" "false"}}
@@ -157,7 +157,7 @@
           {{t "general.courseLearningMaterials"}}
           <FaIcon @icon={{if this.isCourseMaterialsListExpanded "caret-down" "caret-right"}} />
         </button>
-      </h2>
+      </h3>
       {{#if this.isCourseMaterialsListExpanded}}
         <SingleEventLearningmaterialList
           @learningMaterials={{this.courseLearningMaterials}}

@@ -2,7 +2,7 @@
   class="single-event-objective-list"
   data-test-single-event-objective-list
 >
-  <h2 class="title" data-test-title>
+  <h3 class="title" data-test-title>
     <button
       class="expand-collapse-toggle-btn"
       aria-label={{if this.isExpanded (t "general.hideObjectives") (t "general.showObjectives")}}
@@ -29,7 +29,7 @@
         {{/if}}
       </button>
     {{/if}}
-  </h2>
+  </h3>
   {{#if this.isExpanded}}
     {{#if this.groupByCompetencies}}
       {{#if this.domains.length}}
