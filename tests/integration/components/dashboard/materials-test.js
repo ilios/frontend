@@ -191,7 +191,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.table.rows.length, 5);
     assert.strictEqual(component.table.rows[0].sessionTitle, 'session1title');
     assert.strictEqual(component.table.rows[0].courseTitle, 'course 0');
-    assert.strictEqual(component.table.rows[0].title, 'File title1 Download');
+    assert.strictEqual(component.table.rows[0].title, 'PDF file title1 Download');
     assert.ok(component.table.rows[0].isPdf);
     assert.ok(component.table.rows[0].pdfDownloadLink.isVisible);
     assert.strictEqual(component.table.rows[0].pdfDownloadLink.url, 'http://myhost.com/url1');

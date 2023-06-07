@@ -115,6 +115,10 @@ general:
   expandDetail: "Enseñar Detalles"
   externalId: "Identificación del Curso"
   file: Archivo
+  file-audio: "Archivo de audio"
+  file-pdf: "Archivo PDF"
+  file-powerpoint: "Archivo de PowerPoint"
+  file-video: "Archivo de vídeo"
   filterChartPlaceholder: "Empieza marcando para filtrar este gráfico"
   filterPlaceholder: "Empieza marcando para aplicar un filtro"
   fileSizeError: "Este archivo es demasiado grande.  El tamaño máximo es {maxSize}."

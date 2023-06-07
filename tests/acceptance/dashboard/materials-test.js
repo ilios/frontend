@@ -266,7 +266,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.notOk(page.materials.table.rows[5].status.isChecked);
     assert.strictEqual(page.materials.table.rows[5].sessionTitle, 'session1title');
     assert.strictEqual(page.materials.table.rows[5].courseTitle, 'course 0');
-    assert.strictEqual(page.materials.table.rows[5].title, 'File title1 Download');
+    assert.strictEqual(page.materials.table.rows[5].title, 'PDF file title1 Download');
     assert.ok(page.materials.table.rows[5].isPdf);
     assert.ok(page.materials.table.rows[5].pdfDownloadLink.isVisible);
     assert.strictEqual(page.materials.table.rows[5].pdfDownloadLink.url, 'http://myhost.com/url1');

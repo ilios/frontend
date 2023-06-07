@@ -34,7 +34,7 @@ module('Integration | Component | dashboard/material-list-item', function (hooks
 
     assert.strictEqual(component.sessionTitle, 'session1title');
     assert.strictEqual(component.courseTitle, 'course title');
-    assert.strictEqual(component.title, 'File title1 Download');
+    assert.strictEqual(component.title, 'PDF file title1 Download');
     assert.ok(component.isPdf);
     assert.ok(component.pdfDownloadLink.isVisible);
     assert.strictEqual(component.pdfDownloadLink.url, 'http://myhost.com/url1');

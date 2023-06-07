@@ -1,7 +1,8 @@
-import { create, hasClass } from 'ember-cli-page-object';
+import { create, hasClass, text } from 'ember-cli-page-object';
 const definition = {
   scope: '[data-test-lm-type-icon]',
   isLink: hasClass('fa-link'),
+  title: text('title'),
   isCitation: hasClass('fa-paragraph'),
   isPdf: hasClass('fa-file-pdf'),
   isPowerpoint: hasClass('fa-file-powerpoint'),
