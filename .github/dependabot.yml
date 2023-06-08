@@ -42,6 +42,7 @@ updates:
   - dependency-name: prettier
   - dependency-name: qunit
   - dependency-name: qunit-dom
+  - dependency-name: webpack
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
