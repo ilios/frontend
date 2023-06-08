@@ -118,17 +118,17 @@ jobs:
     timeout-minutes: 20
     needs: [test]
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-        cache: npm
-    - name: install dependencies
-      run: npm ci
-    - name: test
-      run: npm run test:percy
-      env:
-        PERCY_TOKEN: 0de8ba013a51dea7cb1e9e94813a8370339285c967dcc84de59fb8cc13015456
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+      - name: install dependencies
+        run: npm ci
+      - name: test
+        run: npm run test:percy
+        env:
+          PERCY_TOKEN: web_4c771bf3f7a933514432f378ca42cfd2b04ab0dcdbdc402f4187b19176fa0f02
 
   firefox-test:
     name: Browser Tests (Firefox)
