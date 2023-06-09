@@ -5,7 +5,7 @@
   @include m.main-section;
   display: grid;
 
-  h2 {
+  h3 {
     @include m.ilios-heading-h4;
     margin: 1em 0;
 
@@ -15,7 +15,7 @@
   }
 
   .pre-work {
-    h2 {
+    h3 {
       @include m.ilios-heading-h5;
       margin: 0;
     }
@@ -24,7 +24,8 @@
   .single-event-summary {
     grid-column: 1 / -1;
 
-    h1 {
+    h2 {
+      @include m.ilios-heading-h1;
       font-weight: normal;
 
       em {
