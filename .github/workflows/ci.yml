@@ -6,7 +6,7 @@ on:
       - master
   pull_request: {}
   schedule:
-    - cron: '15 6 * * 2' # weekly, on Tuesday morning
+    - cron: "15 6 * * 2" # weekly, on Tuesday morning
 
 concurrency:
   group: ci-${{ github.head_ref || github.ref }}
@@ -63,16 +63,16 @@ jobs:
       matrix:
         node-version: [16.x, 18.x]
     steps:
-    - uses: actions/checkout@v3
-    - name: Install Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: npm
-    - name: install dependencies
-      run: npm ci
-    - name: test build
-      run: npm run build
+      - uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - name: install dependencies
+        run: npm ci
+      - name: test build
+        run: npm run build
 
   percy:
     name: Percy Visual Tests
@@ -80,17 +80,17 @@ jobs:
     timeout-minutes: 20
     needs: [test]
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-        cache: npm
-    - name: install dependencies
-      run: npm ci
-    - name: test
-      run: npm run percy:test
-      env:
-        PERCY_TOKEN: d047c88195000471f31972e862cdaa4d80358db3a3bd8c9bee509d4feebd365e
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+      - name: install dependencies
+        run: npm ci
+      - name: test
+        run: npm run percy:test
+        env:
+          PERCY_TOKEN: web_1899a9764a4891f3a19b87e52aa1ae038359e28ba550daa6bad00d0e0a230a33
 
   test-with-embroider:
     name: Test With Embroider
@@ -114,10 +114,10 @@ jobs:
     env:
       BUILD_WITH_EMBROIDER: true
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-        cache: npm
-    - run: npm ci
-    - run: npm run build
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+      - run: npm ci
+      - run: npm run build
