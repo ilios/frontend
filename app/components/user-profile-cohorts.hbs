@@ -1,7 +1,7 @@
 <div
   class="user-profile-cohorts small-component {{if this.hasSavedRecently "has-saved" "has-not-saved"}}"
   {{did-insert (perform this.load) @user}}
-  {{did-update (perform this.load) @user.cohorts @user.primaryCohort}}
+  {{did-update (perform this.load) @user @user.cohorts @user.primaryCohort}}
   ...attributes
   data-test-user-profile-cohorts
 >

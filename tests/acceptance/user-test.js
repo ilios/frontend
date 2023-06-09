@@ -26,9 +26,9 @@ module('Acceptance | User', function (hooks) {
     };
     this.server.create('program', { school: this.school });
     this.server.createList('programYear', 3, { programId: 1 });
-    this.server.create('cohort', { title: 'Medicine', programYearId: 1 });
-    this.server.create('cohort', { programYearId: 2 });
-    this.server.create('cohort', { programYearId: 3 });
+    this.cohort1 = this.server.create('cohort', { title: 'Medicine', programYearId: 1 });
+    this.cohort2 = this.server.create('cohort', { programYearId: 2 });
+    this.cohort3 = this.server.create('cohort', { programYearId: 3 });
     this.server.createList('learnerGroup', 5, { title: 'Group 1', cohortId: 1 });
     await setupAuthentication(userObject);
   });
@@ -148,5 +148,45 @@ module('Acceptance | User', function (hooks) {
     assert.strictEqual(page.roles.formerStudent.value, 'No');
     assert.strictEqual(page.roles.enabled.value, 'No');
     assert.strictEqual(page.roles.excludeFromSync.value, 'No');
+  });
+
+  test('Visit another user #4809', async function (assert) {
+    const studentRole = this.server.create('user-role', {
+      title: 'Student',
+    });
+    const formerStudentRole = this.server.create('user-role', {
+      title: 'Former Student',
+    });
+    const user1 = this.server.create('user', {
+      enabled: true,
+      userSyncIgnore: true,
+      roles: [formerStudentRole],
+      school: this.school,
+      primaryCohort: this.cohort1,
+      authentication: this.server.create('authentication'),
+    });
+    const user2 = this.server.create('user', {
+      enabled: false,
+      userSyncIgnore: false,
+      roles: [studentRole],
+      school: this.school,
+      primaryCohort: this.cohort2,
+      authentication: this.server.create('authentication'),
+    });
+    await page.visit({ userId: user1.id });
+    assert.strictEqual(page.bio.username.text, 'Username: 1');
+    assert.strictEqual(page.roles.student.value, 'No');
+    assert.strictEqual(page.roles.formerStudent.value, 'Yes');
+    assert.strictEqual(page.roles.enabled.value, 'Yes');
+    assert.strictEqual(page.roles.excludeFromSync.value, 'Yes');
+    assert.strictEqual(page.cohorts.primaryCohort.title, 'school 0 program 0 Medicine');
+
+    await page.visit({ userId: user2.id });
+    assert.strictEqual(page.bio.username.text, 'Username: 2');
+    assert.strictEqual(page.roles.student.value, 'Yes');
+    assert.strictEqual(page.roles.formerStudent.value, 'No');
+    assert.strictEqual(page.roles.enabled.value, 'No');
+    assert.strictEqual(page.roles.excludeFromSync.value, 'No');
+    assert.strictEqual(page.cohorts.primaryCohort.title, 'school 0 program 0 cohort 1');
   });
 });
