@@ -34,7 +34,7 @@
     "@embroider/compat": "^3.0.1",
     "@embroider/core": "^3.0.0",
     "@embroider/macros": "^1.10.0",
-    "@embroider/router": "^2.0.0",
+    "@embroider/router": "^2.1.1",
     "@embroider/webpack": "^3.0.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
