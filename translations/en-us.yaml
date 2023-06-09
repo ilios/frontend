@@ -115,6 +115,10 @@ general:
   expandDetail: "Show Details"
   externalId: "Course ID"
   file: File
+  file-audio: "Audio file"
+  file-pdf: "PDF file"
+  file-powerpoint: "PowerPoint file"
+  file-video: "Video file"
   filterChartPlaceholder: "Start typing to filter this chart"
   filterPlaceholder: "Start typing to filter list"
   fileSizeError: "This file is too large.  Maximum size is {maxSize}."

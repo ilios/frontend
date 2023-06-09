@@ -16,6 +16,7 @@ module('Integration | Component | lm type icon', function (hooks) {
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
 `);
     assert.ok(component.isLink);
+    assert.strictEqual(component.title, 'Web Link');
   });
 
   test('citation', async function (assert) {
@@ -24,6 +25,7 @@ module('Integration | Component | lm type icon', function (hooks) {
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
 `);
     assert.ok(component.isCitation);
+    assert.strictEqual(component.title, 'Citation');
   });
 
   test('pdf file', async function (assert) {
@@ -35,10 +37,11 @@ module('Integration | Component | lm type icon', function (hooks) {
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
 `);
     assert.ok(component.isPdf);
+    assert.strictEqual(component.title, 'PDF file');
   });
 
   test('powerpoint file', async function (assert) {
-    assert.expect(5);
+    assert.expect(10);
     const fixtures = [
       { absoluteFileUri: '/dev/null', mimetype: 'ppt' },
       { absoluteFileUri: '/dev/null', mimetype: 'keynote' },
@@ -52,11 +55,12 @@ module('Integration | Component | lm type icon', function (hooks) {
       await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
 `);
       assert.ok(component.isPowerpoint);
+      assert.strictEqual(component.title, 'PowerPoint file');
     }
   });
 
   test('video file', async function (assert) {
-    assert.expect(4);
+    assert.expect(8);
     const fixtures = [
       { absoluteFileUri: '/dev/null', mimetype: 'video/mp4' },
       { absoluteFileUri: '/dev/null', mimetype: 'video/mpg' },
@@ -69,11 +73,12 @@ module('Integration | Component | lm type icon', function (hooks) {
       await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
 `);
       assert.ok(component.isVideo);
+      assert.strictEqual(component.title, 'Video file');
     }
   });
 
   test('audio file', async function (assert) {
-    assert.expect(4);
+    assert.expect(8);
     const fixtures = [
       { absoluteFileUri: '/dev/null', mimetype: 'audio/wav' },
       { absoluteFileUri: '/dev/null', mimetype: 'audio/mp3' },
@@ -86,11 +91,12 @@ module('Integration | Component | lm type icon', function (hooks) {
       await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
 `);
       assert.ok(component.isAudio);
+      assert.strictEqual(component.title, 'Audio file');
     }
   });
 
   test('file of unknown mime-type', async function (assert) {
-    assert.expect(2);
+    assert.expect(4);
     const fixtures = [
       { absoluteFileUri: '/dev/null', mimetype: '' },
       { absoluteFileUri: '/dev/null', mimetype: 'xyz' },
@@ -101,6 +107,7 @@ module('Integration | Component | lm type icon', function (hooks) {
       await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
 `);
       assert.ok(component.isFile);
+      assert.strictEqual(component.title, 'File');
     }
   });
 
