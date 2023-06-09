@@ -241,8 +241,12 @@ module('Integration | Component | new user', function (hooks) {
   test('validate username', async function (assert) {
     const user = this.server.create('user');
     this.server.create('authentication', { username: 'geflarknik', user });
-    await render(hbs`<NewUser @close={{(noop)}}  />`);
+    await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{(noop)}} />`);
     assert.notOk(component.username.hasError);
+    await component.firstName.set('Lorem');
+    await component.lastName.set('Ipsum');
+    await component.email.set('lorem@ipsum.com');
+    await component.password.set('NyukNykNyuk$$000');
     await component.username.set('geflarknik');
     await component.username.submit();
     assert.ok(component.username.hasError);

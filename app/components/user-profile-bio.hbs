@@ -337,7 +337,7 @@
         </div>
         <div
           class="item
-            {{if (includes "username" this.updatedFieldsFromSync) "synced-from-directory"}}"
+          {{if (includes "username" this.updatedFieldsFromSync) "synced-from-directory"}}"
           data-test-username
         >
           <label for="username-{{templateId}}">
@@ -349,12 +349,18 @@
               type="text"
               value={{this.username}}
               {{on "input" (pick "target.value" (set this.username))}}
+              {{on "input" (set this.showUsernameTakenErrorMessage false)}}
               {{on "keyup" (fn this.addErrorDisplayFor "username")}}
               {{on "keyup" this.keyboard}}
               disabled={{not this.canEditUsernameAndPassword}}
               data-test-username-input
             >
             <ValidationError @errors={{get-errors-for this.username}} />
+            {{#if this.showUsernameTakenErrorMessage}}
+              <span class="validation-error-message" data-test-duplicate-username>
+                {{t "errors.duplicateUsername"}}
+              </span>
+            {{/if}}
           {{else}}
             <span class="value">
               {{get (await @user.authentication) "username"}}
