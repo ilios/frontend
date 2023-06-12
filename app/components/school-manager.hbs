@@ -94,24 +94,26 @@
         @expand={{fn @setSchoolVocabularyDetails true}}
       />
     {{/if}}
-    {{#if (or (eq (get (await @school.sessionTypes) "length") 0) @schoolSessionTypeDetails)}}
-      <SchoolSessionTypesExpanded
-        @school={{@school}}
-        @canUpdate={{@canUpdateSessionType}}
-        @canDelete={{@canDeleteSessionType}}
-        @canCreate={{@canCreateSessionType}}
-        @collapse={{fn @setSchoolSessionTypeDetails false}}
-        @expand={{fn @setSchoolSessionTypeDetails true}}
-        @managedSessionTypeId={{@schoolManagedSessionType}}
-        @setSchoolManagedSessionType={{@setSchoolManagedSessionType}}
-        @schoolNewSessionType={{@schoolNewSessionType}}
-        @setSchoolNewSessionType={{@setSchoolNewSessionType}}
-      />
-    {{else}}
-      <SchoolSessionTypesCollapsed
-        @school={{@school}}
-        @expand={{fn @setSchoolSessionTypeDetails true}}
-      />
+    {{#if this.sessionTypesLoaded}}
+      {{#if (or (not this.hasSessionTypes) @schoolSessionTypeDetails)}}
+        <SchoolSessionTypesExpanded
+          @school={{@school}}
+          @canUpdate={{@canUpdateSessionType}}
+          @canDelete={{@canDeleteSessionType}}
+          @canCreate={{@canCreateSessionType}}
+          @collapse={{fn @setSchoolSessionTypeDetails false}}
+          @expand={{fn @setSchoolSessionTypeDetails true}}
+          @managedSessionTypeId={{@schoolManagedSessionType}}
+          @setSchoolManagedSessionType={{@setSchoolManagedSessionType}}
+          @schoolNewSessionType={{@schoolNewSessionType}}
+          @setSchoolNewSessionType={{@setSchoolNewSessionType}}
+        />
+      {{else}}
+        <SchoolSessionTypesCollapsed
+          @school={{@school}}
+          @expand={{fn @setSchoolSessionTypeDetails true}}
+        />
+      {{/if}}
     {{/if}}
     <SchoolSessionAttributes
       @school={{@school}}
@@ -123,12 +125,14 @@
       @manage={{@setSchoolManageSessionAttributes}}
     />
     {{#if @schoolManageInstitution}}
-      <SchoolCurriculumInventoryInstitutionManager
-        @canUpdate={{@canUpdateSchool}}
-        @manage={{@setSchoolManageInstitution}}
-        @institution={{await @school.curriculumInventoryInstitution}}
-        @save={{this.saveInstitution}}
-      />
+      {{#if this.institutionLoaded}}
+        <SchoolCurriculumInventoryInstitutionManager
+          @canUpdate={{@canUpdateSchool}}
+          @manage={{@setSchoolManageInstitution}}
+          @institution={{this.institution}}
+          @save={{this.saveInstitution}}
+        />
+      {{/if}}
     {{else}}
       <SchoolCurriculumInventoryInstitutionDetails
         @canUpdate={{@canUpdateSchool}}
