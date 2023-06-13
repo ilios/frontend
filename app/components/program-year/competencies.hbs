@@ -41,52 +41,14 @@
     {{#if @isManaging}}
       <ul class="managed-competency-list" data-test-managed-list>
         {{#each (sort-by "title" this.domains) as |domain|}}
-          <li data-test-domain>
-            {{#let (includes (get domain "id") (map-by "id" this.selectedCompetencies))
-              as |isSelected|
-            }}
-              <label
-                class="clickable"
-                data-test-domain-label
-                data-test-is-selected={{isSelected}}
-              >
-                <input
-                  type="checkbox"
-                  checked={{isSelected}}
-                  indeterminate={{and
-                    (not isSelected)
-                    (includes domain this.competenciesWithSelectedChildren)
-                  }}
-                  {{on "click" (perform (if isSelected this.removeCompetencyFromBuffer this.addCompetencyToBuffer) domain)}}
-                >
-                {{domain.title}}
-              </label>
-            {{/let}}
-            <ul>
-              {{#each (sort-by "title" this.competencies) as |competency|}}
-                {{#if (includes competency (await domain.children))}}
-                  <li>
-                    {{#let (includes (get competency "id") (map-by "id" this.selectedCompetencies))
-                      as |isSelected|
-                    }}
-                      <label
-                        class="clickable"
-                        data-test-competency
-                        data-test-is-selected={{isSelected}}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={{isSelected}}
-                          {{on "click" (perform (if isSelected this.removeCompetencyFromBuffer this.addCompetencyToBuffer) competency)}}
-                        >
-                        {{competency.title}}
-                      </label>
-                    {{/let}}
-                  </li>
-                {{/if}}
-              {{/each}}
-            </ul>
-          </li>
+          <ProgramYear::ManagedCompetencyListItem
+            @domain={{domain}}
+            @selectedCompetencies={{this.selectedCompetencies}}
+            @competenciesWithSelectedChildren={{this.competenciesWithSelectedChildren}}
+            @competencies={{this.competencies}}
+            @removeCompetencyFromBuffer={{this.removeCompetencyFromBuffer}}
+            @addCompetencyToBuffer={{this.addCompetencyToBuffer}}
+          />
         {{/each}}
       </ul>
     {{else if this.programYearCompetencies.length}}
@@ -98,28 +60,11 @@
               (includes domain this.competenciesWithSelectedChildren)
             )
           }}
-            <li data-test-domain>
-              <span data-test-domain-title
-                class="{{if (includes domain.id (map-by "id" this.selectedCompetencies)) "active"}}"
-                data-test-title>{{domain.title}}
-              </span>
-              <ul>
-                {{#each (sort-by "title" this.competencies) as |competency|}}
-                  {{#if
-                    (and
-                      (includes competency (await domain.children))
-                      (includes
-                        competency.id (map-by "id" this.selectedCompetencies)
-                      )
-                    )
-                  }}
-                    <li data-test-competency>
-                      {{competency.title}}
-                    </li>
-                  {{/if}}
-                {{/each}}
-              </ul>
-            </li>
+            <ProgramYear::CompetencyListItem
+              @domain={{domain}}
+              @selectedCompetencies={{this.selectedCompetencies}}
+              @competencies={{this.competencies}}
+            />
           {{/if}}
         {{/each}}
       </ul>
