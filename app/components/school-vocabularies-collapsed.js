@@ -13,6 +13,6 @@ export default class SchoolVocabulariesCollapsedComponent extends Component {
   }
 
   get vocabularies() {
-    return this.vocabulariesData.isResolved ? this.vocabulariesData.value.slice() : [];
+    return this.vocabulariesData.isResolved ? this.vocabulariesData.value : [];
   }
 }
