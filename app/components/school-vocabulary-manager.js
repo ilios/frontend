@@ -26,11 +26,11 @@ export default class SchoolVocabularyManagerComponent extends Component {
   }
 
   get terms() {
-    return this.termsData.isResolved ? this.termsData.value : null;
+    return this.termsData.isResolved ? this.termsData.value : [];
   }
 
   get sortedTerms() {
-    if (!this.terms) {
+    if (!this.terms.length) {
       return [];
     }
     return sortBy(
