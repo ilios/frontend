@@ -4,11 +4,9 @@
   ...attributes
 >
   <div class="backtolink">
-    {{#if (is-fulfilled @programYear.program)}}
       <LinkTo @route="program" data-test-back-to-program>
         {{t "general.backToProgramYears"}}
       </LinkTo>
-    {{/if}}
   </div>
   <header>
     <div class="title">
@@ -25,10 +23,10 @@
           {{/if}}
         </h4>
         <h5 data-test-cohort>
-          {{#if (get (await @programYear.cohort) "title")}}
-            ({{get (await @programYear.cohort) "title"}})
+          {{#if @programYear.cohort.title}}
+            ({{@programYear.cohort.title}})
           {{else}}
-            ({{t "general.classOf" year=(await @programYear.classOfYear)}})
+            ({{t "general.classOf" year=@programYear.classOfYear}})
           {{/if}}
         </h5>
       {{/if}}
