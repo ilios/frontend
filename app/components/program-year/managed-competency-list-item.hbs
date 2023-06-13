@@ -21,7 +21,7 @@
   {{/let}}
   <ul>
     {{#each (sort-by "title" @competencies) as |competency|}}
-      {{#if (includes competency (await @domain.children))}}
+      {{#if (includes competency this.children)}}
         <li>
           {{#let (includes (get competency "id") (map-by "id" @selectedCompetencies))
           as |isSelected|

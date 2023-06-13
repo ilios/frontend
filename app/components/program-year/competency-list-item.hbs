@@ -10,7 +10,7 @@
     {{#each (sort-by "title" @competencies) as |competency|}}
       {{#if
         (and
-          (includes competency (await @domain.children))
+          (includes competency this.children)
           (includes
             competency.id (map-by "id" @selectedCompetencies)
           )
