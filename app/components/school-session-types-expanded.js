@@ -37,6 +37,7 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
 
   @dropTask
   *save(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
+    this.args.setSchoolNewSessionType(null);
     const sessionType = this.store.createRecord('sessionType');
     const aamcMethods = aamcMethod ? [aamcMethod] : [];
     sessionType.setProperties({
@@ -50,6 +51,5 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
     });
 
     yield sessionType.save();
-    this.args.setSchoolNewSessionType(null);
   }
 }
