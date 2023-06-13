@@ -54,6 +54,56 @@ module('Integration | Component | school-session-types-list-item', function (hoo
     assert.strictEqual(component.calendarColor, 'background-color: #cccccc');
   });
 
+  test('it renders a non-assessment, and without mapped AAMC method', async function (assert) {
+    const school = this.server.create('school');
+    const sessionType = this.server.create('session-type', {
+      school,
+      title: 'pepper',
+      assessment: false,
+      calendarColor: '#cccccc',
+      active: true,
+    });
+    const sessionTypeModel = await this.owner
+      .lookup('service:store')
+      .findRecord('session-type', sessionType.id);
+    this.set('sessionType', sessionTypeModel);
+    await render(hbs`<SchoolSessionTypesListItem
+      @sessionType={{this.sessionType}}
+      @canDelete={{true}}
+      @manageSessionType={{(noop)}}
+    />`);
+    assert.notOk(component.isAssessment);
+    assert.strictEqual(component.aamcMethod, '');
+    assert.strictEqual(component.assessmentOption, '');
+  });
+
+  test('inactive AAMC method is indicated as such', async function (assert) {
+    const school = this.server.create('school');
+    const aamcMethod = this.server.create('aamc-method', {
+      id: 'AM001',
+      description: 'Lorem Ipsum',
+      active: false,
+    });
+    const sessionType = this.server.create('session-type', {
+      school,
+      title: 'sugar',
+      assessment: false,
+      calendarColor: '#cccccc',
+      aamcMethods: [aamcMethod],
+      active: true,
+    });
+    const sessionTypeModel = await this.owner
+      .lookup('service:store')
+      .findRecord('session-type', sessionType.id);
+    this.set('sessionType', sessionTypeModel);
+    await render(hbs`<SchoolSessionTypesListItem
+      @sessionType={{this.sessionType}}
+      @canDelete={{true}}
+      @manageSessionType={{(noop)}}
+    />`);
+    assert.strictEqual(component.aamcMethod, 'Lorem Ipsum (inactive)');
+  });
+
   test('clicking edit fires action', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');

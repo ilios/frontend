@@ -28,11 +28,12 @@
   </td>
   <td class="hide-from-small-screen" colspan="2" data-test-assessment-method-description>
     {{@sessionType.firstAamcMethod.description}}
-    {{#unless @sessionType.firstAamcMethod.active}}
+
+    {{#if (and @sessionType.firstAamcMethod (not @sessionType.firstAamcMethod.active))}}
       <em>
         ({{t "general.inactive"}})
       </em>
-    {{/unless}}
+    {{/if}}
   </td>
   <td class="calendar-color hide-from-small-screen">
     {{! template-lint-disable no-inline-styles style-concatenation no-triple-curlies}}
