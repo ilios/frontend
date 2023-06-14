@@ -1,4 +1,4 @@
-<li data-test-domain>
+<li data-test-program-year-managed-competency-list-item>
   {{#let (includes (get @domain "id") (map-by "id" @selectedCompetencies))
   as |isSelected|
   }}
@@ -14,7 +14,7 @@
         (not isSelected)
         (includes @domain @competenciesWithSelectedChildren)
       }}
-        {{on "click" (perform (if isSelected @removeCompetencyFromBuffer @addCompetencyToBuffer) @domain)}}
+        {{on "click" (perform (if isSelected this.removeCompetencyFromBuffer this.addCompetencyToBuffer) @domain)}}
       >
       {{@domain.title}}
     </label>
@@ -34,7 +34,7 @@
               <input
                 type="checkbox"
                 checked={{isSelected}}
-                {{on "click" (perform (if isSelected @removeCompetencyFromBuffer @addCompetencyToBuffer) competency)}}
+                {{on "click" (perform (if isSelected this.removeCompetencyFromBuffer this.addCompetencyToBuffer) competency)}}
               >
               {{competency.title}}
             </label>
