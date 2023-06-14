@@ -14,7 +14,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
 
   test('it renders and is accessible when managing', async function (assert) {
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @objective={{null}}
+      @meshDescriptors={{(array)}}
       @editable={{false}}
       @manage={{(noop)}}
       @isManaging={{true}}
@@ -29,13 +29,8 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('it renders and is accessible empty and un-editable', async function (assert) {
-    const objective = this.server.create('programYearObjective');
-    const objectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('program-year-objective', objective.id);
-    this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @objective={{this.objective}}
+      @meshDescriptors={{(array)}}
       @editable={{false}}
       @manage={{(noop)}}
       @isManaging={{false}}
@@ -50,15 +45,15 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
 
   test('it renders and is accessible un-editable', async function (assert) {
     const meshDescriptors = this.server.createList('mesh-descriptor', 2);
-    const objective = this.server.create('programYearObjective', {
-      meshDescriptors,
-    });
-    const objectiveModel = await this.owner
+    const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
-      .findRecord('program-year-objective', objective.id);
-    this.set('objective', objectiveModel);
+      .findRecord('mesh-descriptor', meshDescriptors[0].id);
+    const meshDescriptorModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('mesh-descriptor', meshDescriptors[1].id);
+    this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @objective={{this.objective}}
+      @meshDescriptors={{this.meshDescriptors}}
       @editable={{false}}
       @manage={{(noop)}}
       @isManaging={{false}}
@@ -75,15 +70,15 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
 
   test('it renders and is accessible editable', async function (assert) {
     const meshDescriptors = this.server.createList('mesh-descriptor', 2);
-    const objective = this.server.create('programYearObjective', {
-      meshDescriptors,
-    });
-    const objectiveModel = await this.owner
+    const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
-      .findRecord('program-year-objective', objective.id);
-    this.set('objective', objectiveModel);
+      .findRecord('mesh-descriptor', meshDescriptors[0].id);
+    const meshDescriptorModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('mesh-descriptor', meshDescriptors[1].id);
+    this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @objective={{this.objective}}
+      @meshDescriptors={{this.meshDescriptors}}
       @editable={{true}}
       @manage={{(noop)}}
       @isManaging={{false}}
@@ -101,18 +96,18 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   test('clicking save fires save', async function (assert) {
     assert.expect(1);
     const meshDescriptors = this.server.createList('mesh-descriptor', 2);
-    const objective = this.server.create('programYearObjective', {
-      meshDescriptors,
-    });
-    const objectiveModel = await this.owner
+    const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
-      .findRecord('program-year-objective', objective.id);
-    this.set('objective', objectiveModel);
+      .findRecord('mesh-descriptor', meshDescriptors[0].id);
+    const meshDescriptorModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('mesh-descriptor', meshDescriptors[1].id);
+    this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
     this.set('save', () => {
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @objective={{this.objective}}
+      @meshDescriptors={{this.meshDescriptors}}
       @editable={{true}}
       @manage={{(noop)}}
       @isManaging={{true}}
@@ -126,18 +121,18 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   test('clicking cancel fires cancel', async function (assert) {
     assert.expect(1);
     const meshDescriptors = this.server.createList('mesh-descriptor', 2);
-    const objective = this.server.create('programYearObjective', {
-      meshDescriptors,
-    });
-    const objectiveModel = await this.owner
+    const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
-      .findRecord('program-year-objective', objective.id);
-    this.set('objective', objectiveModel);
+      .findRecord('mesh-descriptor', meshDescriptors[0].id);
+    const meshDescriptorModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('mesh-descriptor', meshDescriptors[1].id);
+    this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
     this.set('cancel', () => {
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @objective={{this.objective}}
+      @meshDescriptors={{this.meshDescriptors}}
       @editable={{true}}
       @manage={{(noop)}}
       @isManaging={{true}}
@@ -151,18 +146,18 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   test('clicking descriptor fires manage', async function (assert) {
     assert.expect(1);
     const meshDescriptors = this.server.createList('mesh-descriptor', 2);
-    const objective = this.server.create('programYearObjective', {
-      meshDescriptors,
-    });
-    const objectiveModel = await this.owner
+    const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
-      .findRecord('program-year-objective', objective.id);
-    this.set('objective', objectiveModel);
+      .findRecord('mesh-descriptor', meshDescriptors[0].id);
+    const meshDescriptorModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('mesh-descriptor', meshDescriptors[1].id);
+    this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
     this.set('manage', () => {
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @objective={{this.objective}}
+      @meshDescriptors={{this.meshDescriptors}}
       @editable={{true}}
       @manage={{this.manage}}
       @isManaging={{false}}

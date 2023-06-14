@@ -47,6 +47,10 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     return this.upstreamRelationships?.vocabularies;
   }
 
+  get meshDescriptors() {
+    return this.upstreamRelationships?.meshDescriptors;
+  }
+
   get assignableVocabularies() {
     return this.vocabularies?.slice() ?? [];
   }
@@ -66,11 +70,12 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
 
   async resolveUpstreamRelationships(programYearObjective) {
     const programYear = await programYearObjective.programYear;
+    const meshDescriptors = await programYearObjective.meshDescriptors;
     const program = await programYear.program;
     const school = await program.school;
     const vocabularies = await school.vocabularies;
 
-    return { programYear, program, school, vocabularies };
+    return { meshDescriptors, programYear, program, school, vocabularies };
   }
 
   @dropTask

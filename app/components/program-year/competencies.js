@@ -83,20 +83,18 @@ export default class ProgramYearCompetenciesComponent extends Component {
     this.args.setIsManaging(false);
   }
 
-  @task
-  *addCompetencyToBuffer(competency) {
+  @action
+  addCompetencyToBuffer(competency, children) {
     this.competenciesToAdd = [...this.competenciesToAdd, competency];
-    const children = (yield competency.children).slice();
     this.competenciesToAdd = [...this.competenciesToAdd, ...children];
     this.competenciesToRemove = this.competenciesToRemove.filter((c) => {
       return c !== competency && !children.includes(c);
     });
   }
 
-  @task
-  *removeCompetencyFromBuffer(competency) {
+  @action
+  removeCompetencyFromBuffer(competency, children) {
     this.competenciesToRemove = [...this.competenciesToRemove, competency];
-    const children = (yield competency.children).slice();
     this.competenciesToRemove = [...this.competenciesToRemove, ...children];
     this.competenciesToAdd = this.competenciesToAdd.filter((c) => {
       return c !== competency && !children.includes(c);

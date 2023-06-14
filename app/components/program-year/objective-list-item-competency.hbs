@@ -24,7 +24,7 @@
       <FaIcon @icon="arrow-rotate-left" />
     </button>
   {{else}}
-    {{#if (await @objective.competency)}}
+    {{#if @objective.competency}}
       {{#if @editable}}
         <button
           type="button"
