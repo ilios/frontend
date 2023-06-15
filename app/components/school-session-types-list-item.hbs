@@ -24,11 +24,12 @@
     {{/if}}
   </td>
   <td class="hide-from-small-screen" colspan="2" data-test-assessment-option>
-    {{get (await @sessionType.assessmentOption) "name"}}
+    {{@sessionType.assessmentOption.name}}
   </td>
   <td class="hide-from-small-screen" colspan="2" data-test-assessment-method-description>
-    {{get (await @sessionType.firstAamcMethod) "description"}}
-    {{#if (not (get (await @sessionType.firstAamcMethod) "active"))}}
+    {{@sessionType.firstAamcMethod.description}}
+
+    {{#if (and @sessionType.firstAamcMethod (not @sessionType.firstAamcMethod.active))}}
       <em>
         ({{t "general.inactive"}})
       </em>
