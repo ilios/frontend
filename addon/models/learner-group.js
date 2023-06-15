@@ -210,6 +210,12 @@ export default class LearnerGroup extends Model {
     return uniqueValues([...this._usersData.value, ...this._allDescendantsUsersData.value.flat()]);
   }
 
+  async getAllDescendantUsers() {
+    const users = await this.users;
+    const descendantUsers = await this._getDescendantUsers();
+    return uniqueValues([...users.slice(), ...descendantUsers]);
+  }
+
   async _getDescendantUsers() {
     const allDescendants = await this.getAllDescendants();
     const descendantsUsers = await Promise.all(mapBy(allDescendants, 'users'));
