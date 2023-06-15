@@ -39,10 +39,10 @@ module('Unit | Model | Program', function (hooks) {
       cohort: cohort2,
     });
     model.programYears.pushObjects([programYear1, programYear2]);
-    await waitForResource(model, '_cohorts');
-    assert.strictEqual(model.cohorts.length, 2);
-    assert.ok(model.cohorts.includes(cohort1));
-    assert.ok(model.cohorts.includes(cohort2));
+    const cohorts = await waitForResource(model, 'cohorts');
+    assert.strictEqual(cohorts.length, 2);
+    assert.ok(cohorts.includes(cohort1));
+    assert.ok(cohorts.includes(cohort2));
   });
 
   test('courses', async function (assert) {
@@ -63,10 +63,10 @@ module('Unit | Model | Program', function (hooks) {
       cohort: cohort2,
     });
     model.programYears.pushObjects([programYear1, programYear2]);
-    await waitForResource(model, '_courses');
-    assert.strictEqual(model.courses.length, 3);
-    assert.ok(model.courses.includes(course1));
-    assert.ok(model.courses.includes(course2));
-    assert.ok(model.courses.includes(course3));
+    const courses = await waitForResource(model, 'courses');
+    assert.strictEqual(courses.length, 3);
+    assert.ok(courses.includes(course1));
+    assert.ok(courses.includes(course2));
+    assert.ok(courses.includes(course3));
   });
 });

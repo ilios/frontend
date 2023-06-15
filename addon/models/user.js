@@ -1,7 +1,6 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class User extends Model {
@@ -179,65 +178,183 @@ export default class User extends Model {
   @hasMany('user-session-material-status', { async: true, inverse: 'user' })
   sessionMaterialStatuses;
 
-  @use _roles = new ResolveAsyncValue(() => [this.roles, []]);
+  @cached
+  get _rolesData() {
+    return new TrackedAsyncData(this.roles);
+  }
+
+  @cached
+  get _cohortsData() {
+    return new TrackedAsyncData(this.cohorts);
+  }
+
+  @cached
+  get _offeringsData() {
+    return new TrackedAsyncData(this.offerings);
+  }
+
+  @cached
+  get _learnerIlmSessionsData() {
+    return new TrackedAsyncData(this.learnerIlmSessions);
+  }
+
+  @cached
+  get _directedCoursesData() {
+    return new TrackedAsyncData(this.directedCourses);
+  }
+
+  @cached
+  get _administeredCoursesData() {
+    return new TrackedAsyncData(this.administeredCourses);
+  }
+
+  @cached
+  get _administeredSessionsData() {
+    return new TrackedAsyncData(this.administeredSessions);
+  }
+
+  @cached
+  get _instructorGroupsData() {
+    return new TrackedAsyncData(this.instructorGroups);
+  }
+
+  @cached
+  get _instructedOfferingsData() {
+    return new TrackedAsyncData(this.instructedOfferings);
+  }
+
+  @cached
+  get _instructedLearnerGroupsData() {
+    return new TrackedAsyncData(this.instructedLearnerGroups);
+  }
+
+  @cached
+  get _directedProgramsData() {
+    return new TrackedAsyncData(this.directedPrograms);
+  }
+
+  @cached
+  get _programYearsData() {
+    return new TrackedAsyncData(this.programYears);
+  }
+
+  @cached
+  get _administeredCurriculumInventoryReportsData() {
+    return new TrackedAsyncData(this.administeredCurriculumInventoryReports);
+  }
+
+  @cached
+  get _directedSchoolsData() {
+    return new TrackedAsyncData(this.directedSchools);
+  }
+
+  @cached
+  get _administeredSchoolsData() {
+    return new TrackedAsyncData(this.administeredSchools);
+  }
+
+  @cached
+  get _instructorIlmSessionsData() {
+    return new TrackedAsyncData(this.instructorIlmSessions);
+  }
+
+  @cached
+  get _primaryCohortData() {
+    return new TrackedAsyncData(this.primaryCohort);
+  }
 
   get _roleTitles() {
-    return mapBy(this._roles, 'title');
+    if (!this._rolesData.isResolved) {
+      return [];
+    }
+
+    return this._rolesData.value.map((r) => r.title);
+  }
+
+  @cached
+  get _learnerGroupsData() {
+    return new TrackedAsyncData(this.learnerGroups);
   }
 
   get isStudent() {
-    return Boolean(this._roleTitles?.includes('Student'));
+    return Boolean(this._roleTitles.includes('Student'));
   }
-
-  @use _cohorts = new ResolveAsyncValue(() => [this.cohorts]);
-  @use _offerings = new ResolveAsyncValue(() => [this.offerings]);
-  @use _learnerIlmSessions = new ResolveAsyncValue(() => [this.learnerIlmSessions]);
 
   /**
    * Checks if a user is linked to any student things
    */
   get isLearner() {
-    return Boolean(
-      this._cohorts?.length || this._offerings?.length || this._learnerIlmSessions?.length
-    );
-  }
+    if (this._cohortsData.isResolved && this._cohortsData.value.length) {
+      return true;
+    }
+    if (this._offeringsData.isResolved && this._offeringsData.value.length) {
+      return true;
+    }
+    if (
+      this._learnerIlmSessionSessionsData?.isResolved &&
+      this._learnerIlmSessionSessionsData.value.length
+    ) {
+      return true;
+    }
 
-  @use _directedCourses = new ResolveAsyncValue(() => [this.directedCourses]);
-  @use _administeredCourses = new ResolveAsyncValue(() => [this.administeredCourses]);
-  @use _administeredSessions = new ResolveAsyncValue(() => [this.administeredSessions]);
-  @use _instructorGroups = new ResolveAsyncValue(() => [this.instructorGroups]);
-  @use _instructedOfferings = new ResolveAsyncValue(() => [this.instructedOfferings]);
-  @use _instructedLearnerGroups = new ResolveAsyncValue(() => [this.instructedLearnerGroups]);
-  @use _directedPrograms = new ResolveAsyncValue(() => [this.directedPrograms]);
-  @use _programYears = new ResolveAsyncValue(() => [this.programYears]);
-  @use _administeredCurriculumInventoryReports = new ResolveAsyncValue(() => [
-    this.administeredCurriculumInventoryReports,
-  ]);
-  @use _directedSchools = new ResolveAsyncValue(() => [this.directedSchools]);
-  @use _administeredSchools = new ResolveAsyncValue(() => [this.administeredSchools]);
+    return false;
+  }
 
   /**
    * Checks if a user is linked to any non-student things
    */
   get performsNonLearnerFunction() {
-    return Boolean(
-      this._directedCourses?.length ||
-        this._administeredCourses?.length ||
-        this._administeredSessions?.length ||
-        this._instructorGroups?.length ||
-        this._instructedOfferings?.length ||
-        this._instructedIlmSessions?.length ||
-        this._instructedLearnerGroups?.length ||
-        this._directedPrograms?.length ||
-        this._programYears?.length ||
-        this._administeredCurriculumInventoryReports?.length ||
-        this._directedSchools?.length ||
-        this._administeredSchools?.length
-    );
+    if (this._directedCoursesData.isResolved && this._directedCoursesData.value.length) {
+      return true;
+    }
+    if (this._administeredCoursesData.isResolved && this._administeredCoursesData.value.length) {
+      return true;
+    }
+    if (this._administeredSessionsData.isResolved && this._administeredSessionsData.value.length) {
+      return true;
+    }
+    if (this._instructorGroupsData.isResolved && this._instructorGroupsData.value.length) {
+      return true;
+    }
+    if (this._instructedOfferingsData.isResolved && this._instructedOfferingsData.value.length) {
+      return true;
+    }
+    if (
+      this._instructorIlmSessionsData.isResolved &&
+      this._instructorIlmSessionsData.value.length
+    ) {
+      return true;
+    }
+    if (
+      this._instructedLearnerGroupsData.isResolved &&
+      this._instructedLearnerGroupsData.value.length
+    ) {
+      return true;
+    }
+    if (this._directedProgramsData.isResolved && this._directedProgramsData.value.length) {
+      return true;
+    }
+    if (this._programYearsData.isResolved && this._programYearsData.value.length) {
+      return true;
+    }
+    if (
+      this._administeredCurriculumInventoryReportsData.isResolved &&
+      this._administeredCurriculumInventoryReportsData.value.length
+    ) {
+      return true;
+    }
+    if (this._directedSchoolsData.isResolved && this._directedSchoolsData.value.length) {
+      return true;
+    }
+    if (this._administeredSchoolsData.isResolved && this._administeredSchoolsData.value.length) {
+      return true;
+    }
+
+    return false;
   }
 
   get fullName() {
-    return this.displayName ? this.displayName : this.fullNameFromFirstMiddleInitialLastName;
+    return this.displayName ?? this.fullNameFromFirstMiddleInitialLastName;
   }
 
   get fullNameFromFirstMiddleInitialLastName() {
@@ -287,119 +404,214 @@ export default class User extends Model {
     );
   }
 
-  @use _instructedLearnerGroupOfferings = new ResolveFlatMapBy(() => [
-    this._instructedLearnerGroups,
-    'offerings',
-  ]);
+  @cached
+  get _instructedLearnerGroupOfferingsData() {
+    if (!this._instructedLearnerGroupsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      Promise.all(this._instructedLearnerGroupsData.value.map((t) => t.offerings))
+    );
+  }
 
   get _allInstructedOfferings() {
-    if (!this._instructedLearnerGroupOfferings || !this._instructedOfferings) {
-      return [];
-    }
-    return uniqueValues([...this._instructedLearnerGroupOfferings, ...this._instructedOfferings]);
-  }
-
-  @use _instructorIlmSessions = new ResolveAsyncValue(() => [this.instructorIlmSessions]);
-  @use _instructorIlmSessionsSessions = new ResolveFlatMapBy(() => [
-    this._instructorIlmSessions,
-    'session',
-  ]);
-
-  get _instructedIlmSessions() {
-    if (!this._instructorIlmSessions) {
-      return [];
-    }
-    return this._instructorIlmSessions.slice();
-  }
-
-  @use _instructedOfferingSessions = new ResolveFlatMapBy(() => [
-    this._allInstructedOfferings,
-    'session',
-  ]);
-  @use _instructorGroupSessions = new ResolveFlatMapBy(() => [this._instructorGroups, 'sessions']);
-
-  get allInstructedSessions() {
     if (
-      !this._instructorIlmSessionsSessions ||
-      !this._instructedOfferingSessions ||
-      !this._instructorGroupSessions
-    ) {
-      return [];
-    }
-    return uniqueValues(
-      [
-        ...this._instructorIlmSessionsSessions,
-        ...this._instructedOfferingSessions,
-        ...this._instructorGroupSessions,
-      ].filter(Boolean)
-    );
-  }
-
-  @use allInstructedCourses = new ResolveFlatMapBy(() => [this.allInstructedSessions, 'course']);
-
-  @use _offeringSessions = new ResolveFlatMapBy(() => [this._offerings, 'session']);
-  @use _learnerIlmSessionSessions = new ResolveFlatMapBy(() => [
-    this._learnerIlmSessions,
-    'session',
-  ]);
-  @use _learnerGroupOfferings = new ResolveFlatMapBy(() => [this.learnerGroups, 'offerings']);
-  @use _learnerGroupIlmSessions = new ResolveFlatMapBy(() => [this.learnerGroups, 'ilmSessions']);
-  @use _learnerGroupIlmSessionsSessions = new ResolveFlatMapBy(() => [
-    this._learnerGroupIlmSessions,
-    'session',
-  ]);
-
-  get _learnerOfferings() {
-    if (!this._learnerGroupOfferings || !this._offerings) {
-      return [];
-    }
-    return uniqueValues([...this._learnerGroupOfferings, ...this._offerings.slice()]);
-  }
-  @use _learnerOfferingSessions = new ResolveFlatMapBy(() => [this._learnerOfferings, 'session']);
-
-  get _learnerSessions() {
-    if (
-      !this._learnerOfferingSessions ||
-      !this._learnerIlmSessionSessions ||
-      !this._learnerGroupIlmSessionsSessions
-    ) {
-      return [];
-    }
-    return uniqueValues(
-      [
-        ...this._learnerOfferingSessions,
-        ...this._learnerIlmSessionSessions,
-        ...this._learnerGroupIlmSessionsSessions,
-      ].filter(Boolean)
-    );
-  }
-
-  @use _learnerCourses = new ResolveFlatMapBy(() => [this._learnerSessions, 'course']);
-
-  get allRelatedCourses() {
-    if (
-      !this._learnerCourses ||
-      !this.allInstructedCourses ||
-      !this._directedCourses ||
-      !this._administeredCourses
+      !this._instructedLearnerGroupOfferingsData?.isResolved ||
+      !this._instructorGroupOfferings?.isResolved ||
+      !this._instructedOfferingsData.isResolved
     ) {
       return [];
     }
     return uniqueValues([
-      ...this._learnerCourses,
-      ...this.allInstructedCourses,
-      ...this._directedCourses.slice(),
-      ...this._administeredCourses.slice(),
+      ...this._instructedLearnerGroupOfferingsData.value.flat(),
+      ...this._instructorGroupOfferings.value.flat(),
+      ...this._instructedOfferingsData.value,
     ]);
   }
 
-  @use _primaryCohort = new ResolveAsyncValue(() => [this.primaryCohort]);
+  @cached
+  get _allInstructedOfferingSessions() {
+    return new TrackedAsyncData(Promise.all(this._allInstructedOfferings.map((o) => o.session)));
+  }
 
-  get secondaryCohorts() {
-    if (!this._cohorts || !this._primaryCohort) {
+  @cached
+  get _instructorIlmSessionSessions() {
+    if (!this._instructorIlmSessionsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      Promise.all(this._instructorIlmSessionsData.value.map((t) => t.session))
+    );
+  }
+
+  @cached
+  get _instructorGroupIlmSessions() {
+    if (!this._instructorGroupsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      Promise.all(this._instructorGroupsData.value.map((i) => i.ilmSessions))
+    );
+  }
+
+  @cached
+  get _instructorGroupIlmSessionSessions() {
+    if (!this._instructorGroupIlmSessions?.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      Promise.all(this._instructorGroupIlmSessions.value.flat().map((ilm) => ilm.session))
+    );
+  }
+
+  @cached
+  get _instructorGroupOfferings() {
+    if (!this._instructorGroupsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      Promise.all(this._instructorGroupsData.value.map((g) => g.offerings))
+    );
+  }
+
+  get allInstructedSessions() {
+    if (
+      !this._instructorIlmSessionSessions?.isResolved ||
+      !this._instructorGroupIlmSessionSessions?.isResolved ||
+      !this._allInstructedOfferingSessions.isResolved
+    ) {
       return [];
     }
-    return this._cohorts.slice().filter((cohort) => cohort !== this._primaryCohort);
+    return uniqueValues(
+      [
+        ...this._instructorIlmSessionSessions.value,
+        ...this._instructorGroupIlmSessionSessions.value,
+        ...this._allInstructedOfferingSessions.value,
+      ].filter(Boolean)
+    );
+  }
+
+  @cached
+  get _allInstructedCoursesData() {
+    if (
+      !this._instructorIlmSessionSessions?.isResolved ||
+      !this._instructorGroupIlmSessionSessions?.isResolved ||
+      !this._allInstructedOfferingSessions.isResolved
+    ) {
+      return null;
+    }
+    return new TrackedAsyncData(
+      Promise.all(
+        uniqueValues(
+          [
+            ...this._instructorIlmSessionSessions.value,
+            ...this._instructorGroupIlmSessionSessions.value,
+            ...this._allInstructedOfferingSessions.value,
+          ]
+            .filter(Boolean)
+            .map((s) => s.course)
+        )
+      )
+    );
+  }
+
+  get allInstructedCourses() {
+    if (!this._allInstructedCoursesData?.isResolved) {
+      return [];
+    }
+
+    return this._allInstructedCoursesData.value;
+  }
+
+  @cached
+  get _learnerIlmSessionSessionsData() {
+    if (!this._learnerIlmSessionsData.isResolved) {
+      return [];
+    }
+    return new TrackedAsyncData(
+      Promise.all(this._learnerIlmSessionsData.value.map((i) => i.session))
+    );
+  }
+
+  @cached
+  get _learnerGroupOfferingsData() {
+    if (!this._learnerGroupsData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(Promise.all(this._learnerGroupsData.value.map((l) => l.offerings)));
+  }
+
+  @cached
+  get _learnerGroupIlmSessionsData() {
+    if (!this._learnerGroupsData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(
+      Promise.all(this._learnerGroupsData.value.map((l) => l.ilmSessions))
+    );
+  }
+
+  @cached
+  get _learnerSessionsData() {
+    if (
+      !this._offeringsData.isResolved ||
+      !this._learnerIlmSessionsData.isResolved ||
+      !this._learnerGroupOfferingsData?.isResolved ||
+      !this._learnerGroupIlmSessionsData.isResolved
+    ) {
+      return null;
+    }
+    const offerings = this._offeringsData.value;
+    const learnerIlmSessions = this._learnerIlmSessionsData.value;
+    const learnerGroupOfferings = this._learnerGroupOfferingsData.value.flat();
+    const ilmSessions = this._learnerGroupIlmSessionsData.value.flat();
+
+    return new TrackedAsyncData(
+      Promise.all(
+        [...offerings, ...learnerIlmSessions, ...learnerGroupOfferings, ...ilmSessions].map(
+          (obj) => obj.session
+        )
+      )
+    );
+  }
+
+  @cached
+  get _learnerCoursesData() {
+    if (!this._learnerSessionsData?.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(Promise.all(this._learnerSessionsData.value.map((s) => s.course)));
+  }
+
+  get allRelatedCourses() {
+    if (
+      !this._learnerCoursesData?.isResolved ||
+      !this._allInstructedCoursesData?.isResolved ||
+      !this._directedCoursesData.isResolved ||
+      !this._administeredCoursesData.isResolved
+    ) {
+      return [];
+    }
+
+    return uniqueValues([
+      ...this._learnerCoursesData.value,
+      ...this._allInstructedCoursesData.value,
+      ...this._directedCoursesData.value,
+      ...this._administeredCoursesData.value,
+    ]);
+  }
+
+  get secondaryCohorts() {
+    if (!this._cohortsData.isResolved || !this._primaryCohortData.isResolved) {
+      return [];
+    }
+    return this._cohortsData.value.filter((cohort) => cohort !== this._primaryCohortData.value);
   }
 
   /**

@@ -1,12 +1,10 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import AsyncProcess from 'ilios-common/classes/async-process';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { map } from 'rsvp';
 import moment from 'moment';
-import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class Course extends Model {
   @attr('string')
@@ -45,6 +43,11 @@ export default class Course extends Model {
   @belongsTo('school', { async: true, inverse: 'courses' })
   school;
 
+  @cached
+  get _schoolData() {
+    return new TrackedAsyncData(this.school);
+  }
+
   @hasMany('user', {
     async: true,
     inverse: 'directedCourses',
@@ -66,8 +69,18 @@ export default class Course extends Model {
   @hasMany('cohort', { async: true, inverse: 'courses' })
   cohorts;
 
+  @cached
+  get _cohortsData() {
+    return new TrackedAsyncData(this.cohorts);
+  }
+
   @hasMany('course-objective', { async: true, inverse: 'course' })
   courseObjectives;
+
+  @cached
+  get _courseObjectivesData() {
+    return new TrackedAsyncData(this.courseObjectives);
+  }
 
   @hasMany('mesh-descriptor', { async: true, inverse: 'courses' })
   meshDescriptors;
@@ -77,6 +90,11 @@ export default class Course extends Model {
 
   @hasMany('session', { async: true, inverse: 'course' })
   sessions;
+
+  @cached
+  get _sessionsData() {
+    return new TrackedAsyncData(this.sessions);
+  }
 
   @belongsTo('course', {
     inverse: 'descendants',
@@ -93,67 +111,83 @@ export default class Course extends Model {
   @hasMany('term', { async: true, inverse: 'courses' })
   terms;
 
-  get publishedSessions() {
-    return this.sessions.filter((session) => session.isPublished);
+  @cached
+  get _termsData() {
+    return new TrackedAsyncData(this.terms);
   }
 
-  @use publishedSessionOfferings = new ResolveAsyncValue(() => [
-    mapBy(this.publishedSessions, 'offerings'),
-  ]);
+  @cached
+  get _publishedSessionOfferings() {
+    if (!this._sessionsData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(
+      Promise.all(this._sessionsData.value.filter((s) => s.isPublished).map((s) => s.offerings))
+    );
+  }
 
+  @cached
   get publishedOfferingCount() {
-    if (!this.publishedSessionOfferings) {
+    if (!this._publishedSessionOfferings?.isResolved) {
       return 0;
     }
-
-    return this.publishedSessionOfferings.reduce((acc, curr) => {
-      return acc + curr.length;
-    }, 0);
+    return uniqueValues(this._publishedSessionOfferings.value.flat()).length;
   }
 
-  @use allTreeCompetencies = new ResolveFlatMapBy(() => [
-    this.courseObjectives,
-    'treeCompetencies',
-  ]);
+  get allTreeCompetencies() {
+    if (!this._courseObjectivesData.isResolved) {
+      return null;
+    }
+    return this._courseObjectivesData.value.map((co) => co.treeCompetencies);
+  }
 
   get competencies() {
-    return uniqueValues(this.allTreeCompetencies ?? []).filter(Boolean);
-  }
-
-  @use competencyDomains = new AsyncProcess(() => [
-    this._getCompetencyDomains.bind(this),
-    this.competencies,
-  ]);
-
-  async _getCompetencyDomains(competencies) {
-    return map(competencies, (c) => c.getDomain());
-  }
-
-  @use domainsWithSubcompetencies = new AsyncProcess(() => [
-    this._getDomainProxies.bind(this),
-    this.competencyDomains,
-    this.competencies,
-  ]);
-
-  async _getDomainProxies(domains, courseCompetencies) {
-    if (!domains || !courseCompetencies) {
-      return;
+    if (!this._courseObjectivesData.isResolved) {
+      return [];
     }
-    const domainProxies = await map(uniqueValues(domains), async (domain) => {
-      let subCompetencies = (await domain.children).filter((competency) => {
-        return courseCompetencies.includes(competency);
-      });
 
-      subCompetencies = sortBy(subCompetencies, 'title');
+    const treeCompetencies = this._courseObjectivesData.value.map((o) => o.treeCompetencies);
 
-      return {
-        title: domain.title,
-        id: domain.id,
-        subCompetencies,
-      };
-    });
+    return uniqueValues(treeCompetencies.flat()).filter(Boolean);
+  }
 
-    return sortBy(domainProxies, 'title');
+  @cached
+  get _competencyDomains() {
+    return new TrackedAsyncData(Promise.all(this.competencies?.map((c) => c.getDomain())));
+  }
+
+  @cached
+  get _unsortedDomainsWithSubcompetencies() {
+    if (!this._competencyDomains.isResolved || this.competencies === null) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      map(uniqueValues(this._competencyDomains.value), async (domain) => {
+        let subCompetencies = (await domain.children).filter((competency) => {
+          return this.competencies.includes(competency);
+        });
+
+        subCompetencies = sortBy(subCompetencies, 'title');
+
+        return {
+          title: domain.title,
+          id: domain.id,
+          subCompetencies,
+        };
+      })
+    );
+  }
+
+  get domainsWithSubcompetencies() {
+    if (
+      !this._unsortedDomainsWithSubcompetencies ||
+      !this._unsortedDomainsWithSubcompetencies.isResolved
+    ) {
+      return [];
+    }
+
+    return sortBy(this._unsortedDomainsWithSubcompetencies.value, 'title');
   }
 
   get requiredPublicationIssues() {
@@ -187,49 +221,71 @@ export default class Course extends Model {
     return issues;
   }
 
-  @use _programYears = new ResolveAsyncValue(() => [mapBy(this.cohorts ?? [], 'programYear')]);
-  @use _programs = new ResolveAsyncValue(() => [mapBy(this._programYears ?? [], 'program')]);
-  @use _programSchools = new ResolveAsyncValue(() => [mapBy(this._programs ?? [], 'school')]);
-  @use _resolvedSchool = new ResolveAsyncValue(() => [this.school]);
+  @cached
+  get _programSchoolsData() {
+    if (!this._cohortsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      map(this._cohortsData.value, async (cohort) => {
+        const programYear = await cohort.programYear;
+        const program = await programYear.program;
+        return program.school;
+      })
+    );
+  }
+
   get schools() {
-    if (!this._programSchools || !this._resolvedSchool) {
+    if (!this._programSchoolsData?.isResolved || !this._schoolData.isResolved) {
       return [];
     }
 
-    return uniqueValues([...this._programSchools, this._resolvedSchool]);
+    return uniqueValues([...this._programSchoolsData.value, this._schoolData.value]);
   }
 
-  @use _schoolVocabularies = new ResolveAsyncValue(() => [mapBy(this.schools, 'vocabularies')]);
+  @cached
+  get _schoolVocabulariesData() {
+    return new TrackedAsyncData(Promise.all(this.schools.map((s) => s.vocabularies)));
+  }
 
   get assignableVocabularies() {
-    const rhett = sortBy(
-      this._schoolVocabularies?.reduce((acc, curr) => {
-        acc.push(...curr.slice());
-        return acc;
-      }, []) ?? [],
-      ['school.title', 'title']
-    );
-    return rhett;
+    if (!this._schoolVocabulariesData?.isResolved) {
+      return [];
+    }
+    return sortBy(this._schoolVocabulariesData.value.flat(), ['school.title', 'title']);
   }
 
-  @use _courseObjectives = new ResolveAsyncValue(() => [this.courseObjectives]);
   /**
    * A list of course objectives, sorted by position (asc) and then id (desc).
    */
   get sortedCourseObjectives() {
-    return this._courseObjectives?.slice().sort(sortableByPosition);
+    if (!this._courseObjectivesData.isResolved) {
+      return null;
+    }
+    return this._courseObjectivesData.value.slice().sort(sortableByPosition);
   }
 
   get hasMultipleCohorts() {
     return this.cohorts.length > 1;
   }
 
-  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
+  @cached
+  get _termVocabularies() {
+    if (!this._termsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(Promise.all(this._termsData.value.map((t) => t.vocabulary)));
+  }
   /**
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
+    if (!this._termVocabularies?.isResolved) {
+      return [];
+    }
+    return sortBy(uniqueValues(this._termVocabularies.value), 'title');
   }
 
   get termCount() {

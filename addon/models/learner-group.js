@@ -2,8 +2,8 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { map } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
@@ -26,14 +26,34 @@ export default class LearnerGroup extends Model {
   @belongsTo('learner-group', { async: true, inverse: 'children' })
   parent;
 
+  @cached
+  get _parentData() {
+    return new TrackedAsyncData(this.parent);
+  }
+
   @hasMany('learner-group', { async: true, inverse: 'parent' })
   children;
+
+  @cached
+  get _childrenData() {
+    return new TrackedAsyncData(this.children);
+  }
 
   @hasMany('ilm-session', { async: true, inverse: 'learnerGroups' })
   ilmSessions;
 
+  @cached
+  get _ilmSessionsData() {
+    return new TrackedAsyncData(this.ilmSessions);
+  }
+
   @hasMany('offering', { async: true, inverse: 'learnerGroups' })
   offerings;
+
+  @cached
+  get _offeringsData() {
+    return new TrackedAsyncData(this.offerings);
+  }
 
   @hasMany('instructor-group', { async: true, inverse: 'learnerGroups' })
   instructorGroups;
@@ -41,11 +61,21 @@ export default class LearnerGroup extends Model {
   @hasMany('user', { async: true, inverse: 'learnerGroups' })
   users;
 
+  @cached
+  get _usersData() {
+    return new TrackedAsyncData(this.users);
+  }
+
   @hasMany('user', {
     async: true,
     inverse: 'instructedLearnerGroups',
   })
   instructors;
+
+  @cached
+  get _instructorsData() {
+    return new TrackedAsyncData(this.instructors);
+  }
 
   @belongsTo('learner-group', {
     inverse: 'descendants',
@@ -59,29 +89,55 @@ export default class LearnerGroup extends Model {
   })
   descendants;
 
-  @use _offerings = new ResolveAsyncValue(() => [this.offerings]);
-  @use _ilmSessions = new ResolveAsyncValue(() => [this.ilmSessions]);
+  @cached
+  get _offeringSessionsData() {
+    if (!this._offeringsData.isResolved) {
+      return null;
+    }
 
-  @use _offeringSessions = new ResolveFlatMapBy(() => [this.offerings, 'session']);
-  @use _ilmSessionSessions = new ResolveFlatMapBy(() => [this.ilmSessions, 'session']);
+    return new TrackedAsyncData(Promise.all(this._offeringsData.value.map((o) => o.session)));
+  }
+
+  @cached
+  get _ilmSessionSessionsData() {
+    if (!this._ilmSessionsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(Promise.all(this._ilmSessionsData.value.map((o) => o.session)));
+  }
 
   /**
    * A list of all sessions associated with this learner group, via offerings or via ILMs.
    */
   get sessions() {
-    if (!this._offeringSessions || !this._ilmSessionSessions) {
+    if (
+      !this._offeringSessionsData ||
+      !this._offeringSessionsData.isResolved ||
+      !this._ilmSessionSessionsData ||
+      !this._ilmSessionSessionsData.isResolved
+    ) {
       return [];
     }
-    return uniqueValues([...this._offeringSessions, ...this._ilmSessionSessions].filter(Boolean));
+
+    return uniqueValues(
+      [...this._offeringSessionsData.value, ...this._ilmSessionSessionsData.value].filter(Boolean)
+    );
   }
 
-  @use _sessionCourses = new ResolveFlatMapBy(() => [this.sessions, 'course']);
+  @cached
+  get _sessionCourses() {
+    return new TrackedAsyncData(Promise.all(this.sessions.map((s) => s.course)));
+  }
 
   /**
    * A list of all courses associated with this learner group, via offerings/sessions or via ILMs.
    */
   get courses() {
-    return uniqueValues(this._sessionCourses ?? []);
+    if (!this._sessionCourses.isResolved) {
+      return [];
+    }
+    return uniqueValues(this._sessionCourses.value);
   }
 
   /**
@@ -107,15 +163,26 @@ export default class LearnerGroup extends Model {
     return ++offset;
   }
 
+  @cached
+  get _grandChildrenData() {
+    if (!this._childrenData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      Promise.all(this._childrenData.value.map((c) => c.getAllDescendants()))
+    );
+  }
+
   /**
    * A list of all nested sub-groups of this group.
    */
-  @use _allDescendants = new AsyncProcess(() => [
-    this.getAllDescendants.bind(this),
-    this.children.children,
-  ]);
   get allDescendants() {
-    return this._allDescendants ?? [];
+    if (!this._childrenData.isResolved || !this._grandChildrenData?.isResolved) {
+      return [];
+    }
+
+    return [...this._childrenData.value, ...this._grandChildrenData.value.flat()];
   }
 
   async getAllDescendants() {
@@ -127,22 +194,20 @@ export default class LearnerGroup extends Model {
     return [...children, ...childDescendants.flat()];
   }
 
-  @use _allDescendantUsers = new ResolveFlatMapBy(() => [this.allDescendants, 'users']);
-  @use _users = new ResolveAsyncValue(() => [this.users]);
+  @cached
+  get _allDescendantsUsersData() {
+    return new TrackedAsyncData(Promise.all(this.allDescendants.map((g) => g.users)));
+  }
 
   /**
    * A list of all users in this group and any of its sub-groups.
    */
-  @use allDescendantUsers = new AsyncProcess(() => [
-    this.getAllDescendantUsers.bind(this),
-    this._allDescendantUsers,
-    this._users,
-  ]);
+  get allDescendantUsers() {
+    if (!this._usersData.isResolved || !this._allDescendantsUsersData.isResolved) {
+      return null;
+    }
 
-  async getAllDescendantUsers() {
-    const users = await this.users;
-    const descendantUsers = await this._getDescendantUsers();
-    return uniqueValues([...users.slice(), ...descendantUsers]);
+    return uniqueValues([...this._usersData.value, ...this._allDescendantsUsersData.value.flat()]);
   }
 
   async _getDescendantUsers() {
@@ -156,11 +221,14 @@ export default class LearnerGroup extends Model {
   /**
    * A list of users that are assigned to this group, excluding those that are ALSO assigned to any of this group's sub-groups.
    */
-  @use usersOnlyAtThisLevel = new AsyncProcess(() => [
-    this.getUsersOnlyAtThisLevel.bind(this),
-    this.allDescendants,
-    this._users,
-  ]);
+  get usersOnlyAtThisLevel() {
+    if (!this._usersData.isResolved || !this._allDescendantsUsersData.isResolved) {
+      return null;
+    }
+    const descendantUsers = this._allDescendantsUsersData.value.flat();
+
+    return this._usersData.value.filter((user) => !descendantUsers.includes(user));
+  }
 
   async getUsersOnlyAtThisLevel() {
     const users = (await this.users).slice();
@@ -169,21 +237,20 @@ export default class LearnerGroup extends Model {
     return users.filter((user) => !descendantsUsers.includes(user));
   }
 
-  @use _parent = new ResolveAsyncValue(() => [this.parent]);
-
   get allParentTitles() {
-    if (this.isTopLevelGroup) {
+    if (
+      this.isTopLevelGroup ||
+      !this._parentData.isResolved ||
+      !this._grandparentsData.isResolved
+    ) {
       return [];
     }
-    if (!this._parent || !this._parent.allParentTitles) {
-      return undefined;
-    }
 
-    return [...this._parent.allParentTitles, this._parent.title];
+    return [...mapBy(this._grandparentsData.value, 'title'), this._parentData.value.title];
   }
 
   get allParentsTitle() {
-    return this.allParentTitles?.reduce((acc, curr) => {
+    return this.allParentTitles.reduce((acc, curr) => {
       return (acc += curr + ' > ');
     }, '');
   }
@@ -192,10 +259,17 @@ export default class LearnerGroup extends Model {
     if (this.isTopLevelGroup) {
       return this.title.replace(/\s/g, '');
     }
-    if (!this.allParentTitles) {
+
+    if (!this._parentData.isResolved || !this._grandparentsData?.isResolved) {
       return undefined;
     }
-    return [...this.allParentTitles, this.title].join('').replace(/\s/g, '');
+
+    return [
+      ...mapBy([...this._grandparentsData.value.reverse(), this._parentData.value], 'title'),
+      this.title,
+    ]
+      .join('')
+      .replace(/\s/g, '');
   }
 
   /**
@@ -203,33 +277,65 @@ export default class LearnerGroup extends Model {
    * This includes that titles of all of its ancestors, all its descendants and this group's title itself.
    */
   get filterTitle() {
-    if (!this.allParents || !this.allDescendants) {
+    if (
+      !this._parentData.isResolved ||
+      !this._grandparentsData?.isResolved ||
+      !this._childrenData.isResolved ||
+      !this._grandChildrenData?.isResolved
+    ) {
       return '';
     }
 
-    return [
-      ...mapBy(this.allDescendants, 'title'),
-      ...mapBy(this.allParents, 'title'),
-      this.title,
-    ].join('');
+    const up = this.isTopLevelGroup
+      ? []
+      : [this._parentData.value, ...this._grandparentsData.value];
+    const down = [...this._childrenData.value, ...this._grandChildrenData.value.flat()];
+
+    return [...mapBy(down, 'title'), ...mapBy(up, 'title'), this.title].join('');
+  }
+
+  async _getAllParents() {
+    const parent = await this.parent;
+    if (!parent) {
+      return [];
+    }
+    const grandparents = await parent.getAllParents();
+
+    return [parent, ...grandparents];
+  }
+
+  @cached
+  get _grandparentsData() {
+    if (!this._parentData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(this._parentData.value?._getAllParents());
   }
 
   get allParents() {
-    if (this.isTopLevelGroup) {
+    if (
+      this.isTopLevelGroup ||
+      !this._parentData.isResolved ||
+      !this._grandparentsData?.isResolved
+    ) {
       return [];
     }
-    if (!this._parent?.allParents) {
-      return undefined;
-    }
 
-    return [this._parent, ...this._parent.allParents];
+    return [this._parentData.value, ...this._grandparentsData.value];
   }
 
   /**
    * The top-level group in this group's parentage tree, or this group itself if it has no parent.
    */
   get topLevelGroup() {
-    return this.isTopLevelGroup ? this : this._parent?.topLevelGroup;
+    if (this.isTopLevelGroup) {
+      return this;
+    }
+    if (!this._parentData.isResolved) {
+      return null;
+    }
+    return this._parentData.value.topLevelGroup;
   }
 
   async getTopLevelGroup() {
@@ -245,7 +351,10 @@ export default class LearnerGroup extends Model {
     return !this.belongsTo('parent').id();
   }
 
-  @use _instructors = new ResolveAsyncValue(() => [this.instructors]);
+  get _instructors() {
+    return this._instructorsData.isResolved ? this._instructorsData.value : null;
+  }
+
   @use _instructorGroupUsers = new ResolveFlatMapBy(() => [this.instructorGroups, 'users']);
 
   get allInstructors() {
@@ -256,7 +365,9 @@ export default class LearnerGroup extends Model {
     return uniqueValues([...this._instructors.slice(), ...this._instructorGroupUsers]);
   }
 
-  @use _descendantUsers = new ResolveFlatMapBy(() => [this.allDescendants, 'users']);
+  get _descendantUsers() {
+    return new TrackedAsyncData(Promise.all(this.allDescendants.map((lg) => lg.users)));
+  }
 
   /**
    * Checks if this group or any of its subgroups has any learners.
@@ -266,7 +377,11 @@ export default class LearnerGroup extends Model {
       return true;
     }
 
-    return this._descendantUsers?.length > 0;
+    if (!this._allDescendantsUsersData?.isResolved) {
+      return false;
+    }
+
+    return this._allDescendantsUsersData.value.flat().length > 0;
   }
 
   /**

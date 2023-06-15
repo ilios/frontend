@@ -1,8 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
+import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseObjective extends Model {
   @attr('string')
@@ -47,21 +46,51 @@ export default class CourseObjective extends Model {
   })
   programYearObjectives;
 
-  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
-  get associatedVocabularies() {
-    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
+  @cached
+  get _termsData() {
+    return new TrackedAsyncData(this.terms);
+  }
+  @cached
+  get _termVocabulariesData() {
+    if (!this._termsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(Promise.all(this._termsData.value.map((t) => t.vocabulary)));
   }
 
-  @use _programYearObjectives = new ResolveAsyncValue(() => [this.programYearObjectives]);
-  @use allTermCompetencies = new ResolveAsyncValue(() => [
-    mapBy(this._programYearObjectives?.slice() ?? [], 'competency'),
-  ]);
+  get associatedVocabularies() {
+    if (!this._termVocabulariesData?.isResolved) {
+      return [];
+    }
+    return sortBy(uniqueValues(this._termVocabulariesData.value), 'title');
+  }
+
+  @cached
+  get _programYearObjectivesData() {
+    return new TrackedAsyncData(this.programYearObjectives);
+  }
+
+  @cached
+  get _allTermCompetencies() {
+    if (!this._programYearObjectivesData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      Promise.all(this._programYearObjectivesData.value.map((o) => o.competency))
+    );
+  }
 
   /**
    * All competencies associated with any program-year objectives linked to this course objective.
    */
   get treeCompetencies() {
-    return uniqueValues(this.allTermCompetencies ?? []);
+    if (!this._allTermCompetencies?.isResolved) {
+      return [];
+    }
+
+    return uniqueValues(this._allTermCompetencies.value);
   }
 
   /**

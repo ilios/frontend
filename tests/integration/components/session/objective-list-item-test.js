@@ -14,19 +14,23 @@ module('Integration | Component | session/objective-list-item', function (hooks)
 
   test('it renders and is accessible', async function (assert) {
     assert.expect(6);
-    const session = this.server.create('session');
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school });
+    const session = this.server.create('session', { course });
     const sessionObjective = this.server.create('sessionObjective', {
       session,
     });
-    const sessionObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('session-objective', sessionObjective.id);
+    const store = await this.owner.lookup('service:store');
+    const sessionModel = await store.findRecord('session', session.id);
+    const sessionObjectiveModel = await store.findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
+    this.set('sessionModel', sessionModel);
     await render(
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
+        @session={{this.sessionModel}}
       />
 `
     );
@@ -44,15 +48,17 @@ module('Integration | Component | session/objective-list-item', function (hooks)
     const sessionObjective = this.server.create('sessionObjective', {
       session,
     });
-    const sessionObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('session-objective', sessionObjective.id);
+    const store = await this.owner.lookup('service:store');
+    const sessionModel = await store.findRecord('session', session.id);
+    const sessionObjectiveModel = await store.findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
+    this.set('sessionModel', sessionModel);
     await render(
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
+        @session={{this.sessionModel}}
       />
 `
     );
@@ -66,19 +72,23 @@ module('Integration | Component | session/objective-list-item', function (hooks)
 
   test('can manage parents', async function (assert) {
     assert.expect(1);
-    const session = this.server.create('session');
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school });
+    const session = this.server.create('session', { course });
     const sessionObjective = this.server.create('sessionObjective', {
       session,
     });
-    const sessionObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('session-objective', sessionObjective.id);
+    const store = await this.owner.lookup('service:store');
+    const sessionModel = await store.findRecord('session', session.id);
+    const sessionObjectiveModel = await store.findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
+    this.set('sessionModel', sessionModel);
     await render(
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
+        @session={{this.sessionModel}}
       />
 `
     );
@@ -91,15 +101,17 @@ module('Integration | Component | session/objective-list-item', function (hooks)
     const sessionObjective = this.server.create('sessionObjective', {
       session,
     });
-    const sessionObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('session-objective', sessionObjective.id);
+    const store = await this.owner.lookup('service:store');
+    const sessionModel = await store.findRecord('session', session.id);
+    const sessionObjectiveModel = await store.findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
+    this.set('sessionModel', sessionModel);
     await render(
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
+        @session={{this.sessionModel}}
       />
 `
     );
@@ -109,19 +121,23 @@ module('Integration | Component | session/objective-list-item', function (hooks)
 
   test('can manage terms', async function (assert) {
     assert.expect(2);
-    const session = this.server.create('session');
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school });
+    const session = this.server.create('session', { course });
     const sessionObjective = this.server.create('sessionObjective', {
       session,
     });
-    const sessionObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('session-objective', sessionObjective.id);
+    const store = await this.owner.lookup('service:store');
+    const sessionModel = await store.findRecord('session', session.id);
+    const sessionObjectiveModel = await store.findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
+    this.set('sessionModel', sessionModel);
     await render(
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
+        @session={{this.sessionModel}}
       />
 `
     );
@@ -135,15 +151,17 @@ module('Integration | Component | session/objective-list-item', function (hooks)
     const sessionObjective = this.server.create('sessionObjective', {
       session,
     });
-    const sessionObjectiveModel = await this.owner
-      .lookup('service:store')
-      .findRecord('session-objective', sessionObjective.id);
+    const store = await this.owner.lookup('service:store');
+    const sessionModel = await store.findRecord('session', session.id);
+    const sessionObjectiveModel = await store.findRecord('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
+    this.set('sessionModel', sessionModel);
     await render(
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}
         @editable={{true}}
         @courseObjectives={{(array)}}
+        @session={{this.sessionModel}}
       />
 `
     );

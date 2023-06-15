@@ -1,8 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { use } from 'ember-could-get-used-to-this';
 import moment from 'moment';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class Offering extends Model {
@@ -30,19 +29,34 @@ export default class Offering extends Model {
   @hasMany('learner-group', { async: true, inverse: 'offerings' })
   learnerGroups;
 
+  @cached
+  get _learnerGroupsData() {
+    return new TrackedAsyncData(this.learnerGroups);
+  }
+
   @hasMany('instructor-group', { async: true, inverse: 'offerings' })
   instructorGroups;
+
+  @cached
+  get _instructorGroupsData() {
+    return new TrackedAsyncData(this.instructorGroups);
+  }
 
   @hasMany('user', { async: true, inverse: 'offerings' })
   learners;
 
+  @cached
+  get _learnersData() {
+    return new TrackedAsyncData(this.learners);
+  }
+
   @hasMany('user', { async: true, inverse: 'instructedOfferings' })
   instructors;
 
-  @use _instructors = new ResolveAsyncValue(() => [this.instructors]);
-  @use _instructorsInGroups = new ResolveFlatMapBy(() => [this.instructorGroups, 'users']);
-  @use _learners = new ResolveAsyncValue(() => [this.learners]);
-  @use _learnersInGroups = new ResolveFlatMapBy(() => [this.learnerGroups, 'users']);
+  @cached
+  get _instructorsData() {
+    return new TrackedAsyncData(this.instructors);
+  }
 
   get startDayOfYear() {
     return moment(this.startDate).format('DDDD');
@@ -104,21 +118,50 @@ export default class Offering extends Model {
     return key;
   }
 
+  @cached
+  get _instructorsInGroups() {
+    if (!this._instructorGroupsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(Promise.all(this._instructorGroupsData.value.map((g) => g.users)));
+  }
+
   get allInstructors() {
-    if (!this._instructors || !this._instructorsInGroups) {
+    if (
+      !this._instructorsData.isResolved ||
+      !this._instructorsInGroups ||
+      !this._instructorsInGroups.isResolved
+    ) {
       return [];
     }
     return sortBy(
-      uniqueValues([...this._instructors.slice(), ...this._instructorsInGroups]),
+      uniqueValues([...this._instructorsData.value, ...this._instructorsInGroups.value.flat()]),
       'fullName'
     );
   }
 
+  @cached
+  get _learnersInGroups() {
+    if (!this._learnerGroupsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(Promise.all(this._learnerGroupsData.value.map((g) => g.users)));
+  }
+
   get allLearners() {
-    if (!this._learners || !this._learnersInGroups) {
+    if (
+      !this._learnersData.isResolved ||
+      !this._learnersInGroups ||
+      !this._learnersInGroups.isResolved
+    ) {
       return [];
     }
-    return sortBy(uniqueValues([...this._learners.slice(), ...this._learnersInGroups]), 'fullName');
+    return sortBy(
+      uniqueValues([...this._learnersData.value, ...this._learnersInGroups.value.flat()]),
+      'fullName'
+    );
   }
 
   get durationHours() {
