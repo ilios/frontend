@@ -164,7 +164,7 @@ export default class LearnerGroup extends Model {
   }
 
   @cached
-  get _grandChildrenData() {
+  get _allDescendantsData() {
     if (!this._childrenData.isResolved) {
       return null;
     }
@@ -178,11 +178,11 @@ export default class LearnerGroup extends Model {
    * A list of all nested sub-groups of this group.
    */
   get allDescendants() {
-    if (!this._childrenData.isResolved || !this._grandChildrenData?.isResolved) {
+    if (!this._childrenData.isResolved || !this._allDescendantsData?.isResolved) {
       return [];
     }
 
-    return [...this._childrenData.value, ...this._grandChildrenData.value.flat()];
+    return [...this._childrenData.value, ...this._allDescendantsData.value.flat()];
   }
 
   async getAllDescendants() {
@@ -247,12 +247,12 @@ export default class LearnerGroup extends Model {
     if (
       this.isTopLevelGroup ||
       !this._parentData.isResolved ||
-      !this._grandparentsData.isResolved
+      !this._allAncestorsData.isResolved
     ) {
       return [];
     }
 
-    return [...mapBy(this._grandparentsData.value, 'title'), this._parentData.value.title];
+    return [...mapBy(this._allAncestorsData.value, 'title'), this._parentData.value.title];
   }
 
   get allParentsTitle() {
@@ -266,12 +266,12 @@ export default class LearnerGroup extends Model {
       return this.title.replace(/\s/g, '');
     }
 
-    if (!this._parentData.isResolved || !this._grandparentsData?.isResolved) {
+    if (!this._parentData.isResolved || !this._allAncestorsData?.isResolved) {
       return undefined;
     }
 
     return [
-      ...mapBy([...this._grandparentsData.value.reverse(), this._parentData.value], 'title'),
+      ...mapBy([...this._allAncestorsData.value.reverse(), this._parentData.value], 'title'),
       this.title,
     ]
       .join('')
@@ -285,17 +285,17 @@ export default class LearnerGroup extends Model {
   get filterTitle() {
     if (
       !this._parentData.isResolved ||
-      !this._grandparentsData?.isResolved ||
+      !this._allAncestorsData?.isResolved ||
       !this._childrenData.isResolved ||
-      !this._grandChildrenData?.isResolved
+      !this._allDescendantsData?.isResolved
     ) {
       return '';
     }
 
     const up = this.isTopLevelGroup
       ? []
-      : [this._parentData.value, ...this._grandparentsData.value];
-    const down = [...this._childrenData.value, ...this._grandChildrenData.value.flat()];
+      : [this._parentData.value, ...this._allAncestorsData.value];
+    const down = [...this._childrenData.value, ...this._allDescendantsData.value.flat()];
 
     return [...mapBy(down, 'title'), ...mapBy(up, 'title'), this.title].join('');
   }
@@ -311,7 +311,7 @@ export default class LearnerGroup extends Model {
   }
 
   @cached
-  get _grandparentsData() {
+  get _allAncestorsData() {
     if (!this._parentData.isResolved) {
       return null;
     }
@@ -323,12 +323,12 @@ export default class LearnerGroup extends Model {
     if (
       this.isTopLevelGroup ||
       !this._parentData.isResolved ||
-      !this._grandparentsData?.isResolved
+      !this._allAncestorsData?.isResolved
     ) {
       return [];
     }
 
-    return [this._parentData.value, ...this._grandparentsData.value];
+    return [this._parentData.value, ...this._allAncestorsData.value];
   }
 
   /**
