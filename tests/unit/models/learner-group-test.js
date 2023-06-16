@@ -106,6 +106,43 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     assert.ok(allDescendantUsers.includes(user5));
   });
 
+  test('check getAllDescendantUsers on empty group', async function (assert) {
+    assert.expect(1);
+    const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
+    const allDescendantUsers = await learnerGroup.getAllDescendantUsers();
+    assert.strictEqual(allDescendantUsers.length, 0);
+  });
+
+  test('check getAllDescendantUsers on populated group with sub-groups', async function (assert) {
+    assert.expect(6);
+    const store = this.owner.lookup('service:store');
+    const learnerGroup = store.createRecord('learner-group');
+
+    const user1 = store.createRecord('user');
+    const user2 = store.createRecord('user');
+    const user3 = store.createRecord('user');
+    const user4 = store.createRecord('user');
+    const user5 = store.createRecord('user');
+    const subGroup1 = store.createRecord('learner-group', { users: [user2] });
+    const subSubGroup1 = store.createRecord('learner-group', {
+      users: [user3],
+    });
+    const subGroup2 = store.createRecord('learner-group', {
+      users: [user5],
+      children: [subSubGroup1],
+    });
+    learnerGroup.get('users').pushObjects([user1, user2, user3, user4, user5]);
+    learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
+
+    const allDescendantUsers = await learnerGroup.getAllDescendantUsers();
+    assert.strictEqual(allDescendantUsers.length, 5);
+    assert.ok(allDescendantUsers.includes(user1));
+    assert.ok(allDescendantUsers.includes(user2));
+    assert.ok(allDescendantUsers.includes(user3));
+    assert.ok(allDescendantUsers.includes(user4));
+    assert.ok(allDescendantUsers.includes(user5));
+  });
+
   test('check empty allDescendants', async function (assert) {
     assert.expect(1);
     const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
