@@ -50,7 +50,7 @@
     "caniuse-db": "^1.0.30001503",
     "class-validator": "^0.14.0",
     "concurrently": "^7.6.0",
-    "dotenv": "^16.1.4",
+    "dotenv": "^16.2.0",
     "ember-a11y-refocus": "3.0.2",
     "ember-a11y-testing": "^5.2.1",
     "ember-ajax": "^5.1.2",
