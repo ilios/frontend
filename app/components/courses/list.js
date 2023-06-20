@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 
-export default class IliosCourseListComponent extends Component {
+export default class CoursesListComponent extends Component {
   @service intl;
   @service permissionChecker;
   @service iliosConfig;

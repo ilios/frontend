@@ -86,7 +86,7 @@
     </section>
     <div class="list">
       {{#if this.coursesLoaded}}
-        <IliosCourseList
+        <Courses::List
           @courses={{this.filteredCourses}}
           @query={{this.titleFilter}}
           @sortBy={{this.sortCoursesBy}}

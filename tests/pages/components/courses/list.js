@@ -9,7 +9,7 @@ import {
 } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-ilios-course-list]',
+  scope: '[data-test-courses-list]',
   courses: collection('[data-test-active-row]', {
     title: text('[data-test-course-title]'),
     level: text('[data-test-level]'),

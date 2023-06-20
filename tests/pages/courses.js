@@ -11,7 +11,7 @@ import {
 } from 'ember-cli-page-object';
 import { hasFocus } from 'ilios-common';
 
-import courses from './components/ilios-course-list';
+import courses from './components/courses/list';
 import newCourse from './components/new-course';
 
 export default create({
