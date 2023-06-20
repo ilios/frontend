@@ -6,7 +6,7 @@ import { dropTask } from 'ember-concurrency';
 import { all, filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import PermissionChecker from 'ilios/classes/permission-checker';
+import PermissionChecker from 'ilios-common/classes/permission-checker';
 
 export default class LearnerGroupListItemComponent extends Component {
   @tracked showRemoveConfirmation = false;

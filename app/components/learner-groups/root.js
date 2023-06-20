@@ -5,7 +5,7 @@ import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
-import PermissionChecker from 'ilios/classes/permission-checker';
+import PermissionChecker from 'ilios-common/classes/permission-checker';
 import cloneLearnerGroup from 'ilios/utils/clone-learner-group';
 import { dropTask } from 'ember-concurrency';
 import { map } from 'rsvp';
