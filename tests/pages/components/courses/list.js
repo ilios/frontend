@@ -1,30 +1,9 @@
-import {
-  clickable,
-  collection,
-  count,
-  create,
-  hasClass,
-  isVisible,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, collection, create, hasClass, isVisible } from 'ember-cli-page-object';
+import listItem from './list-item';
 
 const definition = {
   scope: '[data-test-courses-list]',
-  courses: collection('[data-test-active-row]', {
-    title: text('[data-test-course-title]'),
-    level: text('[data-test-level]'),
-    startDate: text('[data-test-start-date]'),
-    endDate: text('[data-test-end-date]'),
-    status: text('[data-test-status]'),
-    isLocked: hasClass('fa-lock', 'svg', { scope: '[data-test-status]', at: 1 }),
-    isUnlocked: hasClass('fa-unlock', 'svg', { scope: '[data-test-status]', at: 1 }),
-    lock: clickable('[data-test-lock]', { scope: '[data-test-status]' }),
-    canLock: isVisible('[data-test-lock]', { scope: '[data-test-status]' }),
-    canUnlock: isVisible('[data-test-unlock]', { scope: '[data-test-status]' }),
-    unLock: clickable('[data-test-unlock]', { scope: '[data-test-status]' }),
-    remove: clickable('[data-test-remove]', { scope: '[data-test-status]' }),
-    removeActionCount: count('[data-test-remove]', { scope: '[data-test-status]' }),
-  }),
+  courses: collection('[data-test-courses-list-item]', listItem),
   emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
   sortByTitle: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(1)' }),
   sortByLevel: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(2)' }),

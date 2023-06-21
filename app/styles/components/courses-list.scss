@@ -46,10 +46,4 @@
       margin-left: 0.5rem;
     }
   }
-
-  .fa-lock,
-  .fa-unlock,
-  .fa-trash {
-    @include cm.icon;
-  }
 }

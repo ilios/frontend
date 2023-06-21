@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
 
 export default class CoursesListComponent extends Component {
   @service intl;
@@ -39,21 +38,22 @@ export default class CoursesListComponent extends Component {
     return this.intl.t(translation);
   }
 
-  @task
-  *unlockCourse(course) {
-    const permission = yield this.permissionChecker.canUnlockCourse(course);
+  @action
+  async unlockCourse(course) {
+    const permission = await this.permissionChecker.canUnlockCourse(course);
     this.startSavingCourse(course.id);
     if (permission) {
-      yield this.args.unlock(course);
+      await this.args.unlock(course);
       this.stopSavingCourse(course.id);
     }
   }
-  @task
-  *lockCourse(course) {
-    const permission = yield this.permissionChecker.canUpdateCourse(course);
+
+  @action
+  async lockCourse(course) {
+    const permission = await this.permissionChecker.canUpdateCourse(course);
     this.startSavingCourse(course.id);
     if (permission) {
-      yield this.args.lock(course);
+      await this.args.lock(course);
       this.stopSavingCourse(course.id);
     }
   }

@@ -248,14 +248,12 @@ module('Acceptance | Courses', function (hooks) {
     });
     await page.visit();
 
-    assert.strictEqual(
-      page.courses.courses[0].removeActionCount,
-      0,
+    assert.notOk(
+      page.courses.courses[0].canRemove,
       'non-privileged user cannot delete published course'
     );
-    assert.strictEqual(
-      page.courses.courses[1].removeActionCount,
-      0,
+    assert.notOk(
+      page.courses.courses[1].canRemove,
       'non-privileged user cannot delete unpublished course'
     );
   });
@@ -276,16 +274,11 @@ module('Acceptance | Courses', function (hooks) {
     });
     await page.visit();
 
-    assert.strictEqual(
-      page.courses.courses[0].removeActionCount,
-      0,
+    assert.notOk(
+      page.courses.courses[0].canRemove,
       'privileged user cannot delete published course'
     );
-    assert.strictEqual(
-      page.courses.courses[1].removeActionCount,
-      1,
-      'privileged user can delete unpublished course'
-    );
+    assert.ok(page.courses.courses[1].canRemove, 'privileged user can delete unpublished course');
   });
 
   test('new course', async function (assert) {
@@ -642,14 +635,12 @@ module('Acceptance | Courses', function (hooks) {
     assert.expect(2);
     await page.visit({ year });
 
-    assert.strictEqual(
-      page.courses.courses[0].removeActionCount,
-      0,
+    assert.notOk(
+      page.courses.courses[0].canRemove,
       'privileged user cannot delete course with descendants'
     );
-    assert.strictEqual(
-      page.courses.courses[1].removeActionCount,
-      1,
+    assert.ok(
+      page.courses.courses[1].canRemove,
       'privileged user can delete course with ancestors'
     );
   });
