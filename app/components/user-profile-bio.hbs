@@ -56,7 +56,7 @@
         <strong>
           {{t "general.primarySchool"}}:
         </strong>
-        {{get (await @user.school) "title"}}
+        {{@user.school.title}}
       </p>
       <div class="form">
         <div
@@ -363,7 +363,7 @@
             {{/if}}
           {{else}}
             <span class="value">
-              {{get (await @user.authentication) "username"}}
+              {{@user.authentication.username}}
             </span>
           {{/if}}
         </div>

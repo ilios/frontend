@@ -64,9 +64,9 @@
           </button>
         {{/if}}
         <span data-test-title>
-          {{get (await this.primaryCohort.programYear.program.school) "title"}}
+          {{this.primaryCohort.programYear.program.school.title}}
           <strong>
-            {{get (await this.primaryCohort.programYear.program) "title"}}
+            {{this.primaryCohort.programYear.program.title}}
           </strong>
           {{this.primaryCohort.title}}
         </span>

@@ -9,7 +9,7 @@
     <UserNameInfo @user={{@user}} />
   </h1>
   <div class="user-roles">
-    {{#if (await @user.isStudent)}}
+    {{#if @user.isStudent}}
       <span class="user-is-student">
         {{t "general.student"}}
       </span>
