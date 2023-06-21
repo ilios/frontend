@@ -21,11 +21,7 @@
             {{t "general.primarySchool"}}:
           </label>
           <span data-test-primary-school>
-            {{#if @user.school}}
-              {{@user.school.title}}
-            {{else}}
-              {{t "general.unassigned"}}
-            {{/if}}
+            {{@user.school.title}}
           </span>
         </div>
         <div>
