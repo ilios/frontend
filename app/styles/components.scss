@@ -6,7 +6,6 @@
 @import "components/connection-status";
 @import "components/course-director-manager";
 @import "components/course-search-result";
-@import "components/courses-list";
 @import "components/dashboard-loading";
 @import "components/filter-tools";
 @import "components/flash-messages";
@@ -152,3 +151,6 @@
 
 @import "components/courses/list-item";
 
+@import "components/courses/root";
+@import "components/courses/list";
+@import "components/courses/list-item";

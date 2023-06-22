@@ -15,7 +15,7 @@ import courses from './components/courses/list';
 import newCourse from './components/new-course';
 
 export default create({
-  scope: '[data-test-courses]',
+  scope: '[data-test-courses-root]',
   visit: visitable('/courses'),
   filterByTitle: fillable('[data-test-title-filter]'),
   filterByYear: fillable('[data-test-year-filter]'),
