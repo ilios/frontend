@@ -105,20 +105,20 @@
       <label>
         {{t "general.performsNonLearnerFunctions"}}:
       </label>
-      <YesNo @value={{await @user.performsNonLearnerFunction}} />
+      <YesNo @value={{@user.performsNonLearnerFunction}} />
     </div>
     <div class="item" data-test-learner>
       <label>
         {{t "general.learner"}}:
       </label>
-      <YesNo @value={{await @user.isLearner}} />
+      <YesNo @value={{@user.isLearner}} />
     </div>
     <hr>
     <div class="item" data-test-root>
       <label>
         {{t "general.root"}}:
       </label>
-      <YesNo @value={{await @user.root}} />
+      <YesNo @value={{@user.root}} />
     </div>
   </div>
 </div>

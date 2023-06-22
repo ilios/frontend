@@ -3,7 +3,7 @@
     <h1 class="name" data-test-name>
       {{@user.fullName}}
     </h1>
-    {{#if (await @user.isStudent)}}
+    {{#if @user.isStudent}}
       <span class="is-student" data-test-is-student>
         <h2>
           {{t "general.student"}}
@@ -21,11 +21,7 @@
             {{t "general.primarySchool"}}:
           </label>
           <span data-test-primary-school>
-            {{#if (await @user.school)}}
-              {{get (await @user.school) "title"}}
-            {{else}}
-              {{t "general.unassigned"}}
-            {{/if}}
+            {{@user.school.title}}
           </span>
         </div>
         <div>
@@ -33,8 +29,8 @@
             {{t "general.primaryCohort"}}:
           </label>
           <span data-test-primary-cohort>
-            {{#if (await @user.primaryCohort)}}
-              {{get (await @user.primaryCohort) "title"}}
+            {{#if @user.primaryCohort}}
+              {{@user.primaryCohort.title}}
             {{else}}
               {{t "general.unassigned"}}
             {{/if}}
@@ -44,9 +40,9 @@
           <label>
             {{t "general.secondaryCohorts"}}:
           </label>
-          {{#if (get (await @user.secondaryCohorts) "length")}}
+          {{#if @user.secondaryCohorts.length}}
             <ul class="secondary-cohorts details-list">
-              {{#each (sort-by "title" (await @user.secondaryCohorts)) as |cohort|}}
+              {{#each (sort-by "title" @user.secondaryCohorts) as |cohort|}}
                 <li data-test-secondary-cohort>
                   <span class="title">
                     {{cohort.title}}

@@ -267,7 +267,7 @@
           {{! template-lint-disable no-bare-strings }}
             <li data-test-course>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{session.course.year}} - {{add (await session.course.year) 1}}
+                {{session.course.year}} - {{add session.course.year 1}}
               {{else}}
                 {{session.course.year}}
               {{/if}}
@@ -294,7 +294,7 @@
           }}
             <li data-test-course>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{session.course.year}} - {{add (await session.course.year) 1}}
+                {{session.course.year}} - {{add session.course.year 1}}
               {{else}}
                 {{session.course.year}}
               {{/if}}
@@ -317,7 +317,7 @@
           {{#each this.studentAdvisedSessions as |session|}}
             <li data-test-course>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{session.course.year}} - {{add (await session.course.year) 1}}
+                {{session.course.year}} - {{add session.course.year 1}}
               {{else}}
                 {{session.course.year}}
               {{/if}}

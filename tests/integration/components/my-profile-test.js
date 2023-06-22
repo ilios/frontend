@@ -76,7 +76,6 @@ module('Integration | Component | my profile', function (hooks) {
     />`);
 
     assert.notOk(component.userIsStudent);
-    assert.strictEqual(component.primarySchool, 'Unassigned');
     assert.strictEqual(component.primaryCohort, 'Unassigned');
     assert.strictEqual(component.secondaryCohorts.length, 1);
     assert.strictEqual(component.secondaryCohorts[0].text, 'Unassigned');
