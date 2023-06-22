@@ -30,7 +30,7 @@
             type="button"
             class="link-button"
             title={{t "general.unlockCourse"}}
-            {{on "click" (perform this.unlockCourse)}}
+            {{on "click" (fn @unlockCourse @course)}}
             data-test-unlock
           >
             <FaIcon @icon="lock" />
@@ -43,7 +43,7 @@
           type="button"
           class="link-button"
           title={{t "general.lockCourse"}}
-          {{on "click" (perform this.lockCourse)}}
+          {{on "click" (fn @lockCourse @course)}}
           data-test-lock
         >
           <FaIcon @icon="unlock" />

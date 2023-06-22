@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import PermissionChecker from 'ilios-common/classes/permission-checker';
 import { use } from 'ember-could-get-used-to-this';
-import { dropTask } from 'ember-concurrency';
 
 export default class CoursesListItemComponent extends Component {
   @use canLock = new PermissionChecker(() => ['canUpdateCourse', this.args.course]);
@@ -15,14 +14,5 @@ export default class CoursesListItemComponent extends Component {
       return false;
     }
     return this.canDeletePermission;
-  }
-
-  @dropTask
-  *unlockCourse() {
-    yield this.args.unlockCourse(this.args.course);
-  }
-  @dropTask
-  *lockCourse() {
-    yield this.args.lockCourse(this.args.course);
   }
 }

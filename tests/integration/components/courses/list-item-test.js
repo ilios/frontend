@@ -106,8 +106,8 @@ module('Integration | Component | courses/list-item', function (hooks) {
       @course={{this.course}}
       @coursesForRemovalConfirmation={{(array)}}
       @savingCourseIds={{(array)}}
-      @lockCourse={{(array)}}
-      @unlockCourse={{(array)}}
+      @lockCourse={{(noop)}}
+      @unlockCourse={{(noop)}}
       @confirmRemoval={{this.confirmRemoval}}
     />`);
     assert.ok(component.canRemove);

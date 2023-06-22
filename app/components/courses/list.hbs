@@ -65,8 +65,8 @@
             @course={{course}}
             @coursesForRemovalConfirmation={{this.coursesForRemovalConfirmation}}
             @savingCourseIds={{this.savingCourseIds}}
-            @lockCourse={{this.lockCourse}}
-            @unlockCourse={{this.unlockCourse}}
+            @lockCourse={{fn (perform this.lockCourse)}}
+            @unlockCourse={{fn (perform this.unlockCourse)}}
             @confirmRemoval={{this.confirmRemoval}}
           />
           {{#if (includes course.id this.coursesForRemovalConfirmation)}}
