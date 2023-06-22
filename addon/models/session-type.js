@@ -1,7 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { htmlSafe } from '@ember/template';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class SessionType extends Model {
   @attr('string')
@@ -25,6 +25,11 @@ export default class SessionType extends Model {
   @hasMany('aamc-method', { async: true, inverse: 'sessionTypes' })
   aamcMethods;
 
+  @cached
+  get _aamcMethodsData() {
+    return new TrackedAsyncData(this.aamcMethods);
+  }
+
   @hasMany('session', { async: true, inverse: 'sessionType' })
   sessions;
 
@@ -40,11 +45,10 @@ export default class SessionType extends Model {
     return this.hasMany('sessions').ids().length;
   }
 
-  @use _aamcMethods = new ResolveAsyncValue(() => [this.aamcMethods]);
   get firstAamcMethod() {
-    if (!this._aamcMethods) {
+    if (!this._aamcMethodsData.isResolved) {
       return undefined;
     }
-    return this._aamcMethods.slice()[0];
+    return this._aamcMethodsData.value[0];
   }
 }

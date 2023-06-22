@@ -3,10 +3,8 @@ import moment from 'moment';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import striptags from 'striptags';
 import { filter } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SessionModel extends Model {
@@ -46,11 +44,34 @@ export default class SessionModel extends Model {
   @belongsTo('course', { async: true, inverse: 'sessions' })
   course;
 
+  @cached
+  get _courseData() {
+    return new TrackedAsyncData(this.course);
+  }
+
   @belongsTo('ilm-session', { async: true, inverse: 'session' })
   ilmSession;
 
+  @cached
+  get _ilmSessionData() {
+    return new TrackedAsyncData(this.ilmSession);
+  }
+
+  get _ilmSession() {
+    if (!this._ilmSessionData.isResolved) {
+      return null;
+    }
+
+    return this._ilmSessionData.value;
+  }
+
   @hasMany('session-objective', { async: true, inverse: 'session' })
   sessionObjectives;
+
+  @cached
+  get _sessionObjectivesData() {
+    return new TrackedAsyncData(this.sessionObjectives);
+  }
 
   @hasMany('mesh-descriptor', { async: true, inverse: 'sessions' })
   meshDescriptors;
@@ -60,6 +81,11 @@ export default class SessionModel extends Model {
 
   @hasMany('offering', { async: true, inverse: 'session' })
   offerings;
+
+  @cached
+  get _offeringsData() {
+    return new TrackedAsyncData(this.offerings);
+  }
 
   @hasMany('user', {
     async: true,
@@ -79,6 +105,11 @@ export default class SessionModel extends Model {
   })
   postrequisite;
 
+  @cached
+  get _postrequisiteData() {
+    return new TrackedAsyncData(this.postrequisite);
+  }
+
   @hasMany('session', {
     inverse: 'postrequisite',
     async: true,
@@ -88,46 +119,122 @@ export default class SessionModel extends Model {
   @hasMany('term', { async: true, inverse: 'sessions' })
   terms;
 
-  @use _offerings = new ResolveAsyncValue(() => [this.offerings]);
-  @use offeringLearnerGroups = new ResolveFlatMapBy(() => [this.offerings, 'learnerGroups']);
-  @use _course = new ResolveAsyncValue(() => [this.course]);
-  @use _ilmSession = new ResolveAsyncValue(() => [this.ilmSession]);
-  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
-  @use _ilmLearnerGroups = new ResolveAsyncValue(() => [this._ilmSession?.learnerGroups]);
-  @use _sessionObjectives = new ResolveAsyncValue(() => [this.sessionObjectives]);
-  @use _offeringInstructors = new ResolveFlatMapBy(() => [this._offerings, 'instructors']);
-  @use _offeringInstructorGroups = new ResolveFlatMapBy(() => [
-    this._offerings,
-    'instructorGroups',
-  ]);
-  @use _offeringInstructorGroupInstructors = new ResolveFlatMapBy(() => [
-    this._offeringInstructorGroups,
-    'users',
-  ]);
-  @use _ilmSessionInstructors = new ResolveAsyncValue(() => [this._ilmSession?.instructors]);
-  @use _ilmSessionInstructorGroups = new ResolveAsyncValue(() => [
-    this._ilmSession?.instructorGroups,
-  ]);
-  @use _ilmSessionInstructorGroupInstructors = new ResolveFlatMapBy(() => [
-    this._ilmSessionInstructorGroups,
-    'users',
-  ]);
-  @use _postrequisite = new ResolveAsyncValue(() => [this.postrequisite]);
-  @use _sessionObjectiveCourseObjectives = new ResolveFlatMapBy(() => [
-    this._sessionObjectives,
-    'courseObjectives',
-  ]);
-  @use showUnlinkIcon = new AsyncProcess(() => [
-    this.getShowUnlinkIcon.bind(this),
-    this._sessionObjectiveCourseObjectives,
-  ]);
+  @cached
+  get _termsData() {
+    return new TrackedAsyncData(this.terms);
+  }
+
+  @cached
+  get _ilmLearnerGroupsData() {
+    if (!this._ilmSessionData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(this._ilmSessionData.value?.learnerGroups);
+  }
+
+  @cached
+  get _ilmInstructorsData() {
+    if (!this._ilmSessionData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(this._ilmSessionData.value.instructors);
+  }
+
+  @cached
+  get _ilmSessionInstructorGroupsData() {
+    if (!this._ilmSessionData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(this._ilmSessionData.value.instructorGroups);
+  }
+
+  @cached
+  get _ilmSessionInstructorGroupsInstructorsData() {
+    if (!this._ilmSessionInstructorGroupsData?.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(
+      Promise.all(this._ilmSessionInstructorGroupsData.value.map((i) => i.users))
+    );
+  }
+
+  @cached
+  get _offeringLearnerGroupsData() {
+    if (!this._offeringsData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(Promise.all(this._offeringsData.value.map((o) => o.learnerGroups)));
+  }
+
+  @cached
+  get _offeringInstructorsData() {
+    if (!this._offeringsData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(Promise.all(this._offeringsData.value.map((o) => o.instructors)));
+  }
+
+  @cached
+  get _offeringInstructorGroups() {
+    if (!this._offeringsData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(
+      Promise.all(this._offeringsData.value.map((o) => o.instructorGroups))
+    );
+  }
+
+  @cached
+  get _offeringInstructorGroupsInstructors() {
+    if (!this._offeringInstructorGroups?.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(
+      Promise.all(this._offeringInstructorGroups.value.flat().map((o) => o.users))
+    );
+  }
+
+  @cached
+  get _termVocabularies() {
+    if (!this._termsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(Promise.all(this._termsData.value.map((t) => t.vocabulary)));
+  }
+
+  @cached
+  get _sessionObjectiveCourseObjectives() {
+    if (!this._sessionObjectivesData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      Promise.all(this._sessionObjectivesData.value.map((so) => so.courseObjectives))
+    );
+  }
+
+  get showUnlinkIcon() {
+    if (!this._sessionObjectivesData.isResolved) {
+      return false;
+    }
+
+    const unlinkedSessionObectives = this._sessionObjectivesData.value.find(
+      (so) => so.hasMany('courseObjectives').ids().length === 0
+    );
+
+    return Boolean(unlinkedSessionObectives);
+  }
 
   get learnerGroupCount() {
-    return this.offeringLearnerGroups?.length ?? 0;
+    return this.associatedOfferingLearnerGroups.length;
   }
 
   get assignableVocabularies() {
-    return this._course?.assignableVocabularies;
+    if (!this._courseData.isResolved) {
+      return [];
+    }
+    return this._courseData.value.assignableVocabularies;
   }
 
   get xObjectives() {
@@ -135,17 +242,25 @@ export default class SessionModel extends Model {
   }
 
   get isIndependentLearning() {
-    return !!this._ilmSession;
+    if (this.belongsTo('ilmSession').id()) {
+      return true;
+    }
+
+    if (this._ilmSessionData.isResolved) {
+      return Boolean(this._ilmSessionData.value);
+    }
+
+    return false;
   }
 
   /**
    * All offerings for this session, sorted by offering start date in ascending order.
    */
   get sortedOfferingsByDate() {
-    if (!this._offerings) {
+    if (!this._offeringsData.isResolved) {
       return [];
     }
-    const filteredOfferings = this._offerings.filter((offering) => offering.startDate);
+    const filteredOfferings = this._offeringsData.value.filter((offering) => offering.startDate);
     return filteredOfferings.sort((a, b) => {
       const aDate = moment(a.startDate);
       const bDate = moment(b.startDate);
@@ -160,8 +275,8 @@ export default class SessionModel extends Model {
    * The earliest start date of all offerings in this session, or, if this is an ILM session, the ILM's due date.
    */
   get firstOfferingDate() {
-    if (this._ilmSession) {
-      return this._ilmSession.dueDate;
+    if (this.isIndependentLearning) {
+      return this._ilmSessionData.isResolved ? this._ilmSessionData.value.dueDate : undefined;
     }
 
     if (!this.hasMany('offerings').ids().length) {
@@ -175,10 +290,10 @@ export default class SessionModel extends Model {
    * The maximum duration in hours (incl. fractions) of any session offerings.
    */
   get maxSingleOfferingDuration() {
-    if (!this.hasMany('offerings').ids().length || !this._offerings) {
+    if (!this.hasMany('offerings').ids().length || !this._offeringsData.isResolved) {
       return 0;
     }
-    const sortedOfferings = this._offerings.slice().sort(function (a, b) {
+    const sortedOfferings = this._offeringsData.value.slice().sort(function (a, b) {
       const diffA = moment(a.endDate).diff(moment(a.startDate), 'minutes');
       const diffB = moment(b.endDate).diff(moment(b.startDate), 'minutes');
       if (diffA > diffB) {
@@ -199,11 +314,11 @@ export default class SessionModel extends Model {
    * The total duration in hours (incl. fractions) of all session offerings.
    */
   get totalSumOfferingsDuration() {
-    if (!this._offerings?.length) {
+    if (!this._offeringsData.isResolved || this._offeringsData.value.length === 0) {
       return 0;
     }
 
-    return this._offerings
+    return this._offeringsData.value
       .reduce((total, offering) => {
         return total + moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
       }, 0)
@@ -215,13 +330,17 @@ export default class SessionModel extends Model {
    * If both ILM and offerings are present sum them
    */
   get totalSumDuration() {
-    if (!this._ilmSession) {
+    if (!this.isIndependentLearning) {
       return this.totalSumOfferingsDuration;
     }
 
-    const ilmHours = this._ilmSession.hours;
+    if (!this._ilmSessionData.isResolved) {
+      return 0;
+    }
 
-    return parseFloat(ilmHours) + parseFloat(this.totalSumOfferingsDuration);
+    return (
+      parseFloat(this._ilmSessionData.value.hours) + parseFloat(this.totalSumOfferingsDuration)
+    );
   }
 
   /**
@@ -229,20 +348,27 @@ export default class SessionModel extends Model {
    * If both ILM and offerings are present sum them
    */
   get maxDuration() {
-    if (!this._ilmSession) {
+    if (!this.isIndependentLearning) {
       return this.maxSingleOfferingDuration;
     }
 
-    const ilmHours = this._ilmSession.hours;
+    if (!this._ilmSessionData.isResolved) {
+      return 0;
+    }
 
-    return parseFloat(ilmHours) + parseFloat(this.maxSingleOfferingDuration);
+    return (
+      parseFloat(this._ilmSessionData.value.hours) + parseFloat(this.maxSingleOfferingDuration)
+    );
   }
 
   /**
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
+    if (!this._termVocabularies?.isResolved) {
+      return [];
+    }
+    return sortBy(uniqueValues(this._termVocabularies.value), 'title');
   }
 
   get termCount() {
@@ -258,28 +384,37 @@ export default class SessionModel extends Model {
   }
 
   get associatedOfferingLearnerGroups() {
-    if (!this.offeringLearnerGroups) {
+    if (!this._offeringLearnerGroupsData?.isResolved) {
       return [];
     }
-    return sortBy(uniqueValues(this.offeringLearnerGroups), 'title');
+    return sortBy(uniqueValues(this._offeringLearnerGroupsData.value.flat()), 'title');
   }
+
   get associatedIlmLearnerGroups() {
-    return this._ilmLearnerGroups?.slice() ?? [];
+    if (!this._ilmLearnerGroupsData?.isResolved) {
+      return [];
+    }
+
+    return this._ilmLearnerGroupsData.value ?? [];
   }
 
   get associatedLearnerGroups() {
-    const ilmLearnerGroups = this.isIndependentLearning ? this.associatedIlmLearnerGroups : [];
-    if (!this.offeringLearnerGroups || !ilmLearnerGroups) {
+    if (!this._ilmLearnerGroupsData?.isResolved || !this._offeringLearnerGroupsData?.isResolved) {
       return [];
     }
+
+    const ilmLearnerGroups = this.isIndependentLearning ? this._ilmLearnerGroupsData.value : [];
     return sortBy(
-      uniqueValues([...this.offeringLearnerGroups, ...ilmLearnerGroups.slice()]),
+      uniqueValues([...this._offeringLearnerGroupsData.value.flat(), ...ilmLearnerGroups]),
       'title'
     );
   }
 
   get sortedSessionObjectives() {
-    return this._sessionObjectives?.slice().sort(sortableByPosition);
+    if (!this._sessionObjectivesData.isResolved) {
+      return null;
+    }
+    return this._sessionObjectivesData.value.slice().sort(sortableByPosition);
   }
 
   get ilmSessionInstructors() {
@@ -296,17 +431,24 @@ export default class SessionModel extends Model {
 
   get allInstructors() {
     if (
-      !this._offeringInstructors ||
-      !this._offeringInstructorGroupInstructors ||
-      !this.ilmSessionInstructors
+      !this._offeringInstructorsData?.isResolved ||
+      !this._offeringInstructorGroupsInstructors?.isResolved ||
+      (this.isIndependentLearning && !this._ilmInstructorsData?.isResolved) ||
+      (this.isIndependentLearning && !this._ilmSessionInstructorGroupsInstructorsData?.isResolved)
     ) {
       return [];
     }
 
+    const ilmInstructors = this.isIndependentLearning ? this._ilmInstructorsData.value : [];
+    const ilmInstructorGroupInstructors = this.isIndependentLearning
+      ? this._ilmSessionInstructorGroupsInstructorsData.value.flat()
+      : [];
+
     return uniqueValues([
-      ...this._offeringInstructors,
-      ...this._offeringInstructorGroupInstructors,
-      ...this.ilmSessionInstructors,
+      ...this._offeringInstructorsData.value.flat(),
+      ...this._offeringInstructorGroupsInstructors.value.flat(),
+      ...ilmInstructors,
+      ...ilmInstructorGroupInstructors,
     ]);
   }
 
@@ -319,7 +461,7 @@ export default class SessionModel extends Model {
   }
 
   get hasPostrequisite() {
-    return !!this._postrequisite;
+    return !!this.belongsTo('postrequisite')?.id();
   }
 
   get requiredPublicationIssues() {
@@ -378,16 +520,6 @@ export default class SessionModel extends Model {
 
   get textDescription() {
     return striptags(this.description);
-  }
-
-  async getShowUnlinkIcon() {
-    const sessionObjectives = await this.sessionObjectives;
-    const collectionOfCourseObjectives = await Promise.all(
-      mapBy(sessionObjectives, 'courseObjectives')
-    );
-    return Boolean(
-      collectionOfCourseObjectives.find((courseObjectives) => courseObjectives.length === 0)
-    );
   }
 
   async getAllIlmSessionInstructors() {

@@ -51,28 +51,25 @@ export default class TaxonomyManager extends Component {
     if (!this.args.vocabularies) {
       return [];
     } else {
-      return this.args.vocabularies.slice().filter((vocab) => {
+      return this.args.vocabularies.filter((vocab) => {
         return vocab.termCount > 0;
       });
     }
   }
 
   get assignableVocabularies() {
-    return this.nonEmptyVocabularies.filter((vocab) => {
-      return vocab.get('active');
-    });
+    return this.nonEmptyVocabularies.filter((vocab) => vocab.active);
   }
 
   get listableVocabularies() {
     return this.nonEmptyVocabularies.filter((vocab) => {
-      if (vocab.get('active')) {
+      if (vocab.active) {
         return true;
       }
       const terms = this.args.selectedTerms;
-      const vocabId = vocab.get('id');
       let hasTerms = false;
       terms.forEach((term) => {
-        if (term.belongsTo('vocabulary').id() === vocabId) {
+        if (term.belongsTo('vocabulary').id() === vocab.id) {
           hasTerms = true;
         }
       });
@@ -84,7 +81,7 @@ export default class TaxonomyManager extends Component {
   get selectedVocabulary() {
     if (isPresent(this.vocabId)) {
       const vocab = this.assignableVocabularies.find((v) => {
-        return v.get('id') === this.vocabId;
+        return v.id === this.vocabId;
       });
       if (vocab) {
         return vocab;

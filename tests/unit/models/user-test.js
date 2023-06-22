@@ -335,22 +335,25 @@ module('Unit | Model | User', function (hooks) {
     const session1 = store.createRecord('session', {
       course: course1,
     });
+    const session2 = store.createRecord('session', {
+      course: course1,
+    });
     const ilm1 = store.createRecord('ilmSession', {
       session: session1,
     });
     const ilm2 = store.createRecord('ilmSession', {
-      session: session1,
+      session: session2,
     });
     store.createRecord('learnerGroup', {
       ilmSessions: [ilm1, ilm2],
       users: [model],
     });
     const course2 = store.createRecord('course');
-    const session2 = store.createRecord('session', {
+    const session3 = store.createRecord('session', {
       course: course2,
     });
     const ilm3 = store.createRecord('ilmSession', {
-      session: session2,
+      session: session3,
     });
     store.createRecord('learnerGroup', {
       ilmSessions: [ilm3],

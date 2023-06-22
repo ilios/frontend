@@ -1,8 +1,8 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
+import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class ProgramYear extends Model {
   @attr('string')
@@ -17,6 +17,11 @@ export default class ProgramYear extends Model {
   @belongsTo('program', { async: true, inverse: 'programYears' })
   program;
 
+  @cached
+  get _programData() {
+    return new TrackedAsyncData(this.program);
+  }
+
   @belongsTo('cohort', { async: true, inverse: 'programYear' })
   cohort;
 
@@ -29,26 +34,54 @@ export default class ProgramYear extends Model {
   @hasMany('program-year-objective', { async: true, inverse: 'programYear' })
   programYearObjectives;
 
+  @cached
+  get _programYearObjectivesData() {
+    return new TrackedAsyncData(this.programYearObjectives);
+  }
+
   @hasMany('term', { async: true, inverse: 'programYears' })
   terms;
+
+  @cached
+  get _termsData() {
+    return new TrackedAsyncData(this.terms);
+  }
 
   get xObjectives() {
     return this.programYearObjectives;
   }
 
-  @use _program = new ResolveAsyncValue(() => [this.program]);
-  @use _school = new ResolveAsyncValue(() => [this._program?.school]);
-  @use _schoolVocabularies = new ResolveAsyncValue(() => [this._school?.vocabularies]);
+  @cached
+  get _schoolData() {
+    if (!this._programData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(this._programData.value.school);
+  }
+
+  @cached
+  get _schoolVocabulariesData() {
+    if (!this._schoolData?.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(this._schoolData.value.vocabularies);
+  }
 
   get assignableVocabularies() {
-    return sortBy(this._schoolVocabularies ?? [], 'title');
+    if (!this._schoolVocabulariesData?.isResolved) {
+      return [];
+    }
+
+    return sortBy(this._schoolVocabulariesData.value, 'title');
   }
 
   get classOfYear() {
-    if (!this._program) {
+    if (!this._programData.isResolved) {
       return '';
     }
-    const classOfYear = Number(this.startYear) + Number(this._program.duration);
+    const classOfYear = Number(this.startYear) + Number(this._programData.value.duration);
     //return as a string
     return `${classOfYear}`;
   }
@@ -58,22 +91,33 @@ export default class ProgramYear extends Model {
     return Number(this.startYear) + Number(program.duration);
   }
 
-  @use _programYearObjectives = new ResolveAsyncValue(() => [this.programYearObjectives]);
-
   /**
    * A list of program-year objectives, sorted by position.
    */
   get sortedProgramYearObjectives() {
-    return this._programYearObjectives?.slice().sort(sortableByPosition);
+    if (!this._programYearObjectivesData.isResolved) {
+      return null;
+    }
+    return this._programYearObjectivesData.value.slice().sort(sortableByPosition);
   }
 
-  @use _allTermVocabularies = new ResolveAsyncValue(() => [mapBy(this.terms, 'vocabulary')]);
+  @cached
+  get _termVocabularies() {
+    if (!this._termsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(Promise.all(this._termsData.value.map((t) => t.vocabulary)));
+  }
 
   /**
    * A list of all vocabularies that are associated via terms.
    */
   get associatedVocabularies() {
-    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
+    if (!this._termVocabularies?.isResolved) {
+      return [];
+    }
+    return sortBy(uniqueValues(this._termVocabularies.value), 'title');
   }
 
   /**
