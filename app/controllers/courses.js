@@ -6,7 +6,7 @@ import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import PermissionChecker from 'ilios/classes/permission-checker';
+import PermissionChecker from 'ilios-common/classes/permission-checker';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
