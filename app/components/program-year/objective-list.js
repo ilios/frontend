@@ -8,6 +8,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { saveAs } from 'file-saver';
 
 export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;
@@ -75,8 +76,6 @@ export default class ProgramYearObjectiveListComponent extends Component {
     const resourcePath = `/programyears/${this.args.programYear.id}/downloadobjectivesmapping`;
     const host = this.iliosConfig.apiHost ?? `${window.location.protocol}//${window.location.host}`;
     const url = host + apiPath + resourcePath;
-    const { saveAs } = yield import('file-saver');
-
     const response = yield fetch(url, {
       headers: this.authHeaders,
     });
