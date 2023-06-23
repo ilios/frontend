@@ -7,7 +7,7 @@
   }
 
   p {
-    padding: .25rem;
+    padding: 0.25rem;
 
     button {
       @include m.ilios-button-reset;
@@ -19,11 +19,11 @@
 
     h5 {
       @include m.ilios-heading-h6;
-      margin: .5rem 0 0 .5rem;
+      margin: 0.5rem 0 0 0.5rem;
     }
 
     ul {
-      margin: 0 0 .5rem 1rem;
+      margin: 0 0 0.5rem 1rem;
       list-style-position: inside;
       list-style-type: circle;
       padding: 0;

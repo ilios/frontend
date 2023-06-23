@@ -3,7 +3,7 @@
 
 .curriculum-inventory-report-details {
   @include m.detail-container(c.$orange);
-  margin: 0 .8rem;
+  margin: 0 0.8rem;
 
   .title {
     @include m.detail-container-title;
@@ -22,7 +22,6 @@
     .confirm-buttons {
       padding-top: 1.1rem;
     }
-
 
     &:hover {
       background-color: c.$lavenderBlush;

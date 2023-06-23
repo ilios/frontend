@@ -2,13 +2,12 @@
 @use "../ilios-common/mixins" as m;
 
 .user-profile-roles {
-
   label {
     @include m.ilios-label;
   }
 
   hr {
-    border-top: .5px solid c.$raisinBlack;
+    border-top: 0.5px solid c.$raisinBlack;
   }
 
   .actions {
@@ -21,7 +20,5 @@
     .item {
       min-height: auto;
     }
-
   }
-
 }

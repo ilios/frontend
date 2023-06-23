@@ -9,7 +9,7 @@
     .bigadd {
       background-color: c.$fernGreen;
       color: c.$white;
-      margin-right: .25rem;
+      margin-right: 0.25rem;
     }
 
     .bigcancel {
@@ -19,12 +19,10 @@
   }
 
   .selected-directors {
-    padding-bottom: .5rem;
+    padding-bottom: 0.5rem;
 
     ul {
       @include m.ilios-removable-list;
     }
   }
-
-
 }

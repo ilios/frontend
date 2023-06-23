@@ -7,13 +7,13 @@
   border-top: 1px dotted c.$orange;
   border-bottom: 0;
   margin: 0 1.5rem;
-  padding: 0 .8rem 1rem .8rem;
+  padding: 0 0.8rem 1rem 0.8rem;
   .programyear-overview-header {
     @include m.ilios-overview-header;
 
     h5 {
       @include m.ilios-overview-title;
-      margin-top: .5rem;
+      margin-top: 0.5rem;
     }
 
     .programyear-overview-actions {
@@ -21,7 +21,7 @@
 
       a {
         color: c.$blueMunsell;
-        @include m.font-size('medium');
+        @include m.font-size("medium");
       }
     }
   }
@@ -34,13 +34,13 @@
     .removable-directors {
       @include m.ilios-removable-list;
 
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
     }
 
     .directors {
       @include m.ilios-tag-list;
 
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
     }
   }
 }

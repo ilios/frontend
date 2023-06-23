@@ -4,19 +4,19 @@
 .reports-new-subject {
   background-color: c.$slightWhite;
   border: 1px solid c.$culturedGrey;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   padding: 1rem 1rem 3rem;
 
   .title {
     @include m.ilios-heading-h5;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
 
   .new-subject-content {
     @include m.ilios-form-error;
     p {
       display: grid;
-      grid-gap: .5rem;
+      grid-gap: 0.5rem;
       grid-template-columns: 1fr 4fr;
 
       label {
@@ -24,7 +24,8 @@
         text-align: right;
       }
 
-      select, input {
+      select,
+      input {
         width: 100%;
       }
 
@@ -43,7 +44,7 @@
     .selected-mesh-term {
       @include m.ilios-tag-list;
       .remove {
-        margin-left: .5rem;
+        margin-left: 0.5rem;
       }
     }
 

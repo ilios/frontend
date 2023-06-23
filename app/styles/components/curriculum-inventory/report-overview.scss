@@ -16,10 +16,11 @@
     .report-overview-actions {
       @include m.ilios-overview-actions;
 
-      a, span {
+      a,
+      span {
         color: c.$blueMunsell;
-        @include m.font-size('medium');
-        margin-right: .5rem;
+        @include m.font-size("medium");
+        margin-right: 0.5rem;
       }
     }
   }

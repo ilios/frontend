@@ -32,7 +32,9 @@
     @include m.main-list-saved-new;
   }
 
-  .fa-lock, .fa-trash, .fa-unlock {
+  .fa-lock,
+  .fa-trash,
+  .fa-unlock {
     @include cm.icon;
   }
 }

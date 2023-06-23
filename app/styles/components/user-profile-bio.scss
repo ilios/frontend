@@ -4,7 +4,6 @@
 @use "sass:color";
 
 .user-profile-bio {
-
   label {
     @include m.ilios-label;
   }
@@ -18,8 +17,8 @@
   }
 
   .primary-school {
-    @include m.font-size('medium');
-    padding: 0 .5rem;
+    @include m.font-size("medium");
+    padding: 0 0.5rem;
   }
 
   .form {
@@ -46,8 +45,8 @@
     button {
       background-color: c.$blueMunsell;
       height: 2rem;
-      margin-bottom: .25rem;
-      margin-left: .5rem;
+      margin-bottom: 0.25rem;
+      margin-left: 0.5rem;
     }
   }
 
@@ -60,13 +59,13 @@
   meter {
     background: none;
     background-color: c.$white;
-    border: .5px solid c.$raisinBlack;
-    height: .75rem;
-    margin: .25rem 0;
+    border: 0.5px solid c.$raisinBlack;
+    height: 0.75rem;
+    margin: 0.25rem 0;
     width: 60%;
   }
 
-  meter[value='0'] {
+  meter[value="0"] {
     width: 40%;
   }
 
@@ -75,21 +74,41 @@
     background-color: c.$white;
   }
 
-  meter[value='0']::-webkit-meter-optimum-value { background: c.$crimson; }
-  meter[value='1']::-webkit-meter-optimum-value { background: c.$crimson; }
-  meter[value='2']::-webkit-meter-optimum-value { background: c.$orange; }
-  meter[value='3']::-webkit-meter-optimum-value { background: c.$gold; }
-  meter[value='4']::-webkit-meter-optimum-value { background: c.$fernGreen; }
+  meter[value="0"]::-webkit-meter-optimum-value {
+    background: c.$crimson;
+  }
+  meter[value="1"]::-webkit-meter-optimum-value {
+    background: c.$crimson;
+  }
+  meter[value="2"]::-webkit-meter-optimum-value {
+    background: c.$orange;
+  }
+  meter[value="3"]::-webkit-meter-optimum-value {
+    background: c.$gold;
+  }
+  meter[value="4"]::-webkit-meter-optimum-value {
+    background: c.$fernGreen;
+  }
 
-  meter[value='0']:-moz-meter-bar { background: c.$crimson; }
-  meter[value='1']:-moz-meter-bar { background: c.$crimson; }
-  meter[value='2']:-moz-meter-bar { background: c.$orange; }
-  meter[value='3']:-moz-meter-bar { background: c.$gold; }
-  meter[value='4']:-moz-meter-bar { background: c.$fernGreen; }
+  meter[value="0"]:-moz-meter-bar {
+    background: c.$crimson;
+  }
+  meter[value="1"]:-moz-meter-bar {
+    background: c.$crimson;
+  }
+  meter[value="2"]:-moz-meter-bar {
+    background: c.$orange;
+  }
+  meter[value="3"]:-moz-meter-bar {
+    background: c.$gold;
+  }
+  meter[value="4"]:-moz-meter-bar {
+    background: c.$fernGreen;
+  }
 
   .password-strength {
     display: inline-block;
-    @include m.font-size('base');
+    @include m.font-size("base");
     font-variant: small-caps;
     text-align: right;
     width: 10%;

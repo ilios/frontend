@@ -23,7 +23,7 @@
 
     .actions {
       button {
-        margin-top: .5rem;
+        margin-top: 0.5rem;
         @include m.for-laptop-and-up {
           margin-top: 0;
         }
@@ -33,11 +33,11 @@
 
   .user-search {
     margin: auto;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     position: relative;
     width: 90%;
 
-    input[type='search'] {
+    input[type="search"] {
       background-color: c.$white;
       border: 1px solid c.$tealBlue;
       border-radius: 3px;

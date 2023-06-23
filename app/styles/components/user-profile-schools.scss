@@ -2,7 +2,6 @@
 @use "../ilios-common/mixins" as m;
 
 .user-profile-schools {
-
   label {
     @include m.ilios-label;
   }
@@ -21,7 +20,7 @@
   }
 
   .primary-school {
-    @include m.font-size('medium');
+    @include m.font-size("medium");
   }
 
   .more-permissions-notice {

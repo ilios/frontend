@@ -8,7 +8,7 @@
   .list {
     table {
       .count-as-one-header input {
-        margin-right: .5rem;
+        margin-right: 0.5rem;
       }
 
       @include m.ilios-table-structure;

@@ -10,15 +10,16 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: calc(constants.$golden-ratio-large * 1rem) 0 calc(constants.$golden-ratio-small * 1rem) 0;
+    padding: calc(constants.$golden-ratio-large * 1rem) 0
+      calc(constants.$golden-ratio-small * 1rem) 0;
 
     h2 {
       @include m.ilios-heading-h4;
-      margin-left: .8rem;
+      margin-left: 0.8rem;
     }
   }
 
   .school-manager-content {
-    margin-left: .8rem;
+    margin-left: 0.8rem;
   }
 }

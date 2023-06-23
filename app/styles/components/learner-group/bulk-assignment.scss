@@ -16,7 +16,7 @@
 
       i {
         color: c.$blueMunsell;
-        @include m.font-size('xxl');
+        @include m.font-size("xxl");
         font-weight: 600;
         margin: 0;
         padding: 0;

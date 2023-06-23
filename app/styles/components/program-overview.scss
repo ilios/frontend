@@ -3,15 +3,15 @@
 
 .program-overview {
   @include m.ilios-overview(c.$culturedGrey);
-  margin: 0 .8rem;
+  margin: 0 0.8rem;
 
   h2 {
     @include m.ilios-overview-title;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
   }
 
   .program-overview-content {
     @include m.ilios-overview-content;
-    padding-top: .5rem;
+    padding-top: 0.5rem;
   }
 }

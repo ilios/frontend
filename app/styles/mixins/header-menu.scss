@@ -5,23 +5,23 @@
 
 $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
 
-@mixin header-menu () {
-  margin: 0 0 0 .5rem;
+@mixin header-menu() {
+  margin: 0 0 0 0.5rem;
   position: relative;
   text-align: right;
 
   button {
     background-color: transparent;
     border: 1px solid $header-menu-background-color;
-    border-radius: .2rem;
+    border-radius: 0.2rem;
     color: c.$raisinBlack;
     font-weight: normal;
-    padding: .25rem;
+    padding: 0.25rem;
   }
 
   .menu {
     background-color: $header-menu-background-color;
-    box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -.8);
+    box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
     display: flex;
     flex-direction: column;
     list-style-type: none;
@@ -36,40 +36,40 @@ $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
   .toggle {
     background-color: $header-menu-background-color;
     &::after {
-      content: '\25BE';
+      content: "\25BE";
     }
     span {
       display: none;
 
       @include cm.for-laptop-and-up {
         display: inline;
-        margin-left: .5rem;
+        margin-left: 0.5rem;
       }
     }
 
     &:hover,
-    &[aria-expanded='true'] {
+    &[aria-expanded="true"] {
       background-color: c.$white;
     }
-    &[aria-expanded='true'] {
+    &[aria-expanded="true"] {
       border-bottom-right-radius: 0;
-      border-bottom-left-radius:  0;
+      border-bottom-left-radius: 0;
     }
   }
 }
 
-@mixin header-menu-item () {
+@mixin header-menu-item() {
   border: 0;
   background-color: $header-menu-background-color;
   color: c.$black;
   display: block;
   outline: none;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   text-align: right;
   text-decoration: none;
   white-space: nowrap;
 
-  &[aria-checked='true'],
+  &[aria-checked="true"],
   &.active {
     background-color: color.adjust(c.$fernGreen, $lightness: 25%);
   }
@@ -77,7 +77,7 @@ $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
   &:hover,
   &:focus {
     background-color: c.$white;
-    &[aria-checked='true'],
+    &[aria-checked="true"],
     &.active {
       background-color: color.adjust(c.$fernGreen, $lightness: 15%);
     }

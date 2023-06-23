@@ -4,13 +4,13 @@
 .curriculum-inventory-sequence-block-overview {
   .curriculum-inventory-sequence-block-overview-wrapper {
     @include m.ilios-overview(c.$orange);
-    padding: .8rem;
+    padding: 0.8rem;
 
     .block {
       @include m.ilios-overview-block;
 
       &.academic-level {
-        padding-top: .5rem;
+        padding-top: 0.5rem;
       }
 
       &.course {
@@ -24,7 +24,7 @@
         }
 
         .details {
-          @include m.font-size('small');
+          @include m.font-size("small");
         }
       }
 
@@ -41,7 +41,7 @@
       &.is-selective {
         font-style: italic;
         grid-column: 1 / -1;
-        padding-top: .5rem;
+        padding-top: 0.5rem;
 
         &.hidden {
           visibility: hidden;
@@ -82,7 +82,6 @@
 
   .curriculum-inventory-sequence-block-session-manager {
     grid-column: 1 / -1;
-
   }
 
   .curriculum-inventory-sequence-block-dates-duration-editor,

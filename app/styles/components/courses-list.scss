@@ -43,11 +43,13 @@
     @include m.main-list-box-table;
 
     i {
-      margin-left: .5rem;
+      margin-left: 0.5rem;
     }
   }
 
-  .fa-lock, .fa-unlock, .fa-trash {
+  .fa-lock,
+  .fa-unlock,
+  .fa-trash {
     @include cm.icon;
   }
 }

@@ -1,15 +1,15 @@
 @use "../../ilios-common/mixins" as m;
 
 .instructor-group-root {
-  padding: .5rem .25rem;
+  padding: 0.5rem 0.25rem;
 
   .backtolink {
-    margin: .5rem;
+    margin: 0.5rem;
   }
 
   .instructor-group-loading {
     display: block;
-    @include m.font-size('xl');
+    @include m.font-size("xl");
     margin: auto;
     text-align: center;
   }

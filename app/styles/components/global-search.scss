@@ -4,22 +4,22 @@
 .global-search {
   display: grid;
   grid-template-areas:
-  'search'
-  'filters'
-  'results';
+    "search"
+    "filters"
+    "results";
   grid-column-gap: 0;
   grid-row-gap: 1rem;
 
   @include m.for-tablet-and-up {
     grid-template-areas:
-    'search search'
-    'results filters';
+      "search search"
+      "results filters";
     grid-template-columns: 1fr auto;
   }
 
   .global-search-box {
     grid-area: search;
-    margin: .75rem 0 1rem 10%;
+    margin: 0.75rem 0 1rem 10%;
     width: 80%;
   }
 
@@ -32,7 +32,7 @@
       flex-direction: column;
       justify-content: flex-start;
       margin: 0;
-      padding: 0 0 0 .5rem;
+      padding: 0 0 0 0.5rem;
     }
 
     .year-filters,
@@ -43,7 +43,7 @@
     .school-filters {
       display: flex;
       justify-content: flex-start;
-      margin-top: .5rem;
+      margin-top: 0.5rem;
       flex-direction: column;
 
       .filter {
@@ -51,7 +51,7 @@
       }
 
       label {
-        margin: 0 1rem 0 .1rem;
+        margin: 0 1rem 0 0.1rem;
         white-space: nowrap;
       }
     }
@@ -63,7 +63,8 @@
     list-style-type: none;
     padding: 0 2rem;
 
-    .searching, .no-results {
+    .searching,
+    .no-results {
       text-align: center;
       text-transform: capitalize;
 

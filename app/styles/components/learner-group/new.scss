@@ -3,7 +3,7 @@
 
 .new-learner-group {
   border: 1px solid c.$culturedGrey;
-  margin: .5rem;
+  margin: 0.5rem;
   padding: 1rem;
 
   h4 {
@@ -13,12 +13,11 @@
   .multi-mode-chooser {
     align-items: baseline;
     display: flex;
-    margin-left: .5rem;
-
+    margin-left: 0.5rem;
 
     label {
       @include m.ilios-label;
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
   }
 
