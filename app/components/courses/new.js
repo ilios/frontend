@@ -7,7 +7,7 @@ import { validatable, Length, NotBlank } from 'ilios-common/decorators/validatio
 import { dropTask, restartableTask } from 'ember-concurrency';
 
 @validatable
-export default class NewCourseComponent extends Component {
+export default class CoursesNewComponent extends Component {
   @service intl;
   @service store;
   @service iliosConfig;

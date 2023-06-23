@@ -66,7 +66,7 @@
     </div>
     <section class="new">
       {{#if this.showNewCourseForm}}
-        <NewCourse
+        <Courses::New
           @currentSchool={{this.selectedSchool}}
           @currentYear={{this.selectedYear}}
           @save={{perform this.saveNewCourse}}

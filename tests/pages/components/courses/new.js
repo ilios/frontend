@@ -10,7 +10,7 @@ import {
 } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-new-course]',
+  scope: '[data-test-courses-new]',
   title: fillable('[data-test-title]'),
   titleHasValidationError: isPresent('.validation-error-message', '[data-test-title]'),
   chooseYear: fillable('[data-test-year]'),

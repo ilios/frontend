@@ -12,7 +12,7 @@ import {
 import { hasFocus } from 'ilios-common';
 
 import courses from './components/courses/list';
-import newCourse from './components/new-course';
+import newCourse from './components/courses/new';
 
 export default create({
   scope: '[data-test-courses-root]',

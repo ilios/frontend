@@ -20,7 +20,6 @@
 @import "components/login-form";
 @import "components/manage-users-summary";
 @import "components/my-profile";
-@import "components/new-course";
 @import "components/new-directory-user";
 @import "components/new-user";
 @import "components/pagination-links";
@@ -149,8 +148,7 @@
 @import "components/school/visualizer-session-type-vocabularies";
 @import "components/school/visualizer-session-type-vocabulary";
 
-@import "components/courses/list-item";
-
 @import "components/courses/root";
 @import "components/courses/list";
 @import "components/courses/list-item";
+@import "components/courses/new";
