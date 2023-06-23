@@ -75,8 +75,7 @@ export default class ProgramYearObjectiveListComponent extends Component {
     const resourcePath = `/programyears/${this.args.programYear.id}/downloadobjectivesmapping`;
     const host = this.iliosConfig.apiHost ?? `${window.location.protocol}//${window.location.host}`;
     const url = host + apiPath + resourcePath;
-    const { saveAs } = yield import('file-saver');
-
+    const { default: saveAs } = yield import('file-saver');
     const response = yield fetch(url, {
       headers: this.authHeaders,
     });
