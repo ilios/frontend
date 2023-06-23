@@ -5,7 +5,7 @@
   padding: 1rem;
 
   h3 {
-    margin: .5rem;
+    margin: 0.5rem;
   }
 
   .new-user-form {
@@ -18,7 +18,7 @@
       justify-content: flex-end;
 
       label {
-        margin-right: .5rem;
+        margin-right: 0.5rem;
       }
     }
 
@@ -65,7 +65,7 @@
 
   .file-is-loading {
     display: flex;
-    @include m.font-size('xxxl');
+    @include m.font-size("xxxl");
     font-weight: bold;
     justify-content: center;
   }
@@ -85,6 +85,5 @@
       list-style-type: disc;
       margin-left: 2rem;
     }
-
   }
 }

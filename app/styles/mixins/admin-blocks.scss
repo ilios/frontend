@@ -3,9 +3,9 @@
 
 @use "sass:color";
 
-@mixin admin-blocks () {
+@mixin admin-blocks() {
   display: grid;
-  grid-gap: .5rem;
+  grid-gap: 0.5rem;
 
   @include cm.for-laptop-and-up {
     grid-template-columns: 1fr 1fr;
@@ -18,7 +18,7 @@
     border-radius: 5px;
     margin-bottom: 1rem;
     min-height: 5rem;
-    padding: .5rem;
+    padding: 0.5rem;
 
     &.alert {
       background-color: c.$white;
@@ -35,7 +35,7 @@
     }
 
     button {
-      @include cm.font-size('base');
+      @include cm.font-size("base");
     }
 
     .inline-data {
@@ -49,7 +49,7 @@
 
   .has-saved {
     background-color: color.adjust(c.$fernGreen, $lightness: 30%);
-    transition: background-color .5s ease-out;
+    transition: background-color 0.5s ease-out;
   }
 
   .has-not-saved {

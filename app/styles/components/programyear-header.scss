@@ -3,21 +3,20 @@
 
 .programyear-header {
   .backtolink {
-    margin: .5rem;
+    margin: 0.5rem;
   }
 
   header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: calc(constants.$golden-ratio-large * 1rem) 0 calc(constants.$golden-ratio-small * 1rem) 0;
-    margin: 0 .8rem 0 1.3rem;
+    padding: calc(constants.$golden-ratio-large * 1rem) 0
+      calc(constants.$golden-ratio-small * 1rem) 0;
+    margin: 0 0.8rem 0 1.3rem;
 
     @include m.for-tablet-and-up {
       flex-direction: row;
     }
-
-
 
     .title {
       display: flex;
@@ -30,7 +29,7 @@
       .editable,
       h5 {
         display: block;
-        @include m.font-size('large');
+        @include m.font-size("large");
 
         @include m.for-laptop-and-up {
           display: inline;

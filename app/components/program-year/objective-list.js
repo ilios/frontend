@@ -58,10 +58,12 @@ export default class ProgramYearObjectiveListComponent extends Component {
   }
 
   get authHeaders() {
-    const { jwt } = this.session?.data?.authenticated;
     const headers = {};
-    if (jwt) {
-      headers['X-JWT-Authorization'] = `Token ${jwt}`;
+    if (this.session?.isAuthenticated) {
+      const { jwt } = this.session.data.authenticated;
+      if (jwt) {
+        headers['X-JWT-Authorization'] = `Token ${jwt}`;
+      }
     }
 
     return new Headers(headers);

@@ -7,8 +7,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: calc(constants.$golden-ratio-large * 1rem) 0 calc(constants.$golden-ratio-small * 1rem) 0;
-  margin: 0 .8rem;
+  padding: calc(constants.$golden-ratio-large * 1rem) 0
+    calc(constants.$golden-ratio-small * 1rem) 0;
+  margin: 0 0.8rem;
 
   @include m.for-tablet-and-up {
     flex-direction: row;

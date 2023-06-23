@@ -2,7 +2,6 @@
 @use "../ilios-common/mixins" as m;
 
 .school-vocabulary-manager {
-
   .school-vocabulary-manager-title {
     align-items: baseline;
     display: flex;
@@ -15,11 +14,11 @@
 
     .editinplace {
       @include m.ilios-heading-h4;
-      margin-left: .5rem;
+      margin-left: 0.5rem;
     }
 
     .term-totals {
-      padding-left: .5rem;
+      padding-left: 0.5rem;
     }
   }
 
@@ -29,7 +28,7 @@
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
-    padding: .5rem;
+    padding: 0.5rem;
     width: 80%;
 
     .saved-result {
@@ -50,5 +49,4 @@
       }
     }
   }
-
 }

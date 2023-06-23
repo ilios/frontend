@@ -1,7 +1,7 @@
 @use "../ilios-common/mixins" as cm;
 @use "../ilios-common/colors" as c;
 
-@mixin main-list-filters () {
+@mixin main-list-filters() {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
@@ -17,7 +17,7 @@
   }
 }
 
-@mixin main-list-filter () {
+@mixin main-list-filter() {
   padding: 0 1rem 1rem 1rem;
   white-space: nowrap;
 
@@ -40,19 +40,18 @@
     @include cm.ilios-input;
     width: 100%;
   }
-
 }
 
-@mixin main-list-box () {
+@mixin main-list-box() {
   display: block;
   width: 100%;
 }
 
-@mixin main-list-box-header () {
+@mixin main-list-box-header() {
   border-bottom: 1px solid c.$culturedGrey;
   display: flex;
   flex-direction: column;
-  padding: .5rem 0;
+  padding: 0.5rem 0;
   text-align: center;
 
   @include cm.for-laptop-and-up {
@@ -65,7 +64,7 @@
 @mixin main-list-box-header-title {
   @include cm.ilios-heading-h4;
   @include cm.text-align-bottom;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   @include cm.for-laptop-and-up {
     margin-bottom: 0;
   }
@@ -79,18 +78,18 @@
 
   @include cm.for-phone-only {
     & > * {
-      margin-top: .25em;
+      margin-top: 0.25em;
     }
   }
 }
 
-@mixin main-list-saved-new () {
+@mixin main-list-saved-new() {
   border: 1px solid c.$fernGreen;
   margin: 1rem;
   padding: 1rem;
 }
 
-@mixin main-list-box-table () {
+@mixin main-list-box-table() {
   clear: both;
   display: block;
   padding: 1rem;
@@ -107,7 +106,7 @@
   }
 }
 
-@mixin main-list-loading-table () {
+@mixin main-list-loading-table() {
   @keyframes shimmer {
     0% {
       background-position: -1000px 0;
@@ -117,7 +116,7 @@
     }
   }
 
-  animation : shimmer 2s infinite;
+  animation: shimmer 2s infinite;
   background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
   background-size: 1000px 100%;
 

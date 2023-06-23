@@ -4,7 +4,6 @@
 @use "sass:color";
 
 .school-competencies-list {
-
   .headers {
     font-weight: bold;
   }
@@ -12,11 +11,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
 
     .grid-item {
       border-bottom: 1px solid c.$davysGrey;
-      padding: .5rem .25rem;
+      padding: 0.5rem 0.25rem;
 
       &.competency {
         padding-left: 2rem;
@@ -46,9 +45,8 @@
       .bigcancel {
         background-color: c.$crimson;
         color: c.$white;
-        margin-left: .5rem;
+        margin-left: 0.5rem;
       }
-
     }
 
     &:last-of-type {

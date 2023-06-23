@@ -1,7 +1,6 @@
 @use "../ilios-common/mixins" as m;
 
 .user-profile-cohorts {
-
   .user-profile-cohorts-header {
     @include m.detail-container-header;
 
@@ -16,7 +15,6 @@
     .item {
       min-height: auto;
     }
-
   }
 
   p {
@@ -36,7 +34,7 @@
   }
 
   i {
-    margin-right: .3rem;
+    margin-right: 0.3rem;
   }
 
   .select-available-cohort {
@@ -46,7 +44,7 @@
 
     ul {
       clear: both;
-      padding-top: .75rem;
+      padding-top: 0.75rem;
     }
 
     .schoolsfilter {
@@ -54,5 +52,4 @@
       margin-left: 3rem;
     }
   }
-
 }

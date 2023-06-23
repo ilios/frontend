@@ -3,7 +3,7 @@
 
 .program-leadership-expanded {
   @include m.detail-container(c.$orange);
-  margin: 0 .8rem;
+  margin: 0 0.8rem;
 
   .program-leadership-expanded-header {
     @include m.detail-container-header;

@@ -2,7 +2,7 @@
 @use "../../mixins" as m;
 
 .curriculum-inventory-verification-preview-table3a {
-  padding: 0 .8rem;
+  padding: 0 0.8rem;
   table {
     @include cm.ilios-table-structure;
     @include cm.ilios-table-colors;

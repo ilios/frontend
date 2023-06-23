@@ -25,7 +25,7 @@
     @include m.main-list-box-table;
 
     i {
-      margin-left: .25rem;
+      margin-left: 0.25rem;
     }
   }
   .default-message {
@@ -35,6 +35,6 @@
   .saved-result {
     border: 1px solid c.$fernGreen;
     margin: 1rem;
-    padding: .75rem;
+    padding: 0.75rem;
   }
 }

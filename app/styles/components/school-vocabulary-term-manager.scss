@@ -2,15 +2,14 @@
 @use "../ilios-common/mixins" as m;
 
 .school-vocabulary-term-manager {
-
   .school-vocabulary-term-manager-properties {
     display: grid;
-    grid-gap: .5rem;
-    padding: .8rem;
+    grid-gap: 0.5rem;
+    padding: 0.8rem;
 
     label {
       @include m.ilios-label;
-      margin: 0 .5rem 0 0;
+      margin: 0 0.5rem 0 0;
     }
 
     .block {
@@ -19,7 +18,7 @@
       margin-bottom: 1rem;
 
       .editinplace {
-        margin-left: .5rem;
+        margin-left: 0.5rem;
       }
 
       &.term-title {
@@ -40,7 +39,7 @@
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
-    padding: .5rem;
+    padding: 0.5rem;
     width: 80%;
 
     .saved-result {
@@ -55,14 +54,14 @@
 
     .form {
       display: flex;
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
 
       .item {
         @include m.ilios-form-item;
       }
 
       button {
-        margin-left: .5rem;
+        margin-left: 0.5rem;
       }
     }
 

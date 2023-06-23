@@ -9,10 +9,8 @@ jobs:
     strategy:
       matrix:
         safe-dependency:
-        - "@ember/test-helpers"
         - "@ilios/ember-template-lint-plugin"
         - "@sentry/ember"
-        - "babel-eslint"
         - "browserslist"
         - "caniuse-db"
         - "dotenv"
@@ -21,18 +19,6 @@ jobs:
         - "ember-cli-dependency-lint"
         - "ember-cli-deprecation-workflow"
         - "ember-noscript"
-        - "ember-qunit"
-        - "ember-qunit-nice-errors"
-        - "ember-template-lint"
-        - "eslint"
-        - "eslint-config-prettier"
-        - "eslint-plugin-ember"
-        - "eslint-plugin-node"
-        - "eslint-plugin-prettier"
-        - "prettier"
-        - "qunit"
-        - "qunit-dom"
-        - "stylelint"
         - "stylelint-config-recommended-scss"
         - "stylelint-scss"
     if: ${{ github.actor == 'dependabot[bot]' }}

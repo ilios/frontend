@@ -32,9 +32,9 @@
     .validation-error-message {
       color: c.$crimson;
       display: block;
-      @include m.font-size('small');
+      @include m.font-size("small");
       font-style: italic;
-      margin-top: .25rem;
+      margin-top: 0.25rem;
     }
   }
 }
