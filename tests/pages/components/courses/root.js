@@ -9,14 +9,14 @@ import {
   text,
 } from 'ember-cli-page-object';
 import { hasFocus } from 'ilios-common';
-
 import list from './list';
 import newCourse from './new';
 
-export default create({
+const definition = {
   scope: '[data-test-courses-root]',
   filterByTitle: fillable('[data-test-title-filter]'),
   filterByYear: fillable('[data-test-year-filter]'),
+  filterBySchool: fillable('[data-test-school-filter] select'),
   filterByMyCourses: clickable('[data-test-my-courses-filter] label:eq(0)'),
   yearFilters: collection('[data-test-year-filter] option', {
     text: text(),
@@ -35,4 +35,7 @@ export default create({
   visitNewCourse: clickable('[data-test-newly-saved-course] a'),
   filterHasFocus: hasFocus('[data-test-title-filter]'),
   list,
-});
+};
+
+export default definition;
+export const component = create(definition);

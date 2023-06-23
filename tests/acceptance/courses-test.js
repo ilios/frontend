@@ -317,7 +317,7 @@ module('Acceptance | Courses', function (hooks) {
     await page.root.newCourse.title(newTitle);
     await page.root.newCourse.save();
     assert.strictEqual(page.root.list.courses.length, 0);
-    assert.ok(page.root.list.emptyListRowIsVisible);
+    assert.ok(page.root.list.emptyListRow.isVisible);
   });
 
   test('new course does not appear twice when navigating back', async function (assert) {
@@ -353,7 +353,7 @@ module('Acceptance | Courses', function (hooks) {
 
     await page.visit({ year });
     assert.strictEqual(page.root.list.courses.length, 0);
-    assert.ok(page.root.list.emptyListRowIsVisible);
+    assert.ok(page.root.list.emptyListRow.isVisible);
 
     await page.root.toggleNewCourseForm();
     await page.root.newCourse.title('Course 1');
@@ -370,7 +370,7 @@ module('Acceptance | Courses', function (hooks) {
     await page.root.list.courses[0].remove();
     await page.root.list.confirmCourseRemoval();
     assert.strictEqual(page.root.list.courses.length, 0);
-    assert.ok(page.root.list.emptyListRowIsVisible);
+    assert.ok(page.root.list.emptyListRow.isVisible);
   });
 
   test('locked courses', async function (assert) {
