@@ -47,7 +47,7 @@
     "broccoli-file-creator": "^2.1.1",
     "broccoli-merge-trees": "^4.2.0",
     "browserslist": "^4.21.9",
-    "caniuse-db": "^1.0.30001506",
+    "caniuse-db": "^1.0.30001507",
     "class-validator": "^0.14.0",
     "concurrently": "^7.6.0",
     "dotenv": "^16.3.1",
