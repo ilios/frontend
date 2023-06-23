@@ -46,9 +46,9 @@ module('Acceptance | Courses', function (hooks) {
       schoolId: 1,
     });
     await page.visit({ filter: 'Last' });
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, lastCourse.title);
-    assert.strictEqual(page.headerTitle, 'Courses (1)');
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, lastCourse.title);
+    assert.strictEqual(page.root.headerTitle, 'Courses (1)');
   });
 
   test('filters by title', async function (assert) {
@@ -88,56 +88,56 @@ module('Acceptance | Courses', function (hooks) {
     });
     await page.visit();
     await percySnapshot(assert);
-    assert.strictEqual(page.courses.courses.length, 5);
-    assert.strictEqual(page.courses.courses[0].title, regexCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, lastCourse.title);
-    assert.strictEqual(page.courses.courses[2].title, regularCourse.title);
-    assert.strictEqual(page.courses.courses[3].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[4].title, secondCourse.title);
+    assert.strictEqual(page.root.list.courses.length, 5);
+    assert.strictEqual(page.root.list.courses[0].title, regexCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, lastCourse.title);
+    assert.strictEqual(page.root.list.courses[2].title, regularCourse.title);
+    assert.strictEqual(page.root.list.courses[3].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[4].title, secondCourse.title);
 
-    await page.filterByTitle('first');
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
-    assert.strictEqual(page.headerTitle, 'Courses (1)');
+    await page.root.filterByTitle('first');
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.headerTitle, 'Courses (1)');
 
-    await page.filterByTitle('  first  ');
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
-    assert.strictEqual(page.headerTitle, 'Courses (1)');
+    await page.root.filterByTitle('  first  ');
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.headerTitle, 'Courses (1)');
 
-    await page.filterByTitle('second');
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, secondCourse.title);
-    assert.strictEqual(page.headerTitle, 'Courses (1)');
+    await page.root.filterByTitle('second');
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, secondCourse.title);
+    assert.strictEqual(page.root.headerTitle, 'Courses (1)');
 
-    await page.filterByTitle('special');
-    assert.strictEqual(page.courses.courses.length, 2);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, secondCourse.title);
-    assert.strictEqual(page.headerTitle, 'Courses (2)');
+    await page.root.filterByTitle('special');
+    assert.strictEqual(page.root.list.courses.length, 2);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, secondCourse.title);
+    assert.strictEqual(page.root.headerTitle, 'Courses (2)');
 
-    await page.filterByTitle('course');
+    await page.root.filterByTitle('course');
     await percySnapshot(assert);
-    assert.strictEqual(page.courses.courses.length, 4);
-    assert.strictEqual(page.courses.courses[0].title, lastCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, regularCourse.title);
-    assert.strictEqual(page.courses.courses[2].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[3].title, secondCourse.title);
-    assert.strictEqual(page.headerTitle, 'Courses (4)');
+    assert.strictEqual(page.root.list.courses.length, 4);
+    assert.strictEqual(page.root.list.courses[0].title, lastCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, regularCourse.title);
+    assert.strictEqual(page.root.list.courses[2].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[3].title, secondCourse.title);
+    assert.strictEqual(page.root.headerTitle, 'Courses (4)');
 
-    await page.filterByTitle('');
-    assert.strictEqual(page.courses.courses.length, 5);
-    assert.strictEqual(page.courses.courses[0].title, regexCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, lastCourse.title);
-    assert.strictEqual(page.courses.courses[2].title, regularCourse.title);
-    assert.strictEqual(page.courses.courses[3].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[4].title, secondCourse.title);
-    assert.strictEqual(page.headerTitle, 'Courses (5)');
+    await page.root.filterByTitle('');
+    assert.strictEqual(page.root.list.courses.length, 5);
+    assert.strictEqual(page.root.list.courses[0].title, regexCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, lastCourse.title);
+    assert.strictEqual(page.root.list.courses[2].title, regularCourse.title);
+    assert.strictEqual(page.root.list.courses[3].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[4].title, secondCourse.title);
+    assert.strictEqual(page.root.headerTitle, 'Courses (5)');
 
-    await page.filterByTitle('\\');
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, regexCourse.title);
-    assert.strictEqual(page.headerTitle, 'Courses (1)');
+    await page.root.filterByTitle('\\');
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, regexCourse.title);
+    assert.strictEqual(page.root.headerTitle, 'Courses (1)');
   });
 
   test('filters by year', async function (assert) {
@@ -153,14 +153,14 @@ module('Acceptance | Courses', function (hooks) {
       schoolId: 1,
     });
     await page.visit();
-    assert.strictEqual(page.courses.courses.length, 1);
-    await page.filterByYear('2013');
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses.length, 1);
+    await page.root.filterByYear('2013');
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
 
-    await page.filterByYear('2014');
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, secondCourse.title);
+    await page.root.filterByYear('2014');
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, secondCourse.title);
   });
 
   test('initial filter by year', async function (assert) {
@@ -176,12 +176,12 @@ module('Acceptance | Courses', function (hooks) {
       schoolId: 1,
     });
     await page.visit({ year: 2014 });
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, secondCourse.title);
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, secondCourse.title);
 
     await page.visit({ year: 2013 });
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
   });
 
   test('filters by mycourses', async function (assert) {
@@ -198,13 +198,13 @@ module('Acceptance | Courses', function (hooks) {
     });
 
     await page.visit();
-    assert.strictEqual(page.courses.courses.length, 2);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, secondCourse.title);
+    assert.strictEqual(page.root.list.courses.length, 2);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, secondCourse.title);
 
-    await page.filterByMyCourses();
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, secondCourse.title);
+    await page.root.filterByMyCourses();
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, secondCourse.title);
   });
 
   test('year filter options', async function (assert) {
@@ -216,21 +216,21 @@ module('Acceptance | Courses', function (hooks) {
     this.server.create('academicYear', { id: 2014 });
 
     await page.visit();
-    assert.strictEqual(page.yearFilters.length, 2);
-    assert.strictEqual(page.yearFilters[0].text, '2014 - 2015');
-    assert.ok(page.yearFilters[0].selected);
-    assert.strictEqual(page.yearFilters[1].text, '2013 - 2014');
-    assert.notOk(page.yearFilters[1].selected);
+    assert.strictEqual(page.root.yearFilters.length, 2);
+    assert.strictEqual(page.root.yearFilters[0].text, '2014 - 2015');
+    assert.ok(page.root.yearFilters[0].selected);
+    assert.strictEqual(page.root.yearFilters[1].text, '2013 - 2014');
+    assert.notOk(page.root.yearFilters[1].selected);
 
-    assert.strictEqual(page.schoolFilters.length, 4);
-    assert.strictEqual(page.schoolFilters[0].text, 'school 0');
-    assert.notOk(page.schoolFilters[0].selected);
-    assert.strictEqual(page.schoolFilters[1].text, 'school 1');
-    assert.ok(page.schoolFilters[1].selected);
-    assert.strictEqual(page.schoolFilters[2].text, 'school 2');
-    assert.notOk(page.schoolFilters[2].selected);
-    assert.strictEqual(page.schoolFilters[3].text, 'school 3');
-    assert.notOk(page.schoolFilters[3].selected);
+    assert.strictEqual(page.root.schoolFilters.length, 4);
+    assert.strictEqual(page.root.schoolFilters[0].text, 'school 0');
+    assert.notOk(page.root.schoolFilters[0].selected);
+    assert.strictEqual(page.root.schoolFilters[1].text, 'school 1');
+    assert.ok(page.root.schoolFilters[1].selected);
+    assert.strictEqual(page.root.schoolFilters[2].text, 'school 2');
+    assert.notOk(page.root.schoolFilters[2].selected);
+    assert.strictEqual(page.root.schoolFilters[3].text, 'school 3');
+    assert.notOk(page.root.schoolFilters[3].selected);
   });
 
   test('unprivileged users can not delete courses', async function (assert) {
@@ -249,11 +249,11 @@ module('Acceptance | Courses', function (hooks) {
     await page.visit();
 
     assert.notOk(
-      page.courses.courses[0].canRemove,
+      page.root.list.courses[0].canRemove,
       'non-privileged user cannot delete published course'
     );
     assert.notOk(
-      page.courses.courses[1].canRemove,
+      page.root.list.courses[1].canRemove,
       'non-privileged user cannot delete unpublished course'
     );
   });
@@ -275,10 +275,10 @@ module('Acceptance | Courses', function (hooks) {
     await page.visit();
 
     assert.notOk(
-      page.courses.courses[0].canRemove,
+      page.root.list.courses[0].canRemove,
       'privileged user cannot delete published course'
     );
-    assert.ok(page.courses.courses[1].canRemove, 'privileged user can delete unpublished course');
+    assert.ok(page.root.list.courses[1].canRemove, 'privileged user can delete unpublished course');
   });
 
   test('new course', async function (assert) {
@@ -286,13 +286,13 @@ module('Acceptance | Courses', function (hooks) {
     const year = DateTime.now().year;
     this.server.create('academicYear', { id: year });
     await page.visit({ year });
-    await page.toggleNewCourseForm();
-    await page.newCourse.title('Course 1');
-    await page.newCourse.chooseYear(year);
-    await page.newCourse.save();
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.newCourseLink, 'Course 1', 'new course link');
-    assert.strictEqual(page.courses.courses[0].title, 'Course 1', 'course title is correct');
+    await page.root.toggleNewCourseForm();
+    await page.root.newCourse.title('Course 1');
+    await page.root.newCourse.chooseYear(year);
+    await page.root.newCourse.save();
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.newCourseLink, 'Course 1', 'new course link');
+    assert.strictEqual(page.root.list.courses[0].title, 'Course 1', 'course title is correct');
   });
 
   test('new course toggle does not show up for unprivileged users', async function (assert) {
@@ -300,7 +300,7 @@ module('Acceptance | Courses', function (hooks) {
     this.server.create('academicYear', { id: year });
     assert.expect(1);
     await page.visit({ year });
-    assert.notOk(page.toggleNewCourseFormExists);
+    assert.notOk(page.root.toggleNewCourseFormExists);
   });
 
   test('new course in another year does not display in list', async function (assert) {
@@ -312,12 +312,12 @@ module('Acceptance | Courses', function (hooks) {
     const newTitle = 'new course title, woohoo';
 
     await page.visit();
-    await page.toggleNewCourseForm();
-    await page.newCourse.chooseYear(new Date().getFullYear() - 1);
-    await page.newCourse.title(newTitle);
-    await page.newCourse.save();
-    assert.strictEqual(page.courses.courses.length, 0);
-    assert.ok(page.courses.emptyListRowIsVisible);
+    await page.root.toggleNewCourseForm();
+    await page.root.newCourse.chooseYear(new Date().getFullYear() - 1);
+    await page.root.newCourse.title(newTitle);
+    await page.root.newCourse.save();
+    assert.strictEqual(page.root.list.courses.length, 0);
+    assert.ok(page.root.list.emptyListRowIsVisible);
   });
 
   test('new course does not appear twice when navigating back', async function (assert) {
@@ -329,17 +329,17 @@ module('Acceptance | Courses', function (hooks) {
     const courseTitle = 'Course 1';
 
     await page.visit({ year });
-    await page.toggleNewCourseForm();
-    await page.newCourse.title(courseTitle);
-    await page.newCourse.chooseYear(year);
-    await page.newCourse.save();
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.newCourseLink, 'Course 1');
+    await page.root.toggleNewCourseForm();
+    await page.root.newCourse.title(courseTitle);
+    await page.root.newCourse.chooseYear(year);
+    await page.root.newCourse.save();
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.newCourseLink, 'Course 1');
 
-    await page.visitNewCourse();
+    await page.root.visitNewCourse();
     await page.visit({ year });
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.ok(page.newCourseLinkIsHidden);
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.ok(page.root.newCourseLinkIsHidden);
   });
 
   test('new course can be deleted', async function (assert) {
@@ -352,25 +352,25 @@ module('Acceptance | Courses', function (hooks) {
     this.server.db.users.update(this.user.id, { roleIds: [1] });
 
     await page.visit({ year });
-    assert.strictEqual(page.courses.courses.length, 0);
-    assert.ok(page.courses.emptyListRowIsVisible);
+    assert.strictEqual(page.root.list.courses.length, 0);
+    assert.ok(page.root.list.emptyListRowIsVisible);
 
-    await page.toggleNewCourseForm();
-    await page.newCourse.title('Course 1');
-    await page.newCourse.chooseYear(year);
-    await page.newCourse.save();
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.newCourseLink, 'Course 1');
+    await page.root.toggleNewCourseForm();
+    await page.root.newCourse.title('Course 1');
+    await page.root.newCourse.chooseYear(year);
+    await page.root.newCourse.save();
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.newCourseLink, 'Course 1');
 
-    await page.visitNewCourse();
+    await page.root.visitNewCourse();
     await page.visit({ year });
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.ok(page.newCourseLinkIsHidden);
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.ok(page.root.newCourseLinkIsHidden);
 
-    await page.courses.courses[0].remove();
-    await page.courses.confirmCourseRemoval();
-    assert.strictEqual(page.courses.courses.length, 0);
-    assert.ok(page.courses.emptyListRowIsVisible);
+    await page.root.list.courses[0].remove();
+    await page.root.list.confirmCourseRemoval();
+    assert.strictEqual(page.root.list.courses.length, 0);
+    assert.ok(page.root.list.emptyListRowIsVisible);
   });
 
   test('locked courses', async function (assert) {
@@ -387,13 +387,21 @@ module('Acceptance | Courses', function (hooks) {
     });
 
     await page.visit({ year: 2014 });
-    assert.strictEqual(page.courses.courses.length, 2);
-    assert.strictEqual(page.courses.courses[0].title, 'course 0', 'course name is correct');
-    assert.strictEqual(page.courses.courses[0].status, 'Not Published', 'course status is correct');
-    assert.notOk(page.courses.courses[0].isLocked, 'course is not locked');
-    assert.strictEqual(page.courses.courses[1].title, 'course 1', 'course name is correct');
-    assert.strictEqual(page.courses.courses[1].status, 'Not Published', 'course status is correct');
-    assert.ok(page.courses.courses[1].isLocked, 'course is locked');
+    assert.strictEqual(page.root.list.courses.length, 2);
+    assert.strictEqual(page.root.list.courses[0].title, 'course 0', 'course name is correct');
+    assert.strictEqual(
+      page.root.list.courses[0].status,
+      'Not Published',
+      'course status is correct'
+    );
+    assert.notOk(page.root.list.courses[0].isLocked, 'course is not locked');
+    assert.strictEqual(page.root.list.courses[1].title, 'course 1', 'course name is correct');
+    assert.strictEqual(
+      page.root.list.courses[1].status,
+      'Not Published',
+      'course status is correct'
+    );
+    assert.ok(page.root.list.courses[1].isLocked, 'course is locked');
   });
 
   test('no academic years exist', async function (assert) {
@@ -401,15 +409,18 @@ module('Acceptance | Courses', function (hooks) {
     assert.expect(7);
 
     await page.visit();
-    await page.toggleNewCourseForm();
+    await page.root.toggleNewCourseForm();
 
     const thisYear = DateTime.now().year;
     const years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1, thisYear + 2];
 
-    assert.strictEqual(page.newCourse.years.length, years.length + 1);
-    assert.strictEqual(page.newCourse.years[0].text, 'Select Academic Year');
+    assert.strictEqual(page.root.newCourse.years.length, years.length + 1);
+    assert.strictEqual(page.root.newCourse.years[0].text, 'Select Academic Year');
     for (let i = 0; i < years.length; i++) {
-      assert.strictEqual(parseInt(page.newCourse.years[i + 1].text.substring(0, 4), 10), years[i]);
+      assert.strictEqual(
+        parseInt(page.root.newCourse.years[i + 1].text.substring(0, 4), 10),
+        years[i]
+      );
     }
   });
 
@@ -424,14 +435,14 @@ module('Acceptance | Courses', function (hooks) {
       schoolId: 1,
     });
     await page.visit();
-    assert.ok(page.courses.isSortedByTitleAscending);
-    assert.strictEqual(page.courses.courses.length, 2);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, secondCourse.title);
-    await page.courses.sortByTitle();
-    assert.ok(page.courses.isSortedByTitleDescending);
-    assert.strictEqual(page.courses.courses[0].title, secondCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, firstCourse.title);
+    assert.ok(page.root.list.isSortedByTitleAscending);
+    assert.strictEqual(page.root.list.courses.length, 2);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, secondCourse.title);
+    await page.root.list.sortByTitle();
+    assert.ok(page.root.list.isSortedByTitleDescending);
+    assert.strictEqual(page.root.list.courses[0].title, secondCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, firstCourse.title);
   });
 
   test('sort by level', async function (assert) {
@@ -448,15 +459,15 @@ module('Acceptance | Courses', function (hooks) {
     });
 
     await page.visit();
-    await page.courses.sortByLevel();
-    assert.ok(page.courses.isSortedByLevelAscending);
-    assert.strictEqual(page.courses.courses.length, 2);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, secondCourse.title);
-    await page.courses.sortByLevel();
-    assert.ok(page.courses.isSortedByLevelDescending);
-    assert.strictEqual(page.courses.courses[0].title, secondCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, firstCourse.title);
+    await page.root.list.sortByLevel();
+    assert.ok(page.root.list.isSortedByLevelAscending);
+    assert.strictEqual(page.root.list.courses.length, 2);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, secondCourse.title);
+    await page.root.list.sortByLevel();
+    assert.ok(page.root.list.isSortedByLevelDescending);
+    assert.strictEqual(page.root.list.courses[0].title, secondCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, firstCourse.title);
   });
 
   test('sort by startDate', async function (assert) {
@@ -473,15 +484,15 @@ module('Acceptance | Courses', function (hooks) {
     });
 
     await page.visit();
-    await page.courses.sortByStartDate();
-    assert.ok(page.courses.isSortedByStartDateAscending);
-    assert.strictEqual(page.courses.courses.length, 2);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, secondCourse.title);
-    await page.courses.sortByStartDate();
-    assert.ok(page.courses.isSortedByStartDateDescending);
-    assert.strictEqual(page.courses.courses[0].title, secondCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, firstCourse.title);
+    await page.root.list.sortByStartDate();
+    assert.ok(page.root.list.isSortedByStartDateAscending);
+    assert.strictEqual(page.root.list.courses.length, 2);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, secondCourse.title);
+    await page.root.list.sortByStartDate();
+    assert.ok(page.root.list.isSortedByStartDateDescending);
+    assert.strictEqual(page.root.list.courses[0].title, secondCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, firstCourse.title);
   });
 
   test('sort by endDate', async function (assert) {
@@ -498,15 +509,15 @@ module('Acceptance | Courses', function (hooks) {
     });
 
     await page.visit();
-    await page.courses.sortByEndDate();
-    assert.ok(page.courses.isSortedByEndDateAscending);
-    assert.strictEqual(page.courses.courses.length, 2);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, secondCourse.title);
-    await page.courses.sortByEndDate();
-    assert.ok(page.courses.isSortedByEndDateDescending);
-    assert.strictEqual(page.courses.courses[0].title, secondCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, firstCourse.title);
+    await page.root.list.sortByEndDate();
+    assert.ok(page.root.list.isSortedByEndDateAscending);
+    assert.strictEqual(page.root.list.courses.length, 2);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, secondCourse.title);
+    await page.root.list.sortByEndDate();
+    assert.ok(page.root.list.isSortedByEndDateDescending);
+    assert.strictEqual(page.root.list.courses[0].title, secondCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, firstCourse.title);
   });
 
   test('sort by status', async function (assert) {
@@ -531,17 +542,17 @@ module('Acceptance | Courses', function (hooks) {
     });
 
     await page.visit();
-    await page.courses.sortByStatus();
-    assert.ok(page.courses.isSortedByStatusAscending);
-    assert.strictEqual(page.courses.courses.length, 3);
-    assert.strictEqual(page.courses.courses[0].title, thirdCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[2].title, secondCourse.title);
-    await page.courses.sortByStatus();
-    assert.ok(page.courses.isSortedByStatusDescending);
-    assert.strictEqual(page.courses.courses[0].title, secondCourse.title);
-    assert.strictEqual(page.courses.courses[1].title, firstCourse.title);
-    assert.strictEqual(page.courses.courses[2].title, thirdCourse.title);
+    await page.root.list.sortByStatus();
+    assert.ok(page.root.list.isSortedByStatusAscending);
+    assert.strictEqual(page.root.list.courses.length, 3);
+    assert.strictEqual(page.root.list.courses[0].title, thirdCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[2].title, secondCourse.title);
+    await page.root.list.sortByStatus();
+    assert.ok(page.root.list.isSortedByStatusDescending);
+    assert.strictEqual(page.root.list.courses[0].title, secondCourse.title);
+    assert.strictEqual(page.root.list.courses[1].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses[2].title, thirdCourse.title);
   });
 
   test('privileged users can lock and unlock course', async function (assert) {
@@ -564,13 +575,13 @@ module('Acceptance | Courses', function (hooks) {
     });
 
     await page.visit();
-    assert.strictEqual(page.courses.courses.length, 2);
-    assert.ok(page.courses.courses[0].isLocked, 'first course is locked');
-    assert.ok(page.courses.courses[1].isUnlocked, 'second course is unlocked');
-    await page.courses.courses[0].unLock();
-    await page.courses.courses[1].lock();
-    assert.ok(page.courses.courses[0].isUnlocked, 'first course is now unlocked');
-    assert.ok(page.courses.courses[1].isLocked, 'second course is now locked');
+    assert.strictEqual(page.root.list.courses.length, 2);
+    assert.ok(page.root.list.courses[0].isLocked, 'first course is locked');
+    assert.ok(page.root.list.courses[1].isUnlocked, 'second course is unlocked');
+    await page.root.list.courses[0].unLock();
+    await page.root.list.courses[1].lock();
+    assert.ok(page.root.list.courses[0].isUnlocked, 'first course is now unlocked');
+    assert.ok(page.root.list.courses[1].isLocked, 'second course is now locked');
   });
 
   test('non-privileged users cannot lock and unlock course but can see the icon', async function (assert) {
@@ -592,11 +603,11 @@ module('Acceptance | Courses', function (hooks) {
     });
 
     await page.visit();
-    assert.strictEqual(page.courses.courses.length, 2);
-    assert.ok(page.courses.courses[0].isLocked, 'first course is locked');
-    assert.ok(page.courses.courses[1].isUnlocked, 'second course is unlocked');
-    assert.notOk(page.courses.courses[0].canLock);
-    assert.notOk(page.courses.courses[1].canUnlock);
+    assert.strictEqual(page.root.list.courses.length, 2);
+    assert.ok(page.root.list.courses[0].isLocked, 'first course is locked');
+    assert.ok(page.root.list.courses[1].isUnlocked, 'second course is unlocked');
+    assert.notOk(page.root.list.courses[0].canLock);
+    assert.notOk(page.root.list.courses[1].canUnlock);
   });
 
   test('title filter escapes regex', async function (assert) {
@@ -609,13 +620,13 @@ module('Acceptance | Courses', function (hooks) {
     });
 
     await page.visit();
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
 
-    await page.filterByTitle('\\');
+    await page.root.filterByTitle('\\');
 
-    assert.strictEqual(page.courses.courses.length, 1);
-    assert.strictEqual(page.courses.courses[0].title, firstCourse.title);
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.list.courses[0].title, firstCourse.title);
   });
 
   test('can not delete course with descendants #3620', async function (assert) {
@@ -636,11 +647,11 @@ module('Acceptance | Courses', function (hooks) {
     await page.visit({ year });
 
     assert.notOk(
-      page.courses.courses[0].canRemove,
+      page.root.list.courses[0].canRemove,
       'privileged user cannot delete course with descendants'
     );
     assert.ok(
-      page.courses.courses[1].canRemove,
+      page.root.list.courses[1].canRemove,
       'privileged user can delete course with ancestors'
     );
   });
@@ -661,8 +672,8 @@ module('Acceptance | Courses', function (hooks) {
       };
     });
     await page.visit();
-    assert.ok(page.yearFilters[1].selected);
-    assert.strictEqual(page.yearFilters[1].value, (year - 1).toString());
+    assert.ok(page.root.yearFilters[1].selected);
+    assert.strictEqual(page.root.yearFilters[1].value, (year - 1).toString());
     unfreezeDate();
   });
 
@@ -682,8 +693,8 @@ module('Acceptance | Courses', function (hooks) {
       };
     });
     await page.visit();
-    assert.ok(page.yearFilters[0].selected);
-    assert.strictEqual(page.yearFilters[0].value, year.toString());
+    assert.ok(page.root.yearFilters[0].selected);
+    assert.strictEqual(page.root.yearFilters[0].value, year.toString());
     unfreezeDate();
   });
 
@@ -703,8 +714,8 @@ module('Acceptance | Courses', function (hooks) {
       };
     });
     await page.visit();
-    assert.ok(page.yearFilters[0].selected);
-    assert.strictEqual(page.yearFilters[0].value, year.toString());
+    assert.ok(page.root.yearFilters[0].selected);
+    assert.strictEqual(page.root.yearFilters[0].value, year.toString());
     unfreezeDate();
   });
 
@@ -724,8 +735,8 @@ module('Acceptance | Courses', function (hooks) {
       };
     });
     await page.visit();
-    assert.ok(page.yearFilters[0].selected);
-    assert.strictEqual(page.yearFilters[0].value, year.toString());
+    assert.ok(page.root.yearFilters[0].selected);
+    assert.strictEqual(page.root.yearFilters[0].value, year.toString());
     unfreezeDate();
   });
 
@@ -736,10 +747,10 @@ module('Acceptance | Courses', function (hooks) {
       school: this.school,
     });
     await page.visit();
-    assert.strictEqual(page.courses.courses.length, 1);
+    assert.strictEqual(page.root.list.courses.length, 1);
 
-    assert.notOk(page.filterHasFocus);
-    await page.filterByTitle('first');
-    assert.ok(page.filterHasFocus);
+    assert.notOk(page.root.filterHasFocus);
+    await page.root.filterByTitle('first');
+    assert.ok(page.root.filterHasFocus);
   });
 });
