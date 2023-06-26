@@ -34,13 +34,13 @@ module('Integration | Component | new user', function (hooks) {
       }
     }
 
-    this.permissionCheckerMock = Service.extend({
+    const permissionCheckerMock = Service.extend({
       async canCreateUser() {
         return resolve(true);
       },
     });
     this.owner.register('service:current-user', CurrentUserMock);
-    this.owner.register('service:permissionChecker', this.permissionCheckerMock);
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
   });
 
   test('it renders', async function (assert) {
@@ -83,14 +83,14 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('create new user', async function (assert) {
-    assert.expect(11);
+    assert.expect(12);
     const studentRole = this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
 
     this.set('transitionToUser', (userId) => {
-      assert.strictEqual(parseInt(userId, 10), 2);
+      assert.strictEqual(Number(userId), 2);
     });
     await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />`);
 
@@ -119,6 +119,7 @@ module('Integration | Component | new user', function (hooks) {
     const authentication = await newUser.authentication;
     assert.strictEqual(authentication.username, 'user123', 'with the correct username');
     assert.strictEqual(authentication.password, 'password123', 'with the correct password');
+    assert.strictEqual(Number((await newUser.school).id), 1);
   });
 
   test('create new student user', async function (assert) {
@@ -139,7 +140,7 @@ module('Integration | Component | new user', function (hooks) {
     await this.owner.lookup('service:store').findAll('programYear');
     await this.owner.lookup('service:store').findAll('cohort');
     this.set('transitionToUser', (userId) => {
-      assert.strictEqual(parseInt(userId, 10), 2);
+      assert.strictEqual(Number(userId), 2);
     });
     await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />`);
     await component.clickChoiceButtons.secondButton.click();
@@ -257,5 +258,52 @@ module('Integration | Component | new user', function (hooks) {
     await component.username.set('geflarknik2');
     await component.username.submit();
     assert.notOk(component.username.hasError);
+  });
+
+  test('create new user in another school #4830', async function (assert) {
+    assert.expect(2);
+
+    this.set('transitionToUser', (userId) => {
+      assert.strictEqual(Number(userId), 2);
+    });
+    await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />`);
+
+    await component.firstName.set('first');
+    await component.lastName.set('last');
+    await component.campusId.set('campusid');
+    await component.email.set('test@test.com');
+    await component.username.set('user123');
+    await component.password.set('password123');
+    component.school.select('2');
+    await component.submit();
+
+    const newUser = await this.owner.lookup('service:store').findRecord('user', 2);
+    assert.strictEqual(Number((await newUser.school).id), 2);
+  });
+
+  test('create new user in another school without permission in primary school #4830', async function (assert) {
+    assert.expect(2);
+    const permissionCheckerMock = Service.extend({
+      async canCreateUser(school) {
+        return Number(school.id) === 2;
+      },
+    });
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+
+    this.set('transitionToUser', (userId) => {
+      assert.strictEqual(Number(userId), 2);
+    });
+    await render(hbs`<NewUser @close={{(noop)}} @transitionToUser={{this.transitionToUser}} />`);
+
+    await component.firstName.set('first');
+    await component.lastName.set('last');
+    await component.campusId.set('campusid');
+    await component.email.set('test@test.com');
+    await component.username.set('user123');
+    await component.password.set('password123');
+    await component.submit();
+
+    const newUser = await this.owner.lookup('service:store').findRecord('user', 2);
+    assert.strictEqual(Number((await newUser.school).id), 2);
   });
 });

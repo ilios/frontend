@@ -33,6 +33,7 @@ module('Integration | Component | new directory user', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
     this['current-user'] = this.owner.lookup('service:current-user');
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
+    await this.owner.lookup('service:store').findAll('school');
   });
 
   test('it renders and is accessible', async function (assert) {
@@ -78,7 +79,7 @@ module('Integration | Component | new directory user', function (hooks) {
   });
 
   test('create new user', async function (assert) {
-    assert.expect(35);
+    assert.expect(37);
     this.server.create('user-role', {
       id: 4,
       title: 'Student',
@@ -154,7 +155,7 @@ module('Integration | Component | new directory user', function (hooks) {
       };
     });
     this.set('transitionToUser', (userId) => {
-      assert.strictEqual(parseInt(userId, 10), 5, 'after saving we transition to the right user');
+      assert.strictEqual(Number(userId), 5, 'after saving we transition to the right user');
     });
     await render(hbs`<NewDirectoryUser
       @close={{(noop)}}
@@ -195,6 +196,7 @@ module('Integration | Component | new directory user', function (hooks) {
     assert.strictEqual(component.form.phone, `Phone: ${searchResult1.telephoneNumber}`);
     assert.strictEqual(component.form.otherId, `Other ID:`);
     assert.strictEqual(component.form.username.text, `Username: ${searchResult1.username}`);
+    assert.strictEqual(component.form.school.value, '1');
 
     await component.form.submit();
 
@@ -207,8 +209,118 @@ module('Integration | Component | new directory user', function (hooks) {
     assert.strictEqual(userModel.otherId, null);
     assert.strictEqual(userModel.phone, searchResult1.telephoneNumber);
     assert.strictEqual(userModel.email, searchResult1.email);
-    assert.strictEqual(parseInt(userModel.id, 10), 5);
+    assert.strictEqual(Number((await userModel.school).id), 1);
+    assert.strictEqual(Number(userModel.id), 5);
     assert.strictEqual(authenticationModel.username, searchResult1.username);
     assert.strictEqual(authenticationModel.password, null);
+  });
+
+  test('create new user in another school #4830', async function (assert) {
+    assert.expect(6);
+    this.server.create('user-role', {
+      id: 4,
+      title: 'Student',
+    });
+    const searchResult = {
+      firstName: 'first',
+      lastName: 'last',
+      campusId: '123',
+      email: 'user1@example.edu',
+      telephoneNumber: '805',
+      username: 'test',
+      user: null,
+    };
+    this.server.get('/application/config', () => {
+      return {
+        config: {
+          locale: 'en',
+          type: 'ladp',
+          userSearchType: 'ldap',
+        },
+      };
+    });
+    this.server.get('/application/directory/search', () => {
+      return {
+        results: [searchResult],
+      };
+    });
+    this.set('transitionToUser', (userId) => {
+      assert.strictEqual(Number(userId), 2, 'after saving we transition to the right user');
+    });
+    await render(hbs`<NewDirectoryUser
+      @close={{(noop)}}
+      @setSearchTerms={{(noop)}}
+      @transitionToUser={{this.transitionToUser}}
+      @searchTerms="searchterm"
+    />`);
+
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.ok(component.searchResults[0].userCanBeAdded);
+    await component.searchResults[0].addUser();
+    assert.strictEqual(component.form.school.value, '1');
+    await component.form.school.select('2');
+    await component.form.submit();
+
+    const userModel = await this.owner.lookup('service:store').findRecord('user', 2);
+    const schoolModel = await userModel.school;
+    assert.strictEqual(Number(userModel.id), 2);
+    assert.strictEqual(Number(schoolModel.id), 2);
+  });
+
+  test('create new user in another school with permission in only one school #4830', async function (assert) {
+    assert.expect(6);
+    class PermissionCheckerMock extends Service {
+      async canCreateUser(school) {
+        return Number(school.id) === 2;
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
+    this.server.create('user-role', {
+      id: 4,
+      title: 'Student',
+    });
+    const searchResult = {
+      firstName: 'first',
+      lastName: 'last',
+      campusId: '123',
+      email: 'user1@example.edu',
+      telephoneNumber: '805',
+      username: 'test',
+      user: null,
+    };
+    this.server.get('/application/config', () => {
+      return {
+        config: {
+          locale: 'en',
+          type: 'ladp',
+          userSearchType: 'ldap',
+        },
+      };
+    });
+    this.server.get('/application/directory/search', () => {
+      return {
+        results: [searchResult],
+      };
+    });
+    this.set('transitionToUser', (userId) => {
+      assert.strictEqual(Number(userId), 2, 'after saving we transition to the right user');
+    });
+    await render(hbs`<NewDirectoryUser
+      @close={{(noop)}}
+      @setSearchTerms={{(noop)}}
+      @transitionToUser={{this.transitionToUser}}
+      @searchTerms="searchterm"
+    />`);
+
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.ok(component.searchResults[0].userCanBeAdded);
+    await component.searchResults[0].addUser();
+    assert.strictEqual(component.form.school.value, '2');
+    await component.form.submit();
+
+    const userModel = await this.owner.lookup('service:store').findRecord('user', 2);
+    const schoolModel = await userModel.school;
+    assert.strictEqual(Number(userModel.id), 2);
+    assert.strictEqual(Number(schoolModel.id), 2);
   });
 });
