@@ -1,7 +1,7 @@
-@use "../ilios-common/mixins" as cm;
-@use "../mixins" as m;
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
 
-.courses-list {
+.courses-root {
   @include cm.main-section;
 
   .filters {
@@ -37,19 +37,5 @@
         @include m.main-list-box-header-actions;
       }
     }
-  }
-
-  .list {
-    @include m.main-list-box-table;
-
-    i {
-      margin-left: 0.5rem;
-    }
-  }
-
-  .fa-lock,
-  .fa-unlock,
-  .fa-trash {
-    @include cm.icon;
   }
 }

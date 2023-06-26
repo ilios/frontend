@@ -1,8 +1,8 @@
 {{#let (unique-id) as |templateId|}}
   <div
-    class="new-course"
+    class="courses-new"
     {{did-insert (perform this.load)}}
-    data-test-new-course
+    data-test-courses-new
   >
     {{#unless this.load.isRunning}}
       <h4>
