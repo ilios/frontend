@@ -62,7 +62,7 @@ export default class NewUserComponent extends Component {
   }
 
   get primarySchool() {
-    return findBy(this.allSchools, this.user.belongsTo('school').id());
+    return findById(this.allSchools, this.user.belongsTo('school').id());
   }
 
   @cached
@@ -112,7 +112,11 @@ export default class NewUserComponent extends Component {
         return currentSchool;
       }
     }
-    return this.primarySchool;
+    if (this.schools.includes(this.primarySchool)) {
+      return this.primarySchool;
+    }
+
+    return this.schools[0];
   }
 
   get bestSelectedCohort() {
