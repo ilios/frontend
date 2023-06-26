@@ -12,7 +12,7 @@
           {{t
             "general.pendingUserUpdates.emailMismatch"
             value=update.value
-            email=(get (await update.user) "email")
+            email=update.user.email
           }}
         {{else}}
           {{t (concat "general.pendingUserUpdates." update.type)}}
