@@ -33,6 +33,7 @@ export default class BulkNewUsersComponent extends Component {
   @tracked savingAuthenticationErrors = [];
   @tracked savingUserErrors = [];
   @tracked selectedUsers = [];
+  @tracked validUsers = [];
 
   get sampleData() {
     const sampleUploadFields = [
@@ -170,11 +171,11 @@ export default class BulkNewUsersComponent extends Component {
 
       return obj;
     });
-    const validUsers = yield filter(filledOutUsers, async (obj) => {
+    this.validUsers = yield filter(filledOutUsers, async (obj) => {
       return await obj.isValid();
     });
 
-    this.selectedUsers = validUsers;
+    this.selectedUsers = this.validUsers;
     this.proposedUsers = filledOutUsers;
   }
 
@@ -270,6 +271,7 @@ export default class BulkNewUsersComponent extends Component {
       this.flashMessages.success('general.newUsersCreatedSuccessfully');
     }
 
+    this.validUsers = [];
     this.selectedUsers = [];
     this.proposedUsers = [];
   }
