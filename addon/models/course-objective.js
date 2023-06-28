@@ -106,7 +106,7 @@ export default class CourseObjective extends Model {
       if (programYearsToRemove.includes(programYear)) {
         programYearObjectives.splice(programYearObjectives.indexOf(programYear), 1);
         const courseObjectives = await programYearObjective.courseObjectives;
-        courseObjectives.removeObject(this);
+        courseObjectives.splice(courseObjectives.indexOf(this), 1);
       }
     }
     await this.save();
