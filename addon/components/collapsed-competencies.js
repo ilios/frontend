@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';

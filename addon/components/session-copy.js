@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { hash, all, filter } from 'rsvp';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';

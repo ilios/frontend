@@ -3,7 +3,7 @@ import moment from 'moment';
 import colorChange from 'ilios-common/utils/color-change';
 import { htmlSafe } from '@ember/template';
 import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class DailyCalendarEventComponent extends Component {
   @service intl;

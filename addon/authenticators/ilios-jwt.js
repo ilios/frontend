@@ -1,5 +1,5 @@
 import { get } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import JwtTokenAuthenticator from 'ember-simple-auth-token/authenticators/jwt';
 
 export default class IliosJWT extends JwtTokenAuthenticator {

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { dropTask } from 'ember-concurrency';
 import readableFileSize from 'ilios-common/utils/readable-file-size';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class LearningMaterialUploaderComponent extends Component {

@@ -1,5 +1,5 @@
 import EventsBase from 'ilios-common/classes/events-base';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import moment from 'moment';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 

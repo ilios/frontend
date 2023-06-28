@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { next } from '@ember/runloop';
 import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
