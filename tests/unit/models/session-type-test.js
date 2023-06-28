@@ -43,7 +43,7 @@ module('Unit | Model | SessionType', function (hooks) {
     const aamcMethod2 = this.store.createRecord('aamc-method', { sessionTypes: [model] });
     firstAamcMethod = await waitForResource(model, 'firstAamcMethod');
     assert.strictEqual(firstAamcMethod, aamcMethod1);
-    model.aamcMethods.splice(model.aamcMethods.indexOf(aamcMethod1), 1);
+    (await model.aamcMethods).splice(model.aamcMethods.indexOf(aamcMethod1), 1);
 
     firstAamcMethod = await waitForResource(model, 'firstAamcMethod');
     assert.strictEqual(firstAamcMethod, aamcMethod2);
