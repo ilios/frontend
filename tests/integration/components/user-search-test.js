@@ -152,10 +152,10 @@ module('Integration | Component | user search', function (hooks) {
     this.server.get('api/users', (schema) => {
       return schema.users.all();
     });
-    const userPromise = this.owner.lookup('service:store').query('user', { id: user.id });
-    this.set('currentlyActiveUsersPromise', userPromise);
+    const users = this.owner.lookup('service:store').query('user', { id: user.id });
+    this.set('currentlyActiveUsers', users);
     await render(hbs`<UserSearch
-      @currentlyActiveUsers={{await this.currentlyActiveUsersPromise}}
+      @currentlyActiveUsers={{this.currentlyActiveUsers}}
     />
 `);
     await component.searchBox.set('foo');
@@ -184,12 +184,12 @@ module('Integration | Component | user search', function (hooks) {
 
   test('reads currentlyActiveInstructorGroups from a promise', async function (assert) {
     this.server.create('instructor-group');
-    const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
+    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     this.set('currentlyActiveInstructorGroups', instructorGroups);
     await render(hbs`<UserSearch
       @availableInstructorGroups={{this.availableInstructorGroups}}
-      @currentlyActiveInstructorGroups={{await this.currentlyActiveInstructorGroups}}
+      @currentlyActiveInstructorGroups={{this.currentlyActiveInstructorGroups}}
     />
 `);
     await component.searchBox.set('group');
