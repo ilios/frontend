@@ -11,6 +11,6 @@ export default Model.extend({
   }),
   sessionTypes: hasMany('session-type', { inverse: 'school' }),
   directors: hasMany('user', { inverse: 'school' }),
-  administrators: hasMany('user', { inverse: 'school' }),
+  administrators: hasMany('user', { inverse: 'administeredSchools' }),
   configurations: hasMany('school-config', { inverse: 'school' }),
 });
