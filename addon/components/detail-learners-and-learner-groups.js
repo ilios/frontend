@@ -97,14 +97,14 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
     if (!this.ilmLearners) {
       return [];
     }
-    return this.ilmLearners.toArray();
+    return this.ilmLearners.slice();
   }
 
   get selectedIlmLearnerGroups() {
     if (!this.ilmLearnerGroups) {
       return [];
     }
-    return this.ilmLearnerGroups.toArray();
+    return this.ilmLearnerGroups.slice();
   }
 
   @action

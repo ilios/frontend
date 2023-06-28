@@ -83,14 +83,14 @@ export default class DetailInstructorsComponent extends Component {
     if (!this.ilmInstructors) {
       return [];
     }
-    return this.ilmInstructors.toArray();
+    return this.ilmInstructors.slice();
   }
 
   get selectedIlmInstructorGroups() {
     if (!this.ilmInstructorGroups) {
       return [];
     }
-    return this.ilmInstructorGroups.toArray();
+    return this.ilmInstructorGroups.slice();
   }
 
   get instructorGroupCount() {
