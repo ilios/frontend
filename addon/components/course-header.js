@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 @validatable
 export default class CourseHeaderComponent extends Component {

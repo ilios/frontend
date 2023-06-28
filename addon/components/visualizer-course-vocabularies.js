@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { all, map } from 'rsvp';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
