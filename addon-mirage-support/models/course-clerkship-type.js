@@ -1,5 +1,5 @@
 import { Model, hasMany } from 'miragejs';
 
 export default Model.extend({
-  competencies: hasMany('term', { inverse: 'aamcResourceTypes' }),
+  courses: hasMany('course', { inverse: 'clerkshipType' }),
 });
