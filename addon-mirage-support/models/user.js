@@ -15,7 +15,7 @@ export default Model.extend({
   offerings: hasMany('offering', { inverse: 'learners' }),
   instructedOfferings: hasMany('offering', { inverse: 'instructors' }),
   programYears: hasMany('program-year', { inverse: 'directors' }),
-  roles: hasMany('user-year', { inverse: null }),
+  roles: hasMany('user-role', { inverse: null }),
   directedSchools: hasMany('school', { inverse: 'directors' }),
   administeredSchools: hasMany('school', { inverse: 'administrators' }),
   administeredSessions: hasMany('session', { inverse: 'administrators' }),

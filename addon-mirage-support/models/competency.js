@@ -6,5 +6,5 @@ export default Model.extend({
   children: hasMany('competency', { inverse: 'parent' }),
   aamcPcrses: hasMany('aamc-pcrs', { inverse: 'competencies' }),
   programYears: hasMany('program-year', { inverse: 'competencies' }),
-  programYearObjectives: hasMany('program-year-objectives', { inverse: 'competency' }),
+  programYearObjectives: hasMany('program-year-objective', { inverse: 'competency' }),
 });

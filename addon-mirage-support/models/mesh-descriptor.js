@@ -5,7 +5,7 @@ export default Model.extend({
   sessions: hasMany('session', { inverse: 'meshDescriptors' }),
   concepts: hasMany('mesh-concept', { inverse: 'descriptors' }),
   qualifiers: hasMany('mesh-qualifier', { inverse: 'descriptors' }),
-  trees: hasMany('mesh-tree', { inverse: 'descriptors' }),
+  trees: hasMany('mesh-tree', { inverse: 'descriptor' }),
   sessionLearningMaterials: hasMany('session-learning-material', { inverse: 'meshDescriptors' }),
   courseLearningMaterials: hasMany('course-learning-material', { inverse: 'meshDescriptors' }),
   previousIndexing: belongsTo('mesh-previous-indexing', { inverse: 'descriptor' }),

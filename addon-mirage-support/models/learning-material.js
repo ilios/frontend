@@ -5,5 +5,5 @@ export default Model.extend({
   status: belongsTo('learning-material-status', { inverse: null }),
   owningUser: belongsTo('user', { inverse: null }),
   sessionLearningMaterials: hasMany('session-learning-material', { inverse: 'learningMaterial' }),
-  courseLearningMaterial: hasMany('course-learning-material', { inverse: 'learningMaterial' }),
+  courseLearningMaterials: hasMany('course-learning-material', { inverse: 'learningMaterial' }),
 });
