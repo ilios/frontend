@@ -10,7 +10,7 @@ export default Model.extend({
     inverse: 'school',
   }),
   sessionTypes: hasMany('session-type', { inverse: 'school' }),
-  directors: hasMany('user', { inverse: 'school' }),
+  directors: hasMany('user', { inverse: 'directedSchools' }),
   administrators: hasMany('user', { inverse: 'administeredSchools' }),
   configurations: hasMany('school-config', { inverse: 'school' }),
 });
