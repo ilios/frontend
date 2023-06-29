@@ -1,7 +1,7 @@
 import { Model, belongsTo, hasMany } from 'miragejs';
 
 export default Model.extend({
-  reports: belongsTo('report', { inverse: 'user' }),
+  reports: hasMany('report', { inverse: 'user' }),
   school: belongsTo('school', { inverse: null }),
   authentication: belongsTo('authentication', { inverse: 'user' }),
   directedCourses: hasMany('course', { inverse: 'directors' }),
@@ -9,6 +9,7 @@ export default Model.extend({
   studentAdvisedCourses: hasMany('course', { inverse: 'studentAdvisors' }),
   studentAdvisedSessions: hasMany('session', { inverse: 'studentAdvisors' }),
   learnerGroups: hasMany('learner-group', { inverse: 'users' }),
+  instructedLearnerGroups: hasMany('learner-group', { inverse: 'instructors' }),
   instructorGroups: hasMany('instructor-group', { inverse: 'users' }),
   instructorIlmSessions: hasMany('ilm-session', { inverse: 'instructors' }),
   learnerIlmSessions: hasMany('ilm-session', { inverse: 'learners' }),
