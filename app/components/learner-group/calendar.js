@@ -49,6 +49,9 @@ export default class LearnerGroupCalendarComponent extends Component {
         color: '#84c444',
         prerequisites: [],
         postrequisites: [],
+        isScheduled: session.isScheduled || course.isScheduled,
+        isPublished: session.isPublished && course.isPublished,
+        isBlanked: false,
       };
     });
   }
