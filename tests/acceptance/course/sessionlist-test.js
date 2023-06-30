@@ -203,7 +203,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('session last update timestamp visible in expanded mode', async function (assert) {
-    assert.expect(1);
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     await sessions[0].row.expand();
@@ -372,7 +371,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('title filter escapes regex', async function (assert) {
-    assert.expect(4);
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
@@ -439,7 +437,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('sort by title #3941', async function (assert) {
-    assert.expect(18);
     await page.visit({ courseId: this.course.id });
     assert.strictEqual(currentURL(), '/courses/1');
     const { sessions } = page.courseSessions.sessionsGrid;

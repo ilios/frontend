@@ -18,8 +18,6 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('lm table items', async function (assert) {
-    assert.expect(10);
-
     const learningMaterial = this.server.create('learning-material', {
       title: 'test title',
       citation: 'some text',
@@ -102,8 +100,6 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('sort button visible when lm list has 2+ items and editing is allowed', async function (assert) {
-    assert.expect(1);
-
     const learningMaterial = this.server.create('learning-material', {
       owningUser: this.user,
       status: this.status[1],
@@ -131,8 +127,6 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('sort button not visible when in read-only mode', async function (assert) {
-    assert.expect(1);
-
     const learningMaterial = this.server.create('learning-material', {
       owningUser: this.user,
       status: this.status[1],
@@ -160,8 +154,6 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('sort button not visible when lm list is empty', async function (assert) {
-    assert.expect(1);
-
     const course = this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);

@@ -22,7 +22,6 @@ module('Integration | Component | sortable th', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(6);
     this.set('label', 'Foo');
     const colspan = '3';
     const title = 'Bar';

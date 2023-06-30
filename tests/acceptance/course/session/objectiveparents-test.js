@@ -65,7 +65,6 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
 
   test('save changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(12);
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -113,7 +112,6 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
 
   test('cancel changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(12);
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -161,7 +159,6 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
 
   test('deselect all parents for session objective', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(10);
     await page.visit({
       courseId: 1,
       sessionId: 1,

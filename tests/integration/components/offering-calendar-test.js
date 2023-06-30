@@ -12,7 +12,6 @@ module('Integration | Component | offering-calendar', function (hooks) {
   setupMirage(hooks);
 
   test('shows events', async function (assert) {
-    assert.expect(1);
     const today = DateTime.fromObject({ hour: 8 });
     const tomorrow = today.plus({ day: 1 });
     const course = this.server.create('course');

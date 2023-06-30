@@ -11,8 +11,6 @@ module('Integration | Component | objective sort manager', function (hooks) {
   setupMirage(hooks);
 
   test('it renders for session', async function (assert) {
-    assert.expect(5);
-
     const session = this.server.create('session');
     this.server.create('sessionObjective', { session, position: 1 });
     this.server.create('sessionObjective', { session, position: 0 });
@@ -28,7 +26,6 @@ module('Integration | Component | objective sort manager', function (hooks) {
   });
 
   test('it renders for course', async function (assert) {
-    assert.expect(5);
     const course = this.server.create('course');
     this.server.create('courseObjective', { course, position: 1 });
     this.server.create('courseObjective', { course, position: 0 });
@@ -44,8 +41,6 @@ module('Integration | Component | objective sort manager', function (hooks) {
   });
 
   test('it renders for program-year', async function (assert) {
-    assert.expect(5);
-
     const programYear = this.server.create('programYear');
     this.server.create('programYearObjective', { programYear, position: 1 });
     this.server.create('programYearObjective', { programYear, position: 0 });

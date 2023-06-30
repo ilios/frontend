@@ -12,7 +12,6 @@ module('Integration | Component | course leadership expanded', function (hooks) 
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(8);
     const users = this.server.createList('user', 2);
     const course = this.server.create('course', {
       directors: [users[0]],

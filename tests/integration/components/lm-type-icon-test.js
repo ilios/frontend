@@ -120,7 +120,6 @@ module('Integration | Component | lm type icon', function (hooks) {
   });
 
   test('no listItem', async function (assert) {
-    assert.expect(2);
     const lm = createTypedLearningMaterialProxy({ link: 'https://iliosproject.org' });
     this.set('lm', lm);
 

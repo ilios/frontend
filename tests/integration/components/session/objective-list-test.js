@@ -13,7 +13,6 @@ module('Integration | Component | session/objective-list', function (hooks) {
   setupMirage(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    assert.expect(14);
     const school = this.server.create('school');
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
@@ -68,7 +67,6 @@ module('Integration | Component | session/objective-list', function (hooks) {
   });
 
   test('empty list', async function (assert) {
-    assert.expect(2);
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
@@ -86,7 +84,6 @@ module('Integration | Component | session/objective-list', function (hooks) {
   });
 
   test('no "sort objectives" button in list with one item', async function (assert) {
-    assert.expect(3);
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
     this.server.create('sessionObjective', { session });

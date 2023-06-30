@@ -22,7 +22,6 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('no token - no currentUserId', async function (assert) {
-    assert.expect(1);
     await invalidateSession();
     const subject = this.owner.lookup('service:current-user');
     const userId = subject.currentUserId;
@@ -30,7 +29,6 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('model', async function (assert) {
-    assert.expect(1);
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
     const model = await subject.getModel();
@@ -38,7 +36,6 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('no token - no model', async function (assert) {
-    assert.expect(1);
     await invalidateSession();
     const subject = this.owner.lookup('service:current-user');
     const model = await subject.getModel();
@@ -66,7 +63,6 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('userRoleTitles', async function (assert) {
-    assert.expect(3);
     const roles = this.server.createList('user-role', 2);
     this.server.create('user', { id: 100, roles });
 
@@ -78,7 +74,6 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('userIsStudent', async function (assert) {
-    assert.expect(1);
     const role = this.server.create('user-role', { title: 'student' });
     this.server.create('user', { id: 100, roles: [role] });
     const subject = this.owner.lookup('service:current-user');
@@ -87,7 +82,6 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('not userIsStudent', async function (assert) {
-    assert.expect(1);
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
     const isStudent = await subject.getIsStudent();
@@ -95,7 +89,6 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('userIsFormerStudent', async function (assert) {
-    assert.expect(1);
     const role = this.server.create('user-role', { title: 'FORMeR Student' });
     this.server.create('user', { id: 100, roles: [role] });
     const subject = this.owner.lookup('service:current-user');
@@ -104,7 +97,6 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('not userIsFormerStudent', async function (assert) {
-    assert.expect(1);
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
     const isFormerStudent = await subject.isFormerStudent();

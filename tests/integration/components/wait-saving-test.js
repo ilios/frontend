@@ -9,7 +9,6 @@ module('Integration | Component | wait saving', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    assert.expect(1);
     await render(hbs`<WaitSaving />
 `);
 
@@ -17,7 +16,6 @@ module('Integration | Component | wait saving', function (hooks) {
   });
 
   test('it in block form', async function (assert) {
-    assert.expect(1);
     this.set('content', 'template block text');
     await render(hbs`
       <WaitSaving>

@@ -31,7 +31,6 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
   });
 
   test('it renders and is accessible when managing', async function (assert) {
-    assert.expect(3);
     this.set('subject', this.subject);
     await render(hbs`<ObjectiveListItemTerms
       @subject={{this.subject}}
@@ -50,7 +49,6 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
   });
 
   test('it renders and is accessible when not managing', async function (assert) {
-    assert.expect(6);
     this.set('subject', this.subject);
     await render(hbs`<ObjectiveListItemTerms
       @subject={{this.subject}}

@@ -11,7 +11,6 @@ module('Integration | Component | detail cohort list', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(10);
     const school1 = this.server.create('school', {
       title: 'School of Life',
     });

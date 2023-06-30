@@ -11,7 +11,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('list courses', async function (assert) {
-    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('learner-group');
     const course1 = store.createRecord('course', { title: 'course1' });
@@ -35,7 +34,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('list sessions', async function (assert) {
-    assert.expect(5);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('learner-group');
     const session1 = store.createRecord('session');
@@ -64,14 +62,12 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check allDescendantUsers on empty group', async function (assert) {
-    assert.expect(1);
     const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
     const allDescendantUsers = await waitForResource(learnerGroup, 'allDescendantUsers');
     assert.strictEqual(allDescendantUsers.length, 0);
   });
 
   test('check allDescendantUsers on populated group with sub-groups', async function (assert) {
-    assert.expect(6);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
 
@@ -101,14 +97,12 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check getAllDescendantUsers on empty group', async function (assert) {
-    assert.expect(1);
     const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
     const allDescendantUsers = await learnerGroup.getAllDescendantUsers();
     assert.strictEqual(allDescendantUsers.length, 0);
   });
 
   test('check getAllDescendantUsers on populated group with sub-groups', async function (assert) {
-    assert.expect(6);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
 
@@ -138,7 +132,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check empty allDescendants', async function (assert) {
-    assert.expect(1);
     const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
 
     const groups = await waitForResource(learnerGroup, 'allDescendants');
@@ -146,7 +139,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check allDescendants', async function (assert) {
-    assert.expect(5);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
 
@@ -172,7 +164,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check getSubgroupNumberingOffset on group with no sub-groups', async function (assert) {
-    assert.expect(1);
     const groupTitle = 'Lorem Ipsum';
     const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
     learnerGroup.set('title', groupTitle);
@@ -181,7 +172,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check getSubgroupNumberingOffset on group with sub-groups', async function (assert) {
-    assert.expect(1);
     const groupTitle = 'Lorem Ipsum';
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
@@ -199,7 +189,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check getSubgroupNumberingOffset on group with sub-groups and mis-matched sub-group title', async function (assert) {
-    assert.expect(1);
     const groupTitle = 'Lorem Ipsum';
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
@@ -221,7 +210,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check allinstructors', async function (assert) {
-    assert.expect(8);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
 
@@ -261,7 +249,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check allParents', async function (assert) {
-    assert.expect(3);
     const store = this.owner.lookup('service:store');
 
     const subGroup1 = store.createRecord('learner-group', { id: 1 });
@@ -281,7 +268,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check filterTitle on top group', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
 
     const learnerGroup = store.createRecord('learner-group', {
@@ -307,7 +293,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check filterTitle on sub group', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', {
       id: 1,
@@ -335,7 +320,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check sortTitle on top group', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
 
@@ -352,7 +336,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check sortTitle on sub group', async function (assert) {
-    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', {
       id: 1,
@@ -385,7 +368,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check removeUserFromGroupAndAllDescendants', async function (assert) {
-    assert.expect(7);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
 
@@ -419,7 +401,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('check addUserToGroupAndAllParents', async function (assert) {
-    assert.expect(7);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const groups = await waitForResource(learnerGroup, 'allParents');
@@ -451,14 +432,12 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('has no learners in group without learners and without subgroups', async function (assert) {
-    assert.expect(1);
     const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
     const hasLearners = await waitForResource(learnerGroup, 'hasLearnersInGroupOrSubgroups');
     assert.notOk(hasLearners);
   });
 
   test('has learners in group with learners and but without learners in subgroups', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const learner = store.createRecord('user', { id: 1 });
@@ -468,7 +447,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('has no learners with no learners in group nor in subgroups', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const subgroup = store.createRecord('learner-group', {
@@ -481,7 +459,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('has learners with no learners in group but with learners in subgroups', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const learner = store.createRecord('user', { id: 1 });
@@ -496,7 +473,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('has learners with learners in group and with learners in subgroups', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const learner = store.createRecord('user', { id: 1 });
@@ -513,7 +489,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('users only at this level', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const user1 = store.createRecord('user', { id: 1 });
@@ -539,7 +514,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('get users only at this level', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const user1 = store.createRecord('user', { id: 1 });
@@ -565,7 +539,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('allParentTitles', async function (assert) {
-    assert.expect(4);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', { title: 'Foo', id: 1 });
     let titles = await waitForResource(learnerGroup, 'allParentTitles');
@@ -588,8 +561,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('allParentsTitle', async function (assert) {
-    assert.expect(2);
-
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', { title: 'Foo', id: 1 });
     let titles = await waitForResource(learnerGroup, 'allParentsTitle');
@@ -610,7 +581,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('sortTitle', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', { title: 'Foo', id: 1 });
     let title = await waitForResource(learnerGroup, 'sortTitle');
@@ -631,7 +601,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('topLevelGroup', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', { id: 1 });
     let topLevelGroup = await waitForResource(learnerGroup, 'topLevelGroup');
@@ -649,7 +618,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('isTopLevelGroup', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', { id: 1 });
     assert.ok(learnerGroup.isTopLevelGroup);
@@ -661,7 +629,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('usersCount', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group', { id: 1 });
     assert.strictEqual(learnerGroup.usersCount, 0);
@@ -673,7 +640,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('childrenCount', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     assert.strictEqual(learnerGroup.childrenCount, 0);
@@ -685,14 +651,12 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('has no needs in group without subgroups', async function (assert) {
-    assert.expect(1);
     const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
     const hasNeeds = await waitForResource(learnerGroup, 'hasSubgroupsInNeedOfAccommodation');
     assert.notOk(hasNeeds);
   });
 
   test('has no needs in group with subgroups without needs', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const subGroup1 = store.createRecord('learner-group', {
@@ -709,7 +673,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('has needs in group with subgroups with needs', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const subGroup1 = store.createRecord('learner-group', {
@@ -726,7 +689,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('has no needs in deeply nested subgroups without needs', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const subGroup1 = store.createRecord('learner-group', {
@@ -758,7 +720,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   });
 
   test('has needs in deeply nested subgroups with needs', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const subGroup1 = store.createRecord('learner-group', {

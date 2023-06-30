@@ -7,7 +7,6 @@ module('Unit | Model | Offering', function (hooks) {
   setupTest(hooks);
 
   test('check allInstructors', async function (assert) {
-    assert.expect(11);
     const offering = this.owner.lookup('service:store').createRecord('offering');
     const store = this.owner.lookup('service:store');
 
@@ -80,7 +79,6 @@ module('Unit | Model | Offering', function (hooks) {
   });
 
   test('check allLearners', async function (assert) {
-    assert.expect(11);
     const offering = this.owner.lookup('service:store').createRecord('offering');
     const store = this.owner.lookup('service:store');
 

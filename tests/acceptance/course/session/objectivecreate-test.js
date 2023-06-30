@@ -25,7 +25,6 @@ module('Acceptance | Session - Objective Create', function (hooks) {
 
   test('save new objective', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(9);
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({
@@ -59,7 +58,6 @@ module('Acceptance | Session - Objective Create', function (hooks) {
 
   test('cancel new objective', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(6);
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -85,7 +83,6 @@ module('Acceptance | Session - Objective Create', function (hooks) {
 
   test('empty objective title can not be created', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(5);
     await page.visit({
       courseId: 1,
       sessionId: 1,

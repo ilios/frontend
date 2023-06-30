@@ -11,7 +11,6 @@ module('Integration | Component | visualizer-course-term', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(3);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', { vocabulary });
     const course = this.server.create('course');

@@ -74,7 +74,6 @@ module('Acceptance | Course - Leadership', function (hooks) {
   });
 
   test('search administrators', async function (assert) {
-    assert.expect(15);
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -122,7 +121,6 @@ module('Acceptance | Course - Leadership', function (hooks) {
   });
 
   test('search directors', async function (assert) {
-    assert.expect(15);
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -149,7 +147,6 @@ module('Acceptance | Course - Leadership', function (hooks) {
   });
 
   test('search student advisors', async function (assert) {
-    assert.expect(15);
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -197,7 +194,6 @@ module('Acceptance | Course - Leadership', function (hooks) {
   });
 
   test('manage leadership', async function (assert) {
-    assert.expect(18);
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -245,7 +241,6 @@ module('Acceptance | Course - Leadership', function (hooks) {
   });
 
   test('cancel leadership changes', async function (assert) {
-    assert.expect(9);
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -284,7 +279,6 @@ module('Acceptance | Course - Leadership', function (hooks) {
   });
 
   test('save leadership changes', async function (assert) {
-    assert.expect(9);
     await page.visit({
       courseId: this.course.id,
       details: true,

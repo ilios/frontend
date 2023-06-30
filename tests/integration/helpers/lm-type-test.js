@@ -9,7 +9,6 @@ module('Integration | Helper | lm-type', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('link', async function (assert) {
-    assert.expect(1);
     const lm = { link: 'whatever' };
     this.set('lm', lm);
     await render(hbs`{{lm-type this.lm}}
@@ -18,7 +17,6 @@ module('Integration | Helper | lm-type', function (hooks) {
   });
 
   test('citation', async function (assert) {
-    assert.expect(1);
     const lm = { citation: 'whatever' };
     this.set('lm', lm);
     await render(hbs`{{lm-type this.lm}}
@@ -27,7 +25,6 @@ module('Integration | Helper | lm-type', function (hooks) {
   });
 
   test('file', async function (assert) {
-    assert.expect(1);
     const lm = { filename: 'whatever' };
     this.set('lm', lm);
     await render(hbs`{{lm-type this.lm}}

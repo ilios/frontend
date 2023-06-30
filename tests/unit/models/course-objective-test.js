@@ -13,7 +13,6 @@ module('Unit | Model | course objective', function (hooks) {
   });
 
   test('associatedVocabularies', async function (assert) {
-    assert.expect(7);
     const store = this.owner.lookup('service:store');
     const subject = store.createRecord('course-objective');
     const vocab1 = store.createRecord('vocabulary', { title: 'Zeppelin' });
@@ -38,7 +37,6 @@ module('Unit | Model | course objective', function (hooks) {
   });
 
   test('treeCompetencies', async function (assert) {
-    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const subject = store.createRecord('course-objective');
     const competency1 = store.createRecord('competency');

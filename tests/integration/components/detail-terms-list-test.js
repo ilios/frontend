@@ -12,7 +12,6 @@ module('Integration | Component | detail terms list', function (hooks) {
   setupMirage(hooks);
 
   test('list with terms', async function (assert) {
-    assert.expect(5);
     const school = this.server.create('school', {
       title: 'Medicine',
     });
@@ -64,7 +63,6 @@ module('Integration | Component | detail terms list', function (hooks) {
   });
 
   test('empty list', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school', {
       title: 'Medicine',
     });
@@ -151,7 +149,6 @@ module('Integration | Component | detail terms list', function (hooks) {
   });
 
   test('inactive vocabulary labeled as such in edit mode', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school', {
       title: 'Medicine',
     });

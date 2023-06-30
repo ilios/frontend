@@ -274,7 +274,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('postrequisite date and title are displayed', async function (assert) {
-    assert.expect(4);
     const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
     const tomorrow = today.plus({ day: 1 });
     const postReq = {
@@ -406,8 +405,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('for non ilms postrequisite date and title are displayed along with offering date', async function (assert) {
-    assert.expect(4);
-
     const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
     const tomorrow = today.plus({ day: 1 });
     const postReq = {
@@ -622,7 +619,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('non learners get link to session if session route exists', async function (assert) {
-    assert.expect(2);
     class CurrentUserMock extends Service {
       performsNonLearnerFunction = true;
       async getIsStudent() {
@@ -657,7 +653,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   todo(
     "non learners don't get link to session if session route doesn't exists",
     async function (assert) {
-      assert.expect(2);
       class CurrentUserMock extends Service {
         performsNonLearnerFunction = true;
         async getIsStudent() {

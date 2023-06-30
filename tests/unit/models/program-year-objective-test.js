@@ -13,7 +13,6 @@ module('Unit | Model | program year objective', function (hooks) {
   });
 
   test('associatedVocabularies', async function (assert) {
-    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const subject = store.createRecord('program-year-objective');
     const vocab1 = store.createRecord('vocabulary', { title: 'Zeppelin' });

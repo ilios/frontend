@@ -71,7 +71,6 @@ module('Integration | Component | taxonomy manager', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(20);
     this.set('assignableVocabularies', [this.vocabModel1, this.vocabModel2, this.vocabModel3]);
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
 
@@ -156,7 +155,6 @@ module('Integration | Component | taxonomy manager', function (hooks) {
   });
 
   test('switch vocabularies', async function (assert) {
-    assert.expect(10);
     this.vocabModel2.set('active', true);
     this.set('assignableVocabularies', [this.vocabModel1, this.vocabModel2]);
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
@@ -186,7 +184,6 @@ module('Integration | Component | taxonomy manager', function (hooks) {
   });
 
   test('filter terms', async function (assert) {
-    assert.expect(14);
     this.set('assignableVocabularies', [this.vocabModel1, this.vocabModel2]);
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
 
@@ -218,7 +215,6 @@ module('Integration | Component | taxonomy manager', function (hooks) {
   });
 
   test('given vocabulary is selected', async function (assert) {
-    assert.expect(5);
     this.vocabModel2.set('active', true);
 
     this.set('assignableVocabularies', [this.vocabModel1, this.vocabModel2, this.vocabModel3]);

@@ -55,7 +55,6 @@ module('Acceptance | Course - Terms', function (hooks) {
   });
 
   test('list terms', async function (assert) {
-    assert.expect(4);
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -95,7 +94,6 @@ module('Acceptance | Course - Terms', function (hooks) {
 
   test('save term changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(5);
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -115,7 +113,6 @@ module('Acceptance | Course - Terms', function (hooks) {
 
   test('cancel term changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(5);
     await page.visit({
       courseId: this.course.id,
       details: true,

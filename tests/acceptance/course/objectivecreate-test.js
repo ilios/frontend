@@ -16,13 +16,13 @@ module('Acceptance | Course - Objective Create', function (hooks) {
   });
 
   test('save new objective', async function (assert) {
+    assert.expect(9);
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
     });
     this.server.create('course-objective', { course });
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(9);
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({
@@ -62,7 +62,6 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     });
     this.server.create('course-objective', { course });
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(6);
     await page.visit({
       courseId: course.id,
       details: true,
@@ -93,7 +92,6 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     });
     this.server.create('course-objective', { course });
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(5);
     await page.visit({
       courseId: course.id,
       details: true,
@@ -123,7 +121,6 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       school: this.school,
     });
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(5);
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({

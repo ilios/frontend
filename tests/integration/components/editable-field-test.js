@@ -109,7 +109,6 @@ module('Integration | Component | editable field', function (hooks) {
   });
 
   test('focus when editor opens on input', async function (assert) {
-    assert.expect(1);
     this.set('value', 'lorem');
     this.set('label', 'Foo');
     await render(
@@ -126,7 +125,6 @@ module('Integration | Component | editable field', function (hooks) {
   });
 
   test('focus when editor opens on textarea', async function (assert) {
-    assert.expect(1);
     this.set('value', 'lorem');
     this.set('label', 'Foo Bar');
     await render(
@@ -158,7 +156,6 @@ module('Integration | Component | editable field', function (hooks) {
   });
 
   test('sends status info', async function (assert) {
-    assert.expect(3);
     this.set('status', false);
     await render(
       hbs`<EditableField

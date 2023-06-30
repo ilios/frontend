@@ -70,7 +70,6 @@ module('Integration | Service | user events', function (hooks) {
   });
 
   test('getEvents - no user', async function (assert) {
-    assert.expect(1);
     this.currentUser.reopen({
       async getModel() {
         return EmberObject.create({

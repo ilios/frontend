@@ -27,8 +27,6 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
 
   test('add and remove a new cohort', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(14);
-
     await page.visit({
       courseId: this.course.id,
       details: true,

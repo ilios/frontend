@@ -11,7 +11,6 @@ module('Integration | Component | click choice buttons', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    assert.expect(5);
     await render(hbs`<ClickChoiceButtons
       @toggle={{(noop)}}
       @firstChoicePicked={{true}}
@@ -32,7 +31,6 @@ module('Integration | Component | click choice buttons', function (hooks) {
   });
 
   test('it renders second choice picked', async function (assert) {
-    assert.expect(5);
     await render(hbs`<ClickChoiceButtons
       @toggle={{(noop)}}
       @firstChoicePicked={{false}}

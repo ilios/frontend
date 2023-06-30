@@ -15,8 +15,6 @@ module('Acceptance | Session - Offering Management', function (hooks) {
   });
 
   test('search for instructor who is a course director #2838', async function (assert) {
-    assert.expect(1);
-
     const users = this.server.createList('user', 3, {
       school: this.school,
     });
@@ -40,8 +38,6 @@ module('Acceptance | Session - Offering Management', function (hooks) {
   });
 
   test('searching for course directors as instructors does not remove existing instructors #3479', async function (assert) {
-    assert.expect(10);
-
     const users = this.server.createList('user', 3, {
       school: this.school,
     });

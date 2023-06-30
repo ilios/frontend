@@ -533,7 +533,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
     test('save terms', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      assert.expect(5);
       await page.visit({ courseId: this.course.id, details: true });
       assert.strictEqual(page.details.learningMaterials.current.length, 4);
       await page.details.learningMaterials.current[0].details();
@@ -561,7 +560,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
     test('cancel term changes', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      assert.expect(5);
       await page.visit({ courseId: this.course.id, details: true });
       assert.strictEqual(page.details.learningMaterials.current.length, 4);
       await page.details.learningMaterials.current[0].details();

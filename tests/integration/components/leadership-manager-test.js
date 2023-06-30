@@ -12,7 +12,6 @@ module('Integration | Component | leadership manager', function (hooks) {
   setupMirage(hooks);
 
   test('it renders with data', async function (assert) {
-    assert.expect(7);
     this.server.createList('user', 2);
     const users = (await this.owner.lookup('service:store').findAll('user')).slice();
     this.set('directors', [users[0]]);
@@ -48,7 +47,6 @@ module('Integration | Component | leadership manager', function (hooks) {
   });
 
   test('it renders without data', async function (assert) {
-    assert.expect(3);
     this.set('directors', []);
     this.set('administrators', []);
     this.set('studentAdvisors', []);
@@ -317,7 +315,6 @@ module('Integration | Component | leadership manager', function (hooks) {
   });
 
   test('disabled users are indicated with an icon', async function (assert) {
-    assert.expect(7);
     this.server.create('user', {
       enabled: true,
     });
@@ -357,8 +354,6 @@ module('Integration | Component | leadership manager', function (hooks) {
   });
 
   test('users are sorted by full name', async function (assert) {
-    assert.expect(12);
-
     this.server.create('user', { firstName: 'Aaron', lastName: 'Aardvark' });
     this.server.create('user', {
       firstName: 'Ursula',
