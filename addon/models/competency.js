@@ -21,7 +21,7 @@ export default class CompetencyModel extends Model {
   @hasMany('program-year', { async: true, inverse: 'competencies' })
   programYears;
 
-  @hasMany('program-year-objectives', { async: true, inverse: 'competency' })
+  @hasMany('program-year-objective', { async: true, inverse: 'competency' })
   programYearObjectives;
 
   get childCount() {
