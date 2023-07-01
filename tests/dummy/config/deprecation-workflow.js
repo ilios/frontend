@@ -13,6 +13,7 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'ember-data:deprecate-array-like' },
     { handler: 'silence', matchId: 'ember-data:deprecate-promise-many-array-behaviors' },
     { handler: 'silence', matchId: 'ember-data:no-a-with-array-like' },
+    { handler: 'silence', matchId: 'ember-data:deprecate-promise-proxies' },
     { handler: 'silence', matchId: 'ember-string.add-package' },
   ],
 };
