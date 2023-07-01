@@ -111,7 +111,12 @@ class SortBy {
   constructor(...args) {
     let [array] = args;
     if (typeof array.toArray === 'function') {
-      array = array.toArray();
+      if (typeof array.slice === 'function') {
+        //for ember data toArray still exists but is deprecated, we want slice if it's there
+        array = array.slice();
+      } else {
+        array = array.toArray();
+      }
     }
 
     this.array = [...array];
