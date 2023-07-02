@@ -3,6 +3,8 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class UserSearch extends Component {
   @service store;
@@ -12,12 +14,30 @@ export default class UserSearch extends Component {
   @tracked userResults = [];
   @tracked instructorGroupResults = [];
 
+  @cached
+  get currentlyActiveInstructorGroupsData() {
+    return new TrackedAsyncData(this.args.currentlyActiveInstructorGroups ?? []);
+  }
+
   get currentlyActiveInstructorGroups() {
-    return this.args.currentlyActiveInstructorGroups || [];
+    if (!this.currentlyActiveInstructorGroupsData.isResolved) {
+      return [];
+    }
+
+    return this.currentlyActiveInstructorGroupsData.value;
+  }
+
+  @cached
+  get currentlyActiveUsersData() {
+    return new TrackedAsyncData(this.args.currentlyActiveUsers ?? []);
   }
 
   get currentlyActiveUsers() {
-    return this.args.currentlyActiveUsers || [];
+    if (!this.currentlyActiveUsersData.isResolved) {
+      return [];
+    }
+
+    return this.currentlyActiveUsersData.value;
   }
 
   get availableInstructorGroups() {
