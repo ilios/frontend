@@ -16,12 +16,12 @@ module('Unit | Model | term', function (hooks) {
     assert.notOk(model.get('isTopLevel'));
   });
 
-  test('hasChildren', function (assert) {
+  test('hasChildren', async function (assert) {
     assert.expect(2);
     const model = this.store.createRecord('term');
     assert.notOk(model.get('hasChildren'));
     const child = this.store.createRecord('term', { id: 1, parent: model });
-    model.get('children').pushObject(child);
+    (await model.children).push(child);
     assert.ok(model.get('hasChildren'));
   });
 
@@ -124,12 +124,12 @@ module('Unit | Model | term', function (hooks) {
     });
   });
 
-  test('childCount', function (assert) {
+  test('childCount', async function (assert) {
     assert.expect(2);
     const model = this.store.createRecord('term');
     assert.strictEqual(model.get('childCount'), 0);
     const child = this.store.createRecord('term', { id: 1, parent: model });
-    model.get('children').pushObject(child);
+    (await model.children).push(child);
     assert.ok(model.get('childCount'), 1);
   });
 });

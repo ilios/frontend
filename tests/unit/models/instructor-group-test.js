@@ -17,22 +17,18 @@ module('Unit | Model | InstructorGroup', function (hooks) {
     const session3 = store.createRecord('session', { course: course2 });
     const session4 = store.createRecord('session', { course: course3 });
 
-    model
-      .get('offerings')
-      .pushObjects([
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session2 }),
-        store.createRecord('offering', { session: session2 }),
-        store.createRecord('offering', { session: session3 }),
-      ]);
-    model
-      .get('ilmSessions')
-      .pushObjects([
-        store.createRecord('ilmSession', { session: session3 }),
-        store.createRecord('ilmSession', { session: session4 }),
-      ]);
+    (await model.offerings).push(
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session2 }),
+      store.createRecord('offering', { session: session2 }),
+      store.createRecord('offering', { session: session3 })
+    );
+    (await model.ilmSessions).push(
+      store.createRecord('ilmSession', { session: session3 }),
+      store.createRecord('ilmSession', { session: session4 })
+    );
     const courses = await waitForResource(model, 'courses');
     assert.strictEqual(courses.length, 3);
     assert.ok(courses.includes(course1));
@@ -48,22 +44,18 @@ module('Unit | Model | InstructorGroup', function (hooks) {
     const session3 = store.createRecord('session');
     const session4 = store.createRecord('session');
 
-    model
-      .get('offerings')
-      .pushObjects([
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session2 }),
-        store.createRecord('offering', { session: session2 }),
-        store.createRecord('offering', { session: session3 }),
-      ]);
-    model
-      .get('ilmSessions')
-      .pushObjects([
-        store.createRecord('ilmSession', { session: session3 }),
-        store.createRecord('ilmSession', { session: session4 }),
-      ]);
+    (await model.offerings).push(
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session2 }),
+      store.createRecord('offering', { session: session2 }),
+      store.createRecord('offering', { session: session3 })
+    );
+    (await model.ilmSessions).push(
+      store.createRecord('ilmSession', { session: session3 }),
+      store.createRecord('ilmSession', { session: session4 })
+    );
     const sessions = await waitForResource(model, 'sessions');
     assert.strictEqual(sessions.length, 4);
     assert.ok(sessions.includes(session1));
@@ -80,7 +72,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
     const user1 = store.createRecord('user', { id: 1, instructorGroups: [instructorGroup] });
     const user2 = store.createRecord('user', { id: 2, instructorGroups: [instructorGroup] });
 
-    instructorGroup.get('users').pushObjects([user1, user2]);
+    (await instructorGroup.users).push(user1, user2);
     assert.strictEqual(await waitForResource(instructorGroup, 'usersCount'), 2);
   });
 });

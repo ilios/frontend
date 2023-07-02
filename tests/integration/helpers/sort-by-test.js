@@ -268,14 +268,12 @@ module('Integration | Helper | sort-by', function (hooks) {
     let store = this.owner.lookup('service:store');
     let learnerGroup = store.createRecord('learnerGroup');
 
-    learnerGroup
-      .get('users')
-      .pushObjects([
-        store.createRecord('user', { firstName: 'c' }),
-        store.createRecord('user', { firstName: 'b' }),
-        store.createRecord('user', { firstName: 'a' }),
-      ]);
     let users = await learnerGroup.users;
+    users.push(
+      store.createRecord('user', { firstName: 'a' }),
+      store.createRecord('user', { firstName: 'b' }),
+      store.createRecord('user', { firstName: 'c' })
+    );
 
     this.set('users', users);
 

@@ -16,7 +16,7 @@ module('Integration | Helper | map-by', function (hooks) {
       {{~#each (map-by "name" this.array) as |name|~}}
         {{~name~}}
       {{~/each~}}
-    
+
 `);
 
     assert.dom().hasText('abc', 'name property is mapped');
@@ -33,7 +33,7 @@ module('Integration | Helper | map-by', function (hooks) {
       {{~#each (map-by "firstName" this.array) as |name|~}}
         {{~name~}}
       {{~/each~}}
-    
+
 `);
 
     assert.dom().hasText('Janusz', 'first name property is mapped');
@@ -48,7 +48,7 @@ module('Integration | Helper | map-by', function (hooks) {
       {{~#each (map-by "name" this.array) as |name|~}}
         {{~name~}}
       {{~/each~}}
-    
+
 `);
 
     run(() => array.pushObject({ name: 'd' }));
@@ -70,7 +70,7 @@ module('Integration | Helper | map-by', function (hooks) {
       {{~#each (map-by this.property this.array) as |name|~}}
         {{~name~}}
       {{~/each~}}
-    
+
 `);
 
     this.set('property', 'x');
@@ -85,7 +85,7 @@ module('Integration | Helper | map-by', function (hooks) {
       {{~#each (map-by "name" this.array) as |name|~}}
         {{~name~}}
       {{~/each~}}
-    
+
 `);
 
     assert.dom().hasText('', 'this is all that will render, but there is no error');
@@ -98,7 +98,7 @@ module('Integration | Helper | map-by', function (hooks) {
       {{~#each (map-by "name" this.array) as |name|~}}
         {{~name~}}
       {{~/each~}}
-    
+
 `);
 
     assert.dom().hasText('', 'this is all that will render, but there is no error');
@@ -108,14 +108,12 @@ module('Integration | Helper | map-by', function (hooks) {
     let store = this.owner.lookup('service:store');
     let learnerGroup = store.createRecord('learnerGroup');
 
-    learnerGroup
-      .get('users')
-      .pushObjects([
-        store.createRecord('user', { firstName: 'a' }),
-        store.createRecord('user', { firstName: 'b' }),
-        store.createRecord('user', { firstName: 'c' }),
-      ]);
     let users = await learnerGroup.users;
+    users.push(
+      store.createRecord('user', { firstName: 'a' }),
+      store.createRecord('user', { firstName: 'b' }),
+      store.createRecord('user', { firstName: 'c' })
+    );
 
     this.set('users', users);
 
@@ -123,7 +121,7 @@ module('Integration | Helper | map-by', function (hooks) {
       {{~#each (map-by "firstName" this.users) as |name|~}}
         {{~name~}}
       {{~/each~}}
-    
+
 `);
 
     assert.dom().hasText('abc', 'first name property is mapped');

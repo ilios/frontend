@@ -19,16 +19,14 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const session1 = store.createRecord('session', { course: course1 });
     const session2 = store.createRecord('session', { course: course1 });
     const session3 = store.createRecord('session', { course: course2 });
-    model
-      .get('offerings')
-      .pushObjects([
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session2 }),
-        store.createRecord('offering', { session: session2 }),
-        store.createRecord('offering', { session: session3 }),
-      ]);
+    (await model.offerings).push(
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session2 }),
+      store.createRecord('offering', { session: session2 }),
+      store.createRecord('offering', { session: session3 })
+    );
 
     const courses = await waitForResource(model, 'courses');
     assert.strictEqual(courses.length, 2);
@@ -45,22 +43,18 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const session3 = store.createRecord('session');
     const session4 = store.createRecord('session');
 
-    model
-      .get('offerings')
-      .pushObjects([
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session1 }),
-        store.createRecord('offering', { session: session2 }),
-        store.createRecord('offering', { session: session2 }),
-        store.createRecord('offering', { session: session3 }),
-      ]);
-    model
-      .get('ilmSessions')
-      .pushObjects([
-        store.createRecord('ilmSession', { session: session3 }),
-        store.createRecord('ilmSession', { session: session4 }),
-      ]);
+    (await model.offerings).push(
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session1 }),
+      store.createRecord('offering', { session: session2 }),
+      store.createRecord('offering', { session: session2 }),
+      store.createRecord('offering', { session: session3 })
+    );
+    (await model.ilmSessions).push(
+      store.createRecord('ilmSession', { session: session3 }),
+      store.createRecord('ilmSession', { session: session4 })
+    );
     const sessions = await waitForResource(model, 'sessions');
     assert.strictEqual(sessions.length, 4);
     assert.ok(sessions.includes(session1));
@@ -94,8 +88,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       users: [user5],
       children: [subSubGroup1],
     });
-    learnerGroup.get('users').pushObjects([user1, user2, user3, user4, user5]);
-    learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
+    (await learnerGroup.users).push(user1, user2, user3, user4, user5);
+    (await learnerGroup.children).push(subGroup1, subGroup2);
 
     const allDescendantUsers = await waitForResource(learnerGroup, 'allDescendantUsers');
     assert.strictEqual(allDescendantUsers.length, 5);
@@ -131,8 +125,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       users: [user5],
       children: [subSubGroup1],
     });
-    learnerGroup.get('users').pushObjects([user1, user2, user3, user4, user5]);
-    learnerGroup.get('children').pushObjects([subGroup1, subGroup2]);
+    (await learnerGroup.users).push(user1, user2, user3, user4, user5);
+    (await learnerGroup.children).push(subGroup1, subGroup2);
 
     const allDescendantUsers = await learnerGroup.getAllDescendantUsers();
     assert.strictEqual(allDescendantUsers.length, 5);
@@ -237,14 +231,14 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const user1 = store.createRecord('user');
     const user2 = store.createRecord('user');
     const user3 = store.createRecord('user');
-    learnerGroup.get('instructors').pushObject(user1, user2);
+    (await learnerGroup.instructors).push(user1, user2);
     const instructorGroup1 = store.createRecord('instructor-group', {
       users: [user2],
     });
     const instructorGroup2 = store.createRecord('instructor-group', {
       users: [user3],
     });
-    learnerGroup.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
+    (await learnerGroup.instructorGroups).push(instructorGroup1, instructorGroup2);
 
     allInstructors = await waitForResource(learnerGroup, 'allInstructors');
     assert.strictEqual(allInstructors.length, 3);
@@ -254,11 +248,11 @@ module('Unit | Model | LearnerGroup', function (hooks) {
 
     const user4 = store.createRecord('user');
     const user5 = store.createRecord('user');
-    learnerGroup.get('instructors').pushObject(user4);
+    (await learnerGroup.instructors).push(user4);
     const instructorGroup3 = store.createRecord('instructor-group', {
       users: [user5],
     });
-    learnerGroup.get('instructorGroups').pushObject(instructorGroup3);
+    (await learnerGroup.instructorGroups).push(instructorGroup3);
 
     allInstructors = await waitForResource(learnerGroup, 'allInstructors');
     assert.strictEqual(allInstructors.length, 5);
@@ -468,7 +462,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     const learner = store.createRecord('user', { id: 1 });
-    learnerGroup.get('users').pushObject(learner);
+    (await learnerGroup.users).push(learner);
     const hasLearners = await waitForResource(learnerGroup, 'hasLearnersInGroupOrSubgroups');
     assert.ok(hasLearners);
   });
@@ -481,7 +475,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       id: 2,
       parent: learnerGroup,
     });
-    learnerGroup.get('children').pushObject(subgroup);
+    (await learnerGroup.children).push(subgroup);
     const hasLearners = await waitForResource(learnerGroup, 'hasLearnersInGroupOrSubgroups');
     assert.notOk(hasLearners);
   });
@@ -497,7 +491,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: learnerGroup,
     });
 
-    learnerGroup.get('children').pushObject(subgroup);
+    (await learnerGroup.children).push(subgroup);
     assert.ok(await waitForResource(learnerGroup, 'hasLearnersInGroupOrSubgroups'));
   });
 
@@ -512,9 +506,9 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       users: [learner],
       parent: learnerGroup,
     });
-    learnerGroup.get('children').pushObject(subgroup);
+    (await learnerGroup.children).push(subgroup);
 
-    learnerGroup.get('users').pushObject(learner2);
+    (await learnerGroup.users).push(learner2);
     assert.ok(await waitForResource(learnerGroup, 'hasLearnersInGroupOrSubgroups'));
   });
 
@@ -537,8 +531,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: subgroup,
       users: [user4],
     });
-    learnerGroup.get('users').pushObjects([user1, user2, user3, user4]);
-    learnerGroup.get('children').pushObject(subgroup);
+    (await learnerGroup.users).push(user1, user2, user3, user4);
+    (await learnerGroup.children).push(subgroup);
     const users = await waitForResource(learnerGroup, 'usersOnlyAtThisLevel');
     assert.strictEqual(users.length, 1);
     assert.ok(users.includes(user2));
@@ -563,8 +557,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: subgroup,
       users: [user4],
     });
-    learnerGroup.get('users').pushObjects([user1, user2, user3, user4]);
-    learnerGroup.get('children').pushObject(subgroup);
+    (await learnerGroup.users).push(user1, user2, user3, user4);
+    (await learnerGroup.children).push(subgroup);
     const users = await learnerGroup.getUsersOnlyAtThisLevel();
     assert.strictEqual(users.length, 1);
     assert.ok(users.includes(user2));
@@ -674,7 +668,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const user1 = store.createRecord('user', { id: 1, learnerGroups: [learnerGroup] });
     const user2 = store.createRecord('user', { id: 2, learnerGroups: [learnerGroup] });
 
-    learnerGroup.get('users').pushObjects([user1, user2]);
+    (await learnerGroup.users).push(user1, user2);
     assert.strictEqual(await waitForResource(learnerGroup, 'usersCount'), 2);
   });
 
@@ -686,7 +680,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const group1 = store.createRecord('learner-group', { id: 1, parent: learnerGroup });
     const group2 = store.createRecord('learner-group', { id: 2, parent: learnerGroup });
 
-    learnerGroup.get('children').pushObjects([group1, group2]);
+    (await learnerGroup.children).push(group1, group2);
     assert.strictEqual(learnerGroup.childrenCount, 2);
   });
 
@@ -707,8 +701,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const subGroup2 = store.createRecord('learner-group', {
       parent: learnerGroup,
     });
-    learnerGroup.get('children').pushObject(subGroup1);
-    learnerGroup.get('children').pushObject(subGroup2);
+    (await learnerGroup.children).push(subGroup1);
+    (await learnerGroup.children).push(subGroup2);
 
     const hasNeeds = await waitForResource(learnerGroup, 'hasSubgroupsInNeedOfAccommodation');
     assert.notOk(hasNeeds);
@@ -725,8 +719,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: learnerGroup,
       needsAccommodation: true,
     });
-    learnerGroup.get('children').pushObject(subGroup1);
-    learnerGroup.get('children').pushObject(subGroup2);
+    (await learnerGroup.children).push(subGroup1);
+    (await learnerGroup.children).push(subGroup2);
     const hasNeeds = await waitForResource(learnerGroup, 'hasSubgroupsInNeedOfAccommodation');
     assert.ok(hasNeeds);
   });
@@ -741,24 +735,24 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const subGroup2 = store.createRecord('learner-group', {
       parent: learnerGroup,
     });
-    learnerGroup.get('children').pushObject(subGroup1);
-    learnerGroup.get('children').pushObject(subGroup2);
+    (await learnerGroup.children).push(subGroup1);
+    (await learnerGroup.children).push(subGroup2);
     const subSubGroup1 = store.createRecord('learner-group', {
       parent: subGroup1,
     });
     const subSubGroup2 = store.createRecord('learner-group', {
       parent: subGroup1,
     });
-    subGroup1.get('children').pushObject(subSubGroup1);
-    subGroup1.get('children').pushObject(subSubGroup2);
+    (await subGroup1.children).push(subSubGroup1);
+    (await subGroup1.children).push(subSubGroup2);
     const subSubGroup3 = store.createRecord('learner-group', {
       parent: subGroup2,
     });
     const subSubGroup4 = store.createRecord('learner-group', {
       parent: subGroup2,
     });
-    subGroup2.get('children').pushObject(subSubGroup3);
-    subGroup2.get('children').pushObject(subSubGroup4);
+    (await subGroup2.children).push(subSubGroup3);
+    (await subGroup2.children).push(subSubGroup4);
     const hasNeeds = await waitForResource(learnerGroup, 'hasSubgroupsInNeedOfAccommodation');
     assert.notOk(hasNeeds);
   });
@@ -773,16 +767,16 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const subGroup2 = store.createRecord('learner-group', {
       parent: learnerGroup,
     });
-    learnerGroup.get('children').pushObject(subGroup1);
-    learnerGroup.get('children').pushObject(subGroup2);
+    (await learnerGroup.children).push(subGroup1);
+    (await learnerGroup.children).push(subGroup2);
     const subSubGroup1 = store.createRecord('learner-group', {
       parent: subGroup1,
     });
     const subSubGroup2 = store.createRecord('learner-group', {
       parent: subGroup1,
     });
-    subGroup1.get('children').pushObject(subSubGroup1);
-    subGroup1.get('children').pushObject(subSubGroup2);
+    (await subGroup1.children).push(subSubGroup1);
+    (await subGroup1.children).push(subSubGroup2);
     const subSubGroup3 = store.createRecord('learner-group', {
       parent: subGroup2,
     });
@@ -790,8 +784,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: subGroup2,
       needsAccommodation: true,
     });
-    subGroup2.get('children').pushObject(subSubGroup3);
-    subGroup2.get('children').pushObject(subSubGroup4);
+    (await subGroup2.children).push(subSubGroup3);
+    (await subGroup2.children).push(subSubGroup4);
     const hasNeeds = await waitForResource(learnerGroup, 'hasSubgroupsInNeedOfAccommodation');
     assert.ok(hasNeeds);
   });
