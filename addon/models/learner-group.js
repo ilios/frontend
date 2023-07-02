@@ -479,7 +479,7 @@ export default class LearnerGroup extends Model {
       const users = await groups[i].users;
       const ids = mapBy(users, 'id');
       if (!ids.includes(userId)) {
-        users.pushObject(user);
+        users.push(user);
         modifiedGroups.push(groups[i]);
       }
     }
