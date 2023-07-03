@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, todo } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -57,5 +57,15 @@ module('Integration | Component | learner-group/calendar', function (hooks) {
     assert.strictEqual(component.calendar.events.length, 1);
     await component.showSubgroups.toggle.click();
     assert.strictEqual(component.calendar.events.length, 2);
+  });
+
+  todo('in-draft event is indicated as such', function () {
+    // @todo implement this once our page object is up to the job [ST 2023/07/03].
+    // @see https://github.com/ilios/common/pull/3430
+  });
+
+  todo('scheduled event is indicated as such', function () {
+    // @todo implement this once our page object is up to the job [ST 2023/07/03].
+    // @see https://github.com/ilios/common/pull/3430
   });
 });
