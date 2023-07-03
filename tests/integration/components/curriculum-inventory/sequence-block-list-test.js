@@ -160,14 +160,15 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     const parentBlockModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-sequence-block', parentBlock.id);
-    const children = (await parentBlockModel.children).slice();
-    parentBlockModel.set('children', [...children, this.sequenceBlock1, this.sequenceBlock2]);
+    const children = [this.sequenceBlock1, this.sequenceBlock2];
+    parentBlockModel.set('children', children);
     this.set('parent', parentBlockModel);
+    this.set('sequenceBlocks', children);
 
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @parent={{this.parent}}
-      @report={{await this.parent.report}}
-      @sequenceBlocks={{await this.parent.children}}
+      @report={{this.report}}
+      @sequenceBlocks={{this.sequenceBlocks}}
       @canUpdate={{true}}
       @remove={{(noop)}}
     />`);
@@ -276,7 +277,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     this.set('parent', parentBlockModel);
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @parent={{this.parent}}
-      @report={{await this.parent.report}}
+      @report={{this.report}}
       @sequenceBlocks={{(array)}}
     />`);
     assert.strictEqual(

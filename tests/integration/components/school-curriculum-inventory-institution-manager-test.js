@@ -15,7 +15,7 @@ module(
 
     test('it renders', async function (assert) {
       const school = this.server.create('school');
-      this.server.create('curriculum-inventory-institution', {
+      const institution = this.server.create('curriculum-inventory-institution', {
         school,
         name: 'School of Rocket Surgery',
         aamcCode: '12345',
@@ -27,11 +27,14 @@ module(
       });
 
       const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
-
+      const institutionModel = await this.owner
+        .lookup('service:store')
+        .findRecord('curriculum-inventory-institution', institution.id);
       this.set('school', schoolModel);
       this.set('canUpdate', true);
+      this.set('institution', institutionModel);
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await this.school.curriculumInventoryInstitution}}
+      @institution={{this.institution}}
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
     />`);
@@ -64,7 +67,7 @@ module(
       this.set('school', schoolModel);
       this.set('canUpdate', true);
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await this.school.curriculumInventoryInstitution}}
+      @institution={{this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
     />`);
@@ -93,7 +96,7 @@ module(
         assert.false(isManaging);
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await this.school.curriculumInventoryInstitution}}
+      @institution={{this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
       @manage={{this.manage}}
     />`);
@@ -103,7 +106,7 @@ module(
     test('save existing institution', async function (assert) {
       assert.expect(8);
       const school = this.server.create('school');
-      this.server.create('curriculum-inventory-institution', {
+      const institution = this.server.create('curriculum-inventory-institution', {
         school,
         name: 'School of Rocket Surgery',
         aamcCode: '12345',
@@ -115,7 +118,9 @@ module(
       });
 
       const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
-
+      const institutionModel = await this.owner
+        .lookup('service:store')
+        .findRecord('curriculum-inventory-institution', institution.id);
       const newName = 'Rocket Surgery Academy';
       const newAamcCode = '11111';
       const newAddressStreet = 'Yellow Brick Road 1';
@@ -125,6 +130,7 @@ module(
       const newAddressCountryCode = 'CA';
 
       this.set('school', schoolModel);
+      this.set('institution', institutionModel);
       this.set('canUpdate', true);
       this.set('saveInstitution', (institution) => {
         assert.strictEqual(institution.get('name'), newName);
@@ -137,7 +143,7 @@ module(
         assert.strictEqual(institution.belongsTo('school').id(), schoolModel.get('id'));
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await this.school.curriculumInventoryInstitution}}
+      @institution={{this.institution}}
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
       @save={{this.saveInstitution}}
@@ -168,6 +174,7 @@ module(
       const newAddressCountryCode = 'US';
 
       this.set('school', schoolModel);
+
       this.set('canUpdate', true);
       this.set('saveInstitution', (institution) => {
         assert.strictEqual(institution.get('name'), newName);
@@ -180,7 +187,6 @@ module(
         assert.notOk(institution.belongsTo('school').id());
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
       @save={{this.saveInstitution}}
@@ -205,7 +211,6 @@ module(
       this.set('canUpdate', true);
 
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
     />`);
@@ -263,7 +268,7 @@ module(
       this.set('canUpdate', false);
 
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await this.school.curriculumInventoryInstitution}}
+      @institution={{this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
       @manage={{(noop)}}
     />`);

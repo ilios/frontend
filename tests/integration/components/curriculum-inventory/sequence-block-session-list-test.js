@@ -199,7 +199,7 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{await this.sessions}}
+      @sessions={{this.sessions}}
       @sequenceBlock={{this.sequenceBlock}}
       @sortBy={{this.sortBy}}
       @setSortBy={{(noop)}}
@@ -229,7 +229,7 @@ module(
         assert.strictEqual(what, 'title', 'Sorting callback gets called for session titles.');
       });
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{await this.sessions}}
+      @sessions={{this.sessions}}
       @sequenceBlock={{this.sequenceBlock}}
       @sortBy={{this.sortBy}}
       @setSortBy={{this.setSortBy}}
@@ -295,7 +295,7 @@ module(
         );
       });
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{await this.sessions}}
+      @sessions={{this.sessions}}
       @sequenceBlock={{this.sequenceBlock}}
       @sortBy={{this.sortBy}}
       @setSortBy={{this.setSortBy}}
