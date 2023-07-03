@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -51,8 +51,7 @@ module('Integration | Component | learner-group/calendar', function (hooks) {
     assert.strictEqual(component.calendar.events.length, 1);
   });
 
-  // @todo this interaction is currently untestable using mirage/models. fix this [ST 2022/06/29]
-  skip('shows subgroup events', async function (assert) {
+  test('shows subgroup events', async function (assert) {
     this.set('learnerGroup', this.learnerGroup);
     await render(hbs`<LearnerGroup::Calendar @learnerGroup={{this.learnerGroup}} />`);
     assert.strictEqual(component.calendar.events.length, 1);
