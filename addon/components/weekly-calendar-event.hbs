@@ -20,12 +20,13 @@
         @icon="circle-exclamation"
         class="recently-updated-icon"
         @title={{t "general.newUpdates"}}
+        data-test-recently-updated-icon
       />
     {{/if}}
     {{#if (not @event.isPublished)}}
-      <FaIcon @icon="file-signature" />
+      <FaIcon @icon="file-signature" data-test-published-icon />
     {{else if @event.isScheduled}}
-      <FaIcon @icon="clock" />
+      <FaIcon @icon="clock" data-test-scheduled-icon />
     {{/if}}
   </span>
   <span class="ilios-calendar-event-time">
