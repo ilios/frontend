@@ -24,7 +24,7 @@
       />
     {{/if}}
     {{#if (not @event.isPublished)}}
-      <FaIcon @icon="file-signature" data-test-published-icon />
+      <FaIcon @icon="file-signature" data-test-draft-icon />
     {{else if @event.isScheduled}}
       <FaIcon @icon="clock" data-test-scheduled-icon />
     {{/if}}

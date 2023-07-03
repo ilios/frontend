@@ -1,4 +1,4 @@
-import { attribute, create, hasClass, text } from 'ember-cli-page-object';
+import { attribute, create, hasClass, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-weekly-calendar-event]',
@@ -12,6 +12,9 @@ const definition = {
   isFifthDayOfWeek: hasClass('day-5'),
   isSixthDayOfWeek: hasClass('day-6'),
   isSeventhDayOfWeek: hasClass('day-7'),
+  isScheduled: isPresent('[data-test-scheduled-icon]'),
+  isDraft: isPresent('[data-test-draft-icon]'),
+  wasRecentlyUpdated: isPresent('[data-test-recently-updated-icon]'),
 };
 
 export default definition;

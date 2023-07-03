@@ -452,4 +452,82 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
       assert.strictEqual(component.time, '12:00 PM');
     });
   });
+
+  module('iconography', function () {
+    test('recently updated', async function (assert) {
+      this.createEvent(
+        '2020-02-10 10:40:00',
+        '2020-02-10 12:30:00',
+        DateTime.now().toFormat('yyyy-LL-dd hh:mm:ss'),
+        false,
+        true
+      );
+      const events = this.server.db.userevents;
+      this.set('event', events[0]);
+      this.set('events', events);
+      await render(hbs`<WeeklyCalendarEvent
+        @event={{this.event}}
+        @allDayEvents={{this.events}}
+      />
+`);
+      assert.ok(component.wasRecentlyUpdated);
+    });
+
+    test('not recently updated', async function (assert) {
+      this.createEvent(
+        '2020-02-10 10:40:00',
+        '2020-02-10 12:30:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      const events = this.server.db.userevents;
+      this.set('event', events[0]);
+      this.set('events', events);
+      await render(hbs`<WeeklyCalendarEvent
+        @event={{this.event}}
+        @allDayEvents={{this.events}}
+      />
+`);
+      assert.notOk(component.wasRecentlyUpdated);
+    });
+
+    test('scheduled', async function (assert) {
+      this.createEvent(
+        '2020-02-10 10:40:00',
+        '2020-02-10 12:30:00',
+        '2012-01-09 08:00:00',
+        true,
+        true
+      );
+      const events = this.server.db.userevents;
+      this.set('event', events[0]);
+      this.set('events', events);
+      await render(hbs`<WeeklyCalendarEvent
+        @event={{this.event}}
+        @allDayEvents={{this.events}}
+      />
+`);
+      assert.ok(component.isScheduled);
+    });
+
+    test('draft', async function (assert) {
+      this.createEvent(
+        '2020-02-10 10:40:00',
+        '2020-02-10 12:30:00',
+        '2012-01-09 08:00:00',
+        true,
+        false
+      );
+      const events = this.server.db.userevents;
+      this.set('event', events[0]);
+      this.set('events', events);
+      await render(hbs`<WeeklyCalendarEvent
+        @event={{this.event}}
+        @allDayEvents={{this.events}}
+      />
+`);
+      assert.ok(component.isDraft);
+    });
+  });
 });
