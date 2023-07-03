@@ -24,7 +24,7 @@
                   {{term.id}}
                   {{#if term.deleted}}
                     - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
-                  {{else if term.trees}}
+                  {{else if term.trees.length}}
                     - <MeshDescriptorLastTreeNumber @descriptor={{term}} />
                   {{/if}}
                 </span>
@@ -38,7 +38,7 @@
               {{term.id}}
                 {{#if term.deleted}}
                   - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
-                {{else if term.trees}}
+                {{else if term.trees.length}}
                   - <MeshDescriptorLastTreeNumber @descriptor={{term}} />
                 {{/if}}
               </span>
@@ -92,7 +92,7 @@
                 </span>
                 <span class="descriptor-id">
                   {{term.id}}
-                  {{#if term.trees}}
+                  {{#if term.trees.length}}
                     - <MeshDescriptorLastTreeNumber @descriptor={{term}} />
                   {{/if}}
                 </span>

@@ -9,22 +9,22 @@ module('Unit | Model | Program', function (hooks) {
     this.store = this.owner.lookup('service:store');
   });
 
-  test('hasCurriculumInventoryReports', function (assert) {
+  test('hasCurriculumInventoryReports', async function (assert) {
     const model = this.store.createRecord('program', { id: 1 });
     assert.notOk(model.hasCurriculumInventoryReports);
     const report = this.store.createRecord('curriculum-inventory-report', {
       id: 1,
       program: model,
     });
-    model.curriculumInventoryReports.pushObject(report);
+    (await model.curriculumInventoryReports).push(report);
     assert.ok(model.hasCurriculumInventoryReports);
   });
 
-  test('hasProgramYears', function (assert) {
+  test('hasProgramYears', async function (assert) {
     const model = this.store.createRecord('program', { id: 1 });
     assert.notOk(model.hasProgramYears);
     const programYear = this.store.createRecord('program-year', { id: 1, program: model });
-    model.programYears.pushObject(programYear);
+    (await model.programYears).push(programYear);
     assert.ok(model.hasProgramYears);
   });
 
@@ -38,7 +38,7 @@ module('Unit | Model | Program', function (hooks) {
     const programYear2 = this.store.createRecord('program-year', {
       cohort: cohort2,
     });
-    model.programYears.pushObjects([programYear1, programYear2]);
+    (await model.programYears).push(programYear1, programYear2);
     const cohorts = await waitForResource(model, 'cohorts');
     assert.strictEqual(cohorts.length, 2);
     assert.ok(cohorts.includes(cohort1));
@@ -53,16 +53,17 @@ module('Unit | Model | Program', function (hooks) {
     const cohort1 = this.store.createRecord('cohort', {
       courses: [course1, course2],
     });
-    const programYear1 = this.store.createRecord('program-year', {
+    this.store.createRecord('program-year', {
       cohort: cohort1,
+      program: model,
     });
     const cohort2 = this.store.createRecord('cohort', {
       courses: [course1, course3],
     });
-    const programYear2 = this.store.createRecord('program-year', {
+    this.store.createRecord('program-year', {
       cohort: cohort2,
+      program: model,
     });
-    model.programYears.pushObjects([programYear1, programYear2]);
     const courses = await waitForResource(model, 'courses');
     assert.strictEqual(courses.length, 3);
     assert.ok(courses.includes(course1));

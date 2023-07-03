@@ -61,6 +61,15 @@ export default class PrintCourseComponent extends Component {
     return this.meshDescriptorsData.isResolved ? this.meshDescriptorsData.value : [];
   }
 
+  @cached
+  get termsData() {
+    return new TrackedAsyncData(this.args.course.terms);
+  }
+
+  get terms() {
+    return this.termsData.isResolved ? this.termsData.value : [];
+  }
+
   load = dropTask(async () => {
     this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'

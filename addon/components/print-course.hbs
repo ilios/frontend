@@ -102,7 +102,7 @@
         {{#each @course.associatedVocabularies as |vocab|}}
           <DetailTermsList
             @vocabulary={{vocab}}
-            @terms={{@course.terms}}
+            @terms={{this.terms}}
             @canEdit={{false}}
           />
         {{/each}}

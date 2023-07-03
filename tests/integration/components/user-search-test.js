@@ -184,9 +184,9 @@ module('Integration | Component | user search', function (hooks) {
 
   test('reads currentlyActiveInstructorGroups from a promise', async function (assert) {
     this.server.create('instructor-group');
-    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
-    this.set('availableInstructorGroups', instructorGroups);
-    this.set('currentlyActiveInstructorGroups', instructorGroups);
+    const igPromise = this.owner.lookup('service:store').findAll('instructor-group');
+    this.set('availableInstructorGroups', await igPromise);
+    this.set('currentlyActiveInstructorGroups', igPromise);
     await render(hbs`<UserSearch
       @availableInstructorGroups={{this.availableInstructorGroups}}
       @currentlyActiveInstructorGroups={{this.currentlyActiveInstructorGroups}}

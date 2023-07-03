@@ -164,7 +164,7 @@
         {{#each @session.associatedVocabularies as |vocab|}}
           <DetailTermsList
             @vocabulary={{vocab}}
-            @terms={{@session.terms}}
+            @terms={{this.terms}}
             @canEdit={{false}}
           />
         {{/each}}

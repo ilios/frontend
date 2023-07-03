@@ -52,7 +52,7 @@
                   <span class="deprecated">
                     ({{t "general.deprecatedAbbreviation"}})
                   </span>
-                {{else if term.trees}}
+                {{else if term.trees.length}}
                   - <MeshDescriptorLastTreeNumber @descriptor={{term}} />
                 {{/if}}
               </span>

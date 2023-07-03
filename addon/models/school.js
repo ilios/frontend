@@ -85,7 +85,7 @@ export default class School extends Model {
       name,
     });
     const configurations = await this.configurations;
-    configurations.pushObject(config);
+    configurations.push(config);
 
     return config;
   }
