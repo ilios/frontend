@@ -1,8 +1,10 @@
-import { create, hasClass, text } from 'ember-cli-page-object';
+import { attribute, create, hasClass, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-weekly-calendar-event]',
   name: text('[data-test-name]'),
+  time: text('[data-test-time]'),
+  style: attribute('style'),
   isFirstDayOfWeek: hasClass('day-1'),
   isSecondDayOfWeek: hasClass('day-2'),
   isThirdDayOfWeek: hasClass('day-3'),
