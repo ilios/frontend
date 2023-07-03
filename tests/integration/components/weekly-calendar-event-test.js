@@ -12,15 +12,15 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
-  this.createEvent = function (startDate, endDate) {
-    const lastModified = '2012-01-09 08:00:00';
+  this.createEvent = function (startDate, endDate, lastModified, isScheduled, isPublished) {
     const color = '#00cc65';
-
     this.server.create('userevent', {
       startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
       endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
       color,
       lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toISO(),
+      isPublished,
+      isScheduled,
     });
   };
 
@@ -37,12 +37,48 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
 
   module('A complicated event list', function (hooks) {
     hooks.beforeEach(function () {
-      this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00');
-      this.createEvent('2019-01-09 08:00:00', '2019-01-09 11:30:00');
-      this.createEvent('2019-01-09 08:10:00', '2019-01-09 10:00:00');
-      this.createEvent('2019-01-09 10:00:00', '2019-01-09 12:00:00');
-      this.createEvent('2019-01-09 10:10:00', '2019-01-09 12:00:00');
-      this.createEvent('2019-01-09 12:00:00', '2019-01-09 13:00:00');
+      this.createEvent(
+        '2019-01-09 08:00:00',
+        '2019-01-09 09:00:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2019-01-09 08:00:00',
+        '2019-01-09 11:30:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2019-01-09 08:10:00',
+        '2019-01-09 10:00:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2019-01-09 10:00:00',
+        '2019-01-09 12:00:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2019-01-09 10:10:00',
+        '2019-01-09 12:00:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2019-01-09 12:00:00',
+        '2019-01-09 13:00:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
       this.events = this.server.db.userevents;
     });
 
@@ -138,17 +174,83 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
 
   module('Second complicated event list', function (hooks) {
     hooks.beforeEach(function () {
-      this.createEvent('2020-02-10 08:10:00', '2020-02-10 10:00:00');
-      this.createEvent('2020-02-10 08:10:00', '2020-02-10 09:20:00');
-      this.createEvent('2020-02-10 09:40:00', '2020-02-10 10:30:00');
-      this.createEvent('2020-02-10 10:10:00', '2020-02-10 12:00:00');
-      this.createEvent('2020-02-10 10:40:00', '2020-02-10 12:30:00');
-      this.createEvent('2020-02-10 10:40:00', '2020-02-10 12:30:00');
-      this.createEvent('2020-02-10 10:40:00', '2020-02-10 12:30:00');
-      this.createEvent('2020-02-10 10:40:00', '2020-02-10 12:30:00');
-      this.createEvent('2020-02-10 10:40:00', '2020-02-10 12:30:00');
-      this.createEvent('2020-02-10 10:40:00', '2020-02-10 12:30:00');
-      this.createEvent('2020-02-10 12:00:00', '2020-02-10 13:00:00');
+      this.createEvent(
+        '2020-02-10 08:10:00',
+        '2020-02-10 10:00:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2020-02-10 08:10:00',
+        '2020-02-10 09:20:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2020-02-10 09:40:00',
+        '2020-02-10 10:30:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2020-02-10 10:10:00',
+        '2020-02-10 12:00:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2020-02-10 10:40:00',
+        '2020-02-10 12:30:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2020-02-10 10:40:00',
+        '2020-02-10 12:30:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2020-02-10 10:40:00',
+        '2020-02-10 12:30:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2020-02-10 10:40:00',
+        '2020-02-10 12:30:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2020-02-10 10:40:00',
+        '2020-02-10 12:30:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2020-02-10 10:40:00',
+        '2020-02-10 12:30:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
+      this.createEvent(
+        '2020-02-10 12:00:00',
+        '2020-02-10 13:00:00',
+        '2012-01-09 08:00:00',
+        false,
+        true
+      );
       this.events = this.server.db.userevents;
     });
 
