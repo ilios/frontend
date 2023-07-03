@@ -425,17 +425,18 @@ export default class LearnerGroup extends Model {
    * to remove the user from them as well.  Will only modify groups where the
    * user currently exists.
    */
-  async removeUserFromGroupAndAllDescendants(user) {
-    const modifiedGroups = [];
-    const userId = user.id;
+  async removeUserFromGroupAndAllDescendants({ id: userId }) {
     const allDescendants = await this.getAllDescendants();
-    [this, ...allDescendants].forEach((group) => {
+    const groups = await map([this, ...allDescendants], async (group) => {
       if (group.hasMany('users').ids().includes(userId)) {
-        group.users = group.users.filter(({ id }) => id !== user.id);
-        modifiedGroups.push(group);
+        group.users = (await group.users).filter(({ id }) => id !== userId);
+        return group;
       }
+
+      return false;
     });
-    return uniqueValues(modifiedGroups);
+
+    return uniqueValues(groups.filter(Boolean));
   }
 
   async getAllParents() {
