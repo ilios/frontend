@@ -98,7 +98,7 @@ export default class BulkNewUsersComponent extends Component {
 
   async existingUsernames() {
     const authentications = await this.store.findAll('authentication');
-    return mapBy(authentications.slice(), 'username');
+    return mapBy(authentications.slice(), 'username').filter(Boolean);
   }
 
   /**
