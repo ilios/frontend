@@ -1,11 +1,10 @@
 <div
   class="user-profile-cohorts small-component {{if this.hasSavedRecently "has-saved" "has-not-saved"}}"
-  {{did-insert (perform this.load) @user}}
-  {{did-update (perform this.load) @user @user.cohorts @user.primaryCohort}}
-  ...attributes
   data-test-user-profile-cohorts
+  ...attributes
+  {{did-insert (perform this.load) @user}}
 >
-  {{#if this.load.performCount}}
+  {{#unless this.load.isRunning}}
     <div class="user-profile-cohorts-header">
       <h3 class="title" data-test-title>
         {{t "general.cohorts"}}
@@ -14,6 +13,7 @@
         {{#if @isManaging}}
           <button
             type="button"
+            disabled={{or this.save.isRunning this.cancel.isRunning}}
             class="bigadd"
             {{on "click" (perform this.save)}}
             data-test-save
@@ -25,9 +25,9 @@
           </button>
           <button
             type="button"
-            disabled={{this.save.isRunning}}
+            disabled={{or this.save.isRunning this.cancel.isRunning}}
             class="bigcancel"
-            {{on "click" (fn @setIsManaging false)}}
+            {{on "click" (perform this.cancel)}}
             data-test-cancel
           >
             <FaIcon @icon="arrow-rotate-left" />
@@ -44,159 +44,19 @@
         {{/if}}
       </div>
     </div>
-    <p data-test-primary-cohort>
-      <h4>
-        {{t "general.primaryCohort"}}:
-      </h4>
-      {{#if this.primaryCohort}}
-        {{#if @isManaging}}
-          <button
-            type="button"
-            class="link-button"
-            {{on "click" (set this.primaryCohort null)}}
-            data-test-remove
-          >
-            <FaIcon
-              @icon="turn-down"
-              class="clickable remove"
-              @title={{t "general.removePrimaryCohort"}}
-            />
-          </button>
-        {{/if}}
-        <span data-test-title>
-          {{this.primaryCohort.programYear.program.school.title}}
-          <strong>
-            {{this.primaryCohort.programYear.program.title}}
-          </strong>
-          {{this.primaryCohort.title}}
-        </span>
-      {{else}}
-        {{t "general.none"}}
-      {{/if}}
-    </p>
-    <p data-test-secondary-cohorts>
-      <h4>
-        {{t "general.secondaryCohorts"}}:
-      </h4>
-      {{#if (gt this.secondaryCohorts.length 0)}}
-        <ul>
-          {{#each
-            (sort-by
-              "programYear.program.school.title"
-              "programYear.program.title"
-              "title"
-              this.secondaryCohorts
-            ) as |cohort|
-          }}
-            <li>
-              {{#if @isManaging}}
-                <button
-                  class="link-button"
-                  type="button"
-                  {{on "click" (set this.primaryCohort cohort)}}
-                  data-test-promote
-                >
-                  <FaIcon
-                    @icon="turn-up"
-                    class="clickable add"
-                    @title={{t "general.promoteToPrimaryCohort"}}
-                  />
-                </button>
-                <button
-                  class="link-button"
-                  type="button"
-                  {{on "click" (fn this.removeSelectedCohort cohort)}}
-                  data-test-remove
-                >
-                  <FaIcon
-                    @icon="xmark"
-                    class="clickable remove"
-                    @title={{t "general.removeCohort"}}
-                  />
-                </button>
-              {{/if}}
-              <span data-test-title>
-                {{cohort.programYear.program.school.title}}
-                <strong>
-                  {{cohort.programYear.program.title}}
-                </strong>
-                {{cohort.title}}
-              </span>
-            </li>
-          {{/each}}
-        </ul>
-      {{else}}
-        {{t "general.none"}}
-      {{/if}}
-    </p>
     {{#if @isManaging}}
-      <p class="select-available-cohort">
-        <h4>
-          {{t "general.availableCohorts"}}
-        </h4>
-        <div class="schoolsfilter" data-test-schools>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
-          {{#if (gt this.schools.length 1)}}
-            <select
-              aria-label={{t "general.schools"}}
-              {{on "change" (pick "target.value" (set this.selectedSchoolId))}}
-              data-test-filter
-            >
-              {{#each (sort-by "title" this.schools) as |school|}}
-                <option
-                  value={{school.id}}
-                  selected={{eq school this.selectedSchool}}
-                >
-                  {{school.title}}
-                </option>
-              {{/each}}
-            </select>
-          {{else}}
-            {{this.selectedSchool.title}}
-          {{/if}}
-        </div>
-        {{#if (gt this.assignableCohortsForSelectedSchool.length 0)}}
-          <ul data-test-assignable-cohorts>
-            {{#each
-              (sort-by
-                "school.title"
-                "program.title"
-                "cohort.title"
-                this.assignableCohortsForSelectedSchool
-              ) as |obj|
-            }}
-              <li>
-                <button
-                  type="button"
-                  class="link-button"
-                  {{on "click" (fn this.addSelectedCohort obj.cohort)}}
-                  data-test-add
-                >
-                  <FaIcon
-                    @icon="plus"
-                    class="clickable add"
-                    @title={{t "general.addCohort"}}
-                  />
-                </button>
-                <span data-test-title>
-                  <strong>
-                    {{get obj.program "title"}}
-                  </strong>
-                  {{obj.cohort.title}}
-                </span>
-              </li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <p>
-            {{t "general.none"}}
-          </p>
-        {{/if}}
-      </p>
+      <UserProfileCohortsManager
+        @primaryCohort={{this.primaryCohortBuffer}}
+        @secondaryCohorts={{this.secondaryCohortsBuffer}}
+        @addSecondaryCohortToBuffer={{this.addSecondaryCohortToBuffer}}
+        @removeSecondaryCohortFromBuffer={{this.removeSecondaryCohortFromBuffer}}
+        @setPrimaryCohortBuffer={{this.setPrimaryCohortBuffer}}
+      />
+    {{else}}
+      <UserProfileCohortsDetails
+        @primaryCohort={{this.primaryCohort}}
+        @secondaryCohorts={{this.secondaryCohorts}}
+      />
     {{/if}}
-  {{else}}
-    <p>
-      <LoadingSpinner />
-    </p>
-  {{/if}}
+  {{/unless}}
 </div>

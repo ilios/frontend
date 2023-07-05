@@ -179,7 +179,7 @@ module('Acceptance | User', function (hooks) {
     assert.strictEqual(page.roles.formerStudent.value, 'Yes');
     assert.strictEqual(page.roles.enabled.value, 'Yes');
     assert.strictEqual(page.roles.excludeFromSync.value, 'Yes');
-    assert.strictEqual(page.cohorts.primaryCohort.title, 'school 0 program 0 Medicine');
+    assert.strictEqual(page.cohorts.details.primaryCohort.title, 'school 0 program 0 Medicine');
 
     await page.visit({ userId: user2.id });
     assert.strictEqual(page.bio.username.text, 'Username: username2');
@@ -187,6 +187,6 @@ module('Acceptance | User', function (hooks) {
     assert.strictEqual(page.roles.formerStudent.value, 'No');
     assert.strictEqual(page.roles.enabled.value, 'No');
     assert.strictEqual(page.roles.excludeFromSync.value, 'No');
-    assert.strictEqual(page.cohorts.primaryCohort.title, 'school 0 program 0 cohort 1');
+    assert.strictEqual(page.cohorts.details.primaryCohort.title, 'school 0 program 0 cohort 1');
   });
 });

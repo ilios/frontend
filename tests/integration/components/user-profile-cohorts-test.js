@@ -43,9 +43,12 @@ module('Integration | Component | user profile cohorts', function (hooks) {
   test('it renders', async function (assert) {
     this.set('user', this.user);
     await render(hbs`<UserProfileCohorts @user={{this.user}} />`);
-    assert.strictEqual(component.primaryCohort.text, 'Primary Cohort: school 0 program 0 cohort 0');
-    assert.strictEqual(component.secondaryCohorts.length, 1);
-    assert.strictEqual(component.secondaryCohorts[0].title, 'school 1 program 1 cohort 1');
+    assert.strictEqual(
+      component.details.primaryCohort.text,
+      'Primary Cohort: school 0 program 0 cohort 0'
+    );
+    assert.strictEqual(component.details.secondaryCohorts.length, 1);
+    assert.strictEqual(component.details.secondaryCohorts[0].title, 'school 1 program 1 cohort 1');
   });
 
   test('clicking manage sends the action', async function (assert) {
@@ -81,19 +84,19 @@ module('Integration | Component | user profile cohorts', function (hooks) {
       hbs`<UserProfileCohorts @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
     );
 
-    assert.strictEqual(component.primaryCohort.title, 'school 0 program 0 cohort 0');
-    assert.strictEqual(component.secondaryCohorts.length, 1);
-    assert.strictEqual(component.secondaryCohorts[0].title, 'school 1 program 1 cohort 1');
-    assert.strictEqual(component.schools.filter.value, '1');
-    assert.strictEqual(component.schools.filter.options.length, 2);
-    assert.strictEqual(component.assignableCohorts.length, 1);
-    assert.strictEqual(component.assignableCohorts[0].title, 'program 0 cohort 2');
-    await component.schools.filter.select('2');
-    assert.strictEqual(component.assignableCohorts.length, 1);
-    assert.strictEqual(component.assignableCohorts[0].title, 'program 1 cohort 3');
-    await component.secondaryCohorts[0].promote();
-    await component.secondaryCohorts[0].remove();
-    await component.assignableCohorts[0].add();
+    assert.strictEqual(component.manager.primaryCohort.title, 'school 0 program 0 cohort 0');
+    assert.strictEqual(component.manager.secondaryCohorts.length, 1);
+    assert.strictEqual(component.manager.secondaryCohorts[0].title, 'school 1 program 1 cohort 1');
+    assert.strictEqual(component.manager.schools.filter.value, '1');
+    assert.strictEqual(component.manager.schools.filter.options.length, 2);
+    assert.strictEqual(component.manager.assignableCohorts.length, 1);
+    assert.strictEqual(component.manager.assignableCohorts[0].title, 'program 0 cohort 2');
+    await component.manager.schools.filter.select('2');
+    assert.strictEqual(component.manager.assignableCohorts.length, 1);
+    assert.strictEqual(component.manager.assignableCohorts[0].title, 'program 1 cohort 3');
+    await component.manager.secondaryCohorts[0].promote();
+    await component.manager.secondaryCohorts[0].remove();
+    await component.manager.assignableCohorts[0].add();
     await component.save();
   });
 });
