@@ -1,20 +1,17 @@
 import Component from '@glimmer/component';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { map } from 'rsvp';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import AsyncProcess from 'ilios-common/classes/async-process';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 
 const DEBOUNCE_DELAY = 250;
 
 export default class CourseMaterialsComponent extends Component {
   @service dataLoader;
+  @service store;
   @tracked courseQuery;
   @tracked sessionQuery;
 
@@ -26,56 +23,74 @@ export default class CourseMaterialsComponent extends Component {
   }
 
   @cached
-  get loadedCourseSessionsData() {
+  get courseSessionsData() {
     return new TrackedAsyncData(this.dataLoader.loadCourseSessions(this.args.course.id));
   }
 
   @cached
-  get courseSessionsData() {
-    return new TrackedAsyncData(this.args.course.sessions);
-  }
-
-  get courseMaterials() {
-    return this.courseMaterialsData.isResolved ? this.courseMaterialsData.value : null;
-  }
-
-  get loadedCourseSessions() {
-    return this.loadedCourseSessionsData.isResolved ? this.loadedCourseSessionsData.value : null;
-  }
-
-  get courseSessions() {
-    return this.courseSessionsData.isResolved ? this.courseSessionsData.value : null;
-  }
-
-  get sessions() {
-    if (!this.loadedCourseSessions) {
-      return false;
+  get sessionMaterialsData() {
+    if (!this.courseSessionsData.isResolved) {
+      return null;
     }
 
-    return this.courseSessions;
+    return new TrackedAsyncData(
+      Promise.all(this.courseSessionsData.value.map((s) => s.learningMaterials))
+    );
   }
 
-  @use sessionMaterials = new ResolveFlatMapBy(() => [this.sessions, 'learningMaterials']);
-  @use courseMaterialLms = new ResolveFlatMapBy(() => [this.courseMaterials, 'learningMaterial']);
-  @use sessionMaterialObjects = new AsyncProcess(() => [
-    this.buildSessionMaterials.bind(this),
-    this.sessionMaterials,
-  ]);
+  @cached
+  get sessionMaterialLmsData() {
+    if (!this.sessionMaterialsData?.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(
+      Promise.all(this.sessionMaterialsData.value.flat().map((s) => s.learningMaterial))
+    );
+  }
+
+  @cached
+  get courseMaterialLmsData() {
+    if (!this.courseMaterialsData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(
+      Promise.all(this.courseMaterialsData.value.map((c) => c.learningMaterial))
+    );
+  }
+
+  /**
+   * Resolve session and LMs, so they can be used synchronous
+   * in the filter.
+   */
+  get sessionMaterialObjects() {
+    if (!this.sessionMaterialsData?.isResolved || !this.sessionMaterialLmsData?.isResolved) {
+      return null;
+    }
+
+    return this.sessionMaterialsData.value.flat().map((slm) => {
+      const lm = this.store.peekRecord('learning-material', slm.belongsTo('learningMaterial').id());
+      const session = this.store.peekRecord('session', slm.belongsTo('session').id());
+      return {
+        session,
+        lm,
+      };
+    });
+  }
 
   get isLoading() {
-    return !this.courseMaterialLms || !this.sessionMaterialObjects;
+    return !this.courseMaterialLmsData?.isResolved || !this.sessionMaterialLmsData?.isResolved;
   }
 
   get filteredCourseLearningMaterials() {
-    if (!this.courseMaterialLms) {
+    if (!this.courseMaterialLmsData?.isResolved) {
       return [];
     }
     const q = cleanQuery(this.courseQuery);
     if (!q) {
-      return this.courseMaterialLms;
+      return this.courseMaterialLmsData.value;
     }
     const exp = new RegExp(q, 'gi');
-    return this.courseMaterialLms.filter((obj) => {
+    return this.courseMaterialLmsData.value.filter((obj) => {
       return (
         (obj.title && obj.title.match(exp)) ||
         (obj.description && obj.description.match(exp)) ||
@@ -140,22 +155,4 @@ export default class CourseMaterialsComponent extends Component {
     await timeout(DEBOUNCE_DELAY);
     this.sessionQuery = q;
   });
-
-  /**
-   * Resolve session and LMs, so they can be used synchronous
-   * in the filter.
-   */
-  async buildSessionMaterials(materials) {
-    if (!materials) {
-      return null;
-    }
-    return map(materials, async (slm) => {
-      const lm = await slm.get('learningMaterial');
-      const session = await slm.session;
-      return {
-        session,
-        lm,
-      };
-    });
-  }
 }

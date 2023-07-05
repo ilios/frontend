@@ -3,11 +3,10 @@ import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { findBy, findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { uniqueById } from '../utils/array-helpers';
 
 export default class VisualizerCourseTerm extends Component {
   @service router;
@@ -24,7 +23,17 @@ export default class VisualizerCourseTerm extends Component {
     return this.sessionsData.isResolved ? this.sessionsData.value : null;
   }
 
-  @use sessionTypes = new ResolveFlatMapBy(() => [this.sessions, 'sessionType']);
+  @cached
+  get sessionTypesData() {
+    if (!this.sessionsData.isResolved) {
+      return null;
+    }
+    return new TrackedAsyncData(Promise.all(this.sessionsData.value.map((s) => s.sessionType)));
+  }
+
+  get sessionTypes() {
+    return this.sessionTypesData?.isResolved ? uniqueById(this.sessionTypesData.value) : null;
+  }
 
   get isLoaded() {
     return !!this.sessionTypes;
