@@ -246,6 +246,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('load day calendar', async function (assert) {
     assert.expect(3);
+    freezeDateAt(
+      DateTime.fromObject({
+        year: 2025,
+        month: 6,
+        day: 24,
+      }).toJSDate()
+    );
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     const tomorow = today.plus({ day: 1 });
     const yesterday = today.minus({ day: 1 });
@@ -870,14 +877,14 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test tooltip', async function (assert) {
     assert.expect(1);
-    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    const november11th = DateTime.fromObject({ month: 11, day: 11, hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
       user: this.user.id,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: november11th.toJSDate(),
+      endDate: november11th.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
-    await page.visit({ show: 'calendar', view: 'week' });
+    await page.visit({ show: 'calendar', view: 'week', date: november11th.toFormat('yyyy-LL-dd') });
     await triggerEvent('[data-test-weekly-calendar-event]', 'mouseover');
     await percySnapshot(assert);
     assert.dom('[data-test-ilios-calendar-event-tooltip]').exists();

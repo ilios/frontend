@@ -5,11 +5,18 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import page from 'ilios-common/page-objects/dashboard-materials';
 import percySnapshot from '@percy/ember';
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Acceptance | Dashboard Materials', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
+    freezeDateAt(
+      DateTime.fromObject({
+        month: 11,
+        day: 5,
+      }).toJSDate()
+    );
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
 
@@ -133,6 +140,10 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     this.currentMaterials = currentMaterials;
     this.allMaterials = [...currentMaterials, ...notCurrentMaterials];
     this.courses = courses;
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
   });
 
   test('it renders with materials in show-current mode', async function (assert) {
