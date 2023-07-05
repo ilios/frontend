@@ -1,7 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SessionObjectiveModel extends Model {
   @attr('string')
@@ -18,6 +18,11 @@ export default class SessionObjectiveModel extends Model {
 
   @hasMany('term', { async: true, inverse: 'sessionObjectives' })
   terms;
+
+  @cached
+  get _termsData() {
+    return new TrackedAsyncData(this.terms);
+  }
 
   @hasMany('mesh-descriptor', { async: true, inverse: 'sessionObjectives' })
   meshDescriptors;
@@ -40,9 +45,21 @@ export default class SessionObjectiveModel extends Model {
   })
   courseObjectives;
 
-  @use _allTermVocabularies = new ResolveFlatMapBy(() => [this.terms, 'vocabulary']);
+  @cached
+  get _allTermVocabulariesData() {
+    if (!this._termsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(Promise.all(this._termsData.value.map((t) => t.vocabulary)));
+  }
+
   get associatedVocabularies() {
-    return sortBy(uniqueValues(this._allTermVocabularies ?? []), 'title');
+    if (!this._allTermVocabulariesData?.isResolved) {
+      return [];
+    }
+
+    return sortBy(uniqueValues(this._allTermVocabulariesData.value), 'title');
   }
 
   /**

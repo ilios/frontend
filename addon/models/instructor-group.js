@@ -1,7 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { use } from 'ember-could-get-used-to-this';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class InstructorGroupModel extends Model {
   @attr('string')
@@ -16,32 +16,85 @@ export default class InstructorGroupModel extends Model {
   @hasMany('ilm-session', { async: true, inverse: 'instructorGroups' })
   ilmSessions;
 
+  @cached
+  get _ilmSessionsData() {
+    return new TrackedAsyncData(this.ilmSessions);
+  }
+
   @hasMany('user', { async: true, inverse: 'instructorGroups' })
   users;
 
   @hasMany('offering', { async: true, inverse: 'instructorGroups' })
   offerings;
 
-  @use _offeringSessions = new ResolveFlatMapBy(() => [this.offerings, 'session']);
-  @use coursesFromOfferings = new ResolveFlatMapBy(() => [this._offeringSessions, 'course']);
-  @use _ilmSessionSessions = new ResolveFlatMapBy(() => [this.ilmSessions, 'session']);
-  @use coursesFromIlmSessions = new ResolveFlatMapBy(() => [this._ilmSessionSessions, 'course']);
+  @cached
+  get _offeringsData() {
+    return new TrackedAsyncData(this.offerings);
+  }
+
+  @cached
+  get _offeringSessionsData() {
+    if (this._offeringsData.isResolved) {
+      return new TrackedAsyncData(Promise.all(this._offeringsData.value.map((o) => o.session)));
+    }
+
+    return null;
+  }
+
+  @cached
+  get _coursesFromOfferings() {
+    if (this._offeringSessionsData?.isResolved) {
+      return new TrackedAsyncData(
+        Promise.all(this._offeringSessionsData.value.map((s) => s.course))
+      );
+    }
+
+    return null;
+  }
+
+  @cached
+  get _ilmSessionSessionsData() {
+    if (this._ilmSessionsData.isResolved) {
+      return new TrackedAsyncData(
+        Promise.all(this._ilmSessionsData.value.map((ilm) => ilm.session))
+      );
+    }
+
+    return null;
+  }
+
+  @cached
+  get _coursesFromilmSessions() {
+    if (this._ilmSessionSessionsData?.isResolved) {
+      return new TrackedAsyncData(
+        Promise.all(this._ilmSessionSessionsData.value.map((s) => s.course))
+      );
+    }
+
+    return null;
+  }
 
   get courses() {
-    if (!this.coursesFromIlmSessions || !this.coursesFromOfferings) {
+    if (!this._coursesFromOfferings?.isResolved || !this._coursesFromilmSessions?.isResolved) {
       return [];
     }
-    return uniqueValues([...this.coursesFromIlmSessions, ...this.coursesFromOfferings]);
+    return uniqueValues([
+      ...this._coursesFromilmSessions.value,
+      ...this._coursesFromOfferings.value,
+    ]);
   }
 
   /**
    * A list of all sessions associated with this group, via offerings or via ILMs.
    */
   get sessions() {
-    if (!this._offeringSessions || !this._ilmSessionSessions) {
+    if (!this._ilmSessionSessionsData?.isResolved || !this._offeringSessionsData?.isResolved) {
       return [];
     }
-    return uniqueValues([...this._offeringSessions, ...this._ilmSessionSessions]);
+    return uniqueValues([
+      ...this._offeringSessionsData.value,
+      ...this._ilmSessionSessionsData.value,
+    ]);
   }
 
   /**

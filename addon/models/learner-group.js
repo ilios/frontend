@@ -1,10 +1,8 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { map } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import ResolveFlatMapBy from 'ilios-common/classes/resolve-flat-map-by';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LearnerGroup extends Model {
@@ -57,6 +55,11 @@ export default class LearnerGroup extends Model {
 
   @hasMany('instructor-group', { async: true, inverse: 'learnerGroups' })
   instructorGroups;
+
+  @cached
+  get _instructorGroupsData() {
+    return new TrackedAsyncData(this.instructorGroups);
+  }
 
   @hasMany('user', { async: true, inverse: 'learnerGroups' })
   users;
@@ -357,18 +360,26 @@ export default class LearnerGroup extends Model {
     return !this.belongsTo('parent').id();
   }
 
-  get _instructors() {
-    return this._instructorsData.isResolved ? this._instructorsData.value : null;
+  @cached
+  get _instructorGroupUsersData() {
+    if (!this._instructorGroupsData.isResolved) {
+      return null;
+    }
+
+    return new TrackedAsyncData(
+      Promise.all(this._instructorGroupsData.value.map((ig) => ig.users))
+    );
   }
 
-  @use _instructorGroupUsers = new ResolveFlatMapBy(() => [this.instructorGroups, 'users']);
-
   get allInstructors() {
-    if (!this._instructors || !this._instructorGroupUsers) {
+    if (!this._instructorsData?.isResolved || !this._instructorGroupUsersData?.isResolved) {
       return [];
     }
 
-    return uniqueValues([...this._instructors.slice(), ...this._instructorGroupUsers]);
+    return uniqueValues([
+      ...this._instructorsData.value,
+      ...this._instructorGroupUsersData.value.flat(),
+    ]);
   }
 
   get _descendantUsers() {
