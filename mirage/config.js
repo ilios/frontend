@@ -1,6 +1,5 @@
 import commonRoutes from './routes';
 import ENV from 'ilios/config/environment';
-import { discoverEmberDataModels } from 'ember-cli-mirage';
 import { createServer, Response } from 'miragejs';
 import { DateTime } from 'luxon';
 
@@ -9,7 +8,7 @@ const { apiVersion } = ENV;
 export default function (config) {
   let finalConfig = {
     ...config,
-    models: { ...discoverEmberDataModels(), ...config.models },
+    models: { ...config.models },
     routes() {
       this.timing = 100;
       this.namespace = '/';
