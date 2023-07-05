@@ -12,8 +12,6 @@ module('Integration | Component | course materials', function (hooks) {
   setupMirage(hooks);
 
   test('course lms render', async function (assert) {
-    assert.expect(4);
-
     const lm1 = this.server.create('learning-material', {
       title: 'title1',
       description: 'description1',
@@ -107,8 +105,6 @@ module('Integration | Component | course materials', function (hooks) {
   };
 
   test('course & session lms render', async function (assert) {
-    assert.expect(29);
-
     const course = await setupPage(this);
     this.setProperties({
       course,
@@ -227,8 +223,6 @@ module('Integration | Component | course materials', function (hooks) {
   });
 
   test('filter course lms by title', async function (assert) {
-    assert.expect(3);
-
     const course = await setupPage(this);
     this.setProperties({
       course,
@@ -250,8 +244,6 @@ module('Integration | Component | course materials', function (hooks) {
   });
 
   test('filter course lms by type', async function (assert) {
-    assert.expect(3);
-
     const course = await setupPage(this);
     this.setProperties({
       course,
@@ -273,8 +265,6 @@ module('Integration | Component | course materials', function (hooks) {
   });
 
   test('filter course lms by author', async function (assert) {
-    assert.expect(3);
-
     const course = await setupPage(this);
     this.setProperties({
       course,
@@ -296,8 +286,6 @@ module('Integration | Component | course materials', function (hooks) {
   });
 
   test('filter course lms by citation', async function (assert) {
-    assert.expect(3);
-
     const course = await setupPage(this);
     this.setProperties({
       course,
@@ -319,8 +307,6 @@ module('Integration | Component | course materials', function (hooks) {
   });
 
   test('filter session lms by title', async function (assert) {
-    assert.expect(3);
-
     const course = await setupPage(this);
     this.setProperties({
       course,
@@ -342,8 +328,6 @@ module('Integration | Component | course materials', function (hooks) {
   });
 
   test('filter session lms by type', async function (assert) {
-    assert.expect(3);
-
     const course = await setupPage(this);
     this.setProperties({
       course,
@@ -365,8 +349,6 @@ module('Integration | Component | course materials', function (hooks) {
   });
 
   test('filter session lms by author', async function (assert) {
-    assert.expect(3);
-
     const course = await setupPage(this);
     this.setProperties({
       course,
@@ -388,8 +370,6 @@ module('Integration | Component | course materials', function (hooks) {
   });
 
   test('filter session lms by citation', async function (assert) {
-    assert.expect(3);
-
     const course = await setupPage(this);
     this.setProperties({
       course,

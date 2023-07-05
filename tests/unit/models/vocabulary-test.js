@@ -15,7 +15,6 @@ module('Unit | Model | vocabulary', function (hooks) {
   });
 
   test('getTopLevelTerms', async function (assert) {
-    assert.expect(3);
     const model = this.owner.lookup('service:store').createRecord('vocabulary');
     const store = model.store;
     const term1 = store.createRecord('term', { id: 1 });

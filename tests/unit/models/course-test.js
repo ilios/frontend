@@ -39,7 +39,6 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('check empty competencies', async function (assert) {
-    assert.expect(1);
     const course = this.owner.lookup('service:store').createRecord('course');
 
     const competencies = await waitForResource(course, 'competencies');
@@ -47,7 +46,6 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('check competencies', async function (assert) {
-    assert.expect(4);
     const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
 
@@ -81,7 +79,6 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('check publishedSessionOfferingCounts count', async function (assert) {
-    assert.expect(2);
     const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
 
@@ -115,7 +112,6 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('domains', async function (assert) {
-    assert.expect(13);
     const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
     const domain1 = store.createRecord('competency', {
@@ -198,7 +194,6 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('schools', async function (assert) {
-    assert.expect(4);
     const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
     const school1 = store.createRecord('school');
@@ -232,7 +227,6 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('assignableVocabularies', async function (assert) {
-    assert.expect(5);
     const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
     const school1 = store.createRecord('school', { title: 'Zylinder' });
@@ -268,7 +262,6 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('sortedCourseObjectives', async function (assert) {
-    assert.expect(4);
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');
     const sessionObjective1 = store.createRecord('course-objective', {
@@ -297,7 +290,6 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('associatedVocabularies', async function (assert) {
-    assert.expect(3);
     const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
     const vocabulary1 = store.createRecord('vocabulary');
@@ -317,7 +309,6 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('set dates based on year before year start', async function (assert) {
-    assert.expect(6);
     freezeDateAt(new Date('5/6/1981'));
     const course = this.owner.lookup('service:store').createRecord('course', {
       year: 1981,
@@ -334,7 +325,6 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('set dates based on year after year start', async function (assert) {
-    assert.expect(6);
     freezeDateAt(new Date('12/11/1980'));
     const course = this.owner.lookup('service:store').createRecord('course', {
       year: 1980,

@@ -206,7 +206,6 @@ module('Integration | Component | session copy', function (hooks) {
   });
 
   test('changing the year looks for new matching courses', async function (assert) {
-    assert.expect(5);
     const thisYear = DateTime.now().year;
     const nextYear = thisYear + 1;
     this.server.create('academic-year', {

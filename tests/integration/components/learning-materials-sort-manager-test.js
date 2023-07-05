@@ -12,7 +12,6 @@ module('Integration | Component | learning materials sort manager', function (ho
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(9);
     const user1 = this.server.create('user', {
       firstName: 'Hans',
       lastName: 'Wurst',

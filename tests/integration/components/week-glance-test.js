@@ -104,7 +104,6 @@ module('Integration | Component | week glance', function (hooks) {
   });
 
   test('it renders with events', async function (assert) {
-    assert.expect(6);
     this.owner.register('service:user-events', this.userEventsMock);
     this.set('today', testDate.toJSDate());
     this.set('week', testDate.weekNumber);
@@ -129,7 +128,6 @@ module('Integration | Component | week glance', function (hooks) {
   });
 
   test('it renders blank', async function (assert) {
-    assert.expect(2);
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
@@ -157,7 +155,6 @@ module('Integration | Component | week glance', function (hooks) {
   });
 
   test('renders short title', async function (assert) {
-    assert.expect(1);
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
@@ -182,7 +179,6 @@ module('Integration | Component | week glance', function (hooks) {
   });
 
   test('it renders collapsed', async function (assert) {
-    assert.expect(3);
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 

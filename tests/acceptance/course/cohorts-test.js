@@ -66,7 +66,6 @@ module('Acceptance | Course - Cohorts', function (hooks) {
   });
 
   test('save cohort changes', async function (assert) {
-    assert.expect(4);
     await page.visit({ courseId: this.course.id, details: true });
     await page.details.cohorts.manage();
     await page.details.cohorts.selected[0].remove();
@@ -80,7 +79,6 @@ module('Acceptance | Course - Cohorts', function (hooks) {
   });
 
   test('cancel cohort changes', async function (assert) {
-    assert.expect(4);
     await page.visit({ courseId: this.course.id, details: true });
     await page.details.cohorts.manage();
     await page.details.cohorts.selected[0].remove();
@@ -94,8 +92,6 @@ module('Acceptance | Course - Cohorts', function (hooks) {
   });
 
   test('removing a cohort remove course objectives parents linked to that cohort', async function (assert) {
-    assert.expect(7);
-
     await page.visit({
       courseId: this.course.id,
       details: true,

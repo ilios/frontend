@@ -232,7 +232,6 @@ module('Integration | Component | course rollover', function (hooks) {
   });
 
   test('rollover into same year with title changed #1342', async function (assert) {
-    assert.expect(2);
     const thisYear = DateTime.now().year;
 
     const school = this.server.create('school');
@@ -385,8 +384,6 @@ module('Integration | Component | course rollover', function (hooks) {
    * if the given course has a start date in a former year.
    */
   test('rollover start date adjustment with former year course start date', async function (assert) {
-    assert.expect(2);
-
     const courseStartDate = DateTime.fromObject({
       year: 2017,
       month: 1,

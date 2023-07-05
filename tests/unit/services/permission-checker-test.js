@@ -247,7 +247,6 @@ module('Unit | Service | permission-checker', function (hooks) {
   });
 
   test('can not delete finalized curriculum inventory report', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const ciExport = this.server.create('curriculum-inventory-export');

@@ -5,7 +5,6 @@ module('Unit | Model | Competency', function (hooks) {
   setupTest(hooks);
 
   test('getDomain', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('competency');
     assert.strictEqual(await model.getDomain(), model);
@@ -14,7 +13,6 @@ module('Unit | Model | Competency', function (hooks) {
   });
 
   test('childCount', function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('competency');
     assert.strictEqual(model.childCount, 0);

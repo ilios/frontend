@@ -13,7 +13,6 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   setupMirage(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    assert.expect(6);
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
     const courseObjective = this.server.create('courseObjective', { course });
@@ -67,7 +66,6 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   });
 
   test('can manage parents', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
     const courseObjective = this.server.create('courseObjective', { course });
@@ -112,7 +110,6 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   });
 
   test('can manage terms', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
     const courseObjective = this.server.create('courseObjective', { course });

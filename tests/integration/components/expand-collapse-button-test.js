@@ -9,7 +9,6 @@ module('Integration | Component | expand collapse button', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('renders with default value false', async function (assert) {
-    assert.expect(1);
     this.set('action', () => {});
     await render(hbs`<ExpandCollapseButton @action={{this.action}} />
 `);

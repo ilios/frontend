@@ -83,14 +83,12 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('print course mesh terms', async function (assert) {
-    assert.expect(1);
     await setupAuthentication({ school: this.school });
     await visit('/course/1/print');
     assert.dom('[data-test-course-mesh] ul li').hasText('Flux Capacitor');
   });
 
   test('print course learning materials', async function (assert) {
-    assert.expect(4);
     await setupAuthentication({ school: this.school });
     await visit('/course/1/print');
 
@@ -157,7 +155,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print ILM details', async function (assert) {
-    assert.expect(6);
     await setupAuthentication({ school: this.school });
 
     this.server.create('session', {
@@ -188,7 +185,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print session objectives', async function (assert) {
-    assert.expect(9);
     await setupAuthentication({ school: this.school });
 
     const session = this.server.create('session', {
@@ -239,7 +235,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print course objectives', async function (assert) {
-    assert.expect(9);
     await setupAuthentication({ school: this.school });
 
     const competency = this.server.create('competency', {

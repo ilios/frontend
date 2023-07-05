@@ -9,8 +9,6 @@ module('Integration | Component | leadership collapsed', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    assert.expect(3);
-
     this.set('title', 'Test Title');
     this.set('directorsCount', 3);
     this.set('administratorsCount', 1);
@@ -56,8 +54,6 @@ module('Integration | Component | leadership collapsed', function (hooks) {
   });
 
   test('it renders without directors', async function (assert) {
-    assert.expect(2);
-
     this.set('title', 'Test Title');
     this.set('directorsCount', 3);
     this.set('administratorsCount', 1);
@@ -81,8 +77,6 @@ module('Integration | Component | leadership collapsed', function (hooks) {
   });
 
   test('it renders without administrators', async function (assert) {
-    assert.expect(2);
-
     this.set('title', 'Test Title');
     this.set('directorsCount', 3);
     this.set('administratorsCount', 1);

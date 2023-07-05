@@ -51,7 +51,6 @@ module('Acceptance | Session - Leadership', function (hooks) {
   });
 
   test('list leadership', async function (assert) {
-    assert.expect(6);
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -69,7 +68,6 @@ module('Acceptance | Session - Leadership', function (hooks) {
   });
 
   test('search administrators', async function (assert) {
-    assert.expect(13);
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -112,7 +110,6 @@ module('Acceptance | Session - Leadership', function (hooks) {
   });
 
   test('search student advisors', async function (assert) {
-    assert.expect(13);
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -155,7 +152,6 @@ module('Acceptance | Session - Leadership', function (hooks) {
   });
 
   test('manage leadership', async function (assert) {
-    assert.expect(10);
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -189,7 +185,6 @@ module('Acceptance | Session - Leadership', function (hooks) {
   });
 
   test('cancel leadership changes', async function (assert) {
-    assert.expect(5);
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -219,7 +214,6 @@ module('Acceptance | Session - Leadership', function (hooks) {
   });
 
   test('save leadership changes', async function (assert) {
-    assert.expect(5);
     await page.visit({
       courseId: 1,
       sessionId: 1,

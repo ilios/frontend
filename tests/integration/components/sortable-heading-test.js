@@ -9,7 +9,6 @@ module('Integration | Component | sortable heading', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders with default options', async function (assert) {
-    assert.expect(5);
     this.set('label', 'Foo');
     await render(hbs`<SortableHeading>{{this.label}}</SortableHeading>
 `);
@@ -21,7 +20,6 @@ module('Integration | Component | sortable heading', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(6);
     this.set('label', 'Foo');
     const title = 'Bar';
     const align = 'right';

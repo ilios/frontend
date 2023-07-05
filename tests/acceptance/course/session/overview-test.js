@@ -244,7 +244,6 @@ module('Acceptance | Session - Overview', function (hooks) {
   });
 
   test('session attributes are shown by school config', async function (assert) {
-    assert.expect(5);
     await setupAuthentication({ school: this.school });
     this.server.create('session', {
       course: this.course,
@@ -283,7 +282,6 @@ module('Acceptance | Session - Overview', function (hooks) {
   });
 
   test('session attributes are hidden by school config', async function (assert) {
-    assert.expect(5);
     await setupAuthentication({ school: this.school });
     this.server.create('session', {
       course: this.course,
@@ -318,7 +316,6 @@ module('Acceptance | Session - Overview', function (hooks) {
   });
 
   test('session attributes are hidden when there is no school config', async function (assert) {
-    assert.expect(5);
     await setupAuthentication({ school: this.school });
     this.server.create('session', {
       course: this.course,

@@ -47,7 +47,6 @@ module('Integration | Component | collapsed competencies', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(7);
     this.set('subject', this.course);
     await render(hbs`<CollapsedCompetencies @subject={{this.subject}} @expand={{(noop)}} />
 `);

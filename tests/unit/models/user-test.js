@@ -442,14 +442,12 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('isStudent - no roles', async function (assert) {
-    assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('user');
     const isStudent = await waitForResource(model, 'isStudent');
     assert.notOk(isStudent);
   });
 
   test('isStudent - roles, but no student role', async function (assert) {
-    assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const notAStudentRole = store.createRecord('user-role', {
@@ -464,7 +462,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('isStudent - has student role', async function (assert) {
-    assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const notAStudentRole = store.createRecord('user-role', {
@@ -477,7 +474,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - directedCourses', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('course', { directors: [model] });
@@ -486,7 +482,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - administeredCourses', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('course', { administrators: [model] });
@@ -495,7 +490,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - administeredSessions', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('session', { administrators: [model] });
@@ -504,7 +498,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - instructedLearnerGroups', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('learner-group', { instructors: [model] });
@@ -513,7 +506,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - instructorGroups', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('instructor-group', { users: [model] });
@@ -522,7 +514,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - instructedOfferings', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('offering', { instructors: [model] });
@@ -531,7 +522,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - instructedIlmSessions', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('ilmSession', { instructors: [model] });
@@ -540,7 +530,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - directedPrograms', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('program', { directors: [model] });
@@ -549,7 +538,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - programYears', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('program-year', { directors: [model] });
@@ -558,7 +546,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - administeredCurriculumInventoryReports', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('curriculum-inventory-report', {
@@ -569,7 +556,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - directedSchools', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('school', { directors: [model] });
@@ -578,7 +564,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - administeredSchools', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('school', { administrators: [model] });
@@ -587,7 +572,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('isLearner - cohorts', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('cohort', { users: [model] });
@@ -596,7 +580,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('isLearner - offerings', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('offering', { learners: [model] });
@@ -605,7 +588,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('isLearner - learnerIlmSessions', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     store.createRecord('ilm-session', { learners: [model] });
@@ -643,7 +625,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('find lowest group at top of tree', async function (assert) {
-    assert.expect(2);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learnerGroup', {
@@ -668,7 +649,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('find lowest group in middle of tree', async function (assert) {
-    assert.expect(2);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learnerGroup', {
@@ -694,7 +674,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('find lowest group in bottom of tree', async function (assert) {
-    assert.expect(2);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learnerGroup', {
@@ -721,7 +700,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('return null when there is no group in the tree', async function (assert) {
-    assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learnerGroup');
@@ -740,7 +718,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets secondary cohorts (all cohorts not the primary cohort)', async function (assert) {
-    assert.expect(4);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const primaryCohort = store.createRecord('cohort', {

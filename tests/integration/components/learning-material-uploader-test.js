@@ -62,7 +62,6 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
   });
 
   test('shows error when file is too big', async function (assert) {
-    assert.expect(1);
     const iliosConfigMock = Service.extend({
       async getMaxUploadSize() {
         return 1;

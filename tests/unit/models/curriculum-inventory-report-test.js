@@ -10,7 +10,6 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
   });
 
   test('get top level sequence blocks', async function (assert) {
-    assert.expect(3);
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     const block1 = store.createRecord('curriculumInventorySequenceBlock', {
@@ -42,7 +41,6 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
   });
 
   test('get linked courses', async function (assert) {
-    assert.expect(3);
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     const course1 = store.createRecord('course');
@@ -68,14 +66,12 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
   });
 
   test('no linked courses', async function (assert) {
-    assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const linkedCourses = await model.getLinkedCourses();
     assert.notOk(linkedCourses.length);
   });
 
   test('linked blocks are not linked courses', async function (assert) {
-    assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     (await model.sequenceBlocks).push(
@@ -88,7 +84,6 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
   });
 
   test('check if report has linked courses', async function (assert) {
-    assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');

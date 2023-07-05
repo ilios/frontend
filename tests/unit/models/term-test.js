@@ -9,7 +9,6 @@ module('Unit | Model | term', function (hooks) {
   });
 
   test('isTopLevel', function (assert) {
-    assert.expect(2);
     const model = this.store.createRecord('term');
     assert.ok(model.get('isTopLevel'));
     this.store.createRecord('term', { id: 1, children: [model] });
@@ -17,7 +16,6 @@ module('Unit | Model | term', function (hooks) {
   });
 
   test('hasChildren', async function (assert) {
-    assert.expect(2);
     const model = this.store.createRecord('term');
     assert.notOk(model.get('hasChildren'));
     const child = this.store.createRecord('term', { id: 1, parent: model });
@@ -26,7 +24,6 @@ module('Unit | Model | term', function (hooks) {
   });
 
   test('getAllParents', async function (assert) {
-    assert.expect(3);
     const model = this.store.createRecord('term');
     const parent = this.store.createRecord('term', { children: [model] });
     const parentsParent = this.store.createRecord('term', { children: [parent] });
@@ -37,7 +34,6 @@ module('Unit | Model | term', function (hooks) {
   });
 
   test('getAllParentTitles', async function (assert) {
-    assert.expect(3);
     const model = this.store.createRecord('term');
     const parent = this.store.createRecord('term', {
       children: [model],
@@ -51,7 +47,6 @@ module('Unit | Model | term', function (hooks) {
   });
 
   test('getTitleWithParentTitles', async function (assert) {
-    assert.expect(1);
     const model = this.store.createRecord('term');
     model.set('title', 'bitte');
     const parent = this.store.createRecord('term', {
@@ -64,7 +59,6 @@ module('Unit | Model | term', function (hooks) {
   });
 
   test('getAllDescendants', async function (assert) {
-    assert.expect(4);
     const model = this.store.createRecord('term');
     const child1 = this.store.createRecord('term', { parent: model });
     const child2 = this.store.createRecord('term', { parent: model });
@@ -77,7 +71,6 @@ module('Unit | Model | term', function (hooks) {
   });
 
   test('getTitleWithDescendantTitles', async function (assert) {
-    assert.expect(1);
     const model = this.store.createRecord('term', { title: 'top' });
     const child1 = this.store.createRecord('term', {
       title: 'first',
@@ -125,7 +118,6 @@ module('Unit | Model | term', function (hooks) {
   });
 
   test('childCount', async function (assert) {
-    assert.expect(2);
     const model = this.store.createRecord('term');
     assert.strictEqual(model.get('childCount'), 0);
     const child = this.store.createRecord('term', { id: 1, parent: model });

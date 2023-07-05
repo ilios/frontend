@@ -46,14 +46,12 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('check empty associatedOfferingLearnerGroups', async function (assert) {
-    assert.expect(1);
     const session = this.owner.lookup('service:store').createRecord('session');
     const groups = await waitForResource(session, 'associatedOfferingLearnerGroups');
     assert.strictEqual(groups.length, 0);
   });
 
   test('check first level associatedOfferingLearnerGroups', async function (assert) {
-    assert.expect(4);
     const session = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -77,7 +75,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('check multi level associatedOfferingLearnerGroups', async function (assert) {
-    assert.expect(6);
     const session = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -107,7 +104,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('check empty associatedIlmLearnerGroups without ilm session', async function (assert) {
-    assert.expect(1);
     const session = this.owner.lookup('service:store').createRecord('session');
 
     const groups = await waitForResource(session, 'associatedIlmLearnerGroups');
@@ -115,7 +111,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('check empty associatedIlmLearnerGroups with ilm session', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const session = store.createRecord('session');
     store.createRecord('ilm-session', { id: 13, session });
@@ -125,7 +120,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('check associatedIlmLearnerGroups', async function (assert) {
-    assert.expect(4);
     const session = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -146,14 +140,12 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('check empty associatedLearnerGroups', async function (assert) {
-    assert.expect(1);
     const session = this.owner.lookup('service:store').createRecord('session');
     const groups = await waitForResource(session, 'associatedLearnerGroups');
     assert.strictEqual(groups.length, 0);
   });
 
   test('check associatedLearnerGroups', async function (assert) {
-    assert.expect(6);
     const session = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -187,7 +179,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('check learner groups count', async function (assert) {
-    assert.expect(2);
     const session = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -217,7 +208,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('isIndependentLearning', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('session');
     assert.notOk(model.get('isIndependentLearning'));
@@ -226,7 +216,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('associatedVocabularies', async function (assert) {
-    assert.expect(3);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     const vocab1 = store.createRecord('vocabulary', { title: 'Zeppelin' });
@@ -242,7 +231,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('termCount', async function (assert) {
-    assert.expect(2);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     assert.strictEqual(subject.termCount, 0);
@@ -253,7 +241,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('sortedSessionObjectives', async function (assert) {
-    assert.expect(5);
     const store = this.owner.lookup('service:store');
     const session = store.createRecord('session');
     const sessionObjective1 = store.createRecord('session-objective', {
@@ -319,7 +306,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('maxSingleOfferingDuration', async function (assert) {
-    assert.expect(2);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     let max = await waitForResource(subject, 'maxSingleOfferingDuration');
@@ -355,14 +341,12 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('firstOfferingDate - no offerings, and no ILM', async function (assert) {
-    assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const firstDate = await waitForResource(subject, 'firstOfferingDate');
     assert.strictEqual(firstDate, null);
   });
 
   test('firstOfferingDate - ILM', async function (assert) {
-    assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     const ilm = store.createRecord('ilmSession', {
@@ -374,7 +358,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('firstOfferingDate - offerings', async function (assert) {
-    assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     const offering1 = store.createRecord('offering', {
@@ -389,7 +372,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('sortedOfferingsByDate', async function (assert) {
-    assert.expect(4);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     const offering1 = store.createRecord('offering', {
@@ -411,7 +393,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('maxDuration with ILM', async function (assert) {
-    assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -448,7 +429,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('maxDuration without ILM', async function (assert) {
-    assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -481,7 +461,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('maxDuration only ILM', async function (assert) {
-    assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -493,7 +472,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('totalSumDuration with ILM', async function (assert) {
-    assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -530,7 +508,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('totalSumDuration without ILM', async function (assert) {
-    assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -563,7 +540,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('totalSumDuration only ILM', async function (assert) {
-    assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -575,7 +551,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('allInstructors gets offerings data', async function (assert) {
-    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const subject = this.owner.lookup('service:store').createRecord('session');
 
@@ -598,7 +573,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('allInstructors gets ilmSession data', async function (assert) {
-    assert.expect(3);
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
@@ -621,13 +595,11 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('text only empty description', async function (assert) {
-    assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
     assert.strictEqual(subject.textDescription, '');
   });
 
   test('test showUnlinkIcon shows when only some sessionObjectives are linked to courseObjectives', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');
     const courseObjective = store.createRecord('course-objective', { course });
@@ -644,7 +616,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('test showUnlinkIcon shows when no sessionObjectives are linked to courseObjectives', async function (assert) {
-    assert.expect(1);
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');
     store.createRecord('course-objective', { course });
@@ -952,7 +923,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('offeringCount', async function (assert) {
-    assert.expect(2);
     const session = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     assert.strictEqual(session.offeringCount, 0);
@@ -963,7 +933,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('objectiveCount', async function (assert) {
-    assert.expect(2);
     const session = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     assert.strictEqual(session.objectiveCount, 0);
@@ -974,7 +943,6 @@ module('Unit | Model | Session', function (hooks) {
   });
 
   test('prerequisiteCount', async function (assert) {
-    assert.expect(2);
     const session = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     assert.strictEqual(session.prerequisiteCount, 0);

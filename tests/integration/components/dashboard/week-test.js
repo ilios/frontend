@@ -38,7 +38,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('it renders with events', async function (assert) {
-    assert.expect(5);
     this.server.create('userevent', {
       name: 'Learn to Learn',
       startDate: today.toISO(),
@@ -91,7 +90,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('it renders blank', async function (assert) {
-    assert.expect(3);
     class UserEvents extends Service {
       async getEvents() {
         return [];

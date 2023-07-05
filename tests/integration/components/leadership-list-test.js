@@ -91,8 +91,6 @@ module('Integration | Component | leadership list', function (hooks) {
   });
 
   test('it renders without directors', async function (assert) {
-    assert.expect(4);
-
     this.set('administrators', [this.user1]);
     this.set('studentAdvisors', [this.user1]);
 
@@ -116,8 +114,6 @@ module('Integration | Component | leadership list', function (hooks) {
   });
 
   test('it renders without administrators', async function (assert) {
-    assert.expect(4);
-
     this.set('directors', [this.user1]);
     this.set('studentAdvisors', [this.user1]);
 
@@ -140,8 +136,6 @@ module('Integration | Component | leadership list', function (hooks) {
   });
 
   test('it renders without student advisors', async function (assert) {
-    assert.expect(4);
-
     this.set('directors', [this.user1]);
     this.set('administrators', [this.user1]);
 
@@ -164,8 +158,6 @@ module('Integration | Component | leadership list', function (hooks) {
   });
 
   test('it renders without data', async function (assert) {
-    assert.expect(6);
-
     this.set('directors', []);
     this.set('administrators', []);
     this.set('studentAdvisors', []);
@@ -192,8 +184,6 @@ module('Integration | Component | leadership list', function (hooks) {
   });
 
   test('disabled users are indicated with an icon', async function (assert) {
-    assert.expect(10);
-
     this.user2.set('enabled', false);
 
     this.set('directors', [this.user1]);

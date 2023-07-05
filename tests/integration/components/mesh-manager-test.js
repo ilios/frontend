@@ -151,7 +151,6 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('clicking outside of search results dismissed them.', async function (assert) {
-    assert.expect(3);
     const descriptors = this.server.createList('meshDescriptor', 3);
     this.set('terms', [descriptors[0], descriptors[2]]);
     await render(hbs`<MeshManager
