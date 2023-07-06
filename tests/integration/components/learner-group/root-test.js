@@ -19,7 +19,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     this.cohort = this.server.create('cohort', { programYear: this.programYear });
 
     const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
         return userModel;

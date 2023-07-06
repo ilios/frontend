@@ -136,7 +136,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', this.learnerGroup.id);
+      .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
     assert.strictEqual(component.title, 'learner group 0');
@@ -149,7 +149,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', this.learnerGroup.id);
+      .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
     assert.strictEqual(component.title, 'learner group 0');
@@ -165,7 +165,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
-      .find('learner-group', this.learnerGroup.id);
+      .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
     assert.strictEqual(component.title, 'learner group 0');
