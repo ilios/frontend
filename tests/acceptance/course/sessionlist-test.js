@@ -5,13 +5,19 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/sessions';
 import sessionPage from 'ilios-common/page-objects/session';
-
-const today = DateTime.fromObject({ hour: 8 });
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Session List', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
+    freezeDateAt(
+      DateTime.fromObject({
+        month: 4,
+        day: 1,
+      }).toJSDate()
+    );
+    this.today = DateTime.fromObject({ hour: 8 });
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
     this.sessionType = this.server.create('sessionType', {
@@ -56,8 +62,8 @@ module('Acceptance | Course - Session List', function (hooks) {
     });
     this.server.create('offering', {
       session: this.session1,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: this.today.toJSDate(),
+      endDate: this.today.plus({ hour: 1 }).toJSDate(),
       learners: [learner1],
       learnerGroups: [learnerGroup1, learnerGroup2],
       instructors: [instructor1],
@@ -65,14 +71,18 @@ module('Acceptance | Course - Session List', function (hooks) {
     });
     this.server.create('offering', {
       session: this.session1,
-      startDate: today.plus({ day: 1, hour: 1 }).toJSDate(),
-      endDate: today.plus({ day: 1, hour: 4 }).toJSDate(),
+      startDate: this.today.plus({ day: 1, hour: 1 }).toJSDate(),
+      endDate: this.today.plus({ day: 1, hour: 4 }).toJSDate(),
     });
     this.server.create('offering', {
       session: this.session1,
-      startDate: today.plus({ day: 2 }).toJSDate(),
-      endDate: today.plus({ day: 3 }).toJSDate(),
+      startDate: this.today.plus({ day: 2 }).toJSDate(),
+      endDate: this.today.plus({ day: 3 }).toJSDate(),
     });
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
   });
 
   test('session list', async function (assert) {
@@ -89,7 +99,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(sessions[0].row.termCount, '0');
     assert.strictEqual(
       sessions[0].row.firstOffering,
-      this.intl.formatDate(today.toJSDate(), {
+      this.intl.formatDate(this.today.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -340,7 +350,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(
       sessions[0].row.firstOffering,
-      this.intl.formatDate(today.toJSDate(), {
+      this.intl.formatDate(this.today.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
@@ -420,7 +430,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(sessions.length, 4);
     assert.strictEqual(
       sessions[0].row.firstOffering,
-      this.intl.formatDate(today.toJSDate(), {
+      this.intl.formatDate(this.today.toJSDate(), {
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',

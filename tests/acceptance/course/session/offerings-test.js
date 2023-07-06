@@ -4,10 +4,17 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
 import percySnapshot from '@percy/ember';
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Acceptance | Session - Offerings', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
+    freezeDateAt(
+      DateTime.fromObject({
+        month: 12,
+        day: 11,
+      }).toJSDate()
+    );
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
     const program = this.server.create('program', { school: this.school });
@@ -74,6 +81,10 @@ module('Acceptance | Session - Offerings', function (hooks) {
       endDate: this.today.plus({ days: 3, hours: 1 }).toJSDate(),
       url: 'https://example.edu/',
     });
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
   });
 
   test('basics', async function (assert) {
