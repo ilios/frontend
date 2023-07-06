@@ -28,8 +28,6 @@ jobs:
       run: |
         NOTES=$(npx generate-github-release-notes ilios common ${{ env.previous_tag }} ${{env.new_tag}})
         echo ${NOTES}
-        # remove line breaks from notes so they can be passed around
-        NOTES="${NOTES//$'\n'/'%0A'}"
         echo "release_notes=${NOTES}" >> $GITHUB_ENV
     - uses: ncipollo/release-action@v1
       with:
