@@ -15,10 +15,10 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
   this.createEvent = function (startDate, endDate, lastModified, isScheduled, isPublished) {
     const color = '#00cc65';
     this.server.create('userevent', {
-      startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
-      endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
+      startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toJSDate(),
+      endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toJSDate(),
       color,
-      lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toISO(),
+      lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toJSDate(),
       isPublished,
       isScheduled,
     });
