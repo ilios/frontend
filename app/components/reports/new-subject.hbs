@@ -151,7 +151,7 @@
                     </span>
                     <span class="term-details" data-test-details>
                       {{this.selectedMeshTerm.id}}
-                      {{#if this.selectedMeshTerm.trees}}
+                      {{#if this.selectedMeshTerm.trees.length}}
                           - <MeshDescriptorLastTreeNumber @descriptor={{this.selectedMeshTerm}} />
                       {{/if}}
                     </span>
