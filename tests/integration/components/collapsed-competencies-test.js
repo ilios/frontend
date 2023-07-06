@@ -17,7 +17,12 @@ module('Integration | Component | collapsed competencies', function (hooks) {
     const competencyA = this.server.create('competency', { school: schoolA });
     const competencyB = this.server.create('competency', { school: schoolB });
     const competencyC = this.server.create('competency', { school: schoolB });
-    const programYear = this.server.create('programYear');
+    const programYear = this.server.create('programYear', {
+      competencies: [
+        ...this.server.createList('competency', 2, { school: schoolB }),
+        ...this.server.createList('competency', 3, { school: schoolA }),
+      ],
+    });
     const pyObjectiveA = this.server.create('programYearObjective', {
       programYear,
       competency: competencyA,
@@ -44,6 +49,9 @@ module('Integration | Component | collapsed competencies', function (hooks) {
       programYearObjectives: [pyObjectiveC],
     });
     this.course = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.programYear = await this.owner
+      .lookup('service:store')
+      .findRecord('program-year', programYear.id);
   });
 
   test('it renders', async function (assert) {
@@ -69,5 +77,18 @@ module('Integration | Component | collapsed competencies', function (hooks) {
 `);
     assert.strictEqual(component.title, 'Competencies (3)');
     await component.expand();
+  });
+
+  test('it renders for program year', async function (assert) {
+    this.set('subject', this.programYear);
+    await render(hbs`<CollapsedCompetencies @subject={{this.subject}} @expand={{(noop)}} />
+`);
+    assert.strictEqual(component.title, 'Competencies (5)');
+    assert.strictEqual(component.headers[0].text, 'School');
+    assert.strictEqual(component.headers[1].text, 'Competencies');
+    assert.strictEqual(component.competencies[0].school, 'Medicine');
+    assert.strictEqual(component.competencies[0].count, '3');
+    assert.strictEqual(component.competencies[1].school, 'Pharmacy');
+    assert.strictEqual(component.competencies[1].count, '2');
   });
 });
