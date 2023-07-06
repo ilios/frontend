@@ -1,27 +1,25 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
 import moment from 'moment';
 import { all, map } from 'rsvp';
 import { mapBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class LearnerGroupCalendarComponent extends Component {
   @tracked selectedDate = moment().toDate();
   @tracked showSubgroupEvents = false;
-  @tracked offerings = [];
-  @tracked calendarEvents = [];
 
-  @dropTask
-  *load(element, [learnerGroup, showSubgroupEvents]) {
-    if (!learnerGroup) {
-      return;
-    }
-    this.offerings = yield this.getOfferings(learnerGroup, showSubgroupEvents);
-    this.calendarEvents = yield this.getCalendarEvents(this.offerings);
+  @cached
+  get eventsData() {
+    return new TrackedAsyncData(this.loadEvents(this.args.learnerGroup, this.showSubgroupEvents));
   }
 
-  async getOfferings(learnerGroup, showSubgroupEvents) {
+  get events() {
+    return this.eventsData.isResolved ? this.eventsData.value : [];
+  }
+
+  async loadEvents(learnerGroup, showSubgroupEvents) {
     let learnerGroups = [learnerGroup];
     if (showSubgroupEvents) {
       const allDescendants = await learnerGroup.get('allDescendants');
@@ -31,12 +29,7 @@ export default class LearnerGroupCalendarComponent extends Component {
     const flat = offerings.reduce((flattened, obj) => {
       return [...flattened, ...obj.slice()];
     }, []);
-
-    return flat;
-  }
-
-  async getCalendarEvents(offerings) {
-    return await map(offerings, async (offering) => {
+    return await map(flat, async (offering) => {
       const session = await offering.session;
       const course = await session.course;
       return {
@@ -49,6 +42,9 @@ export default class LearnerGroupCalendarComponent extends Component {
         color: '#84c444',
         prerequisites: [],
         postrequisites: [],
+        isScheduled: session.isScheduled || course.isScheduled,
+        isPublished: session.isPublished && course.isPublished,
+        isBlanked: false,
       };
     });
   }

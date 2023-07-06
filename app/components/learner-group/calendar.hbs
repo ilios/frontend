@@ -1,7 +1,5 @@
 <div
   class="learner-group-calendar"
-  {{did-insert (perform this.load) @learnerGroup this.showSubgroupEvents}}
-  {{did-update (perform this.load) @learnerGroup this.showSubgroupEvents}}
   data-test-learner-group-calendar
 >
   <p class="learner-group-calendar-filter-options">
@@ -51,7 +49,7 @@
   </ul>
   <div class="ilios-calendar">
     <IliosCalendarWeek
-      @calendarEvents={{this.calendarEvents}}
+      @calendarEvents={{this.events}}
       @date={{this.selectedDate}}
       @areEventsSelectable={{false}}
       @areDaysSelectable={{false}}
