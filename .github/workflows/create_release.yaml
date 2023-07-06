@@ -27,9 +27,12 @@ jobs:
       id: notes
       run: |
         NOTES=$(npx generate-github-release-notes ilios common ${{ env.previous_tag }} ${{env.new_tag}})
+        EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
         echo ${NOTES}
-        echo "release_notes=${NOTES}" >> $GITHUB_ENV
+        echo "RELEASE_NOTES<<$EOF" >> "$GITHUB_ENV"
+        echo ${NOTES} >> $GITHUB_ENV
+        echo "$EOF" >> "$GITHUB_ENV"
     - uses: ncipollo/release-action@v1
       with:
-        body: ${{env.release_notes}}
+        body: ${{env.RELEASE_NOTES}}
         token: ${{ secrets.ZORGBORT_TOKEN }}
