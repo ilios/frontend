@@ -1,6 +1,7 @@
 import { inject as service } from '@ember/service';
 import EmberRouter from '@embroider/router';
 import config from 'ilios/config/environment';
+import { courseRoutes, dashboardRoutes } from 'ilios-common/common-routes';
 
 export default class Router extends EmberRouter {
   @service iliosMetrics;
@@ -20,45 +21,9 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-  this.route(
-    'dashboard',
-    {
-      resetNamespace: true,
-    },
-    function () {
-      this.route('week');
-      this.route('activities');
-      this.route('materials');
-      this.route('calendar');
-    }
-  );
+  dashboardRoutes(this);
   this.route('courses');
-  this.route(
-    'course',
-    {
-      path: 'courses/:course_id',
-      resetNamespace: true,
-    },
-    function () {
-      this.route('publication_check', { path: '/publicationcheck' });
-      this.route('publishall');
-      this.route('rollover');
-      this.route(
-        'session',
-        {
-          path: '/sessions/:session_id',
-          resetNamespace: true,
-        },
-        function () {
-          this.route('publication_check', { path: '/publicationcheck' });
-          this.route('copy');
-        }
-      );
-    }
-  );
-  this.route('print_course', { path: 'course/:course_id/print' });
-  this.route('course-materials', { path: 'courses/:course_id/materials' });
-
+  courseRoutes(this);
   this.route('instructor-groups', { path: 'instructorgroups' });
   this.route('instructor-group', { path: 'instructorgroups/:instructor_group_id' });
 
@@ -98,7 +63,6 @@ Router.map(function () {
   this.route('assign-students', { path: '/admin/assignstudents' });
   this.route('myprofile');
   this.route('mymaterials');
-  this.route('course-rollover');
   this.route('verification-preview', {
     path: 'curriculum-inventory-reports/:curriculum_inventory_report_id/verification-preview',
   });
@@ -114,34 +78,6 @@ Router.map(function () {
   );
   this.route('curriculum-inventory-sequence-block', {
     path: 'curriculum-inventory-sequence-block/:curriculum_inventory_sequence_block_id',
-  });
-  this.route('course-visualizations', {
-    path: 'data/courses/:course_id',
-  });
-  this.route('course-visualize-objectives', {
-    path: 'data/courses/:course_id/objectives',
-  });
-  this.route('course-visualize-session-types', {
-    path: 'data/courses/:course_id/session-types',
-  });
-  this.route('course-visualize-vocabularies', {
-    path: 'data/courses/:course_id/vocabularies',
-  });
-  this.route('course-visualize-vocabulary', {
-    path: 'data/courses/:course_id/vocabularies/:vocabulary_id',
-  });
-  this.route('course-visualize-term', {
-    path: 'data/courses/:course_id/terms/:term_id',
-  });
-  /* eslint ember/routes-segments-snake-case: 0 */
-  this.route('course-visualize-session-type', {
-    path: 'data/courses/:course_id/session-types/:session-type_id',
-  });
-  this.route('course-visualize-instructors', {
-    path: 'data/courses/:course_id/instructors',
-  });
-  this.route('course-visualize-instructor', {
-    path: 'data/courses/:course_id/instructors/:user_id',
   });
   this.route('session-type-visualize-vocabularies', {
     path: 'data/sessiontype/:session_type_id/vocabularies',
