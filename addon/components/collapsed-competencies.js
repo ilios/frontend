@@ -12,8 +12,13 @@ export default class CollapsedCompetenciesComponent extends Component {
     return new TrackedAsyncData(this.store.findAll('school'));
   }
 
+  @cached
+  get competencies() {
+    return new TrackedAsyncData(this.args.subject.competencies);
+  }
+
   get isLoading() {
-    return !this.schools.isResolved;
+    return !this.schools.isResolved || !this.competencies.isResolved;
   }
 
   get summary() {
@@ -21,7 +26,7 @@ export default class CollapsedCompetenciesComponent extends Component {
       return [];
     }
     const allSchools = this.schools.value;
-    const schools = this.args.subject.competencies.reduce((schools, competency) => {
+    const schools = this.competencies.value.reduce((schools, competency) => {
       const schoolId = competency.belongsTo('school').id();
       if (!(schoolId in schools)) {
         schools[schoolId] = {
