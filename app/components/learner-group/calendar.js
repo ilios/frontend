@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { all, map } from 'rsvp';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 
 export default class LearnerGroupCalendarComponent extends Component {
-  @tracked selectedDate = moment().toDate();
+  @tracked selectedDate = DateTime.now();
   @tracked showSubgroupEvents = false;
 
   @cached
@@ -17,6 +17,10 @@ export default class LearnerGroupCalendarComponent extends Component {
 
   get events() {
     return this.eventsData.isResolved ? this.eventsData.value : [];
+  }
+
+  get date() {
+    return this.selectedDate.toJSDate();
   }
 
   async loadEvents(learnerGroup, showSubgroupEvents) {
@@ -33,8 +37,8 @@ export default class LearnerGroupCalendarComponent extends Component {
       const session = await offering.session;
       const course = await session.course;
       return {
-        startDate: offering.startDate,
-        endDate: offering.endDate,
+        startDate: offering.startDate.toISOString(),
+        endDate: offering.endDate.toISOString(),
         courseTitle: course.title,
         name: session.title,
         offering: offering.id,
@@ -51,14 +55,14 @@ export default class LearnerGroupCalendarComponent extends Component {
 
   @action
   goForward() {
-    this.selectedDate = moment(this.selectedDate).add(1, 'week').toDate();
+    this.selectedDate = DateTime.fromISO(this.selectedDate).plus({ weeks: 1 });
   }
   @action
   goBack() {
-    this.selectedDate = moment(this.selectedDate).subtract(1, 'week').toDate();
+    this.selectedDate = DateTime.fromISO(this.selectedDate).minus({ weeks: 1 });
   }
   @action
   gotoToday() {
-    this.selectedDate = moment().toDate();
+    this.selectedDate = DateTime.now();
   }
 }
