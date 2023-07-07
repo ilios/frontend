@@ -1,5 +1,5 @@
-{{#if (has-route "courses")}}
-  <div class="back-to-courses">
+{{#if this.showLink}}
+  <div class="back-to-courses" data-test-back-to-courses>
     <LinkTo @route="courses">
       {{t "general.backToCourses"}}
     </LinkTo>
