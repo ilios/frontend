@@ -68,14 +68,14 @@ export default class UserProfileRolesComponent extends Component {
     const formerStudentRole = findBy(roles, 'title', 'Former Student');
     this.args.user.set('enabled', this.isEnabled);
     this.args.user.set('userSyncIgnore', this.isUserSyncIgnored);
-    const userRoles = yield this.args.user.get('roles');
-    userRoles.clear();
+    const userRoles = [];
     if (this.isStudent) {
-      this.args.user.set('roles', [...userRoles.slice(), studentRole]);
+      userRoles.push(studentRole);
     }
     if (this.isFormerStudent) {
-      this.args.user.set('roles', [...userRoles.slice(), formerStudentRole]);
+      userRoles.push(formerStudentRole);
     }
+    this.args.user.set('roles', userRoles);
     this.resetFlipped();
     yield this.args.user.save();
     if (this.args.setIsManaging) {
