@@ -5,6 +5,7 @@ import { action, set } from '@ember/object';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { DateTime } from 'luxon';
 import { deprecate } from '@ember/debug';
+import scrollIntoView from 'scroll-into-view';
 
 export default class DailyCalendarComponent extends Component {
   @service intl;
@@ -16,9 +17,9 @@ export default class DailyCalendarComponent extends Component {
     let hourElement = this.hour6;
 
     if (earliestHour < 24 && earliestHour > 2) {
-      hourElement = this[`hour${earliestHour - 2}`];
+      hourElement = this[`hour${earliestHour}`];
     }
-    calendarElement.scrollTop = hourElement.offsetTop;
+    scrollIntoView(hourElement, { align: { top: 0 } });
   });
 
   get date() {
