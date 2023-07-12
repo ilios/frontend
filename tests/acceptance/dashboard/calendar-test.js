@@ -236,7 +236,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       `Sunday Sun ${longDayHeading} ${shortDayHeading}`
     );
 
-    assert.strictEqual(page.calendar.weeklyCalendar.longWeekOfYear, 'Week of October 9, 2022');
+    assert.strictEqual(
+      page.calendar.weeklyCalendar.title.longWeekOfYear,
+      'Week of October 9, 2022'
+    );
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
     assert.ok(page.calendar.weeklyCalendar.events[0].isFirstDayOfWeek);
     assert.strictEqual(page.calendar.weeklyCalendar.events[0].name, 'start of week');

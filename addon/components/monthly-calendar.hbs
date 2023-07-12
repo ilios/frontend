@@ -1,6 +1,17 @@
-<section class="monthly-calendar" data-test-monthly-calendar>
+<section
+  class="monthly-calendar"
+  aria-busy={{if @isLoadingEvents "true" "false"}}
+  aria-live="polite"
+  data-test-monthly-calendar
+>
   <h2 class="month-year" data-test-month-year>
-    {{format-date this.firstDayOfMonth month="long" year="numeric"}}
+    {{#if @isLoadingEvents}}
+      <FaIcon @icon="spinner" @spin={{true}} />
+      {{t "general.loadingEvents"}}
+      ...
+    {{else}}
+      {{format-date this.firstDayOfMonth month="long" year="numeric"}}
+    {{/if}}
   </h2>
   <div class="calendar">
     {{#each this.days as |day|}}

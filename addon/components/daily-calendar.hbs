@@ -1,12 +1,20 @@
 <section
   class="daily-calendar"
+  aria-busy={{if @isLoadingEvents "true" "false"}}
+  aria-live="polite"
   data-test-daily-calendar
 >
   <h2 class="day-of-week" data-test-day-of-week>
-    <span class="short" data-test-short>
-      {{format-date this.date}}
-    </span>
-    <span class="long" data-test-long>{{format-date this.date weekday="long" month="long" day="numeric" year="numeric"}}</span>
+    {{#if @isLoadingEvents}}
+      <FaIcon @icon="spinner" @spin={{true}} />
+      {{t "general.loadingEvents"}}
+      ...
+    {{else}}
+      <span class="short" data-test-short>
+        {{format-date this.date}}
+      </span>
+      <span class="long" data-test-long>{{format-date this.date weekday="long" month="long" day="numeric" year="numeric"}}</span>
+    {{/if}}
   </h2>
 
   <div

@@ -1,16 +1,23 @@
 <section
   class="weekly-calendar"
+  aria-busy={{if @isLoadingEvents "true" "false"}}
+  aria-live="polite"
   data-test-weekly-calendar
 >
   <h2 class="week-of-year" data-test-week-of-year>
-    <span class="short" data-test-short>
-      {{format-date this.firstDayOfWeek month="numeric" day="numeric"}} &mdash;
-      {{format-date this.lastDayOfWeek month="numeric" day="numeric"}}
-      {{format-date this.lastDayOfWeek year="numeric"}}
-    </span>
-    <span class="long" data-test-long>{{t "general.weekOf" date=(format-date this.firstDayOfWeek month="long" day="numeric" year="numeric")}}</span>
+    {{#if @isLoadingEvents}}
+      <FaIcon @icon="spinner" @spin={{true}} />
+      {{t "general.loadingEvents"}}
+      ...
+    {{else}}
+      <span class="short" data-test-short>
+        {{format-date this.firstDayOfWeek month="numeric" day="numeric"}} &mdash;
+        {{format-date this.lastDayOfWeek month="numeric" day="numeric"}}
+        {{format-date this.lastDayOfWeek year="numeric"}}
+      </span>
+      <span class="long" data-test-long>{{t "general.weekOf" date=(format-date this.firstDayOfWeek month="long" day="numeric" year="numeric")}}</span>
+    {{/if}}
   </h2>
-
   <div
     class="days"
     tabindex="0"

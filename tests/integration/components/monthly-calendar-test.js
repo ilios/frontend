@@ -14,7 +14,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
   setupMirage(hooks);
 
   test('it renders empty and is accessible', async function (assert) {
-    assert.expect(66);
+    assert.expect(68);
     const january9th2019 = DateTime.fromObject({
       year: 2019,
       month: 1,
@@ -31,7 +31,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />
 `);
-
+    assert.strictEqual(component.ariaBusy, 'false');
+    assert.strictEqual(component.title, 'January 2019');
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[0].isThirdDayOfWeek);
     assert.ok(component.days[0].isFirstWeek);
@@ -67,7 +68,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />
 `);
-
+    assert.strictEqual(component.ariaBusy, 'false');
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[8].isFourthDayOfWeek);
     assert.ok(component.days[8].isSecondWeek);
@@ -101,7 +102,6 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />
 `);
-
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[8].isFourthDayOfWeek);
     assert.ok(component.days[8].isSecondWeek);
@@ -309,5 +309,19 @@ module('Integration | Component | monthly-calendar', function (hooks) {
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('events are loading', async function (assert) {
+    this.set('date', DateTime.now().toJSDate());
+    await render(hbs`<MonthlyCalendar
+      @isLoadingEvents={{true}}
+      @date={{this.date}}
+      @events={{(array)}}
+      @changeToDayView={{(noop)}}
+      @selectEvent={{(noop)}}
+    />
+`);
+    assert.strictEqual(component.ariaBusy, 'true');
+    assert.strictEqual(component.title, 'Loading Events ...');
   });
 });

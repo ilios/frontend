@@ -31,7 +31,7 @@ module('Integration | Component | ilios calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />
 `);
-    assert.strictEqual(component.daily.longDayOfWeek, 'Wednesday, September 30, 2015');
+    assert.strictEqual(component.daily.title.longDayOfWeek, 'Wednesday, September 30, 2015');
     assert.notOk(component.monthly.isVisible);
     assert.notOk(component.weekly.isVisible);
     assert.strictEqual(component.viewModes.length, 3);
@@ -69,7 +69,7 @@ module('Integration | Component | ilios calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />
 `);
-    assert.strictEqual(component.weekly.longWeekOfYear, 'Week of September 27, 2015');
+    assert.strictEqual(component.weekly.title.longWeekOfYear, 'Week of September 27, 2015');
     assert.notOk(component.monthly.isVisible);
     assert.notOk(component.daily.isVisible);
     assert.strictEqual(component.viewModes[0].linksTo, '/dashboard/calendar?view=day');
@@ -99,7 +99,7 @@ module('Integration | Component | ilios calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />
 `);
-    assert.strictEqual(component.monthly.monthYear, 'September 2015');
+    assert.strictEqual(component.monthly.title, 'September 2015');
     assert.notOk(component.daily.isVisible);
     assert.notOk(component.weekly.isVisible);
     assert.strictEqual(component.viewModes[0].linksTo, '/dashboard/calendar?view=day');

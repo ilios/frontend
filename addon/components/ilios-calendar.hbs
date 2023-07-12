@@ -45,14 +45,8 @@
         @instructions={{@icsInstructions}}
       />
     {{/if}}
-    {{#if @isLoadingEvents}}
-      <h1>
-        <FaIcon @icon="spinner" @spin={{true}} />
-        {{t "general.loadingEvents"}}
-        ...
-      </h1>
-    {{/if}}
     <this.calendarViewComponent
+      @isLoadingEvents={{@isLoadingEvents}}
       @calendarEvents={{this.sortedEvents}}
       @date={{@selectedDate}}
       @selectEvent={{@selectEvent}}

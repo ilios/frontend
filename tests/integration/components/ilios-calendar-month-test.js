@@ -32,7 +32,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       @selectEvent={{(noop)}}
     />
 `);
-    assert.strictEqual(component.calendar.monthYear, 'September 2015');
+    assert.strictEqual(component.calendar.title, 'September 2015');
     assert.strictEqual(component.calendar.events.length, 2);
     assert.ok(component.calendar.days[29].hasShowMore);
   });
@@ -55,7 +55,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       @selectEvent={{(noop)}}
     />
 `);
-    assert.strictEqual(component.calendar.monthYear, 'September 2015');
+    assert.strictEqual(component.calendar.title, 'September 2015');
     assert.strictEqual(component.calendar.events.length, 2);
     assert.notOk(component.calendar.days[29].hasShowMore);
   });
