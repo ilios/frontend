@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import moment from 'moment';
 import { findBy, sortBy } from 'ilios-common/utils/array-helpers';
+import scrollIntoView from 'scroll-into-view';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service dataLoader;
@@ -96,8 +97,8 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @action
   scrollToLastYear(element, [year]) {
     if (year === this.academicYear - 1) {
-      this.el.querySelector('.filters').scrollTop =
-        element.offsetTop - element.parentNode.offsetTop;
+      const element = this.el.querySelector('.filters');
+      scrollIntoView(element, { align: { top: 0 } });
     }
   }
 
