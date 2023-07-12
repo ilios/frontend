@@ -12,11 +12,6 @@
       position: absolute;
       top: 2em;
       transition: all 0.5s ease-in-out;
-
-      &.loaded {
-        opacity: 0;
-        z-index: -1;
-      }
     }
   }
 
