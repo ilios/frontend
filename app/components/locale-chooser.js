@@ -10,6 +10,7 @@ export default class LocaleChooserComponent extends Component {
   @service moment;
   @tracked isOpen = false;
   @tracked menuElement;
+  @tracked menuButtonElement;
 
   get locale() {
     const locale = this.intl.get('primaryLocale');
@@ -33,6 +34,11 @@ export default class LocaleChooserComponent extends Component {
   }
 
   @action
+  setMenuButton(menuButtonElement) {
+    this.menuButtonElement = menuButtonElement;
+  }
+
+  @action
   close() {
     this.isOpen = false;
   }
@@ -43,6 +49,7 @@ export default class LocaleChooserComponent extends Component {
     this.intl.setLocale(id);
     this.moment.setLocale(id);
     window.document.querySelector('html').setAttribute('lang', id);
+    this.menuButtonElement.focus();
   }
 
   @action
