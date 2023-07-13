@@ -243,6 +243,7 @@ general:
   ownedBy: "owned by {owner}"
   owner: Owner
   pagedResultsCount: "Showing {start} - {end} of {total}"
+  pagination: Pagination
   parentCount: "{count, plural, =1 {1 has a parent} other {# have parents}}"
   parentGroup: "Parent group"
   parentGroups: "Parent groups"

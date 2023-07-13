@@ -75,7 +75,7 @@
           {{on "input" (perform this.setQuery value="target.value")}}
         >
       </span>
-      <span class="paginator" data-test-paginator-top>
+      <nav class="paginator" aria-label={{t "general.pagination"}} data-test-paginator-top>
         <PagedlistControls
           @offset={{@offset}}
           @limit={{@limit}}
@@ -83,7 +83,7 @@
           @setOffset={{@setOffset}}
           @setLimit={{@setLimit}}
         />
-      </span>
+      </nav>
       <table>
         <thead>
           <tr>
@@ -155,7 +155,7 @@
           {{/if}}
         </tbody>
       </table>
-      <span class="paginator" data-test-paginator-bottom>
+      <nav class="paginator" aria-label={{t "general.pagination"}} data-test-paginator-bottom>
         <PagedlistControls
           @offset={{@offset}}
           @limit={{@limit}}
@@ -163,7 +163,7 @@
           @setOffset={{@setOffset}}
           @setLimit={{@setLimit}}
         />
-      </span>
+      </nav>
     </div>
   </div>
 </div>

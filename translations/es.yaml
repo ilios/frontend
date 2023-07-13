@@ -203,6 +203,7 @@ general:
   myLearningMaterials: "Mis Materiales Didácticos"
   myMaterials: "Mis Materiales"
   mySchedule: "Mi Horario"
+  navigation: Navigation
   newObjective: "Nuevo Objetivo"
   newObjectiveSaved: "Nuevo Objetivo Guardado"
   newOffering: "Nueva Oferta"
@@ -243,6 +244,7 @@ general:
   ownedBy: "propiedad de {owner}"
   owner: "Dueño"
   pagedResultsCount: "Mostrando {start} - {end} de {total}"
+  pagination: Paginación
   parentCount: "{count, plural, =1 {1 tiene un Principal objectivo} other {# tienen Objectivos Principales}}"
   parentGroup: "Principal grupo"
   parentGroups: "Grupos principales"
