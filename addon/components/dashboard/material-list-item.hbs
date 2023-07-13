@@ -1,5 +1,5 @@
 <tr data-test-learning-material>
-  <td>
+  <td colspan="2">
     <UserMaterialStatus @learningMaterial={{@lm}} />
   </td>
   <td id="{{this.uniqueId}}-title" colspan="6" data-test-title>
@@ -74,7 +74,7 @@
   <td colspan="6" data-test-course-title>
     {{@lm.courseTitle}}
   </td>
-  <td class="hide-from-small-screen" colspan="4" data-test-instructors>
+  <td class="hide-from-small-screen" colspan="3" data-test-instructors>
     <TruncateText
       @length={{25}}
       @text={{join
