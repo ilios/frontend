@@ -8,7 +8,11 @@
   <h5>
     {{t "general.courses"}}
     {{#if this.expandedYearWithoutTitleView}}
-      ({{this.expandedYearWithoutTitleView}} - {{add this.expandedYearWithoutTitleView 1}})
+      {{#if this.academicYearCrossesCalendarYearBoundaries}}
+        ({{this.expandedYearWithoutTitleView}} - {{add this.expandedYearWithoutTitleView 1}})
+      {{else}}
+        ({{this.expandedYearWithoutTitleView}})
+      {{/if}}
     {{/if}}
   </h5>
   <div class="filters">
@@ -22,6 +26,7 @@
           {{in-viewport
             onEnter=(fn this.addYearInView year.year)
             onExit=(fn this.removeYearInView year.year)
+            viewportSpy=true
           }}
           data-test-year
         >
@@ -31,6 +36,7 @@
             {{in-viewport
               onEnter=(fn this.addTitleInView year.year)
               onExit=(fn this.removeTitleInView year.year)
+              viewportSpy=true
             }}
           >
             <button type="button" {{on "click" (fn this.toggleYear year.year)}}>
