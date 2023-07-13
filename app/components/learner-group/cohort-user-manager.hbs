@@ -114,27 +114,25 @@
                   {{/if}}
                 </td>
                 <td class="text-left" colspan="1">
-                  {{#if user.enabled}}
-                    {{#if (includes user this.usersBeingMoved)}}
-                      <LoadingSpinner />
-                    {{else if (and @canUpdate (eq this.selectedUsers.length 0))}}
-                      <button
-                        type="button"
-                        class="inline-button"
-                        {{on "click" (perform this.addSingleUser user)}}
-                        data-test-add-user
-                      >
-                        <FaIcon
-                          @icon="plus"
-                          class="yes"
-                          @title={{t
-                            "general.moveToGroup"
-                            groupTitle=@learnerGroupTitle
-                            count=1
-                          }}
-                        />
-                      </button>
-                    {{/if}}
+                  {{#if (includes user this.usersBeingMoved)}}
+                    <LoadingSpinner />
+                  {{else if (and @canUpdate (or user.enabled this.currentUser.isRoot) (eq this.selectedUsers.length 0))}}
+                    <button
+                      type="button"
+                      class="inline-button"
+                      {{on "click" (perform this.addSingleUser user)}}
+                      data-test-add-user
+                    >
+                      <FaIcon
+                        @icon="plus"
+                        class="yes"
+                        @title={{t
+                          "general.moveToGroup"
+                          groupTitle=@learnerGroupTitle
+                          count=1
+                        }}
+                      />
+                    </button>
                   {{/if}}
                 </td>
               </tr>

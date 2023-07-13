@@ -127,8 +127,8 @@
                   <td>
                     {{#if (includes user.content this.usersBeingRemovedFromGroup)}}
                       <LoadingSpinner />
-                    {{else if user.enabled}}
-                      {{#if (eq this.selectedGroupUsers.length 0)}}
+                    {{else}}
+                      {{#if (and (or user.enabled this.currentUser.isRoot) (eq this.selectedGroupUsers.length 0))}}
                         <button
                           type="button"
                           class="link-button"
@@ -268,25 +268,23 @@
                   <td>
                     {{#if (includes user.content this.usersBeingAddedToGroup)}}
                       <LoadingSpinner />
-                    {{else if user.enabled}}
-                      {{#if (eq this.selectedNonGroupUsers.length 0)}}
-                        <button
-                          type="button"
-                          class="link-button"
-                          {{on "click" (perform this.addUserToGroup user.content)}}
-                          data-test-add-user
-                        >
-                          <FaIcon
-                            @icon="plus"
-                            class="yes"
-                            @title={{t
-                              "general.moveToGroup"
-                              groupTitle=@learnerGroupTitle
-                              count=1
-                            }}
-                          />
-                        </button>
-                      {{/if}}
+                    {{else if (and (or user.enabled this.currentUser.isRoot) (eq this.selectedNonGroupUsers.length 0))}}
+                      <button
+                        type="button"
+                        class="link-button"
+                        {{on "click" (perform this.addUserToGroup user.content)}}
+                        data-test-add-user
+                      >
+                        <FaIcon
+                          @icon="plus"
+                          class="yes"
+                          @title={{t
+                            "general.moveToGroup"
+                            groupTitle=@learnerGroupTitle
+                            count=1
+                          }}
+                        />
+                      </button>
                     {{/if}}
                   </td>
                 </tr>
