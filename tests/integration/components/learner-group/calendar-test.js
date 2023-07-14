@@ -1,4 +1,4 @@
-import { module, test, todo } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -14,58 +14,69 @@ module('Integration | Component | learner-group/calendar', function (hooks) {
 
   hooks.beforeEach(async function () {
     const today = DateTime.fromObject({ hour: 8 });
-    const course = this.server.create('course', {
-      title: 'course title',
+    const course1 = this.server.create('course');
+    const course2 = this.server.create('course', {
+      publishedAsTbd: true,
+      published: true,
     });
-    const session = this.server.create('session', {
-      title: 'session title',
-      course,
+    const session1 = this.server.create('session', { course: course1 });
+    const session2 = this.server.create('session', {
+      course: course2,
+      publishedAsTbd: true,
+      published: true,
     });
     const offering1 = this.server.create('offering', {
       startDate: today.toJSON(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       location: '123',
-      session,
+      session: session1,
     });
     const offering2 = this.server.create('offering', {
       startDate: today.toJSON(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       location: '123',
-      session,
+      session: session2,
     });
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup1 = this.server.create('learner-group', {
       offerings: [offering1],
     });
-    this.server.create('learner-group', {
+    const learnerGroup2 = this.server.create('learner-group', {
       offerings: [offering2],
-      parent: learnerGroup,
+      parent: learnerGroup1,
     });
-    this.learnerGroup = await this.owner
+    this.learnerGroup1 = await this.owner
       .lookup('service:store')
-      .findRecord('learner-group', learnerGroup.id);
+      .findRecord('learner-group', learnerGroup1.id);
+    this.learnerGroup2 = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup2.id);
   });
 
   test('shows events', async function (assert) {
-    this.set('learnerGroup', this.learnerGroup);
+    this.set('learnerGroup', this.learnerGroup1);
     await render(hbs`<LearnerGroup::Calendar @learnerGroup={{this.learnerGroup}} />`);
     assert.strictEqual(component.calendar.events.length, 1);
   });
 
   test('shows subgroup events', async function (assert) {
-    this.set('learnerGroup', this.learnerGroup);
+    this.set('learnerGroup', this.learnerGroup1);
     await render(hbs`<LearnerGroup::Calendar @learnerGroup={{this.learnerGroup}} />`);
     assert.strictEqual(component.calendar.events.length, 1);
     await component.showSubgroups.toggle.click();
     assert.strictEqual(component.calendar.events.length, 2);
   });
 
-  todo('in-draft event is indicated as such', function () {
-    // @todo implement this once our page object is up to the job [ST 2023/07/03].
-    // @see https://github.com/ilios/common/pull/3430
+  test('in-draft event is indicated as such', async function (assert) {
+    this.set('learnerGroup', this.learnerGroup1);
+    await render(hbs`<LearnerGroup::Calendar @learnerGroup={{this.learnerGroup}} />`);
+    assert.strictEqual(component.calendar.events.length, 1);
+    assert.ok(component.calendar.events[0].isDraft);
   });
 
-  todo('scheduled event is indicated as such', function () {
-    // @todo implement this once our page object is up to the job [ST 2023/07/03].
-    // @see https://github.com/ilios/common/pull/3430
+  test('scheduled event is indicated as such', async function (assert) {
+    this.set('learnerGroup', this.learnerGroup2);
+    await render(hbs`<LearnerGroup::Calendar @learnerGroup={{this.learnerGroup}} />`);
+    assert.strictEqual(component.calendar.events.length, 1);
+    assert.ok(component.calendar.events[0].isScheduled);
   });
 });
