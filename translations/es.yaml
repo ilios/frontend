@@ -441,6 +441,7 @@ general:
   uploadUsers: "Archivo con datos de usuarios (csv, tsv, tx)"
   userExistsInGroupHierarchy: "El usuario ya existe en el grupo de nivel superior {groupTitle} o en uno de sus subgrupos."
   userExistsMultipleTimesInUpload: "Este usuario ya existe en la carga."
+  userMenu: "Menú del Usuario"
   username: "Nombre de Usuario"
   userNotAddableFromDirectory: "ste usuario está faltando información requerida y no se puede agregar"
   userNotInGroupCohort: "El usuario no está en la cohorte de este grupo: {cohortTitle}"
