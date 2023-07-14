@@ -1,4 +1,3 @@
-import Service from '@ember/service';
 import ObjectProxy from '@ember/object/proxy';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
@@ -62,7 +61,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{(noop)}}
     />`);
-
     assert.strictEqual(component.groupMembers, 'Members of current group (2)');
     assert.strictEqual(component.allOtherMembers, 'All other members of top group (0)');
     assert.strictEqual(
@@ -82,12 +80,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       component.usersInCurrentGroup[1].name.userNameInfo.fullName,
       'Jackson M. Doggy'
     );
-    assert.notOk(component.usersInCurrentGroup[1].canBeSelected);
+    assert.ok(component.usersInCurrentGroup[1].canBeSelected);
     assert.strictEqual(component.usersInCurrentGroup[1].campusId.text, '123');
     assert.strictEqual(component.usersInCurrentGroup[1].email.text, 'testemail2');
-    assert.notOk(component.usersInCurrentGroup[1].name.isClickable);
-    assert.notOk(component.usersInCurrentGroup[1].campusId.isClickable);
-    assert.notOk(component.usersInCurrentGroup[1].email.isClickable);
+    assert.ok(component.usersInCurrentGroup[1].name.isClickable);
+    assert.ok(component.usersInCurrentGroup[1].campusId.isClickable);
+    assert.ok(component.usersInCurrentGroup[1].email.isClickable);
     assert.ok(component.usersInCurrentGroup[1].isDisabled);
   });
 
@@ -738,82 +736,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
     assert.notOk(component.usersNotInCurrentGroup[1].isSelected);
     assert.notOk(component.usersNotInCurrentGroup[2].isSelected);
-  });
-
-  test('root users can manage disabled users', async function (assert) {
-    assert.expect(2);
-
-    const currentUserMock = Service.extend({ isRoot: true });
-    this.owner.register('service:currentUser', currentUserMock);
-
-    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
-    const user = this.server.create('user', { enabled: false, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
-    const learnerGroupModel = await this.owner
-      .lookup('service:store')
-      .findRecord('learner-group', learnerGroup.id);
-    const userModelProxy = ObjectProxy.create({
-      content: userModel,
-      lowestGroupInTree: learnerGroupModel,
-      lowestGroupInTreeTitle: learnerGroupModel.title,
-    });
-
-    this.set('users', [userModelProxy]);
-    this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
-
-    assert.ok(component.usersInCurrentGroup[0].canBeSelected, 'Checkbox visible');
-    assert.ok(component.usersInCurrentGroup[0].isDisabled, 'User is labeled as disabled.');
-  });
-
-  test('non-root users cannot manage disabled users', async function (assert) {
-    assert.expect(2);
-
-    const currentUserMock = Service.extend({ isRoot: false });
-    this.owner.register('service:currentUser', currentUserMock);
-
-    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
-    const user = this.server.create('user', { enabled: false, learnerGroups: [learnerGroup] });
-    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
-    const learnerGroupModel = await this.owner
-      .lookup('service:store')
-      .findRecord('learner-group', learnerGroup.id);
-    const userModelProxy = ObjectProxy.create({
-      content: userModel,
-      lowestGroupInTree: learnerGroupModel,
-      lowestGroupInTreeTitle: learnerGroupModel.title,
-    });
-
-    this.set('users', [userModelProxy]);
-    this.set('learnerGroup', learnerGroupModel);
-    await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
-
-    assert.notOk(component.usersInCurrentGroup[0].canBeSelected, 'Checkbox visible');
-    assert.ok(component.usersInCurrentGroup[0].isDisabled, 'User is labeled as disabled.');
   });
 
   test('filter users', async function (assert) {

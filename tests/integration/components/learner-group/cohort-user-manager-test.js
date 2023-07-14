@@ -1,4 +1,3 @@
-import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
@@ -55,9 +54,9 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
     assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
     assert.strictEqual(component.users[1].campusId.text, '123');
     assert.strictEqual(component.users[1].email.text, 'testemail2');
-    assert.notOk(component.users[1].name.isClickable);
-    assert.notOk(component.users[1].campusId.isClickable);
-    assert.notOk(component.users[1].email.isClickable);
+    assert.ok(component.users[1].name.isClickable);
+    assert.ok(component.users[1].campusId.isClickable);
+    assert.ok(component.users[1].email.isClickable);
     assert.ok(component.users[1].isDisabled);
   });
 
@@ -315,63 +314,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
     assert.notOk(component.users[0].isSelected);
     assert.notOk(component.users[1].isSelected);
     assert.notOk(component.users[2].isSelected);
-  });
-
-  test('root users can manage disabled users', async function (assert) {
-    const currentUserMock = Service.extend({
-      isRoot: true,
-    });
-    this.owner.register('service:currentUser', currentUserMock);
-
-    const user = this.server.create('user', { enabled: false });
-    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
-
-    this.set('users', [userModel]);
-    await render(hbs`<LearnerGroup::CohortUserManager
-      @users={{this.users}}
-      @canUpdate={{true}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top level group"
-      @sortBy="firstName"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-    />`);
-
-    assert.ok(component.users[0].canBeSelected, 'Checkbox visible');
-    assert.ok(component.users[0].name.isClickable);
-    assert.ok(component.users[0].campusId.isClickable);
-    assert.ok(component.users[0].email.isClickable);
-    assert.ok(component.users[0].isDisabled, 'User is labeled as disabled.');
-  });
-
-  test('non-root users cannot manage disabled users', async function (assert) {
-    const currentUserMock = Service.extend({
-      isRoot: false,
-    });
-    this.owner.register('service:currentUser', currentUserMock);
-
-    const user = this.server.create('user', { enabled: false });
-    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
-
-    this.set('users', [userModel]);
-
-    await render(hbs`<LearnerGroup::CohortUserManager
-      @users={{this.users}}
-      @canUpdate={{true}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top level group"
-      @sortBy="firstName"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-    />`);
-
-    assert.notOk(component.users[0].canBeSelected, 'Checkbox visible');
-    assert.notOk(component.users[0].name.isClickable);
-    assert.notOk(component.users[0].campusId.isClickable);
-    assert.notOk(component.users[0].email.isClickable);
-    assert.ok(component.users[0].isDisabled, 'User is labeled as disabled.');
   });
 
   test('filter users', async function (assert) {
