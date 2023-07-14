@@ -117,8 +117,8 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
 
   test('calendar is active in dashboard navigation', async function (assert) {
     await page.visit();
-    assert.notOk(page.week.dashboardViewPicker.calendar.isActive);
-    assert.notOk(page.week.dashboardViewPicker.materials.isActive);
-    assert.ok(page.week.dashboardViewPicker.week.isActive);
+    assert.notOk(page.navigation.calendar.isActive);
+    assert.notOk(page.navigation.materials.isActive);
+    assert.ok(page.navigation.week.isActive);
   });
 });
