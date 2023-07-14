@@ -1,6 +1,6 @@
 <nav
   class="{{if this.isOpen "is-open"}} user-menu"
-  aria-labelledby="user-menu-title"
+  aria-label={{t "general.userMenu"}}
   {{did-insert (set this.element)}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "keyup" this.keyUp}}
@@ -8,7 +8,6 @@
 >
   <button
     type="button"
-    aria-labelledby="user-menu-title"
     class="toggle"
     aria-haspopup="true"
     aria-expanded={{if this.isOpen "true" "false"}}
