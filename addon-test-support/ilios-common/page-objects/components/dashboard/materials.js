@@ -9,14 +9,12 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
-import dashboardViewPicker from './view-picker';
 import controls from '../pagedlist-controls';
 import displayToggle from '../toggle-buttons';
 import materialListItem from './material-list-item';
 
 const definition = {
   scope: '[data-test-dashboard-materials]',
-  dashboardViewPicker,
   title: text('[data-test-materials-title]'),
   header: {
     scope: '[data-test-materials-header]',

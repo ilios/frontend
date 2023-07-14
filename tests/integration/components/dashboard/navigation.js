@@ -3,15 +3,15 @@ import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { component } from 'ilios-common/page-objects/components/dashboard/view-picker';
+import { component } from 'ilios-common/page-objects/components/dashboard/navigation';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 
-module('Integration | Component | dashboard/view-picker', function (hooks) {
+module('Integration | Component | dashboard/navigation', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
   test('it renders and is accessible', async function (assert) {
-    await render(hbs`<Dashboard::ViewPicker />
+    await render(hbs`<Dashboard::Navigation />
 `);
     assert.strictEqual(component.calendar.text, 'Calendar');
     assert.strictEqual(component.calendar.linkTarget, '/dashboard/calendar');
