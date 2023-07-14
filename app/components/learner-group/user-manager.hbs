@@ -59,7 +59,7 @@
               {{#each (sort-by @sortBy this.groupUsers) as |user index|}}
                 <tr class={{unless user.enabled "disabled-user-account" ""}}>
                   <td class="text-left" colspan="1">
-                    {{#if (or user.enabled this.currentUser.isRoot)}}
+                    {{#if user.enabled}}
                       <input
                         aria-labelledby="selected-username-{{index}}-{{templateId}}"
                         type="checkbox"
@@ -77,7 +77,7 @@
                     {{/unless}}
                   </td>
                   <td class="text-left" colspan="4">
-                    {{#if (or user.enabled this.currentUser.isRoot)}}
+                    {{#if user.enabled}}
                       <button
                         class="inline-button"
                         type="button"
@@ -90,7 +90,7 @@
                     {{/if}}
                   </td>
                   <td class="text-left" colspan="2">
-                    {{#if (or user.enabled this.currentUser.isRoot)}}
+                    {{#if user.enabled}}
                       <button
                         class="inline-button"
                         type="button"
@@ -103,7 +103,7 @@
                     {{/if}}
                   </td>
                   <td class="text-left hide-from-small-screen" colspan="5">
-                    {{#if (or user.enabled this.currentUser.isRoot)}}
+                    {{#if user.enabled}}
                       <button
                         class="inline-button"
                         type="button"
@@ -128,7 +128,7 @@
                     {{#if (includes user.content this.usersBeingRemovedFromGroup)}}
                       <LoadingSpinner />
                     {{else}}
-                      {{#if (and (or user.enabled this.currentUser.isRoot) (eq this.selectedGroupUsers.length 0))}}
+                      {{#if (and user.enabled (eq this.selectedGroupUsers.length 0))}}
                         <button
                           type="button"
                           class="link-button"
@@ -200,7 +200,7 @@
               {{#each (sort-by @sortBy this.nonGroupUsers) as |user index|}}
                 <tr class={{unless user.enabled "disabled-user-account" ""}}>
                   <td class="text-left" colspan="1">
-                    {{#if (or user.enabled this.currentUser.isRoot)}}
+                    {{#if user.enabled}}
                       <input
                         aria-labelledby="cohort-username-{{index}}-{{templateId}}"
                         type="checkbox"
@@ -218,7 +218,7 @@
                     {{/unless}}
                   </td>
                   <td class="text-left" colspan="4">
-                    {{#if (or user.enabled this.currentUser.isRoot)}}
+                    {{#if user.enabled}}
                       <button
                         class="inline-button"
                         type="button"
@@ -231,7 +231,7 @@
                     {{/if}}
                   </td>
                   <td class="text-left" colspan="2">
-                    {{#if (or user.enabled this.currentUser.isRoot)}}
+                    {{#if user.enabled}}
                       <button
                         class="inline-button"
                         type="button"
@@ -244,7 +244,7 @@
                     {{/if}}
                   </td>
                   <td class="text-left hide-from-small-screen" colspan="5">
-                    {{#if (or user.enabled this.currentUser.isRoot)}}
+                    {{#if user.enabled}}
                       <button
                         class="inline-button"
                         type="button"
@@ -268,7 +268,7 @@
                   <td>
                     {{#if (includes user.content this.usersBeingAddedToGroup)}}
                       <LoadingSpinner />
-                    {{else if (and (or user.enabled this.currentUser.isRoot) (eq this.selectedNonGroupUsers.length 0))}}
+                    {{else if (and user.enabled (eq this.selectedNonGroupUsers.length 0))}}
                       <button
                         type="button"
                         class="link-button"

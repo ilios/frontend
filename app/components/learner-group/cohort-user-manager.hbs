@@ -57,7 +57,7 @@
             {{#each (sort-by @sortBy this.filteredUsers) as |user index|}}
               <tr class={{unless user.enabled "disabled-user-account"}}>
                 <td class="text-left" colspan="1">
-                  {{#if (and @canUpdate (or user.enabled this.currentUser.isRoot))}}
+                  {{#if (and @canUpdate user.enabled)}}
                     <input
                       type="checkbox"
                       checked={{includes user this.selectedUsers}}
@@ -75,7 +75,7 @@
                   {{/unless}}
                 </td>
                 <td class="text-left" colspan="4">
-                  {{#if (and @canUpdate (or user.enabled this.currentUser.isRoot))}}
+                  {{#if (and @canUpdate user.enabled)}}
                     <button
                       class="inline-button"
                       type="button"
@@ -88,7 +88,7 @@
                   {{/if}}
                 </td>
                 <td class="text-left" colspan="2">
-                  {{#if (and @canUpdate (or user.enabled this.currentUser.isRoot))}}
+                  {{#if (and @canUpdate user.enabled)}}
                     <button
                       class="inline-button"
                       type="button"
@@ -101,7 +101,7 @@
                   {{/if}}
                 </td>
                 <td class="text-left hide-from-small-screen" colspan="5">
-                  {{#if (and @canUpdate (or user.enabled this.currentUser.isRoot))}}
+                  {{#if (and @canUpdate user.enabled)}}
                     <button
                       class="inline-button"
                       type="button"
@@ -116,7 +116,7 @@
                 <td class="text-left" colspan="1">
                   {{#if (includes user this.usersBeingMoved)}}
                     <LoadingSpinner />
-                  {{else if (and @canUpdate (or user.enabled this.currentUser.isRoot) (eq this.selectedUsers.length 0))}}
+                  {{else if (and @canUpdate user.enabled (eq this.selectedUsers.length 0))}}
                     <button
                       type="button"
                       class="inline-button"
