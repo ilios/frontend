@@ -85,6 +85,7 @@ general:
   courseTitlePlaceholder: "Ajoutez titre par ce cours"
   courseVisualizations: "Cours Visualisations"
   currentlySearchingPrompt: "Recherchent..."
+  dashboardNavigation: "Naviguer dans le tableau de bord"
   date: Date
   dateTime: "Date/Temps"
   day: Jour

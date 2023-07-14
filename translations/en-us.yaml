@@ -85,6 +85,7 @@ general:
   courseTitlePlaceholder: "Enter a title for this course"
   courseVisualizations: "Course Visualizations"
   currentlySearchingPrompt: "searching..."
+  dashboardNavigation: "Dashboard navigation"
   date: Date
   dateTime: "Date/Time"
   day: Day
