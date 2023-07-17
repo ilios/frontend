@@ -147,7 +147,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
   });
 
   test('it renders with materials in show-current mode', async function (assert) {
-    assert.expect(94);
+    assert.expect(95);
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 100);
@@ -189,6 +189,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       page.materials.bottomPaginator.controls.pagerDetails.text,
       'Showing 1 - 6 of 6'
     );
+    assert.strictEqual(page.materials.table.headers.status.text, 'Status');
     assert.strictEqual(page.materials.table.headers.sessionTitle.text, 'Session');
     assert.notOk(page.materials.table.headers.sessionTitle.isSortedOn);
     assert.strictEqual(page.materials.table.headers.courseTitle.text, 'Course');
