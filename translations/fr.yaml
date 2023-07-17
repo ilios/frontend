@@ -29,7 +29,8 @@ general:
   backToDashboard: "Retour à tableau de bord"
   backToSessionList: "Retour à Liste du Séances"
   backToTitle: "Retour à {title}"
-  beforeOrAfterMidday: "Avant ou après midi "
+  beforeOrAfterMidday: "Avant ou après midi"
+  bottomPagination: "Pagination en bas"
   calendar: Calendrier
   campusNameOfRecord: "Nombre de registro del campus"
   cancel: Annul
@@ -243,7 +244,6 @@ general:
   ownedBy: "Possédé par {owner}"
   owner: "Propriétaire"
   pagedResultsCount: "Montrant {start} - {end} de {total}"
-  pagination: Pagination
   parentCount: "{count, plural, =1 {1 a un objectif mère} other {# ont des objectifs mères}}"
   parentGroup: "Mère groupe"
   parentGroups: "Mères groupes"
@@ -355,6 +355,7 @@ general:
   title: "Tître"
   today: "Aujourd'hui"
   token: Token
+  topPagination: "Pagination supérieure"
   totalIlmTime: "Durée totale par ILM {minutes} Minutes"
   totalInstructionalTime: "Durée d'enseignement totale {minutes} Minutes"
   tuesday: Mardi

@@ -30,6 +30,7 @@ general:
   backToSessionList: "Back to Session List"
   backToTitle: "Back to {title}"
   beforeOrAfterMidday: "Before or after midday"
+  bottomPagination: "Bottom pagination"
   calendar: Calendar
   campusNameOfRecord: "Campus name of record"
   cancel: Cancel
@@ -243,7 +244,6 @@ general:
   ownedBy: "owned by {owner}"
   owner: Owner
   pagedResultsCount: "Showing {start} - {end} of {total}"
-  pagination: Pagination
   parentCount: "{count, plural, =1 {1 has a parent} other {# have parents}}"
   parentGroup: "Parent group"
   parentGroups: "Parent groups"
@@ -355,6 +355,7 @@ general:
   title: Title
   today: Today
   token: Token
+  topPagination: "Top pagination"
   totalIlmTime: "Total ILM Time {minutes} Minutes"
   totalInstructionalTime: "Total Instructional Time {minutes} Minutes"
   tuesday: Tuesday
