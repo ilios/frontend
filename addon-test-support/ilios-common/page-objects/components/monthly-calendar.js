@@ -1,8 +1,17 @@
-import { create, clickable, collection, hasClass, isPresent, text } from 'ember-cli-page-object';
+import {
+  attribute,
+  create,
+  clickable,
+  collection,
+  hasClass,
+  isPresent,
+  text,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-monthly-calendar]',
-  monthYear: text('[data-test-month-year]'),
+  ariaBusy: attribute('aria-busy'),
+  title: text('[data-test-month-year]'),
   days: collection('[data-test-day]', {
     number: text('[data-test-number]'),
     selectDay: clickable('button', { scope: '[data-test-number]' }),

@@ -22,7 +22,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
     this.set('date', date.toJSDate());
     await render(hbs`<IliosCalendarWeek @date={{this.date}} @calendarEvents={{(array)}} />
 `);
-    assert.strictEqual(component.calendar.longWeekOfYear, 'Week of September 27, 2015');
+    assert.strictEqual(component.calendar.title.longWeekOfYear, 'Week of September 27, 2015');
     assert.strictEqual(component.calendar.events.length, 0);
   });
 

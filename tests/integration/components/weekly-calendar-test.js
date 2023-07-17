@@ -32,7 +32,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
   };
 
   test('it renders empty and is accessible', async function (assert) {
-    assert.expect(21);
+    assert.expect(22);
     const january9th2019 = DateTime.fromObject({
       year: 2019,
       month: 1,
@@ -48,9 +48,9 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @changeToDayView={{(noop)}}
     />
 `);
-
-    assert.strictEqual(component.longWeekOfYear, 'Week of January 6, 2019');
-    assert.strictEqual(component.shortWeekOfYear, '1/6 — 1/12 2019');
+    assert.strictEqual(component.ariaBusy, 'false');
+    assert.strictEqual(component.title.longWeekOfYear, 'Week of January 6, 2019');
+    assert.strictEqual(component.title.shortWeekOfYear, '1/6 — 1/12 2019');
     assert.strictEqual(component.dayHeadings.length, 7);
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(component.dayHeadings[0].text, 'Sunday Sun Jan 6 6');
@@ -84,7 +84,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @changeToDayView={{(noop)}}
     />
 `);
-
+    assert.strictEqual(component.ariaBusy, 'false');
     assert.strictEqual(component.dayHeadings.length, 7);
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(component.dayHeadings[0].text, 'Sunday Sun Jan 6 6');
@@ -291,8 +291,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     />
 `);
 
-    assert.strictEqual(component.longWeekOfYear, 'Week of December 7, 1980');
-    assert.strictEqual(component.shortWeekOfYear, '12/7 — 12/13 1980');
+    assert.strictEqual(component.title.longWeekOfYear, 'Week of December 7, 1980');
+    assert.strictEqual(component.title.shortWeekOfYear, '12/7 — 12/13 1980');
 
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(component.dayHeadings[0].text, 'Sunday Sun Dec 7 7');
@@ -303,8 +303,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     this.owner.lookup('service:intl').setLocale('es');
     await settled();
 
-    assert.strictEqual(component.longWeekOfYear, 'Semana de 8 de diciembre de 1980');
-    assert.strictEqual(component.shortWeekOfYear, '8/12 — 14/12 1980');
+    assert.strictEqual(component.title.longWeekOfYear, 'Semana de 8 de diciembre de 1980');
+    assert.strictEqual(component.title.shortWeekOfYear, '8/12 — 14/12 1980');
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.ok(component.dayHeadings[0].text.match('lunes lun.? 8 dic.? 8'));
 
@@ -338,8 +338,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     />
 `);
 
-    assert.strictEqual(component.longWeekOfYear, 'Week of February 23, 2020');
-    assert.strictEqual(component.shortWeekOfYear, '2/23 — 2/29 2020');
+    assert.strictEqual(component.title.longWeekOfYear, 'Week of February 23, 2020');
+    assert.strictEqual(component.title.shortWeekOfYear, '2/23 — 2/29 2020');
 
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(component.dayHeadings[0].text, 'Sunday Sun Feb 23 23');
@@ -350,8 +350,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     this.owner.lookup('service:intl').setLocale('es');
     await settled();
 
-    assert.strictEqual(component.longWeekOfYear, 'Semana de 24 de febrero de 2020');
-    assert.strictEqual(component.shortWeekOfYear, '24/2 — 1/3 2020');
+    assert.strictEqual(component.title.longWeekOfYear, 'Semana de 24 de febrero de 2020');
+    assert.strictEqual(component.title.shortWeekOfYear, '24/2 — 1/3 2020');
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.ok(component.dayHeadings[0].text.match('lunes lun.? 24 feb.? 24'));
 
@@ -360,5 +360,19 @@ module('Integration | Component | weekly-calendar', function (hooks) {
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('events are loading', async function (assert) {
+    this.set('date', DateTime.now().toJSDate());
+    await render(hbs`<WeeklyCalendar
+      @isLoadingEvents={{true}}
+      @date={{this.date}}
+      @events={{(array)}}
+      @changeToDayView={{(noop)}}
+      @selectEvent={{(noop)}}
+    />
+`);
+    assert.strictEqual(component.ariaBusy, 'true');
+    assert.strictEqual(component.title.text, 'Loading Events ...');
   });
 });

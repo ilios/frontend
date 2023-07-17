@@ -43,9 +43,9 @@ module('Integration | Component | daily-calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />
 `);
-
-    assert.strictEqual(component.longDayOfWeek, 'Wednesday, January 9, 2019');
-    assert.strictEqual(component.shortDayOfWeek, '1/9/2019');
+    assert.strictEqual(component.ariaBusy, 'false');
+    assert.strictEqual(component.title.longDayOfWeek, 'Wednesday, January 9, 2019');
+    assert.strictEqual(component.title.shortDayOfWeek, '1/9/2019');
     assert.ok(component.hasNoEvents);
 
     await a11yAudit(this.element);
@@ -71,8 +71,9 @@ module('Integration | Component | daily-calendar', function (hooks) {
       @selectEvent={{(noop)}}
     />
 `);
+    assert.strictEqual(component.ariaBusy, 'false');
 
-    assert.strictEqual(component.longDayOfWeek, 'Wednesday, January 9, 2019');
+    assert.strictEqual(component.title.longDayOfWeek, 'Wednesday, January 9, 2019');
 
     assert.strictEqual(component.events.length, 2);
     assert.strictEqual(component.events[0].name, 'event 0');
@@ -172,18 +173,31 @@ module('Integration | Component | daily-calendar', function (hooks) {
     />
 `);
 
-    assert.strictEqual(component.longDayOfWeek, 'Thursday, December 11, 1980');
-    assert.strictEqual(component.shortDayOfWeek, '12/11/1980');
+    assert.strictEqual(component.title.longDayOfWeek, 'Thursday, December 11, 1980');
+    assert.strictEqual(component.title.shortDayOfWeek, '12/11/1980');
     assert.strictEqual(component.events.length, 1);
 
     this.owner.lookup('service:intl').setLocale('es');
     await settled();
 
-    assert.strictEqual(component.longDayOfWeek, 'jueves, 11 de diciembre de 1980');
-    assert.strictEqual(component.shortDayOfWeek, '11/12/1980');
+    assert.strictEqual(component.title.longDayOfWeek, 'jueves, 11 de diciembre de 1980');
+    assert.strictEqual(component.title.shortDayOfWeek, '11/12/1980');
     assert.strictEqual(component.events.length, 1);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('events are loading', async function (assert) {
+    this.set('date', DateTime.now().toJSDate());
+    await render(hbs`<DailyCalendar
+      @isLoadingEvents={{true}}
+      @date={{this.date}}
+      @events={{(array)}}
+      @selectEvent={{(noop)}}
+    />
+`);
+    assert.strictEqual(component.ariaBusy, 'true');
+    assert.strictEqual(component.title.text, 'Loading Events ...');
   });
 });

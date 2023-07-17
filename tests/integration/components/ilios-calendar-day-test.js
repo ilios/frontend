@@ -25,7 +25,7 @@ module('Integration | Component | ilios calendar day', function (hooks) {
 `
     );
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
-    assert.strictEqual(component.calendar.longDayOfWeek, 'Wednesday, September 30, 2015');
+    assert.strictEqual(component.calendar.title.longDayOfWeek, 'Wednesday, September 30, 2015');
     assert.strictEqual(component.calendar.events.length, 0);
   });
 });
