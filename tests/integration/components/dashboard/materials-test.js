@@ -131,7 +131,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
   });
 
   test('it renders with materials in show-current mode', async function (assert) {
-    assert.expect(73);
+    assert.expect(74);
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 11);
@@ -178,6 +178,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.textFilter.value, '');
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 5 of 5');
     assert.strictEqual(component.bottomPaginator.controls.pagerDetails.text, 'Showing 1 - 5 of 5');
+    assert.strictEqual(component.table.headers.status.text, 'Status');
     assert.strictEqual(component.table.headers.sessionTitle.text, 'Session');
     assert.notOk(component.table.headers.sessionTitle.isSortedOn);
     assert.strictEqual(component.table.headers.courseTitle.text, 'Course');
