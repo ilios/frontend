@@ -1,13 +1,10 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { enqueueTask, timeout } from 'ember-concurrency';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class LearnerGroupUserManagerComponent extends Component {
-  @service currentUser;
-
   @tracked filter = '';
   @tracked selectedGroupUsers = [];
   @tracked selectedNonGroupUsers = [];
@@ -19,15 +16,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
   }
 
   get selectableUsers() {
-    if (this.currentUser.isRoot) {
-      return mapBy(this.args.users, 'content');
-    }
-    return mapBy(
-      this.args.users.filter((user) => {
-        return user.get('enabled');
-      }),
-      'content'
-    );
+    return mapBy(this.args.users, 'content');
   }
 
   get filteredUsers() {

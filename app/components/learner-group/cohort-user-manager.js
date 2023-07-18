@@ -15,15 +15,6 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
     return this.args.sortBy.search(/desc/) === -1;
   }
 
-  get selectableUsers() {
-    if (this.currentUser.isRoot) {
-      return this.args.users;
-    }
-    return this.args.users.filter((user) => {
-      return user.enabled;
-    });
-  }
-
   get filteredUsers() {
     const filter = this.filter.trim().toLowerCase();
 
