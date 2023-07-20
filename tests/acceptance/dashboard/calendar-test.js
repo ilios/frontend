@@ -755,9 +755,9 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('calendar is active in dashboard navigation', async function (assert) {
     await page.visit();
-    assert.ok(page.calendar.dashboardViewPicker.calendar.isActive);
-    assert.notOk(page.calendar.dashboardViewPicker.materials.isActive);
-    assert.notOk(page.calendar.dashboardViewPicker.week.isActive);
+    assert.ok(page.navigation.calendar.isActive);
+    assert.notOk(page.navigation.materials.isActive);
+    assert.notOk(page.navigation.week.isActive);
   });
 
   test('week summary displays the whole week', async function (assert) {

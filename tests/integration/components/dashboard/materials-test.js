@@ -131,7 +131,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
   });
 
   test('it renders with materials in show-current mode', async function (assert) {
-    assert.expect(74);
+    assert.expect(73);
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 11);
@@ -161,7 +161,6 @@ module('Integration | Component | dashboard/materials', function (hooks) {
         @showAllMaterials={{false}}
     />
 `);
-    assert.ok(component.dashboardViewPicker.isVisible);
     assert.ok(component.header.displayToggle.firstButton.isChecked);
     assert.strictEqual(component.title, 'My Materials');
     assert.strictEqual(component.courseFilter.options.length, 5);
@@ -245,7 +244,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
   });
 
   test('it renders with materials in show-all mode', async function (assert) {
-    assert.expect(16);
+    assert.expect(15);
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 11);
@@ -271,7 +270,6 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     />
 `);
 
-    assert.ok(component.dashboardViewPicker.isVisible);
     assert.ok(component.header.displayToggle.secondButton.isChecked);
     assert.strictEqual(component.courseFilter.options.length, 6);
     assert.strictEqual(component.courseFilter.options[0].text, 'All Courses');

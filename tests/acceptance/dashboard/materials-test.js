@@ -163,10 +163,10 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     });
     await page.visit();
     await percySnapshot(assert);
-    assert.ok(page.materials.dashboardViewPicker.materials.isActive);
-    assert.notOk(page.materials.dashboardViewPicker.calendar.isActive);
-    assert.notOk(page.materials.dashboardViewPicker.week.isActive);
-    assert.ok(page.materials.dashboardViewPicker.isVisible);
+    assert.ok(page.navigation.materials.isActive);
+    assert.notOk(page.navigation.calendar.isActive);
+    assert.notOk(page.navigation.week.isActive);
+    assert.ok(page.navigation.isVisible);
     assert.strictEqual(page.materials.title, 'My Materials');
     assert.ok(page.materials.header.displayToggle.firstButton.isChecked);
     assert.strictEqual(page.materials.courseFilter.options.length, 5);
@@ -310,7 +310,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
 
     await page.visit({ showAll: true });
     await percySnapshot(assert);
-    assert.ok(page.materials.dashboardViewPicker.isVisible);
+    assert.ok(page.navigation.isVisible);
     assert.ok(page.materials.header.displayToggle.secondButton.isChecked);
     assert.strictEqual(page.materials.courseFilter.options.length, 6);
     assert.strictEqual(page.materials.courseFilter.options[0].text, 'All Courses');

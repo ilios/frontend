@@ -1,7 +1,7 @@
 import { attribute, create, hasClass } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-dashboard-view-picker]',
+  scope: '[data-test-dashboard-navigation]',
   calendar: {
     scope: '[data-test-link-calendar]',
     linkTarget: attribute('href'),
