@@ -10,6 +10,7 @@ import { action } from '@ember/object';
 import { ensureSafeComponent } from '@embroider/util';
 import NewCompetencyComponent from './subject/new/competency';
 import NewCourseComponent from './subject/new/course';
+import NewProgramComponent from './subject/new/program';
 import NewSessionComponent from './subject/new/session';
 
 @validatable
@@ -187,6 +188,8 @@ export default class ReportsNewSubjectComponent extends Component {
         return ensureSafeComponent(NewCompetencyComponent, this);
       case 'course':
         return ensureSafeComponent(NewCourseComponent, this);
+      case 'program':
+        return ensureSafeComponent(NewProgramComponent, this);
       case 'session':
         return ensureSafeComponent(NewSessionComponent, this);
     }
