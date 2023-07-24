@@ -84,6 +84,9 @@ export default class HtmlEditorComponent extends Component {
     if (!this.editor) {
       this.editor = await this.createEditor(element, options);
       this.editor.html.set(this.args.content);
+      if (this.args.autofocus) {
+        this.editor.events.focus();
+      }
       this.loadFinished = true;
     }
 
