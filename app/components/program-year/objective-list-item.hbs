@@ -24,7 +24,7 @@
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
       >
-        <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} />
+        <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} @autofocus={{true}} />
         <ValidationError @errors={{get-errors-for this.title}} />
       </EditableField>
     {{else}}
