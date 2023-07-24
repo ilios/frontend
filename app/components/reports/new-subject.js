@@ -8,6 +8,7 @@ import { findById } from 'ilios-common/utils/array-helpers';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { ensureSafeComponent } from '@embroider/util';
+import NewCourseComponent from './subject/new/course';
 import NewCompetencyComponent from './subject/new/competency';
 
 @validatable
@@ -32,7 +33,6 @@ export default class ReportsNewSubjectComponent extends Component {
   @tracked currentSubject = 'course';
   @tracked isSaving = false;
   @tracked selectedSchool = null;
-  @tracked selectedYear = null;
   @tracked schoolChanged = false;
   @tracked @Length(1, 240) title;
   subjectList = [
@@ -182,20 +182,13 @@ export default class ReportsNewSubjectComponent extends Component {
 
   get newPrepositionalObjectComponent() {
     switch (this.currentPrepositionalObject) {
+      case 'course':
+        return ensureSafeComponent(NewCourseComponent, this);
       case 'competency':
         return ensureSafeComponent(NewCompetencyComponent, this);
     }
 
     return null;
-  }
-
-  @cached
-  get allAcademicYearsData() {
-    return new TrackedAsyncData(this.store.findAll('academic-year'));
-  }
-
-  get allAcademicYears() {
-    return this.allAcademicYearsData.isResolved ? this.allAcademicYearsData.value : [];
   }
 
   get prepositionalObjectList() {
@@ -253,14 +246,6 @@ export default class ReportsNewSubjectComponent extends Component {
   changePrepositionalObject(object) {
     this.currentPrepositionalObject = object;
     this.currentPrepositionalObjectId = null;
-    this.clearErrorDisplay();
-  }
-
-  @action
-  changeSelectedYear(year) {
-    this.selectedYear = year;
-    this.currentPrepositionalObjectId = null;
-    this.resetCurrentPrepositionalObjectId.perform();
     this.clearErrorDisplay();
   }
 
