@@ -8,8 +8,9 @@ import { findById } from 'ilios-common/utils/array-helpers';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { ensureSafeComponent } from '@embroider/util';
-import NewCourseComponent from './subject/new/course';
 import NewCompetencyComponent from './subject/new/competency';
+import NewCourseComponent from './subject/new/course';
+import NewSessionComponent from './subject/new/session';
 
 @validatable
 export default class ReportsNewSubjectComponent extends Component {
@@ -182,10 +183,12 @@ export default class ReportsNewSubjectComponent extends Component {
 
   get newPrepositionalObjectComponent() {
     switch (this.currentPrepositionalObject) {
-      case 'course':
-        return ensureSafeComponent(NewCourseComponent, this);
       case 'competency':
         return ensureSafeComponent(NewCompetencyComponent, this);
+      case 'course':
+        return ensureSafeComponent(NewCourseComponent, this);
+      case 'session':
+        return ensureSafeComponent(NewSessionComponent, this);
     }
 
     return null;
