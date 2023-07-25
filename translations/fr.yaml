@@ -29,7 +29,8 @@ general:
   backToDashboard: "Retour à tableau de bord"
   backToSessionList: "Retour à Liste du Séances"
   backToTitle: "Retour à {title}"
-  beforeOrAfterMidday: "Avant ou après midi "
+  beforeOrAfterMidday: "Avant ou après midi"
+  bottomPagination: "Pagination en bas"
   calendar: Calendrier
   campusNameOfRecord: "Nombre de registro del campus"
   cancel: Annul
@@ -355,6 +356,7 @@ general:
   title: "Tître"
   today: "Aujourd'hui"
   token: Token
+  topPagination: "Pagination supérieure"
   totalIlmTime: "Durée totale par ILM {minutes} Minutes"
   totalInstructionalTime: "Durée d'enseignement totale {minutes} Minutes"
   tuesday: Mardi

@@ -30,6 +30,7 @@ general:
   backToSessionList: "Atrás a La Lista de Sesiones"
   backToTitle: "Atrás a {title}"
   beforeOrAfterMidday: "Antes o después del mediodía"
+  bottomPagination: "Paginación inferior"
   calendar: Calendario
   campusNameOfRecord: "Nombre de registro del registrador"
   cancel: Cancelar
@@ -204,6 +205,7 @@ general:
   myLearningMaterials: "Mis Materiales Didácticos"
   myMaterials: "Mis Materiales"
   mySchedule: "Mi Horario"
+  navigation: Navigation
   newObjective: "Nuevo Objetivo"
   newObjectiveSaved: "Nuevo Objetivo Guardado"
   newOffering: "Nueva Oferta"
@@ -355,6 +357,7 @@ general:
   title: Titulo
   today: Hoy
   token: Token
+  topPagination: "Paginación superior"
   totalIlmTime: " Tiempo de ILM {minutes} Minutos"
   totalInstructionalTime: "Tiempo de Instrucción Total {minutes} Minutos"
   tuesday: Martes
