@@ -5,6 +5,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options');
 const { Webpack } = require('@embroider/webpack');
 const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = function (defaults) {
@@ -94,6 +95,20 @@ module.exports = function (defaults) {
       packagerOptions: {
         webpackConfig: {
           plugins: [new RetryChunkLoadPlugin() /*, new BundleAnalyzerPlugin()*/],
+          optimization: {
+            minimize: true,
+            minimizer: [
+              new TerserPlugin({
+                terserOptions: {
+                  compress: {
+                    passes: 6, // slow, but worth it
+                    inline: 5,
+                    reduce_funcs: false,
+                  },
+                },
+              }),
+            ],
+          },
         },
       },
     });
