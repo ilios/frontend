@@ -205,6 +205,7 @@ general:
   myLearningMaterials: "Mes Matériels d'étude"
   myMaterials: "Mes Matériels d'étude"
   mySchedule: "Mon Calendrier (liste)"
+  navigation: Navigation
   newObjective: "Nouvel Objectif"
   newObjectiveSaved: "Nouvel objective sauvé"
   newOffering: "Nouvelle Offre"
