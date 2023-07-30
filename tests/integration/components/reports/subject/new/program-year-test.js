@@ -64,6 +64,25 @@ module('Integration | Component | reports/subject/new/program-year', function (h
     assert.strictEqual(component.value, '2');
   });
 
+  test('it works', async function (assert) {
+    assert.expect(5);
+    this.set('currentId', '3');
+    await render(hbs`<Reports::Subject::New::ProgramYear
+      @currentId={{this.currentId}}
+      @changeId={{this.changeId}}
+      @school={{null}}
+     />`);
+    this.set('changeId', (id) => {
+      assert.strictEqual(id, '1');
+      this.set('currentId', id);
+    });
+    assert.ok(component.options[0].isSelected);
+    await component.set('1');
+    assert.notOk(component.options[0].isSelected);
+    assert.ok(component.options[2].isSelected);
+    assert.strictEqual(component.value, '1');
+  });
+
   test('it filters by school', async function (assert) {
     assert.expect(8);
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', 1);

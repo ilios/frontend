@@ -46,6 +46,25 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
     assert.strictEqual(component.value, '3');
   });
 
+  test('it works', async function (assert) {
+    assert.expect(5);
+    this.set('currentId', '1');
+    await render(hbs`<Reports::Subject::New::Competency
+      @currentId={{this.currentId}}
+      @changeId={{this.changeId}}
+      @school={{null}}
+     />`);
+    this.set('changeId', (id) => {
+      assert.strictEqual(id, '3');
+      this.set('currentId', id);
+    });
+    assert.ok(component.options[0].isSelected);
+    await component.set('3');
+    assert.notOk(component.options[0].isSelected);
+    assert.ok(component.options[2].isSelected);
+    assert.strictEqual(component.value, '3');
+  });
+
   test('it filters by school', async function (assert) {
     assert.expect(8);
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', 2);
