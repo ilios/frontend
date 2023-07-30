@@ -11,6 +11,7 @@ import { ensureSafeComponent } from '@embroider/util';
 import NewCompetencyComponent from './subject/new/competency';
 import NewCourseComponent from './subject/new/course';
 import NewProgramComponent from './subject/new/program';
+import NewInstructorComponent from './subject/new/instructor';
 import NewProgramYearComponent from './subject/new/program-year';
 import NewSessionComponent from './subject/new/session';
 
@@ -189,6 +190,8 @@ export default class ReportsNewSubjectComponent extends Component {
         return ensureSafeComponent(NewCompetencyComponent, this);
       case 'course':
         return ensureSafeComponent(NewCourseComponent, this);
+      case 'instructor':
+        return ensureSafeComponent(NewInstructorComponent, this);
       case 'program':
         return ensureSafeComponent(NewProgramComponent, this);
       case 'program year':

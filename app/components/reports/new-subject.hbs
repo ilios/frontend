@@ -90,6 +90,7 @@
         @currentId={{this.currentPrepositionalObjectId}}
         @changeId={{set this.currentPrepositionalObjectId}}
       />
+      <ValidationError @errors={{get-errors-for this.currentPrepositionalObjectId}} />
       <div class="input-buttons">
         <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-save>
           {{#if this.save.isRunning}}
