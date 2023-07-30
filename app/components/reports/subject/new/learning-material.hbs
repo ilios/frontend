@@ -1,0 +1,25 @@
+<p data-test-reports-subject-new-learning-material>
+  <label for="new-learning-material">
+    {{t "general.whichIs"}}
+  </label>
+  {{#if this.isLoaded}}
+    <select
+      id="new-learning-material"
+      data-test-prepositional-objects
+      {{on "change" (pick "target.value" @changeId)}}
+      {{did-insert (perform this.setInitialValue)}}
+      {{did-update (perform this.setInitialValue) @school}}
+    >
+      {{#each this.sortedLearningMaterials as |learningMaterial|}}
+        <option
+          selected={{eq learningMaterial.id @currentId}}
+          value={{learningMaterial.id}}
+        >
+          {{learningMaterial.title}}
+        </option>
+      {{/each}}
+    </select>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</p>
