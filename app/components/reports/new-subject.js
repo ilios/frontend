@@ -13,6 +13,7 @@ import NewCourseComponent from './subject/new/course';
 import NewInstructorComponent from './subject/new/instructor';
 import NewInstructorGroupComponent from './subject/new/instructor-group';
 import NewLearningMaterialComponent from './subject/new/learning-material';
+import NewMeshTermComponent from './subject/new/mesh-term';
 import NewProgramComponent from './subject/new/program';
 import NewProgramYearComponent from './subject/new/program-year';
 import NewSessionComponent from './subject/new/session';
@@ -198,6 +199,8 @@ export default class ReportsNewSubjectComponent extends Component {
         return ensureSafeComponent(NewInstructorGroupComponent, this);
       case 'learning material':
         return ensureSafeComponent(NewLearningMaterialComponent, this);
+      case 'mesh term':
+        return ensureSafeComponent(NewMeshTermComponent, this);
       case 'program':
         return ensureSafeComponent(NewProgramComponent, this);
       case 'program year':
