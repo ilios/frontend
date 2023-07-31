@@ -17,6 +17,7 @@ import NewMeshTermComponent from './subject/new/mesh-term';
 import NewProgramComponent from './subject/new/program';
 import NewProgramYearComponent from './subject/new/program-year';
 import NewSessionComponent from './subject/new/session';
+import NewSessionTypeComponent from './subject/new/session-type';
 import NewTermComponent from './subject/new/term';
 
 @validatable
@@ -208,6 +209,8 @@ export default class ReportsNewSubjectComponent extends Component {
         return ensureSafeComponent(NewProgramYearComponent, this);
       case 'session':
         return ensureSafeComponent(NewSessionComponent, this);
+      case 'session type':
+        return ensureSafeComponent(NewSessionTypeComponent, this);
       case 'term':
         return ensureSafeComponent(NewTermComponent, this);
     }

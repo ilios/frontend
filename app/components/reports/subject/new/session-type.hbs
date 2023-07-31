@@ -1,0 +1,28 @@
+<p data-test-reports-subject-new-session-type>
+  <label for="new-session-type">
+    {{t "general.whichIs"}}
+  </label>
+  {{#if this.isLoaded}}
+    <select
+      id="new-session-type"
+      data-test-prepositional-objects
+      {{on "change" (pick "target.value" @changeId)}}
+      {{did-insert (perform this.setInitialValue)}}
+      {{did-update (perform this.setInitialValue) @school}}
+    >
+      {{#each this.sortedSessionTypes as |sessionType|}}
+        <option
+          selected={{eq sessionType.id @currentId}}
+          value={{sessionType.id}}
+        >
+          {{sessionType.title}}
+          {{#unless sessionType.active}}
+            ({{t "general.inactive"}})
+          {{/unless}}
+        </option>
+      {{/each}}
+    </select>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</p>
