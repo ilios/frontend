@@ -354,7 +354,7 @@ export default class User extends Model {
   }
 
   get fullName() {
-    return this.displayName ?? this.fullNameFromFirstMiddleInitialLastName;
+    return this.displayName ? this.displayName : this.fullNameFromFirstMiddleInitialLastName;
   }
 
   get fullNameFromFirstMiddleInitialLastName() {
