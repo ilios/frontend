@@ -39,7 +39,7 @@
     "@embroider/util": "^1.0.0",
     "@fortawesome/ember-fontawesome": "^1.0.0",
     "@fortawesome/free-brands-svg-icons": "6.4.0",
-    "@fortawesome/free-regular-svg-icons": "6.4.0",
+    "@fortawesome/free-regular-svg-icons": "6.4.2",
     "@fortawesome/free-solid-svg-icons": "6.4.0",
     "@fortawesome/pro-duotone-svg-icons": "6.4.2",
     "@fortawesome/pro-light-svg-icons": "6.4.2",
