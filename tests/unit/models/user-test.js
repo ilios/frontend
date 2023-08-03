@@ -137,6 +137,14 @@ module('Unit | Model | User', function (hooks) {
     assert.strictEqual(model.get('fullName'), 'something else');
   });
 
+  test('full name with empty displayName', function (assert) {
+    const model = this.owner.lookup('service:store').createRecord('user');
+    model.set('displayName', '');
+    model.set('firstName', 'first');
+    model.set('lastName', 'last');
+    assert.strictEqual(model.get('fullName'), 'first last');
+  });
+
   test('gets all directed courses', async function (assert) {
     assert.expect(3);
     const model = this.owner.lookup('service:store').createRecord('user');
