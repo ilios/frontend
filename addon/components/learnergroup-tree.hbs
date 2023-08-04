@@ -1,7 +1,7 @@
 {{#let (unique-id) as |templateId|}}
   <li
     hidden={{this.isHidden}}
-    class={{if this.hasChildren "strong" "em"}}
+    class="learnergroup-tree {{if this.hasChildren "strong" "em"}}"
     data-test-learnergroup-tree
     data-test-learnergroup-tree-root={{if this.isRoot "true" "false"}}
   >
@@ -12,14 +12,15 @@
         {{on "click" (if (includes @learnerGroup @selectedGroups) (fn this.remove @learnerGroup) (fn this.add @learnerGroup))}}
         data-test-checkbox
       >
-      <span
+      <button
         id="learnergroup-label-{{templateId}}"
-        role="button"
+        class="learnergroup-label"
+        type="button"
         {{on "click" (if (includes @learnerGroup @selectedGroups) (fn this.remove @learnerGroup) (fn this.add @learnerGroup))}}
         data-test-checkbox-title
       >
         {{@learnerGroup.title}}
-      </span>
+      </button>
     {{#if @learnerGroup.needsAccommodation}}
       <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
     {{/if}}

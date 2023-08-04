@@ -29,15 +29,6 @@
 
     .title {
       @include ilios-heading.ilios-heading-h5;
-      button {
-        @include ilios-button.ilios-button-reset;
-      }
-
-      &.collapsible {
-        button::after {
-          content: "\25BC";
-        }
-      }
     }
   }
 

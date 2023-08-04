@@ -1,16 +1,17 @@
 {{#if (and @user.enabled (not (includes @user @currentlyActiveUsers)))}}
-  <li
-    class="active"
-    role="button"
-    data-test-result
-    {{on "click" (fn @addUser @user)}}
-  >
-    <div class="name">
-      {{@user.fullName}}
-    </div>
-    <div class="email">
-      {{@user.email}}
-    </div>
+  <li class="active" data-test-result>
+    <button
+      class="link-button"
+      type="button"
+      {{on "click" (fn @addUser @user)}}
+    >
+      <div class="name">
+        {{@user.fullName}}
+      </div>
+      <div class="email">
+        {{@user.email}}
+      </div>
+    </button>
   </li>
 {{else}}
   <li class="inactive" data-test-result>

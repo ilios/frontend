@@ -51,7 +51,6 @@ module('Acceptance | Session - Publish All', function (hooks) {
 
     await page.visit({ courseId: this.course.id });
     const { publishableSessions } = page.publishAllSessions;
-
     assert.strictEqual(publishableSessions.title, 'Sessions Complete: ready to publish (2)');
     await publishableSessions.toggle();
     assert.strictEqual(publishableSessions.sessions.length, 2);

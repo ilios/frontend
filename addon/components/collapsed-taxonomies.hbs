@@ -2,8 +2,17 @@
   class="collapsed-taxonomies"
   data-test-collapsed-taxonomies
 >
-  <div class="title" role="button" {{on "click" @expand}} data-test-title>
-    {{t "general.terms"}} ({{@subject.terms.length}})
+  <div>
+    <button
+      class="title link-button"
+      type="button"
+      aria-expanded="false"
+      data-test-title
+      {{on "click" @expand}}
+    >
+      {{t "general.terms"}} ({{@subject.terms.length}})
+      <FaIcon @icon="caret-right" />
+    </button>
   </div>
   {{#if @subject.associatedVocabularies}}
     <div class="content">

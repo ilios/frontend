@@ -1,16 +1,19 @@
 <section
- class="detail-competencies {{if this.hasCompetencies "collapsible"}}"
+ class="detail-competencies"
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @course.competencies}}
 >
-  <div
-    class="title {{if this.hasCompetencies "clickable collapsible"}}"
-    role="button"
-    {{on "click" (if this.hasCompetencies this.collapse (noop))}}
-  >
-    {{t "general.competencies"}} ({{this.competencyCount}})
-  </div>
   {{#if this.hasCompetencies}}
+    <button
+      class="title link-button"
+      type="button"
+      aria-expanded="false"
+      data-test-title
+      {{on "click" this.collapse}}
+    >
+      {{t "general.competencies"}} ({{this.competencyCount}})
+      <FaIcon @icon="caret-down" />
+    </button>
     <div class="detail-competencies-content">
       <ul class="static-list">
         {{#each @course.domainsWithSubcompetencies as |domain|}}
@@ -26,6 +29,10 @@
           </li>
         {{/each}}
       </ul>
+    </div>
+  {{else}}
+    <div class="title" data-test-title>
+      {{t "general.competencies"}} ({{this.competencyCount}})
     </div>
   {{/if}}
 </section>
