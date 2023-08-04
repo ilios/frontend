@@ -49,12 +49,6 @@ export default class SingleEvent extends Component {
     });
   }
 
-  get sessionIs() {
-    return this.intl.t('general.sessionIs', {
-      type: this.args.event.sessionTypeTitle,
-    });
-  }
-
   get courseObjectives() {
     const objectives = this.args.event.courseObjectives || [];
     const competencies = this.args.event.competencies || [];
