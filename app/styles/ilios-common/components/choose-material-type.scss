@@ -51,9 +51,6 @@
   .toggle {
     background-color: c.$tealBlue;
     color: c.$white;
-    &::after {
-      content: "\25BE";
-    }
 
     &[aria-expanded="true"] {
       border-bottom-right-radius: 0;

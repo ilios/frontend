@@ -16,6 +16,7 @@
     {{on "keyup" this.toggleMenu}}
   >
     {{t "general.add"}}
+    <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
   </button>
   {{#if this.isOpen}}
     <div
