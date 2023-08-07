@@ -10,19 +10,6 @@
     &.collapsible {
       @include m.ilios-button-reset;
       @include m.font-size("xl");
-      &.collapsed {
-        &::after {
-          content: "\25BA";
-          @include m.font-size("medium");
-        }
-      }
-
-      &.expanded {
-        &::after {
-          content: "\25BC";
-          @include m.font-size("medium");
-        }
-      }
     }
   }
 

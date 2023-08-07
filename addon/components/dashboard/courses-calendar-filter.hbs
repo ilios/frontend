@@ -39,8 +39,13 @@
               viewportSpy=true
             }}
           >
-            <button type="button" {{on "click" (fn this.toggleYear year.year)}}>
+            <button
+              type="button"
+              aria-expanded={{if (includes year.year this.expandedYears) "true" "false"}}
+              {{on "click" (fn this.toggleYear year.year)}}
+            >
               {{year.label}}
+              <FaIcon @icon={{if (includes year.year this.expandedYears) "caret-down" "caret-right"}} />
             </button>
           </h6>
           {{#if (includes year.year this.expandedYears)}}
