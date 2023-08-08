@@ -69,19 +69,19 @@
       {{else}}
         {{#if @programYearObjective.active}}
           <button class="active" type="button" {{on "click" (perform this.saveIsActive false)}} data-test-deactivate>
-            <FaIcon @prefix="fas" @icon="lightbulb-on" @title={{t "general.deactivate"}} />
+            <FaIcon @icon="toggle-on" @title={{t "general.deactivate"}} />
           </button>
         {{else}}
           <button class="active" type="button" {{on "click" (perform this.saveIsActive true)}} data-test-activate>
-            <FaIcon @prefix="fal" @icon="lightbulb-slash" @title={{t "general.activate"}}/>
+            <FaIcon @icon="toggle-off" @title={{t "general.activate"}}/>
           </button>
         {{/if}}
       {{/if}}
     {{else}}
       {{#if @programYearObjective.active}}
-        <FaIcon @prefix="fas" @icon="lightbulb-on" @title={{t "general.active"}} />
+        <FaIcon @icon="toggle-on" @title={{t "general.active"}} />
       {{else}}
-        <FaIcon @prefix="fal" @icon="lightbulb-slash" @title={{t "general.inactive"}} />
+        <FaIcon @icon="toggle-off" @title={{t "general.inactive"}} />
       {{/if}}
     {{/if}}
     {{#if (and this.canDelete @editable (not this.isManaging) (not this.showRemoveConfirmation))}}

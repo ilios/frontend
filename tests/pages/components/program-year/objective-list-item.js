@@ -25,9 +25,9 @@ const definition = {
   remove: clickable('[data-test-remove]', { scope: '[data-test-actions]' }),
   canBeRemoved: isVisible('[data-test-remove]', { scope: '[data-test-actions]' }),
   activate: clickable('[data-test-activate]', { scope: '[data-test-actions]' }),
-  isActive: isVisible('[data-icon="lightbulb-on"]', { scope: '[data-test-actions]' }),
+  isActive: isVisible('[data-test-deactivate]', { scope: '[data-test-actions]' }),
   deactivate: clickable('[data-test-deactivate]', { scope: '[data-test-actions]' }),
-  isInactive: isVisible('[data-icon="lightbulb-slash"]', { scope: '[data-test-actions]' }),
+  isInactive: isVisible('[data-test-activate]', { scope: '[data-test-actions]' }),
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
     confirm: clickable('[data-test-confirm]'),
