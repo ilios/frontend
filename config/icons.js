@@ -25,6 +25,7 @@ module.exports = function () {
       'circle',
       'circle-exclamation',
       'circle-info',
+      'clipboard-list',
       'clock',
       'clock-rotate-left',
       'cloud',
@@ -79,7 +80,5 @@ module.exports = function () {
       'users',
       'xmark',
     ],
-    'pro-light-svg-icons': ['clipboard-list'],
-    'pro-duotone-svg-icons': ['arrow-right-to-bracket'],
   };
 };
