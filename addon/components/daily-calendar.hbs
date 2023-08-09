@@ -20,6 +20,8 @@
   <div
     class="day"
     tabindex="0"
+    {{did-insert (perform this.scrollView) this.earliestHour}}
+    {{did-update (perform this.scrollView) this.earliestHour}}
   >
     <div class="hours">
       {{#each this.hours as |hour|}}
