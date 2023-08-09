@@ -1,7 +1,5 @@
 module.exports = function () {
   return {
-    'pro-light-svg-icons': ['clipboard-list', 'lightbulb-slash'],
-    'pro-solid-svg-icons': ['lightbulb-on'],
     'free-solid-svg-icons': [
       'angle-down',
       'angle-left',
@@ -29,6 +27,8 @@ module.exports = function () {
       'sun',
       'superscript',
       'table',
+      'toggle-off',
+      'toggle-on',
       'truck-medical',
       'turn-down',
       'turn-up',
