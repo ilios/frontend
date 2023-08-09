@@ -7,6 +7,7 @@ import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/single-event-learningmaterial-list-item';
 import createTypedLearningMaterialProxy from 'dummy/utils/create-typed-learning-material-proxy';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import Service from '@ember/service';
 
 module('Integration | Component | single-event-learningmaterial-list-item', function (hooks) {
   setupRenderingTest(hooks);
@@ -270,5 +271,81 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     />
 `);
     assert.strictEqual(component.publicNotes.text, 'read this');
+  });
+
+  test('user material status enabled', async function (assert) {
+    const session = this.server.create('session');
+    const sessionLearningMaterial = this.server.create('session-learning-material', {
+      session,
+    });
+    const sessionMaterialStatus = this.server.create('user-session-material-status', {
+      material: sessionLearningMaterial,
+    });
+    const user = this.server.create('user', {
+      sessionMaterialStatuses: [sessionMaterialStatus],
+    });
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    const lm = createTypedLearningMaterialProxy({
+      sessionLearningMaterial: sessionLearningMaterial.id,
+    });
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+    class IliosConfigMock extends Service {
+      apiNameSpace = '/api';
+      async itemFromConfig(name) {
+        return name === 'materialStatusEnabled';
+      }
+    }
+    this.owner.register('service:iliosConfig', IliosConfigMock);
+    this.owner.register('service:current-user', CurrentUserMock);
+
+    this.set('lm', lm);
+    await render(hbs`<SingleEventLearningmaterialListItem
+      @learningMaterial={{this.lm}}
+      @linked={{true}}
+    />
+`);
+    assert.notOk(component.userMaterialStatus.isDisabled);
+  });
+
+  test('user material status disabled', async function (assert) {
+    const session = this.server.create('session');
+    const sessionLearningMaterial = this.server.create('session-learning-material', {
+      session,
+    });
+    const sessionMaterialStatus = this.server.create('user-session-material-status', {
+      material: sessionLearningMaterial,
+    });
+    const user = this.server.create('user', {
+      sessionMaterialStatuses: [sessionMaterialStatus],
+    });
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    const lm = createTypedLearningMaterialProxy({
+      sessionLearningMaterial: sessionLearningMaterial.id,
+    });
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+    class IliosConfigMock extends Service {
+      apiNameSpace = '/api';
+      async itemFromConfig(name) {
+        return name === 'materialStatusEnabled';
+      }
+    }
+    this.owner.register('service:iliosConfig', IliosConfigMock);
+    this.owner.register('service:current-user', CurrentUserMock);
+
+    this.set('lm', lm);
+    await render(hbs`<SingleEventLearningmaterialListItem
+      @learningMaterial={{this.lm}}
+      @linked={{false}}
+    />
+`);
+    assert.ok(component.userMaterialStatus.isDisabled);
   });
 });

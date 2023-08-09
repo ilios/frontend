@@ -1,5 +1,6 @@
 import { create, isPresent, property, text } from 'ember-cli-page-object';
 import typeIcon from './lm-type-icon';
+import userMaterialStatus from './user-material-status';
 
 const definition = {
   scope: '[data-test-single-event-learningmaterial-list-item]',
@@ -34,6 +35,7 @@ const definition = {
   publicNotes: {
     scope: '[data-test-public-notes]',
   },
+  userMaterialStatus,
 };
 
 export default definition;
