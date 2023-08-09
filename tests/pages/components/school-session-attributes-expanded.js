@@ -3,7 +3,7 @@ import manager from './school-session-attributes-manager';
 
 const definition = {
   scope: '[data-test-school-session-attributes-expanded]',
-  collapse: clickable('[data-test-collapse]'),
+  collapse: clickable('[data-test-title]'),
   manage: clickable('[data-test-manage]'),
   save: clickable('[data-test-save]'),
   cancel: clickable('[data-test-cancel]'),

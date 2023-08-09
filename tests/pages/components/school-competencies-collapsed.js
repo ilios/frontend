@@ -2,8 +2,8 @@ import { collection, create, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-competencies-collapsed]',
-  expandButton: {
-    scope: '[data-test-expand-competencies]',
+  title: {
+    scope: '[data-test-title]',
   },
   domains: collection('[data-test-domain]', {
     title: text('[data-test-domain-title]'),

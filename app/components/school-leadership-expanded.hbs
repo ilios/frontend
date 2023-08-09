@@ -6,14 +6,22 @@
   ...attributes
 >
   <div class="school-leadership-expanded-header">
-    <div
-      class="title {{if this.isCollapsible "collapsible clickable"}}"
-      role="button"
-      {{on "click" @collapse}}
-      data-test-collapse
-    >
-      {{t "general.schoolLeadership"}}
-    </div>
+    {{#if this.isCollapsible}}
+      <button
+        class="title link-button"
+        type="button"
+        aria-expanded="true"
+        data-test-title
+        {{on "click" @collapse}}
+      >
+        {{t "general.schoolLeadership"}}
+        <FaIcon @icon="caret-down" />
+      </button>
+    {{else}}
+      <div class="title" data-test-title>
+        {{t "general.schoolLeadership"}}
+      </div>
+    {{/if}}
     <div class="actions">
       {{#if @isManaging}}
         <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>

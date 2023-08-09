@@ -39,7 +39,10 @@ module('Integration | Component | school leadership expanded', function (hooks) 
 
   test('clicking the header collapses', async function (assert) {
     assert.expect(1);
-    const school = this.server.create('school', {});
+    const user1 = this.server.create('user');
+    const school = this.server.create('school', {
+      directors: [user1],
+    });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('collapse', () => {
@@ -53,7 +56,6 @@ module('Integration | Component | school leadership expanded', function (hooks) 
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
     />`);
-
     await component.collapse();
   });
 

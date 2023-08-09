@@ -5,9 +5,9 @@ import competenciesList from './school-competencies-list';
 const definition = {
   scope: '[data-test-school-competencies-expanded]',
   title: text('[data-test-header] [data-test-title]'),
-  readModeTitle: text('[data-test-header] [data-test-collapse]'),
+  readModeTitle: text('[data-test-header] [data-test-title]'),
   collapser: {
-    scope: '[data-test-header] [data-test-collapse]',
+    scope: '[data-test-header] [data-test-title]',
   },
   save: clickable('[data-test-actions] [data-test-save]'),
   cancel: clickable('[data-test-actions] [data-test-cancel]'),

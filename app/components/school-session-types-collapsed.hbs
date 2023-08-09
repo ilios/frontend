@@ -5,9 +5,19 @@
   data-test-school-session-types-collapsed
   ...attributes
 >
-  <div class="title clickable" role="button" {{on "click" @expand}} data-test-expand>
-    {{t "general.sessionTypes"}}
+  <div>
+    <button
+      class="title link-button"
+      type="button"
+      aria-expanded="false"
+      data-test-expand
+      {{on "click" @expand}}
+    >
+      {{t "general.sessionTypes"}}
+      <FaIcon @icon="caret-right" />
+    </button>
   </div>
+
   <div class="content">
     <table class="condensed">
       <thead>

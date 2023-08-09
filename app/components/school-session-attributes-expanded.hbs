@@ -1,13 +1,20 @@
 <section class="school-session-attributes-expanded" data-test-school-session-attributes-expanded ...attributes>
   <div class="school-session-attributes-expanded-header">
     {{#if @isManaging}}
-      <div class="title">
+      <div class="title" data-test-title>
         {{t "general.sessionAttributes"}}
       </div>
     {{else}}
-      <div class="title clickable collapsible" role="button" {{on "click" @collapse}} data-test-collapse>
+      <button
+        class="title link-button"
+        type="button"
+        aria-expanded="true"
+        data-test-title
+        {{on "click" @collapse}}
+      >
         {{t "general.sessionAttributes"}}
-      </div>
+        <FaIcon @icon="caret-down" />
+      </button>
     {{/if}}
     <div class="actions">
       {{#if @isManaging}}

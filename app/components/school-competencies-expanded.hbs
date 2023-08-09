@@ -11,15 +11,24 @@
         {{t "general.competencies"}}
       </div>
     {{else}}
-      <div
-        class="title {{if this.showCollapsible "collapsible clickable"}}"
-        role="button"
-        {{on "click" this.collapse}}
-        data-test-collapse
-      >
-        {{t "general.competencies"}}
-        ({{this.domains.length}}/{{this.childCompetencies.length}})
-      </div>
+      {{#if this.showCollapsible}}
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded="true"
+          data-test-title
+          {{on "click" this.collapse}}
+        >
+          {{t "general.competencies"}}
+          ({{this.domains.length}}/{{this.childCompetencies.length}})
+          <FaIcon @icon="caret-down" />
+        </button>
+      {{else}}
+        <div class="title" data-test-title>
+          {{t "general.competencies"}}
+          ({{this.domains.length}}/{{this.childCompetencies.length}})
+        </div>
+      {{/if}}
     {{/if}}
     <div class="actions" data-test-actions>
       {{#if @isManaging}}

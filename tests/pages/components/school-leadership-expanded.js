@@ -4,8 +4,8 @@ import leadershipList from 'ilios-common/page-objects/components/leadership-list
 
 const definition = {
   scope: '[data-test-school-leadership-expanded]',
-  title: text('[data-test-collapse]'),
-  collapse: clickable('[data-test-collapse]'),
+  title: text('[data-test-title]'),
+  collapse: clickable('[data-test-title]'),
   save: clickable('[data-test-save]'),
   cancel: clickable('[data-test-cancel]'),
   manage: clickable('[data-test-manage]'),

@@ -9,15 +9,24 @@
     <LoadingSpinner />
   {{else}}
     <div class="school-vocabularies-expanded-header">
-      <div
-        class="title {{if this.isCollapsible "collapsible clickable"}}"
-        role="button"
-        {{on "click" this.doCollapse}}
-        data-test-vocabularies-title
-      >
-        {{t "general.vocabularies"}}
-        ({{@school.vocabularies.length}})
-      </div>
+      {{#if this.isCollapsible}}
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded="true"
+          data-test-vocabularies-title
+          {{on "click" this.doCollapse}}
+        >
+          {{t "general.vocabularies"}}
+          ({{@school.vocabularies.length}})
+          <FaIcon @icon="caret-down" />
+        </button>
+      {{else}}
+        <div class="title" data-test-vocabularies-title>
+          {{t "general.vocabularies"}}
+          ({{@school.vocabularies.length}})
+        </div>
+      {{/if}}
       <div class="actions">
         {{#if (and @canCreateVocabulary (not this.managedTerm) (not this.managedVocabulary))}}
           <ExpandCollapseButton

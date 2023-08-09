@@ -170,7 +170,7 @@ module('Integration | Component | school session types expanded', function (hook
       @setSchoolManagedSessionType={{(noop)}}
       @setSchoolNewSessionType={{(noop)}}
     />`);
-
+    //await pauseTest();
     await component.collapse();
   });
 });
