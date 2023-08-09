@@ -35,9 +35,6 @@ $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
 
   .toggle {
     background-color: $header-menu-background-color;
-    &::after {
-      content: "\25BE";
-    }
     span {
       display: none;
 

@@ -19,6 +19,7 @@
     <span id="{{this.uniqueId}}-locale-chooser-title">
       {{t (concat "general.language." this.locale.id)}}
     </span>
+    <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
   </button>
   {{#if this.isOpen}}
     <div
