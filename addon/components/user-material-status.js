@@ -39,7 +39,6 @@ export default class UserMaterialStatusComponent extends Component {
   }
 
   get isStatusLoaded() {
-    console.log(this.sessionMaterialStatuses);
     return Boolean(this.sessionMaterialStatuses);
   }
 
