@@ -54,7 +54,8 @@
         </div>
       {{/if}}
       <div class="single-event-session-is">
-        {{this.sessionIs}}
+        <strong>{{ t "general.sessionType"}}:</strong>
+        {{@event.sessionTypeTitle}}
       </div>
       {{#if @event.equipmentRequired}}
         <div class="single-event-equipment-required">
