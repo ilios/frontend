@@ -7,15 +7,24 @@
         </span>
       </div>
     {{else}}
-      <div
-        class="title {{if this.programYearCompetencies "clickable collapsible"}}"
-        role="button"
-        {{on "click" (if this.programYearCompetencies @collapse (noop))}}
-        data-test-title
-      >
-        {{t "general.competencies"}}
-        ({{this.programYearCompetencies.length}})
-      </div>
+      {{#if this.programYearCompetencies}}
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded="true"
+          data-test-title
+          {{on "click" @collapse}}
+        >
+          {{t "general.competencies"}}
+          ({{this.programYearCompetencies.length}})
+          <FaIcon @icon="caret-down" />
+        </button>
+      {{else}}
+        <div class="title" data-test-title>
+          {{t "general.competencies"}}
+          ({{this.programYearCompetencies.length}})
+        </div>
+      {{/if}}
     {{/if}}
     <div class="actions" data-test-actions>
       {{#if @canUpdate}}

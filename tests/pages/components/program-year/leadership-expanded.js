@@ -4,8 +4,8 @@ import leadershipManager from 'ilios-common/page-objects/components/leadership-m
 
 const definition = {
   scope: '[data-test-program-year-leadership-expanded]',
-  title: text('.title'),
-  collapse: clickable('.title'),
+  title: text('[data-test-title]'),
+  collapse: clickable('[data-test-title]'),
   manage: clickable('.actions button'),
   save: clickable('.actions button.bigadd'),
   cancel: clickable('.actions button.bigcancel'),

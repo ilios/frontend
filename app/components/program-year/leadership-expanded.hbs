@@ -4,9 +4,16 @@
   ...attributes
 >
   <div class="program-year-leadership-expanded-header">
-    <h3 class="title collapsible clickable" role="button" {{on "click" @collapse}}>
+    <button
+      class="title link-button"
+      type="button"
+      aria-expanded="true"
+      data-test-title
+      {{on "click" @collapse}}
+    >
       {{t "general.programYearLeadership"}}
-    </h3>
+      <FaIcon @icon="caret-down" />
+    </button>
     <div class="actions">
       {{#if @isManaging}}
         <button type="button" class="bigadd" {{on "click" (perform this.save)}}>

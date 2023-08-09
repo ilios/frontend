@@ -5,9 +5,18 @@
   {{did-insert (perform this.load) @programYear.programYearObjectives}}
   {{did-update (perform this.load) @programYear.programYearObjectives}}
 >
-  <div class="title" role="button" {{on "click" @expand}} data-test-title>
-    {{t "general.objectives"}}
-    ({{get this.objectives "length"}})
+  <div>
+    <button
+      class="title link-button"
+      type="button"
+      aria-expanded="false"
+      data-test-title
+      {{on "click" @expand}}
+    >
+      {{t "general.objectives"}}
+      ({{get this.objectives "length"}})
+      <FaIcon @icon="caret-right" />
+    </button>
   </div>
   {{#if this.load.lastSuccessful.value}}
     <div class="content">

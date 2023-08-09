@@ -1,8 +1,15 @@
 <div class="program-leadership-expanded" data-test-program-leadership-expanded ...attributes>
   <div class="program-leadership-expanded-header">
-    <h3 class="title collapsible clickable" role="button" {{on "click" @collapse}}>
+    <button
+      class="title link-button"
+      type="button"
+      aria-expanded="true"
+      data-test-title
+      {{on "click" @collapse}}
+    >
       {{t "general.programLeadership"}}
-    </h3>
+      <FaIcon @icon="caret-down" />
+    </button>
     <div class="actions">
       {{#if @isManaging}}
         <button type="button" class="bigadd" {{on "click" (perform this.save)}}>
