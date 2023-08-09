@@ -169,20 +169,18 @@
             <div class="block start-date" data-test-start-date>
               <label>{{t "general.start"}}:</label>
               {{#if @canUpdate}}
-                <span class="editinplace">
-                  <span
-                    class="editable"
-                    role="button"
-                    {{on "click" (set this.isEditingDatesAndDuration true)}}
-                    data-test-edit
-                  >
-                    {{#if @sequenceBlock.startDate}}
-                      {{format-date @sequenceBlock.startDate}}
-                    {{else}}
-                      {{t "general.clickToEdit"}}
-                    {{/if}}
-                  </span>
-                </span>
+                <button
+                  class="link-button"
+                  type="button"
+                  data-test-edit
+                  {{on "click" (set this.isEditingDatesAndDuration true)}}
+                >
+                  {{#if @sequenceBlock.startDate}}
+                    {{format-date @sequenceBlock.startDate}}
+                  {{else}}
+                    {{t "general.clickToEdit"}}
+                  {{/if}}
+                </button>
               {{else}}
                 <span>
                   {{#if @sequenceBlock.startDate}}
@@ -196,20 +194,18 @@
             <div class="block end-date" data-test-end-date>
               <label>{{t "general.end"}}:</label>
               {{#if @canUpdate}}
-                <span class="editinplace">
-                  <span
-                    class="editable"
-                    role="button"
-                    {{on "click" (set this.isEditingDatesAndDuration true)}}
-                    data-test-edit
-                  >
-                    {{#if @sequenceBlock.endDate}}
-                      {{format-date @sequenceBlock.endDate}}
-                    {{else}}
-                      {{t "general.clickToEdit"}}
-                    {{/if}}
-                  </span>
-                </span>
+                <button
+                  class="link-button"
+                  type="button"
+                  data-test-edit
+                  {{on "click" (set this.isEditingDatesAndDuration true)}}
+                >
+                  {{#if @sequenceBlock.endDate}}
+                    {{format-date @sequenceBlock.endDate}}
+                  {{else}}
+                    {{t "general.clickToEdit"}}
+                  {{/if}}
+                </button>
               {{else}}
                 <span>
                   {{#if @sequenceBlock.endDate}}
@@ -223,20 +219,18 @@
             <div class="block duration" data-test-duration>
               <label>{{t "general.durationInDays"}}:</label>
               {{#if @canUpdate}}
-                <span class="editinplace">
-                  <span
-                    class="editable"
-                    role="button"
-                    {{on "click" (set this.isEditingDatesAndDuration true)}}
-                    data-test-edit
-                  >
-                    {{#if @sequenceBlock.duration}}
-                      {{@sequenceBlock.duration}}
-                    {{else}}
-                      {{t "general.clickToEdit"}}
-                    {{/if}}
-                  </span>
-                </span>
+                <button
+                  class="link-button"
+                  type="button"
+                  data-test-edit
+                  {{on "click" (set this.isEditingDatesAndDuration true)}}
+                >
+                  {{#if @sequenceBlock.duration}}
+                    {{@sequenceBlock.duration}}
+                  {{else}}
+                    {{t "general.clickToEdit"}}
+                  {{/if}}
+                </button>
               {{else}}
                 <span>
                   {{#if @sequenceBlock.duration}}
@@ -405,16 +399,14 @@
             <div class="block minimum" data-test-minimum>
               <label>{{t "general.minimum"}}:</label>
               {{#if (and @canUpdate (not this.isElective))}}
-                <span class="editinplace">
-                  <span
-                    class="editable"
-                    role="button"
-                    {{on "click" this.editMinMax}}
-                    data-test-edit
-                  >
-                    {{this.minimum}}
-                  </span>
-                </span>
+                <button
+                  class="link-button"
+                  type="button"
+                  data-test-edit
+                  {{on "click" this.editMinMax}}
+                >
+                  {{this.minimum}}
+                </button>
               {{else}}
                 <span>{{this.minimum}}</span>
               {{/if}}
@@ -422,16 +414,14 @@
             <div class="block maximum" data-test-maximum>
               <label>{{t "general.maximum"}}:</label>
               {{#if @canUpdate}}
-                <span class="editinplace">
-                  <span
-                    class="editable"
-                    role="button"
-                    {{on "click" this.editMinMax}}
-                    data-test-edit
-                  >
-                    {{this.maximum}}
-                  </span>
-                </span>
+                <button
+                  class="link-button"
+                  type="button"
+                  data-test-edit
+                  {{on "click" this.editMinMax}}
+                >
+                  {{this.maximum}}
+                </button>
               {{else}}
                 <span>{{this.maximum}}</span>
               {{/if}}

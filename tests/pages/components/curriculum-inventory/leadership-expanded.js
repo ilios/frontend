@@ -5,7 +5,7 @@ import leadershipManager from 'ilios-common/page-objects/components/leadership-m
 const definition = {
   scope: '[data-test-curriculum-inventory-leadership-expanded]',
   collapse: {
-    scope: '[data-test-collapse]',
+    scope: '[data-test-title]',
   },
   manage: {
     scope: '[data-test-manage]',
