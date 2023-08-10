@@ -57,7 +57,7 @@ export default class ReportsSubjectNewCourseComponent extends Component {
   }
 
   get sortedCourses() {
-    return sortBy(this.filteredCourses, 'year', 'title');
+    return sortBy(this.filteredCourses, ['year', 'title']);
   }
 
   @action

@@ -151,4 +151,29 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
     });
     this.set('school', schoolModels[0]);
   });
+
+  test('it sorts', async function (assert) {
+    assert.expect(10);
+    this.server.db.courses.update(1, { title: 'xx' });
+    this.server.db.courses.update(3, { title: 'aa' });
+    await render(hbs`<Reports::Subject::New::Course
+      @currentId={{null}}
+      @changeId={{(noop)}}
+      @school={{null}}
+     />`);
+
+    assert.strictEqual(component.course.options.length, 5);
+
+    assert.strictEqual(component.course.options[0].text, '2015 course 1');
+    assert.strictEqual(component.course.options[1].text, '2015 xx');
+    assert.strictEqual(component.course.options[2].text, '2022 aa');
+    assert.strictEqual(component.course.options[3].text, '2022 course 3');
+    assert.strictEqual(component.course.options[4].text, '2022 course 4');
+
+    await component.year.set('2022');
+    assert.strictEqual(component.course.options.length, 3);
+    assert.strictEqual(component.course.options[0].text, 'aa');
+    assert.strictEqual(component.course.options[1].text, 'course 3');
+    assert.strictEqual(component.course.options[2].text, 'course 4');
+  });
 });
