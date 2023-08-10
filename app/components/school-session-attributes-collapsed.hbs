@@ -1,6 +1,15 @@
 <section class="school-session-attributes-collapsed" data-test-school-session-attributes-collapsed ...attributes>
-  <div class="title clickable" role="button" {{on "click" @expand}} data-test-expand>
-    {{t "general.sessionAttributes"}}
+  <div>
+    <button
+      class="title link-button"
+      type="button"
+      aria-expanded="false"
+      data-test-title
+      {{on "click" @expand}}
+    >
+      {{t "general.sessionAttributes"}}
+      <FaIcon @icon="caret-right" />
+    </button>
   </div>
   <div class="content">
     <table class="condensed">

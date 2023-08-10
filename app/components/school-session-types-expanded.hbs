@@ -5,15 +5,23 @@
   data-test-school-session-types-expanded
   ...attributes
 >
-  <div class="school-session-types-header">
-    <div
-      class="title {{if this.isCollapsible "collapsible clickable"}}"
-      role="button"
-      {{on "click" @collapse}}
-      data-test-collapse
-    >
-      {{t "general.sessionTypes"}} ({{this.sessionTypes.length}})
-    </div>
+  <div class="school-session-types-header" data-test-header>
+    {{#if this.isCollapsible}}
+      <button
+        class="title link-button"
+        type="button"
+        aria-expanded="true"
+        data-test-title
+        {{on "click" @collapse}}
+      >
+        {{t "general.sessionTypes"}} ({{this.sessionTypes.length}})
+        <FaIcon @icon="caret-down" />
+      </button>
+    {{else}}
+      <div class="title" data-test-title>
+        {{t "general.sessionTypes"}} ({{this.sessionTypes.length}})
+      </div>
+    {{/if}}
     <div class="actions">
       {{#if (and @canCreate (not @managedSessionTypeId))}}
         <ExpandCollapseButton

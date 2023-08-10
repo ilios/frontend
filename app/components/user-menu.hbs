@@ -18,6 +18,7 @@
     <span id="user-menu-title">
       {{get this.model "fullName"}}
     </span>
+    <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
   </button>
   {{#if this.isOpen}}
     <div {{on-click-outside (set this.isOpen false)}}>

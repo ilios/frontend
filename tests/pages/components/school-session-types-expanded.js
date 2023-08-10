@@ -5,8 +5,8 @@ import list from './school-session-types-list';
 
 const definition = {
   scope: '[data-test-school-session-types-expanded]',
-  collapse: clickable('[data-test-collapse]'),
-  title: text('[data-test-collapse]'),
+  collapse: clickable('[data-test-header] [data-test-title]'),
+  title: text('[data-test-header] [data-test-title]'),
   createNew: clickable('[data-test-expand-collapse-button] button'),
   newSessionType,
   manager,

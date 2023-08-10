@@ -2,7 +2,7 @@ import { clickable, create, hasClass, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-session-attributes-collapsed]',
-  expand: clickable('[data-test-expand]'),
+  expand: clickable('[data-test-title]'),
   attendanceRequired: {
     scope: '[data-test-attendance-required]',
     label: text('td:nth-of-type(1)'),

@@ -7,9 +7,16 @@
       <LoadingSpinner />
   {{else}}
     <div class="curriculum-inventory-leadership-expanded-header" data-test-header>
-      <div class="title collapsible clickable" role="button" {{on "click" @collapse}} data-test-collapse>
+      <button
+        class="title link-button"
+        type="button"
+        aria-expanded="true"
+        data-test-title
+        {{on "click" @collapse}}
+      >
         {{t "general.curriculumInventoryReportLeadership"}}
-      </div>
+        <FaIcon @icon="caret-down" />
+      </button>
       <div class="actions">
         {{#if @isManaging}}
           <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>

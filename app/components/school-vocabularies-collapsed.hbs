@@ -1,7 +1,16 @@
 <section class="school-vocabularies-collapsed" data-test-school-vocabularies-collapsed ...attributes>
-  <div class="title clickable" role="button" {{on "click" @expand}} data-test-title>
-    {{t "general.vocabularies"}}
-    ({{this.vocabularies.length}})
+  <div>
+    <button
+      class="title link-button"
+      type="button"
+      aria-expanded="false"
+      data-test-title
+      {{on "click" @expand}}
+    >
+      {{t "general.vocabularies"}}
+      ({{this.vocabularies.length}})
+      <FaIcon @icon="caret-right" />
+    </button>
   </div>
   {{#if this.vocabulariesLoading}}
     <LoadingSpinner />

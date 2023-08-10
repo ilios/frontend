@@ -23,7 +23,7 @@ module('Integration | Component | school competencies collapsed', function (hook
     this.set('school', schoolModel);
     await render(hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
 
-    assert.strictEqual(component.expandButton.text, 'Competencies (3/4)');
+    assert.strictEqual(component.title.text, 'Competencies (3/4)');
     assert.strictEqual(component.domains.length, 3);
     assert.strictEqual(component.domains[0].title, 'competency 0');
     assert.strictEqual(component.domains[0].summary, 'There are 3 subcompetencies');
@@ -43,6 +43,6 @@ module('Integration | Component | school competencies collapsed', function (hook
     await render(
       hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{this.expand}} />`
     );
-    await component.expandButton.click();
+    await component.title.click();
   });
 });
