@@ -17,11 +17,6 @@
 
 @mixin collapsed-container-title() {
   @include ilios-heading.ilios-heading-h5;
-  cursor: pointer;
-
-  &::after {
-    content: "\25BA";
-  }
 }
 
 @mixin collapsed-container-content() {

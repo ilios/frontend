@@ -30,14 +30,14 @@
           />
         </div>
         {{#if this.showClearFilters}}
-          <span
+          <button
             id="calendar-clear-filters"
             class="calendar-clear-filters"
-            role="button"
+            type="button"
             {{on "click" @clearFilters}}
           >
             {{t "general.clearFilters"}}
-          </span>
+          </button>
         {{/if}}
       {{/if}}
       {{#unless @mySchedule}}

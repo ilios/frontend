@@ -7,14 +7,22 @@
     <LoadingSpinner />
   {{else}}
     <div class="course-leadership-expanded-header">
-      <h3
-        class="title {{unless @isManaging "collapsible clickable"}}"
-        role="button"
-        {{on "click" (unless @isManaging @collapse (noop))}}
-        data-test-title
-      >
-        {{t "general.courseLeadership"}}
-      </h3>
+      {{#if @isManaging}}
+        <h3 class="title" data-test-title>
+          {{t "general.courseLeadership"}}
+        </h3>
+      {{else}}
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded="true"
+          data-test-title
+          {{on "click" @collapse}}
+        >
+          {{t "general.courseLeadership"}}
+          <FaIcon @icon="caret-down" />
+        </button>
+      {{/if}}
       <div class="actions">
         {{#if @isManaging}}
           <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>

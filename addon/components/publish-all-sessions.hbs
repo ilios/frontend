@@ -3,13 +3,18 @@
   data-test-publish-all-sessions
 >
   <section class="publish-all-sessions-unpublishable" data-test-unpublishable>
-    <div
-      class="title {{if this.unPublishableCollapsed "collapsed" "collapsible"}}"
-      role="button"
-      data-test-expand-collapse
-      {{on "click" (set this.unPublishableCollapsed (not this.unPublishableCollapsed))}}
-    >
-      {{t "general.incompleteSessions"}} ({{this.unPublishableSessions.length}})
+    <div>
+      <button
+        class="title link-button"
+        type="button"
+        aria-expanded={{if this.unPublishableCollapsed "true" "false"}}
+        data-test-expand-collapse
+        data-test-title
+        {{on "click" (set this.unPublishableCollapsed (not this.unPublishableCollapsed))}}
+      >
+        {{t "general.incompleteSessions"}} ({{this.unPublishableSessions.length}})
+        <FaIcon @icon={{if this.unPublishableCollapsed "caret-right" "caret-down"}} />
+      </button>
     </div>
     {{#unless this.unPublishableCollapsed}}
       <div class="content" data-test-content>
@@ -97,14 +102,18 @@
     {{/unless}}
   </section>
   <section class="publish-all-sessions-publishable" data-test-publishable>
-    <div
-      class="title {{if this.publishableCollapsed "collapsed" "collapsible"}}"
-      role="button"
-      {{on "click" (set this.publishableCollapsed (not this.publishableCollapsed))}}
-      data-test-expand-collapse
-      data-test-title
-    >
-      {{t "general.completeSessions"}} ({{this.publishableSessions.length}})
+    <div>
+      <button
+        class="title link-button"
+        type="button"
+        aria-expanded={{if this.publishableCollapsed "true" "false"}}
+        data-test-expand-collapse
+        data-test-title
+        {{on "click" (set this.publishableCollapsed (not this.publishableCollapsed))}}
+      >
+        {{t "general.completeSessions"}} ({{this.publishableSessions.length}})
+        <FaIcon @icon={{if this.publishableCollapsed "caret-right" "caret-down"}} />
+      </button>
     </div>
     {{#unless this.publishableCollapsed}}
       <div class="content" data-test-content>

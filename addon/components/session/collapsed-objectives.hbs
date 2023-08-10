@@ -4,8 +4,17 @@
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @session.sessionObjectives}}
 >
-  <div class="title" role="button" {{on "click" @expand}} data-test-title>
-    {{t "general.objectives"}} ({{get this.objectives "length"}})
+  <div>
+    <button
+      class="title link-button"
+      type="button"
+      aria-expanded="false"
+      data-test-title
+      {{on "click" @expand}}
+    >
+      {{t "general.objectives"}} ({{get this.objectives "length"}})
+      <FaIcon @icon="caret-right" />
+    </button>
   </div>
   {{#if this.load.lastSuccessful}}
     <div class="content">

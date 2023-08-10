@@ -13,21 +13,5 @@
         margin-left: 0.25em;
       }
     }
-
-    &.collapsed {
-      .year-title button {
-        &::after {
-          content: "\25BA";
-        }
-      }
-    }
-
-    &.expanded {
-      .year-title button {
-        &::after {
-          content: "\25BC";
-        }
-      }
-    }
   }
 }

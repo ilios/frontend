@@ -1,22 +1,31 @@
 <section
-  class="detail-taxonomies taxonomy-manager {{if this.showCollapsible "collapsible"}}"
+  class="detail-taxonomies taxonomy-manager"
   data-test-detail-taxonomies
 >
   <div class="detail-taxonomies-header">
     {{#if this.isManaging}}
-      <div class="title">
+      <h3 class="title" data-test-title>
         <span class="detail-specific-title">
           {{t "general.termsManageTitle"}}
         </span>
-      </div>
+      </h3>
     {{else}}
-      <div
-        class="title {{if this.showCollapsible "clickable collapsible"}}"
-        role="button"
-        {{on "click" this.collapse}}
-      >
-        {{t "general.terms"}} ({{@subject.terms.length}})
-      </div>
+      {{#if this.showCollapsible}}
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded="true"
+          {{on "click" this.collapse}}
+          data-test-title
+        >
+          {{t "general.terms"}} ({{@subject.terms.length}})
+            <FaIcon @icon="caret-down" />
+        </button>
+      {{else}}
+        <h3 class="title" data-test-title>
+          {{t "general.terms"}} ({{@subject.terms.length}})
+        </h3>
+      {{/if}}
     {{/if}}
     <div class="actions">
       {{#if this.isManaging}}

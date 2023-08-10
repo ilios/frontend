@@ -1,15 +1,28 @@
 <section
-  class="course-objectives {{if this.showCollapsible "collapsible"}}"
+  class="course-objectives"
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @course}}
   data-test-course-objectives
 >
   <div class="header">
-    <h3 class="title {{if this.showCollapsible "clickable collapsible"}}" data-test-title>
-      <button type="button" {{on "click" this.collapse}}>
+    {{#if this.showCollapsible}}
+      <div>
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded="true"
+          data-test-title
+          {{on "click" this.collapse}}
+        >
+          {{t "general.objectives"}} ({{this.objectiveCount}})
+          <FaIcon @icon="caret-down" />
+        </button>
+      </div>
+    {{else}}
+      <h3 class="title" data-test-title>
         {{t "general.objectives"}} ({{this.objectiveCount}})
-      </button>
-    </h3>
+      </h3>
+    {{/if}}
     {{#if @editable}}
       <span data-test-actions>
         <LinkTo
