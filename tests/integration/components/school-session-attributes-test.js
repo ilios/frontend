@@ -92,7 +92,6 @@ module('Integration | Component | school session attributes', function (hooks) {
       @expand={{(noop)}}
     />`);
 
-    // await pauseTest();
     await component.expanded.collapse();
   });
 });
