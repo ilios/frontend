@@ -31,7 +31,7 @@ const definition = {
   }),
   search: fillable('.search-box input'),
   searchResults: collection('.results [data-test-result]', {
-    add: clickable(),
+    add: clickable('button'),
     active: hasClass('active'),
     inactive: hasClass('inactive'),
   }),
