@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports = {
-  extends: 'recommended',
+  plugins: ['@ilios/ember-template-lint-plugin'],
+  extends: 'ilios:recommended',
 };

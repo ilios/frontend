@@ -7,7 +7,8 @@ module('Integration | Helper | page-title', function (hooks) {
   setupRenderingTest(hooks);
 
   test('page title does nothing', async function (assert) {
-    await render(hbs`{{page-title 'Jayden Rules!'}}`);
+    this.set('title', 'Jayden Rules!');
+    await render(hbs`{{page-title this.title}}`);
     assert.dom().hasText('');
   });
 });
