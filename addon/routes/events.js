@@ -1,12 +1,21 @@
 import { service } from '@ember/service';
 import Route from '@ember/routing/route';
 
+class MissingUserEvent {
+  slug = null;
+
+  constructor(slug) {
+    this.slug = slug;
+  }
+}
+
 export default class EventsRoute extends Route {
   @service userEvents;
   @service schoolEvents;
   @service session;
+  @service router;
 
-  model(params) {
+  async model(params) {
     const slug = params.slug;
     const container = slug.substring(0, 1);
     let eventService;
@@ -17,10 +26,20 @@ export default class EventsRoute extends Route {
       eventService = this.userEvents;
     }
 
-    return eventService.getEventForSlug(slug);
+    const event = await eventService.getEventForSlug(slug);
+    if (!event && 'U' === container) {
+      return new MissingUserEvent(slug);
+    }
+    return event;
   }
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+  }
+
+  afterModel(model) {
+    if (model instanceof MissingUserEvent) {
+      this.router.transitionTo('missing-user-event', model);
+    }
   }
 }
