@@ -853,7 +853,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     test('list learning materials', async function (assert) {
       assert.expect(10);
       await page.visit({ courseId: 1, sessionId: 1 });
-      await percySnapshot(assert);
       assert.strictEqual(currentRouteName(), 'session.index');
 
       assert.strictEqual(page.details.learningMaterials.current.length, 1);

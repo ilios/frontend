@@ -145,7 +145,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   test('expanded offering', async function (assert) {
     assert.expect(24);
     await page.visit({ courseId: this.course.id, details: true });
-    await percySnapshot(assert);
     const { sessions } = page.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);
@@ -188,7 +187,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   test('no offerings', async function (assert) {
     assert.expect(8);
     await page.visit({ courseId: this.course.id, details: true });
-    await percySnapshot(assert);
     const { sessions } = page.courseSessions.sessionsGrid;
 
     assert.strictEqual(sessions.length, 4);

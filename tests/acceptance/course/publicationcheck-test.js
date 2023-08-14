@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course-publication-check';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
@@ -43,7 +42,6 @@ module('Acceptance | Course - Publication Check', function (hooks) {
   test('full course count', async function (assert) {
     assert.expect(7);
     await page.visit({ courseId: this.fullCourse.id });
-    await percySnapshot(assert);
     assert.strictEqual(page.publicationcheck.backToCourse.url, '/courses/1');
     assert.strictEqual(currentRouteName(), 'course.publication_check');
     assert.strictEqual(page.publicationcheck.courseTitle, 'course 0');

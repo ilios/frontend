@@ -108,7 +108,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.expect(39);
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: this.course.id, details: true });
-      await percySnapshot(assert);
       assert.strictEqual(currentRouteName(), 'course.index');
 
       assert.strictEqual(page.details.learningMaterials.current.length, 4);

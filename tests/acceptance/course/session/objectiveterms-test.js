@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
   setupApplicationTest(hooks);
@@ -34,7 +33,6 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    await percySnapshot(assert);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
       1
