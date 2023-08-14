@@ -3,12 +3,17 @@
   data-test-course-publicationcheck
   {{scroll-into-view}}
 >
-  <div class="title">
-    {{t "general.missingItems"}} ({{@course.allPublicationIssuesLength}})
-  </div>
-  <div class="course-publicationcheck-content">
-    <table>
-      <thead>
+  <LinkTo @route="course" @model={{@course}} data-test-back-to-course>
+    {{t "general.backToTitle" title=@course.title}}
+  </LinkTo>
+
+  <section class="course-publicationcheck-details">
+    <div class="title">
+      {{t "general.missingItems"}} ({{@course.allPublicationIssuesLength}})
+    </div>
+    <div class="course-publicationcheck-content">
+      <table>
+        <thead>
         <tr>
           <th>
             {{t "general.courseTitle"}}
@@ -26,8 +31,8 @@
             {{t "general.meshTerms"}}
           </th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <tr>
           <td data-test-course-title>
             {{@course.title}}
@@ -79,7 +84,8 @@
             </td>
           {{/if}}
         </tr>
-      </tbody>
-    </table>
-  </div>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>

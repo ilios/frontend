@@ -1,7 +1,11 @@
-import { create, text } from 'ember-cli-page-object';
+import { attribute, create, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-course-publicationcheck]',
+  backToCourse: {
+    scope: '[data-test-back-to-course]',
+    url: attribute('href'),
+  },
   title: text('[data-test-title]'),
   courseTitle: text('[data-test-course-title]'),
   cohorts: text('[data-test-cohorts]'),
