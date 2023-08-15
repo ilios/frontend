@@ -12,7 +12,7 @@ import header from './course-header';
 
 export default create({
   scope: '[data-test-ilios-course-details]',
-  collapseControl: clickable('.detail-collapsed-control'),
+  collapseControl: clickable('[data-test-expand-course-details]'),
   titles: count('.title'),
   header,
   overview,
