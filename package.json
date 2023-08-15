@@ -34,6 +34,7 @@
     "@ember/test-helpers": "^2.9.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@ilios/ember-template-lint-plugin": "^3.0.0",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
     "broccoli-merge-trees": "^4.2.0",
