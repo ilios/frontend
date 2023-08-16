@@ -2,18 +2,22 @@
 @use "../mixins" as m;
 
 .course-publicationcheck {
-  @include m.detail-container(c.$orange);
+  @include m.main-section;
 
-  .title {
-    @include m.detail-container-title;
-  }
+  .course-publicationcheck-details {
+    @include m.detail-container(c.$orange);
 
-  .course-publicationcheck-content {
-    @include m.detail-container-content;
-  }
+    .title {
+      @include m.detail-container-title;
+    }
 
-  .fa-link-slash {
-    color: c.$black;
-    @include m.font-size("small");
+    .course-publicationcheck-content {
+      @include m.detail-container-content;
+    }
+
+    .fa-link-slash {
+      color: c.$black;
+      @include m.font-size("small");
+    }
   }
 }

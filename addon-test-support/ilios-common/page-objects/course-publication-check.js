@@ -7,7 +7,4 @@ export default create({
   visit: visitable('/courses/:courseId/publicationcheck'),
   details,
   publicationcheck,
-  backToCourse: {
-    scope: '[data-test-back-to-course]',
-  },
 });
