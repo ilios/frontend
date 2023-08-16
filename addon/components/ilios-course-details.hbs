@@ -10,16 +10,16 @@
   <CourseHeader @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
   <CourseOverview @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
   {{#unless @showDetails}}
-    <button
-      class="detail-collapsed-control"
-      type="button"
-      {{on "click" (fn @setShowDetails true)}}
-    >
-      <span>
+    <div class="detail-collapsed-control">
+      <button
+        type="button"
+        data-test-expand-course-details
+        {{on "click" (fn @setShowDetails true)}}
+      >
         {{t "general.expandDetail"}}
         <FaIcon @icon="square-plus" class="expand-collapse-icon" />
-      </span>
-    </button>
+      </button>
+    </div>
   {{else}}
     <CourseEditing
       @course={{@course}}
@@ -35,11 +35,15 @@
       @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
       @setCourseManageLeadership={{@setCourseManageLeadership}}
     />
-    <button class="detail-collapsed-control" type="button" {{on "click" this.collapse}}>
-      <span class="is-expanded">
+    <div class="detail-collapsed-control">
+      <button
+        type="button"
+        data-test-expand-course-details
+        {{on "click" this.collapse}}
+      >
         {{t "general.collapseDetail"}}
         <FaIcon @icon="square-minus" class="expand-collapse-icon" />
-      </span>
-    </button>
+      </button>
+    </div>
   {{/unless}}
 </section>

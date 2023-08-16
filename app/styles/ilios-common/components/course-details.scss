@@ -8,12 +8,12 @@
   $collapse-control-shadow-black: rgba(0, 0, 0, 0.34);
 
   .detail-collapsed-control {
-    @include m.ilios-button-reset;
     display: flex;
     justify-content: center;
     width: 100%;
 
-    span {
+    button {
+      @include m.ilios-button-reset;
       background-color: c.$orange;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
