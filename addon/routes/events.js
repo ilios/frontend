@@ -39,7 +39,7 @@ export default class EventsRoute extends Route {
 
   afterModel(model) {
     if (model instanceof MissingUserEvent) {
-      this.router.transitionTo('missing-user-event', model);
+      this.router.transitionTo('event-not-found', model);
     }
   }
 }

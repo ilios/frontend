@@ -32,4 +32,20 @@ module('Acceptance | Event', function (hooks) {
     assert.strictEqual(currentURL(), `/events/${slug}`);
     assert.ok(page.backLink.isPresent);
   });
+
+  test('it redirects to event-not-found page if no user event can be found', async function (assert) {
+    assert.expect(4);
+    const date = DateTime.fromISO('2016-05-25');
+    const slug = 'U' + date.toFormat('yyyyMMdd') + 'O12345';
+    const fromDate = date.set({ hour: 0 });
+    const toDate = date.set({ hour: 24 });
+    this.server.get(`/api/userevents/:userid`, (scheme, { params, queryParams }) => {
+      assert.strictEqual(params.userid, this.user.id);
+      assert.strictEqual(fromDate.toFormat('X'), queryParams.from);
+      assert.strictEqual(toDate.toFormat('X'), queryParams.to);
+      return { userEvents: [] };
+    });
+    await page.visit({ slug });
+    assert.strictEqual(currentURL(), `/event-not-found/${slug}`);
+  });
 });
