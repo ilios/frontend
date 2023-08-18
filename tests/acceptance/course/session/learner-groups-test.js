@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
-import percySnapshot from '@percy/ember';
+import { DateTime } from 'luxon';
 
 module('Acceptance | Session - Learner Groups', function (hooks) {
   setupApplicationTest(hooks);
@@ -41,6 +41,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       });
       this.server.create('session', {
         courseId: 1,
+        updatedAt: DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 }).toJSDate(),
       });
       this.server.createList('user', 2);
       this.server.create('user', {
@@ -59,7 +60,6 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       });
 
       await page.visit({ courseId: 1, sessionId: 1 });
-      await percySnapshot(assert);
 
       assert.strictEqual(currentRouteName(), 'session.index');
       const { selectedLearners, selectedLearnerGroups } =

@@ -3,7 +3,6 @@ import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/course';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Mesh Terms', function (hooks) {
   setupApplicationTest(hooks);
@@ -37,7 +36,6 @@ module('Acceptance | Course - Mesh Terms', function (hooks) {
   test('list mesh', async function (assert) {
     assert.expect(4);
     await page.visit({ courseId: this.course.id, details: true });
-    await percySnapshot(assert);
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     assert.strictEqual(page.details.meshTerms.current[0].title, 'descriptor 0');
     assert.strictEqual(page.details.meshTerms.current[1].title, 'descriptor 1');
@@ -48,7 +46,6 @@ module('Acceptance | Course - Mesh Terms', function (hooks) {
     assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
-    await percySnapshot(assert);
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     await page.details.meshTerms.manage();
     assert.strictEqual(page.details.meshTerms.meshManager.selectedTerms.length, 3);

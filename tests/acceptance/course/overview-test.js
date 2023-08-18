@@ -93,7 +93,6 @@ module('Acceptance | Course - Overview', function (hooks) {
         .lookup('service:store')
         .findRecord('course', this.course.id);
       await page.visit({ courseId: courseModel.id });
-      await percySnapshot(assert);
       assert.strictEqual(page.details.titles, 2);
       assert.strictEqual(currentURL(), '/courses/1');
       await page.details.collapseControl();

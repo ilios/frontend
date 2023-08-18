@@ -6,6 +6,7 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/dashboard-week';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import percySnapshot from '@percy/ember';
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,8 +17,19 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     this.user = await setupAuthentication({ school: this.school });
   });
 
+  hooks.afterEach(() => {
+    unfreezeDate();
+  });
+
   test('shows events', async function (assert) {
     assert.expect(4);
+    const aug16th2023 = DateTime.fromObject({
+      year: 2023,
+      month: 8,
+      day: 16,
+      hour: 10,
+    });
+    freezeDateAt(aug16th2023.toJSDate());
     const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
     const startOfWeek = DateTime.fromJSDate(firstDayOfThisWeek);
     const endOfWeek = DateTime.fromJSDate(lastDayOfThisWeek);
@@ -83,12 +95,19 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       title: 'pre mat 3',
       sessionLearningMaterial: 24,
     });
+    const oct31st2018 = DateTime.fromObject({
+      year: 2018,
+      month: 10,
+      day: 31,
+      hour: 8,
+    });
+    freezeDateAt(oct31st2018.toJSDate());
 
     this.server.create('userevent', {
       user: Number(this.user.id),
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
-      lastModified: today.minus({ year: 1 }).toJSDate(),
+      startDate: oct31st2018.toJSDate(),
+      endDate: oct31st2018.plus({ hour: 1 }).toJSDate(),
+      lastModified: oct31st2018.minus({ year: 1 }).toJSDate(),
       isPublished: true,
       offering: 1,
       prerequisites,

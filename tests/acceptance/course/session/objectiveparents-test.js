@@ -3,7 +3,6 @@ import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
-import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
@@ -34,7 +33,6 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       sessionId: 1,
       sessionObjectiveDetails: true,
     });
-    await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
 
     assert.strictEqual(

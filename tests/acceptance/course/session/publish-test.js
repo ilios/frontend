@@ -4,7 +4,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
-import percySnapshot from '@percy/ember';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Acceptance | Session - Publish', function (hooks) {
@@ -64,7 +63,6 @@ module('Acceptance | Session - Publish', function (hooks) {
   test('check published session', async function (assert) {
     assert.expect(6);
     await page.visit({ courseId: this.course.id, sessionId: this.publishedSession.id });
-    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Published');
     await page.details.overview.publicationMenu.toggle.click();

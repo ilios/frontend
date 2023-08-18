@@ -93,6 +93,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('load month calendar', async function (assert) {
     assert.expect(4);
+    const day = DateTime.fromObject({
+      month: 9,
+      day: 9,
+      year: 2029,
+    });
+    freezeDateAt(day.toJSDate());
+
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     const startOfMonth = today.startOf('month');
     const endOfMonth = today.endOf('month').set({ hour: 22, minute: 59 });
@@ -141,6 +148,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('load week calendar', async function (assert) {
     assert.expect(9);
+    const march11th2009 = DateTime.fromObject({
+      year: 2009,
+      month: 3,
+      day: 11,
+      hour: 8,
+    });
+    freezeDateAt(march11th2009.toJSDate());
     const startOfWeek = DateTime.fromJSDate(
       this.owner.lookup('service:locale-days').firstDayOfThisWeek
     );
@@ -226,7 +240,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       lastModified: DateTime.now().minus({ year: 1 }),
     });
     await page.visit({ show: 'calendar' });
-    await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
 
     assert.strictEqual(page.calendar.weeklyCalendar.dayHeadings.length, 7);
@@ -426,17 +439,25 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('show user events', async function (assert) {
     assert.expect(1);
-    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    const day = DateTime.fromObject({
+      month: 4,
+      day: 4,
+      year: 2004,
+      hour: 4,
+      minute: 0,
+      second: 7,
+    });
+    freezeDateAt(day.toJSDate());
     this.server.create('userevent', {
       user: this.user.id,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: day.toJSDate(),
+      endDate: day.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
     this.server.create('userevent', {
       user: this.user.id,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: day.toJSDate(),
+      endDate: day.plus({ hour: 1 }).toJSDate(),
       offering: 2,
     });
     await page.visit({ show: 'calendar' });
@@ -449,17 +470,25 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   };
   test('show school events', async function (assert) {
     assert.expect(1);
-    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    const day = DateTime.fromObject({
+      month: 7,
+      day: 7,
+      year: 2007,
+      hour: 8,
+      minute: 8,
+      second: 8,
+    });
+    freezeDateAt(day.toJSDate());
     this.server.create('schoolevent', {
       school: 1,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: day.toJSDate(),
+      endDate: day.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
     this.server.create('schoolevent', {
       school: 1,
-      startDate: today.toJSDate(),
-      endDate: today.plus({ hour: 1 }).toJSDate(),
+      startDate: day.toJSDate(),
+      endDate: day.plus({ hour: 1 }).toJSDate(),
       offering: 2,
     });
     await page.visit();
@@ -674,10 +703,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.dom(sessiontype).isChecked('filter is checked');
     assert.dom(course).isChecked('filter is checked');
     assert.dom(term).isChecked('filter is checked');
-    await percySnapshot(assert);
 
     await click(clearFilter);
-    await percySnapshot(assert);
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
     assert.dom(sessiontype).isNotChecked('filter is unchecked');
     assert.dom(course).isNotChecked('filter is unchecked');
@@ -787,7 +814,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const events = `${dashboard} .event`;
 
     await visit('/dashboard/week');
-    await percySnapshot(assert);
 
     const eventBLocks = findAll(events);
     assert.strictEqual(eventBLocks.length, 2);
