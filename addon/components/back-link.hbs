@@ -3,6 +3,7 @@
   class="back-link"
   href="#"
   {{on "click" (prevent-default this.back)}}
+  data-test-back-link
 >
   <FaIcon @icon="angles-left" /> {{t "general.back"}}
 </a>

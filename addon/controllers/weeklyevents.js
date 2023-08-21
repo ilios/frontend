@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
+import { getOwner } from '@ember/application';
 import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
 
@@ -27,5 +28,10 @@ export default class WeeklyeventsController extends Controller {
     }
     arr.sort();
     this.expanded = arr.filter(Boolean).join('-');
+  }
+
+  get showBackLink() {
+    const config = getOwner(this).resolveRegistration('config:environment');
+    return config.modulePrefix !== 'ilios';
   }
 }
