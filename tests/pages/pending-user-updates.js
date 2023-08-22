@@ -22,6 +22,7 @@ export default create({
   },
   titleFilter: {
     scope: '[data-test-title-filter]',
+    set: fillable('input'),
   },
   updates: collection('[data-test-pending-update]', {
     userNameInfo,
