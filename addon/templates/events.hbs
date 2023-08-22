@@ -1,1 +1,4 @@
-<BackLink /><SingleEvent @event={{this.model}} />
+{{#if this.showBackLink}}
+  <BackLink />
+{{/if}}
+<SingleEvent @event={{this.model}} />

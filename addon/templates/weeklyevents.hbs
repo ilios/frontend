@@ -1,4 +1,6 @@
-<BackLink />
+{{#if this.showBackLink}}
+    <BackLink />
+{{/if}}
 <WeeklyEvents
   @year={{this.year}}
   @expandedWeeks={{this.expandedWeeks}}
