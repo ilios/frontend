@@ -1,6 +1,5 @@
 <div
   class="session-publicationcheck"
-  {{scroll-into-view}}
   data-test-session-publicationcheck
 >
   <SessionOverview
@@ -18,7 +17,7 @@
       {{t "general.backToTitle" title=@session.title}}
     </LinkTo>
   </div>
-  <div class="results">
+  <div class="results" {{scroll-into-view}}>
     <div class="title" data-test-title>
       {{t "general.missingItems"}} ({{@session.allPublicationIssuesLength}})
     </div>
