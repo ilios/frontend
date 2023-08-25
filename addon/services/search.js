@@ -1,5 +1,4 @@
 import Service, { inject as service } from '@ember/service';
-import fetch from 'fetch';
 
 export default class SearchService extends Service {
   @service iliosConfig;
