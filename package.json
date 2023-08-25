@@ -54,7 +54,7 @@
     "ember-cli-flash": "^4.0.0",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-cli-mirage": "^3.0.0-alpha.2",
-    "ember-cli-page-object": "^2.0.0-beta.3",
+    "ember-cli-page-object": "^2.1.1",
     "ember-cli-string-helpers": "^6.0.1",
     "ember-click-outside": "^6.0.0",
     "ember-concurrency": "^3.0.0",
@@ -87,8 +87,8 @@
     "query-string": ">= 8.0.0",
     "scroll-into-view": ">= 1.16.0",
     "striptags": ">= 3.2.0",
-    "typeface-nunito": "1.1.0",
-    "typeface-nunito-sans": "1.1.0",
+    "typeface-nunito": ">= 1.1.13",
+    "typeface-nunito-sans": ">= 1.1.13",
     "validator": ">= 13.1.0"
   },
   "peerDependencies": {
@@ -108,8 +108,8 @@
     "query-string": ">= 8.0.0",
     "scroll-into-view": ">= 1.16.0",
     "striptags": ">= 3.2.0",
-    "typeface-nunito": "1.1.0",
-    "typeface-nunito-sans": "1.1.0",
+    "typeface-nunito": ">= 1.1.13",
+    "typeface-nunito-sans": ">= 1.1.13",
     "validator": ">= 13.1.0"
   },
   "devDependencies": {
