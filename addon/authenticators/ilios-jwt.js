@@ -77,14 +77,20 @@ export default class IliosJWT extends Base {
     });
 
     const { statusText, status, headers } = response;
-    const res = { statusText, status, headers };
+    const text = await response.text();
+    const res = {
+      statusText,
+      status,
+      headers,
+      text,
+      json: JSON.parse(text),
+    };
 
-    res.text = await response.text();
-    res.json = JSON.parse(res);
-    if (response.ok) {
-      return res;
+    if (!response.ok) {
+      throw new Error(res);
     }
-    throw new Error(res);
+
+    return res;
   }
 
   #extractTokenAndSetupExpiration(obj) {
