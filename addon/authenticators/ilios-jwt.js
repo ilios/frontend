@@ -1,56 +1,105 @@
 import { get } from '@ember/object';
 import { service } from '@ember/service';
-import JwtTokenAuthenticator from 'ember-simple-auth-token/authenticators/jwt';
+import Base from 'ember-simple-auth/authenticators/base';
+import jwtDecode from 'ilios-common/utils/jwt-decode';
+import { cancel, later } from '@ember/runloop';
+import { DateTime } from 'luxon';
 
-export default class IliosJWT extends JwtTokenAuthenticator {
+export default class IliosJWT extends Base {
   @service iliosConfig;
+  #tokenExpirationTimeout = null;
 
-  /**
-    Extend the JwtTokenAuthenticator to accept a token in liu of credentials
-    This allows authentication of an already existing session.
-    @method authenticate
-    @param {Object} credentials The credentials to authenticate the session with
-    @param {Object} headers Request headers.
-    @return {Promise} A promise that resolves when an auth token is
-                                 successfully acquired from the server and rejects
-                                 otherwise
-  */
   async authenticate(credentials, headers) {
-    if (this.tokenPropertyName in credentials) {
-      const token = get(credentials, this.tokenPropertyName);
-      const tokenData = this.getTokenData(token);
-      const expiresAt = get(tokenData, this.tokenExpireName);
-
-      if (this.refreshAccessTokens) {
-        this.scheduleAccessTokenRefresh(expiresAt, token);
-      }
-
-      if (this.tokenExpirationInvalidateSession) {
-        this.scheduleAccessTokenExpiration(expiresAt);
-      }
-
-      const response = {};
-      response[this.tokenPropertyName] = token;
-      response[this.tokenExpireName] = expiresAt;
-
-      return response;
+    if ('jwt' in credentials) {
+      return this.#extractTokenAndSetupExpiration(credentials);
     }
 
-    return super.authenticate(credentials, headers);
+    const response = await this.loginWithCredentials(credentials, headers);
+    return this.#extractTokenAndSetupExpiration(response.json);
   }
 
-  /**
-   * Extend the default make request in order use a custom
-   * hostname instead of just '/'
-   *
-   * @method makeRequest
-   * @param {string} url The URL to post to.
-   * @param {Object} data The POST data.
-   * @param {Object} headers Request headers.
-   * @return {Promise} The result of the request.
-   */
-  makeRequest(url, data, headers) {
+  async invalidate() {
+    cancel(this.#tokenExpirationTimeout);
+    this.#tokenExpirationTimeout = null;
+  }
+
+  restore(data) {
+    return new Promise((resolve, reject) => {
+      const now = DateTime.now().toUnixInteger();
+      const token = get(data, 'jwt');
+      let expiresAt = get(data, 'exp');
+
+      if (!token) {
+        return reject(new Error('empty token'));
+      }
+
+      if (!expiresAt) {
+        // Fetch the expire time from the token data since `expiresAt` wasn't included in the data object that was passed in.
+        const tokenData = jwtDecode(token);
+        expiresAt = tokenData['exp'];
+      }
+
+      if (expiresAt > now) {
+        this.scheduleAccessTokenExpiration(expiresAt);
+        return resolve(data);
+      } else {
+        return reject(new Error('token is expired'));
+      }
+    });
+  }
+
+  scheduleAccessTokenExpiration(expiresAt) {
+    const now = DateTime.now().toUnixInteger();
+    const wait = Math.max((expiresAt - now) * 1000, 0);
+
+    cancel(this.#tokenExpirationTimeout);
+    this.#tokenExpirationTimeout = null;
+    this.#tokenExpirationTimeout = later(
+      this,
+      async () => {
+        await this.invalidate();
+        this.trigger('sessionDataInvalidated');
+      },
+      wait
+    );
+  }
+
+  async loginWithCredentials(data, loginHeaders) {
     const host = this.iliosConfig.apiHost ? this.iliosConfig.apiHost : '';
-    return super.makeRequest(`${host}${url}`, data, headers);
+    const response = await fetch(`${host}/auth/login`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        ...loginHeaders,
+      },
+      body: JSON.stringify(data),
+    });
+
+    const { statusText, status, headers } = response;
+    const res = { statusText, status, headers };
+
+    res.text = await response.text();
+    res.json = JSON.parse(res);
+    if (response.ok) {
+      return res;
+    }
+    throw new Error(res);
+  }
+
+  #extractTokenAndSetupExpiration(obj) {
+    const token = get(obj, 'jwt');
+    if (!token) {
+      throw new Error('Token is empty. Please check your backend response.');
+    }
+    const tokenData = jwtDecode(token);
+    const expiresAt = get(tokenData, 'exp');
+
+    this.scheduleAccessTokenExpiration(expiresAt);
+
+    return {
+      jwt: token,
+      exp: expiresAt,
+    };
   }
 }

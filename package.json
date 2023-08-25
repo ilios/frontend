@@ -71,7 +71,7 @@
     "ember-math-helpers": "^3.0.0",
     "ember-modifier": "^4.0.0",
     "ember-moment": "^10.0.0",
-    "ember-simple-auth-token": "^5.0.0",
+    "ember-simple-auth": "^6.0.0",
     "ember-simple-charts": "^10.3.0",
     "ember-test-selectors": "^6.0.0",
     "ember-truth-helpers": "^3.0.0",
@@ -164,9 +164,6 @@
     "testem-failure-only-reporter": "^1.0.0",
     "tracked-built-ins": "^3.1.1",
     "webpack": "^5.78.0"
-  },
-  "overrides": {
-    "ember-simple-auth": "^6.0.0-rc.1"
   },
   "engines": {
     "node": "16.* || >= 18",
