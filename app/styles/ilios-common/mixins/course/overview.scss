@@ -1,9 +1,11 @@
 @use "../../colors" as c;
 @use "../font-size";
 @use "../ilios-overview";
+@use "../ilios-form";
 
 @mixin course-overview() {
   @include ilios-overview.ilios-overview(c.$orange);
+  @include ilios-form.ilios-form-error;
 
   .title {
     @include ilios-overview.ilios-overview-title;
