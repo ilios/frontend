@@ -29,7 +29,12 @@
     {{/if}}
     <div class="actions">
       {{#if this.isManaging}}
-        <button class="bigadd" type="button" {{on "click" (perform this.save)}}>
+        <button
+          class="bigadd"
+          type="button"
+          {{on "click" (perform this.save)}}
+          {{did-insert this.scrollHere}}
+        >
           <FaIcon
             @icon={{if this.save.isRunning "spinner" "check"}}
             @spin={{this.save.isRunning}}
