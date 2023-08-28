@@ -10,12 +10,14 @@ export default class IliosJWT extends Base {
   #tokenExpirationTimeout = null;
 
   async authenticate(credentials, headers) {
+    let jwt;
     if ('jwt' in credentials) {
-      return this.#extractTokenAndSetupExpiration(credentials);
+      jwt = credentials.jwt;
+    } else {
+      jwt = (await this.loginWithCredentials(credentials, headers)).jwt;
     }
 
-    const response = await this.loginWithCredentials(credentials, headers);
-    return this.#extractTokenAndSetupExpiration(response.json);
+    return this.#extractTokenAndSetupExpiration(jwt);
   }
 
   async invalidate() {
@@ -23,29 +25,23 @@ export default class IliosJWT extends Base {
     this.#tokenExpirationTimeout = null;
   }
 
-  restore(data) {
-    return new Promise((resolve, reject) => {
-      const now = DateTime.now().toUnixInteger();
-      const token = get(data, 'jwt');
-      let expiresAt = get(data, 'exp');
+  async restore(data) {
+    const now = DateTime.now().toUnixInteger();
+    const jwt = get(data, 'jwt');
+    let exp = get(data, 'exp');
 
-      if (!token) {
-        return reject(new Error('empty token'));
-      }
+    if (!exp) {
+      // Fetch the expire time from the token data since `exp` wasn't included in the data object that was passed in.
+      const tokenData = jwtDecode(jwt);
+      exp = tokenData['exp'];
+    }
 
-      if (!expiresAt) {
-        // Fetch the expire time from the token data since `expiresAt` wasn't included in the data object that was passed in.
-        const tokenData = jwtDecode(token);
-        expiresAt = tokenData['exp'];
-      }
-
-      if (expiresAt > now) {
-        this.scheduleAccessTokenExpiration(expiresAt);
-        return resolve(data);
-      } else {
-        return reject(new Error('token is expired'));
-      }
-    });
+    if (exp > now) {
+      this.scheduleAccessTokenExpiration(exp);
+      return { jwt, exp };
+    } else {
+      throw new Error('token is expired');
+    }
   }
 
   scheduleAccessTokenExpiration(expiresAt) {
@@ -78,34 +74,25 @@ export default class IliosJWT extends Base {
 
     const { statusText, status, headers } = response;
     const text = await response.text();
-    const res = {
-      statusText,
-      status,
-      headers,
-      text,
-      json: JSON.parse(text),
-    };
-
+    const json = JSON.parse(text);
     if (!response.ok) {
-      throw new Error(res);
+      throw {
+        statusText,
+        status,
+        headers,
+        text,
+        json,
+      };
     }
 
-    return res;
+    const { exp } = jwtDecode(json.jwt);
+    return { jwt: json.jwt, exp };
   }
 
-  #extractTokenAndSetupExpiration(obj) {
-    const token = get(obj, 'jwt');
-    if (!token) {
-      throw new Error('Token is empty. Please check your backend response.');
-    }
-    const tokenData = jwtDecode(token);
-    const expiresAt = get(tokenData, 'exp');
+  #extractTokenAndSetupExpiration(jwt) {
+    const { exp } = jwtDecode(jwt);
+    this.scheduleAccessTokenExpiration(exp);
 
-    this.scheduleAccessTokenExpiration(expiresAt);
-
-    return {
-      jwt: token,
-      exp: expiresAt,
-    };
+    return { jwt, exp };
   }
 }
