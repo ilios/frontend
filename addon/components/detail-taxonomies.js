@@ -5,6 +5,7 @@ import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import scrollIntoView from 'scroll-into-view';
 
 export default class DetailTaxonomiesComponent extends Component {
   @service store;
@@ -59,5 +60,10 @@ export default class DetailTaxonomiesComponent extends Component {
   @action
   removeTermFromBuffer(term) {
     this.bufferedTerms = this.bufferedTerms.filter((obj) => obj.id !== term.id);
+  }
+
+  @action
+  scrollHere(element) {
+    scrollIntoView(element, { align: { top: 0 } });
   }
 }
