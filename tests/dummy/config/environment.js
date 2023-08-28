@@ -17,12 +17,6 @@ module.exports = function (environment) {
     intl: {
       defaultLocale: 'en',
     },
-    'ember-simple-auth-token': {
-      serverTokenEndpoint: '/auth/login',
-      tokenPropertyName: 'jwt',
-      refreshAccessTokens: false,
-      authorizationPrefix: 'Token ',
-    },
     serverVariables: {
       tagPrefix: 'iliosconfig',
       vars: ['api-host', 'api-name-space'],

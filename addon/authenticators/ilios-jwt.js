@@ -1,56 +1,98 @@
 import { get } from '@ember/object';
 import { service } from '@ember/service';
-import JwtTokenAuthenticator from 'ember-simple-auth-token/authenticators/jwt';
+import Base from 'ember-simple-auth/authenticators/base';
+import jwtDecode from 'ilios-common/utils/jwt-decode';
+import { cancel, later } from '@ember/runloop';
+import { DateTime } from 'luxon';
 
-export default class IliosJWT extends JwtTokenAuthenticator {
+export default class IliosJWT extends Base {
   @service iliosConfig;
+  #tokenExpirationTimeout = null;
 
-  /**
-    Extend the JwtTokenAuthenticator to accept a token in liu of credentials
-    This allows authentication of an already existing session.
-    @method authenticate
-    @param {Object} credentials The credentials to authenticate the session with
-    @param {Object} headers Request headers.
-    @return {Promise} A promise that resolves when an auth token is
-                                 successfully acquired from the server and rejects
-                                 otherwise
-  */
   async authenticate(credentials, headers) {
-    if (this.tokenPropertyName in credentials) {
-      const token = get(credentials, this.tokenPropertyName);
-      const tokenData = this.getTokenData(token);
-      const expiresAt = get(tokenData, this.tokenExpireName);
-
-      if (this.refreshAccessTokens) {
-        this.scheduleAccessTokenRefresh(expiresAt, token);
-      }
-
-      if (this.tokenExpirationInvalidateSession) {
-        this.scheduleAccessTokenExpiration(expiresAt);
-      }
-
-      const response = {};
-      response[this.tokenPropertyName] = token;
-      response[this.tokenExpireName] = expiresAt;
-
-      return response;
+    let jwt;
+    if ('jwt' in credentials) {
+      jwt = credentials.jwt;
+    } else {
+      jwt = (await this.loginWithCredentials(credentials, headers)).jwt;
     }
 
-    return super.authenticate(credentials, headers);
+    return this.#extractTokenAndSetupExpiration(jwt);
   }
 
-  /**
-   * Extend the default make request in order use a custom
-   * hostname instead of just '/'
-   *
-   * @method makeRequest
-   * @param {string} url The URL to post to.
-   * @param {Object} data The POST data.
-   * @param {Object} headers Request headers.
-   * @return {Promise} The result of the request.
-   */
-  makeRequest(url, data, headers) {
+  async invalidate() {
+    cancel(this.#tokenExpirationTimeout);
+    this.#tokenExpirationTimeout = null;
+  }
+
+  async restore(data) {
+    const now = DateTime.now().toUnixInteger();
+    const jwt = get(data, 'jwt');
+    let exp = get(data, 'exp');
+
+    if (!exp) {
+      // Fetch the expire time from the token data since `exp` wasn't included in the data object that was passed in.
+      const tokenData = jwtDecode(jwt);
+      exp = tokenData['exp'];
+    }
+
+    if (exp > now) {
+      this.scheduleAccessTokenExpiration(exp);
+      return { jwt, exp };
+    } else {
+      throw new Error('token is expired');
+    }
+  }
+
+  scheduleAccessTokenExpiration(expiresAt) {
+    const now = DateTime.now().toUnixInteger();
+    const wait = Math.max((expiresAt - now) * 1000, 0);
+
+    cancel(this.#tokenExpirationTimeout);
+    this.#tokenExpirationTimeout = null;
+    this.#tokenExpirationTimeout = later(
+      this,
+      async () => {
+        await this.invalidate();
+        this.trigger('sessionDataInvalidated');
+      },
+      wait
+    );
+  }
+
+  async loginWithCredentials(data, loginHeaders) {
     const host = this.iliosConfig.apiHost ? this.iliosConfig.apiHost : '';
-    return super.makeRequest(`${host}${url}`, data, headers);
+    const response = await fetch(`${host}/auth/login`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        ...loginHeaders,
+      },
+      body: JSON.stringify(data),
+    });
+
+    const { statusText, status, headers } = response;
+    const text = await response.text();
+    const json = JSON.parse(text);
+    if (!response.ok) {
+      throw {
+        statusText,
+        status,
+        headers,
+        text,
+        json,
+      };
+    }
+
+    const { exp } = jwtDecode(json.jwt);
+    return { jwt: json.jwt, exp };
+  }
+
+  #extractTokenAndSetupExpiration(jwt) {
+    const { exp } = jwtDecode(jwt);
+    this.scheduleAccessTokenExpiration(exp);
+
+    return { jwt, exp };
   }
 }

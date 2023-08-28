@@ -1,5 +1,5 @@
 import Service, { inject as service } from '@ember/service';
-import fetch from 'fetch';
+import { waitForPromise } from '@ember/test-waiters';
 
 export default class SearchService extends Service {
   @service iliosConfig;
@@ -51,9 +51,11 @@ export default class SearchService extends Service {
     const onlySuggest = onlySuggestEnabled ? '&onlySuggest=true' : '';
     const url = `${this.host}/api/search/v1/${type}?q=${q}&size=${size}${onlySuggest}`;
 
-    const response = await fetch(url, {
-      headers: this.authHeaders,
-    });
+    const response = await waitForPromise(
+      fetch(url, {
+        headers: this.authHeaders,
+      })
+    );
     const { results } = await response.json();
 
     return results;
