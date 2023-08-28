@@ -27,21 +27,19 @@
   </button>
   {{#if this.hasResults}}
     <div {{on-click-outside (set this.results null)}}>
-      <ul class="autocomplete" data-test-autocomplete>
+      <div class="autocomplete" data-test-autocomplete>
         {{#each this.results as |result|}}
-          <li class="autocomplete-row">
-            <button
-              type="button"
-              {{on "click" (fn this.searchFromResult result)}}
-            >
-              <FaIcon @icon="magnifying-glass" />
-              <span class="result-text">
-                {{result.text}}
-              </span>
-            </button>
-          </li>
+          <button
+            type="button"
+            class="autocomplete-row"
+            data-test-autocomplete-row
+            {{on "click" (fn this.searchFromResult result)}}
+          >
+            <FaIcon @icon="magnifying-glass" />
+            {{result.text}}
+          </button>
         {{/each}}
-      </ul>
+      </div>
     </div>
   {{/if}}
 </div>
