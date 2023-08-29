@@ -42,7 +42,7 @@ module('Integration | Component | school/session-type-visualize-vocabulary', fun
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'school 0');
     assert.strictEqual(
       component.breadcrumb.crumbs[0].link,
-      '/schools/1?schoolSessionTypeDetails=true'
+      '/schools/1?schoolSessionTypeDetails=true',
     );
     assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
     assert.strictEqual(component.breadcrumb.crumbs[2].text, 'Session Types');
@@ -58,27 +58,27 @@ module('Integration | Component | school/session-type-visualize-vocabulary', fun
     assert.strictEqual(component.termsChart.chart.labels[0].text, 'term 2');
     assert.strictEqual(
       component.termsChart.chart.descriptions[0].text,
-      'The term "term 2" from the "Vocabulary 1" vocabulary is applied to 1 session with session-type "session type 0".'
+      'The term "term 2" from the "Vocabulary 1" vocabulary is applied to 1 session with session-type "session type 0".',
     );
     assert.strictEqual(component.termsChart.chart.labels[1].text, 'term 4');
     assert.strictEqual(
       component.termsChart.chart.descriptions[1].text,
-      'The term "term 4" from the "Vocabulary 1" vocabulary is applied to 1 session with session-type "session type 0".'
+      'The term "term 4" from the "Vocabulary 1" vocabulary is applied to 1 session with session-type "session type 0".',
     );
     assert.strictEqual(component.termsChart.chart.labels[2].text, 'term 1');
     assert.strictEqual(
       component.termsChart.chart.descriptions[2].text,
-      'The term "term 1" from the "Vocabulary 1" vocabulary is applied to 2 sessions with session-type "session type 0".'
+      'The term "term 1" from the "Vocabulary 1" vocabulary is applied to 2 sessions with session-type "session type 0".',
     );
     assert.strictEqual(component.termsChart.chart.labels[3].text, 'term 0');
     assert.strictEqual(
       component.termsChart.chart.descriptions[3].text,
-      'The term "term 0" from the "Vocabulary 1" vocabulary is applied to 3 sessions with session-type "session type 0".'
+      'The term "term 0" from the "Vocabulary 1" vocabulary is applied to 3 sessions with session-type "session type 0".',
     );
     assert.strictEqual(component.termsChart.chart.labels[4].text, 'term 3');
     assert.strictEqual(
       component.termsChart.chart.descriptions[4].text,
-      'The term "term 3" from the "Vocabulary 1" vocabulary is applied to 3 sessions with session-type "session type 0".'
+      'The term "term 3" from the "Vocabulary 1" vocabulary is applied to 3 sessions with session-type "session type 0".',
     );
   });
 });

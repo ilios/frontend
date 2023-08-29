@@ -72,7 +72,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { instructorGroups(schools: [24], sessions: [13]) { title } }'
+        'query { instructorGroups(schools: [24], sessions: [13]) { title } }',
       );
       return responseData;
     });

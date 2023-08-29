@@ -27,7 +27,7 @@ module('Integration | Component | pending single user update', function (hooks) 
     assert.strictEqual(component.updates.length, 1);
     assert.strictEqual(
       component.updates[0].explanation,
-      'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.'
+      'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.',
     );
     assert.notOk(component.updates[0].hasUpdateEmailButton);
 
@@ -51,7 +51,7 @@ module('Integration | Component | pending single user update', function (hooks) 
     assert.strictEqual(component.updates.length, 1);
     assert.strictEqual(
       component.updates[0].explanation,
-      'The email address in the directory (directory-email) does not match the email in ilios (user-email).'
+      'The email address in the directory (directory-email) does not match the email in ilios (user-email).',
     );
     assert.ok(component.updates[0].hasUpdateEmailButton);
 

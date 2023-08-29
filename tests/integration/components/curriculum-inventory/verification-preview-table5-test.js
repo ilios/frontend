@@ -49,7 +49,7 @@ module(
       await render(hbs`<CurriculumInventory::VerificationPreviewTable5 @data={{this.data}} />`);
       assert.strictEqual(
         component.title,
-        'Table 5: Non-Clerkship Sequence Block Assessment Methods'
+        'Table 5: Non-Clerkship Sequence Block Assessment Methods',
       );
       assert.strictEqual(component.table.firstHeadings.length, 4);
       assert.strictEqual(component.table.firstHeadings[0].text, 'Non-Clerkship Sequence Blocks');
@@ -82,5 +82,5 @@ module(
       assert.strictEqual(component.table.rows[1].cells[6].text, '');
       assert.strictEqual(component.table.rows[1].cells[7].text, 'Y');
     });
-  }
+  },
 );

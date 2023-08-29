@@ -79,40 +79,40 @@ module(
       assert.strictEqual(
         component.header.countAsOneOffering.text,
         'Count as one offering',
-        'Column header is labeled correctly.'
+        'Column header is labeled correctly.',
       );
       assert.strictEqual(
         component.header.exclude.text,
         'Exclude',
-        'Column header is labeled correctly.'
+        'Column header is labeled correctly.',
       );
       assert.strictEqual(
         component.header.title.text,
         'Session Title',
-        'Column header is labeled correctly.'
+        'Column header is labeled correctly.',
       );
       assert.strictEqual(
         component.header.sessionType.text,
         'Session Type',
-        'Column header is labeled correctly.'
+        'Column header is labeled correctly.',
       );
       assert.strictEqual(
         component.header.totalTime.text,
         'Total time',
-        'Column header is labeled correctly.'
+        'Column header is labeled correctly.',
       );
       assert.strictEqual(
         component.header.offeringsCount.text,
         'Offerings',
-        'Column header is labeled correctly.'
+        'Column header is labeled correctly.',
       );
       assert.notOk(
         component.header.countAsOneOffering.isChecked,
-        'Not all sessions have their offerings counted as one.'
+        'Not all sessions have their offerings counted as one.',
       );
       assert.ok(
         component.header.countAsOneOffering.isPartiallyChecked,
-        'Some sessions have their offerings counted as one.'
+        'Some sessions have their offerings counted as one.',
       );
       assert.notOk(component.header.exclude.isChecked, 'Not all sessions are excluded.');
       assert.ok(component.header.exclude.isPartiallyChecked, 'Some sessions are excluded.');
@@ -121,72 +121,72 @@ module(
       assert.strictEqual(
         component.sessions[0].sessionType.text,
         'Lecture',
-        'Session type is shown.'
+        'Session type is shown.',
       );
       assert.strictEqual(component.sessions[0].totalTime.text, '30.00', 'Total time is shown.');
       assert.strictEqual(
         component.sessions[0].offeringsCount.text,
         '1',
-        'Number of offerings is shown.'
+        'Number of offerings is shown.',
       );
       assert.ok(
         component.sessions[0].countAsOneOffering.isChecked,
-        'Session offerings are counted as one.'
+        'Session offerings are counted as one.',
       );
       assert.notOk(component.sessions[0].exclude.isChecked, 'Session is not excluded.');
       assert.strictEqual(component.sessions[1].title.text, 'Bluebird', 'Session title is shown.');
       assert.strictEqual(
         component.sessions[1].sessionType.text,
         'Ceremony',
-        'Session type is shown.'
+        'Session type is shown.',
       );
       assert.strictEqual(component.sessions[1].totalTime.text, '30.00', 'Total time is shown.');
       assert.strictEqual(
         component.sessions[1].offeringsCount.text,
         '2',
-        'Number of offerings is shown.'
+        'Number of offerings is shown.',
       );
       assert.notOk(
         component.sessions[1].countAsOneOffering.isChecked,
-        'Session offerings are not counted as one.'
+        'Session offerings are not counted as one.',
       );
       assert.ok(component.sessions[1].exclude.isChecked, 'Session is excluded.');
       assert.strictEqual(component.sessions[2].title.text, 'Zeppelin', 'Session title is shown.');
       assert.strictEqual(
         component.sessions[2].sessionType.text,
         'Small Groups',
-        'Session type is shown.'
+        'Session type is shown.',
       );
       assert.strictEqual(component.sessions[2].totalTime.text, '0', 'Total time is shown.');
       assert.strictEqual(
         component.sessions[2].offeringsCount.text,
         '0',
-        'Number of offerings is shown.'
+        'Number of offerings is shown.',
       );
       assert.ok(
         component.sessions[2].countAsOneOffering.isChecked,
-        'Session offerings are counted as one.'
+        'Session offerings are counted as one.',
       );
       assert.notOk(component.sessions[2].exclude.isChecked, 'Session are not excluded.');
       assert.strictEqual(
         component.sessions[3].title.text,
         '(ILM) Zwickzange',
-        'Session title is shown, ILM indicated as such.'
+        'Session title is shown, ILM indicated as such.',
       );
       assert.strictEqual(
         component.sessions[3].sessionType.text,
         'Rocket Surgery',
-        'Session type is shown.'
+        'Session type is shown.',
       );
       assert.strictEqual(component.sessions[3].totalTime.text, '0', 'Total time is shown.');
       assert.strictEqual(
         component.sessions[3].offeringsCount.text,
         '0',
-        'Number of offerings is shown.'
+        'Number of offerings is shown.',
       );
       assert.notOk(
         component.sessions[3].countAsOneOffering.isChecked,
-        'Session offerings not counted as one.'
+        'Session offerings not counted as one.',
       );
       assert.notOk(component.sessions[3].exclude.isChecked, 'Session are not excluded.');
     });
@@ -264,7 +264,7 @@ module(
         assert.strictEqual(
           what,
           'sessionType.title',
-          'Sorting callback gets called for session types.'
+          'Sorting callback gets called for session types.',
         );
       });
 
@@ -300,7 +300,7 @@ module(
         assert.strictEqual(
           what,
           'offerings.length',
-          'Sorting callback gets called for offerings count.'
+          'Sorting callback gets called for offerings count.',
         );
       });
 
@@ -548,5 +548,5 @@ module(
 
       await component.cancel();
     });
-  }
+  },
 );

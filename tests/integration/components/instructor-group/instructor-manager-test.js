@@ -26,21 +26,21 @@ module('Integration | Component | instructor-group/instructor-manager', function
     const instructors = [this.user1, this.user2, this.user3];
     this.set('instructors', instructors);
     await render(
-      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{(noop)}} />`
+      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{(noop)}} />`,
     );
     assert.strictEqual(component.selectedInstructors.label, 'Selected Instructors:');
     assert.strictEqual(component.selectedInstructors.users.length, 3);
     assert.strictEqual(
       component.selectedInstructors.users[0].userNameInfo.fullName,
-      '0 guy M. Mc0son'
+      '0 guy M. Mc0son',
     );
     assert.strictEqual(
       component.selectedInstructors.users[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       component.selectedInstructors.users[2].userNameInfo.fullName,
-      'Aaron Aardvark'
+      'Aaron Aardvark',
     );
     assert.notOk(component.noSelectedInstructors.isVisible);
     assert.strictEqual(component.availableInstructors.label, 'Available Instructors:');
@@ -51,7 +51,7 @@ module('Integration | Component | instructor-group/instructor-manager', function
   test('it renders without selected instructors', async function (assert) {
     this.set('instructors', []);
     await render(
-      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{(noop)}} />`
+      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{(noop)}} />`,
     );
     assert.strictEqual(component.selectedInstructors.label, 'Selected Instructors:');
     assert.strictEqual(component.selectedInstructors.users.length, 0);
@@ -66,13 +66,13 @@ module('Integration | Component | instructor-group/instructor-manager', function
     });
     this.set('instructors', []);
     await render(
-      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{this.add}} @remove={{(noop)}} />`
+      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{this.add}} @remove={{(noop)}} />`,
     );
     await component.availableInstructors.userSearch.searchBox.set('guy');
     assert.strictEqual(component.availableInstructors.userSearch.results.items.length, 3);
     assert.strictEqual(
       component.availableInstructors.userSearch.results.items[0].text,
-      '0 guy M. Mc0son user@example.edu'
+      '0 guy M. Mc0son user@example.edu',
     );
     await component.availableInstructors.userSearch.results.items[0].click();
   });
@@ -85,16 +85,16 @@ module('Integration | Component | instructor-group/instructor-manager', function
     const instructors = [this.user1, this.user2];
     this.set('instructors', instructors);
     await render(
-      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{this.remove}} />`
+      hbs`<InstructorGroup::InstructorManager @instructors={{this.instructors}} @add={{(noop)}} @remove={{this.remove}} />`,
     );
     assert.strictEqual(component.selectedInstructors.users.length, 2);
     assert.strictEqual(
       component.selectedInstructors.users[0].userNameInfo.fullName,
-      '0 guy M. Mc0son'
+      '0 guy M. Mc0son',
     );
     assert.strictEqual(
       component.selectedInstructors.users[1].userNameInfo.fullName,
-      'Aaron Aardvark'
+      'Aaron Aardvark',
     );
     await component.selectedInstructors.users[1].remove();
   });

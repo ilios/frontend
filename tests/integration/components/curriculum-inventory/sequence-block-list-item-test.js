@@ -53,7 +53,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
         @canUpdate={{true}}
         @remove={{(noop)}}
         @isInOrderedSequence={{true}}
-      />`
+      />`,
     );
 
     assert.strictEqual(component.title, 'block 1');
@@ -62,11 +62,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
     assert.strictEqual(component.orderInSequence, '3');
     assert.strictEqual(
       component.startDate,
-      this.intl.formatDate(DateTime.fromObject({ year: 2021, month: 3, day: 17 }).toJSDate())
+      this.intl.formatDate(DateTime.fromObject({ year: 2021, month: 3, day: 17 }).toJSDate()),
     );
     assert.strictEqual(
       component.endDate,
-      this.intl.formatDate(DateTime.fromObject({ year: 2021, month: 5, day: 22 }).toJSDate())
+      this.intl.formatDate(DateTime.fromObject({ year: 2021, month: 5, day: 22 }).toJSDate()),
     );
     assert.strictEqual(component.course, 'course 0');
     assert.ok(component.isDeletable);
@@ -85,7 +85,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
         @canUpdate={{true}}
         @remove={{(noop)}}
         @isInOrderedSequence={{false}}
-      />`
+      />`,
     );
 
     assert.strictEqual(component.orderInSequence, 'n/a');
@@ -104,7 +104,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
         @canUpdate={{false}}
         @remove={{(noop)}}
         @isInOrderedSequence={{false}}
-      />`
+      />`,
     );
 
     assert.notOk(component.isDeletable);
@@ -127,7 +127,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
         @canUpdate={{true}}
         @remove={{this.remove}}
         @isInOrderedSequence={{false}}
-      />`
+      />`,
     );
 
     assert.notOk(component.confirmRemoval.isVisible);

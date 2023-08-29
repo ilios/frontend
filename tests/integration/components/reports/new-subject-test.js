@@ -377,7 +377,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     assert.strictEqual(component.objects.errors.length, 1);
     assert.strictEqual(
       component.objects.errors[0].text,
-      'Association is required when MeSH Term is the subject'
+      'Association is required when MeSH Term is the subject',
     );
   });
 
@@ -398,7 +398,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     assert.strictEqual(component.objects.errors.length, 1);
     assert.strictEqual(
       component.objects.errors[0].text,
-      'Association is required when Instructor is the subject'
+      'Association is required when Instructor is the subject',
     );
   });
 });

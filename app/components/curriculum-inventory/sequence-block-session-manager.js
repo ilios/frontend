@@ -86,7 +86,7 @@ export default class SequenceBlockSessionManagerComponent extends Component {
   changeSession(session) {
     if (this.linkedSessions.includes(session)) {
       this.linkedSessions = this.linkedSessions.filter(
-        (linkedSession) => linkedSession !== session
+        (linkedSession) => linkedSession !== session,
       );
     } else {
       this.linkedSessions = [...this.linkedSessions, session];
@@ -97,7 +97,7 @@ export default class SequenceBlockSessionManagerComponent extends Component {
   excludeSession(session) {
     if (this.excludedSessions.includes(session)) {
       this.excludedSessions = this.excludedSessions.filter(
-        (excludedSession) => excludedSession !== session
+        (excludedSession) => excludedSession !== session,
       );
     } else {
       this.excludedSessions = [...this.excludedSessions, session];

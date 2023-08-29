@@ -37,9 +37,9 @@ export default class SchoolVocabularyManagerComponent extends Component {
       filterBy(
         filterBy(filterBy(this.terms.slice(), 'isTopLevel'), 'isNew', false),
         'isDeleted',
-        false
+        false,
       ),
-      'title'
+      'title',
     );
   }
 

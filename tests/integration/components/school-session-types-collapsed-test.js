@@ -34,7 +34,7 @@ module('Integration | Component | school session types collapsed', function (hoo
     });
 
     await render(
-      hbs`<SchoolSessionTypesCollapsed @school={{this.school}} @expand={{this.expand}} />`
+      hbs`<SchoolSessionTypesCollapsed @school={{this.school}} @expand={{this.expand}} />`,
     );
 
     await component.expand();

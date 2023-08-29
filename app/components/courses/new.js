@@ -48,7 +48,7 @@ export default class CoursesNewComponent extends Component {
   @restartableTask
   *load() {
     this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
+      'academicYearCrossesCalendarYearBoundaries',
     );
     if (this.args.currentYear && this.years.includes(parseInt(this.args.currentYear.id, 10))) {
       this.setYear(this.args.currentYear.id);

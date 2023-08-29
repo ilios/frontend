@@ -15,7 +15,7 @@ export default class CurriculumInventorySequenceBlockRoute extends Route {
   model(params) {
     return this.store.findRecord(
       'curriculum-inventory-sequence-block',
-      params.curriculum_inventory_sequence_block_id
+      params.curriculum_inventory_sequence_block_id,
     );
   }
 

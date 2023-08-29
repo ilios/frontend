@@ -28,7 +28,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     const years = [];
     const currentYear = new Date().getFullYear();
     this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
+      'academicYearCrossesCalendarYearBoundaries',
     );
     for (let id = currentYear - 5, n = currentYear + 5; id <= n; id++) {
       let title = id.toString();

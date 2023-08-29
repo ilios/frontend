@@ -44,7 +44,7 @@ module('Integration | Component | reports/subject/term', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { terms(schools: [33]) { id, title, vocabulary { id, title } } }'
+        'query { terms(schools: [33]) { id, title, vocabulary { id, title } } }',
       );
       return responseData;
     });
@@ -62,7 +62,7 @@ module('Integration | Component | reports/subject/term', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { terms(courses: [13]) { id, title, vocabulary { id, title } } }'
+        'query { terms(courses: [13]) { id, title, vocabulary { id, title } } }',
       );
       return responseData;
     });
@@ -81,7 +81,7 @@ module('Integration | Component | reports/subject/term', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { terms(schools: [24], sessions: [13]) { id, title, vocabulary { id, title } } }'
+        'query { terms(schools: [24], sessions: [13]) { id, title, vocabulary { id, title } } }',
       );
       return responseData;
     });

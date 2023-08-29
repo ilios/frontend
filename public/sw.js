@@ -20,9 +20,9 @@ self.addEventListener('activate', (event) => {
           if (!cacheAllowlist.includes(cacheName)) {
             return caches.delete(cacheName);
           }
-        })
+        }),
       );
-    })
+    }),
   );
 });
 
@@ -56,7 +56,7 @@ function cacheFirstFetch(event, url) {
         caches.open(iliosServiceWorkerCacheName).then((cache) => cache.put(url, fetchedResponse));
         return fetchedResponse.clone();
       });
-    })
+    }),
   );
 }
 

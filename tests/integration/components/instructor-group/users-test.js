@@ -20,7 +20,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
       .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(
-      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`
+      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`,
     );
     assert.strictEqual(component.title, 'Instructors (3)');
     assert.ok(component.manage.isVisible);
@@ -44,7 +44,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
       .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(
-      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{false}} />`
+      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{false}} />`,
     );
     assert.strictEqual(component.title, 'Instructors (3)');
     assert.notOk(component.manage.isVisible);
@@ -66,7 +66,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
       .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(
-      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`
+      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`,
     );
     assert.strictEqual(component.title, 'Instructors (0)');
     assert.ok(component.manage.isVisible);

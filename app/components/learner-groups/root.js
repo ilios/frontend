@@ -203,7 +203,7 @@ export default class LearnerGroupsRootComponent extends Component {
           program,
           totalGroups: 0,
           distance: 100,
-        }
+        },
       );
     });
     const sorted = sortingPrograms.sort((a, b) => {

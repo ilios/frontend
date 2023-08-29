@@ -30,13 +30,13 @@ export default class CoursesRootComponent extends Component {
   ]);
   userModelData = new TrackedAsyncData(this.currentUser.getModel());
   crossesBoundaryConfig = new TrackedAsyncData(
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @cached
   get coursesInSelectedSchoolData() {
     return new TrackedAsyncData(
-      this.preloadedCoursesInSelectedSchool ? this.selectedSchool?.courses : []
+      this.preloadedCoursesInSelectedSchool ? this.selectedSchool?.courses : [],
     );
   }
 
@@ -111,7 +111,7 @@ export default class CoursesRootComponent extends Component {
   get filteredCourses() {
     if (this.args.userCoursesOnly) {
       return this.coursesFilteredByTitle.filter((course) =>
-        this.allRelatedCourses?.includes(course)
+        this.allRelatedCourses?.includes(course),
       );
     }
     return this.coursesFilteredByTitle;

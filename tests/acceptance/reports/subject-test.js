@@ -102,7 +102,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     assert.strictEqual(page.report.title.text, 'All Sessions for term 0 in school 0');
     assert.strictEqual(
       page.report.description,
-      'This report shows all Sessions associated with Term "term 0" in school 0.'
+      'This report shows all Sessions associated with Term "term 0" in school 0.',
     );
     assert.strictEqual(page.report.results.length, 2);
     assert.strictEqual(page.report.results[0].text, '2015 course 0: session 0');

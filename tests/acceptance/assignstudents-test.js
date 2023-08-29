@@ -62,7 +62,7 @@ module('Acceptance | assign students', function (hooks) {
     assert.ok(page.assignStudents.students[0].name.userNameInfo.hasAdditionalInfo);
     assert.strictEqual(
       page.assignStudents.students[1].name.userNameInfo.fullName,
-      'Clem M. Chowder'
+      'Clem M. Chowder',
     );
     assert.notOk(page.assignStudents.students[1].name.userNameInfo.hasAdditionalInfo);
   });

@@ -45,7 +45,7 @@ module(
       assert.strictEqual(component.content.name.value, 'School of Rocket Surgery');
       assert.strictEqual(
         component.content.aamcCode.label,
-        'AAMC School ID (e.g. "Institution ID")'
+        'AAMC School ID (e.g. "Institution ID")',
       );
       assert.strictEqual(component.content.aamcCode.value, '12345');
       assert.strictEqual(component.content.addressStreet.label, 'Street');
@@ -230,29 +230,29 @@ module(
       assert.ok(component.content.aamcCode.hasError);
       assert.strictEqual(
         component.content.aamcCode.errorMessage,
-        'This field must be greater than or equal to 1'
+        'This field must be greater than or equal to 1',
       );
       assert.ok(component.content.addressStreet.hasError);
       assert.strictEqual(
         component.content.addressStreet.errorMessage,
-        'This field can not be blank'
+        'This field can not be blank',
       );
       assert.ok(component.content.addressCity.hasError);
       assert.strictEqual(component.content.addressCity.errorMessage, 'This field can not be blank');
       assert.ok(component.content.addressStateOrProvince.hasError);
       assert.strictEqual(
         component.content.addressStateOrProvince.errorMessage,
-        'This field can not be blank'
+        'This field can not be blank',
       );
       assert.ok(component.content.addressZipCode.hasError);
       assert.strictEqual(
         component.content.addressZipCode.errorMessage,
-        'This field can not be blank'
+        'This field can not be blank',
       );
       assert.ok(component.content.addressCountryCode.hasError);
       assert.strictEqual(
         component.content.addressCountryCode.errorMessage,
-        'This field can not be blank'
+        'This field can not be blank',
       );
     });
 
@@ -274,5 +274,5 @@ module(
     />`);
       assert.notOk(component.header.hasSaveButton);
     });
-  }
+  },
 );

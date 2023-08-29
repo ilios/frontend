@@ -42,8 +42,8 @@ export default class SchoolRoute extends Route {
         'directors',
         'sessionTypes',
         'vocabularies',
-        'curriculumInventoryInstitution'
-      )
+        'curriculumInventoryInstitution',
+      ),
     );
   }
 

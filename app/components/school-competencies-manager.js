@@ -18,7 +18,7 @@ export default class SchoolCompetenciesManagerComponent extends Component {
         };
       }
       const domainCompetencies = this.args.competencies.filter(
-        (competency) => competency.belongsTo('parent').id() === domain.id
+        (competency) => competency.belongsTo('parent').id() === domain.id,
       );
       return {
         domain,

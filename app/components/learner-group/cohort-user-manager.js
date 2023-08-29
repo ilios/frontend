@@ -51,7 +51,7 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
   @action
   toggleUserSelectionAllOrNone() {
     const unselectedFilteredUsers = this.filteredUsers.filter(
-      (user) => !this.selectedUsers.includes(user)
+      (user) => !this.selectedUsers.includes(user),
     );
     if (this.filteredUsers && unselectedFilteredUsers.length) {
       this.selectedUsers = [...this.selectedUsers, ...unselectedFilteredUsers];

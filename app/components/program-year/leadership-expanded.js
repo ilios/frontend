@@ -20,7 +20,7 @@ export default class ProgramYearLeadershipExpandedComponent extends Component {
       ? this.programYearDirectors.value.slice()
       : [];
     return [...directors, ...this.directorsToAdd].filter(
-      (user) => !this.directorsToRemove.includes(user)
+      (user) => !this.directorsToRemove.includes(user),
     );
   }
 

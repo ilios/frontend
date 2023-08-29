@@ -17,7 +17,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
     const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.push(
-        this.server.create('curriculumInventoryAcademicLevel', { name: `Year ${i + 1}` })
+        this.server.create('curriculumInventoryAcademicLevel', { name: `Year ${i + 1}` }),
       );
     }
     const program = this.server.create('program', { school });
@@ -77,7 +77,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
     assert.strictEqual(component.header.title.value, blockModel.title);
     assert.strictEqual(
       component.overview.description.text,
-      `Description: ${blockModel.description}`
+      `Description: ${blockModel.description}`,
     );
     assert.strictEqual(component.breadcrumbs.blockCrumbs.length, 3);
     assert.strictEqual(component.breadcrumbs.reportCrumb.text, 'Curriculum Inventory Report');

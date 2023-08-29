@@ -65,7 +65,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.strictEqual(component.allOtherMembers, 'All other members of top group (0)');
     assert.strictEqual(
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
-      'Jasper M. Dog'
+      'Jasper M. Dog',
     );
     assert.ok(component.usersInCurrentGroup[0].name.isClickable);
     assert.ok(component.usersInCurrentGroup[0].campusId.isClickable);
@@ -78,7 +78,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.notOk(component.usersInCurrentGroup[0].isDisabled);
     assert.strictEqual(
       component.usersInCurrentGroup[1].name.userNameInfo.fullName,
-      'Jackson M. Doggy'
+      'Jackson M. Doggy',
     );
     assert.ok(component.usersInCurrentGroup[1].canBeSelected);
     assert.strictEqual(component.usersInCurrentGroup[1].campusId.text, '123');
@@ -146,11 +146,11 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.strictEqual(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Captain J');
     assert.strictEqual(
       component.usersNotInCurrentGroup[1].name.userNameInfo.fullName,
-      'Jackson M. Mc1son'
+      'Jackson M. Mc1son',
     );
     assert.strictEqual(
       component.usersNotInCurrentGroup[2].name.userNameInfo.fullName,
-      'Jasper M. Mc0son'
+      'Jasper M. Mc0son',
     );
   });
 
@@ -800,11 +800,11 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.strictEqual(component.usersInCurrentGroup.length, 3);
     assert.strictEqual(
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
-      'Jasper M. Dog'
+      'Jasper M. Dog',
     );
     assert.strictEqual(
       component.usersInCurrentGroup[1].name.userNameInfo.fullName,
-      'Jackson M. Doggy'
+      'Jackson M. Doggy',
     );
     assert.strictEqual(component.usersInCurrentGroup[2].name.userNameInfo.fullName, 'Just Jayden');
     await component.filter('Just');
@@ -814,12 +814,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     await component.filter('JASPER.DOG@EXAMPLE.EDU');
     assert.strictEqual(
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
-      'Jasper M. Dog'
+      'Jasper M. Dog',
     );
     await component.filter('jasper d');
     assert.strictEqual(
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
-      'Jasper M. Dog'
+      'Jasper M. Dog',
     );
   });
 

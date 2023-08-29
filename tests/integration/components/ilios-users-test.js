@@ -99,7 +99,7 @@ module('Integration | Component | ilios users', function (hooks) {
     assert.ok(component.newUserForm.isPresent, 'the new user form is present');
     assert.notOk(
       component.newDirectoryUserForm.isPresent,
-      'the new directory user form is not present'
+      'the new directory user form is not present',
     );
   });
 

@@ -61,7 +61,7 @@ export default class UserProfilePermissionsComponent extends Component {
   }
 
   crossesBoundaryConfig = new TrackedAsyncData(
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @cached

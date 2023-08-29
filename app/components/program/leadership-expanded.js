@@ -18,7 +18,7 @@ export default class ProgramLeadershipExpandedComponent extends Component {
   get directors() {
     const directors = this.programDirectors.isResolved ? this.programDirectors.value.slice() : [];
     return [...directors, ...this.directorsToAdd].filter(
-      (user) => !this.directorsToRemove.includes(user)
+      (user) => !this.directorsToRemove.includes(user),
     );
   }
 

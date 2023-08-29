@@ -265,28 +265,28 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.courses.administrators.length, 1);
     assert.strictEqual(
       component.courses.administrators[0].text,
-      `${this.currentAcademicYear} course 0`
+      `${this.currentAcademicYear} course 0`,
     );
     assert.strictEqual(component.courses.instructors.length, 1);
     assert.strictEqual(
       component.courses.instructors[0].text,
-      `${this.currentAcademicYear} course 0`
+      `${this.currentAcademicYear} course 0`,
     );
     assert.strictEqual(component.courses.studentAdvisors.length, 1);
     assert.strictEqual(
       component.courses.studentAdvisors[0].text,
-      `${this.currentAcademicYear} course 0`
+      `${this.currentAcademicYear} course 0`,
     );
     assert.strictEqual(component.sessions.title, 'Sessions (2)');
     assert.ok(component.sessions.notAdministrating);
     assert.strictEqual(component.sessions.instructors.length, 2);
     assert.strictEqual(
       component.sessions.instructors[0].text,
-      `${this.currentAcademicYear} course 0 » session 0`
+      `${this.currentAcademicYear} course 0 » session 0`,
     );
     assert.strictEqual(
       component.sessions.instructors[1].text,
-      `${this.currentAcademicYear} course 0 » session 1`
+      `${this.currentAcademicYear} course 0 » session 1`,
     );
     assert.ok(component.sessions.notStudentAdvising);
     await component.courses.toggle();
@@ -342,7 +342,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.courses.instructors.length, 1);
     assert.strictEqual(
       component.courses.instructors[0].text,
-      `${this.currentAcademicYear} course 0`
+      `${this.currentAcademicYear} course 0`,
     );
     assert.ok(component.courses.notStudentAdvising);
     assert.strictEqual(component.sessions.title, 'Sessions (3)');
@@ -351,17 +351,17 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.sessions.ariaLabel, 'Hide roles in sessions');
     assert.strictEqual(
       component.sessions.administrators[0].text,
-      `${this.currentAcademicYear} course 0 » session 0`
+      `${this.currentAcademicYear} course 0 » session 0`,
     );
     assert.strictEqual(component.sessions.instructors.length, 1);
     assert.strictEqual(
       component.sessions.instructors[0].text,
-      `${this.currentAcademicYear} course 0 » session 0`
+      `${this.currentAcademicYear} course 0 » session 0`,
     );
     assert.strictEqual(component.sessions.studentAdvisors.length, 1);
     assert.strictEqual(
       component.sessions.studentAdvisors[0].text,
-      `${this.currentAcademicYear} course 0 » session 0`
+      `${this.currentAcademicYear} course 0 » session 0`,
     );
     await component.sessions.toggle();
     assert.strictEqual(component.sessions.ariaExpanded, 'false');
@@ -443,32 +443,32 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.courses.administrators.length, 1);
     assert.strictEqual(
       component.courses.administrators[0].text,
-      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`,
     );
     assert.strictEqual(component.courses.instructors.length, 1);
     assert.strictEqual(
       component.courses.instructors[0].text,
-      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`,
     );
     assert.strictEqual(component.courses.studentAdvisors.length, 1);
     assert.strictEqual(
       component.courses.studentAdvisors[0].text,
-      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`,
     );
     assert.strictEqual(component.sessions.administrators.length, 1);
     assert.strictEqual(
       component.sessions.administrators[0].text,
-      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`,
     );
     assert.strictEqual(component.sessions.instructors.length, 1);
     assert.strictEqual(
       component.sessions.instructors[0].text,
-      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`,
     );
     assert.strictEqual(component.sessions.studentAdvisors.length, 1);
     assert.strictEqual(
       component.sessions.studentAdvisors[0].text,
-      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`,
     );
     unfreezeDate();
   });

@@ -45,7 +45,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     await render(hbs`<UserProfileCohorts @user={{this.user}} />`);
     assert.strictEqual(
       component.details.primaryCohort.text,
-      'Primary Cohort: school 0 program 0 cohort 0'
+      'Primary Cohort: school 0 program 0 cohort 0',
     );
     assert.strictEqual(component.details.secondaryCohorts.length, 1);
     assert.strictEqual(component.details.secondaryCohorts[0].title, 'school 1 program 1 cohort 1');
@@ -58,7 +58,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
       assert.ok(what, 'recieved boolean true value');
     });
     await render(
-      hbs`<UserProfileCohorts @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`
+      hbs`<UserProfileCohorts @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`,
     );
     await component.manage();
   });
@@ -71,7 +71,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
       assert.strictEqual(
         data.relationships.primaryCohort.data.id,
         this.cohort2.id,
-        'user has correct primary cohort'
+        'user has correct primary cohort',
       );
       const cohortIds = mapBy(data.relationships.cohorts.data, 'id');
       assert.notOk(cohortIds.includes(this.cohort1.id), 'cohort1 has been removed');
@@ -81,7 +81,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     });
 
     await render(
-      hbs`<UserProfileCohorts @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileCohorts @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`,
     );
 
     assert.strictEqual(component.manager.primaryCohort.title, 'school 0 program 0 cohort 0');

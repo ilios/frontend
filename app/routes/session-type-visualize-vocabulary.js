@@ -27,7 +27,7 @@ export default class SessionTypeVisualizeVocabularyRoute extends Route {
         {
           include: 'school,sessions.terms.vocabulary,sessions.course.terms.vocabulary',
           reload: true,
-        }
+        },
       );
     }
 

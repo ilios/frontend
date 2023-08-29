@@ -38,7 +38,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
           report,
           level: i,
           name: `Year ${i}`,
-        })
+        }),
       );
     }
     this.academicLevels = academicLevels;
@@ -121,12 +121,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
     assert.strictEqual(
       component.description.text,
-      `Description: ${sequenceBlockModel.description}`
+      `Description: ${sequenceBlockModel.description}`,
     );
     assert.ok(component.description.isEditable);
     assert.strictEqual(
       component.course.text,
-      'Course: Course A Level: 4, Start Date: 2/2/2015, End Date: 3/30/2015 - Clerkship (Block)'
+      'Course: Course A Level: 4, Start Date: 2/2/2015, End Date: 3/30/2015 - Clerkship (Block)',
     );
     assert.ok(component.course.isEditable);
     const startLevel = await sequenceBlockModel.startingAcademicLevel;
@@ -142,24 +142,24 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.ok(component.track.isEditable);
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate),
     );
     assert.ok(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate),
     );
     assert.ok(component.endDate.isEditable);
     assert.strictEqual(
       component.duration.text,
-      `Duration (in Days): ${sequenceBlockModel.duration}`
+      `Duration (in Days): ${sequenceBlockModel.duration}`,
     );
     assert.ok(component.duration.isEditable);
     assert.strictEqual(component.childSequenceOrder.text, 'Child Sequence Order: Ordered');
     assert.ok(component.childSequenceOrder.isEditable);
     assert.strictEqual(
       component.orderInSequence.text,
-      `Order in Sequence: ${sequenceBlockModel.orderInSequence}`
+      `Order in Sequence: ${sequenceBlockModel.orderInSequence}`,
     );
     assert.ok(component.orderInSequence.isEditable);
     assert.strictEqual(component.minimum.text, `Minimum: ${sequenceBlockModel.minimum}`);
@@ -314,7 +314,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
     assert.strictEqual(
       component.course.text,
-      'Course: Alpha Level: 1, Start Date: 1/1/2016, End Date: 1/2/2016 - Clerkship (clerkship type 0)'
+      'Course: Alpha Level: 1, Start Date: 1/1/2016, End Date: 1/2/2016 - Clerkship (clerkship type 0)',
     );
     await component.course.edit();
     assert.strictEqual(component.course.options.length, 4);
@@ -322,7 +322,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.strictEqual(component.course.options[1].text, 'Alpha');
     assert.strictEqual(
       component.course.details,
-      'Level: 1, Start Date: 1/1/2016, End Date: 1/2/2016 - Clerkship (clerkship type 0)'
+      'Level: 1, Start Date: 1/1/2016, End Date: 1/2/2016 - Clerkship (clerkship type 0)',
     );
     assert.strictEqual(component.course.options[1].value, courseModel.id);
     assert.ok(component.course.options[1].isSelected);
@@ -331,12 +331,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.course.select(newCourseModel.id);
     assert.strictEqual(
       component.course.details,
-      'Level: 1, Start Date: 3/1/2016, End Date: 3/2/2016 - Clerkship (clerkship type 0)'
+      'Level: 1, Start Date: 3/1/2016, End Date: 3/2/2016 - Clerkship (clerkship type 0)',
     );
     await component.course.save();
     assert.strictEqual(
       component.course.text,
-      'Course: Gamma Level: 1, Start Date: 3/1/2016, End Date: 3/2/2016 - Clerkship (clerkship type 0)'
+      'Course: Gamma Level: 1, Start Date: 3/1/2016, End Date: 3/2/2016 - Clerkship (clerkship type 0)',
     );
     const blockCourse = await sequenceBlockModel.course;
     assert.strictEqual(blockCourse.id, newCourse.id);
@@ -784,12 +784,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
     assert.strictEqual(
       component.description.text,
-      `Description: ${sequenceBlockModel.description}`
+      `Description: ${sequenceBlockModel.description}`,
     );
     assert.notOk(component.description.isEditable);
     assert.strictEqual(
       component.course.text,
-      'Course: Course A Level: 4, Start Date: 2/2/2015, End Date: 3/30/2015 - Clerkship (Block)'
+      'Course: Course A Level: 4, Start Date: 2/2/2015, End Date: 3/30/2015 - Clerkship (Block)',
     );
     assert.notOk(component.course.isEditable);
     assert.strictEqual(component.startLevel.text, 'Start Level: Year 1');
@@ -802,24 +802,24 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.notOk(component.track.isEditable);
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate),
     );
     assert.notOk(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate),
     );
     assert.notOk(component.endDate.isEditable);
     assert.strictEqual(
       component.duration.text,
-      `Duration (in Days): ${sequenceBlockModel.duration}`
+      `Duration (in Days): ${sequenceBlockModel.duration}`,
     );
     assert.notOk(component.duration.isEditable);
     assert.strictEqual(component.childSequenceOrder.text, 'Child Sequence Order: Ordered');
     assert.notOk(component.childSequenceOrder.isEditable);
     assert.strictEqual(
       component.orderInSequence.text,
-      `Order in Sequence: ${sequenceBlockModel.orderInSequence}`
+      `Order in Sequence: ${sequenceBlockModel.orderInSequence}`,
     );
     assert.notOk(component.orderInSequence.isEditable);
     assert.strictEqual(component.minimum.text, `Minimum: ${sequenceBlockModel.minimum}`);
@@ -910,7 +910,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.notOk(component.isSelective.isHidden);
     assert.strictEqual(
       component.isSelective.text,
-      'This sequence block has been marked as a selective.'
+      'This sequence block has been marked as a selective.',
     );
     await component.required.edit();
     await component.required.select('2'); // select "elective"
@@ -1065,7 +1065,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.strictEqual(component.minMaxEditor.maximum.errors.length, 1);
     assert.strictEqual(
       component.minMaxEditor.maximum.errors[0].text,
-      'Maximum must be greater than or equal to Minimum'
+      'Maximum must be greater than or equal to Minimum',
     );
   });
 
@@ -1271,17 +1271,17 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.save();
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate),
     );
     assert.ok(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate),
     );
     assert.ok(component.endDate.isEditable);
     assert.strictEqual(
       component.duration.text,
-      `Duration (in Days): ${sequenceBlockModel.duration}`
+      `Duration (in Days): ${sequenceBlockModel.duration}`,
     );
     assert.strictEqual(newStartDate.getTime(), sequenceBlockModel.startDate.getTime());
     assert.strictEqual(newEndDate.getTime(), sequenceBlockModel.endDate.getTime());
@@ -1331,12 +1331,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.save();
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate),
     );
     assert.ok(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate),
     );
     assert.strictEqual(component.duration.text, `Duration (in Days): Click to edit`);
     assert.strictEqual(newStartDate.getTime(), sequenceBlockModel.startDate.getTime());
@@ -1385,7 +1385,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.ok(component.endDate.isEditable);
     assert.strictEqual(
       component.duration.text,
-      `Duration (in Days): ${sequenceBlockModel.duration}`
+      `Duration (in Days): ${sequenceBlockModel.duration}`,
     );
     assert.strictEqual(sequenceBlockModel.startDate, null);
     assert.strictEqual(sequenceBlockModel.endDate, null);
@@ -1430,16 +1430,16 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
 
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate),
     );
     assert.ok(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate),
     );
     assert.strictEqual(
       component.duration.text,
-      `Duration (in Days): ${sequenceBlockModel.duration}`
+      `Duration (in Days): ${sequenceBlockModel.duration}`,
     );
     await component.startDate.edit();
     await component.durationEditor.startDate.set(newStartDate);
@@ -1448,16 +1448,16 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.cancel();
     assert.strictEqual(
       component.startDate.text,
-      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate)
+      'Start: ' + this.intl.formatDate(sequenceBlockModel.startDate),
     );
     assert.ok(component.startDate.isEditable);
     assert.strictEqual(
       component.endDate.text,
-      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate)
+      'End: ' + this.intl.formatDate(sequenceBlockModel.endDate),
     );
     assert.strictEqual(
       component.duration.text,
-      `Duration (in Days): ${sequenceBlockModel.duration}`
+      `Duration (in Days): ${sequenceBlockModel.duration}`,
     );
   });
 
@@ -1743,7 +1743,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.strictEqual(component.durationEditor.duration.errors.length, 1);
     assert.strictEqual(
       component.durationEditor.duration.errors[0].text,
-      'Duration must be greater than or equal to 1'
+      'Duration must be greater than or equal to 1',
     );
   });
 

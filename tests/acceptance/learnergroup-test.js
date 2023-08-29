@@ -31,22 +31,22 @@ module('Acceptance | Learner Group', function (hooks) {
     assert.strictEqual(page.root.cohortUserManager.users.length, 2);
     assert.strictEqual(
       page.root.cohortUserManager.users[0].name.userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       page.root.cohortUserManager.users[1].name.userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     await page.root.cohortUserManager.users[0].add();
     assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
     assert.strictEqual(
       page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(page.root.cohortUserManager.users.length, 1);
     assert.strictEqual(
       page.root.cohortUserManager.users[0].name.userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
   });
 
@@ -63,22 +63,22 @@ module('Acceptance | Learner Group', function (hooks) {
     assert.strictEqual(page.root.cohortUserManager.users.length, 0);
     assert.strictEqual(
       page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       page.root.userManager.usersInCurrentGroup[1].name.userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     await page.root.userManager.usersInCurrentGroup[0].remove();
     assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
     assert.strictEqual(
       page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(page.root.cohortUserManager.users.length, 1);
     assert.strictEqual(
       page.root.cohortUserManager.users[0].name.userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
   });
 

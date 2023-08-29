@@ -13,7 +13,7 @@ module('Integration | Component | update notification', function (hooks) {
     assert
       .dom(this.element)
       .hasText(
-        "Huzzah! We've made Ilios better. You will get the new stuff on your next login, or click to update now."
+        "Huzzah! We've made Ilios better. You will get the new stuff on your next login, or click to update now.",
       );
   });
 });

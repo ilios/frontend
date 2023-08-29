@@ -25,7 +25,7 @@ module(
       assert.strictEqual(component.table.headings[1].text, 'Program Expectations');
       assert.strictEqual(
         component.table.headings[2].text,
-        'Physician Competency Reference Set (PCRS)'
+        'Physician Competency Reference Set (PCRS)',
       );
       assert.strictEqual(component.table.rows.length, 2);
       assert.strictEqual(component.table.rows[0].id, 'n/a');
@@ -35,5 +35,5 @@ module(
       assert.strictEqual(component.table.rows[1].expectation, 'foo');
       assert.strictEqual(component.table.rows[1].pcrs, '');
     });
-  }
+  },
 );

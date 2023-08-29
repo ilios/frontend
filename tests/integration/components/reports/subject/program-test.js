@@ -73,7 +73,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { programs(schools: [33]) { id, title, school { title } } }'
+        'query { programs(schools: [33]) { id, title, school { title } } }',
       );
       return responseData;
     });
@@ -91,7 +91,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { programs(sessions: [13]) { id, title, school { title } } }'
+        'query { programs(sessions: [13]) { id, title, school { title } } }',
       );
       return responseData;
     });
@@ -110,7 +110,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { programs(schools: [24], sessions: [13]) { id, title, school { title } } }'
+        'query { programs(schools: [24], sessions: [13]) { id, title, school { title } } }',
       );
       return responseData;
     });

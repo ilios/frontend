@@ -22,7 +22,7 @@ module('Acceptance | FourOhFour', function (hooks) {
     assert
       .dom('.full-screen-error')
       .hasText(
-        "Rats! I couldn't find that. Please check your page address, and try again. Back to Dashboard"
+        "Rats! I couldn't find that. Please check your page address, and try again. Back to Dashboard",
       );
   });
 

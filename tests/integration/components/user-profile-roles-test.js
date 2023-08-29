@@ -69,7 +69,7 @@ module('Integration | Component | user profile roles', function (hooks) {
       assert.ok(what, 'recieved boolean true value');
     });
     await render(
-      hbs`<UserProfileRoles @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`
+      hbs`<UserProfileRoles @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`,
     );
     await component.manage.click();
   });

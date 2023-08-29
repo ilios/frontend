@@ -12,7 +12,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
   @tracked showConfirmRemoval;
   isFinalized = this.args.report.belongsTo('export').id();
   academicYearConfig = new TrackedAsyncData(
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @use canDelete = new PermissionChecker(() => [

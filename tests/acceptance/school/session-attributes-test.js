@@ -30,22 +30,22 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.collapsed.attendanceRequired.label,
-      'Attendance Required'
+      'Attendance Required',
     );
     assert.ok(page.manager.schoolSessionAttributes.collapsed.attendanceRequired.isDisabled);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.collapsed.supplemental.label,
-      'Supplemental Curriculum'
+      'Supplemental Curriculum',
     );
     assert.ok(page.manager.schoolSessionAttributes.collapsed.supplemental.isEnabled);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.collapsed.specialAttireRequired.label,
-      'Special Attire Required'
+      'Special Attire Required',
     );
     assert.ok(page.manager.schoolSessionAttributes.collapsed.specialAttireRequired.isDisabled);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.collapsed.specialEquipmentRequired.label,
-      'Special Equipment Required'
+      'Special Equipment Required',
     );
     assert.ok(page.manager.schoolSessionAttributes.collapsed.specialEquipmentRequired.isDisabled);
   });
@@ -66,29 +66,29 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.label,
-      'Attendance Required'
+      'Attendance Required',
     );
     assert.ok(
-      page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.isDisabled
+      page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.isDisabled,
     );
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.supplemental.label,
-      'Supplemental Curriculum'
+      'Supplemental Curriculum',
     );
     assert.ok(page.manager.schoolSessionAttributes.expanded.attributes.supplemental.isEnabled);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.specialAttireRequired.label,
-      'Special Attire Required'
+      'Special Attire Required',
     );
     assert.ok(
-      page.manager.schoolSessionAttributes.expanded.attributes.specialAttireRequired.isDisabled
+      page.manager.schoolSessionAttributes.expanded.attributes.specialAttireRequired.isDisabled,
     );
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.specialEquipmentRequired.label,
-      'Special Equipment Required'
+      'Special Equipment Required',
     );
     assert.ok(
-      page.manager.schoolSessionAttributes.expanded.attributes.specialEquipmentRequired.isDisabled
+      page.manager.schoolSessionAttributes.expanded.attributes.specialEquipmentRequired.isDisabled,
     );
   });
 
@@ -112,29 +112,29 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.label,
-      'Attendance Required'
+      'Attendance Required',
     );
     assert.notOk(
-      page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.isChecked
+      page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.isChecked,
     );
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.manager.supplemental.label,
-      'Supplemental Curriculum'
+      'Supplemental Curriculum',
     );
     assert.ok(page.manager.schoolSessionAttributes.expanded.manager.supplemental.isChecked);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.manager.specialAttireRequired.label,
-      'Special Attire Required'
+      'Special Attire Required',
     );
     assert.notOk(
-      page.manager.schoolSessionAttributes.expanded.manager.specialAttireRequired.isChecked
+      page.manager.schoolSessionAttributes.expanded.manager.specialAttireRequired.isChecked,
     );
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.manager.specialEquipmentRequired.label,
-      'Special Equipment Required'
+      'Special Equipment Required',
     );
     assert.notOk(
-      page.manager.schoolSessionAttributes.expanded.manager.specialEquipmentRequired.isChecked
+      page.manager.schoolSessionAttributes.expanded.manager.specialEquipmentRequired.isChecked,
     );
     await page.manager.schoolSessionAttributes.expanded.manager.attendanceRequired.check();
     await page.manager.schoolSessionAttributes.expanded.manager.supplemental.check();
@@ -143,29 +143,29 @@ module('Acceptance | School - Session Attributes', function (hooks) {
     await page.manager.schoolSessionAttributes.expanded.save();
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.label,
-      'Attendance Required'
+      'Attendance Required',
     );
     assert.notOk(
-      page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.isDisabled
+      page.manager.schoolSessionAttributes.expanded.attributes.attendanceRequired.isDisabled,
     );
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.supplemental.label,
-      'Supplemental Curriculum'
+      'Supplemental Curriculum',
     );
     assert.notOk(page.manager.schoolSessionAttributes.expanded.attributes.supplemental.isEnabled);
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.specialAttireRequired.label,
-      'Special Attire Required'
+      'Special Attire Required',
     );
     assert.ok(
-      page.manager.schoolSessionAttributes.expanded.attributes.specialAttireRequired.isDisabled
+      page.manager.schoolSessionAttributes.expanded.attributes.specialAttireRequired.isDisabled,
     );
     assert.strictEqual(
       page.manager.schoolSessionAttributes.expanded.attributes.specialEquipmentRequired.label,
-      'Special Equipment Required'
+      'Special Equipment Required',
     );
     assert.notOk(
-      page.manager.schoolSessionAttributes.expanded.attributes.specialEquipmentRequired.isDisabled
+      page.manager.schoolSessionAttributes.expanded.attributes.specialEquipmentRequired.isDisabled,
     );
   });
 });

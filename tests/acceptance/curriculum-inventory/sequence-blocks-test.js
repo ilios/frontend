@@ -68,7 +68,7 @@ module('Acceptance | curriculum inventory sequence blocks', function (hooks) {
     await page.visit({ reportId: this.report.id });
     assert.strictEqual(
       page.blocks.list.items[0].titleLink,
-      `/curriculum-inventory-sequence-block/${block.id}`
+      `/curriculum-inventory-sequence-block/${block.id}`,
     );
   });
 });

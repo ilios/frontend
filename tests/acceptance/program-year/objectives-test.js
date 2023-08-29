@@ -75,70 +75,70 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].competency.competencyTitle,
-      'competency 1'
+      'competency 1',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasDomain);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].competency.domainTitle,
-      '(competency 0)'
+      '(competency 0)',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
-      2
+      2,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[0].text,
-      'descriptor 0'
+      'descriptor 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[1].text,
-      'descriptor 1'
+      'descriptor 1',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
-      1
+      1,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
+      'Vocabulary 1 (school 0)',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
-      'term 0'
+      'term 0',
     );
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].description.text,
-      'program-year objective 1'
+      'program-year objective 1',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[1].competency.hasCompetency);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].competency.competencyTitle,
-      'competency 3'
+      'competency 3',
     );
     assert.notOk(page.details.objectives.objectiveList.objectives[1].competency.hasDomain);
     assert.ok(page.details.objectives.objectiveList.objectives[1].meshDescriptors.isEmpty);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].selectedTerms.list.length,
-      1
+      1,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
+      'Vocabulary 1 (school 0)',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
-      'term 1'
+      'term 1',
     );
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].description.text,
-      'program-year objective 2'
+      'program-year objective 2',
     );
     assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasCompetency);
     assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasDomain);
@@ -153,46 +153,46 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].competency.competencyTitle,
-      'competency 1'
+      'competency 1',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasDomain);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].competency.domainTitle,
-      '(competency 0)'
+      '(competency 0)',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
-      2
+      2,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[0].text,
-      'descriptor 0'
+      'descriptor 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[1].text,
-      'descriptor 1'
+      'descriptor 1',
     );
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].description.text,
-      'program-year objective 1'
+      'program-year objective 1',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[1].competency.hasCompetency);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].competency.competencyTitle,
-      'competency 3'
+      'competency 3',
     );
     assert.notOk(page.details.objectives.objectiveList.objectives[1].competency.hasDomain);
     assert.ok(page.details.objectives.objectiveList.objectives[1].meshDescriptors.isEmpty);
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].description.text,
-      'program-year objective 2'
+      'program-year objective 2',
     );
     assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasCompetency);
     assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasDomain);
@@ -207,19 +207,19 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
-      2
+      2,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title,
-      'descriptor 0'
+      'descriptor 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[1].title,
-      'descriptor 1'
+      'descriptor 1',
     );
 
     await page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[0].manage();
@@ -257,11 +257,11 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
-      2
+      2,
     );
     await page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[0].manage();
 
@@ -280,15 +280,15 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].meshDescriptors.save();
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
-      2
+      2,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title,
-      'descriptor 1'
+      'descriptor 1',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[1].title,
-      'descriptor 2'
+      'descriptor 2',
     );
   });
 
@@ -299,11 +299,11 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
-      2
+      2,
     );
     await page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[0].manage();
 
@@ -321,15 +321,15 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].meshDescriptors.cancel();
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
-      2
+      2,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title,
-      'descriptor 0'
+      'descriptor 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[1].title,
-      'descriptor 1'
+      'descriptor 1',
     );
   });
 
@@ -370,17 +370,17 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].competency.competencyTitle,
-      'competency 2'
+      'competency 2',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasDomain);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].competency.domainTitle,
-      '(competency 0)'
+      '(competency 0)',
     );
   });
 
@@ -397,7 +397,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.notOk(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
   });
@@ -416,17 +416,17 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].competency.competencyTitle,
-      'competency 1'
+      'competency 1',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasDomain);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].competency.domainTitle,
-      '(competency 0)'
+      '(competency 0)',
     );
   });
 
@@ -444,17 +444,17 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].competency.competencyTitle,
-      'competency 1'
+      'competency 1',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasDomain);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].competency.domainTitle,
-      '(competency 0)'
+      '(competency 0)',
     );
   });
 
@@ -464,7 +464,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].description.text,
-      'program-year objective 2'
+      'program-year objective 2',
     );
     assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasCompetency);
 
@@ -478,17 +478,17 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].description.text,
-      'program-year objective 2'
+      'program-year objective 2',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[2].competency.hasCompetency);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].competency.competencyTitle,
-      'competency 2'
+      'competency 2',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[2].competency.hasDomain);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].competency.domainTitle,
-      '(competency 0)'
+      '(competency 0)',
     );
   });
 
@@ -499,18 +499,18 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     await page.details.objectives.createNew();
     assert.notOk(page.details.objectives.newObjective.hasValidationError);
     await page.details.objectives.newObjective.description(
-      '<p>&nbsp</p><div></div><span>  </span>'
+      '<p>&nbsp</p><div></div><span>  </span>',
     );
     await page.details.objectives.newObjective.save();
     assert.ok(page.details.objectives.newObjective.hasValidationError);
     assert.strictEqual(
       page.details.objectives.newObjective.validationError,
-      'This field can not be blank'
+      'This field can not be blank',
     );
   });
 
@@ -519,7 +519,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.expanded.length, 0);
     await page.details.objectives.objectiveList.objectives[0].toggleExpandCollapse();
@@ -528,7 +528,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.expanded[0].objectives.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.expanded[0].objectives[0].text,
-      'course objective 0'
+      'course objective 0',
     );
   });
 

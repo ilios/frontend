@@ -114,7 +114,7 @@ module('Unit | Service | reporting', function (hooks) {
     const title = await this.service.buildReportDescription(reportModel);
     assert.strictEqual(
       title,
-      `This report shows all Courses associated with Instructor "${userModel.fullName}"  in ${school.title}.`
+      `This report shows all Courses associated with Instructor "${userModel.fullName}"  in ${school.title}.`,
     );
   });
 
@@ -141,7 +141,7 @@ module('Unit | Service | reporting', function (hooks) {
     const title = await this.service.buildReportDescription(reportModel);
     assert.strictEqual(
       title,
-      `This report shows all Terms associated with Course "${courseModel.title}" (${courseModel.year}) in ${schoolModel.title}.`
+      `This report shows all Terms associated with Course "${courseModel.title}" (${courseModel.year}) in ${schoolModel.title}.`,
     );
   });
 
@@ -179,7 +179,7 @@ module('Unit | Service | reporting', function (hooks) {
       title,
       `This report shows all Terms associated with Course "${courseModel.title}" (${
         courseModel.year
-      } - ${courseModel.year + 1}) in ${schoolModel.title}.`
+      } - ${courseModel.year + 1}) in ${schoolModel.title}.`,
     );
   });
 

@@ -51,14 +51,14 @@ export default class GlobalSearchComponent extends Component {
 
   get filteredResults() {
     return this.yearFilteredResults.filter(
-      (course) => !this.ignoredSchoolTitles.includes(course.school)
+      (course) => !this.ignoredSchoolTitles.includes(course.school),
     );
   }
 
   get paginatedResults() {
     return this.filteredResults.slice(
       this.args.page * this.size - this.size,
-      this.args.page * this.size
+      this.args.page * this.size,
     );
   }
 
@@ -72,7 +72,7 @@ export default class GlobalSearchComponent extends Component {
             results: 0,
           };
         }),
-        'title'
+        'title',
       );
       const options = this.results.reduce((set, course) => {
         const schoolOption = findBy(set, 'title', course.school);

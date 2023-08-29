@@ -15,43 +15,43 @@ const definition = {
   confirmCourseRemoval: clickable('[data-test-courses] .confirm-removal button.remove'),
   isSortedByTitleAscending: hasClass(
     'fa-arrow-down-a-z',
-    '[data-test-course-headings] th:eq(0) svg'
+    '[data-test-course-headings] th:eq(0) svg',
   ),
   isSortedByTitleDescending: hasClass(
     'fa-arrow-down-z-a',
-    '[data-test-course-headings] th:eq(0) svg'
+    '[data-test-course-headings] th:eq(0) svg',
   ),
   isSortedByLevelAscending: hasClass(
     'fa-arrow-down-1-9',
-    '[data-test-course-headings] th:eq(1) svg'
+    '[data-test-course-headings] th:eq(1) svg',
   ),
   isSortedByLevelDescending: hasClass(
     'fa-arrow-down-9-1',
-    '[data-test-course-headings] th:eq(1) svg'
+    '[data-test-course-headings] th:eq(1) svg',
   ),
   isSortedByStartDateAscending: hasClass(
     'fa-arrow-down-1-9',
-    '[data-test-course-headings] th:eq(2) svg'
+    '[data-test-course-headings] th:eq(2) svg',
   ),
   isSortedByStartDateDescending: hasClass(
     'fa-arrow-down-9-1',
-    '[data-test-course-headings] th:eq(2) svg'
+    '[data-test-course-headings] th:eq(2) svg',
   ),
   isSortedByEndDateAscending: hasClass(
     'fa-arrow-down-1-9',
-    '[data-test-course-headings] th:eq(3) svg'
+    '[data-test-course-headings] th:eq(3) svg',
   ),
   isSortedByEndDateDescending: hasClass(
     'fa-arrow-down-9-1',
-    '[data-test-course-headings] th:eq(3) svg'
+    '[data-test-course-headings] th:eq(3) svg',
   ),
   isSortedByStatusAscending: hasClass(
     'fa-arrow-down-a-z',
-    '[data-test-course-headings] th:eq(4) svg'
+    '[data-test-course-headings] th:eq(4) svg',
   ),
   isSortedByStatusDescending: hasClass(
     'fa-arrow-down-z-a',
-    '[data-test-course-headings] th:eq(4) svg'
+    '[data-test-course-headings] th:eq(4) svg',
   ),
 };
 

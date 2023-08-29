@@ -43,7 +43,7 @@ module(
       assert.strictEqual(component.content.name, 'School of Rocket Surgery');
       assert.strictEqual(
         component.content.aamcCodeLabel,
-        'AAMC School ID (e.g. "Institution ID"):'
+        'AAMC School ID (e.g. "Institution ID"):',
       );
       assert.strictEqual(component.content.aamcCode, '12345');
       assert.strictEqual(component.content.addressStreetLabel, 'Street:');
@@ -114,8 +114,8 @@ module(
     />`);
       await assert.strictEqual(
         component.content.noInfo,
-        'No institutional information has been configured for this school.'
+        'No institutional information has been configured for this school.',
       );
     });
-  }
+  },
 );
