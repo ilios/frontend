@@ -95,12 +95,12 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.instructorManager.assignedInstructors.length, 2);
     assert.strictEqual(
       component.instructorManager.assignedInstructors[0].userNameInfo.fullName,
-      'Aardvark'
+      'Aardvark',
     );
     assert.ok(component.instructorManager.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(
       component.instructorManager.assignedInstructors[1].userNameInfo.fullName,
-      'Walther v. Vogelweide'
+      'Walther v. Vogelweide',
     );
     assert.notOk(component.instructorManager.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.associatedCourses.courses.length, 2);
@@ -208,7 +208,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     />`);
     assert.strictEqual(
       component.needsAccommodation.text,
-      'Accommodation is required for learners in this group: Yes'
+      'Accommodation is required for learners in this group: Yes',
     );
   });
 
@@ -232,7 +232,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     />`);
     assert.strictEqual(
       component.needsAccommodation.text,
-      'Accommodation is required for learners in this group: No'
+      'Accommodation is required for learners in this group: No',
     );
   });
 
@@ -420,14 +420,14 @@ module('Integration | Component | learner-group/root', function (hooks) {
 
     assert.strictEqual(
       component.defaultUrl.text,
-      'Default Virtual Learning Link: https://iliosproject.org/'
+      'Default Virtual Learning Link: https://iliosproject.org/',
     );
     await component.defaultUrl.edit();
     await component.defaultUrl.set('https://github.com/ilios/ilios');
     await component.defaultUrl.save();
     assert.strictEqual(
       component.defaultUrl.text,
-      'Default Virtual Learning Link: https://github.com/ilios/ilios'
+      'Default Virtual Learning Link: https://github.com/ilios/ilios',
     );
   });
 
@@ -467,14 +467,14 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.defaultUrl.errors.length, 2);
     assert.strictEqual(
       component.defaultUrl.errors[0].text,
-      'This field is too long (maximum is 2000 characters)'
+      'This field is too long (maximum is 2000 characters)',
     );
     assert.strictEqual(component.defaultUrl.errors[1].text, 'This field must be a valid url');
     await component.defaultUrl.set('https://abcdefghij.org');
     await component.defaultUrl.save();
     assert.strictEqual(
       component.defaultUrl.text,
-      'Default Virtual Learning Link: https://abcdefghij.org'
+      'Default Virtual Learning Link: https://abcdefghij.org',
     );
   });
 

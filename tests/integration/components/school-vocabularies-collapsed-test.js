@@ -53,7 +53,7 @@ module('Integration | Component | school vocabularies collapsed', function (hook
       assert.ok(true, 'expand triggered.');
     });
     await render(
-      hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{this.expand}} />`
+      hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{this.expand}} />`,
     );
 
     await component.expand();

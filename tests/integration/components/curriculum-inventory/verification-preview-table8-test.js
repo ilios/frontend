@@ -32,5 +32,5 @@ module(
       assert.strictEqual(component.table.rows[1].title, 'bar');
       assert.strictEqual(component.table.rows[1].count, '5');
     });
-  }
+  },
 );

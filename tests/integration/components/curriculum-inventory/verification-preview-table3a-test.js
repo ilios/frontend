@@ -21,7 +21,7 @@ module(
       await render(hbs`<CurriculumInventory::VerificationPreviewTable3a @data={{this.data}} />`);
       assert.strictEqual(
         component.title,
-        'Table 3-A: Non-Clerkship Sequence Block Instructional Time'
+        'Table 3-A: Non-Clerkship Sequence Block Instructional Time',
       );
       assert.strictEqual(component.table.headings.length, 4);
       assert.strictEqual(component.table.headings[0].text, 'Non-Clerkship Sequence Blocks');
@@ -38,5 +38,5 @@ module(
       assert.strictEqual(component.table.rows[1].weeks, '1.5');
       assert.strictEqual(component.table.rows[1].avg, '20.33');
     });
-  }
+  },
 );

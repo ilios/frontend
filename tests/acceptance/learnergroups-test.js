@@ -296,7 +296,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.ok(page.list.items[0].hasRemoveStyle);
     assert.strictEqual(
       page.list.confirmRemoval.text,
-      'Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel'
+      'Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel',
     );
   });
 

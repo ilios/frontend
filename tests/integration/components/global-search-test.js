@@ -116,7 +116,7 @@ module('Integration | Component | global-search', function (hooks) {
     assert.strictEqual(component.academicYear, '');
     assert.strictEqual(
       component.academicYearOptions,
-      'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020'
+      'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020',
     );
     assert.strictEqual(component.searchResults.length, 4);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');

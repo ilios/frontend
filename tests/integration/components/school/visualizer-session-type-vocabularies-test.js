@@ -44,7 +44,7 @@ module('Integration | Component | school/visualizer-session-type-vocabularies', 
   test('it renders', async function (assert) {
     this.set('sessionType', this.sessionType);
     await render(
-      hbs`<School::VisualizerSessionTypeVocabularies @sessionType={{this.sessionType}} />`
+      hbs`<School::VisualizerSessionTypeVocabularies @sessionType={{this.sessionType}} />`,
     );
 
     assert.dom('svg').exists({ count: 1 });
@@ -56,12 +56,12 @@ module('Integration | Component | school/visualizer-session-type-vocabularies', 
     assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1');
     assert.strictEqual(
       component.chart.descriptions[0].text,
-      '1 term from the "Vocabulary 1" vocabulary is applied to 1 session with session-type "session type 0".'
+      '1 term from the "Vocabulary 1" vocabulary is applied to 1 session with session-type "session type 0".',
     );
     assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2');
     assert.strictEqual(
       component.chart.descriptions[1].text,
-      '3 terms from the "Vocabulary 2" vocabulary are applied to 3 sessions with session-type "session type 0".'
+      '3 terms from the "Vocabulary 2" vocabulary are applied to 3 sessions with session-type "session type 0".',
     );
   });
 });

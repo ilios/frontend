@@ -22,7 +22,7 @@ module(
       await render(hbs`<CurriculumInventory::VerificationPreviewTable7 @data={{this.data}} />`);
       assert.strictEqual(
         component.title,
-        'Table 7: All Events with Assessments Tagged as Formative or Summative'
+        'Table 7: All Events with Assessments Tagged as Formative or Summative',
       );
       assert.strictEqual(component.table.headings.length, 4);
       assert.strictEqual(component.table.headings[0].text, 'Item Code');
@@ -45,5 +45,5 @@ module(
       assert.strictEqual(component.table.footer[2].text, '15');
       assert.strictEqual(component.table.footer[3].text, '20');
     });
-  }
+  },
 );

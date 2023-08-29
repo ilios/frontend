@@ -29,13 +29,13 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @Custom(
     'validateCurrentPrepositionalObjectCallback',
-    'validateCurrentPrepositionalObjectMessageCallback'
+    'validateCurrentPrepositionalObjectMessageCallback',
   )
   @tracked
   currentPrepositionalObject = null;
   @Custom(
     'validateCurrentPrepositionalObjectIdCallback',
-    'validateCurrentPrepositionalObjectIdMessageCallback'
+    'validateCurrentPrepositionalObjectIdMessageCallback',
   )
   @tracked
   currentPrepositionalObjectId = null;
@@ -220,7 +220,7 @@ export default class ReportsNewSubjectComponent extends Component {
 
   get prepositionalObjectList() {
     return this.fullPrepositionalObjectList.filter((item) =>
-      item.subjects.includes(this.currentSubject)
+      item.subjects.includes(this.currentSubject),
     );
   }
 

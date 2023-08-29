@@ -35,5 +35,5 @@ module(
       assert.strictEqual(component.table.rows[1].weeks, '1.5');
       assert.strictEqual(component.table.rows[1].avg, '20.33');
     });
-  }
+  },
 );

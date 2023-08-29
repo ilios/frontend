@@ -18,18 +18,18 @@ export default class SchoolSessionAttributesComponent extends Component {
     this.showSessionAttendanceRequiredConfig = findBy(
       schoolConfigs,
       'name',
-      'showSessionAttendanceRequired'
+      'showSessionAttendanceRequired',
     );
     this.showSessionSupplementalConfig = findBy(schoolConfigs, 'name', 'showSessionSupplemental');
     this.showSessionSpecialAttireRequiredConfig = findBy(
       schoolConfigs,
       'name',
-      'showSessionSpecialAttireRequired'
+      'showSessionSpecialAttireRequired',
     );
     this.showSessionSpecialEquipmentRequiredConfig = findBy(
       schoolConfigs,
       'name',
-      'showSessionSpecialEquipmentRequired'
+      'showSessionSpecialEquipmentRequired',
     );
   }
 

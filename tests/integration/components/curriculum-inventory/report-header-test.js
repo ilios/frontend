@@ -34,7 +34,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     assert.strictEqual(
       this.report.absoluteFileUri,
       component.downloadLink.link,
-      'Download link target is correct'
+      'Download link target is correct',
     );
   });
 

@@ -103,7 +103,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { sessions(schools: [1], courses: [1]) { id, title, course { id, year, title } } }'
+        'query { sessions(schools: [1], courses: [1]) { id, title, course { id, year, title } } }',
       );
       return {
         data: {
@@ -147,7 +147,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { sessions(schools: [1], courses: [2]) { id, title, course { id, year, title } } }'
+        'query { sessions(schools: [1], courses: [2]) { id, title, course { id, year, title } } }',
       );
       return {
         data: {
@@ -190,7 +190,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { terms(schools: [1], sessions: [2]) { id, title, vocabulary { id, title } } }'
+        'query { terms(schools: [1], sessions: [2]) { id, title, vocabulary { id, title } } }',
       );
       return {
         data: {
@@ -228,7 +228,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { courses(schools: [1], meshDescriptors: ["D1234"]) { id, title, year, externalId } }'
+        'query { courses(schools: [1], meshDescriptors: ["D1234"]) { id, title, year, externalId } }',
       );
       return {
         data: {

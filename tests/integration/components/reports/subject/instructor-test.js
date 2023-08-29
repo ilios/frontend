@@ -44,7 +44,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { users(schools: [33]) { firstName,middleName,lastName,displayName } }'
+        'query { users(schools: [33]) { firstName,middleName,lastName,displayName } }',
       );
       return responseData;
     });
@@ -62,7 +62,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { users(instructedCourses: [13]) { firstName,middleName,lastName,displayName } }'
+        'query { users(instructedCourses: [13]) { firstName,middleName,lastName,displayName } }',
       );
       return responseData;
     });
@@ -81,7 +81,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { users(schools: [24], instructedSessions: [13]) { firstName,middleName,lastName,displayName } }'
+        'query { users(schools: [24], instructedSessions: [13]) { firstName,middleName,lastName,displayName } }',
       );
       return responseData;
     });

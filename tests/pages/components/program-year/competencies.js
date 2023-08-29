@@ -19,7 +19,7 @@ const definition = {
     scope: '[data-test-managed-list]',
     domains: collection(
       '[data-test-program-year-managed-competency-list-item]',
-      managedCompetencyListItem
+      managedCompetencyListItem,
     ),
   },
 };

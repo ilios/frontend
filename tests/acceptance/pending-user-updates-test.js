@@ -105,12 +105,12 @@ module('Acceptance | pending user updates', function (hooks) {
     assert.strictEqual(page.updates.length, 2);
     assert.strictEqual(
       page.updates[0].updateType,
-      'The email address in the directory (dev@null.com) does not match the email in ilios (user@example.edu).'
+      'The email address in the directory (dev@null.com) does not match the email in ilios (user@example.edu).',
     );
     assert.ok(page.updates[0].canUpdateEmailAddress);
     assert.strictEqual(
       page.updates[1].updateType,
-      'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.'
+      'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.',
     );
     assert.notOk(page.updates[1].canUpdateEmailAddress);
   });
@@ -131,7 +131,7 @@ module('Acceptance | pending user updates', function (hooks) {
     assert.strictEqual(page.updates.length, 1);
     assert.strictEqual(
       page.updates[0].updateType,
-      'The email address in the directory (dev@null.com) does not match the email in ilios (user@example.edu).'
+      'The email address in the directory (dev@null.com) does not match the email in ilios (user@example.edu).',
     );
     await page.updates[0].updateEmailAddress();
     assert.strictEqual(page.updates.length, 0);
@@ -156,7 +156,7 @@ module('Acceptance | pending user updates', function (hooks) {
     assert.strictEqual(page.updates.length, 1);
     assert.strictEqual(
       page.updates[0].updateType,
-      'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.'
+      'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.',
     );
     await page.updates[0].excludeFromSync();
     assert.strictEqual(page.updates.length, 0);
@@ -181,7 +181,7 @@ module('Acceptance | pending user updates', function (hooks) {
     assert.strictEqual(page.updates.length, 1);
     assert.strictEqual(
       page.updates[0].updateType,
-      'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.'
+      'Unable to find user in the directory, please update, disable, or exclude their account from synchronization.',
     );
     await page.updates[0].disableUser();
     assert.strictEqual(page.updates.length, 0);

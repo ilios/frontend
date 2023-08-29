@@ -65,7 +65,7 @@ export default class InstructorGroupsRootComponent extends Component {
               school: schoolId,
             },
           }),
-        ])
+        ]),
       );
     }
     const arr = await this.instructorGroupPromises.get(schoolId);

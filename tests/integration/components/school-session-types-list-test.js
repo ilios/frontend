@@ -59,7 +59,7 @@ module('Integration | Component | school session types list', function (hooks) {
     const sessionTypeModels = await this.owner.lookup('service:store').findAll('session-type');
     this.set('sessionTypes', sessionTypeModels);
     await render(
-      hbs`<SchoolSessionTypesList @sessionTypes={{this.sessionTypes}} @manageSessionType={{(noop)}} />`
+      hbs`<SchoolSessionTypesList @sessionTypes={{this.sessionTypes}} @manageSessionType={{(noop)}} />`,
     );
 
     assert.strictEqual(component.sessionTypes.length, 3);
@@ -74,7 +74,7 @@ module('Integration | Component | school session types list', function (hooks) {
     assert.ok(component.sessionTypes[1].isAssessment);
     assert.strictEqual(
       component.sessionTypes[1].aamcMethod,
-      aamcMethod2.description + ' (inactive)'
+      aamcMethod2.description + ' (inactive)',
     );
     assert.strictEqual(component.sessionTypes[1].assessmentOption, 'formative');
     assert.strictEqual(component.sessionTypes[1].calendarColor, 'background-color: #123456');
@@ -182,7 +182,7 @@ module('Integration | Component | school session types list', function (hooks) {
     await component.sessionTypes[0].delete();
     assert.strictEqual(
       component.sessionTypes[0].confirmRemoval.message,
-      'Are you sure you want to delete this session type? This action cannot be undone. Yes Cancel'
+      'Are you sure you want to delete this session type? This action cannot be undone. Yes Cancel',
     );
     await component.sessionTypes[0].confirmRemoval.confirm();
     assert.strictEqual(this.server.db.sessionTypes.length, 0);

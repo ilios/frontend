@@ -250,11 +250,11 @@ module('Acceptance | Courses', function (hooks) {
 
     assert.notOk(
       page.root.list.courses[0].canRemove,
-      'non-privileged user cannot delete published course'
+      'non-privileged user cannot delete published course',
     );
     assert.notOk(
       page.root.list.courses[1].canRemove,
-      'non-privileged user cannot delete unpublished course'
+      'non-privileged user cannot delete unpublished course',
     );
   });
 
@@ -276,7 +276,7 @@ module('Acceptance | Courses', function (hooks) {
 
     assert.notOk(
       page.root.list.courses[0].canRemove,
-      'privileged user cannot delete published course'
+      'privileged user cannot delete published course',
     );
     assert.ok(page.root.list.courses[1].canRemove, 'privileged user can delete unpublished course');
   });
@@ -392,14 +392,14 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(
       page.root.list.courses[0].status,
       'Not Published',
-      'course status is correct'
+      'course status is correct',
     );
     assert.notOk(page.root.list.courses[0].isLocked, 'course is not locked');
     assert.strictEqual(page.root.list.courses[1].title, 'course 1', 'course name is correct');
     assert.strictEqual(
       page.root.list.courses[1].status,
       'Not Published',
-      'course status is correct'
+      'course status is correct',
     );
     assert.ok(page.root.list.courses[1].isLocked, 'course is locked');
   });
@@ -419,7 +419,7 @@ module('Acceptance | Courses', function (hooks) {
     for (let i = 0; i < years.length; i++) {
       assert.strictEqual(
         parseInt(page.root.newCourse.years[i + 1].text.substring(0, 4), 10),
-        years[i]
+        years[i],
       );
     }
   });
@@ -648,11 +648,11 @@ module('Acceptance | Courses', function (hooks) {
 
     assert.notOk(
       page.root.list.courses[0].canRemove,
-      'privileged user cannot delete course with descendants'
+      'privileged user cannot delete course with descendants',
     );
     assert.ok(
       page.root.list.courses[1].canRemove,
-      'privileged user can delete course with ancestors'
+      'privileged user can delete course with ancestors',
     );
   });
 

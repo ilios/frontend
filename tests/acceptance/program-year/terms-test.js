@@ -62,12 +62,12 @@ module('Acceptance | Program Year - Terms', function (hooks) {
     assert.strictEqual(page.details.detailTaxonomies.manager.selectedTerms.length, 1);
     assert.strictEqual(
       page.details.detailTaxonomies.manager.selectedTerms[0].title,
-      'Vocabulary 1 (school 0)'
+      'Vocabulary 1 (school 0)',
     );
     assert.strictEqual(page.details.detailTaxonomies.manager.selectedTerms[0].terms.length, 1);
     assert.strictEqual(
       page.details.detailTaxonomies.manager.selectedTerms[0].terms[0].name,
-      'term 0'
+      'term 0',
     );
     assert.strictEqual(page.details.detailTaxonomies.manager.availableTerms.length, 2);
     assert.strictEqual(page.details.detailTaxonomies.manager.availableTerms[0].name, 'term 0');

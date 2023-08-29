@@ -41,7 +41,7 @@ module('Integration | Component | school competencies collapsed', function (hook
     this.set('school', schoolModel);
     this.set('expand', () => assert.ok(true));
     await render(
-      hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{this.expand}} />`
+      hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{this.expand}} />`,
     );
     await component.title.click();
   });

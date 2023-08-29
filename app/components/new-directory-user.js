@@ -67,7 +67,7 @@ export default class NewDirectoryUserComponent extends Component {
     return new TrackedAsyncData(
       filter(this.allSchools, async (school) => {
         return this.permissionChecker.canCreateUser(school);
-      })
+      }),
     );
   }
 

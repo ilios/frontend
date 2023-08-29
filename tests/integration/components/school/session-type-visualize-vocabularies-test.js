@@ -41,7 +41,7 @@ module('Integration | Component | school/session-type-visualize-vocabularies', f
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'school 0');
     assert.strictEqual(
       component.breadcrumb.crumbs[0].link,
-      '/schools/1?schoolSessionTypeDetails=true'
+      '/schools/1?schoolSessionTypeDetails=true',
     );
     assert.strictEqual(component.breadcrumb.crumbs[1].text, 'Visualizations');
     assert.strictEqual(component.breadcrumb.crumbs[2].text, 'Session Types');
@@ -56,12 +56,12 @@ module('Integration | Component | school/session-type-visualize-vocabularies', f
     assert.strictEqual(component.vocabulariesChart.chart.labels[0].text, 'Vocabulary 2');
     assert.strictEqual(
       component.vocabulariesChart.chart.descriptions[0].text,
-      '1 term from the "Vocabulary 2" vocabulary is applied to 1 session with session-type "session type 0".'
+      '1 term from the "Vocabulary 2" vocabulary is applied to 1 session with session-type "session type 0".',
     );
     assert.strictEqual(component.vocabulariesChart.chart.labels[1].text, 'Vocabulary 1');
     assert.strictEqual(
       component.vocabulariesChart.chart.descriptions[1].text,
-      '5 terms from the "Vocabulary 1" vocabulary are applied to 10 sessions with session-type "session type 0".'
+      '5 terms from the "Vocabulary 1" vocabulary are applied to 10 sessions with session-type "session type 0".',
     );
   });
 });

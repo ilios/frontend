@@ -15,7 +15,7 @@ export default class ReportsSubjectSessionComponent extends Component {
   @service currentUser;
 
   crossesBoundaryConfig = new TrackedAsyncData(
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);
@@ -79,7 +79,7 @@ export default class ReportsSubjectSessionComponent extends Component {
     const result = await this.graphql.find(
       'sessions',
       filters,
-      'id, title, course { id, year, title }'
+      'id, title, course { id, year, title }',
     );
 
     return result.data.sessions.map(({ id, title, course }) => {

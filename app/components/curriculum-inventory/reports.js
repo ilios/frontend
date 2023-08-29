@@ -82,7 +82,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
     if (this.selectedSchool) {
       this.canCreate = yield this.permissionChecker.canCreateCurriculumInventoryReport(
-        this.selectedSchool
+        this.selectedSchool,
       );
       const programs = yield this.selectedSchool.programs;
       this.programs = sortBy(programs.slice(), 'title');

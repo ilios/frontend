@@ -253,7 +253,7 @@ module('Integration | Component | new user', function (hooks) {
     assert.ok(component.username.hasError);
     assert.strictEqual(
       component.username.errors,
-      'This username is already taken by another user account.'
+      'This username is already taken by another user account.',
     );
     await component.username.set('geflarknik2');
     await component.username.submit();

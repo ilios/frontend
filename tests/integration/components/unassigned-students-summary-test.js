@@ -54,7 +54,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
     assert.strictEqual(component.selectedSchool, '1');
     assert.strictEqual(
       component.summaryText,
-      'There are 5 students needing assignment to a cohort'
+      'There are 5 students needing assignment to a cohort',
     );
     assert.ok(component.hasManageLink);
     assert.ok(component.hasAlert);
@@ -77,7 +77,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
     assert.notOk(component.hasMultipleSchools);
     assert.strictEqual(
       component.summaryText,
-      'There are 0 students needing assignment to a cohort'
+      'There are 0 students needing assignment to a cohort',
     );
 
     assert.notOk(component.hasManageLink);

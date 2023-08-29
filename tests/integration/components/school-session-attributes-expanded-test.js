@@ -31,7 +31,7 @@ module('Integration | Component | school session attributes expanded', function 
     assert.ok(component.attributes.specialAttireRequired.isDisabled);
     assert.strictEqual(
       component.attributes.specialEquipmentRequired.label,
-      'Special Equipment Required'
+      'Special Equipment Required',
     );
     assert.ok(component.attributes.specialEquipmentRequired.isDisabled);
     assert.notOk(component.manager.isVisible);

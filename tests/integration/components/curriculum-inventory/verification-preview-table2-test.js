@@ -40,14 +40,14 @@ module(
       await render(hbs`<CurriculumInventory::VerificationPreviewTable2 @data={{this.data}} />`);
       assert.strictEqual(
         component.title,
-        'Table 2: Primary Instructional Method by Non-Clerkship Sequence Block'
+        'Table 2: Primary Instructional Method by Non-Clerkship Sequence Block',
       );
       assert.strictEqual(component.table.firstHeadings.length, 3);
       assert.strictEqual(component.table.firstHeadings[0].text, 'Non-Clerkship Sequence Blocks');
       assert.strictEqual(component.table.firstHeadings[1].text, 'Phases (Start - End)');
       assert.strictEqual(
         component.table.firstHeadings[2].text,
-        'Number of Formal Instructional Hours Per Course'
+        'Number of Formal Instructional Hours Per Course',
       );
       assert.strictEqual(component.table.secondHeadings.length, 3);
       assert.strictEqual(component.table.secondHeadings[0].text, 'foo');
@@ -72,5 +72,5 @@ module(
       assert.strictEqual(component.table.footer[3].text, '6.67');
       assert.strictEqual(component.table.footer[4].text, '10.00');
     });
-  }
+  },
 );

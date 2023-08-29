@@ -40,7 +40,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-      />`
+      />`,
     );
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.headers[0].text, 'Description');
@@ -53,13 +53,13 @@ module('Integration | Component | program-year/objective-list', function (hooks)
     assert.strictEqual(component.objectives[0].description.text, 'Objective B');
     assert.strictEqual(
       component.objectives[0].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
+      'Vocabulary 1 (school 0)',
     );
     assert.strictEqual(component.objectives[0].selectedTerms.list[0].terms[0].name, 'term 1');
     assert.strictEqual(component.objectives[1].description.text, 'Objective A');
     assert.strictEqual(
       component.objectives[1].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
+      'Vocabulary 1 (school 0)',
     );
     assert.strictEqual(component.objectives[1].selectedTerms.list[0].terms[0].name, 'term 0');
 
@@ -80,7 +80,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-      />`
+      />`,
     );
     assert.notOk(component.sortIsVisible);
     assert.strictEqual(component.text, '');
@@ -100,7 +100,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-      />`
+      />`,
     );
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.objectives.length, 1);
@@ -130,7 +130,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-      />`
+      />`,
     );
     await component.objectives[0].competency.manage();
     assert.strictEqual(component.objectives[0].competencyManager.domains.length, 2);

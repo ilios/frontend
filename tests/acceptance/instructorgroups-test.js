@@ -202,7 +202,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
       await page.list.items[0].remove();
       assert.strictEqual(
         page.list.removalConfirmationMessage,
-        'Are you sure you want to delete this instructor group, with 5 instructors? This action cannot be undone. Yes Cancel'
+        'Are you sure you want to delete this instructor group, with 5 instructors? This action cannot be undone. Yes Cancel',
       );
     });
 

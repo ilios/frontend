@@ -18,7 +18,7 @@ module('Integration | Component | competency title editor', function (hooks) {
       .findRecord('competency', competency.id);
     this.set('competency', competencyModel);
     await render(
-      hbs`<CompetencyTitleEditor @competency={{this.competency}} @canUpdate={{true}} />`
+      hbs`<CompetencyTitleEditor @competency={{this.competency}} @canUpdate={{true}} />`,
     );
     assert.notOk(component.hasError);
   });
@@ -30,7 +30,7 @@ module('Integration | Component | competency title editor', function (hooks) {
       .findRecord('competency', competency.id);
     this.set('competency', competencyModel);
     await render(
-      hbs`<CompetencyTitleEditor @competency={{this.competency}} @canUpdate={{true}} />`
+      hbs`<CompetencyTitleEditor @competency={{this.competency}} @canUpdate={{true}} />`,
     );
     await component.title.edit();
     await component.title.set('');
@@ -45,7 +45,7 @@ module('Integration | Component | competency title editor', function (hooks) {
       .findRecord('competency', competency.id);
     this.set('competency', competencyModel);
     await render(
-      hbs`<CompetencyTitleEditor @competency={{this.competency}} @canUpdate={{true}} />`
+      hbs`<CompetencyTitleEditor @competency={{this.competency}} @canUpdate={{true}} />`,
     );
     await component.title.edit();
     await component.title.set('tooLong'.repeat(50));

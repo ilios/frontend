@@ -118,16 +118,16 @@ module('Integration | Component | assign students', function (hooks) {
     assert.notOk(component.isToggleAllIndeterminate, 'check all is not initially indeterminate');
     assert.notOk(
       component.students[0].isToggleAllChecked,
-      'first student is not initially checked'
+      'first student is not initially checked',
     );
     assert.notOk(
       component.students[1].isToggleAllChecked,
-      'second student is not initially checked'
+      'second student is not initially checked',
     );
     await component.students[0].toggle();
     assert.ok(
       component.isToggleAllIndeterminate,
-      'check all is indeterminate with one student checked'
+      'check all is indeterminate with one student checked',
     );
     await component.students[1].toggle();
     assert.ok(component.isToggleAllChecked, 'check all is checked with both students checked');
@@ -167,11 +167,11 @@ module('Integration | Component | assign students', function (hooks) {
     await component.toggleAll();
     assert.ok(
       component.students[0].isToggleChecked,
-      'first student still checked after checkall clicked'
+      'first student still checked after checkall clicked',
     );
     assert.ok(
       component.students[1].isToggleChecked,
-      'second student checked after checkall clicked'
+      'second student checked after checkall clicked',
     );
   });
 

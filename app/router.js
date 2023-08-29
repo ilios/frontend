@@ -46,9 +46,9 @@ Router.map(function () {
         },
         function () {
           this.route('publication-check', { path: '/publicationcheck' });
-        }
+        },
       );
-    }
+    },
   );
   this.route('admin-dashboard', { path: '/admin' });
   this.route('login');
@@ -74,7 +74,7 @@ Router.map(function () {
     },
     function () {
       this.route('rollover');
-    }
+    },
   );
   this.route('curriculum-inventory-sequence-block', {
     path: 'curriculum-inventory-sequence-block/:curriculum_inventory_sequence_block_id',

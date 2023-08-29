@@ -290,7 +290,7 @@ export default class LearnerGroupRootComponent extends Component {
       learnerGroup,
       cohort,
       withLearners,
-      parentGroup
+      parentGroup,
     );
     // indicate that the top group is a copy
     newGroups[0].title = newGroups[0].title + ` (${this.intl.t('general.copy')})`;
