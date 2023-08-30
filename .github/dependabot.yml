@@ -25,7 +25,6 @@ updates:
   - dependency-name: ember-cli-sri
   - dependency-name: ember-cli-terser
   - dependency-name: ember-export-application-global
-  - dependency-name: ember-fetch
   - dependency-name: ember-load-initializers
   - dependency-name: ember-page-title
   - dependency-name: ember-qunit
