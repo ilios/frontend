@@ -1,0 +1,64 @@
+<div data-test-reports-subject-new-course>
+  <p data-test-year>
+    <label>
+      {{t "general.in"}}
+    </label>
+    {{#if this.isLoaded}}
+      <select
+        aria-label={{t "general.year"}}
+        data-test-report-academic-years
+      {{on "change" (pick "target.value" this.changeSelectedYear)}}
+      >
+        <option selected={{is-empty this.selectedYear}} value="">
+          {{t "general.allAcademicYears"}}
+        </option>
+        {{#each
+          (sort-by
+            "title:desc" this.filteredYears
+          ) as |year|
+        }}
+          <option
+            selected={{eq year.id this.selectedYear}}
+            value={{year.id}}
+          >
+            {{year.title}}
+          </option>
+        {{/each}}
+      </select>
+    {{else}}
+      <LoadingSpinner />
+    {{/if}}
+  </p>
+
+  <p data-test-course>
+    <label for="new-course">
+      {{t "general.whichIs"}}
+    </label>
+    {{#if this.isLoaded}}
+      <select
+        id="new-course"
+        data-test-prepositional-objects
+        {{on "change" (pick "target.value" @changeId)}}
+        {{did-insert (perform this.setInitialValue)}}
+        {{did-update (perform this.setInitialValue) @school}}
+      >
+        {{#each this.sortedCourses as |course|}}
+          <option
+            selected={{eq course.id @currentId}}
+            value={{course.id}}
+          >
+            {{#unless this.selectedYear}}
+              {{course.year}}
+            {{/unless}}
+            {{#if course.externalId}}
+              [{{course.externalId}}] |
+            {{/if}}
+            {{course.title}}
+          </option>
+        {{/each}}
+      </select>
+    {{else}}
+      <LoadingSpinner />
+    {{/if}}
+  </p>
+</div>

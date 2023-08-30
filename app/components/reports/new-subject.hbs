@@ -84,126 +84,13 @@
           <ValidationError @errors={{get-errors-for this.currentPrepositionalObject}} />
         </div>
       </p>
-      {{#if this.currentPrepositionalObject}}
-        {{#if (includes this.currentPrepositionalObject (w "course session"))}}
-          <p>
-            <label>
-              {{t "general.in"}}
-            </label>
-            <select
-              aria-label={{t "general.year"}}
-              data-test-report-academic-years
-            {{on "change" (pick "target.value" this.changeSelectedYear)}}
-            >
-              <option selected={{is-empty this.selectedYear}} value="">
-                {{t "general.allAcademicYears"}}
-              </option>
-              {{#each
-                (sort-by
-                  "title:desc" this.allAcademicYears
-                ) as |year|
-              }}
-                <option
-                  selected={{eq year.id this.selectedYear}}
-                  value={{year.id}}
-                >
-                  {{year.title}}
-                </option>
-              {{/each}}
-            </select>
-          </p>
-        {{/if}}
-        <p>
-          <label for="which-is-{{templateId}}">
-            {{t "general.whichIs"}}
-          </label>
-          {{#if (eq this.currentPrepositionalObject "instructor")}}
-            {{#if this.selectedUser}}
-              <ul class="selected-instructor" data-test-selected-instructor>
-                <li>
-                  <button
-                    class="link-button"
-                    type="button"
-                    {{on "click" (fn this.changePrepositionalObjectId null)}}
-                  >
-                    {{this.selectedUser.fullName}}
-                    <FaIcon @icon="xmark" class="remove"/>
-                  </button>
-                </li>
-              </ul>
-            {{else}}
-              <div data-test-instructors>
-                <UserSearch @addUser={{this.chooseInstructor}} />
-                <ValidationError @errors={{get-errors-for this.currentPrepositionalObjectId}} />
-              </div>
-            {{/if}}
-          {{else if (eq this.currentPrepositionalObject "mesh term")}}
-            {{#if this.selectedMeshTerm}}
-              <ul class="selected-mesh-term" data-test-selected-mesh-term>
-                <li>
-                  <button
-                    class="link-button"
-                    type="button"
-                    {{on "click" (fn this.changePrepositionalObjectId null)}}
-                  >
-                    <span class="term-title" data-test-name>
-                      {{this.selectedMeshTerm.name}}
-                    </span>
-                    <span class="term-details" data-test-details>
-                      {{this.selectedMeshTerm.id}}
-                      {{#if this.selectedMeshTerm.trees.length}}
-                          - <MeshDescriptorLastTreeNumber @descriptor={{this.selectedMeshTerm}} />
-                      {{/if}}
-                    </span>
-                    <FaIcon @icon="xmark" class="remove" />
-                  </button>
-                </li>
-              </ul>
-            {{else}}
-              <div data-test-mesh>
-                <MeshManager @add={{this.chooseMeshTerm}} @editable={{true}} />
-                <ValidationError @errors={{get-errors-for this.currentPrepositionalObjectId}} />
-              </div>
-            {{/if}}
-          {{else if this.isPrepositionalObjectIdListLoaded}}
-            <select
-              id="which-is-{{templateId}}"
-              data-test-prepositional-objects
-              {{on "change" (pick "target.value" this.changePrepositionalObjectId)}}
-            >
-              {{#each
-                (sort-by
-                  "active:desc"
-                  "academicYear"
-                  "label"
-                  this.filteredPrepositionalObjectIdList
-                ) as |o|
-              }}
-                <option
-                  selected={{eq o.value this.currentPrepositionalObjectId}}
-                  value={{o.value}}
-                >
-                  {{#if o.academicYear}}
-                    {{o.academicYear}}|
-                  {{/if}}
-                  {{#if (and this.isCourse o.externalId)}}
-                    [{{o.externalId}}] |{{o.label}}
-                  {{else if this.isSession}}
-                    {{o.label}}|{{o.courseTitle}}
-                  {{else}}
-                    {{o.label}}
-                  {{/if}}
-                  {{#unless o.active}}
-                    ({{t "general.inactive"}})
-                  {{/unless}}
-                </option>
-              {{/each}}
-            </select>
-          {{else}}
-            <LoadingSpinner />
-          {{/if}}
-        </p>
-      {{/if}}
+      <this.newPrepositionalObjectComponent
+        @school={{this.currentSchool}}
+        @templateId={{templateId}}
+        @currentId={{this.currentPrepositionalObjectId}}
+        @changeId={{set this.currentPrepositionalObjectId}}
+      />
+      <ValidationError @errors={{get-errors-for this.currentPrepositionalObjectId}} data-test-validation-error />
       <div class="input-buttons">
         <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-save>
           {{#if this.save.isRunning}}

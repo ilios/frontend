@@ -106,12 +106,12 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.server.create('mesh-descriptor');
     await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
     await component.objects.choose('mesh term');
-    assert.notOk(component.selectedMeshTerm.isVisible);
-    await component.mesh.manager.search.set('descriptor 0');
-    await component.mesh.manager.searchResults[0].add();
-    assert.strictEqual(component.selectedMeshTerm.name, 'descriptor 0');
-    await component.selectedMeshTerm.remove();
-    assert.notOk(component.selectedMeshTerm.isVisible);
+    assert.notOk(component.meshTerm.hasSelectedTerm);
+    await component.meshTerm.meshManager.search.set('descriptor 0');
+    await component.meshTerm.meshManager.searchResults[0].add();
+    assert.strictEqual(component.meshTerm.selectedTerm, 'descriptor 0');
+    await component.meshTerm.removeSelectedTerm();
+    assert.notOk(component.meshTerm.hasSelectedTerm);
   });
 
   test('selecting and de-selecting an instructor as prepositional object', async function (assert) {
@@ -119,12 +119,12 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
 
     await component.objects.choose('instructor');
-    assert.notOk(component.selectedInstructor.isVisible);
-    await component.instructors.search.searchBox.set('Rusty');
-    await component.instructors.search.results.items[0].click();
-    assert.strictEqual(component.selectedInstructor.text, 'Rusty M. Mc0son');
-    await component.selectedInstructor.remove();
-    assert.notOk(component.selectedInstructor.isVisible);
+    assert.notOk(component.instructor.hasSelectedInstructor);
+    await component.instructor.userSearch.searchBox.set('Rusty');
+    await component.instructor.userSearch.results.items[0].click();
+    assert.strictEqual(component.instructor.selectedInstructor, 'Rusty M. Mc0son');
+    await component.instructor.removeSelectedInstructor();
+    assert.notOk(component.instructor.hasSelectedInstructor);
   });
 
   test('choosing course selects correct objects', function (assert) {
@@ -258,14 +258,14 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       displayName: 'Aardvark',
     });
     await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
-    assert.notOk(component.instructors.search.isVisible);
-    assert.notOk(component.selectedInstructor.isVisible);
+    assert.notOk(component.instructor.userSearch.isVisible);
+    assert.notOk(component.instructor.hasSelectedInstructor);
     await component.schools.choose('null');
     await component.objects.choose('instructor');
-    assert.ok(component.instructors.search.isVisible);
-    await component.instructors.search.searchBox.set('test');
-    await component.instructors.search.results.items[0].click();
-    assert.strictEqual(component.selectedInstructor.text, 'Aardvark');
+    assert.ok(component.instructor.userSearch.isVisible);
+    await component.instructor.userSearch.searchBox.set('test');
+    await component.instructor.userSearch.results.items[0].click();
+    assert.strictEqual(component.instructor.selectedInstructor, 'Aardvark');
   });
 
   test('cancel', async function (assert) {
@@ -336,10 +336,10 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
     await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
     await component.objects.choose('instructor');
-    assert.strictEqual(component.instructors.errors.length, 0);
+    assert.strictEqual(component.errors.length, 0);
     await component.save();
-    assert.strictEqual(component.instructors.errors.length, 1);
-    assert.strictEqual(component.instructors.errors[0].text, 'Instructor is Required');
+    assert.strictEqual(component.errors.length, 1);
+    assert.strictEqual(component.errors[0].text, 'Instructor is Required');
   });
 
   test('missing MeSH term', async function (assert) {
@@ -354,10 +354,10 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
     await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
     await component.objects.choose('mesh term');
-    assert.strictEqual(component.mesh.errors.length, 0);
+    assert.strictEqual(component.errors.length, 0);
     await component.save();
-    assert.strictEqual(component.mesh.errors.length, 1);
-    assert.strictEqual(component.mesh.errors[0].text, 'MeSH Term is Required');
+    assert.strictEqual(component.errors.length, 1);
+    assert.strictEqual(component.errors[0].text, 'MeSH Term is Required');
   });
 
   test('missing object for MeSH term', async function (assert) {

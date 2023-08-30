@@ -1,0 +1,28 @@
+<p data-test-reports-subject-new-term>
+  <label for="new-term">
+    {{t "general.whichIs"}}
+  </label>
+  {{#if this.isLoaded}}
+    <select
+      id="new-term"
+      data-test-prepositional-objects
+      {{on "change" (pick "target.value" @changeId)}}
+      {{did-insert (perform this.setInitialValue)}}
+      {{did-update (perform this.setInitialValue) @school}}
+    >
+      {{#each this.sortedTerms as |obj|}}
+        <option
+          selected={{eq obj.term.id @currentId}}
+          value={{obj.term.id}}
+        >
+          {{obj.vocabulary.title}} > {{obj.title}}
+          {{#unless obj.term.active}}
+            ({{t "general.inactive"}})
+          {{/unless}}
+        </option>
+      {{/each}}
+    </select>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</p>

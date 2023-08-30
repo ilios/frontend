@@ -1,0 +1,25 @@
+<p data-test-reports-subject-new-program-year>
+  <label for="new-program">
+    {{t "general.whichIs"}}
+  </label>
+  {{#if this.isLoaded}}
+    <select
+      id="new-program"
+      data-test-prepositional-objects
+      {{on "change" (pick "target.value" @changeId)}}
+      {{did-insert (perform this.setInitialValue)}}
+      {{did-update (perform this.setInitialValue) @school}}
+    >
+      {{#each this.programYears as |programYear|}}
+        <option
+          selected={{eq programYear.id @currentId}}
+          value={{programYear.id}}
+        >
+          {{programYear.classOfYear}} {{programYear.program.title}}
+        </option>
+      {{/each}}
+    </select>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</p>

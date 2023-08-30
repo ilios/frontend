@@ -1,0 +1,25 @@
+<p data-test-reports-subject-new-program>
+  <label for="new-program">
+    {{t "general.whichIs"}}
+  </label>
+  {{#if this.isLoaded}}
+    <select
+      id="new-program"
+      data-test-prepositional-objects
+      {{on "change" (pick "target.value" @changeId)}}
+      {{did-insert (perform this.setInitialValue)}}
+      {{did-update (perform this.setInitialValue) @school}}
+    >
+      {{#each this.sortedPrograms as |program|}}
+        <option
+          selected={{eq program.id @currentId}}
+          value={{program.id}}
+        >
+          {{program.title}}
+        </option>
+      {{/each}}
+    </select>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</p>
