@@ -15,12 +15,13 @@ module('Acceptance | Event', function (hooks) {
 
   test('back link is visible', async function (assert) {
     const date = DateTime.fromISO('2023-04-23');
-    const slug = 'U' + date.toFormat('yyyyMMdd') + 'O12345';
+    const offeringId = 12345;
+    const slug = 'U' + date.toFormat('yyyyMMdd') + 'O' + offeringId;
     this.server.get(`/api/userevents/:userid`, () => {
       return {
         userEvents: [
           {
-            offering: 1,
+            offering: offeringId,
             startDate: '2023-04-23',
             prerequisites: [],
             postrequisites: [],
@@ -31,5 +32,21 @@ module('Acceptance | Event', function (hooks) {
     await page.visit({ slug });
     assert.strictEqual(currentURL(), `/events/${slug}`);
     assert.ok(page.backLink.isPresent);
+  });
+
+  test('it redirects to event-not-found page if no user event can be found', async function (assert) {
+    assert.expect(4);
+    const date = DateTime.fromISO('2016-05-25');
+    const slug = 'U' + date.toFormat('yyyyMMdd') + 'O12345';
+    const fromDate = date.set({ hour: 0 });
+    const toDate = date.set({ hour: 24 });
+    this.server.get(`/api/userevents/:userid`, (scheme, { params, queryParams }) => {
+      assert.strictEqual(params.userid, this.user.id);
+      assert.strictEqual(fromDate.toFormat('X'), queryParams.from);
+      assert.strictEqual(toDate.toFormat('X'), queryParams.to);
+      return { userEvents: [] };
+    });
+    await page.visit({ slug });
+    assert.strictEqual(currentURL(), `/event-not-found/${slug}`);
   });
 });

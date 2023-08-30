@@ -13,6 +13,7 @@ export function dashboardRoutes(router) {
   );
   router.route('events', { path: 'events/:slug' });
   router.route('weeklyevents');
+  router.route('event-not-found', { path: 'event-not-found/:slug' });
 }
 
 export function courseRoutes(router) {
