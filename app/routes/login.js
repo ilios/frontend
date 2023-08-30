@@ -1,7 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import jwtDecode from '../utils/jwt-decode';
-import fetch from 'fetch';
 
 export default class LoginRoute extends Route {
   @service serverVariables;

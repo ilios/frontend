@@ -21,9 +21,6 @@ module.exports = function (defaults) {
     babel: {
       plugins: [require('ember-auto-import/babel-plugin')],
     },
-    'ember-fetch': {
-      preferNative: true,
-    },
   });
   return app.toTree();
 };
