@@ -15,7 +15,7 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
       hash({
         terms: this.store.findAll('term'),
         vocabularies: this.store.findAll('vocabulary'),
-      })
+      }),
     );
   }
 

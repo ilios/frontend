@@ -20,7 +20,7 @@ export default class ReportsSubjectNewSessionTypeComponent extends Component {
   get filteredSessionTypes() {
     if (this.args.school) {
       return this.allSessionTypes.value.filter(
-        (st) => st.belongsTo('school').id() === this.args.school.id
+        (st) => st.belongsTo('school').id() === this.args.school.id,
       );
     }
 

@@ -20,7 +20,7 @@ export default class ReportsSubjectNewLearningMaterialComponent extends Componen
   get filteredLearningMaterials() {
     if (this.args.school) {
       return this.allLearningMaterials.value.filter(
-        (c) => c.belongsTo('school').id() === this.args.school.id
+        (c) => c.belongsTo('school').id() === this.args.school.id,
       );
     }
 
