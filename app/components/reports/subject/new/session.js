@@ -20,7 +20,7 @@ export default class ReportsSubjectNewSessionComponent extends Component {
         sessions: this.store.findAll('session'),
         courses: this.store.findAll('course'),
         years: this.store.findAll('academic-year'),
-      })
+      }),
     );
   }
 

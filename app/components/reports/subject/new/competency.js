@@ -20,7 +20,7 @@ export default class ReportsSubjectNewCompetencyComponent extends Component {
   get filteredCompetencies() {
     if (this.args.school) {
       return this.allCompetencies.value.filter(
-        (c) => c.belongsTo('school').id() === this.args.school.id
+        (c) => c.belongsTo('school').id() === this.args.school.id,
       );
     }
 

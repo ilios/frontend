@@ -20,7 +20,7 @@ export default class ReportsSubjectNewProgramComponent extends Component {
   get filteredPrograms() {
     if (this.args.school) {
       return this.allPrograms.value.filter(
-        (c) => c.belongsTo('school').id() === this.args.school.id
+        (c) => c.belongsTo('school').id() === this.args.school.id,
       );
     }
 
