@@ -37,7 +37,7 @@ module('Integration | Component | course/rollover-date-picker', function (hooks)
     });
     await render(
       hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{this.change}} />
-`
+`,
     );
     const element = find('input');
     element._flatpickr.setDate(newDate.toJSDate(), true);

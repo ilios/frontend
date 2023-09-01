@@ -57,80 +57,80 @@ module('Acceptance | Course - Objective List', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
-      1
+      1,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title,
-      'descriptor 0'
+      'descriptor 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,
-      1
+      1,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
+      'Vocabulary 1 (school 0)',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length,
-      1
+      1,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
-      'term 0'
+      'term 0',
     );
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].description.text,
-      'course objective 1'
+      'course objective 1',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[1].parents.list.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].parents.list[0].text,
-      'program-year objective 1'
+      'program-year objective 1',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      2
+      2,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
-      'descriptor 0'
+      'descriptor 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title,
-      'descriptor 1'
+      'descriptor 1',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].selectedTerms.list.length,
-      1
+      1,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
+      'Vocabulary 1 (school 0)',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms.length,
-      1
+      1,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
-      'term 1'
+      'term 1',
     );
 
     for (let i = 2; i <= 12; i++) {
       assert.strictEqual(
         page.details.objectives.objectiveList.objectives[i].description.text,
-        `course objective ${i}`
+        `course objective ${i}`,
       );
       assert.ok(page.details.objectives.objectiveList.objectives[i].parents.empty);
       assert.ok(page.details.objectives.objectiveList.objectives[i].meshDescriptors.empty);
@@ -154,12 +154,12 @@ module('Acceptance | Course - Objective List', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      longTitle.substring(0, 200)
+      longTitle.substring(0, 200),
     );
     await page.details.objectives.objectiveList.objectives[0].description.openEditor();
     assert.strictEqual(
       await page.details.objectives.objectiveList.objectives[0].description.editorContents(),
-      `<p>${longTitle}</p>`
+      `<p>${longTitle}</p>`,
     );
   });
 
@@ -179,7 +179,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'course objective 0'
+      'course objective 0',
     );
     await page.details.objectives.objectiveList.objectives[0].description.openEditor();
     await page.details.objectives.objectiveList.objectives[0].description.edit(newDescription);
@@ -187,7 +187,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      newDescription
+      newDescription,
     );
   });
 
@@ -205,17 +205,17 @@ module('Acceptance | Course - Objective List', function (hooks) {
     });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.notOk(
-      page.details.objectives.objectiveList.objectives[0].description.hasValidationError
+      page.details.objectives.objectiveList.objectives[0].description.hasValidationError,
     );
     await page.details.objectives.objectiveList.objectives[0].description.openEditor();
     await page.details.objectives.objectiveList.objectives[0].description.edit(
-      '<p>&nbsp</p><div></div><span>  </span>'
+      '<p>&nbsp</p><div></div><span>  </span>',
     );
     await page.details.objectives.objectiveList.objectives[0].description.save();
     assert.ok(page.details.objectives.objectiveList.objectives[0].description.hasValidationError);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.validationError,
-      'This field can not be blank'
+      'This field can not be blank',
     );
   });
 });

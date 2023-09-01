@@ -36,26 +36,26 @@ module('Integration | Component | session/objectives', function (hooks) {
     assert.strictEqual(component.objectiveList.objectives.length, 3);
     assert.strictEqual(
       component.objectiveList.objectives[0].description.text,
-      'session objective 0'
+      'session objective 0',
     );
     assert.ok(component.objectiveList.objectives[0].parents.empty);
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.empty);
 
     assert.strictEqual(
       component.objectiveList.objectives[1].description.text,
-      'session objective 1'
+      'session objective 1',
     );
     assert.ok(component.objectiveList.objectives[1].parents.empty);
     assert.ok(component.objectiveList.objectives[1].meshDescriptors.empty);
 
     assert.strictEqual(
       component.objectiveList.objectives[2].description.text,
-      'session objective 2'
+      'session objective 2',
     );
     assert.strictEqual(component.objectiveList.objectives[2].parents.list.length, 1);
     assert.strictEqual(
       component.objectiveList.objectives[2].parents.list[0].text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.ok(component.objectiveList.objectives[2].meshDescriptors.empty);
 

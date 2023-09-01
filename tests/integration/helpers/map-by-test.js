@@ -112,7 +112,7 @@ module('Integration | Helper | map-by', function (hooks) {
     users.push(
       store.createRecord('user', { firstName: 'a' }),
       store.createRecord('user', { firstName: 'b' }),
-      store.createRecord('user', { firstName: 'c' })
+      store.createRecord('user', { firstName: 'c' }),
     );
 
     this.set('users', users);

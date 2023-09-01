@@ -15,7 +15,7 @@ export function Length(min, max, validationOptions) {
           const [min, max] = constraints;
           if (min === undefined) {
             throw new Error(
-              `You must pass at least a minimum length to the Length validator on ${property}`
+              `You must pass at least a minimum length to the Length validator on ${property}`,
             );
           }
           if (isBlank(value)) {

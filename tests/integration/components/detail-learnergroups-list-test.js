@@ -74,7 +74,7 @@ module('Integration | Component | detail-learnergroups-list', function (hooks) {
     assert.strictEqual(component.trees[0].items[1].text, 'tlg1 » sub group 1 (3)');
     assert.strictEqual(
       component.trees[0].items[2].text,
-      'tlg1 » sub group 1 » sub sub group 1 (1)'
+      'tlg1 » sub group 1 » sub sub group 1 (1)',
     );
     assert.strictEqual(component.trees[1].title, 'program 0 cohort 1');
     assert.strictEqual(component.trees[1].items.length, 2);

@@ -12,7 +12,7 @@ const definition = {
     search,
     cohorts: collection(
       '[data-test-learnergroup-selection-cohort-manager]',
-      learnergroupSelectionCohortManager
+      learnergroupSelectionCohortManager,
     ),
   },
 };

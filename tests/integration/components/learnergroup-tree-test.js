@@ -72,7 +72,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     ]);
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{(noop)}} />
-`
+`,
     );
     assert.strictEqual(component.title, 'Top Group');
     assert.ok(component.needsAccommodation);
@@ -104,7 +104,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     this.set('selectedGroups', []);
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{(noop)}} />
-`
+`,
     );
     assert.ok(component.isStyledAsBranch);
     assert.notOk(component.isStyledAsLeaf);
@@ -122,7 +122,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     this.set('filter', 'Second 2');
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @filter={{this.filter}} @add={{(noop)}} />
-`
+`,
     );
     assert.notOk(component.isHidden);
     assert.ok(component.subgroups[0].isHidden);
@@ -143,7 +143,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />
-`
+`,
     );
     await component.subgroups[0].subgroups[1].toggle();
   });
@@ -158,7 +158,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />
-`
+`,
     );
     await component.subgroups[0].subgroups[1].toggleTitle();
   });
@@ -173,7 +173,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />
-`
+`,
     );
     await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
       shiftKey: true,
@@ -190,7 +190,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />
-`
+`,
     );
     await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
       ctrlKey: true,
@@ -207,7 +207,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />
-`
+`,
     );
     await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox-title]', {
       shiftKey: true,
@@ -224,7 +224,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />
-`
+`,
     );
     await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox-title]', {
       ctrlKey: true,
@@ -241,7 +241,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />
-`
+`,
     );
     await component.subgroups[0].subgroups[1].toggle();
   });
@@ -256,7 +256,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />
-`
+`,
     );
     await component.subgroups[0].subgroups[1].toggleTitle();
   });
@@ -271,7 +271,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />
-`
+`,
     );
     await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
       shiftKey: true,
@@ -288,7 +288,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />
-`
+`,
     );
     await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
       ctrlKey: true,
@@ -305,7 +305,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />
-`
+`,
     );
     await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox-title]', {
       shiftKey: true,
@@ -322,7 +322,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     await render(
       hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @remove={{this.remove}} />
-`
+`,
     );
     await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox-title]', {
       ctrlKey: true,

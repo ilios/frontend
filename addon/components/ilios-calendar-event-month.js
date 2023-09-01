@@ -35,7 +35,7 @@ export default class IliosCalendarEventMonthComponent extends Component {
 
     return new htmlSafe(
       `background-color: ${color};
-       border-left: 4px solid ${darkcolor};`
+       border-left: 4px solid ${darkcolor};`,
     );
   }
 

@@ -59,15 +59,15 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     this.topLevelLearnerGroup3 = await store.findRecord('learner-group', topLevelLearnerGroup3.id);
     this.secondLevelLearnerGroup1 = await store.findRecord(
       'learner-group',
-      secondLevelLearnerGroup1.id
+      secondLevelLearnerGroup1.id,
     );
     this.secondLevelLearnerGroup2 = await store.findRecord(
       'learner-group',
-      secondLevelLearnerGroup2.id
+      secondLevelLearnerGroup2.id,
     );
     this.secondLevelLearnerGroup3 = await store.findRecord(
       'learner-group',
-      secondLevelLearnerGroup3.id
+      secondLevelLearnerGroup3.id,
     );
   });
 
@@ -85,33 +85,33 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[0].title,
-      'program 0 cohort 0'
+      'program 0 cohort 0',
     );
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-      1
+      1,
     );
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-      'Top Group 1 » Second 1 (0)'
+      'Top Group 1 » Second 1 (0)',
     );
     assert.notOk(
-      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].needsAccommodation
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].needsAccommodation,
     );
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].title,
-      'program 0 cohort 1'
+      'program 0 cohort 1',
     );
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
-      1
+      1,
     );
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items[0].text,
-      'Top Group 2 » Second 10 (0) members of this group require accommodation'
+      'Top Group 2 » Second 10 (0) members of this group require accommodation',
     );
     assert.ok(
-      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items[0].needsAccommodation
+      component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items[0].needsAccommodation,
     );
     assert.strictEqual(component.availableGroups.heading, 'Available Learner Groups:');
     assert.strictEqual(component.availableGroups.cohorts.length, 2);
@@ -123,13 +123,13 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     assert.strictEqual(component.availableGroups.cohorts[0].trees[0].subgroups.length, 2);
     assert.strictEqual(
       component.availableGroups.cohorts[0].trees[0].subgroups[0].title,
-      'Second 1'
+      'Second 1',
     );
     assert.notOk(component.availableGroups.cohorts[0].trees[0].subgroups[0].isHidden);
     assert.ok(component.availableGroups.cohorts[0].trees[0].subgroups[0].isChecked);
     assert.strictEqual(
       component.availableGroups.cohorts[0].trees[0].subgroups[1].title,
-      'Second 2'
+      'Second 2',
     );
     assert.ok(component.availableGroups.cohorts[0].trees[0].subgroups[1].needsAccommodation);
     assert.notOk(component.availableGroups.cohorts[0].trees[0].subgroups[1].isHidden);
@@ -143,7 +143,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     assert.strictEqual(component.availableGroups.cohorts[1].trees[0].subgroups.length, 1);
     assert.strictEqual(
       component.availableGroups.cohorts[1].trees[0].subgroups[0].title,
-      'Second 10'
+      'Second 10',
     );
     assert.notOk(component.availableGroups.cohorts[1].trees[0].subgroups[0].isHidden);
     assert.ok(component.availableGroups.cohorts[1].trees[0].subgroups[0].isChecked);

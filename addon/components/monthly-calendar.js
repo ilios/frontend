@@ -37,7 +37,7 @@ export default class MonthlyCalendarComponent extends Component {
             for: 'ilios-common',
             until: '72',
             since: '71',
-          }
+          },
         );
         event.startDate = DateTime.fromJSDate(event.startDate).toISO();
       }
@@ -50,7 +50,7 @@ export default class MonthlyCalendarComponent extends Component {
             for: 'ilios-common',
             until: '72',
             since: '71',
-          }
+          },
         );
         event.endDate = DateTime.fromJSDate(event.endDate).toISO();
       }

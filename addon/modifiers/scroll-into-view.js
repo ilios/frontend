@@ -9,5 +9,5 @@ export default modifier(
       }
     });
   },
-  { eager: false }
+  { eager: false },
 );

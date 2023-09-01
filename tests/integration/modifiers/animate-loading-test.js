@@ -10,12 +10,12 @@ module('Integration | Modifier | animate-loading', function (hooks) {
     await render(hbs`<div {{animate-loading}}></div>
 `);
     assert.ok(
-      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.1) < 0.001
+      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.1) < 0.001,
     );
 
     await waitUntil(
       () => getComputedStyle(this.element.querySelector('div'), null).opacity === '1',
-      { timeout: 5000 }
+      { timeout: 5000 },
     );
     assert.dom('div').hasStyle({
       opacity: '1',
@@ -29,18 +29,18 @@ module('Integration | Modifier | animate-loading', function (hooks) {
     </div>
 `);
     assert.ok(
-      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.3) < 0.001
+      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.3) < 0.001,
     );
 
     await waitUntil(
       () => getComputedStyle(this.element.querySelector('div'), null).opacity >= 0.6,
-      { timeout: 5000 }
+      { timeout: 5000 },
     );
     // assert.dom('div').hasStyle({
     //   transition: 'opacity 0.5s linear 0s', //temporarily disabled as FF ESR 91 doesn't support getting this value
     // });
     assert.ok(
-      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.6) < 0.001
+      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.6) < 0.001,
     );
   });
 
@@ -52,12 +52,12 @@ module('Integration | Modifier | animate-loading', function (hooks) {
     </div>
 `);
     assert.ok(
-      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.23) < 0.001
+      Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.23) < 0.001,
     );
 
     await waitUntil(
       () => getComputedStyle(this.element.querySelector('div'), null).opacity === '1',
-      { timeout: 5000 }
+      { timeout: 5000 },
     );
     // assert.dom('div').hasStyle({
     //   opacity: '1',

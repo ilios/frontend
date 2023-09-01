@@ -208,7 +208,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.table.rows[1].instructors, 'Instructor1name, Instructor2name');
     assert.strictEqual(
       component.table.rows[1].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/yyyy')
+      this.tomorrow.toFormat('M/d/yyyy'),
     );
     assert.strictEqual(component.table.rows[2].sessionTitle, 'session3title');
     assert.strictEqual(component.table.rows[2].courseTitle, 'course 2');
@@ -225,19 +225,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.table.rows[3].instructors, 'Instructor3name, Instructor4name');
     assert.strictEqual(
       component.table.rows[3].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/yyyy')
+      this.tomorrow.toFormat('M/d/yyyy'),
     );
     assert.strictEqual(component.table.rows[4].sessionTitle, 'session5title');
     assert.strictEqual(component.table.rows[4].courseTitle, 'course 4');
     assert.strictEqual(
       component.table.rows[4].title,
-      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)'
+      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)',
     );
     assert.ok(component.table.rows[4].isTimed);
     assert.strictEqual(component.table.rows[4].instructors, '');
     assert.strictEqual(
       component.table.rows[4].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/yyyy')
+      this.tomorrow.toFormat('M/d/yyyy'),
     );
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
@@ -281,7 +281,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 25 of 205');
     assert.strictEqual(
       component.bottomPaginator.controls.pagerDetails.text,
-      'Showing 1 - 25 of 205'
+      'Showing 1 - 25 of 205',
     );
     assert.strictEqual(component.table.rows.length, 25);
   });
@@ -422,7 +422,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
 `);
     assert.strictEqual(
       component.topPaginator.controls.pagerDetails.text,
-      'Showing 51 - 150 of 205'
+      'Showing 51 - 150 of 205',
     );
     assert.strictEqual(component.table.rows.length, 100);
     await component.topPaginator.controls.nextPage.click();
@@ -544,7 +544,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.ok(component.table.headers.title.isSortedDescending);
     assert.strictEqual(
       component.table.rows[0].title,
-      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)'
+      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)',
     );
   });
 
@@ -586,7 +586,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.ok(component.table.headers.firstOfferingDate.isSortedDescending);
     assert.strictEqual(
       component.table.rows[0].firstOfferingDate,
-      this.nextWeek.toFormat('M/d/yyyy')
+      this.nextWeek.toFormat('M/d/yyyy'),
     );
   });
 });

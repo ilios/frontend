@@ -15,7 +15,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       DateTime.fromObject({
         month: 11,
         day: 5,
-      }).toJSDate()
+      }).toJSDate(),
     );
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
@@ -183,11 +183,11 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.textFilter.value, '');
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 6 of 6'
+      'Showing 1 - 6 of 6',
     );
     assert.strictEqual(
       page.materials.bottomPaginator.controls.pagerDetails.text,
-      'Showing 1 - 6 of 6'
+      'Showing 1 - 6 of 6',
     );
     assert.strictEqual(page.materials.table.headers.status.text, 'Status');
     assert.strictEqual(page.materials.table.headers.sessionTitle.text, 'Session');
@@ -208,13 +208,13 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.table.rows[0].courseTitle, 'course 4');
     assert.strictEqual(
       page.materials.table.rows[0].title,
-      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)'
+      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)',
     );
     assert.ok(page.materials.table.rows[0].isTimed);
     assert.strictEqual(page.materials.table.rows[0].instructors, '');
     assert.strictEqual(
       page.materials.table.rows[0].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/y')
+      this.tomorrow.toFormat('M/d/y'),
     );
     assert.ok(page.materials.table.rows[1].status.isPresent);
     assert.notOk(page.materials.table.rows[1].status.isChecked);
@@ -226,11 +226,11 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.table.rows[1].fileLink.url, 'http://myhost.com/document.txt');
     assert.strictEqual(
       page.materials.table.rows[1].instructors,
-      'Instructor3name, Instructor4name'
+      'Instructor3name, Instructor4name',
     );
     assert.strictEqual(
       page.materials.table.rows[1].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/y')
+      this.tomorrow.toFormat('M/d/y'),
     );
     assert.ok(page.materials.table.rows[2].status.isPresent);
     assert.ok(page.materials.table.rows[2].status.isChecked);
@@ -242,11 +242,11 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.table.rows[2].link.url, 'http://myhost.com/url2');
     assert.strictEqual(
       page.materials.table.rows[2].instructors,
-      'Instructor1name, Instructor2name'
+      'Instructor1name, Instructor2name',
     );
     assert.strictEqual(
       page.materials.table.rows[2].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/y')
+      this.tomorrow.toFormat('M/d/y'),
     );
 
     assert.notOk(page.materials.table.rows[3].status.isPresent);
@@ -256,11 +256,11 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.ok(page.materials.table.rows[3].isFile);
     assert.strictEqual(
       page.materials.table.rows[3].instructors,
-      'Instructor3name, Instructor4name'
+      'Instructor3name, Instructor4name',
     );
     assert.strictEqual(
       page.materials.table.rows[3].firstOfferingDate,
-      this.today.toFormat('M/d/y')
+      this.today.toFormat('M/d/y'),
     );
 
     assert.ok(page.materials.table.rows[4].status.isPresent);
@@ -272,7 +272,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.table.rows[4].instructors, '');
     assert.strictEqual(
       page.materials.table.rows[4].firstOfferingDate,
-      this.today.toFormat('M/d/y')
+      this.today.toFormat('M/d/y'),
     );
     assert.ok(page.materials.table.rows[5].status.isPresent);
     assert.notOk(page.materials.table.rows[5].status.isChecked);
@@ -286,11 +286,11 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.table.rows[5].pdfLink.url, 'http://myhost.com/url1?inline');
     assert.strictEqual(
       page.materials.table.rows[5].instructors,
-      'Instructor1name, Instructor2name'
+      'Instructor1name, Instructor2name',
     );
     assert.strictEqual(
       page.materials.table.rows[5].firstOfferingDate,
-      this.today.toFormat('M/d/y')
+      this.today.toFormat('M/d/y'),
     );
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
@@ -321,11 +321,11 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.courseFilter.options[5].text, '2022 | course 4');
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 25 of 206'
+      'Showing 1 - 25 of 206',
     );
     assert.strictEqual(
       page.materials.bottomPaginator.controls.pagerDetails.text,
-      'Showing 1 - 25 of 206'
+      'Showing 1 - 25 of 206',
     );
     assert.strictEqual(page.materials.table.rows.length, 25);
   });
@@ -340,14 +340,14 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     await page.visit({ showAll: true, offset: 100, limit: 50 });
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 101 - 150 of 206'
+      'Showing 101 - 150 of 206',
     );
     assert.strictEqual(page.materials.table.rows.length, 50);
     assert.strictEqual(page.materials.table.rows[0].title, 'Citation title 106 citationtext 106');
     await page.materials.topPaginator.controls.nextPage.click();
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 151 - 200 of 206'
+      'Showing 151 - 200 of 206',
     );
     assert.strictEqual(page.materials.table.rows[0].title, 'Citation title 56 citationtext 56');
   });
@@ -362,7 +362,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.ok(page.materials.table.headers.title.isSortedDescending);
     assert.strictEqual(
       page.materials.table.rows[1].title,
-      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)'
+      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)',
     );
     await page.materials.table.headers.title.click();
     assert.ok(page.materials.table.headers.title.isSortedAscending);
@@ -386,13 +386,13 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.ok(page.materials.table.headers.firstOfferingDate.isSortedAscending);
     assert.strictEqual(
       page.materials.table.rows[0].firstOfferingDate,
-      this.today.toFormat('M/d/y')
+      this.today.toFormat('M/d/y'),
     );
     await page.materials.table.headers.firstOfferingDate.click();
     assert.ok(page.materials.table.headers.firstOfferingDate.isSortedDescending);
     assert.strictEqual(
       page.materials.table.rows[0].firstOfferingDate,
-      this.nextWeek.toFormat('M/d/y')
+      this.nextWeek.toFormat('M/d/y'),
     );
   });
 
@@ -406,18 +406,18 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.ok(page.materials.header.displayToggle.firstButton.isChecked);
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 25 of 206'
+      'Showing 1 - 25 of 206',
     );
     await page.materials.topPaginator.controls.limit.set(50);
     await page.materials.topPaginator.controls.nextPage.click();
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 51 - 100 of 206'
+      'Showing 51 - 100 of 206',
     );
     await page.materials.header.displayToggle.secondButton.click();
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 25 of 206'
+      'Showing 1 - 25 of 206',
     );
     assert.ok(page.materials.header.displayToggle.secondButton.isChecked);
   });
@@ -431,24 +431,24 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     await page.visit({ filter: 'session1title' });
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 1 of 1'
+      'Showing 1 - 1 of 1',
     );
     assert.strictEqual(page.materials.textFilter.value, 'session1title');
     await page.materials.textFilter.set('');
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 25 of 206'
+      'Showing 1 - 25 of 206',
     );
     await page.materials.topPaginator.controls.limit.set(50);
     await page.materials.topPaginator.controls.nextPage.click();
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 51 - 100 of 206'
+      'Showing 51 - 100 of 206',
     );
     await page.materials.textFilter.set('session title');
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 50 of 200'
+      'Showing 1 - 50 of 200',
     );
   });
 
@@ -461,25 +461,25 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     await page.visit({ course: 1 });
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 3 of 3'
+      'Showing 1 - 3 of 3',
     );
     assert.ok(page.materials.courseFilter.options[1].isSelected);
     await page.materials.courseFilter.set('');
     assert.ok(page.materials.courseFilter.options[0].isSelected);
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 25 of 206'
+      'Showing 1 - 25 of 206',
     );
     await page.materials.topPaginator.controls.limit.set(50);
     await page.materials.topPaginator.controls.nextPage.click();
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 51 - 100 of 206'
+      'Showing 51 - 100 of 206',
     );
     await page.materials.textFilter.set('session title');
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 50 of 200'
+      'Showing 1 - 50 of 200',
     );
   });
 
@@ -492,7 +492,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     await page.visit({ course: 4 });
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 0 of 0'
+      'Showing 1 - 0 of 0',
     );
     assert.strictEqual(page.materials.courseFilter.options.length, 6);
     assert.strictEqual(page.materials.courseFilter.options[0].text, 'All Courses');
@@ -514,7 +514,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     await page.visit({ course: 10000 });
     assert.strictEqual(
       page.materials.topPaginator.controls.pagerDetails.text,
-      'Showing 1 - 0 of 0'
+      'Showing 1 - 0 of 0',
     );
     assert.strictEqual(page.materials.courseFilter.options.length, 6);
     assert.strictEqual(page.materials.courseFilter.options[0].text, 'All Courses');

@@ -115,7 +115,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.current[0].title, 'learning material 0');
       assert.strictEqual(
         page.details.learningMaterials.current[0].userNameInfo.fullName,
-        '0 guy M. Mc0son'
+        '0 guy M. Mc0son',
       );
       assert.notOk(page.details.learningMaterials.current[0].userNameInfo.hasAdditionalInfo);
       assert.strictEqual(page.details.learningMaterials.current[0].required, 'No');
@@ -123,21 +123,21 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.notOk(page.details.learningMaterials.current[0].isNotePublic);
       assert.strictEqual(
         page.details.learningMaterials.current[0].mesh,
-        'descriptor 1 descriptor 2'
+        'descriptor 1 descriptor 2',
       );
       assert.strictEqual(page.details.learningMaterials.current[0].status, 'status 0');
 
       assert.strictEqual(page.details.learningMaterials.current[1].title, 'learning material 1');
       assert.strictEqual(
         page.details.learningMaterials.current[1].userNameInfo.fullName,
-        'Clem Chowder'
+        'Clem Chowder',
       );
       assert.ok(page.details.learningMaterials.current[1].userNameInfo.hasAdditionalInfo);
       assert.notOk(page.details.learningMaterials.current[1].userNameInfo.isTooltipVisible);
       await page.details.learningMaterials.current[1].userNameInfo.expandTooltip();
       assert.strictEqual(
         page.details.learningMaterials.current[1].userNameInfo.tooltipContents,
-        'Campus name of record: 1 guy M, Mc1son'
+        'Campus name of record: 1 guy M, Mc1son',
       );
       await page.details.learningMaterials.current[1].userNameInfo.closeTooltip();
       assert.notOk(page.details.learningMaterials.current[1].userNameInfo.isTooltipVisible);
@@ -151,7 +151,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.current[2].title, 'learning material 2');
       assert.strictEqual(
         page.details.learningMaterials.current[2].userNameInfo.fullName,
-        '0 guy M. Mc0son'
+        '0 guy M. Mc0son',
       );
       assert.notOk(page.details.learningMaterials.current[2].userNameInfo.hasAdditionalInfo);
       assert.strictEqual(page.details.learningMaterials.current[2].required, 'Yes');
@@ -164,7 +164,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.current[3].title, 'learning material 3');
       assert.strictEqual(
         page.details.learningMaterials.current[3].userNameInfo.fullName,
-        '0 guy M. Mc0son'
+        '0 guy M. Mc0son',
       );
       assert.notOk(page.details.learningMaterials.current[3].userNameInfo.hasAdditionalInfo);
       assert.strictEqual(page.details.learningMaterials.current[3].required, 'Yes');
@@ -189,13 +189,13 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       await page.details.learningMaterials.pickNew('Web Link');
       assert.notOk(
         page.details.learningMaterials.search.isVisible,
-        'search box is hidden while new group are being added'
+        'search box is hidden while new group are being added',
       );
 
       await page.details.learningMaterials.newLearningMaterial.name(testTitle);
       assert.strictEqual(
         page.details.learningMaterials.newLearningMaterial.owningUser.userNameInfo.fullName,
-        '0 guy M. Mc0son'
+        '0 guy M. Mc0son',
       );
       await page.details.learningMaterials.newLearningMaterial.author(testAuthor);
       await page.details.learningMaterials.newLearningMaterial.url.set(testUrl);
@@ -225,13 +225,13 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       await page.details.learningMaterials.pickNew('Citation');
       assert.notOk(
         page.details.learningMaterials.search.isVisible,
-        'search box is hidden while new group are being added'
+        'search box is hidden while new group are being added',
       );
 
       await page.details.learningMaterials.newLearningMaterial.name(testTitle);
       assert.strictEqual(
         page.details.learningMaterials.newLearningMaterial.owningUser.userNameInfo.fullName,
-        '0 guy M. Mc0son'
+        '0 guy M. Mc0son',
       );
       await page.details.learningMaterials.newLearningMaterial.author(testAuthor);
       await page.details.learningMaterials.newLearningMaterial.citation(testCitation);
@@ -281,7 +281,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
       assert.strictEqual(
         await page.details.learningMaterials.manager.description.editorValue(),
-        '<p>0 lm description</p>'
+        '<p>0 lm description</p>',
       );
       assert.ok(page.details.learningMaterials.manager.hasFile);
       assert.ok(page.details.learningMaterials.manager.hasCopyrightPermission);
@@ -301,14 +301,14 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
       assert.strictEqual(
         await page.details.learningMaterials.manager.description.editorValue(),
-        '<p>1 lm description</p>'
+        '<p>1 lm description</p>',
       );
       assert.ok(page.details.learningMaterials.manager.hasFile);
       assert.notOk(page.details.learningMaterials.manager.hasCopyrightPermission);
       assert.ok(page.details.learningMaterials.manager.hasCopyrightRationale);
       assert.strictEqual(
         page.details.learningMaterials.manager.copyrightRationale,
-        'reason is thus'
+        'reason is thus',
       );
       assert.notOk(page.details.learningMaterials.manager.hasLink);
       assert.notOk(page.details.learningMaterials.manager.hasCitation);
@@ -324,14 +324,14 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
       assert.strictEqual(
         await page.details.learningMaterials.manager.description.editorValue(),
-        '<p>1 lm description</p>'
+        '<p>1 lm description</p>',
       );
       assert.strictEqual(page.details.learningMaterials.manager.uploadDate, '3/14/2011');
       assert.ok(page.details.learningMaterials.manager.hasFile);
       assert.strictEqual(page.details.learningMaterials.manager.downloadText, 'filename');
       assert.strictEqual(
         page.details.learningMaterials.manager.downloadUrl,
-        'http://example.com/file'
+        'http://example.com/file',
       );
       assert.notOk(page.details.learningMaterials.manager.hasLink);
       assert.notOk(page.details.learningMaterials.manager.hasCitation);
@@ -347,11 +347,11 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.manager.author, 'Hunter Pence');
       assert.strictEqual(
         await page.details.learningMaterials.manager.description.editorValue(),
-        '<p>2 lm description</p>'
+        '<p>2 lm description</p>',
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.uploadDate,
-        this.intl.formatDate(today.toJSDate())
+        this.intl.formatDate(today.toJSDate()),
       );
       assert.ok(page.details.learningMaterials.manager.hasLink);
       assert.strictEqual(page.details.learningMaterials.manager.link, 'www.example.com');
@@ -372,7 +372,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.manager.author, 'Willie Mays');
       assert.strictEqual(
         await page.details.learningMaterials.manager.description.editorValue(),
-        '<p>3 lm description</p>'
+        '<p>3 lm description</p>',
       );
       assert.strictEqual(page.details.learningMaterials.manager.uploadDate, '12/12/2016');
       assert.ok(page.details.learningMaterials.manager.hasCitation);
@@ -403,7 +403,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.current[0].title, 'learning material 0');
       assert.strictEqual(
         page.details.learningMaterials.current[0].userNameInfo.fullName,
-        '0 guy M. Mc0son'
+        '0 guy M. Mc0son',
       );
       assert.strictEqual(page.details.learningMaterials.current[0].required, 'Yes');
       assert.notOk(page.details.learningMaterials.current[0].isNotePublic);
@@ -413,11 +413,11 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       await page.details.learningMaterials.current[0].details();
       assert.strictEqual(
         await page.details.learningMaterials.manager.notes.value(),
-        `<p>${newNote}</p>`
+        `<p>${newNote}</p>`,
       );
       assert.strictEqual(
         await page.details.learningMaterials.manager.description.editorValue(),
-        `<p>${newDescription}</p>`
+        `<p>${newDescription}</p>`,
       );
       assert.strictEqual(page.details.learningMaterials.manager.statusValue, '3');
     });
@@ -455,14 +455,14 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.current[0].title, 'learning material 0');
       assert.strictEqual(
         page.details.learningMaterials.current[0].userNameInfo.fullName,
-        '0 guy M. Mc0son'
+        '0 guy M. Mc0son',
       );
       assert.strictEqual(page.details.learningMaterials.current[0].required, 'No');
       assert.strictEqual(page.details.learningMaterials.current[0].notes, 'No');
       assert.notOk(page.details.learningMaterials.current[0].isNotePublic);
       assert.strictEqual(
         page.details.learningMaterials.current[0].mesh,
-        'descriptor 1 descriptor 2'
+        'descriptor 1 descriptor 2',
       );
       assert.strictEqual(page.details.learningMaterials.current[0].status, 'status 0');
 
@@ -470,7 +470,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(await page.details.learningMaterials.manager.notes.value(), '');
       assert.strictEqual(
         await page.details.learningMaterials.manager.description.editorValue(),
-        '<p>0 lm description</p>'
+        '<p>0 lm description</p>',
       );
       assert.strictEqual(page.details.learningMaterials.manager.statusValue, '1');
     });
@@ -483,25 +483,25 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       await page.details.learningMaterials.current[0].details();
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms.length,
-        2
+        2,
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[0].title,
-        'descriptor 1'
+        'descriptor 1',
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[1].title,
-        'descriptor 2'
+        'descriptor 2',
       );
       await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.searchResults.length,
-        6
+        6,
       );
       for (let i = 0; i < 6; i++) {
         assert.strictEqual(
           page.details.learningMaterials.manager.meshManager.searchResults[i].title,
-          `descriptor ${i}`
+          `descriptor ${i}`,
         );
       }
       assert.notOk(page.details.learningMaterials.manager.meshManager.searchResults[0].isDisabled);
@@ -514,19 +514,19 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.ok(page.details.learningMaterials.manager.meshManager.searchResults[0].isDisabled);
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms.length,
-        3
+        3,
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[0].title,
-        'descriptor 0'
+        'descriptor 0',
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[1].title,
-        'descriptor 1'
+        'descriptor 1',
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[2].title,
-        'descriptor 2'
+        'descriptor 2',
       );
     });
 
@@ -537,23 +537,23 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       await page.details.learningMaterials.current[0].details();
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms.length,
-        2
+        2,
       );
       await page.details.learningMaterials.manager.meshManager.selectedTerms[0].remove();
       await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
       await page.details.learningMaterials.manager.meshManager.searchResults[0].add();
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[0].title,
-        'descriptor 0'
+        'descriptor 0',
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[1].title,
-        'descriptor 2'
+        'descriptor 2',
       );
       await page.details.learningMaterials.manager.save();
       assert.strictEqual(
         page.details.learningMaterials.current[0].mesh,
-        'descriptor 0 descriptor 2'
+        'descriptor 0 descriptor 2',
       );
     });
 
@@ -564,23 +564,23 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       await page.details.learningMaterials.current[0].details();
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms.length,
-        2
+        2,
       );
       await page.details.learningMaterials.manager.meshManager.selectedTerms[0].remove();
       await page.details.learningMaterials.manager.meshManager.search.set('descriptor');
       await page.details.learningMaterials.manager.meshManager.searchResults[0].add();
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[0].title,
-        'descriptor 0'
+        'descriptor 0',
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.meshManager.selectedTerms[1].title,
-        'descriptor 2'
+        'descriptor 2',
       );
       await page.details.learningMaterials.manager.cancel();
       assert.strictEqual(
         page.details.learningMaterials.current[0].mesh,
-        'descriptor 1 descriptor 2'
+        'descriptor 1 descriptor 2',
       );
     });
 
@@ -593,24 +593,24 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
 
       assert.strictEqual(
         page.details.learningMaterials.search.searchResults[0].title,
-        'Letter to Doc Brown'
+        'Letter to Doc Brown',
       );
       assert.ok(page.details.learningMaterials.search.searchResults[0].hasFileIcon);
       assert.strictEqual(
         page.details.learningMaterials.search.searchResults[0].properties.length,
-        3
+        3,
       );
       assert.strictEqual(
         page.details.learningMaterials.search.searchResults[0].properties[0].value,
-        'Owner: 0 guy M. Mc0son'
+        'Owner: 0 guy M. Mc0son',
       );
       assert.strictEqual(
         page.details.learningMaterials.search.searchResults[0].properties[1].value,
-        'Content Author: ' + 'Marty McFly'
+        'Content Author: ' + 'Marty McFly',
       );
       assert.strictEqual(
         page.details.learningMaterials.search.searchResults[0].properties[2].value,
-        'Upload date: 3/3/2016'
+        'Upload date: 3/3/2016',
       );
       await page.details.learningMaterials.search.searchResults[0].add();
       assert.strictEqual(page.details.learningMaterials.current.length, 5);
@@ -640,7 +640,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       });
       assert.strictEqual(
         page.details.learningMaterials.manager.timedReleaseSummary,
-        `(Available: ${formattedNewDate})`
+        `(Available: ${formattedNewDate})`,
       );
     });
 
@@ -658,7 +658,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       await page.details.learningMaterials.manager.addStartDate();
 
       await page.details.learningMaterials.manager.startDate.datePicker.set(
-        newStartDate.toJSDate()
+        newStartDate.toJSDate(),
       );
       await page.details.learningMaterials.manager.startTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.startTime.timePicker.minute.select('10');
@@ -689,7 +689,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       });
       assert.strictEqual(
         page.details.learningMaterials.manager.timedReleaseSummary,
-        `(Available: ${formattedStartDate} until ${formattedEndDate})`
+        `(Available: ${formattedStartDate} until ${formattedEndDate})`,
       );
     });
 
@@ -717,7 +717,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       });
       assert.strictEqual(
         page.details.learningMaterials.manager.timedReleaseSummary,
-        `(Available until ${formattedNewDate})`
+        `(Available until ${formattedNewDate})`,
       );
     });
 
@@ -753,7 +753,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       });
       assert.strictEqual(
         page.details.learningMaterials.manager.timedReleaseSummary,
-        `(Available: ${formattedDate} until ${formattedDate})`
+        `(Available: ${formattedDate} until ${formattedDate})`,
       );
     });
 
@@ -862,7 +862,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.current[0].title, 'learning material 0');
       assert.strictEqual(
         page.details.learningMaterials.current[0].userNameInfo.fullName,
-        '0 guy M. Mc0son'
+        '0 guy M. Mc0son',
       );
       assert.notOk(page.details.learningMaterials.current[0].userNameInfo.hasAdditionalInfo);
       assert.strictEqual(page.details.learningMaterials.current[0].required, 'No');
@@ -870,7 +870,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.notOk(page.details.learningMaterials.current[0].isNotePublic);
       assert.strictEqual(
         page.details.learningMaterials.current[0].mesh,
-        'descriptor 1 descriptor 2'
+        'descriptor 1 descriptor 2',
       );
       assert.strictEqual(page.details.learningMaterials.current[0].status, 'status 0');
     });
@@ -886,7 +886,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
       assert.strictEqual(
         page.details.learningMaterials.manager.description.value,
-        '0 lm description'
+        '0 lm description',
       );
       assert.ok(page.details.learningMaterials.manager.hasFile);
       assert.ok(page.details.learningMaterials.manager.hasCopyrightPermission);

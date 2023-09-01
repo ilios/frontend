@@ -14,7 +14,7 @@ export function AfterDate(property, validationOptions) {
         validate(value, { constraints, object: target, property }) {
           if (!constraints[0]) {
             throw new Error(
-              `You must pass the name of a property that ${property} is after as the first argument to AfterDate`
+              `You must pass the name of a property that ${property} is after as the first argument to AfterDate`,
             );
           }
           const afterKey = constraints[0];

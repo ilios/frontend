@@ -61,7 +61,7 @@ module('Acceptance | Session - Publish All', function (hooks) {
 
     assert.strictEqual(
       page.publishAllSessions.review.confirmation,
-      'Publish 2, schedule 0, and ignore 0 sessions'
+      'Publish 2, schedule 0, and ignore 0 sessions',
     );
 
     await page.publishAllSessions.review.save();
@@ -117,7 +117,7 @@ module('Acceptance | Session - Publish All', function (hooks) {
 
     assert.strictEqual(
       page.publishAllSessions.review.confirmation,
-      'Publish 2, schedule 0, and ignore 0 sessions'
+      'Publish 2, schedule 0, and ignore 0 sessions',
     );
 
     await page.publishAllSessions.review.save();

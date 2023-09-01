@@ -149,7 +149,7 @@ export default class CurrentUserService extends Service {
 
     const sessions = await user.get('administeredSessions');
     const matches = sessions.filter((session) =>
-      schoolCourseIds.includes(session.belongsTo('course').id())
+      schoolCourseIds.includes(session.belongsTo('course').id()),
     );
 
     return matches.length > 0;
@@ -169,7 +169,7 @@ export default class CurrentUserService extends Service {
 
     const reports = await user.get('administeredCurriculumInventoryReports');
     const matches = reports.filter((report) =>
-      schoolProgramIds.includes(report.belongsTo('program').id())
+      schoolProgramIds.includes(report.belongsTo('program').id()),
     );
 
     return matches.length > 0;
@@ -193,7 +193,7 @@ export default class CurrentUserService extends Service {
 
     const sessions = await user.get('administeredSessions');
     const matches = sessions.filter(
-      (session) => course.get('id') === session.belongsTo('course').id()
+      (session) => course.get('id') === session.belongsTo('course').id(),
     );
 
     return matches.length > 0;
@@ -233,7 +233,7 @@ export default class CurrentUserService extends Service {
 
     const programYears = await user.get('programYears');
     const matches = programYears.filter(
-      (programYear) => program.get('id') === programYear.belongsTo('program').id()
+      (programYear) => program.get('id') === programYear.belongsTo('program').id(),
     );
 
     return matches.length > 0;

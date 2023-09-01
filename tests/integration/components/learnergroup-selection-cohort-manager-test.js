@@ -37,11 +37,11 @@ module('Integration | Component | learnergroup-selection-cohort-manager', functi
     this.topLevelLearnerGroup1 = await store.findRecord('learner-group', topLevelLearnerGroup1.id);
     this.secondLevelLearnerGroup1 = await store.findRecord(
       'learner-group',
-      secondLevelLearnerGroup1.id
+      secondLevelLearnerGroup1.id,
     );
     this.secondLevelLearnerGroup2 = await store.findRecord(
       'learner-group',
-      secondLevelLearnerGroup2.id
+      secondLevelLearnerGroup2.id,
     );
   });
 

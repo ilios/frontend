@@ -86,7 +86,7 @@ export default class SessionsGridOffering extends Component {
       learnerGroups,
       learners,
       instructorGroups,
-      instructors
+      instructors,
     ) => {
       this.args.offering.setProperties({
         startDate,
@@ -100,7 +100,7 @@ export default class SessionsGridOffering extends Component {
       });
       await this.args.offering.save();
       this.updateUi.perform();
-    }
+    },
   );
 
   updateUi = restartableTask(async () => {

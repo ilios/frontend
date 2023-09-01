@@ -45,7 +45,7 @@ export default class InstructorGroupModel extends Model {
   get _coursesFromOfferings() {
     if (this._offeringSessionsData?.isResolved) {
       return new TrackedAsyncData(
-        Promise.all(this._offeringSessionsData.value.map((s) => s.course))
+        Promise.all(this._offeringSessionsData.value.map((s) => s.course)),
       );
     }
 
@@ -56,7 +56,7 @@ export default class InstructorGroupModel extends Model {
   get _ilmSessionSessionsData() {
     if (this._ilmSessionsData.isResolved) {
       return new TrackedAsyncData(
-        Promise.all(this._ilmSessionsData.value.map((ilm) => ilm.session))
+        Promise.all(this._ilmSessionsData.value.map((ilm) => ilm.session)),
       );
     }
 
@@ -67,7 +67,7 @@ export default class InstructorGroupModel extends Model {
   get _coursesFromilmSessions() {
     if (this._ilmSessionSessionsData?.isResolved) {
       return new TrackedAsyncData(
-        Promise.all(this._ilmSessionSessionsData.value.map((s) => s.course))
+        Promise.all(this._ilmSessionSessionsData.value.map((s) => s.course)),
       );
     }
 

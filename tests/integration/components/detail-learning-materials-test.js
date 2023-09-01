@@ -93,7 +93,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     assert.ok(component.current[0].userNameInfo.isTooltipVisible);
     assert.strictEqual(
       component.current[0].userNameInfo.tooltipContents,
-      'Campus name of record: 1 guy M, Mc1son'
+      'Campus name of record: 1 guy M, Mc1son',
     );
     await component.current[0].userNameInfo.closeTooltip();
     assert.notOk(component.current[0].userNameInfo.isTooltipVisible);

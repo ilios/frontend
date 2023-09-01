@@ -20,7 +20,7 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
         name: 'test',
       },
       this.intl,
-      'hh'
+      'hh',
     );
     assert.strictEqual(result.toString(), 'TBD<br />08 - 08<br />test');
   });
@@ -39,11 +39,11 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
         offering: 1,
       },
       this.intl,
-      'hh'
+      'hh',
     );
     assert.strictEqual(
       result.toString(),
-      'room 101<br />08 - 08<br />test<br /> Taught By Larry, Curly et al.<br />Course: Intro 101<br />Session Type: lecture'
+      'room 101<br />08 - 08<br />test<br /> Taught By Larry, Curly et al.<br />Course: Intro 101<br />Session Type: lecture',
     );
   });
 
@@ -62,11 +62,11 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
         ilmSession: 1,
       },
       this.intl,
-      'hh'
+      'hh',
     );
     assert.strictEqual(
       result.toString(),
-      'room 101<br />ILM - Due By 08<br />test<br /> Taught By Larry, Curly et al.<br />Course: Intro 101<br />Session Type: lecture'
+      'room 101<br />ILM - Due By 08<br />test<br /> Taught By Larry, Curly et al.<br />Course: Intro 101<br />Session Type: lecture',
     );
   });
 });

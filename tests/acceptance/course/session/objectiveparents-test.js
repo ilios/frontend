@@ -37,16 +37,16 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'session objective 0'
+      'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
-      'course objective 1'
+      'course objective 1',
     );
 
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
@@ -71,16 +71,16 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'session objective 0'
+      'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
-      'course objective 1'
+      'course objective 1',
     );
 
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
@@ -95,16 +95,16 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'session objective 0'
+      'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'course objective 1'
+      'course objective 1',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
-      'course objective 2'
+      'course objective 2',
     );
   });
 
@@ -118,16 +118,16 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'session objective 0'
+      'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
-      'course objective 1'
+      'course objective 1',
     );
 
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
@@ -142,16 +142,16 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'session objective 0'
+      'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
-      'course objective 1'
+      'course objective 1',
     );
   });
 
@@ -165,16 +165,16 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'session objective 0'
+      'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
-      'course objective 1'
+      'course objective 1',
     );
 
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
@@ -189,7 +189,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'session objective 0'
+      'session objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
   });

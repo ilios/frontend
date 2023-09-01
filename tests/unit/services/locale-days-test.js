@@ -115,7 +115,7 @@ module('Unit | Service | locale-days', function (hooks) {
         month: 10,
         day: 9,
         hour: 10,
-      }).toJSDate()
+      }).toJSDate(),
     );
     const service = this.owner.lookup('service:locale-days');
     assert.strictEqual(DateTime.fromJSDate(service.firstDayOfThisWeek).day, 9);
@@ -165,7 +165,7 @@ module('Unit | Service | locale-days', function (hooks) {
         month: 10,
         day: 9,
         hour: 10,
-      }).toJSDate()
+      }).toJSDate(),
     );
     const service = this.owner.lookup('service:locale-days');
     assert.strictEqual(DateTime.fromJSDate(service.firstDayOfThisWeek).day, 3);
@@ -215,7 +215,7 @@ module('Unit | Service | locale-days', function (hooks) {
         month: 10,
         day: 9,
         hour: 10,
-      }).toJSDate()
+      }).toJSDate(),
     );
     const service = this.owner.lookup('service:locale-days');
     assert.strictEqual(DateTime.fromJSDate(service.firstDayOfThisWeek).day, 3);
@@ -265,7 +265,7 @@ module('Unit | Service | locale-days', function (hooks) {
         month: 10,
         day: 9,
         hour: 10,
-      }).toJSDate()
+      }).toJSDate(),
     );
     const service = this.owner.lookup('service:locale-days');
     assert.strictEqual(DateTime.fromJSDate(service.lastDayOfThisWeek).day, 15);
@@ -327,7 +327,7 @@ module('Unit | Service | locale-days', function (hooks) {
         month: 10,
         day: 9,
         hour: 10,
-      }).toJSDate()
+      }).toJSDate(),
     );
     const service = this.owner.lookup('service:locale-days');
     assert.strictEqual(DateTime.fromJSDate(service.lastDayOfThisWeek).day, 9);
@@ -389,7 +389,7 @@ module('Unit | Service | locale-days', function (hooks) {
         month: 10,
         day: 9,
         hour: 10,
-      }).toJSDate()
+      }).toJSDate(),
     );
     const service = this.owner.lookup('service:locale-days');
     assert.strictEqual(DateTime.fromJSDate(service.lastDayOfThisWeek).day, 9);

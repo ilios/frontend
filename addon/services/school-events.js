@@ -30,7 +30,7 @@ export default class SchoolEvents extends EventsBase {
 
     return sortBy(
       data.events.map((obj) => this.createEventFromData(obj, false)),
-      ['startDate', 'name']
+      ['startDate', 'name'],
     );
   }
 

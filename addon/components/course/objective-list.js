@@ -76,7 +76,7 @@ export default class CourseObjectiveListComponent extends Component {
       const program = await programYear.program;
       const school = await program.school;
       const allowMultipleCourseObjectiveParents = await school.getConfigValue(
-        'allowMultipleCourseObjectiveParents'
+        'allowMultipleCourseObjectiveParents',
       );
       const objectives = await programYear.programYearObjectives;
       const objectiveObjects = await map(objectives.slice(), async (objective) => {

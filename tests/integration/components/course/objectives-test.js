@@ -46,18 +46,18 @@ module('Integration | Component | course/objectives', function (hooks) {
     assert.strictEqual(component.objectiveList.objectives.length, 2);
     assert.strictEqual(
       component.objectiveList.objectives[0].description.text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(component.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
       component.objectiveList.objectives[0].parents.list[0].text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.empty);
 
     assert.strictEqual(
       component.objectiveList.objectives[1].description.text,
-      'course objective 1'
+      'course objective 1',
     );
     assert.ok(component.objectiveList.objectives[1].parents.empty);
     assert.ok(component.objectiveList.objectives[1].meshDescriptors.empty);
@@ -99,7 +99,7 @@ module('Integration | Component | course/objectives', function (hooks) {
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(
       component.objectiveList.objectives[0].description.text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(component.objectiveList.objectives[0].parents.list.length, 1);
     await component.objectiveList.objectives[0].parents.list[0].manage();
@@ -175,7 +175,7 @@ module('Integration | Component | course/objectives', function (hooks) {
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(
       component.objectiveList.objectives[0].description.text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(component.objectiveList.objectives[0].parents.list.length, 1);
     await component.objectiveList.objectives[0].parents.list[0].manage();

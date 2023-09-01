@@ -56,7 +56,7 @@ export default class IliosJWT extends Base {
         await this.invalidate();
         this.trigger('sessionDataInvalidated');
       },
-      wait
+      wait,
     );
   }
 

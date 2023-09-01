@@ -33,7 +33,7 @@ export default async function preloadCourse(store, courseModel) {
     promises.push(
       store.query('session-learning-material', {
         filters: { session: sessions },
-      })
+      }),
     );
     promises.push(store.query('session-objective', { filters: { session: sessions } }));
   } else {
@@ -44,7 +44,7 @@ export default async function preloadCourse(store, courseModel) {
       promises.push(
         store.query('session-learning-material', {
           filters: { session: slice },
-        })
+        }),
       );
       promises.push(store.query('session-objective', { filters: { session: slice } }));
     }

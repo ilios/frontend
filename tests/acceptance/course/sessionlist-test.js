@@ -15,7 +15,7 @@ module('Acceptance | Course - Session List', function (hooks) {
       DateTime.fromObject({
         month: 4,
         day: 1,
-      }).toJSDate()
+      }).toJSDate(),
     );
     this.today = DateTime.fromObject({ hour: 8 });
     this.school = this.server.create('school');
@@ -105,7 +105,7 @@ module('Acceptance | Course - Session List', function (hooks) {
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
     assert.strictEqual(sessions[0].row.offeringCount, '3');
     assert.notOk(sessions[0].row.hasInstructionalNotes);
@@ -216,7 +216,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     await sessions[0].row.expand();
     assert.strictEqual(
       expandedSessions[0].lastUpdated,
-      'Last Update Last Update: 7/9/2019, 5:00 PM'
+      'Last Update Last Update: 7/9/2019, 5:00 PM',
     );
   });
 
@@ -354,7 +354,7 @@ module('Acceptance | Course - Session List', function (hooks) {
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
     await sessions[0].row.expand();
     await offerings[0].edit();
@@ -374,7 +374,7 @@ module('Acceptance | Course - Session List', function (hooks) {
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
   });
 
@@ -434,7 +434,7 @@ module('Acceptance | Course - Session List', function (hooks) {
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
     await sessions[0].row.expand();
     await offerings[0].edit();

@@ -68,7 +68,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.ok(component.hasDescription);
     assert.strictEqual(
       component.description.content.text,
-      'Best Session For SureLorem ipsum dolor sit amet, c'
+      'Best Session For SureLorem ipsum dolor sit amet, c',
     );
     assert.strictEqual(component.learningMaterials.materials.length, 3);
     assert.strictEqual(component.learningMaterials.materials[0].title, 'Citation LM');
@@ -93,7 +93,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.notOk(component.learningMaterials.materials[2].hasPublicNotes);
     assert.strictEqual(
       component.learningMaterials.materials[2].url,
-      'http://myhost.com/url1?inline'
+      'http://myhost.com/url1?inline',
     );
 
     assert.notOk(component.hasInstructors);
@@ -148,7 +148,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.strictEqual(component.learningMaterials.materials[0].publicNotes, 'slide notes');
     assert.strictEqual(
       component.learningMaterials.materials[0].url,
-      'http://myhost.com/url1?inline'
+      'http://myhost.com/url1?inline',
     );
 
     assert.ok(component.hasInstructors);
@@ -211,7 +211,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.ok(component.hasDescription);
     assert.strictEqual(
       component.description.content.text,
-      'Best Session For Sure' + 'Lorem ipsum dolor sit amet, c'
+      'Best Session For Sure' + 'Lorem ipsum dolor sit amet, c',
     );
     assert.strictEqual(component.learningMaterials.materials.length, 3);
     assert.strictEqual(component.learningMaterials.materials[0].title, 'In the window');
@@ -319,7 +319,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.notOk(component.learningMaterials.materials[1].hasPublicNotes);
     assert.strictEqual(
       component.learningMaterials.materials[1].url,
-      'http://myhost.com/url1?inline'
+      'http://myhost.com/url1?inline',
     );
   });
 

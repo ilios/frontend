@@ -74,7 +74,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
     });
     await render(
       hbs`<PagedlistControls @offset={{90}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />
-`
+`,
     );
     await component.previousPage.click();
   });
@@ -86,7 +86,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
     });
     await render(
       hbs`<PagedlistControls @offset={{0}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />
-`
+`,
     );
     await component.nextPage.click();
   });
@@ -98,7 +98,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
     });
     await render(
       hbs`<PagedlistControls @offset={{50}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />
-`
+`,
     );
     await component.firstPage.click();
   });
@@ -110,7 +110,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
     });
     await render(
       hbs`<PagedlistControls @offset={{50}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />
-`
+`,
     );
     await component.lastPage.click();
   });

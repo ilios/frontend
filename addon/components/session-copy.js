@@ -56,7 +56,7 @@ export default class SessionCopyComponent extends Component {
     }
     return sortBy(
       this.allCourses.filter((course) => course.year === this.bestSelectedYear),
-      'title'
+      'title',
     );
   }
 
@@ -97,8 +97,8 @@ export default class SessionCopyComponent extends Component {
         'equipmentRequired',
         'supplemental',
         'attendanceRequired',
-        'instructionalNotes'
-      )
+        'instructionalNotes',
+      ),
     );
 
     session.set('course', newCourse);
@@ -110,7 +110,7 @@ export default class SessionCopyComponent extends Component {
     if (ilmToCopy) {
       const ilm = this.store.createRecord(
         'ilmSession',
-        ilmToCopy.getProperties('hours', 'dueDate')
+        ilmToCopy.getProperties('hours', 'dueDate'),
       );
       ilm.set('session', session);
       toSave.push(ilm);
@@ -122,7 +122,7 @@ export default class SessionCopyComponent extends Component {
       const lm = await learningMaterialToCopy.learningMaterial;
       const learningMaterial = this.store.createRecord(
         'sessionLearningMaterial',
-        learningMaterialToCopy.getProperties('notes', 'required', 'publicNotes', 'position')
+        learningMaterialToCopy.getProperties('notes', 'required', 'publicNotes', 'position'),
       );
       learningMaterial.set('learningMaterial', lm);
       learningMaterial.set('session', session);

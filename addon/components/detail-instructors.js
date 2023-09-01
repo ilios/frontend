@@ -112,7 +112,7 @@ export default class DetailInstructorsComponent extends Component {
   @action
   removeInstructorGroupFromBuffer(instructorGroup) {
     this.instructorGroupBuffer = this.instructorGroupBuffer.filter(
-      (obj) => obj.id !== instructorGroup.id
+      (obj) => obj.id !== instructorGroup.id,
     );
   }
   @action

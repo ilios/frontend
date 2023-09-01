@@ -51,7 +51,7 @@ module('Integration | Component | editable field', function (hooks) {
       <p>
         &nbsp;
       </p>
-    `
+    `,
     );
     await render(hbs`<EditableField @value={{this.value}} />
 `);
@@ -77,7 +77,7 @@ module('Integration | Component | editable field', function (hooks) {
             </label>
           </EditableField>
 
-`
+`,
     );
     await click('[data-test-edit]');
     await triggerKeyEvent('.editinplace input', 'keyup', 13);
@@ -102,7 +102,7 @@ module('Integration | Component | editable field', function (hooks) {
             </label>
           </EditableField>
 
-`
+`,
     );
     await click('[data-test-edit]');
     await triggerKeyEvent('.editinplace input', 'keyup', 27);
@@ -118,7 +118,7 @@ module('Integration | Component | editable field', function (hooks) {
             <label><input>{{this.label}}</label>
           </EditableField>
 
-`
+`,
     );
     await click('[data-test-edit]');
     assert.dom('input', this.element).isFocused();
@@ -135,7 +135,7 @@ module('Integration | Component | editable field', function (hooks) {
             <textarea id="textarea"></textarea>
           </EditableField>
 
-`
+`,
     );
     await click('[data-test-edit]');
 
@@ -165,7 +165,7 @@ module('Integration | Component | editable field', function (hooks) {
           >
           </EditableField>
 
-`
+`,
     );
     assert.notOk(this.status);
     await click('[data-test-edit]');

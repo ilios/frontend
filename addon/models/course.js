@@ -122,7 +122,7 @@ export default class Course extends Model {
       return null;
     }
     return new TrackedAsyncData(
-      Promise.all(this._sessionsData.value.filter((s) => s.isPublished).map((s) => s.offerings))
+      Promise.all(this._sessionsData.value.filter((s) => s.isPublished).map((s) => s.offerings)),
     );
   }
 
@@ -175,7 +175,7 @@ export default class Course extends Model {
           id: domain.id,
           subCompetencies,
         };
-      })
+      }),
     );
   }
 
@@ -232,7 +232,7 @@ export default class Course extends Model {
         const programYear = await cohort.programYear;
         const program = await programYear.program;
         return program.school;
-      })
+      }),
     );
   }
 

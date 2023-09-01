@@ -26,13 +26,13 @@ export default class IliosCalendarMonthComponent extends Component {
 
   get singleDayEvents() {
     return this.nonIlmPreWorkEvents.filter((event) =>
-      DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day')
+      DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day'),
     );
   }
 
   get multiDayEventsList() {
     return this.nonIlmPreWorkEvents.filter(
-      (event) => !DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day')
+      (event) => !DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day'),
     );
   }
 

@@ -105,7 +105,7 @@ export default class VisualizerCourseInstructors extends Component {
 
     const totalMinutes = mapBy(sessionsWithInstructors, 'totalInstructionalTime').reduce(
       (total, minutes) => total + minutes,
-      0
+      0,
     );
     return instructorData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
@@ -138,7 +138,7 @@ export default class VisualizerCourseInstructors extends Component {
     this.router.transitionTo(
       'course-visualize-instructor',
       this.args.course.get('id'),
-      obj.meta.userId
+      obj.meta.userId,
     );
   }
 }

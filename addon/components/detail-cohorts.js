@@ -35,7 +35,7 @@ export default class DetailCohortsComponent extends Component {
       const programYearsToRemove = await map(removedCohorts, async (cohort) => cohort.programYear);
       const objectives = await course.courseObjectives;
       await all(
-        objectives.map((objective) => objective.removeParentWithProgramYears(programYearsToRemove))
+        objectives.map((objective) => objective.removeParentWithProgramYears(programYearsToRemove)),
       );
     }
     course.set('cohorts', this.bufferedCohorts);

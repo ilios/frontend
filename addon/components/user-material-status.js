@@ -69,7 +69,7 @@ export default class UserMaterialStatusComponent extends Component {
       const user = await this.currentUser.getModel();
       const sessionLearningMaterial = await this.store.findRecord(
         'session-learning-material',
-        this.args.learningMaterial.sessionLearningMaterial
+        this.args.learningMaterial.sessionLearningMaterial,
       );
       materialStatus = this.store.createRecord('user-session-material-status', {
         user,

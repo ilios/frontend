@@ -34,9 +34,9 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
           {
             filename: 'test.file',
             fileHash: '1234',
-          }
+          },
         );
-      })
+      }),
     );
     let filename = null;
     let fileHash = null;

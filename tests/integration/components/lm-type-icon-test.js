@@ -128,7 +128,7 @@ module('Integration | Component | lm type icon', function (hooks) {
     assert.strictEqual(
       this.element.querySelectorAll('.fa-li').length,
       0,
-      'List icon class is not applied by default.'
+      'List icon class is not applied by default.',
     );
 
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{false}} />

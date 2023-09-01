@@ -39,65 +39,65 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
 
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups.length,
-      3
+      3,
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 0'
+      'instructor group 0',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[0].members.members.length,
-      2
+      2,
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[0].members.members[0].text,
-      '7 guy M. Mc7son'
+      '7 guy M. Mc7son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[0].members.members[1].text,
-      '8 guy M. Mc8son'
+      '8 guy M. Mc8son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[1].members.members.length,
-      3
+      3,
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[1].members.members[0].text,
-      '10 guy M. Mc10son'
+      '10 guy M. Mc10son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[1].members.members[1].text,
-      '11 guy M. Mc11son'
+      '11 guy M. Mc11son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[1].members.members[2].text,
-      '9 guy M. Mc9son'
+      '9 guy M. Mc9son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[2].title,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[2].members.members.length,
-      0
+      0,
     );
 
     assert.strictEqual(page.details.instructors.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
   });
 
@@ -115,60 +115,60 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.strictEqual(manager.selectedInstructorGroups.instructorGroups.length, 3);
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 0'
+      'instructor group 0',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[0].members.members.length,
-      2
+      2,
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[0].members.members[0].userNameInfo.fullName,
-      '7 guy M. Mc7son'
+      '7 guy M. Mc7son',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[0].members.members[1].userNameInfo.fullName,
-      '8 guy M. Mc8son'
+      '8 guy M. Mc8son',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[1].members.members[0].userNameInfo.fullName,
-      '10 guy M. Mc10son'
+      '10 guy M. Mc10son',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[1].members.members[1].userNameInfo.fullName,
-      '11 guy M. Mc11son'
+      '11 guy M. Mc11son',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[1].members.members[2].userNameInfo.fullName,
-      '9 guy M. Mc9son'
+      '9 guy M. Mc9son',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[1].members.members.length,
-      3
+      3,
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[2].text,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[2].members.members.length,
-      0
+      0,
     );
     assert.strictEqual(manager.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       manager.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       manager.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       manager.selectedInstructors.instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
   });
 
@@ -253,68 +253,68 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.strictEqual(manager.selectedInstructorGroups.instructorGroups.length, 4);
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 0'
+      'instructor group 0',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[2].title,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[3].title,
-      'instructor group 3'
+      'instructor group 3',
     );
     assert.strictEqual(manager.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       manager.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       manager.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       manager.selectedInstructors.instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
 
     await page.details.instructors.save();
 
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups.length,
-      4
+      4,
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 0'
+      'instructor group 0',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[2].title,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[3].title,
-      'instructor group 3'
+      'instructor group 3',
     );
     assert.strictEqual(page.details.instructors.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
   });
 
@@ -335,68 +335,68 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.strictEqual(manager.selectedInstructorGroups.instructorGroups.length, 3);
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 0'
+      'instructor group 0',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[2].title,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(manager.selectedInstructors.instructors.length, 4);
     assert.strictEqual(
       manager.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       manager.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       manager.selectedInstructors.instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
     assert.strictEqual(
       manager.selectedInstructors.instructors[3].userNameInfo.fullName,
-      '4 guy M. Mc4son'
+      '4 guy M. Mc4son',
     );
 
     await page.details.instructors.save();
 
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups.length,
-      3
+      3,
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 0'
+      'instructor group 0',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[2].title,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(page.details.instructors.selectedInstructors.instructors.length, 4);
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[3].userNameInfo.fullName,
-      '4 guy M. Mc4son'
+      '4 guy M. Mc4son',
     );
   });
 
@@ -416,52 +416,52 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.strictEqual(manager.selectedInstructorGroups.instructorGroups.length, 2);
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(manager.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       manager.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       manager.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       manager.selectedInstructors.instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
 
     await page.details.instructors.save();
 
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups.length,
-      2
+      2,
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(page.details.instructors.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
   });
 
@@ -481,52 +481,52 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.strictEqual(manager.selectedInstructorGroups.instructorGroups.length, 3);
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 0'
+      'instructor group 0',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       manager.selectedInstructorGroups.instructorGroups[2].title,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(manager.selectedInstructors.instructors.length, 2);
     assert.strictEqual(
       manager.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       manager.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
 
     await page.details.instructors.save();
 
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups.length,
-      3
+      3,
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 0'
+      'instructor group 0',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[2].title,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(page.details.instructors.selectedInstructors.instructors.length, 2);
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
   });
 
@@ -548,32 +548,32 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
 
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups.length,
-      3
+      3,
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[0].title,
-      'instructor group 0'
+      'instructor group 0',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[1].title,
-      'instructor group 1'
+      'instructor group 1',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups[2].title,
-      'instructor group 2'
+      'instructor group 2',
     );
     assert.strictEqual(page.details.instructors.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       page.details.instructors.selectedInstructors.instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
   });
 

@@ -22,7 +22,7 @@ module('Integration | Component | click choice buttons', function (hooks) {
     assert.strictEqual(
       component.secondButton.text,
       'Right Button',
-      'second button has correct text'
+      'second button has correct text',
     );
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);
@@ -42,7 +42,7 @@ module('Integration | Component | click choice buttons', function (hooks) {
     assert.strictEqual(
       component.secondButton.text,
       'Right Button',
-      'second button has correct text'
+      'second button has correct text',
     );
     assert.notOk(component.firstButton.isActive);
     assert.ok(component.secondButton.isActive);

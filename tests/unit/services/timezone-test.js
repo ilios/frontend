@@ -13,7 +13,7 @@ module('Unit | Service | timezone', function (hooks) {
     const service = this.owner.lookup('service:timezone');
     assert.strictEqual(
       Intl.DateTimeFormat().resolvedOptions().timeZone,
-      service.getCurrentTimezone()
+      service.getCurrentTimezone(),
     );
   });
 

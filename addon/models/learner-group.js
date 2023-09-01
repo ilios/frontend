@@ -124,7 +124,7 @@ export default class LearnerGroup extends Model {
     }
 
     return uniqueValues(
-      [...this._offeringSessionsData.value, ...this._ilmSessionSessionsData.value].filter(Boolean)
+      [...this._offeringSessionsData.value, ...this._ilmSessionSessionsData.value].filter(Boolean),
     );
   }
 
@@ -173,7 +173,7 @@ export default class LearnerGroup extends Model {
     }
 
     return new TrackedAsyncData(
-      Promise.all(this._childrenData.value.map((c) => c.getAllDescendants()))
+      Promise.all(this._childrenData.value.map((c) => c.getAllDescendants())),
     );
   }
 
@@ -367,7 +367,7 @@ export default class LearnerGroup extends Model {
     }
 
     return new TrackedAsyncData(
-      Promise.all(this._instructorGroupsData.value.map((ig) => ig.users))
+      Promise.all(this._instructorGroupsData.value.map((ig) => ig.users)),
     );
   }
 
@@ -411,7 +411,7 @@ export default class LearnerGroup extends Model {
     }
 
     const subGroupsInNeedOfAccomodation = this.allDescendants?.filter(
-      (group) => group.needsAccommodation
+      (group) => group.needsAccommodation,
     );
 
     return subGroupsInNeedOfAccomodation?.length > 0;

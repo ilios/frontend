@@ -39,7 +39,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
         @editable={{true}}
         @course={{this.course}}
       />
-`
+`,
     );
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.headers[0].text, 'Description');
@@ -52,13 +52,13 @@ module('Integration | Component | course/objective-list', function (hooks) {
     assert.strictEqual(component.objectives[0].description.text, 'Objective B');
     assert.strictEqual(
       component.objectives[0].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
+      'Vocabulary 1 (school 0)',
     );
     assert.strictEqual(component.objectives[0].selectedTerms.list[0].terms[0].name, 'term 1');
     assert.strictEqual(component.objectives[1].description.text, 'Objective A');
     assert.strictEqual(
       component.objectives[1].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
+      'Vocabulary 1 (school 0)',
     );
     assert.strictEqual(component.objectives[1].selectedTerms.list[0].terms[0].name, 'term 0');
 
@@ -76,7 +76,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
         @editable={{true}}
         @course={{this.course}}
       />
-`
+`,
     );
     assert.notOk(component.sortIsVisible);
     assert.strictEqual(component.text, '');
@@ -93,7 +93,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
         @editable={{true}}
         @course={{this.course}}
       />
-`
+`,
     );
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.objectives.length, 1);

@@ -21,7 +21,7 @@ export default class SessionPostrequisiteEditorComponent extends Component {
     const course = await session.course;
     const sessions = await course.sessions;
     this.linkablePostrequisites = sortBy(sessions, 'title').filter(
-      (sessionInCourse) => sessionInCourse.id !== session.id
+      (sessionInCourse) => sessionInCourse.id !== session.id,
     );
   });
 

@@ -82,7 +82,7 @@ export default class WeeklyCalendarComponent extends Component {
             for: 'ilios-common',
             until: '72',
             since: '71',
-          }
+          },
         );
         event.startDate = DateTime.fromJSDate(event.startDate).toISO();
       }
@@ -106,7 +106,7 @@ export default class WeeklyCalendarComponent extends Component {
     return this.week.map((day) => {
       const dt = DateTime.fromJSDate(day.date);
       day.events = this.sortedEvents.filter((e) =>
-        dt.hasSame(DateTime.fromISO(e.startDate), 'day')
+        dt.hasSame(DateTime.fromISO(e.startDate), 'day'),
       );
       return day;
     });

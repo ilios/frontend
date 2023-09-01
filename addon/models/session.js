@@ -154,7 +154,7 @@ export default class SessionModel extends Model {
       return null;
     }
     return new TrackedAsyncData(
-      Promise.all(this._ilmSessionInstructorGroupsData.value.map((i) => i.users))
+      Promise.all(this._ilmSessionInstructorGroupsData.value.map((i) => i.users)),
     );
   }
 
@@ -180,7 +180,7 @@ export default class SessionModel extends Model {
       return null;
     }
     return new TrackedAsyncData(
-      Promise.all(this._offeringsData.value.map((o) => o.instructorGroups))
+      Promise.all(this._offeringsData.value.map((o) => o.instructorGroups)),
     );
   }
 
@@ -190,7 +190,7 @@ export default class SessionModel extends Model {
       return null;
     }
     return new TrackedAsyncData(
-      Promise.all(this._offeringInstructorGroups.value.flat().map((o) => o.users))
+      Promise.all(this._offeringInstructorGroups.value.flat().map((o) => o.users)),
     );
   }
 
@@ -210,7 +210,7 @@ export default class SessionModel extends Model {
     }
 
     return new TrackedAsyncData(
-      Promise.all(this._sessionObjectivesData.value.map((so) => so.courseObjectives))
+      Promise.all(this._sessionObjectivesData.value.map((so) => so.courseObjectives)),
     );
   }
 
@@ -220,7 +220,7 @@ export default class SessionModel extends Model {
     }
 
     const unlinkedSessionObectives = this._sessionObjectivesData.value.find(
-      (so) => so.hasMany('courseObjectives').ids().length === 0
+      (so) => so.hasMany('courseObjectives').ids().length === 0,
     );
 
     return Boolean(unlinkedSessionObectives);
@@ -406,7 +406,7 @@ export default class SessionModel extends Model {
     const ilmLearnerGroups = this.isIndependentLearning ? this._ilmLearnerGroupsData.value : [];
     return sortBy(
       uniqueValues([...this._offeringLearnerGroupsData.value.flat(), ...ilmLearnerGroups]),
-      'title'
+      'title',
     );
   }
 
@@ -538,7 +538,7 @@ export default class SessionModel extends Model {
     const allOfferingInstructors = await Promise.all(
       offerings.map(async (offering) => {
         return (await offering.getAllInstructors()).slice();
-      })
+      }),
     );
 
     return uniqueValues(allOfferingInstructors.flat());

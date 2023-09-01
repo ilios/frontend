@@ -126,40 +126,40 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.notOk(component.summary.title.hasLink);
     assert.strictEqual(
       component.sessionObjectives.objectiveList.title.expandCollapseSwitcher.ariaExpanded,
-      'true'
+      'true',
     );
     assert.strictEqual(
       component.sessionObjectives.objectiveList.title.expandCollapseSwitcher.ariaLabel,
-      'Hide objectives'
+      'Hide objectives',
     );
     assert.strictEqual(
       component.sessionLearningMaterials.expandCollapseSwitcher.ariaExpanded,
-      'true'
+      'true',
     );
     assert.strictEqual(
       component.sessionLearningMaterials.expandCollapseSwitcher.ariaLabel,
-      'Hide session materials'
+      'Hide session materials',
     );
     assert.strictEqual(component.sessionLearningMaterials.expandCollapseSwitcher.text, 'Materials');
     assert.strictEqual(
       component.courseObjectives.objectiveList.title.expandCollapseSwitcher.ariaExpanded,
-      'false'
+      'false',
     );
     assert.strictEqual(
       component.courseObjectives.objectiveList.title.expandCollapseSwitcher.ariaLabel,
-      'Show objectives'
+      'Show objectives',
     );
     assert.strictEqual(
       component.courseLearningMaterials.expandCollapseSwitcher.ariaExpanded,
-      'false'
+      'false',
     );
     assert.strictEqual(
       component.courseLearningMaterials.expandCollapseSwitcher.ariaLabel,
-      'Show course materials'
+      'Show course materials',
     );
     assert.strictEqual(
       component.courseLearningMaterials.expandCollapseSwitcher.text,
-      'Course Learning Materials'
+      'Course Learning Materials',
     );
 
     await component.courseObjectives.objectiveList.title.expandCollapseSwitcher.toggle();
@@ -269,7 +269,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         day: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
   });
 
@@ -314,7 +314,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
     assert.strictEqual(
       component.summary.offeredAt,
-      `Due Before postrequisite session (${formatedDate})`
+      `Due Before postrequisite session (${formatedDate})`,
     );
     assert.strictEqual(component.summary.offeredAtLink, `/events/1234`);
   });
@@ -453,7 +453,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
     assert.strictEqual(
       component.summary.offeredAt,
-      `Due Before postrequisite session (${formattedTomorrow}) ${formattedToday}`
+      `Due Before postrequisite session (${formattedTomorrow}) ${formattedToday}`,
     );
     assert.strictEqual(component.summary.offeredAtLink, `/events/1234`);
   });
@@ -532,7 +532,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         day: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
   });
 
@@ -571,7 +571,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         this.intl.formatDate(laterToday.toJSDate(), {
           hour: 'numeric',
           minute: 'numeric',
-        })
+        }),
     );
   });
 
@@ -614,7 +614,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
           day: 'numeric',
           hour: 'numeric',
           minute: 'numeric',
-        })
+        }),
     );
   });
 
@@ -682,6 +682,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 `);
       assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
       assert.notOk(component.summary.title.hasLink);
-    }
+    },
   );
 });

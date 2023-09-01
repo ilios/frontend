@@ -68,7 +68,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
   });
 

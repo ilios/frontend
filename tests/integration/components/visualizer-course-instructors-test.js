@@ -74,7 +74,7 @@ module('Integration | Component | visualizer-course-instructors', function (hook
 
     await render(
       hbs`<VisualizerCourseInstructors @course={{this.course}} @filter={{this.name}} @isIcon={{false}} />
-`
+`,
     );
     //let the chart animations finish
     await waitFor('.loaded');
@@ -90,7 +90,7 @@ module('Integration | Component | visualizer-course-instructors', function (hook
 
     await render(
       hbs`<VisualizerCourseInstructors @course={{this.course}} @isIcon={{false}} @chartType="donut" />
-`
+`,
     );
     //let the chart animations finish
     await waitFor('.loaded');

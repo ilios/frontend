@@ -45,18 +45,18 @@ module('Acceptance | Course - Overview', function (hooks) {
       await percySnapshot(assert);
       assert.strictEqual(
         page.details.overview.startDate.text,
-        'Start: ' + this.intl.formatDate(courseModel.startDate)
+        'Start: ' + this.intl.formatDate(courseModel.startDate),
       );
       assert.strictEqual(page.details.overview.externalId.text, 'Course ID: 123');
       assert.strictEqual(page.details.overview.level.text, 'Level: 3');
       assert.strictEqual(
         page.details.overview.endDate.text,
-        'End: ' + this.intl.formatDate(courseModel.endDate)
+        'End: ' + this.intl.formatDate(courseModel.endDate),
       );
       assert.strictEqual(page.details.overview.universalLocator, 'ILIOS' + courseModel.id);
       assert.strictEqual(
         page.details.overview.clerkshipType.text,
-        `Clerkship Type: ${clerkshipTypeModel.title}`
+        `Clerkship Type: ${clerkshipTypeModel.title}`,
       );
     });
 
@@ -72,18 +72,18 @@ module('Acceptance | Course - Overview', function (hooks) {
       await percySnapshot(assert);
       assert.strictEqual(
         page.details.overview.startDate.text,
-        'Start: ' + this.intl.formatDate(courseModel.startDate)
+        'Start: ' + this.intl.formatDate(courseModel.startDate),
       );
       assert.strictEqual(page.details.overview.externalId.text, 'Course ID: 123');
       assert.strictEqual(page.details.overview.level.text, 'Level: 3');
       assert.strictEqual(
         page.details.overview.endDate.text,
-        'End: ' + this.intl.formatDate(courseModel.endDate)
+        'End: ' + this.intl.formatDate(courseModel.endDate),
       );
       assert.strictEqual(page.details.overview.universalLocator, 'ILIOS' + courseModel.id);
       assert.strictEqual(
         page.details.overview.clerkshipType.text,
-        `Clerkship Type: ${clerkshipTypeModel.title}`
+        `Clerkship Type: ${clerkshipTypeModel.title}`,
       );
     });
 
@@ -116,7 +116,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     await page.visit({ courseId: courseModel.id, details: true });
     assert.strictEqual(
       page.details.overview.clerkshipType.text,
-      'Clerkship Type: ' + t('general.notAClerkship')
+      'Clerkship Type: ' + t('general.notAClerkship'),
     );
     await page.details.overview.clerkshipType.edit();
     assert.strictEqual(page.details.overview.clerkshipType.value, 'null');
@@ -124,7 +124,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     await page.details.overview.clerkshipType.save();
     assert.strictEqual(
       page.details.overview.clerkshipType.text,
-      'Clerkship Type: clerkship type 1'
+      'Clerkship Type: clerkship type 1',
     );
   });
 
@@ -140,7 +140,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     await page.visit({ courseId: courseModel.id, details: true });
     assert.strictEqual(
       page.details.overview.clerkshipType.text,
-      'Clerkship Type: clerkship type 2'
+      'Clerkship Type: clerkship type 2',
     );
     await page.details.overview.clerkshipType.edit();
     assert.strictEqual(page.details.overview.clerkshipType.value, '3');
@@ -148,7 +148,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     await page.details.overview.clerkshipType.save();
     assert.strictEqual(
       page.details.overview.clerkshipType.text,
-      'Clerkship Type: ' + t('general.notAClerkship')
+      'Clerkship Type: ' + t('general.notAClerkship'),
     );
   });
 
@@ -180,18 +180,18 @@ module('Acceptance | Course - Overview', function (hooks) {
     const newDate = DateTime.fromJSDate(course.startDate).plus({ years: 1, months: 1 }).toJSDate();
     assert.strictEqual(
       page.details.overview.startDate.text,
-      'Start: ' + this.intl.formatDate(course.startDate)
+      'Start: ' + this.intl.formatDate(course.startDate),
     );
     await page.details.overview.startDate.edit();
     assert.strictEqual(
       page.details.overview.startDate.datePicker.value,
-      this.intl.formatDate(course.startDate)
+      this.intl.formatDate(course.startDate),
     );
     await page.details.overview.startDate.datePicker.set(newDate);
     await page.details.overview.startDate.save();
     assert.strictEqual(
       page.details.overview.startDate.text,
-      'Start: ' + this.intl.formatDate(newDate)
+      'Start: ' + this.intl.formatDate(newDate),
     );
   });
 
@@ -290,14 +290,14 @@ module('Acceptance | Course - Overview', function (hooks) {
     await page.visit({ courseId: courseModel.id, details: true });
     assert.strictEqual(
       page.details.overview.externalId.text,
-      `Course ID: ${courseModel.externalId}`
+      `Course ID: ${courseModel.externalId}`,
     );
     await page.details.overview.externalId.edit();
     await page.details.overview.externalId.set('');
     await page.details.overview.externalId.save();
     assert.strictEqual(
       page.details.overview.externalId.text,
-      'Course ID: ' + t('general.clickToEdit')
+      'Course ID: ' + t('general.clickToEdit'),
     );
   });
 
@@ -311,7 +311,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     await page.visit({ courseId: courseModel.id, details: true });
     assert.strictEqual(
       page.details.overview.externalId.text,
-      'Course ID: ' + t('general.clickToEdit')
+      'Course ID: ' + t('general.clickToEdit'),
     );
   });
 

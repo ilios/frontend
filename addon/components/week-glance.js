@@ -17,8 +17,8 @@ export default class WeeklyGlance extends Component {
     return new TrackedAsyncData(
       this.userEvents.getEvents(
         this.midnightAtTheStartOfTheWeekDateTime.toUnixInteger(),
-        this.midnightAtTheEndOfTheWeekDateTime.toUnixInteger()
-      )
+        this.midnightAtTheEndOfTheWeekDateTime.toUnixInteger(),
+      ),
     );
   }
 
@@ -76,7 +76,7 @@ export default class WeeklyGlance extends Component {
     if (
       !this.midnightAtTheStartOfTheWeekDateTime.hasSame(
         this.midnightAtTheEndOfTheWeekDateTime,
-        'month'
+        'month',
       )
     ) {
       to = this.midnightAtTheEndOfTheWeekDateTime.toFormat('MMMM d');

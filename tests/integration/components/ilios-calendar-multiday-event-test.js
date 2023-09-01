@@ -33,7 +33,7 @@ module('Integration | Component | ilios calendar multiday event', function (hook
 `);
     assert.strictEqual(
       component.text,
-      '11/11/84, 12:00 AM – 11/12/84, 12:00 AM Cheramie is born Lancaster, CA'
+      '11/11/84, 12:00 AM – 11/12/84, 12:00 AM Cheramie is born Lancaster, CA',
     );
     await a11yAudit(this.element);
   });

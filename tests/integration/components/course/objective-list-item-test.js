@@ -28,7 +28,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
         @cohortObjectives={{(array)}}
         @course={{this.course}}
       />
-`
+`,
     );
     assert.notOk(component.hasRemoveConfirmation);
     assert.strictEqual(component.description.text, 'course objective 0');
@@ -55,7 +55,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
         @cohortObjectives={{(array)}}
         @course={{this.course}}
       />
-`
+`,
     );
     const newDescription = 'Pluto Visits Earth';
     assert.strictEqual(component.description.text, 'course objective 0');
@@ -81,7 +81,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
         @cohortObjectives={{(array)}}
         @manageParents={{this.manageParents}}
       />
-`
+`,
     );
     await component.parents.list[0].manage();
     assert.ok(component.parentManager.isPresent);
@@ -103,7 +103,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
         @cohortObjectives={{(array)}}
         @course={{this.course}}
       />
-`
+`,
     );
     await component.meshDescriptors.list[0].manage();
     assert.ok(component.meshManager.isPresent);
@@ -125,7 +125,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
         @cohortObjectives={{(array)}}
         @course={{this.course}}
       />
-`
+`,
     );
     assert.notOk(component.taxonomyManager.isPresent);
     await component.selectedTerms.manage();
@@ -148,7 +148,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
         @cohortObjectives={{(array)}}
         @course={{this.course}}
       />
-`
+`,
     );
     await component.remove();
     assert.ok(component.hasRemoveConfirmation);

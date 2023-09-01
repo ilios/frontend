@@ -30,7 +30,7 @@ export default {
       {
         description: text(),
       },
-      { at: 1 }
+      { at: 1 },
     ),
     manageParents: clickable('.clickable:eq(0)', { scope: 'td:eq(1)' }),
     meshTerms: collection(
@@ -38,7 +38,7 @@ export default {
       {
         title: text(),
       },
-      { at: 1 }
+      { at: 1 },
     ),
     manageMesh: clickable('li:eq(0)', {
       scope: 'td:eq(2) .mesh-descriptor-list',

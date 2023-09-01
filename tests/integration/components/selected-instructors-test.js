@@ -60,7 +60,7 @@ module('Integration | Component | selected-instructors', function (hooks) {
     this.set('instructors', []);
     await render(
       hbs`<SelectedInstructors @instructors={{this.instructors}} @showDefaultNotLoaded={{true}} />
-`
+`,
     );
     assert.strictEqual(component.heading, 'Selected Instructors: (Default Not Loaded)');
   });
@@ -73,7 +73,7 @@ module('Integration | Component | selected-instructors', function (hooks) {
     });
     await render(
       hbs`<SelectedInstructors @instructors={{this.instructors}} @isManaging={{true}} @remove={{this.remove}}/>
-`
+`,
     );
     assert.strictEqual(component.heading, 'Selected Instructors:');
     assert.strictEqual(component.instructors.length, 2);

@@ -14,7 +14,7 @@ export function BeforeDate(property, validationOptions) {
         validate(value, { constraints, object: target, property }) {
           if (!constraints[0]) {
             throw new Error(
-              `You must pass the name of a property that ${property} is before as the first argument to BeforeDate`
+              `You must pass the name of a property that ${property} is before as the first argument to BeforeDate`,
             );
           }
           const beforeKey = constraints[0];

@@ -137,7 +137,7 @@ export default class Offering extends Model {
     }
     return sortBy(
       uniqueValues([...this._instructorsData.value, ...this._instructorsInGroups.value.flat()]),
-      'fullName'
+      'fullName',
     );
   }
 
@@ -160,7 +160,7 @@ export default class Offering extends Model {
     }
     return sortBy(
       uniqueValues([...this._learnersData.value, ...this._learnersInGroups.value.flat()]),
-      'fullName'
+      'fullName',
     );
   }
 

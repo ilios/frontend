@@ -105,7 +105,7 @@ export default class SessionOverview extends Component {
       showSessionSupplemental: school.getConfigValue('showSessionSupplemental'),
       showSessionSpecialAttireRequired: school.getConfigValue('showSessionSpecialAttireRequired'),
       showSessionSpecialEquipmentRequired: school.getConfigValue(
-        'showSessionSpecialEquipmentRequired'
+        'showSessionSpecialEquipmentRequired',
       ),
     });
     this.showCopy = showCopy;

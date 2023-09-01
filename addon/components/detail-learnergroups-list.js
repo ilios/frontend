@@ -25,7 +25,7 @@ export default class DetailLearnerGroupsListComponent extends Component {
     const cohorts = uniqueValues(
       await map(this.args.learnerGroups.slice(), async (learnerGroup) => {
         return learnerGroup.cohort;
-      })
+      }),
     );
     return map(cohorts, async (cohort) => {
       const groups = await filter(this.args.learnerGroups.slice(), async (group) => {
@@ -36,7 +36,7 @@ export default class DetailLearnerGroupsListComponent extends Component {
         groups.map(async (group) => {
           const title = await group.getTitleWithParentTitles();
           return { group, title };
-        })
+        }),
       );
       const sortedProxies = proxies.sort((a, b) => {
         const titleA = a.title.toLowerCase();

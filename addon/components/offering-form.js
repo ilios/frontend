@@ -185,7 +185,7 @@ export default class OfferingForm extends Component {
       groupsToRemove = [...descendants, learnerGroup];
     }
     this.learnerGroups = uniqueValues(
-      this.learnerGroups.filter((g) => !groupsToRemove.includes(g))
+      this.learnerGroups.filter((g) => !groupsToRemove.includes(g)),
     );
   }
 
@@ -411,9 +411,9 @@ export default class OfferingForm extends Component {
             learnerGroups,
             learners,
             instructorGroups,
-            instructors
+            instructors,
           );
-        }
+        },
       );
       savedOfferings = savedOfferings + parts.length;
       this.saveProgressPercent = Math.floor((savedOfferings / totalOfferings) * 100);

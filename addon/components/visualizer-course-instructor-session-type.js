@@ -83,7 +83,7 @@ export default class VisualizerCourseInstructorSessionType extends Component {
 
     const totalMinutes = mapBy(sessionTypeData, 'data').reduce(
       (total, minutes) => total + minutes,
-      0
+      0,
     );
 
     return sessionTypeData.map((obj) => {

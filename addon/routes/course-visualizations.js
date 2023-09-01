@@ -47,7 +47,7 @@ export default class CourseVisualizationsRoute extends Route {
         promises.push(
           this.store.query('session-objective', {
             filters: { sessions: slice },
-          })
+          }),
         );
         promises.push(this.store.query('session-type', { filters: { sessions: slice } }));
         promises.push(this.store.query('term', { filters: { sessions: slice } }));

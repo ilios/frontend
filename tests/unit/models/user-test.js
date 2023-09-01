@@ -154,13 +154,13 @@ module('Unit | Model | User', function (hooks) {
       store.createRecord('course', {
         directors: [model],
         id: 1,
-      })
+      }),
     );
     courses.push(
       store.createRecord('course', {
         directors: [model],
         id: 2,
-      })
+      }),
     );
     const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
@@ -178,13 +178,13 @@ module('Unit | Model | User', function (hooks) {
       store.createRecord('course', {
         administrators: [model],
         id: 1,
-      })
+      }),
     );
     courses.push(
       store.createRecord('course', {
         administrators: [model],
         id: 2,
-      })
+      }),
     );
     const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);

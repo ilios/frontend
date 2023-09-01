@@ -10,7 +10,7 @@ export default class CourseVisualizeSessionTypeComponent extends Component {
 
   load = restartableTask(async () => {
     this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
+      'academicYearCrossesCalendarYearBoundaries',
     );
   });
 }

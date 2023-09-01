@@ -49,7 +49,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     this.set('instructors', [this.instructorGroup1, this.instructorGroup2, this.instructorGroup3]);
     await render(
       hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} @isManaging={{true}} @remove={{(noop)}}/>
-`
+`,
     );
     assert.strictEqual(component.heading, 'Selected Instructor Groups:');
     assert.strictEqual(component.instructorGroups.length, 3);
@@ -58,12 +58,12 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     assert.strictEqual(component.instructorGroups[0].members.members.length, 2);
     assert.strictEqual(
       component.instructorGroups[0].members.members[0].userNameInfo.fullName,
-      'Jane A. Doe'
+      'Jane A. Doe',
     );
     assert.notOk(component.instructorGroups[0].members.members[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(
       component.instructorGroups[0].members.members[1].userNameInfo.fullName,
-      'Joe M. Doe'
+      'Joe M. Doe',
     );
     assert.notOk(component.instructorGroups[0].members.members[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.instructorGroups[1].title, 'instructor group 1');
@@ -71,7 +71,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     assert.strictEqual(component.instructorGroups[1].members.members.length, 1);
     assert.strictEqual(
       component.instructorGroups[1].members.members[0].userNameInfo.fullName,
-      'Clem Chowder'
+      'Clem Chowder',
     );
     assert.ok(component.instructorGroups[1].members.members[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.instructorGroups[2].title, 'instructor group 2');
@@ -86,7 +86,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     this.set('instructors', [this.instructorGroup1, this.instructorGroup2, this.instructorGroup3]);
     await render(
       hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} @isManaging={{false}} />
-`
+`,
     );
     assert.strictEqual(component.heading, 'Selected Instructor Groups:');
     assert.strictEqual(component.instructorGroups.length, 3);
@@ -95,12 +95,12 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     assert.strictEqual(component.instructorGroups[0].members.members.length, 2);
     assert.strictEqual(
       component.instructorGroups[0].members.members[0].userNameInfo.fullName,
-      'Jane A. Doe'
+      'Jane A. Doe',
     );
     assert.notOk(component.instructorGroups[0].members.members[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(
       component.instructorGroups[0].members.members[1].userNameInfo.fullName,
-      'Joe M. Doe'
+      'Joe M. Doe',
     );
     assert.notOk(component.instructorGroups[0].members.members[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.instructorGroups[1].title, 'instructor group 1');
@@ -108,7 +108,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     assert.strictEqual(component.instructorGroups[1].members.members.length, 1);
     assert.strictEqual(
       component.instructorGroups[1].members.members[0].userNameInfo.fullName,
-      'Clem Chowder'
+      'Clem Chowder',
     );
     assert.ok(component.instructorGroups[1].members.members[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.instructorGroups[2].title, 'instructor group 2');
@@ -138,7 +138,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     });
     await render(
       hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} @isManaging={{true}} @remove={{this.remove}} />
-`
+`,
     );
     await component.instructorGroups[0].remove();
   });

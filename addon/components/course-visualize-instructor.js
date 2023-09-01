@@ -11,7 +11,7 @@ export default class CourseVisualizeInstructorComponent extends Component {
   @service iliosConfig;
 
   crossesBoundaryConfig = new TrackedAsyncData(
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @cached
@@ -56,7 +56,7 @@ export default class CourseVisualizeInstructorComponent extends Component {
 
     return map(sessionsWithUser, async (session) => {
       const offeringMinutes = await session.getTotalSumOfferingsDurationByInstructor(
-        this.args.user
+        this.args.user,
       );
       const ilmMinutes = await session.getTotalSumIlmDurationByInstructor(this.args.user);
       return {

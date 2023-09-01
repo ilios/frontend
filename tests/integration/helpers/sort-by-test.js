@@ -180,7 +180,7 @@ module('Integration | Helper | sort-by', function (hooks) {
         { firstName: 'William', lastName: 'Abrams' },
         { firstName: 'Sam', lastName: 'Jones' },
         { firstName: 'Donnie', lastName: 'Brady' },
-      ])
+      ]),
     );
 
     this.set('sortBy', ['lastName', 'firstName']);
@@ -196,7 +196,7 @@ module('Integration | Helper | sort-by', function (hooks) {
       .dom()
       .hasText(
         'AbramsWilliamBradyDonnieCodaAdamJonesBillyJonesSam',
-        'Names are sorted alphabetically by last name then first name'
+        'Names are sorted alphabetically by last name then first name',
       );
   });
 
@@ -209,7 +209,7 @@ module('Integration | Helper | sort-by', function (hooks) {
         { firstName: 'William', lastName: 'Abrams' },
         { firstName: 'Sam', lastName: 'Jones' },
         { firstName: 'Donnie', lastName: 'Brady' },
-      ])
+      ]),
     );
 
     await render(hbs`
@@ -223,7 +223,7 @@ module('Integration | Helper | sort-by', function (hooks) {
       .dom()
       .hasText(
         'AbramsWilliamBradyDonnieCodaAdamJonesBillyJonesSam',
-        'Names are sorted alphabetically by last name then first name'
+        'Names are sorted alphabetically by last name then first name',
       );
   });
 
@@ -272,7 +272,7 @@ module('Integration | Helper | sort-by', function (hooks) {
     users.push(
       store.createRecord('user', { firstName: 'a' }),
       store.createRecord('user', { firstName: 'b' }),
-      store.createRecord('user', { firstName: 'c' })
+      store.createRecord('user', { firstName: 'c' }),
     );
 
     this.set('users', users);

@@ -27,7 +27,7 @@ module('Integration | Component | save-button', function (hooks) {
     this.set('label', 'Save');
     await render(
       hbs`<SaveButton @isSaving={{true}} @saveProgressPercent={{100}}>{{this.label}}</SaveButton>
-`
+`,
     );
     assert.dom('[data-icon="check"]').exists();
     assert.dom().hasText('100%');

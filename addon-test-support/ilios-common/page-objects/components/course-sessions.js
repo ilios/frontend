@@ -10,7 +10,7 @@ const definition = {
     scope: '[data-test-course-sessions-header]',
     title: text('[data-test-title]'),
     expandNewSessionForm: clickable(
-      '[data-test-actions] [data-test-expand-collapse-button] button'
+      '[data-test-actions] [data-test-expand-collapse-button] button',
     ),
   },
   newSavedSession: {

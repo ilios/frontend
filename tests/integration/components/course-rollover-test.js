@@ -90,7 +90,7 @@ module('Integration | Component | course rollover', function (hooks) {
           title: data.newCourseTitle,
           startDate: data.newStartDate,
           year: data.year,
-        })
+        }),
       );
     });
     this.set('visit', (newCourse) => {
@@ -124,7 +124,7 @@ module('Integration | Component | course rollover', function (hooks) {
       return this.serialize(
         schema.courses.create({
           id: 14,
-        })
+        }),
       );
     });
     await render(hbs`<CourseRollover
@@ -161,7 +161,7 @@ module('Integration | Component | course rollover', function (hooks) {
           title: data.newCourseTitle,
           startDate: data.newStartDate,
           year: data.year,
-        })
+        }),
       );
     });
     this.set('visit', (newCourse) => {
@@ -276,7 +276,7 @@ module('Integration | Component | course rollover', function (hooks) {
       return this.serialize(
         schema.courses.create({
           id: 14,
-        })
+        }),
       );
     });
     await render(hbs`<CourseRollover
@@ -293,28 +293,28 @@ module('Integration | Component | course rollover', function (hooks) {
     assert.strictEqual(
       picker.currentYear,
       courseStartDate.year,
-      'Selected year initialized to course start date year.'
+      'Selected year initialized to course start date year.',
     );
     assert.strictEqual(
       picker.currentMonth + 1, //zero indexed
       courseStartDate.month,
-      'Selected month initialized to course start date month.'
+      'Selected month initialized to course start date month.',
     );
     picker.setDate(rolloverDate.toJSDate(), true);
     assert.strictEqual(
       picker.currentYear,
       rolloverDate.year,
-      'Selected year changed to rollover date year.'
+      'Selected year changed to rollover date year.',
     );
     assert.strictEqual(
       picker.currentMonth + 1, //zero indexed
       rolloverDate.month,
-      'Selected month changed to rollover date month.'
+      'Selected month changed to rollover date month.',
     );
     assert.strictEqual(
       picker.selectedDates[0].getDate(),
       rolloverDate.day,
-      'Selected day changed to rollover date day.'
+      'Selected day changed to rollover date day.',
     );
     await click('.done');
   });
@@ -342,12 +342,12 @@ module('Integration | Component | course rollover', function (hooks) {
 
       assert.ok(
         courseStartDate.hasSame(newStartDate, 'day'),
-        'New start date is course start date.'
+        'New start date is course start date.',
       );
       return this.serialize(
         schema.courses.create({
           id: 14,
-        })
+        }),
       );
     });
 
@@ -369,12 +369,12 @@ module('Integration | Component | course rollover', function (hooks) {
     assert.strictEqual(
       picker.currentYear,
       courseStartDate.year,
-      'Selected year initialized to course start date year.'
+      'Selected year initialized to course start date year.',
     );
     assert.strictEqual(
       picker.currentMonth + 1, //zero indexed
       courseStartDate.month,
-      'Selected month initialized to course start date month.'
+      'Selected month initialized to course start date month.',
     );
     await click('.done');
   });
@@ -421,12 +421,12 @@ module('Integration | Component | course rollover', function (hooks) {
     assert.strictEqual(
       picker.currentYear,
       rolloverDate.year,
-      'Selected year initialized to this year.'
+      'Selected year initialized to this year.',
     );
     assert.strictEqual(
       picker.currentMonth + 1, //zero indexed
       rolloverDate.month,
-      "Selected month initialized to this year's equivalent of course's start month."
+      "Selected month initialized to this year's equivalent of course's start month.",
     );
   });
 
@@ -449,7 +449,7 @@ module('Integration | Component | course rollover', function (hooks) {
       return this.serialize(
         schema.courses.create({
           id: 14,
-        })
+        }),
       );
     });
 
@@ -531,7 +531,7 @@ module('Integration | Component | course rollover', function (hooks) {
       return this.serialize(
         schema.courses.create({
           id: 14,
-        })
+        }),
       );
     });
 

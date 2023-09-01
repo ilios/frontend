@@ -5,7 +5,7 @@ module('Unit | Utility | escape Regular Expressions special characters', functio
   test('escapes special chars', function (assert) {
     assert.strictEqual(
       escapeRegExp('\\^$*+?.()|{}[]'),
-      '\\\\\\^\\$\\*\\+\\?\\.\\(\\)\\|\\{\\}\\[\\]'
+      '\\\\\\^\\$\\*\\+\\?\\.\\(\\)\\|\\{\\}\\[\\]',
     );
     assert.strictEqual(escapeRegExp('abc'), 'abc');
     assert.strictEqual(escapeRegExp('MoneyBag$$$ +1'), 'MoneyBag\\$\\$\\$ \\+1');

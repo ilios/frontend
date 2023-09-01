@@ -75,15 +75,15 @@ module('Acceptance | course visualizations - session-types', function (hooks) {
     assert.strictEqual(page.root.sessionTypesChart.chart.labels.length, 3);
     assert.strictEqual(
       page.root.sessionTypesChart.chart.labels[0].text,
-      'session type 1: 30 Minutes'
+      'session type 1: 30 Minutes',
     );
     assert.strictEqual(
       page.root.sessionTypesChart.chart.labels[1].text,
-      'session type 0: 60 Minutes'
+      'session type 0: 60 Minutes',
     );
     assert.strictEqual(
       page.root.sessionTypesChart.chart.labels[2].text,
-      'session type 2: 120 Minutes'
+      'session type 2: 120 Minutes',
     );
   });
 });

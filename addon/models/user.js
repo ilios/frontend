@@ -411,7 +411,7 @@ export default class User extends Model {
     }
 
     return new TrackedAsyncData(
-      Promise.all(this._instructedLearnerGroupsData.value.map((t) => t.offerings))
+      Promise.all(this._instructedLearnerGroupsData.value.map((t) => t.offerings)),
     );
   }
 
@@ -442,7 +442,7 @@ export default class User extends Model {
     }
 
     return new TrackedAsyncData(
-      Promise.all(this._instructorIlmSessionsData.value.map((t) => t.session))
+      Promise.all(this._instructorIlmSessionsData.value.map((t) => t.session)),
     );
   }
 
@@ -453,7 +453,7 @@ export default class User extends Model {
     }
 
     return new TrackedAsyncData(
-      Promise.all(this._instructorGroupsData.value.map((i) => i.ilmSessions))
+      Promise.all(this._instructorGroupsData.value.map((i) => i.ilmSessions)),
     );
   }
 
@@ -464,7 +464,7 @@ export default class User extends Model {
     }
 
     return new TrackedAsyncData(
-      Promise.all(this._instructorGroupIlmSessions.value.flat().map((ilm) => ilm.session))
+      Promise.all(this._instructorGroupIlmSessions.value.flat().map((ilm) => ilm.session)),
     );
   }
 
@@ -475,7 +475,7 @@ export default class User extends Model {
     }
 
     return new TrackedAsyncData(
-      Promise.all(this._instructorGroupsData.value.map((g) => g.offerings))
+      Promise.all(this._instructorGroupsData.value.map((g) => g.offerings)),
     );
   }
 
@@ -492,7 +492,7 @@ export default class User extends Model {
         ...this._instructorIlmSessionSessions.value,
         ...this._instructorGroupIlmSessionSessions.value,
         ...this._allInstructedOfferingSessions.value,
-      ].filter(Boolean)
+      ].filter(Boolean),
     );
   }
 
@@ -514,9 +514,9 @@ export default class User extends Model {
             ...this._allInstructedOfferingSessions.value,
           ]
             .filter(Boolean)
-            .map((s) => s.course)
-        )
-      )
+            .map((s) => s.course),
+        ),
+      ),
     );
   }
 
@@ -534,7 +534,7 @@ export default class User extends Model {
       return [];
     }
     return new TrackedAsyncData(
-      Promise.all(this._learnerIlmSessionsData.value.map((i) => i.session))
+      Promise.all(this._learnerIlmSessionsData.value.map((i) => i.session)),
     );
   }
 
@@ -552,7 +552,7 @@ export default class User extends Model {
       return null;
     }
     return new TrackedAsyncData(
-      Promise.all(this._learnerGroupsData.value.map((l) => l.ilmSessions))
+      Promise.all(this._learnerGroupsData.value.map((l) => l.ilmSessions)),
     );
   }
 
@@ -574,9 +574,9 @@ export default class User extends Model {
     return new TrackedAsyncData(
       Promise.all(
         [...offerings, ...learnerIlmSessions, ...learnerGroupOfferings, ...ilmSessions].map(
-          (obj) => obj.session
-        )
-      )
+          (obj) => obj.session,
+        ),
+      ),
     );
   }
 
@@ -633,7 +633,7 @@ export default class User extends Model {
     const lowestGroup = relevantGroups.find((group) => {
       const childIds = group.hasMany('children').ids();
       const childGroupsWhoAreUserGroupMembers = childIds.filter((id) =>
-        relevantGroupIds.includes(id)
+        relevantGroupIds.includes(id),
       );
       return childGroupsWhoAreUserGroupMembers.length === 0;
     });

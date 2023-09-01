@@ -53,7 +53,7 @@ export default class PublishAllSessionsComponent extends Component {
     const sessionsToPublish = [...this.publishedSessions, ...this.userSelectedSessionsToPublish];
 
     return uniqueValues(
-      sessionsToPublish.filter((s) => !this.userSelectedSessionsToSchedule.includes(s))
+      sessionsToPublish.filter((s) => !this.userSelectedSessionsToSchedule.includes(s)),
     );
   }
 
@@ -61,7 +61,7 @@ export default class PublishAllSessionsComponent extends Component {
     const sessionsToPublish = [...this.unpublishedSessions, ...this.userSelectedSessionsToSchedule];
 
     return uniqueValues(
-      sessionsToPublish.filter((s) => !this.userSelectedSessionsToPublish.includes(s))
+      sessionsToPublish.filter((s) => !this.userSelectedSessionsToPublish.includes(s)),
     );
   }
 
@@ -92,7 +92,7 @@ export default class PublishAllSessionsComponent extends Component {
     return Boolean(
       this.courseObjectives.find((objective) => {
         return objective.programYearObjectives.length === 0;
-      })
+      }),
     );
   }
 
@@ -133,12 +133,12 @@ export default class PublishAllSessionsComponent extends Component {
   toggleSession(session) {
     if (this.sessionsToPublish.includes(session)) {
       this.userSelectedSessionsToPublish = this.userSelectedSessionsToPublish.filter(
-        (s) => s !== session
+        (s) => s !== session,
       );
       this.userSelectedSessionsToSchedule = [...this.userSelectedSessionsToSchedule, session];
     } else {
       this.userSelectedSessionsToSchedule = this.userSelectedSessionsToSchedule.filter(
-        (s) => s !== session
+        (s) => s !== session,
       );
       this.userSelectedSessionsToPublish = [...this.userSelectedSessionsToPublish, session];
     }

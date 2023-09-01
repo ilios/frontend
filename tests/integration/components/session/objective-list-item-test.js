@@ -31,7 +31,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @courseObjectives={{(array)}}
         @session={{this.sessionModel}}
       />
-`
+`,
     );
     assert.notOk(component.hasRemoveConfirmation);
     assert.strictEqual(component.description.text, 'session objective 0');
@@ -59,7 +59,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @courseObjectives={{(array)}}
         @session={{this.sessionModel}}
       />
-`
+`,
     );
     const newDescription = 'Pluto Visits Earth';
     assert.strictEqual(component.description.text, 'session objective 0');
@@ -88,7 +88,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @courseObjectives={{(array)}}
         @session={{this.sessionModel}}
       />
-`
+`,
     );
     await component.parents.list[0].manage();
     assert.ok(component.parentManager.isPresent);
@@ -111,7 +111,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @courseObjectives={{(array)}}
         @session={{this.sessionModel}}
       />
-`
+`,
     );
     await component.meshDescriptors.list[0].manage();
     assert.ok(component.meshManager.isPresent);
@@ -136,7 +136,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @courseObjectives={{(array)}}
         @session={{this.sessionModel}}
       />
-`
+`,
     );
     assert.notOk(component.taxonomyManager.isPresent);
     await component.selectedTerms.manage();
@@ -160,7 +160,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
         @courseObjectives={{(array)}}
         @session={{this.sessionModel}}
       />
-`
+`,
     );
     await component.remove();
     assert.ok(component.hasRemoveConfirmation);

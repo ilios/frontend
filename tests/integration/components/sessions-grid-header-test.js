@@ -31,7 +31,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{this.expandCollapse}} @showExpandAll={{true}} @setSortBy={{(noop)}} />
-`
+`,
     );
     await component.expandCollapse.toggle.click();
   });
@@ -43,7 +43,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
-`
+`,
     );
     await component.title.click();
   });
@@ -55,7 +55,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
-`
+`,
     );
     await component.sessionType.click();
   });
@@ -67,7 +67,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
-`
+`,
     );
     await component.learnerGroupCount.click();
   });
@@ -79,7 +79,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
-`
+`,
     );
     await component.objectiveCount.click();
   });
@@ -91,7 +91,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
-`
+`,
     );
     await component.termCount.click();
   });
@@ -103,7 +103,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
-`
+`,
     );
     await component.firstOffering.click();
   });
@@ -115,7 +115,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
     });
     await render(
       hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />
-`
+`,
     );
     await component.offeringCount.click();
   });
