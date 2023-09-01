@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import { findById } from 'ilios-common/utils/array-helpers';
+import { isEmpty } from '@ember/utils';
 
 export default class PendingUserUpdatesController extends Controller {
   @service flashMessages;
@@ -41,7 +42,7 @@ export default class PendingUserUpdatesController extends Controller {
     return this.updatesInCurrentSchool.filter((update) => {
       const user = this.store.peekRecord('user', update.belongsTo('user').id());
       const isNotDeleted = !this.deletedUpdates.includes(update);
-      const noUpdateName = !!user.fullName;
+      const noUpdateName = isEmpty(user.fullName);
       const filterMatch = update
         .get('user.fullName')
         .trim()

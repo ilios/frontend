@@ -187,4 +187,39 @@ module('Acceptance | pending user updates', function (hooks) {
     assert.strictEqual(page.updates.length, 0);
     assert.notOk(userModel.enabled);
   });
+
+  test('filter-search users', async function (assert) {
+    const school = this.server.create('school');
+    const user1 = this.server.create('user', {
+      school,
+      enabled: true,
+      firstName: 'lorem',
+      lastName: 'ipsum',
+    });
+    this.server.create('pending-user-update', {
+      user: user1,
+      type: 'missingFromDirectory',
+    });
+    const user2 = this.server.create('user', {
+      school,
+      enabled: true,
+      firstName: 'zig',
+      lastName: 'zag',
+    });
+    this.server.create('pending-user-update', {
+      user: user2,
+      type: 'missingFromDirectory',
+    });
+    await setupAuthentication({ school, administeredSchools: [school] });
+    await page.visit();
+
+    assert.strictEqual(page.updates.length, 2);
+    assert.strictEqual(page.updates[0].userNameInfo.fullName, 'lorem M. ipsum');
+    assert.strictEqual(page.updates[1].userNameInfo.fullName, 'zig M. zag');
+    await page.titleFilter.set('lorem');
+    assert.strictEqual(page.updates.length, 1);
+    assert.strictEqual(page.updates[0].userNameInfo.fullName, 'lorem M. ipsum');
+    await page.titleFilter.set('no match');
+    assert.strictEqual(page.updates.length, 0);
+  });
 });
