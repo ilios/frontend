@@ -116,7 +116,7 @@ export default class GlobalSearchBox extends Component {
       this.resultListAction(listArray, keyCode);
     } else {
       const selector = keyCode === 40 ? 'first' : 'last';
-      const option = container.querySelector(`.autocomplete li:${selector}-child`);
+      const option = container.querySelector(`.autocomplete-row:${selector}-child`);
       option.classList.add('active');
       this.autocompleteSelectedQuery = option.innerText.trim();
     }
