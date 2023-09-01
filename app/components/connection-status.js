@@ -25,7 +25,7 @@ export default class ConnectionStatusComponent extends Component {
       {
         passive: true,
         capture: false,
-      }
+      },
     );
     this.offlineListener = window.addEventListener(
       'offline',
@@ -35,7 +35,7 @@ export default class ConnectionStatusComponent extends Component {
       {
         passive: true,
         capture: false,
-      }
+      },
     );
   }
 

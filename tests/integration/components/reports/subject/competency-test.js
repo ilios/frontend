@@ -75,7 +75,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { competencies(schools: [24], sessions: [13]) { id, title } }'
+        'query { competencies(schools: [24], sessions: [13]) { id, title } }',
       );
       return responseData;
     });

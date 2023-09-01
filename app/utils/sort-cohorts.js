@@ -14,6 +14,6 @@ export default async function sortCohorts(cohorts) {
     };
   });
   return sortBy(sortProxies, ['schoolTitle', 'programTitle', 'cohortTitle']).map(
-    (sortedProxy) => sortedProxy.cohort
+    (sortedProxy) => sortedProxy.cohort,
   );
 }

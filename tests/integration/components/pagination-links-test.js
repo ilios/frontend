@@ -23,11 +23,11 @@ module('Integration | Component | pagination-links', function (hooks) {
     />`);
     assert.ok(
       component.nextIsHidden,
-      'results array length needs to be greater than size for pagination to show'
+      'results array length needs to be greater than size for pagination to show',
     );
     assert.ok(
       component.prevIsHidden,
-      'results array length needs to be greater than size for pagination to show'
+      'results array length needs to be greater than size for pagination to show',
     );
     this.set('results', [1, 1]);
     const { pageLinks } = component;

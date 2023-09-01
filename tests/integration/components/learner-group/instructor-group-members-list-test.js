@@ -19,7 +19,7 @@ module('Integration | Component | learner-group/instructor-group-members-list', 
       .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
     await render(
-      hbs`<LearnerGroup::InstructorGroupMembersList @instructorGroup={{this.instructorGroup}} />`
+      hbs`<LearnerGroup::InstructorGroupMembersList @instructorGroup={{this.instructorGroup}} />`,
     );
     assert.strictEqual(component.users.length, 3);
     assert.strictEqual(component.users[0].userNameInfo.fullName, '0 guy M. Mc0son');

@@ -75,7 +75,7 @@ module('Integration | Component | reports/subject/learning-material', function (
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { learningMaterials(schools: [24], sessions: [13]) { id, title } }'
+        'query { learningMaterials(schools: [24], sessions: [13]) { id, title } }',
       );
       return responseData;
     });
@@ -95,7 +95,7 @@ module('Integration | Component | reports/subject/learning-material', function (
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { learningMaterials(meshDescriptors: ["ABC"]) { id, title } }'
+        'query { learningMaterials(meshDescriptors: ["ABC"]) { id, title } }',
       );
       return responseData;
     });

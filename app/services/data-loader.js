@@ -24,7 +24,7 @@ export default class DataLoaderService extends CommonDataLoaderService {
         this.store.findRecord('learner-group', learnerGroupId, {
           reload: true,
           include: includes.join(','),
-        })
+        }),
       );
     }
 
@@ -44,7 +44,7 @@ export default class DataLoaderService extends CommonDataLoaderService {
         this.store.findRecord('cohort', cohortId, {
           reload: true,
           include: includes.join(','),
-        })
+        }),
       );
     }
 
@@ -66,7 +66,7 @@ export default class DataLoaderService extends CommonDataLoaderService {
         this.store.findRecord('learner-group', learnerGroupId, {
           reload: true,
           include: includes.join(','),
-        })
+        }),
       );
     }
 
@@ -79,7 +79,7 @@ export default class DataLoaderService extends CommonDataLoaderService {
         this.store.findRecord('instructor-group', instructorGroupId, {
           reload: true,
           include: 'users,ilmSessions.session.course,offerings.session.course',
-        })
+        }),
       );
     }
 
@@ -92,7 +92,7 @@ export default class DataLoaderService extends CommonDataLoaderService {
         this.store.findRecord('school', schoolId, {
           reload: true,
           include: 'instructorGroups.users',
-        })
+        }),
       );
     }
 
@@ -130,7 +130,7 @@ export default class DataLoaderService extends CommonDataLoaderService {
         this.store.findRecord('user', id, {
           reload: true,
           include: includes.join(','),
-        })
+        }),
       );
     }
 

@@ -76,5 +76,5 @@ module(
       assert.strictEqual(component.table.rows[1].cells[5].text, '');
       assert.strictEqual(component.table.rows[1].cells[6].text, 'Y');
     });
-  }
+  },
 );

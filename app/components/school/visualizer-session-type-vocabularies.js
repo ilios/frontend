@@ -65,7 +65,7 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
           session,
           vocabulary,
         };
-      }
+      },
     );
 
     const vocabularyObjects = termsWithSessionAndVocabulary.reduce(
@@ -82,7 +82,7 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
         vocabularies[id].termIds.add(term.id);
         return vocabularies;
       },
-      {}
+      {},
     );
 
     const vocabularyData = Object.values(vocabularyObjects);
@@ -131,7 +131,7 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
     this.router.transitionTo(
       'session-type-visualize-vocabulary',
       this.args.sessionType.id,
-      obj.meta.vocabulary.id
+      obj.meta.vocabulary.id,
     );
   }
 }

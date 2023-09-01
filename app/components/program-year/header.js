@@ -7,7 +7,7 @@ export default class ProgramYearHeaderComponent extends Component {
   @service iliosConfig;
 
   crossesBoundaryConfig = new TrackedAsyncData(
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @cached

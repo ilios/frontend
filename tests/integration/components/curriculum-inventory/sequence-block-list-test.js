@@ -87,48 +87,48 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     assert.strictEqual(
       component.header.title,
       'Sequence Blocks (2)',
-      'Component title is correct, and show the correct number of blocks.'
+      'Component title is correct, and show the correct number of blocks.',
     );
     assert.ok(component.header.expandCollapse.isVisible, 'Add new button is visible.');
     assert.strictEqual(
       component.list.headers.sequenceBlock,
       'Sequence Block',
-      'Table column header has correct label.'
+      'Table column header has correct label.',
     );
     assert.strictEqual(
       component.list.headers.startLevel,
       'Start Level',
-      'Table column header has correct label.'
+      'Table column header has correct label.',
     );
     assert.strictEqual(
       component.list.headers.endLevel,
       'End Level',
-      'Table column header has correct label.'
+      'Table column header has correct label.',
     );
     assert.strictEqual(
       component.list.headers.sequenceNumber,
       'Sequence #',
-      'Table column header has correct label.'
+      'Table column header has correct label.',
     );
     assert.strictEqual(
       component.list.headers.startDate,
       'Start Date',
-      'Table column header has correct label.'
+      'Table column header has correct label.',
     );
     assert.strictEqual(
       component.list.headers.endDate,
       'End Date',
-      'Table column header has correct label.'
+      'Table column header has correct label.',
     );
     assert.strictEqual(
       component.list.headers.course,
       'Course',
-      'Table column header has correct label.'
+      'Table column header has correct label.',
     );
     assert.strictEqual(
       component.list.headers.actions,
       'Actions',
-      'Table column header has correct label.'
+      'Table column header has correct label.',
     );
 
     assert.strictEqual(component.list.items[0].title, this.sequenceBlock2.title);
@@ -145,11 +145,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
     assert.strictEqual(
       component.list.items[1].startDate,
-      this.intl.formatDate(this.sequenceBlock1.startDate)
+      this.intl.formatDate(this.sequenceBlock1.startDate),
     );
     assert.strictEqual(
       component.list.items[1].endDate,
-      this.intl.formatDate(this.sequenceBlock1.endDate)
+      this.intl.formatDate(this.sequenceBlock1.endDate),
     );
     assert.strictEqual(component.list.items[1].course, this.course.title);
     assert.ok(component.list.items[1].isDeletable);
@@ -176,7 +176,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     assert.strictEqual(
       component.header.title,
       'Sequence Blocks (2)',
-      'Component title is correct, and show the correct number of blocks.'
+      'Component title is correct, and show the correct number of blocks.',
     );
     assert.strictEqual(component.list.items[0].title, this.sequenceBlock2.title);
     assert.strictEqual(parseInt(component.list.items[0].startLevel, 10), this.academicLevel2.level);
@@ -192,11 +192,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
     assert.strictEqual(
       component.list.items[1].startDate,
-      this.intl.formatDate(this.sequenceBlock1.startDate)
+      this.intl.formatDate(this.sequenceBlock1.startDate),
     );
     assert.strictEqual(
       component.list.items[1].endDate,
-      this.intl.formatDate(this.sequenceBlock1.endDate)
+      this.intl.formatDate(this.sequenceBlock1.endDate),
     );
     assert.strictEqual(component.list.items[1].course, this.course.title);
     assert.ok(component.list.items[1].isDeletable);
@@ -260,12 +260,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     assert.strictEqual(
       component.header.title,
       'Sequence Blocks (0)',
-      'Component title is correct, and show the correct number of blocks.'
+      'Component title is correct, and show the correct number of blocks.',
     );
     assert.strictEqual(
       component.noSequenceBlocks.text,
       'There are no sequence blocks in this report.',
-      'No blocks message is visible.'
+      'No blocks message is visible.',
     );
   });
 
@@ -283,12 +283,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     assert.strictEqual(
       component.header.title,
       'Sequence Blocks (0)',
-      'Component title is correct, and show the correct number of blocks.'
+      'Component title is correct, and show the correct number of blocks.',
     );
     assert.strictEqual(
       component.noSubSequenceBlocks.text,
       'This sequence block has no nested sequence blocks.',
-      'No blocks message is visible.'
+      'No blocks message is visible.',
     );
   });
 });

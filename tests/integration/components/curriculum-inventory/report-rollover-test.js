@@ -99,16 +99,16 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
         return this.serialize(
           schema.curriculumInventoryReports.create({
             id: 14,
-          })
+          }),
         );
-      }
+      },
     );
     this.set('report', reportModel);
     this.set('visit', (newReport) => {
       assert.strictEqual(parseInt(newReport.id, 10), 14);
     });
     await render(
-      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />`
+      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />`,
     );
     await component.save();
   });
@@ -132,7 +132,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       return this.serialize(
         schema.curriculumInventoryReports.create({
           id: 14,
-        })
+        }),
       );
     });
     this.set('report', reportModel);
@@ -140,7 +140,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       assert.strictEqual(parseInt(newReport.id, 10), 14);
     });
     await render(
-      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />`
+      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{this.visit}} />`,
     );
     await component.name.submit();
   });
@@ -178,14 +178,14 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
         return this.serialize(
           schema.curriculumInventoryReports.create({
             id: 14,
-          })
+          }),
         );
-      }
+      },
     );
 
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{(noop)}} />`
+      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{(noop)}} />`,
     );
 
     await component.name.set(newName);

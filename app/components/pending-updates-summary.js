@@ -27,7 +27,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
       this.store.query('pending-user-update', {
         filters: { schools },
         include: 'user',
-      })
+      }),
     );
   }
 

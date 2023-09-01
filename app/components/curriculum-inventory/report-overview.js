@@ -68,7 +68,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     const program = yield this.args.report.program;
     const school = yield program.school;
     this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
+      'academicYearCrossesCalendarYearBoundaries',
     );
     this.canRollover = yield this.permissionChecker.canCreateCurriculumInventoryReport(school);
     const yearOptions = [];

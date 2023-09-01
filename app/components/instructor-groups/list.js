@@ -25,7 +25,7 @@ export default class LearnerGroupListComponent extends Component {
       return instructorGroups.sort((a, b) =>
         a.title.localeCompare(b.title, locale, {
           numeric: true,
-        })
+        }),
       );
     }
     if (sortBy.includes('courses')) {

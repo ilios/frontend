@@ -31,7 +31,7 @@ export default class UserProfileCalendar extends Component {
     const data = yield this.fetch.getJsonFromApiHost(url);
     this.calendarEvents = sortBy(
       data.userEvents.map((obj) => this.userEvents.createEventFromData(obj, true)),
-      ['startDate', 'name']
+      ['startDate', 'name'],
     );
   }
   @action

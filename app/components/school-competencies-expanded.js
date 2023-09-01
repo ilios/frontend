@@ -24,7 +24,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     }
     const arr = [...this.schoolCompetencies.slice(), ...this.competenciesToAdd];
     return uniqueValues(
-      arr.filter((competency) => !this.competenciesToRemove.includes(competency))
+      arr.filter((competency) => !this.competenciesToRemove.includes(competency)),
     );
   }
 
@@ -100,7 +100,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
 
     // update all modified competencies (this will include new ones).
     yield all(
-      filterBy(this.competencies, 'hasDirtyAttributes').map((competency) => competency.save())
+      filterBy(this.competencies, 'hasDirtyAttributes').map((competency) => competency.save()),
     );
 
     // cleanup

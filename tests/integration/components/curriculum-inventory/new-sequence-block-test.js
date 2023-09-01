@@ -28,7 +28,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         this.server.create('curriculum-inventory-academic-level', {
           report,
           level: i,
-        })
+        }),
       );
     }
     this.academicLevels = academicLevels;
@@ -65,7 +65,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @cancel={{(noop)}} @save={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @cancel={{(noop)}} @save={{(noop)}} />`,
     );
 
     assert.strictEqual(component.title.label, 'Title:');
@@ -152,7 +152,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('parentBlock', parentModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @parent={{this.parentBlock}} @cancel={{(noop)}} @save={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @parent={{this.parentBlock}} @cancel={{(noop)}} @save={{(noop)}} />`,
     );
 
     assert.ok(component.orderInSequence.isVisible);
@@ -182,7 +182,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @cancel={{(noop)}} @save={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @cancel={{(noop)}} @save={{(noop)}} />`,
     );
 
     assert.notOk(component.course.details.isVisible);
@@ -190,7 +190,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.ok(component.course.details.isVisible);
     assert.strictEqual(
       component.course.details.text,
-      'Level: 1, Start Date: 2016-03-01, End Date: 2016-03-02 -Clerkship (clerkship type 0)'
+      'Level: 1, Start Date: 2016-03-01, End Date: 2016-03-02 -Clerkship (clerkship type 0)',
     );
   });
 
@@ -224,7 +224,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{this.save}} @cancel={{(noop)}} />`,
     );
 
     await component.title.set(newTitle);
@@ -266,7 +266,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{this.save}} @cancel={{(noop)}} />`,
     );
 
     await component.title.set('foo bar');
@@ -339,7 +339,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{this.cancel}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{this.cancel}} />`,
     );
 
     await component.cancel();
@@ -354,7 +354,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     assert.strictEqual(component.startDate.value, '');
@@ -363,11 +363,11 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.endDate.set(newEndDate);
     assert.strictEqual(
       component.startDate.value,
-      DateTime.fromJSDate(newStartDate).toFormat('M/d/yyyy')
+      DateTime.fromJSDate(newStartDate).toFormat('M/d/yyyy'),
     );
     assert.strictEqual(
       component.endDate.value,
-      DateTime.fromJSDate(newEndDate).toFormat('M/d/yyyy')
+      DateTime.fromJSDate(newEndDate).toFormat('M/d/yyyy'),
     );
     await component.clearDates();
     assert.strictEqual(component.startDate.value, '');
@@ -381,7 +381,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     assert.strictEqual(component.maximum.errors.length, 0);
@@ -391,7 +391,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.strictEqual(component.maximum.errors.length, 1);
     assert.strictEqual(
       component.maximum.errors[0].text,
-      'Maximum must be greater than or equal to Minimum'
+      'Maximum must be greater than or equal to Minimum',
     );
   });
 
@@ -402,7 +402,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     assert.strictEqual(component.minimum.errors.length, 0);
@@ -418,7 +418,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     assert.strictEqual(component.minimum.errors.length, 0);
@@ -434,7 +434,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     assert.strictEqual(component.maximum.errors.length, 0);
@@ -459,7 +459,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     });
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{this.save}} @cancel={{(noop)}} />`,
     );
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
@@ -482,7 +482,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       assert.strictEqual(parseInt(block.duration, 10), newDuration);
     });
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{this.save}} @cancel={{(noop)}} />`,
     );
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
@@ -497,7 +497,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     await component.title.set('Foo Bar');
@@ -516,7 +516,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     await component.title.set('Foo Bar');
@@ -535,7 +535,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     await component.title.set('Foo Bar');
@@ -554,7 +554,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     await component.title.set('Foo Bar');
@@ -582,7 +582,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
@@ -612,7 +612,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
@@ -626,7 +626,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.strictEqual(component.duration.errors.length, 1);
     assert.strictEqual(
       component.duration.errors[0].text,
-      'Duration must be greater than or equal to 1'
+      'Duration must be greater than or equal to 1',
     );
   });
 
@@ -637,7 +637,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     await component.title.set('Foo Bar');

@@ -192,7 +192,7 @@ module('Integration | Component | school session type form', function (hooks) {
       assert.strictEqual(
         assessmentOption,
         assessmentOptionModel,
-        'correct assessmentOption is sent'
+        'correct assessmentOption is sent',
       );
       assert.strictEqual(aamcMethod, aamcMethodModel, 'correct aamcMethod is sent');
       assert.false(isActive, 'correct isActive value is sent');

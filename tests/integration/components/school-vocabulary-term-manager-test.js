@@ -71,7 +71,7 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     assert.strictEqual(component.subTerms.list.length, 2);
     assert.strictEqual(
       component.subTerms.list[0].text,
-      'term 3 This term has sub-terms. (inactive)'
+      'term 3 This term has sub-terms. (inactive)',
     );
     assert.ok(component.subTerms.list[0].hasChildren);
     assert.strictEqual(component.subTerms.list[1].text, 'term 4');

@@ -67,7 +67,7 @@ export default class CoursesListComponent extends Component {
   @action
   cancelRemove(course) {
     this.coursesForRemovalConfirmation = this.coursesForRemovalConfirmation.filter(
-      (id) => id !== course.id
+      (id) => id !== course.id,
     );
   }
 

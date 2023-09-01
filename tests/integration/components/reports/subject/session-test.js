@@ -156,7 +156,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(schools: [33]) { id, title, course { id, year, title } } }'
+        'query { sessions(schools: [33]) { id, title, course { id, year, title } } }',
       );
       return responseData;
     });
@@ -174,7 +174,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(programs: [13]) { id, title, course { id, year, title } } }'
+        'query { sessions(programs: [13]) { id, title, course { id, year, title } } }',
       );
       return responseData;
     });
@@ -193,7 +193,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(schools: [24], programs: [13]) { id, title, course { id, year, title } } }'
+        'query { sessions(schools: [24], programs: [13]) { id, title, course { id, year, title } } }',
       );
       return responseData;
     });
@@ -213,7 +213,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(courses: [13]) { id, title, course { id, year, title } } }'
+        'query { sessions(courses: [13]) { id, title, course { id, year, title } } }',
       );
       return responseData;
     });
@@ -232,7 +232,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(sessionTypes: [13]) { id, title, course { id, year, title } } }'
+        'query { sessions(sessionTypes: [13]) { id, title, course { id, year, title } } }',
       );
       return responseData;
     });
@@ -251,7 +251,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(meshDescriptors: ["ABC"]) { id, title, course { id, year, title } } }'
+        'query { sessions(meshDescriptors: ["ABC"]) { id, title, course { id, year, title } } }',
       );
       return responseData;
     });

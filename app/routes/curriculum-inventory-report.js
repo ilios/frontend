@@ -12,7 +12,7 @@ export default class CurriculumInventoryReportReport extends Route {
   model(params) {
     return this.store.findRecord(
       'curriculum-inventory-report',
-      params.curriculum_inventory_report_id
+      params.curriculum_inventory_report_id,
     );
   }
 }

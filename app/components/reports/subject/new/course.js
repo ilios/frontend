@@ -19,7 +19,7 @@ export default class ReportsSubjectNewCourseComponent extends Component {
       hash({
         courses: this.store.findAll('course'),
         years: this.store.findAll('academic-year'),
-      })
+      }),
     );
   }
 

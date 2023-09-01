@@ -28,12 +28,12 @@ module('Integration | Component | login-form', function (hooks) {
     this.set('account', accountName);
     this.set('error', true);
     await render(
-      hbs`<LoginForm @noAccountExistsError={{this.error}} @noAccountExistsAccount={{this.account}} />`
+      hbs`<LoginForm @noAccountExistsError={{this.error}} @noAccountExistsAccount={{this.account}} />`,
     );
     assert.strictEqual(component.errors.length, 1);
     assert.strictEqual(
       component.errors[0].text,
-      `Your account ${accountName} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator.`
+      `Your account ${accountName} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator.`,
     );
     assert.notOk(component.form.isPresent);
   });

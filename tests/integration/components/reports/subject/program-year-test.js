@@ -38,7 +38,7 @@ module('Integration | Component | reports/subject/program-year', function (hooks
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { programYears { id, startYear, program { id, title, duration, school { title } } } }'
+        'query { programYears { id, startYear, program { id, title, duration, school { title } } } }',
       );
       return responseData;
     });
@@ -76,7 +76,7 @@ module('Integration | Component | reports/subject/program-year', function (hooks
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { programYears { id, startYear, program { id, title, duration, school { title } } } }'
+        'query { programYears { id, startYear, program { id, title, duration, school { title } } } }',
       );
       return responseData;
     });
@@ -110,7 +110,7 @@ module('Integration | Component | reports/subject/program-year', function (hooks
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { programYears(schools: [33]) { id, startYear, program { id, title, duration, school { title } } } }'
+        'query { programYears(schools: [33]) { id, startYear, program { id, title, duration, school { title } } } }',
       );
       return responseData;
     });

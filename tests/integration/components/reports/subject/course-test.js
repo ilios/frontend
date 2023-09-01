@@ -133,7 +133,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(programs: [13]) { id, title, year, externalId } }'
+        'query { courses(programs: [13]) { id, title, year, externalId } }',
       );
       return responseData;
     });
@@ -152,7 +152,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(schools: [24], programs: [13]) { id, title, year, externalId } }'
+        'query { courses(schools: [24], programs: [13]) { id, title, year, externalId } }',
       );
       return responseData;
     });
@@ -172,7 +172,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(meshDescriptors: ["ABC"]) { id, title, year, externalId } }'
+        'query { courses(meshDescriptors: ["ABC"]) { id, title, year, externalId } }',
       );
       return responseData;
     });

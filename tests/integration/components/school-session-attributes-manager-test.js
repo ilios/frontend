@@ -72,7 +72,7 @@ module('Integration | Component | school session attributes manager', function (
       this,
       assert,
       'showSessionSpecialAttireRequired',
-      component.specialAttireRequired
+      component.specialAttireRequired,
     );
   });
 
@@ -82,7 +82,7 @@ module('Integration | Component | school session attributes manager', function (
       this,
       assert,
       'showSessionSpecialEquipmentRequired',
-      component.specialEquipmentRequired
+      component.specialEquipmentRequired,
     );
   });
 
@@ -125,7 +125,7 @@ module('Integration | Component | school session attributes manager', function (
       this,
       assert,
       'showSessionSpecialAttireRequired',
-      component.specialAttireRequired
+      component.specialAttireRequired,
     );
   });
 
@@ -135,7 +135,7 @@ module('Integration | Component | school session attributes manager', function (
       this,
       assert,
       'showSessionSpecialEquipmentRequired',
-      component.specialEquipmentRequired
+      component.specialEquipmentRequired,
     );
   });
 });

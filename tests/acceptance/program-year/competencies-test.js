@@ -48,11 +48,11 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     assert.strictEqual(page.details.competencies.list.domains[0].competencies.length, 2);
     assert.strictEqual(
       page.details.competencies.list.domains[0].competencies[0].text,
-      'competency 1'
+      'competency 1',
     );
     assert.strictEqual(
       page.details.competencies.list.domains[0].competencies[1].text,
-      'competency 2'
+      'competency 2',
     );
   });
 
@@ -67,11 +67,11 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     assert.strictEqual(page.details.competencies.list.domains[0].competencies.length, 2);
     assert.strictEqual(
       page.details.competencies.list.domains[0].competencies[0].text,
-      'competency 1'
+      'competency 1',
     );
     assert.strictEqual(
       page.details.competencies.list.domains[0].competencies[1].text,
-      'competency 2'
+      'competency 2',
     );
   });
 
@@ -117,14 +117,14 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     assert.strictEqual(page.details.competencies.list.domains[0].competencies.length, 1);
     assert.strictEqual(
       page.details.competencies.list.domains[0].competencies[0].text,
-      'competency 1'
+      'competency 1',
     );
 
     assert.strictEqual(page.details.competencies.list.domains[1].title, 'competency 3');
     assert.strictEqual(page.details.competencies.list.domains[1].competencies.length, 1);
     assert.strictEqual(
       page.details.competencies.list.domains[1].competencies[0].text,
-      'competency 5'
+      'competency 5',
     );
   });
 
@@ -153,11 +153,11 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     assert.strictEqual(page.details.competencies.list.domains[0].competencies.length, 2);
     assert.strictEqual(
       page.details.competencies.list.domains[0].competencies[0].text,
-      'competency 1'
+      'competency 1',
     );
     assert.strictEqual(
       page.details.competencies.list.domains[0].competencies[1].text,
-      'competency 2'
+      'competency 2',
     );
   });
 });

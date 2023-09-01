@@ -46,7 +46,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
           async (sessionObjective) => {
             const session = await sessionObjective.session;
             return buildTreeLevel(sessionObjective, [], session.title, null);
-          }
+          },
         );
         const course = await courseObjective.course;
         return buildTreeLevel(courseObjective, sessionObjectivesTree, null, course.title);

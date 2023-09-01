@@ -19,7 +19,7 @@ module('Integration | Component | courses/new', function (hooks) {
   test('it renders', async function (assert) {
     const thisYear = new Date().getFullYear();
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
     assert.strictEqual(component.years.length, 6);
     assert.strictEqual(component.years[0].text, 'Select Academic Year');
@@ -44,7 +44,7 @@ module('Integration | Component | courses/new', function (hooks) {
       .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} @currentYear={{this.year}} />`
+      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
     );
     assert.notOk(component.years[0].selected);
     assert.notOk(component.years[1].selected);
@@ -62,7 +62,7 @@ module('Integration | Component | courses/new', function (hooks) {
       .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} @currentYear={{this.year}} />`
+      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
     );
     assert.ok(component.years[0].selected);
     assert.notOk(component.years[1].selected);
@@ -83,7 +83,7 @@ module('Integration | Component | courses/new', function (hooks) {
     });
     const thisYear = new Date().getFullYear();
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
     assert.strictEqual(component.years[1].text, `${thisYear - 2} - ${thisYear - 1}`);
     assert.strictEqual(component.years[2].text, `${thisYear - 1} - ${thisYear}`);
@@ -98,7 +98,7 @@ module('Integration | Component | courses/new', function (hooks) {
       assert.ok(true);
     });
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{this.cancel}} />`
+      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{this.cancel}} />`,
     );
     await component.cancel();
   });
@@ -119,7 +119,7 @@ module('Integration | Component | courses/new', function (hooks) {
       assert.strictEqual(school.id, this.school.id);
     });
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`
+      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
     );
     await component.title('test course');
     await component.save();
@@ -141,7 +141,7 @@ module('Integration | Component | courses/new', function (hooks) {
       assert.strictEqual(school.id, this.school.id);
     });
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`
+      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
     );
     await component.title('test course');
     await component.submitOnEnter();
@@ -159,7 +159,7 @@ module('Integration | Component | courses/new', function (hooks) {
       assert.ok(false, 'this code should never be invoked.');
     });
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`
+      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
     );
     assert.notOk(component.titleHasValidationError);
     await component.title('fo');
@@ -179,7 +179,7 @@ module('Integration | Component | courses/new', function (hooks) {
       assert.ok(false, 'this code should never be invoked.');
     });
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`
+      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
     );
     assert.notOk(component.titleHasValidationError);
     await component.title('0123456789'.repeat(21));

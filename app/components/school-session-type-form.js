@@ -81,7 +81,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
       this.assessment,
       this.selectedAssessmentOption,
       this.selectedAamcMethod,
-      this.isActive
+      this.isActive,
     );
     this.clearErrorDisplay();
   }

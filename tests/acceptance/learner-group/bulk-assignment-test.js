@@ -125,7 +125,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.ok(page.root.bulkAssignment.validUploadedUsers[0].hasWarning);
     assert.strictEqual(
       page.root.bulkAssignment.validUploadedUsers[0].firstName,
-      'jasper (jasper J)'
+      'jasper (jasper J)',
     );
     assert.strictEqual(page.root.bulkAssignment.validUploadedUsers[0].lastName, 'johnson');
     assert.strictEqual(page.root.bulkAssignment.validUploadedUsers[0].campusId, '1234567890');
@@ -134,7 +134,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.strictEqual(page.root.bulkAssignment.validUploadedUsers[1].firstName, 'jackson');
     assert.strictEqual(
       page.root.bulkAssignment.validUploadedUsers[1].lastName,
-      'johnson (johnson the seconds)'
+      'johnson (johnson the seconds)',
     );
     assert.strictEqual(page.root.bulkAssignment.validUploadedUsers[1].campusId, '12345');
     assert.strictEqual(page.root.bulkAssignment.validUploadedUsers[1].smallGroupName, '');
@@ -198,27 +198,27 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.strictEqual(page.root.bulkAssignment.invalidUploadedUsers.length, 6);
     assert.strictEqual(
       page.root.bulkAssignment.invalidUploadedUsers[0].errors,
-      'First Name is required'
+      'First Name is required',
     );
     assert.strictEqual(
       page.root.bulkAssignment.invalidUploadedUsers[1].errors,
-      'Last Name is required'
+      'Last Name is required',
     );
     assert.strictEqual(
       page.root.bulkAssignment.invalidUploadedUsers[2].errors,
-      'Could not find a user with the campusId abcd'
+      'Could not find a user with the campusId abcd',
     );
     assert.strictEqual(
       page.root.bulkAssignment.invalidUploadedUsers[3].errors,
-      "User is not in this group's cohort: class of this year"
+      "User is not in this group's cohort: class of this year",
     );
     assert.strictEqual(
       page.root.bulkAssignment.invalidUploadedUsers[4].errors,
-      'This user already exists in the upload.'
+      'This user already exists in the upload.',
     );
     assert.strictEqual(
       page.root.bulkAssignment.invalidUploadedUsers[5].errors,
-      'User already exists in top-level group group 1 or one of its subgroups.'
+      'User already exists in top-level group group 1 or one of its subgroups.',
     );
     assert.notOk(page.root.bulkAssignment.showConfirmUploadButton);
     await percySnapshot(assert);
@@ -286,14 +286,14 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     assert.strictEqual(page.root.bulkAssignment.finalData.length, 2);
     assert.strictEqual(
       page.root.bulkAssignment.finalData[0].user.userNameInfo.fullName,
-      'jasper M. johnson'
+      'jasper M. johnson',
     );
     assert.notOk(page.root.bulkAssignment.finalData[0].user.userNameInfo.hasAdditionalInfo);
     assert.strictEqual(page.root.bulkAssignment.finalData[0].campusId, '1234567890');
     assert.strictEqual(page.root.bulkAssignment.finalData[0].groupName, 'group 1');
     assert.strictEqual(
       page.root.bulkAssignment.finalData[1].user.userNameInfo.fullName,
-      'Jackson McFly'
+      'Jackson McFly',
     );
     assert.ok(page.root.bulkAssignment.finalData[1].user.userNameInfo.hasAdditionalInfo);
     assert.strictEqual(page.root.bulkAssignment.finalData[1].campusId, '12345');

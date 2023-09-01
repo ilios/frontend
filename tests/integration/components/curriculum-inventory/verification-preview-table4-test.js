@@ -38,11 +38,11 @@ module(
       assert.strictEqual(component.table.headings[1].text, 'Instructional Method');
       assert.strictEqual(
         component.table.headings[2].text,
-        'Number of Events Featuring This as the Primary Method'
+        'Number of Events Featuring This as the Primary Method',
       );
       assert.strictEqual(
         component.table.headings[3].text,
-        'Number of Non-Primary Occurrences of This Method'
+        'Number of Non-Primary Occurrences of This Method',
       );
       assert.strictEqual(component.table.rows.length, 2);
       assert.strictEqual(component.table.rows[0].id, '001');
@@ -59,5 +59,5 @@ module(
       assert.strictEqual(component.table.footer[2].text, '20');
       assert.strictEqual(component.table.footer[3].text, '120');
     });
-  }
+  },
 );

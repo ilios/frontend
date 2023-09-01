@@ -15,7 +15,7 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
       hash({
         programs: this.store.findAll('program'),
         programYears: this.store.findAll('program-year'),
-      })
+      }),
     );
   }
 

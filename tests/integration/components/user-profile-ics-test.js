@@ -34,7 +34,7 @@ module('Integration | Component | user profile ics', function (hooks) {
       assert.ok(what, 'received boolean true value');
     });
     await render(
-      hbs`<UserProfileIcs @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`
+      hbs`<UserProfileIcs @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.click}} />`,
     );
     await component.manage();
   });
@@ -43,7 +43,7 @@ module('Integration | Component | user profile ics', function (hooks) {
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     await render(
-      hbs`<UserProfileIcs @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
+      hbs`<UserProfileIcs @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`,
     );
     const currentKey = this.user.icsFeedKey;
     assert.strictEqual(userModel.icsFeedKey, currentKey, 'icsFeedKey is correct');
@@ -52,7 +52,7 @@ module('Integration | Component | user profile ics', function (hooks) {
     assert.strictEqual(
       userModel.icsFeedKey.length,
       64,
-      'icsFeedKey is a long string probably a hash'
+      'icsFeedKey is a long string probably a hash',
     );
   });
 

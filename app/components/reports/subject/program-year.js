@@ -48,7 +48,7 @@ export default class ReportsSubjectProgramYearComponent extends Component {
     const result = await this.graphql.find(
       'programYears',
       filters,
-      'id, startYear, program { id, title, duration, school { title } }'
+      'id, startYear, program { id, title, duration, school { title } }',
     );
 
     return result.data.programYears.map((obj) => {

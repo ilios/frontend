@@ -75,7 +75,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { meshDescriptors(schools: [24], sessions: [13]) { id, name } }'
+        'query { meshDescriptors(schools: [24], sessions: [13]) { id, name } }',
       );
       return responseData;
     });

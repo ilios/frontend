@@ -19,55 +19,55 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
 
     this.set('program', programModel);
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     assert.strictEqual(
       component.programTitle.label,
       'Program:',
-      'program title is labeled correctly.'
+      'program title is labeled correctly.',
     );
     assert.strictEqual(component.programTitle.title, program.title, 'Program title is displayed.');
     assert.strictEqual(
       component.academicYear.label,
       'Academic Year:',
-      'Academic year input is labeled correctly.'
+      'Academic year input is labeled correctly.',
     );
     assert.strictEqual(
       component.academicYear.options.length,
       11,
-      'Academic year dropdown has eleven options.'
+      'Academic year dropdown has eleven options.',
     );
     assert.strictEqual(
       parseInt(component.academicYear.value, 10),
       currentYear,
-      'Current year is selected by default.'
+      'Current year is selected by default.',
     );
     assert.strictEqual(
       parseInt(component.academicYear.options[0].value, 10),
       currentYear - 5,
-      'First year in dropdown is five years prior to current year.'
+      'First year in dropdown is five years prior to current year.',
     );
     assert.strictEqual(
       parseInt(component.academicYear.options[0].text, 10),
       currentYear - 5,
-      'First year label is correct.'
+      'First year label is correct.',
     );
     assert.strictEqual(
       parseInt(component.academicYear.options[10].value, 10),
       currentYear + 5,
-      'Last year in dropdown is five years ahead of current year.'
+      'Last year in dropdown is five years ahead of current year.',
     );
     assert.strictEqual(
       parseInt(component.academicYear.options[10].text, 10),
       currentYear + 5,
-      'Last year label is correct.'
+      'Last year label is correct.',
     );
     assert.strictEqual(component.description.value, 'Curriculum Inventory Report');
     assert.strictEqual(
       component.description.label,
       'Description:',
-      'Description input is labeled correctly.'
+      'Description input is labeled correctly.',
     );
     assert.strictEqual(component.name.value, '', 'Name input is initially empty.');
     assert.strictEqual(component.name.label, 'Name:', 'Name input is labeled correctly.');
@@ -88,18 +88,18 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     this.set('program', programModel);
 
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}} />`,
     );
 
     assert.strictEqual(
       component.academicYear.options[0].text,
       `${currentYear - 5} - ${currentYear - 4}`,
-      'First year label is correct.'
+      'First year label is correct.',
     );
     assert.strictEqual(
       component.academicYear.options[10].text,
       `${currentYear + 5} - ${currentYear + 6}`,
-      'Last year label is correct.'
+      'Last year label is correct.',
     );
   });
 
@@ -117,24 +117,24 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
       assert.strictEqual(
         report.get('year'),
         expectedSelectedYear,
-        'Selected academic year gets passed.'
+        'Selected academic year gets passed.',
       );
       assert.strictEqual(
         DateTime.fromJSDate(report.get('startDate')).toFormat('yyyy-MM-dd'),
         `${expectedSelectedYear}-01-01`,
-        'Start date gets calculated and passed.'
+        'Start date gets calculated and passed.',
       );
       assert.strictEqual(
         DateTime.fromJSDate(report.get('endDate')).toFormat('yyyy-MM-dd'),
         `${expectedSelectedYear}-12-31`,
-        'End date gets calculated and passed.'
+        'End date gets calculated and passed.',
       );
       assert.ok(report.get('program'), 'Program gets passed.');
       return true;
     });
 
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />`,
     );
     await component.name.set('new report');
     await component.description.set('lorem ipsum');
@@ -161,18 +161,18 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
       assert.strictEqual(
         DateTime.fromJSDate(report.get('startDate')).toFormat('yyyy-MM-dd'),
         `${expectedSelectedYear}-07-01`,
-        'Start date gets calculated and passed.'
+        'Start date gets calculated and passed.',
       );
       assert.strictEqual(
         DateTime.fromJSDate(report.get('endDate')).toFormat('yyyy-MM-dd'),
         `${expectedSelectedYear + 1}-06-30`,
-        'End date gets calculated and passed.'
+        'End date gets calculated and passed.',
       );
       return true;
     });
 
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />`,
     );
     await component.name.set('new report');
     await component.description.set('lorem ipsum');
@@ -190,7 +190,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
       assert.ok(true, 'Cancel action got invoked.');
     });
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @cancel={{this.cancel}} @save={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @cancel={{this.cancel}} @save={{(noop)}} />`,
     );
     await component.cancel();
   });
@@ -207,7 +207,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     });
 
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{(noop)}} />`,
     );
     await component.name.set('new report');
     await component.name.submit();
@@ -218,7 +218,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     this.set('program', programModel);
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`,
     );
     assert.notOk(component.name.hasError);
   });
@@ -228,7 +228,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     this.set('program', programModel);
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`,
     );
     await component.save();
     assert.ok(component.name.hasError);
@@ -240,7 +240,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
 
     this.set('program', programModel);
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`,
     );
     await component.name.set('0123456789'.repeat(7));
     await component.save();
@@ -253,7 +253,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     this.set('program', programModel);
 
     await render(
-      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{(noop)}} @cancel={{(noop)}}/>`,
     );
 
     assert.notOk(component.description.hasError);

@@ -25,5 +25,5 @@ module(
       await render(hbs`<CurriculumInventory::VerificationPreviewHeader @report={{this.report}} />`);
       assert.strictEqual(component.title, 'Verification Preview for Foo Bar 2019');
     });
-  }
+  },
 );

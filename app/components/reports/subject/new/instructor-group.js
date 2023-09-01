@@ -20,7 +20,7 @@ export default class ReportsSubjectNewInstructorGroupComponent extends Component
   get filteredInstructorGroups() {
     if (this.args.school) {
       return this.allInstructorGroups.value.filter(
-        (c) => c.belongsTo('school').id() === this.args.school.id
+        (c) => c.belongsTo('school').id() === this.args.school.id,
       );
     }
 

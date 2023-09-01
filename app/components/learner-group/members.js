@@ -13,7 +13,7 @@ export default class LearnerGroupUserMembersComponent extends Component {
 
   get usersInGroup() {
     return this.args.users.filter(
-      (user) => user.get('lowestGroupInTree').id === this.args.learnerGroupId
+      (user) => user.get('lowestGroupInTree').id === this.args.learnerGroupId,
     );
   }
 

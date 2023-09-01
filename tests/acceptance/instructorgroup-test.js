@@ -97,50 +97,50 @@ module('Acceptance | Instructor Group', function (hooks) {
     assert.strictEqual(page.root.users.manager.selectedInstructors.users.length, 2);
     assert.strictEqual(
       page.root.users.manager.selectedInstructors.users[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       page.root.users.manager.selectedInstructors.users[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     await page.root.users.manager.availableInstructors.userSearch.searchBox.set('guy');
     assert.strictEqual(
       page.root.users.manager.availableInstructors.userSearch.results.items.length,
-      5
+      5,
     );
     assert.strictEqual(
       page.root.users.manager.availableInstructors.userSearch.results.items[0].text,
-      '0 guy M. Mc0son user@example.edu'
+      '0 guy M. Mc0son user@example.edu',
     );
     assert.strictEqual(
       page.root.users.manager.availableInstructors.userSearch.results.items[1].text,
-      '1 guy M. Mc1son user@example.edu'
+      '1 guy M. Mc1son user@example.edu',
     );
     assert.strictEqual(
       page.root.users.manager.availableInstructors.userSearch.results.items[2].text,
-      '2 guy M. Mc2son user@example.edu'
+      '2 guy M. Mc2son user@example.edu',
     );
     assert.strictEqual(
       page.root.users.manager.availableInstructors.userSearch.results.items[3].text,
-      '3 guy M. Mc3son user@example.edu'
+      '3 guy M. Mc3son user@example.edu',
     );
     assert.strictEqual(
       page.root.users.manager.availableInstructors.userSearch.results.items[4].text,
-      '4 guy M. Mc4son user@example.edu'
+      '4 guy M. Mc4son user@example.edu',
     );
     await page.root.users.manager.availableInstructors.userSearch.results.items[3].click();
     assert.strictEqual(page.root.users.manager.selectedInstructors.users.length, 3);
     assert.strictEqual(
       page.root.users.manager.selectedInstructors.users[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       page.root.users.manager.selectedInstructors.users[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     assert.strictEqual(
       page.root.users.manager.selectedInstructors.users[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
+      '3 guy M. Mc3son',
     );
     await page.root.users.save.click();
     assert.strictEqual(page.root.users.users.length, 3);
@@ -161,17 +161,17 @@ module('Acceptance | Instructor Group', function (hooks) {
     assert.strictEqual(page.root.users.manager.selectedInstructors.users.length, 2);
     assert.strictEqual(
       page.root.users.manager.selectedInstructors.users[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
+      '1 guy M. Mc1son',
     );
     assert.strictEqual(
       page.root.users.manager.selectedInstructors.users[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     await page.root.users.manager.selectedInstructors.users[0].remove();
     assert.strictEqual(page.root.users.manager.selectedInstructors.users.length, 1);
     assert.strictEqual(
       page.root.users.manager.selectedInstructors.users[0].userNameInfo.fullName,
-      '2 guy M. Mc2son'
+      '2 guy M. Mc2son',
     );
     await page.root.users.save.click();
     assert.strictEqual(page.root.users.users.length, 1);

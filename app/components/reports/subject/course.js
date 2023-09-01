@@ -15,7 +15,7 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service currentUser;
 
   crossesBoundaryConfig = new TrackedAsyncData(
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);

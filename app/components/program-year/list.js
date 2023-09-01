@@ -14,7 +14,7 @@ export default class ProgramYearListComponent extends Component {
   @service fetch;
 
   crossesBoundaryConfig = new TrackedAsyncData(
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @cached
@@ -116,7 +116,7 @@ export default class ProgramYearListComponent extends Component {
       });
       const newProgramYearObjectives = yield this.fetch.postManyToApi(
         `programyearobjectives`,
-        newObjectiveObjects
+        newObjectiveObjects,
       );
       this.store.pushPayload(newProgramYearObjectives);
     }

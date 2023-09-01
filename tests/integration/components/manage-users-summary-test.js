@@ -42,12 +42,12 @@ module('Integration | Component | manage users summary', function (hooks) {
     assert.notEqual(
       findAll('a')[1].href.search(/\/users\?addUser=true$/),
       -1,
-      `${findAll('a')[1].href} links to /users?addUser=true`
+      `${findAll('a')[1].href} links to /users?addUser=true`,
     );
     assert.notEqual(
       findAll('a')[2].href.search(/\/users\?addUsers=true$/),
       -1,
-      `${findAll('a')[2].href} links to /users?addUsers=true`
+      `${findAll('a')[2].href} links to /users?addUsers=true`,
     );
   });
 

@@ -168,21 +168,21 @@ module('Integration | Component | new directory user', function (hooks) {
     assert.ok(component.searchResults[0].userCanBeAdded);
     assert.strictEqual(
       component.searchResults[0].name,
-      `${searchResult1.firstName} ${searchResult1.lastName}`
+      `${searchResult1.firstName} ${searchResult1.lastName}`,
     );
     assert.strictEqual(component.searchResults[0].campusId, searchResult1.campusId);
     assert.strictEqual(component.searchResults[0].email, searchResult1.email);
     assert.ok(component.searchResults[1].userAlreadyExists);
     assert.strictEqual(
       component.searchResults[1].name,
-      `${searchResult2.firstName} ${searchResult2.lastName}`
+      `${searchResult2.firstName} ${searchResult2.lastName}`,
     );
     assert.strictEqual(component.searchResults[1].campusId, searchResult2.campusId);
     assert.strictEqual(component.searchResults[1].email, searchResult2.email);
     assert.ok(component.searchResults[2].userCannotBeAdded);
     assert.strictEqual(
       component.searchResults[2].name,
-      `${searchResult3.firstName} ${searchResult3.lastName}`
+      `${searchResult3.firstName} ${searchResult3.lastName}`,
     );
     assert.strictEqual(component.searchResults[2].campusId, '');
     assert.strictEqual(component.searchResults[2].email, '');

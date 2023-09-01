@@ -49,7 +49,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .findRecord('program', this.program.id);
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     assert.strictEqual(component.title, 'Overview', 'Component title is visible.');
     assert.ok(component.rolloverLink.isVisible, 'Rollover course button is visible.');
@@ -58,35 +58,35 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     assert.strictEqual(
       component.startDate.text,
       this.intl.formatDate(reportModel.startDate),
-      'Start date is visible.'
+      'Start date is visible.',
     );
     assert.strictEqual(component.endDate.label, 'End:', 'End date label is correct.');
     assert.strictEqual(
       component.endDate.text,
       this.intl.formatDate(reportModel.endDate),
-      'End date is visible.'
+      'End date is visible.',
     );
     assert.strictEqual(
       component.academicYear.label,
       'Academic Year:',
-      'Academic year label is correct.'
+      'Academic year label is correct.',
     );
     assert.strictEqual(component.academicYear.text, reportModel.year, 'Academic year is visible.');
     assert.strictEqual(component.program.label, 'Program:', 'Program label is correct.');
     assert.strictEqual(
       component.program.text,
       `${programModel.title} (${programModel.shortTitle})`,
-      'Program is visible.'
+      'Program is visible.',
     );
     assert.strictEqual(
       component.description.label,
       'Description:',
-      'Description label is correct.'
+      'Description label is correct.',
     );
     assert.strictEqual(
       component.description.text,
       reportModel.description,
-      'Description is visible.'
+      'Description is visible.',
     );
   });
 
@@ -99,32 +99,32 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .findRecord('program', this.program.id);
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{false}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{false}} />`,
     );
     assert.strictEqual(
       component.startDate.readOnlyText,
       this.intl.formatDate(reportModel.startDate),
-      'Start date is visible.'
+      'Start date is visible.',
     );
     assert.strictEqual(
       component.endDate.readOnlyText,
       this.intl.formatDate(reportModel.endDate),
-      'End date is visible.'
+      'End date is visible.',
     );
     assert.strictEqual(
       component.academicYear.readOnlyText,
       reportModel.year,
-      'Academic year is visible.'
+      'Academic year is visible.',
     );
     assert.strictEqual(
       component.program.text,
       `${programModel.title} (${programModel.shortTitle})`,
-      'Program is visible.'
+      'Program is visible.',
     );
     assert.strictEqual(
       component.description.readOnlyText,
       reportModel.description,
-      'Description is visible.'
+      'Description is visible.',
     );
   });
 
@@ -141,11 +141,11 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       };
     });
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     assert.strictEqual(
       component.academicYear.text,
-      `${reportModel.year} - ` + (parseInt(reportModel.year, 10) + 1)
+      `${reportModel.year} - ` + (parseInt(reportModel.year, 10) + 1),
     );
   });
 
@@ -162,11 +162,11 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       };
     });
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{false}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{false}} />`,
     );
     assert.strictEqual(
       component.academicYear.readOnlyText,
-      `${reportModel.year} - ` + (parseInt(reportModel.year, 10) + 1)
+      `${reportModel.year} - ` + (parseInt(reportModel.year, 10) + 1),
     );
   });
 
@@ -181,7 +181,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       },
     });
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     assert.notOk(component.rolloverLink.isVisible, 'Rollover course button is not visible.');
   });
@@ -192,13 +192,13 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     await component.startDate.edit();
     assert.strictEqual(
       component.startDate.value,
       this.intl.formatDate(reportModel.startDate),
-      "The report's current start date is pre-selected in date picker."
+      "The report's current start date is pre-selected in date picker.",
     );
     const newVal = DateTime.fromJSDate(reportModel.startDate).plus({ days: 1 });
     await component.startDate.set(newVal.toJSDate());
@@ -206,12 +206,12 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     assert.strictEqual(
       component.startDate.text,
       this.intl.formatDate(newVal),
-      'Edit link shown new start date post-update.'
+      'Edit link shown new start date post-update.',
     );
     assert.strictEqual(
       this.intl.formatDate(reportModel.startDate),
       this.intl.formatDate(newVal),
-      "The report's start date was updated."
+      "The report's start date was updated.",
     );
   });
 
@@ -221,7 +221,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     await component.startDate.edit();
     const newVal = DateTime.fromJSDate(reportModel.endDate).plus({ days: 1 });
@@ -237,13 +237,13 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     await component.endDate.edit();
     assert.strictEqual(
       component.endDate.value,
       this.intl.formatDate(reportModel.endDate),
-      "The report's current end date is pre-selected in date picker."
+      "The report's current end date is pre-selected in date picker.",
     );
     const newVal = DateTime.fromJSDate(reportModel.endDate).plus({ days: 1 });
     await component.endDate.set(newVal.toJSDate());
@@ -251,12 +251,12 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     assert.strictEqual(
       component.endDate.text,
       this.intl.formatDate(newVal),
-      'Edit link shown new end date post-update.'
+      'Edit link shown new end date post-update.',
     );
     assert.strictEqual(
       this.intl.formatDate(reportModel.endDate),
       this.intl.formatDate(newVal),
-      "The report's end date was updated."
+      "The report's end date was updated.",
     );
   });
 
@@ -266,7 +266,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     await component.endDate.edit();
     const newVal = DateTime.fromJSDate(reportModel.startDate).minus({ days: 1 });
@@ -282,18 +282,18 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     await component.academicYear.edit();
     assert.strictEqual(
       component.academicYear.options.length,
       11,
-      'There should be ten options in year dropdown.'
+      'There should be ten options in year dropdown.',
     );
     assert.strictEqual(component.academicYear.options[5].text, reportModel.year);
     assert.ok(
       component.academicYear.options[5].isSelected,
-      "The report's year should be selected."
+      "The report's year should be selected.",
     );
     const newVal = (parseInt(reportModel.year, 10) + 1).toString();
     await component.academicYear.select(newVal);
@@ -313,12 +313,12 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     assert.strictEqual(
       component.academicYear.readOnlyText,
       reportModel.year,
-      'Academic year is in not editable.'
+      'Academic year is in not editable.',
     );
   });
 
@@ -329,7 +329,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     reportModel.description = null;
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     assert.strictEqual(component.description.text, 'Click to edit');
     await component.description.edit();
@@ -347,7 +347,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     this.set('report', reportModel);
     reportModel.description = null;
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     assert.strictEqual(component.description.text, 'Click to edit');
     await component.description.edit();
@@ -364,7 +364,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     assert.strictEqual(component.description.text, 'Lorem Ipsum');
     await component.description.edit();
@@ -381,7 +381,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     this.set('report', reportModel);
     this.program.shortTitle = null;
     await render(
-      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );
     assert.strictEqual(component.program.text, 'Doctor of Rocket Surgery');
   });

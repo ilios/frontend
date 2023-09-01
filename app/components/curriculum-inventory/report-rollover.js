@@ -23,7 +23,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   @restartableTask
   *load() {
     const academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
+      'academicYearCrossesCalendarYearBoundaries',
     );
     const thisYear = new Date().getFullYear();
     const reportYear = parseInt(this.args.report.year, 10);

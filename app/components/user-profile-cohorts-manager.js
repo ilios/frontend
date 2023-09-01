@@ -17,7 +17,7 @@ export default class UserProfileCohortsManagerComponent extends Component {
   @cached
   get secondaryCohortsData() {
     return new TrackedAsyncData(
-      this.sortAndFilterSecondaryCohorts(this.args.primaryCohort, this.args.secondaryCohorts)
+      this.sortAndFilterSecondaryCohorts(this.args.primaryCohort, this.args.secondaryCohorts),
     );
   }
 

@@ -20,7 +20,7 @@ module('Integration | Component | school vocabularies list', function (hooks) {
 
     this.set('school', schoolModel);
     await render(
-      hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{(noop)}} />`
+      hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{(noop)}} />`,
     );
     assert.strictEqual(component.vocabularies.length, 2);
     assert.strictEqual(component.vocabularies[0].title.text, 'Vocabulary 1');
@@ -78,7 +78,7 @@ module('Integration | Component | school vocabularies list', function (hooks) {
       assert.strictEqual(id, vocabularies[0].id);
     });
     await render(
-      hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{this.edit}} />`
+      hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{this.edit}} />`,
     );
     await component.vocabularies[0].manage();
   });

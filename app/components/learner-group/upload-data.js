@@ -91,17 +91,17 @@ export default class LearnerGroupUploadDataComponent extends Component {
         const warnings = [];
         if (!firstName) {
           errors.push(
-            this.intl.t('errors.required', { description: this.intl.t('general.firstName') })
+            this.intl.t('errors.required', { description: this.intl.t('general.firstName') }),
           );
         }
         if (!lastName) {
           errors.push(
-            this.intl.t('errors.required', { description: this.intl.t('general.lastName') })
+            this.intl.t('errors.required', { description: this.intl.t('general.lastName') }),
           );
         }
         if (!campusId) {
           errors.push(
-            this.intl.t('errors.required', { description: this.intl.t('general.campusId') })
+            this.intl.t('errors.required', { description: this.intl.t('general.campusId') }),
           );
         }
         let userRecord = null;
@@ -122,7 +122,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
             const cohortIds = mapBy(cohorts.slice(), 'id');
             if (!cohortIds.includes(cohort.id)) {
               errors.push(
-                this.intl.t('general.userNotInGroupCohort', { cohortTitle: cohort.get('title') })
+                this.intl.t('general.userNotInGroupCohort', { cohortTitle: cohort.get('title') }),
               );
             }
             if (user.firstName != firstName) {
@@ -130,7 +130,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
                 this.intl.t('general.doesNotMatchUserRecord', {
                   description: this.intl.t('general.firstName'),
                   record: user.firstName,
-                })
+                }),
               );
             }
             if (user.lastName != lastName) {
@@ -138,7 +138,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
                 this.intl.t('general.doesNotMatchUserRecord', {
                   description: this.intl.t('general.lastName'),
                   record: user.lastName,
-                })
+                }),
               );
             }
 
@@ -148,7 +148,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
               errors.push(
                 this.intl.t('general.userExistsInGroupHierarchy', {
                   groupTitle: topLevelGroup.title,
-                })
+                }),
               );
             }
 
@@ -167,7 +167,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
           hasWarning: warnings.length > 0,
           isValid: errors.length === 0,
         };
-      }
+      },
     );
 
     // flag duplicate users as such
@@ -207,7 +207,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
       const notHeaderRow = proposedUsers.filter(
         (obj) =>
           String(obj.firstName).toLowerCase() !== 'first' ||
-          String(obj.lastName).toLowerCase() !== 'last'
+          String(obj.lastName).toLowerCase() !== 'last',
       );
       this.parsedFileData = notHeaderRow.filter((obj) => {
         const str = Object.values(obj).join('').trim();

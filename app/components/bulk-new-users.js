@@ -133,7 +133,7 @@ export default class BulkNewUsersComponent extends Component {
         const notHeaderRow = proposedUsers.filter(
           (obj) =>
             String(obj.firstName).toLowerCase() !== 'first' ||
-            String(obj.lastName).toLowerCase() !== 'last'
+            String(obj.lastName).toLowerCase() !== 'last',
         );
         resolve(notHeaderRow);
       };
@@ -253,7 +253,7 @@ export default class BulkNewUsersComponent extends Component {
           (obj) =>
             !userErrors.includes(obj) &&
             isPresent(obj.authentication) &&
-            obj.authentication.get('isError')
+            obj.authentication.get('isError'),
         );
         this.savingUserErrors = [...this.savingUserErrors, ...userErrors];
         this.savingAuthenticationErrors = [
@@ -309,7 +309,7 @@ export default class BulkNewUsersComponent extends Component {
         obj.duration = program.duration;
 
         return obj;
-      })
+      }),
     );
 
     const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);

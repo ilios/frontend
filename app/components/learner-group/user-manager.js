@@ -40,13 +40,13 @@ export default class LearnerGroupUserManagerComponent extends Component {
 
   get groupUsers() {
     return this.filteredUsers.filter(
-      (user) => user.get('lowestGroupInTree').id === this.args.learnerGroupId
+      (user) => user.get('lowestGroupInTree').id === this.args.learnerGroupId,
     );
   }
 
   get nonGroupUsers() {
     return this.filteredUsers.filter(
-      (user) => user.get('lowestGroupInTree').id !== this.args.learnerGroupId
+      (user) => user.get('lowestGroupInTree').id !== this.args.learnerGroupId,
     );
   }
 
@@ -69,7 +69,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     return (
       this.hasSelectedNonGroupUsers &&
       !mapBy(this.nonGroupUsers, 'content').every((user) =>
-        this.selectedNonGroupUsers.includes(user)
+        this.selectedNonGroupUsers.includes(user),
       )
     );
   }
@@ -85,7 +85,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     return (
       this.hasSelectedNonGroupUsers &&
       mapBy(this.nonGroupUsers, 'content').every((user) =>
-        this.selectedNonGroupUsers.includes(user)
+        this.selectedNonGroupUsers.includes(user),
       )
     );
   }
@@ -102,7 +102,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
   toggleGroupUserSelection(user) {
     if (this.selectedGroupUsers.includes(user)) {
       this.selectedGroupUsers = this.selectedGroupUsers.filter(
-        (selectedUser) => selectedUser !== user
+        (selectedUser) => selectedUser !== user,
       );
     } else {
       this.selectedGroupUsers = [...this.selectedGroupUsers, user];
@@ -113,7 +113,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
   toggleNonGroupUserSelection(user) {
     if (this.selectedNonGroupUsers.includes(user)) {
       this.selectedNonGroupUsers = this.selectedNonGroupUsers.filter(
-        (selectedUser) => selectedUser !== user
+        (selectedUser) => selectedUser !== user,
       );
     } else {
       this.selectedNonGroupUsers = [...this.selectedNonGroupUsers, user];
@@ -151,7 +151,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     yield timeout(1);
     yield this.args.addUserToGroup(user);
     this.usersBeingAddedToGroup = this.usersBeingAddedToGroup.filter(
-      (movingUser) => movingUser !== user
+      (movingUser) => movingUser !== user,
     );
   }
 
@@ -162,7 +162,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     yield timeout(1);
     yield this.args.removeUserFromGroup(user);
     this.usersBeingRemovedFromGroup = this.usersBeingRemovedFromGroup.filter(
-      (movingUser) => movingUser !== user
+      (movingUser) => movingUser !== user,
     );
   }
 
@@ -173,7 +173,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     yield timeout(1);
     yield this.args.addUsersToGroup(this.selectedNonGroupUsers);
     this.usersBeingAddedToGroup = this.usersBeingAddedToGroup.filter((user) =>
-      this.selectedNonGroupUsers.includes(user)
+      this.selectedNonGroupUsers.includes(user),
     );
     this.selectedNonGroupUsers = [];
   }
@@ -188,7 +188,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     yield timeout(1);
     yield this.args.removeUsersFromGroup(this.selectedGroupUsers);
     this.usersBeingRemovedFromGroup = this.usersBeingRemovedFromGroup.filter((user) =>
-      this.selectedGroupUsers.includes(user)
+      this.selectedGroupUsers.includes(user),
     );
     this.selectedGroupUsers = [];
   }

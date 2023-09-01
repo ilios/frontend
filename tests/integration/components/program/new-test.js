@@ -45,7 +45,7 @@ module('Integration | Component | program/new', function (hooks) {
     assert.strictEqual(component.title.errors.length, 1);
     assert.strictEqual(
       component.title.errors[0].text,
-      'This field is too short (minimum is 3 characters)'
+      'This field is too short (minimum is 3 characters)',
     );
   });
 
@@ -59,7 +59,7 @@ module('Integration | Component | program/new', function (hooks) {
     assert.strictEqual(component.title.errors.length, 1);
     assert.strictEqual(
       component.title.errors[0].text,
-      'This field is too long (maximum is 200 characters)'
+      'This field is too long (maximum is 200 characters)',
     );
   });
 

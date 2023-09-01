@@ -75,7 +75,7 @@ export default class ReportingService extends Service {
     const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
 
     const crosses = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
+      'academicYearCrossesCalendarYearBoundaries',
     );
     const sortedResults = sortBy(result.data.courses, 'title');
     const mappedResults = sortedResults.map(({ title, year, externalId }) => {
@@ -103,7 +103,7 @@ export default class ReportingService extends Service {
     const result = await this.graphql.find('sessions', filters, attributes.join(','));
 
     const crosses = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
+      'academicYearCrossesCalendarYearBoundaries',
     );
     const sortedResults = sortBy(result.data.sessions, 'title');
     const mappedResults = sortedResults.map(({ title, course, sessionObjectives, description }) => {
@@ -303,7 +303,7 @@ export default class ReportingService extends Service {
       let year = '';
       if (model === 'course') {
         const crosses = await this.iliosConfig.itemFromConfig(
-          'academicYearCrossesCalendarYearBoundaries'
+          'academicYearCrossesCalendarYearBoundaries',
         );
         year = crosses ? `(${record.year} - ${record.year + 1})` : `(${record.year})`;
       }

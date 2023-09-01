@@ -88,7 +88,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
 
     assert.notOk(
       component.finalizeConfirmation.isVisible,
-      'Confirmation dialog is initially not visible.'
+      'Confirmation dialog is initially not visible.',
     );
     await component.header.finalize();
     assert.ok(component.finalizeConfirmation.isVisible, 'Confirmation dialog is visible.');
@@ -97,7 +97,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
         .textContent.trim()
         .indexOf('By finalizing this report'),
       0,
-      'Finalize confirmation message is visible'
+      'Finalize confirmation message is visible',
     );
     await click('.confirm-finalize .confirm-buttons .finalize');
     this.set('canUpdate', false);
