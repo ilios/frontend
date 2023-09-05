@@ -38,7 +38,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
       assert.strictEqual(term, this.termModel);
       this.set(
         'selectedTerms',
-        this.selectedTerms.filter((t) => t !== term)
+        this.selectedTerms.filter((t) => t !== term),
       );
     });
 

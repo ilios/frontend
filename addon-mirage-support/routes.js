@@ -131,7 +131,7 @@ export default function (server) {
   server.post('api/programyears', function (schema, request) {
     const jsonData = this.serializerOrRegistry.normalize(
       JSON.parse(request.requestBody),
-      'program-year'
+      'program-year',
     );
     const attrs = parseJsonData(jsonData);
     const programYear = schema.programYears.create(attrs);

@@ -80,7 +80,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     this.set('term', termModel);
     await render(
       hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{true}} @remove={{(noop)}} />
-`
+`,
     );
     assert.dom('.inactive').hasText('(inactive)');
     assert.dom('.fa-xmark').exists({ count: 1 });

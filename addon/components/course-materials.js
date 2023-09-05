@@ -34,7 +34,7 @@ export default class CourseMaterialsComponent extends Component {
     }
 
     return new TrackedAsyncData(
-      Promise.all(this.courseSessionsData.value.map((s) => s.learningMaterials))
+      Promise.all(this.courseSessionsData.value.map((s) => s.learningMaterials)),
     );
   }
 
@@ -44,7 +44,7 @@ export default class CourseMaterialsComponent extends Component {
       return null;
     }
     return new TrackedAsyncData(
-      Promise.all(this.sessionMaterialsData.value.flat().map((s) => s.learningMaterial))
+      Promise.all(this.sessionMaterialsData.value.flat().map((s) => s.learningMaterial)),
     );
   }
 
@@ -54,7 +54,7 @@ export default class CourseMaterialsComponent extends Component {
       return null;
     }
     return new TrackedAsyncData(
-      Promise.all(this.courseMaterialsData.value.map((c) => c.learningMaterial))
+      Promise.all(this.courseMaterialsData.value.map((c) => c.learningMaterial)),
     );
   }
 

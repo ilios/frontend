@@ -9,7 +9,7 @@ const b64DecodeUnicode = function (str) {
         code = '0' + code;
       }
       return '%' + code;
-    })
+    }),
   );
 };
 

@@ -60,7 +60,7 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
     for (let i = 0; i < 6; i++) {
       assert.strictEqual(
         page.details.meshTerms.meshManager.searchResults[i].title,
-        `descriptor ${i}`
+        `descriptor ${i}`,
       );
     }
     assert.ok(page.details.meshTerms.meshManager.searchResults[0].isDisabled);

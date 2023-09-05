@@ -43,7 +43,7 @@ module('Integration | Component | sortable heading', function (hooks) {
           >
             {{this.label}}
           </SortableHeading>
-`
+`,
     );
     assert.dom('button').hasText('Foo');
     assert.dom('button').hasClass(`text-${align}`);

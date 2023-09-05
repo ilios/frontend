@@ -40,7 +40,7 @@ export default class CourseRolloverComponent extends Component {
     this.title = course.title;
     const school = course.belongsTo('school').id();
     this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
+      'academicYearCrossesCalendarYearBoundaries',
     );
     this.allCourses = await this.store.query('course', {
       filters: {

@@ -6,7 +6,7 @@ function set(positional) {
   const [target, key, maybeValue] = positional;
   assert(
     'you must pass a path to {{set}}',
-    (Boolean(target) && typeof key === 'string') || typeof key === 'symbol'
+    (Boolean(target) && typeof key === 'string') || typeof key === 'symbol',
   );
 
   return positional.length === 3

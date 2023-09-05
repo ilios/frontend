@@ -110,7 +110,7 @@ export default class EventsBase extends Service {
     obj.prerequisites = sortBy(obj.prerequisites, 'startDate');
     obj.prerequisites = sortBy(obj.prerequisites, 'name');
     obj.postrequisites = obj.postrequisites.map((postreq) =>
-      this.createEventFromData(postreq, isUserEvent)
+      this.createEventFromData(postreq, isUserEvent),
     );
     obj.postrequisites = sortBy(obj.postrequisites, 'startDate');
     obj.postrequisites = sortBy(obj.postrequisites, 'name');

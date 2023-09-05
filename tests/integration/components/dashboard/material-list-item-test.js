@@ -47,7 +47,7 @@ module('Integration | Component | dashboard/material-list-item', function (hooks
         month: 'numeric',
         day: 'numeric',
         year: 'numeric',
-      })
+      }),
     );
 
     await a11yAudit();

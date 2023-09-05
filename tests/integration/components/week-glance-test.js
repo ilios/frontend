@@ -149,7 +149,7 @@ module('Integration | Component | week glance', function (hooks) {
 
     assert.strictEqual(
       this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ''),
-      expectedTitle.replace(/[\t\n\s]+/g, '')
+      expectedTitle.replace(/[\t\n\s]+/g, ''),
     );
     assert.dom(this.element.querySelector(body)).hasText('None');
   });
@@ -174,7 +174,7 @@ module('Integration | Component | week glance', function (hooks) {
 
     assert.strictEqual(
       this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ''),
-      expectedTitle.replace(/[\t\n\s]+/g, '')
+      expectedTitle.replace(/[\t\n\s]+/g, ''),
     );
   });
 
@@ -200,7 +200,7 @@ module('Integration | Component | week glance', function (hooks) {
 
     assert.strictEqual(
       this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ''),
-      expectedTitle.replace(/[\t\n\s]+/g, '')
+      expectedTitle.replace(/[\t\n\s]+/g, ''),
     );
     assert.strictEqual(this.element.querySelectorAll(body).length, 0);
 
@@ -276,11 +276,11 @@ module('Integration | Component | week glance', function (hooks) {
             // comparing weeks needs some wiggle room as dates may be shifting across week lines.
             assert.ok(
               1 >= Math.abs(from.weekNumber - nextYear.weekNumber),
-              'From-date is at the most one week off from next year.'
+              'From-date is at the most one week off from next year.',
             );
             assert.ok(
               1 >= Math.abs(to.weekNumber - nextYear.weekNumber),
-              'To-date has is at the most one week off from next year.'
+              'To-date has is at the most one week off from next year.',
             );
             break;
           default:
@@ -311,7 +311,7 @@ module('Integration | Component | week glance', function (hooks) {
 
     assert.strictEqual(
       this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ''),
-      expectedTitle.replace(/[\t\n\s]+/g, '')
+      expectedTitle.replace(/[\t\n\s]+/g, ''),
     );
     assert.dom(this.element.querySelector(body)).hasText('None');
 

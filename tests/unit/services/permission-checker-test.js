@@ -211,9 +211,8 @@ module('Unit | Service | permission-checker', function (hooks) {
     this.owner.register('service:currentUser', currentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
-    const canDeleteCurriculumInventoryReport = await service.canDeleteCurriculumInventoryReport(
-      model
-    );
+    const canDeleteCurriculumInventoryReport =
+      await service.canDeleteCurriculumInventoryReport(model);
     assert.ok(canDeleteCurriculumInventoryReport);
   });
 
@@ -240,9 +239,8 @@ module('Unit | Service | permission-checker', function (hooks) {
     this.owner.register('service:currentUser', currentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
-    const canDeleteCurriculumInventoryReport = await service.canDeleteCurriculumInventoryReport(
-      model
-    );
+    const canDeleteCurriculumInventoryReport =
+      await service.canDeleteCurriculumInventoryReport(model);
     assert.ok(canDeleteCurriculumInventoryReport);
   });
 
@@ -256,9 +254,8 @@ module('Unit | Service | permission-checker', function (hooks) {
       .findRecord('curriculum-inventory-report', report.id);
 
     const service = this.owner.lookup('service:permission-checker');
-    const canDeleteCurriculumInventoryReport = await service.canDeleteCurriculumInventoryReport(
-      model
-    );
+    const canDeleteCurriculumInventoryReport =
+      await service.canDeleteCurriculumInventoryReport(model);
     assert.notOk(canDeleteCurriculumInventoryReport);
   });
 });

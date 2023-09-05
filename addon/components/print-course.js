@@ -72,7 +72,7 @@ export default class PrintCourseComponent extends Component {
 
   load = dropTask(async () => {
     this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
+      'academicYearCrossesCalendarYearBoundaries',
     );
   });
 

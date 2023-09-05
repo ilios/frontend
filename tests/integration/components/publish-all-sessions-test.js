@@ -73,7 +73,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
 `);
     assert.strictEqual(
       component.unpublishableSessions.text,
-      'Sessions Incomplete: cannot publish (1)'
+      'Sessions Incomplete: cannot publish (1)',
     );
     assert.notOk(component.unpublishableSessions.isExpanded);
     assert.strictEqual(component.unpublishableSessions.sessions.length, 0);
@@ -89,7 +89,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.unpublishableSessions.sessions[0].meshDescriptors, 'Yes (1)');
     assert.strictEqual(
       component.publishableSessions.text,
-      'Sessions Complete: ready to publish (1)'
+      'Sessions Complete: ready to publish (1)',
     );
     assert.notOk(component.publishableSessions.isExpanded);
     assert.strictEqual(component.publishableSessions.sessions.length, 0);
@@ -127,7 +127,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.overridableSessions.sessions[1].meshDescriptors, 'No');
     assert.strictEqual(
       component.review.confirmation,
-      'Publish 2, schedule 1, and ignore 1 sessions'
+      'Publish 2, schedule 1, and ignore 1 sessions',
     );
   });
 
@@ -142,11 +142,11 @@ module('Integration | Component | publish all sessions', function (hooks) {
 
     assert.strictEqual(
       component.unpublishableSessions.text,
-      'Sessions Incomplete: cannot publish (0)'
+      'Sessions Incomplete: cannot publish (0)',
     );
     assert.strictEqual(
       component.publishableSessions.text,
-      'Sessions Complete: ready to publish (0)'
+      'Sessions Complete: ready to publish (0)',
     );
     assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (0)');
     assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (0)');
@@ -155,7 +155,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
     assert.strictEqual(component.overridableSessions.sessions.length, 0);
     assert.strictEqual(
       component.review.confirmation,
-      'Publish 0, schedule 0, and ignore 0 sessions'
+      'Publish 0, schedule 0, and ignore 0 sessions',
     );
   });
 
@@ -166,7 +166,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
 `);
     assert.strictEqual(
       component.review.unlinkedObjectivesWarning,
-      'This course has unlinked objective(s)'
+      'This course has unlinked objective(s)',
     );
     assert.ok(component.review.transitionToCourse.isVisible);
     assert.ok(component.review.visualize.isVisible);
@@ -179,7 +179,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
 `);
     assert.strictEqual(
       component.review.confirmation,
-      'Publish 2, schedule 1, and ignore 1 sessions'
+      'Publish 2, schedule 1, and ignore 1 sessions',
     );
     assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
@@ -198,7 +198,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
 
     assert.strictEqual(
       component.review.confirmation,
-      'Publish 3, schedule 0, and ignore 1 sessions'
+      'Publish 3, schedule 0, and ignore 1 sessions',
     );
   });
 
@@ -209,7 +209,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
 `);
     assert.strictEqual(
       component.review.confirmation,
-      'Publish 2, schedule 1, and ignore 1 sessions'
+      'Publish 2, schedule 1, and ignore 1 sessions',
     );
     assert.strictEqual(component.overridableSessions.title, 'Sessions Requiring Review (2)');
     assert.ok(component.overridableSessions.markAllAsScheduled.isVisible);
@@ -229,7 +229,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
 
     assert.strictEqual(
       component.review.confirmation,
-      'Publish 1, schedule 2, and ignore 1 sessions'
+      'Publish 1, schedule 2, and ignore 1 sessions',
     );
   });
 });

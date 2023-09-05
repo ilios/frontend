@@ -62,7 +62,7 @@ module('Acceptance | Session - Overview', function (hooks) {
         hour12: true,
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
 
     await page.details.overview.toggleIlm.yesNoToggle.click();
@@ -99,7 +99,7 @@ module('Acceptance | Session - Overview', function (hooks) {
         hour12: true,
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
   });
 
@@ -153,14 +153,14 @@ module('Acceptance | Session - Overview', function (hooks) {
         hour12: true,
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
     await page.details.overview.ilmDueDateAndTime.edit();
     await page.details.overview.ilmDueDateAndTime.datePicker.set(newDate.toJSDate());
     await page.details.overview.ilmDueDateAndTime.timePicker.hour.select(newDate.toFormat('hh'));
     await page.details.overview.ilmDueDateAndTime.timePicker.minute.select(newDate.toFormat('mm'));
     await page.details.overview.ilmDueDateAndTime.timePicker.ampm.select(
-      newDate.toFormat('a').toLocaleLowerCase()
+      newDate.toFormat('a').toLocaleLowerCase(),
     );
 
     await page.details.overview.ilmDueDateAndTime.save();
@@ -173,7 +173,7 @@ module('Acceptance | Session - Overview', function (hooks) {
         hour12: true,
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
   });
 
@@ -218,7 +218,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(
       page.details.overview.lastUpdated,
-      'Last Update Last Update: 07/09/2019 5:00 PM'
+      'Last Update Last Update: 07/09/2019 5:00 PM',
     );
   });
 
@@ -588,7 +588,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(page.details.overview.instructionalNotes.value, newInstructionalNotes);
     assert.strictEqual(
       this.server.db.sessions[0].instructionalNotes,
-      `<p>${newInstructionalNotes}</p>`
+      `<p>${newInstructionalNotes}</p>`,
     );
   });
 
@@ -611,7 +611,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(page.details.overview.instructionalNotes.value, newInstructionalNotes);
     assert.strictEqual(
       this.server.db.sessions[0].instructionalNotes,
-      `<p>${newInstructionalNotes}</p>`
+      `<p>${newInstructionalNotes}</p>`,
     );
   });
 
@@ -703,7 +703,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(
       page.details.overview.prerequisites.text,
-      'Prerequisites: session 1, session 2, session 3'
+      'Prerequisites: session 1, session 2, session 3',
     );
   });
 
@@ -807,7 +807,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(
       page.details.overview.associatedGroups.groups,
-      'learner group 0, learner group 1, learner group 2'
+      'learner group 0, learner group 1, learner group 2',
     );
   });
 });

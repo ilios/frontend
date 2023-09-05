@@ -40,7 +40,7 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
   const addSessionTypeTitleToContents = function (
     contents,
     sessionTypeTitle,
-    sessionTypeTitlePhrase
+    sessionTypeTitlePhrase,
   ) {
     if (sessionTypeTitle) {
       contents = contents + `<br />${sessionTypeTitlePhrase}: ${sessionTypeTitle}`;
@@ -71,7 +71,7 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     contents = addSessionTypeTitleToContents(
       contents,
       sessionTypeTitle,
-      intl.t('general.sessionType')
+      intl.t('general.sessionType'),
     );
     if (isMulti) {
       contents = contents + `,<br /> ${intl.t('general.multiple')}`;
@@ -88,7 +88,7 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     contents = addSessionTypeTitleToContents(
       contents,
       sessionTypeTitle,
-      intl.t('general.sessionType')
+      intl.t('general.sessionType'),
     );
     if (isMulti) {
       contents = contents + `,<br />${intl.t('general.multiple')}`;

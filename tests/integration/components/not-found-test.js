@@ -15,7 +15,7 @@ module('Integration | Component | not-found', function (hooks) {
 `);
     assert.strictEqual(
       component.text,
-      "Rats! I couldn't find that. Please check your page address, and try again. Back to Dashboard"
+      "Rats! I couldn't find that. Please check your page address, and try again. Back to Dashboard",
     );
     assert.ok(component.backToDashboardLink.isPresent);
     assert.strictEqual(component.backToDashboardLink.text, 'Back to Dashboard');

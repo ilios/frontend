@@ -17,7 +17,8 @@
       background-color: c.$orange;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
-      box-shadow: 0 2px $collapse-control-shadow-grey,
+      box-shadow:
+        0 2px $collapse-control-shadow-grey,
         inset 0 1px 2px $collapse-control-shadow-black;
       color: c.$white;
       cursor: pointer;

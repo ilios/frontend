@@ -94,7 +94,7 @@ export default class VisualizerCourseSessionTypes extends Component {
 
     const totalMinutes = mapBy(mappedSessionTypes, 'data').reduce(
       (total, minutes) => total + minutes,
-      0
+      0,
     );
     return mappedSessionTypes
       .map((obj) => {
@@ -133,7 +133,7 @@ export default class VisualizerCourseSessionTypes extends Component {
     this.router.transitionTo(
       'course-visualize-session-type',
       this.args.course.get('id'),
-      obj.meta.sessionTypeId
+      obj.meta.sessionTypeId,
     );
   }
 }

@@ -106,14 +106,14 @@ export default class VisualizerCourseObjectives extends Component {
           async (sessionObjective) => {
             const parents = await sessionObjective.courseObjectives;
             return parents.length;
-          }
+          },
         );
         const courseSessionObjectives = await map(
           sessionObjectivesWithParents,
           async (sessionObjective) => {
             const parents = await sessionObjective.courseObjectives;
             return mapBy(parents.slice(), 'id');
-          }
+          },
         );
         const flatObjectives = courseSessionObjectives.reduce((flattened, arr) => {
           return [...flattened, ...arr];
@@ -125,7 +125,7 @@ export default class VisualizerCourseObjectives extends Component {
           objectives: flatObjectives,
           minutes,
         };
-      }
+      },
     );
 
     // condensed objectives map
@@ -143,7 +143,7 @@ export default class VisualizerCourseObjectives extends Component {
         }
       });
       const sessionObjectives = sessionCourseObjectiveMap.filter((obj) =>
-        obj.objectives.includes(courseObjective.get('id'))
+        obj.objectives.includes(courseObjective.get('id')),
       );
       const meta = {
         competency,
@@ -160,7 +160,7 @@ export default class VisualizerCourseObjectives extends Component {
 
     const totalMinutes = mapBy(mappedObjectives, 'data').reduce(
       (total, minutes) => total + minutes,
-      0
+      0,
     );
 
     return mappedObjectives.map((obj) => {

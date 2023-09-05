@@ -32,7 +32,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   get expandedYearWithoutTitleView() {
     const yearsWithNoTitle = this.yearsInView.filter((year) => !this.titlesInView.includes(year));
     const expandedYearsWithNoTitle = yearsWithNoTitle.filter((year) =>
-      this.expandedYears.includes(year)
+      this.expandedYears.includes(year),
     );
 
     if (expandedYearsWithNoTitle.length) {
@@ -86,7 +86,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
 
   load = restartableTask(async () => {
     this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
+      'academicYearCrossesCalendarYearBoundaries',
     );
     if (this.args.school) {
       await this.dataLoader.loadSchoolForCalendar(this.args.school.id);

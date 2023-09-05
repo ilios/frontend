@@ -99,7 +99,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     assert
       .dom(values[4])
       .hasText(
-        'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines. Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955'
+        'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines. Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955',
       );
   });
 
@@ -221,7 +221,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
 
     const labels = await findAll('[data-test-session-objectives] [data-test-header]');
     const values = await findAll(
-      '[data-test-session-objectives] [data-test-session-objective-list-item] .grid-item'
+      '[data-test-session-objectives] [data-test-session-objective-list-item] .grid-item',
     );
     assert.dom(labels[0]).hasText('Description');
     assert.dom(labels[1]).hasText('Parent Objectives');
@@ -270,7 +270,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
 
     const labels = await findAll('[data-test-course-objectives] [data-test-header]');
     const values = await findAll(
-      '[data-test-course-objectives] [data-test-course-objective-list-item] .grid-item'
+      '[data-test-course-objectives] [data-test-course-objective-list-item] .grid-item',
     );
     assert.dom(labels[0]).hasText('Description');
     assert.dom(labels[1]).hasText('Parent Objectives');
@@ -334,7 +334,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     assert
       .dom(sessionTerms)
       .hasText(
-        'Terms (5) Vocabulary 2 (school 0) term 1 term 2 term 3 Vocabulary 3 (school 0) term 4 term 5'
+        'Terms (5) Vocabulary 2 (school 0) term 1 term 2 term 3 Vocabulary 3 (school 0) term 4 term 5',
       );
   });
 });

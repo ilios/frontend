@@ -74,7 +74,7 @@ module('Acceptance | Session - Terms', function (hooks) {
     assert.strictEqual(page.details.taxonomies.manager.selectedTerms.length, 1);
     assert.strictEqual(
       page.details.taxonomies.manager.selectedTerms[0].vocabularyName,
-      'Vocabulary 1'
+      'Vocabulary 1',
     );
     assert.strictEqual(page.details.taxonomies.manager.selectedTerms[0].terms.length, 1);
     assert.strictEqual(page.details.taxonomies.manager.selectedTerms[0].terms[0].name, 'term 0');

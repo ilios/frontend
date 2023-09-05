@@ -118,11 +118,11 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     assert.strictEqual(component.multiday.events.length, 2);
     assert.strictEqual(
       component.multiday.events[0].text,
-      '9/20/15, 12:00 PM – 9/21/15, 12:00 PM Rm. 160'
+      '9/20/15, 12:00 PM – 9/21/15, 12:00 PM Rm. 160',
     );
     assert.strictEqual(
       component.multiday.events[1].text,
-      '9/22/15, 12:00 PM – 9/23/15, 12:00 PM Rm. 160'
+      '9/22/15, 12:00 PM – 9/23/15, 12:00 PM Rm. 160',
     );
   });
 });

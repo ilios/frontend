@@ -40,7 +40,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     assert.ok(component.owningUser.userNameInfo.isTooltipVisible);
     assert.strictEqual(
       component.owningUser.userNameInfo.tooltipContents,
-      'Campus name of record: 0 guy M, Mc0son'
+      'Campus name of record: 0 guy M, Mc0son',
     );
     await component.owningUser.userNameInfo.closeTooltip();
     assert.notOk(component.owningUser.userNameInfo.isTooltipVisible);
@@ -68,7 +68,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     assert.strictEqual(component.url.validationErrors.length, 1);
     assert.strictEqual(
       component.url.validationErrors[0].text,
-      'This field is too long (maximum is 256 characters)'
+      'This field is too long (maximum is 256 characters)',
     );
   });
 

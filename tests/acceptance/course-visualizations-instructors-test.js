@@ -83,11 +83,11 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
     assert.strictEqual(page.root.instructorsChart.chart.labels.length, 2);
     assert.strictEqual(
       page.root.instructorsChart.chart.labels[0].text,
-      '1 guy M. Mc1son: 75 Minutes'
+      '1 guy M. Mc1son: 75 Minutes',
     );
     assert.strictEqual(
       page.root.instructorsChart.chart.labels[1].text,
-      '2 guy M. Mc2son: 90 Minutes'
+      '2 guy M. Mc2son: 90 Minutes',
     );
   });
 });

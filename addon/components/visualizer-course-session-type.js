@@ -57,7 +57,7 @@ export default class VisualizerCourseSessionType extends Component {
     const sessions = sessionsAndSessionTypeSessions.sessions;
     const sessionTypeSessions = sessionsAndSessionTypeSessions.sessionTypeSessions;
     const courseSessionsWithSessionType = sessions.filter((session) =>
-      sessionTypeSessions.includes(session)
+      sessionTypeSessions.includes(session),
     );
 
     const sessionsWithMinutes = map(courseSessionsWithSessionType, async (session) => {

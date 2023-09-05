@@ -14,7 +14,7 @@ module('Integration | Component | event-not-found', function (hooks) {
     assert.strictEqual(component.title, 'Event Not Found');
     assert.strictEqual(
       component.explanation,
-      'The event you have tried to reach is either no longer available, or you have followed a personalized user link which is not shareable. If you continue to encounter issues, please contact your Ilios help desk.'
+      'The event you have tried to reach is either no longer available, or you have followed a personalized user link which is not shareable. If you continue to encounter issues, please contact your Ilios help desk.',
     );
     assert.ok(component.backToDashboardLink.isPresent);
     assert.strictEqual(component.backToDashboardLink.text, 'Back to Dashboard');

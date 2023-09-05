@@ -61,8 +61,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       component.timingInfo.text,
       `(Available: ${this.intl.formatDate(startDate, opts)} until ${this.intl.formatDate(
         endDate,
-        opts
-      )})`
+        opts,
+      )})`,
     );
   });
 
@@ -96,8 +96,8 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       component.timingInfo.text,
       `(Available: ${this.intl.formatDate(startDate, opts)} until ${this.intl.formatDate(
         endDate,
-        opts
-      )})`
+        opts,
+      )})`,
     );
     assert.notOk(component.isRequired);
     assert.ok(component.typeIcon.isPresent);

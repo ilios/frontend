@@ -12,5 +12,5 @@ export default modifier(
       element.removeEventListener('mouseout', handleMouseOut);
     };
   },
-  { eager: false }
+  { eager: false },
 );

@@ -109,7 +109,7 @@ module('Integration | Component | selectable terms list', function (hooks) {
       assert.strictEqual(term, this.term4);
       this.set(
         'selectedTerms',
-        this.selectedTerms.filter((t) => t !== term)
+        this.selectedTerms.filter((t) => t !== term),
       );
     });
     await render(hbs`<SelectableTermsList

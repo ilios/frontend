@@ -45,31 +45,31 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].description.text,
-      'session objective 1'
+      'session objective 1',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      5
+      5,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
-      'descriptor 1'
+      'descriptor 1',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title,
-      'descriptor 2'
+      'descriptor 2',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title,
-      'descriptor 3'
+      'descriptor 3',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title,
-      'descriptor 4'
+      'descriptor 4',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title,
-      'descriptor 5'
+      'descriptor 5',
     );
 
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
@@ -117,11 +117,11 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].description.text,
-      'session objective 1'
+      'session objective 1',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      5
+      5,
     );
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
 
@@ -142,27 +142,27 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.save();
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      5
+      5,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
-      'descriptor 0'
+      'descriptor 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title,
-      'descriptor 2'
+      'descriptor 2',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title,
-      'descriptor 3'
+      'descriptor 3',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title,
-      'descriptor 4'
+      'descriptor 4',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title,
-      'descriptor 5'
+      'descriptor 5',
     );
   });
 
@@ -177,11 +177,11 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].description.text,
-      'session objective 1'
+      'session objective 1',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      5
+      5,
     );
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
 
@@ -202,27 +202,27 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.cancel();
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      5
+      5,
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
-      'descriptor 1'
+      'descriptor 1',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title,
-      'descriptor 2'
+      'descriptor 2',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title,
-      'descriptor 3'
+      'descriptor 3',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title,
-      'descriptor 4'
+      'descriptor 4',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title,
-      'descriptor 5'
+      'descriptor 5',
     );
   });
 });

@@ -15,7 +15,7 @@ const getAll = function (schema, request) {
         request.url +
         ' is requesting data from the ' +
         modelName +
-        " collection, but that collection doesn't exist. To create it, create an empty fixture file or factory.  If the name is camel cased it will need to be created in the get-name module."
+        " collection, but that collection doesn't exist. To create it, create an empty fixture file or factory.  If the name is camel cased it will need to be created in the get-name module.",
     );
     return;
   }
@@ -32,12 +32,12 @@ const filterResults = function (all, modelName, request) {
   const filteredByQueryTerms = filterByQueryTerms(
     filteredByFilters,
     modelName,
-    queryParams.queryTerms
+    queryParams.queryTerms,
   );
 
   const results = filteredByQueryTerms.slice(
     queryParams.offset,
-    queryParams.offset + queryParams.limit
+    queryParams.offset + queryParams.limit,
   );
 
   return results;

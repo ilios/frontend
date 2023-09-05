@@ -22,7 +22,7 @@ export default class WeeklyCalendarEventComponent extends Component {
             for: 'ilios-common',
             until: '72',
             since: '71',
-          }
+          },
         );
         startDate = DateTime.fromJSDate(startDate).toISO();
       }
@@ -35,7 +35,7 @@ export default class WeeklyCalendarEventComponent extends Component {
             for: 'ilios-common',
             until: '72',
             since: '71',
-          }
+          },
         );
         endDate = DateTime.fromJSDate(endDate).toISO();
       }
@@ -59,7 +59,7 @@ export default class WeeklyCalendarEventComponent extends Component {
           for: 'ilios-common',
           until: '72',
           since: '71',
-        }
+        },
       );
       return DateTime.fromJSDate(this.args.event.startDate);
     }
@@ -76,7 +76,7 @@ export default class WeeklyCalendarEventComponent extends Component {
           for: 'ilios-common',
           until: '72',
           since: '71',
-        }
+        },
       );
       return DateTime.fromJSDate(this.args.event.endDate);
     }
@@ -101,7 +101,7 @@ export default class WeeklyCalendarEventComponent extends Component {
           for: 'ilios-common',
           until: '72',
           since: '71',
-        }
+        },
       );
       return DateTime.fromJSDate(this.args.event.lastModified);
     }
@@ -170,7 +170,7 @@ export default class WeeklyCalendarEventComponent extends Component {
        border-left: .25rem solid ${darkcolor};
        grid-column-start: span ${this.span};
        grid-row-start: ${this.startMinuteRounded + 1};
-       grid-row-end: span ${this.totalMinutesRounded};`
+       grid-row-end: span ${this.totalMinutesRounded};`,
     );
   }
 }

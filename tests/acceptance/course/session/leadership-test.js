@@ -41,12 +41,12 @@ module('Acceptance | Session - Leadership', function (hooks) {
     assert.strictEqual(page.details.leadershipCollapsed.summary[0].name, 'Administrators');
     assert.strictEqual(
       page.details.leadershipCollapsed.summary[0].value,
-      'There are 2 administrators'
+      'There are 2 administrators',
     );
     assert.strictEqual(page.details.leadershipCollapsed.summary[1].name, 'Student Advisors');
     assert.strictEqual(
       page.details.leadershipCollapsed.summary[1].value,
-      'There is 1 student advisor'
+      'There is 1 student advisor',
     );
   });
 
@@ -79,32 +79,32 @@ module('Acceptance | Session - Leadership', function (hooks) {
     assert.strictEqual(manager.administratorSearch.results.length, 6);
     assert.strictEqual(
       manager.administratorSearch.results[0].text,
-      '0 guy M. Mc0son user@example.edu'
+      '0 guy M. Mc0son user@example.edu',
     );
     assert.ok(manager.administratorSearch.results[0].isSelectable);
     assert.strictEqual(
       manager.administratorSearch.results[1].text,
-      '1 guy M. Mc1son user@example.edu'
+      '1 guy M. Mc1son user@example.edu',
     );
     assert.ok(manager.administratorSearch.results[1].isSelectable);
     assert.strictEqual(
       manager.administratorSearch.results[2].text,
-      '2 guy M. Mc2son user@example.edu'
+      '2 guy M. Mc2son user@example.edu',
     );
     assert.ok(manager.administratorSearch.results[2].isSelectable);
     assert.strictEqual(
       manager.administratorSearch.results[3].text,
-      '3 guy M. Mc3son user@example.edu'
+      '3 guy M. Mc3son user@example.edu',
     );
     assert.ok(manager.administratorSearch.results[3].isSelected);
     assert.strictEqual(
       manager.administratorSearch.results[4].text,
-      '4 guy M. Mc4son user@example.edu'
+      '4 guy M. Mc4son user@example.edu',
     );
     assert.ok(manager.administratorSearch.results[4].isSelected);
     assert.strictEqual(
       manager.administratorSearch.results[5].text,
-      '5 guy M. Mc5son user@example.edu'
+      '5 guy M. Mc5son user@example.edu',
     );
     assert.ok(manager.administratorSearch.results[5].isSelectable);
   });
@@ -121,32 +121,32 @@ module('Acceptance | Session - Leadership', function (hooks) {
     assert.strictEqual(manager.studentAdvisorSearch.results.length, 6);
     assert.strictEqual(
       manager.studentAdvisorSearch.results[0].text,
-      '0 guy M. Mc0son user@example.edu'
+      '0 guy M. Mc0son user@example.edu',
     );
     assert.ok(manager.studentAdvisorSearch.results[0].isSelectable);
     assert.strictEqual(
       manager.studentAdvisorSearch.results[1].text,
-      '1 guy M. Mc1son user@example.edu'
+      '1 guy M. Mc1son user@example.edu',
     );
     assert.ok(manager.studentAdvisorSearch.results[1].isSelectable);
     assert.strictEqual(
       manager.studentAdvisorSearch.results[2].text,
-      '2 guy M. Mc2son user@example.edu'
+      '2 guy M. Mc2son user@example.edu',
     );
     assert.ok(manager.studentAdvisorSearch.results[2].isSelectable);
     assert.strictEqual(
       manager.studentAdvisorSearch.results[3].text,
-      '3 guy M. Mc3son user@example.edu'
+      '3 guy M. Mc3son user@example.edu',
     );
     assert.ok(manager.studentAdvisorSearch.results[3].isSelectable);
     assert.strictEqual(
       manager.studentAdvisorSearch.results[4].text,
-      '4 guy M. Mc4son user@example.edu'
+      '4 guy M. Mc4son user@example.edu',
     );
     assert.ok(manager.studentAdvisorSearch.results[4].isSelectable);
     assert.strictEqual(
       manager.studentAdvisorSearch.results[5].text,
-      '5 guy M. Mc5son user@example.edu'
+      '5 guy M. Mc5son user@example.edu',
     );
     assert.ok(manager.studentAdvisorSearch.results[5].isSelected);
   });

@@ -27,7 +27,7 @@ export default class DashboardMaterialsComponent extends Component {
   ]);
 
   crossesBoundaryConfig = new TrackedAsyncData(
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @cached

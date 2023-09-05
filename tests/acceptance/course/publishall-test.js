@@ -61,14 +61,14 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.notOk(page.publishAll.hasUnlinkedWarning);
     assert.strictEqual(
       page.publishAll.unpublishableSessions.text,
-      'Sessions Incomplete: cannot publish (0)'
+      'Sessions Incomplete: cannot publish (0)',
     );
     assert.notOk(page.publishAll.unpublishableSessions.isExpanded);
     assert.ok(page.publishAll.unpublishableSessions.canExpandCollapse);
 
     assert.strictEqual(
       page.publishAll.publishableSessions.text,
-      'Sessions Complete: ready to publish (3)'
+      'Sessions Complete: ready to publish (3)',
     );
     assert.notOk(page.publishAll.publishableSessions.isExpanded);
     assert.strictEqual(page.publishAll.publishableSessions.sessions.length, 0);

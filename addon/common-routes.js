@@ -9,7 +9,7 @@ export function dashboardRoutes(router) {
       this.route('week');
       this.route('materials');
       this.route('calendar');
-    }
+    },
   );
   router.route('events', { path: 'events/:slug' });
   router.route('weeklyevents');
@@ -36,9 +36,9 @@ export function courseRoutes(router) {
         function () {
           this.route('publication_check', { path: '/publicationcheck' });
           this.route('copy');
-        }
+        },
       );
-    }
+    },
   );
   router.route('course-materials', { path: 'courses/:course_id/materials' });
   router.route('print_course', { path: 'course/:course_id/print' });

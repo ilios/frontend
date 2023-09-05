@@ -97,7 +97,7 @@ export default class DailyCalendarEventComponent extends Component {
        border-left: .25rem solid ${darkcolor};
        grid-column-start: span ${this.span};
        grid-row-start: ${this.startMinuteRounded + 1};
-       grid-row-end: span ${this.totalMinutesRounded};`
+       grid-row-end: span ${this.totalMinutesRounded};`,
     );
   }
 }

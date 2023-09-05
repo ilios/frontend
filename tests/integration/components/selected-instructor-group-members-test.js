@@ -38,7 +38,7 @@ module('Integration | Component | selected-instructor-group-members', function (
     this.set('instructorGroup', this.instructorGroup);
     await render(
       hbs`<SelectedInstructorGroupMembers @instructorGroup={{this.instructorGroup}} />
-`
+`,
     );
     assert.strictEqual(component.members.length, 3);
     assert.strictEqual(component.members[0].userNameInfo.fullName, 'Clem Chowder');

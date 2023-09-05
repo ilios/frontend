@@ -35,13 +35,13 @@ module('Integration | Component | learner selection manager', function (hooks) {
     this.set('learners', [this.learnerModel1, this.learnerModel2, this.learnerModel3]);
     await render(
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{(noop)}}/>
-`
+`,
     );
     assert.strictEqual(component.selectedLearners.heading, 'Selected Learners:');
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(
       component.selectedLearners.learners[0].userNameInfo.fullName,
-      'Clem Chowder'
+      'Clem Chowder',
     );
     assert.ok(component.selectedLearners.learners[0].userNameInfo.hasAdditionalInfo);
     assert.notOk(component.selectedLearners.learners[0].userNameInfo.isTooltipVisible);
@@ -49,7 +49,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
     assert.ok(component.selectedLearners.learners[0].userNameInfo.isTooltipVisible);
     assert.strictEqual(
       component.selectedLearners.learners[0].userNameInfo.tooltipContents,
-      'Campus name of record: 2 guy M, Mc2son'
+      'Campus name of record: 2 guy M, Mc2son',
     );
     await component.selectedLearners.learners[0].userNameInfo.closeTooltip();
     assert.notOk(component.selectedLearners.learners[0].userNameInfo.isTooltipVisible);
@@ -63,7 +63,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
     this.set('learners', []);
     await render(
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{(noop)}}/>
-`
+`,
     );
     assert.strictEqual(component.selectedLearners.heading, 'Selected Learners:');
     assert.strictEqual(component.selectedLearners.noLearners.text, 'None');
@@ -77,7 +77,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
     });
     await render(
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{this.remove}}/>
-`
+`,
     );
     assert.strictEqual(component.selectedLearners.heading, 'Selected Learners:');
     assert.strictEqual(component.selectedLearners.learners.length, 2);
@@ -100,7 +100,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
     });
     await render(
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{this.add}} @remove={{(noop)}}/>
-`
+`,
     );
     await component.search.searchBox.set('Schmitt');
     assert.strictEqual(component.search.results.items.length, 1);

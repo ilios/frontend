@@ -22,7 +22,7 @@ Every day these for-profit companies make developing Ilios possible.  Without th
 open source software, ilios would be nowhere, so if you have a chance to pay them for something please do.
 
 - [GitHub](https://github.com)
-- [Travis CI](https://travis-ci.org/)  
+- [Travis CI](https://travis-ci.org/)
 - [Sentry](https://sentry.io/for/open-source/)
 - [Netlify](https://www.netlify.com)
 - [BrowserStack](https://www.browserstack.com)

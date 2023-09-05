@@ -42,42 +42,42 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
         '2019-01-09 09:00:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2019-01-09 08:00:00',
         '2019-01-09 11:30:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2019-01-09 08:10:00',
         '2019-01-09 10:00:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2019-01-09 10:00:00',
         '2019-01-09 12:00:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2019-01-09 10:10:00',
         '2019-01-09 12:00:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2019-01-09 12:00:00',
         '2019-01-09 13:00:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.events = this.server.db.userevents;
     });
@@ -201,77 +201,77 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
         '2020-02-10 10:00:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2020-02-10 08:10:00',
         '2020-02-10 09:20:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2020-02-10 09:40:00',
         '2020-02-10 10:30:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2020-02-10 10:10:00',
         '2020-02-10 12:00:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2020-02-10 10:40:00',
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2020-02-10 10:40:00',
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2020-02-10 10:40:00',
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2020-02-10 10:40:00',
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2020-02-10 10:40:00',
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2020-02-10 10:40:00',
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.createEvent(
         '2020-02-10 12:00:00',
         '2020-02-10 13:00:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       this.events = this.server.db.userevents;
     });
@@ -460,7 +460,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
         '2020-02-10 12:30:00',
         DateTime.now().toFormat('yyyy-LL-dd hh:mm:ss'),
         false,
-        true
+        true,
       );
       const events = this.server.db.userevents;
       this.set('event', events[0]);
@@ -479,7 +479,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         false,
-        true
+        true,
       );
       const events = this.server.db.userevents;
       this.set('event', events[0]);
@@ -498,7 +498,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         true,
-        true
+        true,
       );
       const events = this.server.db.userevents;
       this.set('event', events[0]);
@@ -517,7 +517,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         true,
-        false
+        false,
       );
       const events = this.server.db.userevents;
       this.set('event', events[0]);

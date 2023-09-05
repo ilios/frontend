@@ -157,7 +157,7 @@ module('Integration | Component | offering form', function (hooks) {
         month: 10,
         day: 24,
         hour: 8,
-      }).toJSDate()
+      }).toJSDate(),
     );
     await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} />
 `);
@@ -204,7 +204,7 @@ module('Integration | Component | offering form', function (hooks) {
     const selectedDate = DateTime.fromFormat(component.startDate.datePicker.value, 'M/d/y');
     assert.ok(
       selectedDate.hasSame(courseStartDate, 'day'),
-      'Selected date initialized to course start date.'
+      'Selected date initialized to course start date.',
     );
   });
 
@@ -222,7 +222,7 @@ module('Integration | Component | offering form', function (hooks) {
     const selectedDate = DateTime.fromFormat(component.startDate.datePicker.value, 'M/d/y');
     assert.ok(
       selectedDate.hasSame(courseEndDate, 'day'),
-      'Selected date initialized to course end date.'
+      'Selected date initialized to course end date.',
     );
   });
 
@@ -264,7 +264,7 @@ module('Integration | Component | offering form', function (hooks) {
         learners,
         learnerGroups,
         instructorGroups,
-        instructors
+        instructors,
       ) => {
         const today = DateTime.fromObject({ hour: 8 });
         assert.ok(today.hasSame(DateTime.fromJSDate(startDate), 'day'));
@@ -275,7 +275,7 @@ module('Integration | Component | offering form', function (hooks) {
         assert.strictEqual(learners.length, 0);
         assert.strictEqual(instructorGroups.length, 0);
         assert.strictEqual(instructors.length, 0);
-      }
+      },
     );
     await render(hbs`<OfferingForm @close={{(noop)}} @save={{this.save}} />
 `);
@@ -330,7 +330,7 @@ module('Integration | Component | offering form', function (hooks) {
         'should only get eight saved offerings, we got ' +
           (savedCount + 1) +
           ' with startDate ' +
-          DateTime.fromJSDate(startDate).toISO()
+          DateTime.fromJSDate(startDate).toISO(),
       );
       let expectedStartDate;
       switch (savedCount) {
@@ -389,7 +389,7 @@ module('Integration | Component | offering form', function (hooks) {
         hour: 'numeric',
         minute: 'numeric',
       }),
-      component.endDate.value
+      component.endDate.value,
     );
     await component.startDate.datePicker.set(newStartDate.toJSDate());
     assert.strictEqual(
@@ -400,7 +400,7 @@ module('Integration | Component | offering form', function (hooks) {
         hour: 'numeric',
         minute: 'numeric',
       }),
-      component.endDate.value
+      component.endDate.value,
     );
   });
 
@@ -415,7 +415,7 @@ module('Integration | Component | offering form', function (hooks) {
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
     await component.startTime.timePicker.hour.select('2');
     await component.startTime.timePicker.minute.select('15');
@@ -428,7 +428,7 @@ module('Integration | Component | offering form', function (hooks) {
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-      })
+      }),
     );
   });
 
@@ -443,7 +443,7 @@ module('Integration | Component | offering form', function (hooks) {
         hour: 'numeric',
         minute: 'numeric',
       }),
-      component.endDate.value
+      component.endDate.value,
     );
     await component.duration.hours.set('2');
     await component.duration.minutes.set('15');
@@ -455,7 +455,7 @@ module('Integration | Component | offering form', function (hooks) {
         hour: 'numeric',
         minute: 'numeric',
       }),
-      component.endDate.value
+      component.endDate.value,
     );
   });
 
@@ -471,7 +471,7 @@ module('Integration | Component | offering form', function (hooks) {
         hour: 'numeric',
         minute: 'numeric',
       }),
-      component.endDate.value
+      component.endDate.value,
     );
     await component.startTime.timePicker.hour.select('2');
     await component.startTime.timePicker.minute.select('10');
@@ -486,7 +486,7 @@ module('Integration | Component | offering form', function (hooks) {
         hour: 'numeric',
         minute: 'numeric',
       }),
-      component.endDate.value
+      component.endDate.value,
     );
   });
 
@@ -563,7 +563,7 @@ module('Integration | Component | offering form', function (hooks) {
     const selectedDate = DateTime.fromFormat(component.startDate.datePicker.value, 'M/d/y');
     assert.ok(
       selectedDate.hasSame(DateTime.fromJSDate(offering.startDate), 'day'),
-      'Selected date initialized to offering start date day.'
+      'Selected date initialized to offering start date day.',
     );
   });
 
@@ -574,7 +574,7 @@ module('Integration | Component | offering form', function (hooks) {
     const currentTimezone = DateTime.local().zoneName;
     assert.strictEqual(
       component.timezoneEditor.currentTimezone.text,
-      timezoneService.formatTimezone(currentTimezone)
+      timezoneService.formatTimezone(currentTimezone),
     );
   });
 
@@ -608,14 +608,14 @@ module('Integration | Component | offering form', function (hooks) {
     this.set('save', async (startDate, endDate) => {
       assert.strictEqual(
         DateTime.fromJSDate(startDate).toUTC().toISO(),
-        '2005-06-25T05:24:00.000Z'
+        '2005-06-25T05:24:00.000Z',
       );
       assert.strictEqual(DateTime.fromJSDate(endDate).toUTC().toISO(), '2005-06-25T06:24:00.000Z');
     });
     const timezoneService = this.owner.lookup('service:timezone');
     await render(
       hbs`<OfferingForm @offering={{this.offering}} @close={{(noop)}} @save={{this.save}} />
-`
+`,
     );
     assert.notEqual(newTimezone, currentTimezone);
     assert.notOk(component.timezoneEditor.picker.isPresent);
@@ -626,7 +626,7 @@ module('Integration | Component | offering form', function (hooks) {
     assert.notOk(component.timezoneEditor.picker.isPresent);
     assert.strictEqual(
       component.timezoneEditor.currentTimezone.text,
-      timezoneService.formatTimezone(newTimezone)
+      timezoneService.formatTimezone(newTimezone),
     );
     await component.save();
   });
@@ -672,17 +672,17 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
         .title,
-      'Learner Group 1'
+      'Learner Group 1',
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
         .title,
-      'Learner Group 2'
+      'Learner Group 2',
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[2]
         .title,
-      'Learner Group 10'
+      'Learner Group 10',
     );
   });
 
@@ -698,7 +698,7 @@ module('Integration | Component | offering form', function (hooks) {
     });
     await render(
       hbs`<OfferingForm @offering={{this.offering}} @close={{(noop)}} @save={{this.save}} />
-`
+`,
     );
     await component.duration.hours.submit();
   });
@@ -715,7 +715,7 @@ module('Integration | Component | offering form', function (hooks) {
     });
     await render(
       hbs`<OfferingForm @offering={{this.offering}} @close={{(noop)}} @save={{this.save}} />
-`
+`,
     );
     await component.duration.minutes.submit();
   });
@@ -786,64 +786,64 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      3
+      3,
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts.length,
-      1
+      1,
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees.length,
-      3
+      3,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
         .subgroups.length,
-      2
+      2,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[1].isChecked
+        .subgroups[1].isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
-        .isChecked
+        .isChecked,
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
         .subgroups.length,
-      1
+      1,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[2]
-        .isChecked
+        .isChecked,
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[2]
         .subgroups.length,
-      0
+      0,
     );
     await component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups[0].toggle();
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      2
+      2,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
   });
 
@@ -873,64 +873,64 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      3
+      3,
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts.length,
-      1
+      1,
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees.length,
-      3
+      3,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
         .subgroups.length,
-      2
+      2,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[1].isChecked
+        .subgroups[1].isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
-        .isChecked
+        .isChecked,
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
         .subgroups.length,
-      1
+      1,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[2]
-        .isChecked
+        .isChecked,
     );
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[2]
         .subgroups.length,
-      0
+      0,
     );
     await component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].remove();
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      2
+      2,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
   });
 
@@ -960,21 +960,21 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      3
+      3,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     await component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].subgroups[0].toggle();
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      4
+      4,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
   });
 
@@ -1004,29 +1004,29 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      3
+      3,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
-        .isChecked
+        .isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     await component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].toggle();
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      5
+      5,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
-        .isChecked
+        .isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[1]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
   });
 
@@ -1056,37 +1056,37 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      3
+      3,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[1].isChecked
+        .subgroups[1].isChecked,
     );
     await component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].toggle();
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      0
+      0,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[1].isChecked
+        .subgroups[1].isChecked,
     );
   });
 
@@ -1116,37 +1116,37 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      3
+      3,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[1].isChecked
+        .subgroups[1].isChecked,
     );
     await component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].remove();
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      0
+      0,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[1].isChecked
+        .subgroups[1].isChecked,
     );
   });
 
@@ -1170,19 +1170,19 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      0
+      0,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
       shiftKey: true,
@@ -1190,19 +1190,19 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      1
+      1,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[1].isChecked
+        .subgroups[1].isChecked,
     );
   });
 
@@ -1232,19 +1232,19 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      3
+      3,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     await click('[data-test-learnergroup-tree-root=true] > [data-test-checkbox]', {
       shiftKey: true,
@@ -1252,19 +1252,19 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      2
+      2,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[1].isChecked
+        .subgroups[1].isChecked,
     );
   });
 
@@ -1294,37 +1294,37 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      3
+      3,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     await click('[data-test-remove-learnergroup]', { at: 0, shiftKey: true });
     assert.strictEqual(
       component.learnerManager.learnergroupSelectionManager.selectedLearnerGroups
         .detailLearnergroupsList.trees[0].items.length,
-      2
+      2,
     );
     assert.notOk(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .isChecked
+        .isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[0].isChecked
+        .subgroups[0].isChecked,
     );
     assert.ok(
       component.learnerManager.learnergroupSelectionManager.availableGroups.cohorts[0].trees[0]
-        .subgroups[1].isChecked
+        .subgroups[1].isChecked,
     );
   });
 });

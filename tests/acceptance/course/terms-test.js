@@ -36,7 +36,7 @@ module('Acceptance | Course - Terms', function (hooks) {
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(
       page.details.collapsedTaxonomies.title,
-      'Terms (' + this.course.terms.length + ')'
+      'Terms (' + this.course.terms.length + ')',
     );
     assert.strictEqual(page.details.collapsedTaxonomies.headers.length, 3);
     assert.strictEqual(page.details.collapsedTaxonomies.headers[0].title, 'Vocabulary');
@@ -48,7 +48,7 @@ module('Acceptance | Course - Terms', function (hooks) {
     assert.strictEqual(page.details.collapsedTaxonomies.vocabularies[0].school, 'school 0');
     assert.strictEqual(
       page.details.collapsedTaxonomies.vocabularies[0].terms.length,
-      this.course.terms.length
+      this.course.terms.length,
     );
   });
 
@@ -78,7 +78,7 @@ module('Acceptance | Course - Terms', function (hooks) {
     assert.strictEqual(page.details.taxonomies.manager.selectedTerms.length, 1);
     assert.strictEqual(
       page.details.taxonomies.manager.selectedTerms[0].vocabularyName,
-      'Vocabulary 1'
+      'Vocabulary 1',
     );
     assert.strictEqual(page.details.taxonomies.manager.selectedTerms[0].terms.length, 1);
     assert.strictEqual(page.details.taxonomies.manager.selectedTerms[0].terms[0].name, 'term 0');

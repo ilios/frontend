@@ -20,7 +20,7 @@ export default class DetailTermsListComponent extends Component {
       filteredTerms.map(async (term) => {
         const title = await term.getTitleWithParentTitles();
         return { term, title };
-      })
+      }),
     );
     const sortedProxies = proxies.sort((a, b) => {
       const titleA = a.title.toLowerCase();

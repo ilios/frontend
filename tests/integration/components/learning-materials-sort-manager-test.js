@@ -68,7 +68,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     this.set('subject', courseModel);
     await render(
       hbs`<LearningMaterialsSortManager @subject={{this.subject}} @cancel={{(noop)}} />
-`
+`,
     );
     assert.dom('.item').exists({ count: 2 });
     assert.dom('.item:nth-of-type(1) [data-test-title]').hasText(lmModel2.title);
@@ -79,7 +79,7 @@ module('Integration | Component | learning materials sort manager', function (ho
       find('.item:nth-of-type(1) .details').textContent.replace(/[\s\n\t]+/g, ''),
       `${capitalize(lmModel2.type)}, owned by ${userModel2.fullName}, Status: ${
         statusModel2.title
-      }`.replace(/[\s\n\t]+/g, '')
+      }`.replace(/[\s\n\t]+/g, ''),
     );
     assert.dom('.item:nth-of-type(2) [data-test-title]').hasText(lmModel1.title);
     assert
@@ -89,7 +89,7 @@ module('Integration | Component | learning materials sort manager', function (ho
       find('.item:nth-of-type(2) .details').textContent.replace(/[\s\n\t]+/g, ''),
       `${capitalize(lmModel1.type)}, owned by ${userModel1.fullName}, Status: ${
         statusModel1.title
-      }`.replace(/[\s\n\t]+/g, '')
+      }`.replace(/[\s\n\t]+/g, ''),
     );
     assert.dom('.actions .bigadd').exists({ count: 1 });
     assert.dom('.actions .bigcancel').exists({ count: 1 });
@@ -130,7 +130,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     });
     await render(
       hbs`<LearningMaterialsSortManager @subject={{this.subject}} @cancel={{this.cancel}} />
-`
+`,
     );
     await click('.actions .bigcancel');
   });
@@ -180,7 +180,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     });
     await render(
       hbs`<LearningMaterialsSortManager @subject={{this.subject}} @save={{this.save}} @cancel={{(noop)}} />
-`
+`,
     );
     await click('.actions .bigadd');
   });

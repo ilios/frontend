@@ -17,7 +17,7 @@ export default class LearnergroupSelectionCohortManagerComponent extends Compone
       return [];
     }
     return this.learnerGroups.value.filter(
-      (learnerGroup) => learnerGroup.belongsTo('parent').value() === null
+      (learnerGroup) => learnerGroup.belongsTo('parent').value() === null,
     );
   }
 

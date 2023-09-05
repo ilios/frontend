@@ -71,19 +71,19 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length, 3);
       assert.strictEqual(
         selectedLearnerGroups.detailLearnergroupsList.trees[0].title,
-        'program 0 cohort 0'
+        'program 0 cohort 0',
       );
       assert.strictEqual(
         selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         selectedLearnerGroups.detailLearnergroupsList.trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
     });
 
@@ -106,107 +106,107 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(learnerSelectionManager.selectedLearners.learners.length, 2);
       assert.strictEqual(
         learnerSelectionManager.selectedLearners.learners[0].userNameInfo.fullName,
-        '1 guy M. Mc1son'
+        '1 guy M. Mc1son',
       );
       assert.strictEqual(
         learnerSelectionManager.selectedLearners.learners[1].userNameInfo.fullName,
-        '2 guy M. Mc2son'
+        '2 guy M. Mc2son',
       );
       assert.strictEqual(
         learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees.length,
-        1
+        1,
       );
       assert.strictEqual(
         learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].title,
-        'program 0 cohort 0'
+        'program 0 cohort 0',
       );
       assert.strictEqual(
         learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].items
           .length,
-        3
+        3,
       );
       assert.strictEqual(
         learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0]
           .text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1]
           .text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[2]
           .text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       assert.strictEqual(learnergroupSelectionManager.availableGroups.cohorts.length, 1);
       assert.strictEqual(learnergroupSelectionManager.availableGroups.cohorts[0].trees.length, 5);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].title,
-        'learner group 0'
+        'learner group 0',
       );
       assert.ok(learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isChecked);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups.length,
-        0
+        0,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].title,
-        'learner group 1'
+        'learner group 1',
       );
       assert.ok(learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].isChecked);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].subgroups.length,
-        0
+        0,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[2].title,
-        'learner group 2'
+        'learner group 2',
       );
       assert.notOk(learnergroupSelectionManager.availableGroups.cohorts[0].trees[2].isChecked);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[2].subgroups.length,
-        0
+        0,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].title,
-        'learner group 3'
+        'learner group 3',
       );
       assert.ok(learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].isChecked);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups.length,
-        2
+        2,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[0].title,
-        'learner group 5'
+        'learner group 5',
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[1].title,
-        'learner group 6'
+        'learner group 6',
       );
       assert.notOk(
-        learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[0].isChecked
+        learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[0].isChecked,
       );
       assert.notOk(
-        learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[1].isChecked
+        learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[1].isChecked,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].title,
-        'learner group 4'
+        'learner group 4',
       );
       assert.notOk(learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].isChecked);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].subgroups.length,
-        1
+        1,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].subgroups[0].title,
-        'learner group 7'
+        'learner group 7',
       );
       assert.notOk(
-        learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].subgroups[0].isChecked
+        learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].subgroups[0].isChecked,
       );
     });
 
@@ -232,69 +232,69 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(learnergroupSelectionManager.availableGroups.cohorts[0].trees.length, 5);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].title,
-        'learner group 0'
+        'learner group 0',
       );
       assert.notOk(learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].isHidden);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[0].subgroups.length,
-        0
+        0,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].title,
-        'learner group 1'
+        'learner group 1',
       );
       assert.notOk(learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].isHidden);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[1].subgroups.length,
-        0
+        0,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[2].title,
-        'learner group 2'
+        'learner group 2',
       );
       assert.notOk(learnergroupSelectionManager.availableGroups.cohorts[0].trees[2].isHidden);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[2].subgroups.length,
-        0
+        0,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].title,
-        'learner group 3'
+        'learner group 3',
       );
       assert.notOk(learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].isHidden);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups.length,
-        2
+        2,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[0].title,
-        'learner group 5'
+        'learner group 5',
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[1].title,
-        'learner group 6'
+        'learner group 6',
       );
       assert.notOk(
-        learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[0].isHidden
+        learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[0].isHidden,
       );
       assert.notOk(
-        learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[1].isHidden
+        learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[1].isHidden,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].title,
-        'learner group 4'
+        'learner group 4',
       );
       assert.notOk(learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].isHidden);
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].subgroups.length,
-        1
+        1,
       );
       assert.strictEqual(
         learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].subgroups[0].title,
-        'learner group 7'
+        'learner group 7',
       );
       assert.notOk(
-        learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].subgroups[0].isHidden
+        learnergroupSelectionManager.availableGroups.cohorts[0].trees[4].subgroups[0].isHidden,
       );
     });
 
@@ -311,12 +311,12 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees.length,
-        1
+        1,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        3
+        3,
       );
 
       await page.details.detailLearnersAndLearnerGroups.manage();
@@ -328,7 +328,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length, 3);
       assert.strictEqual(
         selectedLearnerGroups.detailLearnergroupsList.trees[0].title,
-        'program 0 cohort 0'
+        'program 0 cohort 0',
       );
       await availableGroups.search.set('3');
       assert.strictEqual(availableGroups.cohorts.length, 1);
@@ -362,12 +362,12 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees.length,
-        1
+        1,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        3
+        3,
       );
 
       await page.details.detailLearnersAndLearnerGroups.manage();
@@ -379,7 +379,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length, 3);
       assert.strictEqual(
         selectedLearnerGroups.detailLearnergroupsList.trees[0].title,
-        'program 0 cohort 0'
+        'program 0 cohort 0',
       );
       await availableGroups.search.set('5');
       assert.strictEqual(availableGroups.cohorts.length, 1);
@@ -413,39 +413,39 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees.length,
-        1
+        1,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        3
+        3,
       );
       await page.details.detailLearnersAndLearnerGroups.manage();
 
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees.length,
-        1
+        1,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        3
+        3,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       await page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups.cohorts[0].trees[2].toggle();
       await page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[0].toggle();
@@ -453,79 +453,79 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        5
+        5,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        5
+        5,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[2].text,
-        'learner group 2 (0)'
+        'learner group 2 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[3].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[4].text,
-        'learner group 3 » learner group 5 (0)'
+        'learner group 3 » learner group 5 (0)',
       );
       await page.details.detailLearnersAndLearnerGroups.save();
 
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees.length,
-        1
+        1,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        5
+        5,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].title,
-        'program 0 cohort 0'
+        'program 0 cohort 0',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[2].text,
-        'learner group 2 (0)'
+        'learner group 2 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[3].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[4].text,
-        'learner group 3 » learner group 5 (0)'
+        'learner group 3 » learner group 5 (0)',
       );
     });
 
@@ -542,44 +542,44 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        3
+        3,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       await page.details.detailLearnersAndLearnerGroups.manage();
 
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        3
+        3,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
 
       await page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].subgroups[0].toggle();
@@ -587,27 +587,27 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        4
+        4,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[3].text,
-        'learner group 3 » learner group 5 (0)'
+        'learner group 3 » learner group 5 (0)',
       );
 
       await page.details.detailLearnersAndLearnerGroups.save();
@@ -615,32 +615,32 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees.length,
-        1
+        1,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        4
+        4,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[3].text,
-        'learner group 3 » learner group 5 (0)'
+        'learner group 3 » learner group 5 (0)',
       );
     });
 
@@ -657,89 +657,89 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        2
+        2,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       await page.details.detailLearnersAndLearnerGroups.manage();
 
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        2
+        2,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.notOk(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].isChecked
+          .cohorts[0].trees[3].isChecked,
       );
       assert.notOk(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].subgroups[0].isChecked
+          .cohorts[0].trees[3].subgroups[0].isChecked,
       );
       assert.notOk(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].subgroups[1].isChecked
+          .cohorts[0].trees[3].subgroups[1].isChecked,
       );
       await page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].toggle();
       assert.ok(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].isChecked
+          .cohorts[0].trees[3].isChecked,
       );
       assert.ok(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].subgroups[0].isChecked
+          .cohorts[0].trees[3].subgroups[0].isChecked,
       );
       assert.ok(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].subgroups[1].isChecked
+          .cohorts[0].trees[3].subgroups[1].isChecked,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        5
+        5,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[3].text,
-        'learner group 3 » learner group 5 (0)'
+        'learner group 3 » learner group 5 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[4].text,
-        'learner group 3 » learner group 6 (0)'
+        'learner group 3 » learner group 6 (0)',
       );
 
       await page.details.detailLearnersAndLearnerGroups.save();
@@ -747,32 +747,32 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        5
+        5,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[3].text,
-        'learner group 3 » learner group 5 (0)'
+        'learner group 3 » learner group 5 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[4].text,
-        'learner group 3 » learner group 6 (0)'
+        'learner group 3 » learner group 6 (0)',
       );
     });
 
@@ -790,110 +790,110 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        2
+        2,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.notOk(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].isChecked
+          .cohorts[0].trees[3].isChecked,
       );
       assert.notOk(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].subgroups[0].isChecked
+          .cohorts[0].trees[3].subgroups[0].isChecked,
       );
       assert.notOk(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].subgroups[1].isChecked
+          .cohorts[0].trees[3].subgroups[1].isChecked,
       );
       await page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups.cohorts[0].trees[3].toggle();
       assert.ok(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].isChecked
+          .cohorts[0].trees[3].isChecked,
       );
       assert.ok(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].subgroups[0].isChecked
+          .cohorts[0].trees[3].subgroups[0].isChecked,
       );
       assert.ok(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].subgroups[1].isChecked
+          .cohorts[0].trees[3].subgroups[1].isChecked,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        5
+        5,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[3].text,
-        'learner group 3 » learner group 5 (0)'
+        'learner group 3 » learner group 5 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[4].text,
-        'learner group 3 » learner group 6 (0)'
+        'learner group 3 » learner group 6 (0)',
       );
       await page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[3].remove();
       assert.ok(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].isChecked
+          .cohorts[0].trees[3].isChecked,
       );
       assert.notOk(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].subgroups[0].isChecked
+          .cohorts[0].trees[3].subgroups[0].isChecked,
       );
       assert.ok(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager.availableGroups
-          .cohorts[0].trees[3].subgroups[1].isChecked
+          .cohorts[0].trees[3].subgroups[1].isChecked,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        4
+        4,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[3].text,
-        'learner group 3 » learner group 6 (0)'
+        'learner group 3 » learner group 6 (0)',
       );
 
       await page.details.detailLearnersAndLearnerGroups.save();
@@ -901,27 +901,27 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        4
+        4,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[3].text,
-        'learner group 3 » learner group 6 (0)'
+        'learner group 3 » learner group 6 (0)',
       );
     });
 
@@ -939,22 +939,22 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        3
+        3,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
 
       await page.details.detailLearnersAndLearnerGroups.manage();
@@ -966,17 +966,17 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length,
-        2
+        2,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.learnergroupSelectionManager
           .selectedLearnerGroups.detailLearnergroupsList.trees[0].items[1].text,
-        'learner group 2 (0)'
+        'learner group 2 (0)',
       );
 
       await page.details.detailLearnersAndLearnerGroups.cancel();
@@ -985,22 +985,22 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items.length,
-        3
+        3,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[0].text,
-        'learner group 0 (0)'
+        'learner group 0 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[1].text,
-        'learner group 1 (0)'
+        'learner group 1 (0)',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearnerGroups.detailLearnergroupsList
           .trees[0].items[2].text,
-        'learner group 3 (0)'
+        'learner group 3 (0)',
       );
     });
 
@@ -1017,7 +1017,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearners.learners.length,
-        2
+        2,
       );
 
       await page.details.detailLearnersAndLearnerGroups.manage();
@@ -1036,22 +1036,22 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearners.learners.length,
-        3
+        3,
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearners.learners[0].userNameInfo
           .fullName,
-        '1 guy M. Mc1son'
+        '1 guy M. Mc1son',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearners.learners[1].userNameInfo
           .fullName,
-        '2 guy M. Mc2son'
+        '2 guy M. Mc2son',
       );
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearners.learners[2].userNameInfo
           .fullName,
-        'joe u. shmoe'
+        'joe u. shmoe',
       );
     });
 
@@ -1067,7 +1067,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearners.learners.length,
-        2
+        2,
       );
 
       await page.details.detailLearnersAndLearnerGroups.manage();
@@ -1085,7 +1085,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearners.learners.length,
-        1
+        1,
       );
     });
 
@@ -1101,7 +1101,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       assert.strictEqual(currentRouteName(), 'session.index');
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearners.learners.length,
-        2
+        2,
       );
 
       await page.details.detailLearnersAndLearnerGroups.manage();
@@ -1119,7 +1119,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
       assert.strictEqual(
         page.details.detailLearnersAndLearnerGroups.selectedLearners.learners.length,
-        2
+        2,
       );
     });
   });
@@ -1158,12 +1158,12 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
     assert.strictEqual(selectedLearnerGroups.detailLearnergroupsList.trees.length, 1);
     assert.strictEqual(
       selectedLearnerGroups.detailLearnergroupsList.trees[0].title,
-      'program 0 cohort 0'
+      'program 0 cohort 0',
     );
     assert.strictEqual(selectedLearnerGroups.detailLearnergroupsList.trees[0].items.length, 1);
     assert.strictEqual(
       selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].text,
-      'learner group 0 (0)'
+      'learner group 0 (0)',
     );
   });
 });

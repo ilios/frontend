@@ -61,7 +61,7 @@ module('Integration | Component | visualizer-course-vocabulary', function (hooks
 
     await render(
       hbs`<VisualizerCourseVocabulary @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} />
-`
+`,
     );
     //let the chart animations finish
     await waitFor('.loaded');
@@ -88,7 +88,7 @@ module('Integration | Component | visualizer-course-vocabulary', function (hooks
 
     await render(
       hbs`<VisualizerCourseVocabulary @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} />
-`
+`,
     );
     //let the chart animations finish
     await waitFor('.loaded');

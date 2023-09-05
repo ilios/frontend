@@ -68,7 +68,7 @@ module('Integration | Component | visualizer-course-session-types', function (ho
 
     await render(
       hbs`<VisualizerCourseSessionTypes @course={{this.course}} @isIcon={{false}} @chartType="donut" />
-`
+`,
     );
     //let the chart animations finish
     await waitFor('.loaded');
@@ -85,7 +85,7 @@ module('Integration | Component | visualizer-course-session-types', function (ho
 
     await render(
       hbs`<VisualizerCourseSessionTypes @course={{this.course}} @filter={{this.title}} @isIcon={{false}} />
-`
+`,
     );
     //let the chart animations finish
     await waitFor('.loaded');

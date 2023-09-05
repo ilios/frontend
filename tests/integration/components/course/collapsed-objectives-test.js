@@ -65,7 +65,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     });
     await render(
       hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{this.click}} />
-`
+`,
     );
 
     assert.strictEqual(component.title, 'Objectives (0)');

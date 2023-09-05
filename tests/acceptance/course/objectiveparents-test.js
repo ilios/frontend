@@ -57,12 +57,12 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
 
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
@@ -96,12 +96,12 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
 
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
@@ -115,12 +115,12 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'program-year objective 1'
+      'program-year objective 1',
     );
   });
 
@@ -135,12 +135,12 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
 
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
@@ -154,12 +154,12 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      'course objective 0'
+      'course objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
   });
 });

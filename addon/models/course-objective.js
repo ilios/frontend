@@ -78,7 +78,7 @@ export default class CourseObjective extends Model {
     }
 
     return new TrackedAsyncData(
-      Promise.all(this._programYearObjectivesData.value.map((o) => o.competency))
+      Promise.all(this._programYearObjectivesData.value.map((o) => o.competency)),
     );
   }
 

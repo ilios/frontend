@@ -16,7 +16,7 @@ export default class DashboardFilterTagsComponent extends Component {
       this.args.selectedCourseLevels || [],
       this.args.selectedCohortIds || [],
       this.args.selectedCourseIds || [],
-      this.args.selectedTermIds || []
+      this.args.selectedTermIds || [],
     );
   }
 

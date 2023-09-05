@@ -100,11 +100,11 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'program-year objective 0'
+      'program-year objective 0',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
-      'program-year objective 1'
+      'program-year objective 1',
     );
 
     await page.details.cohorts.manage();
@@ -115,7 +115,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'program-year objective 1'
+      'program-year objective 1',
     );
   });
 });

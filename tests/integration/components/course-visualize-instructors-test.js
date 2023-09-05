@@ -89,18 +89,18 @@ module('Integration | Component | course-visualize-instructors', function (hooks
     assert.strictEqual(component.instructorsChart.chart.labels.length, 2);
     assert.strictEqual(
       component.instructorsChart.chart.labels[0].text,
-      'foo M. Mc0son: 1440 Minutes'
+      'foo M. Mc0son: 1440 Minutes',
     );
     assert.strictEqual(
       component.instructorsChart.chart.labels[1].text,
-      'bar M. Mc1son: 1440 Minutes'
+      'bar M. Mc1son: 1440 Minutes',
     );
     await component.filter.set('foo');
     assert.strictEqual(component.instructorsChart.chart.bars.length, 1);
     assert.strictEqual(component.instructorsChart.chart.labels.length, 1);
     assert.strictEqual(
       component.instructorsChart.chart.labels[0].text,
-      'foo M. Mc0son: 1440 Minutes'
+      'foo M. Mc0son: 1440 Minutes',
     );
   });
 

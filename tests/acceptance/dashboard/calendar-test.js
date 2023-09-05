@@ -156,10 +156,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     freezeDateAt(march11th2009.toJSDate());
     const startOfWeek = DateTime.fromJSDate(
-      this.owner.lookup('service:locale-days').firstDayOfThisWeek
+      this.owner.lookup('service:locale-days').firstDayOfThisWeek,
     );
     const endOfWeek = DateTime.fromJSDate(
-      this.owner.lookup('service:locale-days').lastDayOfThisWeek
+      this.owner.lookup('service:locale-days').lastDayOfThisWeek,
     ).set({ hour: 22, minute: 59 });
 
     const longDayHeading = this.intl.formatDate(startOfWeek.toJSDate(), {
@@ -191,7 +191,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.ok(page.calendar.weeklyCalendar.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(
       page.calendar.weeklyCalendar.dayHeadings[0].text,
-      `Sunday Sun ${longDayHeading} ${shortDayHeading}`
+      `Sunday Sun ${longDayHeading} ${shortDayHeading}`,
     );
 
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
@@ -209,13 +209,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
         month: 10,
         day: 9,
         hour: 10,
-      }).toJSDate()
+      }).toJSDate(),
     );
     const startOfWeek = DateTime.fromJSDate(
-      this.owner.lookup('service:locale-days').firstDayOfThisWeek
+      this.owner.lookup('service:locale-days').firstDayOfThisWeek,
     );
     const endOfWeek = DateTime.fromJSDate(
-      this.owner.lookup('service:locale-days').lastDayOfThisWeek
+      this.owner.lookup('service:locale-days').lastDayOfThisWeek,
     ).set({ hour: 22, minute: 59 });
 
     const longDayHeading = this.intl.formatDate(startOfWeek.toJSDate(), {
@@ -246,12 +246,12 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.ok(page.calendar.weeklyCalendar.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(
       page.calendar.weeklyCalendar.dayHeadings[0].text,
-      `Sunday Sun ${longDayHeading} ${shortDayHeading}`
+      `Sunday Sun ${longDayHeading} ${shortDayHeading}`,
     );
 
     assert.strictEqual(
       page.calendar.weeklyCalendar.title.longWeekOfYear,
-      'Week of October 9, 2022'
+      'Week of October 9, 2022',
     );
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
     assert.ok(page.calendar.weeklyCalendar.events[0].isFirstDayOfWeek);
@@ -267,7 +267,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
         year: 2025,
         month: 6,
         day: 24,
-      }).toJSDate()
+      }).toJSDate(),
     );
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     const tomorow = today.plus({ day: 1 });
@@ -313,7 +313,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(`[data-test-day-button="${aDayInTheMonth.day}"]`);
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + aDayInTheMonth.toFormat('y-MM-dd') + '&view=day'
+      '/dashboard/calendar?date=' + aDayInTheMonth.toFormat('y-MM-dd') + '&view=day',
     );
   });
 
@@ -352,7 +352,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click('.calendar-time-picker li:nth-of-type(3) a');
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.plus({ day: 1 }).toFormat('y-MM-dd') + '&view=day'
+      '/dashboard/calendar?date=' + today.plus({ day: 1 }).toFormat('y-MM-dd') + '&view=day',
     );
   });
 
@@ -368,7 +368,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click('.calendar-time-picker li:nth-of-type(3) a');
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.plus({ week: 1 }).toFormat('y-MM-dd')
+      '/dashboard/calendar?date=' + today.plus({ week: 1 }).toFormat('y-MM-dd'),
     );
   });
 
@@ -385,7 +385,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(findAll('.calendar-time-picker li')[2]);
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.plus({ month: 1 }).toFormat('y-MM-dd') + '&view=month'
+      '/dashboard/calendar?date=' + today.plus({ month: 1 }).toFormat('y-MM-dd') + '&view=month',
     );
   });
 
@@ -401,7 +401,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click('.calendar-time-picker li:nth-of-type(1) a');
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.minus({ day: 1 }).toFormat('y-MM-dd') + '&view=day'
+      '/dashboard/calendar?date=' + today.minus({ day: 1 }).toFormat('y-MM-dd') + '&view=day',
     );
   });
 
@@ -417,7 +417,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click('.calendar-time-picker li:nth-of-type(1) a');
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.minus({ week: 1 }).toFormat('y-MM-dd')
+      '/dashboard/calendar?date=' + today.minus({ week: 1 }).toFormat('y-MM-dd'),
     );
   });
 
@@ -433,7 +433,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click('.calendar-time-picker li:nth-of-type(1) a');
     assert.strictEqual(
       currentURL(),
-      '/dashboard/calendar?date=' + today.minus({ month: 1 }).toFormat('y-MM-dd') + '&view=month'
+      '/dashboard/calendar?date=' + today.minus({ month: 1 }).toFormat('y-MM-dd') + '&view=month',
     );
   });
 
@@ -568,7 +568,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   const pickCohort = async function (i) {
     return await click(
-      find(`[data-test-cohort-calendar-filter] li:nth-of-type(${i}) [data-test-target]`)
+      find(`[data-test-cohort-calendar-filter] li:nth-of-type(${i}) [data-test-target]`),
     );
   };
 
@@ -604,7 +604,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   const pickCourse = async function (i) {
     return await click(
-      find(`[data-test-courses-calendar-filter] li:nth-of-type(${i}) [data-test-target]`)
+      find(`[data-test-courses-calendar-filter] li:nth-of-type(${i}) [data-test-target]`),
     );
   };
   const clearCourses = async function () {
@@ -790,10 +790,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   test('week summary displays the whole week', async function (assert) {
     assert.expect(3);
     const startOfTheWeek = DateTime.fromJSDate(
-      this.owner.lookup('service:locale-days').firstDayOfThisWeek
+      this.owner.lookup('service:locale-days').firstDayOfThisWeek,
     ).set({ minute: 2 });
     const endOfTheWeek = DateTime.fromJSDate(
-      this.owner.lookup('service:locale-days').lastDayOfThisWeek
+      this.owner.lookup('service:locale-days').lastDayOfThisWeek,
     ).set({ hour: 22, minute: 5 });
 
     this.server.create('userevent', {

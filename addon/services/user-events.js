@@ -34,7 +34,7 @@ export default class UserEvents extends EventsBase {
 
     return sortBy(
       data.userEvents.map((obj) => this.createEventFromData(obj, true)),
-      ['startDate', 'name']
+      ['startDate', 'name'],
     );
   }
 

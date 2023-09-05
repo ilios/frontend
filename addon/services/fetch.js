@@ -36,7 +36,7 @@ export default class Fetch extends Service {
     const response = await waitForPromise(
       fetch(url, {
         headers: this.authHeaders,
-      })
+      }),
     );
     return response.json();
   }
@@ -51,7 +51,7 @@ export default class Fetch extends Service {
         method: 'POST',
         headers,
         body,
-      })
+      }),
     );
     return response.json();
   }

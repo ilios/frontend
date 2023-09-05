@@ -70,7 +70,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     });
     await render(
       hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{this.click}} />
-`
+`,
     );
 
     assert.strictEqual(component.title, 'Objectives (0)');

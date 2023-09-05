@@ -55,7 +55,7 @@ module('Integration | Component | leadership search', function (hooks) {
     assert.dom(resultsCount).hasText('1 result');
     assert.strictEqual(
       find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
-      'testM.persontestemail'
+      'testM.persontestemail',
     );
 
     // Check that special characters do not mess things up.
@@ -63,7 +63,7 @@ module('Integration | Component | leadership search', function (hooks) {
     assert.dom(resultsCount).hasText('1 result');
     assert.strictEqual(
       find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
-      'testM.persontestemail'
+      'testM.persontestemail',
     );
 
     // Check that multiple special characters do not mess things up.
@@ -71,7 +71,7 @@ module('Integration | Component | leadership search', function (hooks) {
     assert.dom(resultsCount).hasText('1 result');
     assert.strictEqual(
       find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
-      'testM.persontestemail'
+      'testM.persontestemail',
     );
   });
 
@@ -111,7 +111,7 @@ module('Integration | Component | leadership search', function (hooks) {
     await fillIn(search, 'test');
     assert.strictEqual(
       find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
-      'testM.persontestemail'
+      'testM.persontestemail',
     );
     await click(`${firstResult} [data-test-select-user]`);
   });
@@ -150,13 +150,13 @@ module('Integration | Component | leadership search', function (hooks) {
     assert.dom(resultsCount).hasText('2 results');
     assert.strictEqual(
       find(firstResult).textContent.replace(/[\t\n\s]+/g, ''),
-      'testM.persontestemail'
+      'testM.persontestemail',
     );
     assert.dom(firstResult).hasNoClass('clickable');
     assert.dom(firstResult).hasClass('inactive');
     assert.strictEqual(
       find(secondResult).textContent.replace(/[\t\n\s]+/g, ''),
-      'testM.person2testemail2'
+      'testM.person2testemail2',
     );
     assert.dom(secondResult).hasClass('clickable');
     assert.dom(`${firstResult} [data-test-select-user]`).doesNotExist();

@@ -47,7 +47,7 @@ module('Integration | Helper | reverse', function (hooks) {
     assert.deepEqual(
       this.get('array'),
       ['foo', 'bar', 'baz'],
-      'the original array is not reversed'
+      'the original array is not reversed',
     );
   });
 

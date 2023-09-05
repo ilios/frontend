@@ -13,7 +13,7 @@ export function GteProp(property, validationOptions) {
         validate(value, { constraints, object: target, property }) {
           if (!constraints[0]) {
             throw new Error(
-              `You must pass the name of a property that ${property} is after as the first argument to GteProp`
+              `You must pass the name of a property that ${property} is after as the first argument to GteProp`,
             );
           }
           const compareToProperty = constraints[0];

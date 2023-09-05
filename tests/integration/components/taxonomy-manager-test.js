@@ -118,7 +118,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       assert.strictEqual(term, this.termModel2);
       this.set(
         'selectedTerms',
-        this.selectedTerms.filter((t) => t !== term)
+        this.selectedTerms.filter((t) => t !== term),
       );
     });
 

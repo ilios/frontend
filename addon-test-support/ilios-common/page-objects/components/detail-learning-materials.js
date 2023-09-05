@@ -21,10 +21,10 @@ const definition = {
   scope: '[data-test-detail-learning-materials]',
   search,
   createNew: clickable(
-    '.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-toggle]'
+    '.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-toggle]',
   ),
   pickNew: clickOnText(
-    '.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-item]'
+    '.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-item]',
   ),
   save: clickable('.actions button.bigadd'),
   cancel: clickable('.actions button.bigcancel'),

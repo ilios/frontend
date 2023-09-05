@@ -5,7 +5,7 @@ const defaultUserId = 100;
 
 export default async function (
   userObject = { id: defaultUserId },
-  performsNonLearnerFunction = false
+  performsNonLearnerFunction = false,
 ) {
   const userId = userObject && 'id' in userObject ? userObject.id : defaultUserId;
   const jwtObject = {

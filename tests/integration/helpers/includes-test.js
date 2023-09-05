@@ -50,7 +50,7 @@ module('Integration | Helper | includes', function (hooks) {
 
     this.set(
       'wishlist',
-      games.filter((g) => g !== games[0])
+      games.filter((g) => g !== games[0]),
     );
 
     assert.dom().hasText('false', 'should render false');

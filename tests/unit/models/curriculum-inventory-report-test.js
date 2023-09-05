@@ -77,7 +77,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     (await model.sequenceBlocks).push(
       store.createRecord('curriculumInventorySequenceBlock', {
         report: model,
-      })
+      }),
     );
     const linkedCourses = await model.getLinkedCourses();
     assert.notOk(linkedCourses.length);
@@ -91,7 +91,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
       store.createRecord('curriculumInventorySequenceBlock', {
         report: model,
         course,
-      })
+      }),
     );
     const linkedCourses = await model.getLinkedCourses();
     assert.ok(linkedCourses.length);

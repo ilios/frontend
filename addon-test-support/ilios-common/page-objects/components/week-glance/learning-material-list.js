@@ -5,7 +5,7 @@ import learningMaterial from './learning-material';
 const definition = {
   materials: collection(
     '[data-test-learning-materials] [data-test-learning-material]',
-    learningMaterial
+    learningMaterial,
   ),
   prework: collection('[data-test-learning-materials] [data-test-prework-event]', {
     name: text('a'),

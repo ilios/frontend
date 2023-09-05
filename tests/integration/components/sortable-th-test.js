@@ -46,7 +46,7 @@ module('Integration | Component | sortable th', function (hooks) {
           >
             {{this.label}}
           </SortableTh>
-`
+`,
     );
     assert.dom('th').hasText('Foo');
     assert.dom('th').hasClass(`text-${align}`);
@@ -69,7 +69,7 @@ module('Integration | Component | sortable th', function (hooks) {
           >
             {{this.label}}
           </SortableTh>
-`
+`,
     );
     assert.dom('svg').hasClass('fa-arrow-down-9-1');
     assert.dom('th').hasAttribute('aria-sort', 'descending');
@@ -88,7 +88,7 @@ module('Integration | Component | sortable th', function (hooks) {
           >
             {{this.label}}
           </SortableTh>
-`
+`,
     );
     assert.dom('svg').hasClass('fa-arrow-down-1-9');
     assert.dom('th').hasAttribute('aria-sort', 'ascending');
@@ -100,7 +100,7 @@ module('Integration | Component | sortable th', function (hooks) {
     this.set('label', 'Foo');
     await render(
       hbs`<SortableTh @sortedBy={{this.sortedBy}} @sortType={{this.sortType}}>{{this.label}}</SortableTh>
-`
+`,
     );
     assert.dom('svg').hasClass('fa-arrow-down-1-9');
     assert.dom('th').hasAttribute('aria-sort', 'ascending');

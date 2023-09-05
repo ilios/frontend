@@ -99,7 +99,7 @@ export default class VisualizerCourseVocabularies extends Component {
     this.router.transitionTo(
       'course-visualize-vocabulary',
       this.args.course.id,
-      obj.meta.vocabulary.id
+      obj.meta.vocabulary.id,
     );
   }
 }

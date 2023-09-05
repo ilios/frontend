@@ -136,7 +136,7 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
       groupsToRemove = [...descendants, learnerGroup];
     }
     this.learnerGroupBuffer = uniqueValues(
-      this.learnerGroupBuffer.filter((g) => !groupsToRemove.includes(g))
+      this.learnerGroupBuffer.filter((g) => !groupsToRemove.includes(g)),
     );
   }
 

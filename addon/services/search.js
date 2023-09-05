@@ -54,7 +54,7 @@ export default class SearchService extends Service {
     const response = await waitForPromise(
       fetch(url, {
         headers: this.authHeaders,
-      })
+      }),
     );
     const { results } = await response.json();
 

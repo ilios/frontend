@@ -17,7 +17,7 @@ export default class NewObjectiveComponent extends Component {
     learnerGroups,
     learners,
     instructorGroups,
-    instructors
+    instructors,
   ) {
     const offering = this.store.createRecord('offering', {
       startDate,

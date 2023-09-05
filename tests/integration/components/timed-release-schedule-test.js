@@ -37,7 +37,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
     this.set('endDate', endDate.toJSDate());
     await render(
       hbs`<TimedReleaseSchedule @startDate={{this.startDate}} @endDate={{this.endDate}} />
-`
+`,
     );
     const expectedStartDate = this.intl.formatDate(startDate.toJSDate(), localeFormatOptions);
     const expectedEndDate = this.intl.formatDate(endDate.toJSDate(), localeFormatOptions);
@@ -68,7 +68,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
     this.set('yesterday', yesterday.toJSDate());
     await render(
       hbs`<TimedReleaseSchedule @startDate={{this.yesterday}} @showNoSchedule={{false}} />
-`
+`,
     );
     assert.dom('[data-test-timed-release-schedule]').doesNotExist();
   });

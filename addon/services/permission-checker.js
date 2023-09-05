@@ -178,7 +178,7 @@ export default class PermissionCheckerService extends Service {
     const rolesToCheck = await this.permissionMatrix.getPermittedRoles(school, capability);
     const rolesInProgramYear = await this.currentUser.getRolesInProgramYear(
       programYear,
-      rolesToCheck
+      rolesToCheck,
     );
     if (await this.permissionMatrix.hasPermission(school, capability, rolesInProgramYear)) {
       return true;
@@ -201,7 +201,7 @@ export default class PermissionCheckerService extends Service {
     const rolesToCheck = await this.permissionMatrix.getPermittedRoles(school, capability);
     const rolesInProgramYear = await this.currentUser.getRolesInProgramYear(
       programYear,
-      rolesToCheck
+      rolesToCheck,
     );
     if (await this.permissionMatrix.hasPermission(school, capability, rolesInProgramYear)) {
       return true;
@@ -226,7 +226,7 @@ export default class PermissionCheckerService extends Service {
     const rolesToCheck = await this.permissionMatrix.getPermittedRoles(school, capability);
     const rolesInProgramYear = await this.currentUser.getRolesInProgramYear(
       programYear,
-      rolesToCheck
+      rolesToCheck,
     );
     if (await this.permissionMatrix.hasPermission(school, capability, rolesInProgramYear)) {
       return true;
@@ -245,7 +245,7 @@ export default class PermissionCheckerService extends Service {
     const rolesToCheck = await this.permissionMatrix.getPermittedRoles(school, capability);
     const rolesInProgramYear = await this.currentUser.getRolesInProgramYear(
       programYear,
-      rolesToCheck
+      rolesToCheck,
     );
     if (await this.permissionMatrix.hasPermission(school, capability, rolesInProgramYear)) {
       return true;
@@ -342,7 +342,7 @@ export default class PermissionCheckerService extends Service {
     const rolesToCheck = await this.permissionMatrix.getPermittedRoles(school, capability);
     const rolesInReport = await this.currentUser.getRolesInCurriculumInventoryReport(
       curriculumInventoryReport,
-      rolesToCheck
+      rolesToCheck,
     );
 
     return this.permissionMatrix.hasPermission(school, capability, rolesInReport);
@@ -362,7 +362,7 @@ export default class PermissionCheckerService extends Service {
     const rolesToCheck = await this.permissionMatrix.getPermittedRoles(school, capability);
     const rolesInReport = await this.currentUser.getRolesInCurriculumInventoryReport(
       curriculumInventoryReport,
-      rolesToCheck
+      rolesToCheck,
     );
     return this.permissionMatrix.hasPermission(school, capability, rolesInReport);
   }

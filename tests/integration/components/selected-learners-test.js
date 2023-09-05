@@ -58,7 +58,7 @@ module('Integration | Component | selected-learners', function (hooks) {
     });
     await render(
       hbs`<SelectedLearners @learners={{this.learners}} @isManaging={{true}} @remove={{this.remove}}/>
-`
+`,
     );
     assert.strictEqual(component.heading, 'Selected Learners:');
     assert.strictEqual(component.learners.length, 2);

@@ -56,7 +56,7 @@ module('Integration | Component | visualizer-course-term', function (hooks) {
 
     await render(
       hbs`<VisualizerCourseTerm @course={{this.course}} @term={{this.term}} @isIcon={{false}} />
-`
+`,
     );
     //let the chart animations finish
     await waitFor('.loaded');

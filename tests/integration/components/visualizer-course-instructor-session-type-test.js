@@ -59,7 +59,7 @@ module('Integration | Component | visualizer-course-instructor-session-type', fu
 
     await render(
       hbs`<VisualizerCourseInstructorSessionType @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} />
-`
+`,
     );
 
     //let the chart animations finish

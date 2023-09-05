@@ -4,7 +4,9 @@
   font-style: normal;
   font-display: swap;
   font-weight: 200;
-  src: local("Nunito Sans Extra Light "), local("Nunito Sans-Extra Light"),
+  src:
+    local("Nunito Sans Extra Light "),
+    local("Nunito Sans-Extra Light"),
     url("fonts/nunito-sans/nunito-sans-latin-200.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-200.woff") format("woff"); /* Modern Browsers */
@@ -16,7 +18,8 @@
   font-style: italic;
   font-display: swap;
   font-weight: 200;
-  src: local("Nunito Sans Extra Light italic"),
+  src:
+    local("Nunito Sans Extra Light italic"),
     local("Nunito Sans-Extra Lightitalic"),
     url("fonts/nunito-sans/nunito-sans-latin-200italic.woff2") format("woff2"),
     /* Super Modern Browsers */
@@ -29,7 +32,9 @@
   font-style: normal;
   font-display: swap;
   font-weight: 300;
-  src: local("Nunito Sans Light "), local("Nunito Sans-Light"),
+  src:
+    local("Nunito Sans Light "),
+    local("Nunito Sans-Light"),
     url("fonts/nunito-sans/nunito-sans-latin-300.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-300.woff") format("woff"); /* Modern Browsers */
@@ -41,7 +46,9 @@
   font-style: italic;
   font-display: swap;
   font-weight: 300;
-  src: local("Nunito Sans Light italic"), local("Nunito Sans-Lightitalic"),
+  src:
+    local("Nunito Sans Light italic"),
+    local("Nunito Sans-Lightitalic"),
     url("fonts/nunito-sans/nunito-sans-latin-300italic.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-300italic.woff") format("woff"); /* Modern Browsers */
@@ -53,7 +60,9 @@
   font-style: normal;
   font-display: swap;
   font-weight: 400;
-  src: local("Nunito Sans Regular "), local("Nunito Sans-Regular"),
+  src:
+    local("Nunito Sans Regular "),
+    local("Nunito Sans-Regular"),
     url("fonts/nunito-sans/nunito-sans-latin-400.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-400.woff") format("woff"); /* Modern Browsers */
@@ -65,7 +74,9 @@
   font-style: italic;
   font-display: swap;
   font-weight: 400;
-  src: local("Nunito Sans Regular italic"), local("Nunito Sans-Regularitalic"),
+  src:
+    local("Nunito Sans Regular italic"),
+    local("Nunito Sans-Regularitalic"),
     url("fonts/nunito-sans/nunito-sans-latin-400italic.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-400italic.woff") format("woff"); /* Modern Browsers */
@@ -77,7 +88,9 @@
   font-style: normal;
   font-display: swap;
   font-weight: 600;
-  src: local("Nunito Sans SemiBold "), local("Nunito Sans-SemiBold"),
+  src:
+    local("Nunito Sans SemiBold "),
+    local("Nunito Sans-SemiBold"),
     url("fonts/nunito-sans/nunito-sans-latin-600.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-600.woff") format("woff"); /* Modern Browsers */
@@ -89,7 +102,9 @@
   font-style: italic;
   font-display: swap;
   font-weight: 600;
-  src: local("Nunito Sans SemiBold italic"), local("Nunito Sans-SemiBolditalic"),
+  src:
+    local("Nunito Sans SemiBold italic"),
+    local("Nunito Sans-SemiBolditalic"),
     url("fonts/nunito-sans/nunito-sans-latin-600italic.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-600italic.woff") format("woff"); /* Modern Browsers */
@@ -101,7 +116,9 @@
   font-style: normal;
   font-display: swap;
   font-weight: 700;
-  src: local("Nunito Sans Bold "), local("Nunito Sans-Bold"),
+  src:
+    local("Nunito Sans Bold "),
+    local("Nunito Sans-Bold"),
     url("fonts/nunito-sans/nunito-sans-latin-700.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-700.woff") format("woff"); /* Modern Browsers */
@@ -113,7 +130,9 @@
   font-style: italic;
   font-display: swap;
   font-weight: 700;
-  src: local("Nunito Sans Bold italic"), local("Nunito Sans-Bolditalic"),
+  src:
+    local("Nunito Sans Bold italic"),
+    local("Nunito Sans-Bolditalic"),
     url("fonts/nunito-sans/nunito-sans-latin-700italic.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-700italic.woff") format("woff"); /* Modern Browsers */
@@ -125,7 +144,9 @@
   font-style: normal;
   font-display: swap;
   font-weight: 800;
-  src: local("Nunito Sans ExtraBold "), local("Nunito Sans-ExtraBold"),
+  src:
+    local("Nunito Sans ExtraBold "),
+    local("Nunito Sans-ExtraBold"),
     url("fonts/nunito-sans/nunito-sans-latin-800.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-800.woff") format("woff"); /* Modern Browsers */
@@ -137,7 +158,8 @@
   font-style: italic;
   font-display: swap;
   font-weight: 800;
-  src: local("Nunito Sans ExtraBold italic"),
+  src:
+    local("Nunito Sans ExtraBold italic"),
     local("Nunito Sans-ExtraBolditalic"),
     url("fonts/nunito-sans/nunito-sans-latin-800italic.woff2") format("woff2"),
     /* Super Modern Browsers */
@@ -150,7 +172,9 @@
   font-style: normal;
   font-display: swap;
   font-weight: 900;
-  src: local("Nunito Sans Black "), local("Nunito Sans-Black"),
+  src:
+    local("Nunito Sans Black "),
+    local("Nunito Sans-Black"),
     url("fonts/nunito-sans/nunito-sans-latin-900.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-900.woff") format("woff"); /* Modern Browsers */
@@ -162,7 +186,9 @@
   font-style: italic;
   font-display: swap;
   font-weight: 900;
-  src: local("Nunito Sans Black italic"), local("Nunito Sans-Blackitalic"),
+  src:
+    local("Nunito Sans Black italic"),
+    local("Nunito Sans-Blackitalic"),
     url("fonts/nunito-sans/nunito-sans-latin-900italic.woff2") format("woff2"),
     /* Super Modern Browsers */
       url("fonts/nunito-sans/nunito-sans-latin-900italic.woff") format("woff"); /* Modern Browsers */

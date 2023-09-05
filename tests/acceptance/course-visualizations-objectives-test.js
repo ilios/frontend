@@ -78,7 +78,7 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
     assert.strictEqual(page.root.objectivesChart.untaughtObjectives.items.length, 1);
     assert.strictEqual(
       page.root.objectivesChart.untaughtObjectives.items[0].text,
-      'course objective 2'
+      'course objective 2',
     );
   });
 });
