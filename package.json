@@ -169,7 +169,7 @@
     "webpack": "^5.88.2"
   },
   "engines": {
-    "node": "18",
+    "node": ">= 18",
     "npm": ">= 9"
   },
   "ember": {
