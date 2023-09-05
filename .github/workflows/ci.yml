@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Node
         uses: actions/setup-node@v3
         with:
@@ -44,7 +44,7 @@ jobs:
         node-version: [16, 18]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Node
         uses: actions/setup-node@v3
         with:
@@ -63,7 +63,7 @@ jobs:
       matrix:
         node-version: [16, 18]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Node
         uses: actions/setup-node@v3
         with:
@@ -80,7 +80,7 @@ jobs:
     timeout-minutes: 20
     needs: [test]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -99,7 +99,7 @@ jobs:
     env:
       BUILD_WITH_EMBROIDER: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -114,7 +114,7 @@ jobs:
     env:
       BUILD_WITH_EMBROIDER: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 18
