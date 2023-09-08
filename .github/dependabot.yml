@@ -9,6 +9,7 @@ updates:
   open-pull-requests-limit: 10
   versioning-strategy: increase-if-necessary
   ignore:
+  - dependency-name: "@babel/core"
   - dependency-name: "@babel/eslint-parser"
   - dependency-name: "@babel/plugin-proposal-decorators"
   - dependency-name: "@ember/optional-features"
@@ -22,6 +23,7 @@ updates:
   - dependency-name: ember-auto-import
   - dependency-name: ember-cli
   - dependency-name: ember-cli-babel
+  - dependency-name: ember-cli-clean-css
   - dependency-name: ember-cli-dependency-checker
   - dependency-name: ember-cli-htmlbars
   - dependency-name: ember-cli-inject-live-reload
