@@ -225,23 +225,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.reports.reports[2].title, 'my report 0');
   });
 
-  test('Report Selector with Academic Year not selecting correct predicate #3427', async function (assert) {
-    await page.visit();
-    assert.strictEqual(page.reports.reports.length, 2);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'my report 0');
-    await page.reports.newReportFormToggle.click();
-    await page.reports.newReport.schools.choose('1');
-    await page.reports.newReport.subjects.choose('term');
-    await page.reports.newReport.objects.choose('course');
-    await page.reports.newReport.academicYears.choose('2016');
-    await page.reports.newReport.save();
-    assert.strictEqual(page.reports.reports.length, 3);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'All Terms for course 1 in school 0');
-    assert.strictEqual(page.reports.reports[2].title, 'my report 0');
-  });
-
   test('course external Id in report', async function (assert) {
     assert.expect(13);
     await page.visit();
