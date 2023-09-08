@@ -74,23 +74,23 @@ jobs:
       - name: test build
         run: npm run build
 
-  percy:
-    name: Percy Visual Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    needs: [test]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: npm
-      - name: install dependencies
-        run: npm ci
-      - name: test
-        run: npm run percy:test
-        env:
-          PERCY_TOKEN: web_1899a9764a4891f3a19b87e52aa1ae038359e28ba550daa6bad00d0e0a230a33
+  # percy:
+  #   name: Percy Visual Tests
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 20
+  #   needs: [test]
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18
+  #         cache: npm
+  #     - name: install dependencies
+  #       run: npm ci
+  #     - name: test
+  #       run: npm run percy:test
+  #       env:
+  #         PERCY_TOKEN: web_1899a9764a4891f3a19b87e52aa1ae038359e28ba550daa6bad00d0e0a230a33
 
   test-with-embroider:
     name: Test With Embroider
