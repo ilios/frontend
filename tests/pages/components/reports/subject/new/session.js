@@ -1,23 +1,12 @@
-import { create, collection, fillable, property } from 'ember-cli-page-object';
+import { create, collection, fillable, clickable, isPresent } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-reports-subject-new-session]',
-  year: {
-    scope: '[data-test-year]',
-    options: collection('option', {
-      isSelected: property('selected'),
-    }),
-    set: fillable('select'),
-    value: property('value', 'select'),
-  },
-  session: {
-    scope: '[data-test-session]',
-    options: collection('option', {
-      isSelected: property('selected'),
-    }),
-    set: fillable('select'),
-    value: property('value', 'select'),
-  },
+  input: fillable('input'),
+  search: clickable('button'),
+  results: collection('[data-test-results] button', {
+    isSelected: isPresent('svg.remove'),
+  }),
 };
 
 export default definition;

@@ -1,71 +1,28 @@
 import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import { hash } from 'rsvp';
 import { action } from '@ember/object';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import { guidFor } from '@ember/object/internals';
+import { cleanQuery } from 'ilios-common/utils/query-utils';
 
-export default class ReportsSubjectNewSessionComponent extends Component {
+export default class ReportsSubjectNewCourseComponent extends Component {
   @service store;
+  @tracked sessions;
 
-  @tracked selectedYear;
-
-  @cached
-  get data() {
-    return new TrackedAsyncData(
-      hash({
-        sessions: this.store.findAll('session'),
-        courses: this.store.findAll('course'),
-        years: this.store.findAll('academic-year'),
-      }),
-    );
-  }
-
-  get isLoaded() {
-    return this.data.isResolved;
-  }
-
-  get sessions() {
-    return this.data.value.sessions;
-  }
-
-  get years() {
-    return this.data.value.years;
-  }
-
-  get filteredYears() {
-    const sessionYears = this.filteredSessionsBySchool.map((session) => {
-      const courseId = session.belongsTo('course').id();
-      const course = this.data.value.courses.find(({ id }) => id === courseId);
-
-      return Number(course.year);
-    });
-    return this.years.filter(({ id }) => sessionYears.includes(Number(id)));
+  get uniqueId() {
+    return guidFor(this);
   }
 
   get filteredSessions() {
-    if (this.selectedYear) {
-      return this.filteredSessionsBySchool.filter((session) => {
-        const courseId = session.belongsTo('course').id();
-        const course = this.data.value.courses.find(({ id }) => id === courseId);
-
-        return course.year === Number(this.selectedYear);
-      });
-    }
-
-    return this.filteredSessionsBySchool;
-  }
-
-  get filteredSessionsBySchool() {
     if (this.args.school) {
+      const schoolId = Number(this.args.school.id);
       return this.sessions.filter((session) => {
         const courseId = session.belongsTo('course').id();
-        const course = this.data.value.courses.find(({ id }) => id === courseId);
+        const course = this.store.peekRecord('course', courseId);
 
-        return course.belongsTo('school').id() === this.args.school.id;
+        return Number(course.belongsTo('school').id()) === schoolId;
       });
     }
 
@@ -76,23 +33,28 @@ export default class ReportsSubjectNewSessionComponent extends Component {
     return sortBy(this.filteredSessions, 'course.year', 'course.title', 'title');
   }
 
-  @action
-  changeSelectedYear(year) {
-    this.selectedYear = year;
-    this.setInitialValue.perform();
+  get q() {
+    return cleanQuery(this.query);
   }
 
-  @task
-  *setInitialValue() {
-    yield timeout(1); //wait a moment so we can render before setting
-    const ids = this.sortedSessions.map(({ id }) => id);
-    if (ids.includes(this.args.currentId)) {
+  @restartableTask
+  *search() {
+    if (!this.q.length) {
+      this.sessions = false;
       return;
     }
-    if (!this.sortedSessions.length) {
-      this.args.changeId(null);
-    } else {
-      this.args.changeId(this.sortedSessions[0].id);
+
+    this.sessions = yield this.store.query('session', {
+      q: this.q,
+      include: 'course',
+    });
+  }
+
+  @action
+  keyboard({ keyCode }) {
+    //enter key
+    if (keyCode === 13) {
+      this.search.perform();
     }
   }
 }
