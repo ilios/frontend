@@ -1,56 +1,27 @@
 import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import { hash } from 'rsvp';
 import { action } from '@ember/object';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import { guidFor } from '@ember/object/internals';
+import { cleanQuery } from 'ilios-common/utils/query-utils';
 
 export default class ReportsSubjectNewCourseComponent extends Component {
   @service store;
+  @tracked courses;
 
-  @tracked selectedYear;
-
-  @cached
-  get data() {
-    return new TrackedAsyncData(
-      hash({
-        courses: this.store.findAll('course'),
-        years: this.store.findAll('academic-year'),
-      }),
-    );
-  }
-
-  get isLoaded() {
-    return this.data.isResolved;
-  }
-
-  get courses() {
-    return this.data.value.courses;
-  }
-
-  get years() {
-    return this.data.value.years;
-  }
-
-  get filteredYears() {
-    const courseYears = this.filteredCoursesBySchool.map((c) => Number(c.year));
-    return this.years.filter(({ id }) => courseYears.includes(Number(id)));
+  get uniqueId() {
+    return guidFor(this);
   }
 
   get filteredCourses() {
-    if (this.selectedYear) {
-      return this.filteredCoursesBySchool.filter((c) => c.year === Number(this.selectedYear));
-    }
-
-    return this.filteredCoursesBySchool;
-  }
-
-  get filteredCoursesBySchool() {
     if (this.args.school) {
-      return this.courses.filter((c) => c.belongsTo('school').id() === this.args.school.id);
+      const schoolId = Number(this.args.school.id);
+      return this.courses.filter((c) => {
+        console.log(Number(c.belongsTo('school').id()), schoolId);
+        return Number(c.belongsTo('school').id()) === schoolId;
+      });
     }
 
     return this.courses;
@@ -60,23 +31,27 @@ export default class ReportsSubjectNewCourseComponent extends Component {
     return sortBy(this.filteredCourses, ['year', 'title']);
   }
 
-  @action
-  changeSelectedYear(year) {
-    this.selectedYear = year;
-    this.setInitialValue.perform();
+  get q() {
+    return cleanQuery(this.query);
   }
 
-  @task
-  *setInitialValue() {
-    yield timeout(1); //wait a moment so we can render before setting
-    const ids = this.sortedCourses.map(({ id }) => id);
-    if (ids.includes(this.args.currentId)) {
+  @restartableTask
+  *search() {
+    if (!this.q.length) {
+      this.courses = false;
       return;
     }
-    if (!this.sortedCourses.length) {
-      this.args.changeId(null);
-    } else {
-      this.args.changeId(this.sortedCourses[0].id);
+
+    this.courses = yield this.store.query('course', {
+      q: this.q,
+    });
+  }
+
+  @action
+  keyboard({ keyCode }) {
+    //enter key
+    if (keyCode === 13) {
+      this.search.perform();
     }
   }
 }

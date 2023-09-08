@@ -64,25 +64,23 @@
         <label for="associated-{{templateId}}">
           {{t "general.associatedWith"}}
         </label>
-        <div>
-          <select
-            id="associated-{{templateId}}"
-            {{on "change" (pick "target.value" this.changePrepositionalObject)}}
-          >
-            <option value="" selected={{eq null this.currentPrepositionalObject}}>
-              {{t "general.anything"}}
+        <select
+          id="associated-{{templateId}}"
+          {{on "change" (pick "target.value" this.changePrepositionalObject)}}
+        >
+          <option value="" selected={{eq null this.currentPrepositionalObject}}>
+            {{t "general.anything"}}
+          </option>
+          {{#each this.prepositionalObjectList as |o|}}
+            <option
+              value={{o.value}}
+              selected={{eq o.value this.currentPrepositionalObject}}
+            >
+              {{o.label}}
             </option>
-            {{#each this.prepositionalObjectList as |o|}}
-              <option
-                value={{o.value}}
-                selected={{eq o.value this.currentPrepositionalObject}}
-              >
-                {{o.label}}
-              </option>
-            {{/each}}
-          </select>
-          <ValidationError @errors={{get-errors-for this.currentPrepositionalObject}} />
-        </div>
+          {{/each}}
+        </select>
+        <ValidationError @errors={{get-errors-for this.currentPrepositionalObject}} />
       </p>
       <this.newPrepositionalObjectComponent
         @school={{this.currentSchool}}
@@ -92,7 +90,13 @@
       />
       <ValidationError @errors={{get-errors-for this.currentPrepositionalObjectId}} data-test-validation-error />
       <div class="input-buttons">
-        <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-save>
+        <button
+          type="button"
+          class="done text"
+          {{on "click" (perform this.save)}}
+          disabled={{this.save.isRunning}}
+          data-test-save
+        >
           {{#if this.save.isRunning}}
             <LoadingSpinner />
           {{else}}

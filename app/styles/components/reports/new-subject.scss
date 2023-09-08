@@ -16,8 +16,8 @@
     @include m.ilios-form-error;
     p {
       display: grid;
-      grid-gap: 0.5rem;
-      grid-template-columns: 1fr 4fr;
+      grid-gap: 0.25rem;
+      grid-template-columns: 1fr 4fr 0.5fr;
 
       label {
         @include m.ilios-label;
@@ -27,6 +27,7 @@
       select,
       input {
         width: 100%;
+        grid-column: 2 / span 2;
       }
 
       .validation-error-message {
@@ -36,6 +37,35 @@
       .mesh-search {
         label {
           display: none;
+        }
+      }
+    }
+
+    .new-subject-search {
+      p {
+        input {
+          grid-column: 2;
+        }
+        button {
+          grid-column: 3;
+        }
+        margin-bottom: 0;
+      }
+
+      .results {
+        margin-top: 0.25rem;
+        @include m.font-size("base");
+        div {
+          grid-column: 2;
+        }
+        ol {
+          @include m.ilios-list-reset;
+          padding-left: 0.5rem;
+
+          button {
+            @include m.ilios-button-reset;
+            text-align: left;
+          }
         }
       }
     }
@@ -57,6 +87,7 @@
     }
 
     .input-buttons {
+      margin-top: 0.5rem;
       float: right;
     }
   }
