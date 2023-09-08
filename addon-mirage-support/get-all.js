@@ -179,6 +179,12 @@ const filterByQueryTerms = function (all, modelName, queryTerms) {
           obj.email
         ).toLowerCase();
         break;
+      case 'courses':
+        comparisonString = (obj.title + obj.year + obj.externalId).toLowerCase();
+        break;
+      case 'sessions':
+        comparisonString = (obj.title + obj.course.title + obj.course.year).toLowerCase();
+        break;
       case 'meshDescriptors':
         comparisonString = (obj.name + obj.annotation).toLowerCase();
         break;
