@@ -8,6 +8,7 @@ updates:
     timezone: America/Los_Angeles
   open-pull-requests-limit: 10
   ignore:
+  - dependency-name: "@babel/core"
   - dependency-name: "@babel/eslint-parser"
   - dependency-name: "@babel/plugin-proposal-decorators"
   - dependency-name: "@ember/optional-features"
@@ -21,11 +22,13 @@ updates:
   - dependency-name: ember-cli
   - dependency-name: ember-cli-app-version
   - dependency-name: ember-cli-babel
+  - dependency-name: ember-cli-clean-css
   - dependency-name: ember-cli-dependency-checker
   - dependency-name: ember-cli-htmlbars
   - dependency-name: ember-cli-inject-live-reload
   - dependency-name: ember-cli-sri
   - dependency-name: ember-cli-terser
+  - dependency-name: ember-data
   - dependency-name: ember-fetch
   - dependency-name: ember-load-initializers
   - dependency-name: ember-modifier
@@ -34,6 +37,7 @@ updates:
   - dependency-name: ember-resolver
   - dependency-name: ember-source
   - dependency-name: ember-template-lint
+  - dependency-name: ember-welcome-page
   - dependency-name: eslint
   - dependency-name: eslint-config-prettier
   - dependency-name: eslint-plugin-ember
