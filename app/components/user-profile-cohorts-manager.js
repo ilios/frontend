@@ -83,8 +83,10 @@ export default class UserProfileCohortsManagerComponent extends Component {
   }
 
   async getSelectableCohortsBySchool(school) {
-    const cohorts = await school.cohorts;
-    const sortedCohorts = await sortCohorts(cohorts.slice());
+    const programs = await school.programs;
+    const programYears = (await Promise.all(programs.map((p) => p.programYears))).flat();
+    const cohorts = await Promise.all(programYears.map((py) => py.cohort));
+    const sortedCohorts = await sortCohorts(cohorts);
     return sortedCohorts.filter((cohort) => {
       return this.args.primaryCohort !== cohort && !this.args.secondaryCohorts.includes(cohort);
     });
