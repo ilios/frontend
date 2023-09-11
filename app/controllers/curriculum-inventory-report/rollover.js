@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { service } from '@ember/service';
 
 export default class CurriculumInventoryReportRolloverController extends Controller {
   queryParams = ['leadershipDetails', 'manageLeadership'];
@@ -8,6 +9,7 @@ export default class CurriculumInventoryReportRolloverController extends Control
   @tracked leadershipDetails = false;
   @tracked manageLeadership = false;
   @tracked isFinalized = this.model.belongsTo('export').id();
+  @service router;
 
   get canUpdate() {
     return this.hasUpdatePermissions && !this.isFinalized;
@@ -15,6 +17,6 @@ export default class CurriculumInventoryReportRolloverController extends Control
 
   @action
   loadReport(newReport) {
-    this.transitionToRoute('curriculumInventoryReport', newReport);
+    this.router.transitionTo('curriculum-inventory-report', newReport);
   }
 }

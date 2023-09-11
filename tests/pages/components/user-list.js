@@ -1,4 +1,4 @@
-import { collection, create, hasClass } from 'ember-cli-page-object';
+import { clickable, collection, create, hasClass } from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 
 const definition = {
@@ -8,6 +8,7 @@ const definition = {
     disabledUserIcon: {
       scope: '[data-test-disabled-user-icon]',
     },
+    viewUserDetails: clickable('[data-test-user-link]'),
     userNameInfo,
     campusId: {
       scope: '[data-test-campus-id]',

@@ -49,6 +49,7 @@ export default class NewUserComponent extends Component {
   get schoolsWithCreatePermissions() {
     return new TrackedAsyncData(
       filter(this.allSchools, async (school) => {
+        console.log(school);
         return this.permissionChecker.canCreateUser(school);
       }),
     );

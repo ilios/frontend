@@ -65,14 +65,15 @@
       {{/if}}
     </section>
     {{#if this.searchForUsers.lastSuccessful}}
-      <PagedlistControls
-        @offset={{@offset}}
-        @limit={{@limit}}
-        @limitless={{true}}
-        @setOffset={{@setOffset}}
-        @setLimit={{@setLimit}}
-        data-test-top-paged-list-controls
-      />
+      <div data-test-top-paged-list-controls>
+        <PagedlistControls
+          @offset={{@offset}}
+          @limit={{@limit}}
+          @limitless={{true}}
+          @setOffset={{@setOffset}}
+          @setLimit={{@setLimit}}
+        />
+      </div>
       <div class="list">
         {{#if (gt this.searchForUsers.lastSuccessful.value.length 0)}}
           <UserList @users={{this.searchForUsers.lastSuccessful.value}} />
@@ -82,14 +83,15 @@
           </span>
         {{/if}}
       </div>
-      <PagedlistControls
-        @offset={{@offset}}
-        @limit={{@limit}}
-        @limitless={{true}}
-        @setOffset={{@setOffset}}
-        @setLimit={{@setLimit}}
-        data-test-bottom-paged-list-controls
-      />
+      <div data-test-bottom-paged-list-controls>
+        <PagedlistControls
+          @offset={{@offset}}
+          @limit={{@limit}}
+          @limitless={{true}}
+          @setOffset={{@setOffset}}
+          @setLimit={{@setLimit}}
+        />
+      </div>
     {{else}}
       <PulseLoader />
     {{/if}}

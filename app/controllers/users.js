@@ -1,7 +1,10 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
+import { service } from '@ember/service';
 
 export default class UsersController extends Controller {
+  @service router;
+
   queryParams = [
     {
       offset: 'offset',
@@ -21,6 +24,6 @@ export default class UsersController extends Controller {
 
   @action
   transitionToUser(userId) {
-    this.transitionToRoute('user', userId);
+    this.router.transitionTo('user', userId);
   }
 }
