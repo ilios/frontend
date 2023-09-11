@@ -14,7 +14,7 @@
       type="button"
       {{on "click" (perform this.search)}}
     >
-      <FaIcon @icon="magnifying-glass"/>
+      <FaIcon @icon={{if this.search.isRunning "spinner" "magnifying-glass"}} @spin={{this.search.isRunning}} />
     </button>
   </p>
 
