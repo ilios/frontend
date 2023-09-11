@@ -138,8 +138,8 @@
     "zxcvbn": "^4.4.2"
   },
   "engines": {
-    "node": "16.* || >= 18",
-    "npm": ">= 8"
+    "node": ">= 18",
+    "npm": ">= 9"
   },
   "ember": {
     "edition": "octane"

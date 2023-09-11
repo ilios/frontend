@@ -41,7 +41,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16, 18]
+        node-version: [18]
 
     steps:
       - uses: actions/checkout@v4
@@ -61,7 +61,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        node-version: [16, 18]
+        node-version: [18]
     steps:
       - uses: actions/checkout@v4
       - name: Install Node
