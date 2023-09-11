@@ -9,7 +9,7 @@ export default class ReportsSubjectNewInstructorComponent extends Component {
 
   @cached
   get selectedInstructor() {
-    return new TrackedAsyncData(this.store.find('user', this.args.currentId));
+    return new TrackedAsyncData(this.store.findRecord('user', this.args.currentId));
   }
 
   @action

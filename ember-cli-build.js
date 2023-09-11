@@ -19,6 +19,9 @@ module.exports = function (defaults) {
     sourcemaps: {
       enabled: true,
     },
+    emberData: {
+      compatWith: '5.2',
+    },
 
     hinting: isTestBuild,
     babel: {

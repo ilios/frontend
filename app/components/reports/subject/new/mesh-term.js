@@ -9,7 +9,7 @@ export default class ReportsSubjectNewProgramComponent extends Component {
 
   @cached
   get selectedMeshTerm() {
-    return new TrackedAsyncData(this.store.find('mesh-descriptor', this.args.currentId));
+    return new TrackedAsyncData(this.store.findRecord('mesh-descriptor', this.args.currentId));
   }
 
   @action
