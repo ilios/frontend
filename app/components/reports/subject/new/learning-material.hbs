@@ -1,25 +1,41 @@
-<p data-test-reports-subject-new-learning-material>
-  <label for="new-learning-material">
-    {{t "general.whichIs"}}
-  </label>
-  {{#if this.isLoaded}}
-    <select
-      id="new-learning-material"
-      data-test-prepositional-objects
-      {{on "change" (pick "target.value" @changeId)}}
-      {{did-insert (perform this.setInitialValue)}}
-      {{did-update (perform this.setInitialValue) @school}}
+<div class="new-subject-search" data-test-reports-subject-new-learning-material>
+  <p data-test-search>
+    <label for="{{this.uniqueId}}-learning-material-search">
+      {{t "general.whichIs"}}
+    </label>
+    <input
+      id="{{this.uniqueId}}-learning-material-search"
+      type="search"
+      value={{this.query}}
+      {{on "input" (pick "target.value" (set this.query))}}
+      {{on "keyup" this.keyboard}}
     >
-      {{#each this.sortedLearningMaterials as |learningMaterial|}}
-        <option
-          selected={{eq learningMaterial.id @currentId}}
-          value={{learningMaterial.id}}
-        >
-          {{learningMaterial.title}}
-        </option>
-      {{/each}}
-    </select>
-  {{else}}
-    <LoadingSpinner />
+    <button
+      type="button"
+      {{on "click" (perform this.search)}}
+    >
+      <FaIcon @icon="magnifying-glass"/>
+    </button>
+  </p>
+
+  {{#if this.materials}}
+    <p class="results">
+      <div>
+        <strong>{{t "general.learningMaterials"}}:</strong>
+        <ol data-test-results>
+          {{#each this.sortedMaterials as |material|}}
+            <Reports::Subject::New::Search::Result
+              @isSelected={{eq material.id @currentId}}
+              @id={{material.id}}
+              @changeId={{@changeId}}
+            >
+              {{material.title}}
+            </Reports::Subject::New::Search::Result>
+          {{else}}
+            {{t "general.none"}}
+          {{/each}}
+        </ol>
+      </div>
+    </p>
   {{/if}}
-</p>
+</div>

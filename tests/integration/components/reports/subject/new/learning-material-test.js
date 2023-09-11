@@ -16,7 +16,7 @@ module('Integration | Component | reports/subject/new/learning-material', functi
   });
 
   test('it renders', async function (assert) {
-    assert.expect(16);
+    assert.expect(12);
     this.set('currentId', null);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '1');
@@ -28,24 +28,21 @@ module('Integration | Component | reports/subject/new/learning-material', functi
       @school={{null}}
      />`);
 
-    assert.strictEqual(component.options.length, 5);
-    assert.strictEqual(component.options[0].text, 'learning material 0');
-    assert.ok(component.options[0].isSelected);
-    assert.strictEqual(component.value, '1');
+    await component.input('material');
+    await component.search();
 
-    for (let i = 1; i < 5; i++) {
-      assert.strictEqual(component.options[i].text, `learning material ${i}`);
-      assert.notOk(component.options[i].isSelected);
+    assert.strictEqual(component.results.length, 5);
+    for (let i = 0; i < 5; i++) {
+      assert.strictEqual(component.results[i].text, `learning material ${i}`);
+      assert.notOk(component.results[i].isSelected);
     }
 
     this.set('currentId', '3');
-    assert.notOk(component.options[0].isSelected);
-    assert.ok(component.options[2].isSelected);
-    assert.strictEqual(component.value, '3');
+    assert.ok(component.results[2].isSelected);
   });
 
   test('it works', async function (assert) {
-    assert.expect(5);
+    assert.expect(2);
     this.set('currentId', '1');
     await render(hbs`<Reports::Subject::New::LearningMaterial
       @currentId={{this.currentId}}
@@ -56,10 +53,11 @@ module('Integration | Component | reports/subject/new/learning-material', functi
       assert.strictEqual(id, '3');
       this.set('currentId', id);
     });
-    assert.ok(component.options[0].isSelected);
-    await component.set('3');
-    assert.notOk(component.options[0].isSelected);
-    assert.ok(component.options[2].isSelected);
-    assert.strictEqual(component.value, '3');
+
+    await component.input('material');
+    await component.search();
+
+    await component.results[2].click();
+    assert.ok(component.results[2].isSelected);
   });
 });

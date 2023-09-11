@@ -1,47 +1,45 @@
 import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import { guidFor } from '@ember/object/internals';
+import { cleanQuery } from 'ilios-common/utils/query-utils';
 
 export default class ReportsSubjectNewLearningMaterialComponent extends Component {
   @service store;
+  @tracked materials;
 
-  @cached
-  get allLearningMaterials() {
-    return new TrackedAsyncData(this.store.findAll('learning-material'));
+  get uniqueId() {
+    return guidFor(this);
   }
 
-  get isLoaded() {
-    return this.allLearningMaterials.isResolved;
+  get sortedMaterials() {
+    return sortBy(this.materials, 'title');
   }
 
-  get filteredLearningMaterials() {
-    if (this.args.school) {
-      return this.allLearningMaterials.value.filter(
-        (c) => c.belongsTo('school').id() === this.args.school.id,
-      );
-    }
-
-    return this.allLearningMaterials.value;
+  get q() {
+    return cleanQuery(this.query);
   }
 
-  get sortedLearningMaterials() {
-    return sortBy(this.filteredLearningMaterials, 'title');
-  }
-
-  @task
-  *setInitialValue() {
-    yield timeout(1); //wait a moment so we can render before setting
-    const ids = this.sortedLearningMaterials.map(({ id }) => id);
-    if (ids.includes(this.args.currentId)) {
+  @restartableTask
+  *search() {
+    if (!this.q.length) {
+      this.materials = false;
       return;
     }
-    if (!this.sortedLearningMaterials.length) {
-      this.args.changeId(null);
-    } else {
-      this.args.changeId(this.sortedLearningMaterials[0].id);
+
+    this.materials = yield this.store.query('learning-material', {
+      q: this.q,
+    });
+  }
+
+  @action
+  keyboard({ keyCode }) {
+    //enter key
+    if (keyCode === 13) {
+      this.search.perform();
     }
   }
 }
