@@ -31,7 +31,7 @@
             {{/unless}}
           </td>
           <td class="text-left" colspan="3">
-            <LinkTo @route="user" @model={{user}}>
+            <LinkTo @route="user" @model={{user}} data-test-user-link>
               <UserNameInfo @user={{user}} />
             </LinkTo>
           </td>

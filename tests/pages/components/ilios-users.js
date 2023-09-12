@@ -32,7 +32,7 @@ const definition = {
     cancel: clickable('.buttons button.cancel'),
   },
   topPaginator: {
-    scope: '[data-test-top-paged-list-controls',
+    scope: '[data-test-top-paged-list-controls]',
     pagedlistControls,
   },
   userList,
@@ -40,7 +40,7 @@ const definition = {
     scope: '[data-test-no-users]',
   },
   bottomPaginator: {
-    scope: '[data-test-bottom-paged-list-controls',
+    scope: '[data-test-bottom-paged-list-controls]',
     pagedlistControls,
   },
 };
