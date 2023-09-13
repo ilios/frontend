@@ -1,7 +1,8 @@
 <div
   class="user-profile-calendar"
-    {{did-insert (perform this.load) @user this.date}}
-    {{did-update (perform this.load) @user this.date}}
+  {{did-insert (perform this.load) @user this.date}}
+  {{did-update (perform this.load) @user this.date}}
+  data-test-user-profile-calendar
 >
   <h2 class="title">
     {{t "general.calendar"}}

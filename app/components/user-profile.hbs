@@ -16,7 +16,18 @@
     {{/if}}
   </div>
   <PendingSingleUserUpdate @user={{@user}} @canUpdate={{@canUpdate}} />
+  <div class="user-profile-actions" data-test-user-profile-actions>
+    <ToggleButtons
+      @firstOptionSelected={{not this.showCalendar}}
+      @firstLabel={{t "general.hideCalendar"}}
+      @secondLabel={{t "general.showCalendar"}}
+      @toggle={{toggle "showCalendar" this}}
+    />
+  </div>
   <div class="blocks">
+    {{#if this.showCalendar}}
+      <UserProfileCalendar @user={{@user}} />
+    {{/if}}
     <UserProfileBio
       @user={{@user}}
       @isManageable={{@canUpdate}}
@@ -51,7 +62,7 @@
       @setSchool={{@setPermissionsSchool}}
       @setYear={{@setPermissionsYear}}
     />
-    <UserProfileCalendar @user={{@user}} />
+
     <UserProfile::LearnerGroups @user={{@user}} />
   </div>
 </div>

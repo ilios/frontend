@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -78,6 +78,9 @@ module('Integration | Component | visualizer-program-year-objectives', function 
     this.set('programYear', programYearModel);
     await render(hbs`<VisualizerProgramYearObjectives @programYear={{this.programYear}} />`);
 
+    await waitFor('.loaded');
+    await waitFor('svg .links');
+    await waitFor('svg .nodes');
     assert.dom('svg').exists({ count: 1 });
     assert.dom('svg g.links').exists({ count: 1 });
     assert.dom('svg g.nodes').exists({ count: 1 });
