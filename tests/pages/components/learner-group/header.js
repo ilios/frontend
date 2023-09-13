@@ -23,7 +23,9 @@ const definition = {
   members: text('[data-test-members]'),
   breadcrumb: {
     scope: '[data-test-breadcrumb]',
-    crumbs: collection('span'),
+    crumbs: collection('span', {
+      visit: clickable('a'),
+    }),
   },
 };
 
