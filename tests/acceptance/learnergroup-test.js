@@ -445,4 +445,46 @@ module('Acceptance | Learner Group', function (hooks) {
     assert.strictEqual(users[0].name.userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(users[1].name.userNameInfo.fullName, '2 guy M. Mc2son');
   });
+
+  test('move learners individually from subgroup to subgroup #4953', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const programYear = this.server.create('programYear', { program: this.program });
+    const cohort = this.server.create('cohort', { programYear });
+    const parent = this.server.create('learner-group', { cohort });
+    this.server.createList('learnerGroup', 2, { cohort, parent });
+    this.server.createList('user', 3, { cohorts: [cohort] });
+
+    await page.visit({ learnerGroupId: 1 });
+    assert.strictEqual(page.root.subgroups.list.items.length, 2);
+    assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 1');
+    assert.strictEqual(page.root.subgroups.list.items[1].title, 'learner group 2');
+
+    await page.root.subgroups.list.items[0].clickTitle();
+    await page.root.actions.buttons.manageUsers.click();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 0);
+    assert.strictEqual(page.root.userManager.usersNotInCurrentGroup.length, 0);
+    assert.strictEqual(page.root.cohortUserManager.users.length, 3);
+    await page.root.cohortUserManager.users[0].add();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
+    assert.strictEqual(page.root.userManager.usersNotInCurrentGroup.length, 0);
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2);
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
+    await page.root.header.breadcrumb.crumbs[1].visit();
+    await page.root.subgroups.list.items[1].clickTitle();
+    await page.root.actions.buttons.manageUsers.click();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 0);
+    assert.strictEqual(page.root.userManager.usersNotInCurrentGroup.length, 1);
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2);
+    await page.root.userManager.usersNotInCurrentGroup[0].add();
+    assert.strictEqual(page.root.userManager.usersInCurrentGroup.length, 1);
+    assert.strictEqual(page.root.userManager.usersNotInCurrentGroup.length, 0);
+    assert.strictEqual(page.root.cohortUserManager.users.length, 2);
+    assert.strictEqual(
+      page.root.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
+  });
 });
