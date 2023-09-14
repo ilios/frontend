@@ -45,7 +45,7 @@
     "@ilios/ember-template-lint-plugin": "^3.0.0",
     "@percy/cli": "^1.27.1",
     "@percy/ember": "^4.2.0",
-    "@sentry/ember": "^7.68.0",
+    "@sentry/ember": "^7.69.0",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
     "broccoli-merge-trees": "^4.2.0",
