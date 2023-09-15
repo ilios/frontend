@@ -392,12 +392,12 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     });
 
     const groupsToRemove = await subGroup1.removeUserFromGroupAndAllDescendants(user1);
-    assert.strictEqual(groupsToRemove.length, 3);
+    assert.strictEqual(groupsToRemove.length, 4);
     assert.notOk(groupsToRemove.includes(learnerGroup));
     assert.ok(groupsToRemove.includes(subGroup1));
     assert.ok(groupsToRemove.includes(subGroup2));
     assert.ok(groupsToRemove.includes(subGroup3));
-    assert.notOk(groupsToRemove.includes(subGroup4));
+    assert.ok(groupsToRemove.includes(subGroup4));
   });
 
   test('check addUserToGroupAndAllParents', async function (assert) {
