@@ -200,8 +200,8 @@ export default class LearnerGroupRootComponent extends Component {
     const topLevelGroup = yield learnerGroup.topLevelGroup;
     const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     const addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
-    const groups = [].concat(removeGroups).concat(addGroups);
-    yield all(groups.map((group) => group.save()));
+    yield Promise.all(removeGroups.map((g) => g.save()));
+    yield Promise.all(addGroups.map((g) => g.save()));
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
@@ -219,14 +219,20 @@ export default class LearnerGroupRootComponent extends Component {
   *addUsersToGroup(users) {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = yield learnerGroup.topLevelGroup;
-    let groupsToSave = [];
+    let addGroups = [];
+    let removeGroups = [];
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
-      const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-      const addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
-      groupsToSave = [...groupsToSave, ...removeGroups, ...addGroups];
+      removeGroups = [
+        ...removeGroups,
+        ...(yield topLevelGroup.removeUserFromGroupAndAllDescendants(user)),
+      ];
+      addGroups = [...addGroups, ...(yield learnerGroup.addUserToGroupAndAllParents(user))];
     }
-    yield all(uniqueValues(groupsToSave).map((group) => group.save()));
+
+    yield Promise.all(uniqueValues(removeGroups).map((g) => g.save()));
+    yield Promise.all(uniqueValues(addGroups).map((g) => g.save()));
+
     this.usersToPassToManager = yield this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = yield this.createUsersToPassToCohortManager.perform();
   }
