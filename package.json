@@ -80,7 +80,7 @@
     "stylelint": "^15.9.0",
     "stylelint-config-recommended-scss": "^13.0.0",
     "stylelint-prettier": "^3.0.0",
-    "stylelint-scss": "^5.0.1",
+    "stylelint-scss": "^5.2.0",
     "tracked-built-ins": "^3.2.0",
     "webpack": "^5.85.1"
   },
