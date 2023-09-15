@@ -74,21 +74,33 @@ export default class UserProfileCohortsManagerComponent extends Component {
   @cached
   get selectableCohortsData() {
     if (this.selectedSchool) {
-      return new TrackedAsyncData(this.getSelectableCohortsBySchool(this.selectedSchool));
+      return new TrackedAsyncData(
+        this.getSelectableCohortsBySchool(
+          this.selectedSchool,
+          this.args.primaryCohort,
+          this.args.secondaryCohorts,
+        ),
+      );
     } else if (this.userSchool) {
-      return new TrackedAsyncData(this.getSelectableCohortsBySchool(this.userSchool));
+      return new TrackedAsyncData(
+        this.getSelectableCohortsBySchool(
+          this.userSchool,
+          this.args.primaryCohort,
+          this.args.secondaryCohorts,
+        ),
+      );
     } else {
       return new TrackedAsyncData([]);
     }
   }
 
-  async getSelectableCohortsBySchool(school) {
+  async getSelectableCohortsBySchool(school, selectedPrimaryCohort, selectedSecondaryCohorts) {
     const programs = await school.programs;
     const programYears = (await Promise.all(programs.map((p) => p.programYears))).flat();
     const cohorts = await Promise.all(programYears.map((py) => py.cohort));
     const sortedCohorts = await sortCohorts(cohorts);
     return sortedCohorts.filter((cohort) => {
-      return this.args.primaryCohort !== cohort && !this.args.secondaryCohorts.includes(cohort);
+      return selectedPrimaryCohort !== cohort && !selectedSecondaryCohorts.includes(cohort);
     });
   }
 
