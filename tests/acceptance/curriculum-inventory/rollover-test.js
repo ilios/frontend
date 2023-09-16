@@ -57,7 +57,6 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
     this.server.post(
       `/api/curriculuminventoryreports/:id/rollover`,
       function (schema, { params, requestBody }) {
-        console.log(params);
         assert.ok('id' in params);
         assert.strictEqual(params.id, reportModel.id);
         const data = queryString.parse(requestBody);
