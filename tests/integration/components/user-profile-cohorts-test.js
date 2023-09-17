@@ -22,11 +22,13 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     const programYear2 = this.server.create('program-year', { program: program2 });
     const programYear3 = this.server.create('program-year', { program: program1 });
     const programYear4 = this.server.create('program-year', { program: program2 });
+    const programYear5 = this.server.create('program-year', { program: program1 });
 
     this.cohort1 = this.server.create('cohort', { programYear: programYear1 });
     this.cohort2 = this.server.create('cohort', { programYear: programYear2 });
     this.cohort3 = this.server.create('cohort', { programYear: programYear3 });
     this.cohort4 = this.server.create('cohort', { programYear: programYear4 });
+    this.cohort5 = this.server.create('cohort', { programYear: programYear5 });
 
     const user = this.server.create('user', {
       primaryCohort: this.cohort1,
@@ -64,7 +66,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
   });
 
   test('can edit user cohorts', async function (assert) {
-    assert.expect(13);
+    assert.expect(24);
     this.set('user', this.user);
     this.server.patch('api/users/:id', (schema, request) => {
       const { data } = JSON.parse(request.requestBody);
@@ -89,8 +91,21 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     assert.strictEqual(component.manager.secondaryCohorts[0].title, 'school 1 program 1 cohort 1');
     assert.strictEqual(component.manager.schools.filter.value, '1');
     assert.strictEqual(component.manager.schools.filter.options.length, 2);
+    assert.strictEqual(component.manager.assignableCohorts.length, 2);
+    assert.strictEqual(component.manager.assignableCohorts[0].title, 'program 0 cohort 2');
+    assert.strictEqual(component.manager.assignableCohorts[1].title, 'program 0 cohort 4');
+    await component.manager.assignableCohorts[1].add();
     assert.strictEqual(component.manager.assignableCohorts.length, 1);
     assert.strictEqual(component.manager.assignableCohorts[0].title, 'program 0 cohort 2');
+    assert.strictEqual(component.manager.secondaryCohorts.length, 2);
+    assert.strictEqual(component.manager.secondaryCohorts[0].title, 'school 0 program 0 cohort 4');
+    assert.strictEqual(component.manager.secondaryCohorts[1].title, 'school 1 program 1 cohort 1');
+    await component.manager.secondaryCohorts[0].remove();
+    assert.strictEqual(component.manager.assignableCohorts.length, 2);
+    assert.strictEqual(component.manager.assignableCohorts[0].title, 'program 0 cohort 2');
+    assert.strictEqual(component.manager.assignableCohorts[1].title, 'program 0 cohort 4');
+    assert.strictEqual(component.manager.secondaryCohorts.length, 1);
+    assert.strictEqual(component.manager.secondaryCohorts[0].title, 'school 1 program 1 cohort 1');
     await component.manager.schools.filter.select('2');
     assert.strictEqual(component.manager.assignableCohorts.length, 1);
     assert.strictEqual(component.manager.assignableCohorts[0].title, 'program 1 cohort 3');
