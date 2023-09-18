@@ -18,11 +18,11 @@ module('Acceptance | Event', function (hooks) {
   test('back link is not visible', async function (assert) {
     const date = DateTime.fromISO('2023-04-23');
     const slug = 'U' + date.toFormat('yyyyMMdd') + 'O12345';
-    this.server.get(`/api/userevents/:userid`, () => {
+    this.server.get(`api/userevents/:userid`, () => {
       return {
         userEvents: [
           {
-            offering: 1,
+            offering: 12345,
             startDate: '2023-04-23',
             prerequisites: [],
             postrequisites: [],
