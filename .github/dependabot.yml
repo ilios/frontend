@@ -13,7 +13,6 @@ updates:
   - dependency-name: "@babel/eslint-parser"
   - dependency-name: "@babel/plugin-proposal-decorators"
   - dependency-name: "@ember/optional-features"
-  - dependency-name: "@ember/string"
   - dependency-name: "@ember/test-helpers"
   - dependency-name: "@embroider/test-setup"
   - dependency-name: "@glimmer/component"
