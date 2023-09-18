@@ -1,7 +1,6 @@
 <div
   class="school-session-type-manager"
   {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @sessionType}}
   data-test-school-session-type-manager
   ...attributes
 >
@@ -23,7 +22,7 @@
       @canEditAssessmentOption={{and @canUpdate (eq @sessionType.sessionCount 0)}}
       @canEditActive={{@canUpdate}}
       @canUpdate={{@canUpdate}}
-      @save={{perform this.save}}
+      @save={{@save}}
       @close={{@close}}
     />
   {{else}}

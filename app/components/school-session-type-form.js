@@ -75,6 +75,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
     if (!isValid) {
       return false;
     }
+    this.clearErrorDisplay();
     yield this.args.save(
       this.title,
       this.calendarColor,
@@ -83,7 +84,6 @@ export default class SchoolSessionTypeFormComponent extends Component {
       this.selectedAamcMethod,
       this.isActive,
     );
-    this.clearErrorDisplay();
   }
 
   @dropTask
