@@ -53,6 +53,7 @@
       <SchoolSessionTypeManager
         @sessionType={{this.managedSessionType}}
         @close={{fn @setSchoolManagedSessionType null}}
+        @save={{perform this.update}}
         @canUpdate={{@canUpdate}}
       />
     {{else if (and (is-array this.sessionTypes) this.sessionTypes.length)}}

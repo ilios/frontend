@@ -52,4 +52,21 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
 
     yield sessionType.save();
   }
+
+  @dropTask
+  *update(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
+    const aamcMethods = aamcMethod ? [aamcMethod] : [];
+    const sessionType = this.managedSessionType;
+    this.args.setSchoolManagedSessionType(null);
+    sessionType.setProperties({
+      title,
+      calendarColor,
+      assessment,
+      assessmentOption,
+      aamcMethods,
+      active: isActive,
+    });
+
+    yield sessionType.save();
+  }
 }
