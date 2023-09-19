@@ -3,31 +3,15 @@
     <label for="{{this.uniqueId}}-session-search">
       {{t "general.whichIs"}}
     </label>
-    <input
-      id="{{this.uniqueId}}-session-search"
-      type="search"
-      value={{this.query}}
-      {{on "input" (pick "target.value" (set this.query))}}
-      {{on "keyup" this.keyboard}}
-    >
-    <button
-      type="button"
-      {{on "click" (perform this.search)}}
-    >
-      <FaIcon @icon={{if this.search.isRunning "spinner" "magnifying-glass"}} @spin={{this.search.isRunning}} />
-    </button>
-  </p>
-
-  {{#if this.sessions}}
-    <p class="results">
-      <div>
-        <strong>{{t "general.sessions"}}:</strong>
-        <ol data-test-results>
-          {{#each this.sortedSessions as |session|}}
-            <Reports::Subject::New::Search::Result
-              @isSelected={{eq session.id @currentId}}
-              @id={{session.id}}
-              @changeId={{@changeId}}
+    {{#if @currentId}}
+      {{#let (load this.loadSession) as |p|}}
+        {{#if p.isResolved}}
+          {{#let p.value as |session|}}
+            <button
+              class="link-button"
+              type="button"
+              {{on "click" this.clear}}
+              data-test-selected-session
             >
               {{session.course.year}} |&nbsp;
               {{session.title}}
@@ -35,12 +19,37 @@
                 [{{session.course.externalId}}] |
               {{/if}}
               {{session.course.title}}
-            </Reports::Subject::New::Search::Result>
-          {{else}}
-            {{t "general.none"}}
-          {{/each}}
-        </ol>
-      </div>
-    </p>
-  {{/if}}
+              <FaIcon @icon="xmark" class="remove"/>
+            </button>
+          {{/let}}
+        {{else}}
+          <LoadingSpinner />
+        {{/if}}
+      {{/let}}
+    {{else}}
+      <Reports::Subject::New::Search::Input
+        id="{{this.uniqueId}}-session-search"
+        @search={{perform this.search}}
+        @searchIsRunning={{this.search.isRunning}}
+        @searchIsIdle={{this.search.isIdle}}
+        @searchReturned={{is-array this.sessions}}
+        @results={{this.sortedSessions}}
+        as |session|
+      >
+        <button
+          class="link-button"
+          type="button"
+          {{on "click" (fn @changeId session.id)}}
+        >
+          {{session.course.year}} |&nbsp;
+          {{session.title}}
+          {{#if session.course.externalId}}
+            [{{session.course.externalId}}] |
+          {{/if}}
+          {{session.course.title}}
+        </button>
+
+      </Reports::Subject::New::Search::Input>
+    {{/if}}
+  </p>
 </div>

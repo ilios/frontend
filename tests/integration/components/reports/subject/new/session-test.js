@@ -29,64 +29,55 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
   });
 
   test('it renders', async function (assert) {
-    assert.expect(12);
-    this.set('currentId', null);
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
-      this.set('currentId', id);
-    });
+    assert.expect(6);
     await render(hbs`<Reports::Subject::New::Session
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
+      @currentId={{null}}
+      @changeId={{(noop)}}
       @school={{null}}
      />`);
 
     await component.input('session');
-    await component.search();
-
     assert.strictEqual(component.results.length, 5);
 
     assert.strictEqual(component.results[0].text, '2006 | session 0 course 0');
-    assert.notOk(component.results[0].isSelected);
-
     assert.strictEqual(component.results[1].text, '2006 | session 1 course 0');
-    assert.notOk(component.results[1].isSelected);
     assert.strictEqual(component.results[2].text, '2027 | session 2 course 1');
-    assert.notOk(component.results[2].isSelected);
     assert.strictEqual(component.results[3].text, '2027 | session 3 course 1');
-    assert.notOk(component.results[3].isSelected);
     assert.strictEqual(component.results[4].text, '2027 | session 4 course 1');
-    assert.notOk(component.results[4].isSelected);
-
-    this.set('currentId', '3');
-    assert.ok(component.results[2].isSelected);
   });
 
-  test('it works', async function (assert) {
-    assert.expect(3);
-    this.set('currentId', null);
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
-      this.set('currentId', id);
-    });
+  test('it renders selected session', async function (assert) {
+    assert.expect(2);
+    this.set('currentId', 3);
     await render(hbs`<Reports::Subject::New::Session
       @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
+      @changeId={{(noop)}}
       @school={{null}}
      />`);
 
-    await component.input('session');
-    await component.search();
+    assert.ok(component.hasSelectedSession);
+    assert.strictEqual(component.selectedSession, '2027 | session 2 course 1');
+  });
 
-    assert.strictEqual(component.results.length, 5);
-
+  test('it works', async function (assert) {
+    assert.expect(4);
+    this.set('currentId', null);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '3');
       this.set('currentId', id);
     });
+    await render(hbs`<Reports::Subject::New::Session
+      @currentId={{this.currentId}}
+      @changeId={{this.changeId}}
+      @school={{null}}
+     />`);
 
+    await component.input('session');
+
+    assert.strictEqual(component.results.length, 5);
     await component.results[2].click();
-    assert.ok(component.results[2].isSelected);
+    assert.ok(component.hasSelectedSession);
+    assert.strictEqual(component.selectedSession, '2027 | session 2 course 1');
   });
 
   test('it filters by school', async function (assert) {
@@ -99,7 +90,6 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
      />`);
 
     await component.input('session');
-    await component.search();
 
     assert.strictEqual(component.results.length, 3);
     assert.strictEqual(component.results[0].text, '2027 | session 2 course 1');
