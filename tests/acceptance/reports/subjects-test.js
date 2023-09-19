@@ -89,8 +89,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.reports.newReport.schools.choose('1');
     await page.reports.newReport.subjects.choose('session');
     await page.reports.newReport.objects.choose('course');
-    await page.reports.newReport.course.input('c');
-    await page.reports.newReport.course.search();
+    await page.reports.newReport.course.input('cour');
     await page.reports.newReport.course.results[0].click();
     await percySnapshot(assert);
     await page.reports.newReport.save();

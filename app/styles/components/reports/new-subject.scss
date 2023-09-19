@@ -1,5 +1,6 @@
 @use "../../ilios-common/colors" as c;
 @use "../../ilios-common/mixins" as m;
+@use "sass:color";
 
 .reports-new-subject {
   background-color: c.$slightWhite;
@@ -17,7 +18,7 @@
     p {
       display: grid;
       grid-gap: 0.25rem;
-      grid-template-columns: 1fr 4fr 0.5fr;
+      grid-template-columns: 1fr 4fr;
 
       label {
         @include m.ilios-label;
@@ -27,7 +28,6 @@
       select,
       input {
         width: 100%;
-        grid-column: 2 / span 2;
       }
 
       .validation-error-message {
@@ -43,28 +43,43 @@
 
     .new-subject-search {
       p {
-        input {
-          grid-column: 2;
-        }
-        button {
-          grid-column: 3;
-        }
         margin-bottom: 0;
       }
 
       .results {
-        margin-top: 0.25rem;
-        @include m.font-size("base");
-        div {
-          grid-column: 2;
-        }
-        ol {
-          @include m.ilios-list-reset;
-          padding-left: 0.5rem;
+        @include m.ilios-list-reset;
+        margin-top: -0.25rem;
+        grid-column: 2;
+        background: c.$white;
+        border-width: 0 1px 1px 1px;
+        border-style: solid;
+        border-color: c.$slightWhite;
+        box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
+        color: c.$raisinBlack;
+        max-height: 15rem;
+        overflow-y: scroll;
+        transition: all 0.2s ease-in-out;
+
+        li {
+          border-bottom: 1px solid c.$culturedGrey;
+          width: 100%;
 
           button {
-            @include m.ilios-button-reset;
-            text-align: left;
+            height: 100%;
+            width: 100%;
+            padding: 0.6rem 0 0 1rem;
+
+            &:hover {
+              background-color: c.$culturedGrey;
+            }
+          }
+
+          &:last-of-type {
+            border: 0;
+          }
+
+          &.results-count {
+            color: c.$fernGreen;
           }
         }
       }

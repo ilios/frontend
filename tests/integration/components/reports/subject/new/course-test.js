@@ -20,17 +20,13 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
   });
 
   test('it renders', async function (assert) {
-    assert.expect(12);
-    this.set('currentId', null);
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
-      this.set('currentId', id);
-    });
     await render(hbs`<Reports::Subject::New::Course
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
+      @currentId={{null}}
+      @changeId={{(noop)}}
       @school={{null}}
      />`);
+
+    assert.notOk(component.hasSelectedCourse);
 
     await component.input('course');
     await component.search();
@@ -38,23 +34,25 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
     assert.strictEqual(component.results.length, 5);
 
     assert.strictEqual(component.results[0].text, '2015 course 0');
-    assert.notOk(component.results[0].isSelected);
-
     assert.strictEqual(component.results[1].text, '2015 course 1');
-    assert.notOk(component.results[1].isSelected);
     assert.strictEqual(component.results[2].text, '2022 course 2');
-    assert.notOk(component.results[2].isSelected);
     assert.strictEqual(component.results[3].text, '2022 course 3');
-    assert.notOk(component.results[3].isSelected);
     assert.strictEqual(component.results[4].text, '2022 course 4');
-    assert.notOk(component.results[4].isSelected);
+  });
 
-    this.set('currentId', '3');
-    assert.ok(component.results[2].isSelected);
+  test('it renders selected course', async function (assert) {
+    await render(hbs`<Reports::Subject::New::Course
+      @currentId="2"
+      @changeId={{(noop)}}
+      @school={{null}}
+     />`);
+
+    assert.ok(component.hasSelectedCourse);
+    assert.strictEqual(component.selectedCourse, '2015 course 1');
   });
 
   test('it works', async function (assert) {
-    assert.expect(3);
+    assert.expect(4);
     this.set('currentId', null);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '1');
@@ -76,7 +74,8 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
     });
 
     await component.results[2].click();
-    assert.ok(component.results[2].isSelected);
+    assert.ok(component.hasSelectedCourse);
+    assert.strictEqual(component.selectedCourse, '2022 course 2');
   });
 
   test('it filters by school', async function (assert) {
