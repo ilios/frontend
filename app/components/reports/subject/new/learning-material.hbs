@@ -3,39 +3,43 @@
     <label for="{{this.uniqueId}}-learning-material-search">
       {{t "general.whichIs"}}
     </label>
-    <input
-      id="{{this.uniqueId}}-learning-material-search"
-      type="search"
-      value={{this.query}}
-      {{on "input" (pick "target.value" (set this.query))}}
-      {{on "keyup" this.keyboard}}
-    >
-    <button
-      type="button"
-      {{on "click" (perform this.search)}}
-    >
-      <FaIcon @icon={{if this.search.isRunning "spinner" "magnifying-glass"}} @spin={{this.search.isRunning}} />
-    </button>
-  </p>
-
-  {{#if this.materials}}
-    <p class="results">
-      <div>
-        <strong>{{t "general.learningMaterials"}}:</strong>
-        <ol data-test-results>
-          {{#each this.sortedMaterials as |material|}}
-            <Reports::Subject::New::Search::Result
-              @isSelected={{eq material.id @currentId}}
-              @id={{material.id}}
-              @changeId={{@changeId}}
+    {{#if @currentId}}
+      {{#let (load this.loadMaterial) as |p|}}
+        {{#if p.isResolved}}
+          {{#let p.value as |material|}}
+            <button
+              class="link-button"
+              type="button"
+              {{on "click" this.clear}}
+              data-test-selected-learning-material
             >
               {{material.title}}
-            </Reports::Subject::New::Search::Result>
-          {{else}}
-            {{t "general.none"}}
-          {{/each}}
-        </ol>
-      </div>
-    </p>
-  {{/if}}
+              <FaIcon @icon="xmark" class="remove"/>
+            </button>
+          {{/let}}
+        {{else}}
+          <LoadingSpinner />
+        {{/if}}
+      {{/let}}
+    {{else}}
+      <Reports::Subject::New::Search::Input
+        id="{{this.uniqueId}}-learning-material-search"
+        @search={{perform this.search}}
+        @searchIsRunning={{this.search.isRunning}}
+        @searchIsIdle={{this.search.isIdle}}
+        @searchReturned={{is-array this.materials}}
+        @results={{this.sortedMaterials}}
+        as |material|
+      >
+        <button
+          class="link-button"
+          type="button"
+          {{on "click" (fn @changeId material.id)}}
+        >
+          {{material.title}}
+        </button>
+
+      </Reports::Subject::New::Search::Input>
+    {{/if}}
+  </p>
 </div>
