@@ -2,6 +2,7 @@ import { clickable, create, collection, fillable, property, text } from 'ember-c
 import meshTerm from './subject/new/mesh-term';
 import instructor from './subject/new/instructor';
 import course from './subject/new/course';
+import session from './subject/new/session';
 
 const definition = {
   scope: '[data-test-reports-new-subject]',
@@ -47,6 +48,7 @@ const definition = {
   instructor,
   meshTerm,
   course,
+  session,
   prepositionalObjects: {
     scope: '[data-test-prepositional-objects]',
     choose: fillable(),

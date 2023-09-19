@@ -124,7 +124,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('filter session by year in new report form', async function (assert) {
-    assert.expect(14);
+    assert.expect(13);
     await page.visit();
     assert.strictEqual(page.reports.reports.length, 2);
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
@@ -133,10 +133,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.reports.newReport.schools.choose('1');
     await page.reports.newReport.subjects.choose('term');
     await page.reports.newReport.objects.choose('session');
-    assert.strictEqual(page.reports.newReport.prepositionalObjects.items.length, 2);
-    await page.reports.newReport.academicYears.choose('2016');
-    assert.strictEqual(page.reports.newReport.prepositionalObjects.items.length, 1);
-    await page.reports.newReport.prepositionalObjects.choose('2');
+
+    await page.reports.newReport.session.input('session');
+    assert.strictEqual(page.reports.newReport.session.results.length, 2);
+    await page.reports.newReport.session.results[1].click();
     await page.reports.newReport.save();
     assert.strictEqual(page.reports.reports.length, 3);
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
@@ -213,7 +213,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.reports.newReportFormToggle.click();
     await page.reports.newReport.schools.choose('1');
     await page.reports.newReport.subjects.choose('term');
-    await page.reports.newReport.objects.choose('session');
+    await page.reports.newReport.objects.choose('program year');
     await page.reports.newReport.prepositionalObjects.choose('2');
     await page.reports.newReport.objects.choose('program');
 
