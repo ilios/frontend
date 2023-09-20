@@ -39,11 +39,11 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
     await component.input('session');
     assert.strictEqual(component.results.length, 5);
 
-    assert.strictEqual(component.results[0].text, '2006 | session 0 course 0');
-    assert.strictEqual(component.results[1].text, '2006 | session 1 course 0');
-    assert.strictEqual(component.results[2].text, '2027 | session 2 course 1');
-    assert.strictEqual(component.results[3].text, '2027 | session 3 course 1');
-    assert.strictEqual(component.results[4].text, '2027 | session 4 course 1');
+    assert.strictEqual(component.results[0].text, '2027 | session 2 course 1');
+    assert.strictEqual(component.results[1].text, '2027 | session 3 course 1');
+    assert.strictEqual(component.results[2].text, '2027 | session 4 course 1');
+    assert.strictEqual(component.results[3].text, '2006 | session 0 course 0');
+    assert.strictEqual(component.results[4].text, '2006 | session 1 course 0');
   });
 
   test('it renders selected session', async function (assert) {
@@ -63,7 +63,7 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
     assert.expect(4);
     this.set('currentId', null);
     this.set('changeId', (id) => {
-      assert.strictEqual(id, '3');
+      assert.strictEqual(id, '5');
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::Session
@@ -77,7 +77,7 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
     assert.strictEqual(component.results.length, 5);
     await component.results[2].click();
     assert.ok(component.hasSelectedSession);
-    assert.strictEqual(component.selectedSession, '2027 | session 2 course 1');
+    assert.strictEqual(component.selectedSession, '2027 | session 4 course 1');
   });
 
   test('it filters by school', async function (assert) {

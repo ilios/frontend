@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { restartableTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import { sortBy } from 'ilios-common/utils/array-helpers';
 import { guidFor } from '@ember/object/internals';
 import { action } from '@ember/object';
 
@@ -36,7 +35,21 @@ export default class ReportsSubjectNewSessionComponent extends Component {
   }
 
   get sortedSessions() {
-    return sortBy(this.filteredSessions, 'course.year', 'course.title', 'title');
+    return this.filteredSessions.toSorted((a, b) => {
+      const courseA = this.store.peekRecord('course', a.belongsTo('course').id());
+      const courseB = this.store.peekRecord('course', b.belongsTo('course').id());
+
+      if (courseA.year !== courseB.year) {
+        return courseB.year - courseA.year;
+      }
+
+      const courseTitleCompare = courseA.title.localeCompare(courseB.title);
+      if (courseTitleCompare !== 0) {
+        return courseTitleCompare;
+      }
+
+      return a.title.localeCompare(b.title);
+    });
   }
 
   @restartableTask

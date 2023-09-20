@@ -3,7 +3,6 @@ import { service } from '@ember/service';
 import { restartableTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { sortBy } from 'ilios-common/utils/array-helpers';
 import { guidFor } from '@ember/object/internals';
 
 export default class ReportsSubjectNewCourseComponent extends Component {
@@ -33,7 +32,13 @@ export default class ReportsSubjectNewCourseComponent extends Component {
   }
 
   get sortedCourses() {
-    return sortBy(this.filteredCourses, ['year', 'title']);
+    return this.filteredCourses.toSorted((a, b) => {
+      if (a.year !== b.year) {
+        return b.year - a.year;
+      }
+
+      return a.title.localeCompare(b.title);
+    });
   }
 
   @restartableTask

@@ -33,11 +33,11 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
 
     assert.strictEqual(component.results.length, 5);
 
-    assert.strictEqual(component.results[0].text, '2015 course 0');
-    assert.strictEqual(component.results[1].text, '2015 course 1');
-    assert.strictEqual(component.results[2].text, '2022 course 2');
-    assert.strictEqual(component.results[3].text, '2022 course 3');
-    assert.strictEqual(component.results[4].text, '2022 course 4');
+    assert.strictEqual(component.results[0].text, '2022 course 2');
+    assert.strictEqual(component.results[1].text, '2022 course 3');
+    assert.strictEqual(component.results[2].text, '2022 course 4');
+    assert.strictEqual(component.results[3].text, '2015 course 0');
+    assert.strictEqual(component.results[4].text, '2015 course 1');
   });
 
   test('it renders selected course', async function (assert) {
@@ -73,7 +73,7 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
       this.set('currentId', id);
     });
 
-    await component.results[2].click();
+    await component.results[0].click();
     assert.ok(component.hasSelectedCourse);
     assert.strictEqual(component.selectedCourse, '2022 course 2');
   });
@@ -110,10 +110,10 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
     await component.search();
     assert.strictEqual(component.results.length, 5);
 
-    assert.strictEqual(component.results[0].text, '2015 course 1');
-    assert.strictEqual(component.results[1].text, '2015 [course1] xx');
-    assert.strictEqual(component.results[2].text, '2022 [course2] aa');
-    assert.strictEqual(component.results[3].text, '2022 course 3');
-    assert.strictEqual(component.results[4].text, '2022 course 4');
+    assert.strictEqual(component.results[0].text, '2022 [course2] aa');
+    assert.strictEqual(component.results[1].text, '2022 course 3');
+    assert.strictEqual(component.results[2].text, '2022 course 4');
+    assert.strictEqual(component.results[3].text, '2015 course 1');
+    assert.strictEqual(component.results[4].text, '2015 [course1] xx');
   });
 });

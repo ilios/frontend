@@ -90,7 +90,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.reports.newReport.subjects.choose('session');
     await page.reports.newReport.objects.choose('course');
     await page.reports.newReport.course.input('cour');
-    await page.reports.newReport.course.results[0].click();
+    await page.reports.newReport.course.results[1].click();
     await percySnapshot(assert);
     await page.reports.newReport.save();
     await percySnapshot(assert);
@@ -136,7 +136,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
     await page.reports.newReport.session.input('session');
     assert.strictEqual(page.reports.newReport.session.results.length, 2);
-    await page.reports.newReport.session.results[1].click();
+    await page.reports.newReport.session.results[0].click();
     await page.reports.newReport.save();
     assert.strictEqual(page.reports.reports.length, 3);
     assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
