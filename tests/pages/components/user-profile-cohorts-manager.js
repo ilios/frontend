@@ -22,7 +22,7 @@ const definition = {
       }),
     },
   },
-  assignableCohorts: collection('[data-test-assignable-cohorts] li', {
+  assignableCohorts: collection('[data-test-assignable-cohort]', {
     add: clickable('[data-test-add]'),
     title: text('[data-test-title]'),
   }),

@@ -5,7 +5,6 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { setupAuthentication } from 'ilios-common';
-import { mapBy } from 'ilios-common/utils/array-helpers';
 import { component } from 'ilios/tests/pages/components/user-profile-cohorts';
 
 module('Integration | Component | user profile cohorts', function (hooks) {
@@ -66,21 +65,8 @@ module('Integration | Component | user profile cohorts', function (hooks) {
   });
 
   test('can edit user cohorts', async function (assert) {
-    assert.expect(24);
+    assert.expect(28);
     this.set('user', this.user);
-    this.server.patch('api/users/:id', (schema, request) => {
-      const { data } = JSON.parse(request.requestBody);
-      assert.strictEqual(
-        data.relationships.primaryCohort.data.id,
-        this.cohort2.id,
-        'user has correct primary cohort',
-      );
-      const cohortIds = mapBy(data.relationships.cohorts.data, 'id');
-      assert.notOk(cohortIds.includes(this.cohort1.id), 'cohort1 has been removed');
-      assert.ok(cohortIds.includes(this.cohort2.id), 'cohort2 is still present');
-      assert.ok(cohortIds.includes(this.cohort4.id), 'cohort4 has been added');
-      return schema.users.find(data.id);
-    });
 
     await render(
       hbs`<UserProfileCohorts @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`,
@@ -113,5 +99,16 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     await component.manager.secondaryCohorts[0].remove();
     await component.manager.assignableCohorts[0].add();
     await component.save();
+
+    assert.strictEqual(component.manager.assignableCohorts.length, 0);
+    assert.strictEqual(component.manager.primaryCohort.title, 'school 1 program 1 cohort 1');
+    assert.strictEqual(component.manager.secondaryCohorts.length, 1);
+    assert.strictEqual(component.manager.secondaryCohorts[0].title, 'school 1 program 1 cohort 3');
+
+    const user = this.server.schema.users.find(this.user.id);
+    assert.strictEqual(user.primaryCohort.id, this.cohort2.id, 'user has correct primary cohort');
+    assert.notOk(user.attrs.cohortIds.includes(this.cohort1.id), 'cohort1 has been removed');
+    assert.ok(user.attrs.cohortIds.includes(this.cohort2.id), 'cohort2 is still present');
+    assert.ok(user.attrs.cohortIds.includes(this.cohort4.id), 'cohort4 has been added');
   });
 });
