@@ -18,5 +18,8 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'ember-modifier.function-based-options' },
     { handler: 'silence', matchId: 'ember-polyfills.deprecate-assign' },
     { handler: 'silence', matchId: 'common.dates-no-dates' },
+    { handler: 'silence', matchId: 'ember-data:deprecate-legacy-imports' },
+    { handler: 'silence', matchId: 'ember-data:deprecate-non-strict-types' },
+    { handler: 'silence', matchId: 'ember-data:deprecate-non-unique-relationship-entries' },
   ],
 };

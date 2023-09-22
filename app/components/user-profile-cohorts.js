@@ -79,8 +79,8 @@ export default class UserProfileCohortsComponent extends Component {
 
   @dropTask
   *save() {
-    this.args.user.set('primaryCohort', this.primaryCohortBuffer);
-    this.args.user.set('cohorts', this.secondaryCohortsBuffer);
+    this.args.user.primaryCohort = this.primaryCohortBuffer;
+    this.args.user.cohorts = this.secondaryCohortsBuffer;
     yield this.args.user.save();
     this.args.setIsManaging(false);
     this.hasSavedRecently = true;

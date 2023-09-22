@@ -58,8 +58,7 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     assert.ok(component.schools.filter.options[0].selected);
     assert.strictEqual(component.schools.filter.options[1].text, 'school 1');
     assert.notOk(component.schools.filter.options[1].selected);
-    assert.strictEqual(component.assignableCohorts.length, 1);
-    assert.strictEqual(component.assignableCohorts[0].title, 'None');
+    assert.strictEqual(component.assignableCohorts.length, 0);
     await component.schools.filter.select('2');
     assert.strictEqual(component.assignableCohorts.length, 1);
     assert.strictEqual(component.assignableCohorts[0].title, 'program 1 cohort 3');
