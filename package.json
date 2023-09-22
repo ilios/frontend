@@ -74,7 +74,7 @@
     "ember-modifier": "^4.0.0",
     "ember-moment": "^10.0.0",
     "ember-simple-auth": "^6.0.0",
-    "ember-simple-charts": "^10.3.0",
+    "ember-simple-charts": "^11.0.1",
     "ember-test-selectors": "^6.0.0",
     "ember-truth-helpers": "^4.0.0",
     "flatpickr": ">= 4.0.0",
