@@ -16,50 +16,47 @@ module('Integration | Component | reports/subject/new/learning-material', functi
   });
 
   test('it renders', async function (assert) {
-    assert.expect(16);
-    this.set('currentId', null);
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
-      this.set('currentId', id);
-    });
+    assert.expect(7);
     await render(hbs`<Reports::Subject::New::LearningMaterial
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
+      @currentId={{null}}
+      @changeId={{(noop)}}
       @school={{null}}
      />`);
 
-    assert.strictEqual(component.options.length, 5);
-    assert.strictEqual(component.options[0].text, 'learning material 0');
-    assert.ok(component.options[0].isSelected);
-    assert.strictEqual(component.value, '1');
-
-    for (let i = 1; i < 5; i++) {
-      assert.strictEqual(component.options[i].text, `learning material ${i}`);
-      assert.notOk(component.options[i].isSelected);
+    await component.input('material');
+    assert.strictEqual(component.results.length, 5);
+    for (let i = 0; i < 5; i++) {
+      assert.strictEqual(component.results[i].text, `learning material ${i}`);
     }
+    assert.notOk(component.hasSelectedMaterial);
+  });
 
-    this.set('currentId', '3');
-    assert.notOk(component.options[0].isSelected);
-    assert.ok(component.options[2].isSelected);
-    assert.strictEqual(component.value, '3');
+  test('it renders with selected material', async function (assert) {
+    assert.expect(2);
+    await render(hbs`<Reports::Subject::New::LearningMaterial
+      @currentId={{2}}
+      @changeId={{(noop)}}
+      @school={{null}}
+     />`);
+    assert.ok(component.hasSelectedMaterial);
+    assert.strictEqual(component.selectedMaterial, 'learning material 1');
   });
 
   test('it works', async function (assert) {
-    assert.expect(5);
-    this.set('currentId', '1');
-    await render(hbs`<Reports::Subject::New::LearningMaterial
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+    assert.expect(4);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '3');
       this.set('currentId', id);
     });
-    assert.ok(component.options[0].isSelected);
-    await component.set('3');
-    assert.notOk(component.options[0].isSelected);
-    assert.ok(component.options[2].isSelected);
-    assert.strictEqual(component.value, '3');
+    await render(hbs`<Reports::Subject::New::LearningMaterial
+      @currentId={{this.currentId}}
+      @changeId={{this.changeId}}
+      @school={{null}}
+     />`);
+    assert.notOk(component.hasSelectedMaterial);
+    await component.input('material');
+    await component.results[2].click();
+    assert.ok(component.hasSelectedMaterial);
+    assert.strictEqual(component.selectedMaterial, 'learning material 2');
   });
 });

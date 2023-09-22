@@ -1,71 +1,33 @@
 import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import { hash } from 'rsvp';
+import { guidFor } from '@ember/object/internals';
 import { action } from '@ember/object';
-import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class ReportsSubjectNewSessionComponent extends Component {
   @service store;
+  @tracked sessions;
 
-  @tracked selectedYear;
-
-  @cached
-  get data() {
-    return new TrackedAsyncData(
-      hash({
-        sessions: this.store.findAll('session'),
-        courses: this.store.findAll('course'),
-        years: this.store.findAll('academic-year'),
-      }),
-    );
+  get uniqueId() {
+    return guidFor(this);
   }
 
-  get isLoaded() {
-    return this.data.isResolved;
-  }
-
-  get sessions() {
-    return this.data.value.sessions;
-  }
-
-  get years() {
-    return this.data.value.years;
-  }
-
-  get filteredYears() {
-    const sessionYears = this.filteredSessionsBySchool.map((session) => {
-      const courseId = session.belongsTo('course').id();
-      const course = this.data.value.courses.find(({ id }) => id === courseId);
-
-      return Number(course.year);
-    });
-    return this.years.filter(({ id }) => sessionYears.includes(Number(id)));
+  get loadSession() {
+    return this.store.findRecord('session', this.args.currentId);
   }
 
   get filteredSessions() {
-    if (this.selectedYear) {
-      return this.filteredSessionsBySchool.filter((session) => {
-        const courseId = session.belongsTo('course').id();
-        const course = this.data.value.courses.find(({ id }) => id === courseId);
-
-        return course.year === Number(this.selectedYear);
-      });
+    if (!this.sessions) {
+      return [];
     }
-
-    return this.filteredSessionsBySchool;
-  }
-
-  get filteredSessionsBySchool() {
     if (this.args.school) {
+      const schoolId = Number(this.args.school.id);
       return this.sessions.filter((session) => {
         const courseId = session.belongsTo('course').id();
-        const course = this.data.value.courses.find(({ id }) => id === courseId);
+        const course = this.store.peekRecord('course', courseId);
 
-        return course.belongsTo('school').id() === this.args.school.id;
+        return Number(course.belongsTo('school').id()) === schoolId;
       });
     }
 
@@ -73,26 +35,39 @@ export default class ReportsSubjectNewSessionComponent extends Component {
   }
 
   get sortedSessions() {
-    return sortBy(this.filteredSessions, 'course.year', 'course.title', 'title');
+    return this.filteredSessions.toSorted((a, b) => {
+      const courseA = this.store.peekRecord('course', a.belongsTo('course').id());
+      const courseB = this.store.peekRecord('course', b.belongsTo('course').id());
+
+      if (courseA.year !== courseB.year) {
+        return courseB.year - courseA.year;
+      }
+
+      const courseTitleCompare = courseA.title.localeCompare(courseB.title);
+      if (courseTitleCompare !== 0) {
+        return courseTitleCompare;
+      }
+
+      return a.title.localeCompare(b.title);
+    });
+  }
+
+  @restartableTask
+  *search(q) {
+    if (!q.length) {
+      this.sessions = false;
+      return;
+    }
+
+    this.sessions = yield this.store.query('session', {
+      q: q,
+      include: 'course',
+    });
   }
 
   @action
-  changeSelectedYear(year) {
-    this.selectedYear = year;
-    this.setInitialValue.perform();
-  }
-
-  @task
-  *setInitialValue() {
-    yield timeout(1); //wait a moment so we can render before setting
-    const ids = this.sortedSessions.map(({ id }) => id);
-    if (ids.includes(this.args.currentId)) {
-      return;
-    }
-    if (!this.sortedSessions.length) {
-      this.args.changeId(null);
-    } else {
-      this.args.changeId(this.sortedSessions[0].id);
-    }
+  clear() {
+    this.sessions = false;
+    this.args.changeId(null);
   }
 }

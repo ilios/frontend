@@ -23,6 +23,8 @@ module.exports = function () {
       'paragraph',
       'rectangle-list',
       'rotate',
+      'square-minus',
+      'square-plus',
       'subscript',
       'sun',
       'superscript',

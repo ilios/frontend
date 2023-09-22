@@ -1,5 +1,6 @@
 @use "../../ilios-common/colors" as c;
 @use "../../ilios-common/mixins" as m;
+@use "sass:color";
 
 .reports-new-subject {
   background-color: c.$slightWhite;
@@ -16,7 +17,7 @@
     @include m.ilios-form-error;
     p {
       display: grid;
-      grid-gap: 0.5rem;
+      grid-gap: 0.25rem;
       grid-template-columns: 1fr 4fr;
 
       label {
@@ -40,6 +41,50 @@
       }
     }
 
+    .new-subject-search {
+      p {
+        margin-bottom: 0;
+      }
+
+      .results {
+        @include m.ilios-list-reset;
+        margin-top: -0.25rem;
+        grid-column: 2;
+        background: c.$white;
+        border-width: 0 1px 1px 1px;
+        border-style: solid;
+        border-color: c.$slightWhite;
+        box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
+        color: c.$raisinBlack;
+        max-height: 15rem;
+        overflow-y: scroll;
+        transition: all 0.2s ease-in-out;
+
+        li {
+          border-bottom: 1px solid c.$culturedGrey;
+          width: 100%;
+
+          button {
+            height: 100%;
+            width: 100%;
+            padding: 0.6rem 0 0 1rem;
+
+            &:hover {
+              background-color: c.$culturedGrey;
+            }
+          }
+
+          &:last-of-type {
+            border: 0;
+          }
+
+          &.results-count {
+            color: c.$fernGreen;
+          }
+        }
+      }
+    }
+
     .selected-instructor,
     .selected-mesh-term {
       @include m.ilios-tag-list;
@@ -57,6 +102,7 @@
     }
 
     .input-buttons {
+      margin-top: 0.5rem;
       float: right;
     }
   }

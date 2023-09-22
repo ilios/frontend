@@ -1,47 +1,45 @@
 import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import { guidFor } from '@ember/object/internals';
 
 export default class ReportsSubjectNewLearningMaterialComponent extends Component {
   @service store;
+  @tracked materials;
 
-  @cached
-  get allLearningMaterials() {
-    return new TrackedAsyncData(this.store.findAll('learning-material'));
+  get uniqueId() {
+    return guidFor(this);
   }
 
-  get isLoaded() {
-    return this.allLearningMaterials.isResolved;
+  get loadMaterial() {
+    return this.store.findRecord('learning-material', this.args.currentId);
   }
 
-  get filteredLearningMaterials() {
-    if (this.args.school) {
-      return this.allLearningMaterials.value.filter(
-        (c) => c.belongsTo('school').id() === this.args.school.id,
-      );
+  get sortedMaterials() {
+    if (!this.materials) {
+      return [];
     }
-
-    return this.allLearningMaterials.value;
+    return sortBy(this.materials, 'title');
   }
 
-  get sortedLearningMaterials() {
-    return sortBy(this.filteredLearningMaterials, 'title');
-  }
-
-  @task
-  *setInitialValue() {
-    yield timeout(1); //wait a moment so we can render before setting
-    const ids = this.sortedLearningMaterials.map(({ id }) => id);
-    if (ids.includes(this.args.currentId)) {
+  @restartableTask
+  *search(q) {
+    if (!q.length) {
+      this.materials = false;
       return;
     }
-    if (!this.sortedLearningMaterials.length) {
-      this.args.changeId(null);
-    } else {
-      this.args.changeId(this.sortedLearningMaterials[0].id);
-    }
+
+    this.materials = yield this.store.query('learning-material', {
+      q,
+    });
+  }
+
+  @action
+  clear() {
+    this.materials = false;
+    this.args.changeId(null);
   }
 }

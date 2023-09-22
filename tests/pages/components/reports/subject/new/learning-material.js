@@ -1,12 +1,12 @@
-import { create, collection, fillable, property } from 'ember-cli-page-object';
+import { create, collection, fillable, clickable, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-reports-subject-new-learning-material]',
-  set: fillable('select'),
-  options: collection('option', {
-    isSelected: property('selected'),
-  }),
-  value: property('value', 'select'),
+  input: fillable('input'),
+  search: clickable('[data-test-submit-search]'),
+  results: collection('[data-test-results] button'),
+  hasSelectedMaterial: isPresent('[data-test-selected-learning-material]'),
+  selectedMaterial: text('[data-test-selected-learning-material]'),
 };
 
 export default definition;
