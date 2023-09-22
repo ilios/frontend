@@ -38,7 +38,7 @@
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
     "broccoli-merge-trees": "^4.2.0",
-    "browserslist": "^4.21.10",
+    "browserslist": "^4.21.11",
     "caniuse-db": "^1.0.30001538",
     "concurrently": "^8.0.1",
     "ember-ajax": "^5.1.2",
