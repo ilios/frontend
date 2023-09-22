@@ -1,6 +1,6 @@
 import { click, fillIn, currentURL, triggerEvent, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -12,6 +12,7 @@ module('Acceptance | User', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
+    freezeDateAt(new Date('10/31/2002'));
     this.school = this.server.create('school');
     const userObject = {
       id: 100,
@@ -31,6 +32,10 @@ module('Acceptance | User', function (hooks) {
     this.cohort3 = this.server.create('cohort', { programYearId: 3 });
     this.server.createList('learnerGroup', 5, { title: 'Group 1', cohortId: 1 });
     await setupAuthentication(userObject);
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
   });
 
   test('can search for users', async function (assert) {

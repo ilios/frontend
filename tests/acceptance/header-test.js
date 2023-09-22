@@ -2,12 +2,20 @@ import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | header', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
+  hooks.beforeEach(async function () {
+    freezeDateAt(new Date('9/19/2029'));
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
+  });
 
   test('privileged users can view search', async function (assert) {
     assert.expect(1);

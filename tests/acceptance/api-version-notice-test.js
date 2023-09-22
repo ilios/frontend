@@ -1,9 +1,6 @@
 import { visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
-
-const url = '/';
-
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios-common/page-objects/components/api-version-notice';
@@ -14,7 +11,12 @@ module('Acceptance | API Version Check', function (hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
+    freezeDateAt(new Date('9/19/2019'));
     await setupAuthentication({ school });
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
   });
 
   test('No warning shows up when api versions match', async function (assert) {
@@ -31,9 +33,8 @@ module('Acceptance | API Version Check', function (hooks) {
       };
     });
 
-    await visit(url);
+    await visit('/');
     await waitFor('[data-test-load-finished]');
-    await percySnapshot(assert);
     assert.ok(component.notMismatched);
   });
 
@@ -49,7 +50,7 @@ module('Acceptance | API Version Check', function (hooks) {
       };
     });
 
-    await visit(url);
+    await visit('/');
     await waitFor('[data-test-load-finished]');
     await percySnapshot(assert);
     assert.ok(component.mismatched);
