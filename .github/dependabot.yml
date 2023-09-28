@@ -7,6 +7,10 @@ updates:
     time: "02:30"
     timezone: America/Los_Angeles
   open-pull-requests-limit: 10
+  groups:
+    embroider:
+      patterns:
+      - "@embroider/*"
   ignore:
   - dependency-name: "@babel/core"
   - dependency-name: "@babel/eslint-parser"
