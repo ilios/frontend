@@ -14,7 +14,6 @@ import { cached } from '@glimmer/tracking';
 @validatable
 export default class SessionOverview extends Component {
   @service currentUser;
-  @service features;
   @service router;
   @service permissionChecker;
   @service intl;
