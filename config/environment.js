@@ -77,11 +77,9 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-    //Hide a feature while it is in development
-    IliosFeatures: {
-      programYearVisualizations: false,
-    },
+    //using ember-feature-flags provided by common
     featureFlags: {
+      programYearVisualizations: false,
       sessionLinkingAdminUi: true,
       globalSearch: true,
     },
@@ -100,8 +98,7 @@ module.exports = function (environment) {
       enabled: false,
     };
 
-    ENV.IliosFeatures.programYearVisualizations = true;
-
+    ENV.featureFlags['programYearVisualizations'] = true;
     ENV.featureFlags['globalSearch'] = true;
 
     //put ember concurrency tasks into debug mode to make errors much easier to spot
@@ -130,7 +127,7 @@ module.exports = function (environment) {
   if (environment === 'production') {
     // here you can enable a production-specific feature
     if (process.env.ENABLE_PREVIEW_FEATURES) {
-      ENV.IliosFeatures.programYearVisualizations = true;
+      ENV.featureFlags['programYearVisualizations'] = true;
       ENV.featureFlags['globalSearch'] = true;
     }
   }

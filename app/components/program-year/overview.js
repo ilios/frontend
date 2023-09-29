@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
-import config from 'ilios/config/environment';
-const {
-  IliosFeatures: { programYearVisualizations },
-} = config;
+import { service } from '@ember/service';
 
 export default class ProgramYearOverviewComponent extends Component {
-  programYearVisualizations = programYearVisualizations;
+  @service features;
+  get programYearVisualizations() {
+    return this.features.isEnabled('programYearVisualizations');
+  }
 }
