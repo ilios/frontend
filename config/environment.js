@@ -80,8 +80,6 @@ module.exports = function (environment) {
     //using ember-feature-flags provided by common
     featureFlags: {
       programYearVisualizations: false,
-      sessionLinkingAdminUi: true,
-      globalSearch: true,
     },
   };
 
@@ -99,7 +97,6 @@ module.exports = function (environment) {
     };
 
     ENV.featureFlags['programYearVisualizations'] = true;
-    ENV.featureFlags['globalSearch'] = true;
 
     //put ember concurrency tasks into debug mode to make errors much easier to spot
     ENV.EmberENV.DEBUG_TASKS = true;
@@ -119,7 +116,6 @@ module.exports = function (environment) {
     ENV.serverVariables.defaults['api-name-space'] = 'api';
     ENV.serverVariables.defaults['api-host'] = '';
     ENV.disableServiceWorker = true;
-    ENV.featureFlags['globalSearch'] = true;
 
     ENV.APP.autoboot = false;
   }
@@ -128,7 +124,6 @@ module.exports = function (environment) {
     // here you can enable a production-specific feature
     if (process.env.ENABLE_PREVIEW_FEATURES) {
       ENV.featureFlags['programYearVisualizations'] = true;
-      ENV.featureFlags['globalSearch'] = true;
     }
   }
 
