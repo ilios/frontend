@@ -1,12 +1,12 @@
-import { module, skip, test } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import ENV from 'ilios/config/environment';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios/tests/pages/components/program-year/overview';
+import { enableFeature } from 'ember-feature-flags/test-support';
 
 module('Integration | Component | program-year/overview', function (hooks) {
   setupRenderingTest(hooks);
@@ -29,15 +29,14 @@ module('Integration | Component | program-year/overview', function (hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  // @todo figure out a way how this can be tested. [ST 2022/08/05]
-  skip('visualizations button present', async function (assert) {
-    ENV.IliosFeatures.programYearVisualizations = true; //this doesn't work.
+  test('visualizations button present', async function (assert) {
     const program = this.server.create('program');
     const programYear = this.server.create('programYear', { program });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('programYear', programYear.id);
     this.set('program', programYearModel);
+    enableFeature('programYearVisualizations');
     await render(hbs`<ProgramYear::Overview
       @programYear={{this.programYear}}
     />`);
