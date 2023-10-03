@@ -351,11 +351,12 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
   test('users can create a new offering multi-day', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
+    const sep112011 = DateTime.fromObject({ year: 2011, month: 9, day: 11, hour: 2, minute: 15 });
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.header.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.singleOffering();
-    await form.startDate.datePicker.set(new Date(2011, 8, 11));
+    await form.startDate.datePicker.set(sep112011.toJSDate());
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
     await form.startTime.timePicker.ampm.select('am');
@@ -375,8 +376,28 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasEndTime);
     assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'September 11');
-    assert.strictEqual(block.multiDayStart, 'Starts: Sunday, September 11 at 2:15 AM');
-    assert.strictEqual(block.multiDayEnd, 'Ends: Monday, September 12 at 5:30 PM');
+    assert.strictEqual(
+      block.multiDayStart,
+      'Starts: ' +
+        this.intl.formatDate(sep112011, {
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long',
+          hour: 'numeric',
+          minute: 'numeric',
+        }),
+    );
+    assert.strictEqual(
+      block.multiDayEnd,
+      'Ends: ' +
+        this.intl.formatDate(sep112011.plus({ hours: 39, minutes: 15 }), {
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long',
+          hour: 'numeric',
+          minute: 'numeric',
+        }),
+    );
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
 
     assert.strictEqual(block.timeBlockOfferings.offerings[0].learnerGroups.length, 2);
