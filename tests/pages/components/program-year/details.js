@@ -5,6 +5,7 @@ import expandedLeadership from './leadership-expanded';
 import detailTaxonomies from 'ilios-common/page-objects/components/detail-taxonomies';
 import collapsedTaxonomies from 'ilios-common/page-objects/components/collapsed-taxonomies';
 import collapsedLeadership from 'ilios-common/page-objects/components/leadership-collapsed';
+import courses from './courses';
 
 const definition = {
   scope: '[data-test-program-year-details]',
@@ -14,6 +15,7 @@ const definition = {
   collapsedTaxonomies,
   expandedLeadership,
   collapsedLeadership,
+  courses,
 };
 
 export default definition;

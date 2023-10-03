@@ -1,0 +1,26 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
+.program-year-courses {
+  @include m.detail-container(c.$orange);
+
+  .program-year-courses-header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+  }
+
+  .program-year-courses-content {
+    @include m.detail-container-content;
+
+    .program-year-courses-list {
+      @include m.ilios-tag-list;
+
+      a {
+        color: c.$black;
+      }
+    }
+  }
+}
