@@ -18,10 +18,11 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
     const program = this.server.create('program', {
       school: this.school,
     });
-    this.server.create('programYear', {
+    const programYear = this.server.create('programYear', {
       program,
       directors: [users[2], users[3]],
     });
+    this.server.create('cohort', { programYear });
   });
 
   test('collapsed leadership', async function (assert) {
