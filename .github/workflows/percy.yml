@@ -1,0 +1,43 @@
+name: Percy Visual Tests
+
+on:
+  push:
+    tags:
+      - '*'
+  pull_request_target:
+    types: [labeled]
+  schedule:
+    - cron: "15 23 * * 2,4" # T,Th in the afternoon (UTC)
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+env:
+  SW_DISABLED: true
+  COVERAGE: false
+  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ILIOS_DEPLOYMENT_WEBHOOK_URL }}
+
+jobs:
+  percy:
+    name: Test and Capture Screenshots
+    if: ${{ github.event.action != 'labeled' || github.event.label.name == 'run percy tests' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.17
+          cache: npm
+      - name: install dependencies
+        run: npm ci
+      - name: Run Percy Tests
+        run: npm run percy:test
+      - uses: act10ns/slack@v2
+        if: failure()
+        with:
+          status: ${{ job.status }}
+          message: Percy Run Failed {{ env.GITHUB_SERVER_URL }}/{{ env.GITHUB_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}
