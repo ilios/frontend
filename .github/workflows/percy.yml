@@ -35,7 +35,7 @@ jobs:
       - name: install dependencies
         run: npm ci
       - name: Run Percy Tests
-        run: npm run percy:test
+        run: npm run test:percy
       - uses: act10ns/slack@v2
         if: failure()
         with:
