@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { sortBy } from './array-helpers';
+import { deprecate } from '@ember/debug';
 
 class OfferingBlock {
   offerings = [];
@@ -26,14 +27,26 @@ class OfferingDateBlock extends OfferingBlock {
   }
 
   get dateStamp() {
-    return DateTime.fromJSDate(this.date).toFormat('X');
+    return DateTime.fromJSDate(this.date).toUnixInteger();
   }
 
   get dayOfWeek() {
+    deprecate(`Calling dayOfWeek on OfferingDateBlock. Format this from date instead`, false, {
+      id: 'common.date-block-formats',
+      for: 'ilios-common',
+      until: '85',
+      since: '84',
+    });
     return DateTime.fromJSDate(this.date).toFormat('EEEE');
   }
 
   get dayOfMonth() {
+    deprecate(`Calling dayOfMonth on OfferingDateBlock. Format this from date instead`, false, {
+      id: 'common.date-block-formats',
+      for: 'ilios-common',
+      until: '85',
+      since: '84',
+    });
     return DateTime.fromJSDate(this.date).toFormat('MMMM d');
   }
 
@@ -66,7 +79,7 @@ class OfferingTimeBlock extends OfferingBlock {
   }
 
   get isMultiDay() {
-    return this.startDate.toFormat('oooYYYY') !== this.endDate.toFormat('oooYYYY');
+    return !this.startDate.hasSame(this.endDate, 'day');
   }
 
   //pull our times out of the key
@@ -81,18 +94,46 @@ class OfferingTimeBlock extends OfferingBlock {
   }
 
   get startTime() {
+    deprecate(`Calling startTime on OfferingTimeBlock. Format this from startDate instead`, false, {
+      id: 'common.date-block-formats',
+      for: 'ilios-common',
+      until: '85',
+      since: '84',
+    });
     return this.startDate.toFormat('t');
   }
 
   get endTime() {
+    deprecate(`Calling endTime on OfferingTimeBlock. Format this from endDate instead`, false, {
+      id: 'common.date-block-formats',
+      for: 'ilios-common',
+      until: '85',
+      since: '84',
+    });
     return this.endDate.toFormat('t');
   }
 
   get longStartText() {
+    deprecate(
+      `Calling longStartText on OfferingTimeBlock. Format this from startDate instead`,
+      false,
+      {
+        id: 'common.date-block-formats',
+        for: 'ilios-common',
+        until: '85',
+        since: '84',
+      },
+    );
     return this.startDate.toFormat('EEEE MMMM d @ t');
   }
 
   get longEndText() {
+    deprecate(`Calling longEndText on OfferingTimeBlock. Format this from endDate instead`, false, {
+      id: 'common.date-block-formats',
+      for: 'ilios-common',
+      until: '85',
+      since: '84',
+    });
     return this.endDate.toFormat('EEEE MMMM d @ t');
   }
 

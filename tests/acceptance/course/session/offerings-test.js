@@ -5,9 +5,12 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import page from 'ilios-common/page-objects/session';
 import percySnapshot from '@percy/ember';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
+import { setupIntl } from 'ember-intl/test-support';
 
 module('Acceptance | Session - Offerings', function (hooks) {
   setupApplicationTest(hooks);
+  setupIntl(hooks, 'en-us');
+
   hooks.beforeEach(async function () {
     freezeDateAt(
       DateTime.fromObject({
@@ -154,11 +157,26 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(blocks[2].timeBlockOfferings.offerings.length, 1);
     assert.strictEqual(
       blocks[2].multiDayStart,
-      'Starts: ' + DateTime.fromJSDate(this.offering3.startDate).toFormat('cccc MMMM d @ h:mm a'),
+      'Starts: ' +
+        this.intl.formatDate(this.offering3.startDate, {
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long',
+          hour: 'numeric',
+          minute: 'numeric',
+        }),
     );
+
     assert.strictEqual(
       blocks[2].multiDayEnd,
-      'Ends: ' + DateTime.fromJSDate(this.offering3.endDate).toFormat('cccc MMMM d @ h:mm a'),
+      'Ends: ' +
+        this.intl.formatDate(this.offering3.endDate, {
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long',
+          hour: 'numeric',
+          minute: 'numeric',
+        }),
     );
   });
 
@@ -357,8 +375,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasEndTime);
     assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'September 11');
-    assert.strictEqual(block.multiDayStart, 'Starts: Sunday September 11 @ 2:15 AM');
-    assert.strictEqual(block.multiDayEnd, 'Ends: Monday September 12 @ 5:30 PM');
+    assert.strictEqual(block.multiDayStart, 'Starts: Sunday, September 11 at 2:15 AM');
+    assert.strictEqual(block.multiDayEnd, 'Ends: Monday, September 12 at 5:30 PM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
 
     assert.strictEqual(block.timeBlockOfferings.offerings[0].learnerGroups.length, 2);

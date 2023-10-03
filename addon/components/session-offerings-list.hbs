@@ -8,7 +8,7 @@
     <div class="offering-block">
       <div class="offering-block-date">
         <span class="offering-block-date-dayofweek">
-          {{block.dayOfWeek}}
+          {{format-date block.date weekday="long"}}
         </span>
         <span class="offering-block-date-dayofmonth">
           {{format-date block.date month="long" day="numeric"}}
@@ -22,13 +22,13 @@
                 <label class="offering-block-time-time-starts-label">
                   {{t "general.starts"}}:
                 </label>
-                {{offeringTimeBlock.longStartText}}
+                {{format-date offeringTimeBlock.startDate weekday="long" month="long" day="numeric" hour="numeric" minute="numeric"}}
               </div>
               <div class="offering-block-time-time-ends">
                 <label class="offering-block-time-time-ends-label">
                   {{t "general.ends"}}:
                 </label>
-                {{offeringTimeBlock.longEndText}}
+                {{format-date offeringTimeBlock.endDate weekday="long" month="long" day="numeric" hour="numeric" minute="numeric"}}
               </div>
             </div>
           {{else}}
@@ -37,13 +37,13 @@
                 <label class="offering-block-time-time-starttime-label">
                   {{t "general.starts"}}:
                 </label>
-                {{offeringTimeBlock.startTime}}
+                {{format-date offeringTimeBlock.startDate hour="numeric" minute="numeric"}}
               </span>
               <span class="offering-block-time-time-endtime">
                 <label class="offering-block-time-time-endtime-label">
                   {{t "general.ends"}}:
                 </label>
-                {{offeringTimeBlock.endTime}}
+                {{format-date offeringTimeBlock.endDate hour="numeric" minute="numeric"}}
               </span>
             </div>
           {{/if}}
