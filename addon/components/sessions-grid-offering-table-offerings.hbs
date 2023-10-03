@@ -5,7 +5,7 @@
     @firstRow={{eq index 0}}
     @even={{eq (mod index 2) 1}}
     @span={{this.sortedOfferings.length}}
-    @startTime={{@offeringTimeBlock.startTime}}
+    @startTime={{format-date @offeringTimeBlock.startDate hour="numeric" minute="numeric"}}
     @durationHours={{@offeringTimeBlock.durationHours}}
     @durationMinutes={{@offeringTimeBlock.durationMinutes}}
   />

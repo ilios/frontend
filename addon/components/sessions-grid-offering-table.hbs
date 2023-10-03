@@ -32,7 +32,7 @@
           data-test-offering-block-date
         >
           <span class="offering-block-date-dayofweek" data-test-dayofweek>
-            {{block.dayOfWeek}}
+            {{format-date block.date weekday="long"}}
           </span>
           <span class="offering-block-date-dayofmonth" data-test-dayofmonth>
             {{format-date block.date month="long" day="numeric"}}

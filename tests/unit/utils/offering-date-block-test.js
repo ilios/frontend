@@ -31,21 +31,7 @@ module('Unit | Utility | offering-date-block', function (hooks) {
     const key = '2023005';
     const block = new OfferingDateBlock(key);
     const dateStamp = block.dateStamp;
-    assert.strictEqual(dateStamp, DateTime.fromJSDate(new Date(2023, 0, 5)).toFormat('X'));
-  });
-
-  test('OfferingDateBlock::dayOfWeek', function (assert) {
-    const key = '2023005';
-    const block = new OfferingDateBlock(key);
-    const dayOfWeek = block.dayOfWeek;
-    assert.strictEqual(dayOfWeek, 'Thursday');
-  });
-
-  test('OfferingDateBlock::dayOfMonth', function (assert) {
-    const key = '2023005';
-    const block = new OfferingDateBlock(key);
-    const dayOfMonth = block.dayOfMonth;
-    assert.strictEqual(dayOfMonth, 'January 5');
+    assert.strictEqual(dateStamp, DateTime.fromJSDate(new Date(2023, 0, 5)).toUnixInteger());
   });
 
   test('OfferingTimeBlocks::offeringTimeBlocks', function (assert) {
@@ -97,30 +83,6 @@ module('Unit | Utility | offering-date-block', function (hooks) {
     assert.strictEqual(endDate.ordinal, 12);
     assert.strictEqual(endDate.hour, 4);
     assert.strictEqual(endDate.minute, 30);
-  });
-
-  test('OfferingTimeBlock::startTime', function (assert) {
-    const key = '2023005134520240120430';
-    const block = new OfferingTimeBlock(key);
-    assert.strictEqual(block.startTime, '1:45 PM');
-  });
-
-  test('OfferingTimeBlock::endTime', function (assert) {
-    const key = '2023005134520240120430';
-    const block = new OfferingTimeBlock(key);
-    assert.strictEqual(block.endTime, '4:30 AM');
-  });
-
-  test('OfferingTimeBlock::longStartText', function (assert) {
-    const key = '2023005134520240120430';
-    const block = new OfferingTimeBlock(key);
-    assert.strictEqual(block.longStartText, 'Thursday January 5 @ 1:45 PM');
-  });
-
-  test('OfferingTimeBlock::longEndText', function (assert) {
-    const key = '2023005134520240120430';
-    const block = new OfferingTimeBlock(key);
-    assert.strictEqual(block.longEndText, 'Friday January 12 @ 4:30 AM');
   });
 
   test('OfferingTimeBlock::durationHours', function (assert) {
