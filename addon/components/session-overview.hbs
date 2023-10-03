@@ -214,65 +214,63 @@
               />
             {{/unless}}
           {{/if}}
-          {{#if this.features.sessionLinkingAdminUi}}
-            <div class="postrequisite block" data-test-postrequisite>
-              {{#if @editable}}
-                {{#if this.isEditingPostRequisite}}
-                  <Session::PostrequisiteEditor
-                    @session={{@session}}
-                    @close={{toggle "isEditingPostRequisite" this}}
-                  />
-                {{else}}
-                  <label>
-                    {{#if @session.hasPostrequisite}}
-                      <LinkTo @route="session.index" @models={{array this.postrequisiteCourse this.postrequisite}}>
-                        <FaIcon @icon="square-up-right" /> {{t "general.duePriorTo"}}:
-                      </LinkTo>
-                    {{else}}
-                      {{t "general.duePriorTo"}}:
-                    {{/if}}
-                  </label>
-                  <button
-                    class="post-requisite-edit"
-                    type="button"
-                    {{on "click" (toggle "isEditingPostRequisite" this)}}
-                    data-test-edit
-                  >
-                    {{#if @session.hasPostrequisite}}
-                      {{@session.postrequisite.title}}
-                    {{else}}
-                      {{t "general.none"}}
-                    {{/if}}
-                  </button>
-                {{/if}}
+          <div class="postrequisite block" data-test-postrequisite>
+            {{#if @editable}}
+              {{#if this.isEditingPostRequisite}}
+                <Session::PostrequisiteEditor
+                  @session={{@session}}
+                  @close={{toggle "isEditingPostRequisite" this}}
+                />
               {{else}}
                 <label>
                   {{#if @session.hasPostrequisite}}
                     <LinkTo @route="session.index" @models={{array this.postrequisiteCourse this.postrequisite}}>
                       <FaIcon @icon="square-up-right" /> {{t "general.duePriorTo"}}:
-                    </LinkTo>>
+                    </LinkTo>
                   {{else}}
                     {{t "general.duePriorTo"}}:
                   {{/if}}
                 </label>
-                {{#if @session.hasPostrequisite}}
-                  {{@session.postrequisite.title}}
-                {{else}}
-                  {{t "general.none"}}
-                {{/if}}
+                <button
+                  class="post-requisite-edit"
+                  type="button"
+                  {{on "click" (toggle "isEditingPostRequisite" this)}}
+                  data-test-edit
+                >
+                  {{#if @session.hasPostrequisite}}
+                    {{@session.postrequisite.title}}
+                  {{else}}
+                    {{t "general.none"}}
+                  {{/if}}
+                </button>
               {{/if}}
-            </div>
-            <div class="prerequisites block" data-test-prerequisites>
-              <label>{{t "general.prerequisites"}}:</label>
-              {{#if @session.hasPrerequisites}}
-                <span>
-                  {{#each this.prerequisites as |prerequisite index|~}}<LinkTo @route="session.index" @models={{array prerequisite.course prerequisite}}><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#unless (eq index (sub this.prerequisites.length 1))}}, {{/unless}}{{~/each}}
-                </span>
+            {{else}}
+              <label>
+                {{#if @session.hasPostrequisite}}
+                  <LinkTo @route="session.index" @models={{array this.postrequisiteCourse this.postrequisite}}>
+                    <FaIcon @icon="square-up-right" /> {{t "general.duePriorTo"}}:
+                  </LinkTo>>
+                {{else}}
+                  {{t "general.duePriorTo"}}:
+                {{/if}}
+              </label>
+              {{#if @session.hasPostrequisite}}
+                {{@session.postrequisite.title}}
               {{else}}
                 {{t "general.none"}}
               {{/if}}
-            </div>
-          {{/if}}
+            {{/if}}
+          </div>
+          <div class="prerequisites block" data-test-prerequisites>
+            <label>{{t "general.prerequisites"}}:</label>
+            {{#if @session.hasPrerequisites}}
+              <span>
+                {{#each this.prerequisites as |prerequisite index|~}}<LinkTo @route="session.index" @models={{array prerequisite.course prerequisite}}><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#unless (eq index (sub this.prerequisites.length 1))}}, {{/unless}}{{~/each}}
+              </span>
+            {{else}}
+              {{t "general.none"}}
+            {{/if}}
+          </div>
           <hr>
           <div class="sessiondescription" data-test-description>
             <label>{{t "general.description"}}:</label>
