@@ -33,7 +33,7 @@ jobs:
 
             [1]: https://github.com/peter-evans/create-pull-request
           branch: auto-update-dependencies
-          labels: dependencies,"run percy tests"
+          labels: dependencies,run percy tests
     - name: Enable Pull Request Automerge
       if: steps.cpr.outputs.pull-request-operation == 'created'
       run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
