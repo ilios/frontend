@@ -1,8 +1,8 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import page from 'ilios/tests/pages/reports-subjects';
-import reportPage from 'ilios/tests/pages/reports-subject';
+import page from 'ilios/tests/pages/reports';
+import subjectReportPage from 'ilios/tests/pages/reports-subject';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import percySnapshot from '@percy/ember';
@@ -64,40 +64,40 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
   });
 
-  test('visiting /reports/subjects', async function (assert) {
+  test('visiting /reports', async function (assert) {
     await page.visit();
-    assert.strictEqual(currentRouteName(), 'reports.subjects');
+    assert.strictEqual(currentRouteName(), 'reports.index');
   });
 
   test('shows reports', async function (assert) {
     assert.expect(3);
     await page.visit();
     await percySnapshot(assert);
-    assert.strictEqual(page.reports.reports.length, 2);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'my report 0');
+    assert.strictEqual(page.subjectReports.reports.length, 2);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'my report 0');
   });
 
   test('create new report', async function (assert) {
     assert.expect(12);
     await page.visit();
-    assert.strictEqual(page.reports.reports.length, 2);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'my report 0');
-    await page.reports.newReportFormToggle.click();
-    await page.reports.newReport.title.set('aardvark');
-    await page.reports.newReport.schools.choose('1');
-    await page.reports.newReport.subjects.choose('session');
-    await page.reports.newReport.objects.choose('course');
-    await page.reports.newReport.course.input('cour');
-    await page.reports.newReport.course.results[1].click();
+    assert.strictEqual(page.subjectReports.reports.length, 2);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'my report 0');
+    await page.subjectReports.newReportFormToggle.click();
+    await page.subjectReports.newReport.title.set('aardvark');
+    await page.subjectReports.newReport.schools.choose('1');
+    await page.subjectReports.newReport.subjects.choose('session');
+    await page.subjectReports.newReport.objects.choose('course');
+    await page.subjectReports.newReport.course.input('cour');
+    await page.subjectReports.newReport.course.results[1].click();
     await percySnapshot(assert);
-    await page.reports.newReport.save();
+    await page.subjectReports.newReport.save();
     await percySnapshot(assert);
-    assert.strictEqual(page.reports.reports.length, 3);
-    assert.strictEqual(page.reports.reports[0].title, 'aardvark');
-    assert.strictEqual(page.reports.reports[1].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[2].title, 'my report 0');
+    assert.strictEqual(page.subjectReports.reports.length, 3);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'aardvark');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[2].title, 'my report 0');
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
       const course = db.courses[0];
@@ -115,33 +115,33 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
         },
       };
     });
-    await page.reports.reports[0].select();
+    await page.subjectReports.reports[0].select();
     await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(reportPage.report.title.text, 'aardvark');
-    assert.strictEqual(reportPage.report.results.length, 1);
-    assert.strictEqual(reportPage.report.results[0].text, 'course 0: session 0');
+    assert.strictEqual(subjectReportPage.report.title.text, 'aardvark');
+    assert.strictEqual(subjectReportPage.report.results.length, 1);
+    assert.strictEqual(subjectReportPage.report.results[0].text, 'course 0: session 0');
   });
 
   test('filter session by year in new report form', async function (assert) {
     assert.expect(13);
     await page.visit();
-    assert.strictEqual(page.reports.reports.length, 2);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'my report 0');
-    await page.reports.newReportFormToggle.click();
-    await page.reports.newReport.schools.choose('1');
-    await page.reports.newReport.subjects.choose('term');
-    await page.reports.newReport.objects.choose('session');
+    assert.strictEqual(page.subjectReports.reports.length, 2);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'my report 0');
+    await page.subjectReports.newReportFormToggle.click();
+    await page.subjectReports.newReport.schools.choose('1');
+    await page.subjectReports.newReport.subjects.choose('term');
+    await page.subjectReports.newReport.objects.choose('session');
 
-    await page.reports.newReport.session.input('session');
-    assert.strictEqual(page.reports.newReport.session.results.length, 2);
-    await page.reports.newReport.session.results[0].click();
-    await page.reports.newReport.save();
-    assert.strictEqual(page.reports.reports.length, 3);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'All Terms for session 1 in school 0');
-    assert.strictEqual(page.reports.reports[2].title, 'my report 0');
+    await page.subjectReports.newReport.session.input('session');
+    assert.strictEqual(page.subjectReports.newReport.session.results.length, 2);
+    await page.subjectReports.newReport.session.results[0].click();
+    await page.subjectReports.newReport.save();
+    assert.strictEqual(page.subjectReports.reports.length, 3);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'All Terms for session 1 in school 0');
+    assert.strictEqual(page.subjectReports.reports[2].title, 'my report 0');
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
       const { id, title } = db.terms[0];
@@ -157,31 +157,34 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
         },
       };
     });
-    await page.reports.reports[1].select();
+    await page.subjectReports.reports[1].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(reportPage.report.title.text, 'All Terms for session 1 in school 0');
-    assert.strictEqual(reportPage.report.results.length, 1);
-    assert.strictEqual(reportPage.report.results[0].text, 'Vocabulary 1 > term 0');
+    assert.strictEqual(subjectReportPage.report.title.text, 'All Terms for session 1 in school 0');
+    assert.strictEqual(subjectReportPage.report.results.length, 1);
+    assert.strictEqual(subjectReportPage.report.results[0].text, 'Vocabulary 1 > term 0');
   });
 
   test('get all courses associated with mesh term #3419', async function (assert) {
     assert.expect(14);
     await page.visit();
-    assert.strictEqual(page.reports.reports.length, 2);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'my report 0');
-    await page.reports.newReportFormToggle.click();
-    await page.reports.newReport.schools.choose('1');
-    await page.reports.newReport.subjects.choose('course');
-    await page.reports.newReport.objects.choose('mesh term');
-    await page.reports.newReport.meshTerm.meshManager.search.set('descriptor 0');
-    assert.strictEqual(page.reports.newReport.meshTerm.meshManager.searchResults.length, 1);
-    await page.reports.newReport.meshTerm.meshManager.searchResults[0].add();
-    await page.reports.newReport.save();
-    assert.strictEqual(page.reports.reports.length, 3);
-    assert.strictEqual(page.reports.reports[0].title, 'All Courses for descriptor 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[2].title, 'my report 0');
+    assert.strictEqual(page.subjectReports.reports.length, 2);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'my report 0');
+    await page.subjectReports.newReportFormToggle.click();
+    await page.subjectReports.newReport.schools.choose('1');
+    await page.subjectReports.newReport.subjects.choose('course');
+    await page.subjectReports.newReport.objects.choose('mesh term');
+    await page.subjectReports.newReport.meshTerm.meshManager.search.set('descriptor 0');
+    assert.strictEqual(page.subjectReports.newReport.meshTerm.meshManager.searchResults.length, 1);
+    await page.subjectReports.newReport.meshTerm.meshManager.searchResults[0].add();
+    await page.subjectReports.newReport.save();
+    assert.strictEqual(page.subjectReports.reports.length, 3);
+    assert.strictEqual(
+      page.subjectReports.reports[0].title,
+      'All Courses for descriptor 0 in school 0',
+    );
+    assert.strictEqual(page.subjectReports.reports[1].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[2].title, 'my report 0');
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
 
@@ -197,47 +200,53 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
         },
       };
     });
-    await page.reports.reports[0].select();
+    await page.subjectReports.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(reportPage.report.title.text, 'All Courses for descriptor 0 in school 0');
-    assert.strictEqual(reportPage.report.results.length, 2);
-    assert.strictEqual(reportPage.report.results[0].text, '2015 course 0 (Theoretical Phys Ed)');
-    assert.strictEqual(reportPage.report.results[1].text, '2016 course 1');
+    assert.strictEqual(
+      subjectReportPage.report.title.text,
+      'All Courses for descriptor 0 in school 0',
+    );
+    assert.strictEqual(subjectReportPage.report.results.length, 2);
+    assert.strictEqual(
+      subjectReportPage.report.results[0].text,
+      '2015 course 0 (Theoretical Phys Ed)',
+    );
+    assert.strictEqual(subjectReportPage.report.results[1].text, '2016 course 1');
   });
 
   test('Prepositional object resets when a new type is selected', async function (assert) {
     await page.visit();
-    assert.strictEqual(page.reports.reports.length, 2);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'my report 0');
-    await page.reports.newReportFormToggle.click();
-    await page.reports.newReport.schools.choose('1');
-    await page.reports.newReport.subjects.choose('term');
-    await page.reports.newReport.objects.choose('program year');
-    await page.reports.newReport.prepositionalObjects.choose('2');
-    await page.reports.newReport.objects.choose('program');
+    assert.strictEqual(page.subjectReports.reports.length, 2);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'my report 0');
+    await page.subjectReports.newReportFormToggle.click();
+    await page.subjectReports.newReport.schools.choose('1');
+    await page.subjectReports.newReport.subjects.choose('term');
+    await page.subjectReports.newReport.objects.choose('program year');
+    await page.subjectReports.newReport.prepositionalObjects.choose('2');
+    await page.subjectReports.newReport.objects.choose('program');
 
-    await page.reports.newReport.save();
-    assert.strictEqual(page.reports.reports.length, 3);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'All Terms for program 0 in school 0');
-    assert.strictEqual(page.reports.reports[2].title, 'my report 0');
+    await page.subjectReports.newReport.save();
+    assert.strictEqual(page.subjectReports.reports.length, 3);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'All Terms for program 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[2].title, 'my report 0');
   });
 
   test('course external Id in report', async function (assert) {
     assert.expect(13);
     await page.visit();
-    assert.strictEqual(page.reports.reports.length, 2);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'my report 0');
-    await page.reports.newReportFormToggle.click();
-    await page.reports.newReport.schools.choose('All Schools');
-    await page.reports.newReport.subjects.choose('course');
-    await page.reports.newReport.save();
-    assert.strictEqual(page.reports.reports.length, 3);
-    assert.strictEqual(page.reports.reports[0].title, 'All Courses in All Schools');
-    assert.strictEqual(page.reports.reports[1].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[2].title, 'my report 0');
+    assert.strictEqual(page.subjectReports.reports.length, 2);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'my report 0');
+    await page.subjectReports.newReportFormToggle.click();
+    await page.subjectReports.newReport.schools.choose('All Schools');
+    await page.subjectReports.newReport.subjects.choose('course');
+    await page.subjectReports.newReport.save();
+    assert.strictEqual(page.subjectReports.reports.length, 3);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'All Courses in All Schools');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[2].title, 'my report 0');
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
 
@@ -250,21 +259,24 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
         },
       };
     });
-    await page.reports.reports[0].select();
+    await page.subjectReports.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(reportPage.report.title.text, 'All Courses in All Schools');
-    assert.strictEqual(reportPage.report.results.length, 2);
-    assert.strictEqual(reportPage.report.results[0].text, '2015 course 0 (Theoretical Phys Ed)');
-    assert.strictEqual(reportPage.report.results[1].text, '2016 course 1');
+    assert.strictEqual(subjectReportPage.report.title.text, 'All Courses in All Schools');
+    assert.strictEqual(subjectReportPage.report.results.length, 2);
+    assert.strictEqual(
+      subjectReportPage.report.results[0].text,
+      '2015 course 0 (Theoretical Phys Ed)',
+    );
+    assert.strictEqual(subjectReportPage.report.results[1].text, '2016 course 1');
   });
 
   test('delete report', async function (assert) {
     await page.visit();
-    assert.strictEqual(page.reports.reports.length, 2);
-    assert.strictEqual(page.reports.reports[0].title, 'All Sessions for term 0 in school 0');
-    assert.strictEqual(page.reports.reports[1].title, 'my report 0');
-    await page.reports.reports[0].remove();
-    assert.strictEqual(page.reports.reports.length, 1);
-    assert.strictEqual(page.reports.reports[0].title, 'my report 0');
+    assert.strictEqual(page.subjectReports.reports.length, 2);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.subjectReports.reports[1].title, 'my report 0');
+    await page.subjectReports.reports[0].remove();
+    assert.strictEqual(page.subjectReports.reports.length, 1);
+    assert.strictEqual(page.subjectReports.reports[0].title, 'my report 0');
   });
 });

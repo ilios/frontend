@@ -92,6 +92,5 @@ Router.map(function () {
   this.route('search');
   this.route('reports', function () {
     this.route('subject', { path: 'subjects/:report_id' });
-    this.route('subjects');
   });
 });
