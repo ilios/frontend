@@ -90,7 +90,6 @@ Router.map(function () {
     path: 'data/programyears/:program_year_id/objectives',
   });
   this.route('search');
-  this.route('reports', function () {
-    this.route('subject', { path: 'subjects/:report_id' });
-  });
+  this.route('reports');
+  this.route('subject-report', { path: 'reports/subjects/:report_id' });
 });

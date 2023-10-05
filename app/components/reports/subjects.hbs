@@ -4,9 +4,9 @@
   ...attributes
 >
   <div class="header">
-    <h2 id="title" class="title" data-test-title>
+    <h3 id="title" class="title" data-test-title>
         {{t "general.subjectReports"}}
-    </h2>
+    </h3>
     <div class="actions">
         <ExpandCollapseButton
           @value={{this.editorOn}}
@@ -24,7 +24,7 @@
       <ul class="saved-reports" data-test-saved-reports>
         {{#each (sort-by "title" this.reports) as |obj|}}
           <li>
-            <LinkTo @route="reports.subject" @model={{obj.report}} @query={{hash reportYear=null}} data-test-report-title>
+            <LinkTo @route="subject-report" @model={{obj.report}} @query={{hash reportYear=null}} data-test-report-title>
               {{obj.title}}
             </LinkTo>
             <button
