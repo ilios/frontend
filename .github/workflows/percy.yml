@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ci-${{ github.head_ref || github.ref }}
+  group: percy-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 env:
