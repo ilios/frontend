@@ -21,6 +21,6 @@ Router.map(function () {
       this.route('activities');
       this.route('materials');
       this.route('calendar');
-    }
+    },
   );
 });
