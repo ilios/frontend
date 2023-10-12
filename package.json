@@ -78,7 +78,7 @@
     "prettier": "^3.0.3",
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
-    "sass": "^1.69.1",
+    "sass": "^1.69.3",
     "stylelint": "^15.10.3",
     "stylelint-config-recommended-scss": "^13.0.0",
     "stylelint-prettier": "^4.0.2",
