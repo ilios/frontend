@@ -72,6 +72,12 @@ Make use of the many generators for code, try `ember help generate` for more det
 * `npm build` (development)
 * `npm build --environment production` (production)
 
+## Our Contributors ⭐
+
+<a href="https://github.com/ilios/frontend/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ilios/frontend" />
+</a>
+
 ## Further Reading / Useful Links
 
 * [ember.js](https://emberjs.com/)
