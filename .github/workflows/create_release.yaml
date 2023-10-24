@@ -22,7 +22,7 @@ jobs:
         NEW_TAG=${GITHUB_REF#refs/tags/}
         echo ${NEW_TAG}
         echo "new_tag=${NEW_TAG}" >> $GITHUB_ENV
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
     - name: Generate Release Notes
       run: |
         NOTES=$(npx generate-github-release-notes ilios frontend ${{ env.previous_tag }} ${{env.new_tag}})
