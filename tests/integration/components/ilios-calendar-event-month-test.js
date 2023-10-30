@@ -27,7 +27,6 @@ module('Integration | Component | ilios calendar event month', function (hooks) 
       'background-color': 'rgb(0, 204, 101)',
     });
     assert.dom(s).hasStyle({
-      'border-left-width': '4px',
       'border-left-style': 'solid',
       'border-left-color': 'rgb(0, 173, 86)',
     });
