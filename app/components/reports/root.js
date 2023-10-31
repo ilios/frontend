@@ -45,6 +45,10 @@ export default class ReportsRootComponent extends Component {
     );
   }
 
+  get reportsCount() {
+    return this.user?.hasMany('reports').ids().length ?? 0;
+  }
+
   get decoratedReports() {
     if (!this.subjectReportObjects?.isResolved) {
       return [];

@@ -43,13 +43,17 @@
       {{/if}}
     </section>
     <div class="list">
-      <Reports::List
-        @decoratedReports={{this.filteredReports}}
-        @query={{@titleFilter}}
-        @sortBy={{@sortReportsBy}}
-        @setSortBy={{@setSortReportsBy}}
-        @remove={{perform this.removeReport}}
-      />
+      {{#if (and this.subjectReportObjects this.subjectReportObjects.isResolved)}}
+        <Reports::List
+          @decoratedReports={{this.filteredReports}}
+          @query={{@titleFilter}}
+          @sortBy={{@sortReportsBy}}
+          @setSortBy={{@setSortReportsBy}}
+          @remove={{perform this.removeReport}}
+        />
+      {{else}}
+        <Reports::ListLoading @count={{this.reportsCount}} />
+      {{/if}}
     </div>
   </section>
 </section>
