@@ -310,8 +310,7 @@ export default class ReportsNewSubjectComponent extends Component {
       prepositionalObjectTableRowId: this.currentPrepositionalObjectId,
       school: this.currentSchool,
     });
-    yield this.args.save.perform(report);
-    this.args.close();
+    yield this.args.save(report);
   }
 
   @action

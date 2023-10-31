@@ -297,10 +297,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       }
     }
     this.owner.register('service:current-user', CurrentUserMock);
-    this.set('save', {
-      perform(report) {
-        assert.strictEqual(report.title, 'lorem ipsum');
-      },
+    this.set('save', (report) => {
+      assert.strictEqual(report.title, 'lorem ipsum');
     });
     await render(hbs`<Reports::NewSubject @save={{this.save}} @close={{(noop)}} />`);
     await component.title.set('lorem ipsum');
