@@ -32,11 +32,11 @@
           @close={{set this.showNewReportForm false}}
         />
       {{/if}}
-      {{#if this.newSubjectReport}}
+      {{#if this.newReport}}
         <div class="saved-result" data-test-newly-saved-report>
-          <LinkTo @route="subject-report" @model={{this.newSubjectReport.report}} @query={{hash reportYear=null}} data-test-report-title>
+          <LinkTo @route="subject-report" @model={{this.newReport.report}} @query={{hash reportYear=null}} data-test-report-title>
             <FaIcon @icon="square-up-right" />
-            {{this.newSubjectReport.title}}
+            {{this.newReport.title}}
           </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>

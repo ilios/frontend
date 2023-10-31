@@ -79,11 +79,12 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('create new report', async function (assert) {
-    assert.expect(12);
+    assert.expect(15);
     await page.visit();
     assert.strictEqual(page.root.list.reports.length, 2);
     assert.strictEqual(page.root.list.reports[0].title, 'All Sessions for term 0 in school 0');
     assert.strictEqual(page.root.list.reports[1].title, 'my report 0');
+    assert.ok(page.root.newReportLinkIsHidden);
     await page.root.toggleNewSubjectReportForm();
     await page.root.newSubject.title.set('aardvark');
     await page.root.newSubject.schools.choose('1');
@@ -98,6 +99,9 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.root.list.reports[0].title, 'aardvark');
     assert.strictEqual(page.root.list.reports[1].title, 'All Sessions for term 0 in school 0');
     assert.strictEqual(page.root.list.reports[2].title, 'my report 0');
+    assert.notOk(page.root.newReportLinkIsHidden);
+    assert.strictEqual(page.root.newReportLink, 'aardvark');
+
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
       const course = db.courses[0];
@@ -121,6 +125,20 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(subjectReportPage.report.title.text, 'aardvark');
     assert.strictEqual(subjectReportPage.report.results.length, 1);
     assert.strictEqual(subjectReportPage.report.results[0].text, 'course 0: session 0');
+  });
+
+  test('create new report with empty title', async function (assert) {
+    await page.visit();
+    assert.strictEqual(page.root.list.reports.length, 2);
+    assert.ok(page.root.newReportLinkIsHidden);
+    await page.root.toggleNewSubjectReportForm();
+    await page.root.newSubject.schools.choose('1');
+    await page.root.newSubject.subjects.choose('session');
+    await page.root.newSubject.save();
+    assert.notOk(page.root.newReportLinkIsHidden);
+    assert.strictEqual(page.root.list.reports.length, 3);
+    assert.strictEqual(page.root.list.reports[1].title, 'All Sessions in school 0');
+    assert.strictEqual(page.root.newReportLink, 'All Sessions in school 0');
   });
 
   test('filter session by year in new report form', async function (assert) {

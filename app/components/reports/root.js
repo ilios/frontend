@@ -54,8 +54,8 @@ export default class ReportsRootComponent extends Component {
   }
 
   get newReport() {
-    if (this.newSubjectReport && this.subjectReportTitles.isResolved) {
-      return this.subjectReportTitles.value.find(({ report }) => report === this.newSubjectReport);
+    if (this.newSubjectReport) {
+      return this.decoratedReports.find(({ report }) => report === this.newSubjectReport);
     }
 
     return false;
