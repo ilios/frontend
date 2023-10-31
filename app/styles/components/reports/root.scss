@@ -7,7 +7,7 @@
   .filters {
     @include m.main-list-filters;
 
-    .titlefilter {
+    .title-filter {
       @include m.main-list-filter;
     }
   }
