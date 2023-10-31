@@ -111,7 +111,7 @@
     "ilios-common": "^84.0.0",
     "loader.js": "^4.7.0",
     "luxon": "^3.4.3",
-    "miragejs": "^0.1.47",
+    "miragejs": "^0.1.48",
     "mockdate": "^3.0.5",
     "moment-timezone": "^0.5.42",
     "pad": "^3.2.0",
