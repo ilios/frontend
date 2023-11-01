@@ -32,13 +32,6 @@ module.exports = {
         ],
       },
     },
-    '@embroider/macros': {
-      setConfig: {
-        '@ember-data/store': {
-          polyfillUUID: true,
-        },
-      },
-    },
   },
 
   included: function () {
