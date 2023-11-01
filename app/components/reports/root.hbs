@@ -1,0 +1,59 @@
+<section class="reports-root" data-test-reports-root>
+  <div class="filters">
+    <div class="title-filter">
+      <input
+        value={{@titleFilter}}
+        {{on "input" (pick "target.value" @changeTitleFilter)}}
+        aria-label={{t "general.filterByTitle"}}
+        placeholder={{t "general.filterByTitle"}}
+        data-test-title-filter
+      >
+    </div>
+  </div>
+  <section class="reports">
+    <div class="header">
+      <h2 data-test-courses-header-title class="title">
+        {{t "general.reports"}}
+        ({{this.filteredReports.length}})
+      </h2>
+      <div class="actions">
+        <ExpandCollapseButton
+          @value={{this.showNewReportForm}}
+          @action={{set this.showNewReportForm (not this.showNewReportForm)}}
+          @expandButtonLabel={{t "general.newReport"}}
+          @collapseButtonLabel={{t "general.close"}}
+        />
+      </div>
+    </div>
+    <section class="new">
+      {{#if this.showNewReportForm}}
+        <Reports::NewSubject
+          @save={{perform this.saveNewSubjectReport}}
+          @close={{set this.showNewReportForm false}}
+        />
+      {{/if}}
+      {{#if this.newReport}}
+        <div class="saved-result" data-test-newly-saved-report>
+          <LinkTo @route="subject-report" @model={{this.newReport.report}} @query={{hash reportYear=null}} data-test-report-title>
+            <FaIcon @icon="square-up-right" />
+            {{this.newReport.title}}
+          </LinkTo>
+          {{t "general.savedSuccessfully"}}
+        </div>
+      {{/if}}
+    </section>
+    <div class="list">
+      {{#if (and this.subjectReportObjects this.subjectReportObjects.isResolved)}}
+        <Reports::List
+          @decoratedReports={{this.filteredReports}}
+          @query={{@titleFilter}}
+          @sortBy={{@sortReportsBy}}
+          @setSortBy={{@setSortReportsBy}}
+          @remove={{perform this.removeReport}}
+        />
+      {{else}}
+        <Reports::ListLoading @count={{this.reportsCount}} />
+      {{/if}}
+    </div>
+  </section>
+</section>

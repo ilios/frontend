@@ -1,0 +1,23 @@
+<tr
+  class="reports-list-item {{if (includes @decoratedReport.report.id @reportsForRemovalConfirmation) "confirm-removal"}}"
+  data-test-reports-list-item
+>
+  <td class="text-left" data-test-report-title>
+    {{#if (eq @decoratedReport.type "subject")}}
+      <LinkTo @route="subject-report" @model={{@decoratedReport.report}}>
+        {{@decoratedReport.title}}
+      </LinkTo>
+    {{/if}}
+  </td>
+  <td class="text-right" data-test-status>
+    <button
+      type="button"
+      class="link-button"
+      title={{t "general.delete"}}
+      {{on "click" (fn @confirmRemoval @decoratedReport.report)}}
+      data-test-remove
+    >
+      <FaIcon @icon="trash" class="enabled" />
+    </button>
+  </td>
+</tr>

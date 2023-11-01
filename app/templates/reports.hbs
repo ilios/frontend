@@ -1,2 +1,7 @@
-{{outlet}}
-
+{{page-title (t "general.reports")}}
+<Reports::Root
+  @sortReportsBy={{this.sortReportsBy}}
+  @setSortReportsBy={{set this.sortReportsBy}}
+  @titleFilter={{this.titleFilter}}
+  @changeTitleFilter={{perform this.changeTitleFilter}}
+/>

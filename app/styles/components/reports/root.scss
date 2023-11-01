@@ -1,0 +1,38 @@
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
+
+.reports-root {
+  @include cm.main-section;
+
+  .filters {
+    @include m.main-list-filters;
+
+    .title-filter {
+      @include m.main-list-filter;
+    }
+  }
+
+  .new .saved-result {
+    @include m.main-list-saved-new;
+  }
+
+  .reports {
+    @include m.main-list-box;
+
+    .header {
+      @include m.main-list-box-header;
+
+      h2 {
+        @include cm.ilios-heading;
+      }
+
+      .title {
+        @include m.main-list-box-header-title;
+      }
+
+      .actions {
+        @include m.main-list-box-header-actions;
+      }
+    }
+  }
+}
