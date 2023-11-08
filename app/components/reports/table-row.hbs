@@ -1,6 +1,6 @@
 <tr
-  class="reports-list-item {{if (includes @decoratedReport.report.id @reportsForRemovalConfirmation) "confirm-removal"}}"
-  data-test-reports-list-item
+  class="reports-table-row {{if (includes @decoratedReport.report.id @reportsForRemovalConfirmation) "confirm-removal"}}"
+  data-test-reports-table-row
 >
   <td class="text-left" data-test-report-title>
     {{#if (eq @decoratedReport.type "subject")}}

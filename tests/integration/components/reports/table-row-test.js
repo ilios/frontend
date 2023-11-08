@@ -5,10 +5,10 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupAuthentication } from 'ilios-common';
-import { component } from 'ilios/tests/pages/components/reports/list-item';
+import { component } from 'ilios/tests/pages/components/reports/table-row';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | reports/list-item', function (hooks) {
+module('Integration | Component | reports/table-row', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -31,7 +31,7 @@ module('Integration | Component | reports/list-item', function (hooks) {
       type: 'subject',
     });
 
-    await render(hbs`<Reports::ListItem
+    await render(hbs`<Reports::TableRow
       @decoratedReport={{this.decoratedReport}}
       @confirmRemoval={{(noop)}}
     />`);

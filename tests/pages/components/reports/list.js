@@ -1,22 +1,18 @@
-import { clickable, collection, create, hasClass } from 'ember-cli-page-object';
-import listItem from './list-item';
+import { clickable, create, fillable, isHidden, text } from 'ember-cli-page-object';
+import { hasFocus } from 'ilios-common';
+import table from './table';
+import newSubject from './new-subject';
 
 const definition = {
-  scope: '[data-test-reports-list]',
-  reports: collection('[data-test-reports-list-item]', listItem),
-  emptyListRow: {
-    scope: '[data-test-empty-list]',
-  },
-  sortByTitle: clickable('button', { scope: '[data-test-reports-headings] th:nth-of-type(1)' }),
-  confirmRemoval: clickable('[data-test-reports] .confirm-removal button.remove'),
-  isSortedByTitleAscending: hasClass(
-    'fa-arrow-down-a-z',
-    '[data-test-course-headings] th:eq(0) svg',
-  ),
-  isSortedByTitleDescending: hasClass(
-    'fa-arrow-down-z-a',
-    '[data-test-course-headings] th:eq(0) svg',
-  ),
+  filterByTitle: fillable('[data-test-title-filter]'),
+  headerTitle: text('[data-test-reports-header-title]'),
+  toggleNewSubjectReportForm: clickable('[data-test-expand-collapse-button] button'),
+  newSubject,
+  newReportLink: text('[data-test-newly-saved-report] a'),
+  newReportLinkIsHidden: isHidden('[data-test-newly-saved-report] a'),
+  visitNewReport: clickable('[data-test-newly-saved-report] a'),
+  filterHasFocus: hasFocus('[data-test-title-filter]'),
+  table,
 };
 
 export default definition;

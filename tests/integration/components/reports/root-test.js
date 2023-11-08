@@ -36,9 +36,9 @@ module('Integration | Component | reports/root', function (hooks) {
       @changeTitleFilter={{(noop)}}
     />`);
 
-    assert.strictEqual(component.list.reports.length, 2);
-    assert.strictEqual(component.list.reports[0].title, 'All Courses in All Schools');
-    assert.strictEqual(component.list.reports[1].title, 'All Sessions in All Schools');
+    assert.strictEqual(component.list.table.reports.length, 2);
+    assert.strictEqual(component.list.table.reports[0].title, 'All Courses in All Schools');
+    assert.strictEqual(component.list.table.reports[1].title, 'All Sessions in All Schools');
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
@@ -51,7 +51,7 @@ module('Integration | Component | reports/root', function (hooks) {
       @titleFilter=""
       @changeTitleFilter={{(noop)}}
     />`);
-    assert.ok(component.list.emptyListRow.isVisible);
+    assert.ok(component.list.table.emptyListRow.isVisible);
     a11yAudit(this.element);
   });
 
@@ -62,10 +62,10 @@ module('Integration | Component | reports/root', function (hooks) {
       @titleFilter=""
       @changeTitleFilter={{(noop)}}
     />`);
-    assert.notOk(component.newSubject.isVisible);
-    await component.toggleNewSubjectReportForm();
-    assert.ok(component.newSubject.isVisible);
-    await component.toggleNewSubjectReportForm();
-    assert.notOk(component.newSubject.isVisible);
+    assert.notOk(component.list.newSubject.isVisible);
+    await component.list.toggleNewSubjectReportForm();
+    assert.ok(component.list.newSubject.isVisible);
+    await component.list.toggleNewSubjectReportForm();
+    assert.notOk(component.list.newSubject.isVisible);
   });
 });
