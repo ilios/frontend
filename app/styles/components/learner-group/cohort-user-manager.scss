@@ -8,20 +8,13 @@
   border-top: 1px dotted c.$orange;
 
   .learner-group-cohort-user-manager-header {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    @include cm.detail-container-header;
 
-    @include cm.for-laptop-and-up {
-      align-items: flex-start;
-      flex-direction: row;
-      justify-content: space-around;
+    .title {
+      @include cm.detail-container-title;
     }
 
     .actions {
-      text-align: right;
-
       input {
         @include cm.ilios-input;
         width: 15rem;
