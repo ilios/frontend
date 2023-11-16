@@ -68,27 +68,15 @@
   }
 
   .subgroups {
-    @include m.main-list-box;
-
     .header {
-      @include m.main-list-box-header;
-
-      h3 {
-        @include cm.ilios-heading-h3;
-      }
+      @include cm.detail-container-header;
 
       .title {
-        @include m.main-list-box-header-title;
-      }
-
-      .actions {
-        @include m.main-list-box-header-actions;
+        @include cm.detail-container-title;
       }
     }
 
     .list {
-      @include m.main-list-box-table;
-
       .confirm-copy,
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd) {
