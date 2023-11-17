@@ -33,7 +33,7 @@ module('Acceptance | Session - Leadership', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
     await percySnapshot(assert);
 
-    assert.strictEqual(page.details.leadershipCollapsed.title, 'Session Leadership');
+    assert.strictEqual(page.details.leadershipCollapsed.title, 'Session Leadership (3)');
     assert.strictEqual(page.details.leadershipCollapsed.headers.length, 1);
     assert.strictEqual(page.details.leadershipCollapsed.headers[0].title, 'Summary');
 

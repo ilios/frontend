@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { component } from 'ilios-common/page-objects/components/leadership-collapsed';
 
 module('Integration | Component | leadership collapsed', function (hooks) {
   setupRenderingTest(hooks);
@@ -12,26 +13,26 @@ module('Integration | Component | leadership collapsed', function (hooks) {
     this.set('title', 'Test Title');
     this.set('directorsCount', 3);
     this.set('administratorsCount', 1);
-    this.set('click', () => {});
+    this.set('studentAdvisorsCount', 4);
     await render(hbs`<LeadershipCollapsed
       @title={{this.title}}
-      @directorsCount={{this.directorsCount}}
-      @administratorsCount={{this.administratorsCount}}
-      @expand={{this.click}}
       @showAdministrators={{true}}
       @showDirectors={{true}}
+      @showStudentAdvisors={{true}}
+      @directorsCount={{this.directorsCount}}
+      @administratorsCount={{this.administratorsCount}}
+      @studentAdvisorsCount={{this.studentAdvisorsCount}}
+      @expand={{(noop)}}
     />
 `);
-    const title = '.title';
-    const table = 'table';
-    const directorsRow = `${table} tbody tr:nth-of-type(1)`;
-    const administratorsRow = `${table} tbody tr:nth-of-type(2)`;
-    const directors = `${directorsRow} td:nth-of-type(2)`;
-    const administrators = `${administratorsRow} td:nth-of-type(2)`;
-
-    assert.dom(title).hasText('Test Title');
-    assert.dom(directors).hasText('There are 3 directors');
-    assert.dom(administrators).hasText('There is 1 administrator');
+    assert.strictEqual(component.title, 'Test Title (8)');
+    assert.strictEqual(component.summary.length, 3);
+    assert.strictEqual(component.summary[0].name, 'Directors');
+    assert.strictEqual(component.summary[0].value, 'There are 3 directors');
+    assert.strictEqual(component.summary[1].name, 'Administrators');
+    assert.strictEqual(component.summary[1].value, 'There is 1 administrator');
+    assert.strictEqual(component.summary[2].name, 'Student Advisors');
+    assert.strictEqual(component.summary[2].value, 'There are 4 student advisors');
   });
 
   test('clicking the header expands the list', async function (assert) {
@@ -41,61 +42,80 @@ module('Integration | Component | leadership collapsed', function (hooks) {
       assert.ok(true, 'Action was fired');
     });
     await render(hbs`<LeadershipCollapsed
-      @directorsCount={{0}}
-      @administratorsCount={{0}}
       @expand={{this.click}}
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
     />
 `);
-    const title = '.title';
-
-    await click(title);
+    await component.expand();
   });
 
-  test('it renders without directors', async function (assert) {
+  test('it renders without directors and student advisors', async function (assert) {
     this.set('title', 'Test Title');
     this.set('directorsCount', 3);
-    this.set('administratorsCount', 1);
-    this.set('click', () => {});
+    this.set('administratorsCount', 2);
+    this.set('studentAdvisorsCount', 4);
     await render(hbs`<LeadershipCollapsed
       @title={{this.title}}
-      @showDirectors={{false}}
       @showAdministrators={{true}}
       @directorsCount={{this.directorsCount}}
       @administratorsCount={{this.administratorsCount}}
-      @expand={{this.click}}
+      @studentAdvisorsCount={{this.studentAdvisorsCount}}
+      @expand={{(noop)}}
     />
 `);
-    const title = '.title';
-    const table = 'table';
-    const administratorsRow = `${table} tbody tr:nth-of-type(1)`;
-    const administrators = `${administratorsRow} td:nth-of-type(2)`;
-
-    assert.dom(title).hasText('Test Title');
-    assert.dom(administrators).hasText('There is 1 administrator');
+    assert.strictEqual(component.title, 'Test Title (2)');
+    assert.strictEqual(component.summary.length, 1);
+    assert.strictEqual(component.summary[0].name, 'Administrators');
+    assert.strictEqual(component.summary[0].value, 'There are 2 administrators');
   });
 
-  test('it renders without administrators', async function (assert) {
+  test('it renders without administrators and student advisors', async function (assert) {
     this.set('title', 'Test Title');
-    this.set('directorsCount', 3);
-    this.set('administratorsCount', 1);
-    this.set('click', () => {});
+    this.set('directorsCount', 1);
+    this.set('administratorsCount', 3);
+    this.set('studentAdvisorsCount', 4);
     await render(hbs`<LeadershipCollapsed
       @title={{this.title}}
-      @showAdministrators={{false}}
       @showDirectors={{true}}
       @directorsCount={{this.directorsCount}}
       @administratorsCount={{this.administratorsCount}}
-      @expand={{this.click}}
+      @studentAdvisorsCount={{this.studentAdvisorsCount}}
+      @expand={{(noop)}}
     />
 `);
-    const title = '.title';
-    const table = 'table';
-    const directorsRow = `${table} tbody tr:nth-of-type(1)`;
-    const directors = `${directorsRow} td:nth-of-type(2)`;
+    assert.strictEqual(component.title, 'Test Title (1)');
+    assert.strictEqual(component.summary.length, 1);
+    assert.strictEqual(component.summary[0].name, 'Directors');
+    assert.strictEqual(component.summary[0].value, 'There is 1 director');
+  });
 
-    assert.dom(title).hasText('Test Title');
-    assert.dom(directors).hasText('There are 3 directors');
+  test('it renders without directors and and administrators', async function (assert) {
+    this.set('title', 'Test Title');
+    this.set('directorsCount', 2);
+    this.set('administratorsCount', 3);
+    this.set('studentAdvisorsCount', 1);
+    await render(hbs`<LeadershipCollapsed
+      @title={{this.title}}
+      @showStudentAdvisors={{true}}
+      @directorsCount={{this.directorsCount}}
+      @administratorsCount={{this.administratorsCount}}
+      @studentAdvisorsCount={{this.studentAdvisorsCount}}
+      @expand={{(noop)}}
+    />
+`);
+    assert.strictEqual(component.title, 'Test Title (1)');
+    assert.strictEqual(component.summary.length, 1);
+    assert.strictEqual(component.summary[0].name, 'Student Advisors');
+    assert.strictEqual(component.summary[0].value, 'There is 1 student advisor');
+  });
+
+  test('it renders empty', async function (assert) {
+    this.set('title', 'Test Title');
+    await render(hbs`<LeadershipCollapsed
+      @title={{this.title}}
+      @expand={{(noop)}}
+    />
+`);
+    assert.strictEqual(component.title, 'Test Title (0)');
+    assert.strictEqual(component.summary.length, 0);
   });
 });
