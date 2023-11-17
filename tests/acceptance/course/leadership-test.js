@@ -57,7 +57,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
     });
     await percySnapshot(assert);
 
-    assert.strictEqual(page.details.leadershipExpanded.title, 'Course Leadership');
+    assert.strictEqual(page.details.leadershipExpanded.title, 'Course Leadership (6)');
     const { directors, administrators, studentAdvisors } =
       page.details.leadershipExpanded.leadershipList;
     assert.strictEqual(directors.length, 2);

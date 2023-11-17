@@ -57,7 +57,7 @@ module('Acceptance | Session - Leadership', function (hooks) {
       sessionLeadershipDetails: true,
     });
 
-    assert.strictEqual(page.details.leadershipExpanded.title, 'Session Leadership');
+    assert.strictEqual(page.details.leadershipExpanded.title, 'Session Leadership (3)');
     const { administrators, studentAdvisors } = page.details.leadershipExpanded.leadershipList;
 
     assert.strictEqual(administrators.length, 2);

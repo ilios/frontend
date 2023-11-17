@@ -9,7 +9,7 @@
     <div class="course-leadership-expanded-header">
       {{#if @isManaging}}
         <h3 class="title" data-test-title>
-          {{t "general.courseLeadership"}}
+          {{t "general.courseLeadership"}} ({{this.count}})
         </h3>
       {{else}}
         <button
@@ -19,7 +19,7 @@
           data-test-title
           {{on "click" @collapse}}
         >
-          {{t "general.courseLeadership"}}
+          {{t "general.courseLeadership"}} ({{this.count}})
           <FaIcon @icon="caret-down" />
         </button>
       {{/if}}
