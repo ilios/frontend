@@ -22,7 +22,7 @@ module('Acceptance | Program - Overview', function (hooks) {
     await page.visit({ programId: 1 });
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'program.index');
-    assert.strictEqual(page.root.overview.shortTitle.text, 'Program Title (short): short_0');
+    assert.strictEqual(page.root.overview.shortTitle.text, 'Title (short): short_0');
     assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 4');
   });
 
@@ -35,7 +35,7 @@ module('Acceptance | Program - Overview', function (hooks) {
     await page.visit({ programId: 1 });
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'program.index');
-    assert.strictEqual(page.root.overview.shortTitle.text, 'Program Title (short): short_0');
+    assert.strictEqual(page.root.overview.shortTitle.text, 'Title (short): short_0');
     assert.strictEqual(page.root.overview.duration.text, 'Duration (in Years): 4');
   });
 
@@ -60,11 +60,11 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
 
-    assert.strictEqual(page.root.overview.shortTitle.text, 'Program Title (short): short_0');
+    assert.strictEqual(page.root.overview.shortTitle.text, 'Title (short): short_0');
     await page.root.overview.shortTitle.edit();
     await page.root.overview.shortTitle.set('newshort');
     await page.root.overview.shortTitle.save();
-    assert.strictEqual(page.root.overview.shortTitle.text, 'Program Title (short): newshort');
+    assert.strictEqual(page.root.overview.shortTitle.text, 'Title (short): newshort');
   });
 
   test('change duration', async function (assert) {
