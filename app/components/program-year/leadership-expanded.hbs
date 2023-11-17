@@ -11,7 +11,7 @@
       data-test-title
       {{on "click" @collapse}}
     >
-      {{t "general.programYearLeadership"}}
+      {{t "general.leadership"}}
       <FaIcon @icon="caret-down" />
     </button>
     <div class="actions">
@@ -27,7 +27,7 @@
         </button>
       {{else if @canUpdate}}
         <button type="button" {{on "click" (fn @setIsManaging true)}}>
-          {{t "general.manageLeadership"}}
+          {{t "general.leadership"}}
         </button>
       {{/if}}
     </div>
