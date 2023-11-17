@@ -29,7 +29,7 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
     assert.expect(6);
     await page.visit({ programId: 1, programYearId: 1 });
     await percySnapshot(assert);
-    assert.strictEqual(page.details.collapsedLeadership.title, 'Program Year Leadership');
+    assert.strictEqual(page.details.collapsedLeadership.title, 'Leadership');
     assert.strictEqual(page.details.collapsedLeadership.headers.length, 1);
     assert.strictEqual(page.details.collapsedLeadership.headers[0].title, 'Summary');
     assert.strictEqual(page.details.collapsedLeadership.summary.length, 1);

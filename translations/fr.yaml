@@ -179,6 +179,7 @@ general:
     es: "Español (es)"
     fr: "Français (fr)"
   lastName: "Nom de famille"
+  leadership: "Direction"
   learner: Apprenant
   learnerAssignments: "{groupTitle} affectations d'étudiant"
   learnerGroupTitle: "Titre de groupe d'apprenants"
