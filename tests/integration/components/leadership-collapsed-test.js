@@ -25,7 +25,7 @@ module('Integration | Component | leadership collapsed', function (hooks) {
       @expand={{(noop)}}
     />
 `);
-    assert.strictEqual(component.title, 'Test Title (8)');
+    assert.strictEqual(component.title, 'Leadership (8)');
     assert.strictEqual(component.summary.length, 3);
     assert.strictEqual(component.summary[0].name, 'Directors');
     assert.strictEqual(component.summary[0].value, 'There are 3 directors');
@@ -62,7 +62,7 @@ module('Integration | Component | leadership collapsed', function (hooks) {
       @expand={{(noop)}}
     />
 `);
-    assert.strictEqual(component.title, 'Test Title (2)');
+    assert.strictEqual(component.title, 'Leadership (2)');
     assert.strictEqual(component.summary.length, 1);
     assert.strictEqual(component.summary[0].name, 'Administrators');
     assert.strictEqual(component.summary[0].value, 'There are 2 administrators');
@@ -82,7 +82,7 @@ module('Integration | Component | leadership collapsed', function (hooks) {
       @expand={{(noop)}}
     />
 `);
-    assert.strictEqual(component.title, 'Test Title (1)');
+    assert.strictEqual(component.title, 'Leadership (1)');
     assert.strictEqual(component.summary.length, 1);
     assert.strictEqual(component.summary[0].name, 'Directors');
     assert.strictEqual(component.summary[0].value, 'There is 1 director');
@@ -102,7 +102,7 @@ module('Integration | Component | leadership collapsed', function (hooks) {
       @expand={{(noop)}}
     />
 `);
-    assert.strictEqual(component.title, 'Test Title (1)');
+    assert.strictEqual(component.title, 'Leadership (1)');
     assert.strictEqual(component.summary.length, 1);
     assert.strictEqual(component.summary[0].name, 'Student Advisors');
     assert.strictEqual(component.summary[0].value, 'There is 1 student advisor');
@@ -115,7 +115,7 @@ module('Integration | Component | leadership collapsed', function (hooks) {
       @expand={{(noop)}}
     />
 `);
-    assert.strictEqual(component.title, 'Test Title (0)');
+    assert.strictEqual(component.title, 'Leadership (0)');
     assert.strictEqual(component.summary.length, 0);
   });
 });

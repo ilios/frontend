@@ -29,7 +29,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
     await page.visit({ courseId: this.course.id, details: true });
     await percySnapshot(assert);
 
-    assert.strictEqual(page.details.leadershipCollapsed.title, 'Course Leadership (6)');
+    assert.strictEqual(page.details.leadershipCollapsed.title, 'Leadership (6)');
     assert.strictEqual(page.details.leadershipCollapsed.headers.length, 1);
     assert.strictEqual(page.details.leadershipCollapsed.headers[0].title, 'Summary');
 
@@ -57,7 +57,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
     });
     await percySnapshot(assert);
 
-    assert.strictEqual(page.details.leadershipExpanded.title, 'Course Leadership (6)');
+    assert.strictEqual(page.details.leadershipExpanded.title, 'Leadership (6)');
     const { directors, administrators, studentAdvisors } =
       page.details.leadershipExpanded.leadershipList;
     assert.strictEqual(directors.length, 2);

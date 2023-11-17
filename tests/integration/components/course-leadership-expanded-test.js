@@ -30,7 +30,7 @@ module('Integration | Component | course leadership expanded', function (hooks) 
     />
 `);
 
-    assert.strictEqual(component.title, 'Course Leadership (4)');
+    assert.strictEqual(component.title, 'Leadership (4)');
     assert.strictEqual(component.leadershipList.directors.length, 1);
     assert.strictEqual(component.leadershipList.directors[0].text, '0 guy M. Mc0son');
     assert.strictEqual(component.leadershipList.administrators.length, 2);

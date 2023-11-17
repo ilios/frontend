@@ -32,7 +32,7 @@ module('Integration | Component | session leadership expanded', function (hooks)
     />
 `);
 
-    assert.strictEqual(component.title, 'Session Leadership (3)');
+    assert.strictEqual(component.title, 'Leadership (3)');
     assert.strictEqual(component.leadershipList.administrators.length, 2);
     assert.strictEqual(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
     assert.strictEqual(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
