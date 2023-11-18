@@ -41,7 +41,7 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
     assert.expect(4);
     await page.visit({ programId: 1, programYearId: 1, pyLeadershipDetails: true });
     await percySnapshot(assert);
-    assert.strictEqual(page.details.expandedLeadership.title, 'Leadership');
+    assert.strictEqual(page.details.expandedLeadership.title, 'Leadership (2)');
     const { directors } = page.details.expandedLeadership.leadershipList;
     assert.strictEqual(directors.length, 2);
     assert.strictEqual(directors[0].text, '3 guy M. Mc3son');

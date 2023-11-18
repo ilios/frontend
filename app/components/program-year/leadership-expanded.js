@@ -10,6 +10,11 @@ export default class ProgramYearLeadershipExpandedComponent extends Component {
   @tracked directorsToRemove = [];
 
   @cached
+  get count() {
+    return this.directors.length;
+  }
+
+  @cached
   get programYearDirectors() {
     return new TrackedAsyncData(this.args.programYear.directors);
   }

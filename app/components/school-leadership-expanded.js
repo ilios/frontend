@@ -11,11 +11,16 @@ export default class SchoolLeadershipExpandedComponent extends Component {
   @tracked administratorsToRemove = [];
   @tracked schoolDirectors = [];
   @tracked schoolAdministrators = [];
+
   get isCollapsible() {
     const administratorIds = this.args.school.hasMany('administrators').ids();
     const directorIds = this.args.school.hasMany('directors').ids();
 
     return (administratorIds.length > 0 || directorIds.length > 0) && !this.args.isManaging;
+  }
+
+  get count() {
+    return this.administrators.length + this.directors.length;
   }
 
   @restartableTask

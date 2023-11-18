@@ -14,12 +14,12 @@
         data-test-title
         {{on "click" @collapse}}
       >
-        {{t "general.leadership"}}
+        {{t "general.leadership"}} ({{this.count}})
         <FaIcon @icon="caret-down" />
       </button>
     {{else}}
       <div class="title" data-test-title>
-        {{t "general.leadership"}}
+        {{t "general.leadership"}} ({{this.count}})
       </div>
     {{/if}}
     <div class="actions">
