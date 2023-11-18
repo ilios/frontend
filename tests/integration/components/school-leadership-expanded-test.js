@@ -29,7 +29,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
     />`);
-    assert.strictEqual(component.title, 'School Leadership');
+    assert.strictEqual(component.title, 'Leadership');
     assert.strictEqual(component.leadershipList.directors.length, 1);
     assert.strictEqual(component.leadershipList.directors[0].text, '0 guy M. Mc0son');
     assert.strictEqual(component.leadershipList.administrators.length, 2);

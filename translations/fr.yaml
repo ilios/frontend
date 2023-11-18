@@ -348,7 +348,6 @@ general:
   root: Root
   sampleFile: "Fichier échantillon"
   saved: "Nouvel utilisateur enregistré avec succès"
-  schoolLeadership: "Direction des Écoles"
   schoolName: "Nom de l'école"
   searchDirectory: "Consultez le répertoire pour les utilisateurs nouvels"
   searchTheCurriculum: "Rechercher le curriculum"
