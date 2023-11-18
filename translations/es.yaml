@@ -90,7 +90,6 @@ general:
   curriculumInventory: "Inventario de plan de Estudios"
   curriculumInventoryInstitutionalInfo: "Inventario de plan de Estudios Información Institucional"
   curriculumInventoryReport: "Informe de Inventario de Plan de Estudios"
-  curriculumInventoryReportLeadership: "Liderazgo de Inventario de plan de Estudios"
   curriculumInventoryReportRollover: "Copiar Inventario de plan de Estudios"
   curriculumInventoryReportRolloverSummary: "Esta acción copiará la estructura de este informe que se utilizará en su año objetivo. No copiará la información del curso, solo la estructura del bloque de secuencia de nivel superior. Deberá agregar la información del curso adecuada y modificar las fechas de inicio y finalización del bloque de secuencia una vez que haya cambiado la estructura del informe existente."
   curriculumInventoryReportRolloverSuccess: "Inventario Copiado con Éxito"
