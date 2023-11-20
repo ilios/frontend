@@ -178,7 +178,6 @@ general:
     es: "Español (es)"
     fr: "Français (fr)"
   lastName: Apellido
-  leadership: "Liderazgo"
   learner: Aprendedor
   learnerAssignments: "{groupTitle} Asignaciónes de Aprendedores"
   learnerGroupTitle: "Título de Grupo de Instructores"

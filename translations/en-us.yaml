@@ -178,7 +178,6 @@ general:
     es: "Español (es)"
     fr: "Français (fr)"
   lastName: "Last Name"
-  leadership: "Leadership"
   learner: Learner
   learnerAssignments: "{groupTitle} Learner Assignments"
   learnerGroupTitle: "Learner Group Title"
