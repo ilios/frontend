@@ -8,6 +8,10 @@ export default class CourseLeadershipExpandedComponent extends Component {
   @tracked administrators = [];
   @tracked studentAdvisors = [];
 
+  get count() {
+    return this.administrators.length + this.studentAdvisors.length;
+  }
+
   @action
   addAdministrator(user) {
     this.administrators = [...this.administrators, user];

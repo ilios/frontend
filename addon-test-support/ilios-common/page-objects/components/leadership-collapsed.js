@@ -1,8 +1,9 @@
-import { collection, text } from 'ember-cli-page-object';
+import { clickable, collection, create, text } from 'ember-cli-page-object';
 
-export default {
+const definition = {
   scope: '[data-test-leadership-collapsed]',
-  title: text('.title'),
+  title: text('[data-test-title]'),
+  expand: clickable('[data-test-title]'),
   headers: collection('thead th', {
     title: text(),
   }),
@@ -11,3 +12,6 @@ export default {
     value: text('td', { at: 1 }),
   }),
 };
+
+export default definition;
+export const component = create(definition);

@@ -68,7 +68,6 @@ general:
   copySessionSummary: "Usted va a copiar esta sesión (sin datos del horario) en el curso seleccionado. La sesión nueva va a incluir todos los objectivos, terminos, y materiales de aprendizaje.  Para continuar haga click en \"cumplido\".  Para regresar a su sesión corriente, haga click en \"cancelar\"."
   copySuccess: "La Copia se ha Completado con Éxito"
   course: Curso
-  courseLeadership: "Liderazgo del Curso"
   courseLearningMaterials: "Materiales de Aprendizaje del Curso"
   courseLevel: "Nivel del curso {level}"
   courseLevels: "Niveles de Curso"
@@ -165,6 +164,7 @@ general:
   instructorsManageTitle: "Administrar Instructores"
   last: Último
   lastUpdate: "Última actualización"
+  leadership: Liderazgo
   learnerGroups: "Grupos de Aprendedores"
   learnerGroupsManageTitle: "Administrar Grupos de Aprendedores"
   learners: Aprendedores
@@ -300,7 +300,6 @@ general:
   selectMeshFor: "Seleccione MeSH para: {title}"
   selectVocabulary: "Seleccione un Vocabulario"
   session: "Sessión"
-  sessionLeadership: "Liderazgo de la Sesión"
   sessionLearningMaterials: "Materiales de Aprendizaje de la Sesión"
   sessionObjectives: "Objetivos de la Sesión"
   sessions: Sesiones

@@ -68,7 +68,6 @@ general:
   copySessionSummary: "You are about to copy over this session (without schedule data) into the selected course. The new session will include all objectives, terms, and learning materials.  To continue click \"done\".  To return to your current session click \"cancel\"."
   copySuccess: "Copy Completed Successfully"
   course: Course
-  courseLeadership: "Course Leadership"
   courseLearningMaterials: "Course Learning Materials"
   courseLevel: "Course Level {level}"
   courseLevels: "Course Levels"
@@ -165,6 +164,7 @@ general:
   instructorsManageTitle: "Manage Instructors"
   last: Last
   lastUpdate: "Last Update"
+  leadership: Leadership
   learnerGroups: "Learner Groups"
   learnerGroupsManageTitle: "Manage Learner Groups"
   learners: Learners
@@ -300,7 +300,6 @@ general:
   selectMeshFor: "Select MeSH for: {title}"
   selectVocabulary: "Select Vocabulary"
   session: Session
-  sessionLeadership: "Session Leadership"
   sessionLearningMaterials: "Session Learning Materials"
   sessionObjectives: "Session Objectives"
   sessions: Sessions
