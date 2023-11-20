@@ -179,6 +179,7 @@ general:
     es: "Español (es)"
     fr: "Français (fr)"
   lastName: Apellido
+  leadership: "Liderazgo"
   learner: Aprendedor
   learnerAssignments: "{groupTitle} Asignaciónes de Aprendedores"
   learnerGroupTitle: "Título de Grupo de Instructores"
@@ -314,7 +315,7 @@ general:
   programTitle: "Titulo de Programa"
   programTitleFilterPlaceholder: "Filtrar por Titulo de Programa"
   programTitlePlaceholder: "Meter un titulo para este programa"
-  programTitleShort: "Titulo de Programa (corto)"
+  programTitleShort: "Titulo (corto)"
   programYear: "Año de Programa"
   programYears: "Años de Programa"
   programYearLeadership: "Liderazgo de Año de Programa"

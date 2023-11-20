@@ -179,6 +179,7 @@ general:
     es: "Español (es)"
     fr: "Français (fr)"
   lastName: "Nom de famille"
+  leadership: "Direction"
   learner: Apprenant
   learnerAssignments: "{groupTitle} affectations d'étudiant"
   learnerGroupTitle: "Titre de groupe d'apprenants"
@@ -315,7 +316,7 @@ general:
   programTitle: "Titre de Diplôme"
   programTitleFilterPlaceholder: "Filtre par Titre de Diplôme"
   programTitlePlaceholder: "Ajoutez un titre pour ce Diplôme"
-  programTitleShort: "Titre de Diplôme (bref)"
+  programTitleShort: "Titre (bref)"
   programYear: "Année de Diplôme"
   programYears: "Années des Diplôme"
   programYearLeadership: "Direction de l'Année de Diplôme"
