@@ -25,7 +25,7 @@ module('Acceptance | Program - Leadership', function (hooks) {
     assert.expect(6);
     await page.visit({ programId: 1 });
     await percySnapshot(assert);
-    assert.strictEqual(page.root.leadershipCollapsed.title, 'Leadership');
+    assert.strictEqual(page.root.leadershipCollapsed.title, 'Leadership (2)');
     assert.strictEqual(page.root.leadershipCollapsed.headers.length, 1);
     assert.strictEqual(page.root.leadershipCollapsed.headers[0].title, 'Summary');
     assert.strictEqual(page.root.leadershipCollapsed.summary.length, 1);

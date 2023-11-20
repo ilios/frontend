@@ -26,7 +26,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
 
   test('collapsed leadership', async function (assert) {
     await page.visit({ reportId: this.reportModel.id });
-    assert.strictEqual(page.details.leadershipCollapsed.title, 'Leadership');
+    assert.strictEqual(page.details.leadershipCollapsed.title, 'Leadership (2)');
     assert.strictEqual(page.details.leadershipCollapsed.headers.length, 1);
     assert.strictEqual(page.details.leadershipCollapsed.headers[0].title, 'Summary');
     assert.strictEqual(page.details.leadershipCollapsed.summary.length, 1);
