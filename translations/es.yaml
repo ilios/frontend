@@ -344,6 +344,7 @@ general:
   requiredInTrack: "Requerido en Pista"
   resourceTypes: "Tipos de recursos"
   root: Root
+  runReport: Ejecutar Informe
   sampleFile: "Archivo de Ejemplo"
   saved: "Nuevo Usuario Salvó con Éxito"
   schoolName: "Nombre de escuela"

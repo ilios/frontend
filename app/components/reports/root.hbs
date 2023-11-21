@@ -1,8 +1,16 @@
 <section class="reports-root" data-test-reports-root>
-  <Reports::List
-    @sortReportsBy={{@sortReportsBy}}
-    @setSortReportsBy={{@sortReportsBy}}
-    @titleFilter={{@titleFilter}}
-    @changeTitleFilter={{@changeTitleFilter}}
-  />
+  {{#if this.runningSubjectReport}}
+    <Reports::RunSubject
+      @runSubjectReport={{set this.runningSubjectReport}}
+      @report={{this.runningSubjectReport}}
+    />
+  {{else}}
+    <Reports::List
+      @sortReportsBy={{@sortReportsBy}}
+      @setSortReportsBy={{@sortReportsBy}}
+      @titleFilter={{@titleFilter}}
+      @changeTitleFilter={{@changeTitleFilter}}
+      @runSubjectReport={{set this.runningSubjectReport}}
+    />
+  {{/if}}
 </section>

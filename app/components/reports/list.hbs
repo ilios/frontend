@@ -29,6 +29,7 @@
       <Reports::NewSubject
         @save={{perform this.saveNewSubjectReport}}
         @close={{set this.showNewReportForm false}}
+        @run={{@runSubjectReport}}
       />
     {{/if}}
     {{#if this.newReport}}

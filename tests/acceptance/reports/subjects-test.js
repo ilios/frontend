@@ -340,4 +340,41 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.root.list.table.reports.length, 1);
     assert.strictEqual(page.root.list.table.reports[0].title, 'my report 0');
   });
+
+  test('run subject report', async function (assert) {
+    assert.expect(5);
+    await page.visit();
+    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.newSubject.schools.choose('1');
+    await page.root.list.newSubject.subjects.choose('session');
+    await page.root.list.newSubject.objects.choose('course');
+    await page.root.list.newSubject.course.input('cour');
+    await page.root.list.newSubject.course.results[1].click();
+    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      const { query } = JSON.parse(requestBody);
+      const course = db.courses[0];
+      const { id, title } = db.sessions[0];
+
+      assert.strictEqual(
+        query,
+        'query { sessions(schools: [1], courses: [1]) { id, title, course { id, year, title } } }',
+      );
+      return {
+        data: {
+          sessions: [
+            { id, title, course: { id: course.id, title: course.title, year: course.year } },
+          ],
+        },
+      };
+    });
+    await page.root.list.newSubject.run();
+    await percySnapshot(assert);
+    assert.strictEqual(currentURL(), '/reports');
+    assert.strictEqual(
+      page.root.results.description,
+      'This report shows all Sessions associated with Course "course 0" (2015) in school 0.',
+    );
+    assert.strictEqual(page.root.results.results.length, 1);
+    assert.strictEqual(page.root.results.results[0].text, 'course 0: session 0');
+  });
 });
