@@ -28,7 +28,7 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
     />`);
-    assert.ok(component.collapse.text, 'Curriculum Inventory Report Leadership');
+    assert.ok(component.collapse.text, 'Leadership');
     assert.strictEqual(component.leadershipList.administrators.length, 2);
     assert.strictEqual(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
     assert.strictEqual(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');

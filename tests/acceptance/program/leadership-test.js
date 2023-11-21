@@ -25,7 +25,7 @@ module('Acceptance | Program - Leadership', function (hooks) {
     assert.expect(6);
     await page.visit({ programId: 1 });
     await percySnapshot(assert);
-    assert.strictEqual(page.root.leadershipCollapsed.title, 'Leadership');
+    assert.strictEqual(page.root.leadershipCollapsed.title, 'Leadership (2)');
     assert.strictEqual(page.root.leadershipCollapsed.headers.length, 1);
     assert.strictEqual(page.root.leadershipCollapsed.headers[0].title, 'Summary');
     assert.strictEqual(page.root.leadershipCollapsed.summary.length, 1);
@@ -37,7 +37,7 @@ module('Acceptance | Program - Leadership', function (hooks) {
     assert.expect(4);
     await page.visit({ programId: 1, leadershipDetails: true });
     await percySnapshot(assert);
-    assert.strictEqual(page.root.leadershipExpanded.title, 'Leadership');
+    assert.strictEqual(page.root.leadershipExpanded.title, 'Leadership (2)');
     const { directors } = page.root.leadershipExpanded.leadershipList;
     assert.strictEqual(directors.length, 2);
     assert.strictEqual(directors[0].text, '3 guy M. Mc3son');

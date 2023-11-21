@@ -26,10 +26,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
 
   test('collapsed leadership', async function (assert) {
     await page.visit({ reportId: this.reportModel.id });
-    assert.strictEqual(
-      page.details.leadershipCollapsed.title,
-      'Curriculum Inventory Report Leadership',
-    );
+    assert.strictEqual(page.details.leadershipCollapsed.title, 'Leadership (2)');
     assert.strictEqual(page.details.leadershipCollapsed.headers.length, 1);
     assert.strictEqual(page.details.leadershipCollapsed.headers[0].title, 'Summary');
     assert.strictEqual(page.details.leadershipCollapsed.summary.length, 1);
@@ -42,10 +39,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
 
   test('list leadership', async function (assert) {
     await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
-    assert.strictEqual(
-      page.details.leadershipExpanded.collapse.text,
-      'Curriculum Inventory Report Leadership',
-    );
+    assert.strictEqual(page.details.leadershipExpanded.collapse.text, 'Leadership (2)');
     const { administrators } = page.details.leadershipExpanded.leadershipList;
     assert.strictEqual(administrators.length, 2);
     assert.strictEqual(administrators[0].text, '3 guy M. Mc3son');

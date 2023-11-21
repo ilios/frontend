@@ -10,6 +10,11 @@ export default class ProgramLeadershipExpandedComponent extends Component {
   @tracked directorsToRemove = [];
 
   @cached
+  get count() {
+    return this.directors.length;
+  }
+
+  @cached
   get programDirectors() {
     return new TrackedAsyncData(this.args.program.directors);
   }

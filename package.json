@@ -108,7 +108,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-qunit": "^8.0.0",
     "file-saver": "^2.0.5",
-    "ilios-common": "^84.0.0",
+    "ilios-common": "^84.0.1",
     "loader.js": "^4.7.0",
     "luxon": "^3.4.4",
     "miragejs": "^0.1.48",

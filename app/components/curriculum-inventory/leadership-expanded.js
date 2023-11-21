@@ -6,6 +6,10 @@ import { tracked } from '@glimmer/tracking';
 export default class CurriculumInventoryLeadershipExpandedComponent extends Component {
   @tracked administrators = [];
 
+  get count() {
+    return this.administrators.length;
+  }
+
   @action
   addAdministrator(user) {
     this.administrators = [...this.administrators, user];

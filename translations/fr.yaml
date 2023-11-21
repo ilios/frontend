@@ -90,7 +90,6 @@ general:
   curriculumInventory: "Inventaire des programmes d'études"
   curriculumInventoryInstitutionalInfo: "Inventaire des programmes d'études informations institutionnelles"
   curriculumInventoryReport: "Rapport d'inventaire des programmes d'études"
-  curriculumInventoryReportLeadership: "Dirigeants de Rapport d'inventaire des programmes d'études"
   curriculumInventoryReportRollover: "Roulement Rapport d'inventaire des programmes d'études"
   curriculumInventoryReportRolloverSummary: "Cette action copiera la structure de ce rapport à utiliser dans votre année cible. Il ne copiera pas les informations de cours, uniquement la structure de bloc de séquence de niveau supérieur. Vous devrez ajouter les informations de cours appropriées et modifier les dates de début et de fin du bloc de séquence une fois que vous aurez reconduit la structure de rapport existante."
   curriculumInventoryReportRolloverSuccess: "Roulement achevée avec succès"
@@ -179,7 +178,6 @@ general:
     es: "Español (es)"
     fr: "Français (fr)"
   lastName: "Nom de famille"
-  leadership: "Direction"
   learner: Apprenant
   learnerAssignments: "{groupTitle} affectations d'étudiant"
   learnerGroupTitle: "Titre de groupe d'apprenants"
@@ -349,7 +347,6 @@ general:
   root: Root
   sampleFile: "Fichier échantillon"
   saved: "Nouvel utilisateur enregistré avec succès"
-  schoolLeadership: "Direction des Écoles"
   schoolName: "Nom de l'école"
   searchDirectory: "Consultez le répertoire pour les utilisateurs nouvels"
   searchTheCurriculum: "Rechercher le curriculum"
