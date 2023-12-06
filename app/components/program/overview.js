@@ -36,7 +36,7 @@ export default class ProgramOverviewComponent extends Component {
   }
 
   @action
-  setDuration(value) {
-    this.duration = Number(value);
+  setDuration(ev) {
+    this.duration = Number(ev.target.value);
   }
 }
