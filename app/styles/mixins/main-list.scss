@@ -48,16 +48,16 @@
 }
 
 @mixin main-list-box-header() {
-  border-bottom: 1px solid c.$culturedGrey;
+  background-color: c.$culturedGrey;
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 0;
+  margin-left: 0.7rem;
+  padding: 0.5rem 0 0.5rem 0.3rem;
   text-align: center;
 
   @include cm.for-laptop-and-up {
     flex-direction: row;
     justify-content: space-between;
-    margin-left: 1rem;
   }
 }
 

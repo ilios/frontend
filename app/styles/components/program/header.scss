@@ -3,13 +3,13 @@
 @use "../../ilios-common/mixins" as m;
 
 .program-header {
-  border-bottom: 1px solid c.$culturedGrey;
+  background-color: c.$culturedGrey;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: calc(constants.$golden-ratio-large * 1rem) 0
-    calc(constants.$golden-ratio-small * 1rem) 0;
-  margin: 0 0.8rem;
+    calc(constants.$golden-ratio-small * 1rem) 0.3rem;
+  margin: 0 0.8rem 0 0.5rem;
 
   @include m.for-tablet-and-up {
     flex-direction: row;
