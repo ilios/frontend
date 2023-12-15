@@ -28,13 +28,8 @@ export default class ReportsSubjectResultsComponent extends Component {
     return this.allAcademicYearsData.isResolved ? this.allAcademicYearsData.value : null;
   }
 
-  @cached
-  get reportDescriptionData() {
-    return this.reporting.buildReportDescription(this.args.report);
-  }
-
   get subjectComponent() {
-    switch (this.args.report.subject) {
+    switch (this.args.subject) {
       case 'course':
         return ensureSafeComponent(CourseComponent, this);
       case 'session':
@@ -63,7 +58,9 @@ export default class ReportsSubjectResultsComponent extends Component {
   }
 
   get showAcademicYearFilter() {
-    const { subject, prepositionalObject } = this.args.report;
-    return prepositionalObject !== 'course' && ['course', 'session'].includes(subject);
+    return (
+      this.args.prepositionalObject !== 'course' &&
+      ['course', 'session'].includes(this.args.subject)
+    );
   }
 }

@@ -9,7 +9,13 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
   @service graphql;
   @service intl;
 
-  @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);
+  @use data = new AsyncProcess(() => [
+    this.getReportResults.bind(this),
+    this.args.subject,
+    this.args.prepositionalObject,
+    this.args.prepositionalObjectTableRowId,
+    this.args.school,
+  ]);
 
   get finishedLoading() {
     return Array.isArray(this.data);
@@ -21,11 +27,7 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
     });
   }
 
-  async getGraphQLFilters(report) {
-    let { prepositionalObject, prepositionalObjectTableRowId } = report;
-
-    const school = await report.school;
-
+  async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
     let rhett = [];
     if (school) {
       rhett.push(`schools: [${school.id}]`);
@@ -45,14 +47,16 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
     return rhett;
   }
 
-  async getReportResults(report) {
-    const { subject } = report;
-
+  async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     if (subject !== 'learning material') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectLearningMaterialComponent`);
     }
 
-    const filters = await this.getGraphQLFilters(report);
+    const filters = await this.getGraphQLFilters(
+      prepositionalObject,
+      prepositionalObjectTableRowId,
+      school,
+    );
     const result = await this.graphql.find('learningMaterials', filters, 'id, title');
     return result.data.learningMaterials.map(({ title }) => title);
   }

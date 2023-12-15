@@ -311,15 +311,12 @@ export default class ReportsNewSubjectComponent extends Component {
     }
     this.clearErrorDisplay();
 
-    const report = this.store.createRecord('report', {
-      title: this.title,
-      user: this.userModel,
-      subject: this.subject,
-      prepositionalObject: this.prepositionalObject,
-      prepositionalObjectTableRowId: this.prepositionalObjectId,
-      school: this.currentSchool,
-    });
-    this.args.run(report);
+    this.args.run(
+      this.subject,
+      this.prepositionalObject,
+      this.prepositionalObjectId,
+      this.currentSchool,
+    );
   }
 
   @action

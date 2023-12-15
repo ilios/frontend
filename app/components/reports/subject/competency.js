@@ -9,7 +9,13 @@ export default class ReportsSubjectCompetencyComponent extends Component {
   @service graphql;
   @service intl;
 
-  @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);
+  @use data = new AsyncProcess(() => [
+    this.getReportResults.bind(this),
+    this.args.subject,
+    this.args.prepositionalObject,
+    this.args.prepositionalObjectTableRowId,
+    this.args.school,
+  ]);
 
   get finishedLoading() {
     return Array.isArray(this.data);
@@ -21,14 +27,10 @@ export default class ReportsSubjectCompetencyComponent extends Component {
     });
   }
 
-  async getReportResults(report) {
-    const { subject, prepositionalObject, prepositionalObjectTableRowId } = report;
-
+  async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     if (subject !== 'competency') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectCompetencyComponent`);
     }
-
-    const school = await report.school;
 
     let filters = [];
     if (school) {

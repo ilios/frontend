@@ -33,7 +33,9 @@ module('Integration | Component | reports/subject-results', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<Reports::SubjectResults
-      @report={{this.report}}
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
       @year={{null}}
       @changeYear={{(noop)}}
     />`);

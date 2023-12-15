@@ -10,14 +10,20 @@ export default class ReportsSubjectProgramComponent extends Component {
   @service graphql;
   @service currentUser;
 
-  @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);
+  @use data = new AsyncProcess(() => [
+    this.getReportResults.bind(this),
+    this.args.subject,
+    this.args.prepositionalObject,
+    this.args.prepositionalObjectTableRowId,
+    this.args.school,
+  ]);
 
   get canView() {
     return this.currentUser.performsNonLearnerFunction;
   }
 
   get showSchool() {
-    return !this.args.report.belongsTo('school').id();
+    return !this.args.school;
   }
 
   get sortedPrograms() {
@@ -28,14 +34,10 @@ export default class ReportsSubjectProgramComponent extends Component {
     return Array.isArray(this.data);
   }
 
-  async getReportResults(report) {
-    const { subject, prepositionalObject, prepositionalObjectTableRowId } = report;
-
+  async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     if (subject !== 'program') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectProgramComponent`);
     }
-
-    const school = await report.school;
 
     let filters = [];
     if (school) {

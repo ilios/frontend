@@ -19,7 +19,11 @@ module('Unit | Service | reporting', function (hooks) {
 
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
-    const title = await this.service.buildReportTitle(reportModel);
+    const title = await this.service.buildReportTitle(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+    );
     assert.strictEqual(title, 'All Competencies in All Schools');
   });
 
@@ -32,7 +36,12 @@ module('Unit | Service | reporting', function (hooks) {
 
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
-    const title = await this.service.buildReportTitle(reportModel);
+    const title = await this.service.buildReportTitle(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+      school,
+    );
     assert.strictEqual(title, 'All Competencies in ' + school.title);
   });
 
@@ -52,7 +61,12 @@ module('Unit | Service | reporting', function (hooks) {
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
     const userModel = await store.findRecord('user', user.id);
-    const title = await this.service.buildReportTitle(reportModel);
+    const title = await this.service.buildReportTitle(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+      school,
+    );
     assert.strictEqual(title, 'All Competencies for ' + userModel.fullName + ' in ' + school.title);
   });
 
@@ -67,7 +81,12 @@ module('Unit | Service | reporting', function (hooks) {
 
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
-    const title = await this.service.buildReportTitle(reportModel);
+    const title = await this.service.buildReportTitle(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      school,
+      reportModel.prepositionalObjectTableRowId,
+    );
     assert.strictEqual(title, 'This report is no longer available.');
   });
 
@@ -78,7 +97,11 @@ module('Unit | Service | reporting', function (hooks) {
 
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
-    const title = await this.service.buildReportDescription(reportModel);
+    const title = await this.service.buildReportDescription(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+    );
     assert.strictEqual(title, 'This report shows all Competencies in All Schools.');
   });
 
@@ -91,7 +114,12 @@ module('Unit | Service | reporting', function (hooks) {
 
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
-    const title = await this.service.buildReportDescription(reportModel);
+    const title = await this.service.buildReportDescription(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+      school,
+    );
     assert.strictEqual(title, `This report shows all Competencies in ${school.title}.`);
   });
 
@@ -111,7 +139,12 @@ module('Unit | Service | reporting', function (hooks) {
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
     const userModel = await store.findRecord('user', user.id);
-    const title = await this.service.buildReportDescription(reportModel);
+    const title = await this.service.buildReportDescription(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+      school,
+    );
     assert.strictEqual(
       title,
       `This report shows all Courses associated with Instructor "${userModel.fullName}"  in ${school.title}.`,
@@ -138,7 +171,12 @@ module('Unit | Service | reporting', function (hooks) {
     const reportModel = await store.findRecord('report', report.id);
     const courseModel = await store.findRecord('course', course.id);
     const schoolModel = await store.findRecord('school', school.id);
-    const title = await this.service.buildReportDescription(reportModel);
+    const title = await this.service.buildReportDescription(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+      school,
+    );
     assert.strictEqual(
       title,
       `This report shows all Terms associated with Course "${courseModel.title}" (${courseModel.year}) in ${schoolModel.title}.`,
@@ -174,7 +212,12 @@ module('Unit | Service | reporting', function (hooks) {
     const reportModel = await store.findRecord('report', report.id);
     const courseModel = await store.findRecord('course', course.id);
     const schoolModel = await store.findRecord('school', school.id);
-    const title = await this.service.buildReportDescription(reportModel);
+    const title = await this.service.buildReportDescription(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+      school,
+    );
     assert.strictEqual(
       title,
       `This report shows all Terms associated with Course "${courseModel.title}" (${
@@ -194,7 +237,12 @@ module('Unit | Service | reporting', function (hooks) {
 
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
-    const title = await this.service.buildReportDescription(reportModel);
+    const title = await this.service.buildReportDescription(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+      school,
+    );
     assert.strictEqual(title, 'This report is no longer available.');
   });
 
@@ -225,7 +273,12 @@ module('Unit | Service | reporting', function (hooks) {
 
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
-    const props = await this.service.getDescriptiveProperties(reportModel);
+    const props = await this.service.getDescriptiveProperties(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+      school,
+    );
 
     assert.strictEqual(props.object, 'course 0');
     assert.strictEqual(props.objectType, 'Course');
@@ -240,7 +293,11 @@ module('Unit | Service | reporting', function (hooks) {
     });
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
-    const props = await this.service.getDescriptiveProperties(reportModel);
+    const props = await this.service.getDescriptiveProperties(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+    );
     assert.notOk(props.object);
     assert.notOk(props.objectType);
     assert.notOk(props.year);
@@ -257,7 +314,12 @@ module('Unit | Service | reporting', function (hooks) {
 
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
-    const props = await this.service.getDescriptiveProperties(reportModel);
+    const props = await this.service.getDescriptiveProperties(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+      school,
+    );
     assert.notOk(props.object);
     assert.notOk(props.objectType);
     assert.notOk(props.year);

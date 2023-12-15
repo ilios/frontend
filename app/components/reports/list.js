@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
 export default class ReportsListComponent extends Component {
   @service store;
@@ -12,8 +13,28 @@ export default class ReportsListComponent extends Component {
 
   @tracked showNewReportForm;
   @tracked newSubjectReport;
+  @tracked runningSubjectReport;
+  @tracked reportYear;
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
+
+  @cached
+  get allSchools() {
+    return new TrackedAsyncData(this.store.findAll('school'));
+  }
+
+  get schoolsById() {
+    if (!this.allSchools.isResolved) {
+      return null;
+    }
+
+    const rhett = {};
+    this.allSchools.value.forEach((school) => {
+      rhett[school.id] = school;
+    });
+
+    return rhett;
+  }
 
   @cached
   get user() {
@@ -27,13 +48,31 @@ export default class ReportsListComponent extends Component {
 
   @cached
   get subjectReportObjects() {
-    if (!this.subjectReports.isResolved || !this.subjectReports.value) {
+    if (
+      !this.subjectReports.isResolved ||
+      !this.subjectReports.value ||
+      !this.allSchools.isResolved
+    ) {
       return null;
     }
     return new TrackedAsyncData(
       Promise.all(
         this.subjectReports.value.map(async (report) => {
-          const title = report.title ?? (await this.reporting.buildReportTitle(report));
+          let school;
+          if (report.school) {
+            const schoolId = report.belongsTo('school').id();
+
+            school = this.schoolsById[schoolId];
+          }
+
+          const title =
+            report.title ??
+            (await this.reporting.buildReportTitle(
+              report.subject,
+              report.prepositionalObject,
+              report.prepositionalObjectTableRowId,
+              school,
+            ));
 
           return {
             report,
@@ -78,6 +117,7 @@ export default class ReportsListComponent extends Component {
 
   @dropTask
   *saveNewSubjectReport(report) {
+    this.runningSubjectReport = null;
     this.newSubjectReport = yield report.save();
     this.showNewReportForm = false;
   }
@@ -86,5 +126,27 @@ export default class ReportsListComponent extends Component {
   *removeReport(report) {
     yield report.destroyRecord();
     this.newSubjectReport = null;
+  }
+
+  @restartableTask
+  *runSubjectReport(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
+    this.runningSubjectReport = {
+      subject,
+      prepositionalObject,
+      prepositionalObjectTableRowId,
+      school,
+      description: yield this.reporting.buildReportDescription(
+        subject,
+        prepositionalObject,
+        prepositionalObjectTableRowId,
+        school,
+      ),
+    };
+  }
+
+  @action
+  toggleNewReportForm() {
+    this.runningSubjectReport = null;
+    this.showNewReportForm = !this.showNewReportForm;
   }
 }

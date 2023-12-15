@@ -18,7 +18,7 @@
     <div class="actions">
       <ExpandCollapseButton
         @value={{this.showNewReportForm}}
-        @action={{set this.showNewReportForm (not this.showNewReportForm)}}
+        @action={{this.toggleNewReportForm}}
         @expandButtonLabel={{t "general.newReport"}}
         @collapseButtonLabel={{t "general.close"}}
       />
@@ -28,8 +28,8 @@
     {{#if this.showNewReportForm}}
       <Reports::NewSubject
         @save={{perform this.saveNewSubjectReport}}
-        @close={{set this.showNewReportForm false}}
-        @run={{@runSubjectReport}}
+        @close={{this.toggleNewReportForm}}
+        @run={{perform this.runSubjectReport}}
       />
     {{/if}}
     {{#if this.newReport}}
@@ -42,17 +42,29 @@
       </div>
     {{/if}}
   </section>
-  <div class="list">
-    {{#if (and this.subjectReportObjects this.subjectReportObjects.isResolved)}}
-      <Reports::Table
-        @decoratedReports={{this.filteredReports}}
-        @query={{@titleFilter}}
-        @sortBy={{@sortReportsBy}}
-        @setSortBy={{@setSortReportsBy}}
-        @remove={{perform this.removeReport}}
-      />
-    {{else}}
-      <Reports::ListLoading @count={{this.reportsCount}} />
-    {{/if}}
-  </div>
+  {{#if this.runningSubjectReport}}
+    <Reports::SubjectResults
+      @subject={{this.runningSubjectReport.subject}}
+      @prepositionalObject={{this.runningSubjectReport.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.runningSubjectReport.prepositionalObjectTableRowId}}
+      @school={{this.runningSubjectReport.school}}
+      @description={{this.runningSubjectReport.description}}
+      @year={{this.reportYear}}
+      @changeYear={{set this.reportYear}}
+    />
+  {{else}}
+    <div class="list">
+      {{#if (and this.subjectReportObjects this.subjectReportObjects.isResolved)}}
+        <Reports::Table
+          @decoratedReports={{this.filteredReports}}
+          @query={{@titleFilter}}
+          @sortBy={{@sortReportsBy}}
+          @setSortBy={{@setSortReportsBy}}
+          @remove={{perform this.removeReport}}
+        />
+      {{else}}
+        <Reports::ListLoading @count={{this.reportsCount}} />
+      {{/if}}
+    </div>
+  {{/if}}
 </section>

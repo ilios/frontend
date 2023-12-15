@@ -2,13 +2,12 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { isNone } from '@ember/utils';
 import PapaParse from 'papaparse';
 import { dropTask, timeout } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
 import createDownloadFile from 'ilios/utils/create-download-file';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { validatable, Length } from 'ilios-common/decorators/validation';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 @validatable
 export default class ReportsSubjectComponent extends Component {
@@ -20,13 +19,43 @@ export default class ReportsSubjectComponent extends Component {
   @tracked myReportEditorOn = false;
   @tracked @Length(1, 240) title = '';
 
-  @use constructedReportTitle = new AsyncProcess(() => [
-    this.constructReportTitle.bind(this),
-    this.args.report,
-  ]);
+  @cached
+  get reportTitleData() {
+    return new TrackedAsyncData(
+      this.reporting.buildReportTitle(
+        this.args.report.subject,
+        this.args.report.prepositionalObject,
+        this.args.report.prepositionalObjectTableRowId,
+        this.school,
+      ),
+    );
+  }
 
-  get constructedReportTitleLoaded() {
-    return !isNone(this.constructedReportTitle);
+  get reportDescriptionPromise() {
+    return this.reporting.buildReportDescription(
+      this.args.report.subject,
+      this.args.report.prepositionalObject,
+      this.args.report.prepositionalObjectTableRowId,
+      this.school,
+    );
+  }
+
+  @cached
+  get allSchools() {
+    return new TrackedAsyncData(this.store.findAll('school'));
+  }
+
+  get schoolsById() {
+    if (!this.allSchools.isResolved) {
+      return null;
+    }
+
+    const rhett = {};
+    this.allSchools.value.forEach((school) => {
+      rhett[school.id] = school;
+    });
+
+    return rhett;
   }
 
   get reportTitle() {
@@ -34,10 +63,17 @@ export default class ReportsSubjectComponent extends Component {
       return this.args.report.title;
     }
 
-    if (isNone(this.constructedReportTitle)) {
-      return '';
+    return this.reportTitleData.isResolved ? this.reportTitleData.value : null;
+  }
+
+  get school() {
+    if (this.args.report.school) {
+      const schoolId = this.args.report.belongsTo('school').id();
+
+      return this.schoolsById[schoolId];
     }
-    return this.constructedReportTitle;
+
+    return null;
   }
 
   @dropTask
@@ -55,10 +91,6 @@ export default class ReportsSubjectComponent extends Component {
   @action
   revertTitleChanges() {
     this.title = this.reportTitle;
-  }
-
-  async constructReportTitle(report) {
-    return this.reporting.buildReportTitle(report);
   }
 
   @dropTask

@@ -1,59 +1,69 @@
-<section
-  class="reports-subject"
-  data-test-reports-subject
-  ...attributes
->
-  <div class="back-to-reports" data-test-back-to-reports>
-    <LinkTo @route="reports">
-      {{t "general.backToReports"}}
-    </LinkTo>
-  </div>
-  <div class="header" data-test-report-header>
-    <h2 class="title" data-test-report-title>
-      {{#if this.constructedReportTitleLoaded}}
-        <EditableField
-          data-test-title
-          @value={{this.reportTitle}}
-          @save={{perform this.changeTitle}}
-          @close={{this.revertTitleChanges}}
-          @saveOnEnter={{true}}
-          @showIcon={{true}}
-          @closeOnEscape={{true}} as |isSaving|
-        >
-          <input
-            aria-label={{t "general.reportTitle"}}
-            type="text"
-            value={{this.reportTitle}}
-            placeholder={{this.constructedReportTitle}}
-            disabled={{isSaving}}
-            {{on "input" (pick "target.value" (set this.title))}}
-            {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-          >
-          <ValidationError @errors={{get-errors-for this.title}} />
-        </EditableField>
-      {{/if}}
-    </h2>
-    <div class="actions">
-      <button
-        type="button"
-        disabled={{this.downloadReport.isRunning}}
-        {{on "click" (perform this.downloadReport)}}
-        data-test-download
-      >
-        {{#if this.finishedBuildingReport}}
-          <FaIcon @icon="check" />
-        {{else if this.downloadReport.isRunning}}
-          <LoadingSpinner />
-        {{else}}
-          <FaIcon @icon="download" />
-        {{/if}}
-        {{t "general.downloadResults"}}
-      </button>
+{{#if this.allSchools.isResolved}}
+  <section
+    class="reports-subject"
+    data-test-reports-subject
+    ...attributes
+  >
+    <div class="back-to-reports" data-test-back-to-reports>
+      <LinkTo @route="reports">
+        {{t "general.backToReports"}}
+      </LinkTo>
     </div>
-  </div>
-  <Reports::SubjectResults
-    @report={{@report}}
-    @year={{@year}}
-    @changeYear={{@changeYear}}
-  />
-</section>
+    <div class="header" data-test-report-header>
+      <h2 class="title" data-test-report-title>
+        {{#if this.reportTitleData.isResolved}}
+          <EditableField
+            data-test-title
+            @value={{this.reportTitle}}
+            @save={{perform this.changeTitle}}
+            @close={{this.revertTitleChanges}}
+            @saveOnEnter={{true}}
+            @showIcon={{true}}
+            @closeOnEscape={{true}} as |isSaving|
+          >
+            <input
+              aria-label={{t "general.reportTitle"}}
+              type="text"
+              value={{this.reportTitle}}
+              placeholder={{this.constructedReportTitle}}
+              disabled={{isSaving}}
+              {{on "input" (pick "target.value" (set this.title))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+            >
+            <ValidationError @errors={{get-errors-for this.title}} />
+          </EditableField>
+        {{/if}}
+      </h2>
+      <div class="actions">
+        <button
+          type="button"
+          disabled={{this.downloadReport.isRunning}}
+          {{on "click" (perform this.downloadReport)}}
+          data-test-download
+        >
+          {{#if this.finishedBuildingReport}}
+            <FaIcon @icon="check" />
+          {{else if this.downloadReport.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            <FaIcon @icon="download" />
+          {{/if}}
+          {{t "general.downloadResults"}}
+        </button>
+      </div>
+    </div>
+    {{#let (load this.reportDescriptionPromise) as |p|}}
+      {{#if p.isResolved}}
+        <Reports::SubjectResults
+          @subject={{@report.subject}}
+          @prepositionalObject={{@report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{@report.prepositionalObjectTableRowId}}
+          @school={{this.school}}
+          @description={{p.value}}
+          @year={{@year}}
+          @changeYear={{@changeYear}}
+        />
+      {{/if}}
+    {{/let}}
+  </section>
+{{/if}}

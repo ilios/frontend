@@ -1,10 +1,6 @@
 <div class="content-container" data-test-subject-results>
   <div class="description" data-test-report-description>
-    {{#let (load this.reportDescriptionData) as |p|}}
-      {{#if p.isResolved}}
-        {{p.value}}
-      {{/if}}
-    {{/let}}
+    {{@description}}
   </div>
   {{#if this.showAcademicYearFilter}}
     <div class="years-filter">
@@ -32,7 +28,10 @@
     </div>
   {{/if}}
   <this.subjectComponent
-    @report={{@report}}
+    @subject={{@subject}}
+    @prepositionalObject={{@prepositionalObject}}
+    @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+    @school={{@school}}
     @year={{@year}}
   />
 </div>
