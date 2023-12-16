@@ -65,14 +65,14 @@ export default class ReportsListComponent extends Component {
             school = this.schoolsById[schoolId];
           }
 
-          const title =
-            report.title ??
-            (await this.reporting.buildReportTitle(
-              report.subject,
-              report.prepositionalObject,
-              report.prepositionalObjectTableRowId,
-              school,
-            ));
+          const title = report.title
+            ? report.title
+            : await this.reporting.buildReportTitle(
+                report.subject,
+                report.prepositionalObject,
+                report.prepositionalObjectTableRowId,
+                school,
+              );
 
           return {
             report,

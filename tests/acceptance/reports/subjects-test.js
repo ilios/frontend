@@ -377,4 +377,38 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.root.results.results.length, 1);
     assert.strictEqual(page.root.results.results[0].text, 'course 0: session 0');
   });
+
+  test('remove report title', async function (assert) {
+    assert.expect(6);
+    await page.visit();
+    this.server.post('api/graphql', () => {
+      //send wrong data back, who cares
+      return {
+        data: {
+          sessions: [],
+        },
+      };
+    });
+    await page.root.list.table.reports[1].select();
+    assert.strictEqual(currentURL(), '/reports/subjects/1');
+    assert.strictEqual(subjectReportPage.report.title.text, 'my report 0');
+    await subjectReportPage.report.title.edit();
+    await subjectReportPage.report.title.set('');
+    await subjectReportPage.report.title.save();
+    assert.strictEqual(
+      subjectReportPage.report.title.text,
+      'All Sessions for course 0 in school 0',
+    );
+    await page.visit();
+
+    assert.strictEqual(page.root.list.table.reports.length, 2);
+    assert.strictEqual(
+      page.root.list.table.reports[0].title,
+      'All Sessions for course 0 in school 0',
+    );
+    assert.strictEqual(
+      page.root.list.table.reports[1].title,
+      'All Sessions for term 0 in school 0',
+    );
+  });
 });
