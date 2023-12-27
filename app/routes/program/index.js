@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { all } from 'rsvp';
 
 export default class ProgramIndexRoute extends Route {

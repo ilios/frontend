@@ -1,4 +1,4 @@
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import EmberRouter from '@embroider/router';
 import config from 'ilios/config/environment';
 import { courseRoutes, dashboardRoutes } from 'ilios-common/common-routes';

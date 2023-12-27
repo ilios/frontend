@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
 import CoreObject from '@ember/object/core';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { all, filter } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';

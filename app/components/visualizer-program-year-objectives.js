@@ -3,7 +3,7 @@ import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerProgramYearObjectivesComponent extends Component {

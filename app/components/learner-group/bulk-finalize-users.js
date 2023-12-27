@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { dropTask, timeout } from 'ember-concurrency';
 import { all, map } from 'rsvp';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { findBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LearnergroupBulkFinalizeUsersComponent extends Component {

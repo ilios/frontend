@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { validatable, Length, Custom } from 'ilios-common/decorators/validation';
 import { TrackedAsyncData } from 'ember-async-data';

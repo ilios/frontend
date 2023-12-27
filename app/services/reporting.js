@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize, dasherize } from '@ember/string';
 import striptags from 'striptags';

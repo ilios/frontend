@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { isNone } from '@ember/utils';
 import { ensureSafeComponent } from '@embroider/util';
 import PapaParse from 'papaparse';

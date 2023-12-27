@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';

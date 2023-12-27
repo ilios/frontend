@@ -4,7 +4,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import PermissionChecker from 'ilios-common/classes/permission-checker';
 import { use } from 'ember-could-get-used-to-this';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class CurriculumInventoryReportListItemComponent extends Component {
   @service iliosConfig;

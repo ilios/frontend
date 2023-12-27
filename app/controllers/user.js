@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { filter } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { use } from 'ember-could-get-used-to-this';

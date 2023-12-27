@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
