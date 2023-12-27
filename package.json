@@ -156,7 +156,7 @@
   "private": true,
   "dependencies": {
     "ember-auto-import": "^2.6.3",
-    "moment": "^2.29.1",
+    "moment": "^2.30.0",
     "moment-timezone": "^0.5.42"
   }
 }
