@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import { getOwner } from '@ember/application';
 
 export default class ApiVersionService extends Service {

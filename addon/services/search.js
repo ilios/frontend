@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import { waitForPromise } from '@ember/test-waiters';
 
 export default class SearchService extends Service {

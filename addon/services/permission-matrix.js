@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class PermissionMatrixService extends Service {
