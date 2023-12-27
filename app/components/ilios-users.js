@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';

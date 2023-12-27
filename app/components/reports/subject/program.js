@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 

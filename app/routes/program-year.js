@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 
 export default class ProgramYearRoute extends Route {

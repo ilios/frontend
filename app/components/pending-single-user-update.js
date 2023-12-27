@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { all } from 'rsvp';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';

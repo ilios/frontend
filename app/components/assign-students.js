@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { all } from 'rsvp';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';

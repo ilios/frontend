@@ -4,7 +4,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class ProgramYearListComponent extends Component {
   @service store;

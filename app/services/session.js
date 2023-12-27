@@ -1,7 +1,7 @@
 import ESASessionService from 'ember-simple-auth/services/session';
 import config from 'ilios/config/environment';
 import * as Sentry from '@sentry/ember';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class SessionService extends ESASessionService {
   @service fetch;

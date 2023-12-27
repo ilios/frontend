@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';

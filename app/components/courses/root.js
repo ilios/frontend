@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import moment from 'moment';
 import { use } from 'ember-could-get-used-to-this';

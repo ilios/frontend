@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import PapaParse from 'papaparse';

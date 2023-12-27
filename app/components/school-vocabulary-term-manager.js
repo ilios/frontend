@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
