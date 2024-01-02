@@ -99,6 +99,7 @@ general:
   defaultInstructors: "Instructeurs par Défaut"
   defaultLocation: "Localisation par Défaut"
   defaultVirtualLearningLink: "Address d’Étude Virtuel par Défaut"
+  delete: Supprimer
   deleteCourse: "Supprimer le cours"
   departments: "Facultés"
   deselectUser: "Désélectionner l'utilisateur "

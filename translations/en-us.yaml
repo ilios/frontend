@@ -99,6 +99,7 @@ general:
   defaultInstructors: "Default Instructors"
   defaultLocation: "Default Location"
   defaultVirtualLearningLink: "Default Virtual Learning Link"
+  delete: Delete
   deleteCourse: "Delete Course"
   departments: Departments
   deselectUser: "Deselect User"
