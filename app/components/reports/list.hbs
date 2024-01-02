@@ -1,57 +1,70 @@
-<div
-  data-test-reports-list
-  ...attributes
->
-<table>
-  <thead>
-    <tr data-test-report-headings>
-      <SortableTh
-        data-test-report-title-heading
-        @sortedAscending={{this.sortedAscending}}
-        @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
-        @onClick={{fn this.setSortBy "title"}}
-      >
-        {{t "general.title"}}
-      </SortableTh>
-      <th class="text-right">{{t "general.actions"}}</th>
-    </tr>
-  </thead>
-  <tbody data-test-reports>
-    {{#each (sort-by @sortBy @decoratedReports) as |decoratedReport|}}
-      <Reports::ListItem
-        @decoratedReport={{decoratedReport}}
-        @reportsForRemovalConfirmation={{this.reportsForRemovalConfirmation}}
-        @confirmRemoval={{this.confirmRemoval}}
-      />
-      {{#if (includes decoratedReport.report.id this.reportsForRemovalConfirmation)}}
-        <tr class="confirm-removal">
-          <td colspan="2">
-            <div class="confirm-message">
-              {{t "general.reportConfirmRemove"}}
-              <br>
-              <div class="confirm-buttons">
-                <button {{on "click" (fn @remove decoratedReport.report)}} type="button" class="remove text">
-                  {{t "general.yes"}}
-                </button>
-                <button
-                  type="button"
-                  class="done text"
-                  {{on "click" (fn this.cancelRemove decoratedReport.report)}}
-                >
-                  {{t "general.cancel"}}
-                </button>
-              </div>
-            </div>
-          </td>
-        </tr>
-      {{/if}}
-    {{else}}
-      <tr data-test-empty-list>
-        <td>
-          {{if @query (t "general.noResultsFound") (t "general.none")}}
-        </td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+<div class="filters">
+  <div class="title-filter">
+    <input
+      value={{@titleFilter}}
+      {{on "input" (pick "target.value" @changeTitleFilter)}}
+      aria-label={{t "general.filterByTitle"}}
+      placeholder={{t "general.filterByTitle"}}
+      data-test-title-filter
+    >
+  </div>
 </div>
+<section class="reports">
+  <div class="header">
+    <h2 data-test-courses-header-title class="title">
+      {{t "general.reports"}}
+      ({{this.filteredReports.length}})
+    </h2>
+    <div class="actions">
+      <ExpandCollapseButton
+        @value={{this.showNewReportForm}}
+        @action={{this.toggleNewReportForm}}
+        @expandButtonLabel={{t "general.newReport"}}
+        @collapseButtonLabel={{t "general.close"}}
+      />
+    </div>
+  </div>
+  <section class="new">
+    {{#if this.showNewReportForm}}
+      <Reports::NewSubject
+        @save={{perform this.saveNewSubjectReport}}
+        @close={{this.toggleNewReportForm}}
+        @run={{perform this.runSubjectReport}}
+      />
+    {{/if}}
+    {{#if this.newReport}}
+      <div class="saved-result" data-test-newly-saved-report>
+        <LinkTo @route="subject-report" @model={{this.newReport.report}} @query={{hash reportYear=null}} data-test-report-title>
+          <FaIcon @icon="square-up-right" />
+          {{this.newReport.title}}
+        </LinkTo>
+        {{t "general.savedSuccessfully"}}
+      </div>
+    {{/if}}
+  </section>
+  {{#if this.runningSubjectReport}}
+    <Reports::SubjectResults
+      @subject={{this.runningSubjectReport.subject}}
+      @prepositionalObject={{this.runningSubjectReport.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.runningSubjectReport.prepositionalObjectTableRowId}}
+      @school={{this.runningSubjectReport.school}}
+      @description={{this.runningSubjectReport.description}}
+      @year={{this.reportYear}}
+      @changeYear={{set this.reportYear}}
+    />
+  {{else}}
+    <div class="list">
+      {{#if (and this.subjectReportObjects this.subjectReportObjects.isResolved)}}
+        <Reports::Table
+          @decoratedReports={{this.filteredReports}}
+          @query={{@titleFilter}}
+          @sortBy={{@sortReportsBy}}
+          @setSortBy={{@setSortReportsBy}}
+          @remove={{perform this.removeReport}}
+        />
+      {{else}}
+        <Reports::ListLoading @count={{this.reportsCount}} />
+      {{/if}}
+    </div>
+  {{/if}}
+</section>

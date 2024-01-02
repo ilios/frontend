@@ -18,7 +18,7 @@
             type="text"
             value={{this.title}}
             {{on "focusout" (fn this.addErrorDisplayFor "title")}}
-            {{on "input" (pick "target.value" (set this.title))}}
+            {{on "input" (pick "target.value" (set this.selectedTitle))}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
           >
           <ValidationError @errors={{get-errors-for this.title}} />
@@ -54,7 +54,7 @@
           {{on "change" (pick "target.value" this.changeSubject)}}
         >
           {{#each this.subjectList as |o|}}
-            <option value={{o.value}} selected={{eq o.value this.currentSubject}}>
+            <option value={{o.value}} selected={{eq o.value this.subject}}>
               {{o.label}}
             </option>
           {{/each}}
@@ -68,28 +68,37 @@
           id="associated-{{templateId}}"
           {{on "change" (pick "target.value" this.changePrepositionalObject)}}
         >
-          <option value="" selected={{eq null this.currentPrepositionalObject}}>
+          <option value="" selected={{eq null this.prepositionalObject}}>
             {{t "general.anything"}}
           </option>
           {{#each this.prepositionalObjectList as |o|}}
             <option
               value={{o.value}}
-              selected={{eq o.value this.currentPrepositionalObject}}
+              selected={{eq o.value this.prepositionalObject}}
             >
               {{o.label}}
             </option>
           {{/each}}
         </select>
-        <ValidationError @errors={{get-errors-for this.currentPrepositionalObject}} />
+        <ValidationError @errors={{get-errors-for this.prepositionalObject}} />
       </p>
       <this.newPrepositionalObjectComponent
         @school={{this.currentSchool}}
         @templateId={{templateId}}
-        @currentId={{this.currentPrepositionalObjectId}}
-        @changeId={{set this.currentPrepositionalObjectId}}
+        @currentId={{this.prepositionalObjectId}}
+        @changeId={{set this.selectedPrepositionalObjectId}}
       />
-      <ValidationError @errors={{get-errors-for this.currentPrepositionalObjectId}} data-test-validation-error />
+      <ValidationError @errors={{get-errors-for this.prepositionalObjectId}} data-test-validation-error />
       <div class="input-buttons">
+        <button
+          type="button"
+          class="done text"
+          {{on "click" (perform this.run)}}
+          disabled={{this.run.isRunning}}
+          data-test-run
+        >
+          {{t "general.runReport"}}
+        </button>
         <button
           type="button"
           class="done text"

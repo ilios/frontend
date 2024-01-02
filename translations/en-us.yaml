@@ -344,6 +344,7 @@ general:
   requiredInTrack: "Required In Track"
   resourceTypes: "Resource Types"
   root: Root
+  runReport: Run Report
   sampleFile: "Sample File"
   saved: "New User Saved Successfully"
   schoolName: "School Name"

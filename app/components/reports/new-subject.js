@@ -27,23 +27,34 @@ export default class ReportsNewSubjectComponent extends Component {
   @service store;
   @service dataLoader;
 
-  @Custom(
-    'validateCurrentPrepositionalObjectCallback',
-    'validateCurrentPrepositionalObjectMessageCallback',
-  )
-  @tracked
-  currentPrepositionalObject = null;
-  @Custom(
-    'validateCurrentPrepositionalObjectIdCallback',
-    'validateCurrentPrepositionalObjectIdMessageCallback',
-  )
-  @tracked
-  currentPrepositionalObjectId = null;
-  @tracked currentSubject = 'course';
+  @tracked selectedPrepositionalObject;
+  @tracked selectedSubject;
+  @tracked selectedPrepositionalObjectId;
+  @tracked selectedTitle;
+
   @tracked isSaving = false;
   @tracked selectedSchool = null;
   @tracked schoolChanged = false;
-  @tracked @Length(1, 240) title;
+
+  @Custom('validatePrepositionalObjectCallback', 'validatePrepositionalObjectMessageCallback')
+  get prepositionalObject() {
+    return this.selectedPrepositionalObject ?? this.args.report?.prepositionalObject;
+  }
+
+  @Custom('validatePrepositionalObjectIdCallback', 'validatePrepositionalObjectIdMessageCallback')
+  get prepositionalObjectId() {
+    return this.selectedPrepositionalObjectId ?? this.args.report?.prepositionalObjectTableRowId;
+  }
+
+  get subject() {
+    return this.selectedSubject ?? this.args.report?.subject ?? 'course';
+  }
+
+  @Length(1, 240)
+  get title() {
+    return this.selectedTitle ?? this.args.report?.title;
+  }
+
   subjectList = [
     { value: 'course', label: this.intl.t('general.courses') },
     { value: 'session', label: this.intl.t('general.sessions') },
@@ -190,7 +201,7 @@ export default class ReportsNewSubjectComponent extends Component {
   }
 
   get newPrepositionalObjectComponent() {
-    switch (this.currentPrepositionalObject) {
+    switch (this.prepositionalObject) {
       case 'competency':
         return ensureSafeComponent(NewCompetencyComponent, this);
       case 'course':
@@ -219,33 +230,15 @@ export default class ReportsNewSubjectComponent extends Component {
   }
 
   get prepositionalObjectList() {
-    return this.fullPrepositionalObjectList.filter((item) =>
-      item.subjects.includes(this.currentSubject),
-    );
+    return this.fullPrepositionalObjectList.filter((item) => item.subjects.includes(this.subject));
   }
 
-  get currentSubjectLabel() {
-    const currentSubject = this.subjectList.find((subject) => {
-      return subject.value === this.currentSubject;
+  get subjectLabel() {
+    const subject = this.subjectList.find((subject) => {
+      return subject.value === this.subject;
     });
 
-    return currentSubject.label;
-  }
-
-  get selectedUser() {
-    if (this.currentPrepositionalObject === 'instructor' && this.currentPrepositionalObjectId) {
-      return this.store.peekRecord('user', this.currentPrepositionalObjectId);
-    } else {
-      return null;
-    }
-  }
-
-  get selectedMeshTerm() {
-    if (this.currentPrepositionalObject === 'mesh term' && this.currentPrepositionalObjectId) {
-      return this.store.peekRecord('mesh-descriptor', this.currentPrepositionalObjectId);
-    } else {
-      return null;
-    }
+    return subject.label;
   }
 
   get currentSchool() {
@@ -263,16 +256,16 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @action
   changeSubject(subject) {
-    this.currentSubject = subject;
-    this.currentPrepositionalObject = null;
-    this.currentPrepositionalObjectId = null;
+    this.selectedSubject = subject;
+    this.selectedPrepositionalObject = null;
+    this.selectedPrepositionalObjectId = null;
     this.clearErrorDisplay();
   }
 
   @action
   changePrepositionalObject(object) {
-    this.currentPrepositionalObject = object;
-    this.currentPrepositionalObjectId = null;
+    this.selectedPrepositionalObject = object;
+    this.selectedPrepositionalObjectId = null;
     this.clearErrorDisplay();
   }
 
@@ -291,11 +284,7 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @dropTask
   *save() {
-    this.addErrorDisplaysFor([
-      'title',
-      'currentPrepositionalObject',
-      'currentPrepositionalObjectId',
-    ]);
+    this.addErrorDisplaysFor(['title', 'prepositionalObject', 'prepositionalObjectId']);
     const isValid = yield this.isValid();
     if (!isValid) {
       return false;
@@ -305,12 +294,29 @@ export default class ReportsNewSubjectComponent extends Component {
     const report = this.store.createRecord('report', {
       title: this.title,
       user: this.userModel,
-      subject: this.currentSubject,
-      prepositionalObject: this.currentPrepositionalObject,
-      prepositionalObjectTableRowId: this.currentPrepositionalObjectId,
+      subject: this.subject,
+      prepositionalObject: this.prepositionalObject,
+      prepositionalObjectTableRowId: this.prepositionalObjectId,
       school: this.currentSchool,
     });
     yield this.args.save(report);
+  }
+
+  @dropTask
+  *run() {
+    this.addErrorDisplaysFor(['title', 'prepositionalObject', 'prepositionalObjectId']);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.clearErrorDisplay();
+
+    this.args.run(
+      this.subject,
+      this.prepositionalObject,
+      this.prepositionalObjectId,
+      this.currentSchool,
+    );
   }
 
   @action
@@ -320,37 +326,37 @@ export default class ReportsNewSubjectComponent extends Component {
   }
 
   @action
-  validateCurrentPrepositionalObjectIdCallback() {
-    return !(this.currentPrepositionalObject && !this.currentPrepositionalObjectId);
+  validatePrepositionalObjectIdCallback() {
+    return !(this.prepositionalObject && !this.prepositionalObjectId);
   }
 
   @action
-  validateCurrentPrepositionalObjectIdMessageCallback() {
-    if (this.currentPrepositionalObject && !this.currentPrepositionalObjectId) {
-      if (this.currentPrepositionalObject === 'instructor') {
+  validatePrepositionalObjectIdMessageCallback() {
+    if (this.prepositionalObject && !this.prepositionalObjectId) {
+      if (this.prepositionalObject === 'instructor') {
         return this.intl.t('errors.reportMissingInstructor');
       }
-      if (this.currentPrepositionalObject === 'mesh term') {
+      if (this.prepositionalObject === 'mesh term') {
         return this.intl.t('errors.reportMissingMeshTerm');
       }
     }
   }
 
   @action
-  validateCurrentPrepositionalObjectCallback() {
-    if (this.currentSubject && !this.currentPrepositionalObject) {
-      return !['instructor', 'mesh term'].includes(this.currentSubject);
+  validatePrepositionalObjectCallback() {
+    if (this.subject && !this.prepositionalObject) {
+      return !['instructor', 'mesh term'].includes(this.subject);
     }
     return true;
   }
 
   @action
-  validateCurrentPrepositionalObjectMessageCallback() {
-    if (this.currentSubject && !this.currentPrepositionalObject) {
-      if (this.currentSubject === 'instructor') {
+  validatePrepositionalObjectMessageCallback() {
+    if (this.subject && !this.prepositionalObject) {
+      if (this.subject === 'instructor') {
         return this.intl.t('errors.reportMissingObjectForInstructor');
       }
-      if (this.currentSubject === 'mesh term') {
+      if (this.subject === 'mesh term') {
         return this.intl.t('errors.reportMissingObjectForMeshTerm');
       }
     }

@@ -9,7 +9,13 @@ import { sortBy } from 'ilios-common/utils/array-helpers';
 export default class ReportsSubjectTermComponent extends Component {
   @service graphql;
 
-  @use data = new AsyncProcess(() => [this.getReportResults.bind(this), this.args.report]);
+  @use data = new AsyncProcess(() => [
+    this.getReportResults.bind(this),
+    this.args.subject,
+    this.args.prepositionalObject,
+    this.args.prepositionalObjectTableRowId,
+    this.args.school,
+  ]);
 
   get finishedLoading() {
     return Array.isArray(this.data);
@@ -19,14 +25,10 @@ export default class ReportsSubjectTermComponent extends Component {
     return sortBy(this.data, ['vocabulary.title', 'title']);
   }
 
-  async getReportResults(report) {
-    const { subject, prepositionalObject, prepositionalObjectTableRowId } = report;
-
+  async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     if (subject !== 'term') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectTermComponent`);
     }
-
-    const school = await report.school;
 
     let filters = [];
     if (school) {

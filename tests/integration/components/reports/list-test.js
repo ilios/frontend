@@ -29,29 +29,43 @@ module('Integration | Component | reports/list', function (hooks) {
       user: this.user,
     });
 
-    const reportModels = await this.owner.lookup('service:store').findAll('report');
-
-    this.set(
-      'decoratedReports',
-      reportModels.map((report) => {
-        return {
-          report,
-          title: `${report.id} report`,
-          type: 'subject',
-        };
-      }),
-    );
     await render(hbs`<Reports::List
-      @decoratedReports={{this.decoratedReports}}
-      @query={{null}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-      @remove={{(noop)}}
+      @sortReportsBy="title"
+      @setSortReportsBy={{(noop)}}
+      @titleFilter=""
+      @changeTitleFilter={{(noop)}}
     />`);
 
-    assert.strictEqual(component.reports.length, 2);
+    assert.strictEqual(component.table.reports.length, 2);
+    assert.strictEqual(component.table.reports[0].title, 'All Courses in All Schools');
+    assert.strictEqual(component.table.reports[1].title, 'All Sessions in All Schools');
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders empty', async function (assert) {
+    await render(hbs`<Reports::Root
+      @sortReportsBy="title"
+      @setSortReportsBy={{(noop)}}
+      @titleFilter=""
+      @changeTitleFilter={{(noop)}}
+    />`);
+    assert.ok(component.table.emptyListRow.isVisible);
+    a11yAudit(this.element);
+  });
+
+  test('toggle new report form', async function (assert) {
+    await render(hbs`<Reports::Root
+      @sortReportsBy="title"
+      @setSortReportsBy={{(noop)}}
+      @titleFilter=""
+      @changeTitleFilter={{(noop)}}
+    />`);
+    assert.notOk(component.newSubject.isVisible);
+    await component.toggleNewSubjectReportForm();
+    assert.ok(component.newSubject.isVisible);
+    await component.toggleNewSubjectReportForm();
+    assert.notOk(component.newSubject.isVisible);
   });
 });

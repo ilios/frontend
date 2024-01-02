@@ -31,7 +31,11 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       subject: 'mesh term',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
-    await render(hbs`<Reports::Subject::MeshTerm @report={{this.report}} />`);
+    await render(hbs`<Reports::Subject::MeshTerm
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+    />`);
 
     assert.strictEqual(component.results.length, 2);
     assert.strictEqual(component.results[0].name, 'first Term');
@@ -50,7 +54,13 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       school: this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
-    await render(hbs`<Reports::Subject::MeshTerm @report={{this.report}} />`);
+    this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
+    await render(hbs`<Reports::Subject::MeshTerm
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+      @school={{this.school}}
+    />`);
   });
 
   test('filter by session', async function (assert) {
@@ -66,7 +76,11 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       prepositionalObjectTableRowId: 13,
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
-    await render(hbs`<Reports::Subject::MeshTerm @report={{this.report}} />`);
+    await render(hbs`<Reports::Subject::MeshTerm
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+    />`);
   });
 
   test('filter by school and session', async function (assert) {
@@ -86,6 +100,12 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       prepositionalObjectTableRowId: 13,
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
-    await render(hbs`<Reports::Subject::MeshTerm @report={{this.report}} />`);
+    this.set('school', await this.owner.lookup('service:store').findRecord('school', 24));
+    await render(hbs`<Reports::Subject::MeshTerm
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+      @school={{this.school}}
+    />`);
   });
 });

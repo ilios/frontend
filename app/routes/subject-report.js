@@ -15,7 +15,15 @@ export default class ReportsSubjectRoute extends Route {
   }
 
   async afterModel(report) {
-    await this.reporting.buildReportDescription(report);
-    await this.reporting.buildReportTitle(report);
+    await this.reporting.buildReportDescription(
+      report.subject,
+      report.prepositionalObject,
+      report.prepositionalObjectTableRowId,
+    );
+    await this.reporting.buildReportTitle(
+      report.subject,
+      report.prepositionalObject,
+      report.prepositionalObjectTableRowId,
+    );
   }
 }

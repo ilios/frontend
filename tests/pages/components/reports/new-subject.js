@@ -59,6 +59,7 @@ const definition = {
   errors: collection('[data-test-validation-error]'),
   cancel: clickable('[data-test-cancel]'),
   save: clickable('[data-test-save]'),
+  run: clickable('[data-test-run]'),
 };
 
 export default definition;

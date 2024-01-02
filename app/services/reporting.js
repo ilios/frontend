@@ -241,10 +241,15 @@ export default class ReportingService extends Service {
     return [[this.intl.t('general.vocabulary')]].concat(titles);
   }
 
-  async buildReportTitle(report) {
+  async buildReportTitle(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     try {
-      const props = await this.getDescriptiveProperties(report);
-      return report.prepositionalObject
+      const props = await this.getDescriptiveProperties(
+        subject,
+        prepositionalObject,
+        prepositionalObjectTableRowId,
+        school,
+      );
+      return prepositionalObject
         ? this.intl.t('general.reportDisplayTitleWithObject', props)
         : this.intl.t('general.reportDisplayTitleWithoutObject', props);
     } catch (e) {
@@ -252,10 +257,20 @@ export default class ReportingService extends Service {
     }
   }
 
-  async buildReportDescription(report) {
+  async buildReportDescription(
+    subject,
+    prepositionalObject,
+    prepositionalObjectTableRowId,
+    school,
+  ) {
     try {
-      const props = await this.getDescriptiveProperties(report);
-      return report.prepositionalObject
+      const props = await this.getDescriptiveProperties(
+        subject,
+        prepositionalObject,
+        prepositionalObjectTableRowId,
+        school,
+      );
+      return prepositionalObject
         ? this.intl.t('general.reportDisplayDescriptionWithObject', props)
         : this.intl.t('general.reportDisplayDescriptionWithoutObject', props);
     } catch (e) {
@@ -265,16 +280,16 @@ export default class ReportingService extends Service {
 
   /**
    * Utility method that powers buildReportDescription() and buildReportTitle()
-   * @throws Exception
-   * @return Object
    */
-  async getDescriptiveProperties(report) {
-    const subject = report.subject;
+  async getDescriptiveProperties(
+    subject,
+    prepositionalObject,
+    prepositionalObjectTableRowId,
+    school,
+  ) {
     const subjectKey = subjectTranslations[subject];
     const subjectTranslation = this.intl.t(subjectKey);
-    const prepositionalObject = report.prepositionalObject;
 
-    const school = await report.school;
     const schoolTitle = school ? school.title : this.intl.t('general.allSchools');
 
     if (prepositionalObject) {
@@ -285,8 +300,6 @@ export default class ReportingService extends Service {
       if (model === 'mesh-term') {
         model = 'mesh-descriptor';
       }
-
-      const prepositionalObjectTableRowId = report.get('prepositionalObjectTableRowId');
 
       const record = await this.store.findRecord(model, prepositionalObjectTableRowId);
       const objectKey = objectTranslations[prepositionalObject];
