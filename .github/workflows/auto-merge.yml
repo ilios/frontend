@@ -14,7 +14,6 @@ jobs:
         - "@formatjs/intl-locale"
         - "@formatjs/intl-pluralrules"
         - "@formatjs/intl-relativetimeformat"
-        - "@fortawesome"
         - "@percy/cli"
         - "@percy/ember"
         - "broccoli-file-creator"

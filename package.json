@@ -38,10 +38,6 @@
     "@ember/string": "^3.1.1",
     "@embroider/macros": "^1.8.3",
     "@embroider/util": "^1.0.0",
-    "@fortawesome/ember-fontawesome": "^1.0.0",
-    "@fortawesome/free-brands-svg-icons": ">= 6.4.0",
-    "@fortawesome/free-regular-svg-icons": ">= 6.4.0",
-    "@fortawesome/free-solid-svg-icons": ">= 6.4.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "@popperjs/core": ">= 2.1.0",
@@ -93,9 +89,6 @@
     "validator": ">= 13.1.0"
   },
   "peerDependencies": {
-    "@fortawesome/free-brands-svg-icons": ">= 6.4.0",
-    "@fortawesome/free-regular-svg-icons": ">= 6.4.0",
-    "@fortawesome/free-solid-svg-icons": ">= 6.4.0",
     "@popperjs/core": ">= 2.1.0",
     "class-validator": ">= 0.14.0",
     "ember-source": ">= 4.0.0",

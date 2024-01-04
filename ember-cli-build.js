@@ -2,6 +2,7 @@
 /* eslint camelcase: 0 */
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options');
 
 module.exports = function (defaults) {
   const app = new EmberAddon(defaults, {
@@ -17,6 +18,9 @@ module.exports = function (defaults) {
     },
     'ember-simple-auth': {
       useSessionSetupMethod: true, //can be removed in ESA v5.x
+    },
+    fingerprint: {
+      extensions: broccoliAssetRevDefaults.extensions.concat(['svg']),
     },
   });
 
