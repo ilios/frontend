@@ -25,10 +25,6 @@ module.exports = function (environment) {
         'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
       },
     },
-    fontawesome: {
-      enableExperimentalBuildTimeTransform: false,
-      defaultPrefix: 'fas',
-    },
     'ember-a11y-testing': {
       componentOptions: {
         turnAuditOff: process.env.SKIP_A11Y || false,

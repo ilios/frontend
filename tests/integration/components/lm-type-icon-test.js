@@ -116,7 +116,7 @@ module('Integration | Component | lm type icon', function (hooks) {
     this.set('lm', lm);
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{true}} />
 `);
-    assert.dom('.fa-li').exists();
+    assert.dom('.list-item').exists();
   });
 
   test('no listItem', async function (assert) {
@@ -126,13 +126,13 @@ module('Integration | Component | lm type icon', function (hooks) {
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
 `);
     assert.strictEqual(
-      this.element.querySelectorAll('.fa-li').length,
+      this.element.querySelectorAll('.list-item').length,
       0,
       'List icon class is not applied by default.',
     );
 
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{false}} />
 `);
-    assert.dom('.fa-li').doesNotExist();
+    assert.dom('.list-item').doesNotExist();
   });
 });
