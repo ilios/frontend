@@ -30,4 +30,22 @@ module('Acceptance | FourOhFour', function (hooks) {
     await visit('/nothing');
     assert.strictEqual(currentRouteName(), 'four-oh-four');
   });
+
+  test('visiting missing course', async function (assert) {
+    await visit('/courses/1337');
+    assert
+      .dom('.full-screen-error')
+      .hasText(
+        "Rats! I couldn't find that. Please check your page address, and try again. Back to Dashboard",
+      );
+  });
+
+  test('visiting missing report #5127', async function (assert) {
+    await visit('/reports/subjects/1989');
+    assert
+      .dom('.full-screen-error')
+      .hasText(
+        "Rats! I couldn't find that. Please check your page address, and try again. Back to Dashboard",
+      );
+  });
 });
