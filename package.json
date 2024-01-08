@@ -43,7 +43,7 @@
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "@ilios/ember-template-lint-plugin": "^3.0.0",
-    "@percy/cli": "^1.27.5",
+    "@percy/cli": "^1.27.7",
     "@percy/ember": "^4.2.0",
     "@sentry/ember": "7.92.0",
     "broccoli-asset-rev": "^3.0.0",
