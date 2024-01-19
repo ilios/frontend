@@ -21,7 +21,7 @@ export default class TimezoneService extends Service {
    * @returns {string}
    */
   getCurrentTimezone() {
-    return DateTime.local().zoneName;
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 
   /**
