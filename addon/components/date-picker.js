@@ -3,9 +3,8 @@ import { service } from '@ember/service';
 import { dropTask, restartableTask, waitForProperty } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import flatpickr from 'flatpickr';
-import { later } from '@ember/runloop';
+import { later, next } from '@ember/runloop';
 import { isTesting } from '@embroider/macros';
-import { next } from '@ember/runloop';
 
 export default class DatePickerComponent extends Component {
   @service intl;

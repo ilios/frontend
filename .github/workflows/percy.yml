@@ -27,15 +27,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: npm
-      - name: install dependencies
-        run: npm ci
+          cache: pnpm
+      - run: pnpm install
       - name: Run Percy Tests
-        run: npm run test:percy
+        run: pnpm run test:percy
       - uses: act10ns/slack@v2
         if: failure()
         with:

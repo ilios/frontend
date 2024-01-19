@@ -263,7 +263,7 @@ module('Integration | Component | course rollover', function (hooks) {
     const course = this.server.create('course', {
       title: 'old course',
       school,
-      startDate: courseStartDate.toJSDate(),
+      startDate: courseStartDate.toFormat('yyyy-MM-dd'),
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
@@ -280,10 +280,10 @@ module('Integration | Component | course rollover', function (hooks) {
       );
     });
     await render(hbs`<CourseRollover
-      @course={{this.course}}
-      @visit={{(noop)}}
-    />
-`);
+        @course={{this.course}}
+        @visit={{(noop)}}
+      />
+    `);
     const advancedOptions = '.advanced-options';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
     await fillIn('[data-test-year]', courseStartDate.year);
@@ -330,7 +330,7 @@ module('Integration | Component | course rollover', function (hooks) {
     const course = this.server.create('course', {
       title: 'test title',
       school,
-      startDate: courseStartDate.toJSDate(),
+      startDate: courseStartDate.toFormat('yyyy-MM-dd'),
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
