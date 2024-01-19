@@ -6,7 +6,6 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/course-overview';
-import { DateTime } from 'luxon';
 
 module('Integration | Component | course overview', function (hooks) {
   setupRenderingTest(hooks);
@@ -63,36 +62,33 @@ module('Integration | Component | course overview', function (hooks) {
 
   test('start date validation fails when after end date', async function (assert) {
     const course = this.server.create('course', {
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
+      startDate: '2024-01-01',
+      endDate: '2024-06-30',
     });
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />
-`);
+    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.startDate.isVisible);
     await component.startDate.edit();
     assert.notOk(component.startDate.hasError);
-    await component.startDate.datePicker.set(DateTime.now().plus({ day: 1 }).toJSDate());
+    await component.startDate.datePicker.set('2024-08-01');
     await component.startDate.save();
     assert.ok(component.startDate.hasError);
   });
 
   test('end date validation fails when before start date', async function (assert) {
     const course = this.server.create('course', {
-      startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
-      endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
+      startDate: '2024-01-01',
+      endDate: '2024-06-30',
     });
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />
-`);
-
+    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
     assert.ok(component.endDate.isVisible);
     await component.endDate.edit();
     assert.notOk(component.endDate.hasError);
-    await component.endDate.datePicker.set(DateTime.fromObject({ hour: 7 }).toJSDate());
+    await component.endDate.datePicker.set('2023-12-11');
     await component.endDate.save();
     assert.ok(component.endDate.hasError);
   });

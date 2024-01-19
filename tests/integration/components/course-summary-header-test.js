@@ -46,8 +46,7 @@ module('Integration | Component | course summary header', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseSummaryHeader @course={{this.course}} />
-`);
+    await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
     const title = 'h2';
     const actions = '.course-summary-actions';
     const materialsIcon = `${actions} a:nth-of-type(1) svg`;
@@ -64,9 +63,9 @@ module('Integration | Component | course summary header', function (hooks) {
     assert.dom(materialsIcon).hasClass('fa-box-archive');
     assert.dom(printIcon).hasClass('fa-print');
     assert.dom(rolloverIcon).hasClass('fa-shuffle');
-    assert.dom(start).hasText(this.intl.formatDate(course.startDate));
+    assert.dom(start).hasText('6/24/2005');
     assert.dom(externalId).hasText('abc');
-    assert.dom(end).hasText(this.intl.formatDate(course.endDate));
+    assert.dom(end).hasText('8/12/2005');
     assert.dom(level).hasText('3');
     assert.dom(status).hasText('Published');
   });

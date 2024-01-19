@@ -13,33 +13,34 @@ module('Integration | Component | course/rollover-date-picker', function (hooks)
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    const course = this.server.create('course');
+    const course = this.server.create('course', {
+      startDate: '2019-05-06',
+    });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{(noop)}} />
-`);
-    assert.dom('input').hasValue(this.intl.formatDate(course.startDate));
+    await render(hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{(noop)}} />`);
+    assert.dom('input').hasValue('5/6/2019');
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
   });
 
   test('onChange callback is invoked', async function (assert) {
-    assert.expect(1);
-    const date = DateTime.fromObject({ year: 2020, month: 5, day: 6, hour: 8 });
-    const newDate = date.plus({ days: 7 });
+    assert.expect(3);
     const course = this.server.create('course', {
-      startDate: date.toJSDate(),
+      startDate: '2020-05-06',
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     this.set('change', (changedDate) => {
-      assert.strictEqual(newDate.toMillis(), changedDate.getTime());
+      const { year, month, day } = DateTime.fromJSDate(changedDate);
+      assert.strictEqual(year, 2020);
+      assert.strictEqual(month, 5);
+      assert.strictEqual(day, 13);
     });
     await render(
-      hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{this.change}} />
-`,
+      hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{this.change}} />`,
     );
     const element = find('input');
-    element._flatpickr.setDate(newDate.toJSDate(), true);
+    element._flatpickr.setDate('2020-05-13', true);
   });
 });

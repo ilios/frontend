@@ -4,7 +4,6 @@ import { setupApplicationTest } from 'dummy/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import { t } from 'ember-intl/test-support';
 import page from 'ilios-common/page-objects/course';
-import { DateTime } from 'luxon';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Overview', function (hooks) {
@@ -171,48 +170,35 @@ module('Acceptance | Course - Overview', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
-      startDate: DateTime.local(2013, 3, 23).toJSDate(),
-      endDate: DateTime.local(2015, 4, 22).toJSDate(),
+      startDate: '2013-03-23',
+      endDate: '2015-04-22',
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    const newDate = DateTime.fromJSDate(course.startDate).plus({ years: 1, months: 1 }).toJSDate();
-    assert.strictEqual(
-      page.details.overview.startDate.text,
-      'Start: ' + this.intl.formatDate(course.startDate),
-    );
+    assert.strictEqual(page.details.overview.startDate.text, 'Start: 3/23/2013');
     await page.details.overview.startDate.edit();
-    assert.strictEqual(
-      page.details.overview.startDate.datePicker.value,
-      this.intl.formatDate(course.startDate),
-    );
-    await page.details.overview.startDate.datePicker.set(newDate);
+    assert.strictEqual(page.details.overview.startDate.datePicker.value, '3/23/2013');
+    await page.details.overview.startDate.datePicker.set('2013-04-23');
     await page.details.overview.startDate.save();
-    assert.strictEqual(
-      page.details.overview.startDate.text,
-      'Start: ' + this.intl.formatDate(newDate),
-    );
+    assert.strictEqual(page.details.overview.startDate.text, 'Start: 4/23/2013');
   });
 
   test('start date validation', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
-      startDate: DateTime.local(2013, 3, 23).toJSDate(),
-      endDate: DateTime.local(2013, 4, 22).toJSDate(),
+      startDate: '2013-03-23',
+      endDate: '2013-04-22',
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    const startDate = this.intl.formatDate(courseModel.startDate);
-    const newDate = DateTime.fromJSDate(courseModel.startDate).plus({ years: 1 }).toJSDate();
-
-    assert.strictEqual(page.details.overview.startDate.text, `Start: ${startDate}`);
+    assert.strictEqual(page.details.overview.startDate.text, `Start: 3/23/2013`);
     assert.notOk(page.details.overview.startDate.hasError);
     await page.details.overview.startDate.edit();
-    assert.strictEqual(page.details.overview.startDate.datePicker.value, startDate);
-    await page.details.overview.startDate.datePicker.set(newDate);
+    assert.strictEqual(page.details.overview.startDate.datePicker.value, '3/23/2013');
+    await page.details.overview.startDate.datePicker.set('2014-03-23');
     await page.details.overview.startDate.save();
     assert.ok(page.details.overview.startDate.hasError);
   });
@@ -221,41 +207,35 @@ module('Acceptance | Course - Overview', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
-      startDate: DateTime.local(2013, 3, 23).toJSDate(),
-      endDate: DateTime.local(2015, 4, 22).toJSDate(),
+      startDate: '2013-03-23',
+      endDate: '2015-04-22',
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    const endDate = this.intl.formatDate(courseModel.endDate);
-    const newDate = DateTime.fromJSDate(course.endDate).plus({ years: 1, months: 1 }).toJSDate();
-
-    assert.strictEqual(page.details.overview.endDate.text, `End: ${endDate}`);
+    assert.strictEqual(page.details.overview.endDate.text, `End: 4/22/2015`);
     await page.details.overview.endDate.edit();
-    assert.strictEqual(page.details.overview.endDate.datePicker.value, endDate);
-    await page.details.overview.endDate.datePicker.set(newDate);
+    assert.strictEqual(page.details.overview.endDate.datePicker.value, '4/22/2015');
+    await page.details.overview.endDate.datePicker.set('2016-05-22');
     await page.details.overview.endDate.save();
-    assert.strictEqual(page.details.overview.endDate.text, 'End: ' + this.intl.formatDate(newDate));
+    assert.strictEqual(page.details.overview.endDate.text, 'End: 5/22/2016');
   });
 
   test('end date validation', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
-      startDate: DateTime.local(2013, 3, 23).toJSDate(),
-      endDate: DateTime.local(2013, 4, 22).toJSDate(),
+      startDate: '2013-03-23',
+      endDate: '2013-04-22',
       school: this.school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    const endDate = this.intl.formatDate(courseModel.endDate);
-    const newDate = DateTime.fromJSDate(course.endDate).minus({ years: 1 }).toJSDate();
-
-    assert.strictEqual(page.details.overview.endDate.text, 'End: ' + endDate);
+    assert.strictEqual(page.details.overview.endDate.text, 'End: 4/22/2013');
     assert.notOk(page.details.overview.endDate.hasError);
     await page.details.overview.endDate.edit();
-    assert.strictEqual(page.details.overview.endDate.datePicker.value, endDate);
-    await page.details.overview.endDate.datePicker.set(newDate);
+    assert.strictEqual(page.details.overview.endDate.datePicker.value, '4/22/2013');
+    await page.details.overview.endDate.datePicker.set('2012-04-22');
     await page.details.overview.endDate.save();
     assert.ok(page.details.overview.endDate.hasError);
   });
