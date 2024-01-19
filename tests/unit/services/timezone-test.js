@@ -5,10 +5,6 @@ import { DateTime } from 'luxon';
 module('Unit | Service | timezone', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(async function () {
-    this.owner.lookup('service:moment').setLocale('en');
-  });
-
   test('getCurrentTimezone', function (assert) {
     const service = this.owner.lookup('service:timezone');
     assert.strictEqual(
@@ -32,7 +28,7 @@ module('Unit | Service | timezone', function (hooks) {
     assert.notOk(names.includes('Canada/Newfoundland'));
     assert.notOk(names.includes('UTC'));
     assert.strictEqual(names[0], 'Africa/Abidjan');
-    assert.strictEqual(names[names.length - 1], 'Pacific/Yap');
+    assert.strictEqual(names[names.length - 1], 'Pacific/Wallis');
   });
 
   test('formatTimezone', function (assert) {
