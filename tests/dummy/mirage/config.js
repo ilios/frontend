@@ -8,6 +8,7 @@ export default function (config) {
   let finalConfig = {
     ...config,
     routes() {
+      this.passthrough('/write-coverage');
       this.namespace = '/';
       commonRoutes(this);
       this.get('application/config', function () {

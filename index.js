@@ -16,7 +16,10 @@ module.exports = {
 
   options: {
     babel: {
-      plugins: [require.resolve('ember-auto-import/babel-plugin')],
+      plugins: [
+        require.resolve('ember-auto-import/babel-plugin'),
+        ...require('ember-cli-code-coverage').buildBabelPlugin(),
+      ],
     },
     autoImport: {
       webpack: {

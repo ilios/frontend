@@ -31,7 +31,8 @@
     "browserstack:connect": "ember browserstack:connect",
     "browserstack:disconnect": "ember browserstack:disconnect",
     "browserstack:results": "ember browserstack:results",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "coverage": "COVERAGE=true ember test"
   },
   "dependencies": {
     "@babel/core": "^7.22.20",
