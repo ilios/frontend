@@ -61,7 +61,7 @@ dependencies:
     version: 3.0.2(@ember/test-helpers@3.2.1)(ember-data@5.3.0)(ember-qunit@8.0.2)(ember-source@5.3.0)(miragejs@0.1.48)(webpack@5.89.0)
   ember-cli-page-object:
     specifier: ^2.1.1
-    version: 2.1.3(@ember/test-helpers@3.2.1)
+    version: 2.2.0(@ember/test-helpers@3.2.1)
   ember-cli-string-helpers:
     specifier: ^6.0.1
     version: 6.1.0
@@ -1488,7 +1488,7 @@ packages:
       babel-plugin-polyfill-corejs2: 0.4.8(@babel/core@7.23.7)
       babel-plugin-polyfill-corejs3: 0.8.7(@babel/core@7.23.7)
       babel-plugin-polyfill-regenerator: 0.5.5(@babel/core@7.23.7)
-      core-js-compat: 3.35.0
+      core-js-compat: 3.35.1
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -3806,7 +3806,7 @@ packages:
     dependencies:
       '@babel/core': 7.23.7
       '@babel/helper-define-polyfill-provider': 0.4.4(@babel/core@7.23.7)
-      core-js-compat: 3.35.0
+      core-js-compat: 3.35.1
     transitivePeerDependencies:
       - supports-color
 
@@ -4645,7 +4645,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001579
-      electron-to-chromium: 1.4.639
+      electron-to-chromium: 1.4.640
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
 
@@ -5442,8 +5442,8 @@ packages:
     resolution: {integrity: sha512-XgZ0pFcakEUlbwQEVNg3+QAis1FyTL3Qel9FYy8pSkQqoG3PNoT0bOCQtOXcOkur21r2Eq2kI+IE+gsmAEVlYw==}
     engines: {node: '>=0.10.0'}
 
-  /core-js-compat@3.35.0:
-    resolution: {integrity: sha512-5blwFAddknKeNgsjBzilkdQ0+YK8L1PfqPYq40NOYMYFSS38qj+hpTcLLWwpIwA2A5bje/x5jmVn2tzUMg9IVw==}
+  /core-js-compat@3.35.1:
+    resolution: {integrity: sha512-sftHa5qUJY3rs9Zht1WEnmkvXputCyDBczPnr7QDgL8n3qrF3CMXY4VPSYtOLLiOUJcah2WNXREd48iOl6mQIw==}
     dependencies:
       browserslist: 4.22.2
 
@@ -5975,8 +5975,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /electron-to-chromium@1.4.639:
-    resolution: {integrity: sha512-CkKf3ZUVZchr+zDpAlNLEEy2NJJ9T64ULWaDgy3THXXlPVPkLu3VOs9Bac44nebVtdwl2geSj6AxTtGDOxoXhg==}
+  /electron-to-chromium@1.4.640:
+    resolution: {integrity: sha512-z/6oZ/Muqk4BaE7P69bXhUhpJbUM9ZJeka43ZwxsDshKtePns4mhBlh8bU5+yrnOnz3fhG82XLzGUXazOmsWnA==}
 
   /elliptic@6.5.4:
     resolution: {integrity: sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==}
@@ -6426,8 +6426,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-cli-page-object@2.1.3(@ember/test-helpers@3.2.1):
-    resolution: {integrity: sha512-lDwzsQz0rVJLCOhmKx1y2BbJdA3BYGnq6t16aZ6mr/DXVKI8madMXYxkl6kpgm7KZH14FS79pGMpWb5gkzLXDg==}
+  /ember-cli-page-object@2.2.0(@ember/test-helpers@3.2.1):
+    resolution: {integrity: sha512-jUQsVDXTbXXvQAoRpeNDXTrkVQlGtxxeMf9PsWdiWF0GpNp2c/2uKVj0CVsJ1QyL7Y5ly3Aq8a9yCH2bSSxDOw==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
       '@ember/jquery': '*'
