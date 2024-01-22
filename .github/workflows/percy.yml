@@ -5,7 +5,7 @@ on:
     tags:
       - '*'
   pull_request_target:
-    types: [labeled]
+    types: [labeled,opened,reopened,synchronize]
   schedule:
     - cron: "15 23 * * 2,4" # T,Th in the afternoon (UTC)
   workflow_dispatch:
@@ -23,7 +23,7 @@ env:
 jobs:
   percy:
     name: Test and Capture Screenshots
-    if: ${{ github.event.action != 'labeled' || github.event.label.name == 'run percy tests' }}
+    if: contains(github.event.pull_request.labels.*.name, 'run percy tests')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
