@@ -84,8 +84,8 @@ dependencies:
     specifier: ^6.0.0
     version: 6.0.0
   ember-file-upload:
-    specifier: ^8.0.0
-    version: 8.4.1(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-cli-mirage@3.0.2)(ember-modifier@4.1.0)(miragejs@0.1.48)(tracked-built-ins@3.3.0)(webpack@5.89.0)
+    specifier: ^9.0.0
+    version: 9.0.0(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-cli-mirage@3.0.2)(ember-modifier@4.1.0)(miragejs@0.1.48)(tracked-built-ins@3.3.0)(webpack@5.89.0)
   ember-focus-trap:
     specifier: ^1.0.0
     version: 1.1.0(ember-source@5.3.0)
@@ -6923,8 +6923,8 @@ packages:
       - supports-color
     dev: false
 
-  /ember-file-upload@8.4.1(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-cli-mirage@3.0.2)(ember-modifier@4.1.0)(miragejs@0.1.48)(tracked-built-ins@3.3.0)(webpack@5.89.0):
-    resolution: {integrity: sha512-VeKNNaL5LEo7P6TZqMFXyPSb5kJcjkUG/VNNOll0iZ/EyIXC2fZme64mNyXYheGBLiPk5H1gUsunSNpR6sg1GQ==}
+  /ember-file-upload@9.0.0(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-cli-mirage@3.0.2)(ember-modifier@4.1.0)(miragejs@0.1.48)(tracked-built-ins@3.3.0)(webpack@5.89.0):
+    resolution: {integrity: sha512-7WJTXOoeXqN34aDNpKBIgUf07pYDjtqZRcyqYe4U1GNJGfJdsL+y42y+bKYLfuHLhbOAlZ1ZyEop34LR+hOZSA==}
     engines: {node: 16.* || >= 18}
     peerDependencies:
       '@ember/test-helpers': ^2.9.3 || ^3.0.3
