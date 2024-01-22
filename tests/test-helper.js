@@ -7,6 +7,12 @@ import { start } from 'ember-qunit';
 import './helpers/flash-message';
 import DefaultAdapter from 'ember-cli-page-object/adapters/rfc268';
 import { setAdapter } from 'ember-cli-page-object/adapters';
+import { forceModulesToBeLoaded, sendCoverage } from 'ember-cli-code-coverage/test-support';
+
+QUnit.done(async function () {
+  forceModulesToBeLoaded();
+  await sendCoverage();
+});
 
 setAdapter(new DefaultAdapter());
 setApplication(Application.create(config.APP));

@@ -24,6 +24,12 @@ module.exports = {
     'ember/no-mixins': 0,
     'ember/require-tagless-components': 0,
     'no-console': 1,
+    'n/no-unpublished-require': [
+      'error',
+      {
+        allowModules: ['ember-cli-code-coverage'],
+      },
+    ],
   },
   overrides: [
     // node files

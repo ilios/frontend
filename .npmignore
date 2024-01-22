@@ -20,6 +20,7 @@
 /.travis.yml
 /.watchmanconfig
 /CONTRIBUTING.md
+/coverage/
 /ember-cli-build.js
 /testem.js
 /tests/
