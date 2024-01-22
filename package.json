@@ -71,7 +71,7 @@
     "eslint-plugin-n": "^16.1.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-qunit": "^8.0.0",
-    "ilios-common": "^84.0.0",
+    "ilios-common": "^85.0.1",
     "loader.js": "^4.7.0",
     "postcss-scss": "^4.0.9",
     "pre-commit": "^1.2.2",
