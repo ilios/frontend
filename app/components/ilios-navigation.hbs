@@ -6,12 +6,15 @@
 >
   {{#if this.currentUser.performsNonLearnerFunction}}
     <ul class="expand-navigation" data-test-expand-navigation>
-      <li title={{t "general.menu"}}>
+      <li>
         <button
           type="button"
           class="link-button expander"
           {{on "click" (set this.expanded (not this.expanded))}}
           data-test-expand-collapse
+          aria-haspopup="true"
+          aria-expanded={{if this.expanded "true" "false"}}
+          aria-label={{if this.expanded (t "general.close") (t "general.expand")}}
         >
           <FaIcon @icon="bars" />
         </button>
