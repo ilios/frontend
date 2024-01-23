@@ -123,6 +123,19 @@
       @isManaging={{@schoolManageSessionAttributes}}
       @manage={{@setSchoolManageSessionAttributes}}
     />
+    {{#if @schoolManageEmails}}
+      <School::EmailsEditor
+        @school={{@school}}
+        @cancel={{fn @setSchoolManageEmails false}}
+        @save={{this.saveEmails}}
+      />
+    {{else}}
+      <School::Emails
+        @canUpdate={{@canUpdateSchool}}
+        @manage={{@setSchoolManageEmails}}
+        @school={{@school}}
+      />
+    {{/if}}
     {{#if @schoolManageInstitution}}
       {{#if this.institutionLoaded}}
         <SchoolCurriculumInventoryInstitutionManager

@@ -1,0 +1,22 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
+.school-emails {
+  @include m.detail-container(c.$orange);
+
+  .header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .content {
+    @include m.collapsed-container-content;
+  }
+}

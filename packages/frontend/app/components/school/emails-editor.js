@@ -1,0 +1,72 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { dropTask } from 'ember-concurrency';
+import { validatable, Custom, IsEmail, Length } from 'ilios-common/decorators/validation';
+import { action } from '@ember/object';
+import { isBlank, typeOf } from '@ember/utils';
+import EmailValidator from 'validator/es/lib/isEmail';
+
+@validatable
+export default class SchoolEmailsEditorComponent extends Component {
+  @tracked @Length(0, 100) @IsEmail() administratorEmail;
+  @tracked
+  @Length(0, 300)
+  @Custom('validateChangeAlertRecipientsCallBack', 'validateChangeAlertRecipientsMessageCallBack')
+  changeAlertRecipients;
+
+  get changeAlertRecipientsFormatted() {
+    return this.changeAlertRecipients
+      .trim()
+      .split(',')
+      .map((email) => email.trim())
+      .filter((email) => !isBlank(email))
+      .join(', ');
+  }
+
+  @action
+  load() {
+    this.administratorEmail = this.args.school.iliosAdministratorEmail;
+    this.changeAlertRecipients = this.args.school.changeAlertRecipients;
+  }
+
+  @action
+  validateChangeAlertRecipientsCallBack() {
+    if ('string' !== typeOf(this.changeAlertRecipients)) {
+      return true;
+    }
+    const emails = this.changeAlertRecipients
+      .trim()
+      .split(',')
+      .map((email) => email.trim())
+      .filter((email) => !isBlank(email));
+    return emails.reduce((valid, email) => EmailValidator(email) && valid, true);
+  }
+
+  @action
+  validateChangeAlertRecipientsMessageCallBack() {
+    return 'The change alerts recipients list contains invalid email addresses.';
+  }
+
+  @dropTask
+  *save() {
+    this.addErrorDisplaysFor(['administratorEmail', 'changeAlertRecipients']);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
+
+    yield this.args.save(this.administratorEmail, this.changeAlertRecipientsFormatted);
+    this.clearErrorDisplay();
+    this.args.cancel();
+  }
+
+  @dropTask
+  *saveOrCancel(event) {
+    const keyCode = event.keyCode;
+    if (13 === keyCode) {
+      yield this.save.perform();
+    } else if (27 === keyCode) {
+      this.args.cancel();
+    }
+  }
+}

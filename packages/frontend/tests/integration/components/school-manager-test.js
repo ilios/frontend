@@ -68,6 +68,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{true}}
       @setSchoolNewVocabulary={{(noop)}}
+      @schoolManageEmails={{true}}
+      @setSchoolManageEmails={{(noop)}}
     />`);
 
     assert.ok(component.schoolLeadershipExpanded.isVisible);
@@ -82,6 +84,8 @@ module('Integration | Component | school manager', function (hooks) {
     assert.notOk(component.schoolSessionAttributes.collapsed.isVisible);
     assert.ok(component.schoolCurriculumInventoryInstitutionManager.isVisible);
     assert.notOk(component.schoolCurriculumInventoryInstitutionDetails.isVisible);
+    assert.ok(component.emailsEditor.isVisible);
+    assert.notOk(component.emails.isVisible);
   });
 
   test('it renders collapsed', async function (assert) {
@@ -130,6 +134,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{false}}
       @setSchoolNewVocabulary={{(noop)}}
+      @schoolManageEmails={{false}}
+      @setSchoolManageEmails={{(noop)}}
     />`);
 
     assert.notOk(component.schoolLeadershipExpanded.isVisible);
@@ -144,6 +150,8 @@ module('Integration | Component | school manager', function (hooks) {
     assert.ok(component.schoolSessionAttributes.collapsed.isVisible);
     assert.notOk(component.schoolCurriculumInventoryInstitutionManager.isVisible);
     assert.ok(component.schoolCurriculumInventoryInstitutionDetails.isVisible);
+    assert.notOk(component.emailsEditor.isVisible);
+    assert.ok(component.emails.isVisible);
   });
 
   test('change title', async function (assert) {
@@ -195,6 +203,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{false}}
       @setSchoolNewVocabulary={{(noop)}}
+      @schoolManageEmails={{false}}
+      @setSchoolManageEmails={{(noop)}}
     />`);
 
     assert.strictEqual(component.title.text, 'school 0');
@@ -256,6 +266,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{false}}
       @setSchoolNewVocabulary={{(noop)}}
+      @schoolManageEmails={{false}}
+      @setSchoolManageEmails={{(noop)}}
     />`);
 
     assert.strictEqual(component.title.text, 'school 0');
@@ -314,6 +326,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{false}}
       @setSchoolNewVocabulary={{(noop)}}
+      @schoolManageEmails={{false}}
+      @setSchoolManageEmails={{(noop)}}
     />`);
 
     assert.strictEqual(component.title.text, 'school 0');
@@ -372,6 +386,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolManageInstitution={{(noop)}}
       @schoolNewVocabulary={{false}}
       @setSchoolNewVocabulary={{(noop)}}
+      @schoolManageEmails={{false}}
+      @setSchoolManageEmails={{(noop)}}
     />`);
 
     assert.strictEqual(component.title.text, 'school 0');

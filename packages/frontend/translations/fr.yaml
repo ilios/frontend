@@ -14,6 +14,8 @@ general:
   admin: Admin
   administrator: Administrateur
   administratorEmail: "Courriel d'administrateur"
+  administratorEmailPlaceholder: "email@example.edu"
+  administratorEmails: "Courriels d'administrateur"
   all: Tous
   allAcademicYears: "Toutes Années Scolaires"
   allOtherMembers: "Tous les autres membres du {topLevelGroupTitle}"
@@ -49,6 +51,8 @@ general:
   campusId: "Campus ID"
   canNotContinueWithInvalidRecords: "Ne peut pas continuer avec ces rapports invalides, fixez s'il vous plaît et retéléchargez le fichier."
   canNotDeleteLearnerGroupWithAssociatedCourses: "Ce groupe est rattaché à {courseCount}  cours et ne peut être supprimé."
+  changeAlertRecipients: "Destinataires des alertes de changement"
+  changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
   childSequenceOrder: "Ordre séquentiel des enfants"
   city: Ville
   clearDates: "Supprimer dates"
@@ -116,6 +120,7 @@ general:
   durationInYears: "Durée (en Années)"
   educationalYear: "Année scolaire"
   email: Email
+  emails: Emails
   enabled: "Activé"
   endLevel: "niveau final"
   errorDisplayMessage: "Désolé! Quelque chose s'est passé mal avec votre demande. Essayez s'il vous plaît de rafraîchir ou vérifier en arrière plus tard."
@@ -195,6 +200,7 @@ general:
   manageAPITokens: "Gérer des jetons de l’API"
   manageCompetencies: "Manager des Compétences"
   manageDefaultInstructors: "Gérer les instructeurs par défaut"
+  manageEmails: "Gérer les emails"
   manageGroupMembership: "Gérer l'appartenance au groupe"
   manageInstitutionalInfo: "Manager les informations institutionnelles du CIR"
   manageSessionAttributes: "Gérer Attributs de Séance"
@@ -462,6 +468,7 @@ general:
   zipCode: "Code postal"
 errors:
   duplicateUsername: "Ce nom d'utilisateur est déjà pris par un autre compte utilisateur."
+  invalidChangeAlertRecipients: "Cette liste de destinataires d'alertes de changement contient des adresses e-mail invalides."
   reportMissingInstructor: "Instructeur requis"
   reportMissingMeshTerm: "terme de MeSH requis"
   reportMissingObjectForInstructor: "connexion requis quand `instructeur` est le sujet"
