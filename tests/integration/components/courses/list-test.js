@@ -5,7 +5,6 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import Service from '@ember/service';
-import { DateTime } from 'luxon';
 import { component } from 'ilios/tests/pages/components/courses/list';
 
 module('Integration | Component | courses/list', function (hooks) {
@@ -17,8 +16,8 @@ module('Integration | Component | courses/list', function (hooks) {
     const course1 = this.server.create('course', {
       title: 'Alpha',
       level: 2,
-      startDate: DateTime.fromObject({ year: 2023, month: 4, day: 23 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2023, month: 5, day: 30 }).toJSDate(),
+      startDate: '2023-04-23',
+      endDate: '2023-05-30',
       published: false,
       publishedAsTbd: false,
       locked: true,
@@ -26,8 +25,8 @@ module('Integration | Component | courses/list', function (hooks) {
     const course2 = this.server.create('course', {
       title: 'Omega',
       level: 1,
-      startDate: DateTime.fromObject({ year: 2022, month: 1, day: 11 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2022, month: 1, day: 12 }).toJSDate(),
+      startDate: '2022-01-11',
+      endDate: '2022-01-12',
       published: true,
       publishedAsTbd: false,
       locked: false,

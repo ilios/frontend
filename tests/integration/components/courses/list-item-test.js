@@ -6,7 +6,6 @@ import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios/tests/pages/components/courses/list-item';
-import { DateTime } from 'luxon';
 
 module('Integration | Component | courses/list-item', function (hooks) {
   setupRenderingTest(hooks);
@@ -17,8 +16,8 @@ module('Integration | Component | courses/list-item', function (hooks) {
     const course = this.server.create('course', {
       title: 'Test Course',
       level: 2,
-      startDate: DateTime.fromObject({ year: 2023, month: 4, day: 23 }).toJSDate(),
-      endDate: DateTime.fromObject({ year: 2023, month: 5, day: 30 }).toJSDate(),
+      startDate: '2023-04-23',
+      endDate: '2023-05-30',
       published: false,
       publishedAsTbd: false,
       locked: false,
