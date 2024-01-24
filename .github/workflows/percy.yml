@@ -29,13 +29,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: pnpm
       - run: pnpm install
       - name: Run Percy Tests
-        run: pnpm run test:percy
+        run: pnpm run --workspace-concurrency=1 -r percy
       - uses: act10ns/slack@v2
         if: failure()
         with:

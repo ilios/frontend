@@ -18,34 +18,23 @@ module.exports = {
   },
   rules: {
     'ember/no-get': 0,
-    'ember/use-brace-expansion': 0,
-    'ember/no-new-mixins': 0,
-    'ember/no-classic-classes': 0,
-    'ember/no-mixins': 0,
-    'ember/require-tagless-components': 0,
     'no-console': 1,
-    'n/no-unpublished-require': [
-      'error',
-      {
-        allowModules: ['ember-cli-code-coverage'],
-      },
-    ],
   },
   overrides: [
     // node files
     {
       files: [
-        './.eslintrc.js',
-        './.prettierrc.js',
-        './.stylelintrc.js',
-        './.template-lintrc.js',
-        './ember-cli-build.js',
-        './index.js',
-        './testem.js',
-        './testem.browserstack.js',
-        './blueprints/*/index.js',
-        './config/**/*.js',
-        './tests/dummy/config/**/*.js',
+        '.eslintrc.js',
+        '.prettierrc.js',
+        '.stylelintrc.js',
+        '.template-lintrc.js',
+        'packages/*/ember-cli-build.js',
+        'packages/*/index.js',
+        'packages/*/testem.js',
+        'packages/test-app/testem.browserstack.js',
+        'packages/*/blueprints/*/index.js',
+        'packages/*/config/**/*.js',
+        'packages/*/tests/dummy/config/**/*.js',
       ],
       parserOptions: {
         sourceType: 'script',
@@ -58,10 +47,11 @@ module.exports = {
     },
     {
       // test files
-      files: ['tests/**/*-test.{js,ts}'],
+      files: ['packages/**/tests/**/*-test.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
       rules: {
         'qunit/require-expect': [2, 'except-simple'],
+        'ember/no-classic-classes': 0,
       },
     },
   ],

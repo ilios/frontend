@@ -20,6 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -38,6 +40,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -66,13 +70,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: pnpm
       - run: pnpm install
       - name: Run Tests
-        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }} --skip-cleanup
+        run: pnpm run --filter test-app tryone ${{ matrix.try-scenario }} --skip-cleanup
 
   browserstack-test:
     name: Browserstack ${{ matrix.launcher }}
@@ -91,6 +97,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -106,10 +114,10 @@ jobs:
           # The Job ID + Run ID isn't unique across matrix runs and will fail when run simultaneously
           BROWSERSTACK_LOCAL_ID_SUFFIX: ${{ matrix.launcher }}
         run: |
-          pnpm run browserstack:connect
-          pnpm run test:ember:browserstack --launch=${{ matrix.launcher }}
-          pnpm run browserstack:disconnect
-          pnpm run browserstack:results
+          pnpm run --filter test-app browserstack:connect
+          pnpm run --filter test-app test:ember:browserstack --launch=${{ matrix.launcher }}
+          pnpm run --filter test-app browserstack:disconnect
+          pnpm run --filter test-app browserstack:results
 
   firefox-test:
     name: Browser Tests (Firefox)
@@ -123,6 +131,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -134,4 +144,4 @@ jobs:
           firefox-version: ${{ matrix.firefox-version }}
       - run: firefox --version
       - name: test
-        run: pnpm run test:ember -- --launch=Firefox
+        run: pnpm run --filter test-app test:ember --launch=Firefox
