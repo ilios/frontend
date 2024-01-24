@@ -1,7 +1,7 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { render } from '@ember/test-helpers';
+import { render, waitUntil } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/user-profile-ics';
@@ -48,6 +48,9 @@ module('Integration | Component | user profile ics', function (hooks) {
     const currentKey = this.user.icsFeedKey;
     assert.strictEqual(userModel.icsFeedKey, currentKey, 'icsFeedKey is correct');
     await component.refresh();
+    await waitUntil(() => {
+      return userModel.icsFeedKey !== currentKey;
+    });
     assert.notEqual(userModel.icsFeedKey, currentKey, 'icsFeedKey has been updated');
     assert.strictEqual(
       userModel.icsFeedKey.length,

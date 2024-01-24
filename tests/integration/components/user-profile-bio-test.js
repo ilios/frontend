@@ -79,7 +79,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(component.phone.text, `Phone: ${userModel.phone}`);
     assert.strictEqual(component.username.text, `Username: ${authenticationModel.username}`);
     assert.notOk(component.password.isVisible);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
@@ -112,7 +112,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(component.phone.text, `Phone: ${userModel.phone}`);
     assert.strictEqual(component.username.text, `Username: ${authenticationModel.username}`);
     assert.strictEqual(component.password.text, 'Password: *********');
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 

@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: CI
 
 on:
   push:
@@ -103,3 +103,65 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+
+  browserstack-test:
+    name: Browserstack ${{ matrix.launcher }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [test]
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        launcher:
+          - BS_OSX_Safari
+          - BS_MS_Edge
+          - BS_IOS_SAFARI
+          - BS_CHROME_ANDROID
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+      - name: install dependencies
+        run: npm ci
+      - name: test:browserstack ${{ matrix.launcher }}
+        env:
+          BROWSERSTACK_USERNAME: iliosgithub_1UGowwsqE
+          # This is in plaintext on purpose. It has no privileged access to anything (this is a free
+          # account) and it allows us to run browserstack tests against PRs.
+          BROWSERSTACK_ACCESS_KEY: yJjw6sE6izkpUw9oasGT
+          # The following is necessary when using browserstack under matrix builds on Github Actions
+          # The Job ID + Run ID isn't unique across matrix runs and will fail when run simultaneously
+          BROWSERSTACK_LOCAL_ID_SUFFIX: ${{ matrix.launcher }}
+        run: |
+          npm run browserstack:connect
+          npm run test:ember:browserstack -- --launch=${{ matrix.launcher }}
+          npm run browserstack:disconnect
+          npm run browserstack:results
+
+  firefox-test:
+    name: Browser Tests (Firefox)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [test]
+    strategy:
+      fail-fast: false
+      matrix:
+        firefox-version: [latest-esr]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+      - name: install dependencies
+        run: npm ci
+      - name: Setup firefox
+        uses: browser-actions/setup-firefox@latest
+        with:
+          firefox-version: ${{ matrix.firefox-version }}
+      - run: firefox --version
+      - name: test
+        run: npm run test:ember -- --launch=Firefox

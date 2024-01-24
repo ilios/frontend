@@ -78,7 +78,7 @@ module('Integration | Component | visualizer-program-year-objectives', function 
     this.set('programYear', programYearModel);
     await render(hbs`<VisualizerProgramYearObjectives @programYear={{this.programYear}} />`);
 
-    await waitFor('.loaded');
+    await waitFor('svg.loaded');
     await waitFor('svg .links');
     await waitFor('svg .nodes');
     assert.dom('svg').exists({ count: 1 });

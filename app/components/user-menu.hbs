@@ -1,39 +1,42 @@
-<nav
-  class="{{if this.isOpen "is-open"}} user-menu"
-  aria-label={{t "general.userMenu"}}
-  {{did-insert (set this.element)}}
-  {{! template-lint-disable no-invalid-interactive }}
-  {{on "keyup" this.keyUp}}
-  data-test-user-menu
->
-  <button
-    type="button"
-    class="toggle"
-    aria-haspopup="true"
-    aria-expanded={{if this.isOpen "true" "false"}}
-    data-test-toggle
-    {{on "click" this.toggleMenu}}
+{{#let (unique-id) as |templateId|}}
+  <nav
+    class="{{if this.isOpen "is-open"}} user-menu"
+    aria-label={{t "general.userMenu"}}
+    {{did-insert (set this.element)}}
+    {{! template-lint-disable no-invalid-interactive }}
+    {{on "keyup" this.keyUp}}
+    data-test-user-menu
   >
-    <FaIcon @icon="user" />
-    <span id="user-menu-title">
-      {{get this.model "fullName"}}
-    </span>
-    <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
-  </button>
-  {{#if this.isOpen}}
-    <div {{on-click-outside (set this.isOpen false)}}>
-      <ul class="menu">
-        <li tabindex="-1" data-test-item {{did-insert this.focus}}>
-          <LinkToWithAction @route="myprofile" @action={{set this.isOpen false}} @queryParams={{hash invalidatetokens=null newtoken=null}}>
-            {{t "general.myProfile"}}
-          </LinkToWithAction>
-        </li>
-        <li tabindex="-1" data-test-item>
-          <LinkToWithAction @route="logout" @action={{set this.isOpen false}}>
-            {{t "general.logout"}}
-          </LinkToWithAction>
-        </li>
-      </ul>
-    </div>
-  {{/if}}
-</nav>
+    <button
+      type="button"
+      class="toggle"
+      aria-labelledby="{{templateId}}-user-menu-title"
+      aria-haspopup="true"
+      aria-expanded={{if this.isOpen "true" "false"}}
+      data-test-toggle
+      {{on "click" this.toggleMenu}}
+    >
+      <FaIcon @icon="user" />
+      <span id="{{templateId}}-user-menu-title">
+        {{get this.model "fullName"}}
+      </span>
+      <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
+    </button>
+    {{#if this.isOpen}}
+      <div {{on-click-outside (set this.isOpen false)}}>
+        <ul class="menu">
+          <li tabindex="-1" data-test-item {{did-insert this.focus}}>
+            <LinkToWithAction @route="myprofile" @action={{set this.isOpen false}} @queryParams={{hash invalidatetokens=null newtoken=null}}>
+              {{t "general.myProfile"}}
+            </LinkToWithAction>
+          </li>
+          <li tabindex="-1" data-test-item>
+            <LinkToWithAction @route="logout" @action={{set this.isOpen false}}>
+              {{t "general.logout"}}
+            </LinkToWithAction>
+          </li>
+        </ul>
+      </div>
+    {{/if}}
+  </nav>
+{{/let}}
