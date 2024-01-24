@@ -18,11 +18,17 @@ module('Unit | Service | timezone', function (hooks) {
     const names = service.getTimezoneNames();
     const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     assert.ok(names.includes(currentTimezone));
-    if (currentTimezone === 'UTC') {
-      //we already know it's in the list because it is the current zone
-      //however we now want to remove it because it won't ever display
-      //for users, just in CI
-      names.splice(names.indexOf('UTC'));
+    // KLUDGE!
+    // Some of the test environments (mobile platforms) in our CI/CD pipeline either serve up 'UTC'
+    // as current timezone name, or - even worse - a timezone offset instead of a AINA timezone name.
+    // But that's not how the real world functions, this only ever happens in these broken test environments.
+    // So let's pretend this isn't happening and filter these out to prevent test breakage.
+    // [ST 2023/01/24]
+    if (
+      currentTimezone === 'UTC' ||
+      !!currentTimezone.match('^([+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$')
+    ) {
+      names.splice(names.indexOf(currentTimezone), 1);
     }
     assert.notOk(names.includes('Etc/GMT-13'));
     assert.notOk(names.includes('Canada/Newfoundland'));
