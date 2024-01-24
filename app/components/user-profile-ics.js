@@ -35,17 +35,34 @@ export default class UserProfileIcsComponent extends Component {
   /**
    * Generate a random token from a combination of
    * the user id, a random string and the current time
-   * Implementation lifted from https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
-   * @param userId
-   * @return String
+   *
+   * We use two different methods for making this work. Because some versions of safari don't allow
+   * usage of the crypto.subtle API in an insecure context we have to fall back on a random string
+   * path when that API isn't available.
+   *
+   * Info on secure context requirement: https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle#browser_compatibility
+   *
+   * Digest implementation lifted from https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
    */
   async randomToken(userId) {
     const now = Date.now();
-    const randomValue = Math.random().toString(36).substr(2);
-    const msgUint8 = new TextEncoder().encode(userId + randomValue + now); // encode as (utf-8) Uint8Array
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8); // hash the message
-    const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
-    return hashArray.map((b) => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+    if (window.isSecureContext) {
+      const randomValue = Math.random().toString(36).substring(2);
+      const msgUint8 = new TextEncoder().encode(userId + randomValue + now); // encode as (utf-8) Uint8Array
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8); // hash the message
+      const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+      return hashArray.map((b) => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+    }
+
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let rhett = `${now}${userId}`; //prefix with the time and userId to avoid the remote change of a collision
+    const needRandomnessOf = 64 - rhett.length;
+    for (let i = 0; i < needRandomnessOf; i++) {
+      rhett += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return rhett;
   }
 
   @dropTask
