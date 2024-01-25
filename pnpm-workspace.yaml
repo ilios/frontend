@@ -1,0 +1,3 @@
+packages:
+  - "packages/ilios-common"
+  - "packages/test-app"

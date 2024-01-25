@@ -14,49 +14,22 @@
 ## Running tests
 
 * `pnpm test` – Runs the test suite on the current Ember version
-* `pnpm test:ember --server` – Runs the test suite in "watch mode"
-* `pnpm test:ember-compatibility` – Runs the test suite against multiple Ember versions
 
-## Running the dummy application
+## Running the test application
 
 * `pnpm start`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
+* Visit the test application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://cli.emberjs.com/release/](https://cli.emberjs.com/release/).
 
-## Running an API server for development Using Docker and Docker Compose
-
-For the fastest way to get up and running with Ilios for your development purposes, we HIGHLY recommend using Docker and Docker Compose.
-
-### Install Docker
-
-You will need Docker and Docker compose:
-
-- [OS X](https://www.docker.com/docker-mac)
-- [Windows](https://www.docker.com/docker-windows)
-- [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/)
-
-### Running a local development server
-
-```bash
-$ docker-compose pull
-$ docker-compose up -d
-```
-
-### Accessing Ilios
-
-You should now be able to access your newly-Dockerized instance of Ilios 
-by visiting [http://localhost:8000](http://localhost:8000) in your browser.
-
-### Shutting down the development server
-
-From your ILIOS_CODE directory run:
-
-```bash
-$ docker-compose stop
-```
 
 ### Point Common at the API Server
 
-1. Create a `.env` file in the source code directory
-2. Add `ILIOS_FRONTEND_API_HOST=http://localhost:8000` on it's own line to the `.env` file
+To view the application with data you'll need to provide a URL to a running API server. You can use
+docker to create a local server following the [Quick Setup Guide](https://github.com/ilios/ilios/blob/master/docs/ilios_quick_setup_for_admins.md) for Ilios or point to an existing API server. 
+
+Pass that information to the application using the `ILIOS_FRONTEND_API_HOST` environmental variable.
+
+```bash
+ILIOS_FRONTEND_API_HOST=https://demo.iliosproject.org pnpm start
+```

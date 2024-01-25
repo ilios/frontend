@@ -15,6 +15,8 @@ jobs:
       with:
           token: ${{ secrets.ZORGBORT_TOKEN }}
     - uses: pnpm/action-setup@v2
+      with:
+        version: 8
     - uses: actions/setup-node@v4
       with:
         node-version: 18
@@ -26,6 +28,14 @@ jobs:
         git config user.name Zorgbort
         git config user.email info@iliosproject.org
     - name: Increment Version
-      run: pnpm version ${{ github.event.inputs.releaseType }}
+      run: pnpm version --filter ilios-common ${{ github.event.inputs.releaseType }}
+    - run: |
+        NEW_TAG=`node -p "require('./packages/ilios-common/package.json').version"`
+        echo ${NEW_TAG}
+        echo "new_tag=${NEW_TAG}" >> $GITHUB_ENV
+    - name: Tag Version
+      run: |
+        git commit -a -m "${{env.new_tag}}"
+        git tag ${{env.new_tag}} -m "Tagging the ${{env.new_tag}} ${{ github.event.inputs.releaseType }} release"
     - name: Push Changes
       run: git push --follow-tags
