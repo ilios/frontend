@@ -28,14 +28,16 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: npm
-      - name: install dependencies
-        run: npm ci
+          cache: pnpm
+      - run: pnpm install
       - name: Run Percy Tests
-        run: npm run percy:test
+        run: pnpm run percy:test
       - uses: act10ns/slack@v2
         if: failure()
         with:

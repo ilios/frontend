@@ -11,26 +11,26 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
-    "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.scss\"",
-    "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
-    "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
+    "lint:css:fix": "concurrently \"pnpm:lint:css -- --fix\"",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\"",
     "lint:hbs": "ember-template-lint .",
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
-    "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
+    "test": "concurrently \"pnpm:lint\" \"pnpm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test",
-    "percy:test": "percy exec -- npm run test:ember",
+    "percy:test": "percy exec -- pnpm run test:ember",
     "deploy:production": "ember deploy production --activate",
     "deploy:staging": "ember deploy staging --activate",
     "deploy:test": "ember deploy development",
     "test:ember:browserstack": "ember test --test-port=7774 --host=127.0.0.1 --config-file=testem.browserstack.js",
-    "test:browserstack": "npm-run-all browserstack:connect test:ember:browserstack browserstack:disconnect browserstack:results",
     "browserstack:connect": "ember browserstack:connect",
     "browserstack:disconnect": "ember browserstack:disconnect",
-    "browserstack:results": "ember browserstack:results"
+    "browserstack:results": "ember browserstack:results",
+    "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
     "@babel/core": "^7.22.20",
@@ -146,7 +146,8 @@
   },
   "engines": {
     "node": ">= 18",
-    "npm": ">= 9"
+    "yarn": "use pnpm",
+    "npm": "use pnpm"
   },
   "ember": {
     "edition": "octane"
