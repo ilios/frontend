@@ -20,8 +20,8 @@ devDependencies:
     specifier: ^7.22.20
     version: 7.23.9(supports-color@8.1.1)
   '@babel/eslint-parser':
-    specifier: ^7.22.15
-    version: 7.23.9(@babel/core@7.23.9)(eslint@8.56.0)
+    specifier: 7.23.3
+    version: 7.23.3(@babel/core@7.23.9)(eslint@8.56.0)
   '@babel/plugin-proposal-decorators':
     specifier: ^7.22.15
     version: 7.23.9(@babel/core@7.23.9)
@@ -388,8 +388,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@babel/eslint-parser@7.23.9(@babel/core@7.23.9)(eslint@8.56.0):
-    resolution: {integrity: sha512-xPndlO7qxiJbn0ATvfXQBjCS7qApc9xmKHArgI/FTEFxXas5dnjC/VqM37lfZun9dclRYcn+YQAr6uDFy0bB2g==}
+  /@babel/eslint-parser@7.23.3(@babel/core@7.23.9)(eslint@8.56.0):
+    resolution: {integrity: sha512-9bTuNlyx7oSstodm1cR1bECj4fkiknsDa1YniISkJemMY3DGhJNYBECbe6QD/q54mp2J8VO66jW3/7uP//iFCw==}
     engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
     peerDependencies:
       '@babel/core': ^7.11.0
@@ -3170,8 +3170,8 @@ packages:
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
-  /@types/express-serve-static-core@4.17.41:
-    resolution: {integrity: sha512-OaJ7XLaelTgrvlZD8/aa0vvvxZdUmlCn6MtWeB7TkiKW70BQLc9XEPpDLPdbo52ZhXUCrznlWdCHWxJWtdyajA==}
+  /@types/express-serve-static-core@4.17.42:
+    resolution: {integrity: sha512-ckM3jm2bf/MfB3+spLPWYPUH573plBFwpOhqQ2WottxYV85j1HQFlxmnTq57X1yHY9awZPig06hL/cLMgNWHIQ==}
     dependencies:
       '@types/node': 20.11.6
       '@types/qs': 6.9.11
@@ -3183,7 +3183,7 @@ packages:
     resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
     dependencies:
       '@types/body-parser': 1.19.5
-      '@types/express-serve-static-core': 4.17.41
+      '@types/express-serve-static-core': 4.17.42
       '@types/qs': 6.9.11
       '@types/serve-static': 1.15.5
     dev: true
@@ -7562,7 +7562,7 @@ packages:
     resolution: {integrity: sha512-nCgRkQ/ujzy4fqxSvoaQD8j1ev3LOA30STlZTvHt+dhyfYC6ojMqTBl7SatPcv7Fz6Vy6BqE/Sqy3vhOHCzQJg==}
     engines: {node: 14.* || 16.* || 18.* || >= 20}
     dependencies:
-      '@babel/eslint-parser': 7.23.9(@babel/core@7.23.9)(eslint@8.56.0)
+      '@babel/eslint-parser': 7.23.3(@babel/core@7.23.9)(eslint@8.56.0)
       chalk: 4.1.2
       ember-cli-deploy-plugin: 0.2.9
       glob: 10.3.10
@@ -7598,7 +7598,7 @@ packages:
     resolution: {integrity: sha512-JUKHPHYgpGkgybewsKeMbWc9KL0gNB/kNPoHcfjVZsyeW6Ms+rAexwKqSLMuBgXZeDQEZN5AifyVJ3aHAy8iMg==}
     engines: {node: 14.x || 16.x || 18.x || >= 20.x}
     dependencies:
-      '@babel/eslint-parser': 7.23.9(@babel/core@7.23.9)(eslint@8.56.0)
+      '@babel/eslint-parser': 7.23.3(@babel/core@7.23.9)(eslint@8.56.0)
       '@babel/preset-env': 7.23.9(@babel/core@7.23.9)
       chalk: 4.1.2
       core-object: 3.1.5
@@ -12314,8 +12314,8 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /lru-cache@10.1.0:
-    resolution: {integrity: sha512-/1clY/ui8CzjKFyjdvwPWJUYKiFVXG2I2cY0ssG7h4+hwk+XOIX7ZSG9Q7TW8TW3Kp3BUSqgFWBLgL4PJ+Blag==}
+  /lru-cache@10.2.0:
+    resolution: {integrity: sha512-2bIM8x+VAf6JT4bKAljS1qUWgMsqZRPGJS6FSahIMPVvctcNhyVp7AJu7quxOW9jwkryBReKZY5tY5JYv2n/7Q==}
     engines: {node: 14 || >=16.14}
     dev: true
 
@@ -13518,7 +13518,7 @@ packages:
     resolution: {integrity: sha512-MkhCqzzBEpPvxxQ71Md0b1Kk51W01lrYvlMzSUaIzNsODdd7mqhiimSZlr+VegAz5Z6Vzt9Xg2ttE//XBhH3EQ==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
-      lru-cache: 10.1.0
+      lru-cache: 10.2.0
       minipass: 7.0.4
     dev: true
 
