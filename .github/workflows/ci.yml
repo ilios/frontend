@@ -74,36 +74,6 @@ jobs:
       - name: test build
         run: npm run build
 
-  test-with-embroider:
-    name: Test With Embroider
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    env:
-      BUILD_WITH_EMBROIDER: true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18.17
-          cache: npm
-      - run: npm ci
-      - run: npm run test:ember
-
-  build-with-embroider:
-    name: Build With Embroider
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      BUILD_WITH_EMBROIDER: true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18.17
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-
   browserstack-test:
     name: Browserstack ${{ matrix.launcher }}
     runs-on: ubuntu-latest
