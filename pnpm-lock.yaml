@@ -366,9 +366,6 @@ importers:
       ember-cli-dependency-checker:
         specifier: ^3.3.2
         version: 3.3.2(ember-cli@5.5.0)
-      ember-cli-dependency-lint:
-        specifier: ^2.0.0
-        version: 2.0.1
       ember-cli-htmlbars:
         specifier: ^6.3.0
         version: 6.3.0
@@ -3555,10 +3552,6 @@ packages:
     resolution: {integrity: sha512-lYe4Gx7QT+MKGbDsA+Z+he/Wtef0BiwDOlK/XkBrdfsh9J/jPPXbX0tE9x9cl27Tmu5gg3QUbUrQYa/y+KOHPQ==}
     dev: true
 
-  /archy@1.0.0:
-    resolution: {integrity: sha512-Xg+9RwCg/0p32teKdGMPTPnVXKD0w3DfHnFTficozsAgsvq2XenPJq/MYpzzQ/v8zrOyJn6Ds39VA4JIDwFfqw==}
-    dev: true
-
   /are-we-there-yet@3.0.1:
     resolution: {integrity: sha512-QZW4EDmGwlYur0Yyf/b2uGucHQMa8aFUP7eu9ddR73vvhFyt4V0Vl3QHPcTNJ8l6qYOBdxgXdnBXQrHilfRQBg==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
@@ -6445,16 +6438,6 @@ packages:
       semver: 5.7.2
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /ember-cli-dependency-lint@2.0.1:
-    resolution: {integrity: sha512-FIWdE2ijwp9ZvgM43ZCnFtTLTM74QVrZmYy8tmEnAmDir2bWKtyryF0LmeiW29vfznRy7UvaDW7YiOFegTtHUA==}
-    engines: {node: 10.* || >= 12.*}
-    dependencies:
-      archy: 1.0.0
-      broccoli-plugin: 1.3.1
-      chalk: 2.4.2
-      semver: 5.7.2
     dev: true
 
   /ember-cli-flash@4.0.0(@babel/core@7.23.7)(ember-source@5.5.0)(webpack@5.90.0):
