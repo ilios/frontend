@@ -28,7 +28,8 @@ jobs:
         git config user.name Zorgbort
         git config user.email info@iliosproject.org
     - name: Increment Version
-      run: pnpm version --filter ilios-common ${{ github.event.inputs.releaseType }}
+      working-directory: ./packages/ilios-common
+      run: npx update-version --${{ github.event.inputs.releaseType }} 1
     - run: |
         NEW_TAG=`node -p "require('./packages/ilios-common/package.json').version"`
         echo ${NEW_TAG}
