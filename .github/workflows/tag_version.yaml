@@ -29,7 +29,7 @@ jobs:
         git config user.email info@iliosproject.org
     - name: Increment Version
       working-directory: ./packages/ilios-common
-      run: npx update-version --${{ github.event.inputs.releaseType }} 1
+      run: npx versionup --level ${{ github.event.inputs.releaseType }}
     - run: |
         NEW_TAG=`node -p "require('./packages/ilios-common/package.json').version"`
         echo ${NEW_TAG}
