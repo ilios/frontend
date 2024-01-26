@@ -5,9 +5,6 @@ const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options
 
 module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
-    dotEnv: {
-      clientAllowedKeys: ['ILIOS_FRONTEND_API_NAMESPACE', 'ILIOS_FRONTEND_API_HOST'],
-    },
     'ember-cli-babel': {
       throwUnlessParallelizable: true,
     },
