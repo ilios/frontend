@@ -27,14 +27,15 @@ All Ilios issues should be reported to our [common issue tracker](https://github
 You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with npm)
+* [Node.js](https://nodejs.org/)
+* [PNPM](https://pnpm.io)
 * [Ember CLI](https://cli.emberjs.com/release/)
 
 ### Installation
 
 * `git clone git@github.com:ilios/frontend.git`
 * `cd frontend`
-* `npm install`
+* `pnpm install`
 
 ### Running / Development
 
@@ -47,7 +48,7 @@ within the same directory as your Ilios Frontend code:
 
 Then you can start a local development server:
 
-* `npm start`
+* `pnpm start`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 * Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
@@ -57,20 +58,20 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Running Tests
 
-* `npm test`
-* `npm test --server`
+* `pnpm test`
+* `pnpm test --server`
 
 ### Linting
 
-* `npm run lint:hbs`
-* `npm run lint:style`
-* `npm run lint:js`
-* `npm run lint:js --fix`
+* `pnpm run lint:hbs`
+* `pnpm run lint:css`
+* `pnpm run lint:js`
+* `pnpm run lint:js --fix`
 
 ### Building
 
-* `npm build` (development)
-* `npm build --environment production` (production)
+* `pnpm build` (development)
+* `pnpm build --environment production` (production)
 
 ## Further Reading / Useful Links
 

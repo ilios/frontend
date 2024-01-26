@@ -14,14 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
     - uses: actions/setup-node@v4
       with:
-        node-version: 18.17
-        cache: 'npm'
-    - name: install dependencies
-      run: npm ci
+        node-version: 18
+        cache: pnpm
+    - run: pnpm install
     - name: Ember CLI Deploy
-      run: npm run deploy:staging
+      run: pnpm run deploy:staging
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

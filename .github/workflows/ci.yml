@@ -24,15 +24,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Install Node
-        uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: 18.17
-          cache: npm
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
   test:
     name: "Test"
@@ -41,19 +43,21 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [18,20]
 
     steps:
       - uses: actions/checkout@v4
-      - name: Install Node
-        uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: npm
+          cache: pnpm
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install
       - name: Run Tests
-        run: npm run test:ember
+        run: pnpm run test:ember
 
   build:
     name: Build
@@ -61,18 +65,20 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [18,20]
     steps:
       - uses: actions/checkout@v4
-      - name: Install Node
-        uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: npm
+          cache: pnpm
       - name: install dependencies
-        run: npm ci
+        run: pnpm install
       - name: test build
-        run: npm run build
+        run: pnpm run build
 
   browserstack-test:
     name: Browserstack ${{ matrix.launcher }}
@@ -90,12 +96,14 @@ jobs:
           - BS_CHROME_ANDROID
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: npm
-      - name: install dependencies
-        run: npm ci
+          cache: pnpm
+      - run: pnpm install
       - name: test:browserstack ${{ matrix.launcher }}
         env:
           BROWSERSTACK_USERNAME: iliosgithub_1UGowwsqE
@@ -106,10 +114,10 @@ jobs:
           # The Job ID + Run ID isn't unique across matrix runs and will fail when run simultaneously
           BROWSERSTACK_LOCAL_ID_SUFFIX: ${{ matrix.launcher }}
         run: |
-          npm run browserstack:connect
-          npm run test:ember:browserstack -- --launch=${{ matrix.launcher }}
-          npm run browserstack:disconnect
-          npm run browserstack:results
+          pnpm run browserstack:connect
+          pnpm run test:ember:browserstack --launch=${{ matrix.launcher }}
+          pnpm run browserstack:disconnect
+          pnpm run browserstack:results
 
   firefox-test:
     name: Browser Tests (Firefox)
@@ -122,16 +130,18 @@ jobs:
         firefox-version: [latest-esr]
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: npm
-      - name: install dependencies
-        run: npm ci
+          cache: pnpm
+      - run: pnpm install
       - name: Setup firefox
         uses: browser-actions/setup-firefox@latest
         with:
           firefox-version: ${{ matrix.firefox-version }}
       - run: firefox --version
       - name: test
-        run: npm run test:ember -- --launch=Firefox
+        run: pnpm run test:ember --launch=Firefox
