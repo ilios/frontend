@@ -37,6 +37,6 @@ jobs:
     - name: Tag Version
       run: |
         git commit -a -m "${{env.new_tag}}"
-        git tag ${{env.new_tag}} -m "Tagging the ${{env.new_tag}} ${{ github.event.inputs.releaseType }} release"
+        git tag v${{env.new_tag}} -m "Tagging the v${{env.new_tag}} ${{ github.event.inputs.releaseType }} release"
     - name: Push Changes
       run: git push --follow-tags
