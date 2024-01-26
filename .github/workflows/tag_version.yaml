@@ -14,13 +14,9 @@ jobs:
     - uses: actions/checkout@v4
       with:
           token: ${{ secrets.ZORGBORT_TOKEN }}
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 8
     - uses: actions/setup-node@v4
       with:
         node-version: 18
-        cache: pnpm
     - name: Validate releaseType
       run: npx in-string-list ${{ github.event.inputs.releaseType }} major,minor,patch
     - name: Setup Git
