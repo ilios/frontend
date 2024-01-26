@@ -105,7 +105,7 @@ module.exports = {
   },
 
   contentFor: function (type, env) {
-    if (type === 'head') {
+    if (type === 'head' && env.environment !== 'test') {
       const rootUrl = env.rootUrl ? env.rootUrl : '';
       const fonts = [
         'nunito/nunito-latin-400.woff2',
