@@ -116,8 +116,8 @@ devDependencies:
     specifier: ^8.0.0
     version: 8.2.0(@babel/core@7.23.9)
   ember-cli-browserstack:
-    specifier: ^2.0.1
-    version: 2.1.0
+    specifier: ^3.0.0
+    version: 3.0.0
   ember-cli-bundle-analyzer:
     specifier: ^1.0.0
     version: 1.0.0
@@ -7439,9 +7439,9 @@ packages:
       - supports-color
     dev: true
 
-  /ember-cli-browserstack@2.1.0:
-    resolution: {integrity: sha512-1B8gBE1gXUAnRsUvsJJ9nHBeJRUNvVwnlpX/RIjxQ5ODeNyJFpPYJVDC4C81HFRvaR+8uGNlP16d/avNjNlkWg==}
-    engines: {node: 10.* || >= 12}
+  /ember-cli-browserstack@3.0.0:
+    resolution: {integrity: sha512-hh130Z3H4R90qGsoasOrcYigv6j0Mci0aYcXDeEO18hx5iBczW9MDYP0WPtLVe6fRe5Fr7dq8hlSsdpiFqaZjg==}
+    engines: {node: 14.* || 16.* || >= 18}
     hasBin: true
     dependencies:
       browserstack: 1.6.1
