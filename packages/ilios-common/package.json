@@ -1,6 +1,6 @@
 {
   "name": "ilios-common",
-  "version": "85.0.1",
+  "version": "1.0.1",
   "description": "Common shared code for ilios ember apps.",
   "keywords": [
     "ember-addon"
@@ -12,8 +12,7 @@
     "doc": "doc",
     "test": "tests"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
     "@babel/core": "^7.23.6",
     "@ember/render-modifiers": "^2.0.0",
