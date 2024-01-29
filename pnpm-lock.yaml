@@ -141,8 +141,8 @@ devDependencies:
     specifier: ^8.0.0
     version: 8.0.1(eslint@8.56.0)
   ilios-common:
-    specifier: ^85.0.1
-    version: 85.0.1(@ember/test-helpers@3.2.1)(@popperjs/core@2.11.8)(class-validator@0.14.1)(ember-qunit@8.0.2)(ember-source@5.3.0)(flatpickr@4.6.13)(froala-editor@4.1.4)(luxon@3.4.4)(miragejs@0.1.48)(mockdate@3.0.5)(moment-timezone@0.5.44)(moment@2.30.1)(query-string@8.1.0)(scroll-into-view@1.16.2)(striptags@3.2.0)(tracked-built-ins@3.3.0)(typeface-nunito-sans@1.1.13)(typeface-nunito@1.1.13)(validator@13.11.0)(webpack@5.90.0)
+    specifier: ^87.0.1
+    version: 87.0.1(@ember/test-helpers@3.2.1)(@popperjs/core@2.11.8)(class-validator@0.14.1)(ember-qunit@8.0.2)(ember-source@5.3.0)(flatpickr@4.6.13)(froala-editor@4.1.4)(luxon@3.4.4)(miragejs@0.1.48)(mockdate@3.0.5)(moment-timezone@0.5.44)(moment@2.30.1)(query-string@8.1.0)(scroll-into-view@1.16.2)(striptags@3.2.0)(tracked-built-ins@3.3.0)(typeface-nunito-sans@1.1.13)(typeface-nunito@1.1.13)(validator@13.11.0)(webpack@5.90.0)
   loader.js:
     specifier: ^4.7.0
     version: 4.7.0
@@ -3804,6 +3804,7 @@ packages:
   /binary-extensions@2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dev: true
 
   /binaryextensions@2.3.0:
@@ -4540,7 +4541,7 @@ packages:
     resolution: {integrity: sha512-xq+q3SRMOxGivLhBNaUdC64hDTQwejJ+H0T/NB1XMtTVEwNTrfFF3gAxiyW0Bu/xWEGhjVKgUcMhCrUy2+uCWg==}
     dependencies:
       base64-js: 1.5.1
-      ieee754: 1.1.13
+      ieee754: 1.2.1
       isarray: 1.0.0
     dev: true
 
@@ -5392,7 +5393,7 @@ packages:
     dependencies:
       lru-cache: 4.1.5
       shebang-command: 1.2.0
-      which: 1.2.14
+      which: 1.3.1
     dev: true
 
   /cross-spawn@6.0.5:
@@ -6916,8 +6917,8 @@ packages:
       - supports-color
     dev: true
 
-  /ember-file-upload@8.4.1(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-cli-mirage@3.0.2)(ember-modifier@4.1.0)(miragejs@0.1.48)(tracked-built-ins@3.3.0)(webpack@5.90.0):
-    resolution: {integrity: sha512-VeKNNaL5LEo7P6TZqMFXyPSb5kJcjkUG/VNNOll0iZ/EyIXC2fZme64mNyXYheGBLiPk5H1gUsunSNpR6sg1GQ==}
+  /ember-file-upload@9.0.0(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-cli-mirage@3.0.2)(ember-modifier@4.1.0)(miragejs@0.1.48)(tracked-built-ins@3.3.0)(webpack@5.90.0):
+    resolution: {integrity: sha512-7WJTXOoeXqN34aDNpKBIgUf07pYDjtqZRcyqYe4U1GNJGfJdsL+y42y+bKYLfuHLhbOAlZ1ZyEop34LR+hOZSA==}
     engines: {node: 16.* || >= 18}
     peerDependencies:
       '@ember/test-helpers': ^2.9.3 || ^3.0.3
@@ -9387,10 +9388,9 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /ilios-common@85.0.1(@ember/test-helpers@3.2.1)(@popperjs/core@2.11.8)(class-validator@0.14.1)(ember-qunit@8.0.2)(ember-source@5.3.0)(flatpickr@4.6.13)(froala-editor@4.1.4)(luxon@3.4.4)(miragejs@0.1.48)(mockdate@3.0.5)(moment-timezone@0.5.44)(moment@2.30.1)(query-string@8.1.0)(scroll-into-view@1.16.2)(striptags@3.2.0)(tracked-built-ins@3.3.0)(typeface-nunito-sans@1.1.13)(typeface-nunito@1.1.13)(validator@13.11.0)(webpack@5.90.0):
-    resolution: {integrity: sha512-hoKb0pfo3Va5U98zuv/0kUlt7n2SoctYiSew5yFXCcas6Vkh/Ax94Kk6m8we9AEj6NmmtFnJcLBHDpfJv5E+KA==}
+  /ilios-common@87.0.1(@ember/test-helpers@3.2.1)(@popperjs/core@2.11.8)(class-validator@0.14.1)(ember-qunit@8.0.2)(ember-source@5.3.0)(flatpickr@4.6.13)(froala-editor@4.1.4)(luxon@3.4.4)(miragejs@0.1.48)(mockdate@3.0.5)(moment-timezone@0.5.44)(moment@2.30.1)(query-string@8.1.0)(scroll-into-view@1.16.2)(striptags@3.2.0)(tracked-built-ins@3.3.0)(typeface-nunito-sans@1.1.13)(typeface-nunito@1.1.13)(validator@13.11.0)(webpack@5.90.0):
+    resolution: {integrity: sha512-puDEcOPeKxGgqQ2GsFyjnYh9bAY8cUsNubBP5V8uG9yx373/fYKqkkzzGUfZru0PdbYw2D42JA9BA4Lr2ZbvkA==}
     engines: {node: '>= 18', npm: use pnpm, yarn: use pnpm}
-    requiresBuild: true
     peerDependencies:
       '@popperjs/core': '>= 2.1.0'
       class-validator: '>= 0.14.0'
@@ -9435,7 +9435,7 @@ packages:
       ember-data: 5.3.0(@babel/core@7.23.9)(@ember/string@3.1.1)(@glimmer/tracking@1.1.2)(ember-source@5.3.0)
       ember-event-helpers: 0.1.1
       ember-feature-flags: 6.0.0
-      ember-file-upload: 8.4.1(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-cli-mirage@3.0.2)(ember-modifier@4.1.0)(miragejs@0.1.48)(tracked-built-ins@3.3.0)(webpack@5.90.0)
+      ember-file-upload: 9.0.0(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(ember-cli-mirage@3.0.2)(ember-modifier@4.1.0)(miragejs@0.1.48)(tracked-built-ins@3.3.0)(webpack@5.90.0)
       ember-focus-trap: 1.1.0(ember-source@5.3.0)
       ember-in-element-polyfill: 1.0.1
       ember-in-viewport: 4.1.0(@babel/core@7.23.9)(ember-source@5.3.0)(webpack@5.90.0)
@@ -9705,6 +9705,7 @@ packages:
   /is-binary-path@2.1.0:
     resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dependencies:
       binary-extensions: 2.2.0
     dev: true
@@ -11232,6 +11233,7 @@ packages:
   /normalize-path@2.1.1:
     resolution: {integrity: sha512-3pKJwH184Xo/lnH6oyP1q2pMd7HcypqqmRs91/6/i2CGtWwIKGCkOOMTm/zXbgTEWHw1uNpNi/igc3ePOYHb6w==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dependencies:
       remove-trailing-separator: 1.1.0
     dev: true
@@ -12279,6 +12281,7 @@ packages:
   /readdirp@3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
+    requiresBuild: true
     dependencies:
       picomatch: 2.3.1
     dev: true
@@ -12374,6 +12377,7 @@ packages:
 
   /remove-trailing-separator@1.1.0:
     resolution: {integrity: sha512-/hS+Y0u3aOfIETiaiirUFwDBDzmXPvO+jAfKTitUngIPzdKc6Z0LoFjM/CK5PL4C+eKwHohlHAb6H0VFfmmUsw==}
+    requiresBuild: true
     dev: true
 
   /remove-types@1.0.0:
