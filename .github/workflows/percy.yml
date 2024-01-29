@@ -37,7 +37,7 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - name: Run Percy Tests
-        run: pnpm run --workspace-concurrency=1 -r percy
+        run: pnpm run --workspace-concurrency=1 -r test:percy
       - uses: act10ns/slack@v2
         if: failure()
         with:
