@@ -7,18 +7,21 @@ on:
 
 jobs:
   update:
-    name: Tests
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
     - uses: actions/setup-node@v4
       with:
         node-version: 18
+        cache: pnpm
     - name: remove and re-create lock file
       run: |
-        rm package-lock.json
-        npm install
+        rm pnpm-lock.yaml
+        pnpm install
     - name: Create Pull Request
       id: cpr
       uses: peter-evans/create-pull-request@v5
@@ -36,8 +39,6 @@ jobs:
           labels: dependencies
     - name: Enable Pull Request Automerge
       if: steps.cpr.outputs.pull-request-operation == 'created'
-      uses: peter-evans/enable-pull-request-automerge@v3
-      with:
-        token: ${{ secrets.ZORGBORT_TOKEN }}
-        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-        merge-method: merge
+      run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
