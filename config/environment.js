@@ -1,11 +1,4 @@
 'use strict';
-const { existsSync } = require('fs');
-const dotenv = require('dotenv');
-const path = require('path');
-const dotEnvPath = path.join(__dirname, '../.env');
-if (existsSync(dotEnvPath)) {
-  dotenv.config({ path: dotEnvPath });
-}
 
 module.exports = function (environment) {
   const ENV = {

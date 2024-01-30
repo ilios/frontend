@@ -13,7 +13,6 @@ jobs:
         - "@sentry/ember"
         - "browserslist"
         - "caniuse-db"
-        - "dotenv"
         - "ember-a11y-testing"
         - "ember-cli-dependency-checker"
         - "ember-cli-dependency-lint"

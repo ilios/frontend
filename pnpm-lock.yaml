@@ -91,9 +91,6 @@ devDependencies:
   concurrently:
     specifier: ^8.2.1
     version: 8.2.2
-  dotenv:
-    specifier: ^16.4.1
-    version: 16.4.1
   ember-a11y-refocus:
     specifier: 3.0.2
     version: 3.0.2
@@ -7106,11 +7103,6 @@ packages:
 
   /dotenv@1.2.0:
     resolution: {integrity: sha512-UHFQewZEALYCDzQa+xqjiMA7uRKCWWwd+HjxyD+101MMfMaRXJncTfH6k/SvNrV7479rf8F9lYiCwkMaSkGy0Q==}
-    dev: true
-
-  /dotenv@16.4.1:
-    resolution: {integrity: sha512-CjA3y+Dr3FyFDOAMnxZEGtnW9KBR2M0JvvUtXNW+dYJL5ROWxP9DUHCwgFqpMk0OXCc0ljhaNTr2w/kutYIcHQ==}
-    engines: {node: '>=12'}
     dev: true
 
   /duplexer@0.1.2:
