@@ -52,7 +52,6 @@ module('Integration | Component | reports/subject/new/search/input', function (h
       <Reports::Subject::New::Search::Input
         @search={{this.search}}
         @searchIsIdle={{true}}
-        as |num|
       >
       </Reports::Subject::New::Search::Input>
     `);

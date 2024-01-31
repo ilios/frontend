@@ -78,7 +78,7 @@ jobs:
       - name: install dependencies
         run: pnpm install
       - name: test build
-        run: pnpm run build
+        run: pnpm run --filter frontend build
 
   browserstack-test:
     name: Browserstack ${{ matrix.launcher }}
@@ -114,10 +114,10 @@ jobs:
           # The Job ID + Run ID isn't unique across matrix runs and will fail when run simultaneously
           BROWSERSTACK_LOCAL_ID_SUFFIX: ${{ matrix.launcher }}
         run: |
-          pnpm run browserstack:connect
-          pnpm run test:ember:browserstack --launch=${{ matrix.launcher }}
-          pnpm run browserstack:disconnect
-          pnpm run browserstack:results
+          pnpm run --filter frontend browserstack:connect
+          pnpm run --filter frontend test:ember:browserstack --launch=${{ matrix.launcher }}
+          pnpm run --filter frontend browserstack:disconnect
+          pnpm run --filter frontend browserstack:results
 
   firefox-test:
     name: Browser Tests (Firefox)
