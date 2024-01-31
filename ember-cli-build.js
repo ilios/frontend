@@ -74,7 +74,7 @@ module.exports = function (defaults) {
       'dashboard.activities',
       'dashboard.calendar',
       'dashboard.materials',
-      'error',
+      // 'error', don't ever split the error route, it will break error handling
       'events',
       'four-oh-four',
       /instructor[a-z-]*/,
