@@ -1,7 +1,7 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import page from 'ilios/tests/pages/reports-subject';
+import page from 'frontend/tests/pages/reports-subject';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import percySnapshot from '@percy/ember';

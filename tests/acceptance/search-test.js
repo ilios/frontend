@@ -3,8 +3,8 @@ import { currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { setupAuthentication } from 'ilios-common';
-import page from 'ilios/tests/pages/search';
-import dashboardPage from 'ilios/tests/pages/dashboard';
+import page from 'frontend/tests/pages/search';
+import dashboardPage from 'frontend/tests/pages/dashboard';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | search', function (hooks) {

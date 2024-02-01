@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ilios/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/user-profile/learner-groups';
+import { component } from 'frontend/tests/pages/components/user-profile/learner-groups';
 
 module('Integration | Component | user-profile/learner-groups', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ilios/tests/helpers';
+import { setupTest } from 'frontend/tests/helpers';
 
 module('Unit | Controller | reports', function (hooks) {
   setupTest(hooks);

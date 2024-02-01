@@ -5,7 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { setupAuthentication } from 'ilios-common';
-import { component } from 'ilios/tests/pages/components/unassigned-students-summary';
+import { component } from 'frontend/tests/pages/components/unassigned-students-summary';
 
 module('Integration | Component | unassigned students summary', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ilios/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { component } from 'ilios/tests/pages/components/reports/subject/new/search/input';
+import { component } from 'frontend/tests/pages/components/reports/subject/new/search/input';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupIntl } from 'ember-intl/test-support';
 

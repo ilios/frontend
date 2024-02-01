@@ -5,7 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'ilios/tests/pages/components/program-year/overview';
+import { component } from 'frontend/tests/pages/components/program-year/overview';
 import { enableFeature } from 'ember-feature-flags/test-support';
 
 module('Integration | Component | program-year/overview', function (hooks) {

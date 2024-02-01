@@ -1,4 +1,4 @@
-import readableFileSize from 'ilios/utils/readable-file-size';
+import readableFileSize from 'frontend/utils/readable-file-size';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | readable file size', function () {

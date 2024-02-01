@@ -5,7 +5,7 @@ import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { filter } from 'rsvp';
 import { findById } from 'ilios-common/utils/array-helpers';
-import sortCohorts from 'ilios/utils/sort-cohorts';
+import sortCohorts from 'frontend/utils/sort-cohorts';
 
 export default class UserProfileCohortsManagerComponent extends Component {
   @service currentUser;

@@ -1,4 +1,4 @@
-import sortCohorts from 'ilios/utils/sort-cohorts';
+import sortCohorts from 'frontend/utils/sort-cohorts';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 

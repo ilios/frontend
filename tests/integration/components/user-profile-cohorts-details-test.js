@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/user-profile-cohorts-details';
+import { component } from 'frontend/tests/pages/components/user-profile-cohorts-details';
 
 module('Integration | Component | user-profile-cohorts-details', function (hooks) {
   setupRenderingTest(hooks);

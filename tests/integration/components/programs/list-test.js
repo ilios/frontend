@@ -5,7 +5,7 @@ import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { component } from 'ilios/tests/pages/components/programs/list';
+import { component } from 'frontend/tests/pages/components/programs/list';
 
 module('Integration | Component | programs/list', function (hooks) {
   setupRenderingTest(hooks);

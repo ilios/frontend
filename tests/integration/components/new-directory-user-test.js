@@ -6,7 +6,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'ilios/tests/pages/components/new-directory-user';
+import { component } from 'frontend/tests/pages/components/new-directory-user';
 
 module('Integration | Component | new directory user', function (hooks) {
   setupRenderingTest(hooks);

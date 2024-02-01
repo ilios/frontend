@@ -1,5 +1,5 @@
 import ESASessionService from 'ember-simple-auth/services/session';
-import config from 'ilios/config/environment';
+import config from 'frontend/config/environment';
 import * as Sentry from '@sentry/ember';
 import { service } from '@ember/service';
 

@@ -5,7 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { DateTime } from 'luxon';
-import { component } from 'ilios/tests/pages/components/user-profile-permissions';
+import { component } from 'frontend/tests/pages/components/user-profile-permissions';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 

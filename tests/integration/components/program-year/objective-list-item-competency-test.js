@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'ilios/tests/pages/components/program-year/objective-list-item-competency';
+import { component } from 'frontend/tests/pages/components/program-year/objective-list-item-competency';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | program-year/objective-list-item-competency', function (hooks) {

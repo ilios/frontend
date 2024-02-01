@@ -1,5 +1,5 @@
 import commonRoutes from './routes';
-import ENV from 'ilios/config/environment';
+import ENV from 'frontend/config/environment';
 import { createServer, Response } from 'miragejs';
 import { DateTime } from 'luxon';
 

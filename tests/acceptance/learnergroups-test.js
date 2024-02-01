@@ -3,8 +3,8 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import page from 'ilios/tests/pages/learner-groups';
-import learnerGroupPage from 'ilios/tests/pages/learner-group';
+import page from 'frontend/tests/pages/learner-groups';
+import learnerGroupPage from 'frontend/tests/pages/learner-group';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Learner Groups', function (hooks) {

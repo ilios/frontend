@@ -5,7 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import Service from '@ember/service';
-import { component } from 'ilios/tests/pages/components/instructor-groups/list-item';
+import { component } from 'frontend/tests/pages/components/instructor-groups/list-item';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | instructor-groups/list-item', function (hooks) {

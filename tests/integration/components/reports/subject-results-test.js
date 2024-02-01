@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ilios/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { component } from 'ilios/tests/pages/components/reports/results';
+import { component } from 'frontend/tests/pages/components/reports/results';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | reports/subject-results', function (hooks) {

@@ -4,7 +4,7 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import { appVersion } from 'ilios/helpers/app-version';
+import { appVersion } from 'frontend/helpers/app-version';
 
 export default class ApplicationController extends Controller {
   @service apiVersion;

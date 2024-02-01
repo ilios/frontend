@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupAuthentication } from 'ilios-common';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import page from 'ilios/tests/pages/program';
+import page from 'frontend/tests/pages/program';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program - Leadership', function (hooks) {

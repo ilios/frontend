@@ -2,7 +2,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { DateTime } from 'luxon';
-import page from 'ilios/tests/pages/courses';
+import page from 'frontend/tests/pages/courses';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import percySnapshot from '@percy/ember';

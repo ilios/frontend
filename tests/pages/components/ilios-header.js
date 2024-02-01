@@ -1,5 +1,5 @@
 import { create, text } from 'ember-cli-page-object';
-import searchBox from 'ilios/tests/pages/components/global-search-box';
+import searchBox from 'frontend/tests/pages/components/global-search-box';
 
 const definition = {
   scope: '[data-test-ilios-header]',

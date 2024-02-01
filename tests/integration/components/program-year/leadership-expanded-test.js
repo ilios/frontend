@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { component } from 'ilios/tests/pages/components/program-year/leadership-expanded';
+import { component } from 'frontend/tests/pages/components/program-year/leadership-expanded';
 
 module('Integration | Component | program-year/leadership-expanded', function (hooks) {
   setupRenderingTest(hooks);

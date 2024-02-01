@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import page from 'ilios/tests/pages/curriculum-inventory-report-rollover';
+import page from 'frontend/tests/pages/curriculum-inventory-report-rollover';
 import queryString from 'query-string';
 import { DateTime } from 'luxon';
 

@@ -5,7 +5,7 @@ import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'ilios/tests/pages/components/login-form';
+import { component } from 'frontend/tests/pages/components/login-form';
 
 module('Integration | Component | login-form', function (hooks) {
   setupRenderingTest(hooks);

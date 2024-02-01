@@ -5,7 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'ilios/tests/pages/components/school-competencies-list-item';
+import { component } from 'frontend/tests/pages/components/school-competencies-list-item';
 
 module('Integration | Component | school-competencies-list-item', function (hooks) {
   setupRenderingTest(hooks);

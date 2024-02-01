@@ -7,7 +7,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { mapBy } from 'ilios-common/utils/array-helpers';
-import { component } from 'ilios/tests/pages/components/new-user';
+import { component } from 'frontend/tests/pages/components/new-user';
 
 module('Integration | Component | new user', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,6 +1,6 @@
 import { service } from '@ember/service';
 import EmberRouter from '@embroider/router';
-import config from 'ilios/config/environment';
+import config from 'frontend/config/environment';
 import { courseRoutes, dashboardRoutes } from 'ilios-common/common-routes';
 
 export default class Router extends EmberRouter {

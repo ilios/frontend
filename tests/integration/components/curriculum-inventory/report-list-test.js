@@ -6,7 +6,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/curriculum-inventory/report-list';
+import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-list';
 
 module('Integration | Component | curriculum-inventory/report-list', function (hooks) {
   setupRenderingTest(hooks);

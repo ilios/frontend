@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/learner-group/instructor-group-members-list';
+import { component } from 'frontend/tests/pages/components/learner-group/instructor-group-members-list';
 
 module('Integration | Component | learner-group/instructor-group-members-list', function (hooks) {
   setupRenderingTest(hooks);
