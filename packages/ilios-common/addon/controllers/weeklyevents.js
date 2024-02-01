@@ -32,6 +32,6 @@ export default class WeeklyeventsController extends Controller {
 
   get showBackLink() {
     const config = getOwner(this).resolveRegistration('config:environment');
-    return config.modulePrefix !== 'ilios';
+    return config.modulePrefix !== 'ilios' && config.modulePrefix !== 'frontend';
   }
 }
