@@ -26,11 +26,10 @@
     "eslint-plugin-n": "^16.4.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-qunit": "^8.0.1",
-    "pre-commit": "^1.2.2",
     "prettier": "^3.1.1",
     "stylelint": "^15.11.0",
-    "stylelint-config-standard": "^34.0.0",
     "stylelint-config-recommended-scss": "^13.0.0",
+    "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.1.0",
     "stylelint-scss": "^5.0.0"
   },
@@ -38,8 +37,5 @@
     "node": ">= 18",
     "yarn": "use pnpm",
     "npm": "use pnpm"
-  },
-  "pre-commit": [
-    "lint"
-  ]
+  }
 }
