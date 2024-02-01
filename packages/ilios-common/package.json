@@ -109,7 +109,6 @@
     "ember-resolver": "^11.0.1",
     "ember-source": "~5.5.0",
     "loader.js": "^4.7.0",
-    "pre-commit": "^1.2.2",
     "sass": "^1.13.4",
     "tracked-built-ins": "^3.1.1",
     "webpack": "^5.89.0"
@@ -137,8 +136,5 @@
     "lib/",
     "translations/",
     "vendor/"
-  ],
-  "pre-commit": [
-    "lint"
   ]
 }
