@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import LiveSearchItemMixin from 'ilios/mixins/live-search-item';
+import LiveSearchItemMixin from 'frontend/mixins/live-search-item';
 import { module, test } from 'qunit';
 
 module('LiveSearchItemMixin', function () {

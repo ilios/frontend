@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/school/session-type-visualize-vocabularies';
+import { component } from 'frontend/tests/pages/components/school/session-type-visualize-vocabularies';
 
 module('Integration | Component | school/session-type-visualize-vocabularies', function (hooks) {
   setupRenderingTest(hooks);

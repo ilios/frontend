@@ -1,6 +1,6 @@
 import { create, text } from 'ember-cli-page-object';
 
-import form from 'ilios/tests/pages/components/school-session-type-form';
+import form from 'frontend/tests/pages/components/school-session-type-form';
 
 const definition = {
   scope: '[data-test-school-session-type-manager]',

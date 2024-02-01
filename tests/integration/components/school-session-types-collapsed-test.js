@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { component } from 'ilios/tests/pages/components/school-session-types-collapsed';
+import { component } from 'frontend/tests/pages/components/school-session-types-collapsed';
 
 module('Integration | Component | school session types collapsed', function (hooks) {
   setupRenderingTest(hooks);

@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { component } from 'ilios/tests/pages/components/pagination-links';
+import { component } from 'frontend/tests/pages/components/pagination-links';
 
 module('Integration | Component | pagination-links', function (hooks) {
   setupRenderingTest(hooks);

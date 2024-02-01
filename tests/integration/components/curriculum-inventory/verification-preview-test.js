@@ -5,7 +5,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/curriculum-inventory/verification-preview';
+import { component } from 'frontend/tests/pages/components/curriculum-inventory/verification-preview';
 
 module('Integration | Component | curriculum-inventory/verification-preview', function (hooks) {
   setupRenderingTest(hooks);

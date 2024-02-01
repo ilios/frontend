@@ -1,6 +1,6 @@
 import { clickable, create, property, text, visitable } from 'ember-cli-page-object';
-import bio from 'ilios/tests/pages/components/user-profile-bio';
-import cohorts from 'ilios/tests/pages/components/user-profile-cohorts';
+import bio from 'frontend/tests/pages/components/user-profile-bio';
+import cohorts from 'frontend/tests/pages/components/user-profile-cohorts';
 
 export default create({
   scope: '[data-test-user-profile]',

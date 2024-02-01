@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import component from 'ilios/tests/pages/components/locale-chooser';
+import component from 'frontend/tests/pages/components/locale-chooser';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | locale-chooser', function (hooks) {

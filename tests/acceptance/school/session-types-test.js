@@ -3,7 +3,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { currentURL } from '@ember/test-helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import page from 'ilios/tests/pages/school';
+import page from 'frontend/tests/pages/school';
 
 // @todo flesh out test coverage - the full CRUD, read-only mode, etc [ST 2023/09/18]
 module('Acceptance | School - Session Types', function (hooks) {

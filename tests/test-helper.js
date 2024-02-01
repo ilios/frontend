@@ -1,5 +1,5 @@
-import Application from 'ilios/app';
-import config from 'ilios/config/environment';
+import Application from 'frontend/app';
+import config from 'frontend/config/environment';
 import * as QUnit from 'qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';

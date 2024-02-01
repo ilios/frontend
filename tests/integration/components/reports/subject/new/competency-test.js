@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ilios/tests/helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/reports/subject/new/competency';
+import { component } from 'frontend/tests/pages/components/reports/subject/new/competency';
 import { setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | reports/subject/new/competency', function (hooks) {

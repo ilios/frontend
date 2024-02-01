@@ -3,7 +3,7 @@ import { visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { setupAuthentication } from 'ilios-common';
-import ENV from 'ilios/config/environment';
+import ENV from 'frontend/config/environment';
 import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
 const { version } = ENV.APP;
 

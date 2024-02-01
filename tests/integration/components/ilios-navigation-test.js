@@ -5,7 +5,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'ilios/tests/pages/components/ilios-navigation';
+import { component } from 'frontend/tests/pages/components/ilios-navigation';
 
 module('Integration | Component | ilios-navigation', function (hooks) {
   setupRenderingTest(hooks);

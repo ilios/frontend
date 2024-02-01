@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupTest } from 'ilios/tests/helpers';
+import { setupTest } from 'frontend/tests/helpers';
 
 module('Unit | Service | graphql', function (hooks) {
   setupTest(hooks);

@@ -1,4 +1,4 @@
-import { launchWorker } from 'ilios/utils/launch-worker';
+import { launchWorker } from 'frontend/utils/launch-worker';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | launch-worker', function () {

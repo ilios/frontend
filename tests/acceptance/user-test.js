@@ -4,7 +4,7 @@ import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import page from 'ilios/tests/pages/user';
+import page from 'frontend/tests/pages/user';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | User', function (hooks) {

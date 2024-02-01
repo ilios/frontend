@@ -1,4 +1,4 @@
-import config from 'ilios/config/environment';
+import config from 'frontend/config/environment';
 import { isTesting } from '@embroider/macros';
 
 export async function launchWorker() {

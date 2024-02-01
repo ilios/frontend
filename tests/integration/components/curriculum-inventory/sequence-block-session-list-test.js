@@ -5,7 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { DateTime } from 'luxon';
-import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-session-list';
+import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-session-list';
 
 module(
   'Integration | Component | curriculum-inventory/sequence-block-session-list',

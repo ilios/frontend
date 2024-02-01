@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupAuthentication } from 'ilios-common';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import page from 'ilios/tests/pages/curriculum-inventory-sequence-block';
+import page from 'frontend/tests/pages/curriculum-inventory-sequence-block';
 
 module('Acceptance | curriculum inventory nested sequence blocks', function (hooks) {
   setupApplicationTest(hooks);

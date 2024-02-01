@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   const ENV = {
-    modulePrefix: 'ilios',
+    modulePrefix: 'frontend',
     environment,
     rootURL: '/',
     locationType: 'history',

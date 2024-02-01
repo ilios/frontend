@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { Promise } from 'rsvp';
-import EmberConfig from 'ilios/config/environment';
+import EmberConfig from 'frontend/config/environment';
 
 export default class LoginRoute extends Route {
   @service currentUser;

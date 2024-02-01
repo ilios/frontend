@@ -1,6 +1,6 @@
 import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
-import cloneLearnerGroup from 'ilios/utils/clone-learner-group';
+import cloneLearnerGroup from 'frontend/utils/clone-learner-group';
 import { module, test } from 'qunit';
 
 const { resolve } = RSVP;

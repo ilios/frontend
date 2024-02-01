@@ -4,7 +4,7 @@ import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import page from 'ilios/tests/pages/programs';
+import page from 'frontend/tests/pages/programs';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Programs', function (hooks) {

@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import page from 'ilios/tests/pages/pending-user-updates';
+import page from 'frontend/tests/pages/pending-user-updates';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | pending user updates', function (hooks) {

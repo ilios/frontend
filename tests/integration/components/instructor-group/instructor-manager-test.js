@@ -5,7 +5,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { component } from 'ilios/tests/pages/components/instructor-group/instructor-manager';
+import { component } from 'frontend/tests/pages/components/instructor-group/instructor-manager';
 
 module('Integration | Component | instructor-group/instructor-manager', function (hooks) {
   setupRenderingTest(hooks);

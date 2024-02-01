@@ -1,6 +1,6 @@
 import Application from '@ember/application';
-import config from 'ilios/config/environment';
-import { initialize } from 'ilios/initializers/metrics-imports';
+import config from 'frontend/config/environment';
+import { initialize } from 'frontend/initializers/metrics-imports';
 import { module, test } from 'qunit';
 import Resolver from 'ember-resolver';
 import { run } from '@ember/runloop';

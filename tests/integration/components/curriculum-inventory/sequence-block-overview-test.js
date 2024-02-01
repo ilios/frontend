@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-overview';
+import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-overview';
 
 module('Integration | Component | curriculum-inventory/sequence-block-overview', function (hooks) {
   setupRenderingTest(hooks);

@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { component } from 'ilios/tests/pages/components/back-to-admin-dashboard';
+import { component } from 'frontend/tests/pages/components/back-to-admin-dashboard';
 
 module('Integration | Component | back-to-admin-dashboard', function (hooks) {
   setupRenderingTest(hooks);

@@ -4,7 +4,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { component } from 'ilios/tests/pages/components/courses/new';
+import { component } from 'frontend/tests/pages/components/courses/new';
 
 module('Integration | Component | courses/new', function (hooks) {
   setupRenderingTest(hooks);

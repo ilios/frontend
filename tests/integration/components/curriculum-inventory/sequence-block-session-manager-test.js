@@ -5,7 +5,7 @@ import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { DateTime } from 'luxon';
 import { hbs } from 'ember-cli-htmlbars';
-import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-session-manager';
+import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-session-manager';
 
 module(
   'Integration | Component | curriculum-inventory/sequence-block-session-manager',

@@ -6,7 +6,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { sortBy } from 'ilios-common/utils/array-helpers';
-import { component } from 'ilios/tests/pages/components/program-year/list';
+import { component } from 'frontend/tests/pages/components/program-year/list';
 
 module('Integration | Component | program-year/list', function (hooks) {
   setupRenderingTest(hooks);
