@@ -83,8 +83,8 @@ devDependencies:
     specifier: ^4.22.1
     version: 4.22.3
   caniuse-db:
-    specifier: ^1.0.30001580
-    version: 1.0.30001581
+    specifier: ^1.0.30001582
+    version: 1.0.30001582
   class-validator:
     specifier: ^0.14.0
     version: 0.14.1
@@ -5737,8 +5737,8 @@ packages:
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-db@1.0.30001581:
-    resolution: {integrity: sha512-EinDmiBt2zluuRUGkW1OonG4O/037ZcIGaCoz0CmFpMGAS2gCNd0DR6+6PUcpjtW9TUJZikhWH5vNTV7r3pFCg==}
+  /caniuse-db@1.0.30001582:
+    resolution: {integrity: sha512-bf2eeY5tUaWORL7/JkFSNysbI8rY6UXZYiitnWPr+FDEzitYYEkHxQVB3+tPOrIWN9DNKQ+BKaUC45zHsRSd6A==}
     dev: true
 
   /caniuse-lite@1.0.30001581:
