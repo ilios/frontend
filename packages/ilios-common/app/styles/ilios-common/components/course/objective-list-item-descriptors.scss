@@ -1,0 +1,5 @@
+@use "../../mixins" as m;
+
+.course-objective-list-item-descriptors {
+  @include m.objective-list-item(0.5em);
+}

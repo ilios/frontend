@@ -5,7 +5,7 @@ module.exports = {
   rules: {
     'no-implicit-this': {
       //our helpers which do not take arguments have to be listed here
-      allow: ['noop'],
+      allow: ['browser-timezone', 'noop'],
     },
   },
 };

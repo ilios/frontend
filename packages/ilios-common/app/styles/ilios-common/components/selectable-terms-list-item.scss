@@ -1,0 +1,26 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.selectable-terms-list-item {
+  @include m.ilios-button-reset;
+  border: 1px c.$culturedGrey solid;
+  border-radius: 4px;
+  display: block;
+  margin-top: 5px;
+  padding: 0.2em 0.4em 0.2em 0.6em;
+  text-align: left;
+  vertical-align: middle;
+  width: 100%;
+
+  &.selected {
+    background-color: c.$culturedGrey;
+  }
+
+  .actions {
+    float: right;
+  }
+
+  &.top-level {
+    margin-left: 0;
+  }
+}

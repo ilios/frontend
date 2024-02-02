@@ -1,0 +1,34 @@
+<li
+  {{! template-lint-disable no-invalid-interactive }}
+  class="detail-terms-list-item"
+  role={{if @canEdit "button"}}
+  {{on "click" (fn (if @canEdit @remove (noop)) @term)}}
+  {{mouse-hover-toggle (set this.isHovering)}}
+  {{did-insert (set this.theElement)}}
+>
+  {{#if (and this.theElement this.showTooltip)}}
+    <IliosTooltip @target={{this.theElement}}>
+      {{@term.description}}
+    </IliosTooltip>
+  {{/if}}
+  {{#if @term.isTopLevel}}
+    {{@term.title}}
+  {{else}}
+    {{#each this.allParentTitles as |title|}}
+      {{! template-lint-disable no-bare-strings}}
+      <span class="muted">
+        {{title}}
+        &raquo;&nbsp;
+      </span>
+    {{/each}}
+    {{@term.title}}
+  {{/if}}
+  {{#if (and @canEdit (not @term.active))}}
+    <span class="inactive">
+      ({{t "general.inactive"}})
+    </span>
+  {{/if}}
+  {{#if @canEdit}}
+    <FaIcon @icon="xmark" class="remove" />
+  {{/if}}
+</li>

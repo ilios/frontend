@@ -39,9 +39,9 @@ You will need the following things properly installed on your computer.
 
 ### Running / Development
 
-This Frontend will need to know where your backend API server is located. 
-You can set this information in a system wide environment variable name ILIOS_FRONTEND_API_HOST 
-or can just add the setting to a file named .env file 
+This Frontend will need to know where your backend API server is located.
+You can set this information in a system wide environment variable name ILIOS_FRONTEND_API_HOST
+or can just add the setting to a file named .env file
 within the same directory as your Ilios Frontend code:
 
 * `echo "ILIOS_FRONTEND_API_HOST=https://ilios3-demo.ucsf.edu" > .env`

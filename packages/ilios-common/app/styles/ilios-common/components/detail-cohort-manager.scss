@@ -1,0 +1,22 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.detail-cohort-manager {
+  button {
+    @include m.ilios-button-reset;
+  }
+
+  .selected-cohorts {
+    @include m.ilios-removable-list;
+  }
+
+  .selectable-cohorts {
+    @include m.ilios-selectable-list;
+    background-color: c.$white;
+    border: 1px solid c.$blueMunsell;
+    height: 10rem;
+    margin-bottom: 1rem;
+    overflow-y: scroll;
+    width: 80%;
+  }
+}

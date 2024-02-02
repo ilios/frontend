@@ -1,0 +1,5 @@
+@use "../mixins" as m;
+
+.course-header {
+  @include m.course-header;
+}

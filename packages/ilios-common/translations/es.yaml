@@ -1,0 +1,435 @@
+general:
+  accessAllMaterialsForThisCourse: "Acceso Todos los Materiales para este Curso"
+  actions: Acciones
+  activeFilters: "Filtros Activos"
+  add: Agregue
+  addNew: "Agregue Nuevo"
+  administratorCount: "Hay {count, plural, =1 {1 administrador} other {# administradores}}"
+  administrators: Administradores
+  advancedOptions: "Opciones Avanzadas"
+  allCourses: "Todos Los Cursos"
+  allEvents: "Todos los Eventos"
+  allMaterials: "Todos los Materiales"
+  allWeeks: "Todas las Semanas"
+  apiVersionMismatch: "Incompatibilidad de versión de API"
+  apiVersionMismatchDetails: "Este interfaz de usuario no corresponde a la versión del API con el cual se comunica. Por favor notifique a un administrador o el dueño técnico del sistema con respecto a este error '<em>'inmediatamente'</em>', no puede trabajar con Ilios hasta que esto ha sido resuelto"
+  assignedTerms: "Términos asignados"
+  associatedGroups: "Grupos Associados"
+  attendanceIs_Required_: "Se '<strong><em>'require'</em></strong>' asistencia"
+  attendanceIsRequired: "Se require asistencia"
+  attendanceRequired: "Asistencia Requerida"
+  author: Autor
+  autoUpdatingSeconds: "{count, plural, =1 {Actualización automática en 1 segundo...} other {Actualización automática en # segundos...}}"
+  availableInstructorsAndInstructorGroups: "Instructores y Grupos de instructores Disponibles"
+  availableLearnerGroups: "Grupos de Aprendedores Disponibles"
+  availableLearners: "Aprendedores Disponibles"
+  back: Volver
+  backToCourse: "Volver al Curso"
+  backToCourses: "Atrás a la Lista de Cursos"
+  backToDashboard: "Detrás a Tablero"
+  backToSessionList: "Atrás a La Lista de Sesiones"
+  backToTitle: "Atrás a {title}"
+  beforeOrAfterMidday: "Antes o después del mediodía"
+  bottomPagination: "Paginación inferior"
+  calendar: Calendario
+  campusNameOfRecord: "Nombre de registro del registrador"
+  cancel: Cancelar
+  chooseCohortTitle: "Seleccione Matriz Para"
+  chooseFile: "Seleccione Archivo"
+  citation: "Citación"
+  classOf: "Clase de {year}"
+  clearFilters: "Borrar Filtros"
+  clerkshipType: "Tipo de Rotación"
+  clickForMore: "Haga clic para más información"
+  clickToEdit: "Hacer clic para editar"
+  close: Cerrar
+  cohort: "Clase de la Graduación"
+  cohorts: "Clases de la Graduación"
+  cohortsManageTitle: "Administrar Clases de La Graduación"
+  collapse: colapsar
+  collapseDetail: "Esconder Detalles"
+  competencies: Competencias
+  competency: Competencia
+  complete: Completo
+  completeSessions: "Sesiónes Completas: Listo a Publicar"
+  confirmObjectiveRemoval: "¿Está seguro que desea eliminar este objetivo?"
+  confirmObjectiveRemovalMultipleSessionObjectives: "Está a punto de eliminar este objetivo de curso, que está vinculado a {count} objetivos de sesión. Esto eliminará también esas relaciones. ¿Está seguro que desea continuar?"
+  confirmRemoval: "¿Está seguro que desea eliminar este material de aprendizaje?"
+  confirmRemove: "¿Estás seguro que quieres borrar este ofrecimiento con {learnerGroupCount} grupos de aprendedores? Esta acción no se puede deshacer."
+  confirmSessionRemoval: "¿Está seguro que desea eliminar este sessión?"
+  contentAuthor: "Autor del Contenido"
+  copiedSuccessfully: "Copiado con Éxito"
+  copyIcsFeedUrl: "Copiar Mi Enlace ICS"
+  copyLink: "Copiar el enlace"
+  copyrightAgreement: "El archivo que estoy subiendo es mío o tengo permiso expreso para reproducir y / o distribuir este artículo, o su uso aquí ha sido evaluado como permisible por la doctrina del uso justo. Este archivo no contiene ninguna información protegida de la salud, y su utilización aquí está en conformidad con las políticas del gobierno y Universidad sobre derechos de autor y de seguridad de la información y las directrices de mi institución para la conducta profesional."
+  copyrightPermission: "Permisos de Derechos de Autor"
+  copyrightRationale: "Justificación para Derechos de Autor"
+  copySession: "Copiar una Sesión"
+  copySessionSummary: "Usted va a copiar esta sesión (sin datos del horario) en el curso seleccionado. La sesión nueva va a incluir todos los objectivos, terminos, y materiales de aprendizaje.  Para continuar haga click en \"cumplido\".  Para regresar a su sesión corriente, haga click en \"cancelar\"."
+  copySuccess: "La Copia se ha Completado con Éxito"
+  course: Curso
+  courseLearningMaterials: "Materiales de Aprendizaje del Curso"
+  courseLevel: "Nivel del curso {level}"
+  courseLevels: "Niveles de Curso"
+  courseNotFound: "curso no encontrado"
+  courseObjective: "Objetivo del Curso"
+  courseObjectives: "Objetivos del Curso"
+  courseOrSessionType: "Curso / Tipo de Sesión"
+  courseRollover: "Copiar Curso"
+  courseRolloverSuccess: "Curso Copiado con Éxito"
+  courseRolloverSummary: "Va a rodar este curso en el seleccionado año académico, junto con todas las opciones seleccionadas.. Para continuar, haga clic en \"done\". Para volver a su curso corriente, haga clic en \"cancel\""
+  courseRolloverYearUnavailable: "El Curso Ya Existe"
+  courses: Cursos
+  coursesAndSessions: "Cursos y Sesiones"
+  courseTitle: "Titulo de Curso"
+  courseTitlePlaceholder: "Entre en un título para este curso"
+  courseVisualizations: "Visualizaciones de Cursos"
+  currentlySearchingPrompt: "buscando..."
+  dashboardNavigation: "Panel de navegación"
+  date: Fecha
+  dateTime: "Fecha/Hora"
+  day: "Día"
+  defaultInstructorsNotLoaded: "(Instructores predeterminados no se cargarán: por favor introduzca el valor deseado.)"
+  defaultLocationNotLoaded: "(Ubicación predterminada no se cargará: por favor introduzca el valor deseado.)"
+  defaultNotLoaded: "Predeterminado no cargado"
+  deprecatedAbbreviation: "obs."
+  description: "Descripción"
+  directorCount: "Hay {count, plural, =1 {1 director} other {# directores}}"
+  directors: Directores
+  disabled: desactivado
+  displayName: "Nombre de Mostrar"
+  done: Acabado
+  download: Descargar
+  dueBefore: "Debido antes de"
+  dueBy: "Debido Por"
+  duePriorTo: "Debido antes de"
+  duration: "Duración"
+  durationHours: "{count, plural, =1 {un hora} other {# horas}}"
+  durationMinutes: "{count, plural, =1 {1 minudo} other {# minudos}}"
+  edit: Editar
+  end: Termino
+  endDate: "Fecha de Cumplir"
+  ends: Termina
+  endTime: "Hora de Cumplir"
+  etAl: "et al."
+  eventNotFoundTitle: "Evento no encontrado"
+  eventNotFoundExplanation: "El evento al que ha intentado acceder ya no está disponible o ha seguido un enlace de usuario personalizado que no se puede compartir. Si sigue teniendo problemas, póngase en contacto con el servicio de asistencia de Ilios."
+  expand: "expandir"
+  expandDetail: "Enseñar Detalles"
+  externalId: "Identificación del Curso"
+  file: Archivo
+  file-audio: "Archivo de audio"
+  file-pdf: "Archivo PDF"
+  file-powerpoint: "Archivo de PowerPoint"
+  file-video: "Archivo de vídeo"
+  filterChartPlaceholder: "Empieza marcando para filtrar este gráfico"
+  filterPlaceholder: "Empieza marcando para aplicar un filtro"
+  fileSizeError: "Este archivo es demasiado grande.  El tamaño máximo es {maxSize}."
+  findInstructorOrGroup: "Buscar Instructor o Grupo"
+  findLearners: "Encontrar estudiantes"
+  first: Primero
+  firstOffering: "Ofrecimiento Primero"
+  forward: Adelante
+  friday: Viernes
+  go: Vaya
+  goToNextYear: "Ir al año que viene"
+  goToPreviousYear: "Ir al año anterior"
+  groupByCompetencies: "Agrupe por Competencias"
+  groupName: "Nombre De Grupo"
+  groups: Grupos
+  hideCalendar: "Esconda Calendario"
+  hideCourseMaterials: "Ocultar materiales del curso"
+  hideFilters: "Esconde Filtros"
+  hideIcsFeed: Ocultar Opciones de Fuente de Datos ICS
+  hideObjectives: "Ocultar objetivos"
+  hideSessionMaterials: "Ocultar materiales de sesión"
+  hour: Hora
+  hours: Horas
+  icsInstructions: "Para agregar tu calendario a otra aplicación o servicio, utiliza esta URL.  Esta URL es como una contraseña.  ¡Cualquiera persona que la sepa puede ver tu calendario!"
+  ilios: Ilios
+  ilm: ILM
+  ilmDue: "AI - Debido Por"
+  inactive: inactivo
+  include: Incluir
+  incompleteSessions: "Sesiónes Incompletas: No se pueden publicar"
+  independentLearning: "Aprendizaje Independiente"
+  independentLearningActivities: "Aprendizaje Independiente Actividades"
+  inProgress: "En Progreso"
+  instructionalNotes: "Notes para la Instrucción"
+  instructor: Instructor
+  instructorGroupMembers: "Miembros del grupo instructor"
+  instructorGroups: "Grupos de Instructores"
+  instructors: Instructores
+  instructorsAndInstructorGroups: "Instructores y Grupos de Instructores"
+  instructorsManageTitle: "Administrar Instructores"
+  last: Último
+  lastUpdate: "Última actualización"
+  leadership: Liderazgo
+  learnerGroups: "Grupos de Aprendedores"
+  learnerGroupsManageTitle: "Administrar Grupos de Aprendedores"
+  learners: Aprendedores
+  learnersAndLearnerGroups: "Aprendedores y Grupos de Aprendedores"
+  learningMaterialManageTitle: "Administrar Materiales de Aprendizaje"
+  learningMaterials: "Materiales de Aprendizaje"
+  learningMaterialsSummary: "Resumen de Materiales de Aprendizaje"
+  level: Nivel
+  link: "Enlace de la Web"
+  linkedCompetencies: "Competencias Vinculadas"
+  linkedCompetencyCount: "{count, plural, =1 {1 tiene una competencia vinculada} other {# tienen competencias vinculadas}}"
+  listByPriority: "Lista por prioridad"
+  loadingEvents: "Cargando eventos..."
+  loadingMaterials: "Carga de Materiales..."
+  location: "Ubicación"
+  login: Inicio
+  makeRecurring: "Hacer Recurrente"
+  manageLeadership: "Maneje el Liderazgo"
+  manageLearners: "Administrar Aprendedores"
+  markAsScheduled: "Marque Como Programado"
+  materials: Materiales
+  membersOfThisGroupRequireAccommodation: "los miembros de este grupo necesitan adaptación"
+  mesh: MeSH
+  meshCount: "{count, plural, =1 {1 tiene MeSH} other {# tienen MeSH}}"
+  meshManageTitle: "Administrar MeSH"
+  meshTerms: "Terminos de MeSH"
+  minute: Minuto
+  minutes: Minutos
+  missingCohortMessage: "Favor de agregar por lo menos un Clase de La Graduación a este curso."
+  missingCompetenciesMessage: "Favor de agregar por lo menos una competencia para este año de programa."
+  missingCourseObjectivesMessage: "Favor de agregar por lo menos un objetivo al Curso."
+  missingItems: "Artículos Faltantes"
+  monday: Lunes
+  month: Mes
+  moreInputRequiredPrompt: "sigue marcando..."
+  multiday: "de Días Múltiples"
+  multidayEvents: "Eventos de Varios Días"
+  multiple: "Múltiple "
+  mustBeSameDayOfWeekAsCurrentStartDate: "Debe ser el mismo día de la semana en curso como fecha de inicio"
+  myLearningMaterials: "Mis Materiales Didácticos"
+  myMaterials: "Mis Materiales"
+  mySchedule: "Mi Horario"
+  navigation: Navegación
+  newObjective: "Nuevo Objetivo"
+  newObjectiveSaved: "Nuevo Objetivo Guardado"
+  newOffering: "Nueva Oferta"
+  newSession: "Sesión Nueva"
+  newUpdates: "Nuevas actualizaciones"
+  next: Siguiente
+  nextXDays: "Próximos {days} días"
+  no: No
+  noAssociatedCompetencies: "No Competencias Asociadas"
+  noAssociatedCompetency: "No Competencia Asociada"
+  noAvailableLearnerGroups: "No grupo de aprendedores disponible; Este curso no contiene ninguna clase de la graduación."
+  noAvailableLearners: "No aprendedores disponible; Este curso no contiene ninguna clase de la graduación."
+  noCohorts: "No hay ningún clase de la graduación en este curso"
+  noCourseLearningMaterialsAvailable: "Ningunos Materiales Didácticos del Curso Disponibles"
+  noEvents: no eventos
+  none: "Ningún"
+  noOfferings: "Esta sesión no tiene ningunos ofrecimientos"
+  noResultsFound: "Ningún resultado encontrado. Por favor intente otra vez."
+  noSearchResultsPrompt: "no resultados"
+  noSessionLearningMaterialsAvailable: "Ningunos Materiales Didácticos de la Sesión Disponibles"
+  notAClerkship: "No una Rotación"
+  notes: Notas
+  notFoundMessage: "Malditas! Éso no puede encontrar. Favor de verificar la dirección de la página, y trata otra vez."
+  notPublished: "No Publicado"
+  notStarted: "No Comenzado"
+  objectiveCompetencyManagerTitle: "Seleccione Competencia Principal para Objetivo"
+  objectiveCount: "Hay {count, plural, =1 {1 objectivo} other {# objectivos}}"
+  objectiveDescriptorTitle: "Seleccione Descriptores de MeSH para Objetivo"
+  objectiveParentTitle: "Seleccione Objetivos Principales"
+  objectiveParentTitleSingular: "Seleccione Objetivo Principale"
+  objectives: Objetivos
+  objectivesWithNoHours: "Los siguientes objetivos del curso no están vinculados a ninguna sesión, o están vinculados sólo a las sesiones sin datos de duración."
+  objectivesWithNoLink: "No hay objetivos del curso actualmente vinculados a tiempo de instrucción."
+  offering: Ofrecimiento
+  offerings: Ofrecimientos
+  otherVisualizations: "Otras Visualizaciones"
+  overview: "Visión Amplia"
+  ownedBy: "propiedad de {owner}"
+  owner: "Dueño"
+  pagedResultsCount: "Mostrando {start} - {end} de {total}"
+  parentCount: "{count, plural, =1 {1 tiene un Principal objectivo} other {# tienen Objectivos Principales}}"
+  parentGroup: "Principal grupo"
+  parentGroups: "Grupos principales"
+  parentObjectives: "Objetivos de Matriz"
+  percentage: Porcentaje
+  perPage: "Por Página"
+  pickADate: "Elija una fecha"
+  prerequisites: "Prerrequisitos"
+  previous: Anterior
+  preWork: "Pre Trabajo"
+  printSummary: "Sumario Printado"
+  program: Programa
+  programAndCohort: "Programa/Clase de La Graduación"
+  programCohorts: "Clases de La Graduación"
+  programDetail: "Detalle del programa"
+  publicationStatus: "Estado de Publicación"
+  publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
+  publishAllSessions: "Publique {sessionCount} sesiónes"
+  publishAsIs: "Publique Como Es"
+  publishCourse: "Publique Curso"
+  published: Publicado
+  publishedSuccessfully: "Publicado con Éxito"
+  publishSession: "Publique La Sesión"
+  remove: Remover
+  removeAll: "Quitar Todos"
+  required: Requerido
+  results: Resultados
+  resultsCount: "{count, plural, =1 {1 resultado} other {# resultados}}"
+  returnToPreviousPage: "Volver a la Página Anterior"
+  reviewMissingItems: "Revisar {count} Artículos Faltantes"
+  reviewSessions: "Sesiónes a Revisar"
+  saturday: "Sábado"
+  save: Guardar
+  savedSuccessfully: "Ahorrado Con Éxito"
+  scheduled: Programado
+  scheduledSuccessfully: "Programdo con Éxito"
+  scheduling: Programación
+  school: Escuela
+  schools: Escuelas
+  search: Buscar
+  searchForIliosUsers: "Encuentre Usuarios de Ilios..."
+  searchMesh: "Buscar MeSH"
+  searchPlaceholder: "encontrar material de aprendizaje"
+  selectCohortsToAttach: "Seleccione la cohorte de estudiantes que desea adjuntar al nuevo curso"
+  selectCourse: "Seleccionar un curso"
+  selectedInstructorGroups: "Grupos de Instructores Seleccionados"
+  selectedInstructors: "Instructores Seleccionados"
+  selectedLearnerGroups: "Grupos de Aprendizaje Seleccionados"
+  selectedLearners: "Aprendizaje Seleccionados"
+  selectMeshFor: "Seleccione MeSH para: {title}"
+  selectVocabulary: "Seleccione un Vocabulario"
+  session: "Sessión"
+  sessionLearningMaterials: "Materiales de Aprendizaje de la Sesión"
+  sessionObjectives: "Objetivos de la Sesión"
+  sessions: Sesiones
+  sessionTitle: "Titulo de Sesión"
+  sessionTitleFilterPlaceholder: "Aplicar un Filtro por titulo, tipo, o estado de la publicación"
+  sessionType: "Tipo de Sesión"
+  sessionTypes: "Tipos de Sesiones"
+  sessionTypesFor: "Tipos de Sesiones para {subject}"
+  showCalendar: "Muestre Calendario"
+  showCourseMaterials: "Mostrar materiales del curso"
+  showFilters: "Enseñe Filtros"
+  showIcsFeed: Mostrar Opciones de Fuente de Datos ICS
+  showLearnerGroupEvents: "Mostrar todos los eventos para grupos de alumnos asignados"
+  showMore: "Mostrar más"
+  showNotesToStudents: "Mostrar Notas a Los Estudiantes"
+  showObjectives: "Mostrar objetivos"
+  showSessionEvents: "Mostrar todos los '<em>'{sessionTitle}'</em>' eventos"
+  showSessionMaterials: "Mostrar materiales de la sesión"
+  smallGroupMessage: "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de \"ofrecimiento\" de arriba."
+  smallGroups: "Grupos Pequeños"
+  sortMaterials: "Clasificar los materiales"
+  sortObjectives: "Clasificar los objetivos"
+  specialAttireIs_Required_: "Se '<strong><em>'require'</em></strong>' vestimenta especial"
+  specialAttireRequired: "Vestimenta Especial Requerido"
+  specialEquipment: "Equipo especial"
+  specialEquipmentIs_Required_: "Se '<strong><em>'require'</em></strong>' equipo especial"
+  specialEquipmentRequired: "Equipo Especial Requerido"
+  start: Inicio
+  startDate: "Fecha de Iniciar"
+  starts: Empieza
+  startTime: "Hora de Iniciar"
+  status: Estado
+  studentAdvisorCount: "Hay {count, plural, =1 {1 consejero estudiantil} other {# consejeros estudiantiles}}"
+  studentAdvisors: Consejeros Estudiantiles
+  summary: Resumen
+  sunday: Domingo
+  supplementalCurriculum: "Plan de Estudios No Requerido"
+  targetCourse: "Curso de Destino"
+  taughtBy: "Ènsenada Por {instructors}"
+  termCount: "{count, plural, =1 {1 tiene términos de vocabulario} other {# tienen términos de vocabulario}}"
+  terms: "Términos"
+  termsManageTitle: "Maneje Términos"
+  thursday: Jueves
+  time: Hora
+  timedRelease: "Lanzamiento Calculado"
+  timedReleaseAddEndDate: "Agregar Fecha de Finalización de Lanzamiento"
+  timedReleaseAddStartDate: "Agregar Fecha de Inicio de Lanzamiento"
+  timedReleaseClearEndDate: "Quitar Fecha de Finalización de Lanzamiento "
+  timedReleaseClearStartDate: "Quitar Fecha de Inicio de Lanzamiento "
+  timedReleaseNoSchedule: "Disponible inmediatamente cuando publicado "
+  timedReleaseOnlyEndDate: "Disponible antes de {endDate}"
+  timedReleaseOnlyStartDate: "Disponible después de {startDate}"
+  timedReleaseStartAndEndDate: "Disponible a partir de {startDate} hasta {endDate}"
+  timezone: "Zona horaria"
+  title: Titulo
+  today: Hoy
+  token: Token
+  topPagination: "Paginación superior"
+  totalIlmTime: " Tiempo de ILM {minutes} Minutos"
+  totalInstructionalTime: "Tiempo de Instrucción Total {minutes} Minutos"
+  tuesday: Martes
+  type: Tipo
+  universalLocator: "Localizador universal de"
+  unlinkedObjectives: "Este curso tiene objetivo(s) no vinculados"
+  unPublishCourse: "No Publique El Curso"
+  unPublishedSuccessfully: "No Publicado con Éxito"
+  unPublishSession: "No Publique La Sesión"
+  unusedObjectives: "Objetivos no Utilizados"
+  upcomingActivities: "Mis Actividades para los próximos {days} días"
+  upcomingMaterials: "Mis Materiales de Aprendizaje para los próximos {days} días"
+  updateNow: "Actualizar Ahora "
+  uploadDate: "Fecha de carga"
+  url: URL
+  userRole: "Función de Usuario"
+  view: Vista
+  virtualLearningLink: "Enlace de Aprendizaje Virtual"
+  virtualSessionLink: Enlace de Sesión Virtual
+  visibleToStudents: "visible para los estudiantes"
+  visualizations: "Visualizaciones"
+  visualizeCourseObjectives: "Visualizar los objetivos del curso "
+  vocabularies: Vocabularios
+  vocabulary: Vocabulario
+  vocabularyTerms: "Términos del Vocabulario"
+  vocabularyTermsFor: "Términos del Vocabulario para {subject}"
+  waitSaving: "Salvando... un momento..."
+  wednesday: "Miércoles"
+  week: Semana
+  weekAtAGlance: "Semana de un vistazo"
+  weekOf: "Semana de {date}"
+  weeks: Semanas
+  when: Cuando
+  whitecoatsSlashSpecialAttire: "Abrigos blancos / vestimenta especial"
+  withXmoreOfferings: "con {count, plural, =1 {una ofrenda mas} other {# ofertas más}}"
+  year: "Año"
+  yes: "Sí"
+errors:
+  accepted: "{description} debe ser aceptado"
+  after: "{description} necesita estar después de {after}"
+  agreementRequired: "Acuerdo o se requiere una justificación alternativa para cargar"
+  before: "{description} necesita estar antes de {before}"
+  blank: "{description} no puede estar en blanco"
+  collection: "{description} necesita ser una colección"
+  confirmation: "{description} no coincide con {on}"
+  date: "{description} necesita estar una fecha válida"
+  description: "Este campo"
+  email: "{description} debe ser una dirección válida de correo electrónico"
+  empty: "{description} no puede estar vacío"
+  equalTo: "{description} debe ser igual a {is}"
+  even: "{description} debe ser número par"
+  exclusion: "{description} es reservado"
+  greaterThan: "{description} debe ser mayor que {gt}"
+  greaterThanOrEqualTo: "{description} debe ser mayor que o igual a {gte}"
+  inclusion: "{description} no está incluido en la lista"
+  invalid: "{description} es inválido"
+  lessThan: "{description} debe ser menos que {lt}"
+  lessThanOrEqualTo: "{description} debe ser menos que o igual a {lte}"
+  missingFile: "Archivo faltante"
+  notANumber: "{description} no es un número"
+  notAnInteger: "{description} debe ser un numero entero"
+  odd: "{description} debe ser número impar"
+  onOrAfter: "{description} debe estar en o después de {onOrAfter}"
+  onOrBefore: "{description} debe estar en o antes de {onOrBefore}"
+  otherThan: "{description} Debe ser otra cosa que {value}"
+  phone: "{description} debe ser un número de teléfono válido"
+  positive: "{description} debe ser un número positivo"
+  present: "{description} debe estar en blanco"
+  required: "{description} se requiere"
+  singular: "{description} no se puede ser una colección"
+  tooLong: "{description} es demasiado largo (el máximo es {max} caracteres)"
+  tooShort: "{description} es demasiado corto (el mínimo es {min} caracteres)"
+  url: "{description} debe ser una dirección URL válida"
+  wrongDateFormat: "{description} necesita ser en el formato de {format}"
+  wrongLength: "{description} es la longitud incorrecta (debe ser {is} caracteres)"

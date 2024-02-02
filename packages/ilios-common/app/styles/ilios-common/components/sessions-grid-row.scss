@@ -1,0 +1,22 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.sessions-grid-row {
+  @include m.sessions-grid;
+  padding: 0.25rem 0;
+
+  .session-grid-status {
+    display: flex;
+    justify-content: flex-end;
+
+    .instructional-notes,
+    .prerequisites {
+      color: c.$fernGreen;
+      margin-right: 0.25rem;
+    }
+  }
+
+  .session-grid-title {
+    padding-right: 0.5rem;
+  }
+}

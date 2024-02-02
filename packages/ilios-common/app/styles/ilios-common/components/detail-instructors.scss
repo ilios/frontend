@@ -1,0 +1,41 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.detail-instructors {
+  @include m.detail-container(c.$tealBlue);
+
+  .detail-instructors-header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .detail-instructors-content {
+    @include m.detail-container-content;
+    @include m.ilios-form;
+    grid-template-columns: 1fr;
+
+    .display-selected-instructor-groups,
+    .display-selected-instructors,
+    .instructor-selection-manager {
+      grid-column: 1 / -1;
+    }
+
+    .available-instructors,
+    .selected-instructor-groups,
+    .selected-instructors {
+      margin-bottom: 0.5rem;
+
+      label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}

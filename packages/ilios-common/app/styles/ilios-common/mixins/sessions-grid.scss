@@ -1,0 +1,67 @@
+@use "../colors" as c;
+@use "font-size";
+@use "media";
+
+@mixin sessions-grid() {
+  display: grid;
+  grid-template-columns: 1fr 8fr 2fr 1fr;
+
+  .session-grid-type,
+  .session-grid-groups,
+  .session-grid-objectives,
+  .session-grid-terms,
+  .session-grid-first-offering,
+  .session-grid-offerings {
+    display: none;
+  }
+
+  .session-grid-groups,
+  .session-grid-objectives,
+  .session-grid-terms,
+  .session-grid-offerings {
+    text-align: center;
+  }
+
+  .session-grid-status,
+  .session-grid-status.sortable-heading,
+  .session-grid-actions {
+    padding-right: 0.5rem;
+    text-align: right;
+  }
+
+  @include media.for-tablet-and-up {
+    grid-template-columns: 1fr 8fr repeat(5, 3fr) 1fr;
+    .session-grid-groups,
+    .session-grid-objectives,
+    .session-grid-terms,
+    .session-grid-offerings {
+      display: inline;
+    }
+  }
+
+  @include media.for-laptop-and-up {
+    grid-template-columns: 1fr 8fr 6fr repeat(3, 3fr) 6fr repeat(2, 3fr) 1fr;
+    .session-grid-type,
+    .session-grid-first-offering {
+      display: inline;
+    }
+  }
+
+  .expand-collapse-control {
+    @include font-size.font-size("medium");
+    margin-left: 0.25rem;
+
+    & > .active {
+      color: c.$blueMunsell;
+      cursor: pointer;
+    }
+
+    & > .disabled {
+      color: c.$davysGrey;
+    }
+  }
+
+  .fa-user-clock {
+    @include font-size.font-size("small");
+  }
+}

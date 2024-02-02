@@ -1,0 +1,22 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.detail-competencies {
+  @include m.detail-container(c.$orange);
+
+  .title {
+    @include m.detail-container-title;
+  }
+
+  .actions {
+    @include m.detail-container-actions;
+  }
+
+  .detail-competencies-content {
+    @include m.detail-container-content;
+
+    .static-list {
+      @include m.ilios-static-list;
+    }
+  }
+}

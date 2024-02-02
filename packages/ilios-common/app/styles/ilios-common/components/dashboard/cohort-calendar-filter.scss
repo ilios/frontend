@@ -1,0 +1,7 @@
+@use "../../mixins" as m;
+
+.dashboard-cohort-calendar-filter {
+  ul {
+    @include m.ilios-list-reset;
+  }
+}

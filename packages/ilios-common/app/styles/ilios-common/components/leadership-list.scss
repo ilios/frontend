@@ -1,0 +1,12 @@
+@use "../mixins" as m;
+
+.leadership-list {
+  table {
+    @include m.ilios-table-structure;
+    @include m.ilios-table-colors;
+
+    ul {
+      @include m.ilios-list-reset;
+    }
+  }
+}

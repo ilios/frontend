@@ -1,0 +1,35 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.detail-objectives {
+  @include m.detail-container(c.$orange);
+
+  .detail-objectives-header {
+    @include m.detail-container-header;
+  }
+
+  .title {
+    @include m.detail-container-title;
+  }
+
+  .detail-objectives-actions {
+    @include m.detail-container-actions;
+  }
+
+  .detail-objectives-content {
+    @include m.detail-container-content;
+    margin: 0;
+  }
+
+  .new-objective {
+    border: 1px solid c.$culturedGrey;
+    margin: 0.5rem;
+    padding: 1rem;
+
+    .new-objective-form {
+      .buttons {
+        @include m.ilios-form-buttons;
+      }
+    }
+  }
+}

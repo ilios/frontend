@@ -1,0 +1,41 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.sessions-grid {
+  .no-results {
+    margin: 0.5rem 0;
+    padding: 0.25rem 0;
+    text-align: center;
+  }
+
+  .session {
+    &:nth-of-type(even) {
+      background-color: c.$culturedGrey;
+    }
+
+    &.is-expanded {
+      border: 1px solid c.$blueMunsell;
+      background-color: c.$lightBlue;
+      margin: 0.5rem 0;
+    }
+
+    .confirm-removal {
+      background-color: c.$lavenderBlush;
+      color: c.$crimson;
+      font-weight: bold;
+      margin: 0;
+      padding: 1rem 8rem;
+      text-align: center;
+      width: 100%;
+
+      .confirm-buttons {
+        @include m.ilios-form-buttons;
+        padding-top: 1rem;
+      }
+    }
+  }
+
+  .fa-trash {
+    @include m.icon;
+  }
+}

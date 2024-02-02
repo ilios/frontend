@@ -1,0 +1,12 @@
+@use "../colors" as c;
+
+@mixin icon {
+  &.enabled {
+    color: c.$blueMunsell;
+    cursor: pointer;
+  }
+
+  &.disabled {
+    color: c.$davysGrey;
+  }
+}

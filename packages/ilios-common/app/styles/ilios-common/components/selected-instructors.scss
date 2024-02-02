@@ -1,0 +1,12 @@
+@use "../mixins" as m;
+
+.selected-instructors {
+  .instructors-list {
+    @include m.ilios-removable-list;
+  }
+  margin-bottom: 1rem;
+
+  button {
+    @include m.ilios-button-reset;
+  }
+}

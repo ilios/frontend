@@ -1,0 +1,72 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.offering-manager {
+  @include m.font-size("small");
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+
+  .offering-manager-learner-groups {
+    ul {
+      @include m.ilios-list-reset;
+    }
+  }
+
+  .offering-manager-location {
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: anywhere;
+  }
+
+  .offering-manager-instructors {
+    ul {
+      @include m.ilios-list-reset;
+    }
+  }
+
+  .offering-manager-actions {
+    .remove {
+      padding-left: 0.5rem;
+    }
+  }
+
+  &.show-remove-confirmation {
+    background-color: c.$lavenderBlush;
+    border: 1px solid c.$crimson;
+  }
+
+  .confirm-removal {
+    background-color: c.$lavenderBlush;
+    grid-column: 1 / -1;
+
+    .confirm-message {
+      background-color: c.$lavenderBlush;
+      color: c.$crimson;
+      font-weight: bold;
+      margin: 0;
+      padding: 1rem 8rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    .confirm-buttons {
+      padding-top: 1.1rem;
+    }
+
+    &:hover {
+      background-color: c.$lavenderBlush;
+    }
+
+    .remove {
+      background-color: c.$white;
+      color: c.$crimson;
+    }
+  }
+
+  .fa-trash,
+  .fa-pen-to-square {
+    @include m.icon;
+  }
+}

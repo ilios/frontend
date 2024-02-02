@@ -1,0 +1,5 @@
+@use "../colors" as c;
+
+.common-dashboard {
+  border: 1px solid c.$blueMunsell;
+}

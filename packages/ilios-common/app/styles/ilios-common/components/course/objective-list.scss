@@ -1,0 +1,5 @@
+@use "../../mixins" as m;
+
+.course-objective-list {
+  @include m.objective-list;
+}

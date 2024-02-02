@@ -1,0 +1,5 @@
+@use "../mixins" as m;
+
+.course-visualize-objectives {
+  @include m.data-visualization;
+}

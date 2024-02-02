@@ -1,0 +1,124 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: c.$slightWhite;
+  color: c.$raisinBlack;
+  font-family: Nunito, serif;
+  margin: 0;
+  padding: 0;
+}
+
+a,
+.link {
+  @include m.ilios-link;
+}
+
+button {
+  @include m.ilios-button;
+}
+
+h1 {
+  @include m.ilios-heading-h1;
+}
+
+h2 {
+  @include m.ilios-heading-h2;
+}
+
+h3 {
+  @include m.ilios-heading-h3;
+}
+
+h4 {
+  @include m.ilios-heading-h4;
+}
+
+h5 {
+  @include m.ilios-heading-h5;
+}
+
+h6 {
+  @include m.ilios-heading-h6;
+}
+
+select {
+  color: c.$raisinBlack;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+ul {
+  li {
+    margin-bottom: 0.5rem;
+  }
+}
+
+p {
+  margin-bottom: 1rem;
+  @include m.paragraph-line-height;
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.add,
+.yes {
+  color: c.$fernGreen;
+}
+
+.remove,
+.no {
+  color: c.$crimson;
+}
+
+.error,
+.is-error {
+  color: c.$crimson;
+}
+
+.warning,
+.is-warning {
+  color: c.$gold;
+}
+
+.clickable,
+.is-clickable {
+  cursor: pointer;
+}
+
+.editable,
+.is-editable {
+  color: c.$tealBlue;
+}
+
+.published {
+  color: c.$fernGreen;
+}
+
+.notpublished {
+  color: c.$gold;
+}
+
+.scheduled {
+  color: c.$sepia;
+}
+
+.backtolink {
+  margin: 1rem 0;
+  padding-left: 0.8rem;
+}
+
+.link-button {
+  @include m.ilios-link-button;
+}

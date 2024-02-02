@@ -1,0 +1,85 @@
+<div
+  class="course-summary-header"
+  {{did-insert (perform this.load) @course}}
+  {{did-update (perform this.load) @course}}
+>
+  <div class="course-summary-header-top">
+    <h2>
+      {{@course.title}}
+    </h2>
+    <div class="course-summary-actions">
+      {{#if this.showMaterials}}
+        <LinkTo @route="course-materials" @model={{@course}} class="materials">
+          <FaIcon
+            @icon="box-archive"
+            @title={{t "general.learningMaterialsSummary"}}
+            @fixedWidth={{true}}
+          />
+        </LinkTo>
+      {{/if}}
+      <LinkTo
+        @route="print_course"
+        @model={{@course}}
+        @query={{hash unpublished=true}}
+        class="print"
+      >
+        <FaIcon
+          @icon="print"
+          @title={{t "general.printSummary"}}
+          @fixedWidth={{true}}
+        />
+      </LinkTo>
+      {{#if this.showRollover}}
+        <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
+          <FaIcon
+            @icon="shuffle"
+            @title={{t "general.courseRollover"}}
+            @fixedWidth={{true}}
+          />
+        </LinkTo>
+      {{/if}}
+    </div>
+  </div>
+  <div class="course-summary-content">
+    <div class="block">
+      <label>
+        {{t "general.startDate"}}:
+      </label>
+      <span>
+        {{format-date @course.startDate}}
+      </span>
+    </div>
+    <div class="block">
+      <label>
+        {{t "general.externalId"}}:
+      </label>
+      <span>
+        {{@course.externalId}}
+      </span>
+    </div>
+    <div class="block">
+      <label>
+        {{t "general.endDate"}}:
+      </label>
+      <span>
+        {{format-date @course.endDate}}
+      </span>
+    </div>
+    <div class="block">
+      <label>
+        {{t "general.level"}}:
+      </label>
+      <span>
+        {{@course.level}}
+      </span>
+    </div>
+    <div class="block">
+      <label>
+        {{t "general.publicationStatus"}}:
+      </label>
+      <span>
+        <PublicationStatus @item={{@course}} @showIcon={{true}} @showText={{true}} />
+      </span>
+    </div>
+  </div>
+</div>

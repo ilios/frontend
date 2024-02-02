@@ -1,0 +1,25 @@
+@use "sass:color";
+@use "../colors" as c;
+
+@mixin ilios-link() {
+  color: c.$tealBlue;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:visited {
+    color: c.$tealBlue;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: c.$blueMunsell;
+    outline: thin dotted;
+    text-decoration: underline;
+  }
+
+  &:hover {
+    outline: none;
+  }
+}

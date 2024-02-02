@@ -1,2 +1,4 @@
 packages:
   - "packages/frontend"
+  - "packages/ilios-common"
+  - "packages/test-app"

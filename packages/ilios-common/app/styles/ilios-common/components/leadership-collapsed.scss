@@ -1,0 +1,18 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.leadership-collapsed {
+  @include m.collapsed-container(c.$orange);
+
+  .title {
+    @include m.collapsed-container-title;
+  }
+
+  .content {
+    @include m.collapsed-container-content;
+
+    table {
+      @include m.collapsed-container-table;
+    }
+  }
+}

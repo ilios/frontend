@@ -1,0 +1,26 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.leadership-search {
+  clear: both;
+  margin: auto;
+  position: relative;
+  width: 90%;
+
+  input[type="search"] {
+    background-color: c.$white;
+    border: 1px solid c.$tealBlue;
+    border-radius: 3px;
+    height: 2rem;
+    width: 100%;
+  }
+
+  .results {
+    @include m.user-search-results;
+  }
+
+  .select-user {
+    @include m.ilios-button-reset;
+    text-align: left;
+  }
+}

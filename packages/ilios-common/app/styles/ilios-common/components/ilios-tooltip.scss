@@ -1,0 +1,44 @@
+@use "../colors" as c;
+
+.ilios-tooltip {
+  padding: 0 1em;
+  z-index: 100;
+
+  .content {
+    background: c.$slightWhite;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid c.$davysGrey;
+    border-radius: 4px;
+    max-width: 80%;
+
+    .arrow,
+    .arrow::before {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      z-index: -1;
+    }
+
+    .arrow::before {
+      content: "";
+      transform: rotate(45deg);
+      background: c.$davysGrey;
+      border: 1px solid c.$davysGrey;
+    }
+  }
+  &[data-popper-placement^="top"] .arrow {
+    bottom: -4px;
+  }
+
+  &[data-popper-placement^="bottom"] .arrow {
+    top: -4px;
+  }
+
+  &[data-popper-placement^="left"] .arrow {
+    right: -4px;
+  }
+
+  &[data-popper-placement^="right"] .arrow {
+    left: -4px;
+  }
+}

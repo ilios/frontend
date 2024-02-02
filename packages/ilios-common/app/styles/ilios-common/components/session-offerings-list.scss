@@ -1,0 +1,64 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.session-offerings-list {
+  display: grid;
+
+  .offering-block {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 1rem;
+
+    .offering-form {
+      grid-column: 1 / -1;
+    }
+
+    .offering-block-date {
+      grid-column: 1 / -1;
+
+      .offering-block-date-dayofweek {
+        color: c.$orange;
+        display: block;
+        @include m.font-size("medium");
+        font-weight: bold;
+        width: 100%;
+      }
+
+      .offering-block-date-dayofmonth {
+        color: c.$davysGrey;
+      }
+    }
+
+    .offering-block-time {
+      border-bottom: 1px dotted c.$davysGrey;
+      display: grid;
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(5, 1fr);
+      margin-top: 1rem;
+
+      .offering-block-time-time {
+        grid-column: 1;
+      }
+
+      .offering-block-time-time-starts,
+      .offering-block-time-time-starttime,
+      .offering-block-time-time-ends,
+      .offering-block-time-time-endtime {
+        color: c.$davysGrey;
+        display: block;
+        font-weight: bold;
+      }
+
+      .offering-block-time-time-starttime-label,
+      .offering-block-time-time-endtime-label {
+        font-weight: normal;
+      }
+
+      .offering-block-time-time-starts-label,
+      .offering-block-time-time-ends-label {
+        display: block;
+        font-weight: normal;
+      }
+    }
+  }
+}

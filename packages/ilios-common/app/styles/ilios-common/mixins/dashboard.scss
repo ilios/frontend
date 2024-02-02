@@ -1,0 +1,5 @@
+@use "main-section";
+
+@mixin dashboard-component {
+  @include main-section.main-section;
+}

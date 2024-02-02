@@ -1,0 +1,77 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.ilios-calendar {
+  .ilios-calendar-calendar {
+    clear: both;
+    position: relative;
+
+    h1 {
+      left: 4em;
+      opacity: 75;
+      position: absolute;
+      top: 2em;
+      transition: all 0.5s ease-in-out;
+    }
+  }
+
+  .calendar-view-picker {
+    float: right;
+
+    .highlight {
+      color: c.$orange;
+      @include m.font-size("medium");
+    }
+
+    .on {
+      color: c.$fernGreen;
+    }
+  }
+
+  .calendar-time-picker {
+    float: left;
+  }
+
+  ul {
+    &.inline,
+    &.inline li {
+      display: inline;
+      margin-bottom: 1em;
+    }
+
+    &.inline li {
+      margin-right: 2em;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .ilios-calendar-ics-feed {
+    border: 1px dotted c.$orange;
+    margin: auto;
+    margin-bottom: 1em;
+    padding: 2em;
+    text-align: center;
+    width: 90%;
+
+    span {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+
+      &.yes {
+        color: c.$fernGreen;
+      }
+    }
+
+    button {
+      @include m.ilios-button;
+    }
+  }
+
+  .no-content {
+    list-style-type: none;
+  }
+}

@@ -1,0 +1,144 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+@use "sass:math";
+
+.weekly-calendar {
+  $hour-height: 0.3rem;
+  $minute-rows: math.div(24 * 60, 5); //every 5 minutes
+  --hour-space: 2.9rem;
+
+  @include m.for-tablet-and-up {
+    --hour-space: 5.5rem;
+  }
+
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2rem auto 1fr;
+  margin: 0.5rem 1rem;
+  height: 75vh;
+
+  .week-of-year {
+    @include m.ilios-heading-h4;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    margin: 0 0 0.25rem var(--hour-space);
+    padding: 0;
+  }
+
+  .week-of-year,
+  .day-heading,
+  .hour {
+    .long {
+      display: none;
+    }
+
+    @include m.for-tablet-and-up {
+      .long {
+        display: inline;
+      }
+      .short {
+        display: none;
+      }
+    }
+  }
+
+  .days {
+    display: grid;
+    align-self: start;
+    grid-column: 1;
+    grid-row: 3;
+    grid-template-columns: var(--hour-space) repeat(7, minmax(0, 1fr));
+    grid-template-rows: repeat($minute-rows, $hour-height);
+    max-height: 90%;
+    overflow-y: scroll;
+
+    .day-name {
+      @include m.visually-hidden;
+    }
+
+    .events {
+      @include m.ilios-list-reset;
+      display: grid;
+      grid-row: 1 / -1;
+      grid-template-columns: repeat(50, 1fr);
+      grid-template-rows: repeat($minute-rows, $hour-height);
+      border: 1px solid c.$culturedGrey;
+      @for $day from 1 through 7 {
+        &.day-#{$day} {
+          grid-column: ($day + 1);
+        }
+      }
+
+      .no-events {
+        @include m.visually-hidden();
+      }
+    }
+
+    .hour,
+    .hour-border {
+      @for $hour from 0 through 23 {
+        &.hour-#{$hour} {
+          grid-row: ($hour * 12) + 1;
+        }
+      }
+    }
+
+    .hour-border,
+    .half-hour-border {
+      border-top: 1px solid c.$culturedGrey;
+      grid-column: 2 / -1;
+    }
+
+    .half-hour-border {
+      border-top-width: 0.25px;
+      @for $hour from 0 through 23 {
+        &.half-hour-#{$hour} {
+          grid-row: ($hour * 12) + 7;
+        }
+      }
+    }
+
+    .hours {
+      display: grid;
+      grid-row: 1;
+      grid-column: 1;
+      grid-template-rows: repeat($minute-rows, $hour-height);
+
+      .hour {
+        align-self: start;
+        padding: 0 0.25rem 0 0;
+        scroll-snap-align: start;
+        text-align: right;
+        grid-column: 1;
+      }
+    }
+  }
+
+  .day-headings {
+    display: grid;
+    grid-row: 2;
+    grid-column: 1;
+    grid-template-columns: var(--hour-space) repeat(7, minmax(0, 1fr));
+
+    .day-heading {
+      align-self: center;
+      justify-self: center;
+
+      @for $day from 1 through 7 {
+        &.day-#{$day} {
+          grid-column: ($day + 1);
+        }
+      }
+
+      button {
+        @include m.ilios-link-button;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  }
+}

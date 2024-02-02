@@ -1,0 +1,23 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.api-version-notice {
+  @include m.critical-notice(c.$gold, c.$raisinBlack, 1rem);
+
+  display: none;
+  padding: 0.25rem 1rem;
+
+  &.mismatch {
+    display: block;
+  }
+
+  .details {
+    button {
+      background-color: c.$raisinBlack;
+      border: 0;
+      color: c.$white;
+      display: inline-block;
+      height: 100%;
+    }
+  }
+}

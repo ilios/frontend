@@ -1,0 +1,41 @@
+name: Percy PR Tests
+
+on:
+  pull_request_target:
+    types: [labeled,opened,reopened,synchronize]
+
+concurrency:
+  group: percy-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+env:
+  SW_DISABLED: true
+  COVERAGE: false
+  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ILIOS_DEPLOYMENT_WEBHOOK_URL }}
+
+jobs:
+  percy:
+    name: Test and Capture Screenshots
+    if: contains(github.event.pull_request.labels.*.name, 'run percy tests')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "${{ github.event.pull_request.merge_commit_sha }}"
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+      - run: pnpm install
+      - name: Run Percy Tests
+        run: pnpm run --workspace-concurrency=1 -r test:percy
+      - uses: act10ns/slack@v2
+        if: failure()
+        with:
+          status: ${{ job.status }}
+          message: Percy Run Failed {{ env.GITHUB_SERVER_URL }}/{{ env.GITHUB_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}

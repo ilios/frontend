@@ -1,0 +1,72 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.single-event-objective-list {
+  .expand-collapse-toggle-btn {
+    @include m.ilios-button-reset;
+  }
+
+  .display-mode-toggle-btn {
+    &.active {
+      background-color: c.$fernGreen;
+    }
+    &.disabled {
+      cursor: default;
+      background-color: c.$davysGrey;
+    }
+  }
+
+  .list-in-order {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+      padding-bottom: 0.5rem;
+
+      > div,
+      p {
+        margin: 0;
+        padding: 0.5rem 0;
+      }
+    }
+
+    .details {
+      @include m.font-size("small");
+      font-weight: bold;
+    }
+  }
+
+  .tree {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+      font-weight: bold;
+
+      > ul {
+        list-style-type: none;
+        margin: 0 0 0.5rem 1rem;
+        padding: 0;
+
+        > li {
+          font-weight: normal;
+
+          > div,
+          p {
+            margin: 0;
+            padding: 0.5rem 0;
+          }
+        }
+      }
+    }
+  }
+
+  .objective {
+    border-bottom: 1px dotted c.$orange;
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+}

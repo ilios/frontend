@@ -1,0 +1,23 @@
+@use "../mixins" as m;
+
+.pagedlist-controls {
+  float: right;
+
+  .fa-backward-fast,
+  .fa-forward-fast,
+  .fa-play {
+    @include m.icon;
+  }
+
+  .forward {
+    padding-right: 0.75rem;
+  }
+
+  .backward {
+    padding-left: 0.75rem;
+  }
+
+  select {
+    margin-left: 0.75rem;
+  }
+}

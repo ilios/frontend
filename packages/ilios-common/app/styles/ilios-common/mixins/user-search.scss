@@ -1,0 +1,66 @@
+@use "sass:color";
+
+@use "../colors" as c;
+@use "font-size";
+@use "media";
+
+@mixin user-search-results() {
+  background: c.$white;
+  border: 1px solid c.$slightWhite;
+  border-radius: 3px;
+  box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
+  color: c.$raisinBlack;
+  max-height: 23rem;
+  overflow-y: scroll;
+  position: absolute;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+  z-index: 100;
+
+  &.hidden {
+    display: none;
+  }
+
+  li {
+    border-bottom: 1px solid c.$culturedGrey;
+    color: c.$blueMunsell;
+    display: block;
+    padding: 0.1rem;
+    width: 100%;
+
+    &.inactive {
+      color: color.adjust(c.$culturedGrey, $lightness: -20%);
+      font-style: italic;
+    }
+
+    &.summary {
+      color: c.$fernGreen;
+    }
+
+    a,
+    &.clickable {
+      &:hover {
+        background-color: color.adjust(c.$blueMunsell, $lightness: 50%);
+      }
+    }
+
+    .name,
+    .email {
+      display: block;
+      width: 100%;
+
+      @include media.for-laptop-and-up {
+        display: inline;
+      }
+    }
+
+    .name i {
+      @include font-size.font-size("small");
+    }
+
+    .email {
+      color: c.$davysGrey;
+      font-style: italic;
+    }
+  }
+}

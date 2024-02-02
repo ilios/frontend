@@ -1,0 +1,68 @@
+@use "../../colors" as c;
+@use "../../mixins" as m;
+
+.dashboard-materials {
+  @include m.dashboard-component;
+
+  .title {
+    @include m.ilios-heading-h3;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  .dashboard-materials-content {
+    padding: 0.5rem;
+
+    .header {
+      margin: 0 1em 1em 0;
+    }
+
+    .material-list {
+      border-bottom: 1px dotted c.$orange;
+      display: grid;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+
+      @include m.for-tablet-and-up {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .course-filter,
+    .filter {
+      margin-bottom: 1rem;
+      margin-top: 1rem;
+    }
+
+    .filter input {
+      width: 100%;
+    }
+
+    .lm-type-icon {
+      color: c.$davysGrey;
+    }
+
+    .timed-release-info {
+      @include m.font-size("small");
+    }
+
+    table {
+      @include m.ilios-table-structure;
+      @include m.ilios-table-colors;
+      @include m.ilios-zebra-table;
+      grid-column: 1 / -1;
+
+      .no-results {
+        text-align: center;
+      }
+    }
+
+    .fa-spinner.orange {
+      color: c.$orange;
+    }
+
+    .paginator {
+      grid-column: 1 / -1;
+      text-align: right;
+    }
+  }
+}

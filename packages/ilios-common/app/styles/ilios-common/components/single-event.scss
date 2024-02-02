@@ -1,0 +1,73 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.single-event {
+  @include m.main-section;
+  display: grid;
+
+  h3 {
+    @include m.ilios-heading-h4;
+    margin: 1em 0;
+
+    .fa-box-archive {
+      @include m.font-size("base");
+    }
+  }
+
+  .pre-work {
+    h3 {
+      @include m.ilios-heading-h5;
+      margin: 0;
+    }
+  }
+
+  .single-event-summary {
+    grid-column: 1 / -1;
+
+    h2 {
+      @include m.ilios-heading-h3;
+      font-weight: normal;
+
+      em {
+        font-style: normal;
+        font-weight: bold;
+      }
+
+      .recently-updated-icon {
+        color: c.$rosewood;
+        position: absolute;
+        right: 2px;
+        top: 2px;
+      }
+
+      .recently-updated-icon-event {
+        color: c.$rosewood;
+      }
+    }
+
+    .single-event-location {
+      display: flex;
+
+      .offering-url-display {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  .single-event-offered-at {
+    font-weight: bold;
+  }
+
+  .single-event-instructors {
+    font-style: italic;
+  }
+
+  .expand-collapse-toggle-btn {
+    @include m.ilios-button-reset;
+  }
+
+  .single-event-learningmaterial-filesize {
+    @include m.font-size("small");
+    font-style: italic;
+  }
+}
