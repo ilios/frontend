@@ -25,6 +25,7 @@ jobs:
         cache: pnpm
     - run: pnpm install
     - name: Ember CLI Deploy
+      working-directory: ./packages/frontend
       run: node_modules/.bin/ember deploy pr-preview
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

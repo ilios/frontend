@@ -1,14 +1,8 @@
 name: Percy Visual Tests
 
 on:
-  push:
-    tags:
-      - '*'
   pull_request_target:
     types: [labeled,opened,reopened,synchronize]
-  schedule:
-    - cron: "15 23 * * 2,4" # T,Th in the afternoon (UTC)
-  workflow_dispatch:
 
 concurrency:
   group: percy-${{ github.head_ref || github.ref }}
@@ -28,6 +22,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: "${{ github.event.pull_request.merge_commit_sha }}"
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -37,7 +33,7 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - name: Run Percy Tests
-        run: pnpm run percy:test
+        run: pnpm run --filter frontend test:percy
       - uses: act10ns/slack@v2
         if: failure()
         with:

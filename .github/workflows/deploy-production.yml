@@ -25,7 +25,7 @@ jobs:
         cache: pnpm
     - run: pnpm install
     - name: Ember CLI Deploy
-      run: pnpm run deploy:production
+      run: pnpm run --filter frontend deploy:production
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -37,7 +37,7 @@ jobs:
         export SENTRY_RELEASE=$(sentry-cli releases propose-version)
         sentry-cli releases new $SENTRY_RELEASE
         sentry-cli releases set-commits --auto $SENTRY_RELEASE
-        sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps tmp/deploy-dist/
+        sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps packages/frontend/tmp/deploy-dist/
         sentry-cli releases finalize $SENTRY_RELEASE
       env:
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}

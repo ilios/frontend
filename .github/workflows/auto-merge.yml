@@ -9,7 +9,6 @@ jobs:
     strategy:
       matrix:
         safe-dependency:
-        - "@ilios/ember-template-lint-plugin"
         - "@sentry/ember"
         - "browserslist"
         - "caniuse-db"

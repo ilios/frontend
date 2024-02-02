@@ -1,13 +1,13 @@
 # unconventional js
-/blueprints/*/files/
+/packages/*/blueprints/*/files/
 
 # compiled output
-/dist/
+/packages/*/dist/
 
 # misc
-/coverage/
+/packages/*/coverage/
 !.*
 .*/
 
 # ember-try
-/.node_modules.ember-try/
+/packages/*/.node_modules.ember-try/
