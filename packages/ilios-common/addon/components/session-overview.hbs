@@ -265,7 +265,7 @@
             <label>{{t "general.prerequisites"}}:</label>
             {{#if @session.hasPrerequisites}}
               <span>
-                {{#each this.prerequisites as |prerequisite index|~}}<LinkTo @route="session.index" @models={{array prerequisite.course prerequisite}}><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#unless (eq index (sub this.prerequisites.length 1))}}, {{/unless}}{{~/each}}
+                {{#each this.prerequisites as |prerequisite index|~}}<LinkTo @route="session.index" @models={{array prerequisite.course prerequisite}}><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#if (neq index (sub this.prerequisites.length 1))}}, {{/if}}{{~/each}}
               </span>
             {{else}}
               {{t "general.none"}}

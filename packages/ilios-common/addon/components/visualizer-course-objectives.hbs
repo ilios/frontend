@@ -28,7 +28,7 @@
         </h4>
       </div>
     {{/if}}
-    {{#unless (or @isIcon (not this.objectiveWithoutMinutes.length))}}
+    {{#if (and (not @isIcon) this.objectiveWithoutMinutes.length)}}
       <div class="zero-hours" data-test-zero-hours>
         <h4>
           <FaIcon @icon="triangle-exclamation" class="warning" />
@@ -50,7 +50,7 @@
           {{/each}}
         </ul>
       </div>
-    {{/unless}}
+    {{/if}}
   {{/if}}
   {{#if (and (not @isIcon) @showDataTable)}}
     <div class="data-table" data-test-data-table>

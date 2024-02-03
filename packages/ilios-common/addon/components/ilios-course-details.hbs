@@ -9,18 +9,7 @@
 >
   <CourseHeader @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
   <CourseOverview @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
-  {{#unless @showDetails}}
-    <div class="detail-collapsed-control">
-      <button
-        type="button"
-        data-test-expand-course-details
-        {{on "click" (fn @setShowDetails true)}}
-      >
-        {{t "general.expandDetail"}}
-        <FaIcon @icon="square-plus" class="expand-collapse-icon" />
-      </button>
-    </div>
-  {{else}}
+  {{#if @showDetails}}
     <CourseEditing
       @course={{@course}}
       @editable={{and @editable this.notRolloverRoute}}
@@ -45,5 +34,16 @@
         <FaIcon @icon="square-minus" class="expand-collapse-icon" />
       </button>
     </div>
-  {{/unless}}
+  {{else}}
+    <div class="detail-collapsed-control">
+      <button
+        type="button"
+        data-test-expand-course-details
+        {{on "click" (fn @setShowDetails true)}}
+      >
+        {{t "general.expandDetail"}}
+        <FaIcon @icon="square-plus" class="expand-collapse-icon" />
+      </button>
+    </div>
+  {{/if}}
 </section>
