@@ -1,4 +1,4 @@
-name: CI
+name: Continuous Integration
 
 on:
   push:
@@ -43,7 +43,10 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18,20]
+        node-version: [20]
+        workspace:
+          - frontend
+          - test-app
 
     steps:
       - uses: actions/checkout@v4
@@ -57,7 +60,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Run Tests
-        run: pnpm run test:ember
+        run: pnpm run --filter ${{matrix.workspace}} test:ember
 
   build:
     name: Build
@@ -89,6 +92,9 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
+        workspace:
+          - frontend
+          - test-app
         launcher:
           - BS_OSX_Safari
           - BS_MS_Edge
@@ -114,10 +120,10 @@ jobs:
           # The Job ID + Run ID isn't unique across matrix runs and will fail when run simultaneously
           BROWSERSTACK_LOCAL_ID_SUFFIX: ${{ matrix.launcher }}
         run: |
-          pnpm run --filter frontend browserstack:connect
-          pnpm run --filter frontend test:ember:browserstack --launch=${{ matrix.launcher }}
-          pnpm run --filter frontend browserstack:disconnect
-          pnpm run --filter frontend browserstack:results
+          pnpm run --filter ${{matrix.workspace}} browserstack:connect
+          pnpm run --filter ${{matrix.workspace}} test:ember:browserstack --launch=${{ matrix.launcher }}
+          pnpm run --filter ${{matrix.workspace}} browserstack:disconnect
+          pnpm run --filter ${{matrix.workspace}} browserstack:results
 
   firefox-test:
     name: Browser Tests (Firefox)
@@ -127,6 +133,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        workspace:
+          - frontend
+          - test-app
         firefox-version: [latest-esr]
     steps:
       - uses: actions/checkout@v4
@@ -144,7 +153,37 @@ jobs:
           firefox-version: ${{ matrix.firefox-version }}
       - run: firefox --version
       - name: test
-        run: pnpm run test:ember --launch=Firefox
+        run: pnpm run --filter ${{matrix.workspace}} test:ember --launch=Firefox
+
+  try-scenarios:
+    name: ${{ matrix.try-scenario }}
+    runs-on: ubuntu-latest
+    needs: "test"
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        try-scenario:
+          - ember-lts-5.4
+          - ember-release
+          - ember-beta
+          - ember-canary
+          - embroider-safe
+          - embroider-optimized
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+      - run: pnpm install
+      - name: Run Tests
+        run: pnpm run --filter test-app tryone ${{ matrix.try-scenario }} --skip-cleanup
 
   test-with-embroider:
     name: Test With Embroider
@@ -164,7 +203,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Run Tests
-        run: pnpm run test:ember
+        run: pnpm run --filter frontend test:ember
 
   build-with-embroider:
     name: Build With Embroider
