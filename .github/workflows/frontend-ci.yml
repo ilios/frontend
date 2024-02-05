@@ -145,3 +145,43 @@ jobs:
       - run: firefox --version
       - name: test
         run: pnpm run test:ember --launch=Firefox
+
+  test-with-embroider:
+    name: Test With Embroider
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BUILD_WITH_EMBROIDER: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Run Tests
+        run: pnpm run test:ember
+
+  build-with-embroider:
+    name: Build With Embroider
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BUILD_WITH_EMBROIDER: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Run Tests
+        run: pnpm run --filter frontend build

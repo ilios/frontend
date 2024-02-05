@@ -20,7 +20,7 @@
     "test:test-app": "pnpm run --filter test-app test"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0",
+    "concurrently": "^8.2.2",
     "ember-template-lint": "^5.13.0",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
