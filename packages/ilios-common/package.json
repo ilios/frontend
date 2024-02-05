@@ -31,7 +31,6 @@
     "ember-cli-babel": "^8.2.0",
     "ember-cli-flash": "^4.0.0",
     "ember-cli-htmlbars": "^6.3.0",
-    "ember-cli-mirage": "^3.0.0",
     "ember-cli-page-object": "^2.1.1",
     "ember-cli-string-helpers": "^6.0.1",
     "ember-click-outside": "^6.0.0",
@@ -72,6 +71,7 @@
   "peerDependencies": {
     "@popperjs/core": ">= 2.1.0",
     "class-validator": ">= 0.14.0",
+    "ember-cli-mirage": "^3.0.2",
     "ember-source": ">= 4.0.0",
     "flatpickr": ">= 4.0.0",
     "froala-editor": ">= 4.0.0",
