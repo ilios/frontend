@@ -20,6 +20,12 @@ jobs:
     name: Test and Capture Screenshots
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - test-app
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -31,7 +37,7 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - name: Run Percy Tests
-        run: pnpm run --workspace-concurrency=1 -r test:percy
+        run: pnpm --filter ${{matrix.workspace}} exec percy exec -- ember test
       - uses: act10ns/slack@v2
         if: failure()
         with:

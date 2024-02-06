@@ -20,6 +20,12 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'run percy tests')
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - test-app
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,9 +39,4 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - name: Run Percy Tests
-        run: pnpm run --workspace-concurrency=1 -r test:percy
-      - uses: act10ns/slack@v2
-        if: failure()
-        with:
-          status: ${{ job.status }}
-          message: Percy Run Failed {{ env.GITHUB_SERVER_URL }}/{{ env.GITHUB_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}
+        run: pnpm --filter ${{matrix.workspace}} exec percy exec -- ember test
