@@ -11,8 +11,7 @@
   "scripts": {
     "build": "ember build --environment=production",
     "start": "ember serve",
-    "test:ember": "ember test",
-    "tryone": "ember try:one"
+    "test:ember": "ember test"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
@@ -53,7 +52,6 @@
     "ember-resolver": "^11.0.1",
     "ember-source": "~5.5.0",
     "ember-source-channel-url": "^3.0.0",
-    "ember-try": "^3.0.0",
     "ilios-common": "workspace:*",
     "loader.js": "^4.7.0",
     "luxon": ">= 3.0.0",

@@ -8,6 +8,3 @@
 /packages/*/coverage/
 !.*
 .*/
-
-# ember-try
-/packages/*/.node_modules.ember-try/
