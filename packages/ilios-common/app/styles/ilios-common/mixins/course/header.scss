@@ -1,0 +1,70 @@
+@use "../../colors" as c;
+@use "../../constants";
+@use "../font-size";
+@use "../ilios-heading";
+@use "../ilios-input";
+@use "../media";
+
+@mixin course-header {
+  border-bottom: 1px solid c.$culturedGrey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: calc(constants.$golden-ratio-small * 1rem);
+
+  @include media.for-tablet-and-up {
+    flex-direction: row;
+    align-items: flex-end;
+    height: 2rem;
+  }
+
+  h2,
+  h3 {
+    @include ilios-heading.ilios-heading-h4;
+    @include font-size.text-align-bottom;
+  }
+
+  .academic-year {
+    margin-top: 0.5rem;
+    @include media.for-tablet-and-up {
+      margin-left: 0.5rem;
+      margin-top: 0;
+    }
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+
+    @include media.for-tablet-and-up {
+      flex-direction: row;
+    }
+
+    .editinplace {
+      @include ilios-heading.ilios-heading-h4;
+      @include font-size.text-align-bottom;
+
+      &.is-editing {
+        @include media.for-laptop-and-up {
+          flex-grow: 2;
+        }
+
+        .content,
+        input {
+          width: 100%;
+        }
+
+        input {
+          @include ilios-input.ilios-input;
+        }
+      }
+    }
+  }
+
+  .course-publication {
+    @include media.for-laptop-and-up {
+      text-align: right;
+    }
+  }
+}

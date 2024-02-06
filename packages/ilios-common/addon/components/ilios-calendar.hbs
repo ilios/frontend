@@ -1,0 +1,59 @@
+<div class="ilios-calendar" data-test-ilios-calendar>
+  <ul class="inline calendar-view-picker">
+    <li>
+      <button
+        class="link-button highlight {{if this.showIcsFeed "on"}}"
+        title={{t (if this.showIcsFeed "general.hideIcsFeed" "general.showIcsFeed")}}
+        type="button"
+        {{on "click" (toggle "showIcsFeed" this)}}
+        data-test-ics
+      >
+        <FaIcon @icon="square-rss" />
+      </button>
+    </li>
+    {{#each (array "day" "week" "month") as |viewType|}}
+      <li data-test-view-mode>
+        {{#if (eq @selectedView viewType)}}
+          {{t (concat "general." viewType)}}
+        {{else}}
+          <LinkTo @route="dashboard.calendar" @query={{hash view=viewType}}>{{t (concat "general." viewType)}}</LinkTo>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+  <ul class="inline calendar-time-picker">
+    <li>
+      <LinkTo @route="dashboard.calendar" @query={{hash date=this.backDate}} data-test-go-back>
+        <FaIcon @title={{t "general.back"}} @icon="backward" />
+      </LinkTo>
+    </li>
+    <li>
+      <LinkTo @route="dashboard.calendar" @query={{hash date=this.todayDate}} data-test-go-to-today>
+        {{t "general.today"}}
+      </LinkTo>
+    </li>
+    <li>
+      <LinkTo @route="dashboard.calendar" @query={{hash date=this.forwardDate}} data-test-go-forward>
+        <FaIcon @title={{t "general.forward"}} @icon="forward" />
+      </LinkTo>
+    </li>
+  </ul>
+  <div class="ilios-calendar-calendar">
+    {{#if this.showIcsFeed}}
+      <IcsFeed
+        @url={{@icsFeedUrl}}
+        @instructions={{@icsInstructions}}
+      />
+    {{/if}}
+    <this.calendarViewComponent
+      @isLoadingEvents={{@isLoadingEvents}}
+      @calendarEvents={{this.sortedEvents}}
+      @date={{@selectedDate}}
+      @selectEvent={{@selectEvent}}
+      @changeDate={{@changeDate}}
+      @changeView={{@changeView}}
+      @areDaysSelectable={{true}}
+      @areEventsSelectable={{true}}
+    />
+  </div>
+</div>

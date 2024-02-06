@@ -1,0 +1,17 @@
+.pulse-loader {
+  text-align: center;
+
+  @keyframes pulse {
+    0% {
+      stroke-dashoffset: 691;
+    }
+
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .path {
+    animation: pulse 2.2s infinite ease-in-out;
+  }
+}

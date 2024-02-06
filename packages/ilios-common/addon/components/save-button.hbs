@@ -1,0 +1,14 @@
+<button type="button" disabled={{@isSaving}} ...attributes>
+  {{#if @isSaving}}
+    {{#if (eq @saveProgressPercent 100)}}
+      <FaIcon @icon="check" />
+    {{else}}
+      <FaIcon @icon="spinner" @spin={{true}} />
+    {{/if}}
+    {{#if @saveProgressPercent}}
+      {{@saveProgressPercent}}%
+    {{/if}}
+  {{else}}
+    {{yield}}
+  {{/if}}
+</button>

@@ -1,0 +1,40 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.toggle-buttons {
+  display: flex;
+
+  input {
+    @include m.ilios-off-screen;
+  }
+
+  label {
+    background-color: c.$white;
+    color: c.$tealBlue;
+    border: 1px solid rgba(c.$black, 0.2);
+    display: inline-block;
+    @include m.font-size("small");
+    font-weight: 600;
+    min-width: 3em;
+    padding: 0.25em 0.5em;
+    text-align: center;
+    text-shadow: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:first-of-type {
+      border-radius: 4px 0 0 4px;
+    }
+
+    &:last-of-type {
+      border-radius: 0 4px 4px 0;
+    }
+  }
+
+  input:checked + label {
+    background-color: c.$tealBlue;
+    color: c.$white;
+  }
+}

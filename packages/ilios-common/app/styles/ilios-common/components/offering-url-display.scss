@@ -1,0 +1,25 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.offering-url-display {
+  .copy-btn {
+    @include m.ilios-link-button;
+    margin-left: 0.25em;
+
+    &.copying {
+      color: c.$fernGreen;
+    }
+  }
+}
+
+// tooltips are outside the document flow so have to be styled outside the component
+.offering-url-display-success-message-tooltip {
+  padding: 0;
+  .arrow {
+    display: none;
+  }
+  .content {
+    background-color: c.$fernGreen;
+    color: c.$white;
+  }
+}

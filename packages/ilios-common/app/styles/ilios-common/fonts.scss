@@ -1,0 +1,34 @@
+@use "mixins/media";
+
+@import "fonts/nunito";
+@import "fonts/nunito-sans";
+
+/* stylelint-disable property-disallowed-list */
+:root {
+  --fs-smallest: max(0.5rem, 9px);
+  --fs-small: 0.833rem;
+  --fs-base: 1rem;
+  --fs-medium: 1.2rem;
+  --fs-large: 1.44rem;
+  --fs-xl: 1.728rem;
+  --fs-xxl: 2.074rem;
+  --fs-xxxl: 2.488rem;
+  --fs-huge: 15rem;
+  @include media.for-tablet-and-up {
+    --fs-huge: 25rem;
+  }
+  @include media.for-laptop-and-up {
+    --fs-huge: 30rem;
+  }
+
+  line-height: calc(4px + 2ex);
+
+  font-size: 16px;
+  //scale based on viewport width between 16px and 20px
+  @include media.for-laptop-and-up {
+    font-size: calc(10px + 0.5vw);
+  }
+  @include media.for-desktop-and-up {
+    font-size: 20px;
+  }
+}

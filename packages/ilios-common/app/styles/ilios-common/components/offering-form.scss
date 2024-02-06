@@ -1,0 +1,180 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.offering-form {
+  .toggle-offering-calendar {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .form {
+    @include m.ilios-form;
+    grid-template-columns: 1fr;
+    margin-top: 1em;
+
+    @include m.for-laptop-and-up {
+      grid-template-columns: 2fr 1fr 1fr;
+
+      .instructor-management,
+      .learner-management,
+      .scheduling {
+        grid-column: 1 / -1;
+      }
+
+      .scheduling {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .make-recurring {
+        grid-column: 2 / -1;
+      }
+
+      .room {
+        grid-column: 1 / 3;
+      }
+
+      .url {
+        grid-column: 3 / -1;
+      }
+    }
+
+    .instructor-management,
+    .learner-management,
+    .scheduling {
+      align-items: start;
+      display: grid;
+      grid-gap: 0.25rem 1rem;
+      margin-bottom: 1rem;
+      legend {
+        @include m.ilios-heading;
+        padding: 0 0.5rem;
+      }
+    }
+
+    .end-date-time {
+      .text {
+        padding-top: 0.5rem;
+      }
+    }
+
+    .start-date {
+      input {
+        min-width: initial;
+        width: auto;
+      }
+    }
+
+    .start-time {
+      select {
+        min-width: initial;
+        width: 5rem;
+      }
+    }
+
+    .timezone {
+      .current-timezone {
+        padding-top: 0.5rem;
+      }
+
+      .picker {
+        display: flex;
+
+        .actions {
+          display: flex;
+          justify-content: flex-start;
+
+          button.cancel {
+            background: transparent;
+            color: c.$crimson;
+            margin: 0;
+            padding: 0 0.2rem;
+
+            &:enabled:hover {
+              color: c.$white;
+              background-color: c.$crimson;
+            }
+          }
+        }
+      }
+    }
+
+    .offering-duration {
+      .duration-inputs {
+        display: flex;
+        flex-direction: column;
+
+        @include m.for-laptop-and-up {
+          flex-direction: row;
+        }
+      }
+    }
+
+    .hours,
+    .minutes,
+    .make-recurring-input-container {
+      display: flex;
+
+      input {
+        margin-right: 0.5rem;
+        min-width: 5rem;
+        outline: none;
+        width: 5rem;
+
+        &:invalid {
+          border: 1px c.$crimson solid;
+        }
+      }
+    }
+
+    .make-recurring-days {
+      margin: 0.5rem 0;
+
+      div {
+        align-items: center;
+        display: flex;
+      }
+    }
+
+    .hours {
+      margin-right: 40px;
+      flex-direction: column;
+      .hours-container {
+        vertical-align: top;
+      }
+    }
+
+    .minutes {
+      flex-direction: column;
+      .minutes-container {
+        vertical-align: top;
+      }
+    }
+
+    .validation-error-message {
+      color: c.$crimson;
+      display: block;
+      @include m.font-size("small");
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+
+    .available-instructors,
+    .available-learners,
+    .available-learner-groups,
+    .selected-instructors,
+    .selected-instructor-groups,
+    .selected-learner-groups,
+    .selected-learners {
+      margin-bottom: 0.5rem;
+
+      label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .buttons {
+      @include m.ilios-form-buttons;
+    }
+  }
+}

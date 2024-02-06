@@ -1,0 +1,22 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.course-leadership-expanded {
+  @include m.detail-container(c.$orange);
+
+  .course-leadership-expanded-header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .course-leadership-expanded-content {
+    @include m.detail-container-content;
+  }
+}

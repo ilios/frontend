@@ -1,0 +1,97 @@
+@use "../colors" as c;
+
+.publication-menu {
+  margin: 0 0.5rem;
+  position: relative;
+  text-align: right;
+
+  button {
+    background-color: transparent;
+    border-radius: 0.2rem;
+    font-weight: normal;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .menu {
+    background-color: c.$white;
+    border-style: solid;
+    border-width: 1px;
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin: 1px 0 0 0;
+    padding: 0;
+    position: absolute;
+    top: 1.6rem;
+    right: 0;
+    z-index: 100;
+
+    button {
+      border: 0;
+      background-color: c.$white;
+      color: c.$raisinBlack;
+      display: block;
+      outline: none;
+      padding: 0.5rem 1rem;
+      text-align: right;
+      text-decoration: none;
+      white-space: nowrap;
+
+      &.danger {
+        &:hover,
+        &:focus {
+          background-color: c.$crimson;
+          color: c.$white;
+        }
+      }
+
+      &.good {
+        &:hover,
+        &:focus {
+          background-color: c.$fernGreen;
+          color: c.$white;
+        }
+      }
+    }
+  }
+
+  .toggle {
+    background-color: c.$white;
+    border-style: solid;
+    border-width: 1px;
+    color: c.$white;
+    position: relative;
+
+    &[aria-expanded="true"] {
+      border-width: 1px 1px 0 1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      margin-bottom: 1px;
+      z-index: 101;
+    }
+  }
+
+  &.published {
+    .toggle,
+    .menu {
+      border-color: c.$fernGreen;
+      color: c.$fernGreen;
+    }
+  }
+
+  &.notpublished {
+    .toggle,
+    .menu {
+      border-color: c.$gold;
+      color: c.$gold;
+    }
+  }
+
+  &.scheduled {
+    .toggle,
+    .menu {
+      border-color: c.$sepia;
+      color: c.$sepia;
+    }
+  }
+}

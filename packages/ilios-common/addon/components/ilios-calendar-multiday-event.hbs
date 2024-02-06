@@ -1,0 +1,16 @@
+<li data-test-ilios-calendar-multiday-event>
+  <button
+    type="button"
+    class="link-button"
+    disabled={{not this.enabled}}
+    {{on "click" (fn this.selectEvent @event)}}
+  >
+    {{format-date @event.startDate month="numeric" day="numeric" year="2-digit" hour="numeric" minute="numeric"}}
+    &ndash;
+    {{format-date @event.endDate month="numeric" day="numeric" year="2-digit" hour="numeric" minute="numeric"}}
+    <span data-test-event-name>
+      {{@event.name}}
+    </span>
+    {{@event.location}}
+  </button>
+</li>

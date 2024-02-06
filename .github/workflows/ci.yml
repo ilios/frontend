@@ -1,0 +1,226 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - master
+  pull_request: {}
+  schedule:
+    - cron: "15 6 * * 2" # weekly, on Tuesday morning
+
+concurrency:
+  group: ci-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+env:
+  SW_DISABLED: true
+  COVERAGE: false
+
+jobs:
+  lint:
+    name: "Lint"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Lint
+        run: pnpm run lint
+
+  test:
+    name: "Test"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      matrix:
+        node-version: [20]
+        workspace:
+          - frontend
+          - test-app
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Run Tests
+        run: pnpm run --filter ${{matrix.workspace}} test:ember
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        node-version: [18,20]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+      - name: install dependencies
+        run: pnpm install
+      - name: test build
+        run: pnpm run --filter frontend build
+
+  browserstack-test:
+    name: Browserstack ${{ matrix.launcher }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [test]
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        workspace:
+          - frontend
+          - test-app
+        launcher:
+          - BS_OSX_Safari
+          - BS_MS_Edge
+          - BS_IOS_SAFARI
+          - BS_CHROME_ANDROID
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+      - run: pnpm install
+      - name: test:browserstack ${{ matrix.launcher }}
+        env:
+          BROWSERSTACK_USERNAME: iliosgithub_1UGowwsqE
+          # This is in plaintext on purpose. It has no privileged access to anything (this is a free
+          # account) and it allows us to run browserstack tests against PRs.
+          BROWSERSTACK_ACCESS_KEY: yJjw6sE6izkpUw9oasGT
+          # The following is necessary when using browserstack under matrix builds on Github Actions
+          # The Job ID + Run ID isn't unique across matrix runs and will fail when run simultaneously
+          BROWSERSTACK_LOCAL_ID_SUFFIX: ${{ matrix.launcher }}
+        run: |
+          pnpm run --filter ${{matrix.workspace}} browserstack:connect
+          pnpm run --filter ${{matrix.workspace}} test:ember:browserstack --launch=${{ matrix.launcher }}
+          pnpm run --filter ${{matrix.workspace}} browserstack:disconnect
+          pnpm run --filter ${{matrix.workspace}} browserstack:results
+
+  firefox-test:
+    name: Browser Tests (Firefox)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [test]
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - test-app
+        firefox-version: [latest-esr]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+      - run: pnpm install
+      - name: Setup firefox
+        uses: browser-actions/setup-firefox@latest
+        with:
+          firefox-version: ${{ matrix.firefox-version }}
+      - run: firefox --version
+      - name: test
+        run: pnpm run --filter ${{matrix.workspace}} test:ember --launch=Firefox
+
+  try-scenarios:
+    name: ${{ matrix.try-scenario }}
+    runs-on: ubuntu-latest
+    needs: "test"
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        try-scenario:
+          - ember-lts-5.4
+          - ember-release
+          - ember-beta
+          - ember-canary
+          - embroider-safe
+          - embroider-optimized
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+      - run: pnpm install
+      - name: Run Tests
+        run: pnpm run --filter test-app tryone ${{ matrix.try-scenario }} --skip-cleanup
+
+  test-with-embroider:
+    name: Test With Embroider
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BUILD_WITH_EMBROIDER: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Run Tests
+        run: pnpm run --filter frontend test:ember
+
+  build-with-embroider:
+    name: Build With Embroider
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BUILD_WITH_EMBROIDER: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Run Tests
+        run: pnpm run --filter frontend build

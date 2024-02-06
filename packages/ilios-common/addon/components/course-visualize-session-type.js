@@ -1,0 +1,16 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { service } from '@ember/service';
+import { restartableTask } from 'ember-concurrency';
+
+export default class CourseVisualizeSessionTypeComponent extends Component {
+  @service iliosConfig;
+  @tracked academicYearCrossesCalendarYearBoundaries = false;
+  @tracked title;
+
+  load = restartableTask(async () => {
+    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries',
+    );
+  });
+}

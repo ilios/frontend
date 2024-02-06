@@ -1,0 +1,5 @@
+@use "../../mixins" as m;
+
+.session-objective-list-item-descriptors {
+  @include m.objective-list-item(0.25em);
+}

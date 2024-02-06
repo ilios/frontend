@@ -1,0 +1,34 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.detail-mesh {
+  @include m.detail-container(c.$orange);
+
+  .detail-mesh-header {
+    @include m.detail-container-header;
+  }
+
+  .title {
+    @include m.detail-container-title;
+  }
+
+  .actions {
+    @include m.detail-container-actions;
+  }
+
+  .content {
+    @include m.detail-container-content;
+
+    .selected-mesh-terms {
+      @include m.ilios-tag-list;
+
+      .term-title {
+        font-weight: bold;
+      }
+
+      .term-details {
+        font-style: italic;
+      }
+    }
+  }
+}

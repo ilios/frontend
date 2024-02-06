@@ -1,0 +1,86 @@
+@use "../colors" as c;
+@use "sass:math";
+
+.breadcrumbs {
+  $breadcrumb-border-color: c.$tealBlue;
+  $breadcrumb-border: 1px solid $breadcrumb-border-color;
+  $breadcrumb-height: 2rem;
+  $breadcrumb-arrow-color: $breadcrumb-border-color;
+  $breadcrumb-background: c.$slightWhite;
+  $breadcrumb-color: c.$tealBlue;
+  $breadcrumb-link-color-hover: c.$orange;
+
+  display: inline-block;
+  margin: 0.8rem;
+  text-align: left;
+
+  a {
+    &:focus,
+    &:hover {
+      color: $breadcrumb-link-color-hover;
+    }
+  }
+
+  /* stylelint-disable property-disallowed-list */
+  span {
+    background-color: $breadcrumb-background;
+    border: $breadcrumb-border;
+    border-left: 0;
+    color: $breadcrumb-color;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.8rem;
+    line-height: $breadcrumb-height;
+    margin-bottom: 2px;
+    margin-right: -5px;
+    padding: 0 math.div($breadcrumb-height, 4) 0 math.div($breadcrumb-height, 2);
+    position: relative;
+    text-decoration: none;
+
+    &:first-child {
+      border-bottom-left-radius: 3px;
+      border-left: $breadcrumb-border;
+      border-top-left-radius: 3px;
+      padding-left: math.div($breadcrumb-height, 2);
+    }
+
+    &::after,
+    &::before {
+      bottom: 0;
+      border-bottom: math.div($breadcrumb-height, 2) solid transparent;
+      border-left: math.div($breadcrumb-height, 4) solid transparent;
+      border-top: math.div($breadcrumb-height, 2) solid transparent;
+      content: "";
+      display: block;
+      left: 100%;
+      margin: auto;
+      position: absolute;
+      right: auto;
+      top: 0;
+      z-index: 2;
+    }
+
+    &::before {
+      border-left-color: $breadcrumb-arrow-color;
+      margin-left: 1px;
+      z-index: 1;
+    }
+
+    &::after {
+      border-left-color: $breadcrumb-background;
+    }
+
+    &:last-child,
+    &:last-child:hover {
+      border-bottom-right-radius: 3px;
+      border-top-right-radius: 3px;
+      cursor: default;
+      padding-right: math.div($breadcrumb-height, 2);
+    }
+
+    &:last-child::after,
+    &:last-child::before {
+      border: 0;
+    }
+  }
+}

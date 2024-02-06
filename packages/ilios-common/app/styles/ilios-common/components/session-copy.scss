@@ -1,0 +1,59 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.session-copy {
+  h3 {
+    @include m.ilios-heading-h3;
+    margin-bottom: 1rem;
+  }
+
+  .copy-form {
+    @include m.ilios-form;
+    border: 1px solid c.$blueMunsell;
+    display: block;
+    margin-top: 1rem;
+    padding: 1rem;
+
+    .item {
+      @include m.ilios-form-item;
+    }
+
+    .buttons {
+      @include m.ilios-form-buttons;
+
+      button:disabled {
+        background-color: c.$davysGrey;
+        border-color: c.$davysGrey;
+        color: c.$white;
+        cursor: default;
+      }
+    }
+  }
+
+  .rollover-summary {
+    font-weight: 400;
+    margin: 0 1rem 2rem;
+
+    @include m.for-laptop-and-up {
+      padding: 0.5rem 6rem 0 4rem;
+    }
+  }
+
+  .included {
+    .title {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .include {
+      margin-left: 1rem;
+
+      input {
+        display: inline;
+        margin: 0;
+        width: 1rem;
+      }
+    }
+  }
+}

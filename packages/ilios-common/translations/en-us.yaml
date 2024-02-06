@@ -1,0 +1,435 @@
+general:
+  accessAllMaterialsForThisCourse: "Access All Materials for this Course"
+  actions: Actions
+  activeFilters: "Active Filters"
+  add: Add
+  addNew: "Add New"
+  administratorCount: "There {count, plural, =1 {is 1 administrator} other {are # administrators}}"
+  administrators: Administrators
+  advancedOptions: "Advanced Options"
+  allCourses: "All Courses"
+  allEvents: "All Events"
+  allMaterials: "All Materials"
+  allWeeks: "All Weeks"
+  apiVersionMismatch: "API Version Mismatch"
+  apiVersionMismatchDetails: "This is usually a temporary error in your browser; Ilios is in read-only mode until it resolved. If updating does not help, please notify an administrator or technical owner of the system regarding this error. You may also wish to try a different browser."
+  assignedTerms: "Assigned Terms"
+  associatedGroups: "Associated Groups"
+  attendanceIs_Required_: "Attendance is '<strong><em>'required'</em></strong>'"
+  attendanceIsRequired: "Attendance is required"
+  attendanceRequired: "Attendance Required"
+  author: Author
+  autoUpdatingSeconds: "{count, plural, =1 {Auto updating in 1 second...} other {Auto updating in # seconds...}}"
+  availableInstructorsAndInstructorGroups: "Available Instructors and Instructor Groups"
+  availableLearnerGroups: "Available Learner Groups"
+  availableLearners: "Available Learners"
+  back: Back
+  backToCourse: "Back to Course"
+  backToCourses: "Back to Courses List"
+  backToDashboard: "Back to Dashboard"
+  backToSessionList: "Back to Session List"
+  backToTitle: "Back to {title}"
+  beforeOrAfterMidday: "Before or after midday"
+  bottomPagination: "Bottom pagination"
+  calendar: Calendar
+  campusNameOfRecord: "Campus name of record"
+  cancel: Cancel
+  chooseCohortTitle: "Select Parent For"
+  chooseFile: "Choose File"
+  citation: Citation
+  classOf: "Class of {year}"
+  clearFilters: "Clear Filters"
+  clerkshipType: "Clerkship Type"
+  clickForMore: "Click for more information"
+  clickToEdit: "Click to edit"
+  close: Close
+  cohort: Cohort
+  cohorts: Cohorts
+  cohortsManageTitle: "Manage Cohorts"
+  collapse: collapse
+  collapseDetail: "Hide Details"
+  competencies: Competencies
+  competency: Competency
+  complete: "Complete"
+  completeSessions: "Sessions Complete: ready to publish"
+  confirmObjectiveRemoval: "Are you sure you want to delete this objective?"
+  confirmObjectiveRemovalMultipleSessionObjectives: "You are about to delete this course objective, which is linked to {count} session objectives. This will delete those relationships as well. Are you sure you want to continue?"
+  confirmRemoval: "Are you sure you want to remove this learning material?"
+  confirmRemove: "Are you sure you want to delete this offering with {learnerGroupCount} learner groups? This action cannot be undone."
+  confirmSessionRemoval: "Are you sure you want to delete this session?"
+  contentAuthor: "Content Author"
+  copiedSuccessfully: "Copied Successfully"
+  copyIcsFeedUrl: "Copy My ICS Link"
+  copyLink: "Copy link"
+  copyrightAgreement: "The file I am uploading is my own or I have express permission to reproduce and/or distribute this item, or use of it here has been assessed as allowable by the legal doctrine of Fair Use. This file does not contain protected health information, and use of it here is in compliance with Government and University policies on copyright and information security and my institution’s guidelines for professional conduct."
+  copyrightPermission: "Copyright Permission"
+  copyrightRationale: "Copyright Rationale"
+  copySession: "Copy Session"
+  copySessionSummary: "You are about to copy over this session (without schedule data) into the selected course. The new session will include all objectives, terms, and learning materials.  To continue click \"done\".  To return to your current session click \"cancel\"."
+  copySuccess: "Copy Completed Successfully"
+  course: Course
+  courseLearningMaterials: "Course Learning Materials"
+  courseLevel: "Course Level {level}"
+  courseLevels: "Course Levels"
+  courseNotFound: "course not found"
+  courseObjective: "Course Objective"
+  courseObjectives: "Course Objectives"
+  courseOrSessionType: "Course / Session Type"
+  courseRollover: "Rollover Course"
+  courseRolloverSuccess: "Course-Rollover Completed Successfully"
+  courseRolloverSummary: "You are about to roll over this course into the selected academic year, along with all selected options. To continue, click “Done”. To return to your current course, click “Cancel”."
+  courseRolloverYearUnavailable: "Course Already Exists"
+  courses: Courses
+  coursesAndSessions: "Courses and Sessions"
+  courseTitle: "Course Title"
+  courseTitlePlaceholder: "Enter a title for this course"
+  courseVisualizations: "Course Visualizations"
+  currentlySearchingPrompt: "searching..."
+  dashboardNavigation: "Dashboard navigation"
+  date: Date
+  dateTime: "Date/Time"
+  day: Day
+  defaultInstructorsNotLoaded: "(Default Instructors will not be loaded: please enter desired value.)"
+  defaultLocationNotLoaded: "(Default Location will not be loaded: please enter desired value.)"
+  defaultNotLoaded: "Default Not Loaded"
+  deprecatedAbbreviation: "depr."
+  description: Description
+  directorCount: "There {count, plural, =1 {is 1 director} other {are # directors}}"
+  directors: Directors
+  disabled: disabled
+  displayName: "Display Name"
+  done: Done
+  download: Download
+  dueBefore: "Due Before"
+  dueBy: "Due By"
+  duePriorTo: "Due prior to"
+  duration: Duration
+  durationHours: "{count, plural, =1 {1 hour} other {# hours}}"
+  durationMinutes: "{count, plural, =1 {1 minute} other {# minutes}}"
+  edit: Edit
+  end: End
+  endDate: "End Date"
+  ends: Ends
+  endTime: "End Time"
+  etAl: "et al."
+  eventNotFoundTitle: "Event Not Found"
+  eventNotFoundExplanation: "The event you have tried to reach is either no longer available, or you have followed a personalized user link which is not shareable. If you continue to encounter issues, please contact your Ilios help desk."
+  expand: "expand"
+  expandDetail: "Show Details"
+  externalId: "Course ID"
+  file: File
+  file-audio: "Audio file"
+  file-pdf: "PDF file"
+  file-powerpoint: "PowerPoint file"
+  file-video: "Video file"
+  filterChartPlaceholder: "Start typing to filter this chart"
+  filterPlaceholder: "Start typing to filter list"
+  fileSizeError: "This file is too large.  Maximum size is {maxSize}."
+  findInstructorOrGroup: "Find Instructor or Group"
+  findLearners: "Find Learners"
+  first: First
+  firstOffering: "First Offering"
+  forward: Forward
+  friday: Friday
+  go: Go
+  goToNextYear: "Go to next year"
+  goToPreviousYear: "Go to previous year"
+  groupByCompetencies: "Group by Competencies"
+  groupName: "Group Name"
+  groups: Groups
+  hideCalendar: "Hide Calendar"
+  hideCourseMaterials: "Hide course materials"
+  hideFilters: "Hide Filters"
+  hideIcsFeed: Hide ICS Feed Options
+  hideObjectives: "Hide objectives"
+  hideSessionMaterials: "Hide session materials"
+  hour: Hour
+  hours: Hours
+  icsInstructions: "To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!"
+  ilios: Ilios
+  ilm: ILM
+  ilmDue: "ILM - Due"
+  inactive: inactive
+  include: Include
+  incompleteSessions: "Sessions Incomplete: cannot publish"
+  independentLearning: "Independent Learning"
+  independentLearningActivities: "Independent Learning Activities"
+  inProgress: "In Progress"
+  instructionalNotes: "Instructional Notes"
+  instructor: Instructor
+  instructorGroupMembers: "Instructor Group Members"
+  instructorGroups: "Instructor Groups"
+  instructors: Instructors
+  instructorsAndInstructorGroups: "Instructors and Instructor Groups"
+  instructorsManageTitle: "Manage Instructors"
+  last: Last
+  lastUpdate: "Last Update"
+  leadership: Leadership
+  learnerGroups: "Learner Groups"
+  learnerGroupsManageTitle: "Manage Learner Groups"
+  learners: Learners
+  learnersAndLearnerGroups: "Learners and Learner Groups"
+  learningMaterialManageTitle: "Manage Learning Material"
+  learningMaterials: "Learning Materials"
+  learningMaterialsSummary: "Learning Materials Summary"
+  level: Level
+  link: "Web Link"
+  linkedCompetencies: "Linked Competencies"
+  linkedCompetencyCount: "{count, plural, =1 {1 has a linked competency} other {# have linked competencies}}"
+  listByPriority: "List by Priority"
+  loadingEvents: "Loading Events"
+  loadingMaterials: "Loading Materials..."
+  location: Location
+  login: Login
+  makeRecurring: "Make Recurring"
+  manageLeadership: "Manage Leadership"
+  manageLearners: "Manage Learners"
+  markAsScheduled: "Mark as Scheduled"
+  materials: Materials
+  membersOfThisGroupRequireAccommodation: "members of this group require accommodation"
+  mesh: MeSH
+  meshCount: "{count, plural, =1 {1 has MeSH} other {# have MesH}}"
+  meshManageTitle: "Manage MeSH"
+  meshTerms: "MeSH Terms"
+  minute: Minute
+  minutes: Minutes
+  missingCohortMessage: "Please add at least one cohort to this course."
+  missingCompetenciesMessage: "Please add at least one competency to this program year."
+  missingCourseObjectivesMessage: "Please add at least one objective to the course."
+  missingItems: "Missing Items"
+  monday: Monday
+  month: Month
+  moreInputRequiredPrompt: "keep typing..."
+  multiday: Multiday
+  multidayEvents: "Multiday Events"
+  multiple: Multiple
+  mustBeSameDayOfWeekAsCurrentStartDate: "Must be same day of week as current start date"
+  myLearningMaterials: "My Learning Materials"
+  myMaterials: "My Materials"
+  mySchedule: "My Schedule"
+  navigation: Navigation
+  next: Next
+  newObjective: "New Objective"
+  newObjectiveSaved: "New Objective Saved"
+  newOffering: "New Offering"
+  newSession: "New Session"
+  newUpdates: "new updates"
+  nextXDays: "Next {days} days"
+  no: No
+  noAssociatedCompetencies: "No Associated Competencies"
+  noAssociatedCompetency: "No Associated Competency"
+  noAvailableLearnerGroups: "No learner groups available; No cohort is attached to this course."
+  noAvailableLearners: "No learners available; No cohort is attached to this course."
+  noCohorts: "There are no cohorts in this course"
+  noCourseLearningMaterialsAvailable: "No Course Learning Materials Available"
+  noEvents: No Events
+  none: None
+  noOfferings: "This session has no offerings"
+  noResultsFound: "No results found. Please try again."
+  noSearchResultsPrompt: "no results"
+  noSessionLearningMaterialsAvailable: "No Session Learning Materials Available"
+  notAClerkship: "Not a Clerkship"
+  notes: Notes
+  notFoundMessage: "Rats! I couldn't find that. Please check your page address, and try again."
+  notPublished: "Not Published"
+  notStarted: "Not Started"
+  objectiveCompetencyManagerTitle: "Select Parent Competency for Objective"
+  objectiveCount: "There {count, plural, =1 {is 1 objective} other {are # objectives}}"
+  objectiveDescriptorTitle: "Select MeSH Descriptors for Objective"
+  objectiveParentTitle: "Select Parent Objectives"
+  objectiveParentTitleSingular: "Select Parent Objective"
+  objectives: Objectives
+  objectivesWithNoHours: "The following course objectives are either not linked to any session, or only linked to sessions without offering or duration data."
+  objectivesWithNoLink: "No Course Objectives Currently Linked to Instructional Time."
+  offering: Offering
+  offerings: Offerings
+  otherVisualizations: "Other Visualizations"
+  overview: "Overview"
+  ownedBy: "owned by {owner}"
+  owner: Owner
+  pagedResultsCount: "Showing {start} - {end} of {total}"
+  parentCount: "{count, plural, =1 {1 has a parent} other {# have parents}}"
+  parentGroup: "Parent group"
+  parentGroups: "Parent groups"
+  parentObjectives: "Parent Objectives"
+  percentage: Percentage
+  perPage: "Per Page"
+  pickADate: "Pick a date"
+  prerequisites: "Prerequisites"
+  previous: Previous
+  preWork: "Pre-work"
+  printSummary: "Print Summary"
+  program: Program
+  programAndCohort: "Program/Cohort"
+  programCohorts: "Program Cohorts"
+  programDetail: "Program Detail"
+  publicationStatus: "Publication Status"
+  publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, and ignore {ignoreCount} sessions"
+  publishAllSessions: "Publish {sessionCount} sessions"
+  publishAsIs: "Publish As-is"
+  publishCourse: "Publish Course"
+  published: Published
+  publishedSuccessfully: "Published Successfully"
+  publishSession: "Publish Session"
+  remove: Remove
+  removeAll: "Remove All"
+  required: Required
+  results: Results
+  resultsCount: "{count, plural, =1 {1 result} other {# results}}"
+  returnToPreviousPage: "Return to Previous Page"
+  reviewMissingItems: "Review {count} Missing Items"
+  reviewSessions: "Sessions Requiring Review"
+  saturday: Saturday
+  save: Save
+  savedSuccessfully: "Saved Successfully"
+  scheduled: Scheduled
+  scheduledSuccessfully: "Scheduled Successfully"
+  scheduling: Scheduling
+  school: School
+  schools: Schools
+  search: Search
+  searchForIliosUsers: "Find Ilios Users..."
+  searchMesh: "Search MeSH"
+  searchPlaceholder: "Find Learning Material"
+  selectCohortsToAttach: "Select the cohort of students you wish to attach to the new course"
+  selectCourse: "Select a Course"
+  selectedInstructorGroups: "Selected Instructor Groups"
+  selectedInstructors: "Selected Instructors"
+  selectedLearnerGroups: "Selected Learner Groups"
+  selectedLearners: "Selected Learners"
+  selectMeshFor: "Select MeSH for: {title}"
+  selectVocabulary: "Select Vocabulary"
+  session: Session
+  sessionLearningMaterials: "Session Learning Materials"
+  sessionObjectives: "Session Objectives"
+  sessions: Sessions
+  sessionTitle: "Session Title"
+  sessionTitleFilterPlaceholder: "Filter by title, type, or status"
+  sessionType: "Session Type"
+  sessionTypes: "Session Types"
+  sessionTypesFor: "Session Types for {subject}"
+  showCalendar: "Show Calendar"
+  showCourseMaterials: "Show course materials"
+  showFilters: "Show Filters"
+  showIcsFeed: Show ICS Feed Options
+  showLearnerGroupEvents: "Show all events for assigned learner groups"
+  showMore: "Show more"
+  showNotesToStudents: "Show Notes to Students"
+  showObjectives: "Show objectives"
+  showSessionEvents: "Show all other '<em>'{sessionTitle}'</em>' events"
+  showSessionMaterials: "Show session materials"
+  smallGroupMessage: "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the \"offering\" button above."
+  smallGroups: "Small Groups"
+  sortMaterials: "Sort Materials"
+  sortObjectives: "Sort Objectives"
+  specialAttireIs_Required_: "Special Attire is '<strong><em>'required'</em></strong>'"
+  specialAttireRequired: "Special Attire Required"
+  specialEquipment: "Special Equipment"
+  specialEquipmentIs_Required_: "Special Equipment is '<strong><em>'required'</em></strong>'"
+  specialEquipmentRequired: "Special Equipment Required"
+  start: Start
+  startDate: "Start Date"
+  starts: Starts
+  startTime: "Start Time"
+  status: Status
+  studentAdvisorCount: "There {count, plural, =1 {is 1 student advisor} other {are # student advisors}}"
+  studentAdvisors: Student Advisors
+  summary: Summary
+  sunday: Sunday
+  supplementalCurriculum: "Supplemental Curriculum"
+  targetCourse: "Target Course"
+  taughtBy: "Taught By {instructors}"
+  termCount: "{count, plural, =1 {1 has vocabulary terms} other {# have vocabulary terms}}"
+  terms: Terms
+  termsManageTitle: "Manage Terms"
+  thursday: Thursday
+  time: Time
+  timedRelease: "Timed Release"
+  timedReleaseAddEndDate: "Add End Date"
+  timedReleaseAddStartDate: "Add Start Date"
+  timedReleaseClearEndDate: "Clear End Date"
+  timedReleaseClearStartDate: "Clear Start Date"
+  timedReleaseNoSchedule: "Available immediately when published"
+  timedReleaseOnlyEndDate: "Available until {endDate}"
+  timedReleaseOnlyStartDate: "Available: {startDate}"
+  timedReleaseStartAndEndDate: "Available: {startDate} until {endDate}"
+  timezone: Timezone
+  title: Title
+  today: Today
+  token: Token
+  topPagination: "Top pagination"
+  totalIlmTime: "Total ILM Time {minutes} Minutes"
+  totalInstructionalTime: "Total Instructional Time {minutes} Minutes"
+  tuesday: Tuesday
+  type: Type
+  universalLocator: "Universal Locator"
+  unlinkedObjectives: "This course has unlinked objective(s)"
+  unPublishCourse: "UnPublish Course"
+  unPublishedSuccessfully: "UnPublished Successfully"
+  unPublishSession: "UnPublish Session"
+  unusedObjectives: "Unused Objectives"
+  upcomingActivities: "My Activities for the next {days} days"
+  upcomingMaterials: "My Learning Materials for the next {days} days"
+  updateNow: "Update Now"
+  uploadDate: "Upload date"
+  url: URL
+  userRole: "User Role"
+  view: View
+  virtualLearningLink: "Virtual Learning Link"
+  virtualSessionLink: Virtual Session Link
+  visibleToStudents: "Visible to Students"
+  visualizations: "Visualizations"
+  visualizeCourseObjectives: "Visualize course objectives"
+  vocabularies: Vocabularies
+  vocabulary: Vocabulary
+  vocabularyTerms: "Vocabulary Terms"
+  vocabularyTermsFor: "Vocabulary Terms for {subject}"
+  waitSaving: "saving... one moment..."
+  wednesday: Wednesday
+  week: Week
+  weekAtAGlance: "Week at a Glance"
+  weekOf: "Week of {date}"
+  weeks: Weeks
+  when: When
+  whitecoatsSlashSpecialAttire: "Whitecoats / special attire"
+  withXmoreOfferings: "with {count, plural, =1 {one more offering} other {# more offerings}}"
+  year: Year
+  yes: Yes
+errors:
+  accepted: "{description} must be accepted"
+  after: "{description} must be after {after}"
+  agreementRequired: "Agreement or alternate rationale is required for upload"
+  before: "{description} must be before {before}"
+  blank: "{description} can not be blank"
+  collection: "{description} must be a collection"
+  confirmation: "{description} does not match {on}"
+  date: "{description} must be a valid date"
+  description: "This field"
+  email: "{description} must be a valid email address"
+  empty: "{description} can not be empty"
+  equalTo: "{description} must be equal to {is}"
+  even: "{description} must be even"
+  exclusion: "{description} is a duplicate"
+  greaterThan: "{description} must be greater than {gt}"
+  greaterThanOrEqualTo: "{description} must be greater than or equal to {gte}"
+  inclusion: "{description} is not included in the list"
+  invalid: "{description} is invalid"
+  lessThan: "{description} must be less than {lt}"
+  lessThanOrEqualTo: "{description} must be less than or equal to {lte}"
+  missingFile: "Missing file"
+  notANumber: "{description} must be a number"
+  notAnInteger: "{description} must be an integer"
+  odd: "{description} must be odd"
+  onOrAfter: "{description} must be on or after {onOrAfter}"
+  onOrBefore: "{description} must be on or before {onOrBefore}"
+  otherThan: "{description} must be other than {value}"
+  phone: "{description} must be a valid phone number"
+  positive: "{description} must be positive"
+  present: "{description} must be blank"
+  required: "{description} is required"
+  singular: "{description} can not be a collection"
+  tooLong: "{description} is too long (maximum is {max} characters)"
+  tooShort: "{description} is too short (minimum is {min} characters)"
+  url: "{description} must be a valid url"
+  wrongDateFormat: "{description} must be in the format of {format}"
+  wrongLength: "{description} is the wrong length (should be {is} characters)"

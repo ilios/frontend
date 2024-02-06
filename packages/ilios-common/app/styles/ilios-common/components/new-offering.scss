@@ -1,0 +1,24 @@
+@use "../mixins" as m;
+
+.new-offering {
+  margin-top: 2rem;
+
+  .new-offering-title {
+    @include m.ilios-heading-h5;
+    text-align: center;
+  }
+
+  .choose-offering-type {
+    margin-top: 0.5rem;
+    text-align: center;
+
+    label {
+      @include m.ilios-label;
+    }
+
+    .click-choice-buttons {
+      margin: auto;
+      width: 280px;
+    }
+  }
+}

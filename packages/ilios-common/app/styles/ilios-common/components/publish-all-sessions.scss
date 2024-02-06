@@ -1,0 +1,80 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.publish-all-sessions {
+  background-color: c.$slightWhite;
+  border: 1px solid c.$culturedGrey;
+  padding-left: 1rem;
+
+  section {
+    @include m.detail-container(c.$orange);
+
+    .title {
+      @include m.detail-container-title;
+      text-align: left;
+    }
+
+    .content {
+      @include m.detail-container-content;
+
+      tbody {
+        td {
+          vertical-align: top;
+        }
+      }
+    }
+  }
+
+  .publish-all-sessions-unpublishable,
+  .publish-all-sessions-publishable {
+    .title {
+      cursor: pointer;
+    }
+  }
+
+  .publish-all-sessions-overridable {
+    margin-bottom: 2rem;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .publish-all-sessions-review {
+    border: 1px solid c.$fernGreen;
+    clear: both;
+    @include m.font-size("large");
+    margin: 1rem;
+    padding: 1rem;
+    text-align: center;
+
+    .unlinked-warning {
+      color: c.$gold;
+      @include m.font-size("base");
+    }
+
+    .fa-chart-column {
+      color: c.$blueMunsell;
+      @include m.font-size("small");
+    }
+
+    p {
+      color: c.$fernGreen;
+      font-weight: bold;
+      margin: 0;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background: c.$fernGreen;
+      color: c.$white;
+    }
+  }
+
+  .fa-link-slash {
+    color: c.$black;
+    @include m.font-size("small");
+  }
+}

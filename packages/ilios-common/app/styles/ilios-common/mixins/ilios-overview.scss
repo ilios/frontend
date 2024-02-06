@@ -1,0 +1,61 @@
+@use "../colors" as c;
+@use "font-size";
+@use "ilios-form";
+@use "media";
+
+@mixin ilios-overview($bottom-border-color: false) {
+  @if $bottom-border-color {
+    border-bottom: 1px dotted $bottom-border-color;
+  }
+  display: block;
+  padding: 0.8rem 0;
+
+  label {
+    @include ilios-form.ilios-label;
+    margin: 0 0.5rem 0 0;
+  }
+}
+
+@mixin ilios-overview-block() {
+  align-items: flex-end;
+  display: flex;
+  min-height: 1.5rem;
+}
+
+@mixin ilios-overview-header() {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  height: 1.5em;
+}
+
+@mixin ilios-overview-title() {
+  color: c.$tealBlue;
+  @include font-size.font-size("base");
+  font-weight: bold;
+}
+
+@mixin ilios-overview-actions() {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-around;
+  margin-right: 0.5rem;
+  text-align: right;
+  vertical-align: middle;
+}
+
+@mixin ilios-overview-content() {
+  align-items: center;
+  display: grid;
+  padding-top: 1rem;
+
+  @include media.for-tablet-and-up {
+    grid-row-gap: 0.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  @include media.for-laptop-and-up {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+}

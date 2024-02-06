@@ -1,0 +1,12 @@
+@use "../mixins" as m;
+
+.selected-instructor-groups {
+  .instructor-group-title {
+    @include m.ilios-tag-list;
+    font-weight: bold;
+
+    button {
+      @include m.ilios-button-reset;
+    }
+  }
+}

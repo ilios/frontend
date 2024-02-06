@@ -1,0 +1,36 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.course-details {
+  @include m.main-section;
+
+  $collapse-control-shadow-grey: #e2e2e2;
+  $collapse-control-shadow-black: rgba(0, 0, 0, 0.34);
+
+  .detail-collapsed-control {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    button {
+      @include m.ilios-button-reset;
+      background-color: c.$orange;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      box-shadow:
+        0 2px $collapse-control-shadow-grey,
+        inset 0 1px 2px $collapse-control-shadow-black;
+      color: c.$white;
+      cursor: pointer;
+      padding: 0.25rem 4rem;
+
+      .expand-collapse-icon {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+
+  table {
+    @include m.ilios-table-colors;
+  }
+}

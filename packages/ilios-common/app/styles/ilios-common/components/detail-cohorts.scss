@@ -1,0 +1,22 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.detail-cohorts {
+  @include m.detail-container(c.$orange);
+
+  .detail-cohorts-header {
+    @include m.detail-container-header;
+  }
+
+  .title {
+    @include m.detail-container-title;
+  }
+
+  .actions {
+    @include m.detail-container-actions;
+  }
+
+  .detail-cohorts-content {
+    @include m.detail-container-content;
+  }
+}

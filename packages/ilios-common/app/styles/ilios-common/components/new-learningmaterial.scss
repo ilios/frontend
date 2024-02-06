@@ -1,0 +1,20 @@
+@use "../mixins" as m;
+
+.new-learningmaterial {
+  @include m.ilios-form;
+  margin-left: 2rem;
+  min-height: 25vh;
+
+  .item {
+    @include m.ilios-form-item;
+  }
+
+  .buttons {
+    @include m.ilios-form-buttons;
+  }
+
+  .notes,
+  .description {
+    @include m.ilios-browser-defaults;
+  }
+}

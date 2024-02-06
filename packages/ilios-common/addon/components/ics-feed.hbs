@@ -1,0 +1,22 @@
+<div
+  class="ilios-calendar-ics-feed"
+  data-test-ics-feed
+  ...attributes
+>
+  <p data-test-instructions>
+    {{@instructions}}
+  </p>
+  <p>
+    <span>
+      <CopyButton @clipboardText={{@url}} @success={{perform this.textCopied}}>
+        <FaIcon @icon="copy" />
+        {{t "general.copyIcsFeedUrl"}}
+      </CopyButton>
+      {{#if this.textCopied.isRunning}}
+        <span class="yes">
+          {{t "general.copiedSuccessfully"}}
+        </span>
+      {{/if}}
+    </span>
+  </p>
+</div>

@@ -1,0 +1,28 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.weekly-events {
+  @include m.main-section;
+
+  .year {
+    text-align: center;
+
+    h2 {
+      @include m.ilios-heading-h2;
+
+      i {
+        cursor: pointer;
+        margin: 0 1em;
+      }
+    }
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+
+  .week-glance {
+    border-bottom: 1px solid c.$orange;
+    margin: 0 0 1rem 1rem;
+  }
+}

@@ -1,0 +1,47 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.objective-manager {
+  .objectivetitle {
+    @include m.ilios-browser-defaults;
+  }
+
+  h2 {
+    background-color: c.$slightWhite;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+  }
+
+  .selected {
+    background-color: c.$orange;
+    color: c.$white;
+  }
+
+  .parent-picker {
+    ul {
+      @include m.ilios-list-reset;
+      height: auto;
+    }
+
+    li {
+      list-style-position: outside;
+      padding: 0.2rem 0 0.3rem 1.5rem;
+
+      ul {
+        margin-left: 1.5rem;
+      }
+    }
+  }
+
+  .no-group {
+    color: c.$orange;
+    font-weight: bold;
+  }
+
+  h5 {
+    @include m.font-size("small");
+    font-weight: bold;
+    margin: 0.8rem;
+    padding: 0.2rem 0.5rem;
+  }
+}

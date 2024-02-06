@@ -1,0 +1,22 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.detail-taxonomies {
+  @include m.detail-container(c.$orange);
+
+  .detail-taxonomies-header {
+    @include m.detail-container-header;
+  }
+
+  .title {
+    @include m.detail-container-title;
+  }
+
+  .actions {
+    @include m.detail-container-actions;
+  }
+
+  .content {
+    @include m.detail-container-content;
+  }
+}

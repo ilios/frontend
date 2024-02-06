@@ -1,0 +1,77 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.editinplace {
+  .editable {
+    color: c.$blueMunsell;
+    cursor: pointer;
+
+    &.prompt {
+      font-style: italic;
+    }
+  }
+
+  .editor {
+    @include m.ilios-form-error;
+    align-items: center;
+    display: flex;
+
+    #{m.$form-input-text-types} {
+      background: c.$white;
+      border: 1px solid c.$culturedGrey;
+      border-radius: 3px;
+      color: c.$raisinBlack;
+      cursor: pointer;
+      display: inline;
+      outline: none;
+      overflow: show;
+      z-index: 100;
+    }
+
+    .html-editor {
+      #{m.$form-input-text-types} {
+        z-index: 2;
+      }
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-start;
+
+      button {
+        background: transparent;
+        margin: 0;
+        padding: 0 0.2rem;
+
+        &:enabled:hover {
+          color: c.$white;
+        }
+
+        &.done {
+          color: c.$fernGreen;
+
+          &:enabled:hover {
+            background-color: c.$fernGreen;
+          }
+        }
+
+        &.cancel {
+          color: c.$crimson;
+
+          &:enabled:hover {
+            background-color: c.$crimson;
+          }
+        }
+      }
+    }
+  }
+
+  .fa-pen-to-square {
+    @include m.icon;
+  }
+
+  .expand-text-button {
+    @include m.ilios-link-button;
+    display: inline;
+  }
+}

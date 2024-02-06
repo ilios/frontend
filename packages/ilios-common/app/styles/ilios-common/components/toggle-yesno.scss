@@ -1,0 +1,42 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.toggle-yesno {
+  --height: 1.1em;
+  --switch-diff: 2px;
+  --width: calc(var(--height) * 2);
+  --switch: calc(var(--height) - var(--switch-diff));
+  border-radius: 18px;
+  display: inline-block;
+  height: var(--height);
+  position: relative;
+  width: var(--width);
+  background-color: c.$rosewood;
+  padding: 0;
+
+  &.yes {
+    background-color: c.$fernGreen;
+  }
+
+  .switch-handle {
+    background: c.$white;
+    border-radius: 10px;
+    height: var(--switch);
+    left: var(--switch-diff);
+    position: absolute;
+    margin: 0;
+    top: 1px;
+    width: var(--switch);
+    display: grid;
+    justify-content: center;
+    align-content: center;
+
+    svg {
+      @include m.font-size("small");
+    }
+  }
+
+  &[aria-checked="true"] .switch-handle {
+    left: calc(calc(var(--width) - var(--switch)) - var(--switch-diff));
+  }
+}

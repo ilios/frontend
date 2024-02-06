@@ -1,0 +1,65 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+@use "sass:color";
+
+.course-loading {
+  @include m.loading-text;
+  @include m.loading-shimmer;
+
+  .header {
+    @include m.course-header;
+  }
+  .overview {
+    @include m.course-overview;
+
+    .title {
+      @include m.loading-text;
+    }
+  }
+}
+
+.course-sessions.course-sessions-loading {
+  border-bottom: 0;
+  @include m.loading-shimmer;
+
+  .course-sessions-header {
+    height: 2rem;
+    @include m.for-phone-only {
+      height: 3rem;
+    }
+  }
+
+  .title {
+    @include m.loading-text;
+  }
+
+  .sessions-grid-header {
+    @include m.loading-text;
+    background-color: color.adjust(c.$davysGrey, $lightness: 50%);
+    height: 2rem;
+  }
+}
+
+.course-loading,
+.course-loader {
+  @include m.main-section;
+
+  .mock-detail-box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    span {
+      background-color: color.adjust(c.$davysGrey, $lightness: 50%);
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      padding: 0.25rem 4rem;
+      color: color.adjust(c.$davysGrey, $lightness: 50%);
+
+      .expand-collapse-icon {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}

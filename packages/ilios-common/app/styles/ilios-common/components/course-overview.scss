@@ -1,0 +1,21 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.course-overview {
+  @include m.course-overview;
+
+  .courseexternalid {
+    input {
+      max-width: initial;
+      min-width: initial;
+    }
+  }
+
+  .block {
+    align-items: center;
+  }
+
+  .universallocator {
+    color: c.$davysGrey;
+  }
+}

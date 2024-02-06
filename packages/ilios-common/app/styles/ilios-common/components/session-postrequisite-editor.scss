@@ -1,0 +1,66 @@
+@use "../colors" as c;
+@use "../constants";
+@use "../mixins" as m;
+
+.session-postrequisite-editor {
+  .table-wrapper {
+    max-height: 20rem;
+    overflow: auto;
+    table {
+      @include m.ilios-table-structure;
+      @include m.ilios-zebra-table;
+      margin: 0;
+      position: relative;
+      th {
+        background-color: c.$tealBlue;
+        color: c.$white;
+        position: sticky;
+        top: 0;
+      }
+      th,
+      td {
+        padding: 0.25rem;
+      }
+
+      tbody tr {
+        &.active {
+          background-color: c.$fernGreen;
+          color: c.$white;
+        }
+        &:hover {
+          outline: 1px solid c.$fernGreen;
+        }
+
+        button {
+          @include m.ilios-button-reset;
+          text-align: left;
+          width: 100%;
+        }
+      }
+    }
+  }
+  button.remove {
+    @include m.ilios-link-button;
+    color: c.$crimson;
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+
+    @include m.for-tablet-and-up {
+      flex-direction: row;
+      justify-content: space-between;
+
+      span {
+        width: constants.$golden-ratio-large;
+      }
+      input {
+        width: calc(constants.$golden-ratio-small * 100%);
+      }
+    }
+  }
+  .buttons {
+    @include m.ilios-form-buttons;
+  }
+}

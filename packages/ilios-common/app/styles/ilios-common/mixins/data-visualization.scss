@@ -1,0 +1,39 @@
+@use "ilios-form";
+@use "ilios-heading";
+
+@mixin data-visualization {
+  h2 {
+    @include ilios-heading.ilios-heading-h2;
+    margin: 0.5rem;
+    text-align: center;
+  }
+
+  h3 {
+    @include ilios-heading.ilios-heading-h3;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  h4 {
+    @include ilios-heading.ilios-heading-h3;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .filter {
+    @include ilios-form.ilios-form;
+    padding-left: 0.8rem;
+
+    input {
+      @include ilios-form.ilios-form-last-item;
+    }
+  }
+
+  .visualizations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: center;
+    margin-top: 2rem;
+    padding-left: 0.8rem;
+  }
+}

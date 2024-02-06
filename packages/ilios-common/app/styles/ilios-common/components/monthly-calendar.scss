@@ -1,0 +1,125 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.monthly-calendar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  .month-year {
+    @include m.ilios-heading-h4;
+    margin: 0 0 0.25rem 0;
+    padding: 0;
+  }
+
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 5px;
+    grid-template-rows: 1rem repeat(5, 7rem);
+    width: 100%;
+
+    .day-heading {
+      font-weight: bold;
+      @for $i from 1 through 7 {
+        &.day-#{$i} {
+          grid-column: $i;
+          grid-row: 1;
+        }
+      }
+
+      .long-name {
+        display: none;
+      }
+
+      @include m.for-tablet-and-up {
+        .long-name {
+          display: inline;
+        }
+        .short-name {
+          display: none;
+        }
+      }
+    }
+
+    .day {
+      border: 1px solid c.$culturedGrey;
+      padding: 5px;
+      @for $week from 1 through 6 {
+        @for $day from 1 through 7 {
+          &.week-#{$week}.day-#{$day} {
+            grid-column: $day;
+            grid-row: ($week + 1);
+            overflow: hidden;
+          }
+        }
+      }
+
+      .no-events {
+        @include m.visually-hidden();
+      }
+
+      .day-number {
+        margin: 0 0 0.25rem 0;
+        padding: 0;
+
+        button {
+          @include m.ilios-link-button;
+          width: 100%;
+        }
+      }
+
+      .month-event {
+        @include m.ilios-button-reset;
+        cursor: default;
+        display: block;
+        border: 1px solid c.$culturedGrey;
+        border-radius: 3px;
+        height: 1.5em;
+        overflow: hidden;
+        padding: 0 8px 0 0;
+        position: relative;
+        text-align: left;
+        width: 100%;
+
+        &.clickable {
+          cursor: pointer;
+        }
+
+        span {
+          background-color: transparent;
+          @include m.font-size("smallest");
+          font-weight: normal;
+        }
+
+        .ilios-calendar-event-time {
+          color: c.$black;
+          display: inline;
+        }
+
+        .ilios-calendar-event-end,
+        .ilios-calendar-event-location {
+          display: none;
+        }
+      }
+
+      .month-more-events {
+        @include m.ilios-link-button;
+        display: block;
+        width: 100%;
+        @include m.font-size("small");
+        text-align: right;
+        margin-top: 0.5rem;
+
+        .text {
+          display: none;
+
+          @include m.for-tablet-and-up {
+            display: inline;
+          }
+        }
+      }
+    }
+  }
+}

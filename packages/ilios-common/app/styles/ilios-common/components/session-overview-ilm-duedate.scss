@@ -1,0 +1,16 @@
+@use "../mixins" as m;
+
+.session-overview-ilm-duedate {
+  .editor {
+    flex-direction: column;
+  }
+
+  @include m.for-tablet-and-up {
+    .editor {
+      flex-direction: row;
+    }
+    .time-picker {
+      margin-left: 0.5rem;
+    }
+  }
+}

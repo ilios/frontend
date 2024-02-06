@@ -1,0 +1,19 @@
+<div class="backtolink backtosessionlink" {{scroll-into-view}}>
+  <LinkTo @route="course" @model={{@model.course}} data-test-back-to-sessions>
+    {{t "general.backToSessionList"}}
+  </LinkTo>
+</div>
+<SessionDetails
+  @session={{@model}}
+  @editable={{this.canUpdate}}
+  @sessionObjectiveDetails={{this.sessionObjectiveDetails}}
+  @sessionTaxonomyDetails={{this.sessionTaxonomyDetails}}
+  @setSessionObjectiveDetails={{set this.sessionObjectiveDetails}}
+  @setSessionTaxonomyDetails={{set this.sessionTaxonomyDetails}}
+  @showNewOfferingForm={{this.addOffering}}
+  @toggleShowNewOfferingForm={{fn (set this.addOffering) (not this.addOffering)}}
+  @sessionLeadershipDetails={{this.sessionLeadershipDetails}}
+  @setSessionLeadershipDetails={{set this.sessionLeadershipDetails}}
+  @sessionManageLeadership={{this.sessionManageLeadership}}
+  @setSessionManageLeadership={{set this.sessionManageLeadership}}
+/>

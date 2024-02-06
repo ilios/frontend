@@ -1,0 +1,34 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.detail-learnergroups-list {
+  .trees {
+    display: grid;
+  }
+
+  fieldset {
+    @include m.ilios-fieldset;
+
+    ul {
+      @include m.ilios-removable-list;
+
+      .top-level-group {
+        background-color: c.$gold;
+        color: c.$black;
+      }
+    }
+
+    .remove-all-subgroups {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        @include m.ilios-button-reset;
+      }
+    }
+
+    .remove-learnergroup {
+      @include m.ilios-button-reset;
+    }
+  }
+}

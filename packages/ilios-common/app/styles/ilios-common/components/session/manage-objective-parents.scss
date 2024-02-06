@@ -1,0 +1,22 @@
+@use "../../colors" as c;
+@use "../../mixins" as m;
+
+.session-manage-objective-parents {
+  margin: 1em 2em;
+  grid-column: 1 / -1;
+
+  .parent-picker {
+    @include m.ilios-list-reset;
+    height: auto;
+    padding-left: 0.5rem;
+
+    .selected {
+      font-weight: bold;
+    }
+  }
+
+  .no-groups {
+    color: c.$gold;
+    font-weight: bold;
+  }
+}

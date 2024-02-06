@@ -1,0 +1,28 @@
+@use "../colors" as c;
+@use "ilios-select";
+
+$form-input-text-types: 'input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"]';
+
+@mixin ilios-input {
+  @include ilios-select.ilios-select;
+  background: c.$white;
+  border: 1px solid c.$culturedGrey;
+  border-radius: 3px;
+  color: c.$raisinBlack;
+  cursor: pointer;
+  font-style: italic;
+  min-width: 220px;
+  overflow: show;
+  z-index: 5;
+
+  #{$form-input-text-types} {
+    background-position: right 4px bottom 0.75em;
+    height: 2.5em;
+  }
+
+  &[type="checkbox"],
+  &[type="radio"] {
+    display: inline;
+    width: 2.5em;
+  }
+}

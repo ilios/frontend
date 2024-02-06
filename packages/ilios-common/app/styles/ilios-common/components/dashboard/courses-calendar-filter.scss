@@ -1,0 +1,17 @@
+@use "../../mixins" as m;
+
+.dashboard-courses-calendar-filter {
+  .year {
+    button {
+      @include m.ilios-button-reset;
+    }
+
+    ul {
+      @include m.ilios-list-reset;
+
+      li {
+        margin-left: 0.25em;
+      }
+    }
+  }
+}

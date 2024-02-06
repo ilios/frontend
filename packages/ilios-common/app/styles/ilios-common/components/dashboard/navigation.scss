@@ -1,0 +1,44 @@
+@use "../../colors" as c;
+@use "../../constants";
+@use "../../mixins" as m;
+
+.dashboard-navigation {
+  border-bottom: 1px solid c.$culturedGrey;
+  margin: 0.5rem 0 0 0.5rem;
+
+  ul {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0 0 calc(constants.$golden-ratio-small * 0.5rem) 0;
+    padding: 0;
+
+    li {
+      margin: 0;
+    }
+
+    @include m.for-tablet-and-up {
+      justify-content: flex-start;
+
+      li {
+        margin-right: 3em;
+      }
+    }
+  }
+
+  a {
+    @include m.ilios-button;
+    padding: 0.25rem 0.5rem;
+
+    &:active,
+    &:hover,
+    &:link,
+    &:visited {
+      text-decoration: none;
+    }
+
+    &.active {
+      background-color: c.$fernGreen;
+    }
+  }
+}

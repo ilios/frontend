@@ -1,0 +1,47 @@
+@use "../../colors" as c;
+@use "../../mixins" as m;
+
+.course-manage-objective-parents {
+  margin: 1em 2em;
+  grid-column: 1 / -1;
+
+  .parent-picker {
+    @include m.ilios-list-reset;
+    height: auto;
+
+    .competency {
+      border-left: 10px solid transparent;
+
+      .competency-title {
+        margin: 0.5rem 0 0 0.5rem;
+        padding: 0;
+      }
+      &.selected {
+        border-left: 10px solid c.$orange;
+
+        .competency-title {
+          color: c.$fernGreen;
+          font-weight: bold;
+        }
+      }
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+
+      ul {
+        padding-left: 0.5rem;
+
+        .selected {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .no-cohorts {
+    color: c.$gold;
+    font-weight: bold;
+  }
+}

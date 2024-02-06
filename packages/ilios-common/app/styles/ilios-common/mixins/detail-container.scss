@@ -1,0 +1,63 @@
+@use "../colors" as c;
+@use "ilios-heading";
+@use "ilios-table";
+@use "media";
+
+@mixin detail-container($bottom-border-color) {
+  border-bottom: 1px dotted $bottom-border-color;
+  margin: 0;
+  min-height: 2rem;
+  padding: 1rem 0;
+}
+
+@mixin detail-container-title-style() {
+  @include ilios-heading.ilios-heading-h5;
+}
+
+@mixin detail-container-header() {
+  display: flex;
+  justify-content: space-between;
+
+  @include media.for-phone-only {
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}
+
+@mixin detail-container-title() {
+  @include detail-container-title-style;
+}
+
+@mixin detail-container-actions() {
+  display: flex;
+  justify-content: flex-end;
+
+  & > * {
+    margin-right: 0.5rem;
+
+    @include media.for-phone-only {
+      margin-top: 0.25em;
+    }
+  }
+
+  .bigadd {
+    background-color: c.$fernGreen;
+    color: c.$white;
+  }
+
+  .bigcancel {
+    background-color: c.$crimson;
+    color: c.$white;
+  }
+}
+
+@mixin detail-container-content() {
+  clear: both;
+  padding: 0.5rem 0;
+
+  table {
+    @include ilios-table.ilios-table-structure;
+    @include ilios-table.ilios-removable-table;
+  }
+}

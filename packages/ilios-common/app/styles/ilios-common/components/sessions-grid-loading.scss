@@ -1,0 +1,16 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.sessions-grid-loading {
+  div {
+    @include m.sessions-grid;
+
+    &:nth-child(even) {
+      background-color: c.$culturedGrey;
+    }
+  }
+  span {
+    color: transparent;
+    text-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
+  }
+}
