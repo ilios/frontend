@@ -12,7 +12,6 @@
     "build": "ember build --environment=production",
     "start": "ember serve",
     "test:ember": "ember test",
-    "test:percy": "percy exec -- pnpm run test:ember",
     "tryone": "ember try:one"
   },
   "devDependencies": {

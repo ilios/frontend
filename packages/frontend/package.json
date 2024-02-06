@@ -11,7 +11,6 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
-    "percy:test": "percy exec -- pnpm run test:ember",
     "deploy:production": "ember deploy production --activate",
     "deploy:staging": "ember deploy staging --activate",
     "deploy:test": "ember deploy development",
