@@ -57,6 +57,10 @@
         }
       }
     }
+
+    .learner-group-overview-content {
+      border-bottom: 1px dotted c.$orange;
+    }
   }
 
   .cohortmembers {
@@ -69,6 +73,8 @@
   }
 
   .subgroups {
+    @include cm.detail-container-content;
+
     .header {
       @include cm.detail-container-header;
 
