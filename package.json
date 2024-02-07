@@ -11,8 +11,8 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "preinstall": "npx only-allow pnpm",
-    "start": "pnpm --filter frontend start",
-    "start:test-app": "pnpm --filter test-app start",
+    "start": "pnpm --filter frontend exec ember serve",
+    "start:test-app": "pnpm --filter test-app exec ember serve",
     "test:frontend": "pnpm run --filter frontend test",
     "test:test-app": "pnpm run --filter test-app test"
   },
