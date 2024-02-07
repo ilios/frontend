@@ -49,6 +49,7 @@ module.exports = function (defaults) {
     },
     autoImport: {
       insertScriptsAt: 'auto-import-scripts',
+      watchDependencies: ['ilios-common'],
     },
     'ember-fetch': {
       preferNative: true,
