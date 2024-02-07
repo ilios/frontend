@@ -39,7 +39,7 @@ export default class CoursePublicationMenuComponent extends Component {
     );
   }
   get showReview() {
-    if (this.router.currentRouteName === 'course.publication_check') {
+    if (this.router.currentRouteName === 'course.publication-check') {
       return false;
     }
     return this.args.course.allPublicationIssuesLength > 0;
@@ -115,7 +115,7 @@ export default class CoursePublicationMenuComponent extends Component {
   @action
   scrollToCoursePublication() {
     this.isOpen = false;
-    this.router.transitionTo('course.publication_check', this.args.course);
+    this.router.transitionTo('course.publication-check', this.args.course);
   }
   @action
   async publish() {

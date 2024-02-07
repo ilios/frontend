@@ -43,7 +43,7 @@ module('Acceptance | Course - Publication Check', function (hooks) {
     assert.expect(7);
     await page.visit({ courseId: this.fullCourse.id });
     assert.strictEqual(page.publicationcheck.backToCourse.url, '/courses/1');
-    assert.strictEqual(currentRouteName(), 'course.publication_check');
+    assert.strictEqual(currentRouteName(), 'course.publication-check');
     assert.strictEqual(page.publicationcheck.courseTitle, 'course 0');
     assert.strictEqual(page.publicationcheck.cohorts, 'Yes (1)');
     assert.strictEqual(page.publicationcheck.terms, 'Yes (1)');
@@ -53,7 +53,7 @@ module('Acceptance | Course - Publication Check', function (hooks) {
 
   test('empty course count', async function (assert) {
     await page.visit({ courseId: this.emptyCourse.id });
-    assert.strictEqual(currentRouteName(), 'course.publication_check');
+    assert.strictEqual(currentRouteName(), 'course.publication-check');
     assert.strictEqual(page.publicationcheck.courseTitle, 'course 1');
     assert.strictEqual(page.publicationcheck.cohorts, 'No');
     assert.strictEqual(page.publicationcheck.terms, 'No');

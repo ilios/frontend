@@ -33,7 +33,7 @@ module('Acceptance | Session - Publication Check', function (hooks) {
     this.server.create('offering', { session });
     await page.visit({ courseId: this.course.id, sessionId: session.id });
     await percySnapshot(assert);
-    assert.strictEqual(currentRouteName(), 'session.publication_check');
+    assert.strictEqual(currentRouteName(), 'session.publication-check');
     assert.strictEqual(page.sessionTitle, 'session 0');
     assert.strictEqual(page.offerings, 'Yes (1)');
     assert.strictEqual(page.terms, 'Yes (1)');

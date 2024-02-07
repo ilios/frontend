@@ -24,7 +24,7 @@ export function courseRoutes(router) {
       resetNamespace: true,
     },
     function () {
-      this.route('publication_check', { path: '/publicationcheck' });
+      this.route('publication-check', { path: '/publicationcheck' });
       this.route('publishall');
       this.route('rollover');
       this.route(
@@ -34,14 +34,14 @@ export function courseRoutes(router) {
           resetNamespace: true,
         },
         function () {
-          this.route('publication_check', { path: '/publicationcheck' });
+          this.route('publication-check', { path: '/publicationcheck' });
           this.route('copy');
         },
       );
     },
   );
   router.route('course-materials', { path: 'courses/:course_id/materials' });
-  router.route('print_course', { path: 'course/:course_id/print' });
+  router.route('print-course', { path: 'course/:course_id/print' });
   router.route('course-visualizations', {
     path: 'data/courses/:course_id',
   });

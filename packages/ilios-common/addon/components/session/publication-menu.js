@@ -43,7 +43,7 @@ export default class SessionPublicationMenuComponent extends Component {
     );
   }
   get showReview() {
-    if (this.router.currentRouteName === 'session.publication_check') {
+    if (this.router.currentRouteName === 'session.publication-check') {
       return false;
     }
     return !this.hideCheckLink && this.args.session.allPublicationIssuesLength > 0;
@@ -119,7 +119,7 @@ export default class SessionPublicationMenuComponent extends Component {
   @action
   scrollToSessionPublication() {
     this.isOpen = false;
-    this.router.transitionTo('session.publication_check', this.args.session);
+    this.router.transitionTo('session.publication-check', this.args.session);
   }
   @action
   async publish() {
