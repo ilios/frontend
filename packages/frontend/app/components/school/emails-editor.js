@@ -3,11 +3,14 @@ import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { validatable, Custom, IsEmail, Length } from 'ilios-common/decorators/validation';
 import { action } from '@ember/object';
+import { service } from '@ember/service';
 import { isBlank, typeOf } from '@ember/utils';
 import EmailValidator from 'validator/es/lib/isEmail';
 
 @validatable
 export default class SchoolEmailsEditorComponent extends Component {
+  @service intl;
+
   @tracked @Length(0, 100) @IsEmail() administratorEmail;
   @tracked
   @Length(0, 300)
@@ -44,7 +47,7 @@ export default class SchoolEmailsEditorComponent extends Component {
 
   @action
   validateChangeAlertRecipientsMessageCallBack() {
-    return 'The change alerts recipients list contains invalid email addresses.';
+    return this.intl.t('errors.invalidChangeAlertRecipients');
   }
 
   @dropTask
