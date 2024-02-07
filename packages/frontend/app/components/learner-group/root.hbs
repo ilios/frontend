@@ -236,13 +236,15 @@
             {{/if}}
           </div>
           <div class="list">
-            <LearnerGroup::List
-              @learnerGroups={{this.learnerGroups}}
-              @canCopyWithLearners={{false}}
-              @copyGroup={{perform this.copyGroup}}
-              @sortBy={{this.sortGroupsBy}}
-              @setSortBy={{set this.sortGroupsBy}}
-            />
+           {{#if @learnerGroup.childrenCount}}
+              <LearnerGroup::List
+                @learnerGroups={{this.learnerGroups}}
+                @canCopyWithLearners={{false}}
+                @copyGroup={{perform this.copyGroup}}
+                @sortBy={{this.sortGroupsBy}}
+                @setSortBy={{set this.sortGroupsBy}}
+              />
+            {{/if}}
           </div>
         </section>
         <section class="cohortmembers">
