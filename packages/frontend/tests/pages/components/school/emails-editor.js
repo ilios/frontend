@@ -1,4 +1,12 @@
-import { clickable, create, fillable, isPresent, text, value } from 'ember-cli-page-object';
+import {
+  clickable,
+  create,
+  fillable,
+  isPresent,
+  text,
+  triggerable,
+  value,
+} from 'ember-cli-page-object';
 
 const definition = create({
   scope: '[data-test-school-emails-editor]',
@@ -12,6 +20,7 @@ const definition = create({
     value: value('input'),
     hasError: isPresent('.validation-error-message'),
     errorMessage: text('.validation-error-message'),
+    save: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
   },
   changeAlertRecipients: {
     scope: '[data-test-change-alert-recipients]',
@@ -20,6 +29,7 @@ const definition = create({
     value: value('input'),
     hasError: isPresent('.validation-error-message'),
     errorMessage: text('.validation-error-message'),
+    save: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
   },
 });
 

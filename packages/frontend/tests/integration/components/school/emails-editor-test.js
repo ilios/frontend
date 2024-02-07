@@ -109,4 +109,38 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     );
     await component.cancel();
   });
+
+  test('save on enter in administrator email input', async function (assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
+    this.set('school', schoolModel);
+    this.set('save', (administratorEmail, changeAlertRecipients) => {
+      assert.strictEqual(administratorEmail, 'admin@school.edu');
+      assert.strictEqual(changeAlertRecipients, 'email1@school.edu, email2@school.edu');
+    });
+    await render(
+      hbs`<School::EmailsEditor @school={{this.school}} @save={{this.save}} @cancel={{(noop)}} />`,
+    );
+    await component.administratorEmail.set('admin@school.edu');
+    await component.changeAlertRecipients.set('email1@school.edu, email2@school.edu');
+    await component.administratorEmail.save();
+  });
+
+  test('save on enter in change-alerts recipients input', async function (assert) {
+    assert.expect(2);
+    const school = this.server.create('school');
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
+    this.set('school', schoolModel);
+    this.set('save', (administratorEmail, changeAlertRecipients) => {
+      assert.strictEqual(administratorEmail, 'admin@school.edu');
+      assert.strictEqual(changeAlertRecipients, 'email1@school.edu, email2@school.edu');
+    });
+    await render(
+      hbs`<School::EmailsEditor @school={{this.school}} @save={{this.save}} @cancel={{(noop)}} />`,
+    );
+    await component.administratorEmail.set('admin@school.edu');
+    await component.changeAlertRecipients.set('email1@school.edu, email2@school.edu');
+    await component.changeAlertRecipients.save();
+  });
 });
