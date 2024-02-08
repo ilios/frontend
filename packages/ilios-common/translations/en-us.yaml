@@ -169,6 +169,7 @@ general:
   learnerGroupsManageTitle: Manage Learner Groups
   learners: Learners
   learnersAndLearnerGroups: Learners and Learner Groups
+  learnersAndLearnerGroupsWithCount: "Learners ({learnerCount}) and Learner Groups ({learnerGroupCount})"
   learningMaterialManageTitle: Manage Learning Material
   learningMaterials: Learning Materials
   learningMaterialsSummary: Learning Materials Summary

@@ -169,6 +169,7 @@ general:
   learnerGroupsManageTitle: "Manager groupes d'apprenants"
   learners: Étudiants
   learnersAndLearnerGroups: "Étudiants et Groupes d'Étudiants"
+  learnersAndLearnerGroupsWithCount: "Étudiants ({learnerCount}) et Groupes d'Étudiants ({learnerGroupCount})"
   learningMaterialManageTitle: "Manager Matériels d'Étude"
   learningMaterials: "Matériels d'Étude"
   learningMaterialsSummary: "Résumé Matériels d'Étude"
