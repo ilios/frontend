@@ -29,7 +29,7 @@
     "ember-async-data": "^1.0.1",
     "ember-auto-import": "^2.7.0",
     "ember-cli-babel": "^8.2.0",
-    "ember-cli-flash": "^4.0.0",
+    "ember-cli-flash": "^5.0.1",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-cli-page-object": "^2.1.1",
     "ember-cli-string-helpers": "^6.0.1",
