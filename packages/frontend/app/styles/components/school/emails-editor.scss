@@ -1,0 +1,40 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
+.school-emails-editor {
+  @include m.detail-container(c.$orange);
+
+  .header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .content {
+    @include m.detail-container-content;
+
+    .form {
+      @include m.ilios-form;
+      grid-template-columns: 1fr;
+      margin-top: 1em;
+
+      @include m.for-laptop-and-up {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .validation-error-message {
+      color: c.$crimson;
+      display: block;
+      @include m.font-size("small");
+      font-style: italic;
+      margin-top: 0.25rem;
+    }
+  }
+}

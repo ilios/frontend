@@ -17,6 +17,7 @@ export default class SchoolController extends Controller {
     'schoolNewSessionType',
     'schoolManageInstitution',
     'schoolNewVocabulary',
+    'schoolManageEmails',
   ];
 
   @tracked schoolCompetencyDetails = false;
@@ -33,4 +34,5 @@ export default class SchoolController extends Controller {
   @tracked schoolManagedSessionType = null;
   @tracked schoolManageInstitution = false;
   @tracked schoolNewVocabulary = false;
+  @tracked schoolManageEmails = false;
 }

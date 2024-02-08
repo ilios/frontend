@@ -10,6 +10,8 @@ import schoolSessionAttributes from './school-session-attributes';
 import schoolCurriculumInventoryInstitutionManager from './school-curriculum-inventory-institution-manager';
 import schoolCurriculumInventoryInstitutionDetails from './school-curriculum-inventory-institution-details';
 import schoolLeadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
+import emails from './school/emails';
+import emailsEditor from './school/emails-editor';
 
 const definition = {
   scope: '[data-test-school-manager]',
@@ -33,6 +35,8 @@ const definition = {
   schoolSessionAttributes,
   schoolCurriculumInventoryInstitutionManager,
   schoolCurriculumInventoryInstitutionDetails,
+  emails,
+  emailsEditor,
 };
 
 export default definition;

@@ -14,6 +14,8 @@ general:
   admin: Admin
   administrator: Administrator
   administratorEmail: "Administrator Email"
+  administratorEmailPlaceholder: "email@example.edu"
+  administratorEmails: "Administrator Emails"
   all: All
   allAcademicYears: "All Academic Years"
   allOtherMembers: "All other members of {topLevelGroupTitle}"
@@ -49,6 +51,8 @@ general:
   campusId: "Campus ID"
   canNotContinueWithInvalidRecords: "Cannot continue with these invalid records, please fix and re-upload the file."
   canNotDeleteLearnerGroupWithAssociatedCourses: "This group is attached to {courseCount, plural, one {one course} other {# courses}} and cannot be deleted."
+  changeAlertRecipients: "Change-alert Recipients"
+  changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
   childSequenceOrder: "Child Sequence Order"
   city: City
   clearDates: "Clear Dates"
@@ -116,6 +120,7 @@ general:
   durationInYears: "Duration (in Years)"
   educationalYear: "Educational Year"
   email: Email
+  emails: Emails
   enabled: Enabled
   endLevel: "End Level"
   errorDisplayMessage: "Sorry! Something went wrong with your request. Please try refreshing or check back later."
@@ -195,6 +200,7 @@ general:
   manageAPITokens: "Manage API Tokens"
   manageCompetencies: "Manage Competencies"
   manageDefaultInstructors: "Manage Default Instructors"
+  manageEmails: "Manage Emails"
   manageGroupMembership: "Manage Group Membership"
   manageInstitutionalInfo: "Manage CIR Institutional Info"
   manageSessionAttributes: "Manage Session Attributes"
@@ -461,6 +467,7 @@ general:
   zipCode: "ZIP Code"
 errors:
   duplicateUsername: "This username is already taken by another user account."
+  invalidChangeAlertRecipients: "This list of change-alerts recipients contains invalid email addresses."
   reportMissingInstructor: "Instructor is Required"
   reportMissingMeshTerm: "MeSH Term is Required"
   reportMissingObjectForInstructor: "Association is required when Instructor is the subject"

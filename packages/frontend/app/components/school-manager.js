@@ -68,4 +68,11 @@ export default class SchoolManagerComponent extends Component {
     }
     await institution.save();
   }
+
+  @action
+  async saveEmails(administratorEmail, changeAlertRecipients) {
+    this.args.school.changeAlertRecipients = changeAlertRecipients;
+    this.args.school.iliosAdministratorEmail = administratorEmail;
+    await this.args.school.save();
+  }
 }
