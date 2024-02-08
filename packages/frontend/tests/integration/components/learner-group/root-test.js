@@ -563,4 +563,28 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.ok(component.bulkAssignment.isVisible);
     assert.strictEqual(component.actions.title, 'Upload Group Assignments');
   });
+
+  test('sub-groups list not visible if learner group has no sub-groups', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', {
+      cohort: this.cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnerGroup::Root
+      @canUpdate={{true}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
+      @sortUsersBy="fullName"
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    assert.notOk(component.subgroups.list.isVisible);
+  });
 });
