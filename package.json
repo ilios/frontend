@@ -35,7 +35,7 @@
     "stylelint-scss": "^5.0.0"
   },
   "engines": {
-    "node": ">= 18",
+    "node": ">= 20",
     "yarn": "use pnpm",
     "npm": "use pnpm"
   }
