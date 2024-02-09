@@ -5,6 +5,7 @@ import jwtDecode from '../utils/jwt-decode';
 export default class LoginRoute extends Route {
   @service serverVariables;
   @service session;
+  @service router;
 
   async model({ token }) {
     const tokenData = jwtDecode(token);
@@ -17,13 +18,13 @@ export default class LoginRoute extends Route {
       console.log('Unable to authenticate user');
       console.log(tokenData);
 
-      this.transitionTo('login-error');
+      this.router.transitionTo('login-error');
       return;
     }
     this.serverVariables.setApiVariables(apiHost, apiNameSpace);
     const jwt = await this.getNewToken(token, apiHost);
     await this.session.authenticate('authenticator:ilios-jwt', { jwt });
-    this.transitionTo('index');
+    this.router.transitionTo('index');
   }
 
   async getNewToken(ltiToken, apiHost) {
