@@ -26,6 +26,9 @@ devDependencies:
   '@ember/test-helpers':
     specifier: ^3.2.0
     version: 3.2.1(ember-source@5.3.0)(webpack@5.90.1)
+  '@embroider/macros':
+    specifier: ^1.13.5
+    version: 1.13.5
   '@glimmer/component':
     specifier: ^1.1.2
     version: 1.1.2(@babel/core@7.23.9)
