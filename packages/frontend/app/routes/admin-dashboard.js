@@ -6,6 +6,7 @@ export default class AdminDashboardRoute extends Route {
   @service store;
   @service permissionChecker;
   @service currentUser;
+  @service router;
   @service session;
 
   beforeModel(transition) {
@@ -13,7 +14,7 @@ export default class AdminDashboardRoute extends Route {
     const currentUser = this.currentUser;
     const performsNonLearnerFunction = currentUser.get('performsNonLearnerFunction');
     if (!performsNonLearnerFunction) {
-      this.transitionTo('dashboard');
+      this.router.transitionTo('dashboard');
     }
   }
 
