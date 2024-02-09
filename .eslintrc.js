@@ -25,6 +25,7 @@ module.exports = {
     'ember/no-get': 0,
     'ember/no-mixins': 0,
     'ember/no-new-mixins': 0,
+    'ember/no-runloop': 0,
     'ember/require-tagless-components': 0,
     'no-console': 1,
   },
