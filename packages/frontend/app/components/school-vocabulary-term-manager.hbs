@@ -2,6 +2,8 @@
   <div
     class="school-vocabulary-term-manager"
     data-test-school-vocabulary-term-manager
+    {{did-insert this.load @term}}
+    {{did-update this.load @term}}
     attributes...
   >
     {{#if this.isLoading}}

@@ -1,5 +1,11 @@
 {{#let (unique-id) as |id|}}
-  <div class="program-header" ...attributes data-test-program-header>
+  <div
+    class="program-header"
+    {{did-insert this.load @program}}
+    {{did-update this.load @program}}
+    data-test-program-header
+    ...attributes
+  >
     <h2 class="title" data-test-title>
       {{#if @canUpdate}}
         <EditableField
