@@ -1,5 +1,5 @@
 import EmberRouter from '@ember/routing/router';
-import config from 'lti-app/config/environment';
+import config from 'lti-dashboard/config/environment';
 
 export default class Router extends EmberRouter {
   location = config.locationType;
