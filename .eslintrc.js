@@ -17,14 +17,16 @@ module.exports = {
     browser: true,
   },
   rules: {
-    'ember/no-classic-classes': 0,
-    'ember/require-tagless-components': 0,
     'ember/classic-decorator-no-classic-methods': 0,
-    'ember/no-mixins': 0,
     'ember/no-actions-hash': 0,
+    'ember/no-classic-classes': 0,
     'ember/no-classic-components': 0,
     'ember/no-component-lifecycle-hooks': 0,
+    'ember/no-get': 0,
+    'ember/no-mixins': 0,
     'ember/no-new-mixins': 0,
+    'ember/require-tagless-components': 0,
+    'no-console': 1,
   },
   overrides: [
     // node files
@@ -34,12 +36,12 @@ module.exports = {
         './.prettierrc.js',
         './.stylelintrc.js',
         './.template-lintrc.js',
-        './ember-cli-build.js',
-        './testem.js',
-        './blueprints/*/index.js',
-        './config/**/*.js',
-        './lib/*/index.js',
-        './server/**/*.js',
+        './packages/*/blueprints/*/index.js',
+        './packages/*/config/**/*.js',
+        './packages/*/ember-cli-build.js',
+        './packages/*/index.js',
+        './packages/*/testem.js',
+        './packages/lti-dashboard/lib/*/index.js',
       ],
       parserOptions: {
         sourceType: 'script',
@@ -52,8 +54,12 @@ module.exports = {
     },
     {
       // test files
-      files: ['tests/**/*-test.{js,ts}'],
+      files: ['packages/**/tests/**/*-test.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
+      rules: {
+        'qunit/require-expect': [2, 'except-simple'],
+        'ember/no-classic-classes': 0,
+      },
     },
   ],
 };

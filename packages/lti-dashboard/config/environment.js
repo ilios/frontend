@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   const ENV = {
-    modulePrefix: 'lti-app',
+    modulePrefix: 'lti-dashboard',
     environment,
     rootURL: '/',
     locationType: 'history',

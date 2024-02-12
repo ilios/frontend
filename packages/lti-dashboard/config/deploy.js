@@ -21,13 +21,13 @@ module.exports = function (deployTarget) {
 
   if (deployTarget === 'staging') {
     ENV.build.environment = 'production';
-    ENV.s3.bucket = 'ilios-lti-app-staging';
+    ENV.s3.bucket = 'ilios-lti-dashboard-staging';
     ENV.cloudfront.distribution = 'E8JZZJVG36758';
   }
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
-    ENV.s3.bucket = 'ilios-lti-app-production';
+    ENV.s3.bucket = 'ilios-lti-dashboard-production';
     ENV.cloudfront.distribution = 'E33FMSW7332DVL';
   }
 
