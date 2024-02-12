@@ -42,7 +42,7 @@
     "broccoli-file-creator": "^2.1.1",
     "broccoli-merge-trees": "^4.2.0",
     "browserslist": "^4.22.3",
-    "caniuse-db": "^1.0.30001584",
+    "caniuse-db": "^1.0.30001587",
     "concurrently": "^8.2.1",
     "ember-ajax": "^5.1.2",
     "ember-auto-import": "^2.6.3",

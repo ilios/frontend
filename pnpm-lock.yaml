@@ -51,8 +51,8 @@ devDependencies:
     specifier: ^4.22.3
     version: 4.22.3
   caniuse-db:
-    specifier: ^1.0.30001584
-    version: 1.0.30001584
+    specifier: ^1.0.30001587
+    version: 1.0.30001587
   concurrently:
     specifier: ^8.2.1
     version: 8.2.2
@@ -4665,8 +4665,8 @@ packages:
       tmp: 0.0.28
     dev: true
 
-  /caniuse-db@1.0.30001584:
-    resolution: {integrity: sha512-GOzyHHmYGFDNNvvTVsyWmlNBmqgLo1eZBaoMmFQ/N02TD+POcwV7n1DvgK/xdTmwGf0bdEYjH6/VZ4eYEimw1Q==}
+  /caniuse-db@1.0.30001587:
+    resolution: {integrity: sha512-NIFEWUR4TZVBj+BUeWXfl84dtylzKFe2xQ1GWTV98orUAbCUjju5fgJhbgDB4F0e3ySYjh8ohGpDoLJkbdFD3w==}
     dev: true
 
   /caniuse-lite@1.0.30001583:
