@@ -16,7 +16,10 @@ module.exports = {
 
   options: {
     babel: {
-      plugins: [require.resolve('ember-auto-import/babel-plugin')],
+      plugins: [
+        require.resolve('ember-auto-import/babel-plugin'),
+        require.resolve('ember-concurrency/async-arrow-task-transform'),
+      ],
     },
     autoImport: {
       webpack: {

@@ -10,28 +10,14 @@ module('Integration | Component | link-to-with-action', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
-    assert.expect(7);
-    class RouterMock extends Service {
-      urlFor(route, obj) {
-        assert.strictEqual(route, 'somewhere');
-        assert.ok('queryParams' in obj);
-        assert.deepEqual(obj.queryParams, {});
-        return '/here/somewhere';
-      }
-      isActive(route) {
-        assert.strictEqual(route, 'somewhere');
-        return false;
-      }
-    }
-    this.owner.register('service:router', RouterMock);
     this.set('content', 'Link Text');
     await render(hbs`
-      <LinkToWithAction @route="somewhere">
+      <LinkToWithAction @route="dashboard">
         {{this.content}}
       </LinkToWithAction>`);
 
     assert.strictEqual(this.element.textContent.trim(), 'Link Text');
-    assert.strictEqual(this.element.querySelector('a').getAttribute('href'), '/here/somewhere');
+    assert.strictEqual(this.element.querySelector('a').getAttribute('href'), '/dashboard');
     assert.notOk(this.element.querySelector('a').classList.contains('active'));
   });
 
