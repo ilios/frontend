@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
@@ -21,8 +21,7 @@ module('Integration | Component | link-to-with-action', function (hooks) {
     assert.notOk(this.element.querySelector('a').classList.contains('active'));
   });
 
-  // @todo Mocking the router service this way doesn't work anymore. Find a new way [ST 2024/02/09]
-  skip('it renders active link', async function (assert) {
+  test('it renders active link', async function (assert) {
     class RouterMock extends Service {
       urlFor() {
         return '/here';
