@@ -1,4 +1,5 @@
 packages:
   - "packages/frontend"
   - "packages/ilios-common"
+  - "packages/lti-dashboard"
   - "packages/test-app"
