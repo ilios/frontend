@@ -8,8 +8,14 @@ import { guidFor } from '@ember/object/internals';
 @validatable
 export default class ProgramOverviewComponent extends Component {
   id = guidFor(this);
-  @tracked duration = this.args.program.duration;
-  @Length(2, 10) @tracked shortTitle = this.args.program.shortTitle;
+  @tracked duration;
+  @Length(2, 10) @tracked shortTitle;
+
+  @action
+  load() {
+    this.duration = this.args.program.duration;
+    this.shortTitle = this.args.program.shortTitle;
+  }
 
   @dropTask
   *changeShortTitle() {

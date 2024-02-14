@@ -12,7 +12,7 @@ import { findById } from 'ilios-common/utils/array-helpers';
 export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;
 
-  @Length(3, 65000) @HtmlNotBlank() @tracked title = this.args.programYearObjective.title;
+  @Length(3, 65000) @HtmlNotBlank() @tracked title;
   @tracked isManagingCompetency;
   @tracked competencyBuffer;
   @tracked isManagingDescriptors;
@@ -21,6 +21,11 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
+
+  @action
+  load() {
+    this.title = this.args.programYearObjective.title;
+  }
 
   @cached
   get upstreamRelationshipsData() {

@@ -1,4 +1,10 @@
-<div class="program-overview" ...attributes data-test-program-overview>
+<div
+  class="program-overview"
+  {{did-insert this.load @program}}
+  {{did-update this.load @program}}
+  data-test-program-overview
+  ...attributes
+>
   <h2>
     {{t "general.overview"}}
   </h2>

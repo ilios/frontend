@@ -4,13 +4,14 @@ import { service } from '@ember/service';
 export default class SearchRoute extends Route {
   @service currentUser;
   @service iliosConfig;
+  @service router;
   @service session;
 
   async beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
     const searchEnabled = await this.iliosConfig.getSearchEnabled();
     if (!searchEnabled || !this.currentUser.performsNonLearnerFunction) {
-      this.transitionTo('dashboard');
+      this.router.transitionTo('dashboard');
     }
   }
 }

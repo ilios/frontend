@@ -19,11 +19,18 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   @NotBlank()
   @Length(1, 200)
   @Custom('validateTitleCallback', 'validateTitleMessageCallback')
-  title = this.args.term.title;
+  title;
 
-  @tracked isActive = this.args.term.active;
-  @tracked description = this.args.term.description;
+  @tracked isActive;
+  @tracked description;
   @tracked newTerm;
+
+  @action
+  load() {
+    this.isActive = this.args.term.active;
+    this.description = this.args.term.description;
+    this.title = this.args.term.title;
+  }
 
   @cached
   get childrenData() {
