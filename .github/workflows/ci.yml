@@ -47,6 +47,7 @@ jobs:
         workspace:
           - frontend
           - test-app
+          - lti-course-manager
           - lti-dashboard
     steps:
       - uses: actions/checkout@v4
@@ -138,6 +139,7 @@ jobs:
         workspace:
           - frontend
           - test-app
+          - lti-course-manager
           - lti-dashboard
         firefox-version: [latest-esr]
     steps:
@@ -197,6 +199,3 @@ jobs:
         run: pnpm install
       - name: Run Tests
         run: pnpm run --filter frontend build
-
-
-

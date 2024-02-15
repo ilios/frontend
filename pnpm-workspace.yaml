@@ -1,5 +1,7 @@
 packages:
   - "packages/frontend"
   - "packages/ilios-common"
+  - "packages/lti-course-manager"
   - "packages/lti-dashboard"
   - "packages/test-app"
+
