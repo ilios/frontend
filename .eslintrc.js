@@ -45,6 +45,7 @@ module.exports = {
         './packages/*/tests/dummy/config/**/*.js',
         './packages/frontend/lib/*/index.js',
         './packages/frontend/testem.browserstack.js',
+        './packages/lti-course-manager/lib/*/index.js',
         './packages/lti-dashboard/lib/*/index.js',
         './packages/test-app/testem.browserstack.js',
       ],

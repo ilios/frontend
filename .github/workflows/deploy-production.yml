@@ -3,7 +3,7 @@ name: Deploy Production Build
 on:
   push:
     tags:
-      - '*'
+    - '*'
 
 env:
   COVERAGE: false

@@ -3,7 +3,7 @@ name: Deploy Staging Build
 on:
   push:
     branches:
-      - master
+    - master
 
 env:
   COVERAGE: false

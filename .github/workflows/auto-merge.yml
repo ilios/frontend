@@ -37,15 +37,15 @@ jobs:
         - "stylelint-scss"
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1.6.0
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - uses: actions/checkout@v4
-        if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') }}
-      - name: Enable auto-merge for Dependabot PRs
-        if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') }}
-        run: gh pr merge --merge --auto ${{ github.event.number }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Dependabot metadata
+      id: metadata
+      uses: dependabot/fetch-metadata@v1.6.0
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+    - uses: actions/checkout@v4
+      if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') }}
+    - name: Enable auto-merge for Dependabot PRs
+      if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') }}
+      run: gh pr merge --merge --auto ${{ github.event.number }}
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

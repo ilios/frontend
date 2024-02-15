@@ -1,3 +1,6 @@
 {
-  "ignore_dirs": ["packages/lti-dashboard/dist"]
+  "ignore_dirs": [
+    "packages/lti-course-manager/dist",
+    "packages/lti-dashboard/dist"
+  ]
 }
