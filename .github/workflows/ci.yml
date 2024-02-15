@@ -23,18 +23,18 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - name: Install Dependencies
-        run: pnpm install
-      - name: Lint
-        run: pnpm run lint
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 8
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: pnpm
+    - name: Install Dependencies
+      run: pnpm install
+    - name: Lint
+      run: pnpm run lint
 
   test:
     name: ${{matrix.workspace}} Test (${{ matrix.node-version }})
@@ -45,23 +45,23 @@ jobs:
       matrix:
         node-version: [20]
         workspace:
-          - frontend
-          - test-app
-          - lti-course-manager
-          - lti-dashboard
+        - frontend
+        - test-app
+        - lti-course-manager
+        - lti-dashboard
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: pnpm
-      - name: Install Dependencies
-        run: pnpm install
-      - name: Run Tests
-        run: pnpm --filter ${{matrix.workspace}} exec ember test
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 8
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: pnpm
+    - name: Install Dependencies
+      run: pnpm install
+    - name: Run Tests
+      run: pnpm --filter ${{matrix.workspace}} exec ember test
 
   build:
     name: Build (${{ matrix.node-version }})
@@ -71,20 +71,20 @@ jobs:
       matrix:
         node-version: [20]
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: pnpm
-      - name: install dependencies
-        run: pnpm install
-      - name: test frontend build
-        run: pnpm run --filter frontend build
-      - name: test lti-dashboard build
-        run: pnpm run --filter lti-dashboard build
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 8
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: pnpm
+    - name: install dependencies
+      run: pnpm install
+    - name: test frontend build
+      run: pnpm run --filter frontend build
+    - name: test lti-dashboard build
+      run: pnpm run --filter lti-dashboard build
 
   # browserstack-test:
   #   name: Browserstack ${{matrix.workspace}} ${{ matrix.launcher }}
@@ -137,28 +137,28 @@ jobs:
       fail-fast: false
       matrix:
         workspace:
-          - frontend
-          - test-app
-          - lti-course-manager
-          - lti-dashboard
+        - frontend
+        - test-app
+        - lti-course-manager
+        - lti-dashboard
         firefox-version: [latest-esr]
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - run: pnpm install
-      - name: Setup firefox
-        uses: browser-actions/setup-firefox@latest
-        with:
-          firefox-version: ${{ matrix.firefox-version }}
-      - run: firefox --version
-      - name: test
-        run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=Firefox
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 8
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: pnpm
+    - run: pnpm install
+    - name: Setup firefox
+      uses: browser-actions/setup-firefox@latest
+      with:
+        firefox-version: ${{ matrix.firefox-version }}
+    - run: firefox --version
+    - name: test
+      run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=Firefox
 
   test-with-embroider:
     name: Test With Embroider
@@ -167,18 +167,18 @@ jobs:
     env:
       BUILD_WITH_EMBROIDER: true
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - name: Install Dependencies
-        run: pnpm install
-      - name: Run Tests
-        run: pnpm --filter frontend exec ember test
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 8
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: pnpm
+    - name: Install Dependencies
+      run: pnpm install
+    - name: Run Tests
+      run: pnpm --filter frontend exec ember test
 
   build-with-embroider:
     name: Build With Embroider
@@ -187,15 +187,15 @@ jobs:
     env:
       BUILD_WITH_EMBROIDER: true
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - name: Install Dependencies
-        run: pnpm install
-      - name: Run Tests
-        run: pnpm run --filter frontend build
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 8
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: pnpm
+    - name: Install Dependencies
+      run: pnpm install
+    - name: Run Tests
+      run: pnpm run --filter frontend build
