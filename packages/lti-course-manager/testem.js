@@ -1,4 +1,6 @@
 /* eslint camelcase: 0 */
+'use strict';
+
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,
@@ -17,6 +19,9 @@ module.exports = {
         '--remote-debugging-port=0',
         '--window-size=1440,900',
       ].filter(Boolean),
+    },
+    Firefox: {
+      ci: ['--headless', '--window-size=1440,900'].filter(Boolean),
     },
   },
 };
