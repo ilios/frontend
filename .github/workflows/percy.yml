@@ -2,7 +2,7 @@ name: Percy Visual Tests
 
 on:
   schedule:
-  - cron: "15 23 * * 2,4" # T,Th in the afternoon (UTC)
+    - cron: "15 23 * * 2,4" # T,Th in the afternoon (UTC)
   workflow_dispatch:
 
 concurrency:
@@ -24,22 +24,22 @@ jobs:
       fail-fast: false
       matrix:
         workspace:
-        - frontend
-        - test-app
+          - frontend
+          - test-app
     steps:
-    - uses: actions/checkout@v4
-    - uses: pnpm/action-setup@v3
-      with:
-        version: 8
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: pnpm
-    - run: pnpm install
-    - name: Run Percy Tests
-      run: pnpm --filter ${{matrix.workspace}} exec percy exec -- ember test
-    - uses: act10ns/slack@v2
-      if: failure()
-      with:
-        status: ${{ job.status }}
-        message: Percy Run Failed {{ env.GITHUB_SERVER_URL }}/{{ env.GITHUB_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - name: Run Percy Tests
+        run: pnpm --filter ${{matrix.workspace}} exec percy exec -- ember test
+      - uses: act10ns/slack@v2
+        if: failure()
+        with:
+          status: ${{ job.status }}
+          message: Percy Run Failed {{ env.GITHUB_SERVER_URL }}/{{ env.GITHUB_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}

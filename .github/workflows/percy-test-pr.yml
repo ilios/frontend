@@ -2,7 +2,7 @@ name: Percy PR Tests
 
 on:
   pull_request_target:
-    types: [labeled,opened,reopened,synchronize]
+    types: [labeled, opened, reopened, synchronize]
 
 concurrency:
   group: percy-${{ github.head_ref || github.ref }}
@@ -24,19 +24,19 @@ jobs:
       fail-fast: false
       matrix:
         workspace:
-        - frontend
-        - test-app
+          - frontend
+          - test-app
     steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: "${{ github.event.pull_request.merge_commit_sha }}"
-    - uses: pnpm/action-setup@v3
-      with:
-        version: 8
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: pnpm
-    - run: pnpm install
-    - name: Run Percy Tests
-      run: pnpm --filter ${{matrix.workspace}} exec percy exec -- ember test
+      - uses: actions/checkout@v4
+        with:
+          ref: "${{ github.event.pull_request.merge_commit_sha }}"
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - name: Run Percy Tests
+        run: pnpm --filter ${{matrix.workspace}} exec percy exec -- ember test

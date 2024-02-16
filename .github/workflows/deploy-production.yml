@@ -3,7 +3,7 @@ name: Deploy Production Build
 on:
   push:
     tags:
-    - '*'
+      - "*"
 
 env:
   COVERAGE: false
@@ -15,29 +15,29 @@ jobs:
     name: Deploy and Create Sentry Release
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: pnpm/action-setup@v3
-      with:
-        version: 8
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: pnpm
-    - run: pnpm install
-    - name: Ember CLI Deploy
-      run: pnpm run --filter frontend deploy:production
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    - name: Install Sentry CLI
-      run: pnpm install -g @sentry/cli
-    - name: Create a Sentry.io release
-      run: |
-        # Create new Sentry release
-        export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-        sentry-cli releases new $SENTRY_RELEASE
-        sentry-cli releases set-commits --auto $SENTRY_RELEASE
-        sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps packages/frontend/tmp/deploy-dist/
-        sentry-cli releases finalize $SENTRY_RELEASE
-      env:
-        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - name: Ember CLI Deploy
+        run: pnpm run --filter frontend deploy:production
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Install Sentry CLI
+        run: pnpm install -g @sentry/cli
+      - name: Create a Sentry.io release
+        run: |
+          # Create new Sentry release
+          export SENTRY_RELEASE=$(sentry-cli releases propose-version)
+          sentry-cli releases new $SENTRY_RELEASE
+          sentry-cli releases set-commits --auto $SENTRY_RELEASE
+          sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps packages/frontend/tmp/deploy-dist/
+          sentry-cli releases finalize $SENTRY_RELEASE
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
