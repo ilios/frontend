@@ -65,7 +65,7 @@ general:
   copyrightPermission: "Copyright Permission"
   copyrightRationale: "Copyright Rationale"
   copySession: "Copy Session"
-  copySessionSummary: "You are about to copy over this session (without schedule data) into the selected course. The new session will include all objectives, terms, and learning materials.  To continue click \"done\".  To return to your current session click \"cancel\"."
+  copySessionSummary: 'You are about to copy over this session (without schedule data) into the selected course. The new session will include all objectives, terms, and learning materials.  To continue click "done".  To return to your current session click "cancel".'
   copySuccess: "Copy Completed Successfully"
   course: Course
   courseLearningMaterials: "Course Learning Materials"
@@ -318,7 +318,7 @@ general:
   showObjectives: "Show objectives"
   showSessionEvents: "Show all other '<em>'{sessionTitle}'</em>' events"
   showSessionMaterials: "Show session materials"
-  smallGroupMessage: "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the \"offering\" button above."
+  smallGroupMessage: 'Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the "offering" button above.'
   smallGroups: "Small Groups"
   sortMaterials: "Sort Materials"
   sortObjectives: "Sort Objectives"

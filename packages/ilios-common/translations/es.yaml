@@ -65,7 +65,7 @@ general:
   copyrightPermission: "Permisos de Derechos de Autor"
   copyrightRationale: "Justificación para Derechos de Autor"
   copySession: "Copiar una Sesión"
-  copySessionSummary: "Usted va a copiar esta sesión (sin datos del horario) en el curso seleccionado. La sesión nueva va a incluir todos los objectivos, terminos, y materiales de aprendizaje.  Para continuar haga click en \"cumplido\".  Para regresar a su sesión corriente, haga click en \"cancelar\"."
+  copySessionSummary: 'Usted va a copiar esta sesión (sin datos del horario) en el curso seleccionado. La sesión nueva va a incluir todos los objectivos, terminos, y materiales de aprendizaje.  Para continuar haga click en "cumplido".  Para regresar a su sesión corriente, haga click en "cancelar".'
   copySuccess: "La Copia se ha Completado con Éxito"
   course: Curso
   courseLearningMaterials: "Materiales de Aprendizaje del Curso"
@@ -77,7 +77,7 @@ general:
   courseOrSessionType: "Curso / Tipo de Sesión"
   courseRollover: "Copiar Curso"
   courseRolloverSuccess: "Curso Copiado con Éxito"
-  courseRolloverSummary: "Va a rodar este curso en el seleccionado año académico, junto con todas las opciones seleccionadas.. Para continuar, haga clic en \"done\". Para volver a su curso corriente, haga clic en \"cancel\""
+  courseRolloverSummary: 'Va a rodar este curso en el seleccionado año académico, junto con todas las opciones seleccionadas.. Para continuar, haga clic en "done". Para volver a su curso corriente, haga clic en "cancel"'
   courseRolloverYearUnavailable: "El Curso Ya Existe"
   courses: Cursos
   coursesAndSessions: "Cursos y Sesiones"
@@ -318,7 +318,7 @@ general:
   showObjectives: "Mostrar objetivos"
   showSessionEvents: "Mostrar todos los '<em>'{sessionTitle}'</em>' eventos"
   showSessionMaterials: "Mostrar materiales de la sesión"
-  smallGroupMessage: "Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de \"ofrecimiento\" de arriba."
+  smallGroupMessage: 'Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de "ofrecimiento" de arriba.'
   smallGroups: "Grupos Pequeños"
   sortMaterials: "Clasificar los materiales"
   sortObjectives: "Clasificar los objetivos"

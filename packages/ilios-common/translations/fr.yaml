@@ -4,7 +4,7 @@ general:
   activeFilters: "Filtres actifs"
   add: "Ajouté"
   addNew: "Ajouté Neuf"
-  administratorCount:  "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
+  administratorCount: "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
   administrators: Administrateurs
   advancedOptions: "Options avancées"
   allCourses: "Tous les Cours"
@@ -65,7 +65,7 @@ general:
   copyrightPermission: "Droit d’Auteur"
   copyrightRationale: "Raison du droit d'auteur"
   copySession: "Copier Séance"
-  copySessionSummary: "Vous êtes sur le point la copie sur cette séance (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matériels d'étude. Continuer le clic \"oui\". Retourner à votre clic de session actuel \"annul\"."
+  copySessionSummary: 'Vous êtes sur le point la copie sur cette séance (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matériels d''étude. Continuer le clic "oui". Retourner à votre clic de session actuel "annul".'
   copySuccess: "Copie achevée avec succès"
   course: Cours
   courseLearningMaterials: "Matériels d'Étude du Cours"
@@ -77,7 +77,7 @@ general:
   courseOrSessionType: "Cours / Type de séance"
   courseRollover: "Roulement Cours"
   courseRolloverSuccess: "Roulement achevée avec succès"
-  courseRolloverSummary: "Vous êtes sur le point le roulement ce cours dans l'année universitaire choisie, avec toutes les options choisies. Continuer, cliquer \"done\". Pour retourner à votre cours actuel, le clic \"annul\""
+  courseRolloverSummary: 'Vous êtes sur le point le roulement ce cours dans l''année universitaire choisie, avec toutes les options choisies. Continuer, cliquer "done". Pour retourner à votre cours actuel, le clic "annul"'
   courseRolloverYearUnavailable: "Cours déja existant"
   courses: "Les Cours"
   coursesAndSessions: "Des Cours et Séances"
@@ -104,8 +104,8 @@ general:
   dueBy: Avant
   duePriorTo: "Dû avant"
   duration: "Durée"
-  durationHours:  "{count, plural, =1 {1 une heure} other {# heures}}"
-  durationMinutes:  "{count, plural, =1 {1 une minute} other {# minutes}}"
+  durationHours: "{count, plural, =1 {1 une heure} other {# heures}}"
+  durationMinutes: "{count, plural, =1 {1 une minute} other {# minutes}}"
   edit: Edite
   end: "Terminé"
   endDate: "Jour Terminé"
@@ -188,7 +188,7 @@ general:
   materials: "Matériels"
   membersOfThisGroupRequireAccommodation: "les membres de ce groupe ont besoin d'un accommodation"
   mesh: MeSH
-  meshCount:  "{count, plural, =1 {1 a des MeSH} other {# ont MeSH}}"
+  meshCount: "{count, plural, =1 {1 a des MeSH} other {# ont MeSH}}"
   meshManageTitle: "Manager MeSH"
   meshTerms: "Termes de MeSH"
   minute: Minute
@@ -234,7 +234,7 @@ general:
   notPublished: "Non Publier"
   notStarted: "Non Commencé"
   objectiveCompetencyManagerTitle: "Sélectionner Compétence Mère pour Objectif"
-  objectiveCount:  "Il y a {count, plural, =1 {1 objectif} other {# objectifs}}"
+  objectiveCount: "Il y a {count, plural, =1 {1 objectif} other {# objectifs}}"
   objectiveDescriptorTitle: "Choisi MeSH pour l'objectif"
   objectiveParentTitle: "Choisi Objectifs mères"
   objectiveParentTitleSingular: "Choisi Objectif mère"
@@ -266,7 +266,7 @@ general:
   publicationStatus: "Statut de Publication"
   publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, et ignorer des {ignoreCount} séances"
   publishAllSessions: "Publier {sessionCount} des séances"
-  publishAsIs: "Publier \"as-is\""
+  publishAsIs: 'Publier "as-is"'
   publishCourse: "Publier Cours"
   published: Publier
   publishedSuccessfully: "Publier réussi"
@@ -318,7 +318,7 @@ general:
   showObjectives: "Afficher les objectifs"
   showSessionEvents: "Montrez tous les autres '<em>'{sessionTitle}'</em>' événements"
   showSessionMaterials: "Afficher les supports de session"
-  smallGroupMessage: "S'il vous plaît choisir au moins un groupe d'apprenants à joindre à votre offrande de \"small groups\". Si vous souhaitez programmer cette offrande sans groupes, s'il vous plaît choisir le bouton \"offre\" au-dessus."
+  smallGroupMessage: 'S''il vous plaît choisir au moins un groupe d''apprenants à joindre à votre offrande de "small groups". Si vous souhaitez programmer cette offrande sans groupes, s''il vous plaît choisir le bouton "offre" au-dessus.'
   smallGroups: "Groupes Particulaires"
   sortMaterials: "Trier les matériaux"
   sortObjectives: "Trier les objectifs"

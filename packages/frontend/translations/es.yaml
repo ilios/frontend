@@ -1,7 +1,7 @@
 general:
   aamcMethod: "Método de AAMC"
   aamcPcrs: "AAMC PCRS"
-  aamcSchoolId: "Identificación de la escuela AAMC (\"ID de la institución\")"
+  aamcSchoolId: 'Identificación de la escuela AAMC ("ID de la institución")'
   academicLevel: "Nivel Académico"
   academicLevels: "Niveles Académicos"
   academicYear: "Año Academico"
@@ -111,7 +111,7 @@ general:
   developer: Desarrollador
   director: Director
   disableUser: "Desactivar el usuario"
-  doesNotMatchUserRecord: "Cargado {description} no coincide con la información en Ilios, cuál es \"{record}\""
+  doesNotMatchUserRecord: 'Cargado {description} no coincide con la información en Ilios, cuál es "{record}"'
   domain: Dominio
   downloadCompetencyMap: "Descargar el mapa de competencias"
   downloadResults: "Descargar Resultados"
@@ -308,7 +308,7 @@ general:
   physicianCompetencyReferenceSet: "Conjunto de referencia de competencias médicas"
   physicianCompetencyReferenceSetAbbr: PCRS
   populateGroup: "¿Quieres auto-llenar este grupo?"
-  preferredEmail: 'Email preferido'
+  preferredEmail: "Email preferido"
   prev: Anterior
   primary: Principal
   primaryCohort: "Clase de la Graduación Principal"
@@ -340,7 +340,7 @@ general:
   removePrimaryCohort: "Remover Principal Cohorte"
   reportConfirmRemove: "¿Está seguro que desea eliminar este informe? Esta acción no se puede deshacer."
   reportDescriptionPlaceholder: "Por favor entre en una breve descripción sobre este informe."
-  reportDisplayDescriptionWithObject: "Este informe muestra todos los {subject} asociados con {objectType} \"{object}\" {year} en {school}."
+  reportDisplayDescriptionWithObject: 'Este informe muestra todos los {subject} asociados con {objectType} "{object}" {year} en {school}.'
   reportDisplayDescriptionWithoutObject: "Este informe muestra todos los {subject} en {school}."
   reportDisplayTitleWithObject: "Todos {subject} para {object} en {school}"
   reportDisplayTitleWithoutObject: "Todos {subject} en {school}"
@@ -414,7 +414,7 @@ general:
   table8AllResourceTypes: "Tabla 8: Todos los tipos de recursos"
   term: "Término"
   termsBySessionType: "Términos por Tipo de Sesión"
-  termXappliedToYSessionsWithSessionTypeZ: "El término \"{term}\" del vocabulario \"{vocabulary}\" se aplica a {sessionsCount, plural, =1 {1 sesión} other {# sesiones}} con el tipo de sesión \"{sessionType}\"."
+  termXappliedToYSessionsWithSessionTypeZ: 'El término "{term}" del vocabulario "{vocabulary}" se aplica a {sessionsCount, plural, =1 {1 sesión} other {# sesiones}} con el tipo de sesión "{sessionType}".'
   thereAreXTerms: "{count, plural, =1 {Hay 1 término} other {Hay # términos}}"
   thisReportIsNoLongerAvailable: "Este informe ya no está disponible."
   thisTermHasSubTerms: "Este término tiene subtérminos."
@@ -462,7 +462,7 @@ general:
   weak: "Débil"
   whichIs: "cuál es"
   write: Escribir
-  xTermsFromVocabYusedWithSessionTypeZ: "{termsCount, plural, =1 {1 término} other {# términos}} del vocabulario \"{vocabulary}\" {termsCount, plural, =1 {se aplica } other {se aplican}} a {sessionsCount, plural, =1 {1 sesión} other {# sesiónes}} on el tipo de sesión \"{sessionType}\"."
+  xTermsFromVocabYusedWithSessionTypeZ: '{termsCount, plural, =1 {1 término} other {# términos}} del vocabulario "{vocabulary}" {termsCount, plural, =1 {se aplica } other {se aplican}} a {sessionsCount, plural, =1 {1 sesión} other {# sesiónes}} on el tipo de sesión "{sessionType}".'
   yesPopulateGroup: "¡Sí! Añada la cohorte entera a mi nuevo grupo."
   zipCode: "Código postal"
 errors:
