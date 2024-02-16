@@ -3,7 +3,7 @@ name: Percy Visual Tests
 on:
   schedule:
     - cron: "15 23 * * 2,4" # T,Th in the afternoon (UTC)
-  workflow_dispatch:
+  workflow_dispatch: null
 
 concurrency:
   group: percy-${{ github.head_ref || github.ref }}
