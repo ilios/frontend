@@ -67,5 +67,15 @@ module.exports = {
         'ember/no-classic-classes': 0,
       },
     },
+    {
+      // YAML files
+      files: [
+        './.github/dependabot.yml',
+        './.github/workflows/*.{yaml,yml}',
+        './packages/**/translations/*.{yaml,yml}',
+      ],
+      extends: ['plugin:yml/standard'],
+      parser: 'yaml-eslint-parser',
+    },
   ],
 };

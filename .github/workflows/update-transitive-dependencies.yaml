@@ -2,30 +2,30 @@ name: Update Transitive Dependencies
 
 on:
   schedule:
-  - cron: '15 11 * * 0' # weekly, on Sunday morning (UTC)
-  workflow_dispatch:
+    - cron: "15 11 * * 0" # weekly, on Sunday morning (UTC)
+  workflow_dispatch: null
 
 jobs:
   update:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: pnpm/action-setup@v3
-      with:
-        version: 8
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: pnpm
-    - name: remove and re-create lock file
-      run: |
-        rm pnpm-lock.yaml
-        pnpm install
-    - name: Create Pull Request
-      id: cpr
-      uses: peter-evans/create-pull-request@v6
-      with:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: remove and re-create lock file
+        run: |
+          rm pnpm-lock.yaml
+          pnpm install
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
           token: ${{ secrets.ZORGBORT_TOKEN }}
           commit-message: Update Transitive Dependencies
           title: Update Transitive Dependencies
@@ -37,8 +37,8 @@ jobs:
             [1]: https://github.com/peter-evans/create-pull-request
           branch: auto-update-dependencies
           labels: dependencies,run percy tests
-    - name: Enable Pull Request Automerge
-      if: steps.cpr.outputs.pull-request-operation == 'created'
-      run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

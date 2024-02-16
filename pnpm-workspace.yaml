@@ -4,4 +4,3 @@ packages:
   - "packages/lti-course-manager"
   - "packages/lti-dashboard"
   - "packages/test-app"
-

@@ -1,408 +1,408 @@
 general:
-  aamcMethod: "Método de AAMC"
-  aamcPcrs: "AAMC PCRS"
-  aamcSchoolId: "Identificación de la escuela AAMC (\"ID de la institución\")"
-  academicLevel: "Nivel Académico"
-  academicLevels: "Niveles Académicos"
-  academicYear: "Año Academico"
-  academicYears: "Años Academicos"
-  accommodationIsRequiredForLearnersInThisGroup: "Se requiere alojamiento para los estudiantes de este grupo"
-  accountEnabled: "Cuenta Activa"
+  aamcMethod: Método de AAMC
+  aamcPcrs: AAMC PCRS
+  aamcSchoolId: 'Identificación de la escuela AAMC ("ID de la institución")'
+  academicLevel: Nivel Académico
+  academicLevels: Niveles Académicos
+  academicYear: Año Academico
+  academicYears: Años Academicos
+  accommodationIsRequiredForLearnersInThisGroup: Se requiere alojamiento para los estudiantes de este grupo
+  accountEnabled: Cuenta Activa
   activate: Activar
   active: Activo
-  addCohort: "Agregar Cohorte"
+  addCohort: Agregar Cohorte
   admin: Admin
   administrator: Administrador
-  administratorEmail: "Correo Eelectrónico del Administrador"
-  administratorEmailPlaceholder: "email@example.edu"
-  administratorEmails: "Correos Eelectrónicos del Administrador"
+  administratorEmail: Correo Eelectrónico del Administrador
+  administratorEmailPlaceholder: email@example.edu
+  administratorEmails: Correos Eelectrónicos del Administrador
   all: Todos
-  allAcademicYears: "Todos Los Años Académicos"
+  allAcademicYears: Todos Los Años Académicos
   allOtherMembers: "Todos otros miembros de {topLevelGroupTitle}"
-  allSchools: "Todas las Escuelas"
-  allVocabularies: "Todos los Vocabularios"
-  anything: "Caulquier Cosa"
-  assessment: "Evaluación"
-  assessments: "Evaluacións"
-  assessmentMethods: "Métodos de Evaluación"
-  assessmentOption: "Opción de Evaluación"
-  associatedCourses: "Cursos Asociados"
-  associatedWith: "Ssociado con"
+  allSchools: Todas las Escuelas
+  allVocabularies: Todos los Vocabularios
+  anything: Caulquier Cosa
+  assessment: Evaluación
+  assessments: Evaluacións
+  assessmentMethods: Métodos de Evaluación
+  assessmentOption: Opción de Evaluación
+  associatedCourses: Cursos Asociados
+  associatedWith: Ssociado con
   attribute: Atributo
   available: Disponible
-  availableCohorts: "Clases de La Graduación Disponibles"
-  availableInstructors: "Instructores Disponibles"
-  averageHoursOfInstructionPerWeek: "Promedio de horas de instrucción por semana"
-  backToAdminDashboard: "Atrás a Panel de Control"
-  backToCalendar: "Atrás a Calendario"
-  backToDetails: "Atrás a Las Detalles de la Sesión"
-  backToInstructorGroups: "Atrás a la Lista de Grupos de Instructores"
-  backToPrograms: "Atrás a Programas"
-  backToProgramYear: "Atrás a Año de Programa"
-  backToProgramYears: "Atrás a Años de Programas"
-  backToReport: "Atrás a Reporte"
-  backToReports: "Atrás a Reportes"
-  backToSchools: "Atrás a Escuelas"
-  backToTableOfContents: "Atrás a la tabla de contenido"
+  availableCohorts: Clases de La Graduación Disponibles
+  availableInstructors: Instructores Disponibles
+  averageHoursOfInstructionPerWeek: Promedio de horas de instrucción por semana
+  backToAdminDashboard: Atrás a Panel de Control
+  backToCalendar: Atrás a Calendario
+  backToDetails: Atrás a Las Detalles de la Sesión
+  backToInstructorGroups: Atrás a la Lista de Grupos de Instructores
+  backToPrograms: Atrás a Programas
+  backToProgramYear: Atrás a Año de Programa
+  backToProgramYears: Atrás a Años de Programas
+  backToReport: Atrás a Reporte
+  backToReports: Atrás a Reportes
+  backToSchools: Atrás a Escuelas
+  backToTableOfContents: Atrás a la tabla de contenido
   bad: Malo
-  badCredentials: "Incorrecta contraseña o nombre de usuario"
-  calendarOff: "Calendario Apagado"
-  calendarOn: "Calendario en Uso"
-  campusId: "Campus ID"
+  badCredentials: Incorrecta contraseña o nombre de usuario
+  calendarOff: Calendario Apagado
+  calendarOn: Calendario en Uso
+  campusId: Campus ID
   canNotContinueWithInvalidRecords: "No se puede continuar con estos registros no válidos, por favor, corrija y vuelva a subir el archivo."
   canNotDeleteLearnerGroupWithAssociatedCourses: "Este grupo está unido a {courseCount, plural, one {un curso} other {# cursos}} y no se puede eliminar."
-  changeAlertRecipients: "Destinatarios con alerta de cambio"
+  changeAlertRecipients: Destinatarios con alerta de cambio
   changeAlertRecipientsPlaceholder: "email1@example.edu, email2@example.edu"
-  childSequenceOrder: "Orden de Secuencia de Los Hijos"
+  childSequenceOrder: Orden de Secuencia de Los Hijos
   city: Ciudad
-  clearDates: "Borrar Fechas"
-  clearErrors: "Borrar los Errores y Volver a Ilios"
-  clerkship: "Rotación"
-  clerkshipSequenceBlocks: "Bloques de secuencia de rotación"
-  clickToAddDescription: "Haga clic para añadir una descripción"
-  clickToAddTermDescription: "Haga clic para agregar notas descriptivas"
+  clearDates: Borrar Fechas
+  clearErrors: Borrar los Errores y Volver a Ilios
+  clerkship: Rotación
+  clerkshipSequenceBlocks: Bloques de secuencia de rotación
+  clickToAddDescription: Haga clic para añadir una descripción
+  clickToAddTermDescription: Haga clic para agregar notas descriptivas
   cohortMembersNotInGroup: "Miembros de la Clase NO Asignados a {groupTitle} "
   color: Color
-  competenciesManageTitle: "Maneje Competencias"
+  competenciesManageTitle: Maneje Competencias
   competency: Competencia
-  competencyDomain: "Dominio de Dompetencia"
+  competencyDomain: Dominio de Dompetencia
   confirmLogout: "Usted ha cerrado la aplicación Ilios con éxito. Para asistir con la protección de su cuenta y la seguridad de otros, favor de cerrar todas las ventanas del navegador."
   confirmRemoveCourse: " ¿Estás seguro que quieres borrar este curso, con {publishedOfferingCount} ofrecimientos publicados? Esta acción borrará todas las sesiones y ofrecimientos para este curso y no se puede deshacer."
   confirmRemoveInstructorGroup: "¿Estás seguro que quieres remover este grupo de instructores, con {instructorCount} instructores? Esta acción no se puede deshacer."
   confirmRemoveLearnerGroup: "¿Estás seguro que quieres borrar este grupo de aprendedores, con {subgroupCount} grupos subordinados? Esta acción no se puede deshacer."
-  confirmRemoveProgram: "¿Estás seguro que quieres borrar este programa? Esta accion no se puede deshacer."
+  confirmRemoveProgram: ¿Estás seguro que quieres borrar este programa? Esta accion no se puede deshacer.
   confirmRemoveProgramYear: "¿Está seguro de que desea eliminar este año del programa?   Hacer tan también quitará su cohorte estudiantil asociada y grupos y asociaciones con {courseCount} curso(s), y no se puede deshacer."
-  confirmVocabularyRemoval: "¿Está seguro que desea eliminar este vocabulario?"
-  connectionLost: "Conexión Perdida."
+  confirmVocabularyRemoval: ¿Está seguro que desea eliminar este vocabulario?
+  connectionLost: Conexión Perdida.
   continue: Continuar
   copy: Copiar
-  copyNewToken: "Copiar nuevo token"
-  copyWithLearners: "Copiar Con Alumnos"
-  copyWithoutLearners: "Copiar Sin Alumnos"
+  copyNewToken: Copiar nuevo token
+  copyWithLearners: Copiar Con Alumnos
+  copyWithoutLearners: Copiar Sin Alumnos
   couldNotFindUserCampusId: "No se pudo encontrar un usuario con el campusId {campusId}"
-  countAsOneOffering: "Cuenta como un Ofrecimiento"
+  countAsOneOffering: Cuenta como un Ofrecimiento
   countTotal: "{total} en total"
   country: País
-  courseDirector: "Director del Curso"
-  courseTitleFilterPlaceholder: "Aplicar un filtro por título de curso"
-  create: "Crear Nuevo Usuario"
-  createBulk: "Subir Múltiples Usuarios."
-  createNew: "Crear Nuevo"
-  createNewGroup: "Crear Este Grupo"
-  currentCompetency: "Competencia Actual"
-  currentSchool: "Escuela Actual"
-  curriculumInventory: "Inventario de plan de Estudios"
-  curriculumInventoryInstitutionalInfo: "Inventario de plan de Estudios Información Institucional"
-  curriculumInventoryReport: "Informe de Inventario de Plan de Estudios"
-  curriculumInventoryReportRollover: "Copiar Inventario de plan de Estudios"
+  courseDirector: Director del Curso
+  courseTitleFilterPlaceholder: Aplicar un filtro por título de curso
+  create: Crear Nuevo Usuario
+  createBulk: Subir Múltiples Usuarios.
+  createNew: Crear Nuevo
+  createNewGroup: Crear Este Grupo
+  currentCompetency: Competencia Actual
+  currentSchool: Escuela Actual
+  curriculumInventory: Inventario de plan de Estudios
+  curriculumInventoryInstitutionalInfo: Inventario de plan de Estudios Información Institucional
+  curriculumInventoryReport: Informe de Inventario de Plan de Estudios
+  curriculumInventoryReportRollover: Copiar Inventario de plan de Estudios
   curriculumInventoryReportRolloverSummary: "Esta acción copiará la estructura de este informe que se utilizará en su año objetivo. No copiará la información del curso, solo la estructura del bloque de secuencia de nivel superior. Deberá agregar la información del curso adecuada y modificar las fechas de inicio y finalización del bloque de secuencia una vez que haya cambiado la estructura del informe existente."
-  curriculumInventoryReportRolloverSuccess: "Inventario Copiado con Éxito"
-  curriculumInventoryReports: "Informes de Inventario de Plan de Estudios"
+  curriculumInventoryReportRolloverSuccess: Inventario Copiado con Éxito
+  curriculumInventoryReports: Informes de Inventario de Plan de Estudios
   dashboard: Tablero
   deactivate: Desactivar
-  defaultInstructors: "Instructores Predeterminados"
-  defaultLocation: "Ubicación Predeterminada"
-  defaultVirtualLearningLink: "Enlace de Aprendizaje Virtual Predeterminado"
+  defaultInstructors: Instructores Predeterminados
+  defaultLocation: Ubicación Predeterminada
+  defaultVirtualLearningLink: Enlace de Aprendizaje Virtual Predeterminado
   delete: Eliminar
-  deleteCourse: "Eliminar el curso"
+  deleteCourse: Eliminar el curso
   departments: Departmentos
-  deselectUser: "Deseleccione usuario"
-  details: "Detalles de Curso"
+  deselectUser: Deseleccione usuario
+  details: Detalles de Curso
   developer: Desarrollador
   director: Director
-  disableUser: "Desactivar el usuario"
-  doesNotMatchUserRecord: "Cargado {description} no coincide con la información en Ilios, cuál es \"{record}\""
+  disableUser: Desactivar el usuario
+  doesNotMatchUserRecord: 'Cargado {description} no coincide con la información en Ilios, cuál es "{record}"'
   domain: Dominio
-  downloadCompetencyMap: "Descargar el mapa de competencias"
-  downloadResults: "Descargar Resultados"
+  downloadCompetencyMap: Descargar el mapa de competencias
+  downloadResults: Descargar Resultados
   draft: Borrador
-  durationInDays: "Duración (en Días)"
-  durationInYears: "Duración (en Años)"
-  educationalYear: "Año Escolar"
+  durationInDays: Duración (en Días)
+  durationInYears: Duración (en Años)
+  educationalYear: Año Escolar
   email: Correo
   emails: Correos
   enabled: Activa
-  endLevel: "nivel final"
+  endLevel: nivel final
   errorDisplayMessage: "Lo sentimos! Algo salió mal con su pedido. Por favor, trate de actualizar la página o revise de nuevo más tarde."
   error: Error
   errors: Errores
   errorSavingAuthentication: "Las cuentas fueron creadas para estos usuarios, pero no podrán iniciar sesión.  Esto generalmente sucede cuando el nombre de usuario ya existe, pero pertenece a otro usuario.  Por favor seleccione cada usuario y crear un nombre de usuario y contraseña."
   errorSavingUser: "Estos usuarios fueron incapaces de salvarse. Por favor, compruebe que no existen."
   exclude: Excluir
-  excludeFromSync: "Excluir de la sincronización"
-  existingGroup: "Grupo Existente"
+  excludeFromSync: Excluir de la sincronización
+  existingGroup: Grupo Existente
   fileTypeError: "Archivo mal subido: {fileType} no parece ser válido ficha separado archivo."
   fileUploadError: "No pudimos subir este archivo.   Por favor, asegúrese de que está conectado a la red.  Si este problema persiste, por favor avísenos."
-  filterByNameOrEmail: "Aplicar un Filtro por nombre o email"
-  filterByTitle: "Filtrar por Título"
-  filterByProgram: "Filtrar por Programa"
-  filterBySchool: "Filtrar por Escuela"
-  filterByYear: "Filtrar por Año"
+  filterByNameOrEmail: Aplicar un Filtro por nombre o email
+  filterByTitle: Filtrar por Título
+  filterByProgram: Filtrar por Programa
+  filterBySchool: Filtrar por Escuela
+  filterByYear: Filtrar por Año
   finalErrorDisplayMessage: "¡Zoinks! Algo es muy incorrecto. Por favor refresque su navegador y avísenos en support@iliosproject.org si sigue viendo este mensaje. "
   finalize: Finalizar
   finalized: Finalizado
   finalizeReportConfirmation: "Finalizando este informe, lo salvará en su estado actual a la base de datos de Ilios como un objeto de la referencia permanente, y ninguna otra edición será posible."
   finalizingReport: "Finalizando informe, esto puede tardar un tiempo ..."
-  finalResults: "Resultados Finales"
-  findDirector: "Buscar Director"
+  finalResults: Resultados Finales
+  findDirector: Buscar Director
   firstName: Nombre
   for: Para
-  formative: "formativa"
-  formerStudent: "Antiguo Estudiante"
-  fullName: "Nombre completo"
-  globalSearchPlaceholder: "Encontrar Usuarios..."
+  formative: formativa
+  formerStudent: Antiguo Estudiante
+  fullName: Nombre completo
+  globalSearchPlaceholder: Encontrar Usuarios...
   good: Bueno
-  goToUser: "Mostrar registro de usuario en Ilios"
-  groupMembers: "Miembros de grupo corriente"
-  hideRolesInCourses: "Ocultar roles en cursos"
-  hideRolesInPrograms: "Ocultar roles en programas"
-  hideRolesInProgramYears: "Ocultar roles en los años del programa"
-  hideRolesInSessions: "Ocultar roles en sesiones"
+  goToUser: Mostrar registro de usuario en Ilios
+  groupMembers: Miembros de grupo corriente
+  hideRolesInCourses: Ocultar roles en cursos
+  hideRolesInPrograms: Ocultar roles en programas
+  hideRolesInProgramYears: Ocultar roles en los años del programa
+  hideRolesInSessions: Ocultar roles en sesiones
   home: Inicio
   icsAdminInstructions: "Para agregar el calendario de Ilios de un usuario a otra aplicación o servicio, será necesario utilizar esta URL.  esta dirección URL es como una contraseña. ¡Quien lo sabe puede ver el calendario de este usuario!"
-  icsFeed: "Fuente de ICS"
-  id: "ID"
+  icsFeed: Fuente de ICS
+  id: ID
   ignore: Ignorar
   iliosUpdatePending: "¡Huzzah, hemos hecho Ilios mejor! Obtendrá las cosas nuevas en su próximo inicio de sesión, o haga clic para actualizar ahora."
   in: en
-  includedInGrade: "Incluido en Grado"
-  instructionalMethod: "Método de Instrucción"
-  instructionalMethods: "Métodos de Instrucción"
-  instructorGroup: "Grupo de Instructores"
-  instructorGroupTitle: "Titulo de Grupo de Instructores"
-  instructorGroupTitleFilterPlaceholder: "Aplicar un Filtro por Título de Grupo de Instructor"
-  instructorGroupTitlePlaceholder: "Entre en un Título para este grupo de Instructores"
-  invalidateTokens: "Invalida Todos los Tokens"
-  invalidateTokensConfirmation: "Esto invalidará todas los tokens de API existentes y ustedes tendrán que generar nuevos tokens para cualquier aplicación que tengan. ¿Está seguro que desea hacer esto?"
-  invalidDatetimes: "Fecha/Hora Inválida"
-  invalidUsers: "Usuarios no Válidos"
-  isSelective: "Es selectivo"
-  itemCode: "Código de artículo"
-  isTrack: "Es la Pista"
+  includedInGrade: Incluido en Grado
+  instructionalMethod: Método de Instrucción
+  instructionalMethods: Métodos de Instrucción
+  instructorGroup: Grupo de Instructores
+  instructorGroupTitle: Titulo de Grupo de Instructores
+  instructorGroupTitleFilterPlaceholder: Aplicar un Filtro por Título de Grupo de Instructor
+  instructorGroupTitlePlaceholder: Entre en un Título para este grupo de Instructores
+  invalidateTokens: Invalida Todos los Tokens
+  invalidateTokensConfirmation: Esto invalidará todas los tokens de API existentes y ustedes tendrán que generar nuevos tokens para cualquier aplicación que tengan. ¿Está seguro que desea hacer esto?
+  invalidDatetimes: Fecha/Hora Inválida
+  invalidUsers: Usuarios no Válidos
+  isSelective: Es selectivo
+  itemCode: Código de artículo
+  isTrack: Es la Pista
   language:
-    en-us: "English (en)"
-    es: "Español (es)"
-    fr: "Français (fr)"
+    en-us: English (en)
+    es: Español (es)
+    fr: Français (fr)
   lastName: Apellido
   learner: Aprendedor
   learnerAssignments: "{groupTitle} Asignaciónes de Aprendedores"
-  learnerGroupTitle: "Título de Grupo de Instructores"
-  learnerGroupTitleFilterPlaceholder: "Aplicar un Filtro por Título de Grupo de Aprendedor"
-  learnerGroupTitlePlaceholder: "Entre en un Título para este grupo de aprendedores"
-  learningMaterial: "Material de Aprendizaje"
-  lmDescriptorTitle: "Seleccione Descriptores de MeSH para Materiales de Aprendizaje"
-  loading: "Marcando Ilios"
-  loadingSessionTypes: "Cargando Tipos de Sesión..."
-  lockCourse: "Bloquear el curso"
-  logo: "Logo de Ilios"
-  logout: "Cerrar aplicación"
+  learnerGroupTitle: Título de Grupo de Instructores
+  learnerGroupTitleFilterPlaceholder: Aplicar un Filtro por Título de Grupo de Aprendedor
+  learnerGroupTitlePlaceholder: Entre en un Título para este grupo de aprendedores
+  learningMaterial: Material de Aprendizaje
+  lmDescriptorTitle: Seleccione Descriptores de MeSH para Materiales de Aprendizaje
+  loading: Marcando Ilios
+  loadingSessionTypes: Cargando Tipos de Sesión...
+  lockCourse: Bloquear el curso
+  logo: Logo de Ilios
+  logout: Cerrar aplicación
   manage: Manejar
-  manageAPITokens: "Maneje Tokens de la API"
-  manageCompetencies: "Maneje Competencias"
-  manageDefaultInstructors: "Maneje instructores predeterminados"
-  manageEmails: "Administrar correos electrónicos"
-  manageGroupMembership: "Administrar membresía de grupo"
-  manageInstitutionalInfo: "Administrar información institucional del CIR"
-  manageSessionAttributes: "Maneje Atributos de la Sesión"
-  manageUsers: "Administrar Usuarios"
-  manageUsersSummaryTitle: "Usuarios de Ilios"
-  manageVocabularies: "Maneje Vocabularios"
-  matchGroups: "Igualar Grupos"
-  matriculationYear: "Año de Inscripción"
-  maximum: "Máximo"
+  manageAPITokens: Maneje Tokens de la API
+  manageCompetencies: Maneje Competencias
+  manageDefaultInstructors: Maneje instructores predeterminados
+  manageEmails: Administrar correos electrónicos
+  manageGroupMembership: Administrar membresía de grupo
+  manageInstitutionalInfo: Administrar información institucional del CIR
+  manageSessionAttributes: Maneje Atributos de la Sesión
+  manageUsers: Administrar Usuarios
+  manageUsersSummaryTitle: Usuarios de Ilios
+  manageVocabularies: Maneje Vocabularios
+  matchGroups: Igualar Grupos
+  matriculationYear: Año de Inscripción
+  maximum: Máximo
   members: Miembros
-  menu: "El Menú de Ilios"
-  meshTerm: "Término de MeSH"
+  menu: El Menú de Ilios
+  meshTerm: Término de MeSH
   message: Mensaje
-  middleName: "Segundo Nombre"
-  minimum: "Mínimo"
-  missingPassword: "Contraseña requirida"
+  middleName: Segundo Nombre
+  minimum: Mínimo
+  missingPassword: Contraseña requirida
   missingRequiredUsername: "'Nombre de Usuario' se requiere para la entrada al sistema; este usuario será incapaz a la entrada al sistema hasta que un username sea entrado"
-  missingUsername: "Nombre de usaurio requirido"
-  modifyUserPassword: "Haga clic aquí para restablecer la contraseña."
+  missingUsername: Nombre de usaurio requirido
+  modifyUserPassword: Haga clic aquí para restablecer la contraseña.
   moveToGroup: "{count, plural, =1 {Mueva estudiante a {groupTitle}} other {Mueva # estudiantes a {groupTitle}}}"
-  multiDay: "Días Múltiples"
-  multipleGroups: "Múltiples grupos"
+  multiDay: Días Múltiples
+  multipleGroups: Múltiples grupos
   multipleUsersFoundWithCampusId: "Varios usuarios encontrados con el campusId {campusId}"
-  myCalendar: "Mi Calendario"
-  myCourses: "Mis Cursos"
-  myProfile: "Mi Perfil"
+  myCalendar: Mi Calendario
+  myCourses: Mis Cursos
+  myProfile: Mi Perfil
   name: Nombre
-  narrative: "narrativa"
+  narrative: narrativa
   navigationCompleteText: La navegación de la página de Ilios está completa. Ahora puede navegar por el contenido de la página como desee.
-  newCourse: "Curso Nuevo"
-  newCurriculumInventoryReport: "Nuevo Informe de Inventario de Plan de Estudios"
-  newDomain: "Nuevo Dominio"
-  newInstructorGroup: "Nuevo Grupo de Instructores"
-  newLearnerGroup: "Nuevo Grupo de Aprendedores"
-  newProgram: "Programa Nuevo"
-  newProgramYear: "Nuevo Año Del Programa"
-  newReport: "Nuevo Reporte"
-  newSchool: "Nueva Escuela"
-  newSequenceBlock: "Nuevo Bloque de Secuencia"
-  newTerm: "Nuevo Termino"
-  newToken: "Nuevo Símbolo (Token)"
-  newUser: "Nuevo Usuario"
-  newUsersCreatedSuccessfully: "Nuevos usuarios creados con éxito"
+  newCourse: Curso Nuevo
+  newCurriculumInventoryReport: Nuevo Informe de Inventario de Plan de Estudios
+  newDomain: Nuevo Dominio
+  newInstructorGroup: Nuevo Grupo de Instructores
+  newLearnerGroup: Nuevo Grupo de Aprendedores
+  newProgram: Programa Nuevo
+  newProgramYear: Nuevo Año Del Programa
+  newReport: Nuevo Reporte
+  newSchool: Nueva Escuela
+  newSequenceBlock: Nuevo Bloque de Secuencia
+  newTerm: Nuevo Termino
+  newToken: Nuevo Símbolo (Token)
+  newUser: Nuevo Usuario
+  newUsersCreatedSuccessfully: Nuevos usuarios creados con éxito
   newUsersCreatedWarning: "Algunos usuarios fueron creados, pero hubo errores."
   noAccountExists: "Su cuenta {accountName} no coincide con los registros de Ilios. Si usted necesita más asistencia, póngase en contacto con su administrador de Ilios"
-  noAvailableCohorts: "Ningun Clase de La Graduación Disponible"
-  noCourses: "No hay ningún curso en esta escuela"
-  noCurriculumInventoryInstitutionalInfo: "No se ha configurado información institucional para esta escuela."
-  noLearnerGroups: "No Grupos de Aprendedores"
-  nonClerkshipSequenceBlocks: "Bloques de secuencia que no son de la rotación"
-  nonStudent: "No estudiante"
-  noOfferingLearnerGroups: "Ningunos Grupos"
-  noPermissionsInOtherSchools: "No tiene los permisos necesarios de añadir a este usuario a cualquier otra escuela."
-  noPopulateGroup: "¡No! Déjelo vacío. Voy a agregar alumnos yo mismo."
-  noPrintDraft: "Cursos que se encuentran en estado borrador no se puede imprimir"
-  noProgramYears: "No hay años de programa en este programa"
-  noSearchResults: "Su búsqueda no regresó ningunos resultados"
-  noSelectedCompetencies: "No hay competencias seleccionadas"
-  noSelectedLearnerGroups: "No hay grupos de aprendedores seleccionados"
-  noSequenceBlocks: "No hay bloques de secuencia en este informe."
-  noSessions: "No hay ningún sesión en este curso"
-  noSubgroups: "No hay ningunos grupos subordinados en este grupo de aprendedores"
-  noSubSequenceBlocks: "Este bloque de la secuencia no tiene bloques de secuencia anidadas."
-  notApplicableAbbr: "n/d"
-  noUnselectedCompetencies: "No hay competencias disponibles para selección"
-  noUnselectedLearnerGroupsInCohort: "No hay grupos de aprendedores no seleccionados en este Clase de La Graduación"
-  numberOfEvents: "Numero de eventos"
-  numberOfEventsFeaturingThisAsThePrimaryMethod: "Número de eventos con esto como método principal"
-  numberOfExams: "Numero de Exámenes"
-  numberOfFormalInstructionalHoursPerCourse: "Número de horas formales de instrucción por curso"
-  numberOfFormativeAssessments: "Número de evaluaciones formativas"
-  numberOfGroups: "Número de grupos"
-  numberOfGroupsToGenerate: "número de grupos para generar."
-  numberOfNonPrimaryOccurrencesOfThisMethod: "Número de ocurrencias no primarias de este método"
-  numberOfSummativeAssessments: "Número de evaluaciones sumativas"
+  noAvailableCohorts: Ningun Clase de La Graduación Disponible
+  noCourses: No hay ningún curso en esta escuela
+  noCurriculumInventoryInstitutionalInfo: No se ha configurado información institucional para esta escuela.
+  noLearnerGroups: No Grupos de Aprendedores
+  nonClerkshipSequenceBlocks: Bloques de secuencia que no son de la rotación
+  nonStudent: No estudiante
+  noOfferingLearnerGroups: Ningunos Grupos
+  noPermissionsInOtherSchools: No tiene los permisos necesarios de añadir a este usuario a cualquier otra escuela.
+  noPopulateGroup: ¡No! Déjelo vacío. Voy a agregar alumnos yo mismo.
+  noPrintDraft: Cursos que se encuentran en estado borrador no se puede imprimir
+  noProgramYears: No hay años de programa en este programa
+  noSearchResults: Su búsqueda no regresó ningunos resultados
+  noSelectedCompetencies: No hay competencias seleccionadas
+  noSelectedLearnerGroups: No hay grupos de aprendedores seleccionados
+  noSequenceBlocks: No hay bloques de secuencia en este informe.
+  noSessions: No hay ningún sesión en este curso
+  noSubgroups: No hay ningunos grupos subordinados en este grupo de aprendedores
+  noSubSequenceBlocks: Este bloque de la secuencia no tiene bloques de secuencia anidadas.
+  notApplicableAbbr: n/d
+  noUnselectedCompetencies: No hay competencias disponibles para selección
+  noUnselectedLearnerGroupsInCohort: No hay grupos de aprendedores no seleccionados en este Clase de La Graduación
+  numberOfEvents: Numero de eventos
+  numberOfEventsFeaturingThisAsThePrimaryMethod: Número de eventos con esto como método principal
+  numberOfExams: Numero de Exámenes
+  numberOfFormalInstructionalHoursPerCourse: Número de horas formales de instrucción por curso
+  numberOfFormativeAssessments: Número de evaluaciones formativas
+  numberOfGroups: Número de grupos
+  numberOfGroupsToGenerate: número de grupos para generar.
+  numberOfNonPrimaryOccurrencesOfThisMethod: Número de ocurrencias no primarias de este método
+  numberOfSummativeAssessments: Número de evaluaciones sumativas
   objective: Objetivo
-  objectiveMap: "Mapa de Objetivos"
-  objectiveParentsTitle: "Seleccione Objetivos Matrices"
-  objectiveTitle: "Objetivos de la Sesión"
+  objectiveMap: Mapa de Objetivos
+  objectiveParentsTitle: Seleccione Objetivos Matrices
+  objectiveTitle: Objetivos de la Sesión
   off: Apagado
   on: Encendido
   ok: OK
-  openSmallGroupGenerator: "Abrir el Generador de Ofrecimientos para Grupos Pequeños"
+  openSmallGroupGenerator: Abrir el Generador de Ofrecimientos para Grupos Pequeños
   optional: Opcional
-  optionalElective: "Opcional (electiva)"
+  optionalElective: Opcional (electiva)
   ordered: Ordenado
-  orderInSequence: "Orden en la Secuencia"
+  orderInSequence: Orden en la Secuencia
   other: Otro
-  otherId: "Otro ID"
+  otherId: Otro ID
   parallel: Paralelo
-  password: "Contraseña"
+  password: Contraseña
   pendingUpdatesSummary: "{count, plural, =1 {Hay un usuario que necesita atención} other {Hay # usuarios que necesitan atención}}"
-  pendingUpdatesSummaryTitle: "Actualizaciones del Directorio del Campus"
+  pendingUpdatesSummaryTitle: Actualizaciones del Directorio del Campus
   pendingUserUpdates:
-    filterBy: "Filtro por nombre de uauario"
+    filterBy: Filtro por nombre de uauario
     missingFromDirectory: "No se puede encontrar el usuario en el directorio, por favor actualice, desactive, o excluya su cuenta de la sincronización."
     emailMismatch: "La dirección de correo electrónico en el directorio ({value}) does not match the email in Ilios ({email})."
-    updateIlios: "Actualice Ilios"
+    updateIlios: Actualice Ilios
   people: Gente
-  performsNonLearnerFunctions: "Performe Funciones de Non-Aprendedor"
+  performsNonLearnerFunctions: Performe Funciones de Non-Aprendedor
   permissions: Permisos
-  permissionsInOtherSchools: "Permisos en Otras Escuelas"
-  phasesStartToEnd: "Fases (inicio - final)"
-  phone: "Teléfono"
-  physicianCompetencyReferenceSet: "Conjunto de referencia de competencias médicas"
+  permissionsInOtherSchools: Permisos en Otras Escuelas
+  phasesStartToEnd: Fases (inicio - final)
+  phone: Teléfono
+  physicianCompetencyReferenceSet: Conjunto de referencia de competencias médicas
   physicianCompetencyReferenceSetAbbr: PCRS
-  populateGroup: "¿Quieres auto-llenar este grupo?"
-  preferredEmail: 'Email preferido'
+  populateGroup: ¿Quieres auto-llenar este grupo?
+  preferredEmail: Email preferido
   prev: Anterior
   primary: Principal
-  primaryCohort: "Clase de la Graduación Principal"
-  primarySchool: "Escuela Primaria"
-  programExpectations: "Expectativas del programa"
-  programExpectationsId: "ID de expectativas del programa"
-  programLeadership: "Liderazgo del Programa"
+  primaryCohort: Clase de la Graduación Principal
+  primarySchool: Escuela Primaria
+  programExpectations: Expectativas del programa
+  programExpectationsId: ID de expectativas del programa
+  programLeadership: Liderazgo del Programa
   programs: Programas
-  programTitle: "Titulo de Programa"
-  programTitleFilterPlaceholder: "Filtrar por Titulo de Programa"
-  programTitlePlaceholder: "Meter un titulo para este programa"
-  programTitleShort: "Titulo (corto)"
-  programYear: "Año de Programa"
-  programYears: "Años de Programa"
-  programYearLeadership: "Liderazgo de Año de Programa"
-  programYearVisualizations: "Visualizaciones de Año de Programa"
-  promoteToPrimaryCohort: "Ascender al Principal Cohorte"
-  pronouns: "Pronombres"
-  publishProgram: "Publique El Programa"
-  publishProgramYear: "Publique Año de Programa"
+  programTitle: Titulo de Programa
+  programTitleFilterPlaceholder: Filtrar por Titulo de Programa
+  programTitlePlaceholder: Meter un titulo para este programa
+  programTitleShort: Titulo (corto)
+  programYear: Año de Programa
+  programYears: Años de Programa
+  programYearLeadership: Liderazgo de Año de Programa
+  programYearVisualizations: Visualizaciones de Año de Programa
+  promoteToPrimaryCohort: Ascender al Principal Cohorte
+  pronouns: Pronombres
+  publishProgram: Publique El Programa
+  publishProgramYear: Publique Año de Programa
   read: Leer
   reconnectionSeconds: "{count, plural, =1 {Reconectando en 1 segundo...} other {Reconectando en # segundos...}}"
-  reconnectNow: "Volver a conectar ahora"
-  refreshIcsFeedKey: "Refresque la llave de la Fuente de ICS para este usuario."
-  refreshTheBrowser: "Refresque el Navegador"
-  removeCohort: "Remover Cohorte"
-  removedSuccessfully: "Eliminado con éxito"
+  reconnectNow: Volver a conectar ahora
+  refreshIcsFeedKey: Refresque la llave de la Fuente de ICS para este usuario.
+  refreshTheBrowser: Refresque el Navegador
+  removeCohort: Remover Cohorte
+  removedSuccessfully: Eliminado con éxito
   removeLearnerToCohort: "{count, plural, =1 {Quite estudiante a {cohort}} other {Quite # estudiantes a {cohort}}}"
-  removePrimaryCohort: "Remover Principal Cohorte"
-  reportConfirmRemove: "¿Está seguro que desea eliminar este informe? Esta acción no se puede deshacer."
-  reportDescriptionPlaceholder: "Por favor entre en una breve descripción sobre este informe."
-  reportDisplayDescriptionWithObject: "Este informe muestra todos los {subject} asociados con {objectType} \"{object}\" {year} en {school}."
+  removePrimaryCohort: Remover Principal Cohorte
+  reportConfirmRemove: ¿Está seguro que desea eliminar este informe? Esta acción no se puede deshacer.
+  reportDescriptionPlaceholder: Por favor entre en una breve descripción sobre este informe.
+  reportDisplayDescriptionWithObject: 'Este informe muestra todos los {subject} asociados con {objectType} "{object}" {year} en {school}.'
   reportDisplayDescriptionWithoutObject: "Este informe muestra todos los {subject} en {school}."
   reportDisplayTitleWithObject: "Todos {subject} para {object} en {school}"
   reportDisplayTitleWithoutObject: "Todos {subject} en {school}"
-  reportName: "Nombre de Informe"
-  reportNamePlaceholder: "Por favor Introduzca un Nombre de Informe"
+  reportName: Nombre de Informe
+  reportNamePlaceholder: Por favor Introduzca un Nombre de Informe
   reports: Informes
-  reportTitle: "Título de Informe"
-  requiredInTrack: "Requerido en Pista"
-  resourceTypes: "Tipos de recursos"
+  reportTitle: Título de Informe
+  requiredInTrack: Requerido en Pista
+  resourceTypes: Tipos de recursos
   root: Root
   runReport: Ejecutar Informe
-  sampleFile: "Archivo de Ejemplo"
-  saved: "Nuevo Usuario Salvó con Éxito"
-  schoolName: "Nombre de escuela"
-  searchDirectory: "Busque el directorio para nuevos usuarios"
+  sampleFile: Archivo de Ejemplo
+  saved: Nuevo Usuario Salvó con Éxito
+  schoolName: Nombre de escuela
+  searchDirectory: Busque el directorio para nuevos usuarios
   searchTheCurriculum: "Buscar el plan de estudios "
-  searchUsers: "Buscar usuarios"
-  secondaryCohorts: "Clases de la Graduación Secondarias"
+  searchUsers: Buscar usuarios
+  secondaryCohorts: Clases de la Graduación Secondarias
   select: Selecciona
-  selectAcademicYear: "Selecciona Año Academico"
-  selectAllOrNone: "Seleccione Todo o Ninguno"
+  selectAcademicYear: Selecciona Año Academico
+  selectAllOrNone: Seleccione Todo o Ninguno
   selected: Escogido
-  selectProgram: "Seleccione un Programa"
-  selectSchool: "Seleccione Escuela"
-  selectUser: "Seleccione usuario"
-  selectYear: "Seleccione El Año Escolar"
-  sequenceBlock: "Bloque de Secuencia"
-  sequenceBlockConfirmRemove: "¿Está seguro que desea eliminar este bloque de secuencia? Esta acción no se puede deshacer."
+  selectProgram: Seleccione un Programa
+  selectSchool: Seleccione Escuela
+  selectUser: Seleccione usuario
+  selectYear: Seleccione El Año Escolar
+  sequenceBlock: Bloque de Secuencia
+  sequenceBlockConfirmRemove: ¿Está seguro que desea eliminar este bloque de secuencia? Esta acción no se puede deshacer.
   sequenceBlockDescriptionPlaceholder: "Por favor, introduzca una descripción para este bloque de la secuencia."
-  sequenceBlockIsSelective: "Esta bloque de la secuencia ha sido marcada como selectiva."
-  sequenceBlocks: "Bloques de la Secuencia"
+  sequenceBlockIsSelective: Esta bloque de la secuencia ha sido marcada como selectiva.
+  sequenceBlocks: Bloques de la Secuencia
   sequenceBlockTitlePlaceholder: "Por favor, introduzca un título para esta bloque de la secuencia."
-  sequenceNumber: "No. de Secuencia"
-  sessionAttributes: "Atributos de la Sesión"
-  sessionTitlePlaceholder: "Entre en un titulo para esta sesión"
-  sessionTypeConfirmRemoval: "¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer."
-  showResultsFor: "Mostrar Resultados Para"
-  showRolesInCourses: "Mostrar roles en cursos"
-  showRolesInPrograms: "Mostrar roles en programas"
-  showRolesInProgramYears: "Mostrar roles en años de programa"
-  showRolesInSessions: "Mostrar roles en sesiones"
-  showSubgroupEvents: "Mostrar eventos para todos los grupos subordinados"
-  singleDay: "Un Solo Día"
-  singleGroup: "Solo grupo"
+  sequenceNumber: No. de Secuencia
+  sessionAttributes: Atributos de la Sesión
+  sessionTitlePlaceholder: Entre en un titulo para esta sesión
+  sessionTypeConfirmRemoval: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
+  showResultsFor: Mostrar Resultados Para
+  showRolesInCourses: Mostrar roles en cursos
+  showRolesInPrograms: Mostrar roles en programas
+  showRolesInProgramYears: Mostrar roles en años de programa
+  showRolesInSessions: Mostrar roles en sesiones
+  showSubgroupEvents: Mostrar eventos para todos los grupos subordinados
+  singleDay: Un Solo Día
+  singleGroup: Solo grupo
   skipToMainContent: Saltar al contenido principal
-  startLevel: "nivel de inicio"
-  startOver: "Empezar de Nuevo"
-  stateOrProvince: "Estado o Provincia"
-  statusCode: "Código de estado"
-  stewardingSchoolsAndDepartments: "Escuelas y Departamentos Administrativos"
-  stewardsManageTitle: "Maneje Administradores"
+  startLevel: nivel de inicio
+  startOver: Empezar de Nuevo
+  stateOrProvince: Estado o Provincia
+  statusCode: Código de estado
+  stewardingSchoolsAndDepartments: Escuelas y Departamentos Administrativos
+  stewardsManageTitle: Maneje Administradores
   street: Calle
   strong: Fuerte
   student: Estudiante
   subCompetencyCount: "{count, plural, =1 {Hay 1 subcompetencia} other {Hay # subcompetencias}}"
-  subgroupName: "Nombre del Subgrupo"
-  subgroups: "Grupos Subordinados"
-  subjectReports: "Informes de Sujetos"
-  subTerms: "Términos subordinados"
-  successfullyAddedTerm: "Término Agregado Correctamente"
-  successfullyInvalidatedTokens: "Todas los tokens existentes fueron con éxito invalidadas"
-  successfullyRemovedTerm: "Término Eliminado Correctamente"
+  subgroupName: Nombre del Subgrupo
+  subgroups: Grupos Subordinados
+  subjectReports: Informes de Sujetos
+  subTerms: Términos subordinados
+  successfullyAddedTerm: Término Agregado Correctamente
+  successfullyInvalidatedTokens: Todas los tokens existentes fueron con éxito invalidadas
+  successfullyRemovedTerm: Término Eliminado Correctamente
   table1ProgramExpectationsMappedToPcrs: "Tabla 1: Expectativas del programa asignadas a PCRS"
   table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock: "Tabla 2: Método de instrucción primario por bloque de secuencia de no rotación"
   table3aNonClerkshipSequenceBlockInstructionalTime: "Tabla 3-A: Tiempo de instrucción del bloque de secuencia de no rotación"
@@ -412,63 +412,63 @@ general:
   table6ClerkshipSequenceBlockAssessmentMethods: "Tabla 6: Métodos de evaluación del bloque de secuencia de la rotación"
   table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Tabla 7: Todos los eventos con evaluaciones etiquetadas como formativas o sumativas"
   table8AllResourceTypes: "Tabla 8: Todos los tipos de recursos"
-  term: "Término"
-  termsBySessionType: "Términos por Tipo de Sesión"
-  termXappliedToYSessionsWithSessionTypeZ: "El término \"{term}\" del vocabulario \"{vocabulary}\" se aplica a {sessionsCount, plural, =1 {1 sesión} other {# sesiones}} con el tipo de sesión \"{sessionType}\"."
+  term: Término
+  termsBySessionType: Términos por Tipo de Sesión
+  termXappliedToYSessionsWithSessionTypeZ: 'El término "{term}" del vocabulario "{vocabulary}" se aplica a {sessionsCount, plural, =1 {1 sesión} other {# sesiones}} con el tipo de sesión "{sessionType}".'
   thereAreXTerms: "{count, plural, =1 {Hay 1 término} other {Hay # términos}}"
-  thisReportIsNoLongerAvailable: "Este informe ya no está disponible."
-  thisTermHasSubTerms: "Este término tiene subtérminos."
+  thisReportIsNoLongerAvailable: Este informe ya no está disponible.
+  thisTermHasSubTerms: Este término tiene subtérminos.
   tokenInfo: "Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en {apiDocsLink}."
   tooManyResults: "La búsqueda ha devuelto más de {count} resultados.  Para ver mejores resultados, intente su búsqueda otra vez con condiciones adicionales."
-  total: "Total"
+  total: Total
   totalErrors: "{count, plural, =1 {Hay un error} other {Hay # errores}}"
-  totalTime: "Horas Totales"
-  totalWeeks: "Semanas totales"
-  transitionErrorMessage: "Lo sentimos! No le podemos conseguir donde pidió ir..."
-  tryHarder: "Esforzarse Más"
-  unableToReconnect: "¡No se puede volver a conectar!"
+  totalTime: Horas Totales
+  totalWeeks: Semanas totales
+  transitionErrorMessage: Lo sentimos! No le podemos conseguir donde pidió ir...
+  tryHarder: Esforzarse Más
+  unableToReconnect: ¡No se puede volver a conectar!
   unableToSyncUser: "Incapaz de sincronizar al usuario del directorio, por favor asegure el Campus ID es correcto."
-  unassigned: "No asignado"
+  unassigned: No asignado
   unassignedStudentsConfirmation: "{count, plural, =1 {Asignar 1 el usuario seleccionado a} other {Asignar # usuarios seleccionados a}}"
   unassignedStudentsSummary: "{count, plural, =1 {Hay un estudiante que requiere asignación de cohorte} other {Hay # estudiantes que requieren asignación de cohorte}}"
-  unassignedStudentsSummaryTitle: "Estudiantes que Requieren Asignación de Cohorte"
+  unassignedStudentsSummaryTitle: Estudiantes que Requieren Asignación de Cohorte
   undo: Deshacer
-  unlockCourse: "Desbloquea el curso"
-  unordered: "No Ordenado"
-  unPublishProgram: "No Publique El Programa"
-  unPublishProgramYear: "No Publique Año de Programa"
-  unsupportedBrowserFailure: "Su navegador no está soportado oficialmente por Ilios y no puede completar esta acción.  Por favor inténtalo de nuevo utilizando un navegador actualizado."
-  update: "Actualizar"
-  updateUserFromDirectory: "Actualizar este registro del usuario del directorio del campus."
-  updatePending: "Actualización Pendiente"
-  uploadedGroup: "Grupo Subido"
-  uploadGroupAssignments: "Cargar Asignaciones de Grupos"
+  unlockCourse: Desbloquea el curso
+  unordered: No Ordenado
+  unPublishProgram: No Publique El Programa
+  unPublishProgramYear: No Publique Año de Programa
+  unsupportedBrowserFailure: Su navegador no está soportado oficialmente por Ilios y no puede completar esta acción.  Por favor inténtalo de nuevo utilizando un navegador actualizado.
+  update: Actualizar
+  updateUserFromDirectory: Actualizar este registro del usuario del directorio del campus.
+  updatePending: Actualización Pendiente
+  uploadedGroup: Grupo Subido
+  uploadGroupAssignments: Cargar Asignaciones de Grupos
   uploadUsers: "Archivo con datos de usuarios (csv, tsv, tx)"
   userExistsInGroupHierarchy: "El usuario ya existe en el grupo de nivel superior {groupTitle} o en uno de sus subgrupos."
-  userExistsMultipleTimesInUpload: "Este usuario ya existe en la carga."
-  userMenu: "Menú del Usuario"
-  username: "Nombre de Usuario"
-  userNotAddableFromDirectory: "ste usuario está faltando información requerida y no se puede agregar"
+  userExistsMultipleTimesInUpload: Este usuario ya existe en la carga.
+  userMenu: Menú del Usuario
+  username: Nombre de Usuario
+  userNotAddableFromDirectory: ste usuario está faltando información requerida y no se puede agregar
   userNotInGroupCohort: "El usuario no está en la cohorte de este grupo: {cohortTitle}"
-  userRoles: "Funciones de usuario"
+  userRoles: Funciones de usuario
   users: Usuarios
   usersCalendar: "Calendario de{name}"
   usersSelected: "{count, plural, =1 {1 usuario seleccionado} other {# usuarios seleccionados}}"
-  validUntil: "¿Cuándo debe este símbolo (token) deje de funcionar??"
-  validUsers: "Usuarios Válidos"
+  validUntil: ¿Cuándo debe este símbolo (token) deje de funcionar??
+  validUsers: Usuarios Válidos
   verificationPreviewFor: "Vista previa de verificación para {name}"
-  viewAll: "Ver Todos"
-  vocabulariesBySessionType: "Vocabularios por Tipo de Sesión"
-  weak: "Débil"
-  whichIs: "cuál es"
+  viewAll: Ver Todos
+  vocabulariesBySessionType: Vocabularios por Tipo de Sesión
+  weak: Débil
+  whichIs: cuál es
   write: Escribir
-  xTermsFromVocabYusedWithSessionTypeZ: "{termsCount, plural, =1 {1 término} other {# términos}} del vocabulario \"{vocabulary}\" {termsCount, plural, =1 {se aplica } other {se aplican}} a {sessionsCount, plural, =1 {1 sesión} other {# sesiónes}} on el tipo de sesión \"{sessionType}\"."
-  yesPopulateGroup: "¡Sí! Añada la cohorte entera a mi nuevo grupo."
-  zipCode: "Código postal"
+  xTermsFromVocabYusedWithSessionTypeZ: '{termsCount, plural, =1 {1 término} other {# términos}} del vocabulario "{vocabulary}" {termsCount, plural, =1 {se aplica } other {se aplican}} a {sessionsCount, plural, =1 {1 sesión} other {# sesiónes}} on el tipo de sesión "{sessionType}".'
+  yesPopulateGroup: ¡Sí! Añada la cohorte entera a mi nuevo grupo.
+  zipCode: Código postal
 errors:
-  duplicateUsername: "Este nombre de usuario ya está ocupado por otra cuenta de usuario."
-  invalidChangeAlertRecipients: "Esta lista de destinatarios de alertas de cambios contiene direcciones de correo electrónico no válidas."
-  reportMissingInstructor: "Instructor es Necesario"
-  reportMissingMeshTerm: "Término de MeSH es Necesario"
-  reportMissingObjectForInstructor: "Asociación es Necesario Cuando Instructor es el Sujeto"
-  reportMissingObjectForMeshTerm: "Asociación es Necesario Cuando Término de MeSH es el Sujeto"
+  duplicateUsername: Este nombre de usuario ya está ocupado por otra cuenta de usuario.
+  invalidChangeAlertRecipients: Esta lista de destinatarios de alertas de cambios contiene direcciones de correo electrónico no válidas.
+  reportMissingInstructor: Instructor es Necesario
+  reportMissingMeshTerm: Término de MeSH es Necesario
+  reportMissingObjectForInstructor: Asociación es Necesario Cuando Instructor es el Sujeto
+  reportMissingObjectForMeshTerm: Asociación es Necesario Cuando Término de MeSH es el Sujeto
