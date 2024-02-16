@@ -144,54 +144,50 @@ export default class LearnerGroupUserManagerComponent extends Component {
     }
   }
 
-  @enqueueTask
-  *addUserToGroup(user) {
+  addUserToGroup = enqueueTask(async user => {
     this.usersBeingAddedToGroup = [...this.usersBeingAddedToGroup, user];
     //timeout gives the spinner time to render
-    yield timeout(1);
-    yield this.args.addUserToGroup(user);
+    await timeout(1);
+    await this.args.addUserToGroup(user);
     this.usersBeingAddedToGroup = this.usersBeingAddedToGroup.filter(
       (movingUser) => movingUser !== user,
     );
-  }
+  });
 
-  @enqueueTask
-  *removeUserFromGroup(user) {
+  removeUserFromGroup = enqueueTask(async user => {
     this.usersBeingRemovedFromGroup = [...this.usersBeingRemovedFromGroup, user];
     //timeout gives the spinner time to render
-    yield timeout(1);
-    yield this.args.removeUserFromGroup(user);
+    await timeout(1);
+    await this.args.removeUserFromGroup(user);
     this.usersBeingRemovedFromGroup = this.usersBeingRemovedFromGroup.filter(
       (movingUser) => movingUser !== user,
     );
-  }
+  });
 
-  @enqueueTask
-  *addUsersToGroup() {
+  addUsersToGroup = enqueueTask(async () => {
     this.usersBeingAddedToGroup = [...this.usersBeingAddedToGroup, ...this.selectedNonGroupUsers];
     //timeout gives the spinner time to render
-    yield timeout(1);
-    yield this.args.addUsersToGroup(this.selectedNonGroupUsers);
+    await timeout(1);
+    await this.args.addUsersToGroup(this.selectedNonGroupUsers);
     this.usersBeingAddedToGroup = this.usersBeingAddedToGroup.filter((user) =>
       this.selectedNonGroupUsers.includes(user),
     );
     this.selectedNonGroupUsers = [];
-  }
+  });
 
-  @enqueueTask
-  *removeUsersFromGroup() {
+  removeUsersFromGroup = enqueueTask(async () => {
     this.usersBeingRemovedFromGroup = [
       ...this.usersBeingRemovedFromGroup,
       ...this.selectedGroupUsers,
     ];
     //timeout gives the spinner time to render
-    yield timeout(1);
-    yield this.args.removeUsersFromGroup(this.selectedGroupUsers);
+    await timeout(1);
+    await this.args.removeUsersFromGroup(this.selectedGroupUsers);
     this.usersBeingRemovedFromGroup = this.usersBeingRemovedFromGroup.filter((user) =>
       this.selectedGroupUsers.includes(user),
     );
     this.selectedGroupUsers = [];
-  }
+  });
 
   willDestroy() {
     super.willDestroy(...arguments);

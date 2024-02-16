@@ -149,12 +149,11 @@ export default class NewDirectoryUserComponent extends Component {
     return this.currentSchoolCohorts.slice().reverse()[0];
   }
 
-  @restartableTask
-  *load() {
+  load = restartableTask(async () => {
     if (this.args.searchTerms) {
-      yield this.findUsersInDirectory.perform(this.args.searchTerms);
+      await this.findUsersInDirectory.perform(this.args.searchTerms);
     }
-  }
+  });
 
   @action
   pickUser(user) {
@@ -217,13 +216,12 @@ export default class NewDirectoryUserComponent extends Component {
     }
   }
 
-  @restartableTask
-  *findUsersInDirectory(searchTerms) {
+  findUsersInDirectory = restartableTask(async searchTerms => {
     this.searchResultsReturned = false;
     this.tooManyResults = false;
     if (!isEmpty(searchTerms)) {
       const url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
-      const data = yield this.fetch.getJsonFromApiHost(url);
+      const data = await this.fetch.getJsonFromApiHost(url);
       const mappedResults = data.results.map((result) => {
         result.addable =
           isPresent(result.firstName) &&
@@ -236,10 +234,9 @@ export default class NewDirectoryUserComponent extends Component {
       this.searchResults = mappedResults;
       this.searchResultsReturned = true;
     }
-  }
+  });
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor([
       'firstName',
       'middleName',
@@ -251,11 +248,11 @@ export default class NewDirectoryUserComponent extends Component {
       'username',
       'password',
     ]);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    const roles = yield this.store.findAll('user-role');
+    const roles = await this.store.findAll('user-role');
     const primaryCohort = this.bestSelectedCohort;
     let user = this.store.createRecord('user', {
       firstName: this.firstName,
@@ -274,15 +271,15 @@ export default class NewDirectoryUserComponent extends Component {
       const studentRole = findBy(roles.slice(), 'title', 'Student');
       user.set('roles', [studentRole]);
     }
-    user = yield user.save();
+    user = await user.save();
     const authentication = this.store.createRecord('authentication', {
       user,
       username: this.username,
       password: this.password,
     });
-    yield authentication.save();
+    await authentication.save();
     this.clearErrorDisplay();
     this.flashMessages.success('general.saved');
     this.args.transitionToUser(user.id);
-  }
+  });
 }

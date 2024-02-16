@@ -124,8 +124,7 @@ export default class UserProfileBioComponent extends Component {
     await this.calculatePasswordStrengthScore();
   }
 
-  @restartableTask
-  *load() {
+  load = restartableTask(async () => {
     this.firstName = this.args.user.firstName;
     this.middleName = this.args.user.middleName;
     this.lastName = this.args.user.lastName;
@@ -136,16 +135,15 @@ export default class UserProfileBioComponent extends Component {
     this.pronouns = this.args.user.pronouns;
     this.preferredEmail = this.args.user.preferredEmail;
     this.phone = this.args.user.phone;
-    const auth = yield this.args.user.authentication;
+    const auth = await this.args.user.authentication;
     if (auth) {
       this.username = auth.username;
       this.password = '';
       this.passwordStrengthScore = 0;
     }
-  }
+  });
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     const store = this.store;
     this.addErrorDisplaysFor([
       'firstName',
@@ -161,12 +159,12 @@ export default class UserProfileBioComponent extends Component {
       'username',
       'password',
     ]);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
 
-    const isUsernameTaken = yield this.isUsernameTaken(this.username, this.args.user.id);
+    const isUsernameTaken = await this.isUsernameTaken(this.username, this.args.user.id);
     if (isUsernameTaken) {
       this.clearErrorDisplay();
       this.showUsernameTakenErrorMessage = true;
@@ -185,7 +183,7 @@ export default class UserProfileBioComponent extends Component {
     user.set('preferredEmail', this.preferredEmail);
     user.set('phone', this.phone);
 
-    let auth = yield user.authentication;
+    let auth = await user.authentication;
     if (!auth) {
       auth = store.createRecord('authentication', {
         user,
@@ -200,22 +198,21 @@ export default class UserProfileBioComponent extends Component {
     if (this.canEditUsernameAndPassword && this.changeUserPassword) {
       auth.set('password', this.password);
     }
-    yield auth.save();
-    yield user.save();
-    const pendingUpdates = yield user.pendingUserUpdates;
-    yield all(pendingUpdates.map((update) => update.destroyRecord()));
+    await auth.save();
+    await user.save();
+    const pendingUpdates = await user.pendingUserUpdates;
+    await all(pendingUpdates.map((update) => update.destroyRecord()));
     this.clearErrorDisplay();
     this.cancel();
-  }
+  });
 
-  @dropTask
-  *directorySync() {
+  directorySync = dropTask(async () => {
     this.updatedFieldsFromSync = [];
     this.showSyncErrorMessage = false;
     const userId = this.args.user.id;
     const url = `/application/directory/find/${userId}`;
     try {
-      const data = yield this.fetch.getJsonFromApiHost(url);
+      const data = await this.fetch.getJsonFromApiHost(url);
       const userData = data.result;
       const firstName = this.firstName;
       const lastName = this.lastName;
@@ -261,5 +258,5 @@ export default class UserProfileBioComponent extends Component {
     } catch (e) {
       this.showSyncErrorMessage = true;
     }
-  }
+  });
 }

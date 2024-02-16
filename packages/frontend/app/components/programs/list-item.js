@@ -16,8 +16,7 @@ export default class ProgramListItemComponent extends Component {
     return this.canDeletePermission && !hasCiReports && !hasProgramYears;
   }
 
-  @dropTask
-  *remove() {
-    yield this.args.program.destroyRecord();
-  }
+  remove = dropTask(async () => {
+    await this.args.program.destroyRecord();
+  });
 }

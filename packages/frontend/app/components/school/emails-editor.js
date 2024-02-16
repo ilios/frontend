@@ -50,26 +50,24 @@ export default class SchoolEmailsEditorComponent extends Component {
     return this.intl.t('errors.invalidChangeAlertRecipients');
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor(['administratorEmail', 'changeAlertRecipients']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
 
-    yield this.args.save(this.administratorEmail, this.changeAlertRecipientsFormatted);
+    await this.args.save(this.administratorEmail, this.changeAlertRecipientsFormatted);
     this.clearErrorDisplay();
     this.args.cancel();
-  }
+  });
 
-  @dropTask
-  *saveOrCancel(event) {
+  saveOrCancel = dropTask(async event => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
-      yield this.save.perform();
+      await this.save.perform();
     } else if (27 === keyCode) {
       this.args.cancel();
     }
-  }
+  });
 }

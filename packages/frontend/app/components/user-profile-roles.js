@@ -15,11 +15,10 @@ export default class UserProfileRolesComponent extends Component {
   @tracked isUserSyncIgnoredFlipped = false;
   @tracked roleTitles = [];
 
-  @restartableTask
-  *load() {
-    const roles = yield this.args.user.roles;
+  load = restartableTask(async () => {
+    const roles = await this.args.user.roles;
     this.roleTitles = roles.map((role) => role.title.toLowerCase());
-  }
+  });
 
   get isStudent() {
     const originallyYes = this.roleTitles.includes('student');
@@ -61,9 +60,8 @@ export default class UserProfileRolesComponent extends Component {
     this.isUserSyncIgnoredFlipped = false;
   }
 
-  @dropTask
-  *save() {
-    const roles = (yield this.store.findAll('user-role')).slice();
+  save = dropTask(async () => {
+    const roles = ((await this.store.findAll('user-role'))).slice();
     const studentRole = findBy(roles, 'title', 'Student');
     const formerStudentRole = findBy(roles, 'title', 'Former Student');
     this.args.user.set('enabled', this.isEnabled);
@@ -77,12 +75,12 @@ export default class UserProfileRolesComponent extends Component {
     }
     this.args.user.set('roles', userRoles);
     this.resetFlipped();
-    yield this.args.user.save();
+    await this.args.user.save();
     if (this.args.setIsManaging) {
       this.args.setIsManaging(false);
     }
     this.hasSavedRecently = true;
-    yield timeout(500);
+    await timeout(500);
     this.hasSavedRecently = false;
-  }
+  });
 }

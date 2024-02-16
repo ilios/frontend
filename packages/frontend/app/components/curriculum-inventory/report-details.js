@@ -15,14 +15,13 @@ export default class CurriculumInventoryReportDetailsComponent extends Component
     return this.args.canUpdate && !this.isFinalizing;
   }
 
-  @dropTask
-  *finalize() {
+  finalize = dropTask(async () => {
     const newExport = this.store.createRecord('curriculumInventoryExport', {
       report: this.args.report,
     });
     this.showFinalizeConfirmation = false;
-    const savedExport = yield newExport.save();
+    const savedExport = await newExport.save();
     this.args.report.set('export', savedExport);
     this.args.setIsFinalized(true);
-  }
+  });
 }

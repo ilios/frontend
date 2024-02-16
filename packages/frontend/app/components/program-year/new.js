@@ -39,8 +39,7 @@ export default class NewProgramYearComponent extends Component {
     }
   }
 
-  @dropTask
-  *saveNewYear() {
-    yield this.args.save(this.selectedYear.value);
-  }
+  saveNewYear = dropTask(async () => {
+    await this.args.save(this.selectedYear.value);
+  });
 }

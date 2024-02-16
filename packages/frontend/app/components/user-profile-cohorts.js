@@ -59,32 +59,29 @@ export default class UserProfileCohortsComponent extends Component {
     this.primaryCohortBuffer = cohort;
   }
 
-  @restartableTask
-  *load() {
-    const primaryCohort = yield this.args.user.primaryCohort;
-    const cohorts = (yield this.args.user.cohorts).slice();
+  load = restartableTask(async () => {
+    const primaryCohort = await this.args.user.primaryCohort;
+    const cohorts = ((await this.args.user.cohorts)).slice();
     this.primaryCohortBuffer = primaryCohort;
     this.secondaryCohortsBuffer = cohorts;
     this.primaryCohortBuffer = primaryCohort;
-  }
+  });
 
-  @restartableTask
-  *cancel() {
-    const primaryCohort = yield this.args.user.primaryCohort;
-    const cohorts = (yield this.args.user.cohorts).slice();
+  cancel = restartableTask(async () => {
+    const primaryCohort = await this.args.user.primaryCohort;
+    const cohorts = ((await this.args.user.cohorts)).slice();
     this.primaryCohortBuffer = primaryCohort;
     this.secondaryCohortsBuffer = cohorts;
     this.args.setIsManaging(false);
-  }
+  });
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.args.user.primaryCohort = this.primaryCohortBuffer;
     this.args.user.cohorts = this.secondaryCohortsBuffer;
-    yield this.args.user.save();
+    await this.args.user.save();
     this.args.setIsManaging(false);
     this.hasSavedRecently = true;
-    yield timeout(500);
+    await timeout(500);
     this.hasSavedRecently = false;
-  }
+  });
 }

@@ -138,8 +138,7 @@ export default class NewUserComponent extends Component {
     return !!auths.length;
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor([
       'firstName',
       'middleName',
@@ -151,17 +150,17 @@ export default class NewUserComponent extends Component {
       'username',
       'password',
     ]);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    const isUsernameTaken = yield this.isUsernameTaken(this.username);
+    const isUsernameTaken = await this.isUsernameTaken(this.username);
     if (isUsernameTaken) {
       this.clearErrorDisplay();
       this.showUsernameTakenErrorMessage = true;
       return false;
     }
-    const roles = yield this.store.findAll('user-role');
+    const roles = await this.store.findAll('user-role');
     const primaryCohort = this.bestSelectedCohort;
     let user = this.store.createRecord('user', {
       firstName: this.firstName,
@@ -180,25 +179,24 @@ export default class NewUserComponent extends Component {
       const studentRole = findBy(roles.slice(), 'title', 'Student');
       user.set('roles', [studentRole]);
     }
-    user = yield user.save();
+    user = await user.save();
     const authentication = this.store.createRecord('authentication', {
       user,
       username: this.username,
       password: this.password,
     });
-    yield authentication.save();
+    await authentication.save();
     this.clearErrorDisplay();
     this.flashMessages.success('general.saved');
     this.args.transitionToUser(user.get('id'));
-  }
+  });
 
-  @dropTask
-  *saveOrCancel(event) {
+  saveOrCancel = dropTask(async event => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
-      yield this.save.perform();
+      await this.save.perform();
     } else if (27 === keyCode) {
       this.args.close();
     }
-  }
+  });
 }

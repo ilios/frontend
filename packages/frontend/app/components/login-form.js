@@ -12,10 +12,9 @@ export default class LoginFormComponent extends Component {
   @tracked @NotBlank() username;
   @tracked @NotBlank() password;
 
-  @task
-  *authenticate() {
+  authenticate = task(async () => {
     this.addErrorDisplaysFor(['username', 'password']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -23,7 +22,7 @@ export default class LoginFormComponent extends Component {
       this.error = null;
       const session = this.session;
       const authenticator = 'authenticator:ilios-jwt';
-      yield session.authenticate(authenticator, {
+      await session.authenticate(authenticator, {
         username: this.username,
         password: this.password,
       });
@@ -35,7 +34,7 @@ export default class LoginFormComponent extends Component {
     } finally {
       this.clearErrorDisplay();
     }
-  }
+  });
 
   @action
   async submitOnEnter(event) {

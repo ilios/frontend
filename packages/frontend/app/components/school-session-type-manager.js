@@ -7,12 +7,11 @@ export default class SchoolSessionTypeManagerComponent extends Component {
   @service store;
   @tracked readonlySessionType;
 
-  @restartableTask
-  *load() {
+  load = restartableTask(async () => {
     const { title, calendarColor, assessment, active: isActive } = this.args.sessionType;
-    const assessmentOption = yield this.args.sessionType.assessmentOption;
+    const assessmentOption = await this.args.sessionType.assessmentOption;
     const selectedAssessmentOptionId = assessmentOption?.id;
-    const firstAamcMethod = yield this.args.sessionType.firstAamcMethod;
+    const firstAamcMethod = await this.args.sessionType.firstAamcMethod;
     const selectedAamcMethodId = firstAamcMethod?.id;
     this.readonlySessionType = {
       title,
@@ -22,21 +21,22 @@ export default class SchoolSessionTypeManagerComponent extends Component {
       selectedAamcMethodId,
       isActive,
     };
-  }
+  });
 
-  @dropTask
-  *save(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
-    const aamcMethods = aamcMethod ? [aamcMethod] : [];
-    this.args.sessionType.setProperties({
-      title,
-      calendarColor,
-      assessment,
-      assessmentOption,
-      aamcMethods,
-      active: isActive,
-    });
+  save = dropTask(
+    async (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
+      const aamcMethods = aamcMethod ? [aamcMethod] : [];
+      this.args.sessionType.setProperties({
+        title,
+        calendarColor,
+        assessment,
+        assessmentOption,
+        aamcMethods,
+        active: isActive,
+      });
 
-    yield this.args.sessionType.save();
-    this.args.close();
-  }
+      await this.args.sessionType.save();
+      this.args.close();
+    }
+  );
 }

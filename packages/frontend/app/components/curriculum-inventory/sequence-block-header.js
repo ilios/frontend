@@ -20,15 +20,14 @@ export default class CurriculumInventorySequenceBlockHeaderComponent extends Com
     this.title = this.args.sequenceBlock.title;
   }
 
-  @restartableTask
-  *changeTitle() {
+  changeTitle = restartableTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid('title');
+    const isValid = await this.isValid('title');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
     this.args.sequenceBlock.title = this.title;
-    yield this.args.sequenceBlock.save();
-  }
+    await this.args.sequenceBlock.save();
+  });
 }

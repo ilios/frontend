@@ -28,23 +28,20 @@ export default class CurriculumInventoryLeadershipExpandedComponent extends Comp
     this.args.setIsManaging(true);
   }
 
-  @dropTask
-  *load() {
-    yield this.setBuffers();
-  }
+  load = dropTask(async () => {
+    await this.setBuffers();
+  });
 
-  @dropTask
-  *save() {
-    yield timeout(10);
+  save = dropTask(async () => {
+    await timeout(10);
     this.args.report.set('administrators', this.administrators);
     this.args.expand();
-    yield this.args.report.save();
+    await this.args.report.save();
     this.args.setIsManaging(false);
-  }
+  });
 
-  @dropTask
-  *cancel() {
-    yield this.setBuffers();
+  cancel = dropTask(async () => {
+    await this.setBuffers();
     this.args.setIsManaging(false);
-  }
+  });
 }

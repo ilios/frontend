@@ -282,10 +282,9 @@ export default class ReportsNewSubjectComponent extends Component {
     }
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor(['title', 'prepositionalObject', 'prepositionalObjectId']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -299,13 +298,12 @@ export default class ReportsNewSubjectComponent extends Component {
       prepositionalObjectTableRowId: this.prepositionalObjectId,
       school: this.currentSchool,
     });
-    yield this.args.save(report);
-  }
+    await this.args.save(report);
+  });
 
-  @dropTask
-  *run() {
+  run = dropTask(async () => {
     this.addErrorDisplaysFor(['title', 'prepositionalObject', 'prepositionalObjectId']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -317,7 +315,7 @@ export default class ReportsNewSubjectComponent extends Component {
       this.prepositionalObjectId,
       this.currentSchool,
     );
-  }
+  });
 
   @action
   changeSchool(schoolId) {

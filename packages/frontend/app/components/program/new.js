@@ -11,10 +11,9 @@ export default class NewProgramComponent extends Component {
 
   @tracked @Length(3, 200) @NotBlank() title;
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -22,8 +21,8 @@ export default class NewProgramComponent extends Component {
     const program = this.store.createRecord('program', {
       title: this.title,
     });
-    yield this.args.save(program);
-  }
+    await this.args.save(program);
+  });
 
   @action
   async keyboard({ keyCode }) {
