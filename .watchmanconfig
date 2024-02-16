@@ -1,5 +1,7 @@
 {
   "ignore_dirs": [
+    "packages/frontend/dist",
+    "packages/test-app/dist",
     "packages/lti-course-manager/dist",
     "packages/lti-dashboard/dist"
   ]
