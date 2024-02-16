@@ -74,7 +74,7 @@ module.exports = {
         './.github/workflows/*.{yaml,yml}',
         './packages/**/translations/*.{yaml,yml}',
       ],
-      extends: ['plugin:yml/recommended'],
+      extends: ['plugin:yml/standard'],
       parser: 'yaml-eslint-parser',
     },
   ],
