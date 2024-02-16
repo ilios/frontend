@@ -52,7 +52,7 @@ export default class PendingUserUpdatesController extends Controller {
     });
   }
 
-  updateEmailAddress = task(async update => {
+  updateEmailAddress = task(async (update) => {
     this.updatesBeingSaved = [...this.updatesBeingSaved, update];
     const user = await update.user;
     user.email = update.value;
@@ -64,7 +64,7 @@ export default class PendingUserUpdatesController extends Controller {
     this.flashMessages.success('general.savedSuccessfully');
   });
 
-  disableUser = task(async update => {
+  disableUser = task(async (update) => {
     this.updatesBeingSaved = [...this.updatesBeingSaved, update];
     const user = await update.user;
     user.enabled = false;
@@ -78,7 +78,7 @@ export default class PendingUserUpdatesController extends Controller {
     this.flashMessages.success('general.savedSuccessfully');
   });
 
-  excludeFromSync = task(async update => {
+  excludeFromSync = task(async (update) => {
     this.updatesBeingSaved = [...this.updatesBeingSaved, update];
     const user = await update.user;
     user.userSyncIgnore = true;

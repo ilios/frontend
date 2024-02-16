@@ -38,7 +38,7 @@ export default class SchoolVocabulariesListComponent extends Component {
     this.showRemovalConfirmationFor = null;
   }
 
-  remove = dropTask(async vocabulary => {
+  remove = dropTask(async (vocabulary) => {
     await vocabulary.destroyRecord();
     if (this.newVocabulary === vocabulary) {
       this.newVocabulary = null;

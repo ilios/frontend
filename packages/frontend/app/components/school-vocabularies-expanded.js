@@ -33,7 +33,7 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
 
   load = restartableTask(async () => {
     await this.loadSchool(this.args.school.id);
-    const vocabularies = ((await this.args.school.vocabularies)).slice();
+    const vocabularies = (await this.args.school.vocabularies).slice();
     this.schoolVocabularies = await map(vocabularies, async (vocabulary) => {
       const terms = await vocabulary.terms;
       return {

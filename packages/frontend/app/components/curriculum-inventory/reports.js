@@ -94,8 +94,8 @@ export default class CurriculumInventoryReportsComponent extends Component {
     }
   });
 
-  removeCurriculumInventoryReport = dropTask(async report => {
-    const reports = ((await this.selectedProgram.curriculumInventoryReports)).slice();
+  removeCurriculumInventoryReport = dropTask(async (report) => {
+    const reports = (await this.selectedProgram.curriculumInventoryReports).slice();
     reports.splice(reports.indexOf(report), 1);
     this.selectedProgram.set('curriculumInventoryReports', reports);
     await report.destroyRecord();

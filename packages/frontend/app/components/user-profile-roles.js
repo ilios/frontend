@@ -61,7 +61,7 @@ export default class UserProfileRolesComponent extends Component {
   }
 
   save = dropTask(async () => {
-    const roles = ((await this.store.findAll('user-role'))).slice();
+    const roles = (await this.store.findAll('user-role')).slice();
     const studentRole = findBy(roles, 'title', 'Student');
     const formerStudentRole = findBy(roles, 'title', 'Former Student');
     this.args.user.set('enabled', this.isEnabled);

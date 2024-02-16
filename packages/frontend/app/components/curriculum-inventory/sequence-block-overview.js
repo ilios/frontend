@@ -83,7 +83,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   load = restartableTask(async (element, [sequenceBlock]) => {
     this.report = await sequenceBlock.report;
     this.parent = await sequenceBlock.parent;
-    this.academicLevels = ((await this.report.academicLevels)).slice();
+    this.academicLevels = (await this.report.academicLevels).slice();
     this.isInOrderedSequence = false;
     this.orderInSequenceOptions = [];
     if (isPresent(this.parent) && this.parent.isOrdered) {
@@ -237,7 +237,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.course = await this.args.sequenceBlock.get('course');
   }
 
-  changeTrack = dropTask(async value => {
+  changeTrack = dropTask(async (value) => {
     this.args.sequenceBlock.set('track', value);
     await this.args.sequenceBlock.save();
   });

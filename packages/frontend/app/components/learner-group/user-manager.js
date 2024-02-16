@@ -144,7 +144,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     }
   }
 
-  addUserToGroup = enqueueTask(async user => {
+  addUserToGroup = enqueueTask(async (user) => {
     this.usersBeingAddedToGroup = [...this.usersBeingAddedToGroup, user];
     //timeout gives the spinner time to render
     await timeout(1);
@@ -154,7 +154,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     );
   });
 
-  removeUserFromGroup = enqueueTask(async user => {
+  removeUserFromGroup = enqueueTask(async (user) => {
     this.usersBeingRemovedFromGroup = [...this.usersBeingRemovedFromGroup, user];
     //timeout gives the spinner time to render
     await timeout(1);

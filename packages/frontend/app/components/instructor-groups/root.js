@@ -91,7 +91,7 @@ export default class InstructorGroupsRootComponent extends Component {
     });
   }
 
-  saveNewInstructorGroup = dropTask(async newInstructorGroup => {
+  saveNewInstructorGroup = dropTask(async (newInstructorGroup) => {
     newInstructorGroup.set('school', this.bestSelectedSchool);
     this.newInstructorGroup = await newInstructorGroup.save();
     this.showNewInstructorGroupForm = false;

@@ -13,7 +13,7 @@ export default class SchoolSessionAttributesComponent extends Component {
   @tracked showSessionSpecialEquipmentRequiredConfig;
 
   load = restartableTask(async (element, [school]) => {
-    const schoolConfigs = ((await school.configurations)).slice();
+    const schoolConfigs = (await school.configurations).slice();
     this.showSessionAttendanceRequiredConfig = findBy(
       schoolConfigs,
       'name',
@@ -45,7 +45,7 @@ export default class SchoolSessionAttributesComponent extends Component {
     return JSON.parse(this.showSessionSpecialEquipmentRequiredConfig?.value ?? null);
   }
 
-  save = dropTask(async newValues => {
+  save = dropTask(async (newValues) => {
     const names = [
       'showSessionAttendanceRequired',
       'showSessionSupplemental',

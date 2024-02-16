@@ -25,7 +25,7 @@ export default class SequenceBlockListComponent extends Component {
     this.editorOn = false;
   }
 
-  save = dropTask(async block => {
+  save = dropTask(async (block) => {
     this.editorOn = false;
     this.savedBlock = await block.save();
     // adding/updating a sequence block will have side-effects on its siblings if the given block is nested

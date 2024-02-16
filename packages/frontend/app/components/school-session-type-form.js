@@ -57,8 +57,8 @@ export default class SchoolSessionTypeFormComponent extends Component {
     this.title = this.args.title;
     this.selectedAssessmentOptionId = this.args.selectedAssessmentOptionId;
     this.selectedAamcMethodId = this.args.selectedAamcMethodId;
-    this.assessmentOptions = ((await this.store.findAll('assessment-option'))).slice();
-    this.aamcMethods = ((await this.store.findAll('aamc-method'))).slice();
+    this.assessmentOptions = (await this.store.findAll('assessment-option')).slice();
+    this.aamcMethods = (await this.store.findAll('aamc-method')).slice();
   });
 
   @action
@@ -84,7 +84,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
     );
   });
 
-  saveOrCancel = dropTask(async event => {
+  saveOrCancel = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.saveSessionType.perform();

@@ -85,7 +85,7 @@ export default class LearnerGroupRootComponent extends Component {
     }
   });
 
-  saveNewLearnerGroup = dropTask(async title => {
+  saveNewLearnerGroup = dropTask(async (title) => {
     const cohort = await this.args.learnerGroup.cohort;
     const newLearnerGroup = this.store.createRecord('learner-group', {
       cohort,
@@ -190,7 +190,7 @@ export default class LearnerGroupRootComponent extends Component {
     return this.args.learnerGroup.save();
   }
 
-  addUserToGroup = enqueueTask(async user => {
+  addUserToGroup = enqueueTask(async (user) => {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = await learnerGroup.topLevelGroup;
     const removeGroups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
@@ -201,7 +201,7 @@ export default class LearnerGroupRootComponent extends Component {
     this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
   });
 
-  removeUserToCohort = enqueueTask(async user => {
+  removeUserToCohort = enqueueTask(async (user) => {
     const topLevelGroup = await this.args.learnerGroup.topLevelGroup;
     const groups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     await all(groups.map((group) => group.save()));
@@ -209,7 +209,7 @@ export default class LearnerGroupRootComponent extends Component {
     this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
   });
 
-  addUsersToGroup = enqueueTask(async users => {
+  addUsersToGroup = enqueueTask(async (users) => {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = await learnerGroup.topLevelGroup;
     let addGroups = [];
@@ -218,9 +218,9 @@ export default class LearnerGroupRootComponent extends Component {
       const user = users[i];
       removeGroups = [
         ...removeGroups,
-        ...((await topLevelGroup.removeUserFromGroupAndAllDescendants(user))),
+        ...(await topLevelGroup.removeUserFromGroupAndAllDescendants(user)),
       ];
-      addGroups = [...addGroups, ...((await learnerGroup.addUserToGroupAndAllParents(user)))];
+      addGroups = [...addGroups, ...(await learnerGroup.addUserToGroupAndAllParents(user))];
     }
 
     await Promise.all(uniqueValues(removeGroups).map((g) => g.save()));
@@ -230,7 +230,7 @@ export default class LearnerGroupRootComponent extends Component {
     this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
   });
 
-  removeUsersToCohort = enqueueTask(async users => {
+  removeUsersToCohort = enqueueTask(async (users) => {
     const topLevelGroup = await this.args.learnerGroup.topLevelGroup;
     let groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
@@ -271,7 +271,7 @@ export default class LearnerGroupRootComponent extends Component {
     return users.filter((user) => !currentUsers.includes(user));
   });
 
-  changeNeedsAccommodation = restartableTask(async value => {
+  changeNeedsAccommodation = restartableTask(async (value) => {
     this.args.learnerGroup.set('needsAccommodation', value);
     await this.args.learnerGroup.save();
   });

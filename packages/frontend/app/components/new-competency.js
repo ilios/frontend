@@ -7,7 +7,7 @@ import { validatable, Length, NotBlank } from 'ilios-common/decorators/validatio
 export default class NewCompetencyComponent extends Component {
   @tracked @NotBlank() @Length(1, 200) title;
 
-  cancelOrSave = dropTask(async event => {
+  cancelOrSave = dropTask(async (event) => {
     const keyCode = event.keyCode;
 
     if (13 === keyCode) {

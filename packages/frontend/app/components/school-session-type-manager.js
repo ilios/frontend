@@ -37,6 +37,6 @@ export default class SchoolSessionTypeManagerComponent extends Component {
 
       await this.args.sessionType.save();
       this.args.close();
-    }
+    },
   );
 }

@@ -136,9 +136,9 @@ export default class SequenceBlockSessionManagerComponent extends Component {
   }
 
   load = restartableTask(async () => {
-    this.linkedSessions = ((await this.args.sequenceBlock.sessions)).slice();
-    this.excludedSessions = ((await this.args.sequenceBlock.excludedSessions)).slice();
-    this.sessions = ((await this.args.sessions)).slice();
+    this.linkedSessions = (await this.args.sequenceBlock.sessions).slice();
+    this.excludedSessions = (await this.args.sequenceBlock.excludedSessions).slice();
+    this.sessions = (await this.args.sessions).slice();
   });
 
   saveChanges = dropTask(async () => {

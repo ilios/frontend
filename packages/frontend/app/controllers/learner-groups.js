@@ -11,7 +11,7 @@ export default class LearnerGroupsController extends Controller {
   @tracked filter;
   @tracked sortBy = 'title';
 
-  setTitleFilter = restartableTask(async value => {
+  setTitleFilter = restartableTask(async (value) => {
     //if we already have a value or if resetting filter then add a keyboard delay
     if (this.filter && value) {
       await timeout(250);

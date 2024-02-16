@@ -25,7 +25,7 @@ export default class SchoolNewVocabularyFormComponent extends Component {
     this.clearErrorDisplay();
   });
 
-  saveOrCancel = dropTask(async event => {
+  saveOrCancel = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.saveNew.perform();

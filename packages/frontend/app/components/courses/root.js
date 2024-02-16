@@ -145,8 +145,8 @@ export default class CoursesRootComponent extends Component {
     return defaultYear;
   }
 
-  removeCourse = dropTask(async course => {
-    const courses = ((await this.selectedSchool.courses)).slice();
+  removeCourse = dropTask(async (course) => {
+    const courses = (await this.selectedSchool.courses).slice();
     courses.splice(courses.indexOf(course), 1);
     this.selectedSchool.set('courses', courses);
     await course.destroyRecord();
@@ -156,7 +156,7 @@ export default class CoursesRootComponent extends Component {
     }
   });
 
-  saveNewCourse = dropTask(async newCourse => {
+  saveNewCourse = dropTask(async (newCourse) => {
     newCourse.setDatesBasedOnYear();
     this.newCourse = await newCourse.save();
     this.showNewCourseForm = false;

@@ -216,7 +216,7 @@ export default class NewDirectoryUserComponent extends Component {
     }
   }
 
-  findUsersInDirectory = restartableTask(async searchTerms => {
+  findUsersInDirectory = restartableTask(async (searchTerms) => {
     this.searchResultsReturned = false;
     this.tooManyResults = false;
     if (!isEmpty(searchTerms)) {

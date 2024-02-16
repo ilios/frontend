@@ -8,7 +8,7 @@ export default class ReportsController extends Controller {
   @tracked sortReportsBy = 'title';
   @tracked titleFilter = null;
 
-  changeTitleFilter = restartableTask(async value => {
+  changeTitleFilter = restartableTask(async (value) => {
     this.titleFilter = value;
     await timeout(250);
     return value;

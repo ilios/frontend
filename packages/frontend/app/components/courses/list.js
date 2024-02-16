@@ -39,7 +39,7 @@ export default class CoursesListComponent extends Component {
     return this.intl.t(translation);
   }
 
-  unlockCourse = task(async course => {
+  unlockCourse = task(async (course) => {
     const permission = await this.permissionChecker.canUnlockCourse(course);
     this.startSavingCourse(course.id);
     if (permission) {
@@ -48,7 +48,7 @@ export default class CoursesListComponent extends Component {
     }
   });
 
-  lockCourse = task(async course => {
+  lockCourse = task(async (course) => {
     const permission = await this.permissionChecker.canUpdateCourse(course);
     this.startSavingCourse(course.id);
     if (permission) {

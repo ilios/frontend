@@ -60,7 +60,7 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
     }
   }
 
-  addSingleUser = enqueueTask(async user => {
+  addSingleUser = enqueueTask(async (user) => {
     this.usersBeingMoved = [...this.usersBeingMoved, user];
     //timeout gives the spinner time to render
     await timeout(1);

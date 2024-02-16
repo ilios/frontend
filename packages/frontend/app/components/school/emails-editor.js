@@ -62,7 +62,7 @@ export default class SchoolEmailsEditorComponent extends Component {
     this.args.cancel();
   });
 
-  saveOrCancel = dropTask(async event => {
+  saveOrCancel = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.save.perform();

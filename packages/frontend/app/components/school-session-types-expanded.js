@@ -50,7 +50,7 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
       });
 
       await sessionType.save();
-    }
+    },
   );
 
   update = dropTask(
@@ -68,6 +68,6 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
       });
 
       await sessionType.save();
-    }
+    },
   );
 }

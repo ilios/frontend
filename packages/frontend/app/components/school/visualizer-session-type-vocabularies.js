@@ -109,7 +109,7 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
       });
   }
 
-  donutHover = restartableTask(async obj => {
+  donutHover = restartableTask(async (obj) => {
     await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;

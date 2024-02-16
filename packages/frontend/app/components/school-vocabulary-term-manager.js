@@ -98,7 +98,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     const goTo = isEmpty(parent) ? null : parent.id;
     this.args.term.deleteRecord();
     if (parent) {
-      const siblings = ((await parent.children)).slice();
+      const siblings = (await parent.children).slice();
       siblings.splice(siblings.indexOf(this.args.term), 1);
       parent.set('children', siblings);
     }
@@ -113,7 +113,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     this.args.manageTerm(null);
   }
 
-  changeIsActive = dropTask(async isActive => {
+  changeIsActive = dropTask(async (isActive) => {
     this.args.term.active = isActive;
     await this.args.term.save();
     this.isActive = this.args.term.active;

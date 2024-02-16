@@ -49,7 +49,7 @@ export default class ConnectionStatusComponent extends Component {
     }
   }
 
-  changeConnectionState = restartableTask(async isOnline => {
+  changeConnectionState = restartableTask(async (isOnline) => {
     this.timer = 5;
     this.multiplier = 1;
     this.stopAttemptingToReconnect = false;
@@ -61,7 +61,7 @@ export default class ConnectionStatusComponent extends Component {
     }
   });
 
-  reconnect = restartableTask(async force => {
+  reconnect = restartableTask(async (force) => {
     if (navigator.onLine) {
       this.changeConnectionState.perform(true);
     }

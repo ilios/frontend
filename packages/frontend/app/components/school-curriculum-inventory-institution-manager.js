@@ -68,7 +68,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
     this.args.manage(false);
   });
 
-  saveOrCancel = dropTask(async event => {
+  saveOrCancel = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.save.perform();

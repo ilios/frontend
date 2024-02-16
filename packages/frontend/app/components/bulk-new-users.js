@@ -143,7 +143,7 @@ export default class BulkNewUsersComponent extends Component {
     });
   }
 
-  updateSelectedFile = restartableTask(async files => {
+  updateSelectedFile = restartableTask(async (files) => {
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       if (files.length > 0) {
@@ -154,12 +154,12 @@ export default class BulkNewUsersComponent extends Component {
     }
   });
 
-  setSchool = restartableTask(async id => {
+  setSchool = restartableTask(async (id) => {
     this.schoolId = id;
     this.cohorts = await this.loadCohorts.perform(this.bestSelectedSchool);
   });
 
-  parseFile = restartableTask(async file => {
+  parseFile = restartableTask(async (file) => {
     const proposedUsers = await this.getFileContents(file);
     const existingUsernames = await this.existingUsernames();
     const filledOutUsers = proposedUsers.map((obj) => {
@@ -278,7 +278,7 @@ export default class BulkNewUsersComponent extends Component {
     });
   });
 
-  loadCohorts = restartableTask(async school => {
+  loadCohorts = restartableTask(async (school) => {
     const cohorts = await this.store.query('cohort', {
       filters: {
         schools: [school.id],

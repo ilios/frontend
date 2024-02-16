@@ -71,7 +71,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     this.selectedYear = findById(this.years, id);
   }
 
-  keyboard = dropTask(async ev => {
+  keyboard = dropTask(async (ev) => {
     const keyCode = ev.keyCode;
 
     if (13 === keyCode) {

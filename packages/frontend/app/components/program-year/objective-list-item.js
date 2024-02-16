@@ -95,7 +95,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.highlightSave.perform();
   });
 
-  saveIsActive = dropTask(async active => {
+  saveIsActive = dropTask(async (active) => {
     this.args.programYearObjective.set('active', active);
     await this.args.programYearObjective.save();
     this.highlightSave.perform();
@@ -112,7 +112,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.isManagingDescriptors = true;
   });
 
-  manageTerms = dropTask(async vocabulary => {
+  manageTerms = dropTask(async (vocabulary) => {
     this.selectedVocabulary = vocabulary;
     const terms = await this.args.programYearObjective.terms;
     this.termsBuffer = terms.slice();

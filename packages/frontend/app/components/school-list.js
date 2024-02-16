@@ -48,7 +48,7 @@ export default class SchoolListComponent extends Component {
     this.showNewSchoolForm = false;
   });
 
-  saveOrCancel = dropTask(async event => {
+  saveOrCancel = dropTask(async (event) => {
     const keyCode = event.keyCode;
     const target = event.target;
 

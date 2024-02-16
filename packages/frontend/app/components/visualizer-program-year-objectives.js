@@ -117,7 +117,7 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
     };
   }
 
-  nodeHover = restartableTask(async obj => {
+  nodeHover = restartableTask(async (obj) => {
     await timeout(100);
     const isIcon = this.isIcon;
     if (isIcon || !obj || obj.empty) {

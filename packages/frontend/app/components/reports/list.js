@@ -115,13 +115,13 @@ export default class ReportsListComponent extends Component {
     return this.subjectReportsFilteredByTitle;
   }
 
-  saveNewSubjectReport = dropTask(async report => {
+  saveNewSubjectReport = dropTask(async (report) => {
     this.runningSubjectReport = null;
     this.newSubjectReport = await report.save();
     this.showNewReportForm = false;
   });
 
-  removeReport = dropTask(async report => {
+  removeReport = dropTask(async (report) => {
     await report.destroyRecord();
     this.newSubjectReport = null;
   });
@@ -140,7 +140,7 @@ export default class ReportsListComponent extends Component {
           school,
         ),
       };
-    }
+    },
   );
 
   @action

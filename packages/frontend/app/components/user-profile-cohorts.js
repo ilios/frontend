@@ -61,7 +61,7 @@ export default class UserProfileCohortsComponent extends Component {
 
   load = restartableTask(async () => {
     const primaryCohort = await this.args.user.primaryCohort;
-    const cohorts = ((await this.args.user.cohorts)).slice();
+    const cohorts = (await this.args.user.cohorts).slice();
     this.primaryCohortBuffer = primaryCohort;
     this.secondaryCohortsBuffer = cohorts;
     this.primaryCohortBuffer = primaryCohort;
@@ -69,7 +69,7 @@ export default class UserProfileCohortsComponent extends Component {
 
   cancel = restartableTask(async () => {
     const primaryCohort = await this.args.user.primaryCohort;
-    const cohorts = ((await this.args.user.cohorts)).slice();
+    const cohorts = (await this.args.user.cohorts).slice();
     this.primaryCohortBuffer = primaryCohort;
     this.secondaryCohortsBuffer = cohorts;
     this.args.setIsManaging(false);

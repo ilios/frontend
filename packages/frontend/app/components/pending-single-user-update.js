@@ -25,7 +25,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     );
   }
 
-  updateEmailAddress = dropTask(async update => {
+  updateEmailAddress = dropTask(async (update) => {
     this.args.user.set('email', update.value);
     await this.args.user.save();
     await update.destroyRecord();

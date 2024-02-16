@@ -26,7 +26,7 @@ export default class ProgramYearObjectivesComponent extends Component {
     this.objectiveCount = programYear.hasMany('programYearObjectives').ids().length;
   }
 
-  saveNewObjective = dropTask(async title => {
+  saveNewObjective = dropTask(async (title) => {
     const programYearObjectives = await this.args.programYear.programYearObjectives;
     const position = programYearObjectives.length
       ? sortBy(programYearObjectives.slice(), 'position').reverse()[0].position + 1

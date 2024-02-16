@@ -151,7 +151,7 @@ export default class LearnerGroupsRootComponent extends Component {
       cohort: this.selectedCohort,
     });
     if (fillWithCohort) {
-      const users = ((await this.selectedCohort.users)).slice();
+      const users = (await this.selectedCohort.users).slice();
       group.set('users', users);
     }
     this.savedLearnerGroup = await group.save();
@@ -225,7 +225,7 @@ export default class LearnerGroupsRootComponent extends Component {
     this.args.setSchoolId(schoolId);
   }
 
-  setProgramId = dropTask(async programId => {
+  setProgramId = dropTask(async (programId) => {
     const program = findById(this.programs.slice(), programId);
     const school = await program.school;
     this.args.setSchoolId(school.id);
@@ -233,7 +233,7 @@ export default class LearnerGroupsRootComponent extends Component {
     this.args.setProgramYearId(null);
   });
 
-  setProgramYearId = dropTask(async programYearId => {
+  setProgramYearId = dropTask(async (programYearId) => {
     const programYear = findById(this.programYears.slice(), programYearId);
     const program = await programYear.program;
     const school = await program.school;

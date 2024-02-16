@@ -26,7 +26,7 @@ export default class SchoolVocabularyNewTermComponent extends Component {
     this.title = null;
   });
 
-  saveOnEnter = dropTask(async event => {
+  saveOnEnter = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.save.perform();
