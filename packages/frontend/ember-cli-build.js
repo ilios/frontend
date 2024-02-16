@@ -25,7 +25,10 @@ module.exports = function (defaults) {
 
     hinting: isTestBuild,
     babel: {
-      plugins: [require.resolve('ember-auto-import/babel-plugin')],
+      plugins: [
+        require.resolve('ember-auto-import/babel-plugin'),
+        require.resolve('ember-concurrency/async-arrow-task-transform'),
+      ],
     },
     'ember-cli-image-transformer': {
       images: [
