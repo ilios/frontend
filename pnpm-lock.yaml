@@ -658,6 +658,9 @@ importers:
       ember-cli-babel:
         specifier: ^8.2.0
         version: 8.2.0(@babel/core@7.24.0)
+      ember-cli-browserstack:
+        specifier: ^3.0.0
+        version: 3.0.0
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
@@ -769,6 +772,9 @@ importers:
       stylelint-scss:
         specifier: ^6.2.1
         version: 6.2.1(stylelint@16.2.1)
+      testem-failure-only-reporter:
+        specifier: ^1.0.0
+        version: 1.0.0
       tracked-built-ins:
         specifier: ^3.3.0
         version: 3.3.0
@@ -841,6 +847,9 @@ importers:
       ember-cli-babel:
         specifier: ^8.2.0
         version: 8.2.0(@babel/core@7.24.0)
+      ember-cli-browserstack:
+        specifier: ^3.0.0
+        version: 3.0.0
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
@@ -955,6 +964,9 @@ importers:
       stylelint-scss:
         specifier: ^6.2.1
         version: 6.2.1(stylelint@16.2.1)
+      testem-failure-only-reporter:
+        specifier: ^1.0.0
+        version: 1.0.0
       tracked-built-ins:
         specifier: ^3.3.0
         version: 3.3.0
