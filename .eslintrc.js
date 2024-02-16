@@ -12,12 +12,7 @@ module.exports = {
     },
   },
   plugins: ['ember'],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended',
-    'plugin:prettier/recommended',
-    'plugin:yml/standard',
-  ],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {
     browser: true,
   },
@@ -71,6 +66,16 @@ module.exports = {
         'qunit/require-expect': [2, 'except-simple'],
         'ember/no-classic-classes': 0,
       },
+    },
+    {
+      // YAML files
+      files: [
+        './.github/dependabot.yml',
+        './.github/workflows/*.{yaml,yml}',
+        './packages/**/translations/*.{yaml,yml}',
+      ],
+      extends: ['plugin:yml/recommended'],
+      parser: 'yaml-eslint-parser',
     },
   ],
 };
