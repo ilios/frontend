@@ -56,9 +56,8 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
     return this.sortedProgramYears.map(({ programYear }) => programYear);
   }
 
-  @task
-  *setInitialValue() {
-    yield timeout(1); //wait a moment so we can render before setting
+  setInitialValue = task(async () => {
+    await timeout(1); //wait a moment so we can render before setting
     const ids = this.programYears.map(({ id }) => id);
     if (ids.includes(this.args.currentId)) {
       return;
@@ -68,5 +67,5 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
     } else {
       this.args.changeId(this.programYears[0].id);
     }
-  }
+  });
 }

@@ -31,9 +31,8 @@ export default class ReportsSubjectNewCompetencyComponent extends Component {
     return sortBy(this.filteredCompetencies, 'title');
   }
 
-  @task
-  *setInitialValue() {
-    yield timeout(1); //wait a moment so we can render before setting
+  setInitialValue = task(async () => {
+    await timeout(1); //wait a moment so we can render before setting
     const ids = this.sortedCompetencies.map(({ id }) => id);
     if (ids.includes(this.args.currentId)) {
       return;
@@ -43,5 +42,5 @@ export default class ReportsSubjectNewCompetencyComponent extends Component {
     } else {
       this.args.changeId(this.sortedCompetencies[0].id);
     }
-  }
+  });
 }

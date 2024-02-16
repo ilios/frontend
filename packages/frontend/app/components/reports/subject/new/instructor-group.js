@@ -31,9 +31,8 @@ export default class ReportsSubjectNewInstructorGroupComponent extends Component
     return sortBy(this.filteredInstructorGroups, 'title');
   }
 
-  @task
-  *setInitialValue() {
-    yield timeout(1); //wait a moment so we can render before setting
+  setInitialValue = task(async () => {
+    await timeout(1); //wait a moment so we can render before setting
     const ids = this.sortedInstructorGroups.map(({ id }) => id);
     if (ids.includes(this.args.currentId)) {
       return;
@@ -43,5 +42,5 @@ export default class ReportsSubjectNewInstructorGroupComponent extends Component
     } else {
       this.args.changeId(this.sortedInstructorGroups[0].id);
     }
-  }
+  });
 }
