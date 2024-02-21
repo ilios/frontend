@@ -31,18 +31,17 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
     return this.#loadedSchools[schoolId];
   }
 
-  @restartableTask
-  *load() {
-    yield this.loadSchool(this.args.school.id);
-    const vocabularies = (yield this.args.school.vocabularies).slice();
-    this.schoolVocabularies = yield map(vocabularies, async (vocabulary) => {
+  load = restartableTask(async () => {
+    await this.loadSchool(this.args.school.id);
+    const vocabularies = (await this.args.school.vocabularies).slice();
+    this.schoolVocabularies = await map(vocabularies, async (vocabulary) => {
       const terms = await vocabulary.terms;
       return {
         vocabulary,
         terms,
       };
     });
-  }
+  });
 
   get managedVocabulary() {
     if (!this.args.managedVocabularyId || !this.schoolVocabularies.length) {
@@ -81,14 +80,13 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
     }
   }
 
-  @dropTask
-  *saveNewVocabulary(title, school, active) {
+  saveNewVocabulary = dropTask(async (title, school, active) => {
     const vocabulary = this.store.createRecord('vocabulary', {
       title,
       school,
       active,
     });
     this.args.setSchoolNewVocabulary(null);
-    yield vocabulary.save();
-  }
+    await vocabulary.save();
+  });
 }

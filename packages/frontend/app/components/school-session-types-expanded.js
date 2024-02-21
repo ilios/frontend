@@ -14,11 +14,10 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
     return !!this.args.managedSessionTypeId;
   }
 
-  @restartableTask
-  *load(element, [school]) {
-    this.sessionTypes = yield school.sessionTypes;
+  load = restartableTask(async (element, [school]) => {
+    this.sessionTypes = await school.sessionTypes;
     this.isCollapsible = !this.isManaging && this.sessionTypes.length;
-  }
+  });
 
   get managedSessionType() {
     if (!this.sessionTypes) {
@@ -35,38 +34,40 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
     }
   }
 
-  @dropTask
-  *save(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
-    this.args.setSchoolNewSessionType(null);
-    const sessionType = this.store.createRecord('sessionType');
-    const aamcMethods = aamcMethod ? [aamcMethod] : [];
-    sessionType.setProperties({
-      school: this.args.school,
-      title,
-      calendarColor,
-      assessment,
-      assessmentOption,
-      aamcMethods,
-      active: isActive,
-    });
+  save = dropTask(
+    async (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
+      this.args.setSchoolNewSessionType(null);
+      const sessionType = this.store.createRecord('sessionType');
+      const aamcMethods = aamcMethod ? [aamcMethod] : [];
+      sessionType.setProperties({
+        school: this.args.school,
+        title,
+        calendarColor,
+        assessment,
+        assessmentOption,
+        aamcMethods,
+        active: isActive,
+      });
 
-    yield sessionType.save();
-  }
+      await sessionType.save();
+    },
+  );
 
-  @dropTask
-  *update(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
-    const aamcMethods = aamcMethod ? [aamcMethod] : [];
-    const sessionType = this.managedSessionType;
-    this.args.setSchoolManagedSessionType(null);
-    sessionType.setProperties({
-      title,
-      calendarColor,
-      assessment,
-      assessmentOption,
-      aamcMethods,
-      active: isActive,
-    });
+  update = dropTask(
+    async (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
+      const aamcMethods = aamcMethod ? [aamcMethod] : [];
+      const sessionType = this.managedSessionType;
+      this.args.setSchoolManagedSessionType(null);
+      sessionType.setProperties({
+        title,
+        calendarColor,
+        assessment,
+        assessmentOption,
+        aamcMethods,
+        active: isActive,
+      });
 
-    yield sessionType.save();
-  }
+      await sessionType.save();
+    },
+  );
 }

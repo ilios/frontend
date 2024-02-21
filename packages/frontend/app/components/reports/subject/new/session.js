@@ -52,18 +52,17 @@ export default class ReportsSubjectNewSessionComponent extends Component {
     });
   }
 
-  @restartableTask
-  *search(q) {
+  search = restartableTask(async (q) => {
     if (!q.length) {
       this.sessions = false;
       return;
     }
 
-    this.sessions = yield this.store.query('session', {
+    this.sessions = await this.store.query('session', {
       q: q,
       include: 'course',
     });
-  }
+  });
 
   @action
   clear() {

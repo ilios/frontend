@@ -108,16 +108,15 @@ export default class ProgramYearCompetenciesComponent extends Component {
     }
   }
 
-  @task
-  *save() {
-    yield timeout(10);
+  save = task(async () => {
+    await timeout(10);
     this.args.programYear.set('competencies', this.selectedCompetencies);
     try {
-      yield this.args.programYear.save();
+      await this.args.programYear.save();
     } finally {
       this.flashMessages.success('general.savedSuccessfully');
       this.args.setIsManaging(false);
       this.args.expand();
     }
-  }
+  });
 }

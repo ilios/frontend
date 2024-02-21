@@ -115,34 +115,33 @@ export default class ReportsListComponent extends Component {
     return this.subjectReportsFilteredByTitle;
   }
 
-  @dropTask
-  *saveNewSubjectReport(report) {
+  saveNewSubjectReport = dropTask(async (report) => {
     this.runningSubjectReport = null;
-    this.newSubjectReport = yield report.save();
+    this.newSubjectReport = await report.save();
     this.showNewReportForm = false;
-  }
+  });
 
-  @dropTask
-  *removeReport(report) {
-    yield report.destroyRecord();
+  removeReport = dropTask(async (report) => {
+    await report.destroyRecord();
     this.newSubjectReport = null;
-  }
+  });
 
-  @restartableTask
-  *runSubjectReport(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
-    this.runningSubjectReport = {
-      subject,
-      prepositionalObject,
-      prepositionalObjectTableRowId,
-      school,
-      description: yield this.reporting.buildReportDescription(
+  runSubjectReport = restartableTask(
+    async (subject, prepositionalObject, prepositionalObjectTableRowId, school) => {
+      this.runningSubjectReport = {
         subject,
         prepositionalObject,
         prepositionalObjectTableRowId,
         school,
-      ),
-    };
-  }
+        description: await this.reporting.buildReportDescription(
+          subject,
+          prepositionalObject,
+          prepositionalObjectTableRowId,
+          school,
+        ),
+      };
+    },
+  );
 
   @action
   toggleNewReportForm() {

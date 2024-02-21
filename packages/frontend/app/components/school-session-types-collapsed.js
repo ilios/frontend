@@ -6,10 +6,9 @@ import { filterBy } from 'ilios-common/utils/array-helpers';
 export default class SchoolSessionTypesCollapseComponent extends Component {
   @tracked sessionTypes = [];
 
-  @restartableTask
-  *load(element, [school]) {
-    this.sessionTypes = yield school.sessionTypes;
-  }
+  load = restartableTask(async (element, [school]) => {
+    this.sessionTypes = await school.sessionTypes;
+  });
 
   get instructionalMethods() {
     return filterBy(this.sessionTypes, 'assessment', false);

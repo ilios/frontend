@@ -7,12 +7,11 @@ import { validatable, Length, NotBlank } from 'ilios-common/decorators/validatio
 export default class NewCompetencyComponent extends Component {
   @tracked @NotBlank() @Length(1, 200) title;
 
-  @dropTask
-  *cancelOrSave(event) {
+  cancelOrSave = dropTask(async (event) => {
     const keyCode = event.keyCode;
 
     if (13 === keyCode) {
-      yield this.save.perform();
+      await this.save.perform();
       return;
     }
 
@@ -20,18 +19,17 @@ export default class NewCompetencyComponent extends Component {
       this.removeErrorDisplayFor('title');
       this.title = null;
     }
-  }
+  });
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     const title = this.title;
-    yield this.args.add(title);
+    await this.args.add(title);
     this.removeErrorDisplayFor('title');
     this.title = null;
-  }
+  });
 }

@@ -80,24 +80,23 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     return 0 === num;
   }
 
-  @restartableTask
-  *load(element, [sequenceBlock]) {
-    this.report = yield sequenceBlock.report;
-    this.parent = yield sequenceBlock.parent;
-    this.academicLevels = (yield this.report.academicLevels).slice();
+  load = restartableTask(async (element, [sequenceBlock]) => {
+    this.report = await sequenceBlock.report;
+    this.parent = await sequenceBlock.parent;
+    this.academicLevels = (await this.report.academicLevels).slice();
     this.isInOrderedSequence = false;
     this.orderInSequenceOptions = [];
     if (isPresent(this.parent) && this.parent.isOrdered) {
       this.isInOrderedSequence = true;
-      const siblings = yield this.parent.children;
+      const siblings = await this.parent.children;
       for (let i = 0, n = siblings.slice().length; i < n; i++) {
         const num = i + 1;
         this.orderInSequenceOptions.push(num);
       }
     }
-    this.linkedSessions = yield sequenceBlock.sessions;
-    this.startingAcademicLevel = yield sequenceBlock.startingAcademicLevel;
-    this.endingAcademicLevel = yield sequenceBlock.endingAcademicLevel;
+    this.linkedSessions = await sequenceBlock.sessions;
+    this.startingAcademicLevel = await sequenceBlock.startingAcademicLevel;
+    this.endingAcademicLevel = await sequenceBlock.endingAcademicLevel;
     this.required = sequenceBlock.required.toString();
     this.duration = sequenceBlock.duration;
     this.startDate = sequenceBlock.startDate;
@@ -105,12 +104,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.childSequenceOrder = sequenceBlock.childSequenceOrder.toString();
     this.orderInSequence = sequenceBlock.orderInSequence;
     this.description = sequenceBlock.description;
-    this.course = yield sequenceBlock.course;
+    this.course = await sequenceBlock.course;
     this.minimum = sequenceBlock.minimum;
     this.maximum = sequenceBlock.maximum;
-    this.sessions = yield this.getSessions(this.course);
-    this.linkableCourses = yield this.getLinkableCourses(this.report, this.course);
-  }
+    this.sessions = await this.getSessions(this.course);
+    this.linkableCourses = await this.getLinkableCourses(this.report, this.course);
+  });
 
   get requiredLabel() {
     switch (this.required) {
@@ -196,14 +195,13 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     return sessions.slice();
   }
 
-  @dropTask
-  *changeRequired() {
+  changeRequired = dropTask(async () => {
     this.args.sequenceBlock.required = parseInt(this.required, 10);
     if ('2' === this.required) {
       this.args.sequenceBlock.minimum = 0;
     }
-    yield this.args.sequenceBlock.save();
-  }
+    await this.args.sequenceBlock.save();
+  });
 
   @action
   setRequired(required) {
@@ -239,46 +237,42 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.course = await this.args.sequenceBlock.get('course');
   }
 
-  @dropTask()
-  *changeTrack(value) {
+  changeTrack = dropTask(async (value) => {
     this.args.sequenceBlock.set('track', value);
-    yield this.args.sequenceBlock.save();
-  }
+    await this.args.sequenceBlock.save();
+  });
 
-  @dropTask()
-  *saveDescription() {
+  saveDescription = dropTask(async () => {
     this.args.sequenceBlock.set('description', this.description);
-    yield this.args.sequenceBlock.save();
-  }
+    await this.args.sequenceBlock.save();
+  });
 
   @action
   revertDescriptionChanges() {
     this.description = this.args.sequenceBlock.get('description');
   }
 
-  @dropTask
-  *changeChildSequenceOrder() {
+  changeChildSequenceOrder = dropTask(async () => {
     this.args.sequenceBlock.set('childSequenceOrder', parseInt(this.childSequenceOrder, 10));
-    const savedBlock = yield this.args.sequenceBlock.save();
-    const children = yield savedBlock.get('children');
-    yield all(children.map((child) => child.reload()));
-  }
+    const savedBlock = await this.args.sequenceBlock.save();
+    const children = await savedBlock.get('children');
+    await all(children.map((child) => child.reload()));
+  });
 
   @action
   revertChildSequenceOrderChanges() {
     this.childSequenceOrder = this.args.sequenceBlock.get('childSequenceOrder').toString();
   }
 
-  @dropTask
-  *changeStartingAcademicLevel() {
+  changeStartingAcademicLevel = dropTask(async () => {
     this.addErrorDisplaysFor(['startingAcademicLevel']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.args.sequenceBlock.set('startingAcademicLevel', this.startingAcademicLevel);
-    yield this.args.sequenceBlock.save();
-  }
+    await this.args.sequenceBlock.save();
+  });
 
   @action
   setStartingAcademicLevel(event) {
@@ -291,16 +285,15 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.startingAcademicLevel = this.args.sequenceBlock.startingAcademicLevel;
   }
 
-  @dropTask
-  *changeEndingAcademicLevel() {
+  changeEndingAcademicLevel = dropTask(async () => {
     this.addErrorDisplaysFor(['endingAcademicLevel']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.args.sequenceBlock.set('endingAcademicLevel', this.endingAcademicLevel);
-    yield this.args.sequenceBlock.save();
-  }
+    await this.args.sequenceBlock.save();
+  });
 
   @action
   setEndingAcademicLevel(event) {
@@ -313,14 +306,13 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.endingAcademicLevel = this.args.sequenceBlock.endingAcademicLevel;
   }
 
-  @dropTask
-  *changeOrderInSequence() {
+  changeOrderInSequence = dropTask(async () => {
     this.args.sequenceBlock.set('orderInSequence', this.orderInSequence);
-    const savedBlock = yield this.args.sequenceBlock.save();
-    const parent = yield savedBlock.parent;
-    const children = yield parent.children;
-    yield all(children.map((child) => child.reload()));
-  }
+    const savedBlock = await this.args.sequenceBlock.save();
+    const parent = await savedBlock.parent;
+    const children = await parent.children;
+    await all(children.map((child) => child.reload()));
+  });
 
   @action
   revertOrderInSequenceChanges() {
@@ -349,13 +341,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.isManagingSessions = false;
   }
 
-  @dropTask
-  *changeSessions(sessions, excludedSessions) {
+  changeSessions = dropTask(async (sessions, excludedSessions) => {
     this.args.sequenceBlock.set('sessions', sessions);
     this.args.sequenceBlock.set('excludedSessions', excludedSessions);
-    yield this.args.sequenceBlock.save();
+    await this.args.sequenceBlock.save();
     this.isManagingSessions = false;
-  }
+  });
 
   @action
   updateCourse(event) {
@@ -440,19 +431,18 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     });
   }
 
-  @dropTask
-  *saveMinMax() {
+  saveMinMax = dropTask(async () => {
     this.addErrorDisplaysFor(['minimum', 'maximum']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.args.sequenceBlock.minimum = this.minimum;
     this.args.sequenceBlock.maximum = this.maximum;
 
-    yield this.args.sequenceBlock.save();
+    await this.args.sequenceBlock.save();
     this.isEditingMinMax = false;
-  }
+  });
 
   @action
   changeStartDate(startDate) {
@@ -464,19 +454,18 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.endDate = endDate;
   }
 
-  @dropTask
-  *saveDuration() {
+  saveDuration = dropTask(async () => {
     this.addErrorDisplaysFor(['startDate', 'endDate', 'duration']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.args.sequenceBlock.startDate = this.startDate;
     this.args.sequenceBlock.endDate = this.endDate;
     this.args.sequenceBlock.duration = this.duration;
-    yield this.args.sequenceBlock.save();
+    await this.args.sequenceBlock.save();
     this.isEditingDatesAndDuration = false;
-  }
+  });
 
   @action
   cancelDurationEditing() {

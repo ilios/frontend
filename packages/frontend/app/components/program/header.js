@@ -13,18 +13,17 @@ export default class ProgramHeaderComponent extends Component {
     this.title = this.args.program.title;
   }
 
-  @dropTask
-  *changeTitle() {
+  changeTitle = dropTask(async () => {
     if (this.title !== this.args.program.title) {
       this.addErrorDisplayFor('title');
-      const isValid = yield this.isValid('title');
+      const isValid = await this.isValid('title');
       if (!isValid) {
         return false;
       }
       this.args.program.set('title', this.title);
-      yield this.args.program.save();
+      await this.args.program.save();
       this.title = this.args.program.title;
       this.removeErrorDisplayFor('title');
     }
-  }
+  });
 }

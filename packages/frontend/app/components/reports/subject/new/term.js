@@ -64,9 +64,8 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
     return sortBy(this.filteredTerms, ['vocabulary.title', 'title']);
   }
 
-  @task
-  *setInitialValue() {
-    yield timeout(1); //wait a moment so we can render before setting
+  setInitialValue = task(async () => {
+    await timeout(1); //wait a moment so we can render before setting
     const ids = this.sortedTerms.map(({ term }) => term.id);
     if (ids.includes(this.args.currentId)) {
       return;
@@ -76,5 +75,5 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
     } else {
       this.args.changeId(this.sortedTerms[0].term.id);
     }
-  }
+  });
 }

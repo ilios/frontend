@@ -72,14 +72,13 @@ export default class LearnerGroupListItemComponent extends Component {
     return !!linkedChildren.length;
   }
 
-  @dropTask
-  *remove() {
-    const descendants = yield this.args.learnerGroup.allDescendants;
-    yield all([
+  remove = dropTask(async () => {
+    const descendants = await this.args.learnerGroup.allDescendants;
+    await all([
       ...descendants.map((descendant) => descendant.destroyRecord()),
       this.args.learnerGroup.destroyRecord(),
     ]);
-  }
+  });
 
   @action
   copyWithLearners() {

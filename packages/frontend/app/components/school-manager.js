@@ -42,19 +42,18 @@ export default class SchoolManagerComponent extends Component {
     return this.sessionTypesData.isResolved ? !!this.sessionTypesData.value.length : false;
   }
 
-  @dropTask
-  *changeTitle() {
+  changeTitle = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
 
     this.args.school.title = this.title;
-    this.newSchool = yield this.args.school.save();
+    this.newSchool = await this.args.school.save();
     this.flashMessages.success('general.savedSuccessfully');
-  }
+  });
 
   @action
   revertTitleChanges() {

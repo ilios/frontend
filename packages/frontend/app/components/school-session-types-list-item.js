@@ -5,8 +5,7 @@ import { dropTask } from 'ember-concurrency';
 export default class SchoolSessionTypesListItemComponent extends Component {
   @tracked showRemoveConfirmation = false;
 
-  @dropTask
-  *remove() {
-    yield this.args.sessionType.destroyRecord();
-  }
+  remove = dropTask(async () => {
+    await this.args.sessionType.destroyRecord();
+  });
 }

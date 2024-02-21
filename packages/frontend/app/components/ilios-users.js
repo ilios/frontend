@@ -32,15 +32,13 @@ export default class IliosUsersComponent extends Component {
     return ensureSafeComponent(component, this);
   }
 
-  @restartableTask
-  *load() {
-    yield this.searchForUsers.perform();
-  }
+  load = restartableTask(async () => {
+    await this.searchForUsers.perform();
+  });
 
-  @restartableTask
-  *searchForUsers() {
+  searchForUsers = restartableTask(async () => {
     const q = cleanQuery(this.args.query);
-    yield timeout(DEBOUNCE_TIMEOUT);
+    await timeout(DEBOUNCE_TIMEOUT);
     return this.store.query('user', {
       limit: this.args.limit,
       q,
@@ -48,5 +46,5 @@ export default class IliosUsersComponent extends Component {
       'order_by[lastName]': 'ASC',
       'order_by[firstName]': 'ASC',
     });
-  }
+  });
 }

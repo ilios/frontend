@@ -221,11 +221,10 @@ export default class LearnerGroupUploadDataComponent extends Component {
     });
   }
 
-  @task
-  *continue() {
-    yield timeout(10);
-    const matchedGroups = yield this.getMatchedGroups();
+  continue = task(async () => {
+    await timeout(10);
+    const matchedGroups = await this.getMatchedGroups();
     this.args.sendValidUsers(this.validUsers);
     this.args.sendMatchedGroups(matchedGroups);
-  }
+  });
 }

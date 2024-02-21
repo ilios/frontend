@@ -16,15 +16,14 @@ export default class UnassignedStudentsSummaryComponent extends Component {
     return this.unassignedStudents?.length > 0;
   }
 
-  @restartableTask
-  *load(element, [schoolId]) {
+  load = restartableTask(async (element, [schoolId]) => {
     if (schoolId) {
       this.selectedSchool = findById(this.args.schools.slice(), schoolId);
     } else {
-      const user = yield this.currentUser.getModel();
-      this.selectedSchool = yield user.school;
+      const user = await this.currentUser.getModel();
+      this.selectedSchool = await user.school;
     }
-    this.unassignedStudents = yield this.store.query('user', {
+    this.unassignedStudents = await this.store.query('user', {
       filters: {
         cohorts: null,
         enabled: true,
@@ -32,5 +31,5 @@ export default class UnassignedStudentsSummaryComponent extends Component {
         school: this.selectedSchool.id,
       },
     });
-  }
+  });
 }

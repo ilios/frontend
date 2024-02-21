@@ -15,18 +15,17 @@ export default class InstructorGroupHeaderComponent extends Component {
     this.title = this.args.instructorGroup.title;
   }
 
-  @dropTask
-  *changeTitle() {
+  changeTitle = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid('title');
+    const isValid = await this.isValid('title');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
     this.args.instructorGroup.title = this.title;
-    yield this.args.instructorGroup.save();
+    await this.args.instructorGroup.save();
     this.title = this.args.instructorGroup.title;
-  }
+  });
 
   @action
   revertTitleChanges() {

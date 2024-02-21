@@ -221,11 +221,10 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     });
   }
 
-  @restartableTask
-  *load() {
+  load = restartableTask(async () => {
     this.orderInSequence = 0;
     if (this.isInOrderedSequence) {
-      const siblings = yield this.args.parent.children;
+      const siblings = await this.args.parent.children;
       for (let i = 0, n = siblings.slice().length + 1; i < n; i++) {
         this.orderInSequenceOptions.push(i + 1);
       }
@@ -234,39 +233,37 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     this.childSequenceOrder = this.childSequenceOrderOptions[0];
     this.required = this.requiredOptions[0];
     if (this.args.parent) {
-      this.startingAcademicLevel = yield this.args.parent.startingAcademicLevel;
-      this.endingAcademicLevel = yield this.args.parent.endingAcademicLevel;
+      this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
+      this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
     }
     if (this.args.report) {
-      this.academicLevels = yield this.args.report.academicLevels;
+      this.academicLevels = await this.args.report.academicLevels;
       if (this.args.parent) {
-        this.startingAcademicLevel = yield this.args.parent.startingAcademicLevel;
-        this.endingAcademicLevel = yield this.args.parent.endingAcademicLevel;
+        this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
+        this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
       } else {
         this.startingAcademicLevel = this.academicLevels.slice()[0];
         this.endingAcademicLevel = this.academicLevels.slice()[0];
       }
-      this.linkableCourses = yield this.getLinkableCourses(this.args.report);
+      this.linkableCourses = await this.getLinkableCourses(this.args.report);
     }
-  }
+  });
 
-  @restartableTask
-  *reload() {
+  reload = restartableTask(async () => {
     if (this.args.report) {
-      this.academicLevels = yield this.args.report.academicLevels;
+      this.academicLevels = await this.args.report.academicLevels;
       if (this.args.parent) {
-        this.startingAcademicLevel = yield this.args.parent.startingAcademicLevel;
-        this.endingAcademicLevel = yield this.args.parent.endingAcademicLevel;
+        this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
+        this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
       } else {
         this.startingAcademicLevel = this.academicLevels.slice()[0];
         this.endingAcademicLevel = this.academicLevels.slice()[0];
       }
-      this.linkableCourses = yield this.getLinkableCourses(this.args.report);
+      this.linkableCourses = await this.getLinkableCourses(this.args.report);
     }
-  }
+  });
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplaysFor([
       'title',
       'duration',
@@ -276,7 +273,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       'maximum',
       'endingAcademicLevel',
     ]);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -298,6 +295,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       duration: this.duration || 0,
       report: this.args.report,
     });
-    yield this.args.save(block);
-  }
+    await this.args.save(block);
+  });
 }

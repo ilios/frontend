@@ -23,10 +23,9 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
     });
   }
 
-  @dropTask
-  *save() {
-    yield timeout(10);
-    const treeGroups = yield map(this.finalData, async ({ learnerGroup, user }) => {
+  save = dropTask(async () => {
+    await timeout(10);
+    const treeGroups = await map(this.finalData, async ({ learnerGroup, user }) => {
       return learnerGroup.addUserToGroupAndAllParents(user);
     });
 
@@ -34,8 +33,8 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
       return [...flattened, ...arr];
     }, []);
 
-    yield all(uniqueValues(flat).map((o) => o.save()));
+    await all(uniqueValues(flat).map((o) => o.save()));
     this.flashMessages.success('general.savedSuccessfully');
     this.args.done();
-  }
+  });
 }

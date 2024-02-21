@@ -109,9 +109,8 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
       });
   }
 
-  @restartableTask
-  *donutHover(obj) {
-    yield timeout(100);
+  donutHover = restartableTask(async (obj) => {
+    await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
@@ -120,7 +119,7 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
 
     this.tooltipTitle = htmlSafe(obj.label);
     this.tooltipContent = obj.description;
-  }
+  });
 
   @action
   donutClick(obj) {

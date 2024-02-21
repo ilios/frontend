@@ -27,16 +27,15 @@ export default class InstructorGroupUsersComponent extends Component {
     this.usersBuffer = this.usersBuffer.filter((obj) => obj !== user);
   }
 
-  @dropTask
-  *manage() {
-    this.usersBuffer = (yield this.args.instructorGroup.users).slice();
+  manage = dropTask(async () => {
+    this.usersBuffer = (await this.args.instructorGroup.users).slice();
     this.isManaging = true;
-  }
-  @dropTask
-  *save() {
-    yield timeout(10);
+  });
+
+  save = dropTask(async () => {
+    await timeout(10);
     this.args.instructorGroup.set('users', this.usersBuffer);
-    yield this.args.instructorGroup.save();
+    await this.args.instructorGroup.save();
     this.isManaging = false;
-  }
+  });
 }

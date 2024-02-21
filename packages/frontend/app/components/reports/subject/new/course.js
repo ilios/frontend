@@ -41,17 +41,16 @@ export default class ReportsSubjectNewCourseComponent extends Component {
     });
   }
 
-  @restartableTask
-  *search(q) {
+  search = restartableTask(async (q) => {
     if (!q.length) {
       this.courses = false;
       return;
     }
 
-    this.courses = yield this.store.query('course', {
+    this.courses = await this.store.query('course', {
       q,
     });
-  }
+  });
 
   @action
   clear() {

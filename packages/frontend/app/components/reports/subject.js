@@ -76,33 +76,31 @@ export default class ReportsSubjectComponent extends Component {
     return null;
   }
 
-  @dropTask
-  *changeTitle() {
+  changeTitle = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid('title');
+    const isValid = await this.isValid('title');
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
     this.args.report.title = this.title;
-    yield this.args.report.save();
-  }
+    await this.args.report.save();
+  });
 
   @action
   revertTitleChanges() {
     this.title = this.reportTitle;
   }
 
-  @dropTask
-  *downloadReport() {
+  downloadReport = dropTask(async () => {
     const report = this.args.report;
     const title = this.reportTitle;
     const year = this.args.selectedYear;
-    const data = yield this.reporting.getArrayResults(report, year);
+    const data = await this.reporting.getArrayResults(report, year);
     this.finishedBuildingReport = true;
     const csv = PapaParse.unparse(data);
     createDownloadFile(`${title}.csv`, csv, 'text/csv');
-    yield timeout(2000);
+    await timeout(2000);
     this.finishedBuildingReport = false;
-  }
+  });
 }

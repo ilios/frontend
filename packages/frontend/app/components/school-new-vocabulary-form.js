@@ -15,28 +15,26 @@ export default class SchoolNewVocabularyFormComponent extends Component {
   @Custom('validateTitleCallback', 'validateTitleMessageCallback')
   title;
 
-  @dropTask
-  *saveNew() {
+  saveNew = dropTask(async () => {
     this.addErrorDisplaysFor(['title']);
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    yield this.args.save.linked().perform(this.title, this.args.school, true);
+    await this.args.save.linked().perform(this.title, this.args.school, true);
     this.clearErrorDisplay();
-  }
+  });
 
-  @dropTask
-  *saveOrCancel(event) {
+  saveOrCancel = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
-      yield this.saveNew.perform();
+      await this.saveNew.perform();
       return;
     }
     if (27 === keyCode) {
       this.args.close();
     }
-  }
+  });
 
   async validateTitleCallback() {
     const allVocabsInSchool = await this.args.school.vocabularies;

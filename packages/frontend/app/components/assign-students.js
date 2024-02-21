@@ -39,17 +39,16 @@ export default class AssignStudentsComponent extends Component {
     return this.args.students.length - this.savedUserIds.length;
   }
 
-  @restartableTask
-  *load(element, [school]) {
-    let cohorts = yield this.store.query('cohort', {
+  load = restartableTask(async (element, [school]) => {
+    let cohorts = await this.store.query('cohort', {
       filters: {
         schools: [school.id],
       },
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = yield all(mapBy(cohorts.slice(), 'programYear'));
-    yield all(mapBy(programYears.slice(), 'program'));
+    const programYears = await all(mapBy(cohorts.slice(), 'programYear'));
+    await all(mapBy(programYears.slice(), 'program'));
 
     cohorts = cohorts.slice();
     const allCohorts = [];
@@ -60,8 +59,8 @@ export default class AssignStudentsComponent extends Component {
         id: cohort.id,
         model: cohort,
       };
-      const programYear = yield cohort.programYear;
-      const program = yield programYear.program;
+      const programYear = await cohort.programYear;
+      const program = await programYear.program;
       obj.title = program.title + ' ' + cohort.title;
       obj.startYear = programYear.startYear;
       obj.duration = program.duration;
@@ -74,7 +73,7 @@ export default class AssignStudentsComponent extends Component {
       const finalYear = Number(obj.startYear) + Number(obj.duration);
       return finalYear > lastYear;
     });
-  }
+  });
 
   @action
   toggleCheck() {
@@ -93,8 +92,7 @@ export default class AssignStudentsComponent extends Component {
     }
   }
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.savedUserIds = [];
     const ids = this.selectedUserIds;
     const cohort = this.bestSelectedCohort;
@@ -109,11 +107,11 @@ export default class AssignStudentsComponent extends Component {
 
     while (studentsToModify.get('length') > 0) {
       const parts = studentsToModify.splice(0, 3);
-      yield all(parts.map((part) => part.save()));
+      await all(parts.map((part) => part.save()));
       this.savedUserIds = [...this.savedUserIds, ...mapBy(parts, 'id')];
     }
     this.selectedUserIds = [];
 
     this.flashMessages.success('general.savedSuccessfully');
-  }
+  });
 }

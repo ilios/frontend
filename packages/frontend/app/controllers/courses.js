@@ -33,10 +33,9 @@ export default class CoursesController extends Controller {
     this.userCoursesOnly = !this.userCoursesOnly;
   }
 
-  @restartableTask
-  *changeTitleFilter(value) {
+  changeTitleFilter = restartableTask(async (value) => {
     this.titleFilter = value;
-    yield timeout(250);
+    await timeout(250);
     return value;
-  }
+  });
 }

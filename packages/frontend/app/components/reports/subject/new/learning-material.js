@@ -25,17 +25,16 @@ export default class ReportsSubjectNewLearningMaterialComponent extends Componen
     return sortBy(this.materials, 'title');
   }
 
-  @restartableTask
-  *search(q) {
+  search = restartableTask(async (q) => {
     if (!q.length) {
       this.materials = false;
       return;
     }
 
-    this.materials = yield this.store.query('learning-material', {
+    this.materials = await this.store.query('learning-material', {
       q,
     });
-  }
+  });
 
   @action
   clear() {

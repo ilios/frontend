@@ -15,25 +15,23 @@ export default class SchoolVocabularyNewTermComponent extends Component {
   @Custom('validateTitleCallback', 'validateTitleMessageCallback')
   title;
 
-  @dropTask
-  *save() {
+  save = dropTask(async () => {
     this.addErrorDisplayFor('title');
-    const isValid = yield this.isValid();
+    const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
-    yield this.args.createTerm(this.title);
+    await this.args.createTerm(this.title);
     this.title = null;
-  }
+  });
 
-  @dropTask
-  *saveOnEnter(event) {
+  saveOnEnter = dropTask(async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
-      yield this.save.perform();
+      await this.save.perform();
     }
-  }
+  });
 
   async validateTitleCallback() {
     const terms = this.args.term

@@ -21,8 +21,7 @@ export default class SchoolCompetenciesCollapsedComponent extends Component {
     });
   }
 
-  @restartableTask
-  *load() {
-    this.competenciesRelationship = yield this.args.school.competencies;
-  }
+  load = restartableTask(async () => {
+    this.competenciesRelationship = await this.args.school.competencies;
+  });
 }
