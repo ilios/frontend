@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import moment from 'moment';
 import { action } from '@ember/object';
 import { deprecate } from '@ember/debug';
 import { DateTime } from 'luxon';
@@ -71,7 +70,7 @@ export default class TimePicker extends Component {
       '58',
       '59',
     ];
-    this.ampms = ['am', 'pm'];
+    this.ampms = ['AM', 'PM'];
   }
 
   get date() {
@@ -89,15 +88,15 @@ export default class TimePicker extends Component {
   }
 
   get hour() {
-    return moment(this.date).format('h');
+    return DateTime.fromJSDate(this.date).toFormat('h');
   }
 
   get minute() {
-    return moment(this.date).format('mm');
+    return DateTime.fromJSDate(this.date).toFormat('mm');
   }
 
   get ampm() {
-    return moment(this.date).format('a');
+    return DateTime.fromJSDate(this.date).toFormat('a');
   }
 
   @action
@@ -105,7 +104,7 @@ export default class TimePicker extends Component {
     let hour = parseInt(event.target.value, 10);
     const ampm = this.ampm;
 
-    if (ampm === 'pm') {
+    if (ampm === 'PM') {
       hour += 12;
     }
 
@@ -122,10 +121,10 @@ export default class TimePicker extends Component {
   changeAmPm(event) {
     const value = event.target.value;
     const currentValue = this.ampm;
-    const hour = moment(this.date).hours();
+    const hour = DateTime.fromJSDate(this.date).hour;
 
     if (value !== currentValue) {
-      if (value === 'am') {
+      if (value === 'AM') {
         this.args.action(hour - 12, 'hour');
       } else {
         this.args.action(hour + 12, 'hour');
