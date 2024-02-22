@@ -1,5 +1,5 @@
 import { registerDecorator } from 'class-validator';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { getOwner } from '@ember/application';
 
 export function BeforeDate(property, validationOptions) {
@@ -32,19 +32,24 @@ export function BeforeDate(property, validationOptions) {
           if (!(beforeValue instanceof Date)) {
             throw new Error(`${beforeKey} must be a Date()`);
           }
-          return moment(value).isBefore(beforeValue, validationOptions?.granularity ?? 'second');
+
+          const granularity = validationOptions?.granularity ?? 'second';
+          return (
+            DateTime.fromJSDate(value).startOf(granularity) <
+            DateTime.fromJSDate(beforeValue).startOf(granularity)
+          );
         },
         defaultMessage({ constraints, object: target }) {
           const owner = getOwner(target);
           const intl = owner.lookup('service:intl');
           const beforeKey = constraints[0];
           const beforeValue = target[beforeKey];
-          const before = moment(beforeValue);
+          const before = DateTime.fromJSDate(beforeValue);
           const description = intl.t('errors.description');
-          const format = validationOptions?.granularity === 'day' ? 'LL' : 'LLL';
+          const format = validationOptions?.granularity === 'day' ? 'DDD' : 'LLLL d, yyyy, t a';
           const message = intl.t('errors.before', {
             description,
-            before: before.format(format),
+            before: before.toFormat(format),
           });
           return message;
         },

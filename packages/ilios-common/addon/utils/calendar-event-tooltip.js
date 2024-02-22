@@ -1,5 +1,5 @@
 import { isBlank } from '@ember/utils';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { htmlSafe } from '@ember/template';
 
 export default function calendarEventTooltip(event, intl, timeFormat) {
@@ -50,8 +50,8 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
 
   const eventLocation = event.location || '';
   const name = event.name;
-  const startTime = moment(event.startDate).format(timeFormat);
-  const endTime = moment(event.endDate).format(timeFormat);
+  const startTime = DateTime.fromISO(event.startDate).toFormat(timeFormat);
+  const endTime = DateTime.fromISO(event.endDate).toFormat(timeFormat);
   const instructors = event.instructors || [];
   const courseTitle = event.courseTitle;
   const sessionTypeTitle = event.sessionTypeTitle;

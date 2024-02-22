@@ -15,8 +15,8 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
     const today = DateTime.fromObject({ hour: 8 });
     const result = calendarEventTooltip(
       {
-        startDate: today.toJSDate(),
-        endDate: today.toJSDate(),
+        startDate: today.toISO(),
+        endDate: today.toISO(),
         name: 'test',
       },
       this.intl,
@@ -28,8 +28,8 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
     const today = DateTime.fromObject({ hour: 8 });
     const result = calendarEventTooltip(
       {
-        startDate: today.toJSDate(),
-        endDate: today.toJSDate(),
+        startDate: today.toISO(),
+        endDate: today.toISO(),
         name: 'test',
         location: 'room 101',
         instructors: ['Larry', 'Curly', 'Moe', 'Shemp'],
@@ -51,8 +51,8 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
     const today = DateTime.fromObject({ hour: 8 });
     const result = calendarEventTooltip(
       {
-        startDate: today.toJSDate(),
-        endDate: today.toJSDate(),
+        startDate: today.toISO(),
+        endDate: today.toISO(),
         name: 'test',
         location: 'room 101',
         instructors: ['Larry', 'Curly', 'Moe', 'Shemp'],

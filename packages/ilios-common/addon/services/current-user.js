@@ -1,7 +1,7 @@
 import { isEmpty } from '@ember/utils';
 import { get } from '@ember/object';
 import Service, { service } from '@ember/service';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import jwtDecode from 'ilios-common/utils/jwt-decode';
 
 export default class CurrentUserService extends Service {
@@ -65,8 +65,8 @@ export default class CurrentUserService extends Service {
     if (isEmpty(user)) {
       return [];
     }
-    let currentYear = moment().format('YYYY');
-    const currentMonth = parseInt(moment().format('M'), 10);
+    let currentYear = DateTime.now().year;
+    const currentMonth = DateTime.now().month;
     if (currentMonth < 6) {
       currentYear--;
     }
