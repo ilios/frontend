@@ -39,7 +39,7 @@ export default class UserEvents extends EventsBase {
   }
 
   /**
-   * Retrieves and event by it's given slug.
+   * Retrieves and event by its given slug.
    * @method getEventForSlug
    * @param {String} slug
    * @return {Promise.<Object>}
