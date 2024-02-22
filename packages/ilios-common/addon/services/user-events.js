@@ -1,6 +1,6 @@
 import EventsBase from 'ilios-common/classes/events-base';
 import { service } from '@ember/service';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class UserEvents extends EventsBase {
@@ -45,12 +45,12 @@ export default class UserEvents extends EventsBase {
    * @return {Promise.<Object>}
    */
   async getEventForSlug(slug) {
-    const from = moment(slug.substring(1, 9), 'YYYYMMDD').hour(0);
-    const to = from.clone().hour(24);
+    const from = DateTime.fromFormat(slug.substring(1, 9), 'yyyyMMdd').set({ hour: 0 });
+    const to = from.set({ hour: 24 });
     const type = slug.substring(9, 10);
     const id = parseInt(slug.substring(10), 10);
 
-    const events = await this.getEvents(from.unix(), to.unix());
+    const events = await this.getEvents(from.toUnixInteger(), to.toUnixInteger());
 
     return events.find((event) => {
       if (type === 'O') {
@@ -70,7 +70,7 @@ export default class UserEvents extends EventsBase {
    */
   getSlugForEvent(event) {
     let slug = 'U';
-    slug += moment(event.startDate).format('YYYYMMDD');
+    slug += DateTime.fromJSDate(event.startDate).toFormat('yyyyMMdd');
     if (event.offering) {
       slug += 'O' + event.offering;
     }
