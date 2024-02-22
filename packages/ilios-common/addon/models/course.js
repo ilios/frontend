@@ -3,7 +3,7 @@ import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { map } from 'rsvp';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class Course extends Model {
@@ -293,12 +293,16 @@ export default class Course extends Model {
   }
 
   setDatesBasedOnYear() {
-    const today = moment();
-    const firstDayOfYear = moment(this.year + '-7-1', 'YYYY-MM-DD');
+    const today = DateTime.now();
+    const firstDayOfYear = DateTime.fromObject({
+      year: this.year,
+      month: 7,
+      day: 1,
+    });
     const startDate = today < firstDayOfYear ? firstDayOfYear : today;
-    const endDate = moment(startDate).add('8', 'weeks');
-    this.startDate = startDate.toDate();
-    this.endDate = endDate.toDate();
+    const endDate = startDate.plus({ weeks: 8 });
+    this.startDate = startDate.toJSDate();
+    this.endDate = endDate.toJSDate();
   }
 
   get xObjectives() {

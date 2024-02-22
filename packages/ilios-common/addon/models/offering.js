@@ -1,5 +1,5 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
@@ -59,35 +59,35 @@ export default class Offering extends Model {
   }
 
   get startDayOfYear() {
-    return moment(this.startDate).format('DDDD');
+    return DateTime.fromJSDate(this.startDate).toFormat('ooo');
   }
 
   get startYear() {
-    return moment(this.startDate).format('YYYY');
+    return DateTime.fromJSDate(this.startDate).toFormat('yyyy');
   }
 
   get startTime() {
-    return moment(this.startDate).format('HHmm');
+    return DateTime.fromJSDate(this.startDate).toFormat('HHmm');
   }
 
   get endDayOfYear() {
-    return moment(this.endDate).format('DDDD');
+    return DateTime.fromJSDate(this.endDate).toFormat('ooo');
   }
 
   get endYear() {
-    return moment(this.endDate).format('YYYY');
+    return DateTime.fromJSDate(this.endDate).toFormat('yyyy');
   }
 
   get endTime() {
-    return moment(this.endDate).format('HHmm');
+    return DateTime.fromJSDate(this.endDate).toFormat('HHmm');
   }
 
   get startYearAndDayOfYear() {
-    return moment(this.startDate).format('DDDDYYYY');
+    return DateTime.fromJSDate(this.startDate).toFormat('oooyyyy');
   }
 
   get endYearAndDayOfYear() {
-    return moment(this.endDate).format('DDDDYYYY');
+    return DateTime.fromJSDate(this.endDate).toFormat('oooyyyy');
   }
 
   get isMultiDay() {
@@ -168,23 +168,23 @@ export default class Offering extends Model {
     if (!this.startDate || !this.endDate) {
       return 0;
     }
-    const mStart = moment(this.startDate);
-    const mEnd = moment(this.endDate);
-    return mEnd.diff(mStart, 'hours');
+    return DateTime.fromJSDate(this.endDate).diff(DateTime.fromJSDate(this.startDate), [
+      'hours',
+      'minutes',
+    ]).hours;
   }
 
   get durationMinutes() {
     if (!this.startDate || !this.endDate) {
       return 0;
     }
-    const mStart = moment(this.startDate);
-    const mEnd = moment(this.endDate);
+    const mEnd = DateTime.fromJSDate(this.endDate);
 
-    const endHour = mEnd.hour();
-    const endMinute = mEnd.minute();
+    const endHour = mEnd.hour;
+    const endMinute = mEnd.minute;
 
-    mStart.hour(endHour);
-    const startMinute = mStart.minute();
+    const mStart = DateTime.fromJSDate(this.startDate).set({ hour: endHour });
+    const startMinute = mStart.minute;
 
     let diff = 0;
     if (endMinute > startMinute) {

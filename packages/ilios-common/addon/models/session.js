@@ -1,5 +1,5 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import striptags from 'striptags';
 import { filter } from 'rsvp';
@@ -262,8 +262,8 @@ export default class SessionModel extends Model {
     }
     const filteredOfferings = this._offeringsData.value.filter((offering) => offering.startDate);
     return filteredOfferings.sort((a, b) => {
-      const aDate = moment(a.startDate);
-      const bDate = moment(b.startDate);
+      const aDate = DateTime.fromJSDate(a.startDate);
+      const bDate = DateTime.fromJSDate(b.startDate);
       if (aDate === bDate) {
         return 0;
       }
@@ -294,8 +294,14 @@ export default class SessionModel extends Model {
       return 0;
     }
     const sortedOfferings = this._offeringsData.value.slice().sort(function (a, b) {
-      const diffA = moment(a.endDate).diff(moment(a.startDate), 'minutes');
-      const diffB = moment(b.endDate).diff(moment(b.startDate), 'minutes');
+      const diffA = DateTime.fromJSDate(a.endDate).diff(
+        DateTime.fromJSDate(a.startDate),
+        'minutes',
+      ).minutes;
+      const diffB = DateTime.fromJSDate(b.endDate).diff(
+        DateTime.fromJSDate(b.startDate),
+        'minutes',
+      ).minutes;
       if (diffA > diffB) {
         return -1;
       } else if (diffA < diffB) {
@@ -305,9 +311,11 @@ export default class SessionModel extends Model {
     });
 
     const offering = sortedOfferings[0];
-    const duration = moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
-
-    return duration.toFixed(2);
+    const duration = DateTime.fromJSDate(offering.endDate).diff(
+      DateTime.fromJSDate(offering.startDate),
+      'hours',
+    );
+    return duration.hours.toFixed(2);
   }
 
   /**
@@ -320,7 +328,13 @@ export default class SessionModel extends Model {
 
     return this._offeringsData.value
       .reduce((total, offering) => {
-        return total + moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
+        return (
+          total +
+          DateTime.fromJSDate(offering.endDate).diff(
+            DateTime.fromJSDate(offering.startDate),
+            'hours',
+          ).hours
+        );
       }, 0)
       .toFixed(2);
   }
@@ -559,7 +573,13 @@ export default class SessionModel extends Model {
 
     return offerings
       .reduce((total, offering) => {
-        return total + moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
+        return (
+          total +
+          DateTime.fromJSDate(offering.endDate).diff(
+            DateTime.fromJSDate(offering.startDate),
+            'hours',
+          ).hours
+        );
       }, 0)
       .toFixed(2);
   }
@@ -581,7 +601,13 @@ export default class SessionModel extends Model {
     });
     const offeringHours = offeringsWithUser
       .reduce((total, offering) => {
-        return total + moment(offering.endDate).diff(moment(offering.startDate), 'hours', true);
+        return (
+          total +
+          DateTime.fromJSDate(offering.endDate).diff(
+            DateTime.fromJSDate(offering.startDate),
+            'hours',
+          ).hours
+        );
       }, 0)
       .toFixed(2);
     return Math.round(offeringHours * 60);
