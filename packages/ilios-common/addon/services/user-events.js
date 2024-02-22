@@ -61,22 +61,4 @@ export default class UserEvents extends EventsBase {
       }
     });
   }
-
-  /**
-   * Generates a slug for a given event.
-   * @method getSlugForEvent
-   * @param {Object} event
-   * @return {String}
-   */
-  getSlugForEvent(event) {
-    let slug = 'U';
-    slug += DateTime.fromJSDate(event.startDate).toFormat('yyyyMMdd');
-    if (event.offering) {
-      slug += 'O' + event.offering;
-    }
-    if (event.ilmSession) {
-      slug += 'I' + event.ilmSession;
-    }
-    return slug;
-  }
 }
