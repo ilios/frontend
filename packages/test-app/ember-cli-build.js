@@ -20,6 +20,13 @@ module.exports = function (defaults) {
     autoImport: {
       watchDependencies: ['ilios-common'],
     },
+    babel: {
+      plugins: [
+        require.resolve('ember-auto-import/babel-plugin'),
+        // eslint-disable-next-line
+        require.resolve('ember-concurrency/async-arrow-task-transform'),
+      ],
+    },
   });
 
   const { maybeEmbroider } = require('@embroider/test-setup');
