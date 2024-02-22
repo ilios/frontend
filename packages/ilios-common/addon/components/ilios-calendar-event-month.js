@@ -2,13 +2,12 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import colorChange from 'ilios-common/utils/color-change';
 import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 
 export default class IliosCalendarEventMonthComponent extends Component {
   @service intl;
-  @service moment;
 
   get isIlm() {
     return !!this.args.event.ilmSession;
@@ -24,7 +23,6 @@ export default class IliosCalendarEventMonthComponent extends Component {
 
   get tooltipContent() {
     //access the locale info here so the getter will recompute when it changes
-    this.moment.locale;
     this.intl.locale;
     return calendarEventTooltip(this.args.event, this.intl, 'h:mma');
   }
@@ -40,9 +38,9 @@ export default class IliosCalendarEventMonthComponent extends Component {
   }
 
   get recentlyUpdated() {
-    const lastModifiedDate = moment(this.args.event.lastModified);
-    const today = moment();
-    const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
+    const lastModifiedDate = DateTime.fromISO(this.args.event.lastModified);
+    const today = DateTime.now();
+    const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days').days;
 
     return daysSinceLastUpdate < 6 ? true : false;
   }
