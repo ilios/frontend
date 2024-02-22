@@ -294,7 +294,11 @@ export default class Course extends Model {
 
   setDatesBasedOnYear() {
     const today = DateTime.now();
-    const firstDayOfYear = DateTime.fromFormat(this.year + '-07-01', 'yyyy-LL-dd');
+    const firstDayOfYear = DateTime.fromObject({
+      year: this.year,
+      month: 7,
+      day: 1,
+    });
     const startDate = today < firstDayOfYear ? firstDayOfYear : today;
     const endDate = startDate.plus({ weeks: 8 });
     this.startDate = startDate.toJSDate();
