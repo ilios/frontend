@@ -2,11 +2,11 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { getOwner } from '@ember/application';
 import { tracked } from '@glimmer/tracking';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 export default class WeeklyeventsController extends Controller {
   queryParams = ['year', 'expanded', 'week'];
-  year = moment().format('YYYY');
+  year = DateTime.now().year;
   @tracked expanded = '';
   @tracked week = '';
 
