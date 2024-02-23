@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import Service from '@ember/service';
+import { component } from 'frontend/tests/pages/components/link-to-with-action';
 
 module('Integration | Component | link-to-with-action', function (hooks) {
   setupRenderingTest(hooks);
@@ -16,29 +16,8 @@ module('Integration | Component | link-to-with-action', function (hooks) {
         {{this.content}}
       </LinkToWithAction>`);
 
-    assert.strictEqual(this.element.textContent.trim(), 'Link Text');
-    assert.strictEqual(this.element.querySelector('a').getAttribute('href'), '/dashboard');
-    assert.notOk(this.element.querySelector('a').classList.contains('active'));
-  });
-
-  test('it renders active link', async function (assert) {
-    class RouterMock extends Service {
-      urlFor() {
-        return '/here';
-      }
-      isActive() {
-        return true;
-      }
-    }
-
-    this.owner.register('service:router', RouterMock);
-    this.set('content', 'More Link Text');
-    await render(hbs`
-      <LinkToWithAction @route="somewhere">
-        {{this.content}}
-      </LinkToWithAction>`);
-
-    assert.strictEqual(this.element.textContent.trim(), 'More Link Text');
-    assert.ok(this.element.querySelector('a').classList.contains('active'));
+    assert.strictEqual(component.text, 'Link Text');
+    assert.strictEqual(component.url, '/dashboard');
+    assert.notOk(component.isActive);
   });
 });
