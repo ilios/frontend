@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { findById } from 'ilios-common/utils/array-helpers';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -168,9 +168,9 @@ export default class SingleEvent extends Component {
   }
 
   get recentlyUpdated() {
-    const lastModifiedDate = moment(this.args.event.lastModified);
-    const today = moment();
-    const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
+    const lastModifiedDate = DateTime.fromISO(this.args.event.lastModified);
+    const today = DateTime.now();
+    const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days').days;
     return daysSinceLastUpdate < 6;
   }
 
