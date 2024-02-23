@@ -629,7 +629,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       await page.details.learningMaterials.manager.startDate.datePicker.set(newDate.toJSDate());
       await page.details.learningMaterials.manager.startTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.startTime.timePicker.minute.select('10');
-      await page.details.learningMaterials.manager.startTime.timePicker.ampm.select('am');
+      await page.details.learningMaterials.manager.startTime.timePicker.ampm.select('AM');
       await page.details.learningMaterials.manager.save();
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
@@ -664,13 +664,13 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       );
       await page.details.learningMaterials.manager.startTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.startTime.timePicker.minute.select('10');
-      await page.details.learningMaterials.manager.startTime.timePicker.ampm.select('am');
+      await page.details.learningMaterials.manager.startTime.timePicker.ampm.select('AM');
 
       await page.details.learningMaterials.manager.addEndDate();
       await page.details.learningMaterials.manager.endDate.datePicker.set(newEndDate.toJSDate());
       await page.details.learningMaterials.manager.endTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.endTime.timePicker.minute.select('11');
-      await page.details.learningMaterials.manager.endTime.timePicker.ampm.select('am');
+      await page.details.learningMaterials.manager.endTime.timePicker.ampm.select('AM');
 
       await page.details.learningMaterials.manager.save();
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
@@ -706,7 +706,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       await page.details.learningMaterials.manager.endDate.datePicker.set(newDate.toJSDate());
       await page.details.learningMaterials.manager.endTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.endTime.timePicker.minute.select('10');
-      await page.details.learningMaterials.manager.endTime.timePicker.ampm.select('am');
+      await page.details.learningMaterials.manager.endTime.timePicker.ampm.select('AM');
       await page.details.learningMaterials.manager.save();
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
@@ -736,13 +736,13 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       await page.details.learningMaterials.manager.startDate.datePicker.set(newDate.toJSDate());
       await page.details.learningMaterials.manager.startTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.startTime.timePicker.minute.select('10');
-      await page.details.learningMaterials.manager.startTime.timePicker.ampm.select('am');
+      await page.details.learningMaterials.manager.startTime.timePicker.ampm.select('AM');
 
       await page.details.learningMaterials.manager.addEndDate();
       await page.details.learningMaterials.manager.endDate.datePicker.set(newDate.toJSDate());
       await page.details.learningMaterials.manager.endTime.timePicker.hour.select('10');
       await page.details.learningMaterials.manager.endTime.timePicker.minute.select('10');
-      await page.details.learningMaterials.manager.endTime.timePicker.ampm.select('am');
+      await page.details.learningMaterials.manager.endTime.timePicker.ampm.select('AM');
       await page.details.learningMaterials.manager.save();
 
       assert.ok(page.details.learningMaterials.manager.hasEndDateValidationError);
