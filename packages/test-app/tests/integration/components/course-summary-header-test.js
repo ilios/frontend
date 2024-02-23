@@ -46,7 +46,9 @@ module('Integration | Component | course summary header', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
+    await render(
+      hbs`<CourseSummaryHeader @course={{this.course}} @showRollover={{true}} @showMaterials={{true}} />`,
+    );
     const title = 'h2';
     const actions = '.course-summary-actions';
     const materialsIcon = `${actions} a:nth-of-type(1) svg`;
@@ -72,18 +74,12 @@ module('Integration | Component | course summary header', function (hooks) {
 
   test('no link to materials when that is the current route', async function (assert) {
     const school = this.server.create('school');
-    const routerMock = Service.extend({
-      currentRouteName: 'course-materials',
-      generateURL() {},
-    });
-    this.owner.register('service:router', routerMock);
-
     const course = this.server.create('course', {
       school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseSummaryHeader @course={{this.course}} />
+    await render(hbs`<CourseSummaryHeader @course={{this.course}} @showRollover={{true}} @showMaterials={{false}} />
 `);
     const actions = '.course-summary-actions a';
     const printIcon = `${actions}:nth-of-type(1) svg`;
@@ -95,16 +91,10 @@ module('Integration | Component | course summary header', function (hooks) {
   });
 
   test('no link to rollover when that is the current route', async function (assert) {
-    const routerMock = Service.extend({
-      currentRouteName: 'course.rollover',
-      generateURL() {},
-    });
-    this.owner.register('service:router', routerMock);
-
     const course = this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseSummaryHeader @course={{this.course}} />
+    await render(hbs`<CourseSummaryHeader @course={{this.course}} @showRollover={{false}} @showMaterials={{true}}/>
 `);
     const actions = '.course-summary-actions a';
     const materialsIcon = `${actions}:nth-of-type(1) svg`;
@@ -117,18 +107,12 @@ module('Integration | Component | course summary header', function (hooks) {
 
   test('no link to rollover when user cannot edit the course', async function (assert) {
     const school = this.server.create('school', {});
-    const routerMock = Service.extend({
-      currentRouteName: 'course.rollover',
-      generateURL() {},
-    });
-    this.owner.register('service:router', routerMock);
-
     const course = this.server.create('course', {
       school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseSummaryHeader @course={{this.course}} />
+    await render(hbs`<CourseSummaryHeader @course={{this.course}} @showRollover={{true}} @showMaterials={{true}} />
 `);
     const actions = '.course-summary-actions a';
     const materialsIcon = `${actions}:nth-of-type(1) svg`;

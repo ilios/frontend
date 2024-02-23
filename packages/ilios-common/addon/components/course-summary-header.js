@@ -6,7 +6,6 @@ import { restartableTask } from 'ember-concurrency';
 export default class CourseSummaryHeaderComponent extends Component {
   @service currentUser;
   @service permissionChecker;
-  @service router;
 
   @tracked canRollover;
 
@@ -16,14 +15,6 @@ export default class CourseSummaryHeaderComponent extends Component {
   });
 
   get showRollover() {
-    if (this.router.currentRouteName === 'course.rollover') {
-      return false;
-    }
-
-    return this.canRollover;
-  }
-
-  get showMaterials() {
-    return this.router.currentRouteName !== 'course-materials';
+    return this.args.showRollover && this.canRollover;
   }
 }

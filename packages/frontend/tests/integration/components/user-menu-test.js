@@ -13,7 +13,7 @@ module('Integration | Component | user-menu', function (hooks) {
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     await setupAuthentication();
   });
 
