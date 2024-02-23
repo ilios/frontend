@@ -1,9 +1,7 @@
 import Component from '@glimmer/component';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 export default class TimedReleaseSchedule extends Component {
-  now = new Date();
-
   get show() {
     return this.showNoSchedule || this.args.endDate || this.startDateInTheFuture;
   }
@@ -19,6 +17,6 @@ export default class TimedReleaseSchedule extends Component {
     if (!this.args.startDate) {
       return false;
     }
-    return moment(this.args.startDate).isAfter(this.now);
+    return DateTime.fromJSDate(this.args.startDate) > DateTime.now();
   }
 }
