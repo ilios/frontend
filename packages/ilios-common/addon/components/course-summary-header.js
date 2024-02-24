@@ -15,6 +15,6 @@ export default class CourseSummaryHeaderComponent extends Component {
   });
 
   get showRollover() {
-    return this.args.showRollover && this.canRollover;
+    return this.canRollover;
   }
 }

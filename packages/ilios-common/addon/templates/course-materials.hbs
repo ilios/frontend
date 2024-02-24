@@ -3,11 +3,7 @@
     {{t "general.backToCourse"}}
   </LinkTo>
 </div>
-<CourseSummaryHeader
-  @course={{@model}}
-  @showMaterials={{this.showMaterials}}
-  @showRollover={{this.showRollover}}
-/>
+<CourseSummaryHeader @course={{@model}} />
 <CourseMaterials
   @course={{@model}}
   @courseSort={{or this.courseSort "title"}}
