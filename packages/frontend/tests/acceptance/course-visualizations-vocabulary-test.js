@@ -10,19 +10,15 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
-  });
-
-  test('it renders', async function (assert) {
-    assert.expect(17);
-    const vocabulary = this.server.create('vocabulary');
+    this.vocabulary = this.server.create('vocabulary');
     const term1 = this.server.create('term', {
-      vocabulary,
+      vocabulary: this.vocabulary,
     });
     const term2 = this.server.create('term', {
-      vocabulary,
+      vocabulary: this.vocabulary,
     });
     const term3 = this.server.create('term', {
-      vocabulary,
+      vocabulary: this.vocabulary,
     });
     const sessionType = this.server.create('sessionType');
     const session1 = this.server.create('session', {
@@ -51,11 +47,16 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
       endDate: DateTime.fromISO('2022-07-20T09:30:00').toJSDate(),
       session: session2,
     });
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       sessions: [session1, session2, session3],
       year: 2022,
     });
-    await page.visit({ courseId: course.id, vocabularyId: vocabulary.id });
+  });
+
+  test('it renders', async function (assert) {
+    assert.expect(17);
+
+    await page.visit({ courseId: this.course.id, vocabularyId: this.vocabulary.id });
     assert.strictEqual(currentURL(), '/data/courses/1/vocabularies/1');
     assert.strictEqual(page.root.vocabularyTitle, 'Vocabulary 1');
     assert.strictEqual(page.root.courseTitle.text, 'course 0 2022');
@@ -77,5 +78,16 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
     assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1: 30 Minutes');
     assert.strictEqual(page.root.termsChart.chart.labels[1].text, 'term 0: 60 Minutes');
     assert.strictEqual(page.root.termsChart.chart.labels[2].text, 'term 2: 150 Minutes');
+  });
+
+  test('clicking chart transitions user to term visualization', async function (assert) {
+    assert.expect(2);
+    await page.visit({ courseId: this.course.id, vocabularyId: this.vocabulary.id });
+    // wait for charts to load
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
+    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1: 30 Minutes');
+    await page.root.termsChart.chart.bars[0].click();
+    assert.strictEqual(currentURL(), '/data/courses/1/terms/2');
   });
 });
