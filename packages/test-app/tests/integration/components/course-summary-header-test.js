@@ -27,7 +27,7 @@ module('Integration | Component | course summary header', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(10);
+    assert.expect(9);
 
     class PermissionCheckerStub extends Service {
       async canCreateCourse(inSchool) {
@@ -49,9 +49,8 @@ module('Integration | Component | course summary header', function (hooks) {
     await render(hbs`<CourseSummaryHeader @course={{this.course}} />`);
     const title = 'h2';
     const actions = '.course-summary-actions';
-    const materialsIcon = `${actions} a:nth-of-type(1) svg`;
-    const printIcon = `${actions} a:nth-of-type(2) svg`;
-    const rolloverIcon = `${actions} a:nth-of-type(3) svg`;
+    const printIcon = `${actions} a:nth-of-type(1) svg`;
+    const rolloverIcon = `${actions} a:nth-of-type(2) svg`;
     const blocks = '.course-summary-content .block';
     const start = `${blocks}:nth-of-type(1) span`;
     const externalId = `${blocks}:nth-of-type(2) span`;
@@ -60,7 +59,6 @@ module('Integration | Component | course summary header', function (hooks) {
     const status = `${blocks}:nth-of-type(5) span:nth-of-type(1) [data-test-text]`;
 
     assert.dom(title).hasText('course 0');
-    assert.dom(materialsIcon).hasClass('fa-box-archive');
     assert.dom(printIcon).hasClass('fa-print');
     assert.dom(rolloverIcon).hasClass('fa-shuffle');
     assert.dom(start).hasText('6/24/2005');
@@ -80,11 +78,9 @@ module('Integration | Component | course summary header', function (hooks) {
     await render(hbs`<CourseSummaryHeader @course={{this.course}} />
 `);
     const actions = '.course-summary-actions a';
-    const materialsIcon = `${actions}:nth-of-type(1) svg`;
-    const printIcon = `${actions}:nth-of-type(2) svg`;
+    const printIcon = `${actions}:nth-of-type(1) svg`;
 
     assert.ok(findAll(actions).length, 2);
     assert.dom(printIcon).hasClass('fa-print');
-    assert.dom(materialsIcon).hasClass('fa-box-archive');
   });
 });
