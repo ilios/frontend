@@ -96,7 +96,7 @@
     "pad": "^3.2.0",
     "papaparse": "^5.4.1",
     "prettier": "^3.2.4",
-    "query-string": "^8.1.0",
+    "query-string": "^9.0.0",
     "qunit": "^2.20.0",
     "qunit-dom": "^2.0.0",
     "sass": "^1.71.1",
