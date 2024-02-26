@@ -56,7 +56,7 @@
     "loader.js": "^4.7.0",
     "luxon": ">= 3.0.0",
     "miragejs": ">= 0.1.45",
-    "query-string": ">= 8.0.0",
+    "query-string": ">= 9.0.0",
     "qunit": "^2.20.0",
     "qunit-dom": "^2.0.0",
     "testem-failure-only-reporter": "^1.0.0",
