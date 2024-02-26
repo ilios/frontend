@@ -7,7 +7,6 @@ import component from 'frontend/tests/pages/components/user-menu';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupAuthentication } from 'ilios-common';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import Service from '@ember/service';
 
 module('Integration | Component | user-menu', function (hooks) {
   setupRenderingTest(hooks);
@@ -16,15 +15,6 @@ module('Integration | Component | user-menu', function (hooks) {
 
   hooks.beforeEach(async function () {
     await setupAuthentication();
-    class RouterMock extends Service {
-      urlFor() {
-        return '';
-      }
-      isActive() {
-        return false;
-      }
-    }
-    this.owner.register('service:router', RouterMock);
   });
 
   test('it renders and is accessible', async function (assert) {
@@ -35,6 +25,7 @@ module('Integration | Component | user-menu', function (hooks) {
 
     await component.toggle.click();
     await a11yAudit(this.element);
+
     assert.ok(true, 'no a11y errors found!');
   });
 

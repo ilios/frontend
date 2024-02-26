@@ -1,4 +1,3 @@
-import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
@@ -101,26 +100,5 @@ module('Integration | Component | visualizer-course-instructors', function (hook
     assert.strictEqual(component.chart.slices[1].text, 'Duke: 180 Minutes');
     assert.strictEqual(component.chart.slices[2].text, 'William: 510 Minutes');
     assert.strictEqual(component.chart.slices[3].text, 'Marie: 810 Minutes');
-  });
-
-  test('on-click transition fires', async function (assert) {
-    assert.expect(3);
-    class RouterMock extends Service {
-      transitionTo(route, courseId, termId) {
-        assert.strictEqual(route, 'course-visualize-instructor');
-        assert.strictEqual(parseInt(courseId, 10), 1);
-        assert.strictEqual(parseInt(termId, 10), 2);
-      }
-    }
-    this.owner.register('service:router', RouterMock);
-    this.set('course', this.courseModel);
-
-    await render(hbs`<VisualizerCourseInstructors @course={{this.course}} @isIcon={{false}} />
-`);
-    //let the chart animations finish
-    await waitFor('.loaded');
-    await waitFor('svg .bars');
-
-    await component.chart.bars[0].click();
   });
 });

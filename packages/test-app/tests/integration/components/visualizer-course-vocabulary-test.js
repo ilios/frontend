@@ -1,8 +1,7 @@
-import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
-import { click, render, waitFor } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/visualizer-course-vocabulary';
@@ -71,29 +70,5 @@ module('Integration | Component | visualizer-course-vocabulary', function (hooks
     assert.strictEqual(component.chart.labels.length, 2);
     assert.strictEqual(component.chart.labels[0].text, 'Campaign: 180 Minutes');
     assert.strictEqual(component.chart.labels[1].text, 'Standalone: 630 Minutes');
-  });
-
-  test('on-click transition fires', async function (assert) {
-    assert.expect(3);
-    class RouterMock extends Service {
-      transitionTo(route, courseId, termId) {
-        assert.strictEqual(route, 'course-visualize-term');
-        assert.strictEqual(parseInt(courseId, 10), 1);
-        assert.strictEqual(parseInt(termId, 10), 2);
-      }
-    }
-    this.owner.register('service:router', RouterMock);
-    this.set('course', this.courseModel);
-    this.set('vocabulary', this.vocabularyModel);
-
-    await render(
-      hbs`<VisualizerCourseVocabulary @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} />
-`,
-    );
-    //let the chart animations finish
-    await waitFor('.loaded');
-    await waitFor('svg .bars');
-
-    await click('svg .bars rect:nth-of-type(1)');
   });
 });

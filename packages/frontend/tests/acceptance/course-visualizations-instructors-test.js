@@ -10,10 +10,6 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
-  });
-
-  test('it renders', async function (assert) {
-    assert.expect(12);
     const instructor1 = this.server.create('user');
     const instructor2 = this.server.create('user');
     const vocabulary1 = this.server.create('vocabulary');
@@ -62,11 +58,15 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
       endDate: DateTime.fromISO('2022-07-20T10:30:00').toJSDate(),
       session: session1,
     });
-    const course = this.server.create('course', {
+    this.course = this.server.create('course', {
       sessions: [session1, session2, session3],
       year: 2022,
     });
-    await page.visit({ courseId: course.id });
+  });
+
+  test('it renders', async function (assert) {
+    assert.expect(12);
+    await page.visit({ courseId: this.course.id });
     assert.strictEqual(currentURL(), '/data/courses/1/instructors');
     assert.strictEqual(page.root.title, 'course 0 2022');
     assert.strictEqual(page.root.breadcrumb.crumbs.length, 3);
@@ -89,5 +89,20 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
       page.root.instructorsChart.chart.labels[1].text,
       '2 guy M. Mc2son: 90 Minutes',
     );
+  });
+
+  test('clicking chart transitions user to instructor visualization', async function (assert) {
+    assert.expect(2);
+
+    await page.visit({ courseId: this.course.id });
+    // wait for charts to load
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
+    assert.strictEqual(
+      page.root.instructorsChart.chart.labels[0].text,
+      '1 guy M. Mc1son: 75 Minutes',
+    );
+    await page.root.instructorsChart.chart.bars[0].click();
+    assert.strictEqual(currentURL(), '/data/courses/1/instructors/2');
   });
 });
