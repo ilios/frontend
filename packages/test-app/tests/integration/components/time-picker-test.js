@@ -22,7 +22,7 @@ module('Integration | Component | time-picker', function (hooks) {
     assert.strictEqual(component.hour.options.length, 12);
     assert.strictEqual(component.minute.value, '58');
     assert.strictEqual(component.minute.options.length, 60);
-    assert.strictEqual(component.ampm.value, 'pm');
+    assert.strictEqual(component.ampm.value, 'PM');
     assert.strictEqual(component.ampm.options.length, 2);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -65,9 +65,9 @@ module('Integration | Component | time-picker', function (hooks) {
     await render(hbs`<TimePicker @date={{this.date}} @action={{this.action}} />
 `);
     assert.strictEqual(component.hour.value, '11');
-    assert.strictEqual(component.ampm.value, 'pm');
-    await component.ampm.select('am');
+    assert.strictEqual(component.ampm.value, 'PM');
+    await component.ampm.select('AM');
     assert.strictEqual(component.hour.value, '11');
-    assert.strictEqual(component.ampm.value, 'am');
+    assert.strictEqual(component.ampm.value, 'AM');
   });
 });

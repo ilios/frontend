@@ -419,7 +419,7 @@ module('Integration | Component | offering form', function (hooks) {
     );
     await component.startTime.timePicker.hour.select('2');
     await component.startTime.timePicker.minute.select('15');
-    await component.startTime.timePicker.ampm.select('pm');
+    await component.startTime.timePicker.ampm.select('PM');
     assert.strictEqual(
       component.endDate.value,
       this.intl.formatDate(DateTime.fromObject({ hour: 15, minute: 15 }).toJSDate(), {
@@ -475,7 +475,7 @@ module('Integration | Component | offering form', function (hooks) {
     );
     await component.startTime.timePicker.hour.select('2');
     await component.startTime.timePicker.minute.select('10');
-    await component.startTime.timePicker.ampm.select('pm');
+    await component.startTime.timePicker.ampm.select('PM');
     await component.duration.hours.set('2');
     await component.duration.minutes.set('50');
     assert.strictEqual(

@@ -158,9 +158,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.details.overview.ilmDueDateAndTime.datePicker.set(newDate.toJSDate());
     await page.details.overview.ilmDueDateAndTime.timePicker.hour.select(newDate.toFormat('hh'));
     await page.details.overview.ilmDueDateAndTime.timePicker.minute.select(newDate.toFormat('mm'));
-    await page.details.overview.ilmDueDateAndTime.timePicker.ampm.select(
-      newDate.toFormat('a').toLocaleLowerCase(),
-    );
+    await page.details.overview.ilmDueDateAndTime.timePicker.ampm.select(newDate.toFormat('a'));
 
     await page.details.overview.ilmDueDateAndTime.save();
     assert.strictEqual(

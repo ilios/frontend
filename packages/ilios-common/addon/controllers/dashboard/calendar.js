@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class DashboardCalendarController extends Controller {
@@ -43,10 +43,10 @@ export default class DashboardCalendarController extends Controller {
 
   get selectedDate() {
     if (this.date) {
-      return moment(this.date, 'YYYY-MM-DD').toDate();
+      return DateTime.fromFormat(this.date, 'yyyy-MM-dd').toJSDate();
     }
 
-    return moment().toDate();
+    return DateTime.now().toJSDate();
   }
 
   get selectedView() {
@@ -59,7 +59,7 @@ export default class DashboardCalendarController extends Controller {
 
   @action
   changeDate(newDate) {
-    this.date = moment(newDate).format('YYYY-MM-DD');
+    this.date = DateTime.fromJSDate(newDate).toFormat('yyyy-MM-dd');
   }
 
   @action

@@ -310,7 +310,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.startDate.datePicker.set(new Date(2011, 8, 11));
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
-    await form.startTime.timePicker.ampm.select('am');
+    await form.startTime.timePicker.ampm.select('AM');
     await form.duration.hours.set(15);
     await form.duration.minutes.set(15);
     await form.location.set('Rm. 111');
@@ -359,7 +359,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.startDate.datePicker.set(sep112011.toJSDate());
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
-    await form.startTime.timePicker.ampm.select('am');
+    await form.startTime.timePicker.ampm.select('AM');
     await form.duration.hours.set(39);
     await form.duration.minutes.set(15);
     await form.location.set('Rm. 111');
@@ -426,7 +426,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.startDate.datePicker.set(new Date(2011, 8, 11));
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
-    await form.startTime.timePicker.ampm.select('am');
+    await form.startTime.timePicker.ampm.select('AM');
     await form.duration.hours.set(15);
     await form.duration.minutes.set(15);
 
@@ -493,7 +493,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.startDate.datePicker.set(new Date(2011, 9, 5));
     await form.startTime.timePicker.hour.select('11');
     await form.startTime.timePicker.minute.select('45');
-    await form.startTime.timePicker.ampm.select('am');
+    await form.startTime.timePicker.ampm.select('AM');
     await form.duration.hours.set(6);
     await form.duration.minutes.set(10);
     await form.location.set('Rm. 111');
@@ -541,7 +541,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.startDate.datePicker.set(new Date(2015, 4, 22));
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
-    await form.startTime.timePicker.ampm.select('am');
+    await form.startTime.timePicker.ampm.select('AM');
     await form.duration.hours.set(13);
     await form.duration.minutes.set(8);
 
@@ -616,7 +616,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.startDate.datePicker.set(new Date(2015, 4, 22));
     await form.startTime.timePicker.hour.select('2');
     await form.startTime.timePicker.minute.select('15');
-    await form.startTime.timePicker.ampm.select('am');
+    await form.startTime.timePicker.ampm.select('AM');
     await form.duration.hours.set(13);
     await form.duration.minutes.set(8);
     await form.location.set('Scottsdale Stadium');
