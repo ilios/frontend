@@ -1,19 +1,19 @@
 import Component from '@glimmer/component';
-import moment from 'moment';
-
+import { DateTime } from 'luxon';
 export default class DashboardWeekComponent extends Component {
   get expanded() {
-    const lastSunday = moment().day(1).subtract(1, 'week').format('W');
-    const thisSunday = moment().day(1).format('W');
-    const nextSunday = moment().day(1).add(1, 'week').format('W');
+    const now = DateTime.now();
+    const lastSunday = now.set({ weekday: 1 }).minus({ week: 1 }).toFormat('W');
+    const thisSunday = now.set({ weekday: 1 }).toFormat('W');
+    const nextSunday = now.set({ weekday: 1 }).plus({ week: 1 }).toFormat('W');
 
     return `${lastSunday}-${thisSunday}-${nextSunday}`;
   }
   get year() {
-    return moment().year();
+    return DateTime.now().year;
   }
   get week() {
     //set day to Thursday to correctly calculate isoWeek
-    return moment().day(4).isoWeek();
+    return DateTime.now().set({ weekday: 4 }).weekNumber;
   }
 }
