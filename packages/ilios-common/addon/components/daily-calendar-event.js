@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import colorChange from 'ilios-common/utils/color-change';
 import { htmlSafe } from '@ember/template';
 import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
@@ -7,7 +7,6 @@ import { service } from '@ember/service';
 
 export default class DailyCalendarEventComponent extends Component {
   @service intl;
-  @service moment;
 
   constructor() {
     super(...arguments);
@@ -37,45 +36,44 @@ export default class DailyCalendarEventComponent extends Component {
 
   get tooltipContent() {
     //access the locale info here so the getter will recompute when it changes
-    this.moment.locale;
     this.intl.locale;
     return calendarEventTooltip(this.args.event, this.intl, 'h:mma');
   }
 
   get recentlyUpdated() {
-    const lastModifiedDate = moment(this.args.event.lastModified);
-    const today = moment();
-    const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
+    const lastModifiedDate = DateTime.fromISO(this.args.event.lastModified);
+    const today = DateTime.now();
+    const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days').days;
 
-    return daysSinceLastUpdate < 6 ? true : false;
+    return daysSinceLastUpdate < 6;
   }
 
-  get startMoment() {
-    return moment(this.args.event.startDate);
+  get startLuxon() {
+    return DateTime.fromISO(this.args.event.startDate);
   }
 
-  get endMoment() {
-    return moment(this.args.event.endDate);
+  get endLuxon() {
+    return DateTime.fromISO(this.args.event.endDate);
   }
 
-  get startOfDay() {
-    return this.startMoment.startOf('day');
+  get startOfDayLuxon() {
+    return this.startLuxon.startOf('day');
   }
 
   get startMinuteRounded() {
-    const minute = this.startMoment.diff(this.startOfDay, 'minutes');
+    const minute = this.startLuxon.diff(this.startOfDayLuxon, 'minutes').minutes;
     return Math.ceil(minute / 5);
   }
 
   get totalMinutesRounded() {
-    const minutes = this.endMoment.diff(this.startMoment, 'minutes');
+    const minutes = this.endLuxon.diff(this.startLuxon, 'minutes').minutes;
     return Math.floor(minutes / 5);
   }
 
   getMinuteInTheDay(date) {
-    const m = moment(date);
-    const midnight = moment(date).startOf('day');
-    return m.diff(midnight, 'minutes');
+    const dt = DateTime.fromISO(date);
+    const midnight = dt.startOf('day');
+    return dt.diff(midnight, 'minutes').minutes;
   }
 
   get span() {
