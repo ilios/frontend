@@ -4,7 +4,7 @@ import { hash, all, filter } from 'rsvp';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SessionCopyComponent extends Component {
@@ -31,8 +31,8 @@ export default class SessionCopyComponent extends Component {
         },
       }),
     });
-    const now = moment();
-    const thisYear = now.year();
+    const now = DateTime.now();
+    const thisYear = now.year;
     this.years = years
       .map((year) => Number(year.id))
       .filter((year) => year >= thisYear - 1)
