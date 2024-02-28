@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { task, restartableTask, dropTask } from 'ember-concurrency';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
@@ -123,7 +123,7 @@ export default class SessionOverview extends Component {
     } else {
       this.isIndependentLearning = false;
     }
-    this.updatedAt = moment(session.updatedAt).format('L LT');
+    this.updatedAt = DateTime.fromJSDate(session.updatedAt).toFormat('D t');
     this.sessionTypes = sessionTypes || [];
     this.description = session.description;
   });
@@ -172,7 +172,7 @@ export default class SessionOverview extends Component {
       await ilmSession.save();
     } else {
       const hours = 1;
-      const dueDate = moment().add(6, 'weeks').hour('17').minute('00').toDate();
+      const dueDate = DateTime.now().plus({ week: 6 }).set({ hour: 17, minute: 0 }).toJSDate();
       this.hours = hours;
       const ilmSession = this.store.createRecord('ilm-session', {
         session: this.args.session,
