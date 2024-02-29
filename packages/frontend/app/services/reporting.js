@@ -32,6 +32,7 @@ const objectTranslations = {
   session: 'general.session',
   school: 'general.school',
   term: 'general.term',
+  'academic year': 'general.academicYear',
 };
 
 export default class ReportingService extends Service {

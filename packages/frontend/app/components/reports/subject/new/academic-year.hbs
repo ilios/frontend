@@ -1,0 +1,29 @@
+<p data-test-reports-subject-new-academic-year>
+  <label for="new-term">
+    {{t "general.whichIs"}}
+  </label>
+  {{#if this.isLoaded}}
+    <select
+      id="new-academic-year"
+      data-test-prepositional-objects
+      {{on "change" (pick "target.value" @changeId)}}
+      {{did-insert (perform this.setInitialValue)}}
+      {{did-update (perform this.setInitialValue) @school}}
+    >
+      {{#each (sort-by "title" this.academicYears) as |year|}}
+        <option
+          selected={{eq year.id @currentId}}
+          value={{year.id}}
+        >
+        {{#if this.academicYearCrossesCalendarYearBoundaries}}
+          {{year.id}} - {{add year.id 1}}
+        {{else}}
+          {{year.id}}
+        {{/if}}
+        </option>
+      {{/each}}
+    </select>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</p>
