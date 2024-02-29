@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { validatable, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask } from 'ember-concurrency';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 @validatable
 export default class SessionOverviewIlmDuedateComponent extends Component {
@@ -16,22 +16,19 @@ export default class SessionOverviewIlmDuedateComponent extends Component {
 
   @action
   updateDate(date) {
-    const currentDueDate = moment(this.dueDate);
-    this.dueDate = moment(date)
-      .hour(currentDueDate.hour())
-      .minute(currentDueDate.minute())
-      .toDate();
+    const currentDueDate = DateTime.fromJSDate(this.dueDate);
+    this.dueDate = DateTime.fromJSDate(date)
+      .set({
+        hour: currentDueDate.hour,
+        minute: currentDueDate.minute,
+      })
+      .toJSDate();
   }
 
   @action
   updateTime(value, type) {
-    const dueDate = moment(this.dueDate);
-    if (type === 'hour') {
-      dueDate.hour(value);
-    } else {
-      dueDate.minute(value);
-    }
-    this.dueDate = dueDate.toDate();
+    const update = 'hour' === type ? { hour: value } : { minute: value };
+    this.dueDate = DateTime.fromJSDate(this.dueDate).set(update).toJSDate();
   }
 
   save = dropTask(async () => {

@@ -215,7 +215,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(
       page.details.overview.lastUpdated,
-      'Last Update Last Update: 07/09/2019 5:00 PM',
+      'Last Update Last Update: 7/9/2019 5:00 PM',
     );
   });
 

@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 export default class WeeklyEvents extends Component {
   get weeksInYear() {
-    const weeksInTheYear = moment().year(this.args.year).isoWeeksInYear();
+    const weeksInTheYear = DateTime.now().set({ year: this.args.year }).weeksInWeekYear;
     const weeks = [];
     for (let i = 1; i <= weeksInTheYear; i++) {
       weeks.push(`${i}`);
