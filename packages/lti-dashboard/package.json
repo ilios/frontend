@@ -52,7 +52,7 @@
     "ember-resolver": "^11.0.1",
     "ember-source": "~5.6.0",
     "ember-web-app": "^5.0.0",
-    "ilios-common": "^87.0.1",
+    "ilios-common": "workspace:*",
     "loader.js": "^4.7.0",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.2.4",
