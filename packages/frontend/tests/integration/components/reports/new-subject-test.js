@@ -128,29 +128,27 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing course selects correct objects', function (assert) {
-    assert.expect(9);
+    assert.expect(8);
     return checkObjects(this, assert, 0, 'course', [
-      'academic year',
-      'competency',
+      'program',
       'instructor',
       'instructor group',
       'learning material',
+      'competency',
       'mesh term',
-      'program',
     ]);
   });
 
   test('choosing session selects correct objects', function (assert) {
-    assert.expect(11);
+    assert.expect(10);
     return checkObjects(this, assert, 1, 'session', [
-      'academic year',
-      'competency',
       'course',
+      'program',
       'instructor',
       'instructor group',
       'learning material',
+      'competency',
       'mesh term',
-      'program',
       'session type',
     ]);
   });
@@ -166,25 +164,23 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing instructor selects correct objects', function (assert) {
-    assert.expect(8);
+    assert.expect(7);
     return checkObjects(this, assert, 4, 'instructor', [
-      'academic year',
       'course',
+      'session',
       'instructor group',
       'learning material',
-      'session',
       'session type',
     ]);
   });
 
   test('choosing instructor group selects correct objects', function (assert) {
-    assert.expect(8);
+    assert.expect(7);
     return checkObjects(this, assert, 5, 'instructor group', [
-      'academic year',
       'course',
+      'session',
       'instructor',
       'learning material',
-      'session',
       'session type',
     ]);
   });
@@ -193,60 +189,53 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     assert.expect(8);
     return checkObjects(this, assert, 6, 'learning material', [
       'course',
+      'session',
       'instructor',
       'instructor group',
       'mesh term',
-      'session',
       'session type',
     ]);
   });
 
   test('choosing competency selects correct objects', function (assert) {
-    assert.expect(6);
-    return checkObjects(this, assert, 7, 'competency', [
-      'academic year',
-      'course',
-      'session',
-      'session type',
-    ]);
+    assert.expect(5);
+    return checkObjects(this, assert, 7, 'competency', ['course', 'session', 'session type']);
   });
 
   test('choosing mesh term selects correct objects', function (assert) {
     assert.expect(6);
     return checkObjects(this, assert, 8, 'mesh term', [
       'course',
-      'learning material',
       'session',
+      'learning material',
       'session type',
     ]);
   });
 
   test('choosing term selects correct objects', function (assert) {
-    assert.expect(11);
+    assert.expect(10);
     return checkObjects(this, assert, 9, 'term', [
-      'academic year',
-      'competency',
       'course',
+      'session',
+      'program year',
+      'program',
       'instructor',
       'learning material',
+      'competency',
       'mesh term',
-      'program',
-      'program year',
-      'session',
     ]);
   });
 
   test('choosing session type selects correct objects', function (assert) {
-    assert.expect(11);
+    assert.expect(10);
     return checkObjects(this, assert, 10, 'session type', [
-      'academic year',
-      'competency',
       'course',
+      'program',
       'instructor',
       'instructor group',
       'learning material',
+      'competency',
       'mesh term',
-      'program',
       'term',
     ]);
   });

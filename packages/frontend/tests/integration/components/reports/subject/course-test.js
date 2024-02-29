@@ -221,31 +221,4 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
     />`);
   });
-
-  test('filter by academic year', async function (assert) {
-    assert.expect(1);
-    this.server.post('api/graphql', function (schema, { requestBody }) {
-      const { query } = JSON.parse(requestBody);
-      assert.strictEqual(
-        query,
-        'query { courses(academicYears: [2015]) { id, title, year, externalId } }',
-      );
-      return {
-        data: {
-          courses: [{ id: 1, title: 'First Course', year: 2015 }],
-        },
-      };
-    });
-    const { id } = this.server.create('report', {
-      subject: 'course',
-      prepositionalObject: 'academic year',
-      prepositionalObjectTableRowId: '2015',
-    });
-    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
-    await render(hbs`<Reports::Subject::Course
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-    />`);
-  });
 });

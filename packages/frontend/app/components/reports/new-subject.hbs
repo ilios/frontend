@@ -71,7 +71,7 @@
           <option value="" selected={{eq null this.prepositionalObject}}>
             {{t "general.anything"}}
           </option>
-          {{#each (sort-by "label" this.prepositionalObjectList) as |o|}}
+          {{#each this.prepositionalObjectList as |o|}}
             <option
               value={{o.value}}
               selected={{eq o.value this.prepositionalObject}}

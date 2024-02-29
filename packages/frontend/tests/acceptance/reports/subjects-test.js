@@ -201,7 +201,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('get all courses associated with mesh term #3419', async function (assert) {
-    assert.expect(15);
+    assert.expect(14);
     await page.visit();
     assert.strictEqual(page.root.list.table.reports.length, 2);
     assert.strictEqual(
@@ -248,7 +248,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       subjectReportPage.report.title.text,
       'All Courses for descriptor 0 in school 0',
     );
-    assert.ok(subjectReportPage.report.academicYears.isVisible);
     assert.strictEqual(subjectReportPage.report.results.length, 2);
     assert.strictEqual(
       subjectReportPage.report.results[0].text,
@@ -411,83 +410,5 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       page.root.list.table.reports[1].title,
       'All Sessions for term 0 in school 0',
     );
-  });
-
-  test('create new report for instructors by academic year #3594', async function (assert) {
-    assert.expect(14);
-    this.server.createList('user', 3);
-    await page.visit();
-    assert.strictEqual(page.root.list.table.reports.length, 2);
-    assert.ok(page.root.list.newReportLinkIsHidden);
-    await page.root.list.toggleNewSubjectReportForm();
-    await page.root.list.newSubject.schools.choose('1');
-    await page.root.list.newSubject.subjects.choose('instructor');
-    await page.root.list.newSubject.objects.choose('academic year');
-    await page.root.list.newSubject.save();
-    assert.notOk(page.root.list.newReportLinkIsHidden);
-    assert.strictEqual(page.root.list.table.reports.length, 3);
-    assert.strictEqual(
-      page.root.list.table.reports[0].title,
-      'All Instructors for 2015 - 2016 in school 0',
-    );
-    assert.strictEqual(page.root.list.newReportLink, 'All Instructors for 2015 - 2016 in school 0');
-
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
-      const { query } = JSON.parse(requestBody);
-
-      assert.strictEqual(
-        query,
-        'query { users(schools: [1], instructedAcademicYears: [2015]) { firstName,middleName,lastName,displayName } }',
-      );
-      return {
-        data: {
-          users: db.users.map(({ firstName, middleName, lastName, displayName }) => {
-            return { firstName, middleName, lastName, displayName };
-          }),
-        },
-      };
-    });
-    await page.root.list.table.reports[0].select();
-    assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(
-      subjectReportPage.report.title.text,
-      'All Instructors for 2015 - 2016 in school 0',
-    );
-    assert.strictEqual(subjectReportPage.report.results.length, 4);
-    assert.strictEqual(subjectReportPage.report.results[0].text, '0 guy M. Mc0son');
-    assert.strictEqual(subjectReportPage.report.results[1].text, '1 guy M. Mc1son');
-    assert.strictEqual(subjectReportPage.report.results[2].text, '2 guy M. Mc2son');
-    assert.strictEqual(subjectReportPage.report.results[3].text, '3 guy M. Mc3son');
-  });
-
-  test('courses by academic year hides year', async function (assert) {
-    assert.expect(5);
-    await page.visit();
-    await page.root.list.toggleNewSubjectReportForm();
-    await page.root.list.newSubject.schools.choose('');
-    await page.root.list.newSubject.subjects.choose('course');
-    await page.root.list.newSubject.objects.choose('academic year');
-    await page.root.list.newSubject.prepositionalObjects.choose('2015');
-    await page.root.list.newSubject.save();
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
-      const { query } = JSON.parse(requestBody);
-      assert.strictEqual(
-        query,
-        'query { courses(academicYears: [2015]) { id, title, year, externalId } }',
-      );
-      const coursesIn2015 = db.courses.filter(({ year }) => year === 2015);
-      return {
-        data: {
-          courses: coursesIn2015.map(({ id, title, year, externalId }) => {
-            return { id, title, year, externalId };
-          }),
-        },
-      };
-    });
-    await page.root.list.table.reports[0].select();
-    assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.notOk(subjectReportPage.report.academicYears.isVisible);
-    assert.strictEqual(subjectReportPage.report.results.length, 1);
-    assert.strictEqual(subjectReportPage.report.results[0].text, 'course 0 (Theoretical Phys Ed)');
   });
 });

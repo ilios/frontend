@@ -60,7 +60,6 @@ export default class ReportsSubjectResultsComponent extends Component {
   get showAcademicYearFilter() {
     return (
       this.args.prepositionalObject !== 'course' &&
-      this.args.prepositionalObject !== 'academic year' &&
       ['course', 'session'].includes(this.args.subject)
     );
   }
