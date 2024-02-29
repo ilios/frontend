@@ -692,7 +692,7 @@ importers:
         specifier: ^5.0.0
         version: 5.0.1
       ilios-common:
-        specifier: ^87.0.1
+        specifier: workspace:*
         version: link:../ilios-common
       loader.js:
         specifier: ^4.7.0
@@ -827,7 +827,7 @@ importers:
         specifier: ^5.0.0
         version: 5.0.1
       ilios-common:
-        specifier: ^87.0.1
+        specifier: workspace:*
         version: link:../ilios-common
       loader.js:
         specifier: ^4.7.0
