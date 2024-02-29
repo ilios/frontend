@@ -36,7 +36,7 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   get showYear() {
-    return !this.args.year;
+    return !this.args.year && this.args.prepositionalObject !== 'academic year';
   }
 
   get filteredCourses() {

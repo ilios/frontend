@@ -114,4 +114,27 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       @school={{this.school}}
     />`);
   });
+
+  test('filter by academic year', async function (assert) {
+    assert.expect(1);
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(
+        query,
+        'query { users(instructedAcademicYears: [2005]) { firstName,middleName,lastName,displayName } }',
+      );
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'instructor',
+      prepositionalObject: 'academic year',
+      prepositionalObjectTableRowId: 2005,
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Instructor
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+    />`);
+  });
 });

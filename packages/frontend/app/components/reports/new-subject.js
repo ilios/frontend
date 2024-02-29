@@ -19,6 +19,7 @@ import NewProgramYearComponent from './subject/new/program-year';
 import NewSessionComponent from './subject/new/session';
 import NewSessionTypeComponent from './subject/new/session-type';
 import NewTermComponent from './subject/new/term';
+import NewAcademicYearComponent from './subject/new/academic-year';
 
 @validatable
 export default class ReportsNewSubjectComponent extends Component {
@@ -173,6 +174,19 @@ export default class ReportsNewSubjectComponent extends Component {
       label: this.intl.t('general.term'),
       subjects: ['course', 'session', 'program', 'program year', 'session type'],
     },
+    {
+      value: 'academic year',
+      label: this.intl.t('general.academicYear'),
+      subjects: [
+        'course',
+        'session',
+        'instructor',
+        'instructor group',
+        'competency',
+        'session type',
+        'term',
+      ],
+    },
   ];
 
   userModelData = new TrackedAsyncData(this.currentUser.getModel());
@@ -224,6 +238,8 @@ export default class ReportsNewSubjectComponent extends Component {
         return ensureSafeComponent(NewSessionTypeComponent, this);
       case 'term':
         return ensureSafeComponent(NewTermComponent, this);
+      case 'academic year':
+        return ensureSafeComponent(NewAcademicYearComponent, this);
     }
 
     return null;

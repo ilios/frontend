@@ -50,7 +50,13 @@ export default class ReportsSubjectInstructorComponent extends Component {
     }
     if (prepositionalObject && prepositionalObjectTableRowId) {
       let what = pluralize(camelize(prepositionalObject));
-      const specialInstructed = ['learningMaterials', 'sessionTypes', 'courses', 'sessions'];
+      const specialInstructed = [
+        'learningMaterials',
+        'sessionTypes',
+        'courses',
+        'sessions',
+        'academicYears',
+      ];
       if (specialInstructed.includes(what)) {
         what = 'instructed' + capitalize(what);
       }
