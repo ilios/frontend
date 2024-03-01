@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { map } from 'rsvp';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
@@ -16,6 +16,7 @@ export default class DashboardCalendarComponent extends Component {
   @service intl;
   @service iliosConfig;
   @service dataLoader;
+  @service localeDays;
 
   @tracked usersPrimarySchool;
   @tracked absoluteIcsUri;
@@ -28,17 +29,28 @@ export default class DashboardCalendarComponent extends Component {
   ]);
 
   get fromTimeStamp() {
-    return moment(this.args.selectedDate)
+    if ('week' === this.args.selectedView) {
+      return DateTime.fromJSDate(this.localeDays.firstDayOfDateWeek(this.args.selectedDate))
+        .minus({ day: this.clockSkew })
+        .toUnixInteger();
+    }
+    return DateTime.fromJSDate(this.args.selectedDate)
       .startOf(this.args.selectedView)
-      .subtract(this.clockSkew, 'days')
-      .unix();
+      .minus({ day: this.clockSkew })
+      .toUnixInteger();
   }
   get toTimeStamp() {
-    return moment(this.args.selectedDate)
+    if ('week' === this.args.selectedView) {
+      return DateTime.fromJSDate(this.localeDays.lastDayOfDateWeek(this.args.selectedDate))
+        .plus({ day: this.clockSkew })
+        .toUnixInteger();
+    }
+    return DateTime.fromJSDate(this.args.selectedDate)
       .endOf(this.args.selectedView)
-      .add(this.clockSkew, 'days')
-      .unix();
+      .plus({ day: this.clockSkew })
+      .toUnixInteger();
   }
+
   get clockSkew() {
     if (this.selectedView === 'month') {
       return 6;
