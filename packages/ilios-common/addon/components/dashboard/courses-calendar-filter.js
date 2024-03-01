@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { findBy, sortBy } from 'ilios-common/utils/array-helpers';
 import scrollIntoView from 'scroll-into-view';
 
@@ -19,9 +19,9 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @tracked academicYearCrossesCalendarYearBoundaries = false;
 
   get academicYear() {
-    const today = moment();
-    const thisYear = Number(today.format('YYYY'));
-    const thisMonth = Number(today.format('M'));
+    const today = DateTime.now();
+    const thisYear = Number(today.year);
+    const thisMonth = Number(today.month);
     if (thisMonth < 4) {
       return thisYear - 1;
     }
