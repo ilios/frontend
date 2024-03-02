@@ -55,18 +55,16 @@ export default class IliosCalendarComponent extends Component {
     return this.compiledCalendarEvents.sort((a, b) => {
       const aStartDate = DateTime.fromISO(a.startDate);
       const bStartDate = DateTime.fromISO(b.startDate);
-      if (aStartDate > bStartDate) {
-        return 1;
-      } else if (aStartDate < bStartDate) {
-        return -1;
+      let diff = aStartDate > bStartDate ? 1 : aStartDate < bStartDate ? -1 : 0;
+      if (diff) {
+        return diff;
       }
 
       const aEndDate = DateTime.fromISO(a.endDate);
       const bEndDate = DateTime.fromISO(b.endDate);
-      if (aEndDate > bEndDate) {
-        return 1;
-      } else if (aEndDate < bEndDate) {
-        return -1;
+      diff = aEndDate > bEndDate ? 1 : aEndDate < bEndDate ? -1 : 0;
+      if (diff) {
+        return diff;
       }
 
       return a.title - b.title;
