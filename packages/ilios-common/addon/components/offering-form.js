@@ -4,7 +4,6 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { hash, map } from 'rsvp';
-import moment from 'moment-timezone';
 import { DateTime } from 'luxon';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import {
@@ -372,12 +371,12 @@ export default class OfferingForm extends Component {
 
     // adjust timezone
     offerings.forEach((offering) => {
-      offering.startDate = moment
-        .tz(moment(offering.startDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone)
-        .toDate();
-      offering.endDate = moment
-        .tz(moment(offering.endDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone)
-        .toDate();
+      offering.startDate = DateTime.fromJSDate(offering.startDate)
+        .setZone(this.currentTimezone)
+        .toJSDate();
+      offering.endDate = DateTime.fromJSDate(offering.endDate)
+        .setZone(this.currentTimezone)
+        .toJSDate();
     });
 
     const totalOfferings = offerings.length;
