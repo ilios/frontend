@@ -67,13 +67,13 @@ export default class OfferingForm extends Component {
     this.timezones = this.timezone.getTimezones();
 
     this.recurringDayOptions = [
-      { day: '0', t: 'general.sunday' },
-      { day: '1', t: 'general.monday' },
-      { day: '2', t: 'general.tuesday' },
-      { day: '3', t: 'general.wednesday' },
-      { day: '4', t: 'general.thursday' },
-      { day: '5', t: 'general.friday' },
-      { day: '6', t: 'general.saturday' },
+      { day: 7, t: 'general.sunday' },
+      { day: 1, t: 'general.monday' },
+      { day: 2, t: 'general.tuesday' },
+      { day: 3, t: 'general.wednesday' },
+      { day: 4, t: 'general.thursday' },
+      { day: 5, t: 'general.friday' },
+      { day: 6, t: 'general.saturday' },
     ];
   }
 
@@ -91,6 +91,11 @@ export default class OfferingForm extends Component {
       return courseEndDate.toJSDate();
     }
     return today.toJSDate();
+  }
+
+  get startDateDayOfWeek() {
+    return DateTime.fromJSDate(this.startDate).weekday;
+
   }
 
   @IsInt()
@@ -436,13 +441,11 @@ export default class OfferingForm extends Component {
     }
 
     const userPickedDay = DateTime.fromJSDate(this.startDate).weekday;
-    //convert strings to numbers use parseFloat because parseInt takes a second
-    //argument and gets thrown off by map sending that argument as the counter
-    const recurringDayInts = this.recurringDays.map(parseFloat).sort();
+    const recurringDays = [...this.recurringDays].sort();
 
     // Add offerings for the rest of first week
     //only days AFTER the initial day are considered
-    recurringDayInts.forEach((day) => {
+    recurringDays.forEach((day) => {
       if (day > userPickedDay) {
         const obj = {
           room: this.room,
@@ -458,11 +461,11 @@ export default class OfferingForm extends Component {
         offerings.push(obj);
       }
     });
-    recurringDayInts.push(userPickedDay);
-    recurringDayInts.sort();
+    recurringDays.push(userPickedDay);
+    recurringDays.sort();
 
     for (let i = 1; i < this.numberOfWeeks; i++) {
-      recurringDayInts.forEach((day) => {
+      recurringDays.forEach((day) => {
         const obj = {
           room: this.room,
           url: this.url,
