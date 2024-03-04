@@ -443,7 +443,7 @@ export default class OfferingForm extends Component {
       return offerings;
     }
 
-    const userPickedDay = moment(this.startDate).day();
+    const userPickedDay = DateTime.fromJSDate(this.startDate).weekday;
     //convert strings to numbers use parseFloat because parseInt takes a second
     //argument and gets thrown off by map sending that argument as the counter
     const recurringDayInts = this.recurringDays.map(parseFloat).sort();
@@ -460,8 +460,8 @@ export default class OfferingForm extends Component {
           instructorGroups: this.instructorGroups,
           instructors: this.instructors,
         };
-        obj.startDate = moment(this.startDate).day(day).toDate();
-        obj.endDate = moment(this.endDate).day(day).toDate();
+        obj.startDate = DateTime.fromJSDate(this.startDate).set({ weekday: day }).toJSDate();
+        obj.endDate = DateTime.fromJSDate(this.endDate).set({ weekday: day }).toJSDate();
 
         offerings.push(obj);
       }
@@ -479,9 +479,11 @@ export default class OfferingForm extends Component {
           instructorGroups: this.instructorGroups,
           instructors: this.instructors,
         };
-        obj.startDate = moment(this.startDate).day(day).add(i, 'weeks').toDate();
-        obj.endDate = moment(this.endDate).day(day).add(i, 'weeks').toDate();
-
+        obj.startDate = DateTime.fromJSDate(this.startDate)
+          .set({ weekday: day })
+          .plus({ week: i })
+          .toJSDate();
+        obj.endDate = DateTime.fromJSDate(this.endDate).set({ weekday: day }).plus({ week: i }).toJSDate();
         offerings.push(obj);
       });
     }
