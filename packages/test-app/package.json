@@ -23,7 +23,7 @@
     "@embroider/test-setup": "^3.0.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@percy/cli": "^1.28.0",
+    "@percy/cli": "^1.28.1",
     "@percy/ember": "^4.2.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
