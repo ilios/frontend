@@ -104,9 +104,9 @@ export default class OfferingForm extends Component {
     if (isEmpty(startDate) || isEmpty(endDate)) {
       return 1;
     }
-    const mStart = moment(startDate);
-    const mEnd = moment(endDate);
-    return mEnd.diff(mStart, 'hours');
+    return Math.trunc(
+      DateTime.fromJSDate(this.endDate).diff(DateTime.fromJSDate(this.startDate), 'hours').hours,
+    );
   }
 
   @IsInt()
@@ -117,17 +117,13 @@ export default class OfferingForm extends Component {
     const startDate = this.startDate;
     const endDate = this.endDate;
 
-    if (isEmpty(startDate) || isEmpty(endDate)) {
+    if (isEmpty(this.startDate) || isEmpty(this.endDate)) {
       return 0;
     }
-    const mStart = moment(startDate);
-    const mEnd = moment(endDate);
-
-    const endHour = mEnd.hour();
-    const endMinute = mEnd.minute();
-
-    mStart.hour(endHour);
-    const startMinute = mStart.minute();
+    const endDateTime = DateTime.fromJSDate(endDate);
+    const startDateTime = DateTime.fromJSDate(startDate).set({ hour: endDateTime.hour });
+    const startMinute = startDateTime.minute;
+    const endMinute = endDateTime.minute;
 
     let diff = 0;
     if (endMinute > startMinute) {
