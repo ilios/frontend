@@ -95,7 +95,6 @@ export default class OfferingForm extends Component {
 
   get startDateDayOfWeek() {
     return DateTime.fromJSDate(this.startDate).weekday;
-
   }
 
   @IsInt()
