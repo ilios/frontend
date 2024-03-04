@@ -241,15 +241,15 @@ export default class OfferingForm extends Component {
   updateStartDate(date) {
     const minutes = this.durationMinutes;
     const hours = this.durationHours;
-    const currentStartDate = moment(this.startDate);
-    const startDate = moment(date)
-      .hour(currentStartDate.hour())
-      .minute(currentStartDate.minute())
-      .toDate();
-    const endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
+    const currentStartDate = DateTime.fromJSDate(this.startDate);
+    const startDate = DateTime.fromJSDate(date).set({
+      hour: currentStartDate.hour,
+      minute: currentStartDate.minute,
+    });
+    const endDate = startDate.plus({ hour: hours, minute: minutes });
 
-    this.startDate = startDate;
-    this.endDate = endDate;
+    this.startDate = startDate.toJSDate();
+    this.endDate = endDate.toJSDate();
   }
 
   @action
