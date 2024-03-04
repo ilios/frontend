@@ -18,16 +18,10 @@ module.exports = {
   },
   rules: {
     'ember/classic-decorator-no-classic-methods': 0,
-    'ember/no-actions-hash': 0,
     'ember/no-classic-classes': 0,
-    'ember/no-classic-components': 0,
-    'ember/no-component-lifecycle-hooks': 0,
-    'ember/no-get': 0,
     'ember/no-mixins': 0,
     'ember/no-new-mixins': 0,
     'ember/no-runloop': 0,
-    'ember/require-tagless-components': 0,
-    'no-console': 1,
   },
   overrides: [
     // node files
@@ -37,17 +31,13 @@ module.exports = {
         './.prettierrc.js',
         './.stylelintrc.js',
         './.template-lintrc.js',
-        './packages/*/blueprints/*/index.js',
-        './packages/*/config/**/*.js',
-        './packages/*/ember-cli-build.js',
-        './packages/*/index.js',
-        './packages/*/testem.js',
-        './packages/*/tests/dummy/config/**/*.js',
-        './packages/frontend/lib/*/index.js',
-        './packages/frontend/testem.browserstack.js',
-        './packages/lti-course-manager/lib/*/index.js',
-        './packages/lti-dashboard/lib/*/index.js',
-        './packages/test-app/testem.browserstack.js',
+        './ember-cli-build.js',
+        './testem.js',
+        './testem.browserstack.js',
+        './blueprints/*/index.js',
+        './config/**/*.js',
+        './lib/*/index.js',
+        './server/**/*.js',
       ],
       parserOptions: {
         sourceType: 'script',
@@ -60,22 +50,12 @@ module.exports = {
     },
     {
       // test files
-      files: ['packages/**/tests/**/*-test.{js,ts}'],
+      files: ['tests/**/*-test.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
       rules: {
         'qunit/require-expect': [2, 'except-simple'],
         'ember/no-classic-classes': 0,
       },
-    },
-    {
-      // YAML files
-      files: [
-        './.github/dependabot.yml',
-        './.github/workflows/*.{yaml,yml}',
-        './packages/**/translations/*.{yaml,yml}',
-      ],
-      extends: ['plugin:yml/standard'],
-      parser: 'yaml-eslint-parser',
     },
   ],
 };
