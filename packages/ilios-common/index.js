@@ -8,7 +8,6 @@ const SetTransform = require('./lib/set-transform');
 const HasErrorForTransform = require('./lib/has-error-for-transform');
 const GetErrorsForTransform = require('./lib/get-errors-for-transform');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
-const MomentTimezoneDataPlugin = require('moment-timezone-data-webpack-plugin');
 
 module.exports = {
   name: require('./package').name,
@@ -27,10 +26,6 @@ module.exports = {
           new MomentLocalesPlugin({
             // 'en' is built into moment and cannot be removed. This strips the others.
             localesToKeep: ['es', 'fr'],
-          }),
-
-          new MomentTimezoneDataPlugin({
-            startYear: 2001,
           }),
         ],
       },
