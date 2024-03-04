@@ -5,6 +5,7 @@ import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { hash, map } from 'rsvp';
 import moment from 'moment-timezone';
+import { DateTime } from 'luxon';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import {
   ArrayNotEmpty,
@@ -82,18 +83,15 @@ export default class OfferingForm extends Component {
   }
 
   get defaultStartDate() {
-    const today = moment();
-    const courseStartDate = this.args.courseStartDate;
-    const courseEndDate = this.args.courseEndDate;
-    let defaultStartDate = today.clone();
-    if (isPresent(courseStartDate) && today.isBefore(courseStartDate)) {
-      defaultStartDate = moment(courseStartDate);
+    const today = DateTime.now();
+    const courseStartDate = DateTime.fromJSDate(this.args.courseStartDate);
+    const courseEndDate = DateTime.fromJSDate(this.args.courseEndDate);
+    if (today < courseStartDate) {
+      return courseStartDate.toJSDate();
+    } else if (today > courseEndDate) {
+      return courseEndDate.toJSDate();
     }
-    if (isPresent(courseEndDate) && today.isAfter(courseEndDate)) {
-      defaultStartDate = moment(courseEndDate);
-    }
-
-    return defaultStartDate.toDate();
+    return today.toJSDate();
   }
 
   @IsInt()
