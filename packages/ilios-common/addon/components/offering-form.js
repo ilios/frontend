@@ -377,10 +377,10 @@ export default class OfferingForm extends Component {
     // adjust timezone
     offerings.forEach((offering) => {
       offering.startDate = DateTime.fromJSDate(offering.startDate)
-        .setZone(this.currentTimezone)
+        .setZone(this.currentTimezone, { keepLocalTime: true })
         .toJSDate();
       offering.endDate = DateTime.fromJSDate(offering.endDate)
-        .setZone(this.currentTimezone)
+        .setZone(this.currentTimezone, { keepLocalTime: true })
         .toJSDate();
     });
 
