@@ -483,7 +483,10 @@ export default class OfferingForm extends Component {
           .set({ weekday: day })
           .plus({ week: i })
           .toJSDate();
-        obj.endDate = DateTime.fromJSDate(this.endDate).set({ weekday: day }).plus({ week: i }).toJSDate();
+        obj.endDate = DateTime.fromJSDate(this.endDate)
+          .set({ weekday: day })
+          .plus({ week: i })
+          .toJSDate();
         offerings.push(obj);
       });
     }
@@ -532,11 +535,9 @@ export default class OfferingForm extends Component {
     this.addErrorDisplayFor('durationHours');
     this.addErrorDisplayFor('durationMinutes');
     const minutes = this.durationMinutes;
-    this.endDate = moment(this.startDate)
-      .clone()
-      .add(hours, 'hours')
-      .add(minutes, 'minutes')
-      .toDate();
+    this.endDate = DateTime.fromJSDate(this.startDate)
+      .plus({ hour: hours, minute: minutes })
+      .toJSDate();
   });
 
   updateDurationMinutes = restartableTask(async (minutes) => {
