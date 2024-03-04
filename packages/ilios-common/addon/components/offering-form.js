@@ -225,19 +225,16 @@ export default class OfferingForm extends Component {
 
   @action
   updateStartTime(value, type) {
-    const startDate = moment(this.startDate);
+    const newTime = type === 'hour' ? { hour: value } : { minute: value };
 
-    if (type === 'hour') {
-      startDate.hour(value);
-    } else {
-      startDate.minute(value);
-    }
+    const startDate = DateTime.fromJSDate(this.startDate).set(newTime);
+
     const minutes = this.durationMinutes;
     const hours = this.durationHours;
-    const endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes');
+    const endDate = startDate.plus({ hour: hours, minute: minutes });
 
-    this.startDate = startDate.toDate();
-    this.endDate = endDate.toDate();
+    this.startDate = startDate.toJSDate();
+    this.endDate = endDate.toJSDate();
   }
 
   @action
