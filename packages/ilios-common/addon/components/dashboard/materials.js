@@ -8,7 +8,7 @@ import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { filterBy, sortBy, uniqueById } from 'ilios-common/utils/array-helpers';
 
 const DEBOUNCE_DELAY = 250;
@@ -39,8 +39,12 @@ export default class DashboardMaterialsComponent extends Component {
     const user = await this.currentUser.getModel();
     let url = `${this.iliosConfig.apiNameSpace}/usermaterials/${user.id}`;
     if (!this.args.showAllMaterials) {
-      const from = moment().hour(0).minute(0).unix();
-      const to = moment().hour(23).minute(59).add(this.daysInAdvance, 'days').unix();
+      const now = DateTime.now();
+      const from = now.set({ hour: 0, minute: 0 }).toUnixInteger();
+      const to = now
+        .set({ hour: 23, minute: 59 })
+        .plus({ day: this.daysInAdvance })
+        .toUnixInteger();
       url += `?before=${to}&after=${from}`;
     }
     const data = await this.fetch.getJsonFromApiHost(url);

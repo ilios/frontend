@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { tracked } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
 import IliosCalendarDay from './ilios-calendar-day';
@@ -27,11 +27,14 @@ export default class IliosCalendarComponent extends Component {
     } else {
       const hashedEvents = {};
       this.args.calendarEvents.forEach((event) => {
-        const hash = moment(event.startDate).format() + moment(event.endDate).format() + event.name;
+        const hash =
+          DateTime.fromISO(event.startDate).toISO() +
+          DateTime.fromISO(event.endDate).toISO() +
+          event.name;
         if (!(hash in hashedEvents)) {
           hashedEvents[hash] = [];
         }
-        //clone our event so we don't trample on the original when we change location
+        //clone our event, so we don't trample on the original when we change location
         hashedEvents[hash].push(Object.assign({}, event));
       });
       const compiledEvents = [];
@@ -50,18 +53,18 @@ export default class IliosCalendarComponent extends Component {
 
   get sortedEvents() {
     return this.compiledCalendarEvents.sort((a, b) => {
-      const startDiff = moment(a.startDate).diff(moment(b.startDate));
-      if (startDiff !== 0) {
-        return startDiff;
+      const aStartDate = DateTime.fromISO(a.startDate);
+      const bStartDate = DateTime.fromISO(b.startDate);
+      let diff = aStartDate > bStartDate ? 1 : aStartDate < bStartDate ? -1 : 0;
+      if (diff) {
+        return diff;
       }
 
-      const durationA = moment(a.startDate).diff(moment(a.endDate));
-      const durationB = moment(b.startDate).diff(moment(b.endDate));
-
-      const durationDiff = durationA - durationB;
-
-      if (durationDiff !== 0) {
-        return durationDiff;
+      const aEndDate = DateTime.fromISO(a.endDate);
+      const bEndDate = DateTime.fromISO(b.endDate);
+      diff = aEndDate > bEndDate ? 1 : aEndDate < bEndDate ? -1 : 0;
+      if (diff) {
+        return diff;
       }
 
       return a.title - b.title;
@@ -69,12 +72,32 @@ export default class IliosCalendarComponent extends Component {
   }
 
   get forwardDate() {
-    return moment(this.args.selectedDate).add(1, this.args.selectedView).format('YYYY-MM-DD');
+    return DateTime.fromJSDate(this.args.selectedDate)
+      .plus(this.viewOpts(this.args.selectedView, 1))
+      .toFormat('yyyy-MM-dd');
   }
   get backDate() {
-    return moment(this.args.selectedDate).subtract(1, this.args.selectedView).format('YYYY-MM-DD');
+    return DateTime.fromJSDate(this.args.selectedDate)
+      .minus(this.viewOpts(this.args.selectedView, 1))
+      .toFormat('yyyy-MM-dd');
   }
   get todayDate() {
-    return moment().format('YYYY-MM-DD');
+    return DateTime.now().toFormat('yyyy-MM-dd');
+  }
+
+  viewOpts(view, value) {
+    let opts = {};
+    switch (view) {
+      case 'month':
+        opts = { month: value };
+        break;
+      case 'week':
+        opts = { week: value };
+        break;
+      case 'day':
+        opts = { day: value };
+        break;
+    }
+    return opts;
   }
 }
