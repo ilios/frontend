@@ -4,8 +4,11 @@
   "author": "The Ilios Team (info@iliosproject.org)",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "lint": "pnpm -r lint",
-    "lint:fix": "pnpm -r lint:fix",
+    "lint": "pnpm run --parallel /^lint:.*/",
+    "lint:js": "pnpm run --parallel lint:js",
+    "lint:hbs": "pnpm run --parallel lint:hbs",
+    "lint:css": "pnpm run --parallel lint:css",
+    "lint:fix": "pnpm run --parallel lint:fix",
     "start": "pnpm --filter frontend exec ember serve",
     "start:lti-course-manager": "pnpm --filter lti-course-manager exec ember serve",
     "start:lti-dashboard": "pnpm --filter lti-dashboard exec ember serve",
