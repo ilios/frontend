@@ -19,7 +19,8 @@
     "lint:js:fix": "eslint . --fix",
     "deploy:production": "ember deploy production --activate",
     "deploy:staging": "ember deploy staging --activate",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "lint:deps": "ember dependency-lint"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
