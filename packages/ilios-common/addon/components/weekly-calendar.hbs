@@ -37,7 +37,7 @@
         <h3 class="day-name" data-test-day-name>
           <button
             type="button"
-            {{on "click" (fn @changeToDayView day.date)}}
+            {{on "click" (fn this.changeToDayView day.date)}}
           >
             {{format-date day.date weekday="long"}}
           </button>
@@ -64,7 +64,7 @@
       <div class="day-heading day-{{day.dayOfWeek}}">
         <button
           type="button"
-          {{on "click" (fn @changeToDayView day.date)}}
+          {{on "click" (fn this.changeToDayView day.date)}}
           tabindex="-1"
           data-test-day
           aria-label={{day.longName}}
