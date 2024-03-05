@@ -3,12 +3,13 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options');
+const { Webpack } = require('@embroider/webpack');
 
 module.exports = function (defaults) {
   const env = EmberApp.env() || 'development';
   const isTestBuild = env === 'test';
 
-  const app = new EmberApp(defaults, {
+  const config = {
     fingerprint: {
       extensions: broccoliAssetRevDefaults.extensions.concat(['webmanifest', 'svg']),
       exclude: ['ilios-icon.png'],
@@ -16,11 +17,23 @@ module.exports = function (defaults) {
     sourcemaps: {
       enabled: true,
     },
-
     hinting: isTestBuild,
-    babel: {
+  };
+  if (!process.env.BUILD_WITH_EMBROIDER) {
+    config.babel = {
       plugins: [require('ember-auto-import/babel-plugin')],
-    },
-  });
-  return app.toTree();
+    };
+  }
+  const app = new EmberApp(defaults, config);
+
+  if (process.env.BUILD_WITH_EMBROIDER) {
+    return require('@embroider/compat').compatBuild(app, Webpack, {
+      staticAddonTestSupportTrees: true,
+      staticAddonTrees: true,
+      staticHelpers: true,
+      staticComponents: true,
+    });
+  } else {
+    return app.toTree();
+  }
 };

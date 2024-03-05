@@ -12,7 +12,7 @@ module.exports = function (defaults) {
   const env = EmberApp.env() || 'development';
   const isTestBuild = env === 'test';
 
-  const app = new EmberApp(defaults, {
+  const config = {
     fingerprint: {
       extensions: broccoliAssetRevDefaults.extensions.concat(['webmanifest', 'svg']),
     },
@@ -26,7 +26,6 @@ module.exports = function (defaults) {
     hinting: isTestBuild,
     babel: {
       plugins: [
-        require.resolve('ember-auto-import/babel-plugin'),
         // eslint-disable-next-line
         require.resolve('ember-concurrency/async-arrow-task-transform'),
       ],
@@ -64,7 +63,12 @@ module.exports = function (defaults) {
     minifyCSS: {
       enabled: false,
     },
-  });
+  };
+  if (!process.env.BUILD_WITH_EMBROIDER) {
+    config.babel.plugins.push(require('ember-auto-import/babel-plugin'));
+  }
+
+  const app = new EmberApp(defaults, config);
 
   if (process.env.BUILD_WITH_EMBROIDER) {
     return require('@embroider/compat').compatBuild(app, Webpack, {
