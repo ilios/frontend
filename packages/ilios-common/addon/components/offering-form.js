@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { hash, map } from 'rsvp';
-import moment from 'moment-timezone';
+import { DateTime } from 'luxon';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import {
   ArrayNotEmpty,
@@ -67,13 +67,13 @@ export default class OfferingForm extends Component {
     this.timezones = this.timezone.getTimezones();
 
     this.recurringDayOptions = [
-      { day: '0', t: 'general.sunday' },
-      { day: '1', t: 'general.monday' },
-      { day: '2', t: 'general.tuesday' },
-      { day: '3', t: 'general.wednesday' },
-      { day: '4', t: 'general.thursday' },
-      { day: '5', t: 'general.friday' },
-      { day: '6', t: 'general.saturday' },
+      { day: 7, t: 'general.sunday' },
+      { day: 1, t: 'general.monday' },
+      { day: 2, t: 'general.tuesday' },
+      { day: 3, t: 'general.wednesday' },
+      { day: 4, t: 'general.thursday' },
+      { day: 5, t: 'general.friday' },
+      { day: 6, t: 'general.saturday' },
     ];
   }
 
@@ -82,18 +82,19 @@ export default class OfferingForm extends Component {
   }
 
   get defaultStartDate() {
-    const today = moment();
-    const courseStartDate = this.args.courseStartDate;
-    const courseEndDate = this.args.courseEndDate;
-    let defaultStartDate = today.clone();
-    if (isPresent(courseStartDate) && today.isBefore(courseStartDate)) {
-      defaultStartDate = moment(courseStartDate);
+    const today = DateTime.now();
+    const courseStartDate = DateTime.fromJSDate(this.args.courseStartDate);
+    const courseEndDate = DateTime.fromJSDate(this.args.courseEndDate);
+    if (today < courseStartDate) {
+      return courseStartDate.toJSDate();
+    } else if (today > courseEndDate) {
+      return courseEndDate.toJSDate();
     }
-    if (isPresent(courseEndDate) && today.isAfter(courseEndDate)) {
-      defaultStartDate = moment(courseEndDate);
-    }
+    return today.toJSDate();
+  }
 
-    return defaultStartDate.toDate();
+  get startDateDayOfWeek() {
+    return DateTime.fromJSDate(this.startDate).weekday;
   }
 
   @IsInt()
@@ -106,9 +107,9 @@ export default class OfferingForm extends Component {
     if (isEmpty(startDate) || isEmpty(endDate)) {
       return 1;
     }
-    const mStart = moment(startDate);
-    const mEnd = moment(endDate);
-    return mEnd.diff(mStart, 'hours');
+    return Math.trunc(
+      DateTime.fromJSDate(this.endDate).diff(DateTime.fromJSDate(this.startDate), 'hours').hours,
+    );
   }
 
   @IsInt()
@@ -119,17 +120,13 @@ export default class OfferingForm extends Component {
     const startDate = this.startDate;
     const endDate = this.endDate;
 
-    if (isEmpty(startDate) || isEmpty(endDate)) {
+    if (isEmpty(this.startDate) || isEmpty(this.endDate)) {
       return 0;
     }
-    const mStart = moment(startDate);
-    const mEnd = moment(endDate);
-
-    const endHour = mEnd.hour();
-    const endMinute = mEnd.minute();
-
-    mStart.hour(endHour);
-    const startMinute = mStart.minute();
+    const endDateTime = DateTime.fromJSDate(endDate);
+    const startDateTime = DateTime.fromJSDate(startDate).set({ hour: endDateTime.hour });
+    const startMinute = startDateTime.minute;
+    const endMinute = endDateTime.minute;
 
     let diff = 0;
     if (endMinute > startMinute) {
@@ -231,34 +228,31 @@ export default class OfferingForm extends Component {
 
   @action
   updateStartTime(value, type) {
-    const startDate = moment(this.startDate);
+    const newTime = type === 'hour' ? { hour: value } : { minute: value };
 
-    if (type === 'hour') {
-      startDate.hour(value);
-    } else {
-      startDate.minute(value);
-    }
+    const startDate = DateTime.fromJSDate(this.startDate).set(newTime);
+
     const minutes = this.durationMinutes;
     const hours = this.durationHours;
-    const endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes');
+    const endDate = startDate.plus({ hour: hours, minute: minutes });
 
-    this.startDate = startDate.toDate();
-    this.endDate = endDate.toDate();
+    this.startDate = startDate.toJSDate();
+    this.endDate = endDate.toJSDate();
   }
 
   @action
   updateStartDate(date) {
     const minutes = this.durationMinutes;
     const hours = this.durationHours;
-    const currentStartDate = moment(this.startDate);
-    const startDate = moment(date)
-      .hour(currentStartDate.hour())
-      .minute(currentStartDate.minute())
-      .toDate();
-    const endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
+    const currentStartDate = DateTime.fromJSDate(this.startDate);
+    const startDate = DateTime.fromJSDate(date).set({
+      hour: currentStartDate.hour,
+      minute: currentStartDate.minute,
+    });
+    const endDate = startDate.plus({ hour: hours, minute: minutes });
 
-    this.startDate = startDate;
-    this.endDate = endDate;
+    this.startDate = startDate.toJSDate();
+    this.endDate = endDate.toJSDate();
   }
 
   @action
@@ -317,8 +311,12 @@ export default class OfferingForm extends Component {
     if (this.loaded) {
       return;
     }
-    this.startDate = moment(this.defaultStartDate).hour(8).minute(0).second(0).toDate();
-    this.endDate = moment(this.defaultStartDate).hour(9).minute(0).second(0).toDate();
+    this.startDate = DateTime.fromJSDate(this.defaultStartDate)
+      .set({ hour: 8, minute: 0, second: 0 })
+      .toJSDate();
+    this.endDate = DateTime.fromJSDate(this.defaultStartDate)
+      .set({ hour: 9, minute: 0, second: 0 })
+      .toJSDate();
     this.learnerGroups = [];
     this.learners = [];
     this.recurringDays = [];
@@ -377,12 +375,12 @@ export default class OfferingForm extends Component {
 
     // adjust timezone
     offerings.forEach((offering) => {
-      offering.startDate = moment
-        .tz(moment(offering.startDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone)
-        .toDate();
-      offering.endDate = moment
-        .tz(moment(offering.endDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone)
-        .toDate();
+      offering.startDate = DateTime.fromJSDate(offering.startDate)
+        .setZone(this.currentTimezone, { keepLocalTime: true })
+        .toJSDate();
+      offering.endDate = DateTime.fromJSDate(offering.endDate)
+        .setZone(this.currentTimezone, { keepLocalTime: true })
+        .toJSDate();
     });
 
     const totalOfferings = offerings.length;
@@ -441,14 +439,12 @@ export default class OfferingForm extends Component {
       return offerings;
     }
 
-    const userPickedDay = moment(this.startDate).day();
-    //convert strings to numbers use parseFloat because parseInt takes a second
-    //argument and gets thrown off by map sending that argument as the counter
-    const recurringDayInts = this.recurringDays.map(parseFloat).sort();
+    const userPickedDay = DateTime.fromJSDate(this.startDate).weekday;
+    const recurringDays = [...this.recurringDays].sort();
 
     // Add offerings for the rest of first week
     //only days AFTER the initial day are considered
-    recurringDayInts.forEach((day) => {
+    recurringDays.forEach((day) => {
       if (day > userPickedDay) {
         const obj = {
           room: this.room,
@@ -458,17 +454,17 @@ export default class OfferingForm extends Component {
           instructorGroups: this.instructorGroups,
           instructors: this.instructors,
         };
-        obj.startDate = moment(this.startDate).day(day).toDate();
-        obj.endDate = moment(this.endDate).day(day).toDate();
+        obj.startDate = DateTime.fromJSDate(this.startDate).set({ weekday: day }).toJSDate();
+        obj.endDate = DateTime.fromJSDate(this.endDate).set({ weekday: day }).toJSDate();
 
         offerings.push(obj);
       }
     });
-    recurringDayInts.push(userPickedDay);
-    recurringDayInts.sort();
+    recurringDays.push(userPickedDay);
+    recurringDays.sort();
 
     for (let i = 1; i < this.numberOfWeeks; i++) {
-      recurringDayInts.forEach((day) => {
+      recurringDays.forEach((day) => {
         const obj = {
           room: this.room,
           url: this.url,
@@ -477,9 +473,14 @@ export default class OfferingForm extends Component {
           instructorGroups: this.instructorGroups,
           instructors: this.instructors,
         };
-        obj.startDate = moment(this.startDate).day(day).add(i, 'weeks').toDate();
-        obj.endDate = moment(this.endDate).day(day).add(i, 'weeks').toDate();
-
+        obj.startDate = DateTime.fromJSDate(this.startDate)
+          .set({ weekday: day })
+          .plus({ week: i })
+          .toJSDate();
+        obj.endDate = DateTime.fromJSDate(this.endDate)
+          .set({ weekday: day })
+          .plus({ week: i })
+          .toJSDate();
         offerings.push(obj);
       });
     }
@@ -528,11 +529,9 @@ export default class OfferingForm extends Component {
     this.addErrorDisplayFor('durationHours');
     this.addErrorDisplayFor('durationMinutes');
     const minutes = this.durationMinutes;
-    this.endDate = moment(this.startDate)
-      .clone()
-      .add(hours, 'hours')
-      .add(minutes, 'minutes')
-      .toDate();
+    this.endDate = DateTime.fromJSDate(this.startDate)
+      .plus({ hour: hours, minute: minutes })
+      .toJSDate();
   });
 
   updateDurationMinutes = restartableTask(async (minutes) => {
@@ -540,11 +539,9 @@ export default class OfferingForm extends Component {
     this.addErrorDisplayFor('durationHours');
     this.addErrorDisplayFor('durationMinutes');
     const hours = this.durationHours;
-    this.endDate = moment(this.startDate)
-      .clone()
-      .add(hours, 'hours')
-      .add(minutes, 'minutes')
-      .toDate();
+    this.endDate = DateTime.fromJSDate(this.startDate)
+      .plus({ hour: hours, minute: minutes })
+      .toJSDate();
   });
 
   @action

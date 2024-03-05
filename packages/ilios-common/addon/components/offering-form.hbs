@@ -154,9 +154,9 @@
                             type="checkbox"
                             checked={{or
                               (includes obj.day this.recurringDays)
-                              (eq (moment-format this.startDate "d") obj.day)
+                              (eq this.startDateDayOfWeek obj.day)
                             }}
-                            disabled={{eq (moment-format this.startDate "d") obj.day}}
+                            disabled={{eq this.startDateDayOfWeek obj.day}}
                             data-test-recurring-day-input={{i}}
                             {{on "click" (fn this.toggleRecurringDay obj.day)}}
                           >
