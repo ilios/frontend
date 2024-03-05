@@ -136,4 +136,9 @@ export default class WeeklyCalendarComponent extends Component {
       this.args.selectEvent(event);
     }
   }
+
+  @action
+  changeToDayView(date) {
+    this.args.changeToDayView(DateTime.fromJSDate(date).toFormat('yyyy-MM-dd'));
+  }
 }

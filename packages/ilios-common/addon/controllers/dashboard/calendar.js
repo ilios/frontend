@@ -59,7 +59,7 @@ export default class DashboardCalendarController extends Controller {
 
   @action
   changeDate(newDate) {
-    this.date = DateTime.fromJSDate(newDate).toFormat('yyyy-MM-dd');
+    this.date = DateTime.fromISO(newDate).toFormat('yyyy-MM-dd');
   }
 
   @action

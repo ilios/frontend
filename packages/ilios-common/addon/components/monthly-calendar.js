@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { DateTime } from 'luxon';
@@ -102,5 +103,10 @@ export default class MonthlyCalendarComponent extends Component {
         shortName: this.intl.formatDate(date, { weekday: 'short' }),
       };
     });
+  }
+
+  @action
+  changeToDayView(date) {
+    this.args.changeToDayView(DateTime.fromJSDate(date).toFormat('yyyy-MM-dd'));
   }
 }
