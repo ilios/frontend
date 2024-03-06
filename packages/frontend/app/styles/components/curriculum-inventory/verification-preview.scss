@@ -1,9 +1,12 @@
 .curriculum-inventory-verification-preview {
   .back-to-toc {
     display: block;
-    padding: 1em 0;
+    padding: 1rem 0 1rem 1rem;
   }
+
   .table-of-contents {
     list-style-type: none;
+    margin-left: 0;
+    padding-left: 1rem;
   }
 }
