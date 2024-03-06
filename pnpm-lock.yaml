@@ -300,8 +300,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.2.5)(stylelint@16.2.1)
       stylelint-scss:
-        specifier: ^6.2.0
-        version: 6.2.0(stylelint@16.2.1)
+        specifier: ^6.2.1
+        version: 6.2.1(stylelint@16.2.1)
       terser-webpack-plugin:
         specifier: ^5.3.9
         version: 5.3.10(webpack@5.90.2)
@@ -592,8 +592,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.2.5)(stylelint@16.2.1)
       stylelint-scss:
-        specifier: ^6.2.0
-        version: 6.2.0(stylelint@16.2.1)
+        specifier: ^6.2.1
+        version: 6.2.1(stylelint@16.2.1)
       tracked-built-ins:
         specifier: ^3.1.1
         version: 3.3.0
@@ -766,8 +766,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.2.5)(stylelint@16.2.1)
       stylelint-scss:
-        specifier: ^6.2.0
-        version: 6.2.0(stylelint@16.2.1)
+        specifier: ^6.2.1
+        version: 6.2.1(stylelint@16.2.1)
       tracked-built-ins:
         specifier: ^3.3.0
         version: 3.3.0
@@ -943,8 +943,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.2.5)(stylelint@16.2.1)
       stylelint-scss:
-        specifier: ^6.2.0
-        version: 6.2.0(stylelint@16.2.1)
+        specifier: ^6.2.1
+        version: 6.2.1(stylelint@16.2.1)
       tracked-built-ins:
         specifier: ^3.3.0
         version: 3.3.0
@@ -1129,8 +1129,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.2.5)(stylelint@16.2.1)
       stylelint-scss:
-        specifier: ^6.2.0
-        version: 6.2.0(stylelint@16.2.1)
+        specifier: ^6.2.1
+        version: 6.2.1(stylelint@16.2.1)
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0
@@ -17311,7 +17311,7 @@ packages:
       postcss-scss: 4.0.9(postcss@8.4.35)
       stylelint: 16.2.1(typescript@5.3.3)
       stylelint-config-recommended: 14.0.0(stylelint@16.2.1)
-      stylelint-scss: 6.2.0(stylelint@16.2.1)
+      stylelint-scss: 6.2.1(stylelint@16.2.1)
     dev: true
 
   /stylelint-config-recommended@14.0.0(stylelint@16.2.1):
@@ -17345,8 +17345,8 @@ packages:
       stylelint: 16.2.1(typescript@5.3.3)
     dev: true
 
-  /stylelint-scss@6.2.0(stylelint@16.2.1):
-    resolution: {integrity: sha512-ktYsWKNN+zh4VlpdNMajYCOREwaPI9xZLVue/H5vX4f4v7Kg+ej9Bj0b7fG41J2UboNujZNU9qi0yM/KK3KhOQ==}
+  /stylelint-scss@6.2.1(stylelint@16.2.1):
+    resolution: {integrity: sha512-ZoGLbVb1keZYRVGQlhB8G6sZOoNqw61whzzzGFWp05N12ErqLFfBv3JPrXiMLZaW98sBS7K/vUQhRnvUj4vwdw==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       stylelint: ^16.0.2
