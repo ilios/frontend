@@ -4,7 +4,7 @@
   "author": "The Ilios Team (info@iliosproject.org)",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "lint": "pnpm run --parallel /^lint:.*/",
+    "lint": "pnpm run --parallel \"/^lint:(hbs|js|css)$/\"",
     "lint:js": "pnpm run --parallel lint:js",
     "lint:hbs": "pnpm run --parallel lint:hbs",
     "lint:css": "pnpm run --parallel lint:css",
