@@ -13,7 +13,7 @@ registerDeprecationHandler((message, options, next) => {
   if (SILENCED_DEPRECATIONS.includes(options.id)) {
     return;
   } else if (SHOULD_THROW) {
-    throw new Error(message);
+    throw new Error(`Deprecation:  ${message} ++++ ID: ${options.id}`);
   }
 
   next(message, options);
