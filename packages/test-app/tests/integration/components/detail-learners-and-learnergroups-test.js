@@ -96,7 +96,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @cohorts={{this.cohorts}}
     />
 `);
-    assert.strictEqual(component.title, 'Learners and Learner Groups (3/3)');
+    assert.strictEqual(component.title, 'Learners (3) and Learner Groups (3)');
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(
       component.selectedLearners.learners[0].userNameInfo.fullName,
@@ -516,13 +516,13 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       @cohorts={{(array)}}
     />
 `);
-    assert.strictEqual(component.title, 'Learners and Learner Groups (3/3)');
+    assert.strictEqual(component.title, 'Learners (3) and Learner Groups (3)');
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
     this.ilmSession.set('learners', []);
     this.ilmSession.set('learnerGroups', []);
     await this.ilmSession.save();
-    assert.strictEqual(component.title, 'Learners and Learner Groups (0/0)');
+    assert.strictEqual(component.title, 'Learners (0) and Learner Groups (0)');
     assert.strictEqual(component.selectedLearners.learners.length, 0);
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 0);
   });

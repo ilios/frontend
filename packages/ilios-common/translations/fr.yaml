@@ -161,6 +161,7 @@ general:
   instructorGroups: Groupes des Instructeurs
   instructors: Instructeurs
   instructorsAndInstructorGroups: Instructeurs et Groupes des Instructeurs
+  instructorsAndInstructorGroupsWithCount: Instructeurs ({instructorCount}) et Groupes des Instructeurs ({instructorGroupCount})
   instructorsManageTitle: Manager Instructeurs
   last: Dernier
   lastUpdate: Dernière mise à jour
@@ -169,6 +170,7 @@ general:
   learnerGroupsManageTitle: "Manager groupes d'apprenants"
   learners: Étudiants
   learnersAndLearnerGroups: "Étudiants et Groupes d'Étudiants"
+  learnersAndLearnerGroupsWithCount: "Étudiants ({learnerCount}) et Groupes d'Étudiants ({learnerGroupCount})"
   learningMaterialManageTitle: "Manager Matériels d'Étude"
   learningMaterials: "Matériels d'Étude"
   learningMaterialsSummary: "Résumé Matériels d'Étude"

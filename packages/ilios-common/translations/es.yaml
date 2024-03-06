@@ -161,6 +161,7 @@ general:
   instructorGroups: Grupos de Instructores
   instructors: Instructores
   instructorsAndInstructorGroups: Instructores y Grupos de Instructores
+  instructorsAndInstructorGroupsWithCount: Instructores ({instructorCount}) y Grupos de Instructores ({instructorGroupCount})
   instructorsManageTitle: Administrar Instructores
   last: Último
   lastUpdate: Última actualización
@@ -169,6 +170,7 @@ general:
   learnerGroupsManageTitle: Administrar Grupos de Aprendedores
   learners: Aprendedores
   learnersAndLearnerGroups: Aprendedores y Grupos de Aprendedores
+  learnersAndLearnerGroupsWithCount: "Aprendedores ({learnerCount}) y Grupos de Aprendedores ({learnerGroupCount})"
   learningMaterialManageTitle: Administrar Materiales de Aprendizaje
   learningMaterials: Materiales de Aprendizaje
   learningMaterialsSummary: Resumen de Materiales de Aprendizaje
