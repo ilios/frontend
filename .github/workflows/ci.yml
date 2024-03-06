@@ -42,6 +42,7 @@ jobs:
     timeout-minutes: 15
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [20]
         workspace:
@@ -64,12 +65,18 @@ jobs:
         run: pnpm --filter ${{matrix.workspace}} exec ember test
 
   build:
-    name: Build (${{ matrix.node-version }})
+    name: ${{matrix.workspace}} Build (${{ matrix.node-version }})
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
+      fail-fast: false
       matrix:
         node-version: [20]
+        workspace:
+          - frontend
+          - test-app
+          - lti-course-manager
+          - lti-dashboard
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
@@ -81,10 +88,8 @@ jobs:
           cache: pnpm
       - name: install dependencies
         run: pnpm install
-      - name: test frontend build
-        run: pnpm run --filter frontend build
-      - name: test lti-dashboard build
-        run: pnpm run --filter lti-dashboard build
+      - name: Build
+        run: pnpm run --filter ${{matrix.workspace}} build
 
   # browserstack-test:
   #   name: Browserstack ${{matrix.workspace}} ${{ matrix.launcher }}
@@ -161,9 +166,16 @@ jobs:
         run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=Firefox
 
   test-with-embroider:
-    name: Test With Embroider
+    name: ${{matrix.workspace}} Test With Embroider
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - lti-course-manager
+          - lti-dashboard
     env:
       BUILD_WITH_EMBROIDER: true
     steps:
@@ -178,12 +190,19 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Run Tests
-        run: pnpm --filter frontend exec ember test
+        run: pnpm --filter ${{matrix.workspace}} exec ember test
 
   build-with-embroider:
-    name: Build With Embroider
+    name: ${{matrix.workspace}} Build With Embroider
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - lti-course-manager
+          - lti-dashboard
     env:
       BUILD_WITH_EMBROIDER: true
     steps:
@@ -199,3 +218,5 @@ jobs:
         run: pnpm install
       - name: Run Tests
         run: pnpm run --filter frontend build
+      - name: Build
+        run: pnpm --filter ${{matrix.workspace}} run build
