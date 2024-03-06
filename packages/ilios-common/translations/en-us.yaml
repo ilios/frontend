@@ -161,6 +161,7 @@ general:
   instructorGroups: Instructor Groups
   instructors: Instructors
   instructorsAndInstructorGroups: Instructors and Instructor Groups
+  instructorsAndInstructorGroupsWithCount: Instructors ({instructorCount}) and Instructor Groups ({instructorGroupCount})
   instructorsManageTitle: Manage Instructors
   last: Last
   lastUpdate: Last Update

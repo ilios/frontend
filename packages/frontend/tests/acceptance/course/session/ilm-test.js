@@ -35,7 +35,7 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.instructors.title, 'Instructors and Instructor Groups (3/3)');
+    assert.strictEqual(page.details.instructors.title, 'Instructors (3) and Instructor Groups (3)');
 
     assert.strictEqual(
       page.details.instructors.selectedInstructorGroups.instructorGroups.length,

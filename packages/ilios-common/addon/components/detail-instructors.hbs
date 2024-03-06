@@ -9,8 +9,7 @@
           {{t "general.instructorsManageTitle"}}
         </span>
       {{else}}
-        {{t "general.instructorsAndInstructorGroups"}}
-        ({{this.instructorCount}}/{{this.instructorGroupCount}})
+        {{t "general.instructorsAndInstructorGroupsWithCount" instructorCount=this.instructorCount instructorGroupCount=this.instructorGroupCount}}
       {{/if}}
     </div>
     <div class="actions">
