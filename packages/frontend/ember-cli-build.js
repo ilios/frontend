@@ -25,10 +25,7 @@ module.exports = function (defaults) {
 
     hinting: isTestBuild,
     babel: {
-      plugins: [
-        // eslint-disable-next-line
-        require.resolve('ember-concurrency/async-arrow-task-transform'),
-      ],
+      plugins: [require.resolve('ember-concurrency/async-arrow-task-transform')],
     },
     'ember-cli-image-transformer': {
       images: [
