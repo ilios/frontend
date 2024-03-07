@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
@@ -132,8 +132,9 @@ export default class CoursesRootComponent extends Component {
     if (this.args.year) {
       return this.args.years.find((year) => year.id === this.args.year);
     }
-    let currentYear = Number(moment().format('YYYY'));
-    const currentMonth = Number(moment().format('M'));
+    const now = DateTime.now();
+    let currentYear = now.year;
+    const currentMonth = now.month;
     if (this.academicYearCrossesCalendarYearBoundaries && currentMonth < 6) {
       currentYear--;
     }
