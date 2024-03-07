@@ -23,7 +23,7 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - name: Ember CLI Deploy
-        run: pnpm run --filter frontend deploy:staging
+        run: pnpm -r run --parallel deploy:staging
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
