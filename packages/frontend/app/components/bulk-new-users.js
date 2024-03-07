@@ -8,7 +8,7 @@ import { isPresent } from '@ember/utils';
 import { all, filter } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import PapaParse from 'papaparse';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';
 import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 
@@ -305,7 +305,7 @@ export default class BulkNewUsersComponent extends Component {
       }),
     );
 
-    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+    const lastYear = DateTime.now().minus({ year: 1 }).year;
     return objects.filter((obj) => {
       const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
       return finalYear > lastYear;
