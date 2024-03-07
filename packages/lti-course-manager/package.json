@@ -17,7 +17,6 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
-    "deploy:production": "ember deploy production --activate",
     "deploy:staging": "ember deploy staging --activate",
     "preinstall": "npx only-allow pnpm",
     "lint:deps": "ember dependency-lint"
