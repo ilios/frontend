@@ -17,11 +17,15 @@
     "test:frontend": "pnpm run --filter frontend test",
     "test:lti-course-manager": "pnpm run --filter lti-course-manager test",
     "test:lti-dashboard": "pnpm run --filter lti-dashboard test",
-    "test:test-app": "pnpm run --filter test-app test"
+    "test:test-app": "pnpm run --filter test-app test",
+    "prepare": "husky"
   },
   "engines": {
     "node": ">= 20",
     "yarn": "use pnpm",
     "npm": "use pnpm"
+  },
+  "devDependencies": {
+    "husky": "^9.0.11"
   }
 }
