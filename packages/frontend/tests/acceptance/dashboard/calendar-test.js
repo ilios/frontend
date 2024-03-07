@@ -952,4 +952,58 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     assert.strictEqual(page.calendar.weeklyCalendar.events.length, 1);
   });
+
+  test('transition from weekly calendar to day calendar when multi-event is clicked', async function (assert) {
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    freezeDateAt(today.toJSDate());
+    this.server.create('userevent', {
+      name: 'multi-event',
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      offering: 1,
+    });
+    this.server.create('userevent', {
+      name: 'multi-event',
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      offering: 1,
+    });
+    await page.visit({ show: 'calendar', view: 'week' });
+    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 1);
+    await page.calendar.weeklyCalendar.events[0].click();
+    assert.strictEqual(
+      currentURL(),
+      `/dashboard/calendar?date=${today.toFormat('yyyy-MM-dd')}&view=day`,
+    );
+    assert.strictEqual(page.calendar.dailyCalendar.events.length, 2);
+  });
+
+  test('transition from monthly calendar to day calendar when multi-event is clicked', async function (assert) {
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    freezeDateAt(today.toJSDate());
+    this.server.create('userevent', {
+      name: 'multi-event',
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      offering: 1,
+    });
+    this.server.create('userevent', {
+      name: 'multi-event',
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      offering: 1,
+    });
+    await page.visit({ show: 'calendar', view: 'month' });
+    assert.strictEqual(page.calendar.monthlyCalendar.events.length, 1);
+    await page.calendar.monthlyCalendar.events[0].click();
+    assert.strictEqual(
+      currentURL(),
+      `/dashboard/calendar?date=${today.toFormat('yyyy-MM-dd')}&view=day`,
+    );
+    assert.strictEqual(page.calendar.dailyCalendar.events.length, 2);
+  });
 });
