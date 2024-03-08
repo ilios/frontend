@@ -26,8 +26,8 @@ const definition = {
         scope: '[data-test-objective]',
         toggle: clickable('button'),
       },
-      competency: {
-        scope: '[data-test-competency]',
+      competencies: {
+        scope: '[data-test-competencies]',
         toggle: clickable('button'),
       },
       sessions: {
@@ -42,7 +42,7 @@ const definition = {
     rows: collection('tbody tr', {
       percentage: text('[data-test-percentage]'),
       objective: text('[data-test-objective]'),
-      competency: text('[data-test-competency]'),
+      competencies: text('[data-test-competencies]'),
       sessions: {
         scope: '[data-test-sessions]',
         links: collection('a', {

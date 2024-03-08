@@ -23,9 +23,12 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
     const programYearObjective3 = this.server.create('programYearObjective', {
       competency: competencies[2],
     });
+    const programYearObjective4 = this.server.create('programYearObjective', {
+      competency: competencies[1],
+    });
     const courseObjective1 = this.server.create('courseObjective', {
       course,
-      programYearObjectives: [programYearObjective1],
+      programYearObjectives: [programYearObjective1, programYearObjective2, programYearObjective4],
     });
     const courseObjective2 = this.server.create('courseObjective', {
       course,
@@ -97,13 +100,13 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
     assert.strictEqual(component.untaughtObjectives.items[0].text, 'course objective 2');
     assert.strictEqual(component.dataTable.header.percentage.text, 'Percentage');
     assert.strictEqual(component.dataTable.header.objective.text, 'Course Objective');
-    assert.strictEqual(component.dataTable.header.competency.text, 'Competency');
+    assert.strictEqual(component.dataTable.header.competencies.text, 'Competencies');
     assert.strictEqual(component.dataTable.header.sessions.text, 'Sessions');
     assert.strictEqual(component.dataTable.header.minutes.text, 'Minutes');
     assert.strictEqual(component.dataTable.rows.length, 3);
     assert.strictEqual(component.dataTable.rows[0].percentage, '77.8%');
     assert.strictEqual(component.dataTable.rows[0].objective, 'course objective 0');
-    assert.strictEqual(component.dataTable.rows[0].competency, 'competency 0');
+    assert.strictEqual(component.dataTable.rows[0].competencies, 'competency 0, competency 1');
     assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
     assert.strictEqual(
       component.dataTable.rows[0].sessions.links[0].text,
@@ -113,7 +116,7 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
     assert.strictEqual(component.dataTable.rows[0].minutes, '630');
     assert.strictEqual(component.dataTable.rows[1].percentage, '22.2%');
     assert.strictEqual(component.dataTable.rows[1].objective, 'course objective 1');
-    assert.strictEqual(component.dataTable.rows[1].competency, 'competency 1');
+    assert.strictEqual(component.dataTable.rows[1].competencies, 'competency 1');
     assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
     assert.strictEqual(
       component.dataTable.rows[1].sessions.links[0].text,
@@ -123,7 +126,7 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
     assert.strictEqual(component.dataTable.rows[2].percentage, '0.0%');
     assert.strictEqual(component.dataTable.rows[2].objective, 'course objective 2');
-    assert.strictEqual(component.dataTable.rows[2].competency, 'competency 2');
+    assert.strictEqual(component.dataTable.rows[2].competencies, 'competency 2');
     assert.strictEqual(component.dataTable.rows[2].sessions.links.length, 1);
     assert.strictEqual(component.dataTable.rows[2].sessions.links[0].text, 'Empty Session');
     assert.strictEqual(component.dataTable.rows[2].sessions.links[0].url, '/courses/1/sessions/3');
@@ -174,17 +177,17 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
       hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
 `,
     );
-    assert.strictEqual(component.dataTable.rows[0].competency, 'competency 0');
-    assert.strictEqual(component.dataTable.rows[1].competency, 'competency 1');
-    assert.strictEqual(component.dataTable.rows[2].competency, 'competency 2');
-    await component.dataTable.header.competency.toggle();
-    assert.strictEqual(component.dataTable.rows[0].competency, 'competency 0');
-    assert.strictEqual(component.dataTable.rows[1].competency, 'competency 1');
-    assert.strictEqual(component.dataTable.rows[2].competency, 'competency 2');
-    await component.dataTable.header.competency.toggle();
-    assert.strictEqual(component.dataTable.rows[0].competency, 'competency 2');
-    assert.strictEqual(component.dataTable.rows[1].competency, 'competency 1');
-    assert.strictEqual(component.dataTable.rows[2].competency, 'competency 0');
+    assert.strictEqual(component.dataTable.rows[0].competencies, 'competency 0, competency 1');
+    assert.strictEqual(component.dataTable.rows[1].competencies, 'competency 1');
+    assert.strictEqual(component.dataTable.rows[2].competencies, 'competency 2');
+    await component.dataTable.header.competencies.toggle();
+    assert.strictEqual(component.dataTable.rows[0].competencies, 'competency 0, competency 1');
+    assert.strictEqual(component.dataTable.rows[1].competencies, 'competency 1');
+    assert.strictEqual(component.dataTable.rows[2].competencies, 'competency 2');
+    await component.dataTable.header.competencies.toggle();
+    assert.strictEqual(component.dataTable.rows[0].competencies, 'competency 2');
+    assert.strictEqual(component.dataTable.rows[1].competencies, 'competency 1');
+    assert.strictEqual(component.dataTable.rows[2].competencies, 'competency 0, competency 1');
   });
 
   test('sort data-table by sessions', async function (assert) {

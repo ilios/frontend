@@ -9,7 +9,7 @@ import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
+import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class VisualizerCourseObjectives extends Component {
   @service router;
@@ -58,7 +58,7 @@ export default class VisualizerCourseObjectives extends Component {
       rhett.percentage = obj.percentage * 1000;
       rhett.percentageLabel = obj.label;
       rhett.objective = obj.meta.courseObjective.title;
-      rhett.competency = obj.meta.competency?.title;
+      rhett.competencies = obj.meta.competencies;
       rhett.sessions = sortBy(mapBy(obj.meta.sessionObjectives, 'session'), 'title');
       rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
       return rhett;
@@ -132,9 +132,14 @@ export default class VisualizerCourseObjectives extends Component {
     const courseObjectives = await this.args.course.courseObjectives;
     const mappedObjectives = await map(courseObjectives.slice(), async (courseObjective) => {
       const programYearObjectives = (await courseObjective.programYearObjectives).slice();
-      const competency = programYearObjectives.length
-        ? await programYearObjectives[0].competency
-        : null;
+      const competencyTitles = (
+        await map(programYearObjectives, async (pyObjective) => {
+          const competency = await pyObjective.competency;
+          return competency ? competency.title : null;
+        })
+      )
+        .filter((title) => !!title)
+        .sort();
       const minutes = sessionCourseObjectiveMap.map((obj) => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
           return obj.minutes;
@@ -146,7 +151,7 @@ export default class VisualizerCourseObjectives extends Component {
         obj.objectives.includes(courseObjective.get('id')),
       );
       const meta = {
-        competency,
+        competencies: uniqueValues(competencyTitles).join(', '),
         courseObjective,
         sessionObjectives,
       };
@@ -180,8 +185,8 @@ export default class VisualizerCourseObjectives extends Component {
     const { data, meta } = obj;
 
     let objectiveTitle = meta.courseObjective.title;
-    if (meta.competency) {
-      objectiveTitle += `(${meta.competency.title})`;
+    if (meta.competencies) {
+      objectiveTitle += `(${meta.competencies})`;
     }
 
     const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`);
