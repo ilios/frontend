@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { all } from 'rsvp';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { findById, mapBy } from 'ilios-common/utils/array-helpers';
@@ -68,7 +68,7 @@ export default class AssignStudentsComponent extends Component {
       allCohorts.push(obj);
     }
 
-    const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
+    const lastYear = DateTime.now().minus({ year: 1 }).year;
     this.cohorts = allCohorts.filter((obj) => {
       const finalYear = Number(obj.startYear) + Number(obj.duration);
       return finalYear > lastYear;

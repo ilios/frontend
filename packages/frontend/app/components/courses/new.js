@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask, restartableTask } from 'ember-concurrency';
 
@@ -19,7 +19,7 @@ export default class CoursesNewComponent extends Component {
 
   constructor() {
     super(...arguments);
-    const thisYear = parseInt(moment().format('YYYY'), 10);
+    const thisYear = DateTime.now().year;
     this.years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1, thisYear + 2];
   }
 

@@ -14,10 +14,10 @@
     {{@course.level}}
   </td>
   <td class="text-center hide-from-small-screen" colspan="2" data-test-start-date>
-    {{moment-format @course.startDate "L"}}
+    {{format-date @course.startDate day="2-digit" month="2-digit" year="numeric"}}
   </td>
   <td class="text-center hide-from-small-screen" colspan="2" data-test-end-date>
-    {{moment-format @course.endDate "L"}}
+    {{format-date @course.endDate day="2-digit" month="2-digit" year="numeric"}}
   </td>
   <td class="text-right" colspan="2" data-test-status>
     {{#if (includes @course.id @savingCourseIds)}}
