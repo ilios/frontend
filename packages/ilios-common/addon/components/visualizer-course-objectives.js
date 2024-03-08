@@ -39,7 +39,6 @@ export default class VisualizerCourseObjectives extends Component {
     if (!this.courseSessions) {
       return [];
     }
-
     return this.courseSessions.slice();
   }
 
@@ -164,7 +163,7 @@ export default class VisualizerCourseObjectives extends Component {
     );
 
     return mappedObjectives.map((obj) => {
-      const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
+      const percent = totalMinutes ? ((obj.data / totalMinutes) * 100).toFixed(1) : 0;
       obj.label = `${percent}%`;
       obj.percentage = percent;
       return obj;
