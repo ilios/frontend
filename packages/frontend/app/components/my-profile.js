@@ -3,9 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { task, timeout } from 'ember-concurrency';
-import pad from 'pad';
 
 export default class MyProfileComponent extends Component {
   @service fetch;
@@ -44,25 +43,28 @@ export default class MyProfileComponent extends Component {
 
   @action
   reset() {
-    const midnightToday = moment().hour(23).minute(59).second(59);
-    const twoWeeksFromNow = midnightToday.clone().add(2, 'weeks');
-    const oneYearFromNow = midnightToday.clone().add(1, 'year');
-    this.minDate = midnightToday.toDate();
-    this.maxDate = oneYearFromNow.toDate();
-    this.expiresAt = twoWeeksFromNow.toDate();
+    const midnightToday = DateTime.fromObject({
+      hour: 23,
+      minute: 59,
+      second: 59,
+    });
+    const twoWeeksFromNow = midnightToday.plus({ weeks: 2 });
+    const oneYearFromNow = midnightToday.plus({ years: 1 });
+    this.minDate = midnightToday.toJSDate();
+    this.maxDate = oneYearFromNow.toJSDate();
+    this.expiresAt = twoWeeksFromNow.toJSDate();
     this.generatedJwt = null;
   }
 
   createNewToken = task(async () => {
     await timeout(10); //small delay to allow rendering the spinner
-    const selection = this.expiresAt;
-    const expiresAt = moment(selection).hour(23).minute(59).second(59);
-    const now = moment();
-    const days = pad(2, expiresAt.diff(now, 'days'), '0');
+    const expiresAt = DateTime.fromJSDate(this.expiresAt).set({ hour: 23, minute: 59, second: 59 });
+    const now = DateTime.now();
+    const days = expiresAt.diff(now, 'days').toFormat('dd');
 
-    const hours = pad(2, moment().hours(23).diff(now, 'hours'), '0');
-    const minutes = pad(2, moment().minutes(59).diff(now, 'minutes'), '0');
-    const seconds = pad(2, moment().seconds(59).diff(now, 'seconds'), '0');
+    const hours = DateTime.fromObject({ hour: 23 }).diff(now, 'hours').toFormat('hh');
+    const minutes = DateTime.fromObject({ minute: 59 }).diff(now, 'minutes').toFormat('mm');
+    const seconds = DateTime.fromObject({ second: 59 }).diff(now, 'seconds').toFormat('ss');
 
     const interval = `P${days}DT${hours}H${minutes}M${seconds}S`;
 
