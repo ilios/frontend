@@ -225,7 +225,7 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
     assert.strictEqual(component.dataTable.rows[2].minutes, '0');
   });
 
-  test('no linked objectives', async function (assert) {
+  test('no objectives', async function (assert) {
     const course = this.server.create('course');
     const session1 = this.server.create('session', {
       title: 'Berkeley Investigations',
@@ -276,5 +276,21 @@ module('Integration | Component | visualizer-course-objectives', function (hooks
       component.unlinkedObjectives.text,
       'No Course Objectives Currently Linked to Instructional Time.',
     );
+  });
+
+  // See https://github.com/ilios/ilios/issues/5305
+  test('a course without mapped course objectives shows 0 percent for each objective in the data table', async function (assert) {
+    const course = this.server.create('course');
+    this.server.create('courseObjective', { course });
+    this.server.create('courseObjective', { course });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+    await render(
+      hbs`<VisualizerCourseObjectives @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.strictEqual(component.dataTable.rows.length, 2);
+    assert.strictEqual(component.dataTable.rows[0].percentage, '0%');
+    assert.strictEqual(component.dataTable.rows[1].percentage, '0%');
   });
 });
