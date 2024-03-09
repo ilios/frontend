@@ -46,9 +46,9 @@
               {{t "general.level"}}:
               {{this.course.level}},
               {{t "general.startDate"}}:
-              {{moment-format this.course.startDate "YYYY-MM-DD"}},
+              {{format-date this.course.startDate day="2-digit" month="2-digit" year="numeric"}},
               {{t "general.endDate"}}:
-              {{moment-format this.course.endDate "YYYY-MM-DD"}}
+              {{format-date this.course.endDate day="2-digit" month="2-digit" year="numeric"}}
               {{#if this.course.clerkshipType}}
                 -{{t "general.clerkship"}} ({{this.course.clerkshipType.title}})
               {{/if}}
