@@ -14,8 +14,10 @@ export default class UserProfileCalendar extends Component {
   @tracked calendarEvents;
 
   load = dropTask(async () => {
-    const from = DateTime.fromJSDate(this.date).startOf('week').toSeconds();
-    const to = DateTime.fromJSDate(this.date).endOf('week').toSeconds();
+    //luxon weeks always stort on Monday to we have to adjust for that
+    const from = DateTime.fromJSDate(this.date).startOf('week').minus({ day: 1 }).toUnixInteger();
+    const to = DateTime.fromJSDate(this.date).endOf('week').minus({ day: 1 }).toUnixInteger();
+
     let url = '';
     if (this.iliosConfig.apiNameSpace) {
       url += '/' + this.iliosConfig.apiNameSpace;

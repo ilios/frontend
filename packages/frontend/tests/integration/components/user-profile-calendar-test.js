@@ -33,9 +33,9 @@ module('Integration | Component | user profile calendar', function (hooks) {
       const to = DateTime.fromJSDate(lastDayOfThisWeek).toUnixInteger();
 
       assert.ok('from' in queryParams);
-      assert.strictEqual(Number(queryParams.from), from);
+      assert.strictEqual(Number(queryParams.from), from, 'from is correct');
       assert.ok('to' in queryParams);
-      assert.strictEqual(Number(queryParams.to), to);
+      assert.strictEqual(Number(queryParams.to), to, 'to is correct');
 
       const userEvents = [
         {
