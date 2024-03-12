@@ -13,7 +13,13 @@ export default class DashboardWeekComponent extends Component {
     return DateTime.now().year;
   }
   get week() {
-    //set day to Thursday to correctly calculate isoWeek
-    return DateTime.now().set({ weekday: 4 }).weekNumber;
+    const today = DateTime.now();
+    // In this component the week always starts on Sunday, but luxon's starts on Monday
+    // so we need to adjust the week number to account for that.
+    if (today.weekday === 7) {
+      return today.weekNumber + 1;
+    } else {
+      return today.weekNumber;
+    }
   }
 }
