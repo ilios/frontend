@@ -7,6 +7,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/dashboard/week';
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Integration | Component | dashboard/week', function (hooks) {
   setupRenderingTest(hooks);
@@ -35,6 +36,10 @@ module('Integration | Component | dashboard/week', function (hooks) {
 
       return expectedTitle;
     };
+  });
+
+  hooks.afterEach(() => {
+    unfreezeDate();
   });
 
   test('it renders with events', async function (assert) {
@@ -79,8 +84,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
     }
     this.owner.register('service:user-events', UserEvents);
 
-    await render(hbs`<Dashboard::Week />
-`);
+    await render(hbs`<Dashboard::Week />`);
     const expectedTitle = this.getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
@@ -104,5 +108,98 @@ module('Integration | Component | dashboard/week', function (hooks) {
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
     assert.strictEqual(component.weekGlance.events.length, 0);
+  });
+
+  test('right week on sunday #5308', async function (assert) {
+    class UserEvents extends Service {
+      async getEvents() {
+        return [];
+      }
+    }
+    this.owner.register('service:user-events', UserEvents);
+    this.userEvents = this.owner.lookup('service:user-events');
+    freezeDateAt(DateTime.fromObject({ year: 2024, month: 3, day: 10 }).toJSDate());
+
+    await render(hbs`<Dashboard::Week />`);
+    assert.strictEqual(component.weekGlance.title, 'March 10-16 Week at a Glance');
+  });
+
+  test('right week on monday #5308', async function (assert) {
+    class UserEvents extends Service {
+      async getEvents() {
+        return [];
+      }
+    }
+    this.owner.register('service:user-events', UserEvents);
+    this.userEvents = this.owner.lookup('service:user-events');
+    freezeDateAt(DateTime.fromObject({ year: 2023, month: 8, day: 7 }).toJSDate());
+
+    await render(hbs`<Dashboard::Week />`);
+    assert.strictEqual(component.weekGlance.title, 'August 6-12 Week at a Glance');
+  });
+
+  test('right week on tuesday #5308', async function (assert) {
+    class UserEvents extends Service {
+      async getEvents() {
+        return [];
+      }
+    }
+    this.owner.register('service:user-events', UserEvents);
+    this.userEvents = this.owner.lookup('service:user-events');
+    freezeDateAt(DateTime.fromObject({ year: 2022, month: 12, day: 6 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+    assert.strictEqual(component.weekGlance.title, 'December 4-10 Week at a Glance');
+  });
+
+  test('right week on wednesday #5308', async function (assert) {
+    class UserEvents extends Service {
+      async getEvents() {
+        return [];
+      }
+    }
+    this.owner.register('service:user-events', UserEvents);
+    this.userEvents = this.owner.lookup('service:user-events');
+    freezeDateAt(DateTime.fromObject({ year: 2022, month: 7, day: 13 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+    assert.strictEqual(component.weekGlance.title, 'July 10-16 Week at a Glance');
+  });
+
+  test('right week on thursday #5308', async function (assert) {
+    class UserEvents extends Service {
+      async getEvents() {
+        return [];
+      }
+    }
+    this.owner.register('service:user-events', UserEvents);
+    this.userEvents = this.owner.lookup('service:user-events');
+    freezeDateAt(DateTime.fromObject({ year: 2021, month: 5, day: 13 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+    assert.strictEqual(component.weekGlance.title, 'May 9-15 Week at a Glance');
+  });
+
+  test('right week on friday #5308', async function (assert) {
+    class UserEvents extends Service {
+      async getEvents() {
+        return [];
+      }
+    }
+    this.owner.register('service:user-events', UserEvents);
+    this.userEvents = this.owner.lookup('service:user-events');
+    freezeDateAt(DateTime.fromObject({ year: 2021, month: 9, day: 24 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+    assert.strictEqual(component.weekGlance.title, 'September 19-25 Week at a Glance');
+  });
+
+  test('right week on saturday #5308', async function (assert) {
+    class UserEvents extends Service {
+      async getEvents() {
+        return [];
+      }
+    }
+    this.owner.register('service:user-events', UserEvents);
+    this.userEvents = this.owner.lookup('service:user-events');
+    freezeDateAt(DateTime.fromObject({ year: 2022, month: 7, day: 30 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+    assert.strictEqual(component.weekGlance.title, 'July 24-30 Week at a Glance');
   });
 });
