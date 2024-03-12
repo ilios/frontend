@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
@@ -337,9 +337,9 @@ export default class UserProfilePermissionsComponent extends Component {
     if (this.args.selectedYearId) {
       currentYear = Number(this.args.selectedYearId);
     } else {
-      currentYear = Number(moment().format('YYYY'));
+      currentYear = DateTime.now().year;
     }
-    const currentMonth = Number(moment().format('M'));
+    const currentMonth = DateTime.now().month;
     if (this.academicYearCrossesCalendarYearBoundaries && currentMonth < 6) {
       currentYear--;
     }

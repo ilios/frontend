@@ -190,7 +190,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.ok(component.course.details.isVisible);
     assert.strictEqual(
       component.course.details.text,
-      'Level: 1, Start Date: 2016-03-01, End Date: 2016-03-02 -Clerkship (clerkship type 0)',
+      'Level: 1, Start Date: 03/01/2016, End Date: 03/02/2016 -Clerkship (clerkship type 0)',
     );
   });
 

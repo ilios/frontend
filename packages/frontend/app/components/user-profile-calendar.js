@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
@@ -10,17 +10,13 @@ export default class UserProfileCalendar extends Component {
   @service fetch;
   @service iliosConfig;
   @service userEvents;
-  @tracked date;
+  @tracked date = new Date();
   @tracked calendarEvents;
 
-  constructor() {
-    super(...arguments);
-    this.date = new Date();
-  }
-
   load = dropTask(async () => {
-    const from = moment(this.date).day(0).hour(0).minute(0).second(0).format('X');
-    const to = moment(this.date).day(6).hour(23).minute(59).second(59).format('X');
+    //luxon weeks always stort on Monday to we have to adjust for that
+    const from = DateTime.fromJSDate(this.date).startOf('week').minus({ day: 1 }).toUnixInteger();
+    const to = DateTime.fromJSDate(this.date).endOf('week').minus({ day: 1 }).toUnixInteger();
 
     let url = '';
     if (this.iliosConfig.apiNameSpace) {
@@ -36,19 +32,14 @@ export default class UserProfileCalendar extends Component {
 
   @action
   goForward() {
-    const newDate = moment(this.date).add(1, 'week').toDate();
-    this.date = newDate;
+    this.date = DateTime.fromJSDate(this.date).plus({ weeks: 1 }).toJSDate();
   }
-
   @action
   goBack() {
-    const newDate = moment(this.date).subtract(1, 'week').toDate();
-    this.date = newDate;
+    this.date = DateTime.fromJSDate(this.date).minus({ weeks: 1 }).toJSDate();
   }
-
   @action
   gotoToday() {
-    const newDate = moment().toDate();
-    this.date = newDate;
+    this.date = new Date();
   }
 }
