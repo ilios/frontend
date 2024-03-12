@@ -427,8 +427,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-intl:
-        specifier: ^6.5.1
-        version: 6.5.2(@babel/core@7.24.0)(@glint/template@1.3.0)(typescript@5.4.2)(webpack@5.90.3)
+        specifier: ^6.5.3
+        version: 6.5.3(@babel/core@7.24.0)(@glint/template@1.3.0)(typescript@5.4.2)(webpack@5.90.3)
       ember-math-helpers:
         specifier: ^4.0.0
         version: 4.0.0(ember-source@5.6.0)
@@ -9475,8 +9475,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-intl@6.5.2(@babel/core@7.24.0)(@glint/template@1.3.0)(typescript@5.4.2)(webpack@5.90.3):
-    resolution: {integrity: sha512-rB1HXQiZ7QXbdJPqC1bd8I31J7mobv71xF3c8sKT3MPRA06N8W8E9aqlhNeYytY9Jxb2jPO4cSsgXvbNPxHD0Q==}
+  /ember-intl@6.5.3(@babel/core@7.24.0)(@glint/template@1.3.0)(typescript@5.4.2)(webpack@5.90.3):
+    resolution: {integrity: sha512-wt3YyWHMHdK8pyJl2ymtXYhO3apgY1WnQB1w6glFthpNdO8q8p1lrK990gwX5kRvTDpXnfHwVhArHamb09E8PQ==}
     engines: {node: 16.* || >= 18}
     peerDependencies:
       typescript: ^4.8.0 || ^5.0.0
