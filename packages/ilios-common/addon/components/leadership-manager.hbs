@@ -22,6 +22,32 @@
     <tbody>
       <tr>
         {{#if @showDirectors}}
+          <td data-test-director-search>
+            <LeadershipSearch
+              @existingUsers={{@directors}}
+              @selectUser={{@addDirector}}
+            />
+          </td>
+        {{/if}}
+        {{#if @showAdministrators}}
+          <td data-test-administrator-search>
+            <LeadershipSearch
+              @existingUsers={{@administrators}}
+              @selectUser={{@addAdministrator}}
+            />
+          </td>
+        {{/if}}
+        {{#if @showStudentAdvisors}}
+          <td data-test-student-advisor-search>
+            <LeadershipSearch
+              @existingUsers={{@studentAdvisors}}
+              @selectUser={{@addStudentAdvisor}}
+            />
+          </td>
+        {{/if}}
+      </tr>
+      <tr>
+        {{#if @showDirectors}}
           <td class="text-top" data-test-directors>
             <ul>
               {{#each (sort-by "fullName" @directors) as |user|}}
@@ -109,32 +135,6 @@
                 {{t "general.none"}}
               {{/each}}
             </ul>
-          </td>
-        {{/if}}
-      </tr>
-      <tr>
-        {{#if @showDirectors}}
-          <td data-test-director-search>
-            <LeadershipSearch
-              @existingUsers={{@directors}}
-              @selectUser={{@addDirector}}
-            />
-          </td>
-        {{/if}}
-        {{#if @showAdministrators}}
-          <td data-test-administrator-search>
-            <LeadershipSearch
-              @existingUsers={{@administrators}}
-              @selectUser={{@addAdministrator}}
-            />
-          </td>
-        {{/if}}
-        {{#if @showStudentAdvisors}}
-          <td data-test-student-advisor-search>
-            <LeadershipSearch
-              @existingUsers={{@studentAdvisors}}
-              @selectUser={{@addStudentAdvisor}}
-            />
           </td>
         {{/if}}
       </tr>
