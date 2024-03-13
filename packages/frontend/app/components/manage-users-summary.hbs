@@ -1,10 +1,11 @@
-<section class="manage-users-summary large-component" ...attributes>
+<section class="manage-users-summary large-component" data-test-manage-users-summary ...attributes>
   <div class="header">
     <h2 class="title">
       {{t "general.manageUsersSummaryTitle"}}
       (<LinkTo
          @route="users"
-         @query={{hash showBulkNewUserForm=false showNewUserForm=false}}
+         @query={{hash showBulkNewUserForm=false showNewUserForm=false filter=null}}
+         data-test-users-link
        >
          {{t "general.viewAll"}}
        </LinkTo>)
@@ -13,7 +14,8 @@
       {{#if @canCreate}}
         <LinkTo
           @route="users"
-          @query={{hash showNewUserForm=true showBulkNewUserForm=false}}
+          @query={{hash showNewUserForm=true showBulkNewUserForm=false filter=null}}
+          data-test-create-user-link
         >
           <button type="button">
             {{t "general.create"}}

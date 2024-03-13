@@ -1,10 +1,12 @@
 import { clickable, create, property, text, visitable } from 'ember-cli-page-object';
 import bio from 'frontend/tests/pages/components/user-profile-bio';
 import cohorts from 'frontend/tests/pages/components/user-profile-cohorts';
+import manageUsersSummary from 'frontend/tests/pages/components/manage-users-summary';
 
 export default create({
   scope: '[data-test-user-profile]',
   visit: visitable('/users/:userId'),
+  manageUsersSummary,
   bio,
   cohorts,
   roles: {
