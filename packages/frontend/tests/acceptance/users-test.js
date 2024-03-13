@@ -5,6 +5,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'frontend/tests/pages/users';
 import percySnapshot from '@percy/ember';
+import userPage from 'frontend/tests/pages/user';
 
 module('Acceptance | Users', function (hooks) {
   setupApplicationTest(hooks);
@@ -70,5 +71,51 @@ module('Acceptance | Users', function (hooks) {
     await page.root.newUserForm.password.set('G3heimSach*e');
     await page.root.newUserForm.submit();
     assert.strictEqual(currentURL(), '/users/101');
+  });
+
+  test('clear search when returning from creating a new user #4356', async function (assert) {
+    await page.visit();
+    await page.root.search.set('searchingterm');
+    assert.strictEqual(currentURL(), '/users?filter=searchingterm');
+    await page.root.showNewUserFormButton.click();
+    await page.root.newUserForm.firstName.set('Lorem');
+    await page.root.newUserForm.lastName.set('Ipsum');
+    await page.root.newUserForm.email.set('lorem@ipsum.edu');
+    await page.root.newUserForm.username.set('test123');
+    await page.root.newUserForm.password.set('G3heimSach*e');
+    await page.root.newUserForm.submit();
+    assert.strictEqual(currentURL(), '/users/101');
+    await userPage.manageUsersSummary.visitUsers();
+    assert.strictEqual(page.root.search.value, '');
+    assert.strictEqual(currentURL(), '/users');
+  });
+
+  test('clear search when returning from viewing a user #4356', async function (assert) {
+    await page.visit();
+    await page.root.search.set('Mc4son');
+    assert.strictEqual(currentURL(), '/users?filter=Mc4son');
+    assert.strictEqual(page.root.userList.users[0].userNameInfo.fullName, '4 guy M. Mc4son');
+    await page.root.userList.users[0].viewUserDetails();
+    assert.strictEqual(currentURL(), '/users/5');
+    await userPage.manageUsersSummary.visitUsers();
+    assert.strictEqual(page.root.search.value, '');
+    assert.strictEqual(currentURL(), '/users');
+  });
+
+  test('clear search when returning from creating a new user to creating another new user #4356', async function (assert) {
+    await page.visit();
+    await page.root.search.set('searchingterm');
+    assert.strictEqual(currentURL(), '/users?filter=searchingterm');
+    await page.root.showNewUserFormButton.click();
+    await page.root.newUserForm.firstName.set('Lorem');
+    await page.root.newUserForm.lastName.set('Ipsum');
+    await page.root.newUserForm.email.set('lorem@ipsum.edu');
+    await page.root.newUserForm.username.set('test123');
+    await page.root.newUserForm.password.set('G3heimSach*e');
+    await page.root.newUserForm.submit();
+    assert.strictEqual(currentURL(), '/users/101');
+    await userPage.manageUsersSummary.createNewUser();
+    assert.strictEqual(page.root.search.value, '');
+    assert.strictEqual(currentURL(), '/users?addUser=true');
   });
 });
