@@ -71,8 +71,9 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('academic year filter works properly', async function (assert) {
-    assert.expect(16);
-
+    assert.expect(28);
+    this.server.create('school', { title: 'Medicine' });
+    this.server.create('school', { title: 'Pharmacy' });
     this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
@@ -82,21 +83,25 @@ module('Integration | Component | global-search', function (hooks) {
               title: 'Course 1',
               year: 2019,
               sessions: [],
+              school: 'Medicine',
             },
             {
               title: 'Course 2',
               year: 2020,
               sessions: [],
+              school: 'Pharmacy',
             },
             {
               title: 'Course 3',
               year: 2021,
               sessions: [],
+              school: 'Pharmacy',
             },
             {
               title: 'Course 4',
               year: 2021,
               sessions: [],
+              school: 'Medicine',
             },
           ],
         },
@@ -123,18 +128,30 @@ module('Integration | Component | global-search', function (hooks) {
     assert.strictEqual(component.searchResults[1].courseTitle, '2020 Course 2');
     assert.strictEqual(component.searchResults[2].courseTitle, '2021 Course 3');
     assert.strictEqual(component.searchResults[3].courseTitle, '2021 Course 4');
+    assert.strictEqual(component.schoolFilters.length, 2);
+    assert.strictEqual(component.schoolFilters[0].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy (2)');
     await component.selectAcademicYear('2021');
     assert.strictEqual(component.searchResults.length, 2);
     assert.strictEqual(component.searchResults[0].courseTitle, '2021 Course 3');
     assert.strictEqual(component.searchResults[1].courseTitle, '2021 Course 4');
+    assert.strictEqual(component.schoolFilters.length, 2);
+    assert.strictEqual(component.schoolFilters[0].school, 'Medicine (1)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy (1)');
     await component.selectAcademicYear('2020');
     assert.strictEqual(component.academicYear, '2020');
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2020 Course 2');
+    assert.strictEqual(component.schoolFilters.length, 2);
+    assert.strictEqual(component.schoolFilters[0].school, 'Medicine (0)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy (1)');
     await component.selectAcademicYear('2019');
     assert.strictEqual(component.academicYear, '2019');
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
+    assert.strictEqual(component.schoolFilters.length, 2);
+    assert.strictEqual(component.schoolFilters[0].school, 'Medicine (1)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy (0)');
   });
 
   test('school filter works properly', async function (assert) {

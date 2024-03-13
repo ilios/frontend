@@ -63,7 +63,7 @@ export default class GlobalSearchComponent extends Component {
   }
 
   get schoolOptions() {
-    if (this.results.length && this.schools.length) {
+    if (this.yearFilteredResults.length && this.schools.length) {
       const emptySchools = sortBy(
         this.schools.map(({ id, title }) => {
           return {
@@ -74,7 +74,7 @@ export default class GlobalSearchComponent extends Component {
         }),
         'title',
       );
-      const options = this.results.reduce((set, course) => {
+      const options = this.yearFilteredResults.reduce((set, course) => {
         const schoolOption = findBy(set, 'title', course.school);
         schoolOption.results++;
 
