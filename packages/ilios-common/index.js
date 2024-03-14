@@ -7,7 +7,6 @@ const WriteFile = require('broccoli-file-creator');
 const SetTransform = require('./lib/set-transform');
 const HasErrorForTransform = require('./lib/has-error-for-transform');
 const GetErrorsForTransform = require('./lib/get-errors-for-transform');
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 module.exports = {
   name: require('./package').name,
@@ -19,16 +18,6 @@ module.exports = {
         require.resolve('ember-auto-import/babel-plugin'),
         require.resolve('ember-concurrency/async-arrow-task-transform'),
       ],
-    },
-    autoImport: {
-      webpack: {
-        plugins: [
-          new MomentLocalesPlugin({
-            // 'en' is built into moment and cannot be removed. This strips the others.
-            localesToKeep: ['es', 'fr'],
-          }),
-        ],
-      },
     },
   },
 
