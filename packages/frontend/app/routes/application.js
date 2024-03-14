@@ -8,7 +8,6 @@ import { launchWorker } from '../utils/launch-worker';
 export default class AuthenticatedRoute extends Route {
   @service currentUser;
   @service intl;
-  @service moment;
   @service store;
   @service router;
   @service session;
@@ -20,7 +19,6 @@ export default class AuthenticatedRoute extends Route {
     await this.session.setup();
     await loadPolyfills();
     const locale = this.intl.get('primaryLocale');
-    this.moment.setLocale(locale);
     window.document.querySelector('html').setAttribute('lang', locale);
   }
 
