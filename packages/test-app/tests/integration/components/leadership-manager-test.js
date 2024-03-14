@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
-import { render, fillIn, click, findAll, find, triggerEvent } from '@ember/test-helpers';
-import { map } from 'rsvp';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/leadership-manager';
 
 module('Integration | Component | leadership manager', function (hooks) {
   setupRenderingTest(hooks);
@@ -33,17 +33,22 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addStudentAdvisor={{(noop)}}
     />
 `);
-    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
-
-    assert.dom(directors).exists({ count: 1 });
-    assert.dom(findAll(directors)[0]).hasText('0 guy M. Mc0son');
-    assert.dom(administrators).exists({ count: 2 });
-    assert.dom(findAll(administrators)[0]).hasText('0 guy M. Mc0son');
-    assert.dom(findAll(administrators)[1]).hasText('1 guy M. Mc1son');
-    assert.dom(studentAdvisors).exists({ count: 1 });
-    assert.dom(findAll(studentAdvisors)[0]).hasText('1 guy M. Mc1son');
+    assert.strictEqual(component.selectedDirectors.length, 1);
+    assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.strictEqual(component.selectedAdministrators.length, 2);
+    assert.strictEqual(
+      component.selectedAdministrators[0].userNameInfo.fullName,
+      '0 guy M. Mc0son',
+    );
+    assert.strictEqual(
+      component.selectedAdministrators[1].userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
+    assert.strictEqual(component.selectedStudentAdvisors.length, 1);
+    assert.strictEqual(
+      component.selectedStudentAdvisors[0].userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
   });
 
   test('it renders without data', async function (assert) {
@@ -66,13 +71,9 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addStudentAdvisor={{(noop)}}
     />
 `);
-    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
-
-    assert.dom(directors).doesNotExist();
-    assert.dom(administrators).doesNotExist();
-    assert.dom(studentAdvisors).doesNotExist();
+    assert.strictEqual(component.selectedDirectors.length, 0);
+    assert.strictEqual(component.selectedAdministrators.length, 0);
+    assert.strictEqual(component.selectedStudentAdvisors.length, 0);
   });
 
   test('remove director', async function (assert) {
@@ -101,12 +102,9 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addStudentAdvisor={{(noop)}}
     />
 `);
-    const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const icon = `${list}:nth-of-type(1) svg`;
-
-    assert.dom(list).exists({ count: 1 });
-    assert.dom(findAll(list)[0]).hasText('0 guy M. Mc0son');
-    await click(icon);
+    assert.strictEqual(component.selectedDirectors.length, 1);
+    assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    component.selectedDirectors[0].remove();
   });
 
   test('remove administrator', async function (assert) {
@@ -135,12 +133,12 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addStudentAdvisor={{(noop)}}
     />
 `);
-    const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const icon = `${list}:nth-of-type(1) svg`;
-
-    assert.dom(list).exists({ count: 1 });
-    assert.dom(findAll(list)[0]).hasText('0 guy M. Mc0son');
-    await click(icon);
+    assert.strictEqual(component.selectedAdministrators.length, 1);
+    assert.strictEqual(
+      component.selectedAdministrators[0].userNameInfo.fullName,
+      '0 guy M. Mc0son',
+    );
+    component.selectedAdministrators[0].remove();
   });
 
   test('remove student advisor', async function (assert) {
@@ -169,12 +167,12 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addStudentAdvisor={{(noop)}}
     />
 `);
-    const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
-    const icon = `${list}:nth-of-type(1) svg`;
-
-    assert.dom(list).exists({ count: 1 });
-    assert.dom(findAll(list)[0]).hasText('0 guy M. Mc0son');
-    await click(icon);
+    assert.strictEqual(component.selectedStudentAdvisors.length, 1);
+    assert.strictEqual(
+      component.selectedStudentAdvisors[0].userNameInfo.fullName,
+      '0 guy M. Mc0son',
+    );
+    component.selectedStudentAdvisors[0].remove();
   });
 
   test('add director', async function (assert) {
@@ -204,22 +202,17 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addStudentAdvisor={{(noop)}}
     />
 `);
-    const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administratorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
-    const directorSearch = '[data-test-director-search] input';
-    const firstResult = '[data-test-result-index="1"]';
+    assert.strictEqual(component.selectedDirectors.length, 0);
+    assert.strictEqual(component.selectedAdministrators.length, 1);
+    assert.strictEqual(component.selectedStudentAdvisors.length, 1);
 
-    assert.dom(directorsList).doesNotExist();
-    assert.dom(administratorsList).exists({ count: 1 });
-    assert.dom(studentAdvisorsList).exists({ count: 1 });
-    await fillIn(directorSearch, 'user');
+    await component.directorSearch.search('0 guy');
+    await component.directorSearch.results[0].add();
 
-    assert.ok(find(firstResult).textContent.includes('0 guy'));
-    await click(`${firstResult} [data-test-select-user]`);
-    assert.dom(directorsList).exists({ count: 1 });
-    assert.dom(administratorsList).exists({ count: 1 });
-    assert.dom(studentAdvisorsList).exists({ count: 1 });
+    assert.strictEqual(component.selectedDirectors.length, 1);
+    assert.strictEqual(component.selectedAdministrators.length, 1);
+    assert.strictEqual(component.selectedStudentAdvisors.length, 1);
+    assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, '0 guy M. Mc0son');
   });
 
   test('add administrator', async function (assert) {
@@ -249,23 +242,20 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addStudentAdvisor={{(noop)}}
     />
 `);
-    const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administratorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
-    const administratorSearch = '[data-test-administrator-search] input';
-    const firstResult = '[data-test-result-index="1"]';
+    assert.strictEqual(component.selectedDirectors.length, 1);
+    assert.strictEqual(component.selectedAdministrators.length, 0);
+    assert.strictEqual(component.selectedStudentAdvisors.length, 1);
 
-    assert.dom(directorsList).exists({ count: 1 });
-    assert.dom(administratorsList).doesNotExist();
-    assert.dom(studentAdvisorsList).exists({ count: 1 });
+    await component.administratorSearch.search('0 guy');
+    await component.administratorSearch.results[0].add();
 
-    await fillIn(administratorSearch, 'user');
-
-    assert.ok(find(firstResult).textContent.includes('0 guy'));
-    await click(`${firstResult} [data-test-select-user]`);
-    assert.dom(directorsList).exists({ count: 1 });
-    assert.dom(administratorsList).exists({ count: 1 });
-    assert.dom(studentAdvisorsList).exists({ count: 1 });
+    assert.strictEqual(component.selectedDirectors.length, 1);
+    assert.strictEqual(component.selectedAdministrators.length, 1);
+    assert.strictEqual(component.selectedStudentAdvisors.length, 1);
+    assert.strictEqual(
+      component.selectedAdministrators[0].userNameInfo.fullName,
+      '0 guy M. Mc0son',
+    );
   });
 
   test('add student advisor', async function (assert) {
@@ -295,23 +285,20 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addStudentAdvisor={{this.add}}
     />
 `);
-    const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administratorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
-    const studentAdvisorSearch = '[data-test-student-advisor-search] input';
-    const firstResult = '[data-test-result-index="1"]';
+    assert.strictEqual(component.selectedDirectors.length, 1);
+    assert.strictEqual(component.selectedAdministrators.length, 1);
+    assert.strictEqual(component.selectedStudentAdvisors.length, 0);
 
-    assert.dom(directorsList).exists({ count: 1 });
-    assert.dom(administratorsList).exists({ count: 1 });
-    assert.dom(studentAdvisorsList).doesNotExist();
+    await component.studentAdvisorSearch.search('0 guy');
+    await component.studentAdvisorSearch.results[0].add();
 
-    await fillIn(studentAdvisorSearch, 'user');
-
-    assert.ok(find(firstResult).textContent.includes('0 guy'));
-    await click(`${firstResult} [data-test-select-user]`);
-    assert.dom(directorsList).exists({ count: 1 });
-    assert.dom(administratorsList).exists({ count: 1 });
-    assert.dom(studentAdvisorsList).exists({ count: 1 });
+    assert.strictEqual(component.selectedDirectors.length, 1);
+    assert.strictEqual(component.selectedAdministrators.length, 1);
+    assert.strictEqual(component.selectedStudentAdvisors.length, 1);
+    assert.strictEqual(
+      component.selectedStudentAdvisors[0].userNameInfo.fullName,
+      '0 guy M. Mc0son',
+    );
   });
 
   test('disabled users are indicated with an icon', async function (assert) {
@@ -337,20 +324,20 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addAdministrator={{(noop)}}
     />
 `);
-    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const disabledDirectors = `${directors} .fa-user-xmark`;
-    const disabledAdministrators = `${administrators} .fa-user-xmark`;
-    const firstAdministratorName = `${administrators}:nth-of-type(1) [data-test-fullname]`;
-    const secondAdministratorName = `${administrators}:nth-of-type(2) [data-test-fullname]`;
-
-    assert.dom(directors).exists({ count: 1 });
-    assert.dom(disabledDirectors).doesNotExist();
-    assert.dom(findAll(directors)[0]).hasText('0 guy M. Mc0son');
-    assert.dom(administrators).exists({ count: 2 });
-    assert.dom(disabledAdministrators).exists({ count: 1 });
-    assert.dom(firstAdministratorName).hasText('0 guy M. Mc0son');
-    assert.dom(secondAdministratorName).hasText('1 guy M. Mc1son');
+    assert.strictEqual(component.selectedDirectors.length, 1);
+    assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.notOk(component.selectedDirectors[0].isDisabled);
+    assert.strictEqual(component.selectedAdministrators.length, 2);
+    assert.strictEqual(
+      component.selectedAdministrators[0].userNameInfo.fullName,
+      '0 guy M. Mc0son',
+    );
+    assert.notOk(component.selectedAdministrators[0].isDisabled);
+    assert.strictEqual(
+      component.selectedAdministrators[1].userNameInfo.fullName,
+      '1 guy M. Mc1son',
+    );
+    assert.ok(component.selectedAdministrators[1].isDisabled);
   });
 
   test('users are sorted by full name', async function (assert) {
@@ -386,17 +373,36 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addStudentAdvisor={{(noop)}}
     />
 `);
-
-    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
-
-    [directors, administrators, studentAdvisors].forEach((users) => {
-      assert.dom(users).exists({ count: 3 });
-      assert.dom(`${users}:nth-of-type(1) [data-test-fullname]`).hasText('Aaron M. Aardvark');
-      assert.dom(`${users}:nth-of-type(2) [data-test-fullname]`).hasText('The Bane of Iowa');
-      assert.dom(`${users}:nth-of-type(3) [data-test-fullname]`).hasText('Ursula U. Unbekannt');
-    });
+    assert.strictEqual(component.selectedDirectors.length, 3);
+    assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, 'Aaron M. Aardvark');
+    assert.strictEqual(component.selectedDirectors[1].userNameInfo.fullName, 'The Bane of Iowa');
+    assert.strictEqual(component.selectedDirectors[2].userNameInfo.fullName, 'Ursula U. Unbekannt');
+    assert.strictEqual(component.selectedAdministrators.length, 3);
+    assert.strictEqual(
+      component.selectedAdministrators[0].userNameInfo.fullName,
+      'Aaron M. Aardvark',
+    );
+    assert.strictEqual(
+      component.selectedAdministrators[1].userNameInfo.fullName,
+      'The Bane of Iowa',
+    );
+    assert.strictEqual(
+      component.selectedAdministrators[2].userNameInfo.fullName,
+      'Ursula U. Unbekannt',
+    );
+    assert.strictEqual(component.selectedStudentAdvisors.length, 3);
+    assert.strictEqual(
+      component.selectedStudentAdvisors[0].userNameInfo.fullName,
+      'Aaron M. Aardvark',
+    );
+    assert.strictEqual(
+      component.selectedStudentAdvisors[1].userNameInfo.fullName,
+      'The Bane of Iowa',
+    );
+    assert.strictEqual(
+      component.selectedStudentAdvisors[2].userNameInfo.fullName,
+      'Ursula U. Unbekannt',
+    );
   });
 
   test('username info tooltip shows as applicable', async function (assert) {
@@ -432,23 +438,44 @@ module('Integration | Component | leadership manager', function (hooks) {
       @addStudentAdvisor={{(noop)}}
     />
 `);
-
-    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
-
-    await map([directors, administrators, studentAdvisors], async (users) => {
-      assert.dom(users).exists({ count: 3 });
-      assert.dom(`${users}:nth-of-type(1) [data-test-fullname]`).hasText('Aaron M. Aardvark');
-      assert.dom(`${users}:nth-of-type(1) [data-test-info]`).doesNotExist();
-      assert.dom(`${users}:nth-of-type(2) [data-test-fullname]`).hasText('The Bane of Iowa');
-      assert.dom(find('.ilios-tooltip')).doesNotExist();
-      await triggerEvent(find(`${users}:nth-of-type(2) [data-test-info]`), 'mouseover');
-      assert.dom(find('.ilios-tooltip')).hasText('Campus name of record: Zeb M, Zoober');
-      await triggerEvent(find(`${users}:nth-of-type(2) [data-test-info]`), 'mouseout');
-      assert.dom(find('.ilios-tooltip')).doesNotExist();
-      assert.dom(`${users}:nth-of-type(3) [data-test-fullname]`).hasText('Ursula U. Unbekannt');
-      assert.dom(`${users}:nth-of-type(3) [data-test-info]`).doesNotExist();
-    });
+    assert.strictEqual(component.selectedDirectors.length, 3);
+    assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, 'Aaron M. Aardvark');
+    assert.strictEqual(component.selectedDirectors[1].userNameInfo.fullName, 'The Bane of Iowa');
+    assert.strictEqual(component.selectedDirectors[2].userNameInfo.fullName, 'Ursula U. Unbekannt');
+    assert.notOk(component.selectedDirectors[0].userNameInfo.hasAdditionalInfo);
+    assert.ok(component.selectedDirectors[1].userNameInfo.hasAdditionalInfo);
+    assert.notOk(component.selectedDirectors[2].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(component.selectedAdministrators.length, 3);
+    assert.strictEqual(
+      component.selectedAdministrators[0].userNameInfo.fullName,
+      'Aaron M. Aardvark',
+    );
+    assert.strictEqual(
+      component.selectedAdministrators[1].userNameInfo.fullName,
+      'The Bane of Iowa',
+    );
+    assert.strictEqual(
+      component.selectedAdministrators[2].userNameInfo.fullName,
+      'Ursula U. Unbekannt',
+    );
+    assert.notOk(component.selectedAdministrators[0].userNameInfo.hasAdditionalInfo);
+    assert.ok(component.selectedAdministrators[1].userNameInfo.hasAdditionalInfo);
+    assert.notOk(component.selectedAdministrators[2].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(component.selectedStudentAdvisors.length, 3);
+    assert.strictEqual(
+      component.selectedStudentAdvisors[0].userNameInfo.fullName,
+      'Aaron M. Aardvark',
+    );
+    assert.strictEqual(
+      component.selectedStudentAdvisors[1].userNameInfo.fullName,
+      'The Bane of Iowa',
+    );
+    assert.strictEqual(
+      component.selectedStudentAdvisors[2].userNameInfo.fullName,
+      'Ursula U. Unbekannt',
+    );
+    assert.notOk(component.selectedStudentAdvisors[0].userNameInfo.hasAdditionalInfo);
+    assert.ok(component.selectedStudentAdvisors[1].userNameInfo.hasAdditionalInfo);
+    assert.notOk(component.selectedStudentAdvisors[2].userNameInfo.hasAdditionalInfo);
   });
 });

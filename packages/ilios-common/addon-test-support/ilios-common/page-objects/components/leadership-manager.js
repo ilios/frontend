@@ -1,10 +1,16 @@
-import { clickable, collection, fillable, hasClass, notHasClass } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  hasClass,
+  isPresent,
+  notHasClass,
+} from 'ember-cli-page-object';
+import userNameInfo from './user-name-info';
 
-export default {
+const definition = {
   scope: '[data-test-leadership-manager]',
-  selectedDirectors: collection('[data-test-directors] ul li', {
-    remove: clickable('.remove'),
-  }),
   directorSearch: {
     scope: '[data-test-director-search] [data-test-leadership-search]',
     search: fillable('input[type=search]'),
@@ -23,9 +29,6 @@ export default {
       isSelected: notHasClass('clickable'),
     }),
   },
-  selectedAdministrators: collection('[data-test-administrators] ul li', {
-    remove: clickable('.remove'),
-  }),
   studentAdvisorSearch: {
     scope: '[data-test-student-advisor-search] [data-test-leadership-search]',
     search: fillable('input[type=search]'),
@@ -35,7 +38,22 @@ export default {
       isSelected: notHasClass('clickable'),
     }),
   },
-  selectedStudentAdvisors: collection('[data-test-student-advisors] ul li', {
+  selectedDirectors: collection('[data-test-directors] ul li', {
+    userNameInfo,
     remove: clickable('.remove'),
+    isDisabled: isPresent('.disabled-user'),
+  }),
+  selectedAdministrators: collection('[data-test-administrators] ul li', {
+    userNameInfo,
+    remove: clickable('.remove'),
+    isDisabled: isPresent('.disabled-user'),
+  }),
+  selectedStudentAdvisors: collection('[data-test-student-advisors] ul li', {
+    userNameInfo,
+    remove: clickable('.remove'),
+    isDisabled: isPresent('.disabled-user'),
   }),
 };
+
+export default definition;
+export const component = create(definition);
