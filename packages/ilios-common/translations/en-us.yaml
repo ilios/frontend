@@ -71,6 +71,7 @@ general:
   courseLearningMaterials: Course Learning Materials
   courseLevel: "Course Level {level}"
   courseLevels: Course Levels
+  courseMaterials: Course Materials
   courseNotFound: course not found
   courseObjective: Course Objective
   courseObjectives: Course Objectives
