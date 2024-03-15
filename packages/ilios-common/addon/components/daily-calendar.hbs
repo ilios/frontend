@@ -11,9 +11,9 @@
       ...
     {{else}}
       <span class="short" data-test-short>
-        {{format-date this.date}}
+        {{format-date @date}}
       </span>
-      <span class="long" data-test-long>{{format-date this.date weekday="long" month="long" day="numeric" year="numeric"}}</span>
+      <span class="long" data-test-long>{{format-date @date weekday="long" month="long" day="numeric" year="numeric"}}</span>
     {{/if}}
   </h2>
 

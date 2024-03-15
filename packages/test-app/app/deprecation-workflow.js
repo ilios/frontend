@@ -9,7 +9,6 @@ const SILENCED_DEPRECATIONS = [
   'ember-data:deprecate-non-strict-types',
   'ember-data:deprecate-non-strict-id',
   'ember-data:deprecate-non-unique-relationship-entries',
-  'common.dates-no-dates',
 ];
 
 registerDeprecationHandler((message, options, next) => {

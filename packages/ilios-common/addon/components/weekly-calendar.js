@@ -4,7 +4,6 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { action, set } from '@ember/object';
 import { DateTime } from 'luxon';
 import { sortBy } from 'ilios-common/utils/array-helpers';
-import { deprecate } from '@ember/debug';
 import scrollIntoView from 'scroll-into-view';
 
 export default class WeeklyCalendarComponent extends Component {
@@ -23,26 +22,12 @@ export default class WeeklyCalendarComponent extends Component {
     scrollIntoView(hourElement, { align: { top: 0 } });
   });
 
-  get date() {
-    if (typeof this.args.date === 'string') {
-      deprecate(`String passed to WeeklyCalendar @date instead of Date`, false, {
-        id: 'common.dates-no-strings',
-        for: 'ilios-common',
-        until: '72',
-        since: '71',
-      });
-      return DateTime.fromISO(this.args.date).toJSDate();
-    }
-
-    return this.args.date;
-  }
-
   get firstDayOfWeek() {
-    return this.localeDays.firstDayOfDateWeek(this.date);
+    return this.localeDays.firstDayOfDateWeek(this.args.date);
   }
 
   get lastDayOfWeek() {
-    return this.localeDays.lastDayOfDateWeek(this.date);
+    return this.localeDays.lastDayOfDateWeek(this.args.date);
   }
 
   get week() {
@@ -72,34 +57,7 @@ export default class WeeklyCalendarComponent extends Component {
       return [];
     }
 
-    const events = this.args.events.map((event) => {
-      if (typeof event.startDate === 'object') {
-        deprecate(
-          `Object passed to WeeklyCalendar @events.startDate instead of ISO string`,
-          false,
-          {
-            id: 'common.dates-no-dates',
-            for: 'ilios-common',
-            until: '72',
-            since: '71',
-          },
-        );
-        event.startDate = DateTime.fromJSDate(event.startDate).toISO();
-      }
-      if (typeof event.endDate === 'object') {
-        deprecate(`Object passed to WeeklyCalendar @events.endDate instead of ISO string`, false, {
-          id: 'common.dates-no-dates',
-          for: 'ilios-common',
-          until: '72',
-          since: '71',
-        });
-        event.endDate = DateTime.fromJSDate(event.endDate).toISO();
-      }
-
-      return event;
-    });
-
-    return sortBy(events, ['startDate', 'endDate', 'name']);
+    return sortBy(this.args.events, ['startDate', 'endDate', 'name']);
   }
 
   get days() {
