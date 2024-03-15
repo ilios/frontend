@@ -303,7 +303,6 @@ general:
   selectVocabulary: Choisi Vocabulaire
   session: Séance
   sessionLearningMaterials: "Matériels d'Étude de la Séance"
-  sessionObjectives: Objectifs de la Séance
   sessions: Séances
   sessionTitle: Titre de Séance
   sessionTitleFilterPlaceholder: "Filtre par titre, genre, ou statut"

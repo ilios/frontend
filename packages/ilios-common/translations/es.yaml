@@ -303,7 +303,6 @@ general:
   selectVocabulary: Seleccione un Vocabulario
   session: Sessión
   sessionLearningMaterials: Materiales de Aprendizaje de la Sesión
-  sessionObjectives: Objetivos de la Sesión
   sessions: Sesiones
   sessionTitle: Titulo de Sesión
   sessionTitleFilterPlaceholder: "Aplicar un Filtro por titulo, tipo, o estado de la publicación"
