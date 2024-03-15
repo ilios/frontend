@@ -71,6 +71,7 @@ general:
   courseLearningMaterials: Course Learning Materials
   courseLevel: "Course Level {level}"
   courseLevels: Course Levels
+  courseMaterials: Course Materials
   courseNotFound: course not found
   courseObjective: Course Objective
   courseObjectives: Course Objectives
@@ -303,7 +304,6 @@ general:
   selectVocabulary: Select Vocabulary
   session: Session
   sessionLearningMaterials: Session Learning Materials
-  sessionObjectives: Session Objectives
   sessions: Sessions
   sessionTitle: Session Title
   sessionTitleFilterPlaceholder: "Filter by title, type, or status"

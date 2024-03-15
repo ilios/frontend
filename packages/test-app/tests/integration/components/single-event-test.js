@@ -159,7 +159,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     );
     assert.strictEqual(
       component.courseLearningMaterials.expandCollapseSwitcher.text,
-      'Course Learning Materials',
+      'Course Materials',
     );
 
     await component.courseObjectives.objectiveList.title.expandCollapseSwitcher.toggle();
