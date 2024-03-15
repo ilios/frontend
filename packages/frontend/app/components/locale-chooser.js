@@ -7,7 +7,6 @@ import { findById, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LocaleChooserComponent extends Component {
   @service intl;
-  @service moment;
   @tracked isOpen = false;
   @tracked menuElement;
   @tracked menuButtonElement;
@@ -47,7 +46,6 @@ export default class LocaleChooserComponent extends Component {
   changeLocale(id) {
     this.isOpen = false;
     this.intl.setLocale(id);
-    this.moment.setLocale(id);
     window.document.querySelector('html').setAttribute('lang', id);
     this.menuButtonElement.focus();
   }

@@ -299,7 +299,6 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     assert.ok(component.days[0].isFirstWeek);
     assert.strictEqual(component.days[0].events.length, 1);
     this.owner.lookup('service:intl').setLocale('es');
-    this.owner.lookup('service:moment').setLocale('es');
     await settled();
 
     assert.strictEqual(component.days.length, 29);
