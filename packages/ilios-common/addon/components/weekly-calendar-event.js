@@ -4,41 +4,13 @@ import colorChange from 'ilios-common/utils/color-change';
 import { htmlSafe } from '@ember/template';
 import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 import { service } from '@ember/service';
-import { deprecate } from '@ember/debug';
 
 export default class WeeklyCalendarEventComponent extends Component {
   @service intl;
 
-  constructor() {
-    super(...arguments);
+  get minutes() {
     const allMinutesInDay = Array(60 * 24).fill(0);
     this.args.allDayEvents.forEach(({ startDate, endDate }) => {
-      if (typeof startDate === 'object') {
-        deprecate(
-          `Object passed to WeeklyCalendar @allDayEvents.startDate instead of ISO string`,
-          false,
-          {
-            id: 'common.dates-no-dates',
-            for: 'ilios-common',
-            until: '72',
-            since: '71',
-          },
-        );
-        startDate = DateTime.fromJSDate(startDate).toISO();
-      }
-      if (typeof endDate === 'object') {
-        deprecate(
-          `Object passed to WeeklyCalendar @allDayEvents.endDate instead of ISO string`,
-          false,
-          {
-            id: 'common.dates-no-dates',
-            for: 'ilios-common',
-            until: '72',
-            since: '71',
-          },
-        );
-        endDate = DateTime.fromJSDate(endDate).toISO();
-      }
       const start = this.getMinuteInTheDay(DateTime.fromISO(startDate));
       const end = this.getMinuteInTheDay(DateTime.fromISO(endDate));
       for (let i = start; i <= end; i++) {
@@ -46,40 +18,14 @@ export default class WeeklyCalendarEventComponent extends Component {
       }
     });
 
-    this.minutes = allMinutesInDay;
+    return allMinutesInDay;
   }
 
   get startDateTime() {
-    if (typeof this.args.event.startDate === 'object') {
-      deprecate(
-        `Object passed to WeeklyCalendarEvent @event.startDate instead of ISO string`,
-        false,
-        {
-          id: 'common.dates-no-dates',
-          for: 'ilios-common',
-          until: '72',
-          since: '71',
-        },
-      );
-      return DateTime.fromJSDate(this.args.event.startDate);
-    }
     return DateTime.fromISO(this.args.event.startDate);
   }
 
   get endDateTime() {
-    if (typeof this.args.event.endDate === 'object') {
-      deprecate(
-        `Object passed to WeeklyCalendarEvent @event.endDate instead of ISO string`,
-        false,
-        {
-          id: 'common.dates-no-dates',
-          for: 'ilios-common',
-          until: '72',
-          since: '71',
-        },
-      );
-      return DateTime.fromJSDate(this.args.event.endDate);
-    }
     return DateTime.fromISO(this.args.event.endDate);
   }
 
@@ -92,19 +38,6 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   get lastModifiedDateTime() {
-    if (typeof this.args.event.lastModified === 'object') {
-      deprecate(
-        `Object passed to WeeklyCalendarEvent @event.lastModified instead of ISO string`,
-        false,
-        {
-          id: 'common.dates-no-dates',
-          for: 'ilios-common',
-          until: '72',
-          since: '71',
-        },
-      );
-      return DateTime.fromJSDate(this.args.event.lastModified);
-    }
     return DateTime.fromISO(this.args.event.lastModified);
   }
 
