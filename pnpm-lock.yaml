@@ -169,8 +169,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@babel/core@7.24.0)
       ember-cli-page-object:
-        specifier: ^2.2.3
-        version: 2.2.3(@ember/test-helpers@3.3.0)
+        specifier: ^2.3.0
+        version: 2.3.0(@ember/test-helpers@3.3.0)
       ember-cli-sass:
         specifier: ^11.0.1
         version: 11.0.1
@@ -382,8 +382,8 @@ importers:
         specifier: ^6.3.0
         version: 6.3.0
       ember-cli-page-object:
-        specifier: ^2.2.3
-        version: 2.2.3(@ember/test-helpers@3.3.0)
+        specifier: ^2.3.0
+        version: 2.3.0(@ember/test-helpers@3.3.0)
       ember-cli-string-helpers:
         specifier: ^6.0.1
         version: 6.1.0
@@ -8778,8 +8778,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-cli-page-object@2.2.3(@ember/test-helpers@3.3.0):
-    resolution: {integrity: sha512-wO1Kd00hBTC6FmGSWovDxu60OMwjO5r8+hyk3zSLgMwk2KA8LVz5c8vFMbzGm7UfTFDWey8cecois8//aKLJEA==}
+  /ember-cli-page-object@2.3.0(@ember/test-helpers@3.3.0):
+    resolution: {integrity: sha512-vhnOOHUD5CFe470OwmKv/QSxnuxntO0KIG0QMMh684ycYA9Pp6WoGvR7EU8OfSvgftBL7UHahq/RAuudpFG3Hw==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
       '@ember/jquery': '*'
