@@ -99,7 +99,7 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-qunit": "^8.1.1",
-    "eslint-plugin-yml": "^1.12.2",
+    "eslint-plugin-yml": "^1.13.1",
     "file-saver": "^2.0.5",
     "ilios-common": "workspace:*",
     "loader.js": "^4.7.0",
