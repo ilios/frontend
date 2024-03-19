@@ -30,7 +30,7 @@ module('Integration | Component | program/leadership expanded', function (hooks)
     this.set('program', programModel);
     await render(hbs`<Program::LeadershipExpanded
       @program={{this.program}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}
@@ -53,7 +53,7 @@ module('Integration | Component | program/leadership expanded', function (hooks)
     });
     await render(hbs`<Program::LeadershipExpanded
       @program={{this.program}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{this.click}}
       @expand={{(noop)}}
       @isManaging={{false}}
@@ -73,7 +73,7 @@ module('Integration | Component | program/leadership expanded', function (hooks)
     });
     await render(hbs`<Program::LeadershipExpanded
       @program={{this.program}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}

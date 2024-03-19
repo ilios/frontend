@@ -2,7 +2,7 @@
   {{#if @programYearLeadershipDetails}}
     <ProgramYear::LeadershipExpanded
       @programYear={{@programYear}}
-      @canUpdate={{@canUpdate}}
+      @editable={{@canUpdate}}
       @collapse={{fn @setProgramYearLeadershipDetails false}}
       @expand={{fn @setProgramYearLeadershipDetails true}}
       @isManaging={{@manageProgramYearLeadership}}

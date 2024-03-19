@@ -6,9 +6,9 @@ const definition = {
   scope: '[data-test-program-leadership-expanded]',
   title: text('[data-test-title]'),
   collapse: clickable('[data-test-title]'),
-  manage: clickable('.actions button'),
-  save: clickable('.actions button.bigadd'),
-  cancel: clickable('.actions button.bigcancel'),
+  manage: clickable('[data-test-manage]'),
+  save: clickable('[data-test-save]'),
+  cancel: clickable('[data-test-cancel]'),
   leadershipList,
   leadershipManager,
 };

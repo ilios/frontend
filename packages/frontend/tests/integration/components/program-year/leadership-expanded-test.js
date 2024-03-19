@@ -33,7 +33,7 @@ module('Integration | Component | program-year/leadership-expanded', function (h
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::LeadershipExpanded
       @programYear={{this.programYear}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}
@@ -60,7 +60,7 @@ module('Integration | Component | program-year/leadership-expanded', function (h
     });
     await render(hbs`<ProgramYear::LeadershipExpanded
       @programYear={{this.programYear}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{this.click}}
       @expand={{(noop)}}
       @isManaging={{false}}
@@ -84,7 +84,7 @@ module('Integration | Component | program-year/leadership-expanded', function (h
     });
     await render(hbs`<ProgramYear::LeadershipExpanded
       @programYear={{this.programYear}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}

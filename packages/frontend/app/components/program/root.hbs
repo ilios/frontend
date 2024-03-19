@@ -9,7 +9,7 @@
   {{#if @leadershipDetails}}
     <Program::LeadershipExpanded
       @program={{@program}}
-      @canUpdate={{@canUpdate}}
+      @editable={{@canUpdate}}
       @collapse={{fn @setLeadershipDetails false}}
       @expand={{fn @setLeadershipDetails true}}
       @isManaging={{@manageLeadership}}
