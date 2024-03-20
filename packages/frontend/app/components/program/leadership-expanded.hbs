@@ -1,62 +1,57 @@
 <div
   class="program-leadership-expanded"
   data-test-program-leadership-expanded
-  {{did-insert (perform this.load) @program}}
 >
-  {{#if this.load.isRunning}}
-      <LoadingSpinner />
-  {{else}}
-    <div class="program-leadership-expanded-header">
+  <div class="program-leadership-expanded-header">
+    {{#if @isManaging}}
+      <h3 class="title" data-test-title>
+        {{t "general.leadership"}} ({{this.count}})
+      </h3>
+    {{else}}
+      <button
+        class="title link-button"
+        type="button"
+        aria-expanded="true"
+        data-test-title
+        {{on "click" @collapse}}
+      >
+        {{t "general.leadership"}} ({{this.count}})
+        <FaIcon @icon="caret-down" />
+    </button>
+    {{/if}}
+    <div class="actions">
       {{#if @isManaging}}
-        <h3 class="title" data-test-title>
-          {{t "general.leadership"}} ({{this.count}})
-        </h3>
-      {{else}}
-        <button
-          class="title link-button"
-          type="button"
-          aria-expanded="true"
-          data-test-title
-          {{on "click" @collapse}}
-        >
-          {{t "general.leadership"}} ({{this.count}})
-          <FaIcon @icon="caret-down" />
-      </button>
-      {{/if}}
-      <div class="actions">
-        {{#if @isManaging}}
-          <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>
-            <FaIcon
-              @icon={{if this.save.isRunning "spinner" "check"}}
-              @spin={{this.save.isRunning}}
-            />
-          </button>
-          <button type="button" class="bigcancel" {{on "click" (perform this.cancel)}} data-test-cancel>
-            <FaIcon @icon="arrow-rotate-left" />
-          </button>
-        {{else if @editable}}
-          <button type="button" {{on "click" this.manage}} data-test-manage>
-            {{t "general.manageLeadership"}}
-          </button>
-        {{/if}}
-      </div>
-    </div>
-    <div class="program-leadership-expanded-content">
-      {{#if @isManaging}}
-        <LeadershipManager
-          @directors={{this.directors}}
-          @showAdministrators={{false}}
-          @showDirectors={{true}}
-          @addDirector={{this.addDirector}}
-          @removeDirector={{this.removeDirector}}
-        />
-      {{else}}
-        <LeadershipList
-          @directors={{this.directors}}
-          @showAdministrators={{false}}
-          @showDirectors={{true}}
-        />
+        <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>
+          <FaIcon
+            @icon={{if this.save.isRunning "spinner" "check"}}
+            @spin={{this.save.isRunning}}
+          />
+        </button>
+        <button type="button" class="bigcancel" {{on "click" this.close}} data-test-cancel>
+          <FaIcon @icon="arrow-rotate-left" />
+        </button>
+      {{else if @editable}}
+        <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>
+          {{t "general.manageLeadership"}}
+        </button>
       {{/if}}
     </div>
-  {{/if}}
+  </div>
+  <div class="program-leadership-expanded-content">
+    {{#if @isManaging}}
+      <LeadershipManager
+        @directors={{this.directors}}
+        @showAdministrators={{false}}
+        @showDirectors={{true}}
+        @addDirector={{this.addDirector}}
+        @removeDirector={{this.removeDirector}}
+      />
+    {{else}}
+      <LeadershipList
+        @directors={{this.directors}}
+        @showAdministrators={{false}}
+        @showDirectors={{true}}
+      />
+    {{/if}}
+  </div>
 </div>
