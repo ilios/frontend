@@ -39,3 +39,10 @@ jobs:
           git tag v${{env.new_tag}} -m "Tagging the v${{env.new_tag}} ${{ github.event.inputs.releaseType }} release"
       - name: Push Changes
         run: git push --follow-tags
+      - uses: act10ns/slack@v2
+        if: failure()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_ILIOS_DEPLOYMENT_WEBHOOK_URL }}
+        with:
+          status: ${{ job.status }}
+          message: Version Tagging Failed {{ env.GITHUB_SERVER_URL }}/{{ env.GITHUB_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}
