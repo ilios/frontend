@@ -1,6 +1,6 @@
 {
   "name": "lti-dashboard",
-  "version": "40.0.2",
+  "version": "40.0.3",
   "description": "LTI App for ilios integration",
   "repository": "https://github.com/ilios/lti-dashboard",
   "license": "MIT",
