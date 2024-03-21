@@ -1,61 +1,82 @@
 import Component from '@glimmer/component';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolLeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];
   @tracked directorsToRemove = [];
   @tracked administratorsToAdd = [];
   @tracked administratorsToRemove = [];
-  @tracked schoolDirectors = [];
-  @tracked schoolAdministrators = [];
-
-  get isCollapsible() {
-    const administratorIds = this.args.school.hasMany('administrators').ids();
-    const directorIds = this.args.school.hasMany('directors').ids();
-
-    return (administratorIds.length > 0 || directorIds.length > 0) && !this.args.isManaging;
-  }
 
   get count() {
     return this.administrators.length + this.directors.length;
   }
 
-  load = restartableTask(async () => {
-    this.schoolDirectors = await this.args.school.directors;
-    this.schoolAdministrators = await this.args.school.administrators;
-  });
+  @cached
+  get schoolDirectors() {
+    return new TrackedAsyncData(this.args.school.directors);
+  }
 
+  @cached
+  get schoolAdministrators() {
+    return new TrackedAsyncData(this.args.school.administrators);
+  }
+
+  @cached
   get directors() {
-    const arr = [...this.schoolDirectors.slice(), ...this.directorsToAdd];
-    return uniqueValues(arr.filter((user) => !this.directorsToRemove.includes(user)));
+    const directors = this.schoolDirectors.isResolved ? this.schoolDirectors.value.slice() : [];
+    return [...directors, ...this.directorsToAdd].filter(
+      (user) => !this.directorsToRemove.includes(user),
+    );
   }
 
   get administrators() {
-    const arr = [...this.schoolAdministrators.slice(), ...this.administratorsToAdd];
-    return uniqueValues(arr.filter((user) => !this.administratorsToRemove.includes(user)));
+    const administrators = this.schoolAdministrators.isResolved
+      ? this.schoolAdministrators.value.slice()
+      : [];
+    return [...administrators, ...this.administratorsToAdd].filter(
+      (user) => !this.administratorsToRemove.includes(user),
+    );
   }
+
+  resetBuffers() {
+    this.directorsToAdd = [];
+    this.directorsToRemove = [];
+    this.administratorsToAdd = [];
+    this.administratorsToRemove = [];
+  }
+
   @action
   addDirector(user) {
-    this.directorsToRemove = this.directorsToRemove.filter((u) => u !== user);
     this.directorsToAdd = [...this.directorsToAdd, user];
+    this.directorsToRemove = this.directorsToRemove.filter((u) => u !== user);
   }
+
   @action
   removeDirector(user) {
-    this.directorsToAdd = this.directorsToAdd.filter((u) => u !== user);
     this.directorsToRemove = [...this.directorsToRemove, user];
+    this.directorsToAdd = this.directorsToAdd.filter((u) => u !== user);
   }
+
   @action
   addAdministrator(user) {
-    this.administratorsToRemove = this.administratorsToRemove.filter((u) => u !== user);
     this.administratorsToAdd = [...this.administratorsToAdd, user];
+    this.administratorsToRemove = this.administratorsToRemove.filter((u) => u !== user);
   }
+
   @action
   removeAdministrator(user) {
-    this.administratorsToAdd = this.administratorsToAdd.filter((u) => u !== user);
     this.administratorsToRemove = [...this.administratorsToRemove, user];
+    this.administratorsToAdd = this.administratorsToAdd.filter((u) => u !== user);
+  }
+
+  @action
+  close() {
+    this.resetBuffers();
+    this.args.setIsManaging(false);
   }
 
   save = dropTask(async () => {
@@ -65,6 +86,7 @@ export default class SchoolLeadershipExpandedComponent extends Component {
       administrators: this.administrators,
     });
     this.args.expand();
+    this.resetBuffers();
     await this.args.school.save();
     this.args.setIsManaging(false);
   });
