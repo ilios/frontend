@@ -33,6 +33,7 @@ export default class SchoolLeadershipExpandedComponent extends Component {
     );
   }
 
+  @cached
   get administrators() {
     const administrators = this.schoolAdministrators.isResolved
       ? this.schoolAdministrators.value.slice()
