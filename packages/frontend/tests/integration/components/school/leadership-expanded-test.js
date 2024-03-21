@@ -4,9 +4,9 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'frontend/tests/pages/components/school-leadership-expanded';
+import { component } from 'frontend/tests/pages/components/school/leadership-expanded';
 
-module('Integration | Component | school leadership expanded', function (hooks) {
+module('Integration | Component | school/leadership-expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -21,7 +21,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
 
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<SchoolLeadershipExpanded
+    await render(hbs`<School::LeadershipExpanded
       @school={{this.school}}
       @canUpdate={{true}}
       @collapse={{(noop)}}
@@ -48,7 +48,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
     this.set('collapse', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<SchoolLeadershipExpanded
+    await render(hbs`<School::LeadershipExpanded
       @school={{this.school}}
       @canUpdate={{true}}
       @collapse={{this.collapse}}
@@ -67,7 +67,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
     this.set('manage', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<SchoolLeadershipExpanded
+    await render(hbs`<School::LeadershipExpanded
       @school={{this.school}}
       @canUpdate={{true}}
       @collapse={{(noop)}}
@@ -84,7 +84,7 @@ module('Integration | Component | school leadership expanded', function (hooks) 
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<SchoolLeadershipExpanded
+    await render(hbs`<School::LeadershipExpanded
       @school={{this.school}}
       @canUpdate={{true}}
       @collapse={{(noop)}}
