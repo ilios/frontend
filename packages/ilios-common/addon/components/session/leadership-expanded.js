@@ -1,54 +1,86 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { dropTask, timeout } from 'ember-concurrency';
-import { hash } from 'rsvp';
+import { tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
 export default class CourseLeadershipExpandedComponent extends Component {
-  @tracked administrators = [];
-  @tracked studentAdvisors = [];
+  @tracked administratorsToAdd = [];
+  @tracked administratorsToRemove = [];
+  @tracked studentAdvisorsToAdd = [];
+  @tracked studentAdvisorsToRemove = [];
 
   get count() {
     return this.administrators.length + this.studentAdvisors.length;
   }
 
+  @cached
+  get courseAdministrators() {
+    return new TrackedAsyncData(this.args.session.administrators);
+  }
+
+  @cached
+  get courseStudentAdvisors() {
+    return new TrackedAsyncData(this.args.session.studentAdvisors);
+  }
+
+  @cached
+  get administrators() {
+    const administrators = this.courseAdministrators.isResolved
+      ? this.courseAdministrators.value.slice()
+      : [];
+    return [...administrators, ...this.administratorsToAdd].filter(
+      (user) => !this.administratorsToRemove.includes(user),
+    );
+  }
+
+  @cached
+  get studentAdvisors() {
+    const studentAdvisors = this.courseStudentAdvisors.isResolved
+      ? this.courseStudentAdvisors.value.slice()
+      : [];
+    return [...studentAdvisors, ...this.studentAdvisorsToAdd].filter(
+      (user) => !this.studentAdvisorsToRemove.includes(user),
+    );
+  }
+
+  resetBuffers() {
+    this.administratorsToAdd = [];
+    this.administratorsToRemove = [];
+    this.studentAdvisorsToAdd = [];
+    this.studentAdvisorsToRemove = [];
+  }
+
   @action
   addAdministrator(user) {
-    this.administrators = [...this.administrators, user];
+    this.administratorsToAdd = [...this.administratorsToAdd, user];
+    this.administratorsToRemove = this.administratorsToRemove.filter((u) => u !== user);
   }
 
   @action
   removeAdministrator(user) {
-    this.administrators = this.administrators.filter((obj) => obj !== user);
+    this.administratorsToRemove = [...this.administratorsToRemove, user];
+    this.administratorsToAdd = this.administratorsToAdd.filter((u) => u !== user);
   }
 
   @action
   addStudentAdvisor(user) {
-    this.studentAdvisors = [...this.studentAdvisors, user];
+    this.studentAdvisorsToAdd = [...this.studentAdvisorsToAdd, user];
+    this.studentAdvisorsToRemove = this.studentAdvisorsToRemove.filter((u) => u !== user);
   }
 
   @action
   removeStudentAdvisor(user) {
-    this.studentAdvisors = this.studentAdvisors.filter((obj) => obj !== user);
+    this.studentAdvisorsToRemove = [...this.studentAdvisorsToRemove, user];
+    this.studentAdvisorsToAdd = this.studentAdvisorsToAdd.filter((u) => u !== user);
   }
 
   @action
-  manage() {
-    this.args.setIsManaging(true);
+  close() {
+    this.resetBuffers();
+    this.args.setIsManaging(false);
   }
-
-  async setBuffers() {
-    const obj = await hash({
-      administrators: this.args.session.administrators,
-      studentAdvisors: this.args.session.studentAdvisors,
-    });
-    this.administrators = obj.administrators.slice();
-    this.studentAdvisors = obj.studentAdvisors.slice();
-  }
-
-  load = dropTask(async () => {
-    await this.setBuffers();
-  });
 
   save = dropTask(async () => {
     await timeout(10);
@@ -57,12 +89,8 @@ export default class CourseLeadershipExpandedComponent extends Component {
       studentAdvisors: this.studentAdvisors,
     });
     this.args.expand();
+    this.resetBuffers();
     await this.args.session.save();
-    this.args.setIsManaging(false);
-  });
-
-  cancel = dropTask(async () => {
-    await this.setBuffers();
     this.args.setIsManaging(false);
   });
 }

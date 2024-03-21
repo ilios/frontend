@@ -24,7 +24,7 @@ module('Integration | Component | session/leadership-expanded', function (hooks)
     this.set('session', sessionModel);
     await render(hbs`<Session::LeadershipExpanded
       @session={{this.session}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}
@@ -55,7 +55,7 @@ module('Integration | Component | session/leadership-expanded', function (hooks)
     });
     await render(hbs`<Session::LeadershipExpanded
       @session={{this.session}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{this.click}}
       @expand={{(noop)}}
       @isManaging={{false}}
@@ -80,7 +80,7 @@ module('Integration | Component | session/leadership-expanded', function (hooks)
     });
     await render(hbs`<Session::LeadershipExpanded
       @session={{this.session}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{this.click}}
       @expand={{(noop)}}
       @isManaging={{false}}
@@ -100,7 +100,7 @@ module('Integration | Component | session/leadership-expanded', function (hooks)
     });
     await render(hbs`<Session::LeadershipExpanded
       @session={{this.session}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}

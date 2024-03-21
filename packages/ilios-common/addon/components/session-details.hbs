@@ -9,7 +9,7 @@
   {{#if @sessionLeadershipDetails}}
     <Session::LeadershipExpanded
       @session={{@session}}
-      @canUpdate={{@editable}}
+      @editable={{@editable}}
       @collapse={{fn @setSessionLeadershipDetails false}}
       @expand={{fn @setSessionLeadershipDetails true}}
       @isManaging={{@sessionManageLeadership}}
