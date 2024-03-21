@@ -1,72 +1,67 @@
 <div
   class="course-leadership-expanded"
   data-test-course-leadership-expanded
-  {{did-insert (perform this.load) @course}}
 >
-  {{#if this.load.isRunning}}
-    <LoadingSpinner />
-  {{else}}
-    <div class="course-leadership-expanded-header">
+  <div class="course-leadership-expanded-header">
+    {{#if @isManaging}}
+      <h3 class="title" data-test-title>
+        {{t "general.leadership"}} ({{this.count}})
+      </h3>
+    {{else}}
+      <button
+        class="title link-button"
+        type="button"
+        aria-expanded="true"
+        data-test-title
+        {{on "click" @collapse}}
+      >
+        {{t "general.leadership"}} ({{this.count}})
+        <FaIcon @icon="caret-down" />
+      </button>
+    {{/if}}
+    <div class="actions">
       {{#if @isManaging}}
-        <h3 class="title" data-test-title>
-          {{t "general.leadership"}} ({{this.count}})
-        </h3>
-      {{else}}
-        <button
-          class="title link-button"
-          type="button"
-          aria-expanded="true"
-          data-test-title
-          {{on "click" @collapse}}
-        >
-          {{t "general.leadership"}} ({{this.count}})
-          <FaIcon @icon="caret-down" />
+        <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
+          <FaIcon
+            @icon={{if this.save.isRunning "spinner" "check"}}
+            @spin={{this.save.isRunning}}
+          />
+        </button>
+        <button class="bigcancel" type="button" {{on "click" this.close}} data-test-cancel>
+          <FaIcon @icon="arrow-rotate-left" />
+        </button>
+      {{else if @editable}}
+        <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>
+          {{t "general.manageLeadership"}}
         </button>
       {{/if}}
-      <div class="actions">
-        {{#if @isManaging}}
-          <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
-            <FaIcon
-              @icon={{if this.save.isRunning "spinner" "check"}}
-              @spin={{this.save.isRunning}}
-            />
-          </button>
-          <button class="bigcancel" type="button" {{on "click" (perform this.cancel)}} data-test-cancel>
-            <FaIcon @icon="arrow-rotate-left" />
-          </button>
-        {{else if @editable}}
-          <button type="button" {{on "click" this.manage}} data-test-manage>
-            {{t "general.manageLeadership"}}
-          </button>
-        {{/if}}
-      </div>
     </div>
-    <div class="course-leadership-expanded-content">
-        {{#if @isManaging}}
-            <LeadershipManager
-              @directors={{this.directors}}
-              @showDirectors={{true}}
-              @removeDirector={{this.removeDirector}}
-              @addDirector={{this.addDirector}}
-              @administrators={{this.administrators}}
-              @showAdministrators={{true}}
-              @removeAdministrator={{this.removeAdministrator}}
-              @addAdministrator={{this.addAdministrator}}
-              @studentAdvisors={{this.studentAdvisors}}
-              @showStudentAdvisors={{true}}
-              @removeStudentAdvisor={{this.removeStudentAdvisor}}
-              @addStudentAdvisor={{this.addStudentAdvisor}}
-            />
-        {{else}}
-          <LeadershipList
+  </div>
+  <div class="course-leadership-expanded-content">
+      {{#if @isManaging}}
+          <LeadershipManager
             @directors={{this.directors}}
-            @administrators={{this.administrators}}
-            @studentAdvisors={{this.studentAdvisors}}
-            @showAdministrators={{true}}
             @showDirectors={{true}}
+            @removeDirector={{this.removeDirector}}
+            @addDirector={{this.addDirector}}
+            @administrators={{this.administrators}}
+            @showAdministrators={{true}}
+            @removeAdministrator={{this.removeAdministrator}}
+            @addAdministrator={{this.addAdministrator}}
+            @studentAdvisors={{this.studentAdvisors}}
             @showStudentAdvisors={{true}}
+            @removeStudentAdvisor={{this.removeStudentAdvisor}}
+            @addStudentAdvisor={{this.addStudentAdvisor}}
           />
-        {{/if}}
-    </div>
-  {{/if}}
+      {{else}}
+        <LeadershipList
+          @directors={{this.directors}}
+          @administrators={{this.administrators}}
+          @studentAdvisors={{this.studentAdvisors}}
+          @showAdministrators={{true}}
+          @showDirectors={{true}}
+          @showStudentAdvisors={{true}}
+        />
+      {{/if}}
+  </div>
 </div>
