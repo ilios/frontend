@@ -43,7 +43,13 @@ export default class DashboardCalendarController extends Controller {
 
   get selectedDate() {
     if (this.date) {
-      return DateTime.fromFormat(this.date, 'yyyy-MM-dd').toJSDate();
+      const dt = DateTime.fromFormat(this.date, 'yyyy-MM-dd');
+
+      if (dt.isValid) {
+        return dt.toJSDate();
+      } else {
+        console.error(`date in URL is invalid: ${dt.invalidExplanation}`);
+      }
     }
 
     return DateTime.now().toJSDate();

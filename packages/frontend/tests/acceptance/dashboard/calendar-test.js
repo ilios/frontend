@@ -301,6 +301,20 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.strictEqual(page.calendar.dailyCalendar.events[0].name, 'today');
   });
 
+  test('invalid date loads today #5342', async function (assert) {
+    assert.expect(2);
+    freezeDateAt(
+      DateTime.fromObject({
+        year: 2005,
+        month: 6,
+        day: 24,
+      }).toJSDate(),
+    );
+    await visit('/dashboard/calendar?view=day&date=somethinginvalid');
+    assert.strictEqual(currentRouteName(), 'dashboard.calendar');
+    assert.strictEqual(page.calendar.dailyCalendar.title.longDayOfWeek, 'Friday, June 24, 2005');
+  });
+
   test('click month day number and go to day', async function (assert) {
     const aDayInTheMonth = DateTime.fromObject({ hour: 8 }).startOf('month').plus({ days: 12 });
     this.server.create('userevent', {
