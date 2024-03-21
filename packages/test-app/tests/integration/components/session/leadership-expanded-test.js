@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { component } from 'ilios-common/page-objects/components/session-leadership-expanded';
+import { component } from 'ilios-common/page-objects/components/session/leadership-expanded';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | session leadership expanded', function (hooks) {
+module('Integration | Component | session/leadership-expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -22,7 +22,7 @@ module('Integration | Component | session leadership expanded', function (hooks)
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
-    await render(hbs`<SessionLeadershipExpanded
+    await render(hbs`<Session::LeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{(noop)}}
@@ -53,7 +53,7 @@ module('Integration | Component | session leadership expanded', function (hooks)
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<SessionLeadershipExpanded
+    await render(hbs`<Session::LeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{this.click}}
@@ -78,7 +78,7 @@ module('Integration | Component | session leadership expanded', function (hooks)
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<SessionLeadershipExpanded
+    await render(hbs`<Session::LeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{this.click}}
@@ -98,7 +98,7 @@ module('Integration | Component | session leadership expanded', function (hooks)
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<SessionLeadershipExpanded
+    await render(hbs`<Session::LeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{(noop)}}
