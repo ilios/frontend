@@ -23,7 +23,7 @@ module('Integration | Component | school/leadership-expanded', function (hooks) 
     this.set('school', schoolModel);
     await render(hbs`<School::LeadershipExpanded
       @school={{this.school}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}
@@ -50,7 +50,7 @@ module('Integration | Component | school/leadership-expanded', function (hooks) 
     });
     await render(hbs`<School::LeadershipExpanded
       @school={{this.school}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{this.collapse}}
       @expand={{(noop)}}
       @isManaging={{false}}
@@ -69,7 +69,7 @@ module('Integration | Component | school/leadership-expanded', function (hooks) 
     });
     await render(hbs`<School::LeadershipExpanded
       @school={{this.school}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}
@@ -86,7 +86,7 @@ module('Integration | Component | school/leadership-expanded', function (hooks) 
     this.set('school', schoolModel);
     await render(hbs`<School::LeadershipExpanded
       @school={{this.school}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{true}}
