@@ -22,13 +22,12 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
     this.set('report', reportModel);
     await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
     />`);
-    assert.ok(component.collapse.text, 'Leadership');
     assert.strictEqual(component.leadershipList.administrators.length, 2);
     assert.strictEqual(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
     assert.strictEqual(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
@@ -47,13 +46,13 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
     });
     await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{this.collapse}}
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{(noop)}}
     />`);
-    await component.collapse.click();
+    await component.collapse();
   });
 
   test('clicking manage fires action', async function (assert) {
@@ -69,12 +68,12 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
     });
     await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
-      @canUpdate={{true}}
+      @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{this.manage}}
     />`);
-    await component.manage.click();
+    await component.manage();
   });
 });

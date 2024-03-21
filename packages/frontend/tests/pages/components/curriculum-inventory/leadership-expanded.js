@@ -1,21 +1,14 @@
-import { create } from 'ember-cli-page-object';
+import { clickable, create, text } from 'ember-cli-page-object';
 import leadershipList from 'ilios-common/page-objects/components/leadership-list';
 import leadershipManager from 'ilios-common/page-objects/components/leadership-manager';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-leadership-expanded]',
-  collapse: {
-    scope: '[data-test-title]',
-  },
-  manage: {
-    scope: '[data-test-manage]',
-  },
-  save: {
-    scope: '[data-test-save]',
-  },
-  cancel: {
-    scope: '[data-test-cancel]',
-  },
+  title: text('[data-test-title]'),
+  collapse: clickable('[data-test-title]'),
+  manage: clickable('[data-test-manage]'),
+  save: clickable('[data-test-save]'),
+  cancel: clickable('[data-test-cancel]'),
   leadershipList,
   leadershipManager,
 };

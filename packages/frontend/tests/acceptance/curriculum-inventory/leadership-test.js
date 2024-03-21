@@ -39,7 +39,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
 
   test('list leadership', async function (assert) {
     await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
-    assert.strictEqual(page.details.leadershipExpanded.collapse.text, 'Leadership (2)');
+    assert.strictEqual(page.details.leadershipExpanded.title, 'Leadership (2)');
     const { administrators } = page.details.leadershipExpanded.leadershipList;
     assert.strictEqual(administrators.length, 2);
     assert.strictEqual(administrators[0].text, '3 guy M. Mc3son');
@@ -48,7 +48,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
 
   test('search administrators', async function (assert) {
     await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
-    await page.details.leadershipExpanded.manage.click();
+    await page.details.leadershipExpanded.manage();
     const manager = page.details.leadershipExpanded.leadershipManager;
     await manager.administratorSearch.search('guy');
     assert.strictEqual(manager.administratorSearch.results.length, 5);
@@ -81,7 +81,7 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
 
   test('manage leadership', async function (assert) {
     await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
-    await page.details.leadershipExpanded.manage.click();
+    await page.details.leadershipExpanded.manage();
     const manager = page.details.leadershipExpanded.leadershipManager;
     const { selectedAdministrators } = manager;
     assert.strictEqual(selectedAdministrators.length, 2);
@@ -97,13 +97,13 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
 
   test('cancel leadership changes', async function (assert) {
     await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
-    await page.details.leadershipExpanded.manage.click();
+    await page.details.leadershipExpanded.manage();
     const manager = page.details.leadershipExpanded.leadershipManager;
     const { selectedAdministrators } = manager;
     await selectedAdministrators[1].remove();
     await manager.administratorSearch.search('guy');
     await manager.administratorSearch.results[1].add();
-    await page.details.leadershipExpanded.cancel.click();
+    await page.details.leadershipExpanded.cancel();
     const { administrators } = page.details.leadershipExpanded.leadershipList;
     assert.strictEqual(administrators.length, 2);
     assert.strictEqual(administrators[0].text, '3 guy M. Mc3son');
@@ -112,13 +112,13 @@ module('Acceptance | curriculum inventory leadership', function (hooks) {
 
   test('save leadership changes', async function (assert) {
     await page.visit({ reportId: this.reportModel.id, leadershipDetails: true });
-    await page.details.leadershipExpanded.manage.click();
+    await page.details.leadershipExpanded.manage();
     const manager = page.details.leadershipExpanded.leadershipManager;
     const { selectedAdministrators } = manager;
     await selectedAdministrators[1].remove();
     await manager.administratorSearch.search('guy');
     await manager.administratorSearch.results[1].add();
-    await page.details.leadershipExpanded.save.click();
+    await page.details.leadershipExpanded.save();
     const { administrators } = page.details.leadershipExpanded.leadershipList;
     assert.strictEqual(administrators.length, 2);
     assert.strictEqual(administrators[0].text, '1 guy M. Mc1son');
