@@ -35,9 +35,9 @@
   </div>
   <div class="school-manager-content">
     {{#if (or (and (eq @school.directors.length 0) (eq @school.administrators.length 0)) @schoolLeadershipDetails)}}
-      <SchoolLeadershipExpanded
+      <School::LeadershipExpanded
         @school={{@school}}
-        @canUpdate={{@canUpdateSchool}}
+        @editable={{@canUpdateSchool}}
         @collapse={{fn @setSchoolLeadershipDetails false}}
         @expand={{fn @setSchoolLeadershipDetails true}}
         @isManaging={{@schoolManageLeadership}}

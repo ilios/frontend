@@ -5,7 +5,7 @@ import meshTerms from './mesh-terms';
 import taxonomies from './detail-taxonomies';
 import collapsedTaxonomies from './collapsed-taxonomies';
 import leadershipCollapsed from './leadership-collapsed';
-import leadershipExpanded from './course-leadership-expanded';
+import leadershipExpanded from './course/leadership-expanded';
 import collapsedCompetencies from './collapsed-competencies';
 import overview from './course-overview';
 import header from './course-header';

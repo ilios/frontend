@@ -1,5 +1,5 @@
-@use "../colors" as c;
-@use "../mixins" as m;
+@use "../../colors" as c;
+@use "../../mixins" as m;
 
 .session-leadership-expanded {
   @include m.detail-container(c.$orange);

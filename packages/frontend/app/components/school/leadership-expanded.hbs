@@ -1,12 +1,13 @@
 <div
   class="school-leadership-expanded"
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @school.directors @school.administrators}}
   data-test-school-leadership-expanded
-  ...attributes
 >
   <div class="school-leadership-expanded-header">
-    {{#if this.isCollapsible}}
+    {{#if @isManaging}}
+      <h3 class="title" data-test-title>
+        {{t "general.leadership"}} ({{this.count}})
+      </h3>
+    {{else}}
       <button
         class="title link-button"
         type="button"
@@ -17,10 +18,6 @@
         {{t "general.leadership"}} ({{this.count}})
         <FaIcon @icon="caret-down" />
       </button>
-    {{else}}
-      <div class="title" data-test-title>
-        {{t "general.leadership"}} ({{this.count}})
-      </div>
     {{/if}}
     <div class="actions">
       {{#if @isManaging}}
@@ -30,10 +27,10 @@
             @spin={{this.save.isRunning}}
           />
         </button>
-        <button type="button" class="bigcancel" {{on "click" (fn @setIsManaging false)}} data-test-cancel>
+        <button type="button" class="bigcancel" {{on "click" this.close}} data-test-cancel>
           <FaIcon @icon="arrow-rotate-left" />
         </button>
-      {{else if @canUpdate}}
+      {{else if @editable}}
         <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>
           {{t "general.manageLeadership"}}
         </button>
@@ -41,7 +38,6 @@
     </div>
   </div>
   <div class="school-leadership-expanded-content">
-    {{#if this.load.lastSuccessful}}
       {{#if @isManaging}}
         <LeadershipManager
           @directors={{this.directors}}
@@ -61,8 +57,5 @@
           @showDirectors={{true}}
         />
       {{/if}}
-    {{else}}
-      <LoadingSpinner />
-    {{/if}}
   </div>
 </div>

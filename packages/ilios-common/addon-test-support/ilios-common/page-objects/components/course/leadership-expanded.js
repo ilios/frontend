@@ -1,6 +1,6 @@
 import { create, clickable, text } from 'ember-cli-page-object';
-import leadershipList from './leadership-list';
-import leadershipManager from './leadership-manager';
+import leadershipList from '../leadership-list';
+import leadershipManager from '../leadership-manager';
 
 const definition = {
   scope: '[data-test-course-leadership-expanded]',
