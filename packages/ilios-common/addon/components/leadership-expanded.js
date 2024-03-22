@@ -18,21 +18,48 @@ export default class LeadershipExpandedComponent extends Component {
   }
 
   @cached
+  get modelHasDirectors() {
+    return 'directors' in this.args.model;
+  }
+
+  @cached
+  get modelHasAdministrators() {
+    return 'administrators' in this.args.model;
+  }
+
+  @cached
+  get modelHasStudentAdvisors() {
+    return 'studentAdvisors' in this.args.model;
+  }
+
+  @cached
   get modelDirectors() {
-    return new TrackedAsyncData(this.args.model.directors);
+    if (this.modelHasDirectors) {
+      return new TrackedAsyncData(this.args.model.directors);
+    }
+    return null;
   }
 
   @cached
   get modelAdministrators() {
-    return new TrackedAsyncData(this.args.model.administrators);
+    if (this.modelHasAdministrators) {
+      return new TrackedAsyncData(this.args.model.administrators);
+    }
+    return null;
   }
 
   @cached
   get modelStudentAdvisors() {
-    return new TrackedAsyncData(this.args.model.studentAdvisors);
+    if (this.modelHasStudentAdvisors) {
+      return new TrackedAsyncData(this.args.model.studentAdvisors);
+    }
+    return null;
   }
 
   get directors() {
+    if (!this.modelHasDirectors) {
+      return [];
+    }
     const directors = this.modelDirectors.isResolved ? this.modelDirectors.value.slice() : [];
     return [...directors, ...this.directorsToAdd].filter(
       (user) => !this.directorsToRemove.includes(user),
@@ -41,6 +68,9 @@ export default class LeadershipExpandedComponent extends Component {
 
   @cached
   get administrators() {
+    if (!this.modelHasAdministrators) {
+      return [];
+    }
     const administrators = this.modelAdministrators.isResolved
       ? this.modelAdministrators.value.slice()
       : [];
@@ -51,6 +81,9 @@ export default class LeadershipExpandedComponent extends Component {
 
   @cached
   get studentAdvisors() {
+    if (!this.modelHasStudentAdvisors) {
+      return [];
+    }
     const studentAdvisors = this.modelStudentAdvisors.isResolved
       ? this.modelStudentAdvisors.value.slice()
       : [];
@@ -112,11 +145,18 @@ export default class LeadershipExpandedComponent extends Component {
 
   save = dropTask(async () => {
     await timeout(10);
-    this.args.model.setProperties({
-      directors: this.directors,
-      administrators: this.administrators,
-      studentAdvisors: this.studentAdvisors,
-    });
+    const props = {};
+    if (this.modelHasAdministrators) {
+      props.administrators = this.administrators;
+    }
+    if (this.modelHasDirectors) {
+      props.directors = this.directors;
+    }
+    if (this.modelHasStudentAdvisors) {
+      props.studentAdvisors = this.studentAdvisors;
+    }
+
+    this.args.model.setProperties(props);
     this.args.expand();
     this.resetBuffers();
     await this.args.model.save();

@@ -41,15 +41,15 @@
       {{#if @isManaging}}
           <LeadershipManager
             @directors={{this.directors}}
-            @showDirectors={{true}}
+            @showDirectors={{this.modelHasDirectors}}
             @removeDirector={{this.removeDirector}}
             @addDirector={{this.addDirector}}
             @administrators={{this.administrators}}
-            @showAdministrators={{true}}
+            @showAdministrators={{this.modelHasAdministrators}}
             @removeAdministrator={{this.removeAdministrator}}
             @addAdministrator={{this.addAdministrator}}
             @studentAdvisors={{this.studentAdvisors}}
-            @showStudentAdvisors={{true}}
+            @showStudentAdvisors={{this.modelHasStudentAdvisors}}
             @removeStudentAdvisor={{this.removeStudentAdvisor}}
             @addStudentAdvisor={{this.addStudentAdvisor}}
           />
@@ -58,9 +58,9 @@
           @directors={{this.directors}}
           @administrators={{this.administrators}}
           @studentAdvisors={{this.studentAdvisors}}
-          @showAdministrators={{true}}
-          @showDirectors={{true}}
-          @showStudentAdvisors={{true}}
+          @showAdministrators={{this.modelHasAdministrators}}
+          @showDirectors={{this.modelHasDirectors}}
+          @showStudentAdvisors={{this.modelHasStudentAdvisors}}
         />
       {{/if}}
   </div>
