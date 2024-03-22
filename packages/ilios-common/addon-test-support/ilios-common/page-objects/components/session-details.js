@@ -7,7 +7,7 @@ import collapsedTaxonomies from './collapsed-taxonomies';
 import collapsedObjectives from './session/collapsed-objectives';
 import offeringForm from './offering-form';
 import leadershipCollapsed from './leadership-collapsed';
-import leadershipExpanded from './session/leadership-expanded';
+import leadershipExpanded from './leadership-expanded';
 import detailInstructors from './detail-instructors';
 import detailLearnersAndLearnerGroups from './detail-learners-and-learner-groups';
 import overview from './session-overview';

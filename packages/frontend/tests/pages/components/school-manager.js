@@ -1,5 +1,4 @@
 import { clickable, create, isPresent, fillable, text } from 'ember-cli-page-object';
-import schoolLeadershipExpanded from './school/leadership-expanded';
 import schoolCompetenciesExpanded from './school-competencies-expanded';
 import schoolCompetenciesCollapsed from './school-competencies-collapsed';
 import schoolVocabulariesExpanded from './school-vocabularies-expanded';
@@ -10,6 +9,7 @@ import schoolSessionAttributes from './school-session-attributes';
 import schoolCurriculumInventoryInstitutionManager from './school-curriculum-inventory-institution-manager';
 import schoolCurriculumInventoryInstitutionDetails from './school-curriculum-inventory-institution-details';
 import schoolLeadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
+import schoolLeadershipExpanded from 'ilios-common/page-objects/components/leadership-expanded';
 import emails from './school/emails';
 import emailsEditor from './school/emails-editor';
 

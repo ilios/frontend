@@ -2,7 +2,7 @@ import { clickable, create, text } from 'ember-cli-page-object';
 
 import header from './report-header';
 import overview from './report-overview';
-import leadershipExpanded from './leadership-expanded';
+import leadershipExpanded from 'ilios-common/page-objects/components/leadership-expanded';
 import leadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
 
 const definition = {

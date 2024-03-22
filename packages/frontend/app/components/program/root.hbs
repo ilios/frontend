@@ -7,8 +7,8 @@
   <Program::Header @program={{@program}} @canUpdate={{@canUpdate}} />
   <Program::Overview @program={{@program}} @canUpdate={{@canUpdate}} />
   {{#if @leadershipDetails}}
-    <Program::LeadershipExpanded
-      @program={{@program}}
+    <LeadershipExpanded
+      @model={{@program}}
       @editable={{@canUpdate}}
       @collapse={{fn @setLeadershipDetails false}}
       @expand={{fn @setLeadershipDetails true}}
