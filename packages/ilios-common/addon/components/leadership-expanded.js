@@ -60,7 +60,7 @@ export default class LeadershipExpandedComponent extends Component {
     if (!this.modelHasDirectors) {
       return [];
     }
-    const directors = this.modelDirectors.isResolved ? this.modelDirectors.value.slice() : [];
+    const directors = this.modelDirectors.isResolved ? this.modelDirectors.value : [];
     return [...directors, ...this.directorsToAdd].filter(
       (user) => !this.directorsToRemove.includes(user),
     );
@@ -72,7 +72,7 @@ export default class LeadershipExpandedComponent extends Component {
       return [];
     }
     const administrators = this.modelAdministrators.isResolved
-      ? this.modelAdministrators.value.slice()
+      ? this.modelAdministrators.value
       : [];
     return [...administrators, ...this.administratorsToAdd].filter(
       (user) => !this.administratorsToRemove.includes(user),
@@ -85,7 +85,7 @@ export default class LeadershipExpandedComponent extends Component {
       return [];
     }
     const studentAdvisors = this.modelStudentAdvisors.isResolved
-      ? this.modelStudentAdvisors.value.slice()
+      ? this.modelStudentAdvisors.value
       : [];
     return [...studentAdvisors, ...this.studentAdvisorsToAdd].filter(
       (user) => !this.studentAdvisorsToRemove.includes(user),
