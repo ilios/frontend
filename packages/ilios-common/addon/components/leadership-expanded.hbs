@@ -1,8 +1,8 @@
 <div
-  class="course-leadership-expanded"
-  data-test-course-leadership-expanded
+  class="leadership-expanded"
+  data-test-leadership-expanded
 >
-  <div class="course-leadership-expanded-header">
+  <div class="leadership-expanded-header">
     {{#if @isManaging}}
       <h3 class="title" data-test-title>
         {{t "general.leadership"}} ({{this.count}})
@@ -37,7 +37,7 @@
       {{/if}}
     </div>
   </div>
-  <div class="course-leadership-expanded-content">
+  <div class="leadership-expanded-content">
       {{#if @isManaging}}
           <LeadershipManager
             @directors={{this.directors}}

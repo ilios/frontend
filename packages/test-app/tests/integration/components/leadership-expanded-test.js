@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { component } from 'ilios-common/page-objects/components/course/leadership-expanded';
+import { component } from 'ilios-common/page-objects/components/leadership-expanded';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | course/leadership-expanded', function (hooks) {
+module('Integration | Component | leadership expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -20,8 +20,8 @@ module('Integration | Component | course/leadership-expanded', function (hooks) 
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<Course::LeadershipExpanded
-      @course={{this.course}}
+    await render(hbs`<LeadershipExpanded
+      @model={{this.course}}
       @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}
@@ -51,8 +51,8 @@ module('Integration | Component | course/leadership-expanded', function (hooks) 
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<Course::LeadershipExpanded
-      @course={{this.course}}
+    await render(hbs`<LeadershipExpanded
+      @model={{this.course}}
       @editable={{true}}
       @collapse={{this.click}}
       @expand={{(noop)}}
@@ -74,8 +74,8 @@ module('Integration | Component | course/leadership-expanded', function (hooks) 
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<Course::LeadershipExpanded
-      @course={{this.course}}
+    await render(hbs`<LeadershipExpanded
+      @model={{this.course}}
       @editable={{true}}
       @collapse={{this.click}}
       @expand={{(noop)}}
@@ -97,8 +97,8 @@ module('Integration | Component | course/leadership-expanded', function (hooks) 
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<Course::LeadershipExpanded
-      @course={{this.course}}
+    await render(hbs`<LeadershipExpanded
+      @model={{this.course}}
       @editable={{true}}
       @collapse={{this.click}}
       @expand={{(noop)}}
@@ -117,8 +117,8 @@ module('Integration | Component | course/leadership-expanded', function (hooks) 
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<Course::LeadershipExpanded
-      @course={{this.course}}
+    await render(hbs`<LeadershipExpanded
+      @model={{this.course}}
       @editable={{true}}
       @collapse={{(noop)}}
       @expand={{(noop)}}

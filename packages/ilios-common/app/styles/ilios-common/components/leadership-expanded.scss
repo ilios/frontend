@@ -1,10 +1,10 @@
-@use "../../colors" as c;
-@use "../../mixins" as m;
+@use "../colors" as c;
+@use "../mixins" as m;
 
-.course-leadership-expanded {
+.leadership-expanded {
   @include m.detail-container(c.$orange);
 
-  .course-leadership-expanded-header {
+  .leadership-expanded-header {
     @include m.detail-container-header;
 
     .title {
@@ -16,7 +16,7 @@
     }
   }
 
-  .course-leadership-expanded-content {
+  .leadership-expanded-content {
     @include m.detail-container-content;
   }
 }
