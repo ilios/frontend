@@ -1,7 +1,5 @@
 <div
   class="user-profile-calendar"
-  {{did-insert (perform this.load) @user this.date}}
-  {{did-update (perform this.load) @user this.date}}
   data-test-user-profile-calendar
 >
   <h2 class="title">
@@ -47,11 +45,7 @@
       @date={{this.date}}
       @areEventsSelectable={{false}}
       @areDaysSelectable={{false}}
+      @isLoadingEvents={{this.eventsData.isPending}}
     />
   </div>
-  <span class="loading-indicator {{if (is-array this.calendarEvents) "loaded"}}">
-    <LoadingSpinner />
-    {{t "general.loadingEvents"}}
-    ...
-  </span>
 </div>
