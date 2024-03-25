@@ -1,34 +1,49 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
-import { tracked } from '@glimmer/tracking';
+import { tracked, cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class UserProfileCalendar extends Component {
   @service fetch;
   @service iliosConfig;
   @service userEvents;
-  @tracked date = new Date();
-  @tracked calendarEvents;
+  @service localeDays;
 
-  load = dropTask(async () => {
-    //luxon weeks always stort on Monday to we have to adjust for that
-    const from = DateTime.fromJSDate(this.date).startOf('week').minus({ day: 1 }).toUnixInteger();
-    const to = DateTime.fromJSDate(this.date).endOf('week').minus({ day: 1 }).toUnixInteger();
+  @tracked date = new Date();
+
+  @cached
+  get eventsData() {
+    return new TrackedAsyncData(
+      this.loadEvents(this.date, this.iliosConfig.apiNameSpace, this.args.user.id),
+    );
+  }
+
+  get calendarEvents() {
+    if (this.eventsData.isResolved) {
+      return sortBy(
+        this.eventsData.value.map((obj) => this.userEvents.createEventFromData(obj, true)),
+        ['startDate', 'name'],
+      );
+    }
+    return [];
+  }
+
+  async loadEvents(date, apiNameSpace, userId) {
+    const from = DateTime.fromJSDate(this.localeDays.firstDayOfDateWeek(date)).toUnixInteger();
+    const to = DateTime.fromJSDate(this.localeDays.lastDayOfDateWeek(date)).toUnixInteger();
 
     let url = '';
-    if (this.iliosConfig.apiNameSpace) {
-      url += '/' + this.iliosConfig.apiNameSpace;
+    if (apiNameSpace) {
+      url += '/' + apiNameSpace;
     }
-    url += '/userevents/' + this.args.user.get('id') + '?from=' + from + '&to=' + to;
-    const data = await this.fetch.getJsonFromApiHost(url);
-    this.calendarEvents = sortBy(
-      data.userEvents.map((obj) => this.userEvents.createEventFromData(obj, true)),
-      ['startDate', 'name'],
-    );
-  });
+    url += '/userevents/' + userId + '?from=' + from + '&to=' + to;
+    const { userEvents } = await this.fetch.getJsonFromApiHost(url);
+
+    return userEvents;
+  }
 
   @action
   goForward() {
