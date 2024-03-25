@@ -34,11 +34,10 @@ jobs:
       - name: Create a Sentry.io release
         run: |
           # Create new Sentry release
-          export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-          sentry-cli releases new $SENTRY_RELEASE
-          sentry-cli releases set-commits --auto $SENTRY_RELEASE
-          sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps packages/frontend/tmp/deploy-dist/
-          sentry-cli releases finalize $SENTRY_RELEASE
+          sentry-cli releases new ${{github.ref_name}}
+          sentry-cli releases set-commits --auto ${{github.ref_name}}
+          sentry-cli releases files ${{github.ref_name}} upload-sourcemaps packages/frontend/tmp/deploy-dist/
+          sentry-cli releases finalize ${{github.ref_name}}
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       - uses: act10ns/slack@v2
