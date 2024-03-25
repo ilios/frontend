@@ -75,6 +75,7 @@ module('Integration | Helper | reverse', function (hooks) {
 
     assert.dom().hasText('bazbarfoo', 'array is reversed');
 
+    // eslint-disable-next-line ember/no-runloop
     run(() => array.removeAt(1));
 
     assert.dom().hasText('bazfoo', 'array is reversed');
