@@ -7,8 +7,8 @@
     @editable={{@editable}}
   />
   {{#if @sessionLeadershipDetails}}
-    <Session::LeadershipExpanded
-      @session={{@session}}
+    <LeadershipExpanded
+      @model={{@session}}
       @editable={{@editable}}
       @collapse={{fn @setSessionLeadershipDetails false}}
       @expand={{fn @setSessionLeadershipDetails true}}

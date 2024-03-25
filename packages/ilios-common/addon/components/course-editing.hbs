@@ -1,7 +1,7 @@
 <div>
   {{#if @courseLeadershipDetails}}
-    <Course::LeadershipExpanded
-      @course={{@course}}
+    <LeadershipExpanded
+      @model={{@course}}
       @editable={{@editable}}
       @collapse={{fn @setCourseLeadershipDetails false}}
       @expand={{fn @setCourseLeadershipDetails true}}

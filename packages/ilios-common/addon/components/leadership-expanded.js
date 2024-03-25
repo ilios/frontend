@@ -5,7 +5,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
-export default class CourseLeadershipExpandedComponent extends Component {
+export default class LeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];
   @tracked directorsToRemove = [];
   @tracked administratorsToAdd = [];
@@ -18,22 +18,49 @@ export default class CourseLeadershipExpandedComponent extends Component {
   }
 
   @cached
-  get courseDirectors() {
-    return new TrackedAsyncData(this.args.course.directors);
+  get modelHasDirectors() {
+    return 'directors' in this.args.model;
   }
 
   @cached
-  get courseAdministrators() {
-    return new TrackedAsyncData(this.args.course.administrators);
+  get modelHasAdministrators() {
+    return 'administrators' in this.args.model;
   }
 
   @cached
-  get courseStudentAdvisors() {
-    return new TrackedAsyncData(this.args.course.studentAdvisors);
+  get modelHasStudentAdvisors() {
+    return 'studentAdvisors' in this.args.model;
+  }
+
+  @cached
+  get modelDirectors() {
+    if (this.modelHasDirectors) {
+      return new TrackedAsyncData(this.args.model.directors);
+    }
+    return null;
+  }
+
+  @cached
+  get modelAdministrators() {
+    if (this.modelHasAdministrators) {
+      return new TrackedAsyncData(this.args.model.administrators);
+    }
+    return null;
+  }
+
+  @cached
+  get modelStudentAdvisors() {
+    if (this.modelHasStudentAdvisors) {
+      return new TrackedAsyncData(this.args.model.studentAdvisors);
+    }
+    return null;
   }
 
   get directors() {
-    const directors = this.courseDirectors.isResolved ? this.courseDirectors.value.slice() : [];
+    if (!this.modelHasDirectors) {
+      return [];
+    }
+    const directors = this.modelDirectors.isResolved ? this.modelDirectors.value : [];
     return [...directors, ...this.directorsToAdd].filter(
       (user) => !this.directorsToRemove.includes(user),
     );
@@ -41,8 +68,11 @@ export default class CourseLeadershipExpandedComponent extends Component {
 
   @cached
   get administrators() {
-    const administrators = this.courseAdministrators.isResolved
-      ? this.courseAdministrators.value.slice()
+    if (!this.modelHasAdministrators) {
+      return [];
+    }
+    const administrators = this.modelAdministrators.isResolved
+      ? this.modelAdministrators.value
       : [];
     return [...administrators, ...this.administratorsToAdd].filter(
       (user) => !this.administratorsToRemove.includes(user),
@@ -51,8 +81,11 @@ export default class CourseLeadershipExpandedComponent extends Component {
 
   @cached
   get studentAdvisors() {
-    const studentAdvisors = this.courseStudentAdvisors.isResolved
-      ? this.courseStudentAdvisors.value.slice()
+    if (!this.modelHasStudentAdvisors) {
+      return [];
+    }
+    const studentAdvisors = this.modelStudentAdvisors.isResolved
+      ? this.modelStudentAdvisors.value
       : [];
     return [...studentAdvisors, ...this.studentAdvisorsToAdd].filter(
       (user) => !this.studentAdvisorsToRemove.includes(user),
@@ -112,14 +145,21 @@ export default class CourseLeadershipExpandedComponent extends Component {
 
   save = dropTask(async () => {
     await timeout(10);
-    this.args.course.setProperties({
-      directors: this.directors,
-      administrators: this.administrators,
-      studentAdvisors: this.studentAdvisors,
-    });
+    const props = {};
+    if (this.modelHasAdministrators) {
+      props.administrators = this.administrators;
+    }
+    if (this.modelHasDirectors) {
+      props.directors = this.directors;
+    }
+    if (this.modelHasStudentAdvisors) {
+      props.studentAdvisors = this.studentAdvisors;
+    }
+
+    this.args.model.setProperties(props);
     this.args.expand();
     this.resetBuffers();
-    await this.args.course.save();
+    await this.args.model.save();
     this.args.setIsManaging(false);
   });
 }

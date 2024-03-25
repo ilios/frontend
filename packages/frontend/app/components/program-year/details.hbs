@@ -1,7 +1,7 @@
 <div class="programyear-details" data-test-program-year-details ...attributes>
   {{#if @programYearLeadershipDetails}}
-    <ProgramYear::LeadershipExpanded
-      @programYear={{@programYear}}
+    <LeadershipExpanded
+      @model={{@programYear}}
       @editable={{@canUpdate}}
       @collapse={{fn @setProgramYearLeadershipDetails false}}
       @expand={{fn @setProgramYearLeadershipDetails true}}

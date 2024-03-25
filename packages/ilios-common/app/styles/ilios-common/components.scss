@@ -10,7 +10,6 @@
 @import "components/common-dashboard";
 @import "components/course-details";
 @import "components/course-header";
-@import "components/course/leadership-expanded";
 @import "components/course-loading";
 @import "components/course-materials";
 @import "components/course-overview";
@@ -58,6 +57,7 @@
 @import "components/ilios-tooltip";
 @import "components/instructor-selection-manager";
 @import "components/leadership-collapsed";
+@import "components/leadership-expanded";
 @import "components/leadership-list";
 @import "components/leadership-manager";
 @import "components/leadership-search";
@@ -147,7 +147,6 @@
 
 @import "components/session/collapsed-objectives";
 @import "components/session/objectives";
-@import "components/session/leadership-expanded";
 @import "components/session/manage-objective-descriptors";
 @import "components/session/manage-objective-parents";
 @import "components/session/objective-list-item-descriptors";

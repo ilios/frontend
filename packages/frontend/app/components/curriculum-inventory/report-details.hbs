@@ -36,8 +36,8 @@
     @canUpdate={{this.canUpdate}}
   />
   {{#if @leadershipDetails}}
-    <CurriculumInventory::LeadershipExpanded
-      @report={{@report}}
+    <LeadershipExpanded
+      @model={{@report}}
       @editable={{this.canUpdate}}
       @collapse={{fn @setLeadershipDetails false}}
       @expand={{fn @setLeadershipDetails true}}
