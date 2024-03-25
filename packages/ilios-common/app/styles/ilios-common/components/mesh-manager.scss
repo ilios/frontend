@@ -72,6 +72,8 @@
   }
 
   .mesh-search {
+    padding-bottom: 0.5rem;
+
     input[type="search"] {
       @include m.ilios-input;
     }
