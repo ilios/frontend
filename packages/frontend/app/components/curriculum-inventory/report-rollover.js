@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import scrollIntoView from 'scroll-into-view';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
@@ -55,6 +56,11 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     this.name = this.args.report.name;
     this.description = this.args.report.description;
   });
+
+  @action
+  scrollTo(element) {
+    scrollIntoView(element);
+  }
 
   @action
   changeName(newName) {
