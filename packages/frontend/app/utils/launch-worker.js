@@ -2,7 +2,12 @@ import config from 'frontend/config/environment';
 import { isTesting } from '@embroider/macros';
 
 export async function launchWorker() {
-  if (isTesting() || config.disableServiceWorker || navigator.serviceWorker.controller) {
+  if (
+    isTesting() ||
+    config.disableServiceWorker ||
+    !('serviceWorker' in navigator) ||
+    navigator.serviceWorker.controller
+  ) {
     return true;
   }
 
