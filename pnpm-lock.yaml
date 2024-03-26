@@ -115,8 +115,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       ember-cli-code-coverage:
-        specifier: ^v2.1.1
-        version: 2.1.1(@embroider/compat@3.4.6)(@embroider/core@3.4.6)
+        specifier: ^v2.1.2
+        version: 2.1.2(@embroider/compat@3.4.6)(@embroider/core@3.4.6)
       ember-cli-dependency-checker:
         specifier: ^3.3.2
         version: 3.3.2(ember-cli@5.6.0)
@@ -8323,8 +8323,8 @@ packages:
       - supports-color
     dev: true
 
-  /ember-cli-code-coverage@2.1.1(@embroider/compat@3.4.6)(@embroider/core@3.4.6):
-    resolution: {integrity: sha512-WP/XdyvtHMzg/WWPJvmC+FXgLRwCLOu9N0WZINTKQSXoYHxcFjLpQFH4Yw+jUmX2iFa5H9yUKKxNIXWY9FwGiw==}
+  /ember-cli-code-coverage@2.1.2(@embroider/compat@3.4.6)(@embroider/core@3.4.6):
+    resolution: {integrity: sha512-4DpMv6SiGbAHNcfvSk0k/ybogd0iiUEgMdVxnb7t0+ITpLA7G6+bjGpd8W8ImoINcKdhSbP6Zl78WlWo/8XcDg==}
     engines: {node: 14.* || 16.* || >= 18}
     peerDependencies:
       '@embroider/compat': ^0.47.0 || ^1.0.0 || ^2.0.0 || >=3.0.0
