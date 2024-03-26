@@ -33,7 +33,7 @@
           class="bigadd"
           type="button"
           {{on "click" (perform this.save)}}
-          {{did-insert this.scrollHere}}
+          {{scroll-into-view}}
         >
           <FaIcon
             @icon={{if this.save.isRunning "spinner" "check"}}

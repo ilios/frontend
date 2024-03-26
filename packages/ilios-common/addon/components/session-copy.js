@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { hash, all, filter } from 'rsvp';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
-import scrollIntoView from 'scroll-into-view';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
@@ -70,11 +69,6 @@ export default class SessionCopyComponent extends Component {
     }
 
     return this.courses[0];
-  }
-
-  @action
-  scrollTo(element) {
-    scrollIntoView(element, { align: { top: 0 } });
   }
 
   @action

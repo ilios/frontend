@@ -6,7 +6,7 @@ import { validatable, Length, NotBlank } from 'ilios-common/decorators/validatio
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { filterBy, mapBy } from 'ilios-common/utils/array-helpers';
-import scrollIntoView from 'scroll-into-view';
+
 @validatable
 export default class CourseRolloverComponent extends Component {
   @service fetch;
@@ -123,10 +123,5 @@ export default class CourseRolloverComponent extends Component {
       weekNumber: from.weekNumber,
       weekday: from.weekday,
     }).toJSDate();
-  }
-
-  @action
-  scrollTo(element) {
-    scrollIntoView(element, { align: { top: 0 } });
   }
 }

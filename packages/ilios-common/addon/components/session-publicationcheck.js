@@ -3,7 +3,6 @@ import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import scrollIntoView from 'scroll-into-view';
 
 export default class SessionPublicationCheckComponent extends Component {
   @service router;
@@ -50,11 +49,6 @@ export default class SessionPublicationCheckComponent extends Component {
     });
 
     return objectivesWithoutParents.length > 0;
-  }
-
-  @action
-  scrollTo(element) {
-    scrollIntoView(element, { align: { top: 0 } });
   }
 
   @action
