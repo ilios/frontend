@@ -41,6 +41,7 @@ export function pageObjectFroalaEditorValue(selector, options = {}) {
 function getEditorInstance(element) {
   return new Promise((resolve) => {
     loadFroalaEditor().then(({ FroalaEditor }) => {
+      // eslint-disable-next-line ember/no-runloop
       later(() => {
         const { INSTANCES } = FroalaEditor;
         const ourInstance = INSTANCES.find((instance) => {
