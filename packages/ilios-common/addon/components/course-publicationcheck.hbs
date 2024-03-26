@@ -1,7 +1,7 @@
 <div
   class="course-publicationcheck"
   data-test-course-publicationcheck
-  {{scroll-into-view}}
+  {{did-insert this.scrollTo}}
 >
   <LinkTo @route="course" @model={{@course}} data-test-back-to-course>
     {{t "general.backToTitle" title=@course.title}}

@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import scrollIntoView from 'scroll-into-view';
 
 export default class SessionDetailsComponent extends Component {
   @cached
@@ -19,5 +21,10 @@ export default class SessionDetailsComponent extends Component {
 
   get cohorts() {
     return this.cohortsData.isResolved ? this.cohortsData.value : null;
+  }
+
+  @action
+  scrollTo(element) {
+    scrollIntoView(element, { align: { top: 0 } });
   }
 }

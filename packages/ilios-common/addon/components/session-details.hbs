@@ -1,3 +1,9 @@
+<div class="back-to-session" {{did-insert this.scrollTo}}>
+  <LinkTo @route="course" @model={{@session.course}} data-test-back-to-sessions>
+    {{t "general.backToSessionList"}}
+  </LinkTo>
+</div>
+
 <section
   class="session-details"
   data-test-session-details

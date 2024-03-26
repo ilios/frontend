@@ -17,7 +17,7 @@
       {{t "general.backToTitle" title=@session.title}}
     </LinkTo>
   </div>
-  <div class="results" {{scroll-into-view}}>
+  <div class="results" {{did-insert this.scrollTo}}>
     <div class="title" data-test-title>
       {{t "general.missingItems"}} ({{@session.allPublicationIssuesLength}})
     </div>
