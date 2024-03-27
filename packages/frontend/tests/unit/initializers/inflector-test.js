@@ -22,6 +22,7 @@ module('Unit | Initializer | inflector', function (hooks) {
   });
 
   hooks.afterEach(function () {
+    // eslint-disable-next-line ember/no-runloop
     run(this.application, 'destroy');
   });
 

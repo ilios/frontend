@@ -57,6 +57,7 @@ export default class UserMenuComponent extends Component {
       if (item.nextElementSibling) {
         item.nextElementSibling.querySelector('a').focus();
       } else {
+        // eslint-disable-next-line ember/no-runloop
         schedule('afterRender', () => {
           this.element.querySelector('.menu li:nth-of-type(1) a').focus();
         });

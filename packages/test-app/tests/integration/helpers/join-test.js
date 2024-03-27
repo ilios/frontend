@@ -25,6 +25,7 @@ module('Integration | Helper | join', function (hooks) {
     await render(hbs`{{join ", " this.array}}
 `);
 
+    // eslint-disable-next-line ember/no-runloop
     run(() => array.pushObject('quux'));
 
     assert.dom().hasText('foo, bar, baz, quux', 'quux was added');

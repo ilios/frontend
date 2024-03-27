@@ -55,6 +55,7 @@ module('Integration | Helper | includes', function (hooks) {
 
     assert.dom().hasText('false', 'should render false');
 
+    // eslint-disable-next-line ember/no-runloop
     run(() => this.set('selectedGame', games[1]));
 
     assert.dom().hasText('true', 'should render true');

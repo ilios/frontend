@@ -1,7 +1,7 @@
 <div
   class="week-glance"
   data-test-week-glance
-  {{did-insert this.scrollOnLoad}}
+  {{scroll-into-view disabled=(not-eq @week @weekInFocus)}}
 >
   {{#if @collapsible}}
     <button

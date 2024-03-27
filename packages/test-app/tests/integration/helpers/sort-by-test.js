@@ -150,7 +150,7 @@ module('Integration | Helper | sort-by', function (hooks) {
       {{~/each~}}
 
 `);
-
+    // eslint-disable-next-line ember/no-runloop
     run(() => array.pushObject({ name: 'c' }));
 
     assert.dom().hasText('abcd', 'list is still sorted after addition');

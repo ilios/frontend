@@ -4,10 +4,9 @@ import { dropTask } from 'ember-concurrency';
 import flatpickr from 'flatpickr';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { later } from '@ember/runloop';
+import { later, next } from '@ember/runloop';
 import { isTesting } from '@embroider/macros';
 import { DateTime } from 'luxon';
-import { next } from '@ember/runloop';
 
 export default class CourseRolloverDatePickerComponent extends Component {
   @service intl;
@@ -46,6 +45,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
       minDate: course.startDate,
       onChange: ([selectedDate]) => this.onChange(selectedDate),
       onOpen: () => {
+        // eslint-disable-next-line ember/no-runloop
         later(() => {
           this.isOpen = true;
         }, 250);
@@ -82,6 +82,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
       date = this.args.course.startDate;
     }
     await this.args.onChange(date);
+    // eslint-disable-next-line ember/no-runloop
     await next(() => {});
   }
 }

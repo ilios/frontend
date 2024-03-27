@@ -1,8 +1,3 @@
-<div class="backtolink backtosessionlink" {{scroll-into-view}}>
-  <LinkTo @route="course" @model={{@model.course}} data-test-back-to-sessions>
-    {{t "general.backToSessionList"}}
-  </LinkTo>
-</div>
 <SessionDetails
   @session={{@model}}
   @editable={{this.canUpdate}}

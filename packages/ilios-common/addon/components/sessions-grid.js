@@ -164,6 +164,7 @@ export default class SessionsGrid extends Component {
   @action
   scrollDown() {
     const position = this.preserveScroll.getPosition('session-list');
+    // eslint-disable-next-line ember/no-runloop
     next(() => {
       if (position) {
         window.scroll(0, position);

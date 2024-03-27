@@ -4,9 +4,10 @@
         <button
           class="link-button"
           type="button"
+          disabled={{this.expandAll.isRunning}}
           {{on "click" (perform this.expandAll)}}
         >
-          {{#if this.isExpanding}}
+          {{#if this.expandAll.isRunning}}
             <LoadingSpinner />
           {{else if @allSessionsExpanded}}
             <FaIcon @icon="caret-down" class="clickable" />

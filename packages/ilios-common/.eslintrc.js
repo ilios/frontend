@@ -18,7 +18,6 @@ module.exports = {
   },
   rules: {
     'ember/no-get': 0,
-    'ember/no-runloop': 0,
   },
   overrides: [
     // node files
