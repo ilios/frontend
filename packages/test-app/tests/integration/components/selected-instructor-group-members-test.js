@@ -36,10 +36,7 @@ module('Integration | Component | selected-instructor-group-members', function (
 
   test('it renders', async function (assert) {
     this.set('instructorGroup', this.instructorGroup);
-    await render(
-      hbs`<SelectedInstructorGroupMembers @instructorGroup={{this.instructorGroup}} />
-`,
-    );
+    await render(hbs`<SelectedInstructorGroupMembers @instructorGroup={{this.instructorGroup}} />`);
     assert.strictEqual(component.members.length, 3);
     assert.strictEqual(component.members[0].userNameInfo.fullName, 'Clem Chowder');
     assert.ok(component.members[0].userNameInfo.hasAdditionalInfo);
@@ -47,7 +44,7 @@ module('Integration | Component | selected-instructor-group-members', function (
     assert.notOk(component.members[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.members[2].userNameInfo.fullName, 'Joe M. Doe');
     assert.notOk(component.members[2].userNameInfo.hasAdditionalInfo);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 });

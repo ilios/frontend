@@ -26,7 +26,7 @@ module('Integration | Component | click choice buttons', function (hooks) {
     );
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
@@ -46,7 +46,7 @@ module('Integration | Component | click choice buttons', function (hooks) {
     );
     assert.notOk(component.firstButton.isActive);
     assert.ok(component.secondButton.isActive);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 

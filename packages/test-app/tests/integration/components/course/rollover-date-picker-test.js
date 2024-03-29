@@ -20,7 +20,7 @@ module('Integration | Component | course/rollover-date-picker', function (hooks)
     this.set('course', courseModel);
     await render(hbs`<Course::RolloverDatePicker @course={{this.course}} @onChange={{(noop)}} />`);
     assert.dom('input').hasValue('5/6/2019');
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 

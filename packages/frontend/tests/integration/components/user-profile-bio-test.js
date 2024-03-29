@@ -151,7 +151,7 @@ module('Integration | Component | user profile bio', function (hooks) {
       hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`,
     );
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
     assert.strictEqual(updates.length, 2);
     assert.strictEqual(component.firstName.value, 'Test Person');
@@ -205,7 +205,7 @@ module('Integration | Component | user profile bio', function (hooks) {
       hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`,
     );
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
     assert.strictEqual(component.firstName.value, 'Test Person');
     assert.strictEqual(component.middleName.value, 'Name');
@@ -256,7 +256,7 @@ module('Integration | Component | user profile bio', function (hooks) {
       hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`,
     );
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
     assert.strictEqual(component.firstName.value, 'Test Person');
     assert.strictEqual(component.middleName.value, 'Name');

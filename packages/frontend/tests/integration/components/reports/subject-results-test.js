@@ -43,7 +43,7 @@ module('Integration | Component | reports/subject-results', function (hooks) {
     assert.strictEqual(component.results.length, 1);
     assert.strictEqual(component.results[0].text, '2013 course 0');
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 });

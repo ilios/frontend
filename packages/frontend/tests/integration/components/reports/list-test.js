@@ -40,7 +40,7 @@ module('Integration | Component | reports/list', function (hooks) {
     assert.strictEqual(component.table.reports[0].title, 'All Courses in All Schools');
     assert.strictEqual(component.table.reports[1].title, 'All Sessions in All Schools');
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 

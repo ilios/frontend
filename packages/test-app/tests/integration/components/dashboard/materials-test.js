@@ -239,7 +239,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       component.table.rows[4].firstOfferingDate,
       this.tomorrow.toFormat('M/d/yyyy'),
     );
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 

@@ -37,7 +37,7 @@ module('Integration | Component | reports/table-row', function (hooks) {
     />`);
 
     assert.strictEqual(component.title, 'this report');
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 });
