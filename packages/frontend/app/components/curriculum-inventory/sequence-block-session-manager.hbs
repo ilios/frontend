@@ -83,20 +83,20 @@
               {{#let (unique-id) as |sessionTitleLabelId|}}
                 <tr>
                   <td class="text-center" colspan="2">
-                    <Input
-                      @type="checkbox"
-                      @checked={{includes session this.linkedSessions}}
+                    <input
+                      type="checkbox"
+                      checked={{includes session this.linkedSessions}}
                       aria-labelledby={{concat countAsOneLabelId " " sessionTitleLabelId}}
                       {{on "change" (fn this.changeSession session)}}
-                    />
+                    >
                   </td>
                   <td class="text-center" colspan="2">
-                    <Input
-                      @type="checkbox"
-                      @checked={{includes session this.excludedSessions}}
+                    <input
+                      type="checkbox"
+                      checked={{includes session this.excludedSessions}}
                       aria-labelledby={{concat excludedLabelId " " sessionTitleLabelId}}
                       {{on "change" (fn this.excludeSession session)}}
-                    />
+                    >
                   </td>
                   <td class="text-left" colspan="3">
                     <label id={{sessionTitleLabelId}}>

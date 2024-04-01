@@ -47,13 +47,14 @@
                 @saveOnEnter={{true}}
                 @closeOnEscape={{true}} as |isSaving|
               >
-                <Input
+                <input
                   id="location-{{templateId}}"
-                  @type="text"
-                  @value={{this.location}}
+                  type="text"
+                  value={{this.location}}
                   disabled={{isSaving}}
+                  {{on "input" (pick "target.value" (set this.location))}}
                   {{on "keyup" (fn this.addErrorDisplayFor "location")}}
-                />
+                >
                 <ValidationError @errors={{get-errors-for this.location}} />
               </EditableField>
             {{else if this.location}}

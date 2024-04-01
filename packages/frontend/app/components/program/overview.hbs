@@ -23,13 +23,14 @@
             @clickPrompt={{t "general.clickToEdit"}}
             @closeOnEscape={{true}} as |isSaving|
           >
-            <Input
+            <input
               id={{concat this.id "short-title"}}
-              @type="text"
-              @value={{this.shortTitle}}
+              type="text"
+              value={{this.shortTitle}}
+              {{on "input" (pick "target.value" (set this.shortTitle))}}
               {{on "keypress" (fn this.addErrorDisplayFor "shortTitle")}}
               disabled={{isSaving}}
-            />
+            >
           </EditableField>
           <ValidationError @errors={{get-errors-for this.shortTitle}} />
         {{else}}

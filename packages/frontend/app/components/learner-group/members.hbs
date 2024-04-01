@@ -5,12 +5,14 @@
   >
     {{#if this.usersInGroup.length}}
       <div class="actions">
-        <Input
-          @value={{this.filter}}
+        <input
+          type="text"
+          value={{this.filter}}
           placeholder={{t "general.filterByNameOrEmail"}}
           aria-label={{t "general.filterByNameOrEmail"}}
+          {{on "input" (pick "target.value" (set this.filter))}}
           data-test-filter
-        />
+        >
       </div>
       <div class="learner-group-members-content">
         <div class="list">

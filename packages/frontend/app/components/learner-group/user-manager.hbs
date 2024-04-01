@@ -2,12 +2,14 @@
   <div class="learner-group-user-manager" data-test-learner-group-user-manager ...attributes>
     {{#if @users.length}}
       <div class="actions">
-        <Input
-          @value={{this.filter}}
+        <input
+          type="text"
+          value={{this.filter}}
           placeholder={{t "general.filterByNameOrEmail"}}
           aria-label={{t "general.filterByNameOrEmail"}}
+          {{on "input" (pick "target.value" (set this.filter))}}
           data-test-filter
-        />
+        >
       </div>
       <div class="learner-group-user-manager-content">
         <div class="list">
