@@ -71,7 +71,7 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
     assert.ok(component.detailLearnergroupsList.trees[0].items[1].isRemovable);
     assert.ok(component.detailLearnergroupsList.trees[0].items[2].isRemovable);
     assert.ok(component.detailLearnergroupsList.trees[0].items[3].isRemovable);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
@@ -94,7 +94,7 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
     assert.notOk(component.detailLearnergroupsList.trees[0].items[1].isRemovable);
     assert.notOk(component.detailLearnergroupsList.trees[0].items[2].isRemovable);
     assert.notOk(component.detailLearnergroupsList.trees[0].items[3].isRemovable);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 

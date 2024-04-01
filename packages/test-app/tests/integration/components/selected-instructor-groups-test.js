@@ -78,7 +78,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     assert.ok(component.instructorGroups[2].isRemovable);
     assert.strictEqual(component.instructorGroups[2].members.members.length, 0);
     assert.notOk(component.noGroups.isVisible);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
@@ -115,7 +115,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     assert.notOk(component.instructorGroups[2].isRemovable);
     assert.strictEqual(component.instructorGroups[2].members.members.length, 0);
     assert.notOk(component.noGroups.isVisible);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
@@ -126,7 +126,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
     assert.strictEqual(component.heading, 'Selected Instructor Groups:');
     assert.strictEqual(component.instructorGroups.length, 0);
     assert.strictEqual(component.noGroups.text, 'None');
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 

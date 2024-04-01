@@ -38,7 +38,7 @@ module('Integration | Component | new directory user', function (hooks) {
 
   test('it renders and is accessible', async function (assert) {
     await render(hbs`<NewDirectoryUser @close={{(noop)}} @setSearchTerms={{(noop)}} />`);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found.');
   });
 

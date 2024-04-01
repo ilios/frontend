@@ -51,7 +51,7 @@ module('Integration | Component | reports/table', function (hooks) {
 
     assert.strictEqual(component.reports.length, 2);
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 });

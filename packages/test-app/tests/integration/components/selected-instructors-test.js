@@ -44,7 +44,7 @@ module('Integration | Component | selected-instructors', function (hooks) {
 `);
     assert.strictEqual(component.heading, 'Selected Instructors:');
     assert.strictEqual(component.instructors.length, 3);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 

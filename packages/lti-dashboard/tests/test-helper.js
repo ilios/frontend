@@ -6,6 +6,7 @@ import { setup } from 'qunit-dom';
 import { start } from 'ember-qunit';
 import DefaultAdapter from 'ember-cli-page-object/adapters/rfc268';
 import { setAdapter } from 'ember-cli-page-object/adapters';
+import 'qunit-theme-ember/qunit.css';
 
 setAdapter(new DefaultAdapter());
 setApplication(Application.create(config.APP));

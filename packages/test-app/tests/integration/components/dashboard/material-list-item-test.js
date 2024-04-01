@@ -50,7 +50,7 @@ module('Integration | Component | dashboard/material-list-item', function (hooks
       }),
     );
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 });

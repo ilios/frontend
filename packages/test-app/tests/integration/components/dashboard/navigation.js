@@ -19,7 +19,7 @@ module('Integration | Component | dashboard/navigation', function (hooks) {
     assert.strictEqual(component.materials.linkTarget, '/dashboard/materials');
     assert.strictEqual(component.week.text, 'Week at a Glance');
     assert.strictEqual(component.week.linkTarget, '/dashboard/week');
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 });

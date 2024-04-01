@@ -38,7 +38,7 @@ module('Integration | Component | selected-learners', function (hooks) {
 `);
     assert.strictEqual(component.heading, 'Selected Learners:');
     assert.strictEqual(component.learners.length, 3);
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 

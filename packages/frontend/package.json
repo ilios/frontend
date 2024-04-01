@@ -112,6 +112,7 @@
     "query-string": "^9.0.0",
     "qunit": "^2.20.0",
     "qunit-dom": "^2.0.0",
+    "qunit-theme-ember": "^0.2.0",
     "sass": "^1.72.0",
     "scroll-into-view": "^1.16.2",
     "striptags": "^3.2.0",

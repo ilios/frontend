@@ -72,7 +72,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.sessions.instructors.length, 0);
     assert.strictEqual(component.sessions.studentAdvisors.length, 0);
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
@@ -180,7 +180,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.programs.ariaLabel, 'Hide roles in programs');
     assert.strictEqual(component.programs.directors.length, 1);
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
@@ -219,7 +219,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.programYears.ariaLabel, 'Hide roles in program years');
     assert.strictEqual(component.programYears.directors.length, 1);
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
@@ -304,7 +304,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.courses.instructors.length, 1);
     assert.strictEqual(component.courses.studentAdvisors.length, 1);
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
@@ -376,7 +376,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.sessions.instructors.length, 1);
     assert.strictEqual(component.sessions.studentAdvisors.length, 1);
 
-    await a11yAudit();
+    await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
