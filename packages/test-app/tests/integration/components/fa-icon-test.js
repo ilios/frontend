@@ -62,7 +62,7 @@ module('Integration | Component | fa-icon', function (hooks) {
   });
 
   test('it should change the focusable attribute to true', async function (assert) {
-    await render(hbs`<FaIcon @icon="coffee" focusable={{"true"}} />`);
+    await render(hbs`<FaIcon @icon="coffee" focusable="true" />`);
     assert.dom('svg').hasAttribute('focusable', 'true');
   });
 
