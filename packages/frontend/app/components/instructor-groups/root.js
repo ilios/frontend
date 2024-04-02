@@ -1,17 +1,15 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { findById } from 'ilios-common/utils/array-helpers';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
 import { dropTask } from 'ember-concurrency';
 
 export default class InstructorGroupsRootComponent extends Component {
   @service currentUser;
   @service store;
   @service dataLoader;
+  @service permissionChecker;
   @tracked showNewInstructorGroupForm = false;
   @tracked newInstructorGroup;
   @tracked instructorGroupPromises = new Map();
@@ -22,14 +20,24 @@ export default class InstructorGroupsRootComponent extends Component {
     return this.userModel.isResolved ? this.userModel.value : null;
   }
 
-  @use canCreate = new PermissionChecker(() => [
-    'canCreateInstructorGroup',
-    this.bestSelectedSchool,
-  ]);
+  @cached
+  get canCreateData() {
+    return new TrackedAsyncData(
+      this.bestSelectedSchool
+        ? this.permissionChecker.canCreateInstructorGroup(this.bestSelectedSchool)
+        : new Promise((resolve) => {
+            resolve(() => false);
+          }),
+    );
+  }
 
   @cached
   get loadedSchoolData() {
     return new TrackedAsyncData(this.getSchoolPromise(this.bestSelectedSchool.id));
+  }
+
+  get canCreate() {
+    return this.canCreateData.isResolved ? this.canCreateData.value : false;
   }
 
   get loadedSchool() {

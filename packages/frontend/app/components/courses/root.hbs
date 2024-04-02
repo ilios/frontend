@@ -56,7 +56,7 @@
         ({{this.filteredCourses.length}})
       </h2>
       <div class="actions">
-        {{#if this.canCreateCourse}}
+        {{#if this.canCreate}}
           <ExpandCollapseButton
             @value={{this.showNewCourseForm}}
             @action={{set this.showNewCourseForm (not this.showNewCourseForm)}}

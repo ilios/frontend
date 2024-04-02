@@ -1,15 +1,13 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
 
 export default class ProgramRootComponent extends Component {
   @service currentUser;
+  @service permissionChecker;
   @tracked selectedSchoolId;
   @tracked showNewProgramForm = false;
   @tracked newProgram;
@@ -20,11 +18,24 @@ export default class ProgramRootComponent extends Component {
     return this.userModel.isResolved ? this.userModel.value : null;
   }
 
-  @use canCreate = new PermissionChecker(() => ['canCreateProgram', this.bestSelectedSchool]);
+  @cached
+  get canCreateData() {
+    return new TrackedAsyncData(
+      this.bestSelectedSchool
+        ? this.permissionChecker.canCreateProgram(this.bestSelectedSchool)
+        : new Promise((resolve) => {
+            resolve(() => false);
+          }),
+    );
+  }
 
   @cached
   get programsData() {
     return new TrackedAsyncData(this.bestSelectedSchool.programs);
+  }
+
+  get canCreate() {
+    return this.canCreateData.isResolved ? this.canCreateData.value : false;
   }
 
   get programs() {

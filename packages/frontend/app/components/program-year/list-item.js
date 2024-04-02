@@ -1,9 +1,6 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
-import { use } from 'ember-could-get-used-to-this';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 
@@ -12,6 +9,21 @@ export default class ProgramYearListItemComponent extends Component {
   @service currentUser;
 
   @tracked showRemoveConfirmation = false;
+
+  @cached
+  get canLockData() {
+    return new TrackedAsyncData(this.permissionChecker.canLockProgramYear(this.args.programYear));
+  }
+
+  @cached
+  get canUnlockData() {
+    return new TrackedAsyncData(this.permissionChecker.canUnlockProgramYear(this.args.programYear));
+  }
+
+  @cached
+  get canDeleteData() {
+    return new TrackedAsyncData(this.permissionChecker.canDeleteProgramYear(this.args.programYear));
+  }
 
   @cached
   get programData() {
@@ -31,12 +43,13 @@ export default class ProgramYearListItemComponent extends Component {
     return this.cohortData.isResolved ? this.cohortData.value : null;
   }
 
-  @use canDeletePermission = new PermissionChecker(() => [
-    'canDeleteProgramYear',
-    this.args.programYear,
-  ]);
-  @use canLock = new PermissionChecker(() => ['canLockProgramYear', this.args.programYear]);
-  @use canUnlock = new PermissionChecker(() => ['canUnlockProgramYear', this.args.programYear]);
+  get canLock() {
+    return this.canLockData.isResolved ? this.canLockData.value : false;
+  }
+
+  get canUnlock() {
+    return this.canUnlockData.isResolved ? this.canUnlockData.value : false;
+  }
 
   get canDelete() {
     if (!this.cohort) {
@@ -48,7 +61,7 @@ export default class ProgramYearListItemComponent extends Component {
       return false;
     }
 
-    return this.canDeletePermission;
+    return this.canDeleteData.isResolved ? this.canDeleteData.value : false;
   }
 
   get classOfYear() {

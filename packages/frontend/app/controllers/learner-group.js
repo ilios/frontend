@@ -1,7 +1,5 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
@@ -14,8 +12,23 @@ export default class LearnerGroupController extends Controller {
   @tracked isBulkAssigning = false;
   @tracked sortUsersBy = 'fullName';
 
-  @use canUpdate = new PermissionChecker(() => ['canUpdateLearnerGroup', this.model]);
-  @use canDelete = new PermissionChecker(() => ['canDeleteLearnerGroup', this.model]);
+  @cached
+  get canDeleteData() {
+    return new TrackedAsyncData(this.permissionChecker.canDeleteLearnerGroup(this.model));
+  }
+
+  get canDelete() {
+    return this.canDeleteData.isResolved ? this.canDeleteData.value : false;
+  }
+
+  @cached
+  get canUpdateData() {
+    return new TrackedAsyncData(this.permissionChecker.canUpdateLearnerGroup(this.model));
+  }
+
+  get canUpdate() {
+    return this.canUpdateData.isResolved ? this.canUpdateData.value : false;
+  }
 
   @cached
   get canCreateData() {

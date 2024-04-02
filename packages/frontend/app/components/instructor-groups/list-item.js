@@ -1,18 +1,19 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
-import { use } from 'ember-could-get-used-to-this';
+import { cached, tracked } from '@glimmer/tracking';
+import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 export default class InstructorGroupsListItemComponent extends Component {
+  @service permissionChecker;
   @tracked showRemoveConfirmation = false;
 
-  @use canDeletePermission = new PermissionChecker(() => [
-    'canDeleteInstructorGroup',
-    this.args.instructorGroup,
-  ]);
+  @cached
+  get canDeleteData() {
+    return new TrackedAsyncData(
+      this.permissionChecker.canDeleteInstructorGroup(this.args.instructorGroup),
+    );
+  }
 
   @cached
   get coursesData() {
@@ -24,7 +25,9 @@ export default class InstructorGroupsListItemComponent extends Component {
   }
 
   get canDelete() {
-    return this.canDeletePermission && this.courses && this.courses.length === 0;
+    return this.canDeleteData.isResolved
+      ? this.canDeleteData.value && this.courses && this.courses.length === 0
+      : false;
   }
 
   remove = dropTask(async () => {

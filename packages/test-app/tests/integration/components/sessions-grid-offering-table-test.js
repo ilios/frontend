@@ -16,16 +16,12 @@ module('Integration | Component | sessions-grid-offering-table', function (hooks
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
   test('it renders', async function (assert) {
-    class PermissionCheckerStub extends Service {
-      canDeleteSession() {
-        return true;
-      }
-      canUpdateSession() {
+    class PermissionCheckerServiceMock extends Service {
+      async canUpdateSession() {
         return true;
       }
     }
-
-    this.owner.register('service:permissionChecker', PermissionCheckerStub);
+    this.owner.register('service:permission-checker', PermissionCheckerServiceMock);
     const session = this.server.create('session');
     this.server.createList('offering', 3, {
       session,
