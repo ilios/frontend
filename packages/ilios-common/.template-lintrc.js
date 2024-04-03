@@ -7,7 +7,6 @@ module.exports = {
       //our helpers which do not take arguments have to be listed here
       allow: ['browser-timezone', 'noop'],
     },
-    'no-at-ember-render-modifiers': false,
     'no-bare-strings': true,
   },
 };
