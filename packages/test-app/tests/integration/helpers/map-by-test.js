@@ -51,6 +51,7 @@ module('Integration | Helper | map-by', function (hooks) {
 
 `);
 
+    // eslint-disable-next-line ember/no-runloop
     run(() => array.pushObject({ name: 'd' }));
 
     assert.dom().hasText('abcd', 'd is added');

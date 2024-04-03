@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
-import scrollTo from 'ilios-common/utils/scroll-to';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
@@ -147,6 +146,5 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   @action
   transitionToRollover() {
     this.router.transitionTo('curriculum-inventory-report.rollover', this.args.report);
-    scrollTo('.rollover-form');
   }
 }

@@ -39,6 +39,7 @@ export default Service.extend({
         metrics.trackPage({ page, title });
       }
     };
+    // eslint-disable-next-line ember/no-runloop
     scheduleOnce('afterRender', this, setContext);
   },
 });

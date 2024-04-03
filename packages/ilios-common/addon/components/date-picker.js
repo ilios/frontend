@@ -42,6 +42,7 @@ export default class DatePickerComponent extends Component {
       formatDate: (dateObj) => this.intl.formatDate(dateObj),
       onChange: (selectedDates) => this.onChange(selectedDates[0]),
       onOpen: () => {
+        // eslint-disable-next-line ember/no-runloop
         later(() => {
           this.isOpen = true;
         }, 250);
@@ -64,6 +65,7 @@ export default class DatePickerComponent extends Component {
 
   async onChange(date) {
     await this.args.onChange(date);
+    // eslint-disable-next-line ember/no-runloop
     await next(() => {});
   }
 }

@@ -1,5 +1,9 @@
 @use "../colors" as c;
 
+.back-to-session {
+  margin-bottom: 1rem;
+}
+
 .session-details {
   background-color: c.$lightBlue;
   border-color: c.$culturedGrey;

@@ -21,6 +21,7 @@ export default class IliosJWT extends Base {
   }
 
   async invalidate() {
+    // eslint-disable-next-line ember/no-runloop
     cancel(this.#tokenExpirationTimeout);
     this.#tokenExpirationTimeout = null;
   }
@@ -31,7 +32,7 @@ export default class IliosJWT extends Base {
     let exp = get(data, 'exp');
 
     if (!exp) {
-      // Fetch the expire time from the token data since `exp` wasn't included in the data object that was passed in.
+      // Fetch the expiration time from the token data since `exp` wasn't included in the data object that was passed in.
       const tokenData = jwtDecode(jwt);
       exp = tokenData['exp'];
     }
@@ -48,8 +49,10 @@ export default class IliosJWT extends Base {
     const now = DateTime.now().toUnixInteger();
     const wait = Math.max((expiresAt - now) * 1000, 0);
 
+    // eslint-disable-next-line ember/no-runloop
     cancel(this.#tokenExpirationTimeout);
     this.#tokenExpirationTimeout = null;
+    // eslint-disable-next-line ember/no-runloop
     this.#tokenExpirationTimeout = later(
       this,
       async () => {

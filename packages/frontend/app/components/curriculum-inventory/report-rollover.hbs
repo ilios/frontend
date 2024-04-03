@@ -5,7 +5,7 @@
   data-test-curriculum-inventory-report-rollover
 >
   {{#unless this.load.isRunning}}
-    <div class="rollover-form">
+    <div class="rollover-form" {{scroll-into-view}}>
       <h3 class="title">
         {{t "general.curriculumInventoryReportRollover"}}
       </h3>

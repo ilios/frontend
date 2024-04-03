@@ -41,6 +41,7 @@ class DelayedAccess {
   async getValue() {
     do {
       this.value = this.obj[this.keyname];
+      // eslint-disable-next-line ember/no-runloop
       next(() => {});
       await settled();
     } while (!this.done);

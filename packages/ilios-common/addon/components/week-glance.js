@@ -2,8 +2,6 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { isNone } from '@ember/utils';
 import { DateTime } from 'luxon';
-import scrollIntoView from 'scroll-into-view';
-import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 
@@ -57,13 +55,6 @@ export default class WeeklyGlance extends Component {
     return this.weekEvents.filter((ev) => {
       return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
     });
-  }
-
-  @action
-  scrollOnLoad(element) {
-    if (this.args.week === this.args.weekInFocus) {
-      scrollIntoView(element);
-    }
   }
 
   get title() {
