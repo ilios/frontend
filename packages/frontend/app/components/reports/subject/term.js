@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
@@ -9,20 +9,20 @@ import { sortBy } from 'ilios-common/utils/array-helpers';
 export default class ReportsSubjectTermComponent extends Component {
   @service graphql;
 
-  @use data = new AsyncProcess(() => [
-    this.getReportResults.bind(this),
-    this.args.subject,
-    this.args.prepositionalObject,
-    this.args.prepositionalObjectTableRowId,
-    this.args.school,
-  ]);
-
-  get finishedLoading() {
-    return Array.isArray(this.data);
+  @cached
+  get data() {
+    return new TrackedAsyncData(
+      this.getReportResults(
+        this.args.subject,
+        this.args.prepositionalObject,
+        this.args.prepositionalObjectTableRowId,
+        this.args.school,
+      ),
+    );
   }
 
   get sortedData() {
-    return sortBy(this.data, ['vocabulary.title', 'title']);
+    return sortBy(this.data.value, ['vocabulary.title', 'title']);
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
