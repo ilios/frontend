@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { sortBy } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
@@ -10,13 +10,17 @@ export default class ReportsSubjectProgramComponent extends Component {
   @service graphql;
   @service currentUser;
 
-  @use data = new AsyncProcess(() => [
-    this.getReportResults.bind(this),
-    this.args.subject,
-    this.args.prepositionalObject,
-    this.args.prepositionalObjectTableRowId,
-    this.args.school,
-  ]);
+  @cached
+  get data() {
+    return new TrackedAsyncData(
+      this.getReportResults(
+        this.args.subject,
+        this.args.prepositionalObject,
+        this.args.prepositionalObjectTableRowId,
+        this.args.school,
+      ),
+    );
+  }
 
   get canView() {
     return this.currentUser.performsNonLearnerFunction;
@@ -27,11 +31,7 @@ export default class ReportsSubjectProgramComponent extends Component {
   }
 
   get sortedPrograms() {
-    return sortBy(this.data, ['school.title', 'title']);
-  }
-
-  get finishedLoading() {
-    return Array.isArray(this.data);
+    return sortBy(this.data.value, ['school.title', 'title']);
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {

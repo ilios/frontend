@@ -1,5 +1,5 @@
 <div data-test-reports-subject-course>
-  {{#if this.finishedLoading}}
+  {{#if this.data.isResolved}}
     <ul class="report-results" data-test-results>
       {{#each this.sortedCourses as |course|}}
         <li>

@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
 import { filterBy } from 'ilios-common/utils/array-helpers';
 import { sortBy } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
@@ -18,13 +16,17 @@ export default class ReportsSubjectSessionComponent extends Component {
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
-  @use data = new AsyncProcess(() => [
-    this.getReportResults.bind(this),
-    this.args.subject,
-    this.args.prepositionalObject,
-    this.args.prepositionalObjectTableRowId,
-    this.args.school,
-  ]);
+  @cached
+  get data() {
+    return new TrackedAsyncData(
+      this.getReportResults(
+        this.args.subject,
+        this.args.prepositionalObject,
+        this.args.prepositionalObjectTableRowId,
+        this.args.school,
+      ),
+    );
+  }
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
@@ -41,18 +43,14 @@ export default class ReportsSubjectSessionComponent extends Component {
 
   get filteredSessions() {
     if (this.args.year) {
-      return filterBy(this.data, 'year', Number(this.args.year));
+      return filterBy(this.data.value, 'year', Number(this.args.year));
     }
 
-    return this.data;
+    return this.data.value;
   }
 
   get sortedSessions() {
     return sortBy(this.filteredSessions, ['year', 'courseTitle', 'title']);
-  }
-
-  get finishedLoading() {
-    return Array.isArray(this.data);
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {

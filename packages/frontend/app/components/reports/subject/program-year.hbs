@@ -1,5 +1,5 @@
 <div data-test-reports-subject-program-year>
-  {{#if this.finishedLoading}}
+  {{#if this.data.isResolved}}
     <ul class="report-results" data-test-results>
       {{#each this.sortedProgramYears as |obj|}}
         <li>
