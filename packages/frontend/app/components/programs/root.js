@@ -23,9 +23,7 @@ export default class ProgramRootComponent extends Component {
     return new TrackedAsyncData(
       this.bestSelectedSchool
         ? this.permissionChecker.canCreateProgram(this.bestSelectedSchool)
-        : new Promise((resolve) => {
-            resolve(() => false);
-          }),
+        : false,
     );
   }
 

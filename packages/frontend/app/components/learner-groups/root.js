@@ -27,9 +27,7 @@ export default class LearnerGroupsRootComponent extends Component {
     return new TrackedAsyncData(
       this.selectedSchool
         ? this.permissionChecker.canCreateLearnerGroup(this.selectedSchool)
-        : new Promise((resolve) => {
-            resolve(() => false);
-          }),
+        : false,
     );
   }
 

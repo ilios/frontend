@@ -65,11 +65,7 @@ export default class CoursesRootComponent extends Component {
   @cached
   get canCreateData() {
     return new TrackedAsyncData(
-      this.selectedSchool
-        ? this.permissionChecker.canCreateCourse(this.selectedSchool)
-        : new Promise((resolve) => {
-            resolve(() => false);
-          }),
+      this.selectedSchool ? this.permissionChecker.canCreateCourse(this.selectedSchool) : false,
     );
   }
 

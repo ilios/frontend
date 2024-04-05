@@ -22,11 +22,7 @@ export default class LearnerGroupListItemComponent extends Component {
   @cached
   get canCreateData() {
     return new TrackedAsyncData(
-      this.school
-        ? this.permissionChecker.canCreateLearnerGroup(this.school)
-        : new Promise((resolve) => {
-            resolve(() => false);
-          }),
+      this.school ? this.permissionChecker.canCreateLearnerGroup(this.school) : false,
     );
   }
 

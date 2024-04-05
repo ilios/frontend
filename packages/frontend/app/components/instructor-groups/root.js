@@ -25,9 +25,7 @@ export default class InstructorGroupsRootComponent extends Component {
     return new TrackedAsyncData(
       this.bestSelectedSchool
         ? this.permissionChecker.canCreateInstructorGroup(this.bestSelectedSchool)
-        : new Promise((resolve) => {
-            resolve(() => false);
-          }),
+        : false,
     );
   }
 
