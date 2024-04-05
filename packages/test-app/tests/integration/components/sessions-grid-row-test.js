@@ -3,8 +3,8 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { DateTime } from 'luxon';
-import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
+import Service from '@ember/service';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/sessions-grid-row';
 
@@ -12,18 +12,6 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
-
-  hooks.beforeEach(function () {
-    class PermissionCheckerStub extends Service {
-      canDeleteSession() {
-        return true;
-      }
-      canUpdateSession() {
-        return true;
-      }
-    }
-    this.owner.register('service:permissionChecker', PermissionCheckerStub);
-  });
 
   test('it renders', async function (assert) {
     const date = DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 });
@@ -90,6 +78,15 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
 
   test('confirmDelete fires', async function (assert) {
     assert.expect(1);
+    class PermissionCheckerServiceMock extends Service {
+      async canDeleteSession() {
+        return true;
+      }
+      async canUpdateSession() {
+        return true;
+      }
+    }
+    this.owner.register('service:permission-checker', PermissionCheckerServiceMock);
     const session = this.server.create('session');
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);

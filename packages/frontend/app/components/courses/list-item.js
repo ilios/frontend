@@ -1,11 +1,33 @@
 import Component from '@glimmer/component';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
-import { use } from 'ember-could-get-used-to-this';
+import { service } from '@ember/service';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class CoursesListItemComponent extends Component {
-  @use canLock = new PermissionChecker(() => ['canUpdateCourse', this.args.course]);
-  @use canUnlock = new PermissionChecker(() => ['canUnlockCourse', this.args.course]);
-  @use canDeletePermission = new PermissionChecker(() => ['canDeleteCourse', this.args.course]);
+  @service permissionChecker;
+
+  @cached
+  get canLockData() {
+    return new TrackedAsyncData(this.permissionChecker.canUpdateCourse(this.args.course));
+  }
+
+  @cached
+  get canUnlockData() {
+    return new TrackedAsyncData(this.permissionChecker.canUnlockCourse(this.args.course));
+  }
+
+  @cached
+  get canDeleteData() {
+    return new TrackedAsyncData(this.permissionChecker.canDeleteCourse(this.args.course));
+  }
+
+  get canLock() {
+    return this.canLockData.isResolved ? this.canLockData.value : false;
+  }
+
+  get canUnlock() {
+    return this.canUnlockData.isResolved ? this.canUnlockData.value : false;
+  }
 
   get canDelete() {
     if (this.args.course.isPublishedOrScheduled) {
@@ -13,6 +35,6 @@ export default class CoursesListItemComponent extends Component {
     } else if (this.args.course.hasMany('descendants').ids().length > 0) {
       return false;
     }
-    return this.canDeletePermission;
+    return this.canDeleteData.isResolved ? this.canDeleteData.value : false;
   }
 }

@@ -2,8 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
-import { use } from 'ember-could-get-used-to-this';
 import { service } from '@ember/service';
 
 export default class CurriculumInventoryReportListItemComponent extends Component {
@@ -15,10 +13,16 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
-  @use canDelete = new PermissionChecker(() => [
-    'canDeleteCurriculumInventoryReport',
-    this.args.report,
-  ]);
+  @cached
+  get canDeleteData() {
+    return new TrackedAsyncData(
+      this.permissionChecker.canDeleteCurriculumInventoryReport(this.args.report),
+    );
+  }
+
+  get canDelete() {
+    return this.canDeleteData.isResolved ? this.canDeleteData.value : false;
+  }
 
   @cached
   get academicYearCrossesCalendarYearBoundaries() {

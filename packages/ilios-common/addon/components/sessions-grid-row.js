@@ -1,8 +1,26 @@
 import Component from '@glimmer/component';
-import { use } from 'ember-could-get-used-to-this';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
+import { cached } from '@glimmer/tracking';
+import { service } from '@ember/service';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SessionsGridRowComponent extends Component {
-  @use canDelete = new PermissionChecker(() => ['canDeleteSession', this.args.session]);
-  @use canUpdate = new PermissionChecker(() => ['canUpdateSession', this.args.session]);
+  @service permissionChecker;
+
+  @cached
+  get canDeleteData() {
+    return new TrackedAsyncData(this.permissionChecker.canDeleteSession(this.args.session));
+  }
+
+  get canDelete() {
+    return this.canDeleteData.isResolved ? this.canDeleteData.value : false;
+  }
+
+  @cached
+  get canUpdateData() {
+    return new TrackedAsyncData(this.permissionChecker.canUpdateSession(this.args.session));
+  }
+
+  get canUpdate() {
+    return this.canUpdateData.isResolved ? this.canUpdateData.value : false;
+  }
 }

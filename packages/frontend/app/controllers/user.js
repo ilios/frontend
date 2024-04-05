@@ -6,7 +6,6 @@ import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
 
 export default class UserController extends Controller {
   @service store;
@@ -30,8 +29,16 @@ export default class UserController extends Controller {
   @tracked permissionsSchool = null;
   @tracked permissionsYear = null;
 
-  @use canUpdate = new PermissionChecker(() => ['canUpdateUser', this.model]);
   @use canCreate = new AsyncProcess(() => [this.canCreateInSomeSchool.bind(this), this.allSchools]);
+
+  @cached
+  get canUpdateData() {
+    return new TrackedAsyncData(this.permissionChecker.canUpdateUser(this.model));
+  }
+
+  get canUpdate() {
+    return this.canUpdateData.isResolved ? this.canUpdateData.value : false;
+  }
 
   @cached
   get allSchoolsData() {

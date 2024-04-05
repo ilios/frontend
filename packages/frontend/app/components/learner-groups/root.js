@@ -1,11 +1,8 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
 import cloneLearnerGroup from 'frontend/utils/clone-learner-group';
 import { dropTask } from 'ember-concurrency';
 import { map } from 'rsvp';
@@ -16,6 +13,7 @@ export default class LearnerGroupsRootComponent extends Component {
   @service store;
   @service dataLoader;
   @service intl;
+  @service permissionChecker;
   @tracked showNewLearnerGroupForm = false;
   @tracked savedLearnerGroup;
   @tracked totalGroupsToSave;
@@ -23,7 +21,15 @@ export default class LearnerGroupsRootComponent extends Component {
 
   learnerGroupPromises = new Map();
   userModel = new TrackedAsyncData(this.currentUser.getModel());
-  @use canCreate = new PermissionChecker(() => ['canCreateLearnerGroup', this.selectedSchool]);
+
+  @cached
+  get canCreateData() {
+    return new TrackedAsyncData(
+      this.selectedSchool
+        ? this.permissionChecker.canCreateLearnerGroup(this.selectedSchool)
+        : false,
+    );
+  }
 
   @cached
   get user() {
@@ -33,6 +39,10 @@ export default class LearnerGroupsRootComponent extends Component {
   @cached
   get programsData() {
     return new TrackedAsyncData(this.selectedSchool.programs);
+  }
+
+  get canCreate() {
+    return this.canCreateData.isResolved ? this.canCreateData.value : false;
   }
 
   get programs() {

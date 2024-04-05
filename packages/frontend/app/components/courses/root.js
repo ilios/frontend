@@ -4,12 +4,10 @@ import { dropTask } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
-import PermissionChecker from 'ilios-common/classes/permission-checker';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 
 export default class CoursesRootComponent extends Component {
   @service currentUser;
@@ -64,7 +62,16 @@ export default class CoursesRootComponent extends Component {
     return this.allRelatedCoursesData.isResolved ? this.allRelatedCoursesData.value : null;
   }
 
-  @use canCreateCourse = new PermissionChecker(() => ['canCreateCourse', this.selectedSchool]);
+  @cached
+  get canCreateData() {
+    return new TrackedAsyncData(
+      this.selectedSchool ? this.permissionChecker.canCreateCourse(this.selectedSchool) : false,
+    );
+  }
+
+  get canCreate() {
+    return this.canCreateData.isResolved ? this.canCreateData.value : false;
+  }
 
   get hasMoreThanOneSchool() {
     return this.args.schools.length > 1;
