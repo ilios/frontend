@@ -26,7 +26,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|bcdebfb3fe4e091e214
 add|ember-template-lint|no-at-ember-render-modifiers|6|23|6|23|0e32f6999f3a29ff9a455ce1b98cc77c08e734e3|1712102400000|1714694400000|1717286400000|addon/components/detail-learning-materials.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1712102400000|1714694400000|1717286400000|addon/components/detail-mesh.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|aeb46aff123bc727f06ae48e1615d63dd2e58f6e|1712102400000|1714694400000|1717286400000|addon/components/detail-mesh.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|36|10|36|10|896990d580c1ce62f1484f4d4d8a77c1e90e77b4|1712102400000|1714694400000|1717286400000|addon/components/detail-taxonomies.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|7|2|7|2|83ed72f478af76221bd23683c194bca4058827a2|1712102400000|1714694400000|1717286400000|addon/components/detail-terms-list-item.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|14e71516c5eaaf379dbe0977f46462cc0f65c190|1712102400000|1714694400000|1717286400000|addon/components/detail-terms-list.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|193a7ae9f8fcb4fc4e0df0f1899a568d1ac22349|1712102400000|1714694400000|1717286400000|addon/components/detail-terms-list.hbs
@@ -39,7 +38,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|4|4|4|4|fc97c348371546a640a
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|4836956b22094e4400c07a696446403e2e70ae25|1712102400000|1714694400000|1717286400000|addon/components/learningmaterial-manager.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|ed145b35cc73f6141f721a99468b9ac5488e1c3c|1712102400000|1714694400000|1717286400000|addon/components/learningmaterial-manager.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|62|10|62|10|3c1d8299bf0aa0a14c6978f658612f5ef935c35d|1712102400000|1714694400000|1717286400000|addon/components/mesh-manager.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|34|4|34|896990d580c1ce62f1484f4d4d8a77c1e90e77b4|1712102400000|1714694400000|1717286400000|addon/components/new-offering.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|6bbbcafd85d75fd8f3d70c2bd4ba01d753c24f9c|1712102400000|1714694400000|1717286400000|addon/components/offering-calendar.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|0a8f8f3c4ad64455e02a7594b39cb2785441d6e8|1712102400000|1714694400000|1717286400000|addon/components/offering-calendar.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|fab53a12bc25481f88028a380c2d467d682eee45|1712102400000|1714694400000|1717286400000|addon/components/offering-form.hbs
@@ -63,7 +61,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|d4688dbdc2532b9de09
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|7491f1d2f4e83f2c87fbb4c84f36a84ba901e218|1712102400000|1714694400000|1717286400000|addon/components/taxonomy-manager.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|13|6|13|6|83ed72f478af76221bd23683c194bca4058827a2|1712102400000|1714694400000|1717286400000|addon/components/user-name-info.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|8|57|8|57|5ee728ed47908f031dd90bb0e2f64787a1c4998f|1712102400000|1714694400000|1717286400000|addon/components/wait-saving.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|8d238303df63c3e74b1cfcb72bf9288f0418b631|1712102400000|1714694400000|1717286400000|addon/components/week-glance.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|7|2|7|2|83ed72f478af76221bd23683c194bca4058827a2|1712102400000|1714694400000|1717286400000|addon/components/weekly-calendar-event.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|24|4|24|4|88f10de94f95126fa1fd673667ca2aaab7982129|1712102400000|1714694400000|1717286400000|addon/components/weekly-calendar.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|25|4|25|4|43d899f1e425cbd1d9905289c03c76010e2b8e28|1712102400000|1714694400000|1717286400000|addon/components/weekly-calendar.hbs
