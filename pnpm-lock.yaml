@@ -151,8 +151,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       ember-cli-deploy-s3-index:
-        specifier: 4.0.1
-        version: 4.0.1
+        specifier: 4.0.2
+        version: 4.0.2
       ember-cli-htmlbars:
         specifier: ^6.3.0
         version: 6.3.0
@@ -9782,8 +9782,8 @@ packages:
       - supports-color
     dev: true
 
-  /ember-cli-deploy-s3-index@4.0.1:
-    resolution: {integrity: sha512-8GJQRs62kIgLk4997lTX+nrzQrpB3JNoo7zGCr7PXF9/E2Pd9lm5GnFJr0CzPRowRiwSaukWfw77Is9W7Ym4ZQ==}
+  /ember-cli-deploy-s3-index@4.0.2:
+    resolution: {integrity: sha512-CZGa/z4priHCevMkluog4Tn7uwFUhc/im/aLbcvg3sNq47N7fnocxi89GAt8XS+ZiWO8l2KeY0fjP02gk5dniA==}
     engines: {node: 14.* || 16.* || 18.* || >= 20}
     dependencies:
       '@aws-sdk/client-s3': 3.540.0
