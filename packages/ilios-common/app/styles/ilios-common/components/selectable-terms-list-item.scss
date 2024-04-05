@@ -12,6 +12,12 @@
   vertical-align: middle;
   width: 100%;
 
+  &:focus,
+  &:hover {
+    background-color: c.$culturedGrey;
+    border: 1px c.$black solid;
+  }
+
   &.selected {
     background-color: c.$culturedGrey;
   }
