@@ -8,7 +8,7 @@ function startSentry(config) {
   Sentry.init({
     dsn: captureErrors ? DSN : null,
     environment: config.environment,
-    release: config.APP.version.match(versionRegExp)[0],
+    release: `v${config.APP.version.match(versionRegExp)[0]}`,
     tracesSampleRate: 0.25,
   });
 }
