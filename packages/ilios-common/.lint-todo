@@ -95,6 +95,3 @@ add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|1fb6f249958ee245e6a
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|856162ce473b112534763bb641aae7a4422d8e2e|1712102400000|1714694400000|1717286400000|addon/components/session/postrequisite-editor.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|28|6|28|6|242be4337ef58ba487a9168fe2944bd6919a1397|1712102400000|1714694400000|1717286400000|addon/components/session/publication-menu.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|29|6|29|6|df94e6558ff62dea69f6f656f668f29b56bcc378|1712102400000|1714694400000|1717286400000|addon/components/session/publication-menu.hbs
-remove|ember-template-lint|no-at-ember-render-modifiers|36|10|36|10|896990d580c1ce62f1484f4d4d8a77c1e90e77b4|1712102400000|1714694400000|1717286400000|addon/components/detail-taxonomies.hbs
-remove|ember-template-lint|no-at-ember-render-modifiers|4|34|4|34|896990d580c1ce62f1484f4d4d8a77c1e90e77b4|1712102400000|1714694400000|1717286400000|addon/components/new-offering.hbs
-remove|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|8d238303df63c3e74b1cfcb72bf9288f0418b631|1712102400000|1714694400000|1717286400000|addon/components/week-glance.hbs
