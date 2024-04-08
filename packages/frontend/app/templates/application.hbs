@@ -1,9 +1,6 @@
 {{page-title (t "general.ilios") separator=" " front=true}}
 <ConnectionStatus />
 <ApiVersionNotice />
-<NewVersionNotifier as |version lastVersion reload|>
-  <UpdateNotification @reload={{reload}} />
-</NewVersionNotifier>
 <div
   class="application-wrapper
     {{if this.currentUser.performsNonLearnerFunction "show-navigation"}}"

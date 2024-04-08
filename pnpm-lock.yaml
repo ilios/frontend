@@ -165,9 +165,6 @@ importers:
       ember-cli-mirage:
         specifier: ^3.0.3
         version: 3.0.3(@ember/test-helpers@3.3.0)(ember-qunit@8.0.2)(ember-source@5.6.0)(miragejs@0.1.48)(webpack@5.91.0)
-      ember-cli-new-version:
-        specifier: ^4.1.0
-        version: 4.1.0(@babel/core@7.24.4)
       ember-cli-page-object:
         specifier: ^2.3.0
         version: 2.3.0(@ember/test-helpers@3.3.0)
@@ -9988,23 +9985,6 @@ packages:
       - webpack
     dev: true
 
-  /ember-cli-new-version@4.1.0(@babel/core@7.24.4):
-    resolution: {integrity: sha512-nhIFfrLs+JqyordanQ1KnSGm168LIc4gCAW93OHArhfmQppD5xb2aWVOmVDvU2AZkbagkr5IXBskUCBAm8pYEg==}
-    engines: {node: 12.* || 14.* || >= 16}
-    dependencies:
-      '@glimmer/component': 1.1.2(@babel/core@7.24.4)
-      '@glimmer/tracking': 1.1.2
-      broccoli-file-creator: 2.1.1
-      ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 5.7.2
-      ember-concurrency: 2.3.7(@babel/core@7.24.4)
-      ember-fetch: 8.1.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - encoding
-      - supports-color
-    dev: true
-
   /ember-cli-normalize-entity-name@1.0.0:
     resolution: {integrity: sha512-rF4P1rW2P1gVX1ynZYPmuIf7TnAFDiJmIUFI1Xz16VYykUAyiOCme0Y22LeZq8rTzwBMiwBwoE3RO4GYWehXZA==}
     dependencies:
@@ -10400,23 +10380,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
-
-  /ember-concurrency@2.3.7(@babel/core@7.24.4):
-    resolution: {integrity: sha512-sz6sTIXN/CuLb5wdpauFa+rWXuvXXSnSHS4kuNzU5GSMDX1pLBWSuovoUk61FUe6CYRqBmT1/UushObwBGickQ==}
-    engines: {node: 10.* || 12.* || 14.* || >= 16}
-    dependencies:
-      '@babel/helper-plugin-utils': 7.24.0
-      '@babel/types': 7.24.0
-      '@glimmer/tracking': 1.1.2
-      ember-cli-babel: 7.26.11
-      ember-cli-babel-plugin-helpers: 1.1.1
-      ember-cli-htmlbars: 5.7.2
-      ember-compatibility-helpers: 1.2.7(@babel/core@7.24.4)
-      ember-destroyable-polyfill: 2.0.3(@babel/core@7.24.4)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
-    dev: true
 
   /ember-concurrency@4.0.2(@babel/core@7.24.4)(@glimmer/tracking@1.1.2)(ember-source@5.6.0):
     resolution: {integrity: sha512-enmStRE8bHIeF/kPZoDZlzP9YINN7H8l3Myk1sVkqo235ph0Vjee37AGCw44eRq6cBRvcdQmb5K3pkzVY7A6WA==}
