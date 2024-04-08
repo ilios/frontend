@@ -23,9 +23,11 @@ updates:
       - dependency-name: "@ember/optional-features"
       - dependency-name: "@ember/string"
       - dependency-name: "@ember/test-helpers"
+      - dependency-name: "@embroider/test-setup"
       - dependency-name: "@glimmer/component"
       - dependency-name: "@glimmer/tracking"
       - dependency-name: broccoli-asset-rev
+      - dependency-name: concurrently
       - dependency-name: ember-auto-import
       - dependency-name: ember-cli
       - dependency-name: ember-cli-app-version
@@ -44,8 +46,22 @@ updates:
       - dependency-name: ember-qunit
       - dependency-name: ember-resolver
       - dependency-name: ember-source
+      - dependency-name: ember-source-channel-url
+      - dependency-name: ember-template-lint
+      - dependency-name: ember-try
       - dependency-name: ember-welcome-page
+      - dependency-name: eslint
+      - dependency-name: eslint-config-prettier
+      - dependency-name: eslint-plugin-ember
+      - dependency-name: eslint-plugin-n
+      - dependency-name: eslint-plugin-prettier
+      - dependency-name: eslint-plugin-qunit
+      - dependency-name: loader.js
+      - dependency-name: prettier
       - dependency-name: qunit
       - dependency-name: qunit-dom
+      - dependency-name: stylelint
+      - dependency-name: stylelint-config-standard
+      - dependency-name: stylelint-prettier
       - dependency-name: tracked-built-ins
       - dependency-name: webpack
