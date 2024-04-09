@@ -24,6 +24,7 @@ export default class NewVersionService extends Service {
 
   constructor() {
     super(...arguments);
+    // don't autostart this task in a test environment.
     if (!Ember.testing) {
       this.updateVersion.perform();
     }
@@ -31,7 +32,7 @@ export default class NewVersionService extends Service {
 
   updateVersion = task(async () => {
     try {
-      const response = fetch(this.url + '?_=' + Date.now());
+      const response = await fetch(this.url + '?_=' + Date.now());
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -40,8 +41,11 @@ export default class NewVersionService extends Service {
     } catch (e) {
       this.onError(e);
     } finally {
-      await timeout(ONE_MINUTE);
-      this.updateVersion.perform();
+      // @todo figure out a way to test the recursion. For now, don't run it in test mode [ST 2024/04/09]
+      if (!Ember.testing) {
+        await timeout(ONE_MINUTE);
+        this.updateVersion.perform();
+      }
     }
   });
 
