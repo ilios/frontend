@@ -21,6 +21,12 @@ module.exports = {
     'ember/no-classic-classes': 0,
     'ember/no-mixins': 0,
     'ember/no-new-mixins': 0,
+    'n/no-extraneous-require': [
+      'error',
+      {
+        allowModules: ['broccoli-file-creator'],
+      },
+    ],
   },
   overrides: [
     // node files
