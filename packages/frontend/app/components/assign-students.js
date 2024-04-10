@@ -4,20 +4,81 @@ import { service } from '@ember/service';
 import { all } from 'rsvp';
 import { DateTime } from 'luxon';
 import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { findById, mapBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class AssignStudentsComponent extends Component {
   @service flashMessages;
   @service store;
+  @service dataLoader;
 
   @tracked primaryCohortId = null;
   @tracked savedUserIds = [];
   @tracked selectedUserIds = [];
-  @tracked cohorts;
+
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.dataLoader.loadSchoolsForLearnerGroups());
+  }
+
+  @cached
+  get data() {
+    return {
+      programs: this.store.peekAll('program'),
+      programYears: this.store.peekAll('programYear'),
+      cohorts: this.store.peekAll('cohort'),
+    };
+  }
+
+  @cached
+  get programs() {
+    return this.data.programs.filter(
+      (program) => program.belongsTo('school').id() === this.args.school.id,
+    );
+  }
+
+  @cached
+  get programYears() {
+    const programIds = this.programs.map(({ id }) => id);
+
+    return this.data.programYears.filter((programYear) =>
+      programIds.includes(programYear.belongsTo('program').id()),
+    );
+  }
+
+  @cached
+  get schoolCohorts() {
+    const programYearIds = this.programYears.map(({ id }) => id);
+
+    return this.data.cohorts.filter((cohort) =>
+      programYearIds.includes(cohort.belongsTo('programYear').id()),
+    );
+  }
+
+  get cohorts() {
+    const cohortsWithData = this.schoolCohorts.map((cohort) => {
+      const programYear = findById(this.programYears, cohort.belongsTo('programYear').id());
+      const program = findById(this.programs, programYear.belongsTo('program').id());
+      return {
+        id: cohort.id,
+        model: cohort,
+        title: program.title + ' ' + cohort.title,
+        startYear: Number(programYear.startYear),
+        duration: Number(program.duration),
+      };
+    });
+
+    const lastYear = DateTime.now().minus({ year: 1 }).year;
+    return cohortsWithData.filter((obj) => {
+      const finalYear = obj.startYear + obj.duration;
+      return finalYear > lastYear;
+    });
+  }
 
   get bestSelectedCohort() {
-    if (!this.cohorts) {
+    if (!this.schoolData.isResolved) {
       return false;
     }
 
@@ -25,7 +86,7 @@ export default class AssignStudentsComponent extends Component {
       const currentCohort = findById(this.cohorts, this.primaryCohortId);
       return currentCohort ?? false;
     } else {
-      return this.cohorts.slice().reverse()[0];
+      return this.cohorts.reverse()[0];
     }
   }
 
@@ -38,42 +99,6 @@ export default class AssignStudentsComponent extends Component {
   get totalUnassignedStudents() {
     return this.args.students.length - this.savedUserIds.length;
   }
-
-  load = restartableTask(async (element, [school]) => {
-    let cohorts = await this.store.query('cohort', {
-      filters: {
-        schools: [school.id],
-      },
-    });
-
-    //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = await all(mapBy(cohorts.slice(), 'programYear'));
-    await all(mapBy(programYears.slice(), 'program'));
-
-    cohorts = cohorts.slice();
-    const allCohorts = [];
-
-    for (let i = 0; i < cohorts.length; i++) {
-      const cohort = cohorts[i];
-      const obj = {
-        id: cohort.id,
-        model: cohort,
-      };
-      const programYear = await cohort.programYear;
-      const program = await programYear.program;
-      obj.title = program.title + ' ' + cohort.title;
-      obj.startYear = programYear.startYear;
-      obj.duration = program.duration;
-
-      allCohorts.push(obj);
-    }
-
-    const lastYear = DateTime.now().minus({ year: 1 }).year;
-    this.cohorts = allCohorts.filter((obj) => {
-      const finalYear = Number(obj.startYear) + Number(obj.duration);
-      return finalYear > lastYear;
-    });
-  });
 
   @action
   toggleCheck() {

@@ -7,6 +7,7 @@ export default class AssignStudentsRoute extends Route {
   @service permissionChecker;
   @service store;
   @service session;
+  @service dataLoader;
 
   queryParams = {
     query: {
@@ -20,9 +21,9 @@ export default class AssignStudentsRoute extends Route {
 
   async model() {
     const user = await this.currentUser.getModel();
-    const schools = await this.store.findAll('school');
-    const primarySchool = await user.get('school');
-    const schoolsWithUpdateUserPermission = await filter(schools.slice(), async (school) => {
+    const schools = await this.dataLoader.loadSchoolsForLearnerGroups();
+    const primarySchool = await user.school;
+    const schoolsWithUpdateUserPermission = await filter(schools, async (school) => {
       return this.permissionChecker.canUpdateUserInSchool(school);
     });
 
