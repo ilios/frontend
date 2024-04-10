@@ -6,7 +6,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from '../pages/assign-students';
 import percySnapshot from '@percy/ember';
 
-// @todo flesh this acceptance test out [ST 2020/08/14]import percySnapshot from '@percy/ember';
+// @todo flesh this acceptance test out [ST 2020/08/14]
 module('Acceptance | assign students', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -33,8 +33,8 @@ module('Acceptance | assign students', function (hooks) {
     assert.expect(3);
     await page.visit();
     await percySnapshot(assert);
-    assert.strictEqual(page.schoolFilter.text, 'school 0');
-    assert.strictEqual(page.schoolFilter.options.length, 0);
+    assert.strictEqual(page.root.schoolFilter.text, 'school 0');
+    assert.strictEqual(page.root.schoolFilter.options.length, 0);
     assert.strictEqual(currentURL(), '/admin/assignstudents');
   });
 
@@ -49,21 +49,21 @@ module('Acceptance | assign students', function (hooks) {
       administeredSchools: [this.school, this.school2],
     });
     await page.visit();
-    assert.strictEqual(page.schoolFilter.selectedSchool, this.school.id);
-    assert.strictEqual(page.schoolFilter.options.length, 2);
-    assert.strictEqual(page.schoolFilter.options[0].text, 'school 0');
-    assert.strictEqual(page.schoolFilter.options[1].text, 'school 1');
+    assert.strictEqual(page.root.schoolFilter.selectedSchool, this.school.id);
+    assert.strictEqual(page.root.schoolFilter.options.length, 2);
+    assert.strictEqual(page.root.schoolFilter.options[0].text, 'school 0');
+    assert.strictEqual(page.root.schoolFilter.options[1].text, 'school 1');
   });
 
   test('users are listed in full name by default', async function (assert) {
     await page.visit();
-    assert.strictEqual(page.assignStudents.students.length, 2);
-    assert.strictEqual(page.assignStudents.students[0].name.userNameInfo.fullName, 'Aardvark');
-    assert.ok(page.assignStudents.students[0].name.userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(page.root.assignStudents.students.length, 2);
+    assert.strictEqual(page.root.assignStudents.students[0].name.userNameInfo.fullName, 'Aardvark');
+    assert.ok(page.root.assignStudents.students[0].name.userNameInfo.hasAdditionalInfo);
     assert.strictEqual(
-      page.assignStudents.students[1].name.userNameInfo.fullName,
+      page.root.assignStudents.students[1].name.userNameInfo.fullName,
       'Clem M. Chowder',
     );
-    assert.notOk(page.assignStudents.students[1].name.userNameInfo.hasAdditionalInfo);
+    assert.notOk(page.root.assignStudents.students[1].name.userNameInfo.hasAdditionalInfo);
   });
 });

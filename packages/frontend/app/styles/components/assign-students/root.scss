@@ -1,7 +1,7 @@
-@use "../ilios-common/mixins" as cm;
-@use "../mixins" as m;
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
 
-.assign-students {
+.assign-students-root {
   @include cm.main-section;
 
   .filters {
