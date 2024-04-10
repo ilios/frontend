@@ -20,7 +20,7 @@ export default class AssignStudentsController extends Controller {
 
   get selectedSchool() {
     if (this.schoolId) {
-      return findById(this.model.schools.slice(), this.schoolId) ?? this.model.primarySchool;
+      return findById(this.model.schools, this.schoolId) ?? this.model.primarySchool;
     }
 
     return this.model.primarySchool;

@@ -1,7 +1,5 @@
 <div
   class="students"
-  {{did-insert (perform this.load) @school}}
-  {{did-update (perform this.load) @school}}
   data-test-assign-students
   ...attributes
 >
@@ -14,9 +12,7 @@
     <label>
       {{t "general.unassignedStudentsConfirmation" count=this.selectedUserIds.length}}:
     </label>
-    {{#if (not (is-array this.cohorts))}}
-      <LoadingSpinner />
-    {{else if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
+    {{#if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
       <select
         aria-label={{t "general.cohorts"}}
         {{on "change" (pick "target.value" (set this.primaryCohortId))}}

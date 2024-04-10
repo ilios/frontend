@@ -1,5 +1,3 @@
-add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|66a5b0f89c3a88a7c0b541518f72e20531cd4be7|1712102400000|1714694400000|1717286400000|app/components/assign-students.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|a90be151f45cd8ab32827e9247a9a9eb7f1baef2|1712102400000|1714694400000|1717286400000|app/components/assign-students.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|23cd787c79c34a628dadb6e96dd4004d42eebb79|1712102400000|1714694400000|1717286400000|app/components/bulk-new-users.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|32|3|32|fc97c348371546a640a56d968295aa0dec994ad9|1712102400000|1714694400000|1717286400000|app/components/connection-status.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|a9951d9c91e7824f84df423ad824cc030d433818|1712102400000|1714694400000|1717286400000|app/components/connection-status.hbs
