@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import Ember from 'ember';
+import { isTesting } from '@embroider/macros';
 import { task, timeout } from 'ember-concurrency';
 import config from 'frontend/config/environment';
 
@@ -25,7 +25,7 @@ export default class NewVersionService extends Service {
   constructor() {
     super(...arguments);
     // don't autostart this task in a test environment.
-    if (!Ember.testing) {
+    if (!isTesting()) {
       this.updateVersion.perform();
     }
   }
@@ -42,7 +42,7 @@ export default class NewVersionService extends Service {
       this.onError(e);
     } finally {
       // @todo figure out a way to test the recursion. For now, don't run it in test mode [ST 2024/04/09]
-      if (!Ember.testing) {
+      if (!isTesting()) {
         await timeout(ONE_MINUTE);
         this.updateVersion.perform();
       }
@@ -50,7 +50,7 @@ export default class NewVersionService extends Service {
   });
 
   onError(error) {
-    if (!Ember.testing) {
+    if (!isTesting()) {
       console.log(error);
     }
   }
