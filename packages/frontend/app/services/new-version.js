@@ -18,8 +18,7 @@ export default class NewVersionService extends Service {
   }
 
   get url() {
-    const baseUrl = config.prepend || config.rootURL || config.baseURL;
-    return baseUrl + config.newVersion.versionFile;
+    return config.rootURL + config.newVersion.versionFile;
   }
 
   constructor() {
