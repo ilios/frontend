@@ -36,11 +36,11 @@
     @save={{perform this.save}}
     @isSaving={{this.save.isRunning}}
   />
-  {{#if this.save.isRunning}}
-    <WaitSaving
-      @currentProgress={{this.savedUserIds.length}}
-      @showProgress={{true}}
-      @totalProgress={{this.selectedUserIds.length}}
-    />
-  {{/if}}
 </section>
+{{#if this.save.isRunning}}
+  <WaitSaving
+    @currentProgress={{this.savedUserIds.length}}
+    @showProgress={{true}}
+    @totalProgress={{this.selectedUserIds.length}}
+  />
+{{/if}}
