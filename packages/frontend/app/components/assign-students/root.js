@@ -77,7 +77,7 @@ export default class AssignStudentsRootComponent extends Component {
     if (!cohort || studentsToModify.length < 1) {
       return;
     }
-    studentsToModify.setEach('primaryCohort', cohort.model);
+    studentsToModify.forEach((student) => student.set('primaryCohort', cohort.model));
 
     while (studentsToModify.length > 0) {
       const parts = studentsToModify.splice(0, 3);
