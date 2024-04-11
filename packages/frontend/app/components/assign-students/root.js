@@ -46,7 +46,10 @@ export default class AssignStudentsRootComponent extends Component {
 
   get filteredUnassignedStudents() {
     return this.args.query
-      ? this.filterStudents(this.sortedStudents, this.args.query)
+      ? this.sortedStudents.filter((student) => {
+        const regex = new RegExp(this.args.query, 'i');
+        return student.fullName.search(regex) > -1;
+      })
       : this.sortedStudents;
   }
 
@@ -54,13 +57,6 @@ export default class AssignStudentsRootComponent extends Component {
     await timeout(DEBOUNCE_DELAY);
     this.args.setQuery(q);
   });
-
-  filterStudents(students, query) {
-    return students.filter((student) => {
-      const regex = new RegExp(query, 'i');
-      return student.fullName.search(regex) > -1;
-    });
-  }
 
   @action
   changeSchool(schoolId) {
