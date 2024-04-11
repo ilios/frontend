@@ -2,5 +2,8 @@
   "name": "new-version",
   "keywords": [
     "ember-addon"
-  ]
+  ],
+  "dependencies": {
+    "broccoli-file-creator": "^2.1.1"
+  }
 }
