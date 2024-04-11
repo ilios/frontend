@@ -55,6 +55,7 @@ export default class AssignStudentsRootComponent extends Component {
 
   setQuery = restartableTask(async (q) => {
     await timeout(DEBOUNCE_DELAY);
+    this.selectedUserIds = [];
     this.args.setQuery(q);
   });
 
@@ -85,6 +86,7 @@ export default class AssignStudentsRootComponent extends Component {
 
   @action
   changeSchool(schoolId) {
+    this.selectedUserIds = [];
     this.args.setSchoolId(schoolId);
   }
 
