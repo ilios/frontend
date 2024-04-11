@@ -58,11 +58,6 @@ export default class AssignStudentsRootComponent extends Component {
     this.args.setQuery(q);
   });
 
-  @action
-  changeSchool(schoolId) {
-    this.args.setSchoolId(schoolId);
-  }
-
   save = dropTask(async (cohort) => {
     this.savedUserIds = [];
     const ids = this.selectedUserIds;
@@ -87,6 +82,11 @@ export default class AssignStudentsRootComponent extends Component {
 
     this.flashMessages.success('general.savedSuccessfully');
   });
+
+  @action
+  changeSchool(schoolId) {
+    this.args.setSchoolId(schoolId);
+  }
 
   @action
   changeUserSelection(userId) {
