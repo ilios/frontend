@@ -8,41 +8,45 @@
     </h2>
   </div>
   <div class="form">
-    <label>
-      {{t "general.unassignedStudentsConfirmation" count=@selectedUserIds.length}}:
-    </label>
-    {{#if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
-      <select
-        aria-label={{t "general.cohorts"}}
-        {{on "change" (pick "target.value" (set this.primaryCohortId))}}
-        data-test-cohort-selector
-      >
-        {{#each (sort-by "title" this.cohorts) as |cohort|}}
-          <option
-            selected={{eq cohort.id this.bestSelectedCohort.id}}
-            value={{cohort.id}}
-          >
-            {{cohort.title}}
-          </option>
-        {{/each}}
-      </select>
-      <button
-        type="button"
-        class="done text"
-        disabled={{or
-          @isSaving
-          (lt this.cohorts.length 1)
-          (eq @selectedUserIds.length 0)
-        }}
-        data-test-submit
-        {{on "click" (fn @save this.bestSelectedCohort)}}
-      >
-        {{#if @isSaving}}
-          <LoadingSpinner />
-        {{else}}
-          {{t "general.save"}}
-        {{/if}}
-      </button>
+    {{#if this.cohorts.length}}
+      <label>
+        {{t "general.unassignedStudentsConfirmation" count=@selectedUserIds.length}}:
+      </label>
+      {{#if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
+        <select
+          aria-label={{t "general.cohorts"}}
+          {{on "change" (pick "target.value" (set this.primaryCohortId))}}
+          data-test-cohort-selector
+        >
+          {{#each (sort-by "title" this.cohorts) as |cohort|}}
+            <option
+              selected={{eq cohort.id this.bestSelectedCohort.id}}
+              value={{cohort.id}}
+            >
+              {{cohort.title}}
+            </option>
+          {{/each}}
+        </select>
+        <button
+          type="button"
+          class="done text"
+          disabled={{or
+            @isSaving
+            (lt this.cohorts.length 1)
+            (eq @selectedUserIds.length 0)
+          }}
+          data-test-submit
+          {{on "click" (fn @save this.bestSelectedCohort)}}
+        >
+          {{#if @isSaving}}
+            <LoadingSpinner />
+          {{else}}
+            {{t "general.save"}}
+          {{/if}}
+        </button>
+      {{/if}}
+    {{else}}
+      <div class="no-cohorts" data-test-no-cohorts>{{t "general.noCohortsAvailableForStudentAssignment"}}</div>
     {{/if}}
   </div>
   <div class="list">
@@ -61,7 +65,7 @@
                   (gt @selectedUserIds.length 0)
                   (lt @selectedUserIds.length @students.length)
                 }}
-                disabled={{not @students.length}}
+                disabled={{or (not @students.length) (not this.cohorts.length)}}
                 {{on "click" @changeAllUserSelections}}
                 data-test-toggle-all
               >
@@ -86,6 +90,7 @@
               <input type="checkbox"
                 aria-label={{if (includes user.id @selectedUserIds) (t "general.deselectUser") (t "general.selectUser")}}
                 checked={{if (includes user.id @selectedUserIds) "checked"}}
+                disabled={{not this.cohorts.length}}
                 data-test-toggle
                 {{on "click" (fn @changeUserSelection user.id)}}
               >

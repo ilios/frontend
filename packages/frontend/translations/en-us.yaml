@@ -247,6 +247,7 @@ general:
   newUsersCreatedWarning: "Some users were created, but there were errors."
   noAccountExists: "Your account {accountName} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator."
   noAvailableCohorts: No available cohorts
+  noCohortsAvailableForStudentAssignment: There are no cohorts available for student assignment in this school.
   noCourses: There are no courses in this school
   noCurriculumInventoryInstitutionalInfo: No institutional information has been configured for this school.
   noLearnerGroups: No learner groups

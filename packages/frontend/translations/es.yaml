@@ -247,6 +247,7 @@ general:
   newUsersCreatedWarning: "Algunos usuarios fueron creados, pero hubo errores."
   noAccountExists: "Su cuenta {accountName} no coincide con los registros de Ilios. Si usted necesita más asistencia, póngase en contacto con su administrador de Ilios"
   noAvailableCohorts: Ningun Clase de La Graduación Disponible
+  noCohortsAvailableForStudentAssignment: "No hay cohortes disponibles para la asignación de estudiantes en esta escuela."
   noCourses: No hay ningún curso en esta escuela
   noCurriculumInventoryInstitutionalInfo: No se ha configurado información institucional para esta escuela.
   noLearnerGroups: No Grupos de Aprendedores
