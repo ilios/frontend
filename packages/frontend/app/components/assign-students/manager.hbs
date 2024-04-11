@@ -52,15 +52,16 @@
           <th class="text-left clickable" colspan="1">
             <label>
               <input
-                checked={{eq
-                  @selectedUserIds.length
+                checked={{and
                   this.filteredStudents.length
+                  (eq @selectedUserIds.length this.filteredStudents.length)
                 }}
                 type="checkbox"
                 indeterminate={{and
                   (gt @selectedUserIds.length 0)
                   (lt @selectedUserIds.length this.filteredStudents.length)
                 }}
+                disabled={{not this.filteredStudents.length}}
                 {{on "click" @changeAllUserSelections}}
                 data-test-toggle-all
               >
