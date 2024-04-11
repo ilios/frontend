@@ -72,14 +72,14 @@ export default class AssignStudentsRootComponent extends Component {
     const ids = this.selectedUserIds;
     const students = this.filteredUnassignedStudents;
     const studentsToModify = students.filter((user) => {
-      return ids.includes(user.get('id'));
+      return ids.includes(user.id);
     });
     if (!cohort || studentsToModify.length < 1) {
       return;
     }
     studentsToModify.setEach('primaryCohort', cohort.model);
 
-    while (studentsToModify.get('length') > 0) {
+    while (studentsToModify.length > 0) {
       const parts = studentsToModify.splice(0, 3);
       await all(parts.map((part) => part.save()));
       this.savedUserIds = [...this.savedUserIds, ...mapBy(parts, 'id')];
