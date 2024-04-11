@@ -1,5 +1,5 @@
 import { collection, create, fillable, property, value } from 'ember-cli-page-object';
-import assignStudents from '../assign-students';
+import manager from './manager';
 
 const definition = {
   scope: '[data-test-assign-students-root]',
@@ -15,7 +15,7 @@ const definition = {
       value: value('input'),
     },
   },
-  assignStudents,
+  manager,
 };
 
 export default definition;

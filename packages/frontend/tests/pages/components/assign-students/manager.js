@@ -2,7 +2,7 @@ import { collection, clickable, create, property, text } from 'ember-cli-page-ob
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 
 const definition = {
-  scope: '[data-test-assign-students]',
+  scope: '[data-test-assign-students-manager]',
   title: text('[data-test-title]'),
   unassignedStudentsConfirmation: text('[data-test-unassigned-students-confirmation]'),
   toggleAll: clickable('[data-test-toggle-all]'),

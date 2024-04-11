@@ -4,9 +4,9 @@ import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'frontend/tests/pages/components/assign-students';
+import { component } from 'frontend/tests/pages/components/assign-students/manager';
 
-module('Integration | Component | assign students', function (hooks) {
+module('Integration | Component | assign-students/manager', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
   setupMirage(hooks);
@@ -42,13 +42,9 @@ module('Integration | Component | assign students', function (hooks) {
 
     this.set('school', schoolModel);
     this.set('students', students);
-    await render(hbs`<AssignStudents
+    await render(hbs`<AssignStudents::Manager
       @students={{this.students}}
       @school={{this.school}}
-      @offset={{0}}
-      @limit={{10}}
-      @setOffset={{(noop)}}
-      @setLimit={{(noop)}}
     />`);
 
     assert.strictEqual(component.cohorts.options.length, 1);
@@ -73,13 +69,9 @@ module('Integration | Component | assign students', function (hooks) {
     this.set('school', schoolModel);
     this.set('students', students);
 
-    await render(hbs`<AssignStudents
+    await render(hbs`<AssignStudents::Manager
       @students={{this.students}}
       @school={{this.school}}
-      @offset={{0}}
-      @limit={{10}}
-      @setOffset={{(noop)}}
-      @setLimit={{(noop)}}
     />`);
     assert.notOk(component.isToggleAllChecked);
     assert.notOk(component.students[0].isToggleChecked);
@@ -105,13 +97,9 @@ module('Integration | Component | assign students', function (hooks) {
     this.set('school', schoolModel);
     this.set('students', students);
 
-    await render(hbs`<AssignStudents
+    await render(hbs`<AssignStudents::Manager
       @students={{this.students}}
       @school={{this.school}}
-      @offset={{0}}
-      @limit={{10}}
-      @setOffset={{(noop)}}
-      @setLimit={{(noop)}}
     />`);
 
     assert.notOk(component.isToggleAllChecked, 'check all is not initially checked');
@@ -151,13 +139,9 @@ module('Integration | Component | assign students', function (hooks) {
     this.set('school', schoolModel);
     this.set('students', students);
 
-    await render(hbs`<AssignStudents
+    await render(hbs`<AssignStudents::Manager
       @students={{this.students}}
       @school={{this.school}}
-      @offset={{0}}
-      @limit={{10}}
-      @setOffset={{(noop)}}
-      @setLimit={{(noop)}}
     />`);
     assert.notOk(component.isToggleAllChecked, 'check all is not initially checked');
     assert.notOk(component.students[0].isToggleChecked, 'first student is not initially checked');
@@ -203,13 +187,9 @@ module('Integration | Component | assign students', function (hooks) {
     this.set('school', schoolModel);
     this.set('students', students);
 
-    await render(hbs`<AssignStudents
+    await render(hbs`<AssignStudents::Manager
       @students={{this.students}}
       @school={{this.school}}
-      @offset={{0}}
-      @limit={{10}}
-      @setOffset={{(noop)}}
-      @setLimit={{(noop)}}
     />`);
 
     assert.strictEqual(this.server.db.users[0].primaryCohortId, null);

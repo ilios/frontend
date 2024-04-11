@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import page from '../pages/assign-students';
+import page from 'frontend/tests/pages/assign-students';
 import percySnapshot from '@percy/ember';
 
 // @todo flesh this acceptance test out [ST 2020/08/14]
@@ -57,13 +57,10 @@ module('Acceptance | assign students', function (hooks) {
 
   test('users are listed in full name by default', async function (assert) {
     await page.visit();
-    assert.strictEqual(page.root.assignStudents.students.length, 2);
-    assert.strictEqual(page.root.assignStudents.students[0].name.userNameInfo.fullName, 'Aardvark');
-    assert.ok(page.root.assignStudents.students[0].name.userNameInfo.hasAdditionalInfo);
-    assert.strictEqual(
-      page.root.assignStudents.students[1].name.userNameInfo.fullName,
-      'Clem M. Chowder',
-    );
-    assert.notOk(page.root.assignStudents.students[1].name.userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(page.root.manager.students.length, 2);
+    assert.strictEqual(page.root.manager.students[0].name.userNameInfo.fullName, 'Aardvark');
+    assert.ok(page.root.manager.students[0].name.userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(page.root.manager.students[1].name.userNameInfo.fullName, 'Clem M. Chowder');
+    assert.notOk(page.root.manager.students[1].name.userNameInfo.hasAdditionalInfo);
   });
 });
