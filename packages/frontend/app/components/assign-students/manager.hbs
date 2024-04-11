@@ -53,15 +53,15 @@
             <label>
               <input
                 checked={{and
-                  this.filteredStudents.length
-                  (eq @selectedUserIds.length this.filteredStudents.length)
+                  @students.length
+                  (eq @selectedUserIds.length @students.length)
                 }}
                 type="checkbox"
                 indeterminate={{and
                   (gt @selectedUserIds.length 0)
-                  (lt @selectedUserIds.length this.filteredStudents.length)
+                  (lt @selectedUserIds.length @students.length)
                 }}
-                disabled={{not this.filteredStudents.length}}
+                disabled={{not @students.length}}
                 {{on "click" @changeAllUserSelections}}
                 data-test-toggle-all
               >
@@ -80,7 +80,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each this.filteredStudents as |user|}}
+        {{#each @students as |user|}}
           <tr class={{if (includes user.id @selectedUserIds) "highlighted"}} data-test-student>
             <td class="text-left" colspan="1" >
               <input type="checkbox"

@@ -10,8 +10,6 @@ export default class AssignStudentsManagerComponent extends Component {
   @service dataLoader;
 
   @tracked primaryCohortId = null;
-  @tracked savedUserIds = [];
-  @tracked selectedUserIds = [];
 
   @cached
   get schoolData() {
@@ -83,15 +81,5 @@ export default class AssignStudentsManagerComponent extends Component {
     } else {
       return this.cohorts.reverse()[0];
     }
-  }
-
-  get filteredStudents() {
-    return this.args.students
-      ? this.args.students.filter((user) => !this.savedUserIds.includes(user.id))
-      : [];
-  }
-
-  get totalUnassignedStudents() {
-    return this.args.students.length - this.savedUserIds.length;
   }
 }
