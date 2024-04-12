@@ -1,5 +1,4 @@
 import Service from '@ember/service';
-import fetch from 'fetch';
 import { service } from '@ember/service';
 
 export default class GraphqlService extends Service {

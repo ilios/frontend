@@ -1,7 +1,10 @@
 import Component from '@glimmer/component';
+import { service } from '@ember/service';
 import { restartableTask } from 'ember-concurrency';
 
 export default class UpdateNotificationComponent extends Component {
+  @service newVersion;
+
   /**
    * send a message to update every tab attached to this worker
    * this message is caught by our sw-skip-wait in-repo addon
@@ -13,8 +16,8 @@ export default class UpdateNotificationComponent extends Component {
         reg.waiting.postMessage('skipWaiting');
       }
     }
-    if (this.args.reload) {
-      this.args.reload();
+    if (typeof window !== 'undefined' && window.location) {
+      window.location.reload(true);
     }
   });
 }
