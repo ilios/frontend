@@ -280,8 +280,8 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       sass:
-        specifier: ^1.74.1
-        version: 1.74.1
+        specifier: ^1.75.0
+        version: 1.75.0
       scroll-into-view:
         specifier: ^1.16.2
         version: 1.16.2
@@ -563,8 +563,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       sass:
-        specifier: ^1.74.1
-        version: 1.74.1
+        specifier: ^1.75.0
+        version: 1.75.0
       stylelint:
         specifier: ^16.3.1
         version: 16.3.1(typescript@5.4.5)
@@ -755,8 +755,8 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       sass:
-        specifier: ^1.74.1
-        version: 1.74.1
+        specifier: ^1.75.0
+        version: 1.75.0
       stylelint:
         specifier: ^16.3.1
         version: 16.3.1(typescript@5.4.5)
@@ -944,8 +944,8 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       sass:
-        specifier: ^1.74.1
-        version: 1.74.1
+        specifier: ^1.75.0
+        version: 1.75.0
       stylelint:
         specifier: ^16.3.1
         version: 16.3.1(typescript@5.4.5)
@@ -16509,8 +16509,8 @@ packages:
       walker: 1.0.8
     dev: true
 
-  /sass@1.74.1:
-    resolution: {integrity: sha512-w0Z9p/rWZWelb88ISOLyvqTWGmtmu2QJICqDBGyNnfG4OUnPX9BBjjYIXUpXCMOOg5MQWNpqzt876la1fsTvUA==}
+  /sass@1.75.0:
+    resolution: {integrity: sha512-ShMYi3WkrDWxExyxSZPst4/okE9ts46xZmJDSawJQrnte7M1V9fScVB+uNXOVKRBt0PggHOwoZcn8mYX4trnBw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
