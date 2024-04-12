@@ -126,7 +126,7 @@
     "tracked-built-ins": "^3.3.0",
     "validator": "^13.11.0",
     "webpack": "^5.89.0",
-    "webpack-bundle-analyzer": "^4.10.1",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-retry-chunk-load-plugin": "^3.0.0",
     "zxcvbn": "^4.4.2"
   },
