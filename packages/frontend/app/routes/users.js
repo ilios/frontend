@@ -3,6 +3,7 @@ import Route from '@ember/routing/route';
 
 export default class UsersRoute extends Route {
   @service session;
+  @service dataLoader;
 
   queryParams = {
     query: {
@@ -16,5 +17,9 @@ export default class UsersRoute extends Route {
 
   async beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+  }
+
+  async afterModel() {
+    return this.dataLoader.loadSchoolsForLearnerGroups();
   }
 }
