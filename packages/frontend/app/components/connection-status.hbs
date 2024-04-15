@@ -1,7 +1,6 @@
 <div
   class="connection-status {{unless this.isOnline "offline"}}"
-  aria-hidden={{this.isOnline}} {{did-insert this.setup}}
-  {{will-destroy this.teardown}}
+  aria-hidden={{this.isOnline}}
 >
   {{#unless this.isOnline}}
     {{#if this.unableToReconnect}}

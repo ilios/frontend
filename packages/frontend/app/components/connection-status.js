@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { action } from '@ember/object';
+import { registerDestructor } from '@ember/destroyable';
 
 export default class ConnectionStatusComponent extends Component {
   @tracked isOnline = true;
@@ -12,8 +12,8 @@ export default class ConnectionStatusComponent extends Component {
   onlineListener;
   offlineListener;
 
-  @action
-  setup() {
+  constructor(...args) {
+    super(...args);
     if (!navigator.onLine) {
       this.changeConnectionState.perform(false);
     }
@@ -37,16 +37,15 @@ export default class ConnectionStatusComponent extends Component {
         capture: false,
       },
     );
-  }
 
-  @action
-  teardown() {
-    if (this.onlineListener) {
-      window.removeEventListener('online', this.onlineListener);
-    }
-    if (this.offlineListener) {
-      window.removeEventListener('offline', this.offlineListener);
-    }
+    registerDestructor(this, () => {
+      if (this.onlineListener) {
+        window.removeEventListener('online', this.onlineListener);
+      }
+      if (this.offlineListener) {
+        window.removeEventListener('offline', this.offlineListener);
+      }
+    });
   }
 
   changeConnectionState = restartableTask(async (isOnline) => {

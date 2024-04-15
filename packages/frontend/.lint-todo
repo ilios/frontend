@@ -1,5 +1,3 @@
-add|ember-template-lint|no-at-ember-render-modifiers|3|32|3|32|fc97c348371546a640a56d968295aa0dec994ad9|1712102400000|1714694400000|1717286400000|app/components/connection-status.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|a9951d9c91e7824f84df423ad824cc030d433818|1712102400000|1714694400000|1717286400000|app/components/connection-status.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|9|4|9|4|a687e07eea7726f554cb103ffd68b6bae67cccbe|1712102400000|1714694400000|1717286400000|app/components/global-search-box.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|ba281ed24a0260f1c75bd83392de19c3c526d931|1712102400000|1714694400000|1717286400000|app/components/global-search.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|1c5c6b41f808528d7ff0afed840e3fd47ea786da|1712102400000|1714694400000|1717286400000|app/components/global-search.hbs
