@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { isBlank } from '@ember/utils';
 import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
-import { findById, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { service } from '@ember/service';
 import { all } from 'rsvp';
 
@@ -60,9 +60,15 @@ export default class AssignStudentsRootComponent extends Component {
     return this.sortedStudents.filter((student) => this.selectedUserIds.includes(student.id));
   }
 
+  get selectableAndSelectedStudents() {
+    return sortBy(
+      uniqueValues([...this.selectedStudents, ...this.filteredUnassignedStudents]),
+      'fullName',
+    );
+  }
+
   setQuery = restartableTask(async (q) => {
     await timeout(DEBOUNCE_DELAY);
-    this.selectedUserIds = [];
     this.args.setQuery(q);
   });
 
@@ -104,9 +110,9 @@ export default class AssignStudentsRootComponent extends Component {
 
   @action
   changeAllUserSelections() {
-    const currentlySelected = this.selectedUserIds.length;
-    const currentlyUnassigned = this.filteredUnassignedStudents.length;
     this.selectedUserIds =
-      currentlySelected < currentlyUnassigned ? mapBy(this.filteredUnassignedStudents, 'id') : [];
+      this.selectedUserIds.length < this.selectableAndSelectedStudents.length
+        ? mapBy(this.selectableAndSelectedStudents, 'id')
+        : [];
   }
 }

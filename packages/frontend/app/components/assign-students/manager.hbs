@@ -57,15 +57,15 @@
             <label>
               <input
                 checked={{and
-                  @students.length
-                  (eq @selectedStudents.length @students.length)
+                  @selectableStudents.length
+                  (eq @selectedStudents.length @selectableStudents.length)
                 }}
                 type="checkbox"
                 indeterminate={{and
                   (gt @selectedStudents.length 0)
-                  (lt @selectedStudents.length @students.length)
+                  (lt @selectedStudents.length @selectableStudents.length)
                 }}
-                disabled={{or (not @students.length) (not this.cohorts.length)}}
+                disabled={{or (not @selectableStudents.length) (not this.cohorts.length)}}
                 {{on "click" @changeAllUserSelections}}
                 data-test-toggle-all
               >
@@ -84,7 +84,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each @students as |user|}}
+        {{#each @selectableStudents as |user|}}
           <tr class={{if (includes user @selectedStudents) "highlighted"}} data-test-student>
             <td class="text-left" colspan="1" >
               <input type="checkbox"
