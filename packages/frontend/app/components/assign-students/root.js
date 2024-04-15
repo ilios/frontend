@@ -53,6 +53,10 @@ export default class AssignStudentsRootComponent extends Component {
       : this.sortedStudents;
   }
 
+  get selectedStudents() {
+    return this.sortedStudents.filter((student) => this.selectedUserIds.includes(student.id));
+  }
+
   setQuery = restartableTask(async (q) => {
     await timeout(DEBOUNCE_DELAY);
     this.selectedUserIds = [];
@@ -61,11 +65,7 @@ export default class AssignStudentsRootComponent extends Component {
 
   save = dropTask(async (cohort) => {
     this.savedUserIds = [];
-    const ids = this.selectedUserIds;
-    const students = this.filteredUnassignedStudents;
-    const studentsToModify = students.filter((user) => {
-      return ids.includes(user.id);
-    });
+    const studentsToModify = this.selectedStudents;
     if (!cohort || studentsToModify.length < 1) {
       return;
     }

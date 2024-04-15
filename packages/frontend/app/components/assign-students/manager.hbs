@@ -10,7 +10,7 @@
   <div class="form">
     {{#if this.cohorts.length}}
       <label>
-        {{t "general.unassignedStudentsConfirmation" count=@selectedUserIds.length}}:
+        {{t "general.unassignedStudentsConfirmation" count=@selectedStudents.length}}:
       </label>
       {{#if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
         <select
@@ -33,7 +33,7 @@
           disabled={{or
             @isSaving
             (lt this.cohorts.length 1)
-            (eq @selectedUserIds.length 0)
+            (eq @selectedStudents.length 0)
           }}
           data-test-submit
           {{on "click" (fn @save this.bestSelectedCohort)}}
@@ -58,12 +58,12 @@
               <input
                 checked={{and
                   @students.length
-                  (eq @selectedUserIds.length @students.length)
+                  (eq @selectedStudents.length @students.length)
                 }}
                 type="checkbox"
                 indeterminate={{and
-                  (gt @selectedUserIds.length 0)
-                  (lt @selectedUserIds.length @students.length)
+                  (gt @selectedStudents.length 0)
+                  (lt @selectedStudents.length @students.length)
                 }}
                 disabled={{or (not @students.length) (not this.cohorts.length)}}
                 {{on "click" @changeAllUserSelections}}
@@ -85,11 +85,11 @@
       </thead>
       <tbody>
         {{#each @students as |user|}}
-          <tr class={{if (includes user.id @selectedUserIds) "highlighted"}} data-test-student>
+          <tr class={{if (includes user @selectedStudents) "highlighted"}} data-test-student>
             <td class="text-left" colspan="1" >
               <input type="checkbox"
-                aria-label={{if (includes user.id @selectedUserIds) (t "general.deselectUser") (t "general.selectUser")}}
-                checked={{if (includes user.id @selectedUserIds) "checked"}}
+                aria-label={{if (includes user @selectedStudents) (t "general.deselectUser") (t "general.selectUser")}}
+                checked={{if (includes user @selectedStudents) "checked"}}
                 disabled={{not this.cohorts.length}}
                 data-test-toggle
                 {{on "click" (fn @changeUserSelection user.id)}}
