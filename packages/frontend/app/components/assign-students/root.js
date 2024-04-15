@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { isBlank } from '@ember/utils';
 import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { findById, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
@@ -45,12 +46,14 @@ export default class AssignStudentsRootComponent extends Component {
   }
 
   get filteredUnassignedStudents() {
-    return this.args.query
-      ? this.sortedStudents.filter((student) => {
-          const regex = new RegExp(this.args.query, 'i');
-          return student.fullName.search(regex) > -1;
-        })
-      : this.sortedStudents;
+    if (isBlank(this.args.query)) {
+      return this.sortedStudents;
+    }
+
+    const regex = new RegExp(this.args.query.trim(), 'i');
+    return this.sortedStudents.filter((student) => {
+      return student.fullName.search(regex) > -1;
+    });
   }
 
   get selectedStudents() {
