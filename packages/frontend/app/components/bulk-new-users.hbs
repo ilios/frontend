@@ -2,9 +2,8 @@
   <div
     class="bulk-new-users"
     ...attributes
-    {{did-insert (perform this.load)}}
   >
-    {{#unless this.load.isRunning}}
+    {{#unless this.isLoading}}
       {{#if this.savingUserErrors.length}}
         <div class="saving-user-errors">
           <p>
@@ -172,7 +171,7 @@
             {{on "change" (pick "target.value" (perform this.setSchool))}}
             data-test-schools
           >
-            {{#each (sort-by "title" this.schools) as |school|}}
+            {{#each (sort-by "title" this.schoolsWithPermissionData.value) as |school|}}
               <option
                 value={{school.id}}
                 selected={{eq school.id this.bestSelectedSchool.id}}
@@ -187,24 +186,20 @@
             <label for="primary-cohort-{{templateId}}">
               {{t "general.primaryCohort"}}:
             </label>
-            {{#if this.loadCohorts.isIdle}}
-              <select
-                id="primary-cohort-{{templateId}}"
-                {{on "change" (pick "target.value" this.setPrimaryCohort)}}
-                data-test-cohorts
-              >
-                {{#each (sort-by "title" this.cohorts) as |cohort|}}
-                  <option
-                    value={{cohort.id}}
-                    selected={{eq cohort.id this.bestSelectedCohort.id}}
-                  >
-                    {{cohort.title}}
-                  </option>
-                {{/each}}
-              </select>
-            {{else}}
-              <LoadingSpinner />
-            {{/if}}
+            <select
+              id="primary-cohort-{{templateId}}"
+              {{on "change" (pick "target.value" this.setPrimaryCohort)}}
+              data-test-cohorts
+            >
+              {{#each (sort-by "title" this.cohorts) as |cohort|}}
+                <option
+                  value={{cohort.id}}
+                  selected={{eq cohort.id this.bestSelectedCohort.id}}
+                >
+                  {{cohort.title}}
+                </option>
+              {{/each}}
+            </select>
           </div>
         {{/unless}}
         <div class="buttons">

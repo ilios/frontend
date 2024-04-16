@@ -11,6 +11,8 @@ import PapaParse from 'papaparse';
 import { DateTime } from 'luxon';
 import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';
 import { findById, mapBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
 
 export default class BulkNewUsersComponent extends Component {
   @service flashMessages;
@@ -19,21 +21,101 @@ export default class BulkNewUsersComponent extends Component {
   @service store;
   @service currentUser;
   @service permissionChecker;
+  @service dataLoader;
 
   @tracked file = null;
   @tracked fileUploadError = false;
   @tracked nonStudentMode = true;
-  @tracked primarySchool = null;
   @tracked schoolId;
   @tracked primaryCohortId;
-  @tracked cohorts = [];
-  @tracked schools = [];
   @tracked proposedUsers = [];
   @tracked savedUserIds = [];
   @tracked savingAuthenticationErrors = [];
   @tracked savingUserErrors = [];
   @tracked selectedUsers = [];
   @tracked validUsers = [];
+
+  userModel = new TrackedAsyncData(this.currentUser.getModel());
+  get primarySchool() {
+    return findById(this.schoolData.value, this.userModel.value.belongsTo('school').id());
+  }
+
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.dataLoader.loadSchoolsForLearnerGroups());
+  }
+
+  @cached
+  get schoolsWithPermissionData() {
+    return new TrackedAsyncData(
+      filter(this.data.schools, async (school) => {
+        return this.permissionChecker.canCreateUser(school);
+      }),
+    );
+  }
+
+  get isLoading() {
+    return (
+      this.userModel.isPending ||
+      this.schoolData.isPending ||
+      this.schoolsWithPermissionData.isPending
+    );
+  }
+
+  @cached
+  get data() {
+    return {
+      schools: this.store.peekAll('school'),
+      programs: this.store.peekAll('program'),
+      programYears: this.store.peekAll('programYear'),
+      cohorts: this.store.peekAll('cohort'),
+    };
+  }
+
+  @cached
+  get programs() {
+    return this.data.programs.filter(
+      (program) => program.belongsTo('school').id() === this.bestSelectedSchool.id,
+    );
+  }
+
+  @cached
+  get programYears() {
+    const programIds = this.programs.map(({ id }) => id);
+
+    return this.data.programYears.filter((programYear) =>
+      programIds.includes(programYear.belongsTo('program').id()),
+    );
+  }
+
+  @cached
+  get schoolCohorts() {
+    const programYearIds = this.programYears.map(({ id }) => id);
+
+    return this.data.cohorts.filter((cohort) =>
+      programYearIds.includes(cohort.belongsTo('programYear').id()),
+    );
+  }
+
+  get cohorts() {
+    const cohortsWithData = this.schoolCohorts.map((cohort) => {
+      const programYear = findById(this.data.programYears, cohort.belongsTo('programYear').id());
+      const program = findById(this.data.programs, programYear.belongsTo('program').id());
+      return {
+        id: cohort.id,
+        model: cohort,
+        title: program.title + ' ' + cohort.title,
+        startYear: Number(programYear.startYear),
+        duration: Number(program.duration),
+      };
+    });
+
+    const lastYear = DateTime.now().minus({ year: 1 }).year;
+    return cohortsWithData.filter((obj) => {
+      const finalYear = obj.startYear + obj.duration;
+      return finalYear > lastYear;
+    });
+  }
 
   get sampleData() {
     const sampleUploadFields = [
@@ -53,7 +135,7 @@ export default class BulkNewUsersComponent extends Component {
 
   get bestSelectedSchool() {
     if (this.schoolId) {
-      const currentSchool = findById(this.schools, this.schoolId);
+      const currentSchool = findById(this.data.schools, this.schoolId);
 
       if (currentSchool) {
         return currentSchool;
@@ -64,22 +146,15 @@ export default class BulkNewUsersComponent extends Component {
 
   get bestSelectedCohort() {
     if (this.primaryCohortId) {
-      const currentCohort = findById(this.cohorts, this.primaryCohortId);
+      const currentCohort = findById(this.data.cohorts, this.primaryCohortId);
 
       if (currentCohort) {
         return currentCohort;
       }
     }
 
-    return this.cohorts.slice().reverse()[0];
+    return this.cohorts.reverse()[0];
   }
-
-  load = restartableTask(async () => {
-    const user = await this.currentUser.getModel();
-    this.primarySchool = await user.school;
-    this.schools = await this.loadSchools.perform();
-    this.cohorts = await this.loadCohorts.perform(this.bestSelectedSchool);
-  });
 
   @action
   toggleUserSelection(obj) {
@@ -156,7 +231,6 @@ export default class BulkNewUsersComponent extends Component {
 
   setSchool = restartableTask(async (id) => {
     this.schoolId = id;
-    this.cohorts = await this.loadCohorts.perform(this.bestSelectedSchool);
   });
 
   parseFile = restartableTask(async (file) => {
@@ -269,47 +343,6 @@ export default class BulkNewUsersComponent extends Component {
     this.validUsers = [];
     this.selectedUsers = [];
     this.proposedUsers = [];
-  });
-
-  loadSchools = restartableTask(async () => {
-    const schools = await this.store.findAll('school', { reload: true });
-    return filter(schools.slice(), async (school) => {
-      return this.permissionChecker.canCreateUser(school);
-    });
-  });
-
-  loadCohorts = restartableTask(async (school) => {
-    const cohorts = await this.store.query('cohort', {
-      filters: {
-        schools: [school.id],
-      },
-    });
-
-    //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = await all(mapBy(cohorts.slice(), 'programYear'));
-    await all(mapBy(programYears.slice(), 'program'));
-
-    const objects = await all(
-      cohorts.slice().map(async (cohort) => {
-        const obj = {
-          id: cohort.get('id'),
-          cohortModel: cohort,
-        };
-        const programYear = await cohort.programYear;
-        const program = await programYear.program;
-        obj.title = program.title + ' ' + cohort.title;
-        obj.startYear = programYear.startYear;
-        obj.duration = program.duration;
-
-        return obj;
-      }),
-    );
-
-    const lastYear = DateTime.now().minus({ year: 1 }).year;
-    return objects.filter((obj) => {
-      const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
-      return finalYear > lastYear;
-    });
   });
 }
 
