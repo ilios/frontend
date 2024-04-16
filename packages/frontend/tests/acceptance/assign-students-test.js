@@ -58,9 +58,9 @@ module('Acceptance | assign students', function (hooks) {
   test('users are listed in full name by default', async function (assert) {
     await page.visit();
     assert.strictEqual(page.root.manager.students.length, 2);
-    assert.strictEqual(page.root.manager.students[0].name.userNameInfo.fullName, 'Aardvark');
-    assert.ok(page.root.manager.students[0].name.userNameInfo.hasAdditionalInfo);
-    assert.strictEqual(page.root.manager.students[1].name.userNameInfo.fullName, 'Clem M. Chowder');
-    assert.notOk(page.root.manager.students[1].name.userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(page.root.manager.students[0].userNameInfo.fullName, 'Aardvark');
+    assert.ok(page.root.manager.students[0].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(page.root.manager.students[1].userNameInfo.fullName, 'Clem M. Chowder');
+    assert.notOk(page.root.manager.students[1].userNameInfo.hasAdditionalInfo);
   });
 });
