@@ -12,7 +12,7 @@
       <label>
         {{t "general.unassignedStudentsConfirmation" count=@selectedStudents.length}}:
       </label>
-      {{#if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
+      {{#if this.bestSelectedCohort}}
         <select
           aria-label={{t "general.cohorts"}}
           disabled={{@isSaving}}
