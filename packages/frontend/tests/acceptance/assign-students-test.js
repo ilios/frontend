@@ -5,8 +5,8 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'frontend/tests/pages/assign-students';
 import percySnapshot from '@percy/ember';
+import { DateTime } from 'luxon';
 
-// @todo flesh this acceptance test out [ST 2020/08/14]
 module('Acceptance | assign students', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -14,6 +14,12 @@ module('Acceptance | assign students', function (hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.school2 = this.server.create('school');
+    const program = this.server.create('program', { school: this.school });
+    const programYear = this.server.create('programYear', {
+      program,
+      startYear: DateTime.now().year,
+    });
+    this.server.create('cohort', { programYear });
     this.server.createList('userRole', 5);
     this.server.create('user', {
       school: this.school,
@@ -62,5 +68,82 @@ module('Acceptance | assign students', function (hooks) {
     assert.ok(page.root.manager.students[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(page.root.manager.students[1].userNameInfo.fullName, 'Clem M. Chowder');
     assert.notOk(page.root.manager.students[1].userNameInfo.hasAdditionalInfo);
+  });
+
+  test('applying text filter respects user selections', async function (assert) {
+    await page.visit();
+    assert.strictEqual(page.root.titleFilter.value, '');
+    assert.strictEqual(page.root.manager.students.length, 2);
+    assert.strictEqual(page.root.manager.students[0].userNameInfo.fullName, 'Aardvark');
+    assert.strictEqual(page.root.manager.students[1].userNameInfo.fullName, 'Clem M. Chowder');
+    assert.notOk(page.root.manager.isToggleAllIndeterminate);
+    assert.notOk(page.root.manager.isToggleAllChecked);
+    assert.notOk(page.root.manager.students[0].isToggleChecked);
+    assert.notOk(page.root.manager.students[1].isToggleChecked);
+    await page.root.titleFilter.set('chow');
+    assert.notOk(page.root.manager.isToggleAllIndeterminate);
+    assert.notOk(page.root.manager.isToggleAllChecked);
+    assert.strictEqual(page.root.manager.students.length, 1);
+    assert.strictEqual(page.root.manager.students[0].userNameInfo.fullName, 'Clem M. Chowder');
+    await page.root.manager.students[0].toggle();
+    assert.notOk(page.root.manager.isToggleAllIndeterminate);
+    assert.ok(page.root.manager.isToggleAllChecked);
+    await page.root.titleFilter.set('vark');
+    assert.ok(page.root.manager.isToggleAllIndeterminate);
+    assert.notOk(page.root.manager.isToggleAllChecked);
+    assert.strictEqual(page.root.manager.students.length, 2);
+    assert.strictEqual(page.root.manager.students[0].userNameInfo.fullName, 'Aardvark');
+    assert.strictEqual(page.root.manager.students[1].userNameInfo.fullName, 'Clem M. Chowder');
+    assert.ok(page.root.manager.students[1].isToggleChecked);
+    await page.root.manager.students[1].toggle();
+    assert.notOk(page.root.manager.isToggleAllIndeterminate);
+    assert.notOk(page.root.manager.isToggleAllChecked);
+    assert.strictEqual(page.root.manager.students.length, 1);
+    assert.strictEqual(page.root.manager.students[0].userNameInfo.fullName, 'Aardvark');
+    await page.root.manager.students[0].toggle();
+    assert.notOk(page.root.manager.isToggleAllIndeterminate);
+    assert.ok(page.root.manager.isToggleAllChecked);
+    await page.root.titleFilter.set('');
+    assert.strictEqual(page.root.manager.students.length, 2);
+    assert.strictEqual(page.root.manager.students[0].userNameInfo.fullName, 'Aardvark');
+    assert.strictEqual(page.root.manager.students[1].userNameInfo.fullName, 'Clem M. Chowder');
+    assert.ok(page.root.manager.students[0].isToggleChecked);
+    assert.notOk(page.root.manager.students[1].isToggleChecked);
+    assert.ok(page.root.manager.isToggleAllIndeterminate);
+    assert.notOk(page.root.manager.isToggleAllChecked);
+  });
+
+  test('changing school filter resets user selections', async function (assert) {
+    this.server.create('user', {
+      school: this.school2,
+      roleIds: [4],
+      displayName: 'Zeb',
+    });
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school, this.school2],
+    });
+    await page.visit();
+    assert.strictEqual(page.root.schoolFilter.selectedSchool, this.school.id);
+    assert.strictEqual(page.root.schoolFilter.options.length, 2);
+    assert.strictEqual(page.root.schoolFilter.options[0].text, 'school 0');
+    assert.strictEqual(page.root.schoolFilter.options[1].text, 'school 1');
+    assert.strictEqual(page.root.manager.students.length, 2);
+    assert.strictEqual(page.root.manager.students[0].userNameInfo.fullName, 'Aardvark');
+    assert.strictEqual(page.root.manager.students[1].userNameInfo.fullName, 'Clem M. Chowder');
+    assert.notOk(page.root.manager.isToggleAllIndeterminate);
+    assert.notOk(page.root.manager.isToggleAllChecked);
+    assert.notOk(page.root.manager.students[0].isToggleChecked);
+    assert.notOk(page.root.manager.students[1].isToggleChecked);
+    await page.root.manager.students[1].toggle();
+    assert.ok(page.root.manager.isToggleAllIndeterminate);
+    assert.notOk(page.root.manager.isToggleAllChecked);
+    await page.root.schoolFilter.set(this.school2.id);
+    assert.strictEqual(page.root.schoolFilter.selectedSchool, this.school2.id);
+    assert.notOk(page.root.manager.isToggleAllIndeterminate);
+    assert.notOk(page.root.manager.isToggleAllChecked);
+    assert.strictEqual(page.root.manager.students.length, 1);
+    assert.strictEqual(page.root.manager.students[0].userNameInfo.fullName, 'Zeb');
+    assert.notOk(page.root.manager.students[0].isToggleChecked);
   });
 });
