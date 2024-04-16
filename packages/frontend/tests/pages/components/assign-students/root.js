@@ -10,10 +10,11 @@ const definition = {
     options: collection('option', {
       selected: property('selected'),
     }),
-    titleFilter: {
-      set: fillable('input'),
-      value: value('input'),
-    },
+  },
+  titleFilter: {
+    scope: '[data-test-title-filter]',
+    set: fillable('input'),
+    value: value('input'),
   },
   manager,
 };

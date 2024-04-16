@@ -1,4 +1,12 @@
-import { collection, clickable, create, fillable, property, text } from 'ember-cli-page-object';
+import {
+  collection,
+  clickable,
+  create,
+  fillable,
+  property,
+  text,
+  value,
+} from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 
 const definition = {
@@ -15,6 +23,7 @@ const definition = {
     scope: '[data-test-cohorts]',
     label: text('label'),
     select: fillable('select'),
+    value: value('select'),
     isDisabled: property('disabled', 'select'),
     options: collection('option', {
       isSelected: property('selected'),
