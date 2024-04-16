@@ -19,7 +19,6 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     const program = this.server.create('program', { school: school1 });
     const programYear1 = this.server.create('programYear', {
       program,
-      duration: 4,
       startYear: thisYear,
     });
     const programYear2 = this.server.create('programYear', {
