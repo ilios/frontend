@@ -7,7 +7,7 @@
       {{t "general.unassignedStudentsSummaryTitle"}}
     </h2>
   </div>
-  <div class="form">
+  <div class="form" data-test-cohorts>
     {{#if this.cohorts.length}}
       <label>
         {{t "general.unassignedStudentsConfirmation" count=@selectedStudents.length}}:
@@ -15,8 +15,8 @@
       {{#if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
         <select
           aria-label={{t "general.cohorts"}}
+          disabled={{@isSaving}}
           {{on "change" (pick "target.value" (set this.primaryCohortId))}}
-          data-test-cohort-selector
         >
           {{#each (sort-by "title" this.cohorts) as |cohort|}}
             <option
@@ -65,7 +65,7 @@
                   (gt @selectedStudents.length 0)
                   (lt @selectedStudents.length @selectableStudents.length)
                 }}
-                disabled={{or (not @selectableStudents.length) (not this.cohorts.length)}}
+                disabled={{or @isSaving (not @selectableStudents.length) (not this.cohorts.length)}}
                 {{on "click" @changeAllUserSelections}}
                 data-test-toggle-all
               >
@@ -90,7 +90,7 @@
               <input type="checkbox"
                 aria-label={{if (includes user @selectedStudents) (t "general.deselectUser") (t "general.selectUser")}}
                 checked={{if (includes user @selectedStudents) "checked"}}
-                disabled={{not this.cohorts.length}}
+                disabled={{or @isSaving (not this.cohorts.length)}}
                 data-test-toggle
                 {{on "click" (fn @changeUserSelection user.id)}}
               >
