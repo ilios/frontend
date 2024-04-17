@@ -1,8 +1,6 @@
 <div
   class="ilios-users"
   data-test-ilios-users
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @limit @offset @query}}
   ...attributes
 >
   <div class="filters" data-test-filters>
@@ -11,7 +9,7 @@
         autocomplete="name"
         type="search"
         value={{@query}}
-        {{on "input" (pick "target.value" @setQuery)}}
+        {{on "input" (pick "target.value" this.setQuery)}}
         placeholder={{t "general.searchUsers"}}
         aria-label={{t "general.searchUsers"}}
       >
@@ -70,8 +68,8 @@
           @offset={{@offset}}
           @limit={{@limit}}
           @limitless={{true}}
-          @setOffset={{@setOffset}}
-          @setLimit={{@setLimit}}
+          @setOffset={{this.setOffset}}
+          @setLimit={{this.setLimit}}
         />
       </div>
       <div class="list">
@@ -88,8 +86,8 @@
           @offset={{@offset}}
           @limit={{@limit}}
           @limitless={{true}}
-          @setOffset={{@setOffset}}
-          @setLimit={{@setLimit}}
+          @setOffset={{this.setOffset}}
+          @setLimit={{this.setLimit}}
         />
       </div>
     {{else}}
