@@ -247,6 +247,7 @@ general:
   newUsersCreatedWarning: "Certains utilisateurs ont été créés, mais il y avait des erreurs."
   noAccountExists: "Votre compte d'utilisateur {accountName} ne correspond pas à ceux des utilisateur enregistre en Ilios. Si vous avez besoin d'aide, n'hesitez pas à communiquer avec votre administrateur  d'Ilios."
   noAvailableCohorts: Pas des Cohortes disponsibles
+  noCohortsAvailableForStudentAssignment: "Il n'y a pas de cohortes disponibles pour l'affectation des étudiants dans cette école."
   noCourses: "Il n'y a aucun des cours dans cette école."
   noCurriculumInventoryInstitutionalInfo: "Aucune information institutionnelle n'a été configurée pour cette école."
   noLearnerGroups: Pas de groupes des Étudiants

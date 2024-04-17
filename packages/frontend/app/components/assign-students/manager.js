@@ -1,22 +1,15 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { all } from 'rsvp';
 import { DateTime } from 'luxon';
-import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
-import { findById, mapBy } from 'ilios-common/utils/array-helpers';
+import { cached, tracked } from '@glimmer/tracking';
+import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
-export default class AssignStudentsComponent extends Component {
-  @service flashMessages;
+export default class AssignStudentsManagerComponent extends Component {
   @service store;
   @service dataLoader;
 
   @tracked primaryCohortId = null;
-  @tracked savedUserIds = [];
-  @tracked selectedUserIds = [];
 
   @cached
   get schoolData() {
@@ -89,54 +82,4 @@ export default class AssignStudentsComponent extends Component {
       return this.cohorts.reverse()[0];
     }
   }
-
-  get filteredStudents() {
-    return this.args.students
-      ? this.args.students.filter((user) => !this.savedUserIds.includes(user.id))
-      : [];
-  }
-
-  get totalUnassignedStudents() {
-    return this.args.students.length - this.savedUserIds.length;
-  }
-
-  @action
-  toggleCheck() {
-    const currentlySelected = this.selectedUserIds.length;
-    const totalDisplayed = this.filteredStudents.length;
-    this.selectedUserIds =
-      currentlySelected < totalDisplayed ? mapBy(this.filteredStudents, 'id') : [];
-  }
-
-  @action
-  toggleUserSelection(userId) {
-    if (this.selectedUserIds.includes(userId)) {
-      this.selectedUserIds = this.selectedUserIds.filter((id) => id !== userId);
-    } else {
-      this.selectedUserIds = [...this.selectedUserIds, userId];
-    }
-  }
-
-  save = dropTask(async () => {
-    this.savedUserIds = [];
-    const ids = this.selectedUserIds;
-    const cohort = this.bestSelectedCohort;
-    const students = this.args.students;
-    const studentsToModify = students.filter((user) => {
-      return ids.includes(user.get('id'));
-    });
-    if (!cohort || studentsToModify.length < 1) {
-      return;
-    }
-    studentsToModify.setEach('primaryCohort', cohort.model);
-
-    while (studentsToModify.get('length') > 0) {
-      const parts = studentsToModify.splice(0, 3);
-      await all(parts.map((part) => part.save()));
-      this.savedUserIds = [...this.savedUserIds, ...mapBy(parts, 'id')];
-    }
-    this.selectedUserIds = [];
-
-    this.flashMessages.success('general.savedSuccessfully');
-  });
 }

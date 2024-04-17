@@ -1,0 +1,15 @@
+@use "../../ilios-common/mixins" as cm;
+@use "../../mixins" as m;
+
+.assign-students-root {
+  @include cm.main-section;
+
+  .filters {
+    @include m.main-list-filters;
+
+    .schoolsfilter,
+    .titlefilter {
+      @include m.main-list-filter;
+    }
+  }
+}

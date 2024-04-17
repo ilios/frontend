@@ -1,6 +1,5 @@
 @import "components/admin-dashboard";
 @import "components/api-version-check";
-@import "components/assign-students";
 @import "components/back-to-admin-dashboard";
 @import "components/bulk-new-users";
 @import "components/connection-status";
@@ -154,3 +153,6 @@
 @import "components/courses/list";
 @import "components/courses/list-item";
 @import "components/courses/new";
+
+@import "components/assign-students/manager";
+@import "components/assign-students/root";
