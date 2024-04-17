@@ -1,11 +1,9 @@
 <div
   class="global-search"
-  {{did-insert (perform this.search) @query}}
-  {{did-update (perform this.search) @query}}
   data-test-global-search
   ...attributes
 >
-  <GlobalSearchBox @query={{@query}} @search={{@onQuery}} />
+  <GlobalSearchBox @query={{@query}} @search={{this.setQuery}} />
   <ul
     class="results {{if (and (not this.search.isRunning) (not this.hasResults)) "hidden"}}"
     data-test-results

@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
-import { TrackedAsyncData } from 'ember-async-data';
 import { findBy, findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 
@@ -17,9 +16,9 @@ export default class GlobalSearchComponent extends Component {
   size = 10;
   @tracked results = [];
 
-  @cached
-  get allSchools() {
-    return new TrackedAsyncData(this.store.findAll('school'));
+  constructor() {
+    super(...arguments);
+    this.search.perform();
   }
 
   get hasResults() {
@@ -27,7 +26,7 @@ export default class GlobalSearchComponent extends Component {
   }
 
   get schools() {
-    return this.allSchools.isResolved ? this.allSchools.value : [];
+    return this.store.peekAll('school');
   }
 
   get ignoredSchoolTitles() {
@@ -109,10 +108,16 @@ export default class GlobalSearchComponent extends Component {
     this.args.setIgnoredSchoolIds(ignoredSchoolIds);
   }
 
-  search = restartableTask(async (el, [query]) => {
+  @action
+  setQuery(query) {
+    this.args.setQuery(query);
+    this.search.perform();
+  }
+
+  search = restartableTask(async () => {
     this.results = [];
-    if (query?.length > MIN_INPUT) {
-      const { courses } = await this.iliosSearch.forCurriculum(query);
+    if (this.args.query?.length > MIN_INPUT) {
+      const { courses } = await this.iliosSearch.forCurriculum(this.args.query);
 
       this.results = courses;
     }
