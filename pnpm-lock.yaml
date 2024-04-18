@@ -82,8 +82,8 @@ importers:
         specifier: ^4.23.0
         version: 4.23.0
       caniuse-db:
-        specifier: ^1.0.30001610
-        version: 1.0.30001610
+        specifier: ^1.0.30001611
+        version: 1.0.30001611
       class-validator:
         specifier: ^0.14.0
         version: 0.14.1
@@ -644,8 +644,8 @@ importers:
         specifier: ^4.22.3
         version: 4.23.0
       caniuse-db:
-        specifier: ^1.0.30001610
-        version: 1.0.30001610
+        specifier: ^1.0.30001611
+        version: 1.0.30001611
       ember-auto-import:
         specifier: ^2.7.2
         version: 2.7.2(webpack@5.91.0)
@@ -830,8 +830,8 @@ importers:
         specifier: ^4.22.3
         version: 4.23.0
       caniuse-db:
-        specifier: ^1.0.30001610
-        version: 1.0.30001610
+        specifier: ^1.0.30001611
+        version: 1.0.30001611
       ember-auto-import:
         specifier: ^2.7.2
         version: 2.7.2(webpack@5.91.0)
@@ -7827,8 +7827,8 @@ packages:
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-db@1.0.30001610:
-    resolution: {integrity: sha512-GLdKwZR0S1EwOBIJlCze89enIbFf0Om/wzHF1GU8nIqf82NmxkB8JsfkOR5A6cZR57wiPJf0WBU+7gnNf0+EyQ==}
+  /caniuse-db@1.0.30001611:
+    resolution: {integrity: sha512-9IOx+mNYnYJDxYFeGJFgt3scvLXZguxJlHmZFLTtyYkJVMRwIUk2kGH29dYM/FPOZe38uZGvgYtJFNL3Ym2o2A==}
     dev: true
 
   /caniuse-lite@1.0.30001609:
