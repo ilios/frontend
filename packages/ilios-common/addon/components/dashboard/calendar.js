@@ -8,6 +8,7 @@ import { map } from 'rsvp';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
+
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;
   @service schoolEvents;
@@ -20,13 +21,27 @@ export default class DashboardCalendarComponent extends Component {
 
   @tracked usersPrimarySchool;
   @tracked absoluteIcsUri;
+  @tracked user;
 
   @tracked ourEvents = [];
+
+  @tracked userContext;
 
   @use cohortProxies = new AsyncProcess(() => [
     this.getCohortProxies.bind(this),
     this.bestSelectedSchool,
   ]);
+
+  get canFilterByUserContext() {
+    // KLUDGE!
+    // checking if the current user is an instructor at all cast the net too wide.
+    // what we really want is to check if this user instructs in the currently selected school.
+    // <code>CurrentUser::isTeachingCourseInSchool()</code> is supposed to provide that functionality, but it's bugged.
+    // until this gets fixed we'll have to use this getter on the User model instead.
+    // @see https://github.com/ilios/ilios/issues/5410
+    // [ST 2024/04/18]
+    return this.user?.isInstructor;
+  }
 
   get fromTimeStamp() {
     if ('week' === this.args.selectedView) {
@@ -64,10 +79,9 @@ export default class DashboardCalendarComponent extends Component {
   }
 
   setup = dropTask(async () => {
-    const user = await this.currentUser.getModel();
-    this.usersPrimarySchool = await user.school;
-
-    const icsFeedKey = user.icsFeedKey;
+    this.user = await this.currentUser.getModel();
+    this.usersPrimarySchool = await this.user.school;
+    const icsFeedKey = this.user.icsFeedKey;
     const apiHost = this.iliosConfig.apiHost;
     const loc = window.location.protocol + '//' + window.location.hostname;
     const server = apiHost ? apiHost : loc;
@@ -130,6 +144,7 @@ export default class DashboardCalendarComponent extends Component {
       'eventsWithSelectedCohorts',
       'eventsWithSelectedCourses',
       'eventsWithSelectedTerms',
+      'eventsWithSelectedUserContext',
     ];
     const allFilteredEvents = eventTypes.map((name) => {
       return this[name];
@@ -204,6 +219,16 @@ export default class DashboardCalendarComponent extends Component {
       const allTerms = mapBy([].concat(event.sessionTerms || [], event.courseTerms || []), 'id');
       const matchingTerms = allTerms.filter((id) => selectedIds.includes(id));
       return matchingTerms.length > 0;
+    });
+  }
+
+  get eventsWithSelectedUserContext() {
+    if (!this.userContext) {
+      return this.ourEvents;
+    }
+
+    return this.ourEvents.filter((event) => {
+      return event.userContexts.includes(this.userContext);
     });
   }
 
