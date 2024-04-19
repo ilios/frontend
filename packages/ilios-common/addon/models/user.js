@@ -639,4 +639,20 @@ export default class User extends Model {
     });
     return lowestGroup ? lowestGroup : null;
   }
+
+  /**
+   * Returns a list of all courses that this user is instructing in.
+   * @todo implement [ST 2024/04/18]
+   */
+  async getAllInstructedCourses() {
+    return [];
+  }
+
+  /**
+   * Returns a list of all sessions that this user is instructing in.
+   * @todo implement [ST 2024/04/18]
+   */
+  async getAllInstructedSessions() {
+    return [];
+  }
 }

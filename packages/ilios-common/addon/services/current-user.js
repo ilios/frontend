@@ -155,11 +155,13 @@ export default class CurrentUserService extends Service {
     return matches.length > 0;
   }
   async isTeachingCourseInSchool(school) {
-    const user = await this.getModel();
     const schoolCourseIds = school.hasMany('courses').ids();
-
-    const courses = await user.get('allInstructedCourses');
-    const matches = courses.filter((course) => schoolCourseIds.includes(course.get('id')));
+    if (!schoolCourseIds.length) {
+      return false;
+    }
+    const user = await this.getModel();
+    const courses = await user.getAllInstructedCourses();
+    const matches = courses.filter((course) => schoolCourseIds.includes(course.id));
 
     return matches.length > 0;
   }
@@ -200,10 +202,8 @@ export default class CurrentUserService extends Service {
   }
   async isTeachingCourse(course) {
     const user = await this.getModel();
-
-    const courses = await user.get('allInstructedCourses');
+    const courses = await user.getAllInstructedCourses();
     const matches = courses.filter((c) => c.id === course.id);
-
     return matches.length > 0;
   }
   async isAdministeringSession(session) {
@@ -216,7 +216,7 @@ export default class CurrentUserService extends Service {
   async isTeachingSession(session) {
     const user = await this.getModel();
 
-    const sessions = await user.get('allInstructedSessions');
+    const sessions = await user.getAllInstructedSessions();
     const matches = sessions.filter((s) => s.id === session.id);
 
     return matches.length > 0;
