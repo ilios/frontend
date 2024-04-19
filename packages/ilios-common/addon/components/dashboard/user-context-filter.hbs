@@ -1,0 +1,9 @@
+<div class="dashboard-user-context-filter">
+  <button type="button" {{on "click" this.toggle}}>
+    {{#if (eq 'instructor' @userContext)}}
+      Show all
+    {{else}}
+      Show instructed only
+    {{/if}}
+  </button>
+</div>

@@ -101,6 +101,9 @@
         @clearFilters={{@clearFilters}}
       />
     {{/if}}
+    {{#if this.canFilterByUserContext}}
+      <Dashboard::UserContextFilter @setUserContext={{set this.userContext}} @userContext={{this.userContext}}/>
+    {{/if}}
     <section class="fullwidth ilios-calendar-container"
       {{did-insert (perform this.loadEvents) this.bestSelectedSchool this.fromTimeStamp this.toTimeStamp @mySchedule}}
       {{did-update (perform this.loadEvents) this.bestSelectedSchool this.fromTimeStamp this.toTimeStamp @mySchedule}}
