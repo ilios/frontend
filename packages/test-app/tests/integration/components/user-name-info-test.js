@@ -22,13 +22,6 @@ module('Integration | Component | user-name-info', function (hooks) {
   });
 
   test('it renders with additional info when configured to do so', async function (assert) {
-    this.server.get('application/config', function () {
-      return {
-        config: {
-          showCampusNameOfRecord: true,
-        },
-      };
-    });
     const user = this.server.create('user', { displayName: 'Clem Chowder' });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
