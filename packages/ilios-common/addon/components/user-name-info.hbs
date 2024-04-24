@@ -7,7 +7,7 @@
   {{#if @user.pronouns}}
     <span data-test-pronouns>({{@user.pronouns}})</span>
   {{/if}}
-  {{#if @user.hasDifferentDisplayName}}
+  {{#if (and this.showCampusNameOfRecord @user.hasDifferentDisplayName)}}
     <span
       data-test-info
       {{did-insert (set this.theElement)}}
