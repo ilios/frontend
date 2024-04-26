@@ -16,6 +16,7 @@ export default function (config) {
             type: 'form',
             materialStatusEnabled: true,
             apiVersion,
+            showCampusNameOfRecord: true,
           },
         };
       });

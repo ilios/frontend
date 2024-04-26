@@ -59,6 +59,7 @@ export default function (config) {
             apiVersion,
             appVersion: '1.2.3',
             materialStatusEnabled: true,
+            showCampusNameOfRecord: true,
           },
         };
         // return { config: {
