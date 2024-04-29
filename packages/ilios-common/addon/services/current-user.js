@@ -3,6 +3,7 @@ import { get } from '@ember/object';
 import Service, { service } from '@ember/service';
 import { DateTime } from 'luxon';
 import jwtDecode from 'ilios-common/utils/jwt-decode';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CurrentUserService extends Service {
   @service store;
@@ -155,11 +156,12 @@ export default class CurrentUserService extends Service {
     return matches.length > 0;
   }
   async isTeachingCourseInSchool(school) {
-    const user = await this.getModel();
     const schoolCourseIds = school.hasMany('courses').ids();
-
-    const courses = await user.get('allInstructedCourses');
-    const matches = courses.filter((course) => schoolCourseIds.includes(course.get('id')));
+    if (!schoolCourseIds.length) {
+      return false;
+    }
+    const courses = await this.getAllInstructedCourses();
+    const matches = courses.filter((course) => schoolCourseIds.includes(course.id));
 
     return matches.length > 0;
   }
@@ -199,11 +201,8 @@ export default class CurrentUserService extends Service {
     return matches.length > 0;
   }
   async isTeachingCourse(course) {
-    const user = await this.getModel();
-
-    const courses = await user.get('allInstructedCourses');
+    const courses = await this.getAllInstructedCourses();
     const matches = courses.filter((c) => c.id === course.id);
-
     return matches.length > 0;
   }
   async isAdministeringSession(session) {
@@ -214,9 +213,7 @@ export default class CurrentUserService extends Service {
     return ids.includes(session.get('id'));
   }
   async isTeachingSession(session) {
-    const user = await this.getModel();
-
-    const sessions = await user.get('allInstructedSessions');
+    const sessions = await this.getAllInstructedSessions();
     const matches = sessions.filter((s) => s.id === session.id);
 
     return matches.length > 0;
@@ -374,5 +371,84 @@ export default class CurrentUserService extends Service {
     }
 
     return roles;
+  }
+
+  /**
+   * Returns a list of all courses that this user is instructing in.
+   * This entails the following user-to-course relationship paths:
+   * - instructor -> ILMs-> sessions -> courses
+   * - instructor -> instructor-groups -> ILMs -> sessions -> courses
+   * - instructor -> learner-groups -> ILMs -> sessions -> courses
+   * - instructor -> offerings -> sessions -> courses
+   * - instructor -> instructor-groups -> offerings -> sessions -> courses
+   * - instructor -> learner-groups -> offerings -> sessions -> courses
+   */
+  async getAllInstructedCourses() {
+    const sessions = await this.getAllInstructedSessions();
+    const courses = await Promise.all(sessions.map((s) => s.course));
+    return uniqueValues(courses);
+  }
+
+  /**
+   * Returns a list of all sessions that this user is instructing in.
+   * This entails the following user-to-session relationship paths:
+   * - instructor -> ILMs-> sessions
+   * - instructor -> instructor-groups -> ILMs -> sessions
+   * - instructor -> learner-groups -> ILMs -> sessions
+   * - instructor -> offerings -> sessions
+   * - instructor -> instructor-groups -> offerings -> sessions
+   * - instructor -> learner-groups -> offerings -> sessions
+   */
+  async getAllInstructedSessions() {
+    const user = await this.getModel();
+    const instructedIlms = await user.instructorIlmSessions;
+    const instructedLearnerGroups = await user.instructedLearnerGroups;
+    const instructorGroups = await user.instructorGroups;
+
+    // instructor -> ILMs -> sessions
+    const instructedIlmsSessions = await Promise.all(instructedIlms.map((t) => t.session));
+
+    // instructor -> instructor-groups -> ILMs -> sessions
+    const instructorGroupsIlms = await Promise.all(instructorGroups.map((i) => i.ilmSessions));
+    const instructorGroupsIlmsSessions = await Promise.all(
+      instructorGroupsIlms.flat().map((ilm) => ilm.session),
+    );
+
+    // instructor -> learner-groups -> ILMs -> sessions
+    const learnerGroupsIlms = await Promise.all(instructedLearnerGroups.map((i) => i.ilmSessions));
+    const learnerGroupsIlmsSessions = await Promise.all(
+      learnerGroupsIlms.flat().map((ilm) => ilm.session),
+    );
+
+    // instructor -> offerings -> sessions
+    const instructedOfferings = await user.instructedOfferings;
+    const instructedOfferingsSessions = await Promise.all(
+      instructedOfferings.map((t) => t.session),
+    );
+
+    // instructor -> instructor-groups -> offerings -> sessions
+    const instructorGroupsOfferings = await Promise.all(instructorGroups.map((i) => i.offerings));
+    const instructorGroupsOfferingsSessions = await Promise.all(
+      instructorGroupsOfferings.flat().map((offering) => offering.session),
+    );
+
+    // instructor -> learner-groups -> offerings -> sessions
+    const learnerGroupsOfferings = await Promise.all(
+      instructedLearnerGroups.map((i) => i.offerings),
+    );
+    const learnerGroupsOfferingsSessions = await Promise.all(
+      learnerGroupsOfferings.flat().map((offering) => offering.session),
+    );
+
+    return uniqueValues(
+      [
+        ...instructedIlmsSessions,
+        ...instructorGroupsIlmsSessions,
+        ...learnerGroupsIlmsSessions,
+        ...instructedOfferingsSessions,
+        ...instructorGroupsOfferingsSessions,
+        ...learnerGroupsOfferingsSessions,
+      ].filter(Boolean),
+    );
   }
 }
