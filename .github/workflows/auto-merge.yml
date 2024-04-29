@@ -48,4 +48,4 @@ jobs:
         if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') }}
         run: gh pr merge --merge --auto ${{ github.event.number }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.ZORGBORT_TOKEN }}

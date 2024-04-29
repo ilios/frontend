@@ -26,7 +26,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.ZORGBORT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Update Transitive Dependencies
           title: Update Transitive Dependencies
           body: |
@@ -41,4 +41,4 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation == 'created'
         run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.ZORGBORT_TOKEN }}
