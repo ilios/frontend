@@ -11,7 +11,7 @@
           <li data-test-course>
             <LinkTo @route="course" @model={{course}}>
               <FaIcon @icon="square-up-right" />
-              {{course.title}}
+              {{course.title}} ({{course.year}} - {{year-next course.year}})
             </LinkTo>
           </li>
         {{/each}}

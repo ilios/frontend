@@ -106,7 +106,7 @@
             {{#each (sort-by "courseTitle" this.courses) as |obj|}}
               <li>
                 <LinkTo @route="course" @model={{obj.course}}>
-                  {{obj.courseTitle}}
+                  {{obj.courseTitle}} ({{obj.course.year}} - {{year-next obj.course.year}})
                 </LinkTo>
               </li>
             {{/each}}
