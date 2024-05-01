@@ -11,7 +11,11 @@
           <li data-test-course>
             <LinkTo @route="course" @model={{course}}>
               <FaIcon @icon="square-up-right" />
-              {{course.title}} ({{course.year}} - {{year-next course.year}})
+              {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                {{course.title}} ({{course.year}} - {{year-next course.year}})
+              {{else}}
+                {{course.title}} ({{course.year}})
+              {{/if}}
             </LinkTo>
           </li>
         {{/each}}

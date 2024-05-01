@@ -43,11 +43,11 @@ module('Integration | Component | instructor-group/courses', function (hooks) {
     await render(hbs`<InstructorGroup::Courses @instructorGroup={{this.instructorGroup}} />`);
     assert.strictEqual(component.title, 'Associated Courses (3)');
     assert.strictEqual(component.courses.length, 3);
-    assert.strictEqual(component.courses[0].text, 'course 0 (2013 - 14)');
+    assert.strictEqual(component.courses[0].text, 'course 0 (2013)');
     assert.strictEqual(component.courses[0].url, '/courses/1');
-    assert.strictEqual(component.courses[1].text, 'course 1 (2013 - 14)');
+    assert.strictEqual(component.courses[1].text, 'course 1 (2013)');
     assert.strictEqual(component.courses[1].url, '/courses/2');
-    assert.strictEqual(component.courses[2].text, 'course 2 (2013 - 14)');
+    assert.strictEqual(component.courses[2].text, 'course 2 (2013)');
     assert.strictEqual(component.courses[2].url, '/courses/3');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

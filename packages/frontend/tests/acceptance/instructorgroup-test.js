@@ -69,8 +69,8 @@ module('Acceptance | Instructor Group', function (hooks) {
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.root.users.users[1].userNameInfo.fullName, '2 guy M. Mc2son');
     assert.strictEqual(page.root.courses.courses.length, 2);
-    assert.strictEqual(page.root.courses.courses[0].text, 'course 0 (2013 - 14)');
-    assert.strictEqual(page.root.courses.courses[1].text, 'course 1 (2013 - 14)');
+    assert.strictEqual(page.root.courses.courses[0].text, 'course 0 (2013)');
+    assert.strictEqual(page.root.courses.courses[1].text, 'course 1 (2013)');
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
   });
