@@ -56,8 +56,8 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     assert.notOk(component.users.users[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.courses.title, 'Associated Courses (2)');
     assert.strictEqual(component.courses.courses.length, 2);
-    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1 (2013 - 2014)');
-    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101 (2013 - 2014)');
+    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1 (2013 - 14)');
+    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101 (2013 - 14)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -82,8 +82,8 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     assert.notOk(component.users.users[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.courses.title, 'Associated Courses (2)');
     assert.strictEqual(component.courses.courses.length, 2);
-    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1 (2013 - 2014)');
-    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101 (2013 - 2014)');
+    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1 (2013 - 14)');
+    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101 (2013 - 14)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

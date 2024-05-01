@@ -104,8 +104,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
     );
     assert.notOk(component.instructorManager.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.associatedCourses.courses.length, 2);
-    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013 - 2014)');
-    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013 - 2014)');
+    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013 - 14)');
+    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013 - 14)');
     assert.ok(component.actions.buttons.toggle.isVisible);
     assert.ok(component.actions.buttons.bulkAssignment.isVisible);
     assert.ok(component.actions.buttons.manageUsers.isVisible);
@@ -354,7 +354,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     />`);
 
     assert.strictEqual(component.associatedCourses.courses.length, 1);
-    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013 - 2014)');
+    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013 - 14)');
   });
 
   test('associated courses are linked to course pages', async function (assert) {
@@ -390,9 +390,9 @@ module('Integration | Component | learner-group/root', function (hooks) {
     />`);
 
     assert.strictEqual(component.associatedCourses.courses.length, 2);
-    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013 - 2014)');
+    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013 - 14)');
     assert.strictEqual(component.associatedCourses.courses[0].linksTo, '/courses/1');
-    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013 - 2014)');
+    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013 - 14)');
     assert.strictEqual(component.associatedCourses.courses[1].linksTo, '/courses/2');
   });
 
