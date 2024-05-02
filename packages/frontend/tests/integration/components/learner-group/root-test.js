@@ -104,8 +104,6 @@ module('Integration | Component | learner-group/root', function (hooks) {
     );
     assert.notOk(component.instructorManager.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.associatedCourses.courses.length, 2);
-    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013)');
-    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013)');
     assert.ok(component.actions.buttons.toggle.isVisible);
     assert.ok(component.actions.buttons.bulkAssignment.isVisible);
     assert.ok(component.actions.buttons.manageUsers.isVisible);
@@ -144,6 +142,152 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.notOk(component.actions.buttons.manageUsers.isVisible);
     assert.notOk(component.actions.buttons.close.isVisible);
     assert.strictEqual(component.actions.title, 'Members (0)');
+  });
+
+  test('renders associated courses display with single course year if calendar year boundary IS NOT crossed', async function (assert) {
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
+    const user3 = this.server.create('user');
+    const user4 = this.server.create('user');
+    const user5 = this.server.create('user', {
+      firstName: 'Walther',
+      middleName: 'von der',
+      lastName: 'Vogelweide',
+    });
+    const user6 = this.server.create('user', {
+      firstName: 'Zeb',
+      lastName: 'Zoober',
+      displayName: 'Aardvark',
+    });
+    const cohort = this.server.create('cohort', {
+      title: 'this cohort',
+      users: [user1, user2, user3, user4],
+      programYear: this.programYear,
+    });
+    const subGroup = this.server.create('learner-group', {
+      title: 'test sub-group',
+      cohort,
+    });
+
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
+
+    const course2 = this.server.create('course');
+    const session2 = this.server.create('session', { course: course2 });
+    const ilm = this.server.create('ilm-session', { session: session2 });
+
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'test group',
+      location: 'test location',
+      children: [subGroup],
+      instructors: [user5, user6],
+      users: [user1, user2],
+      offerings: [offering],
+      ilmSessions: [ilm],
+      cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: false,
+          apiVersion,
+        },
+      };
+    });
+
+    await render(hbs`<LearnerGroup::Root
+      @canUpdate={{true}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
+      @sortUsersBy="fullName"
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013)');
+    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013)');
+  });
+
+  test('renders associated courses display with course year range if calendar year boundary IS crossed', async function (assert) {
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
+    const user3 = this.server.create('user');
+    const user4 = this.server.create('user');
+    const user5 = this.server.create('user', {
+      firstName: 'Walther',
+      middleName: 'von der',
+      lastName: 'Vogelweide',
+    });
+    const user6 = this.server.create('user', {
+      firstName: 'Zeb',
+      lastName: 'Zoober',
+      displayName: 'Aardvark',
+    });
+    const cohort = this.server.create('cohort', {
+      title: 'this cohort',
+      users: [user1, user2, user3, user4],
+      programYear: this.programYear,
+    });
+    const subGroup = this.server.create('learner-group', {
+      title: 'test sub-group',
+      cohort,
+    });
+
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
+
+    const course2 = this.server.create('course');
+    const session2 = this.server.create('session', { course: course2 });
+    const ilm = this.server.create('ilm-session', { session: session2 });
+
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'test group',
+      location: 'test location',
+      children: [subGroup],
+      instructors: [user5, user6],
+      users: [user1, user2],
+      offerings: [offering],
+      ilmSessions: [ilm],
+      cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+          apiVersion,
+        },
+      };
+    });
+
+    await render(hbs`<LearnerGroup::Root
+      @canUpdate={{true}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
+      @sortUsersBy="fullName"
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013 - 2014)');
+    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013 - 2014)');
   });
 
   test('Needs accommodation', async function (assert) {
@@ -354,7 +498,6 @@ module('Integration | Component | learner-group/root', function (hooks) {
     />`);
 
     assert.strictEqual(component.associatedCourses.courses.length, 1);
-    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013)');
   });
 
   test('associated courses are linked to course pages', async function (assert) {
@@ -390,9 +533,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     />`);
 
     assert.strictEqual(component.associatedCourses.courses.length, 2);
-    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013)');
     assert.strictEqual(component.associatedCourses.courses[0].linksTo, '/courses/1');
-    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013)');
     assert.strictEqual(component.associatedCourses.courses[1].linksTo, '/courses/2');
   });
 
