@@ -10,11 +10,11 @@
         {{#each (sort-by "title" @instructorGroup.courses) as |course|}}
           <li data-test-course>
             <LinkTo @route="course" @model={{course}}>
-              <FaIcon @icon="square-up-right" />
+              <FaIcon @icon="square-up-right" /> {{course.title}}
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{course.title}} ({{course.year}} - {{year-next course.year}})
+                ({{course.year}} - {{add course.year 1}})
               {{else}}
-                {{course.title}} ({{course.year}})
+                ({{course.year}})
               {{/if}}
             </LinkTo>
           </li>
