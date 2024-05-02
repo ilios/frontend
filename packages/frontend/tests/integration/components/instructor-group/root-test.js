@@ -82,6 +82,15 @@ module('Integration | Component | instructor-group/root', function (hooks) {
 
   test('it displays single course year if calendar year boundary IS NOT crossed', async function (assert) {
     this.set('group', this.instructorGroup);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: false,
+          apiVersion,
+        },
+      };
+    });
     await render(
       hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{true}} />`,
     );
@@ -93,8 +102,17 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it displays single course year if calendar year boundary IS crossed', async function (assert) {
+  test('it displays course year range if calendar year boundary IS crossed', async function (assert) {
     this.set('group', this.instructorGroup);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+          apiVersion,
+        },
+      };
+    });
     await render(
       hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{true}} />`,
     );
