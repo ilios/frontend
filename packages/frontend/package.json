@@ -40,7 +40,7 @@
     "@glimmer/tracking": "^1.1.2",
     "@percy/cli": "^1.28.5",
     "@percy/ember": "^4.2.0",
-    "@sentry/ember": "7.112.2",
+    "@sentry/ember": "7.113.0",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
     "broccoli-merge-trees": "^4.2.0",
