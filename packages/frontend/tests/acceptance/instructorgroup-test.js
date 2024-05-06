@@ -54,7 +54,7 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(15);
+    assert.expect(13);
     await visit(url);
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'instructor-group');
@@ -69,10 +69,40 @@ module('Acceptance | Instructor Group', function (hooks) {
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.root.users.users[1].userNameInfo.fullName, '2 guy M. Mc2son');
     assert.strictEqual(page.root.courses.courses.length, 2);
-    assert.strictEqual(page.root.courses.courses[0].text, 'course 0');
-    assert.strictEqual(page.root.courses.courses[1].text, 'course 1');
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('course year shows as single year if calendar year boundary IS NOT crossed', async function (assert) {
+    await setupAuthentication({ school: this.school });
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: false,
+          apiVersion,
+        },
+      };
+    });
+    await visit(url);
+    assert.strictEqual(page.root.courses.courses[0].text, 'course 0 (2013)');
+    assert.strictEqual(page.root.courses.courses[1].text, 'course 1 (2013)');
+  });
+
+  test('course year shows as range if calendar year boundary IS crossed', async function (assert) {
+    await setupAuthentication({ school: this.school });
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+          apiVersion,
+        },
+      };
+    });
+    await visit(url);
+    assert.strictEqual(page.root.courses.courses[0].text, 'course 0 (2013 - 2014)');
+    assert.strictEqual(page.root.courses.courses[1].text, 'course 1 (2013 - 2014)');
   });
 
   test('change title', async function (assert) {

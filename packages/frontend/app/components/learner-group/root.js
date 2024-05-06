@@ -38,6 +38,7 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked showNewLearnerGroupForm = false;
   @tracked currentGroupsSaved = 0;
   @tracked totalGroupsToSave = 0;
+  @service iliosConfig;
 
   @cached
   get subGroupsData() {
@@ -336,5 +337,14 @@ export default class LearnerGroupRootComponent extends Component {
       uniqueValues(courseObj.groups);
       return arr;
     }, []);
+  }
+
+  crossesBoundaryConfig = new TrackedAsyncData(
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+  );
+
+  @cached
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }
 }

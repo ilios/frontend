@@ -107,6 +107,11 @@
               <li>
                 <LinkTo @route="course" @model={{obj.course}}>
                   {{obj.courseTitle}}
+                  {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                    ({{obj.course.year}} - {{add obj.course.year 1}})
+                  {{else}}
+                    ({{obj.course.year}})
+                  {{/if}}
                 </LinkTo>
               </li>
             {{/each}}
