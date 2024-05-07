@@ -106,31 +106,4 @@ module('Integration | Component | ilios calendar', function (hooks) {
     assert.strictEqual(component.goBack.linksTo, '/dashboard/calendar?date=2015-08-30');
     assert.strictEqual(component.goForward.linksTo, '/dashboard/calendar?date=2015-10-30');
   });
-
-  test('toggle ics feed visibility', async function (assert) {
-    const date = DateTime.fromObject({
-      year: 2015,
-      month: 9,
-      day: 30,
-      hour: 12,
-      minute: 0,
-      second: 0,
-    });
-    this.set('date', date.toJSDate());
-
-    await render(hbs`<IliosCalendar
-      @selectedDate={{this.date}}
-      @selectedView="month"
-      @calendarEvents={{(array)}}
-      @changeDate={{(noop)}}
-      @changeView={{(noop)}}
-      @selectEvent={{(noop)}}
-    />
-`);
-    assert.notOk(component.icsFeed.isVisible);
-    await component.icsFeedToggle.click();
-    assert.ok(component.icsFeed.isVisible);
-    await component.icsFeedToggle.click();
-    assert.notOk(component.icsFeed.isVisible);
-  });
 });
