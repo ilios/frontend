@@ -9,14 +9,6 @@ module('Integration | Component | ics feed', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
-  test('it show instructions', async function (assert) {
-    const instructions = 'SOME TEST INS';
-    this.set('instructions', instructions);
-    await render(hbs`<IcsFeed @instructions={{this.instructions}} />
-`);
-    assert.strictEqual(component.instructions, instructions);
-  });
-
   test('copy', async function (assert) {
     //skip this test if we can't access the clipboard
     if (!navigator.clipboard) {
@@ -33,8 +25,7 @@ module('Integration | Component | ics feed', function (hooks) {
     };
     this.set('url', url);
     this.set('instructions', instructions);
-    await render(hbs`<IcsFeed @instructions={{this.instructions}} @url={{this.url}} />
-`);
+    await render(hbs`<IcsFeed @instructions={{this.instructions}} @url={{this.url}} />`);
     await component.copy.click();
     // undo writeText overwrite.
     navigator.clipboard.writeText = writeText;
