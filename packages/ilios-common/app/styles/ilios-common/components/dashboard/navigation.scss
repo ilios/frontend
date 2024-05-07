@@ -15,6 +15,19 @@
 
     li {
       margin: 0;
+
+      .ilios-calendar-ics-feed {
+        display: flex;
+        margin: 0.175em auto 0;
+        padding: 0;
+        text-align: center;
+        width: 90%;
+
+        .highlight {
+          color: c.$orange;
+          @include m.font-size("large");
+        }
+      }
     }
 
     @include m.for-tablet-and-up {
@@ -22,6 +35,10 @@
 
       li {
         margin-right: 3em;
+
+        &:nth-of-type(3) {
+          margin-right: 0.5em;
+        }
       }
     }
   }
@@ -40,5 +57,13 @@
     &.active {
       background-color: c.$fernGreen;
     }
+  }
+}
+
+// tooltips are outside the document flow so have to be styled outside the component
+.ics-feed-display-success-message-tooltip {
+  padding: 0;
+  &.ilios-tooltip .content {
+    max-width: 100%;
   }
 }
