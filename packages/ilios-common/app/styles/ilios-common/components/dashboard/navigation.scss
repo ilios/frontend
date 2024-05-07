@@ -24,6 +24,10 @@
         width: 90%;
 
         .highlight {
+          @include m.for-phone-only {
+            /* stylelint-disable property-disallowed-list */
+            width: 3vw;
+          }
           color: c.$orange;
           @include m.font-size("large");
         }
