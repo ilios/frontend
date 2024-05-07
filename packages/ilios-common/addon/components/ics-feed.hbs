@@ -3,20 +3,22 @@
   data-test-ics-feed
   ...attributes
 >
-  <p data-test-instructions>
-    {{@instructions}}
-  </p>
-  <p>
-    <span>
-      <CopyButton @clipboardText={{@url}} @success={{perform this.textCopied}}>
-        <FaIcon @icon="copy" />
-        {{t "general.copyIcsFeedUrl"}}
-      </CopyButton>
-      {{#if this.textCopied.isRunning}}
-        <span class="yes">
-          {{t "general.copiedSuccessfully"}}
-        </span>
-      {{/if}}
-    </span>
-  </p>
+  <CopyButton
+    @clipboardText={{@url}}
+    @success={{perform this.textCopied}}
+    {{!-- template-lint-disable no-at-ember-render-modifiers --}}
+    {{did-insert (set this.copyButton)}}
+    title={{if @instructions @instructions 'Copy My ICS Link'}}
+    class="link-button highlight"
+  >
+    <FaIcon @icon="square-rss" />
+  </CopyButton>
+  {{#if (and this.copyButton this.textCopied.isRunning)}}
+    <IliosTooltip
+      @target={{this.copyButton}}
+      class="ics-feed-display-success-message-tooltip"
+    >
+      {{t "general.copiedSuccessfully"}}
+    </IliosTooltip>
+  {{/if}}
 </div>
