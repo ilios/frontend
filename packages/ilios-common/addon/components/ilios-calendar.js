@@ -1,14 +1,11 @@
 import Component from '@glimmer/component';
 import { DateTime } from 'luxon';
-import { tracked } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
 import IliosCalendarDay from './ilios-calendar-day';
 import IliosCalendarWeek from './ilios-calendar-week';
 import IliosCalendarMonth from './ilios-calendar-month';
 
 export default class IliosCalendarComponent extends Component {
-  @tracked showIcsFeed = false;
-
   get calendarViewComponent() {
     let calendar = IliosCalendarDay;
     if (this.args.selectedView === 'week') {
