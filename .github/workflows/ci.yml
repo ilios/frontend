@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
       - uses: actions/setup-node@v4
@@ -52,7 +52,7 @@ jobs:
           - lti-dashboard
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
       - uses: actions/setup-node@v4
@@ -79,7 +79,7 @@ jobs:
           - lti-dashboard
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
       - uses: actions/setup-node@v4
@@ -110,7 +110,7 @@ jobs:
   #         - BS_CHROME_ANDROID
   #   steps:
   #     - uses: actions/checkout@v4
-  #     - uses: pnpm/action-setup@v3
+  #     - uses: pnpm/action-setup@v4
   #       with:
   #         version: 8
   #     - uses: actions/setup-node@v4
@@ -149,7 +149,7 @@ jobs:
         firefox-version: [latest-esr]
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
       - uses: actions/setup-node@v4
@@ -180,7 +180,7 @@ jobs:
       BUILD_WITH_EMBROIDER: true
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
       - uses: actions/setup-node@v4
@@ -207,7 +207,7 @@ jobs:
       BUILD_WITH_EMBROIDER: true
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
       - uses: actions/setup-node@v4
