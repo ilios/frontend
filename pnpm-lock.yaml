@@ -40,8 +40,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0(ember-source@5.8.0)(webpack@5.91.0)
       '@embroider/compat':
-        specifier: ~3.4.8
-        version: 3.4.9(@embroider/core@3.4.9)
+        specifier: ~3.5.0
+        version: 3.5.0(@embroider/core@3.4.9)
       '@embroider/core':
         specifier: ~3.4.8
         version: 3.4.9
@@ -49,8 +49,8 @@ importers:
         specifier: ^1.16.0
         version: 1.16.1
       '@embroider/router':
-        specifier: ^2.1.6
-        version: 2.1.6(@embroider/core@3.4.9)
+        specifier: ^2.1.7
+        version: 2.1.7(@embroider/core@3.4.9)
       '@embroider/webpack':
         specifier: ~4.0.0
         version: 4.0.0(@embroider/core@3.4.9)(webpack@5.91.0)
@@ -116,7 +116,7 @@ importers:
         version: 3.0.0
       ember-cli-code-coverage:
         specifier: ^v3.0.0
-        version: 3.0.0(@embroider/compat@3.4.9)(@embroider/core@3.4.9)
+        version: 3.0.0(@embroider/compat@3.5.0)(@embroider/core@3.4.9)
       ember-cli-dependency-checker:
         specifier: ^3.3.2
         version: 3.3.2(ember-cli@5.8.1)
@@ -492,7 +492,7 @@ importers:
         version: 3.3.0(ember-source@5.8.0)(webpack@5.91.0)
       '@embroider/test-setup':
         specifier: ^4.0.0
-        version: 4.0.0(@embroider/compat@3.4.9)(@embroider/core@3.4.9)(@embroider/webpack@4.0.0)
+        version: 4.0.0(@embroider/compat@3.5.0)(@embroider/core@3.4.9)(@embroider/webpack@4.0.0)
       '@ilios/ember-template-lint-plugin':
         specifier: ^3.0.0
         version: 3.0.0
@@ -611,8 +611,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0(ember-source@5.8.0)(webpack@5.91.0)
       '@embroider/compat':
-        specifier: ~3.4.8
-        version: 3.4.9(@embroider/core@3.4.9)
+        specifier: ~3.5.0
+        version: 3.5.0(@embroider/core@3.4.9)
       '@embroider/core':
         specifier: ~3.4.8
         version: 3.4.9
@@ -620,8 +620,8 @@ importers:
         specifier: ^1.16.0
         version: 1.16.1
       '@embroider/router':
-        specifier: ^2.1.6
-        version: 2.1.6(@embroider/core@3.4.9)
+        specifier: ^2.1.7
+        version: 2.1.7(@embroider/core@3.4.9)
       '@embroider/webpack':
         specifier: ~4.0.0
         version: 4.0.0(@embroider/core@3.4.9)(webpack@5.91.0)
@@ -803,8 +803,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0(ember-source@5.8.0)(webpack@5.91.0)
       '@embroider/compat':
-        specifier: ~3.4.8
-        version: 3.4.9(@embroider/core@3.4.9)
+        specifier: ~3.5.0
+        version: 3.5.0(@embroider/core@3.4.9)
       '@embroider/macros':
         specifier: ^1.16.0
         version: 1.16.1
@@ -989,14 +989,14 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0(ember-source@5.8.0)(webpack@5.91.0)
       '@embroider/compat':
-        specifier: ^3.4.8
-        version: 3.4.9(@embroider/core@3.4.9)
+        specifier: ^3.5.0
+        version: 3.5.0(@embroider/core@3.4.9)
       '@embroider/macros':
         specifier: ^1.16.0
         version: 1.16.1
       '@embroider/test-setup':
         specifier: ^4.0.0
-        version: 4.0.0(@embroider/compat@3.4.9)(@embroider/core@3.4.9)(@embroider/webpack@4.0.0)
+        version: 4.0.0(@embroider/compat@3.5.0)(@embroider/core@3.4.9)(@embroider/webpack@4.0.0)
       '@embroider/webpack':
         specifier: ~4.0.0
         version: 4.0.0(@embroider/core@3.4.9)(webpack@5.91.0)
@@ -3345,7 +3345,7 @@ packages:
       ember-cli-version-checker: 5.1.2
       git-repo-info: 2.1.1
       npm-git-info: 1.0.3
-      semver: 7.6.0
+      semver: 7.6.1
       silent-error: 1.1.1
     transitivePeerDependencies:
       - '@glint/template'
@@ -3505,7 +3505,7 @@ packages:
       calculate-cache-key-for-tree: 2.0.0
       ember-cli-babel: 7.26.11
       ember-cli-version-checker: 5.1.2
-      semver: 7.6.0
+      semver: 7.6.1
     transitivePeerDependencies:
       - supports-color
 
@@ -3515,7 +3515,18 @@ packages:
     dependencies:
       '@embroider/shared-internals': 2.6.0(supports-color@8.1.1)
       broccoli-funnel: 3.0.8
-      semver: 7.6.0
+      semver: 7.6.1
+    transitivePeerDependencies:
+      - supports-color
+
+  /@embroider/addon-shim@1.8.8:
+    resolution: {integrity: sha512-+SkD/JJqnmCBJpsjPu419iNA9kQdqojNBrldE7f5H80A4FWUGRO9s622+SwdzKiXCaMWcNeww7Ah7CL/YZPoHg==}
+    engines: {node: 12.* || 14.* || >= 16}
+    dependencies:
+      '@embroider/shared-internals': 2.6.0(supports-color@8.1.1)
+      broccoli-funnel: 3.0.8
+      common-ancestor-path: 1.0.1
+      semver: 7.6.1
     transitivePeerDependencies:
       - supports-color
 
@@ -3533,8 +3544,8 @@ packages:
       - webpack
     dev: true
 
-  /@embroider/compat@3.4.9(@embroider/core@3.4.9):
-    resolution: {integrity: sha512-1KuKlCx4wGxxo+GsTeS8AX6S4Ka2Ht6EKYlFsm0Ln38mQyPolIefVUeEURe9FKKaQsOdj8bdPdjJlGU1ZVF8Aw==}
+  /@embroider/compat@3.5.0(@embroider/core@3.4.9):
+    resolution: {integrity: sha512-KFv4CGXiNZA9D+T89bQgmHRyJBIMq6NLzNHTTpD8lKWL0egZpaw2irzIH/1SqdktRf86Ee8pkWfqEi0W+UWXxA==}
     engines: {node: 12.* || 14.* || >= 16}
     hasBin: true
     peerDependencies:
@@ -3576,7 +3587,7 @@ packages:
       pkg-up: 3.1.0
       resolve: 1.22.8
       resolve-package-path: 4.0.3
-      semver: 7.6.0
+      semver: 7.6.1
       symlink-or-copy: 1.3.1
       tree-sync: 2.1.0
       typescript-memoize: 1.1.1
@@ -3657,8 +3668,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@embroider/router@2.1.6(@embroider/core@3.4.9):
-    resolution: {integrity: sha512-geEJF0iKpGQ4YcP2oc30BGPgxer7Umeeg/C07m6xe2OYltQxIzSNWm//A7F/ZrwhVwSSai1W7YyFw8r5wS3OsA==}
+  /@embroider/router@2.1.7(@embroider/core@3.4.9):
+    resolution: {integrity: sha512-EcmWgFP0stVbKQkQIJ+moXWqOLADkh4ByKo6zviCxktXxCEzx11NGm6G2eDd3JJYy1JR2XSI1Tn2T+Hsjefb9A==}
     peerDependencies:
       '@embroider/core': ^2.0.0||^3.0.0
     peerDependenciesMeta:
@@ -3666,7 +3677,7 @@ packages:
         optional: true
     dependencies:
       '@ember/test-waiters': 3.1.0
-      '@embroider/addon-shim': 1.8.7
+      '@embroider/addon-shim': 1.8.8
       '@embroider/core': 3.4.9
     transitivePeerDependencies:
       - supports-color
@@ -3682,7 +3693,7 @@ packages:
       js-string-escape: 1.0.1
       lodash: 4.17.21
       resolve-package-path: 4.0.3
-      semver: 7.6.0
+      semver: 7.6.1
       typescript-memoize: 1.1.1
     dev: false
 
@@ -3698,12 +3709,12 @@ packages:
       lodash: 4.17.21
       minimatch: 3.1.2
       resolve-package-path: 4.0.3
-      semver: 7.6.0
+      semver: 7.6.1
       typescript-memoize: 1.1.1
     transitivePeerDependencies:
       - supports-color
 
-  /@embroider/test-setup@4.0.0(@embroider/compat@3.4.9)(@embroider/core@3.4.9)(@embroider/webpack@4.0.0):
+  /@embroider/test-setup@4.0.0(@embroider/compat@3.5.0)(@embroider/core@3.4.9)(@embroider/webpack@4.0.0):
     resolution: {integrity: sha512-1S3Ebk0CEh3XDqD93AWSwQZBCk+oGv03gtkaGgdgyXGIR7jrVyDgEnEuslN/hJ0cuU8TqhiXrzHMw7bJwIGhWw==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
@@ -3718,7 +3729,7 @@ packages:
       '@embroider/webpack':
         optional: true
     dependencies:
-      '@embroider/compat': 3.4.9(@embroider/core@3.4.9)
+      '@embroider/compat': 3.5.0(@embroider/core@3.4.9)
       '@embroider/core': 3.4.9
       '@embroider/webpack': 4.0.0(@embroider/core@3.4.9)(webpack@5.91.0)
       lodash: 4.17.21
@@ -5408,7 +5419,7 @@ packages:
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
-      semver: 7.6.0
+      semver: 7.6.1
       ts-api-utils: 1.3.0(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -7328,7 +7339,7 @@ packages:
   /builtins@5.1.0:
     resolution: {integrity: sha512-SW9lzGTLvWTP1AY8xeAMZimqDrIaSdLQUcVr9DMef51niJ022Ri87SwRRKYm4A6iHfkPaiVUu/Duw2Wc4J7kKg==}
     dependencies:
-      semver: 7.6.0
+      semver: 7.6.1
     dev: true
 
   /bytes@1.0.0:
@@ -7778,6 +7789,9 @@ packages:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
     engines: {node: '>= 12'}
     dev: true
+
+  /common-ancestor-path@1.0.1:
+    resolution: {integrity: sha512-L3sHRo1pXXEqX8VU28kfgUY+YGsk09hPqZiZmLacNib6XNTCM8ubYeT7ryXQw8asB1sKgcU5lkB7ONug08aB8w==}
 
   /common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
@@ -8265,7 +8279,7 @@ packages:
       postcss-modules-values: 4.0.0(postcss@8.4.38)
       postcss-value-parser: 4.2.0
       schema-utils: 3.3.0
-      semver: 7.6.0
+      semver: 7.6.1
       webpack: 5.91.0
 
   /css-select@1.2.0:
@@ -8936,7 +8950,7 @@ packages:
       mkdirp: 0.5.6
       resolve-package-path: 3.1.0
       rimraf: 2.7.1
-      semver: 7.6.0
+      semver: 7.6.1
       symlink-or-copy: 1.3.1
       typescript-memoize: 1.1.1
       walk-sync: 0.3.4
@@ -9151,7 +9165,7 @@ packages:
       - supports-color
     dev: true
 
-  /ember-cli-code-coverage@3.0.0(@embroider/compat@3.4.9)(@embroider/core@3.4.9):
+  /ember-cli-code-coverage@3.0.0(@embroider/compat@3.5.0)(@embroider/core@3.4.9):
     resolution: {integrity: sha512-IAVET5oKS0IkEAPUTKOzHlNk1Z+986//8LZmfqhkSGkGJ76tFLw8AAS+BloUctX7J/xCUNn/1voBVqb5oabMPw==}
     engines: {node: '>= 18'}
     peerDependencies:
@@ -9163,7 +9177,7 @@ packages:
       '@embroider/core':
         optional: true
     dependencies:
-      '@embroider/compat': 3.4.9(@embroider/core@3.4.9)
+      '@embroider/compat': 3.5.0(@embroider/core@3.4.9)
       '@embroider/core': 3.4.9
       babel-plugin-istanbul: 6.1.1
       body-parser: 1.20.2
@@ -9484,7 +9498,7 @@ packages:
       hash-for-dep: 1.5.1
       heimdalljs-logger: 0.1.10
       json-stable-stringify: 1.1.1
-      semver: 7.6.0
+      semver: 7.6.1
       silent-error: 1.1.1
       strip-bom: 4.0.0
       walk-sync: 2.2.0
@@ -9752,7 +9766,7 @@ packages:
       fs-extra: 9.1.0
       resolve: 1.22.8
       rsvp: 4.8.5
-      semver: 7.6.0
+      semver: 7.6.1
       stagehand: 1.0.1
       walk-sync: 2.2.0
     transitivePeerDependencies:
@@ -9770,7 +9784,7 @@ packages:
       fs-extra: 9.1.0
       resolve: 1.22.8
       rsvp: 4.8.5
-      semver: 7.6.0
+      semver: 7.6.1
       stagehand: 1.0.1
       walk-sync: 2.2.0
     transitivePeerDependencies:
@@ -10005,7 +10019,7 @@ packages:
     resolution: {integrity: sha512-6GaN0eEDZT9SEUSZBxWzZMlvxjcGKXFTJNjv30LVXTTOxozE5IBmIxiDAEq0udi0UpWUGHLYQBgnANn4jdll7w==}
     engines: {node: '>= 16.*'}
     dependencies:
-      '@embroider/addon-shim': 1.8.7
+      '@embroider/addon-shim': 1.8.8
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10942,7 +10956,7 @@ packages:
       eslint: '>=6.0.0'
     dependencies:
       eslint: 8.57.0
-      semver: 7.6.0
+      semver: 7.6.1
     dev: true
 
   /eslint-config-prettier@9.1.0(eslint@8.57.0):
@@ -13974,7 +13988,7 @@ packages:
     resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
     engines: {node: '>=10'}
     dependencies:
-      semver: 7.6.0
+      semver: 7.6.1
     dev: true
 
   /makeerror@1.0.12:
@@ -14476,7 +14490,7 @@ packages:
     resolution: {integrity: sha512-CPMcGa+y33xuL1E0TcNIu4YyaZCxnnvkVaEXrsosR3FxN+fV8xvb7Mzpb7IgKler10qeMkE6+Dp8qJhpzdq35g==}
     engines: {node: '>=10'}
     dependencies:
-      semver: 7.6.0
+      semver: 7.6.1
     dev: true
 
   /node-addon-api@6.1.0:
@@ -14549,7 +14563,7 @@ packages:
     dependencies:
       growly: 1.3.0
       is-wsl: 2.2.0
-      semver: 7.6.0
+      semver: 7.6.1
       shellwords: 0.1.1
       uuid: 8.3.2
       which: 2.0.2
@@ -14594,7 +14608,7 @@ packages:
     dependencies:
       hosted-git-info: 6.1.1
       proc-log: 3.0.0
-      semver: 7.6.0
+      semver: 7.6.1
       validate-npm-package-name: 5.0.0
     dev: true
 
@@ -16144,6 +16158,11 @@ packages:
     dependencies:
       lru-cache: 6.0.0
 
+  /semver@7.6.1:
+    resolution: {integrity: sha512-f/vbBsu+fOiYt+lmwZV0rVwJScl46HppnOA1ZvIuBWKOTlllpyJ3bfVax76/OrhCH38dyxoDIA8K7uB963IYgA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   /send@0.18.0:
     resolution: {integrity: sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg==}
     engines: {node: '>= 0.8.0'}
@@ -16250,7 +16269,7 @@ packages:
       detect-libc: 2.0.3
       node-addon-api: 6.1.0
       prebuild-install: 7.1.2
-      semver: 7.6.0
+      semver: 7.6.1
       simple-get: 4.0.1
       tar-fs: 3.0.6
       tunnel-agent: 0.6.0
@@ -17934,7 +17953,7 @@ packages:
     resolution: {integrity: sha512-nd2HUpKc6RWblPZQ2GDuI65sxJ2n/UqZwSBVtj64xlWjMx0m7ZB2m9b2JS3v1f+n9VWH/dd1CMhkHfP6pIdckA==}
     dependencies:
       resolve-package-path: 3.1.0
-      semver: 7.6.0
+      semver: 7.6.1
     dev: true
 
   /validate-peer-dependencies@2.2.0:
@@ -17942,7 +17961,7 @@ packages:
     engines: {node: '>= 12'}
     dependencies:
       resolve-package-path: 4.0.3
-      semver: 7.6.0
+      semver: 7.6.1
     dev: true
 
   /validator@13.11.0:
