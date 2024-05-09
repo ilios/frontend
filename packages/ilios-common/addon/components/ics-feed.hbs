@@ -8,17 +8,15 @@
     @success={{perform this.textCopied}}
     {{!-- template-lint-disable no-at-ember-render-modifiers --}}
     {{did-insert (set this.copyButton)}}
-    title={{if @instructions @instructions 'Copy My ICS Link'}}
+    aria-label={{if @instructions @instructions (t "general.copyIcsFeedUrl")}}
     class="link-button highlight"
+    {{mouse-hover-toggle (set this.showTooltip)}}
   >
     <FaIcon @icon="square-rss" />
   </CopyButton>
-  {{#if (and this.copyButton this.textCopied.isRunning)}}
-    <IliosTooltip
-      @target={{this.copyButton}}
-      class="ics-feed-display-success-message-tooltip"
-    >
-      {{t "general.copiedSuccessfully"}}
+  {{#if (and this.copyButton this.showTooltip)}}
+    <IliosTooltip @target={{this.copyButton}}>
+      {{t "general.copyIcsFeedUrl"}}
     </IliosTooltip>
   {{/if}}
 </div>
