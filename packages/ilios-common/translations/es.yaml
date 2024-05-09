@@ -58,6 +58,7 @@ general:
   confirmRemove: "¿Estás seguro que quieres borrar este ofrecimiento con {learnerGroupCount} grupos de aprendedores? Esta acción no se puede deshacer."
   confirmSessionRemoval: ¿Está seguro que desea eliminar este sessión?
   contentAuthor: Autor del Contenido
+  copiedIcsFeedUrl: Copiado Mi Enlace ICS con Éxito
   copiedSuccessfully: Copiado con Éxito
   copyIcsFeedUrl: Copiar Mi Enlace ICS
   copyLink: Copiar el enlace
