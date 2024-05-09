@@ -110,7 +110,10 @@ export default class CoursesRootComponent extends Component {
     return this.coursesInSelectedYear.filter((course) => {
       return (
         course.title?.trim().toLowerCase().includes(title) ||
-        course.externalId?.trim().toLowerCase().includes(title)
+        course.externalId?.trim().toLowerCase().includes(title) ||
+        `${course.title?.trim().toLowerCase()} (${course.externalId?.trim().toLowerCase()})`.includes(
+          title,
+        )
       );
     });
   }
