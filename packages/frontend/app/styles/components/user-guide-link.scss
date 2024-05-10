@@ -1,7 +1,10 @@
 @use "../ilios-common/mixins" as cm;
 @use "../ilios-common/colors" as c;
+@use "../mixins" as m;
 
 .user-guide-link {
+  @include m.header-menu;
+  margin-left: 0;
   @include cm.for-tablet-and-up {
     margin-right: 0.5rem;
   }
@@ -9,6 +12,8 @@
   a {
     svg {
       color: c.$white;
+      height: 1.5em;
+      width: 1.5em;
     }
   }
 }
