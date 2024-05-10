@@ -148,6 +148,7 @@ general:
   hours: Hours
   icsInstructions: "To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!"
   ilios: Ilios
+  iliosUserGuide: Ilios User Guide
   ilm: ILM
   ilmDue: ILM - Due
   inactive: inactive
