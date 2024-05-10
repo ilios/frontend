@@ -1,6 +1,6 @@
 {{#let (unique-id) as |templateId|}}
   <nav
-    class="{{if this.isOpen "is-open"}} user-menu"
+    class="user-menu{{if this.isOpen " is-open"}}"
     aria-label={{t "general.userMenu"}}
     {{did-insert (set this.element)}}
     {{! template-lint-disable no-invalid-interactive }}
