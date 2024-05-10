@@ -27,7 +27,7 @@
     row-gap: 0.25rem;
 
     @include m.for-tablet-and-up {
-      grid-template-areas: "search locale user";
+      grid-template-areas: "search locale user guide";
     }
 
     .locale-chooser {
@@ -35,6 +35,9 @@
     }
     .user-menu {
       grid-area: user;
+    }
+    .user-guide-link {
+      grid-area: guide;
     }
 
     .global-search-box {
