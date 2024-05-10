@@ -22,8 +22,8 @@
     display: grid;
     justify-content: end;
     grid-template-areas:
-      ". locale user"
-      "search search search";
+      ". locale user guide"
+      "search search search search";
     row-gap: 0.25rem;
 
     @include m.for-tablet-and-up {
