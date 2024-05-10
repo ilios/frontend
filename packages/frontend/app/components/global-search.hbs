@@ -3,7 +3,7 @@
   data-test-global-search
   ...attributes
 >
-  <GlobalSearchBox @query={{@query}} @search={{this.setQuery}} />
+  <GlobalSearchBox @query={{@query}} @search={{@setQuery}} />
   <ul
     class="results {{if (and (not this.search.isRunning) (not this.hasResults)) "hidden"}}"
     data-test-results

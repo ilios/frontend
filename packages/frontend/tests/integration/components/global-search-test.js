@@ -13,7 +13,7 @@ module('Integration | Component | global-search', function (hooks) {
     assert.expect(1);
 
     await render(hbs`<GlobalSearch
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
@@ -44,7 +44,7 @@ module('Integration | Component | global-search', function (hooks) {
     await render(hbs`<GlobalSearch
       @query={{this.query}}
       @page="1"
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
@@ -69,7 +69,7 @@ module('Integration | Component | global-search', function (hooks) {
 
     this.set('query', (value) => assert.strictEqual(value, 'typed it'));
     await render(hbs`<GlobalSearch
-      @onQuery={{this.query}}
+      @setQuery={{this.query}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
@@ -120,7 +120,7 @@ module('Integration | Component | global-search', function (hooks) {
     await render(hbs`<GlobalSearch
       @page="1"
       @query={{this.query}}
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @selectedYear={{this.selectedYear}}
       @setSelectedYear={{set this.selectedYear}}
@@ -206,7 +206,7 @@ module('Integration | Component | global-search', function (hooks) {
     await render(hbs`<GlobalSearch
       @page="1"
       @query={{this.query}}
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @ignoredSchoolIds={{this.ignoredSchoolIds}}
       @setIgnoredSchoolIds={{set this.ignoredSchoolIds}}
@@ -302,7 +302,7 @@ module('Integration | Component | global-search', function (hooks) {
     await render(hbs`<GlobalSearch
       @page="1"
       @query={{this.query}}
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
@@ -341,7 +341,7 @@ module('Integration | Component | global-search', function (hooks) {
     await render(hbs`<GlobalSearch
       @page="1"
       @query={{this.query}}
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
