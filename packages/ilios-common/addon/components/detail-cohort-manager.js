@@ -61,7 +61,7 @@ export default class DetailCohortManagerComponent extends Component {
       return compare;
     });
 
-    // filter out cohors outside of relevant range
+    // filter cohorts outside of relevant range
     const objectsFiltered = objects.filter((el) => {
       const cohortYear = parseInt(el.cohortTitle.split(' ')[2]);
       const curYear = new Date().getFullYear();
