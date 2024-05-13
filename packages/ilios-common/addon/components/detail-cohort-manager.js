@@ -61,7 +61,17 @@ export default class DetailCohortManagerComponent extends Component {
       return compare;
     });
 
-    return mapBy(objects, 'cohort');
+    // filter out cohors outside of relevant range
+    const objectsFiltered = objects.filter((el) => {
+      const cohortYear = parseInt(el.cohortTitle.split(' ')[2]);
+      const curYear = new Date().getFullYear();
+      const maxYear = curYear + 4;
+      const minYear = curYear - 3;
+
+      return cohortYear >= minYear && cohortYear <= maxYear;
+    });
+
+    return mapBy(objectsFiltered, 'cohort');
   }
 
   async loadCohorts(course) {
