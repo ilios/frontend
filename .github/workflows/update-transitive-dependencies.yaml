@@ -26,7 +26,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ZORGBORT_TOKEN }}
           commit-message: Update Transitive Dependencies
           title: Update Transitive Dependencies
           body: |
