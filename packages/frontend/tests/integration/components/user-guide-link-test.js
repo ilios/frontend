@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
+import { setLocale, setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | user-guide-link', function (hooks) {
   setupRenderingTest(hooks);
@@ -11,20 +11,16 @@ module('Integration | Component | user-guide-link', function (hooks) {
   test('it renders', async function (assert) {
     await render(hbs`<UserGuideLink />`);
 
-    assert.dom('.user-guide-link').exists();
-    assert.dom('.user-guide-link svg.fa-circle-question').exists();
-    assert.dom('.user-guide-link svg.fa-circle-question title').hasText('Ilios User Guide');
+    assert.dom('[data-test-user-guide-link]').exists();
+    assert.dom('[data-test-user-guide-link-icon]').exists();
+    assert.dom('[data-test-user-guide-link-icon]').hasText('Ilios User Guide');
 
-    this.owner.lookup('service:intl').setLocale('es');
-    await settled();
+    await setLocale('es');
 
-    assert.dom('.user-guide-link svg.fa-circle-question title').hasText('Ilios Guía de usuario');
+    assert.dom('[data-test-user-guide-link-icon]').hasText('Ilios Guía de usuario');
 
-    this.owner.lookup('service:intl').setLocale('fr');
-    await settled();
+    await setLocale('fr');
 
-    assert
-      .dom('.user-guide-link svg.fa-circle-question title')
-      .hasText("Ilios Guide d'utilisation");
+    assert.dom('[data-test-user-guide-link-icon]').hasText("Ilios Guide d'utilisation");
   });
 });
