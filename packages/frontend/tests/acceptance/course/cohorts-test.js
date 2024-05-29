@@ -14,15 +14,18 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     });
     this.server.create('academicYear', { id: 2013 });
     const program = this.server.create('program', { school });
+    const year = new Date().getFullYear();
     const cohort1 = this.server.create('cohort');
     const cohort2 = this.server.create('cohort');
     const programYear1 = this.server.create('programYear', {
       program,
       cohort: cohort1,
+      startYear: year,
     });
     const programYear2 = this.server.create('programYear', {
       program,
       cohort: cohort2,
+      startYear: year,
     });
 
     const programYearObjective1 = this.server.create('programYearObjective', {

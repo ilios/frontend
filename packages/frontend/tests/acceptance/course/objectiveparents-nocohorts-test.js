@@ -11,7 +11,11 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
     this.school = this.server.create('school');
     const program = this.server.create('program', { school: this.school });
 
-    const programYear = this.server.create('programYear', { program });
+    const year = new Date().getFullYear();
+    const programYear = this.server.create('programYear', {
+      program,
+      startYear: year,
+    });
     this.server.create('cohort', { programYear });
     const competency = this.server.create('competency', {
       school: this.school,
