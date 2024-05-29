@@ -509,10 +509,12 @@ module('Integration | Component | course rollover', function (hooks) {
       title: 'SOM',
       school,
     });
+    const startYear = new Date().getFullYear();
     const programYear = this.server.create('programYear', {
       program,
       published: true,
       archived: false,
+      startYear,
     });
     this.server.create('cohort', {
       programYear,
@@ -550,6 +552,8 @@ module('Integration | Component | course rollover', function (hooks) {
 `);
     const advancedOptions = '.advanced-options';
     const firstCohort = `${advancedOptions} .selectable-cohorts li:nth-of-type(1) button`;
+
+    // await pauseTest();
 
     await click(firstCohort);
     await click('.done');
