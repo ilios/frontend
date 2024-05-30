@@ -6,33 +6,58 @@ import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Cohorts', function (hooks) {
   setupApplicationTest(hooks);
+
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     this.user = await setupAuthentication({
       school,
       administeredSchools: [school],
     });
-    this.server.create('academicYear', { id: 2013 });
-    const program = this.server.create('program', { school });
-    const year = new Date().getFullYear();
+    const currentYear = new Date().getFullYear();
+    this.server.create('academicYear', { id: currentYear });
+    const program = this.server.create('program', { school, duration: 4 });
     const cohort1 = this.server.create('cohort');
     const cohort2 = this.server.create('cohort');
+    const cohort3 = this.server.create('cohort');
+    const cohort4 = this.server.create('cohort');
+
+    // first two should get through the filter
     const programYear1 = this.server.create('programYear', {
       program,
       cohort: cohort1,
-      startYear: year,
+      startYear: currentYear - program.duration,
     });
     const programYear2 = this.server.create('programYear', {
       program,
       cohort: cohort2,
-      startYear: year,
+      startYear: currentYear - program.duration - 4,
     });
 
+    // extras should not get through the filter
+    // (startYear + duration) <= (currentYear + duration)
+    // &&
+    // (startYear + duration) >= (currentYear + duration)
+    const programYear3 = this.server.create('programYear', {
+      program,
+      cohort: cohort3,
+      startYear: currentYear - program.duration - 5,
+    });
+    const programYear4 = this.server.create('programYear', {
+      program,
+      cohort: cohort4,
+      startYear: currentYear - program.duration + 5,
+    });
     const programYearObjective1 = this.server.create('programYearObjective', {
       programYear: programYear1,
     });
     const programYearObjective2 = this.server.create('programYearObjective', {
       programYear: programYear2,
+    });
+    const programYearObjective3 = this.server.create('programYearObjective', {
+      programYear: programYear3,
+    });
+    const programYearObjective4 = this.server.create('programYearObjective', {
+      programYear: programYear4,
     });
 
     this.course = this.server.create('course', {
@@ -43,13 +68,19 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
     this.server.create('courseObjective', {
       course: this.course,
-      programYearObjectives: [programYearObjective1, programYearObjective2],
+      programYearObjectives: [
+        programYearObjective1,
+        programYearObjective2,
+        programYearObjective3,
+        programYearObjective4,
+      ],
     });
   });
 
   test('list cohorts', async function (assert) {
     assert.expect(4);
     await page.visit({ courseId: this.course.id, details: true });
+
     assert.strictEqual(page.details.cohorts.current.length, 1);
     assert.strictEqual(page.details.cohorts.current[0].school, 'school 0');
     assert.strictEqual(page.details.cohorts.current[0].program, 'program 0');
@@ -100,7 +131,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
       courseObjectiveDetails: true,
     });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
-    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 4);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0',
@@ -115,7 +146,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     await page.details.cohorts.save();
 
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
-    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 3);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 1',

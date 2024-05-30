@@ -43,14 +43,14 @@ export default class DetailCohortManagerComponent extends Component {
   get sortedAvailableCohorts() {
     const objects = this.unselectedAvailableCohortProxies.map((obj) => {
       const sortTitle = obj.school.get('title') + obj.program.get('title');
-      const programYearStartYear = parseInt(obj.programYear.startYear);
+      const programEndYear = parseInt(obj.programYear.startYear) + obj.program.duration;
 
       return {
         cohort: obj.cohort,
         sortTitle,
         cohortTitle: obj.cohort.title,
         programDuration: obj.program.duration,
-        programYearStartYear,
+        programEndYear,
       };
     });
 
@@ -65,13 +65,12 @@ export default class DetailCohortManagerComponent extends Component {
     });
 
     // filter cohorts through relevant range
-    const objectsFiltered = objects.filter((el) => {
-      const cohortYear = el.programYearStartYear + el.programDuration;
+    const objectsFiltered = objects.filter((obj) => {
       const curYear = new Date().getFullYear();
-      const minYear = curYear - el.programDuration;
-      const maxYear = curYear + el.programDuration;
+      const minEndYear = curYear - obj.programDuration;
+      const maxEndYear = curYear + obj.programDuration;
 
-      return cohortYear >= minYear && cohortYear <= maxYear;
+      return obj.programEndYear >= minEndYear && obj.programEndYear <= maxEndYear;
     });
 
     return mapBy(objectsFiltered, 'cohort');
