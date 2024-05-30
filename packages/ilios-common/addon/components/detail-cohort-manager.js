@@ -43,11 +43,14 @@ export default class DetailCohortManagerComponent extends Component {
   get sortedAvailableCohorts() {
     const objects = this.unselectedAvailableCohortProxies.map((obj) => {
       const sortTitle = obj.school.get('title') + obj.program.get('title');
+      const programEndYear = parseInt(obj.programYear.startYear) + obj.program.duration;
 
       return {
         cohort: obj.cohort,
         sortTitle,
         cohortTitle: obj.cohort.title,
+        programDuration: obj.program.duration,
+        programEndYear,
       };
     });
 
@@ -61,7 +64,16 @@ export default class DetailCohortManagerComponent extends Component {
       return compare;
     });
 
-    return mapBy(objects, 'cohort');
+    // filter cohorts through relevant range
+    const objectsFiltered = objects.filter((obj) => {
+      const curYear = new Date().getFullYear();
+      const minEndYear = curYear - obj.programDuration;
+      const maxEndYear = curYear + obj.programDuration;
+
+      return obj.programEndYear >= minEndYear && obj.programEndYear <= maxEndYear;
+    });
+
+    return mapBy(objectsFiltered, 'cohort');
   }
 
   async loadCohorts(course) {
