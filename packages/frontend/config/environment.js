@@ -30,6 +30,8 @@ module.exports = function (environment) {
         'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
         'error-capture-enabled':
           process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENABLED || environment === 'production',
+        'error-capture-environment':
+          process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENVIRONMENT || environment,
       },
     },
     'ember-metrics': {

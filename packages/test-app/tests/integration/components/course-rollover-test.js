@@ -509,10 +509,12 @@ module('Integration | Component | course rollover', function (hooks) {
       title: 'SOM',
       school,
     });
+    const startYear = new Date().getFullYear();
     const programYear = this.server.create('programYear', {
       program,
       published: true,
       archived: false,
+      startYear,
     });
     this.server.create('cohort', {
       programYear,
