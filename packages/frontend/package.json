@@ -112,7 +112,7 @@
     "qunit": "^2.20.1",
     "qunit-dom": "^2.0.0",
     "qunit-theme-ember": "^1.0.0",
-    "sass": "^1.77.1",
+    "sass": "^1.77.3",
     "scroll-into-view": "^1.16.2",
     "striptags": "^3.2.0",
     "stylelint": "^16.3.1",
