@@ -100,23 +100,21 @@ export default class UserProfileCohortsManagerComponent extends Component {
     const cohorts = await Promise.all(programYears.map((py) => py.cohort));
     const sortedCohorts = await sortCohorts(cohorts);
 
-    // TODO
-    // console.log(
-    //   'sortedCohorts',
-    //   sortedCohorts.map((el) => el.title),
-    // );
-
-    // filter cohorts outside of relevant range
-    // const sortedCohortsFiltered = sortedCohorts.filter((el) => {
-    //   const cohortYear = parseInt(el.title.split(' ')[2]);
-    //   const curYear = new Date().getFullYear();
-    //   const maxYear = curYear + 4;
-    //   const minYear = curYear - 3;
-    //   return cohortYear >= minYear && cohortYear <= maxYear;
-    // });
-
     return sortedCohorts.filter((cohort) => {
-      return selectedPrimaryCohort !== cohort && !selectedSecondaryCohorts.includes(cohort);
+      // filter cohorts through relevant range
+      const programYearEndYear = parseInt(cohort.programYear.content.startYear);
+      const programDuration = cohort.programYear.content.program.content.duration;
+      const curYear = new Date().getFullYear();
+      const programEndYear = programYearEndYear + programDuration;
+      const minEndYear = curYear - programDuration;
+      const maxEndYear = curYear + programDuration;
+
+      return (
+        selectedPrimaryCohort !== cohort &&
+        !selectedSecondaryCohorts.includes(cohort) &&
+        programEndYear >= minEndYear &&
+        programEndYear <= maxEndYear
+      );
     });
   }
 
