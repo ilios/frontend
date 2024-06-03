@@ -102,10 +102,10 @@ export default class UserProfileCohortsManagerComponent extends Component {
 
     return sortedCohorts.filter((cohort) => {
       // filter cohorts through relevant range
-      const programYearEndYear = parseInt(cohort.programYear.content.startYear);
+      const programYearStartYear = parseInt(cohort.programYear.content.startYear);
       const programDuration = cohort.programYear.content.program.content.duration;
       const curYear = new Date().getFullYear();
-      const programEndYear = programYearEndYear + programDuration;
+      const programEndYear = programYearStartYear + programDuration;
       const minEndYear = curYear - programDuration;
       const maxEndYear = curYear + programDuration;
 
