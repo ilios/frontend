@@ -1,12 +1,10 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | error display', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('the detail link toggles properly', async function (assert) {
     assert.expect(3);

@@ -1,13 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render, click, findAll } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | detail terms list item', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

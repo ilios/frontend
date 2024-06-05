@@ -1,12 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | expand collapse button', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('renders with default value false', async function (assert) {
     this.set('action', () => {});

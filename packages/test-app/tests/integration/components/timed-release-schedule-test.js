@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
@@ -14,7 +13,6 @@ const localeFormatOptions = {
 };
 module('Integration | Component | timed release schedule', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('it renders with no start and end date', async function (assert) {
     await render(hbs`<TimedReleaseSchedule />

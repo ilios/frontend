@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
@@ -8,7 +7,6 @@ import { component } from 'ilios-common/page-objects/components/ilios-calendar-m
 
 module('Integration | Component | ilios calendar month', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('month displays with three events', async function (assert) {
     const date = DateTime.fromISO('2015-09-30T12:00:00');

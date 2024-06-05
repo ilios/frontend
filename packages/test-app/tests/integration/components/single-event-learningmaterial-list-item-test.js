@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
@@ -11,7 +10,6 @@ import Service from '@ember/service';
 
 module('Integration | Component | single-event-learningmaterial-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('blanked', async function (assert) {

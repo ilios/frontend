@@ -1,13 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { click, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/truncate-text';
 
 module('Integration | Component | truncate-text', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('it renders empty', async function (assert) {
     await render(hbs`<TruncateText />

@@ -24,13 +24,14 @@ function setupApplicationTest(hooks, options) {
   //
   // This is also a good place to call test setup functions coming
   // from other addons:
-  //
+
   setupIntl(hooks, 'en-us'); // ember-intl
   setupMirage(hooks); // ember-cli-mirage
 }
 
 function setupRenderingTest(hooks, options) {
   upstreamSetupRenderingTest(hooks, options);
+  setupIntl(hooks, 'en-us'); // ember-intl
 
   // Additional setup for rendering tests can be done here.
 }

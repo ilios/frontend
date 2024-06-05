@@ -1,7 +1,7 @@
 import { currentRouteName, visit, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'frontend/tests/helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import page from '../pages/instructor-group';

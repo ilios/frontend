@@ -1,14 +1,12 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/api-version-notice';
 
 module('Integration | Component | api-version-notice', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('hidden when version match', async function (assert) {
     const apiVersionMock = Service.extend({

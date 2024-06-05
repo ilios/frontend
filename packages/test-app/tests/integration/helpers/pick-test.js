@@ -1,7 +1,7 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'test-app/tests/helpers';
 import { click, render } from '@ember/test-helpers';
 
 module('Integration | Helper | pick', function (hooks) {
@@ -20,7 +20,7 @@ module('Integration | Helper | pick', function (hooks) {
         value="pizza party"
         {{on "focusin" (pipe (pick "target.value") this.onFocus)}}
       />
-    
+
 `);
 
     await click('#test-input');
@@ -39,7 +39,7 @@ module('Integration | Helper | pick', function (hooks) {
         value="pizza party"
         {{on "focusin" (pick "target.value" this.onFocus)}}
       />
-    
+
 `);
 
     await click('#test-input');

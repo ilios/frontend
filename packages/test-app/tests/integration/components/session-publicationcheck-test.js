@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -9,7 +8,6 @@ import { component } from 'ilios-common/page-objects/components/session-publicat
 
 module('Integration | Component | session-publicationcheck', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('it shows unlink icon', async function (assert) {
