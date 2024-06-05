@@ -88,8 +88,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.1
       ember-a11y-refocus:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.1.0
+        version: 4.1.0
       ember-a11y-testing:
         specifier: ^6.1.1
         version: 6.1.1(@babel/core@7.24.6)(@ember/test-helpers@3.3.0)(qunit@2.21.0)(webpack@5.91.0)
@@ -8768,8 +8768,8 @@ packages:
       minimalistic-crypto-utils: 1.0.1
     dev: false
 
-  /ember-a11y-refocus@4.0.0:
-    resolution: {integrity: sha512-TaM9fusRVIQ1lFnFzTzb3h+kDugOutmnD6P80L4zgOlLv+3QAPW8zQzQ8fKktcuB7wd8LTlScLzsJBlNxrO9Eg==}
+  /ember-a11y-refocus@4.1.0:
+    resolution: {integrity: sha512-+52wyJj9vhsRRA9q9wSFgZBoa/abl61EQ3XQDPRosD8ThupXx4BOm5ZAiU8GXEOY55b7r87MpCH3VQDMbdCePg==}
     engines: {node: 16.* || >= 18.*}
     requiresBuild: true
     dependencies:
