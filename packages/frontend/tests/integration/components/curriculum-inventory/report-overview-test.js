@@ -1,16 +1,14 @@
 import Service from '@ember/service';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
-import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-overview';
 
 module('Integration | Component | curriculum-inventory/report-overview', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {

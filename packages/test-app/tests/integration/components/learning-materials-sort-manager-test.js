@@ -1,5 +1,4 @@
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render, click, find } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
@@ -8,7 +7,6 @@ import { capitalize } from '@ember/string';
 
 module('Integration | Component | learning materials sort manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('it renders', async function (assert) {

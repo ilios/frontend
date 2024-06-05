@@ -1,7 +1,7 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click } from '@ember/test-helpers';
 
 module('Integration | Helper | toggle', function (hooks) {
@@ -13,7 +13,7 @@ module('Integration | Helper | toggle', function (hooks) {
       <button type="button" {{on "click" (toggle "isExpanded" this)}}>
         {{if this.isExpanded "I am expanded" "I am not"}}
       </button>
-    
+
 `);
     await click('button');
 
@@ -26,7 +26,7 @@ module('Integration | Helper | toggle', function (hooks) {
       <button type="button" {{on "click" (toggle "currentName" this "foo" "bar" "baz")}}>
         {{this.currentName}}
       </button>
-    
+
 `);
 
     assert.dom().hasText('foo', 'precondition');
@@ -44,7 +44,7 @@ module('Integration | Helper | toggle', function (hooks) {
       <button type="button" {{on "click" (toggle "currentName" this "foo" "bar")}}>
         {{this.currentName}}
       </button>
-    
+
 `);
 
     assert.dom().hasText('meow', 'precondition');

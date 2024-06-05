@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'frontend/tests/helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { currentURL } from '@ember/test-helpers';
 import page from 'ilios-common/page-objects/events';

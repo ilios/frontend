@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import component from 'frontend/tests/pages/components/locale-chooser';
@@ -8,7 +7,6 @@ import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | locale-chooser', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('it renders and is accessible', async function (assert) {
     await render(hbs`<LocaleChooser />`);

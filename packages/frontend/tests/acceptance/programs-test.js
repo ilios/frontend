@@ -2,7 +2,7 @@ import { click, fillIn, find, currentURL, currentRouteName, visit } from '@ember
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'frontend/tests/helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'frontend/tests/pages/programs';
 import percySnapshot from '@percy/ember';

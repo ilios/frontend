@@ -2,7 +2,6 @@ import Service from '@ember/service';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -11,7 +10,6 @@ import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Integration | Component | dashboard/week', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   const today = DateTime.fromObject({ hour: 8 });

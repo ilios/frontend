@@ -4,11 +4,9 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/search/input';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | reports/subject/new/search/input', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
 
   test('it renders and is accessible', async function (assert) {
     await render(hbs`<Reports::Subject::New::Search::Input />`);

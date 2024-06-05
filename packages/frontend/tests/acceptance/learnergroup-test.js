@@ -2,7 +2,7 @@ import { currentURL } from '@ember/test-helpers';
 import { test, module } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'frontend/tests/helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from '../pages/learner-group';
 import learnerGroupsPage from '../pages/learner-groups';
