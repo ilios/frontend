@@ -7,7 +7,6 @@ const SILENCED_DEPRECATIONS = [
   // Add ids of deprecations we temporarily want to silence here.
   'ember-data:deprecate-legacy-imports',
   'ember-data:deprecate-non-strict-types',
-  'ember-data:deprecate-non-strict-id',
   'ember-data:deprecate-non-unique-relationship-entries',
 ];
 
