@@ -79,11 +79,11 @@ module.exports = function (environment) {
   };
 
   if (environment === 'development') {
-    ENV.APP.LOG_RESOLVER = process.env.LOG_RESOLVER || false;
-    ENV.APP.LOG_ACTIVE_GENERATION = process.env.LOG_ACTIVE_GENERATION || false;
-    ENV.APP.LOG_TRANSITIONS = process.env.LOG_TRANSITIONS || false;
-    ENV.APP.LOG_TRANSITIONS_INTERNAL = process.env.LOG_TRANSITIONS_INTERNAL || false;
-    ENV.APP.LOG_VIEW_LOOKUPS = process.env.LOG_VIEW_LOOKUPS || false;
+    ENV.APP.LOG_RESOLVER = !!process.env.LOG_RESOLVER;
+    ENV.APP.LOG_ACTIVE_GENERATION = !!process.env.LOG_ACTIVE_GENERATION;
+    ENV.APP.LOG_TRANSITIONS = !!process.env.LOG_TRANSITIONS;
+    ENV.APP.LOG_TRANSITIONS_INTERNAL = !!process.env.LOG_TRANSITIONS_INTERNAL;
+    ENV.APP.LOG_VIEW_LOOKUPS = !!process.env.LOG_VIEW_LOOKUPS;
     ENV.redirectAfterShibLogin = false;
 
     //Remove mirage in developemnt, we only use it in testing
