@@ -18,7 +18,9 @@ export default class AuthenticatedRoute extends Route {
     await launchWorker();
     await this.session.setup();
     await loadPolyfills();
-    const locale = this.intl.get('primaryLocale');
+    // Set the default locale.
+    this.intl.setLocale('en-us');
+    const locale = this.intl.primaryLocale;
     window.document.querySelector('html').setAttribute('lang', locale);
   }
 
