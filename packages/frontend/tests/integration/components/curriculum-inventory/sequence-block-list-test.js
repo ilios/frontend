@@ -143,11 +143,19 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
     assert.strictEqual(
       component.list.items[1].startDate,
-      this.intl.formatDate(this.sequenceBlock1.startDate),
+      this.intl.formatDate(this.sequenceBlock1.startDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
     );
     assert.strictEqual(
       component.list.items[1].endDate,
-      this.intl.formatDate(this.sequenceBlock1.endDate),
+      this.intl.formatDate(this.sequenceBlock1.endDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
     );
     assert.strictEqual(component.list.items[1].course, this.course.title);
     assert.ok(component.list.items[1].isDeletable);
@@ -190,11 +198,19 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     assert.strictEqual(component.list.items[1].orderInSequence, 'n/a');
     assert.strictEqual(
       component.list.items[1].startDate,
-      this.intl.formatDate(this.sequenceBlock1.startDate),
+      this.intl.formatDate(this.sequenceBlock1.startDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
     );
     assert.strictEqual(
       component.list.items[1].endDate,
-      this.intl.formatDate(this.sequenceBlock1.endDate),
+      this.intl.formatDate(this.sequenceBlock1.endDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
     );
     assert.strictEqual(component.list.items[1].course, this.course.title);
     assert.ok(component.list.items[1].isDeletable);

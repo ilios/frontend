@@ -114,7 +114,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.ok(component.description.isEditable);
     assert.strictEqual(
       component.course.text,
-      `Course: Course A Level: 4, Start Date: 2/2/2015, End Date: 3/30/2015 - Clerkship (Block)`,
+      `Course: Course A Level: 4, Start Date: 02/02/2015, End Date: 03/30/2015 - Clerkship (Block)`,
     );
     assert.ok(component.course.isEditable);
     const startLevel = await sequenceBlockModel.startingAcademicLevel;
@@ -128,9 +128,9 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.strictEqual(component.track.label, 'Is Track:');
     assert.strictEqual(component.track.yesNoToggle.checked, 'true');
     assert.ok(component.track.isEditable);
-    assert.strictEqual(component.startDate.text, 'Start: 1/2/2015');
+    assert.strictEqual(component.startDate.text, 'Start: 01/02/2015');
     assert.ok(component.startDate.isEditable);
-    assert.strictEqual(component.endDate.text, 'End: 4/30/2015');
+    assert.strictEqual(component.endDate.text, 'End: 04/30/2015');
     assert.ok(component.endDate.isEditable);
     assert.strictEqual(
       component.duration.text,
@@ -295,7 +295,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     />`);
     assert.strictEqual(
       component.course.text,
-      `Course: Alpha Level: 1, Start Date: 1/1/2016, End Date: 1/2/2016 - Clerkship (clerkship type 0)`,
+      `Course: Alpha Level: 1, Start Date: 01/01/2016, End Date: 01/02/2016 - Clerkship (clerkship type 0)`,
     );
     await component.course.edit();
     assert.strictEqual(component.course.options.length, 4);
@@ -303,7 +303,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.strictEqual(component.course.options[1].text, 'Alpha');
     assert.strictEqual(
       component.course.details,
-      'Level: 1, Start Date: 1/1/2016, End Date: 1/2/2016 - Clerkship (clerkship type 0)',
+      'Level: 1, Start Date: 01/01/2016, End Date: 01/02/2016 - Clerkship (clerkship type 0)',
     );
     assert.strictEqual(component.course.options[1].value, courseModel.id);
     assert.ok(component.course.options[1].isSelected);
@@ -312,12 +312,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.course.select(newCourseModel.id);
     assert.strictEqual(
       component.course.details,
-      'Level: 1, Start Date: 3/1/2016, End Date: 3/2/2016 - Clerkship (clerkship type 0)',
+      'Level: 1, Start Date: 03/01/2016, End Date: 03/02/2016 - Clerkship (clerkship type 0)',
     );
     await component.course.save();
     assert.strictEqual(
       component.course.text,
-      'Course: Gamma Level: 1, Start Date: 3/1/2016, End Date: 3/2/2016 - Clerkship (clerkship type 0)',
+      'Course: Gamma Level: 1, Start Date: 03/01/2016, End Date: 03/02/2016 - Clerkship (clerkship type 0)',
     );
     const blockCourse = await sequenceBlockModel.course;
     assert.strictEqual(blockCourse.id, newCourse.id);
@@ -770,7 +770,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.notOk(component.description.isEditable);
     assert.strictEqual(
       component.course.text,
-      `Course: Course A Level: 4, Start Date: 2/2/2015, End Date: 3/30/2015 - Clerkship (Block)`,
+      `Course: Course A Level: 4, Start Date: 02/02/2015, End Date: 03/30/2015 - Clerkship (Block)`,
     );
     assert.notOk(component.course.isEditable);
     assert.strictEqual(component.startLevel.text, 'Start Level: Year 1');
@@ -781,9 +781,9 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.notOk(component.required.isEditable);
     assert.strictEqual(component.track.text, 'Is Track: Yes');
     assert.notOk(component.track.isEditable);
-    assert.strictEqual(component.startDate.text, 'Start: 1/2/2015');
+    assert.strictEqual(component.startDate.text, 'Start: 01/02/2015');
     assert.notOk(component.startDate.isEditable);
-    assert.strictEqual(component.endDate.text, 'End: 4/30/2015');
+    assert.strictEqual(component.endDate.text, 'End: 04/30/2015');
     assert.notOk(component.endDate.isEditable);
     assert.strictEqual(
       component.duration.text,
@@ -1244,7 +1244,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.save();
     assert.strictEqual(component.startDate.text, 'Start: 10/30/2016');
     assert.ok(component.startDate.isEditable);
-    assert.strictEqual(component.endDate.text, 'End: 11/2/2016');
+    assert.strictEqual(component.endDate.text, 'End: 11/02/2016');
     assert.ok(component.endDate.isEditable);
     assert.strictEqual(
       component.duration.text,
@@ -1301,7 +1301,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.save();
     assert.strictEqual(component.startDate.text, 'Start: 10/30/2016');
     assert.ok(component.startDate.isEditable);
-    assert.strictEqual(component.endDate.text, 'End: 11/2/2016');
+    assert.strictEqual(component.endDate.text, 'End: 11/02/2016');
     assert.strictEqual(component.duration.text, `Duration (in Days): Click to edit`);
 
     const { startDate, endDate, duration } = sequenceBlockModel;
@@ -1396,9 +1396,9 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @setSortBy={{(noop)}}
     />`);
 
-    assert.strictEqual(component.startDate.text, 'Start: 4/23/2016');
+    assert.strictEqual(component.startDate.text, 'Start: 04/23/2016');
     assert.ok(component.startDate.isEditable);
-    assert.strictEqual(component.endDate.text, 'End: 6/22/2016');
+    assert.strictEqual(component.endDate.text, 'End: 06/22/2016');
     assert.ok(component.endDate.isEditable);
     assert.strictEqual(
       component.duration.text,
@@ -1409,9 +1409,9 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.endDate.set('2016-11-02');
     await component.durationEditor.duration.set(newDuration);
     await component.durationEditor.cancel();
-    assert.strictEqual(component.startDate.text, 'Start: 4/23/2016');
+    assert.strictEqual(component.startDate.text, 'Start: 04/23/2016');
     assert.ok(component.startDate.isEditable);
-    assert.strictEqual(component.endDate.text, 'End: 6/22/2016');
+    assert.strictEqual(component.endDate.text, 'End: 06/22/2016');
     assert.strictEqual(
       component.duration.text,
       `Duration (in Days): ${sequenceBlockModel.duration}`,

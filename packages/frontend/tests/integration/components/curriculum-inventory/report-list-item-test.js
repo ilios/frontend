@@ -41,8 +41,22 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     assert.strictEqual(component.name, 'CI Report');
     assert.strictEqual(component.program, 'program 0');
     assert.strictEqual(component.year, '2017');
-    assert.strictEqual(component.startDate, this.intl.formatDate(this.report.startDate));
-    assert.strictEqual(component.endDate, this.intl.formatDate(this.report.endDate));
+    assert.strictEqual(
+      component.startDate,
+      this.intl.formatDate(this.report.startDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
+    );
+    assert.strictEqual(
+      component.endDate,
+      this.intl.formatDate(this.report.endDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
+    );
     assert.strictEqual(component.status, 'Draft');
     assert.ok(component.isDeletable);
     assert.notOk(component.confirmRemoval.isVisible);
