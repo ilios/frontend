@@ -12,6 +12,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
+    this.intl = this.owner.lookup('service:intl');
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
     this.user2 = this.server.create('user', { displayName: 'Clem Chowder' });

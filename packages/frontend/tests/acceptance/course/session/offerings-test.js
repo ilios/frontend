@@ -16,6 +16,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
         day: 11,
       }).toJSDate(),
     );
+    this.intl = this.owner.lookup('service:intl');
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
     const program = this.server.create('program', { school: this.school });

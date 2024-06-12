@@ -12,6 +12,8 @@ module('Integration | Component | offering form', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
+    this.intl = this.owner.lookup('service:intl');
+
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });

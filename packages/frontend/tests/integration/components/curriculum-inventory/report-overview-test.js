@@ -12,6 +12,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
+    this.intl = this.owner.lookup('service:intl');
     const school = this.server.create('school');
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);

@@ -9,9 +9,13 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(function () {
+    this.intl = this.owner.lookup('service:intl');
+  });
+
   //reset locale for other tests
   hooks.afterEach(function () {
-    this.owner.lookup('service:intl').setLocale('en-us');
+    this.intl.setLocale('en-us');
   });
 
   test('it renders', async function (assert) {

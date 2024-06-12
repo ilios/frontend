@@ -12,6 +12,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
+    this.intl = this.owner.lookup('service:intl');
     const school = this.server.create('school');
     this.program = this.server.create('program', { school });
     this.permissionCheckerMock = class extends Service {
