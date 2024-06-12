@@ -421,8 +421,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-intl:
-        specifier: ^6.5.4
-        version: 6.5.5(webpack@5.91.0)
+        specifier: ^7.0.2
+        version: 7.0.2(webpack@5.91.0)
       ember-math-helpers:
         specifier: ^4.0.0
         version: 4.0.0(ember-source@5.8.0)
@@ -8048,8 +8048,8 @@ packages:
       libphonenumber-js: 1.11.3
       validator: 13.12.0
 
-  /cldr-core@44.1.0:
-    resolution: {integrity: sha512-ssbJaXu3pCkc4YqNC6xHhgleZG7YqnOFZ9laMlJfHOfnspoA9waI4AH54gKB3Fe/+wI4i3cVxKFdCTVGTRw+UA==}
+  /cldr-core@45.0.0:
+    resolution: {integrity: sha512-gQVxy3gzOQpXiTRGmlKiRQFLYimrr1RgvqGKZCS61JgmdkeNm7+LZGx+Lhw5/AW0t8WMM/uZhf4CMva6LuUobQ==}
     dev: false
 
   /clean-base-url@1.0.0:
@@ -10692,11 +10692,11 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-intl@6.5.5(webpack@5.91.0):
-    resolution: {integrity: sha512-ce+SyhrnzHMgxuX7eIv1PSs5GY0uJpG/33QxGMvrRqavDEzvhhAq9G56dedoMygFT6bKPr/dZuLpDmz7hhk8Kg==}
-    engines: {node: 16.* || >= 18}
+  /ember-intl@7.0.2(webpack@5.91.0):
+    resolution: {integrity: sha512-zwLt3496Xo4rxYdyxDwYxTRyxnz20aOIzAtWRaEyTqGN7UCMOHRrOpeCjvlGN2tgO75e3tE1vovYdVGfnITkUw==}
+    engines: {node: 18.* || >= 20}
     peerDependencies:
-      typescript: ^4.8.0 || ^5.0.0
+      typescript: ^5.0.0
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -10708,19 +10708,16 @@ packages:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
       broccoli-source: 3.0.1
-      broccoli-stew: 3.0.0
       calculate-cache-key-for-tree: 2.0.0
-      cldr-core: 44.1.0
+      cldr-core: 45.0.0
       ember-auto-import: 2.7.3(webpack@5.91.0)
       ember-cli-babel: 8.2.0(@babel/core@7.24.7)
       ember-cli-typescript: 5.3.0
       eventemitter3: 5.0.1
       extend: 3.0.2
-      fast-memoize: 2.5.2
       intl-messageformat: 10.5.14
       js-yaml: 4.1.0
       json-stable-stringify: 1.1.1
-      silent-error: 1.1.1
     transitivePeerDependencies:
       - '@glint/template'
       - supports-color
@@ -11938,10 +11935,6 @@ packages:
   /fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
     dev: true
-
-  /fast-memoize@2.5.2:
-    resolution: {integrity: sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw==}
-    dev: false
 
   /fast-ordered-set@1.0.3:
     resolution: {integrity: sha512-MxBW4URybFszOx1YlACEoK52P6lE3xiFcPaGCUZ7QQOZ6uJXKo++Se8wa31SjcZ+NC/fdAWX7UtKEfaGgHS2Vg==}
