@@ -2,13 +2,12 @@ import { visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios-common/page-objects/components/api-version-notice';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | API Version Check', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
+
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     freezeDateAt(new Date('9/19/2019'));

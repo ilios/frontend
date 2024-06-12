@@ -1,14 +1,12 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'frontend/tests/pages/program-year';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Program Year - Competencies', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
+
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });

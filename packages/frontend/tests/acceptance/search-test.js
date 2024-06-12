@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/search';
 import dashboardPage from 'frontend/tests/pages/dashboard';
@@ -9,7 +8,6 @@ import percySnapshot from '@percy/ember';
 
 module('Acceptance | search', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     await setupAuthentication({}, true);

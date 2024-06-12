@@ -1,14 +1,12 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { currentURL } from '@ember/test-helpers';
 import page from 'ilios-common/page-objects/events';
 import { DateTime } from 'luxon';
 
 module('Acceptance | Event', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');

@@ -3,12 +3,10 @@ import { setupApplicationTest } from 'frontend/tests/helpers';
 import { triggerEvent, waitFor } from '@ember/test-helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from '../../pages/learner-group';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
