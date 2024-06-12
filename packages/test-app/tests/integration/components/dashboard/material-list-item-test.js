@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/dashboard/material-list-item';
@@ -10,7 +9,6 @@ import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Integration | Component | dashboard/material-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('it renders a material with no a11y errors', async function (assert) {

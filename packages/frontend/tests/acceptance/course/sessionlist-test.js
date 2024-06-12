@@ -100,11 +100,11 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(
       sessions[0].row.firstOffering,
       this.intl.formatDate(this.today.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
     assert.strictEqual(sessions[0].row.offeringCount, '3');
@@ -349,11 +349,11 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(
       sessions[0].row.firstOffering,
       this.intl.formatDate(this.today.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
     await sessions[0].row.expand();
@@ -369,11 +369,11 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(
       sessions[0].row.firstOffering,
       this.intl.formatDate(newDate.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
   });
@@ -429,11 +429,11 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(
       sessions[0].row.firstOffering,
       this.intl.formatDate(this.today.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
     await sessions[0].row.expand();

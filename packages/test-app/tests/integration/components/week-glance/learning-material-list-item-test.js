@@ -2,14 +2,12 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
 import { component } from 'ilios-common/page-objects/components/week-glance/learning-material';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
 
 module('Integration | Component | week-glance/learning-material-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks);
   setupMirage(hooks);
 
   test('it renders', async function (assert) {

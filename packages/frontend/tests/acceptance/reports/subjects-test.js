@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/reports';
 import subjectReportPage from 'frontend/tests/pages/reports-subject';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'frontend/tests/helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import percySnapshot from '@percy/ember';
 

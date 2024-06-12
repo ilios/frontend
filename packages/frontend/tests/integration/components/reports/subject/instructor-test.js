@@ -4,12 +4,10 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'frontend/tests/pages/components/reports/subject/instructor';
-import { setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | reports/subject/instructor', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
-  setupIntl(hooks, 'en-us');
 
   const responseData = {
     data: {

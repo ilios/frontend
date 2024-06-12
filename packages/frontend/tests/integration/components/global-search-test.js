@@ -1,14 +1,12 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
-import { render } from '@ember/test-helpers';
+import { setupRenderingTest } from 'frontend/tests/helpers';
+import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'frontend/tests/pages/components/global-search';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | global-search', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
@@ -30,7 +28,14 @@ module('Integration | Component | global-search', function (hooks) {
       return {
         results: {
           autocomplete: [],
-          courses: [],
+          courses: [
+            {
+              title: 'Course 1',
+              year: 2019,
+              sessions: [],
+              school: 'Medicine',
+            },
+          ],
         },
       };
     });
@@ -38,12 +43,14 @@ module('Integration | Component | global-search', function (hooks) {
     this.set('query', '');
     await render(hbs`<GlobalSearch
       @query={{this.query}}
+      @page="1"
       @onQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
     assert.ok(component.noResultsIsVisible);
     this.set('query', 'hello world');
+    await settled();
     assert.notOk(component.noResultsIsVisible);
   });
 

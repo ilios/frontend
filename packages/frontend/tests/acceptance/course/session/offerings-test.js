@@ -5,11 +5,9 @@ import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/session';
 import percySnapshot from '@percy/ember';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
-import { setupIntl } from 'ember-intl/test-support';
 
 module('Acceptance | Session - Offerings', function (hooks) {
   setupApplicationTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(async function () {
     freezeDateAt(

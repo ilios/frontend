@@ -39,6 +39,7 @@ const definition = {
     firstName: text('[data-test-first-name]'),
     middleName: text('[data-test-middle-name]'),
     lastName: text('[data-test-last-name]'),
+    displayName: text('[data-test-display-name]'),
     campusId: text('[data-test-campus-id]'),
     otherId: text('[data-test-other-id]'),
     email: text('[data-test-email]'),

@@ -1,8 +1,7 @@
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-session-list';
@@ -11,7 +10,6 @@ module(
   'Integration | Component | curriculum-inventory/sequence-block-session-list',
   function (hooks) {
     setupRenderingTest(hooks);
-    setupIntl(hooks);
     setupMirage(hooks);
 
     test('it renders', async function (assert) {

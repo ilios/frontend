@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -9,7 +8,6 @@ import { component } from 'frontend/tests/pages/components/instructor-group/root
 
 module('Integration | Component | instructor-group/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
@@ -54,10 +52,6 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     assert.ok(component.users.users[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.users.users[1].userNameInfo.fullName, 'Anton M. Alpha');
     assert.notOk(component.users.users[1].userNameInfo.hasAdditionalInfo);
-    assert.strictEqual(component.courses.title, 'Associated Courses (2)');
-    assert.strictEqual(component.courses.courses.length, 2);
-    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1');
-    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -80,10 +74,50 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     assert.ok(component.users.users[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.users.users[1].userNameInfo.fullName, 'Anton M. Alpha');
     assert.notOk(component.users.users[1].userNameInfo.hasAdditionalInfo);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it displays single course year if calendar year boundary IS NOT crossed', async function (assert) {
+    this.set('group', this.instructorGroup);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: false,
+          apiVersion,
+        },
+      };
+    });
+    await render(
+      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{true}} />`,
+    );
     assert.strictEqual(component.courses.title, 'Associated Courses (2)');
     assert.strictEqual(component.courses.courses.length, 2);
-    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1');
-    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101');
+    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1 (2013)');
+    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101 (2013)');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it displays course year range if calendar year boundary IS crossed', async function (assert) {
+    this.set('group', this.instructorGroup);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+          apiVersion,
+        },
+      };
+    });
+    await render(
+      hbs`<InstructorGroup::Root @instructorGroup={{this.group}} @canUpdate={{true}} />`,
+    );
+    assert.strictEqual(component.courses.title, 'Associated Courses (2)');
+    assert.strictEqual(component.courses.courses.length, 2);
+    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1 (2013 - 2014)');
+    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101 (2013 - 2014)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

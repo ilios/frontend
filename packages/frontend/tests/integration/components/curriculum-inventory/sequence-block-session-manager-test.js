@@ -1,5 +1,4 @@
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -11,7 +10,6 @@ module(
   'Integration | Component | curriculum-inventory/sequence-block-session-manager',
   function (hooks) {
     setupRenderingTest(hooks);
-    setupIntl(hooks, 'en-us');
     setupMirage(hooks);
 
     test('it renders', async function (assert) {

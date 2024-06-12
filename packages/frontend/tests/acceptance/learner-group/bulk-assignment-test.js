@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'frontend/tests/helpers';
 import { triggerEvent, waitFor } from '@ember/test-helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from '../../pages/learner-group';

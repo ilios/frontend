@@ -24,7 +24,7 @@
     "@babel/core": "^7.24.4",
     "@ember/render-modifiers": "^2.0.0",
     "@ember/string": "^3.1.1",
-    "@embroider/macros": "^1.16.0",
+    "@embroider/macros": "^1.16.3",
     "@embroider/util": "^1.13.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
@@ -51,7 +51,7 @@
     "ember-in-element-polyfill": "^1.0.0",
     "ember-in-viewport": "^4.0.0",
     "ember-inflector": "^4.0.2",
-    "ember-intl": "^6.5.3",
+    "ember-intl": "^6.5.4",
     "ember-math-helpers": "^4.0.0",
     "ember-modifier": "^4.0.0",
     "ember-simple-auth": "^6.0.0",
@@ -68,7 +68,7 @@
     "striptags": ">= 3.2.0",
     "typeface-nunito": ">= 1.1.13",
     "typeface-nunito-sans": ">= 1.1.13",
-    "validator": ">= 13.1.0"
+    "validator": ">= 13.12.0"
   },
   "peerDependencies": {
     "@popperjs/core": ">= 2.1.0",
@@ -83,7 +83,7 @@
     "striptags": ">= 3.2.0",
     "typeface-nunito": ">= 1.1.13",
     "typeface-nunito-sans": ">= 1.1.13",
-    "validator": ">= 13.1.0"
+    "validator": ">= 13.12.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.24.1",
@@ -115,7 +115,7 @@
     "eslint-plugin-yml": "^1.14.0",
     "loader.js": "^4.7.0",
     "prettier": "^3.2.5",
-    "sass": "^1.75.0",
+    "sass": "^1.77.5",
     "stylelint": "^16.3.1",
     "stylelint-config-recommended-scss": "^14.0.0",
     "stylelint-config-standard": "^36.0.0",

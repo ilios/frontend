@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/lm-type-icon';
@@ -8,7 +7,6 @@ import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-le
 
 module('Integration | Component | lm type icon', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('link', async function (assert) {
     const lm = createTypedLearningMaterialProxy({ link: 'https://iliosproject.org' });

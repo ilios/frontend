@@ -1,7 +1,6 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import {
   render,
   settled,
@@ -19,7 +18,6 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | bulk new users', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {

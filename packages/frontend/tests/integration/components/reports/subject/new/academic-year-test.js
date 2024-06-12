@@ -4,12 +4,10 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/academic-year';
-import { setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | reports/subject/new/academic-year', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
-  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
     this.server.create('academicYear', {

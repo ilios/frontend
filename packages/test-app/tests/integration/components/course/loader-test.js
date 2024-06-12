@@ -3,14 +3,12 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { setupIntl } from 'ember-intl/test-support';
 import Service from '@ember/service';
 import { defer } from 'rsvp';
 
 module('Integration | Component | course/loader', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
     assert.expect(3);
