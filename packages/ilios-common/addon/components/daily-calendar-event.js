@@ -35,8 +35,6 @@ export default class DailyCalendarEventComponent extends Component {
   }
 
   get tooltipContent() {
-    //access the locale info here so the getter will recompute when it changes
-    this.intl.locale;
     return calendarEventTooltip(this.args.event, this.intl, 'h:mma');
   }
 
