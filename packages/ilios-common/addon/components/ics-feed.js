@@ -8,4 +8,16 @@ export default class IcsFeedComponent extends Component {
   textCopied = restartableTask(async () => {
     this.flashMessages.success('general.copiedIcsFeedUrl');
   });
+
+  popperOptions = {
+    placement: 'right',
+    modifiers: [
+      {
+        name: 'flip',
+        options: {
+          fallbackPlacements: ['bottom'],
+        },
+      },
+    ],
+  };
 }
