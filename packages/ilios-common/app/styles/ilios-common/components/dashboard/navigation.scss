@@ -64,11 +64,3 @@
     }
   }
 }
-
-// tooltips are outside the document flow so have to be styled outside the component
-.ics-feed-display-success-message-tooltip {
-  padding: 0;
-  &.ilios-tooltip .content {
-    max-width: 100%;
-  }
-}
