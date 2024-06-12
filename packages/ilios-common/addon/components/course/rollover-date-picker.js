@@ -21,7 +21,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
     if (this.#flatPickerInstance) {
       this.#flatPickerInstance.destroy();
     }
-    const currentLocale = this.intl.locale[0];
+    const currentLocale = this.intl.primaryLocale;
     const courseDT = DateTime.fromJSDate(course.startDate);
     let locale;
     switch (currentLocale) {

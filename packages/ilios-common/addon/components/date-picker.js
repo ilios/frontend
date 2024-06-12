@@ -20,7 +20,7 @@ export default class DatePickerComponent extends Component {
   });
 
   setupPicker = dropTask(async (element) => {
-    const currentLocale = this.intl.locale[0];
+    const currentLocale = this.intl.primaryLocale;
     let locale;
     switch (currentLocale) {
       case 'fr':
