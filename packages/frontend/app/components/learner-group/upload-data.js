@@ -3,10 +3,9 @@ import { service } from '@ember/service';
 import { map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import PapaParse from 'papaparse';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { filterBy, findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class LearnerGroupUploadDataComponent extends Component {

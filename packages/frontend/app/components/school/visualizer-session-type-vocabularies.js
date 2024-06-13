@@ -3,12 +3,11 @@ import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Component {
   @service router;

@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
 import { service } from '@ember/service';

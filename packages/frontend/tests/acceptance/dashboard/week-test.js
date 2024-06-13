@@ -1,12 +1,11 @@
 import { currentRouteName } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/dashboard-week';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import percySnapshot from '@percy/ember';
-import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   setupApplicationTest(hooks);

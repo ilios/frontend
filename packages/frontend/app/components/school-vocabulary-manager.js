@@ -1,12 +1,11 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 @validatable
 export default class SchoolVocabularyManagerComponent extends Component {

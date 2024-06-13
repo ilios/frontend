@@ -1,10 +1,9 @@
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/session';
 import percySnapshot from '@percy/ember';
-import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Acceptance | Session - Offerings', function (hooks) {
   setupApplicationTest(hooks);

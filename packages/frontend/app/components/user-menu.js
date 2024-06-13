@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
 import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 export default class UserMenuComponent extends Component {
   @service intl;

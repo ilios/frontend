@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { dropTask, timeout } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class LeadershipExpandedComponent extends Component {

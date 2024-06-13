@@ -2,9 +2,8 @@ import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { findBy, findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { uniqueById } from '../utils/array-helpers';
 

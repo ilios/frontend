@@ -1,5 +1,4 @@
-import Service from '@ember/service';
-import { service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import queryString from 'query-string';
 import { waitForPromise } from '@ember/test-waiters';
 

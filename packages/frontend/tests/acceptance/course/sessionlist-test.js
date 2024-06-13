@@ -1,11 +1,10 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/sessions';
 import sessionPage from 'ilios-common/page-objects/session';
-import { freezeDateAt, unfreezeDate } from 'ilios-common';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Session List', function (hooks) {

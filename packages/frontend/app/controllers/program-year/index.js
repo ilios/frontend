@@ -1,7 +1,6 @@
 import Controller from '@ember/controller';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 export default class ProgramYearIndexController extends Controller {
   queryParams = [

@@ -1,11 +1,10 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 

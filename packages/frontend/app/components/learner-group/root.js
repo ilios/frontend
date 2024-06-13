@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { service } from '@ember/service';
@@ -8,7 +8,6 @@ import { all, map } from 'rsvp';
 import { dropTask, enqueueTask, restartableTask, task } from 'ember-concurrency';
 import pad from 'pad';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import cloneLearnerGroup from '../../utils/clone-learner-group';
