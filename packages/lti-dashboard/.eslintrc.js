@@ -16,7 +16,9 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {},
+  rules: {
+    'no-duplicate-imports': 'error',
+  },
   overrides: [
     // node files
     {

@@ -1,11 +1,10 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 export default class DetailInstructorsComponent extends Component {
   @service currentUser;

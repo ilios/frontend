@@ -1,7 +1,6 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
 import { helper } from '@ember/component/helper';
-import { get } from '@ember/object';
-import { set } from '@ember/object';
+import { get, set } from '@ember/object';
 import { isPresent } from '@ember/utils';
 
 function nextIndex(length, currentIdx) {

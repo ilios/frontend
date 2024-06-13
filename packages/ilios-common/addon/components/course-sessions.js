@@ -2,9 +2,8 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { task, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 const DEBOUNCE_DELAY = 250;

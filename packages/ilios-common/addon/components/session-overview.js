@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
@@ -9,7 +9,6 @@ import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/vali
 import { hash } from 'rsvp';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 @validatable
 export default class SessionOverview extends Component {

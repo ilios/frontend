@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
 import CoreObject from '@ember/object/core';
@@ -12,7 +12,6 @@ import { DateTime } from 'luxon';
 import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';
 import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 export default class BulkNewUsersComponent extends Component {
   @service flashMessages;

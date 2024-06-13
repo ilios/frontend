@@ -1,8 +1,7 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 export default class CurriculumInventoryReportIndexController extends Controller {
   queryParams = ['leadershipDetails', 'manageLeadership'];

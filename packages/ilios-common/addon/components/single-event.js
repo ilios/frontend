@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
@@ -7,7 +7,6 @@ import { DateTime } from 'luxon';
 import { findById } from 'ilios-common/utils/array-helpers';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 export default class SingleEvent extends Component {
   @service currentUser;

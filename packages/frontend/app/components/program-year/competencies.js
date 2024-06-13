@@ -4,11 +4,10 @@ import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 
 export default class ProgramYearCompetenciesComponent extends Component {
   @service flashMessages;

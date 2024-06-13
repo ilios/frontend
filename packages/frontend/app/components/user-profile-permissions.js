@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
@@ -7,7 +7,6 @@ import { filter } from 'rsvp';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { findById, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class UserProfilePermissionsComponent extends Component {

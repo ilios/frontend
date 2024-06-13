@@ -1,11 +1,10 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { all } from 'rsvp';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 export default class ObjectiveSortManagerComponent extends Component {
   @tracked totalObjectivesToSave;

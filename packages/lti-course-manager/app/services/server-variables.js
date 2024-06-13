@@ -1,5 +1,4 @@
-import Service from '@ember/service';
-import { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 
 /**
  * In the LTI app we pull server variables out of the session instead

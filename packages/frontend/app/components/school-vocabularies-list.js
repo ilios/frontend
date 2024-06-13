@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { filterBy, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SchoolVocabulariesListComponent extends Component {

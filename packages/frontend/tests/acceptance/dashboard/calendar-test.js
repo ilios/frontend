@@ -10,11 +10,10 @@ import {
 import { isEmpty } from '@ember/utils';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import { map } from 'rsvp';
 import page from 'ilios-common/page-objects/dashboard-calendar';
-import { freezeDateAt, unfreezeDate } from 'ilios-common';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Dashboard Calendar', function (hooks) {

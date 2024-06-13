@@ -1,5 +1,4 @@
-import Service from '@ember/service';
-import { service } from '@ember/service';
+import Service, { service } from '@ember/service';
 
 export default class GraphqlService extends Service {
   @service session;

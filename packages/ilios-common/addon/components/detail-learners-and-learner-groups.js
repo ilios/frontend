@@ -1,12 +1,11 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @service currentUser;

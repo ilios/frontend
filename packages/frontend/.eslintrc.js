@@ -21,6 +21,7 @@ module.exports = {
     'ember/no-classic-classes': 0,
     'ember/no-mixins': 0,
     'ember/no-new-mixins': 0,
+    'no-duplicate-imports': 'error',
   },
   overrides: [
     // node files

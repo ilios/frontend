@@ -1,12 +1,11 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { all } from 'rsvp';
 import scrollIntoView from 'scroll-into-view';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 

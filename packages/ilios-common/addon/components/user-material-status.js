@@ -1,9 +1,8 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
 
 export default class UserMaterialStatusComponent extends Component {
   @service store;

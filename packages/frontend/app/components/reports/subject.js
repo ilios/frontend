@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import PapaParse from 'papaparse';
@@ -7,7 +7,6 @@ import { dropTask, timeout } from 'ember-concurrency';
 import createDownloadFile from 'frontend/utils/create-download-file';
 import { validatable, Length } from 'ilios-common/decorators/validation';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 
 @validatable
 export default class ReportsSubjectComponent extends Component {
