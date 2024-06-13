@@ -4,12 +4,10 @@ import { module, test } from 'qunit';
 import page from 'frontend/tests/pages/instructor-groups';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Instructor Groups', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   module('User in single school', function (hooks) {
     hooks.beforeEach(async function () {

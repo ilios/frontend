@@ -2,13 +2,11 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import { currentURL } from '@ember/test-helpers';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'frontend/tests/pages/school';
 
 // @todo flesh out test coverage - the full CRUD, read-only mode, etc [ST 2023/09/18]
 module('Acceptance | School - Session Types', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');

@@ -2,14 +2,12 @@ import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'frontend/tests/pages/curriculum-inventory-reports';
 
 const url = '/curriculum-inventory-reports/?program=1&school=1';
 
 module('Acceptance | curriculum inventory reports', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');

@@ -1,15 +1,12 @@
 import { click, fillIn, currentURL, triggerEvent, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
-
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'frontend/tests/pages/user';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | User', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     freezeDateAt(new Date('10/31/2002'));

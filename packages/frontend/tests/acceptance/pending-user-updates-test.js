@@ -2,13 +2,11 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'frontend/tests/pages/pending-user-updates';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | pending user updates', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test('visiting /admin/userupdates', async function (assert) {
     const school = this.server.create('school');
