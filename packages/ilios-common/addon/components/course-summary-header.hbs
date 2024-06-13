@@ -37,7 +37,7 @@
         {{t "general.startDate"}}:
       </label>
       <span>
-        {{format-date @course.startDate}}
+        {{format-date @course.startDate day="2-digit" month="2-digit" year="numeric"}}
       </span>
     </div>
     <div class="block">
@@ -53,7 +53,7 @@
         {{t "general.endDate"}}:
       </label>
       <span>
-        {{format-date @course.endDate}}
+        {{format-date @course.endDate day="2-digit" month="2-digit" year="numeric"}}
       </span>
     </div>
     <div class="block">
