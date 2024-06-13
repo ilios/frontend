@@ -25,14 +25,14 @@
   </td>
   <td class="text-center hide-from-small-screen" colspan="2" data-test-start-date>
     {{#if @sequenceBlock.startDate}}
-      {{format-date @sequenceBlock.startDate}}
+      {{format-date @sequenceBlock.startDate day="2-digit" month="2-digit" year="numeric"}}
     {{else}}
       {{t "general.notApplicableAbbr"}}
     {{/if}}
   </td>
   <td class="text-center hide-from-small-screen" colspan="2" data-test-end-date>
     {{#if @sequenceBlock.endDate}}
-      {{format-date @sequenceBlock.endDate}}
+      {{format-date @sequenceBlock.endDate day="2-digit" month="2-digit" year="numeric"}}
     {{else}}
       {{t "general.notApplicableAbbr"}}
     {{/if}}

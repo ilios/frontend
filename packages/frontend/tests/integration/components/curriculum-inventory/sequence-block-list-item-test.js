@@ -61,11 +61,19 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
     assert.strictEqual(component.orderInSequence, '3');
     assert.strictEqual(
       component.startDate,
-      this.intl.formatDate(DateTime.fromObject({ year: 2021, month: 3, day: 17 }).toJSDate()),
+      this.intl.formatDate(DateTime.fromObject({ year: 2021, month: 3, day: 17 }).toJSDate(), {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
     );
     assert.strictEqual(
       component.endDate,
-      this.intl.formatDate(DateTime.fromObject({ year: 2021, month: 5, day: 22 }).toJSDate()),
+      this.intl.formatDate(DateTime.fromObject({ year: 2021, month: 5, day: 22 }).toJSDate(), {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
     );
     assert.strictEqual(component.course, 'course 0');
     assert.ok(component.isDeletable);

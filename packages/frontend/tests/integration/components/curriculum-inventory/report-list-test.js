@@ -97,12 +97,20 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     assert.strictEqual(component.reports[0].year, '2016', 'Academic year shows.');
     assert.strictEqual(
       component.reports[0].startDate,
-      this.intl.formatDate(reportModel2.startDate),
+      this.intl.formatDate(reportModel2.startDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       'Start date shows.',
     );
     assert.strictEqual(
       component.reports[0].endDate,
-      this.intl.formatDate(reportModel2.endDate),
+      this.intl.formatDate(reportModel2.endDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       'End date shows.',
     );
     assert.strictEqual(component.reports[0].status, 'Finalized', 'Status shows.');
@@ -111,12 +119,20 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     assert.strictEqual(component.reports[1].year, '2017', 'Academic year shows.');
     assert.strictEqual(
       component.reports[1].startDate,
-      this.intl.formatDate(reportModel1.startDate),
+      this.intl.formatDate(reportModel1.startDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       'Start date shows.',
     );
     assert.strictEqual(
       component.reports[1].endDate,
-      this.intl.formatDate(reportModel1.endDate),
+      this.intl.formatDate(reportModel1.endDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       'End date shows.',
     );
     assert.strictEqual(component.reports[1].status, 'Draft', 'Status shows.');

@@ -31,14 +31,14 @@
     colspan="2"
     data-test-start-date
   >
-    {{format-date @report.startDate}}
+    {{format-date @report.startDate day="2-digit" month="2-digit" year="numeric"}}
   </td>
   <td
     class="text-center hide-from-small-screen"
     colspan="2"
     data-test-end-date
   >
-    {{format-date @report.endDate}}
+    {{format-date @report.endDate day="2-digit" month="2-digit" year="numeric"}}
   </td>
   <td
     class="text-center"

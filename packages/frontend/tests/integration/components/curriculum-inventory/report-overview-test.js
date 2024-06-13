@@ -56,13 +56,21 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     assert.strictEqual(component.startDate.label, 'Start:', 'Start date label is correct.');
     assert.strictEqual(
       component.startDate.text,
-      this.intl.formatDate(reportModel.startDate),
+      this.intl.formatDate(reportModel.startDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       'Start date is visible.',
     );
     assert.strictEqual(component.endDate.label, 'End:', 'End date label is correct.');
     assert.strictEqual(
       component.endDate.text,
-      this.intl.formatDate(reportModel.endDate),
+      this.intl.formatDate(reportModel.endDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       'End date is visible.',
     );
     assert.strictEqual(
@@ -102,12 +110,20 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     );
     assert.strictEqual(
       component.startDate.readOnlyText,
-      this.intl.formatDate(reportModel.startDate),
+      this.intl.formatDate(reportModel.startDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       'Start date is visible.',
     );
     assert.strictEqual(
       component.endDate.readOnlyText,
-      this.intl.formatDate(reportModel.endDate),
+      this.intl.formatDate(reportModel.endDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       'End date is visible.',
     );
     assert.strictEqual(
@@ -204,7 +220,11 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await component.startDate.save();
     assert.strictEqual(
       component.startDate.text,
-      this.intl.formatDate(newVal),
+      this.intl.formatDate(newVal, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       'Edit link shown new start date post-update.',
     );
     assert.strictEqual(
@@ -249,7 +269,11 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await component.endDate.save();
     assert.strictEqual(
       component.endDate.text,
-      this.intl.formatDate(newVal),
+      this.intl.formatDate(newVal, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       'Edit link shown new end date post-update.',
     );
     assert.strictEqual(
