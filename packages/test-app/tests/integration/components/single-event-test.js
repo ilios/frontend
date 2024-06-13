@@ -12,6 +12,10 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(function () {
+    this.intl = this.owner.lookup('service:intl');
+  });
+
   test('it renders', async function (assert) {
     const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
     const course = this.server.create('course', {

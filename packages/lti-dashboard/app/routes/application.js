@@ -7,8 +7,9 @@ export default class ApplicationRoute extends Route {
 
   async beforeModel() {
     await this.session.setup();
-    const intl = this.intl;
-    window.document.querySelector('html').setAttribute('lang', intl.locale);
+    // Set the default locale.
+    this.intl.setLocale('en-us');
+    window.document.querySelector('html').setAttribute('lang', this.intl.primaryLocale);
   }
 
   /**

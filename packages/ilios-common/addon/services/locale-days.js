@@ -16,7 +16,7 @@ export default class LocaleDaysService extends Service {
   lastDayOfDateWeek(dateTime) {
     const dt = DateTime.fromJSDate(dateTime);
     const endOfWeek = dt.endOf('week');
-    if (this.intl.locale[0] === 'en-us') {
+    if (this.intl.primaryLocale === 'en-us') {
       const saturday = endOfWeek.minus({ days: 1 });
       if (saturday.diff(dt, 'days').days < 0) {
         return saturday.plus({ days: 7 }).toJSDate();
@@ -30,7 +30,7 @@ export default class LocaleDaysService extends Service {
   firstDayOfDateWeek(dateTime) {
     const dt = DateTime.fromJSDate(dateTime);
     const startOfWeek = dt.startOf('week');
-    if (this.intl.locale[0] === 'en-us') {
+    if (this.intl.primaryLocale === 'en-us') {
       const sunday = startOfWeek.minus({ days: 1 });
       if (dt.diff(sunday, 'days').days < 7) {
         return sunday.toJSDate();

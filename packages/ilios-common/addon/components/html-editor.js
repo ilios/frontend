@@ -32,7 +32,7 @@ export default class HtmlEditorComponent extends Component {
       key: 'Kb3A3pE2E2A1E4G4I4oCd2ZSb1XHi1Cb2a1KIWCWMJHXCLSwG1G1B2C1B1C7F6E1E4F4==',
       theme: 'gray',
       attribution: false,
-      language: this.intl.locale,
+      language: this.intl.primaryLocale,
       toolbarInline: false,
       placeholderText: '',
       saveInterval: false,

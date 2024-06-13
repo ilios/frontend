@@ -11,6 +11,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
+    this.intl = this.owner.lookup('service:intl');
     const school = this.server.create('school');
     this.program = this.server.create('program', { school });
     this.report = this.server.create('curriculum-inventory-report', {

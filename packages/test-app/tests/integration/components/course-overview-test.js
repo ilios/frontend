@@ -11,6 +11,7 @@ module('Integration | Component | course overview', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
+    this.intl = this.owner.lookup('service:intl');
     const permissionCheckerMock = Service.extend({
       async canCreateCourse() {
         return true;

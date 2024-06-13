@@ -8,6 +8,7 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Overview', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
+    this.intl = this.owner.lookup('service:intl');
     this.school = this.server.create('school');
     this.server.create('academicYear');
     this.course = this.server.create('course', {

@@ -11,6 +11,10 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(function () {
+    this.intl = this.owner.lookup('service:intl');
+  });
+
   test('it renders', async function (assert) {
     const date = DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 });
     const session = this.server.create('session');

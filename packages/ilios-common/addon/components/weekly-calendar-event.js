@@ -54,7 +54,6 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   get tooltipContent() {
-    this.intl.locale;
     return calendarEventTooltip(this.args.event, this.intl, 'h:mma');
   }
 

@@ -14,6 +14,10 @@ const localeFormatOptions = {
 module('Integration | Component | timed release schedule', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.intl = this.owner.lookup('service:intl');
+  });
+
   test('it renders with no start and end date', async function (assert) {
     await render(hbs`<TimedReleaseSchedule />
 `);

@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
 
 module('Unit | Service | locale-days', function (hooks) {
   setupTest(hooks);
-  setupIntl(hooks);
+  setupIntl(hooks, 'en-us');
 
   hooks.afterEach(() => {
     unfreezeDate();

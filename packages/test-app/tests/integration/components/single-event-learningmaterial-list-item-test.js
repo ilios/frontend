@@ -12,6 +12,10 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(function () {
+    this.intl = this.owner.lookup('service:intl');
+  });
+
   test('blanked', async function (assert) {
     const lm = { title: 'foo bar', isBlanked: true };
     this.set('lm', lm);

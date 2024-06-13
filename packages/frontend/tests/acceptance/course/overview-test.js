@@ -9,6 +9,7 @@ import percySnapshot from '@percy/ember';
 module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
+    this.intl = this.owner.lookup('service:intl');
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
     this.server.createList('courseClerkshipType', 2);

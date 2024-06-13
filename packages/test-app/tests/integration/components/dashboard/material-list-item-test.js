@@ -11,6 +11,10 @@ module('Integration | Component | dashboard/material-list-item', function (hooks
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(function () {
+    this.intl = this.owner.lookup('service:intl');
+  });
+
   test('it renders a material with no a11y errors', async function (assert) {
     const today = DateTime.local({ hour: 8 });
     const lm = {
