@@ -1,18 +1,12 @@
 @use "../ilios-common/mixins" as cm;
 @use "../ilios-common/colors" as c;
-@use "../mixins" as m;
 
 .user-guide-link {
-  @include m.header-menu;
+  margin-left: 0.5rem;
 
   @include cm.for-tablet-and-up {
     margin-left: 0.25rem;
     margin-right: 0.5rem;
-  }
-
-  @include cm.for-phone-only {
-    /* stylelint-disable property-disallowed-list */
-    font-size: 3.5vw;
   }
 
   a {
@@ -20,8 +14,17 @@
       align-items: center;
       color: c.$white;
       display: flex;
-      height: 1.85em;
-      width: 1.85em;
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  @include cm.for-phone-only {
+    a {
+      svg {
+        height: 24px;
+        width: 24px;
+      }
     }
   }
 }
