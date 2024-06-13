@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { setupAuthentication } from 'ilios-common';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
@@ -10,7 +9,6 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 // @todo flesh this integration test out [ST 2020/09/02]
 module('Integration | Component | new learningmaterial', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {

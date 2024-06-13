@@ -1,15 +1,13 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'ember-qunit';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/users';
 import percySnapshot from '@percy/ember';
 import userPage from 'frontend/tests/pages/user';
 
 module('Acceptance | Users', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');

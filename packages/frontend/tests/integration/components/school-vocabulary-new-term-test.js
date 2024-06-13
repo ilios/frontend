@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'frontend/tests/pages/components/school-vocabulary-new-term';
@@ -8,7 +7,6 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | school vocabulary new term', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('add term', async function (assert) {

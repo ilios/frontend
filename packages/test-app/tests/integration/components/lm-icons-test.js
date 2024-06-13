@@ -2,13 +2,11 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
 import { component } from 'ilios-common/page-objects/components/lm-icons';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
 
 module('Integration | Component | lm-icons', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('it renders optional', async function (assert) {
     this.set('lm', createTypedLearningMaterialProxy({ link: 'https://iliosproject.org' }));

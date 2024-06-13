@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { DateTime } from 'luxon';
 import { render } from '@ember/test-helpers';
@@ -10,7 +9,6 @@ import { component } from 'ilios-common/page-objects/components/sessions-grid-ro
 
 module('Integration | Component | sessions-grid-row', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
@@ -51,11 +49,11 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     assert.strictEqual(
       component.firstOffering,
       this.intl.formatDate(date.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
   });

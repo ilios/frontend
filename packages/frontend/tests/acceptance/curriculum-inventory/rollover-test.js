@@ -1,15 +1,13 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'ember-qunit';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/curriculum-inventory-report-rollover';
 import queryString from 'query-string';
 import { DateTime } from 'luxon';
 
 module('Acceptance | curriculum inventory report/rollover', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');

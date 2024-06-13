@@ -1,7 +1,6 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -10,7 +9,6 @@ import { component } from 'frontend/tests/pages/components/new-directory-user';
 
 module('Integration | Component | new directory user', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
@@ -79,7 +77,7 @@ module('Integration | Component | new directory user', function (hooks) {
   });
 
   test('create new user', async function (assert) {
-    assert.expect(37);
+    assert.expect(39);
     this.server.create('user-role', {
       id: 4,
       title: 'Student',
@@ -87,6 +85,7 @@ module('Integration | Component | new directory user', function (hooks) {
     const user1 = this.server.create('user', {
       firstName: 'user1-first',
       lastName: 'user1-last',
+      displayName: 'user1-display',
       campusId: 'user1-campus',
       email: 'user1@test.com',
       telephoneNumber: 'user11234',
@@ -94,6 +93,7 @@ module('Integration | Component | new directory user', function (hooks) {
     const user2 = this.server.create('user', {
       firstName: 'user2-first',
       lastName: 'user2-last',
+      displayName: '',
       campusId: 'user2-campus',
       email: 'user2@test.com',
       telephoneNumber: 'user21234',
@@ -105,6 +105,7 @@ module('Integration | Component | new directory user', function (hooks) {
     const user3 = this.server.create('user', {
       firstName: 'user3-first',
       lastName: 'user3-last',
+      displayName: '',
       campusId: null,
       email: null,
       telephoneNumber: 'user31234',
@@ -112,6 +113,7 @@ module('Integration | Component | new directory user', function (hooks) {
     const searchResult1 = {
       firstName: user1.firstName,
       lastName: user1.lastName,
+      displayName: user1.displayName,
       campusId: user1.campusId,
       email: user1.email,
       telephoneNumber: user1.telephoneNumber,
@@ -121,6 +123,7 @@ module('Integration | Component | new directory user', function (hooks) {
     const searchResult2 = {
       firstName: user2.firstName,
       lastName: user2.lastName,
+      displayName: user2.displayName,
       campusId: user2.campusId,
       email: user2.email,
       telephoneNumber: user2.telephoneNumber,
@@ -130,6 +133,7 @@ module('Integration | Component | new directory user', function (hooks) {
     const searchResult3 = {
       firstName: user3.firstName,
       lastName: user3.lastName,
+      displayName: user3.displayName,
       campusId: user3.campusId,
       email: user3.email,
       telephoneNumber: user3.telephoneNumber,
@@ -166,10 +170,7 @@ module('Integration | Component | new directory user', function (hooks) {
 
     assert.strictEqual(component.searchResults.length, 3);
     assert.ok(component.searchResults[0].userCanBeAdded);
-    assert.strictEqual(
-      component.searchResults[0].name,
-      `${searchResult1.firstName} ${searchResult1.lastName}`,
-    );
+    assert.strictEqual(component.searchResults[0].name, `${searchResult1.displayName}`);
     assert.strictEqual(component.searchResults[0].campusId, searchResult1.campusId);
     assert.strictEqual(component.searchResults[0].email, searchResult1.email);
     assert.ok(component.searchResults[1].userAlreadyExists);
@@ -191,6 +192,7 @@ module('Integration | Component | new directory user', function (hooks) {
 
     assert.strictEqual(component.form.firstName, `First Name: ${searchResult1.firstName}`);
     assert.strictEqual(component.form.lastName, `Last Name: ${searchResult1.lastName}`);
+    assert.strictEqual(component.form.displayName, `Display Name: ${searchResult1.displayName}`);
     assert.strictEqual(component.form.campusId, `Campus ID: ${searchResult1.campusId}`);
     assert.strictEqual(component.form.email, `Email: ${searchResult1.email}`);
     assert.strictEqual(component.form.phone, `Phone: ${searchResult1.telephoneNumber}`);
@@ -205,6 +207,7 @@ module('Integration | Component | new directory user', function (hooks) {
     assert.strictEqual(userModel.firstName, searchResult1.firstName);
     assert.strictEqual(userModel.middleName, null);
     assert.strictEqual(userModel.lastName, searchResult1.lastName);
+    assert.strictEqual(userModel.displayName, searchResult1.displayName);
     assert.strictEqual(userModel.campusId, searchResult1.campusId);
     assert.strictEqual(userModel.otherId, null);
     assert.strictEqual(userModel.phone, searchResult1.telephoneNumber);
@@ -224,6 +227,7 @@ module('Integration | Component | new directory user', function (hooks) {
     const searchResult = {
       firstName: 'first',
       lastName: 'last',
+      displayName: '',
       campusId: '123',
       email: 'user1@example.edu',
       telephoneNumber: '805',
@@ -282,6 +286,7 @@ module('Integration | Component | new directory user', function (hooks) {
     const searchResult = {
       firstName: 'first',
       lastName: 'last',
+      displayName: '',
       campusId: '123',
       email: 'user1@example.edu',
       telephoneNumber: '805',

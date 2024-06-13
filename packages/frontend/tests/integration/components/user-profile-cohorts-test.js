@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -9,19 +8,34 @@ import { component } from 'frontend/tests/pages/components/user-profile-cohorts'
 
 module('Integration | Component | user profile cohorts', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
+    const currentYear = new Date().getFullYear();
     const school1 = this.server.create('school');
     const school2 = this.server.create('school');
-    const program1 = this.server.create('program', { school: school1 });
-    const program2 = this.server.create('program', { school: school2 });
-    const programYear1 = this.server.create('program-year', { program: program1 });
-    const programYear2 = this.server.create('program-year', { program: program2 });
-    const programYear3 = this.server.create('program-year', { program: program1 });
-    const programYear4 = this.server.create('program-year', { program: program2 });
-    const programYear5 = this.server.create('program-year', { program: program1 });
+    const program1 = this.server.create('program', { school: school1, duration: 4 });
+    const program2 = this.server.create('program', { school: school2, duration: 4 });
+    const programYear1 = this.server.create('program-year', {
+      program: program1,
+      startYear: currentYear - program1.duration,
+    });
+    const programYear2 = this.server.create('program-year', {
+      program: program2,
+      startYear: currentYear - program2.duration,
+    });
+    const programYear3 = this.server.create('program-year', {
+      program: program1,
+      startYear: currentYear - program1.duration,
+    });
+    const programYear4 = this.server.create('program-year', {
+      program: program2,
+      startYear: currentYear - program2.duration,
+    });
+    const programYear5 = this.server.create('program-year', {
+      program: program1,
+      startYear: currentYear - program1.duration,
+    });
 
     this.cohort1 = this.server.create('cohort', { programYear: programYear1 });
     this.cohort2 = this.server.create('cohort', { programYear: programYear2 });

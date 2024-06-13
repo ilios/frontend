@@ -1,6 +1,5 @@
 import { module, test, todo } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
 import { hbs } from 'ember-cli-htmlbars';
@@ -11,7 +10,6 @@ import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Integration | Component | ilios calendar single event', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('it renders', async function (assert) {

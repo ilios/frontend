@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/time-picker';
@@ -8,7 +7,6 @@ import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Integration | Component | time-picker', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
     const date = new Date(2020, 4, 6, 23, 58);

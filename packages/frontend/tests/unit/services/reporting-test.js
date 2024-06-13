@@ -5,7 +5,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Unit | Service | reporting', function (hooks) {
   setupTest(hooks);
-  setupIntl(hooks);
+  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(function () {

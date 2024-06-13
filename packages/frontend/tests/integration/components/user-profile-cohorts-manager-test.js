@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -9,28 +8,58 @@ import { component } from 'frontend/tests/pages/components/user-profile-cohorts-
 
 module('Integration | Component | user-profile-cohorts-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
+    const currentYear = new Date().getFullYear();
     const school1 = this.server.create('school');
     const school2 = this.server.create('school');
-    const program1 = this.server.create('program', { school: school1 });
-    const program2 = this.server.create('program', { school: school2 });
-    const programYear1 = this.server.create('program-year', { program: program1 });
-    const programYear2 = this.server.create('program-year', { program: program2 });
-    const programYear3 = this.server.create('program-year', { program: program1 });
-    const programYear4 = this.server.create('program-year', { program: program2 });
+    const program1 = this.server.create('program', { school: school1, duration: 1 });
+    const program2 = this.server.create('program', { school: school2, duration: 4 });
+    const programYear1 = this.server.create('program-year', {
+      program: program1,
+      startYear: currentYear - program1.duration,
+    });
+    const programYear2 = this.server.create('program-year', {
+      program: program2,
+      startYear: currentYear - program2.duration,
+    });
+    const programYear3 = this.server.create('program-year', {
+      program: program1,
+      startYear: currentYear - program1.duration,
+    });
+    const programYear4 = this.server.create('program-year', {
+      program: program2,
+      startYear: currentYear - program2.duration,
+    });
+    const programYear5 = this.server.create('program-year', {
+      program: program2,
+      startYear: currentYear - program2.duration - 4,
+    });
+    const programYear6 = this.server.create('program-year', {
+      program: program2,
+      startYear: currentYear - program2.duration - 5,
+    });
+    const programYear7 = this.server.create('program-year', {
+      program: program2,
+      startYear: currentYear - program2.duration + 5,
+    });
 
     const cohort1 = this.server.create('cohort', { programYear: programYear1 });
     const cohort2 = this.server.create('cohort', { programYear: programYear2 });
     const cohort3 = this.server.create('cohort', { programYear: programYear3 });
     const cohort4 = this.server.create('cohort', { programYear: programYear4 });
+    const cohort5 = this.server.create('cohort', { programYear: programYear5 });
+    const cohort6 = this.server.create('cohort', { programYear: programYear6 });
+    const cohort7 = this.server.create('cohort', { programYear: programYear7 });
 
     this.cohort1 = await await this.owner.lookup('service:store').findRecord('cohort', cohort1.id);
     this.cohort2 = await await this.owner.lookup('service:store').findRecord('cohort', cohort2.id);
     this.cohort3 = await await this.owner.lookup('service:store').findRecord('cohort', cohort3.id);
     this.cohort4 = await await this.owner.lookup('service:store').findRecord('cohort', cohort4.id);
+    this.cohort5 = await await this.owner.lookup('service:store').findRecord('cohort', cohort5.id);
+    this.cohort6 = await await this.owner.lookup('service:store').findRecord('cohort', cohort6.id);
+    this.cohort7 = await await this.owner.lookup('service:store').findRecord('cohort', cohort7.id);
 
     await setupAuthentication({
       school: school1,
@@ -60,8 +89,9 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     assert.notOk(component.schools.filter.options[1].selected);
     assert.strictEqual(component.assignableCohorts.length, 0);
     await component.schools.filter.select('2');
-    assert.strictEqual(component.assignableCohorts.length, 1);
+    assert.strictEqual(component.assignableCohorts.length, 2);
     assert.strictEqual(component.assignableCohorts[0].title, 'program 1 cohort 3');
+    assert.strictEqual(component.assignableCohorts[1].title, 'program 1 cohort 4');
   });
 
   test('it renders without selected cohorts', async function (assert) {
@@ -85,9 +115,10 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     assert.strictEqual(component.assignableCohorts[0].title, 'program 0 cohort 0');
     assert.strictEqual(component.assignableCohorts[1].title, 'program 0 cohort 2');
     await component.schools.filter.select('2');
-    assert.strictEqual(component.assignableCohorts.length, 2);
+    assert.strictEqual(component.assignableCohorts.length, 3);
     assert.strictEqual(component.assignableCohorts[0].title, 'program 1 cohort 1');
     assert.strictEqual(component.assignableCohorts[1].title, 'program 1 cohort 3');
+    assert.strictEqual(component.assignableCohorts[2].title, 'program 1 cohort 4');
   });
 
   test('promote secondary cohort to primary cohort', async function (assert) {

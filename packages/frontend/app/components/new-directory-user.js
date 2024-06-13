@@ -30,6 +30,7 @@ export default class NewDirectoryUserComponent extends Component {
   @tracked firstName;
   @tracked middleName;
   @tracked lastName;
+  @tracked displayName;
   @tracked campusId;
   @tracked @Length(0, 16) otherId;
   @tracked email;
@@ -160,6 +161,7 @@ export default class NewDirectoryUserComponent extends Component {
     this.selectedUser = true;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
+    this.displayName = user.displayName;
     this.email = user.email;
     this.campusId = user.campusId;
     this.phone = user.telephoneNumber;
@@ -171,6 +173,7 @@ export default class NewDirectoryUserComponent extends Component {
     this.selectedUser = false;
     this.firstName = null;
     this.lastName = null;
+    this.displayName = null;
     this.email = null;
     this.campusId = null;
     this.phone = null;
@@ -228,6 +231,10 @@ export default class NewDirectoryUserComponent extends Component {
           isPresent(result.lastName) &&
           isPresent(result.email) &&
           isPresent(result.campusId);
+
+        result.fullName = result.displayName.length
+          ? result.displayName
+          : `${result.firstName} ${result.lastName}`;
         return result;
       });
       this.tooManyResults = mappedResults.length > 50;
@@ -241,6 +248,7 @@ export default class NewDirectoryUserComponent extends Component {
       'firstName',
       'middleName',
       'lastName',
+      'displayName',
       'campusId',
       'otherId',
       'email',
@@ -258,6 +266,7 @@ export default class NewDirectoryUserComponent extends Component {
       firstName: this.firstName,
       middleName: this.middleName,
       lastName: this.lastName,
+      displayName: this.displayName,
       campusId: this.campusId,
       otherId: this.otherId,
       email: this.email,

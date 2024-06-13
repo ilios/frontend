@@ -34,6 +34,14 @@
             {{this.lastName}}
           </span>
         </div>
+        <div class="item" data-test-display-name>
+          <label>
+            {{t "general.displayName"}}:
+          </label>
+          <span>
+            {{this.displayName}}
+          </span>
+        </div>
         <div class="item" data-test-campus-id>
           <label>
             {{t "general.campusId"}}:
@@ -260,11 +268,10 @@
                       <td class="text-left" colspan="3" data-test-name>
                         {{#if user.user}}
                           <LinkTo @route="user" @model={{user.user}}>
-                            {{user.firstName}}
-                            {{user.lastName}}
+                            {{user.fullName}}
                           </LinkTo>
                         {{else}}
-                          {{user.firstName}} {{user.lastName}}
+                          {{user.fullName}}
                         {{/if}}
                       </td>
                       <td class="text-left" colspan="2" data-test-campus-id>

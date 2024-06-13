@@ -2,13 +2,11 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupIntl } from 'ember-intl/test-support';
 import { OfferingTimeBlock } from 'ilios-common/utils/offering-date-block';
 import { component } from 'ilios-common/page-objects/components/session-offerings-time-block-offerings';
 
 module('Integration | Component | session-offerings-time-block-offerings', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
     const store = this.owner.lookup('service:store');

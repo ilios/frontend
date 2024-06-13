@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupIntl } from 'ember-intl/test-support';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
@@ -9,7 +8,6 @@ import { component } from 'ilios-common/page-objects/components/ilios-calendar-m
 
 module('Integration | Component | ilios calendar multiday events', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
     this.events = [

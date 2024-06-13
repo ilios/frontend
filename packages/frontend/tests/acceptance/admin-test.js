@@ -4,13 +4,12 @@ import { setupAuthentication } from 'ilios-common';
 
 const url = '/admin';
 
-import { setupApplicationTest } from 'ember-qunit';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupApplicationTest } from 'frontend/tests/helpers';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Admin', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
+
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] }, true);

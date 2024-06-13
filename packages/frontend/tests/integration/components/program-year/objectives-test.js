@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { setupIntl } from 'ember-intl/test-support';
+import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'frontend/tests/pages/components/program-year/objectives';
@@ -9,7 +8,6 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | program-year/objectives', function (hooks) {
   setupRenderingTest(hooks);
-  setupIntl(hooks, 'en-us');
   setupMirage(hooks);
 
   test('it renders and is accessible', async function (assert) {
