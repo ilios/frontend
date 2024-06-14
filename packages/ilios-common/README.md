@@ -11,18 +11,16 @@ All Ilios issues should be reported to our [common issue tracker](https://github
 
 ## Compatibility
 
-* Ember.js v5.8 or above
-* Ember CLI v5.8 or above
-* Node.js v20 or above
+- Ember.js v5.9 or above
+- Ember CLI v5.9 or above
+- Node.js v20 or above
 
-Open Source Heroes
-------------------------------------------------------------------------------
+## Open Source Heroes
 
-Every day these for-profit companies make developing Ilios possible.  Without the free tier of service they offer to
+Every day these for-profit companies make developing Ilios possible. Without the free tier of service they offer to
 open source software, ilios would be nowhere, so if you have a chance to pay them for something please do.
 
 - [GitHub](https://github.com)
-- [Travis CI](https://travis-ci.org/)
 - [Sentry](https://sentry.io/for/open-source/)
 - [Netlify](https://www.netlify.com)
 - [BrowserStack](https://www.browserstack.com)
@@ -30,7 +28,6 @@ open source software, ilios would be nowhere, so if you have a chance to pay the
 ## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
-
 
 ## License
 
