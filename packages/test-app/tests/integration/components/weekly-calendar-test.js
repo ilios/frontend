@@ -1,23 +1,20 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { settled, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
+import { setLocale } from 'ember-intl/test-support';
 import { component } from 'ilios-common/page-objects/components/weekly-calendar';
 
 module('Integration | Component | weekly-calendar', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    this.owner.lookup('service:intl').setLocale('en-us');
-  });
-
   //reset locale for other tests
-  hooks.afterEach(function () {
-    this.owner.lookup('service:intl').setLocale('en-us');
+  hooks.afterEach(async function () {
+    await setLocale('en-us');
   });
 
   this.createEvent = function (startDate, endDate, color) {
@@ -298,8 +295,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     assert.strictEqual(component.events.length, 1);
     assert.ok(component.events[0].isFifthDayOfWeek);
 
-    this.owner.lookup('service:intl').setLocale('es');
-    await settled();
+    await setLocale('es');
 
     assert.strictEqual(component.title.longWeekOfYear, 'Semana de 8 de diciembre de 1980');
     assert.strictEqual(component.title.shortWeekOfYear, '8/12 — 14/12 1980');
@@ -345,8 +341,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     assert.strictEqual(component.events.length, 1);
     assert.ok(component.events[0].isThirdDayOfWeek);
 
-    this.owner.lookup('service:intl').setLocale('es');
-    await settled();
+    await setLocale('es');
 
     assert.strictEqual(component.title.longWeekOfYear, 'Semana de 24 de febrero de 2020');
     assert.strictEqual(component.title.shortWeekOfYear, '24/2 — 1/3 2020');

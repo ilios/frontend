@@ -1,19 +1,20 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { settled, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/daily-calendar';
+import { setLocale } from 'ember-intl/test-support';
 
 module('Integration | Component | daily-calendar', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   //reset locale for other tests
-  hooks.afterEach(function () {
-    this.owner.lookup('service:intl').setLocale('en-us');
+  hooks.afterEach(async function () {
+    await setLocale('en-us');
   });
 
   this.createEvent = function (startDate, endDate, color) {
@@ -175,8 +176,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
     assert.strictEqual(component.title.shortDayOfWeek, '12/11/1980');
     assert.strictEqual(component.events.length, 1);
 
-    this.owner.lookup('service:intl').setLocale('es');
-    await settled();
+    await setLocale('es');
 
     assert.strictEqual(component.title.longDayOfWeek, 'jueves, 11 de diciembre de 1980');
     assert.strictEqual(component.title.shortDayOfWeek, '11/12/1980');
