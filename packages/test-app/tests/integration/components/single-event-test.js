@@ -269,8 +269,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
   });
@@ -311,8 +311,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
     assert.strictEqual(
       component.summary.offeredAt,
@@ -442,16 +442,16 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
     const formattedToday = this.intl.formatDate(today.toJSDate(), {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
     assert.strictEqual(
       component.summary.offeredAt,
@@ -532,8 +532,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
   });
@@ -566,13 +566,13 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }) +
         ' - ' +
         this.intl.formatDate(laterToday.toJSDate(), {
-          hour: 'numeric',
-          minute: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
         }),
     );
   });
@@ -605,8 +605,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }) +
         ' - ' +
         this.intl.formatDate(notToday.toJSDate(), {
@@ -614,8 +614,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
           year: 'numeric',
           month: 'long',
           day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
         }),
     );
   });

@@ -11,8 +11,8 @@
       ...
     {{else}}
       <span class="short" data-test-short>
-        {{format-date this.firstDayOfWeek month="numeric" day="numeric"}} &mdash;
-        {{format-date this.lastDayOfWeek month="numeric" day="numeric"}}
+        {{format-date this.firstDayOfWeek month="2-digit" day="2-digit"}} &mdash;
+        {{format-date this.lastDayOfWeek month="2-digit" day="2-digit"}}
         {{format-date this.lastDayOfWeek year="numeric"}}
       </span>
       <span class="long" data-test-long>{{t "general.weekOf" date=(format-date this.firstDayOfWeek month="long" day="numeric" year="numeric")}}</span>

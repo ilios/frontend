@@ -123,12 +123,12 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const events = findAll('[data-test-ilios-calendar-event]');
     assert.strictEqual(events.length, 2);
     const startOfMonthStartFormat = this.intl.formatTime(startOfMonth.toJSDate(), {
-      hour: 'numeric',
-      minute: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
     const startOfMonthEndFormat = this.intl.formatTime(startOfMonth.plus({ hour: 1 }).toJSDate(), {
-      hour: 'numeric',
-      minute: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
     assert
       .dom(events[0])

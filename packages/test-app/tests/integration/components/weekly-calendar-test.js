@@ -48,7 +48,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
 `);
     assert.strictEqual(component.ariaBusy, 'false');
     assert.strictEqual(component.title.longWeekOfYear, 'Week of January 6, 2019');
-    assert.strictEqual(component.title.shortWeekOfYear, '1/6 — 1/12 2019');
+    assert.strictEqual(component.title.shortWeekOfYear, '01/06 — 01/12 2019');
     assert.strictEqual(component.dayHeadings.length, 7);
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(component.dayHeadings[0].text, 'Sunday Sun Jan 6 6');
@@ -290,7 +290,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
 `);
 
     assert.strictEqual(component.title.longWeekOfYear, 'Week of December 7, 1980');
-    assert.strictEqual(component.title.shortWeekOfYear, '12/7 — 12/13 1980');
+    assert.strictEqual(component.title.shortWeekOfYear, '12/07 — 12/13 1980');
 
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(component.dayHeadings[0].text, 'Sunday Sun Dec 7 7');
@@ -337,7 +337,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
 `);
 
     assert.strictEqual(component.title.longWeekOfYear, 'Week of February 23, 2020');
-    assert.strictEqual(component.title.shortWeekOfYear, '2/23 — 2/29 2020');
+    assert.strictEqual(component.title.shortWeekOfYear, '02/23 — 02/29 2020');
 
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(component.dayHeadings[0].text, 'Sunday Sun Feb 23 23');

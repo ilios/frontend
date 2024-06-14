@@ -28,6 +28,6 @@ module('Integration | Component | ilios calendar event month', function (hooks) 
       'border-left-style': 'solid',
       'border-left-color': 'rgb(0, 173, 86)',
     });
-    assert.dom(s).hasText('8:00 AM - 9:00 AM : test');
+    assert.dom(s).hasText('08:00 AM - 09:00 AM : test');
   });
 });

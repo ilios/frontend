@@ -92,7 +92,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       assert.ok(component.style.includes(styles['grid-row-end']));
       assert.ok(component.style.includes(styles['grid-column-start']));
       assert.strictEqual(component.name, 'event 0');
-      assert.strictEqual(component.time, '8:00 AM');
+      assert.strictEqual(component.time, '08:00 AM');
     });
 
     test('check event 0', async function (assert) {
@@ -108,7 +108,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       assert.ok(component.style.includes(styles['grid-row-end']));
       assert.ok(component.style.includes(styles['grid-column-start']));
       assert.strictEqual(component.name, 'event 0');
-      assert.strictEqual(component.time, '8:00 AM');
+      assert.strictEqual(component.time, '08:00 AM');
     });
 
     test('check event 1', async function (assert) {
@@ -124,7 +124,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       assert.ok(component.style.includes(styles['grid-row-end']));
       assert.ok(component.style.includes(styles['grid-column-start']));
       assert.strictEqual(component.name, 'event 1');
-      assert.strictEqual(component.time, '8:00 AM');
+      assert.strictEqual(component.time, '08:00 AM');
     });
 
     test('check event 2', async function (assert) {
@@ -140,7 +140,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       assert.ok(component.style.includes(styles['grid-row-end']));
       assert.ok(component.style.includes(styles['grid-column-start']));
       assert.strictEqual(component.name, 'event 2');
-      assert.strictEqual(component.time, '8:10 AM');
+      assert.strictEqual(component.time, '08:10 AM');
     });
 
     test('check event 3', async function (assert) {
@@ -287,7 +287,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       assert.ok(component.style.includes(styles['grid-row-end']));
       assert.ok(component.style.includes(styles['grid-column-start']));
       assert.strictEqual(component.name, 'event 0');
-      assert.strictEqual(component.time, '8:10 AM');
+      assert.strictEqual(component.time, '08:10 AM');
     });
 
     test('check event 1', async function (assert) {
@@ -303,7 +303,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       assert.ok(component.style.includes(styles['grid-row-end']));
       assert.ok(component.style.includes(styles['grid-column-start']));
       assert.strictEqual(component.name, 'event 1');
-      assert.strictEqual(component.time, '8:10 AM');
+      assert.strictEqual(component.time, '08:10 AM');
     });
 
     test('check event 2', async function (assert) {
@@ -319,7 +319,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       assert.ok(component.style.includes(styles['grid-row-end']));
       assert.ok(component.style.includes(styles['grid-column-start']));
       assert.strictEqual(component.name, 'event 2');
-      assert.strictEqual(component.time, '9:40 AM');
+      assert.strictEqual(component.time, '09:40 AM');
     });
 
     test('check event 3', async function (assert) {
