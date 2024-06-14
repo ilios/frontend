@@ -118,7 +118,7 @@
         <span>
           {{#if @editable}}
             <EditableField
-              @value={{format-date @course.startDate}}
+              @value={{format-date @course.startDate day="2-digit" month="2-digit" year="numeric"}}
               @save={{perform this.changeStartDate}}
               @close={{this.revertStartDateChanges}}
             >
@@ -129,7 +129,7 @@
             </EditableField>
             <ValidationError @errors={{get-errors-for this.startDate}} />
           {{else}}
-            {{format-date @course.startDate}}&nbsp;
+            {{format-date @course.startDate day="2-digit" month="2-digit" year="numeric"}}&nbsp;
           {{/if}}
         </span>
       </div>
@@ -138,7 +138,7 @@
         <span>
           {{#if @editable}}
             <EditableField
-              @value={{format-date @course.endDate}}
+              @value={{format-date @course.endDate day="2-digit" month="2-digit" year="numeric"}}
               @save={{perform this.changeEndDate}}
               @close={{this.revertEndDateChanges}}
             >
@@ -149,7 +149,7 @@
             </EditableField>
             <ValidationError @errors={{get-errors-for this.endDate}} />
           {{else}}
-            {{format-date @course.endDate}}&nbsp;
+            {{format-date @course.endDate day="2-digit" month="2-digit" year="numeric"}}&nbsp;
           {{/if}}
         </span>
       </div>

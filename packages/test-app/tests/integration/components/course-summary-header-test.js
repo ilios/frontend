@@ -59,9 +59,9 @@ module('Integration | Component | course summary header', function (hooks) {
     assert.dom(title).hasText('course 0');
     assert.dom(printIcon).hasClass('fa-print');
     assert.dom(rolloverIcon).hasClass('fa-shuffle');
-    assert.dom(start).hasText('6/24/2005');
+    assert.dom(start).hasText('06/24/2005');
     assert.dom(externalId).hasText('abc');
-    assert.dom(end).hasText('8/12/2005');
+    assert.dom(end).hasText('08/12/2005');
     assert.dom(level).hasText('3');
     assert.dom(status).hasText('Published');
   });

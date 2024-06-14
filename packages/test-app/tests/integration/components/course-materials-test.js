@@ -131,7 +131,7 @@ module('Integration | Component | course materials', function (hooks) {
     assert.strictEqual(component.sessions[0].type, 'Link');
     assert.strictEqual(component.sessions[0].author, 'author1');
     assert.strictEqual(component.sessions[0].sessionTitle, 'session1title');
-    assert.strictEqual(component.sessions[0].firstOffering, '2/2/2020');
+    assert.strictEqual(component.sessions[0].firstOffering, '02/02/2020');
 
     assert.strictEqual(component.sessions.length, 3);
     assert.strictEqual(component.sessions[1].title, 'title2');
@@ -140,7 +140,7 @@ module('Integration | Component | course materials', function (hooks) {
     assert.strictEqual(component.sessions[1].type, 'File');
     assert.strictEqual(component.sessions[1].author, 'author2');
     assert.strictEqual(component.sessions[1].sessionTitle, 'session1title');
-    assert.strictEqual(component.sessions[1].firstOffering, '2/2/2020');
+    assert.strictEqual(component.sessions[1].firstOffering, '02/02/2020');
 
     assert.strictEqual(component.sessions.length, 3);
     assert.strictEqual(component.sessions[2].title, 'title3 citationtext');
@@ -148,7 +148,7 @@ module('Integration | Component | course materials', function (hooks) {
     assert.strictEqual(component.sessions[2].type, 'Citation');
     assert.strictEqual(component.sessions[2].author, 'author3');
     assert.strictEqual(component.sessions[2].sessionTitle, 'session1title');
-    assert.strictEqual(component.sessions[2].firstOffering, '2/2/2020');
+    assert.strictEqual(component.sessions[2].firstOffering, '02/02/2020');
   });
 
   test('clicking sort fires action', async function (assert) {

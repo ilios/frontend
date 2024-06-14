@@ -45,13 +45,23 @@ module('Acceptance | Course - Overview', function (hooks) {
       await percySnapshot(assert);
       assert.strictEqual(
         page.details.overview.startDate.text,
-        'Start: ' + this.intl.formatDate(courseModel.startDate),
+        'Start: ' +
+          this.intl.formatDate(courseModel.startDate, {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          }),
       );
       assert.strictEqual(page.details.overview.externalId.text, 'Course ID: 123');
       assert.strictEqual(page.details.overview.level.text, 'Level: 3');
       assert.strictEqual(
         page.details.overview.endDate.text,
-        'End: ' + this.intl.formatDate(courseModel.endDate),
+        'End: ' +
+          this.intl.formatDate(courseModel.endDate, {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          }),
       );
       assert.strictEqual(page.details.overview.universalLocator, 'ILIOS' + courseModel.id);
       assert.strictEqual(
@@ -72,13 +82,23 @@ module('Acceptance | Course - Overview', function (hooks) {
       await percySnapshot(assert);
       assert.strictEqual(
         page.details.overview.startDate.text,
-        'Start: ' + this.intl.formatDate(courseModel.startDate),
+        'Start: ' +
+          this.intl.formatDate(courseModel.startDate, {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          }),
       );
       assert.strictEqual(page.details.overview.externalId.text, 'Course ID: 123');
       assert.strictEqual(page.details.overview.level.text, 'Level: 3');
       assert.strictEqual(
         page.details.overview.endDate.text,
-        'End: ' + this.intl.formatDate(courseModel.endDate),
+        'End: ' +
+          this.intl.formatDate(courseModel.endDate, {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          }),
       );
       assert.strictEqual(page.details.overview.universalLocator, 'ILIOS' + courseModel.id);
       assert.strictEqual(
@@ -177,12 +197,12 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    assert.strictEqual(page.details.overview.startDate.text, 'Start: 3/23/2013');
+    assert.strictEqual(page.details.overview.startDate.text, 'Start: 03/23/2013');
     await page.details.overview.startDate.edit();
     assert.strictEqual(page.details.overview.startDate.datePicker.value, '3/23/2013');
     await page.details.overview.startDate.datePicker.set('2013-04-23');
     await page.details.overview.startDate.save();
-    assert.strictEqual(page.details.overview.startDate.text, 'Start: 4/23/2013');
+    assert.strictEqual(page.details.overview.startDate.text, 'Start: 04/23/2013');
   });
 
   test('start date validation', async function (assert) {
@@ -195,7 +215,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    assert.strictEqual(page.details.overview.startDate.text, `Start: 3/23/2013`);
+    assert.strictEqual(page.details.overview.startDate.text, `Start: 03/23/2013`);
     assert.notOk(page.details.overview.startDate.hasError);
     await page.details.overview.startDate.edit();
     assert.strictEqual(page.details.overview.startDate.datePicker.value, '3/23/2013');
@@ -214,12 +234,12 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    assert.strictEqual(page.details.overview.endDate.text, `End: 4/22/2015`);
+    assert.strictEqual(page.details.overview.endDate.text, `End: 04/22/2015`);
     await page.details.overview.endDate.edit();
     assert.strictEqual(page.details.overview.endDate.datePicker.value, '4/22/2015');
     await page.details.overview.endDate.datePicker.set('2016-05-22');
     await page.details.overview.endDate.save();
-    assert.strictEqual(page.details.overview.endDate.text, 'End: 5/22/2016');
+    assert.strictEqual(page.details.overview.endDate.text, 'End: 05/22/2016');
   });
 
   test('end date validation', async function (assert) {
@@ -232,7 +252,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     await page.visit({ courseId: courseModel.id, details: true });
-    assert.strictEqual(page.details.overview.endDate.text, 'End: 4/22/2013');
+    assert.strictEqual(page.details.overview.endDate.text, 'End: 04/22/2013');
     assert.notOk(page.details.overview.endDate.hasError);
     await page.details.overview.endDate.edit();
     assert.strictEqual(page.details.overview.endDate.datePicker.value, '4/22/2013');
