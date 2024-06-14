@@ -24,11 +24,11 @@
     {{/if}}
     <span class="ilios-calendar-event-time">
       <span class="ilios-calendar-event-start">
-        {{format-date @event.startDate  hour12=true hour="numeric" minute="numeric"}}
+        {{format-date @event.startDate hour12=true hour="2-digit" minute="2-digit"}}
       </span>
       <span class="ilios-calendar-event-end">
         -
-        {{format-date @event.endDate  hour12=true hour="numeric" minute="numeric"}}
+        {{format-date @event.endDate hour12=true hour="2-digit" minute="2-digit"}}
       </span>
     </span>
     {{#unless @event.isMulti}}

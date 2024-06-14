@@ -43,7 +43,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
 `);
     assert.strictEqual(component.ariaBusy, 'false');
     assert.strictEqual(component.title.longDayOfWeek, 'Wednesday, January 9, 2019');
-    assert.strictEqual(component.title.shortDayOfWeek, '1/9/2019');
+    assert.strictEqual(component.title.shortDayOfWeek, '01/09/2019');
     assert.ok(component.hasNoEvents);
 
     await a11yAudit(this.element);
