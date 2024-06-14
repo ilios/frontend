@@ -196,7 +196,10 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.ok(component.table.rows[0].pdfLink.isVisible);
     assert.strictEqual(component.table.rows[0].pdfLink.url, 'http://myhost.com/url1?inline');
     assert.strictEqual(component.table.rows[0].instructors, 'Instructor1name, Instructor2name');
-    assert.strictEqual(component.table.rows[0].firstOfferingDate, this.today.toFormat('M/d/yyyy'));
+    assert.strictEqual(
+      component.table.rows[0].firstOfferingDate,
+      this.today.toFormat('MM/dd/yyyy'),
+    );
     assert.strictEqual(component.table.rows[1].sessionTitle, 'session2title');
     assert.strictEqual(component.table.rows[1].courseTitle, 'course 1');
     assert.strictEqual(component.table.rows[1].title, 'Web Link title2');
@@ -206,14 +209,17 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.table.rows[1].instructors, 'Instructor1name, Instructor2name');
     assert.strictEqual(
       component.table.rows[1].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/yyyy'),
+      this.tomorrow.toFormat('MM/dd/yyyy'),
     );
     assert.strictEqual(component.table.rows[2].sessionTitle, 'session3title');
     assert.strictEqual(component.table.rows[2].courseTitle, 'course 2');
     assert.strictEqual(component.table.rows[2].title, 'Citation title3 citationtext');
     assert.ok(component.table.rows[2].isCitation);
     assert.strictEqual(component.table.rows[2].instructors, '');
-    assert.strictEqual(component.table.rows[2].firstOfferingDate, this.today.toFormat('M/d/yyyy'));
+    assert.strictEqual(
+      component.table.rows[2].firstOfferingDate,
+      this.today.toFormat('MM/dd/yyyy'),
+    );
     assert.strictEqual(component.table.rows[3].sessionTitle, 'session4title');
     assert.strictEqual(component.table.rows[3].courseTitle, 'course 0');
     assert.strictEqual(component.table.rows[3].title, 'File title4');
@@ -223,7 +229,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.table.rows[3].instructors, 'Instructor3name, Instructor4name');
     assert.strictEqual(
       component.table.rows[3].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/yyyy'),
+      this.tomorrow.toFormat('MM/dd/yyyy'),
     );
     assert.strictEqual(component.table.rows[4].sessionTitle, 'session5title');
     assert.strictEqual(component.table.rows[4].courseTitle, 'course 4');
@@ -235,7 +241,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.table.rows[4].instructors, '');
     assert.strictEqual(
       component.table.rows[4].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/yyyy'),
+      this.tomorrow.toFormat('MM/dd/yyyy'),
     );
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -579,12 +585,15 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.notOk(component.table.headers.title.isSortedOn);
     assert.ok(component.table.headers.firstOfferingDate.isSortedOn);
     assert.ok(component.table.headers.firstOfferingDate.isSortedAscending);
-    assert.strictEqual(component.table.rows[0].firstOfferingDate, this.today.toFormat('M/d/yyyy'));
+    assert.strictEqual(
+      component.table.rows[0].firstOfferingDate,
+      this.today.toFormat('MM/dd/yyyy'),
+    );
     await component.table.headers.firstOfferingDate.click();
     assert.ok(component.table.headers.firstOfferingDate.isSortedDescending);
     assert.strictEqual(
       component.table.rows[0].firstOfferingDate,
-      this.nextWeek.toFormat('M/d/yyyy'),
+      this.nextWeek.toFormat('MM/dd/yyyy'),
     );
   });
 });
