@@ -445,8 +445,8 @@ importers:
         specifier: '>= 4.0.0'
         version: 4.6.13
       froala-editor:
-        specifier: '>= 4.2.0'
-        version: 4.2.0
+        specifier: '>= 4.2.1'
+        version: 4.2.1
       luxon:
         specifier: '>= 3.0.0'
         version: 3.4.4
@@ -2777,7 +2777,7 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.24.7(supports-color@8.1.1)
+      '@babel/core': 7.24.7
       '@babel/helper-plugin-utils': 7.24.7
 
   /@babel/plugin-syntax-private-property-in-object@7.14.5(@babel/core@7.24.7):
@@ -3371,7 +3371,7 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.24.7(supports-color@8.1.1)
+      '@babel/core': 7.24.7
       '@babel/helper-plugin-utils': 7.24.7
 
   /@babel/plugin-transform-private-methods@7.24.7(@babel/core@7.24.7):
@@ -12896,8 +12896,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /froala-editor@4.2.0:
-    resolution: {integrity: sha512-gYVw0oR4yD/8TNFdFELnOwKjNKifxsNnWZIcmjYaoFXYx0rdnSN8z6ewqXurEZ4Ehm3q/hIq1eVXzx1v/fynlA==}
+  /froala-editor@4.2.1:
+    resolution: {integrity: sha512-Ov8XdJpP6X+hernpF89CzkDHBiXEsBzFUX2ftmG2QLw+2ZqiK2RirUbUy2IABxBXZrBzHgzm8GZyZ5rd+cAU5Q==}
     dev: false
 
   /from2@2.3.0:
