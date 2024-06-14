@@ -46,8 +46,8 @@ module('Integration | Component | dashboard/material-list-item', function (hooks
     assert.strictEqual(
       component.firstOfferingDate,
       this.intl.formatDate(today.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
       }),
     );

@@ -213,7 +213,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.table.rows[0].instructors, '');
     assert.strictEqual(
       page.materials.table.rows[0].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/y'),
+      this.tomorrow.toFormat('MM/dd/y'),
     );
     assert.ok(page.materials.table.rows[1].status.isPresent);
     assert.notOk(page.materials.table.rows[1].status.isChecked);
@@ -229,7 +229,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(
       page.materials.table.rows[1].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/y'),
+      this.tomorrow.toFormat('MM/dd/y'),
     );
     assert.ok(page.materials.table.rows[2].status.isPresent);
     assert.ok(page.materials.table.rows[2].status.isChecked);
@@ -245,7 +245,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(
       page.materials.table.rows[2].firstOfferingDate,
-      this.tomorrow.toFormat('M/d/y'),
+      this.tomorrow.toFormat('MM/dd/y'),
     );
 
     assert.notOk(page.materials.table.rows[3].status.isPresent);
@@ -259,7 +259,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(
       page.materials.table.rows[3].firstOfferingDate,
-      this.today.toFormat('M/d/y'),
+      this.today.toFormat('MM/dd/y'),
     );
 
     assert.ok(page.materials.table.rows[4].status.isPresent);
@@ -271,7 +271,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.table.rows[4].instructors, '');
     assert.strictEqual(
       page.materials.table.rows[4].firstOfferingDate,
-      this.today.toFormat('M/d/y'),
+      this.today.toFormat('MM/dd/y'),
     );
     assert.ok(page.materials.table.rows[5].status.isPresent);
     assert.notOk(page.materials.table.rows[5].status.isChecked);
@@ -289,7 +289,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     assert.strictEqual(
       page.materials.table.rows[5].firstOfferingDate,
-      this.today.toFormat('M/d/y'),
+      this.today.toFormat('MM/dd/y'),
     );
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
@@ -385,7 +385,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.ok(page.materials.table.headers.firstOfferingDate.isSortedAscending);
     assert.strictEqual(
       page.materials.table.rows[0].firstOfferingDate,
-      this.today.toFormat('M/d/y'),
+      this.today.toFormat('MM/dd/y'),
     );
     await page.materials.table.headers.firstOfferingDate.click();
     assert.ok(page.materials.table.headers.firstOfferingDate.isSortedDescending);

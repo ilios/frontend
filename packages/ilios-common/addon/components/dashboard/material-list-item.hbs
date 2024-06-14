@@ -85,7 +85,7 @@
   </td>
   <td colspan="4" data-test-date>
     {{#if @lm.firstOfferingDate}}
-      {{format-date @lm.firstOfferingDate}}
+      {{format-date @lm.firstOfferingDate day="2-digit" month="2-digit" year="numeric"}}
     {{else}}
       {{t "general.none"}}
     {{/if}}
