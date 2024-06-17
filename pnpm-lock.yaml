@@ -445,8 +445,8 @@ importers:
         specifier: '>= 4.0.0'
         version: 4.6.13
       froala-editor:
-        specifier: '>= 4.2.0'
-        version: 4.2.0
+        specifier: '>= 4.2.1'
+        version: 4.2.1
       luxon:
         specifier: '>= 3.0.0'
         version: 3.4.4
@@ -12880,8 +12880,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /froala-editor@4.2.0:
-    resolution: {integrity: sha512-gYVw0oR4yD/8TNFdFELnOwKjNKifxsNnWZIcmjYaoFXYx0rdnSN8z6ewqXurEZ4Ehm3q/hIq1eVXzx1v/fynlA==}
+  /froala-editor@4.2.1:
+    resolution: {integrity: sha512-Ov8XdJpP6X+hernpF89CzkDHBiXEsBzFUX2ftmG2QLw+2ZqiK2RirUbUy2IABxBXZrBzHgzm8GZyZ5rd+cAU5Q==}
     dev: false
 
   /from2@2.3.0:
