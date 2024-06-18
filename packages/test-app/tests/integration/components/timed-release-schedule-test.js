@@ -6,10 +6,10 @@ import { DateTime } from 'luxon';
 
 const localeFormatOptions = {
   year: 'numeric',
-  month: 'numeric',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
 };
 module('Integration | Component | timed release schedule', function (hooks) {
   setupRenderingTest(hooks);

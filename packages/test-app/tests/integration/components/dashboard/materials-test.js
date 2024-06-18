@@ -235,7 +235,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.table.rows[4].courseTitle, 'course 4');
     assert.strictEqual(
       component.table.rows[4].title,
-      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)',
+      'Timed Release title5 (Available until 03/01/2013, 01:10 AM)',
     );
     assert.ok(component.table.rows[4].isTimed);
     assert.strictEqual(component.table.rows[4].instructors, '');
@@ -548,7 +548,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.ok(component.table.headers.title.isSortedDescending);
     assert.strictEqual(
       component.table.rows[0].title,
-      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)',
+      'Timed Release title5 (Available until 03/01/2013, 01:10 AM)',
     );
   });
 

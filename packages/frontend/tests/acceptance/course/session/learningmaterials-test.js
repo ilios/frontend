@@ -326,7 +326,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         page.details.learningMaterials.manager.description.value,
         '1 lm description',
       );
-      assert.strictEqual(page.details.learningMaterials.manager.uploadDate, '3/14/2011');
+      assert.strictEqual(page.details.learningMaterials.manager.uploadDate, '03/14/2011');
       assert.ok(page.details.learningMaterials.manager.hasFile);
       assert.strictEqual(page.details.learningMaterials.manager.downloadText, 'filename');
       assert.strictEqual(
@@ -350,7 +350,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       );
       assert.strictEqual(
         page.details.learningMaterials.manager.uploadDate,
-        this.intl.formatDate(today.toJSDate()),
+        this.intl.formatDate(today.toJSDate(), {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        }),
       );
       assert.ok(page.details.learningMaterials.manager.hasLink);
       assert.strictEqual(page.details.learningMaterials.manager.link, 'www.example.com');
@@ -613,7 +617,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       );
       assert.strictEqual(
         page.details.learningMaterials.search.searchResults[0].properties[2].value,
-        'Upload date: 3/3/2016',
+        'Upload date: 03/03/2016',
       );
       await page.details.learningMaterials.search.searchResults[0].add();
       assert.strictEqual(page.details.learningMaterials.current.length, 5);
@@ -635,11 +639,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
       const formattedNewDate = this.intl.formatDate(newDate.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       });
       assert.strictEqual(
         page.details.learningMaterials.manager.timedReleaseSummary,
@@ -677,18 +681,18 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
       const formattedStartDate = this.intl.formatDate(newStartDate.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       });
       const formattedEndDate = this.intl.formatDate(newEndDate.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       });
       assert.strictEqual(
         page.details.learningMaterials.manager.timedReleaseSummary,
@@ -712,11 +716,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       assert.ok(page.details.learningMaterials.current[0].isTimedRelease);
       await page.details.learningMaterials.current[0].details();
       const formattedNewDate = this.intl.formatDate(newDate.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       });
       assert.strictEqual(
         page.details.learningMaterials.manager.timedReleaseSummary,
@@ -748,11 +752,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
 
       assert.ok(page.details.learningMaterials.manager.hasEndDateValidationError);
       const formattedDate = this.intl.formatDate(newDate.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       });
       assert.strictEqual(
         page.details.learningMaterials.manager.timedReleaseSummary,

@@ -211,7 +211,7 @@
           {{t "general.uploadDate"}}:
         </label>
         <span class="upload-date">
-          {{format-date this.uploadDate}}
+          {{format-date this.uploadDate day="2-digit" month="2-digit" year="numeric"}}
         </span>
       </div>
       <label>
@@ -230,7 +230,7 @@
                 @onChange={{fn this.updateDate "startDate"}}
               />
             {{else}}
-              {{format-date this.startDate}}
+              {{format-date this.startDate day="2-digit" month="2-digit" year="numeric"}}
             {{/if}}
           </div>
           <div class="item start-time">
@@ -243,7 +243,7 @@
                 @action={{fn this.updateTime "startDate"}}
               />
             {{else}}
-              {{format-date this.startDate  hour12=true hour="numeric" minute="numeric"}}
+              {{format-date this.startDate day="2-digit" month="2-digit" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
             {{/if}}
           </div>
           {{#if @editable}}
@@ -274,7 +274,7 @@
                 @onChange={{fn this.updateDate "endDate"}}
               />
             {{else}}
-              {{format-date this.endDate}}
+              {{format-date this.endDate day="2-digit" month="2-digit" year="numeric"}}
             {{/if}}
           </div>
           <div class="item end-time">
@@ -287,7 +287,7 @@
                 @action={{fn this.updateTime "endDate"}}
               />
             {{else}}
-              {{format-date this.endDate  hour12=true hour="numeric" minute="numeric"}}
+              {{format-date this.endDate day="2-digit" month="2-digit" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
             {{/if}}
           </div>
           <ValidationError @errors={{get-errors-for this.endDate}} data-test-end-date-validation-error-message />
