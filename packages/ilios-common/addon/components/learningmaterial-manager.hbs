@@ -211,7 +211,7 @@
           {{t "general.uploadDate"}}:
         </label>
         <span class="upload-date">
-          {{format-date this.uploadDate day="2-digit" month="2-digit" year="2-digit"}}
+          {{format-date this.uploadDate day="2-digit" month="2-digit" year="numeric"}}
         </span>
       </div>
       <label>
@@ -230,7 +230,7 @@
                 @onChange={{fn this.updateDate "startDate"}}
               />
             {{else}}
-              {{format-date this.startDate day="2-digit" month="2-digit" year="2-digit"}}
+              {{format-date this.startDate day="2-digit" month="2-digit" year="numeric"}}
             {{/if}}
           </div>
           <div class="item start-time">
