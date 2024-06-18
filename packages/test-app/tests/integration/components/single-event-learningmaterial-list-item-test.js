@@ -41,11 +41,11 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     const startDate = now.minus({ hour: 1 });
     const endDate = now.plus({ hour: 1 });
     const opts = {
-      month: 'numeric',
-      day: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
       year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     };
     const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',
@@ -73,11 +73,11 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     const startDate = now.minus({ hour: 1 });
     const endDate = now.plus({ hour: 1 });
     const opts = {
-      month: 'numeric',
-      day: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
       year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     };
     const lm = createTypedLearningMaterialProxy({
       title: 'foo bar',

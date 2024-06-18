@@ -207,7 +207,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.table.rows[0].courseTitle, 'course 4');
     assert.strictEqual(
       page.materials.table.rows[0].title,
-      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)',
+      'Timed Release title5 (Available until 03/01/2013, 01:10 AM)',
     );
     assert.ok(page.materials.table.rows[0].isTimed);
     assert.strictEqual(page.materials.table.rows[0].instructors, '');
@@ -361,7 +361,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.ok(page.materials.table.headers.title.isSortedDescending);
     assert.strictEqual(
       page.materials.table.rows[1].title,
-      'Timed Release title5 (Available until 3/1/2013, 1:10 AM)',
+      'Timed Release title5 (Available until 03/01/2013, 01:10 AM)',
     );
     await page.materials.table.headers.title.click();
     assert.ok(page.materials.table.headers.title.isSortedAscending);
