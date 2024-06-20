@@ -4,6 +4,7 @@ general:
   activeFilters: Active Filters
   add: Add
   addNew: Add New
+  admin: Admin
   administratorCount: "There {count, plural, =1 {is 1 administrator} other {are # administrators}}"
   administrators: Administrators
   advancedOptions: Advanced Options
@@ -156,6 +157,7 @@ general:
   independentLearning: Independent Learning
   independentLearningActivities: Independent Learning Activities
   inProgress: In Progress
+  instructing: Instructing
   instructionalNotes: Instructional Notes
   instructor: Instructor
   instructorGroupMembers: Instructor Group Members
@@ -171,6 +173,7 @@ general:
   learnerGroupsManageTitle: Manage Learner Groups
   learners: Learners
   learnersAndLearnerGroups: Learners and Learner Groups
+  learning: Learning
   learnersAndLearnerGroupsWithCount: "Learners ({learnerCount}) and Learner Groups ({learnerGroupCount})"
   learningMaterialManageTitle: Manage Learning Material
   learningMaterials: Learning Materials

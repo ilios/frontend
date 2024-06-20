@@ -2,6 +2,7 @@ general:
   accessAllMaterialsForThisCourse: "Accéder à tout le matériel d'étude pour ce cours"
   actions: Actions
   activeFilters: Filtres actifs
+  admin: Admin
   add: Ajouté
   addNew: Ajouté Neuf
   administratorCount: "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
@@ -158,6 +159,7 @@ general:
   inProgress: En Cours
   instructionalNotes: Notes Didactiques
   instructor: Instructeur
+  instructing: Instruis
   instructorGroupMembers: "Membres du groupe d'instructeurs"
   instructorGroups: Groupes des Instructeurs
   instructors: Instructeurs
@@ -172,6 +174,7 @@ general:
   learners: Étudiants
   learnersAndLearnerGroups: "Étudiants et Groupes d'Étudiants"
   learnersAndLearnerGroupsWithCount: "Étudiants ({learnerCount}) et Groupes d'Étudiants ({learnerGroupCount})"
+  learning: Apprends
   learningMaterialManageTitle: "Manager Matériels d'Étude"
   learningMaterials: "Matériels d'Étude"
   learningMaterialsSummary: "Résumé Matériels d'Étude"
