@@ -217,6 +217,16 @@ export default class DashboardCalendarComponent extends Component {
     }
 
     return this.ourEvents.filter((event) => {
+      if ('administrator' === this.userContext) {
+        // TODO: Replace this with Set.intersect() once that becomes
+        //   available in all browsers, or polyfill it. [ST 2024/06/20].
+        // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/intersection
+        return (
+          event.userContexts.includes('course administrator') ||
+          event.userContexts.includes('course director') ||
+          event.userContexts.includes('session administrator')
+        );
+      }
       return event.userContexts.includes(this.userContext);
     });
   }
