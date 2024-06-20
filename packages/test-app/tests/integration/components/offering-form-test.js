@@ -383,22 +383,22 @@ module('Integration | Component | offering form', function (hooks) {
     const newStartDate = DateTime.fromObject({ hour: 9 }).plus({ days: 1 });
     assert.strictEqual(
       this.intl.formatDate(DateTime.fromObject({ hour: 9, minute: 0 }).toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
       component.endDate.value,
     );
     await component.startDate.datePicker.set(newStartDate.toJSDate());
     assert.strictEqual(
       this.intl.formatDate(newStartDate.set({ hour: 9, minute: 0 }).toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
       component.endDate.value,
     );
@@ -410,11 +410,11 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.endDate.value,
       this.intl.formatDate(DateTime.fromObject({ hour: 9, minute: 0 }).toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
     await component.startTime.timePicker.hour.select('2');
@@ -423,11 +423,11 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(
       component.endDate.value,
       this.intl.formatDate(DateTime.fromObject({ hour: 15, minute: 15 }).toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
   });
@@ -437,11 +437,11 @@ module('Integration | Component | offering form', function (hooks) {
 `);
     assert.strictEqual(
       this.intl.formatDate(DateTime.fromObject({ hour: 9, minute: 0 }).toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
       component.endDate.value,
     );
@@ -449,11 +449,11 @@ module('Integration | Component | offering form', function (hooks) {
     await component.duration.minutes.set('15');
     assert.strictEqual(
       this.intl.formatDate(DateTime.fromObject({ hour: 10, minute: 15 }).toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
       component.endDate.value,
     );
@@ -465,11 +465,11 @@ module('Integration | Component | offering form', function (hooks) {
 `);
     assert.strictEqual(
       this.intl.formatDate(DateTime.fromObject({ hour: 9, minute: 0 }).toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
       component.endDate.value,
     );
@@ -480,11 +480,11 @@ module('Integration | Component | offering form', function (hooks) {
     await component.duration.minutes.set('50');
     assert.strictEqual(
       this.intl.formatDate(DateTime.fromObject({ hour: 17, minute: 0 }).toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
       component.endDate.value,
     );
