@@ -40,7 +40,13 @@
           </button>
         {{/if}}
       {{/if}}
-      {{#unless @mySchedule}}
+      {{#if @mySchedule}}
+        {{#if this.canFilterByUserContext}}
+          <div class="calendar-options-control toggle-user-context-filters">
+            <Dashboard::UserContextFilter @setUserContext={{set this.userContext}} @userContext={{this.userContext}}/>
+          </div>
+        {{/if}}
+      {{else}}
         <div class="calendar-options-control calendar-school-picker">
           <FaIcon @icon="building-columns" />
           {{#if this.hasMoreThanOneSchool}}
@@ -58,7 +64,7 @@
             {{get this.bestSelectedSchool "title"}}
           {{/if}}
         </div>
-      {{/unless}}
+      {{/if}}
       <div class="calendar-filters">
         {{#if (and @showFilters this.bestSelectedSchool)}}
           <Dashboard::CalendarFilters
@@ -100,9 +106,6 @@
         @removeTermId={{@removeTermId}}
         @clearFilters={{@clearFilters}}
       />
-    {{/if}}
-    {{#if this.canFilterByUserContext}}
-      <Dashboard::UserContextFilter @setUserContext={{set this.userContext}} @userContext={{this.userContext}}/>
     {{/if}}
     <section class="fullwidth ilios-calendar-container"
       {{did-insert (perform this.loadEvents) this.bestSelectedSchool this.fromTimeStamp this.toTimeStamp @mySchedule}}
