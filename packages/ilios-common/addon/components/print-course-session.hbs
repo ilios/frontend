@@ -208,7 +208,7 @@
               {{@session.ilmSession.hours}}
             </td>
             <td>
-              {{format-date @session.ilmSession.dueDate}}
+              {{format-date @session.ilmSession.dueDate month="2-digit" day="2-digit" year="numeric"}}
             </td>
           </tr>
           </tbody>
@@ -240,9 +240,9 @@
           {{#each this.offerings as |offering|}}
             <tr>
               <td class="text-left">
-                {{format-date offering.startDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
+                {{format-date offering.startDate month="2-digit" day="2-digit" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
                 -
-                {{format-date offering.endDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
+                {{format-date offering.endDate month="2-digit" day="2-digit" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
               </td>
               <td class="text-left">
                 {{offering.room}}
