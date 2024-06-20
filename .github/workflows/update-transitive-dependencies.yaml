@@ -20,7 +20,8 @@ jobs:
       - name: remove and re-create lock file
         run: |
           rm pnpm-lock.yaml
-          pnpm install
+          pnpm install --fix-lockfile
+          pnpm dedupe
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v6
