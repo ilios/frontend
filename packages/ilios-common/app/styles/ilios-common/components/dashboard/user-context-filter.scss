@@ -1,0 +1,5 @@
+@use "../../mixins" as m;
+
+.dashboard-user-context-filter {
+  @include m.multi-button;
+}
