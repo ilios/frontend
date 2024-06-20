@@ -56,12 +56,12 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(
       page.details.overview.ilmDueDateAndTime.value,
       this.intl.formatDate(ilmSession.dueDate, {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: '2-digit',
         hour12: true,
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
 
@@ -93,12 +93,12 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(
       page.details.overview.ilmDueDateAndTime.value,
       this.intl.formatDate(DateTime.fromObject({ hour: 17, minute: 0 }).plus({ weeks: 6 }), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: '2-digit',
         hour12: true,
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
   });
@@ -147,12 +147,12 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(
       page.details.overview.ilmDueDateAndTime.value,
       this.intl.formatDate(ilmSession.dueDate, {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: '2-digit',
         hour12: true,
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
     await page.details.overview.ilmDueDateAndTime.edit();
@@ -165,12 +165,12 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(
       page.details.overview.ilmDueDateAndTime.value,
       this.intl.formatDate(newDate.toJSDate(), {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: '2-digit',
         hour12: true,
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
     );
   });
