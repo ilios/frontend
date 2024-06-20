@@ -32,17 +32,6 @@ export default class DashboardCalendarComponent extends Component {
     this.bestSelectedSchool,
   ]);
 
-  get canFilterByUserContext() {
-    // KLUDGE!
-    // checking if the current user is an instructor at all cast the net too wide.
-    // what we really want is to check if this user instructs in the currently selected school.
-    // <code>CurrentUser::isTeachingCourseInSchool()</code> is supposed to provide that functionality, but it's bugged.
-    // until this gets fixed we'll have to use this getter on the User model instead.
-    // @see https://github.com/ilios/ilios/issues/5410
-    // [ST 2024/04/18]
-    return this.user?.isInstructor;
-  }
-
   get fromTimeStamp() {
     if ('week' === this.args.selectedView) {
       return DateTime.fromJSDate(this.localeDays.firstDayOfDateWeek(this.args.selectedDate))

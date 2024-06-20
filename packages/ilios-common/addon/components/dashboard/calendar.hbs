@@ -41,11 +41,9 @@
         {{/if}}
       {{/if}}
       {{#if @mySchedule}}
-        {{#if this.canFilterByUserContext}}
-          <div class="calendar-options-control toggle-user-context-filters">
-            <Dashboard::UserContextFilter @setUserContext={{set this.userContext}} @userContext={{this.userContext}}/>
-          </div>
-        {{/if}}
+        <div class="calendar-options-control toggle-user-context-filters">
+          <Dashboard::UserContextFilter @setUserContext={{set this.userContext}} @userContext={{this.userContext}}/>
+        </div>
       {{else}}
         <div class="calendar-options-control calendar-school-picker">
           <FaIcon @icon="building-columns" />
