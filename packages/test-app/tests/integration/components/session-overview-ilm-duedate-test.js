@@ -29,7 +29,7 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
 
     assert.ok(component.isVisible);
     assert.strictEqual(component.label, 'Due By:');
-    assert.strictEqual(component.value, '5/19/21, 11:55 PM');
+    assert.strictEqual(component.value, '05/19/21, 11:55 PM');
     assert.ok(component.isEditable);
     await a11yAudit(this.element);
     assert.ok(true, 'not a11y violations');
@@ -45,7 +45,7 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
 `);
 
     assert.strictEqual(component.label, 'Due By:');
-    assert.strictEqual(component.value, '5/19/21, 11:55 PM');
+    assert.strictEqual(component.value, '05/19/21, 11:55 PM');
     assert.notOk(component.isEditable);
     await a11yAudit(this.element);
     assert.ok(true, 'not a11y violations');

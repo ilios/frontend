@@ -37,11 +37,11 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
 `);
     const lastUpdatedText = () => {
       const date = this.intl.formatDate(session.updatedAt, {
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       });
 
       const text = this.intl.t('general.lastUpdate');
