@@ -361,7 +361,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { offeringForm: form } = offerings[0];
     const newDate = DateTime.fromObject({ year: 2011, month: 8, day: 11, hour: 14, minute: 2 });
     await form.startDate.datePicker.set(newDate.toJSDate());
-    await form.startTime.timePicker.hour.select(newDate.toFormat('h'));
+    await form.startTime.timePicker.hour.select(newDate.toFormat('hh'));
     await form.startTime.timePicker.minute.select(newDate.toFormat('mm'));
     await form.startTime.timePicker.ampm.select(newDate.toFormat('a'));
     await form.save();

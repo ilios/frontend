@@ -361,11 +361,11 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.endDate.set(newEndDate);
     assert.strictEqual(
       component.startDate.value,
-      DateTime.fromJSDate(newStartDate).toFormat('M/d/yyyy'),
+      DateTime.fromJSDate(newStartDate).toFormat('MM/dd/yyyy'),
     );
     assert.strictEqual(
       component.endDate.value,
-      DateTime.fromJSDate(newEndDate).toFormat('M/d/yyyy'),
+      DateTime.fromJSDate(newEndDate).toFormat('MM/dd/yyyy'),
     );
     await component.clearDates();
     assert.strictEqual(component.startDate.value, '');
