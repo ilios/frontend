@@ -62,7 +62,7 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
 
     assert.strictEqual(component.value, '05/19/21, 11:55 PM');
     await component.edit();
-    assert.strictEqual(component.datePicker.value, '05/19/2021');
+    assert.strictEqual(component.datePicker.value, '5/19/2021');
     assert.strictEqual(component.timePicker.hour.value, '11');
     assert.strictEqual(component.timePicker.minute.value, '55');
     assert.strictEqual(component.timePicker.ampm.value, 'PM');
@@ -89,8 +89,8 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
     assert.strictEqual(component.timePicker.hour.value, '11');
     assert.strictEqual(component.timePicker.minute.value, '55');
     assert.strictEqual(component.timePicker.ampm.value, 'PM');
-    await component.datePicker.set('1/1/1999');
-    await component.timePicker.hour.select('5');
+    await component.datePicker.set('01/01/1999');
+    await component.timePicker.hour.select('05');
     await component.timePicker.minute.select('23');
     await component.timePicker.ampm.select('AM');
     await component.cancel();
