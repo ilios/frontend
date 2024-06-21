@@ -212,7 +212,11 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await component.startDate.edit();
     assert.strictEqual(
       component.startDate.value,
-      this.intl.formatDate(reportModel.startDate),
+      this.intl.formatDate(reportModel.startDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       "The report's current start date is pre-selected in date picker.",
     );
     const newVal = DateTime.fromJSDate(reportModel.startDate).plus({ days: 1 });
@@ -261,7 +265,11 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await component.endDate.edit();
     assert.strictEqual(
       component.endDate.value,
-      this.intl.formatDate(reportModel.endDate),
+      this.intl.formatDate(reportModel.endDate, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       "The report's current end date is pre-selected in date picker.",
     );
     const newVal = DateTime.fromJSDate(reportModel.endDate).plus({ days: 1 });

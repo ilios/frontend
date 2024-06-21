@@ -39,7 +39,8 @@ export default class DatePickerComponent extends Component {
     this._flatPickerInstance = flatpickr(element, {
       locale,
       defaultDate: this.args.value,
-      formatDate: (dateObj) => this.intl.formatDate(dateObj),
+      formatDate: (dateObj) =>
+        this.intl.formatDate(dateObj, { day: '2-digit', month: '2-digit', year: 'numeric' }),
       onChange: (selectedDates) => this.onChange(selectedDates[0]),
       onOpen: () => {
         // eslint-disable-next-line ember/no-runloop

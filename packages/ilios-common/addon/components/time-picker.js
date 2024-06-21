@@ -7,7 +7,7 @@ export default class TimePicker extends Component {
   constructor() {
     super(...arguments);
     this.now = new Date();
-    this.hours = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    this.hours = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
     this.minutes = [
       '00',
       '01',
@@ -88,7 +88,7 @@ export default class TimePicker extends Component {
   }
 
   get hour() {
-    return DateTime.fromJSDate(this.date).toFormat('h');
+    return DateTime.fromJSDate(this.date).toFormat('hh');
   }
 
   get minute() {

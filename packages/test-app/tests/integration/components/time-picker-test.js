@@ -28,7 +28,7 @@ module('Integration | Component | time-picker', function (hooks) {
 
   test('change hour', async function (assert) {
     assert.expect(4);
-    const newHour = '7';
+    const newHour = '07';
     this.set('action', (value, unit) => {
       assert.strictEqual(unit, 'hour');
       assert.strictEqual(value, 19);
