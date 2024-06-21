@@ -165,19 +165,19 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(offerings.dates[2].dayOfMonth, offering3StartDate.toFormat('MMMM d'));
 
     assert.strictEqual(offerings.offerings.length, 3);
-    assert.strictEqual(offerings.offerings[0].startTime, offering1StartDate.toFormat('h:mm a'));
+    assert.strictEqual(offerings.offerings[0].startTime, offering1StartDate.toFormat('hh:mm a'));
     assert.strictEqual(offerings.offerings[0].location, 'room 0');
     assert.strictEqual(offerings.offerings[0].learners, '(2) 1 guy M. Mc1son, 2 guy...');
     assert.strictEqual(offerings.offerings[0].learnerGroups, '(2) learner group 0, learn...');
     assert.strictEqual(offerings.offerings[0].instructors, '(3) 3 guy M. Mc3son, 4 guy...');
 
-    assert.strictEqual(offerings.offerings[1].startTime, offering2StartDate.toFormat('h:mm a'));
+    assert.strictEqual(offerings.offerings[1].startTime, offering2StartDate.toFormat('hh:mm a'));
     assert.strictEqual(offerings.offerings[1].location, 'room 1');
     assert.strictEqual(offerings.offerings[1].learners, '');
     assert.strictEqual(offerings.offerings[1].learnerGroups, '');
     assert.strictEqual(offerings.offerings[1].instructors, '');
 
-    assert.strictEqual(offerings.offerings[2].startTime, offering3StartDate.toFormat('h:mm a'));
+    assert.strictEqual(offerings.offerings[2].startTime, offering3StartDate.toFormat('hh:mm a'));
     assert.strictEqual(offerings.offerings[2].location, 'room 2');
     assert.strictEqual(offerings.offerings[2].learners, '');
     assert.strictEqual(offerings.offerings[2].learnerGroups, '');
@@ -216,7 +216,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     await sessions[0].row.expand();
     assert.strictEqual(
       expandedSessions[0].lastUpdated,
-      'Last Update Last Update: 7/9/2019, 5:00 PM',
+      'Last Update Last Update: 07/09/2019, 05:00 PM',
     );
   });
 

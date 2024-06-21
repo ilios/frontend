@@ -114,7 +114,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     );
     assert.strictEqual(
       blocks[0].startTime,
-      'Starts: ' + DateTime.fromJSDate(this.offering1.startDate).toFormat('h:mm a'),
+      'Starts: ' + DateTime.fromJSDate(this.offering1.startDate).toFormat('hh:mm a'),
     );
     assert.strictEqual(
       blocks[0].endTime,
@@ -134,7 +134,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     );
     assert.strictEqual(
       blocks[1].startTime,
-      'Starts: ' + DateTime.fromJSDate(this.offering2.startDate).toFormat('h:mm a'),
+      'Starts: ' + DateTime.fromJSDate(this.offering2.startDate).toFormat('hh:mm a'),
     );
     assert.strictEqual(
       blocks[1].endTime,
@@ -160,8 +160,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
           month: 'long',
           day: 'numeric',
           weekday: 'long',
-          hour: 'numeric',
-          minute: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
         }),
     );
 
@@ -326,8 +326,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasMultiDay);
     assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'September 11');
-    assert.strictEqual(block.startTime, 'Starts: 2:15 AM');
-    assert.strictEqual(block.endTime, 'Ends: 5:30 PM');
+    assert.strictEqual(block.startTime, 'Starts: 02:15 AM');
+    assert.strictEqual(block.endTime, 'Ends: 05:30 PM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
 
     assert.strictEqual(block.timeBlockOfferings.offerings[0].learnerGroups.length, 2);
@@ -381,8 +381,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
           month: 'long',
           day: 'numeric',
           weekday: 'long',
-          hour: 'numeric',
-          minute: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
         }),
     );
     assert.strictEqual(
@@ -392,8 +392,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
           month: 'long',
           day: 'numeric',
           weekday: 'long',
-          hour: 'numeric',
-          minute: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
         }),
     );
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
@@ -439,8 +439,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.notOk(block.hasMultiDay);
     assert.strictEqual(block.dayOfWeek, 'Sunday');
     assert.strictEqual(block.dayOfMonth, 'September 11');
-    assert.strictEqual(block.startTime, 'Starts: 2:15 AM');
-    assert.strictEqual(block.endTime, 'Ends: 5:30 PM');
+    assert.strictEqual(block.startTime, 'Starts: 02:15 AM');
+    assert.strictEqual(block.endTime, 'Ends: 05:30 PM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 2);
 
     assert.strictEqual(block.timeBlockOfferings.offerings[0].learnerGroups.length, 1);
@@ -511,7 +511,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(block.dayOfWeek, 'Wednesday');
     assert.strictEqual(block.dayOfMonth, 'October 5');
     assert.strictEqual(block.startTime, 'Starts: 11:45 AM');
-    assert.strictEqual(block.endTime, 'Ends: 5:55 PM');
+    assert.strictEqual(block.endTime, 'Ends: 05:55 PM');
     assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
 
     const offering = block.timeBlockOfferings.offerings[0];
@@ -563,8 +563,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
       assert.ok(block.hasEndTime);
       assert.notOk(block.hasMultiDay);
       assert.strictEqual(block.dayOfWeek, 'Friday');
-      assert.strictEqual(block.startTime, 'Starts: 2:15 AM');
-      assert.strictEqual(block.endTime, 'Ends: 3:23 PM');
+      assert.strictEqual(block.startTime, 'Starts: 02:15 AM');
+      assert.strictEqual(block.endTime, 'Ends: 03:23 PM');
       assert.strictEqual(block.timeBlockOfferings.offerings.length, 2);
       assert.strictEqual(block.timeBlockOfferings.offerings[0].learnerGroups.length, 1);
       assert.strictEqual(
@@ -640,8 +640,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
       assert.ok(block.hasEndTime);
       assert.notOk(block.hasMultiDay);
       assert.strictEqual(block.dayOfWeek, 'Friday');
-      assert.strictEqual(block.startTime, 'Starts: 2:15 AM');
-      assert.strictEqual(block.endTime, 'Ends: 3:23 PM');
+      assert.strictEqual(block.startTime, 'Starts: 02:15 AM');
+      assert.strictEqual(block.endTime, 'Ends: 03:23 PM');
       assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
       assert.strictEqual(block.timeBlockOfferings.offerings[0].learnerGroups.length, 2);
       assert.strictEqual(block.timeBlockOfferings.offerings[0].location, 'Scottsdale Stadium');
