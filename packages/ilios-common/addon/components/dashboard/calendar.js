@@ -32,6 +32,10 @@ export default class DashboardCalendarComponent extends Component {
     this.bestSelectedSchool,
   ]);
 
+  get showUserContextFilters() {
+    return this.currentUser.performsNonLearnerFunction;
+  }
+
   get fromTimeStamp() {
     if ('week' === this.args.selectedView) {
       return DateTime.fromJSDate(this.localeDays.firstDayOfDateWeek(this.args.selectedDate))
