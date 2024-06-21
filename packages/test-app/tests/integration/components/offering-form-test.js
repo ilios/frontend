@@ -417,7 +417,7 @@ module('Integration | Component | offering form', function (hooks) {
         minute: '2-digit',
       }),
     );
-    await component.startTime.timePicker.hour.select('2');
+    await component.startTime.timePicker.hour.select('02');
     await component.startTime.timePicker.minute.select('15');
     await component.startTime.timePicker.ampm.select('PM');
     assert.strictEqual(
@@ -473,7 +473,7 @@ module('Integration | Component | offering form', function (hooks) {
       }),
       component.endDate.value,
     );
-    await component.startTime.timePicker.hour.select('2');
+    await component.startTime.timePicker.hour.select('02');
     await component.startTime.timePicker.minute.select('10');
     await component.startTime.timePicker.ampm.select('PM');
     await component.duration.hours.set('2');
