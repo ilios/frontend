@@ -3,6 +3,7 @@
     class="filters-list"
     {{did-insert (perform this.load) this.activeFilters}}
     {{did-update (perform this.load) this.activeFilters}}
+    data-test-dashboard-filter-tags
   >
     {{#if this.filterTags}}
       <header class="filters-header">
