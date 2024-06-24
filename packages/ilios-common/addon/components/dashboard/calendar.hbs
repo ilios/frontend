@@ -3,8 +3,8 @@
   data-test-dashboard-calendar
 >
   <div class="dashboard-calendar-content">
-    <section class="calendar-controls">
-      <div class="calendar-options-control togglemyschedule">
+    <section class="calendar-controls" data-test-dashboard-calendar-controls>
+      <div class="calendar-options-control togglemyschedule" data-test-myschedule>
         <ToggleButtons
           @firstOptionSelected={{@mySchedule}}
           @firstLabel={{t "general.mySchedule"}}
@@ -12,7 +12,7 @@
           @toggle={{@toggleMySchedule}}
         />
       </div>
-      <div class="calendar-options-control showfilters">
+      <div class="calendar-options-control showfilters" data-test-showfilters>
         <ToggleButtons
           @firstOptionSelected={{not @showFilters}}
           @firstLabel={{t "general.hideFilters"}}
@@ -21,7 +21,7 @@
         />
       </div>
       {{#if @showFilters}}
-        <div class="calendar-options-control togglecoursefilters">
+        <div class="calendar-options-control togglecoursefilters" data-test-showcoursefilters>
           <ToggleButtons
             @firstOptionSelected={{@courseFilters}}
             @firstLabel={{t "general.courseOrSessionType"}}
@@ -29,16 +29,6 @@
             @toggle={{@toggleCourseFilters}}
           />
         </div>
-        {{#if this.showClearFilters}}
-          <button
-            id="calendar-clear-filters"
-            class="calendar-clear-filters"
-            type="button"
-            {{on "click" @clearFilters}}
-          >
-            {{t "general.clearFilters"}}
-          </button>
-        {{/if}}
       {{/if}}
       {{#if @mySchedule}}
         {{#if this.showUserContextFilters}}
@@ -50,7 +40,7 @@
         <div class="calendar-options-control calendar-school-picker">
           <FaIcon @icon="building-columns" />
           {{#if this.hasMoreThanOneSchool}}
-            <select aria-label={{t "general.schools"}} {{on "change" this.changeSchool}}>
+            <select aria-label={{t "general.schools"}} {{on "change" this.changeSchool}} data-test-select-school>
               {{#each (sort-by "title" @allSchools) as |school|}}
                 <option
                   value={{school.id}}
