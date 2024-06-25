@@ -1,8 +1,11 @@
-import { create } from 'ember-cli-page-object';
+import { collection, create } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-dashboard-filter-tags]',
-  // @todo implement [ST 2024/06/24]
+  tags: collection('[data-test-filter-tag]'),
+  clearAll: {
+    scope: '[data-test-clear-filters]',
+  },
 };
 
 export default definition;

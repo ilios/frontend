@@ -1,12 +1,9 @@
 import { collection, create, fillable, property } from 'ember-cli-page-object';
-import weeklyCalendar from './../weekly-calendar';
-import dailyCalendar from './../daily-calendar';
-import weekGlance from './../week-glance';
-import monthlyCalendar from './../monthly-calendar';
 import toggle from '../toggle-buttons';
 import userContextFilter from './user-context-filter';
-import calendarFilters from './calendar-filters';
+import filters from './calendar-filters';
 import filterTags from './filter-tags';
+import calendar from './../ilios-calendar';
 
 const definition = {
   scope: '[data-test-dashboard-calendar]',
@@ -38,13 +35,10 @@ const definition = {
         }),
       },
     },
-    calendarFilters,
+    filters,
   },
   filterTags,
-  dailyCalendar,
-  weekGlance,
-  weeklyCalendar,
-  monthlyCalendar,
+  calendar,
 };
 
 export default definition;

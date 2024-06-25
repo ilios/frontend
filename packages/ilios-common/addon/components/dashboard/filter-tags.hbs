@@ -15,6 +15,7 @@
             class="filter-tag {{tag.class}}"
             type="button"
             {{on "click" (fn tag.remove tag.id)}}
+            data-test-filter-tag
           >
             {{tag.name}}
             <FaIcon @icon="xmark" />
@@ -25,6 +26,7 @@
           class="filters-clear-filters"
           type="button"
           {{on "click" @clearFilters}}
+          data-test-clear-filters
         >
           {{t "general.clearFilters"}}
         </button>

@@ -1,4 +1,4 @@
-import { currentRouteName } from '@ember/test-helpers';
+import { currentRouteName, findAll } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
@@ -9,9 +9,11 @@ import percySnapshot from '@percy/ember';
 
 module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   setupApplicationTest(hooks);
+
   const today = DateTime.fromObject({ hour: 8 });
 
   hooks.beforeEach(async function () {
+    this.intl = this.owner.lookup('service:intl');
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
   });
@@ -131,6 +133,51 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('week summary displays the whole week', async function (assert) {
+    assert.expect(3);
+    const startOfTheWeek = DateTime.fromJSDate(
+      this.owner.lookup('service:locale-days').firstDayOfThisWeek,
+    ).set({ minute: 2 });
+    const endOfTheWeek = DateTime.fromJSDate(
+      this.owner.lookup('service:locale-days').lastDayOfThisWeek,
+    ).set({ hour: 22, minute: 5 });
+
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: startOfTheWeek.toJSDate(),
+      endDate: startOfTheWeek.plus({ hour: 1 }).toJSDate(),
+      offering: 1,
+      isPublished: true,
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: endOfTheWeek.toJSDate(),
+      endDate: endOfTheWeek.plus({ hour: 1 }).toJSDate(),
+      offering: 2,
+      isPublished: true,
+    });
+    const dashboard = '.dashboard-week';
+    const events = `${dashboard} .event`;
+
+    await page.visit();
+
+    const eventBLocks = findAll(events);
+    assert.strictEqual(eventBLocks.length, 2);
+    const options = {
+      weekday: 'long',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+    assert.strictEqual(
+      page.week.weekGlance.events[0].text,
+      'event 0 ' + this.intl.formatTime(startOfTheWeek.toJSDate(), options),
+    );
+    assert.strictEqual(
+      page.week.weekGlance.events[1].text,
+      'event 1 ' + this.intl.formatTime(endOfTheWeek.toJSDate(), options),
+    );
   });
 
   test('calendar is active in dashboard navigation', async function (assert) {
