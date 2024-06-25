@@ -37,7 +37,7 @@
     </div>
     <div
       class="calendar-filter-list vocabularyfilter"
-      data-test-vocbulary-filter
+      data-test-vocabulary-filter
     >
       <h5>
         {{t "general.terms"}}
@@ -72,7 +72,7 @@
         {{#if (is-array this.sessionTypes)}}
           <ul>
             {{#each this.sessionTypes as |type|}}
-              <li class="clickable">
+              <li class="clickable" data-test-filter>
                 <Dashboard::FilterCheckbox
                   @checked={{includes type.id @selectedSessionTypeIds}}
                   @add={{fn @addSessionTypeId type.id}}
