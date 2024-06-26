@@ -1,27 +1,21 @@
-import { create, property } from 'ember-cli-page-object';
+import { clickable, create, property, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-dashboard-user-context-filter]',
-  instructingLabel: {
-    scope: '[data-test-instructing-label]',
+  instructing: {
+    isChecked: property('checked', '[data-test-instructing-input]'),
+    label: text('[data-test-instructing-label]'),
+    toggle: clickable('[data-test-instructing-label]'),
   },
-  instructingInput: {
-    scope: '[data-test-instructing-input]',
-    isChecked: property('checked'),
+  learning: {
+    isChecked: property('checked', '[data-test-learning-input]'),
+    label: text('[data-test-learning-label]'),
+    toggle: clickable('[data-test-learning-label]'),
   },
-  learningLabel: {
-    scope: '[data-test-learning-label]',
-  },
-  learningInput: {
-    scope: '[data-test-learning-input]',
-    isChecked: property('checked'),
-  },
-  adminLabel: {
-    scope: '[data-test-admin-label]',
-  },
-  adminInput: {
-    scope: '[data-test-admin-input]',
-    isChecked: property('checked'),
+  admin: {
+    isChecked: property('checked', '[data-test-admin-input]'),
+    label: text('[data-test-admin-label]'),
+    toggle: clickable('[data-test-admin-label]'),
   },
 };
 
