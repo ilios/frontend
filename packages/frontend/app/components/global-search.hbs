@@ -5,11 +5,11 @@
 >
   <GlobalSearchBox @query={{@query}} @search={{@setQuery}} />
   <ul
-    class="results {{if (and (not this.search.isRunning) (not this.hasResults)) "hidden"}}"
+    class="results {{if (and this.resultsData.isPending (not this.hasResults)) "hidden"}}"
     data-test-results
   >
-    {{#if this.search.isRunning}}
-      <li class="searching">
+    {{#if this.resultsData.isPending}}
+      <li class="searching" data-test-searching>
         <FaIcon @icon="spinner" class="orange" @spin={{true}} />
         {{t "general.currentlySearchingPrompt"}}
       </li>
