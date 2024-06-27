@@ -47,6 +47,25 @@ module('Acceptance | search', function (hooks) {
     assert.strictEqual(currentURL(), `/search?q=${input}`, 'triggering search updates query param');
   });
 
+  test('visiting /search?q', async function (assert) {
+    assert.expect(3);
+    const test = 'hello';
+    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
+      assert.ok(queryParams.q);
+      assert.strictEqual(queryParams.q, test);
+
+      return {
+        results: {
+          autocomplete: [],
+          courses: [],
+        },
+      };
+    });
+
+    await page.visit({ q: test });
+    assert.strictEqual(page.globalSearch.searchBox.inputValue, test);
+  });
+
   test('search with special chars #4752', async function (assert) {
     assert.expect(4);
 
@@ -136,7 +155,7 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('clicking back on search updates results and input #4759', async function (assert) {
-    assert.expect(14);
+    assert.expect(15);
 
     const firstInput = 'first';
     const secondInput = 'second';
@@ -187,6 +206,7 @@ module('Acceptance | search', function (hooks) {
     assert.strictEqual(currentURL(), `/search?q=${firstInput}`);
     assert.strictEqual(page.globalSearch.searchBox.inputValue, firstInput);
     assert.strictEqual(page.globalSearch.searchBox.autocompleteResults.length, 0);
+    assert.strictEqual(searchRun, 3, 'search was run three times');
   });
 
   test('search requires three chars #4769', async function (assert) {

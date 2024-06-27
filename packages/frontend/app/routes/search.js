@@ -6,6 +6,7 @@ export default class SearchRoute extends Route {
   @service iliosConfig;
   @service router;
   @service session;
+  @service store;
 
   async beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
@@ -13,5 +14,10 @@ export default class SearchRoute extends Route {
     if (!searchEnabled || !this.currentUser.performsNonLearnerFunction) {
       this.router.transitionTo('dashboard');
     }
+  }
+
+  async afterModel() {
+    //preload all schools
+    return this.store.findAll('school');
   }
 }

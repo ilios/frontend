@@ -4,6 +4,7 @@ import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'frontend/tests/pages/components/global-search';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import Service from '@ember/service';
 
 module('Integration | Component | global-search', function (hooks) {
   setupRenderingTest(hooks);
@@ -13,7 +14,7 @@ module('Integration | Component | global-search', function (hooks) {
     assert.expect(1);
 
     await render(hbs`<GlobalSearch
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
@@ -44,7 +45,7 @@ module('Integration | Component | global-search', function (hooks) {
     await render(hbs`<GlobalSearch
       @query={{this.query}}
       @page="1"
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
@@ -69,7 +70,7 @@ module('Integration | Component | global-search', function (hooks) {
 
     this.set('query', (value) => assert.strictEqual(value, 'typed it'));
     await render(hbs`<GlobalSearch
-      @onQuery={{this.query}}
+      @setQuery={{this.query}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
@@ -120,7 +121,7 @@ module('Integration | Component | global-search', function (hooks) {
     await render(hbs`<GlobalSearch
       @page="1"
       @query={{this.query}}
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @selectedYear={{this.selectedYear}}
       @setSelectedYear={{set this.selectedYear}}
@@ -206,7 +207,7 @@ module('Integration | Component | global-search', function (hooks) {
     await render(hbs`<GlobalSearch
       @page="1"
       @query={{this.query}}
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @ignoredSchoolIds={{this.ignoredSchoolIds}}
       @setIgnoredSchoolIds={{set this.ignoredSchoolIds}}
@@ -302,7 +303,7 @@ module('Integration | Component | global-search', function (hooks) {
     await render(hbs`<GlobalSearch
       @page="1"
       @query={{this.query}}
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
@@ -341,12 +342,39 @@ module('Integration | Component | global-search', function (hooks) {
     await render(hbs`<GlobalSearch
       @page="1"
       @query={{this.query}}
-      @onQuery={{(noop)}}
+      @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @setSelectedYear={{(noop)}}
     />`);
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.schoolFilters.length, 0);
+  });
+
+  test('shows search spinner while running', async function (assert) {
+    assert.expect(2);
+    let resolveTestPromise;
+    const p = new Promise((r) => {
+      resolveTestPromise = r;
+    });
+    class SearchMock extends Service {
+      forCurriculum() {
+        return p;
+      }
+    }
+    this.owner.register('service:search', SearchMock);
+
+    this.set('query', '');
+    await render(hbs`<GlobalSearch
+      @query={{this.query}}
+      @page="1"
+      @setQuery={{(noop)}}
+      @onSelectPage={{(noop)}}
+      @setSelectedYear={{(noop)}}
+    />`);
+    assert.notOk(component.searchIsRunning);
+    this.set('query', 'hello world');
+    assert.ok(component.searchIsRunning);
+    resolveTestPromise();
   });
 });

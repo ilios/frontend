@@ -27,6 +27,7 @@ const definition = {
     toggle: clickable('label'),
   }),
   searchResults: collection('[data-test-course-search-result]', courseSearchResult),
+  searchIsRunning: isVisible('[data-test-searching]'),
 };
 
 export default definition;
