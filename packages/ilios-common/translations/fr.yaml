@@ -159,7 +159,7 @@ general:
   inProgress: En Cours
   instructionalNotes: Notes Didactiques
   instructor: Instructeur
-  instructing: Instruis
+  instructing: Enseignement
   instructorGroupMembers: "Membres du groupe d'instructeurs"
   instructorGroups: Groupes des Instructeurs
   instructors: Instructeurs
@@ -174,7 +174,7 @@ general:
   learners: Étudiants
   learnersAndLearnerGroups: "Étudiants et Groupes d'Étudiants"
   learnersAndLearnerGroupsWithCount: "Étudiants ({learnerCount}) et Groupes d'Étudiants ({learnerGroupCount})"
-  learning: Apprends
+  learning: Apprentissages
   learningMaterialManageTitle: "Manager Matériels d'Étude"
   learningMaterials: "Matériels d'Étude"
   learningMaterialsSummary: "Résumé Matériels d'Étude"
