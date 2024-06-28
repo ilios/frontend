@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { validatable, IsInt, Gte, Length, Lte, NotBlank } from 'ilios-common/decorators/validation';
@@ -8,34 +7,15 @@ import { validatable, IsInt, Gte, Length, Lte, NotBlank } from 'ilios-common/dec
 @validatable
 export default class SchoolCurriculumInventoryInstitutionManagerComponent extends Component {
   @service store;
-  @tracked @Length(1, 100) @NotBlank() name;
-  @tracked @IsInt() @Gte(1) @Lte(99999) aamcCode;
-  @tracked @Length(1, 100) @NotBlank() addressStreet;
-  @tracked @Length(1, 100) @NotBlank() addressCity;
-  @tracked @Length(1, 50) @NotBlank() addressStateOrProvince;
-  @tracked @Length(1, 10) @NotBlank() addressZipCode;
-  @tracked @Length(1, 2) @NotBlank() addressCountryCode;
-
-  @action
-  load() {
-    if (this.args.institution) {
-      this.name = this.args.institution?.name;
-      this.aamcCode = this.args.institution?.aamcCode;
-      this.addressStreet = this.args.institution?.addressStreet;
-      this.addressCity = this.args.institution?.addressCity;
-      this.addressStateOrProvince = this.args.institution?.addressStateOrProvince;
-      this.addressZipCode = this.args.institution?.addressZipCode;
-      this.addressCountryCode = this.args.institution?.addressCountryCode;
-    } else {
-      this.name = '';
-      this.aamcCode = '';
-      this.addressStreet = '';
-      this.addressCity = '';
-      this.addressStateOrProvince = '';
-      this.addressZipCode = '';
-      this.addressCountryCode = '';
-    }
-  }
+  @tracked @Length(1, 100) @NotBlank() name = this.args.institution?.name ?? '';
+  @tracked @IsInt() @Gte(1) @Lte(99999) aamcCode = this.args.institution?.aamcCode ?? '';
+  @tracked @Length(1, 100) @NotBlank() addressStreet = this.args.institution?.addressStreet ?? '';
+  @tracked @Length(1, 100) @NotBlank() addressCity = this.args.institution?.addressCity ?? '';
+  @tracked @Length(1, 50) @NotBlank() addressStateOrProvince =
+    this.args.institution?.addressStateOrProvince ?? '';
+  @tracked @Length(1, 10) @NotBlank() addressZipCode = this.args.institution?.addressZipCode ?? '';
+  @tracked @Length(1, 2) @NotBlank() addressCountryCode =
+    this.args.institution?.addressCountryCode ?? '';
 
   save = dropTask(async () => {
     this.addErrorDisplaysFor([
