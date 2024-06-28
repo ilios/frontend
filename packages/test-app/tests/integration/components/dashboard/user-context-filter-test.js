@@ -12,12 +12,21 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
   test('it renders', async function (assert) {
     await render(hbs`<Dashboard::UserContextFilter />`);
     assert.strictEqual(component.instructing.label, 'Instructing');
+    assert.strictEqual(
+      component.instructing.ariaDescription,
+      'Show only my instructing activities',
+    );
+    assert.strictEqual(component.instructing.title, 'Show only my instructing activities');
     assert.notOk(component.instructing.isChecked);
     assert.ok(component.instructing.isActive);
     assert.strictEqual(component.learning.label, 'Learning');
+    assert.strictEqual(component.learning.ariaDescription, 'Show only my learning activities');
+    assert.strictEqual(component.learning.title, 'Show only my learning activities');
     assert.notOk(component.learning.isChecked);
     assert.ok(component.learning.isActive);
     assert.strictEqual(component.admin.label, 'Admin');
+    assert.strictEqual(component.admin.ariaDescription, 'Show only my admin activities');
+    assert.strictEqual(component.admin.title, 'Show only my admin activities');
     assert.notOk(component.admin.isChecked);
     assert.ok(component.admin.isActive);
   });
@@ -33,7 +42,7 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
   });
 
   test('de-selecting learning filter', async function (assert) {
-    assert.expect(5);
+    assert.expect(7);
     this.set('userContext', 'learner');
     this.set('setUserContext', (context) => {
       assert.strictEqual(context, null);
@@ -41,6 +50,8 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
     await render(
       hbs`<Dashboard::UserContextFilter @setUserContext={{this.setUserContext}} @userContext={{this.userContext}}/>`,
     );
+    assert.strictEqual(component.learning.ariaDescription, 'Show all my activities');
+    assert.strictEqual(component.learning.title, 'Show all my activities');
     assert.ok(component.learning.isChecked);
     assert.notOk(component.instructing.isActive);
     assert.ok(component.learning.isActive);
@@ -59,7 +70,7 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
   });
 
   test('de-selecting instructing filter', async function (assert) {
-    assert.expect(5);
+    assert.expect(7);
     this.set('userContext', 'instructor');
     this.set('setUserContext', (context) => {
       assert.strictEqual(context, null);
@@ -67,6 +78,8 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
     await render(
       hbs`<Dashboard::UserContextFilter @setUserContext={{this.setUserContext}} @userContext={{this.userContext}}/>`,
     );
+    assert.strictEqual(component.instructing.ariaDescription, 'Show all my activities');
+    assert.strictEqual(component.instructing.title, 'Show all my activities');
     assert.ok(component.instructing.isChecked);
     assert.ok(component.instructing.isActive);
     assert.notOk(component.learning.isActive);
@@ -85,7 +98,7 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
   });
 
   test('de-selecting admin filter', async function (assert) {
-    assert.expect(5);
+    assert.expect(7);
     this.set('userContext', 'administrator');
     this.set('setUserContext', (context) => {
       assert.strictEqual(context, null);
@@ -93,6 +106,8 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
     await render(
       hbs`<Dashboard::UserContextFilter @setUserContext={{this.setUserContext}} @userContext={{this.userContext}}/>`,
     );
+    assert.strictEqual(component.admin.ariaDescription, 'Show all my activities');
+    assert.strictEqual(component.admin.title, 'Show all my activities');
     assert.ok(component.admin.isChecked);
     assert.notOk(component.instructing.isActive);
     assert.notOk(component.learning.isActive);

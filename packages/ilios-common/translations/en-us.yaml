@@ -313,6 +313,7 @@ general:
   sessionType: Session Type
   sessionTypes: Session Types
   sessionTypesFor: "Session Types for {subject}"
+  showAllMyActivities: Show all my activities
   showCalendar: Show Calendar
   showCourseMaterials: Show course materials
   showFilters: Show Filters
@@ -321,6 +322,9 @@ general:
   showMore: Show more
   showNotesToStudents: Show Notes to Students
   showObjectives: Show objectives
+  showOnlyMyAdminActivities: Show only my admin activities
+  showOnlyMyInstructingActivities: Show only my instructing activities
+  showOnlyMyLearningActivities: Show only my learning activities
   showSessionEvents: "Show all other '<em>'{sessionTitle}'</em>' events"
   showSessionMaterials: Show session materials
   smallGroupMessage: 'Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the "offering" button above.'
