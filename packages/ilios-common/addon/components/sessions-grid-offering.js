@@ -60,6 +60,7 @@ export default class SessionsGridOffering extends Component {
   @action
   close() {
     this.isEditing = false;
+    this.args.setHeaderLockedStatus(this.isEditing);
     scrollIntoView(this.row);
   }
 
@@ -97,6 +98,7 @@ export default class SessionsGridOffering extends Component {
         instructorGroups,
         instructors,
       });
+      this.toggleEditing();
       await this.args.offering.save();
       this.updateUi.perform();
     },
@@ -109,4 +111,9 @@ export default class SessionsGridOffering extends Component {
     await timeout(4000);
     this.wasUpdated = false;
   });
+
+  toggleEditing = () => {
+    this.isEditing = !this.isEditing;
+    this.args.setHeaderLockedStatus(this.isEditing);
+  };
 }

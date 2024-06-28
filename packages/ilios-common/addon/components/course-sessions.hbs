@@ -63,6 +63,7 @@
         (gt this.sessionsWithOfferings.length 0)
       }}
       @toggleExpandAll={{this.toggleExpandAll}}
+      @headerIsLocked={{this.tableHeadersLocked}}
     />
     {{#if this.sessions}}
       <SessionsGrid
@@ -72,6 +73,8 @@
         @expandedSessionIds={{this.expandedSessionIds}}
         @closeSession={{perform this.closeSession}}
         @expandSession={{perform this.expandSession}}
+        @headerIsLocked={{this.tableHeadersLocked}}
+        @setHeaderLockedStatus={{this.setHeaderLockedStatus}}
       />
     {{else}}
       <SessionsGridLoading @count={{this.sessionsCount}} />

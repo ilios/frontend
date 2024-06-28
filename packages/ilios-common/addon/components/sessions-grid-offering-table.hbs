@@ -1,5 +1,5 @@
 <table class="sessions-grid-offering-table" data-test-sessions-grid-offering-table>
-  <thead>
+  <thead class={{if @headerIsLocked 'locked'}}>
     <tr>
       <th colspan="2">
         {{t "general.when"}}
@@ -43,6 +43,7 @@
         <SessionsGridOfferingTableOfferings
           @offeringTimeBlock={{offeringTimeBlock}}
           @canUpdate={{this.canUpdate}}
+          @setHeaderLockedStatus={{@setHeaderLockedStatus}}
         />
       {{/each}}
     {{/each}}

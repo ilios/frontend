@@ -52,6 +52,8 @@
         <SessionsGridLastUpdated @session={{session}} />
         <SessionsGridOfferingTable
           @session={{session}}
+          @headerIsLocked={{@headerIsLocked}}
+          @setHeaderLockedStatus={{@setHeaderLockedStatus}}
         />
       {{/if}}
     </div>

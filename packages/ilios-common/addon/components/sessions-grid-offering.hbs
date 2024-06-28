@@ -114,7 +114,8 @@
             class="link-button"
             data-test-edit
             type="button"
-            {{on "click" (set this.isEditing (not this.isEditing))}}>
+            {{on "click" this.toggleEditing}}
+          >
             <FaIcon
               @icon="pencil"
               @title={{t "general.edit"}}
