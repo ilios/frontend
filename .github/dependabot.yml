@@ -16,6 +16,9 @@ updates:
       embroider:
         patterns:
           - "@embroider/*"
+      ember-data:
+        patterns:
+          - "@ember-data/*"
     ignore:
       - dependency-name: "@babel/core"
       - dependency-name: "@babel/eslint-parser"
