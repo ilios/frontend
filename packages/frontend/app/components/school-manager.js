@@ -11,8 +11,8 @@ export default class SchoolManagerComponent extends Component {
   @service flashMessages;
   @tracked @NotBlank() @Length(1, 60) title;
 
-  @action
-  load() {
+  constructor() {
+    super(...arguments);
     this.title = this.args.school.title;
   }
 
