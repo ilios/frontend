@@ -1,16 +1,5 @@
 <div class="ilios-calendar" data-test-ilios-calendar>
   <ul class="inline calendar-view-picker">
-    <li>
-      <button
-        class="link-button highlight {{if this.showIcsFeed "on"}}"
-        title={{t (if this.showIcsFeed "general.hideIcsFeed" "general.showIcsFeed")}}
-        type="button"
-        {{on "click" (toggle "showIcsFeed" this)}}
-        data-test-ics
-      >
-        <FaIcon @icon="square-rss" />
-      </button>
-    </li>
     {{#each (array "day" "week" "month") as |viewType|}}
       <li data-test-view-mode>
         {{#if (eq @selectedView viewType)}}
@@ -39,12 +28,6 @@
     </li>
   </ul>
   <div class="ilios-calendar-calendar">
-    {{#if this.showIcsFeed}}
-      <IcsFeed
-        @url={{@icsFeedUrl}}
-        @instructions={{@icsInstructions}}
-      />
-    {{/if}}
     <this.calendarViewComponent
       @isLoadingEvents={{@isLoadingEvents}}
       @calendarEvents={{this.sortedEvents}}

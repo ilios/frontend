@@ -1,8 +1,23 @@
 import Component from '@glimmer/component';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency';
+import { service } from '@ember/service';
 
 export default class IcsFeedComponent extends Component {
+  @service flashMessages;
+
   textCopied = restartableTask(async () => {
-    await timeout(3000);
+    this.flashMessages.success('general.copiedIcsFeedUrl');
   });
+
+  popperOptions = {
+    placement: 'right',
+    modifiers: [
+      {
+        name: 'flip',
+        options: {
+          fallbackPlacements: ['bottom'],
+        },
+      },
+    ],
+  };
 }

@@ -48,29 +48,6 @@
     }
   }
 
-  .ilios-calendar-ics-feed {
-    border: 1px dotted c.$orange;
-    margin: auto;
-    margin-bottom: 1em;
-    padding: 2em;
-    text-align: center;
-    width: 90%;
-
-    span {
-      display: inline-block;
-      margin: 0;
-      padding: 0;
-
-      &.yes {
-        color: c.$fernGreen;
-      }
-    }
-
-    button {
-      @include m.ilios-button;
-    }
-  }
-
   .no-content {
     list-style-type: none;
   }
