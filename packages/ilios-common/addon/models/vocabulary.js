@@ -1,8 +1,5 @@
 import Model, { belongsTo, hasMany, attr } from '@ember-data/model';
-import Inflector from 'ember-inflector';
 import { filter } from 'rsvp';
-
-Inflector.inflector.irregular('vocabulary', 'vocabularies');
 
 export default class Vocabulary extends Model {
   @attr('string')
