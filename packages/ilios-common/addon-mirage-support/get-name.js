@@ -1,6 +1,6 @@
 var models = [
   'aamcMethods',
-  'aamcPcrs',
+  'aamcPcrses',
   'academicYears',
   'assessmentOptions',
   'courseLearningMaterials',
