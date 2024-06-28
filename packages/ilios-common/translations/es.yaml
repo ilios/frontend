@@ -313,6 +313,7 @@ general:
   sessionType: Tipo de Sesión
   sessionTypes: Tipos de Sesiones
   sessionTypesFor: "Tipos de Sesiones para {subject}"
+  showAllMyActivities: Show all my activities
   showCalendar: Muestre Calendario
   showCourseMaterials: Mostrar materiales del curso
   showFilters: Enseñe Filtros
@@ -326,6 +327,9 @@ general:
   smallGroupMessage: 'Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de "ofrecimiento" de arriba.'
   smallGroups: Grupos Pequeños
   sortMaterials: Clasificar los materiales
+  showOnlyMyAdminActivities: Show only my admin activities
+  showOnlyMyInstructingActivities: Show only my instructing activities
+  showOnlyMyLearningActivities: Show only my learning activities
   sortObjectives: Clasificar los objetivos
   specialAttireIs_Required_: "Se '<strong><em>'require'</em></strong>' vestimenta especial"
   specialAttireRequired: Vestimenta Especial Requerido

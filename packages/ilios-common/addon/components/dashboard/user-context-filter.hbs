@@ -8,8 +8,19 @@
   >
   <label
     for={{concat "instructing-toggle-" this.uniqueId}}
-    data-test-instructing-label
     class={{if (or (not @userContext) (eq @userContext "instructor")) "active"}}
+    title={{
+      if (eq @userContext "instructor")
+         (t "general.showAllMyActivities")
+         (t "general.showOnlyMyInstructingActivities")
+    }}
+    aria-description={{
+      if (eq @userContext "instructor")
+         (t "general.showAllMyActivities")
+         (t "general.showOnlyMyInstructingActivities")
+    }}
+    data-test-instructing-label
+
   >
     {{t "general.instructing"}}
   </label>
@@ -22,8 +33,18 @@
   >
   <label
     for={{concat "learning-toggle-" this.uniqueId}}
-    data-test-learning-label
     class={{if (or (not @userContext) (eq @userContext "learner")) "active"}}
+    title={{
+      if (eq @userContext "learner")
+         (t "general.showAllMyActivities")
+         (t "general.showOnlyMyLearningActivities")
+    }}
+    aria-description={{
+      if (eq @userContext "learner")
+         (t "general.showAllMyActivities")
+         (t "general.showOnlyMyLearningActivities")
+    }}
+    data-test-learning-label
   >
     {{t "general.learning"}}
   </label>
@@ -36,8 +57,18 @@
   >
   <label
     for={{concat "admin-toggle-" this.uniqueId}}
-    data-test-admin-label
     class={{if (or (not @userContext) (eq @userContext "administrator")) "active"}}
+    title={{
+      if (eq @userContext "administrator")
+         (t "general.showAllMyActivities")
+         (t "general.showOnlyMyAdminActivities")
+    }}
+    aria-description={{
+      if (eq @userContext "administrator")
+       (t "general.showAllMyActivities")
+       (t "general.showOnlyMyAdminActivities")
+    }}
+    data-test-admin-label
   >
     {{t "general.admin"}}
   </label>
