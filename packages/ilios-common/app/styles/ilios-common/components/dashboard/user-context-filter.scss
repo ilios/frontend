@@ -1,5 +1,11 @@
 @use "../../mixins" as m;
+@use "../../colors" as c;
 
 .dashboard-user-context-filter {
   @include m.multi-button;
+
+  label.active {
+    background-color: c.$tealBlue;
+    color: c.$white;
+  }
 }
