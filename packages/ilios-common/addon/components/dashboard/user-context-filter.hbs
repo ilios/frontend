@@ -9,6 +9,7 @@
   <label
     for={{concat "instructing-toggle-" this.uniqueId}}
     data-test-instructing-label
+    class={{if (or (not @userContext) (eq @userContext "instructor")) "active"}}
   >
     {{t "general.instructing"}}
   </label>
@@ -22,6 +23,7 @@
   <label
     for={{concat "learning-toggle-" this.uniqueId}}
     data-test-learning-label
+    class={{if (or (not @userContext) (eq @userContext "learner")) "active"}}
   >
     {{t "general.learning"}}
   </label>
@@ -35,6 +37,7 @@
   <label
     for={{concat "admin-toggle-" this.uniqueId}}
     data-test-admin-label
+    class={{if (or (not @userContext) (eq @userContext "administrator")) "active"}}
   >
     {{t "general.admin"}}
   </label>
