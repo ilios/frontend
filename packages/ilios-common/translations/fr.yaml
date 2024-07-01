@@ -313,7 +313,7 @@ general:
   sessionType: Type de Séance
   sessionTypes: Types de Séance
   sessionTypesFor: "Types de Séance par {subject}"
-  showAllMyActivities: Show all my activities
+  showAllMyActivities: Afficher toutes mes activités
   showCalendar: Afficher Calendrier
   showCourseMaterials: Afficher les supports de cours
   showFilters: Montrez les Filtres
@@ -322,9 +322,9 @@ general:
   showMore: Afficher plus
   showNotesToStudents: Afficher notes aux étudiantes
   showObjectives: Afficher les objectifs
-  showOnlyMyAdminActivities: Show only my admin activities
-  showOnlyMyInstructingActivities: Show only my instructing activities
-  showOnlyMyLearningActivities: Show only my learning activities
+  showOnlyMyAdminActivities: Afficher uniquement mes activités d'administrateur
+  showOnlyMyInstructorActivities: Afficher uniquement mes activités d'instructeur
+  showOnlyMyLearnerActivities: Afficher uniquement mes activités d'apprenant
   showSessionEvents: "Montrez tous les autres '<em>'{sessionTitle}'</em>' événements"
   showSessionMaterials: Afficher les supports de session
   smallGroupMessage: 'S''il vous plaît choisir au moins un groupe d''apprenants à joindre à votre offrande de "small groups". Si vous souhaitez programmer cette offrande sans groupes, s''il vous plaît choisir le bouton "offre" au-dessus.'
