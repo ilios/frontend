@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setLocale } from 'ember-intl/test-support';
 import { DateTime } from 'luxon';
 
 module('Integration | Component | sessions-grid-last-updated', function (hooks) {
@@ -14,8 +15,8 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
   });
 
   //reset locale for other tests
-  hooks.afterEach(function () {
-    this.intl.setLocale('en-us');
+  hooks.afterEach(async function () {
+    await setLocale('en-us');
   });
 
   test('it renders', async function (assert) {
@@ -50,11 +51,9 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
     };
 
     assert.dom(this.element).containsText(lastUpdatedText());
-    this.owner.lookup('service:intl').setLocale('es');
-    await settled();
+    await setLocale('es');
     assert.dom(this.element).containsText(lastUpdatedText());
-    this.owner.lookup('service:intl').setLocale('fr');
-    await settled();
+    await setLocale('fr');
     assert.dom(this.element).containsText(lastUpdatedText());
   });
 });

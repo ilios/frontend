@@ -10,7 +10,6 @@ module('Integration | Component | session-offerings-time-block-offerings', funct
 
   test('it renders', async function (assert) {
     const store = this.owner.lookup('service:store');
-    this.owner.lookup('service:intl').setLocale('en-us');
     const key = '2023005134520240120430'; // value doesn't really matter, although it needs to be parseable
     const offeringTimeBlock = new OfferingTimeBlock(key);
     const course = store.createRecord('course');

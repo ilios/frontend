@@ -2,13 +2,14 @@ import calendarEventTooltip from 'test-app/utils/calendar-event-tooltip';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { DateTime } from 'luxon';
+import { setupIntl } from 'ember-intl/test-support';
 
 module('Unit | Utility | calendar-event-tooltip', function (hooks) {
   setupTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
-    this.intl.setLocale('en-us');
   });
 
   test('it works for blanked event', function (assert) {
