@@ -8,9 +8,12 @@
   color: c.$white;
   @include m.font-size("small");
   font-weight: normal;
-  position: sticky;
   top: 0;
   z-index: 1;
+
+  &.locked {
+    position: sticky;
+  }
 
   .sortable-heading {
     padding: 0.5rem 0;

@@ -17,6 +17,13 @@ export default class CourseSessionsComponent extends Component {
   @tracked filterByLocalCache = [];
   @tracked showNewSessionForm = false;
 
+  @tracked tableHeadersLocked = true;
+
+  @action
+  setHeaderLockedStatus(isEditing) {
+    this.tableHeadersLocked = !isEditing;
+  }
+
   @cached
   get loadedCourseSessionsData() {
     return new TrackedAsyncData(this.dataLoader.loadCourseSessions(this.args.course.id));

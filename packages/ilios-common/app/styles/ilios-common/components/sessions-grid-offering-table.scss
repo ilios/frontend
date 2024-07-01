@@ -12,8 +12,11 @@
 
   thead {
     color: c.$white;
-    position: sticky;
     top: 2rem;
+
+    &.locked {
+      position: sticky;
+    }
 
     th {
       @include m.font-size("small");
