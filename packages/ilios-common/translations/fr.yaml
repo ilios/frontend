@@ -2,6 +2,7 @@ general:
   accessAllMaterialsForThisCourse: "Accéder à tout le matériel d'étude pour ce cours"
   actions: Actions
   activeFilters: Filtres actifs
+  admin: Admin
   add: Ajouté
   addNew: Ajouté Neuf
   administratorCount: "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
@@ -158,6 +159,7 @@ general:
   inProgress: En Cours
   instructionalNotes: Notes Didactiques
   instructor: Instructeur
+  instructing: Enseignement
   instructorGroupMembers: "Membres du groupe d'instructeurs"
   instructorGroups: Groupes des Instructeurs
   instructors: Instructeurs
@@ -172,6 +174,7 @@ general:
   learners: Étudiants
   learnersAndLearnerGroups: "Étudiants et Groupes d'Étudiants"
   learnersAndLearnerGroupsWithCount: "Étudiants ({learnerCount}) et Groupes d'Étudiants ({learnerGroupCount})"
+  learning: Apprentissages
   learningMaterialManageTitle: "Manager Matériels d'Étude"
   learningMaterials: "Matériels d'Étude"
   learningMaterialsSummary: "Résumé Matériels d'Étude"
@@ -310,6 +313,7 @@ general:
   sessionType: Type de Séance
   sessionTypes: Types de Séance
   sessionTypesFor: "Types de Séance par {subject}"
+  showAllMyActivities: Afficher toutes mes activités
   showCalendar: Afficher Calendrier
   showCourseMaterials: Afficher les supports de cours
   showFilters: Montrez les Filtres
@@ -318,6 +322,9 @@ general:
   showMore: Afficher plus
   showNotesToStudents: Afficher notes aux étudiantes
   showObjectives: Afficher les objectifs
+  showOnlyMyAdminActivities: Afficher uniquement mes activités d'administrateur
+  showOnlyMyInstructorActivities: Afficher uniquement mes activités d'instructeur
+  showOnlyMyLearnerActivities: Afficher uniquement mes activités d'apprenant
   showSessionEvents: "Montrez tous les autres '<em>'{sessionTitle}'</em>' événements"
   showSessionMaterials: Afficher les supports de session
   smallGroupMessage: 'S''il vous plaît choisir au moins un groupe d''apprenants à joindre à votre offrande de "small groups". Si vous souhaitez programmer cette offrande sans groupes, s''il vous plaît choisir le bouton "offre" au-dessus.'

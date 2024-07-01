@@ -8,6 +8,7 @@ import { map } from 'rsvp';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
+
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;
   @service schoolEvents;
@@ -20,13 +21,20 @@ export default class DashboardCalendarComponent extends Component {
 
   @tracked usersPrimarySchool;
   @tracked absoluteIcsUri;
+  @tracked user;
 
   @tracked ourEvents = [];
+
+  @tracked userContext;
 
   @use cohortProxies = new AsyncProcess(() => [
     this.getCohortProxies.bind(this),
     this.bestSelectedSchool,
   ]);
+
+  get showUserContextFilters() {
+    return this.currentUser.performsNonLearnerFunction;
+  }
 
   get fromTimeStamp() {
     if ('week' === this.args.selectedView) {
@@ -64,10 +72,9 @@ export default class DashboardCalendarComponent extends Component {
   }
 
   setup = dropTask(async () => {
-    const user = await this.currentUser.getModel();
-    this.usersPrimarySchool = await user.school;
-
-    const icsFeedKey = user.icsFeedKey;
+    this.user = await this.currentUser.getModel();
+    this.usersPrimarySchool = await this.user.school;
+    const icsFeedKey = this.user.icsFeedKey;
     const apiHost = this.iliosConfig.apiHost;
     const loc = window.location.protocol + '//' + window.location.hostname;
     const server = apiHost ? apiHost : loc;
@@ -130,6 +137,7 @@ export default class DashboardCalendarComponent extends Component {
       'eventsWithSelectedCohorts',
       'eventsWithSelectedCourses',
       'eventsWithSelectedTerms',
+      'eventsWithSelectedUserContext',
     ];
     const allFilteredEvents = eventTypes.map((name) => {
       return this[name];
@@ -204,6 +212,26 @@ export default class DashboardCalendarComponent extends Component {
       const allTerms = mapBy([].concat(event.sessionTerms || [], event.courseTerms || []), 'id');
       const matchingTerms = allTerms.filter((id) => selectedIds.includes(id));
       return matchingTerms.length > 0;
+    });
+  }
+
+  get eventsWithSelectedUserContext() {
+    if (!this.userContext) {
+      return this.ourEvents;
+    }
+
+    return this.ourEvents.filter((event) => {
+      if ('administrator' === this.userContext) {
+        // TODO: Replace this with Set.intersect() once that becomes
+        //   available in all browsers, or polyfill it. [ST 2024/06/20].
+        // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/intersection
+        return (
+          event.userContexts.includes('course administrator') ||
+          event.userContexts.includes('course director') ||
+          event.userContexts.includes('session administrator')
+        );
+      }
+      return event.userContexts.includes(this.userContext);
     });
   }
 

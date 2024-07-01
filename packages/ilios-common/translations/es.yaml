@@ -4,6 +4,7 @@ general:
   activeFilters: Filtros Activos
   add: Agregue
   addNew: Agregue Nuevo
+  admin: Admin
   administratorCount: "Hay {count, plural, =1 {1 administrador} other {# administradores}}"
   administrators: Administradores
   advancedOptions: Opciones Avanzadas
@@ -156,6 +157,7 @@ general:
   independentLearning: Aprendizaje Independiente
   independentLearningActivities: Aprendizaje Independiente Actividades
   inProgress: En Progreso
+  instructing: Instruyendo
   instructionalNotes: Notes para la Instrucción
   instructor: Instructor
   instructorGroupMembers: Miembros del grupo instructor
@@ -172,6 +174,7 @@ general:
   learners: Aprendedores
   learnersAndLearnerGroups: Aprendedores y Grupos de Aprendedores
   learnersAndLearnerGroupsWithCount: "Aprendedores ({learnerCount}) y Grupos de Aprendedores ({learnerGroupCount})"
+  learning: Aprendiendo
   learningMaterialManageTitle: Administrar Materiales de Aprendizaje
   learningMaterials: Materiales de Aprendizaje
   learningMaterialsSummary: Resumen de Materiales de Aprendizaje
@@ -310,6 +313,7 @@ general:
   sessionType: Tipo de Sesión
   sessionTypes: Tipos de Sesiones
   sessionTypesFor: "Tipos de Sesiones para {subject}"
+  showAllMyActivities: Mostrar todas mis actividades
   showCalendar: Muestre Calendario
   showCourseMaterials: Mostrar materiales del curso
   showFilters: Enseñe Filtros
@@ -323,6 +327,9 @@ general:
   smallGroupMessage: 'Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de "ofrecimiento" de arriba.'
   smallGroups: Grupos Pequeños
   sortMaterials: Clasificar los materiales
+  showOnlyMyAdminActivities: Mostrar solo mis actividades de administrador
+  showOnlyMyInstructorActivities: Mostrar solo las actividades de mi instructor
+  showOnlyMyLearnerActivities: Mostrar solo mis actividades de aprendizaje
   sortObjectives: Clasificar los objetivos
   specialAttireIs_Required_: "Se '<strong><em>'require'</em></strong>' vestimenta especial"
   specialAttireRequired: Vestimenta Especial Requerido
