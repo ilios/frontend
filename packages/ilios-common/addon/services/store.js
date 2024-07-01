@@ -22,7 +22,6 @@ export default class StoreService extends BaseStore {
   constructor() {
     super(...arguments);
     this.requestManager = new RequestManager();
-    this.requestManager = new RequestManager();
     this.requestManager.use([LegacyNetworkHandler, Fetch]);
     this.requestManager.useCache(CacheHandler);
   }
