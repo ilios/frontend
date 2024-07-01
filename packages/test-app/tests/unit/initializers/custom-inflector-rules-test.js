@@ -34,5 +34,9 @@ module('Unit | Initializer | custom-inflector-rules', function (hooks) {
 
     assert.strictEqual(pluralize('aamc-pcrs'), 'aamc-pcrses');
     assert.strictEqual(singularize('aamc-pcrses'), 'aamc-pcrs');
+    assert.strictEqual(pluralize('vocabulary'), 'vocabularies');
+    assert.strictEqual(singularize('vocabularies'), 'vocabulary');
+    assert.strictEqual(pluralize('pcrs'), 'pcrses');
+    assert.strictEqual(singularize('pcrses'), 'pcrs');
   });
 });

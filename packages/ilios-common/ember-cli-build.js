@@ -2,9 +2,13 @@
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
-module.exports = function (defaults) {
+module.exports = async function (defaults) {
   const app = new EmberAddon(defaults, {
     // Add options here
+  });
+  const { setConfig } = await import('@warp-drive/build-config');
+  setConfig(app, __dirname, {
+    ___legacy_support: true,
   });
 
   /*

@@ -1,8 +1,11 @@
 import Inflector from 'ember-inflector';
-
+import { irregular } from '@ember-data/request-utils/string';
 export function initialize() {
-  const inflector = Inflector.inflector;
-  inflector.irregular('pcrs', 'pcrses');
+  irregular('pcrs', 'pcrses');
+  irregular('vocabulary', 'vocabularies');
+
+  Inflector.inflector.irregular('pcrs', 'pcrses');
+  Inflector.inflector.irregular('vocabulary', 'vocabularies');
 }
 
 export default {

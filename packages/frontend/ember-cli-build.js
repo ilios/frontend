@@ -8,7 +8,7 @@ const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-module.exports = function (defaults) {
+module.exports = async function (defaults) {
   const env = EmberApp.env() || 'development';
   const isTestBuild = env === 'test';
 
@@ -66,6 +66,11 @@ module.exports = function (defaults) {
   }
 
   const app = new EmberApp(defaults, config);
+
+  const { setConfig } = await import('@warp-drive/build-config');
+  setConfig(app, __dirname, {
+    ___legacy_support: true,
+  });
 
   if (process.env.BUILD_WITH_EMBROIDER) {
     return require('@embroider/compat').compatBuild(app, Webpack, {
