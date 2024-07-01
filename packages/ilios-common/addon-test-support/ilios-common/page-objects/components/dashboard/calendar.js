@@ -21,10 +21,7 @@ const definition = {
       scope: '[data-test-showcoursefilters]',
       toggle,
     },
-    userContexts: {
-      scope: '[data-test-usercontexts]',
-      toggle: userContextFilter,
-    },
+    userContextFilter,
     schoolPicker: {
       scope: '[data-test-schoolpicker]',
       select: {
