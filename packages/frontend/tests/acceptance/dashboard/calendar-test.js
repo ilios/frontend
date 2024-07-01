@@ -498,6 +498,79 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
   });
 
+  test('user context filters are not present on student-only user calendar', async function (assert) {
+    assert.expect(1);
+    await page.visit({ show: 'calendar' });
+    assert.notOk(page.calendar.controls.userContextFilter.isPresent);
+  });
+
+  test('user context filters are present on user calendar for privileged users', async function (assert) {
+    assert.expect(1);
+    await setupAuthentication({ school: this.school }, true);
+    await page.visit({ show: 'calendar' });
+    assert.ok(page.calendar.controls.userContextFilter.isPresent);
+  });
+
+  test('user context filters are not present on school calendar', async function (assert) {
+    assert.expect(2);
+    await setupAuthentication({ school: this.school }, true);
+    await page.visit({ show: 'calendar' });
+    assert.ok(page.calendar.controls.userContextFilter.isPresent);
+    await page.calendar.controls.mySchedule.toggle.secondLabel.click();
+    assert.notOk(page.calendar.controls.userContextFilter.isPresent);
+  });
+
+  test('test user context filters', async function (assert) {
+    assert.expect(11);
+    this.user = await setupAuthentication({ school: this.school }, true);
+    const day = DateTime.fromObject({
+      month: 4,
+      day: 4,
+      year: 2004,
+      hour: 4,
+      minute: 0,
+      second: 7,
+    });
+    freezeDateAt(day.toJSDate());
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.toJSDate(),
+      endDate: day.plus({ hour: 1 }).toJSDate(),
+      offering: 1,
+      userContexts: ['learner'],
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.plus({ hour: 1 }).toJSDate(),
+      endDate: day.plus({ hour: 2 }).toJSDate(),
+      offering: 2,
+      userContexts: ['instructor'],
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.plus({ hour: 2 }).toJSDate(),
+      endDate: day.plus({ hour: 3 }).toJSDate(),
+      offering: 3,
+      userContexts: ['course director'],
+    });
+    await page.visit({ show: 'calendar' });
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 3);
+    assert.strictEqual(page.calendar.calendar.weekly.events[0].text, '04:00 AM event 0');
+    assert.strictEqual(page.calendar.calendar.weekly.events[1].text, '05:00 AM event 1');
+    assert.strictEqual(page.calendar.calendar.weekly.events[2].text, '06:00 AM event 2');
+    await page.calendar.controls.userContextFilter.learning.toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.weekly.events[0].text, '04:00 AM event 0');
+    await page.calendar.controls.userContextFilter.instructing.toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.weekly.events[0].text, '05:00 AM event 1');
+    await page.calendar.controls.userContextFilter.admin.toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.weekly.events[0].text, '06:00 AM event 2');
+    await page.calendar.controls.userContextFilter.admin.toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 3);
+  });
+
   test('test session type filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
