@@ -12,16 +12,13 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
   test('it renders', async function (assert) {
     await render(hbs`<Dashboard::UserContextFilter />`);
     assert.strictEqual(component.instructing.label, 'Instructing');
-    assert.strictEqual(
-      component.instructing.ariaDescription,
-      'Show only my instructing activities',
-    );
-    assert.strictEqual(component.instructing.title, 'Show only my instructing activities');
+    assert.strictEqual(component.instructing.ariaDescription, 'Show only my instructor activities');
+    assert.strictEqual(component.instructing.title, 'Show only my instructor activities');
     assert.notOk(component.instructing.isChecked);
     assert.ok(component.instructing.isActive);
     assert.strictEqual(component.learning.label, 'Learning');
-    assert.strictEqual(component.learning.ariaDescription, 'Show only my learning activities');
-    assert.strictEqual(component.learning.title, 'Show only my learning activities');
+    assert.strictEqual(component.learning.ariaDescription, 'Show only my learner activities');
+    assert.strictEqual(component.learning.title, 'Show only my learner activities');
     assert.notOk(component.learning.isChecked);
     assert.ok(component.learning.isActive);
     assert.strictEqual(component.admin.label, 'Admin');

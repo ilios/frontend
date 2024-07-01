@@ -12,12 +12,12 @@
     title={{
       if (eq @userContext "instructor")
          (t "general.showAllMyActivities")
-         (t "general.showOnlyMyInstructingActivities")
+         (t "general.showOnlyMyInstructorActivities")
     }}
     aria-description={{
       if (eq @userContext "instructor")
          (t "general.showAllMyActivities")
-         (t "general.showOnlyMyInstructingActivities")
+         (t "general.showOnlyMyInstructorActivities")
     }}
     data-test-instructing-label
 
@@ -37,12 +37,12 @@
     title={{
       if (eq @userContext "learner")
          (t "general.showAllMyActivities")
-         (t "general.showOnlyMyLearningActivities")
+         (t "general.showOnlyMyLearnerActivities")
     }}
     aria-description={{
       if (eq @userContext "learner")
          (t "general.showAllMyActivities")
-         (t "general.showOnlyMyLearningActivities")
+         (t "general.showOnlyMyLearnerActivities")
     }}
     data-test-learning-label
   >
