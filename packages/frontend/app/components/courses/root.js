@@ -2,10 +2,8 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { DateTime } from 'luxon';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 
@@ -21,11 +19,17 @@ export default class CoursesRootComponent extends Component {
   @tracked sortSchoolsBy = null;
   @tracked sortYearsBy = null;
 
-  @use preloadedCoursesInSelectedSchool = new AsyncProcess(() => [
-    this.getCourses,
-    this.selectedSchool,
-    this.dataLoader,
-  ]);
+  @cached
+  get preloadedCoursesInSelectedSchoolData() {
+    return new TrackedAsyncData(this.getCourses(this.selectedSchool, this.dataLoader));
+  }
+
+  get preloadedCoursesInSelectedSchool() {
+    return this.preloadedCoursesInSelectedSchoolData.isResolved
+      ? this.preloadedCoursesInSelectedSchoolData.value
+      : false;
+  }
+
   userModelData = new TrackedAsyncData(this.currentUser.getModel());
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
