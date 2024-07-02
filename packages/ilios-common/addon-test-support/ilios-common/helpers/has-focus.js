@@ -1,6 +1,6 @@
 import { findOne } from 'ember-cli-page-object/extend';
 
-export function hasFocus(selector, userOptions = {}) {
+export function hasFocus(selector = null, userOptions = {}) {
   return {
     isDescriptor: true,
 
