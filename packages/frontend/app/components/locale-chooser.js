@@ -26,12 +26,6 @@ export default class LocaleChooserComponent extends Component {
   }
 
   @action
-  focusOnFirstItem(menuElement) {
-    this.menuElement = menuElement;
-    menuElement.querySelector('button:first-of-type').focus();
-  }
-
-  @action
   close() {
     this.isOpen = false;
   }

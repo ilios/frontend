@@ -63,4 +63,13 @@ module('Integration | Component | locale-chooser', function (hooks) {
     assert.strictEqual(component.text, 'Español (es)');
     assert.ok(component.toggle.hasFocus);
   });
+
+  test('first item in menu receives focus when menu is opened', async function (assert) {
+    await render(hbs`<LocaleChooser />`);
+    await component.toggle.click();
+    assert.strictEqual(component.locales.length, 3);
+    assert.ok(component.locales[0].hasFocus);
+    assert.notOk(component.locales[1].hasFocus);
+    assert.notOk(component.locales[2].hasFocus);
+  });
 });

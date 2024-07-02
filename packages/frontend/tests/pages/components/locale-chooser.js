@@ -9,5 +9,7 @@ export default create({
     esc: triggerable('keyup', '', { eventProperties: { key: 'Escape' } }),
     hasFocus: hasFocus(),
   },
-  locales: collection('[data-test-item]', {}),
+  locales: collection('[data-test-item]', {
+    hasFocus: hasFocus(),
+  }),
 });
