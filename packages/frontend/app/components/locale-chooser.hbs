@@ -13,7 +13,7 @@
     data-test-toggle
     {{on "click" (toggle "isOpen" this)}}
     {{on "keyup" this.toggleMenu}}
-    {{did-insert this.setMenuButton}}
+    {{on-insert this.setMenuButton}}
   >
     <FaIcon @icon="globe" />
     <span id="{{this.uniqueId}}-locale-chooser-title">
@@ -25,7 +25,7 @@
     <div
       class="menu"
       role="menu"
-      {{did-insert this.focusOnFirstItem}}
+      {{on-insert this.focusOnFirstItem}}
     >
       {{#each this.locales as |loc|}}
         <button
