@@ -98,3 +98,5 @@ add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c0
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1719360000000|1734915600000|1750464000000|app/components/reports/subject/new/session-type.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c01fe2ba15416673e52e91124|1719360000000|1734915600000|1750464000000|app/components/reports/subject/new/term.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1719360000000|1734915600000|1750464000000|app/components/reports/subject/new/term.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|16|4|16|4|46d995f60904f6b6f4b1b6b24bb65b9c97441bc1|1719360000000|1734915600000|1750464000000|app/components/locale-chooser.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|28|6|28|6|df94e6558ff62dea69f6f656f668f29b56bcc378|1719360000000|1734915600000|1750464000000|app/components/locale-chooser.hbs
