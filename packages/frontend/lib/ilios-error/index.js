@@ -32,7 +32,7 @@ module.exports = {
 
         if (!document.getElementById('ilios-loading-error')) {
           var link = document.createElement( "link" );
-          link.href = 'ilios-error/style.css';
+          link.href = '/ilios-error/style.css';
           link.type = "text/css";
           link.rel = "stylesheet";
           link.media = "screen";
