@@ -166,9 +166,8 @@ export default class SessionOverview extends Component {
     if (!value) {
       const ilmSession = await this.args.session.ilmSession;
       this.args.session.set('ilmSession', null);
-      ilmSession.deleteRecord();
+      await ilmSession.destroyRecord();
       await this.args.session.save();
-      await ilmSession.save();
     } else {
       const hours = 1;
       const dueDate = DateTime.now().plus({ week: 6 }).set({ hour: 17, minute: 0 }).toJSDate();
