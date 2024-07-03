@@ -22,15 +22,14 @@ module('Integration | Component | course rollover', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<CourseRollover @course={{this.course}} />
-`);
+    await render(hbs`<CourseRollover @course={{this.course}} />`);
 
-    const lastYear = DateTime.now().minus({ year: 1 }).year;
+    const currentYear = DateTime.now().year;
     const yearSelect = '.year-select select';
     const title = '.title input';
 
     for (let i = 0; i < 6; i++) {
-      assert.dom(`${yearSelect} option:nth-of-type(${i + 1})`).hasText(`${lastYear + i}`);
+      assert.dom(`${yearSelect} option:nth-of-type(${i + 1})`).hasText(`${currentYear + i}`);
     }
     assert.dom(title).exists({ count: 1 });
     assert.strictEqual(find(title).value.trim(), course.title);
@@ -52,15 +51,14 @@ module('Integration | Component | course rollover', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<CourseRollover @course={{this.course}} />
-`);
+    await render(hbs`<CourseRollover @course={{this.course}} />`);
 
-    const lastYear = DateTime.now().minus({ year: 1 }).year;
+    const currentYear = DateTime.now().year;
     const yearSelect = '.year-select select';
     for (let i = 0; i < 6; i++) {
       assert
         .dom(`${yearSelect} option:nth-of-type(${i + 1})`)
-        .hasText(`${lastYear + i} - ${lastYear + i + 1}`);
+        .hasText(`${currentYear + i} - ${currentYear + i + 1}`);
     }
   });
 
@@ -76,10 +74,10 @@ module('Integration | Component | course rollover', function (hooks) {
     this.set('course', courseModel);
 
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
-      const lastYear = DateTime.now().minus({ year: 1 }).year;
+      const currentYear = DateTime.now().year;
       const data = queryString.parse(request.requestBody);
       assert.ok('year' in data);
-      assert.strictEqual(parseInt(data.year, 10), lastYear);
+      assert.strictEqual(parseInt(data.year, 10), currentYear);
       assert.strictEqual(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
       return this.serialize(
@@ -177,24 +175,24 @@ module('Integration | Component | course rollover', function (hooks) {
 
   test('disable years when title already exists', async function (assert) {
     const title = 'to be rolled';
-    const lastYear = DateTime.now().minus({ year: 1 }).year;
+    const currentYear = DateTime.now().year;
     const school = this.server.create('school');
     const course = this.server.create('course', {
       title,
       school,
-      year: lastYear - 1,
+      year: currentYear - 1,
     });
     this.server.create('course', {
       id: 2,
       school,
       title,
-      year: lastYear,
+      year: currentYear,
     });
     this.server.create('course', {
       id: 3,
       school,
       title,
-      year: lastYear + 2,
+      year: currentYear + 2,
     });
 
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -252,9 +250,9 @@ module('Integration | Component | course rollover', function (hooks) {
 
   test('rollover course with new start date', async function (assert) {
     assert.expect(7);
-    const lastYear = DateTime.now().year - 1;
+    const currentYear = DateTime.now().year;
     // ensure that rollover date and course start date fall on the same day of the week.
-    const courseStartDate = DateTime.fromISO(`${lastYear}-W20-1`);
+    const courseStartDate = DateTime.fromISO(`${currentYear}-W20-1`);
     const rolloverDate = courseStartDate.plus({ week: 1 });
 
     const school = this.server.create('school');
@@ -319,9 +317,9 @@ module('Integration | Component | course rollover', function (hooks) {
 
   test('rollover course prohibit non-matching day-of-week date selection', async function (assert) {
     assert.expect(4);
-    const lastYear = DateTime.now().year - 1;
+    const currentYear = DateTime.now().year;
     // rollover date and course start date don't fall on the same day of the week.
-    const courseStartDate = DateTime.fromISO(`${lastYear}-W20-1`);
+    const courseStartDate = DateTime.fromISO(`${currentYear}-W20-1`);
     const rolloverDate = courseStartDate.plus({ week: 1 }).set({ weekday: 3 });
 
     const school = this.server.create('school');
