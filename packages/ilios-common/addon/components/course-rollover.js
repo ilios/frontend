@@ -26,10 +26,10 @@ export default class CourseRolloverComponent extends Component {
 
   constructor() {
     super(...arguments);
-    const lastYear = DateTime.now().minus({ years: 1 }).year;
+    const currentYear = DateTime.now().year;
     this.years = [];
     for (let i = 0; i < 6; i++) {
-      this.years.push(lastYear + i);
+      this.years.push(currentYear + i);
     }
   }
 
@@ -47,7 +47,10 @@ export default class CourseRolloverComponent extends Component {
         school,
       },
     });
-    this.changeSelectedYear(this.years[0]);
+
+    // set selectedYear to next valid year (or current if none found)
+    const validYear = this.years.find((year) => !this.unavailableYears.includes(year));
+    this.changeSelectedYear(validYear || this.years[0]);
   });
 
   @action
