@@ -1,15 +1,21 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/monthly-calendar';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setLocale } from 'ember-intl/test-support';
 
 module('Integration | Component | monthly-calendar', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+
+  //reset locale for other tests
+  hooks.afterEach(async function () {
+    await setLocale('en-us');
+  });
 
   test('it renders empty and is accessible', async function (assert) {
     assert.expect(68);
@@ -257,8 +263,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     assert.ok(component.days[10].isThirdWeek);
     assert.strictEqual(component.days[10].events.length, 1);
 
-    this.owner.lookup('service:intl').setLocale('es');
-    await settled();
+    await setLocale('es');
 
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[10].isFirstDayOfWeek);
@@ -296,8 +301,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     assert.ok(component.days[0].isSeventhDayOfWeek);
     assert.ok(component.days[0].isFirstWeek);
     assert.strictEqual(component.days[0].events.length, 1);
-    this.owner.lookup('service:intl').setLocale('es');
-    await settled();
+
+    await setLocale('es');
 
     assert.strictEqual(component.days.length, 29);
     assert.ok(component.days[0].isSixthDayOfWeek);
