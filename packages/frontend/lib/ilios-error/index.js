@@ -9,8 +9,10 @@ const caniuse = require('caniuse-db/data.json').agents;
 module.exports = {
   name: 'ilios-error',
 
-  contentFor: function (type) {
-    const script = this.getScript();
+  contentFor: function (type, config) {
+    const rootUrl = config.rootUrl || '';
+    const script = this.getScript(rootUrl);
+
     if (type === 'body') {
       return `
         <script>
@@ -20,8 +22,9 @@ module.exports = {
     }
   },
 
-  getScript() {
+  getScript(rootUrl) {
     const supportedBrowsers = this.getSupportedBrowsers().join('');
+
     return `
       // if there is an uncaught runtime error show the error message
       window.addEventListener('error', function (event) {
@@ -32,7 +35,7 @@ module.exports = {
 
         if (!document.getElementById('ilios-loading-error')) {
           var link = document.createElement( "link" );
-          link.href = 'ilios-error/style.css';
+          link.href = '${rootUrl}/ilios-error/style.css';
           link.type = "text/css";
           link.rel = "stylesheet";
           link.media = "screen";
