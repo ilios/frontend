@@ -4,7 +4,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options');
 const { Webpack } = require('@embroider/webpack');
 
-module.exports = function (defaults) {
+module.exports = async function (defaults) {
   const app = new EmberApp(defaults, {
     'ember-fetch': {
       preferNative: true,
@@ -25,6 +25,10 @@ module.exports = function (defaults) {
         require.resolve('ember-concurrency/async-arrow-task-transform'),
       ],
     },
+  });
+  const { setConfig } = await import('@warp-drive/build-config');
+  setConfig(app, __dirname, {
+    ___legacy_support: true,
   });
   if (process.env.BUILD_WITH_EMBROIDER) {
     return require('@embroider/compat').compatBuild(app, Webpack, {
