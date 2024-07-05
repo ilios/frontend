@@ -41,11 +41,11 @@ export default class ProgramRootComponent extends Component {
 
   get bestSelectedSchool() {
     if (this.args.schoolId) {
-      return findById(this.args.schools.slice(), this.args.schoolId);
+      return findById(this.args.schools, this.args.schoolId);
     }
 
     const schoolId = this.user?.belongsTo('school').id();
-    return schoolId ? findById(this.args.schools.slice(), schoolId) : this.args.schools.slice()[0];
+    return schoolId ? findById(this.args.schools, schoolId) : this.args.schools[0];
   }
 
   saveNewProgram = dropTask(async (newProgram) => {
