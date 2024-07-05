@@ -4,11 +4,11 @@ import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
+import { action } from '@ember/object';
 
 export default class ProgramRootComponent extends Component {
   @service currentUser;
   @service permissionChecker;
-  @tracked selectedSchoolId;
   @tracked showNewProgramForm = false;
   @tracked newProgram;
 
@@ -41,8 +41,8 @@ export default class ProgramRootComponent extends Component {
   }
 
   get bestSelectedSchool() {
-    if (this.selectedSchoolId) {
-      return findById(this.args.schools.slice(), this.selectedSchoolId);
+    if (this.args.schoolId) {
+      return findById(this.args.schools.slice(), this.args.schoolId);
     }
 
     const schoolId = this.user?.belongsTo('school').id();
@@ -55,4 +55,9 @@ export default class ProgramRootComponent extends Component {
     this.newProgram = await newProgram.save();
     this.showNewProgramForm = false;
   });
+
+  @action
+  setSchoolId(schoolId) {
+    this.args.setSchoolId(schoolId);
+  }
 }
