@@ -1,33 +1,77 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { validatable, IsHexColor, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 @validatable
 export default class SchoolSessionTypeFormComponent extends Component {
   @service store;
-  @tracked assessment;
-  @tracked @NotBlank() @IsHexColor() calendarColor;
-  @tracked isActive;
-  @tracked selectedAamcMethodId;
-  @tracked selectedAssessmentOptionId;
-  @tracked @NotBlank() @Length(1, 100) title;
-  @tracked assessmentOptions = [];
-  @tracked aamcMethods = [];
+  @tracked assessmentValue;
+  @tracked @NotBlank() @IsHexColor() calendarColorValue;
+  @tracked isActiveValue;
+  @tracked selectedAamcMethodIdValue;
+  @tracked selectedAssessmentOptionIdValue;
+  @tracked @NotBlank() @Length(1, 100) titleValue;
+
+  @cached
+  get assessmentOptionsData() {
+    return new TrackedAsyncData(this.store.findAll('assessment-option'));
+  }
+
+  get assessmentOptions() {
+    return this.assessmentOptionsData.isResolved ? this.assessmentOptionsData.value : [];
+  }
+
+  @cached
+  get aamcMethodData() {
+    return new TrackedAsyncData(this.store.findAll('aamc-method'));
+  }
+
+  get aamcMethods() {
+    return this.aamcMethodData.isResolved ? this.aamcMethodData.value : [];
+  }
+
+  get isLoaded() {
+    return this.assessmentOptionsData.isResolved && this.aamcMethodData.isResolved;
+  }
+
+  get assessment() {
+    return this.assessmentValue ?? this.args.assessment;
+  }
+
+  get calendarColor() {
+    return this.calendarColorValue ?? this.args.calendarColor;
+  }
+
+  get isActive() {
+    return this.isActiveValue ?? this.args.isActive;
+  }
+
+  get title() {
+    return this.titleValue ?? this.args.title;
+  }
+
+  get selectedAamcMethodId() {
+    return this.selectedAamcMethodIdValue ?? this.args.selectedAamcMethodId;
+  }
+
+  get selectedAssessmentOptionId() {
+    return this.selectedAssessmentOptionIdValue ?? this.args.selectedAssessmentOptionId;
+  }
 
   get filteredAamcMethods() {
-    return this.aamcMethods.filter((aamcMethod) => {
-      const id = aamcMethod.get('id');
-      if (id !== this.selectedAamcMethodId && !aamcMethod.get('active')) {
+    return this.aamcMethods.filter(({ id, active }) => {
+      if (id !== this.selectedAamcMethodId && !active) {
         return false;
       }
       if (this.assessment) {
-        return id.indexOf('AM') === 0;
+        return id.startsWith('AM');
       } else {
-        return id.indexOf('IM') === 0;
+        return id.startsWith('IM');
       }
     });
   }
@@ -50,21 +94,10 @@ export default class SchoolSessionTypeFormComponent extends Component {
     return null;
   }
 
-  load = restartableTask(async () => {
-    this.assessment = this.args.assessment;
-    this.calendarColor = this.args.calendarColor;
-    this.isActive = this.args.isActive;
-    this.title = this.args.title;
-    this.selectedAssessmentOptionId = this.args.selectedAssessmentOptionId;
-    this.selectedAamcMethodId = this.args.selectedAamcMethodId;
-    this.assessmentOptions = (await this.store.findAll('assessment-option')).slice();
-    this.aamcMethods = (await this.store.findAll('aamc-method')).slice();
-  });
-
   @action
   updateAssessment(assessment) {
-    this.selectedAamcMethodId = null;
-    this.assessment = assessment;
+    this.selectedAamcMethodIdValue = null;
+    this.assessmentValue = assessment;
   }
 
   saveSessionType = dropTask(async () => {

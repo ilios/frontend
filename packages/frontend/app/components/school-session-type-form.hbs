@@ -2,13 +2,10 @@
   <div
     class="school-session-type-form"
     data-test-school-session-type-form
-    {{did-insert (perform this.load)}}
     ...attributes
   >
-    {{#if this.load.isRunning}}
-      <LoadingSpinner />
-    {{else}}
-      <div class="form">
+    {{#if this.isLoaded}}
+    <div class="form">
         <div class="item" data-test-title>
           <label for="title-{{templateId}}">
             {{t "general.title"}}:
@@ -18,10 +15,10 @@
               id="title-{{templateId}}"
               type="text"
               value={{this.title}}
-              {{on "input" (pick "target.value" (set this.title))}}
+              {{on "input" (pick "target.value" (set this.titleValue))}}
               {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))}}
             >
-            <ValidationError @errors={{get-errors-for this.title}} />
+            <ValidationError @errors={{get-errors-for this.titleValue}} />
           {{else}}
             <span class="value">
               {{this.title}}
@@ -33,7 +30,7 @@
             {{t "general.aamcMethod"}}
           </label>
           {{#if @canEditAamcMethod}}
-            <select id="aamc-method-{{templateId}}" {{on "change" (pick "target.value" (set this.selectedAamcMethodId))}}>
+            <select id="aamc-method-{{templateId}}" {{on "change" (pick "target.value" (set this.selectedAamcMethodIdValue))}}>
               <option selected={{not this.selectedAamcMethodId}}></option>
               {{#each (sort-by "description" this.filteredAamcMethods) as |aamcMethod| }}
                 <option
@@ -65,10 +62,10 @@
               id="color-{{templateId}}"
               type="color"
               value={{this.calendarColor}}
-              {{on "input" (pick "target.value" (set this.calendarColor))}}
+              {{on "input" (pick "target.value" (set this.calendarColorValue))}}
               {{on "keyup" (queue (fn this.addErrorDisplayFor "calendarColor") (perform this.saveOrCancel))}}
             >
-            <ValidationError @errors={{get-errors-for this.calendarColor}} />
+            <ValidationError @errors={{get-errors-for this.calendarColorValue}} />
           {{else}}
             <span class="value">
               {{! template-lint-disable no-inline-styles style-concatenation no-triple-curlies}}
@@ -103,7 +100,7 @@
               {{t "general.assessmentOption"}}:
             </label>
             {{#if @canEditAssessmentOption}}
-              <select id="assessment-option-{{templateId}}" {{on "change" (pick "target.value" (set this.selectedAssessmentOptionId))}}>
+              <select id="assessment-option-{{templateId}}" {{on "change" (pick "target.value" (set this.selectedAssessmentOptionIdValue))}}>
                 {{#each (sort-by "name" this.assessmentOptions) as |o|}}
                   <option
                     value={{o.id}}
@@ -125,7 +122,7 @@
             {{t "general.active"}}:
           </label>
           {{#if @canEditActive}}
-            <ToggleYesno @yes={{this.isActive}} @toggle={{set this.isActive}} />
+            <ToggleYesno @yes={{this.isActive}} @toggle={{set this.isActiveValue}} />
           {{else}}
             <span class="value {{if this.isActive "yes" "no"}}">
               {{#if this.isActive}}
@@ -161,6 +158,8 @@
           {{/if}}
         </div>
       </div>
+    {{else}}
+      <LoadingSpinner />
     {{/if}}
   </div>
 {{/let}}
