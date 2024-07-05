@@ -18,17 +18,17 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   @NotBlank()
   @Length(1, 200)
   @Custom('validateTitleCallback', 'validateTitleMessageCallback')
-  title;
+  titleValue;
 
-  @tracked isActive;
-  @tracked description;
+  @tracked descriptionValue;
   @tracked newTerm;
 
-  @action
-  load() {
-    this.isActive = this.args.term.active;
-    this.description = this.args.term.description;
-    this.title = this.args.term.title;
+  get title() {
+    return this.titleValue || this.args.term.title;
+  }
+
+  get description() {
+    return this.descriptionValue || this.args.term.description;
   }
 
   @cached
@@ -55,20 +55,20 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   }
 
   changeTitle = dropTask(async () => {
-    this.addErrorDisplayFor('title');
+    this.addErrorDisplayFor('titleValue');
     const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.removeErrorDisplayFor('titleValue');
     this.args.term.title = this.title;
     return this.args.term.save();
   });
 
   @action
   revertTitleChanges() {
-    this.removeErrorDisplayFor('title');
-    this.title = this.args.term.title;
+    this.removeErrorDisplayFor('titleValue');
+    this.titleValue = this.args.term.title;
   }
 
   changeDescription = dropTask(async () => {
@@ -78,7 +78,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
 
   @action
   revertDescriptionChanges() {
-    this.description = this.args.term.description;
+    this.descriptionValue = this.args.term.description;
   }
 
   @action
@@ -115,7 +115,6 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   changeIsActive = dropTask(async (isActive) => {
     this.args.term.active = isActive;
     await this.args.term.save();
-    this.isActive = this.args.term.active;
   });
 
   async validateTitleCallback() {
