@@ -64,12 +64,14 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
   }
 
   save = dropTask(async () => {
-    await this.args.saveAll({
+    //read the flipped values before we reset them
+    const all = {
       showSessionAttendanceRequired: this.showSessionAttendanceRequired,
       showSessionSupplemental: this.showSessionSupplemental,
       showSessionSpecialAttireRequired: this.showSessionSpecialAttireRequired,
       showSessionSpecialEquipmentRequired: this.showSessionSpecialEquipmentRequired,
-    });
-    this.resetFlipped();
+    };
+    this.resetFlipped(); //reset before we save, otherwise there will be a flash of the old values
+    await this.args.saveAll(all);
   });
 }
