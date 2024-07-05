@@ -4,7 +4,6 @@ import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
-import { action } from '@ember/object';
 
 export default class ProgramRootComponent extends Component {
   @service currentUser;
@@ -55,9 +54,4 @@ export default class ProgramRootComponent extends Component {
     this.newProgram = await newProgram.save();
     this.showNewProgramForm = false;
   });
-
-  @action
-  setSchoolId(schoolId) {
-    this.args.setSchoolId(schoolId);
-  }
 }

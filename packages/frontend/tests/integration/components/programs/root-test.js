@@ -55,9 +55,18 @@ module('Integration | Component | programs/root', function (hooks) {
   });
 
   test('school filter works', async function (assert) {
+    assert.expect(10);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
-    await render(hbs`<Programs::Root @schools={{this.schools}} />`);
+    this.set('setSchoolId', (schoolId) => {
+      assert.strictEqual(schoolId, '3');
+      this.set('schoolId', schoolId);
+    });
+    await render(hbs`<Programs::Root
+      @schools={{this.schools}}
+      @setSchoolId={{this.setSchoolId}}
+      @schoolId={{this.schoolId}}
+    />`);
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'program 3');
