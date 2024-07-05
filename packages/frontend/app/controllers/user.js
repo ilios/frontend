@@ -2,8 +2,6 @@ import Controller from '@ember/controller';
 import { service } from '@ember/service';
 import { filter } from 'rsvp';
 import { cached, tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 
 export default class UserController extends Controller {
@@ -28,7 +26,14 @@ export default class UserController extends Controller {
   @tracked permissionsSchool = null;
   @tracked permissionsYear = null;
 
-  @use canCreate = new AsyncProcess(() => [this.canCreateInSomeSchool.bind(this), this.allSchools]);
+  @cached
+  get canCreateData() {
+    return new TrackedAsyncData(this.canCreateInSomeSchool(this.allSchools));
+  }
+
+  get canCreate() {
+    return this.canCreateData.isResolved ? this.canCreateData.value : false;
+  }
 
   @cached
   get canUpdateData() {
@@ -49,6 +54,9 @@ export default class UserController extends Controller {
   }
 
   async canCreateInSomeSchool(schools) {
+    if (!schools) {
+      return false;
+    }
     const schoolsWithCreateUserPermission = await filter(schools.slice(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });

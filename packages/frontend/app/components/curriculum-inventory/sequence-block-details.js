@@ -1,9 +1,14 @@
 import Component from '@glimmer/component';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class CurriculumInventorySequenceBlockDetailsComponent extends Component {
-  @use allParents = new AsyncProcess(() => [
-    this.args.sequenceBlock.getAllParents.bind(this.args.sequenceBlock),
-  ]);
+  @cached
+  get allParentsData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.getAllParents(this.args.sequenceBlock));
+  }
+
+  get allParents() {
+    return this.allParentsData.isResolved ? this.allParentsData.value : [];
+  }
 }

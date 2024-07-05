@@ -2,9 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { filter } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class PendingUpdatesSummaryComponent extends Component {
@@ -34,11 +32,16 @@ export default class PendingUpdatesSummaryComponent extends Component {
     return this.allUpdatesData.isResolved ? this.allUpdatesData.value : null;
   }
 
-  @use updatesForSchool = new AsyncProcess(() => [
-    this.getUpdatesForSchool,
-    this.allUpdatesArray,
-    this.bestSelectedSchool,
-  ]);
+  @cached
+  get updatesData() {
+    return new TrackedAsyncData(
+      this.getUpdatesForSchool(this.allUpdatesArray, this.bestSelectedSchool),
+    );
+  }
+
+  get updates() {
+    return this.updatesData.isResolved ? this.updatesData.value : [];
+  }
 
   get haveUpdates() {
     return this.updates?.length > 0;
@@ -65,10 +68,6 @@ export default class PendingUpdatesSummaryComponent extends Component {
     }
 
     return this.allUpdates.slice();
-  }
-
-  get updates() {
-    return this.updatesForSchool ?? [];
   }
 
   async getUpdatesForSchool(allUpdates, selectedSchool) {
