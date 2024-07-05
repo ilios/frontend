@@ -1,14 +1,13 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency';
-import { map } from 'rsvp';
+import { dropTask } from 'ember-concurrency';
 import { findById } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SchoolVocabulariesExpandedComponent extends Component {
   @service store;
-  @tracked schoolVocabularies = [];
 
   #loadedSchools = {};
 
@@ -31,17 +30,39 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
     return this.#loadedSchools[schoolId];
   }
 
-  load = restartableTask(async () => {
-    await this.loadSchool(this.args.school.id);
-    const vocabularies = (await this.args.school.vocabularies).slice();
-    this.schoolVocabularies = await map(vocabularies, async (vocabulary) => {
-      const terms = await vocabulary.terms;
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.loadSchool(this.args.school.id));
+  }
+
+  get isLoaded() {
+    return this.schoolData.isResolved;
+  }
+
+  get vocabularies() {
+    return this.schoolData.value
+      .hasMany('vocabularies')
+      .ids()
+      .map((id) => {
+        return this.store.peekRecord('vocabulary', id);
+      });
+  }
+
+  get schoolVocabularies() {
+    return this.vocabularies.map((vocabulary) => {
+      const terms = vocabulary
+        .hasMany('terms')
+        .ids()
+        .map((id) => {
+          return this.store.peekRecord('term', id);
+        });
+
       return {
         vocabulary,
         terms,
       };
     });
-  });
+  }
 
   get managedVocabulary() {
     if (!this.args.managedVocabularyId || !this.schoolVocabularies.length) {

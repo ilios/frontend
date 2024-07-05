@@ -1,13 +1,9 @@
 <section
   class="school-vocabularies-expanded"
-  {{did-insert (perform this.load) @school}}
-  {{did-update (perform this.load) @school @school.vocabularies}}
   data-test-school-vocabularies-expanded
   ...attributes
 >
-  {{#if this.load.isRunning}}
-    <LoadingSpinner />
-  {{else}}
+  {{#if this.isLoaded}}
     <div class="school-vocabularies-expanded-header">
       {{#if this.isCollapsible}}
         <button
@@ -72,5 +68,7 @@
         />
       {{/if}}
     </div>
+  {{else}}
+    <LoadingSpinner />
   {{/if}}
 </section>
