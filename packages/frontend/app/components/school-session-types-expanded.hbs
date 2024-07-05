@@ -1,7 +1,5 @@
 <section
   class="school-session-types-expanded"
-  {{did-insert (perform this.load) @school}}
-  {{did-update (perform this.load) @school @school.sessionTypes}}
   data-test-school-session-types-expanded
   ...attributes
 >
@@ -56,7 +54,7 @@
         @save={{perform this.update}}
         @canUpdate={{@canUpdate}}
       />
-    {{else if (and (is-array this.sessionTypes) this.sessionTypes.length)}}
+    {{else if (and this.isLoaded this.sessionTypes.length)}}
       <SchoolSessionTypesList
         @sessionTypes={{this.sessionTypes}}
         @manageSessionType={{@setSchoolManagedSessionType}}

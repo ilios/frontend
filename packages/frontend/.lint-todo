@@ -1,8 +1,6 @@
 add|ember-template-lint|no-at-ember-render-modifiers|16|4|16|4|46d995f60904f6b6f4b1b6b24bb65b9c97441bc1|1719360000000|1734915600000|1750464000000|app/components/locale-chooser.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|28|6|28|6|df94e6558ff62dea69f6f656f668f29b56bcc378|1719360000000|1734915600000|1750464000000|app/components/locale-chooser.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1719360000000|1734915600000|1750464000000|app/components/new-directory-user.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|66a5b0f89c3a88a7c0b541518f72e20531cd4be7|1719360000000|1734915600000|1750464000000|app/components/school-session-types-collapsed.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|a90be151f45cd8ab32827e9247a9a9eb7f1baef2|1719360000000|1734915600000|1750464000000|app/components/school-session-types-collapsed.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|66a5b0f89c3a88a7c0b541518f72e20531cd4be7|1719360000000|1734915600000|1750464000000|app/components/school-session-types-expanded.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|af2ee7cd6f5c12e29ee3d5dc0ec4a76db43b7556|1719360000000|1734915600000|1750464000000|app/components/school-session-types-expanded.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|66a5b0f89c3a88a7c0b541518f72e20531cd4be7|1719360000000|1734915600000|1750464000000|app/components/school-vocabularies-expanded.hbs

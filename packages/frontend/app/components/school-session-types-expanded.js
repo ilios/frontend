@@ -1,29 +1,42 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { restartableTask, dropTask } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
+import { cached } from '@glimmer/tracking';
+import { dropTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { findById } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SchoolSessionTypesExpandedComponent extends Component {
   @service store;
-  @tracked isCollapsible;
-  @tracked sessionTypes;
 
   get isManaging() {
     return !!this.args.managedSessionTypeId;
   }
 
-  load = restartableTask(async (element, [school]) => {
-    this.sessionTypes = await school.sessionTypes;
-    this.isCollapsible = !this.isManaging && this.sessionTypes.length;
-  });
+  @cached
+  get sessionTypesData() {
+    return new TrackedAsyncData(this.args.school.sessionTypes);
+  }
+
+  get isLoaded() {
+    return this.sessionTypesData.isResolved;
+  }
+
+  get isCollapsible() {
+    return (
+      !this.isManaging && this.sessionTypesData.isResolved && this.sessionTypesData.value.length
+    );
+  }
+
+  get sessionTypes() {
+    return this.sessionTypesData.isResolved ? this.sessionTypesData.value : [];
+  }
 
   get managedSessionType() {
-    if (!this.sessionTypes) {
+    if (!this.sessionTypesData.isResolved) {
       return null;
     }
-    return findById(this.sessionTypes.slice(), this.args.managedSessionTypeId);
+    return findById(this.sessionTypes, this.args.managedSessionTypeId);
   }
 
   @action
