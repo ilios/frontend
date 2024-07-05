@@ -1,20 +1,23 @@
 import Component from '@glimmer/component';
-import { restartableTask } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
+import { cached } from '@glimmer/tracking';
 import { filterBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SchoolSessionTypesCollapseComponent extends Component {
-  @tracked sessionTypes = [];
+  @cached
+  get sessionTypesData() {
+    return new TrackedAsyncData(this.args.school.sessionTypes);
+  }
 
-  load = restartableTask(async (element, [school]) => {
-    this.sessionTypes = await school.sessionTypes;
-  });
+  get isLoaded() {
+    return this.sessionTypesData.isResolved;
+  }
 
   get instructionalMethods() {
-    return filterBy(this.sessionTypes, 'assessment', false);
+    return filterBy(this.sessionTypesData.value, 'assessment', false);
   }
 
   get assessmentMethods() {
-    return filterBy(this.sessionTypes, 'assessment');
+    return filterBy(this.sessionTypesData.value, 'assessment');
   }
 }
