@@ -3,8 +3,8 @@
     {{t "general.backToCourse"}}
   </LinkTo>
 </div>
-<CourseSummaryHeader @course={{@model}} />
-<CourseMaterials
+<Course::SummaryHeader @course={{@model}} />
+<Course::Materials
   @course={{@model}}
   @courseSort={{or this.courseSort "title"}}
   @sessionSort={{or this.sessionSort "title"}}
