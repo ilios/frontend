@@ -30,7 +30,7 @@ Router.map(function () {
       );
     },
   );
-  this.route('print_course', { path: 'course/:course_id/print' });
+  this.route('print-course', { path: 'course/:course_id/print' });
   this.route('course-materials', { path: 'courses/:course_id/materials' });
 
   this.route('course-rollover');
