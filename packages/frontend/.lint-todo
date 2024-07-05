@@ -4,8 +4,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|23cd787c79c34a628da
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|66a5b0f89c3a88a7c0b541518f72e20531cd4be7|1719360000000|1734915600000|1750464000000|app/components/school-vocabularies-expanded.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|df089fc2824cc65ff8a25e7787cf29a1911298b6|1719360000000|1734915600000|1750464000000|app/components/school-vocabularies-expanded.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|7312526529ca39ed820819d1478d8e1b8f555279|1719360000000|1734915600000|1750464000000|app/components/school-vocabulary-manager.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|1fe23f11c7d96a9f1082ef86c3d1f725c2212c21|1719360000000|1734915600000|1750464000000|app/components/school-vocabulary-term-manager.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|6|4|6|4|99e02f01ac450458b91299ca7b0c6e67d69d26d2|1719360000000|1734915600000|1750464000000|app/components/school-vocabulary-term-manager.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|4|4|4|5d93dc162628c4faaa7bce9ef9bfba305f14ce38|1719360000000|1734915600000|1750464000000|app/components/unassigned-students-summary.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|5f7f17419fe451673ab74fb58778311bc01912c0|1719360000000|1734915600000|1750464000000|app/components/unassigned-students-summary.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|ddf86727990ead62165fe28c6dff53552a4d49b7|1719360000000|1734915600000|1750464000000|app/components/user-menu.hbs
