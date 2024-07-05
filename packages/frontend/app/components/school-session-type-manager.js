@@ -1,19 +1,36 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
+import { dropTask } from 'ember-concurrency';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SchoolSessionTypeManagerComponent extends Component {
   @service store;
-  @tracked readonlySessionType;
 
-  load = restartableTask(async () => {
+  @cached
+  get assessmentOptionsData() {
+    return new TrackedAsyncData(this.store.findAll('assessment-option'));
+  }
+
+  @cached
+  get aamcMethodData() {
+    return new TrackedAsyncData(this.store.findAll('aamc-method'));
+  }
+
+  get isLoaded() {
+    return this.assessmentOptionsData.isResolved && this.aamcMethodData.isResolved;
+  }
+
+  get readonlySessionType() {
     const { title, calendarColor, assessment, active: isActive } = this.args.sessionType;
-    const assessmentOption = await this.args.sessionType.assessmentOption;
+    const assessmentOption = this.assessmentOptionsData.value.find(
+      ({ id }) => id === this.args.sessionType.belongsTo('assessmentOption').id(),
+    );
     const selectedAssessmentOptionId = assessmentOption?.id;
-    const firstAamcMethod = await this.args.sessionType.firstAamcMethod;
+
+    const firstAamcMethod = this.args.sessionType.firstAamcMethod;
     const selectedAamcMethodId = firstAamcMethod?.id;
-    this.readonlySessionType = {
+    return {
       title,
       calendarColor,
       assessment,
@@ -21,7 +38,7 @@ export default class SchoolSessionTypeManagerComponent extends Component {
       selectedAamcMethodId,
       isActive,
     };
-  });
+  }
 
   save = dropTask(
     async (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
