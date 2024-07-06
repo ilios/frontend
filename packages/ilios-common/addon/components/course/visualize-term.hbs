@@ -46,7 +46,7 @@
       </LinkTo>
     </h3>
     <div class="visualizations">
-      <VisualizerCourseTerm @course={{@model.course}} @term={{@model.term}} />
+      <Course::VisualizeTermGraph @course={{@model.course}} @term={{@model.term}} />
     </div>
   {{/unless}}
 </section>

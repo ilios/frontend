@@ -1,5 +1,5 @@
 import { attribute, collection, create, text } from 'ember-cli-page-object';
-import sessionTypeChart from '../visualizer-course-session-type';
+import sessionTypeChart from './visualize-session-type-graph';
 
 const definition = create({
   scope: '[data-test-course-visualize-session-type]',

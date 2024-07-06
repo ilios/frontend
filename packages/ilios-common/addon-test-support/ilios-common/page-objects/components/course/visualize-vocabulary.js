@@ -1,5 +1,5 @@
 import { attribute, collection, create, text } from 'ember-cli-page-object';
-import termsChart from '../visualizer-course-vocabulary';
+import termsChart from './visualize-vocabulary-graph';
 
 const definition = create({
   scope: '[data-test-course-visualize-vocabulary]',

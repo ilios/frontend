@@ -103,14 +103,6 @@
 @import "components/truncate-text";
 @import "components/user-search";
 @import "components/user-material-status";
-@import "components/visualizer-course-instructor-session-type";
-@import "components/visualizer-course-instructors";
-@import "components/visualizer-course-objectives";
-@import "components/visualizer-course-session-type";
-@import "components/visualizer-course-session-types";
-@import "components/visualizer-course-term";
-@import "components/visualizer-course-vocabularies";
-@import "components/visualizer-course-vocabulary";
 @import "components/wait-saving";
 @import "components/week-glance";
 @import "components/weekly-calendar";
@@ -137,13 +129,21 @@
 @import "components/course/summary-header";
 @import "components/course/visualizations";
 @import "components/course/visualize-instructor";
+@import "components/course/visualize-instructor-session-type-graph";
 @import "components/course/visualize-instructors";
+@import "components/course/visualize-instructors-graph";
 @import "components/course/visualize-objectives";
+@import "components/course/visualize-objectives-graph";
 @import "components/course/visualize-session-type";
+@import "components/course/visualize-session-type-graph";
 @import "components/course/visualize-session-types";
+@import "components/course/visualize-session-types-graph";
 @import "components/course/visualize-term";
+@import "components/course/visualize-term-graph";
 @import "components/course/visualize-vocabularies";
+@import "components/course/visualize-vocabularies-graph";
 @import "components/course/visualize-vocabulary";
+@import "components/course/visualize-vocabulary-graph";
 
 @import "components/session/collapsed-objectives";
 @import "components/session/objectives";

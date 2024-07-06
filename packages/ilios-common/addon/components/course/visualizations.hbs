@@ -33,7 +33,7 @@
           <h4>
             {{t "general.objectives"}}
           </h4>
-          <VisualizerCourseObjectives @isIcon={{true}} @course={{@model}} @showDataTable={{false}} />
+          <Course::VisualizeObjectivesGraph @isIcon={{true}} @course={{@model}} @showDataTable={{false}} />
         </LinkTo>
       </div>
       <div data-test-visualize-session-types>
@@ -41,7 +41,7 @@
           <h4>
             {{t "general.sessionTypes"}}
           </h4>
-          <VisualizerCourseSessionTypes
+          <Course::VisualizeSessionTypesGraph
             @isIcon={{true}}
             @course={{@model}}
             @chartType="donut"
@@ -53,7 +53,7 @@
           <h4>
             {{t "general.vocabularies"}}
           </h4>
-          <VisualizerCourseVocabularies @isIcon={{true}} @course={{@model}} />
+          <Course::VisualizeVocabulariesGraph @isIcon={{true}} @course={{@model}} />
         </LinkTo>
       </div>
       <div data-test-visualize-instructors>
@@ -61,7 +61,7 @@
           <h4>
             {{t "general.instructors"}}
           </h4>
-          <VisualizerCourseInstructors
+          <Course::VisualizeInstructorsGraph
             @isIcon={{true}}
             @course={{@model}}
             @chartType="donut"

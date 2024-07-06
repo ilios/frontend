@@ -1,5 +1,5 @@
 import { attribute, collection, create, fillable, text, value } from 'ember-cli-page-object';
-import instructorsChart from '../visualizer-course-instructors';
+import instructorsChart from './visualize-instructors-graph';
 
 const definition = create({
   scope: '[data-test-course-visualize-instructors]',

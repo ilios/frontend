@@ -1,5 +1,5 @@
 import { attribute, collection, create, text } from 'ember-cli-page-object';
-import objectivesChart from '../visualizer-course-objectives';
+import objectivesChart from './visualize-objectives-graph';
 
 const definition = create({
   scope: '[data-test-course-visualize-objectives]',

@@ -4,10 +4,10 @@
   @include m.data-visualization;
 
   .visualizations {
-    .visualizer-course-instructors,
-    .visualizer-course-objectives,
-    .visualizer-course-session-types,
-    .visualizer-course-vocabularies {
+    .course-visualize-instructors-graph,
+    .course-visualize-objectives-graph,
+    .course-visualize-session-types-graph,
+    .course-visualize-vocabularies-graph {
       height: 40vh;
       margin-bottom: 2rem;
       width: 40vw;

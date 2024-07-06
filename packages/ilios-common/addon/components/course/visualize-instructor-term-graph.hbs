@@ -1,0 +1,21 @@
+<div
+  class="course-visualize-instructors-term-graph {{unless @isIcon "not-icon"}}"
+  data-test-course-visualize-instructor-term-graph
+  ...attributes
+>
+  {{#if (or @isIcon this.data.length)}}
+    <SimpleChart
+      @name="horz-bar"
+      @isIcon={{@isIcon}}
+      @data={{this.data}}
+      @hover={{perform this.donutHover}}
+      @leave={{perform this.donutHover}} as |chart|
+    >
+      {{#if this.tooltipContent}}
+        <chart.tooltip @title={{this.tooltipTitle}}>
+          {{this.tooltipContent}}
+        </chart.tooltip>
+      {{/if}}
+    </SimpleChart>
+  {{/if}}
+</div>
