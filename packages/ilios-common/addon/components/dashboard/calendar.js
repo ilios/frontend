@@ -1,13 +1,14 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { map } from 'rsvp';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { use } from 'ember-could-get-used-to-this';
 import AsyncProcess from 'ilios-common/classes/async-process';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;
@@ -19,12 +20,7 @@ export default class DashboardCalendarComponent extends Component {
   @service dataLoader;
   @service localeDays;
 
-  @tracked usersPrimarySchool;
-  @tracked absoluteIcsUri;
-  @tracked user;
-
   @tracked ourEvents = [];
-
   @tracked userContext;
 
   @use cohortProxies = new AsyncProcess(() => [
@@ -66,20 +62,37 @@ export default class DashboardCalendarComponent extends Component {
     return 1;
   }
 
-  constructor() {
-    super(...arguments);
-    this.setup.perform();
+  @cached
+  get userData() {
+    return new TrackedAsyncData(this.currentUser.getModel());
   }
 
-  setup = dropTask(async () => {
-    this.user = await this.currentUser.getModel();
-    this.usersPrimarySchool = await this.user.school;
-    const icsFeedKey = this.user.icsFeedKey;
+  get user() {
+    return this.userData.isResolved ? this.userData.value : null;
+  }
+
+  @cached
+  get usersPrimarySchoolData() {
+    return new TrackedAsyncData(this.user?.school);
+  }
+
+  get usersPrimarySchool() {
+    return this.usersPrimarySchoolData.isResolved ? this.usersPrimarySchoolData.value : null;
+  }
+
+  get icsFeedKey() {
+    return this.user?.icsFeedKey;
+  }
+
+  get absoluteIcsUri() {
+    if (!this.icsFeedKey) {
+      return '';
+    }
     const apiHost = this.iliosConfig.apiHost;
     const loc = window.location.protocol + '//' + window.location.hostname;
     const server = apiHost ? apiHost : loc;
-    this.absoluteIcsUri = server + '/ics/' + icsFeedKey;
-  });
+    return server + '/ics/' + this.icsFeedKey;
+  }
 
   loadEvents = restartableTask(async (event, [school, fromTimeStamp, toTimeStamp]) => {
     if (!school || !fromTimeStamp || !toTimeStamp) {
