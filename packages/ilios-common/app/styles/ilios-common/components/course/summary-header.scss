@@ -1,0 +1,34 @@
+@use "../../mixins" as m;
+
+.course-summary-header {
+  @include m.ilios-overview();
+  padding-left: 0.8rem;
+
+  .course-summary-header-top {
+    @include m.ilios-overview-header;
+
+    h2 {
+      @include m.ilios-overview-title;
+      @include m.ilios-heading-h3;
+    }
+
+    .course-summary-actions {
+      @include m.ilios-overview-actions;
+      margin-top: 0;
+      text-align: right;
+
+      a {
+        @include m.font-size("medium");
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .course-summary-content {
+    @include m.ilios-overview-content;
+
+    .block {
+      @include m.ilios-overview-block;
+    }
+  }
+}

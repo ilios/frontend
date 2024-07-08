@@ -1,0 +1,18 @@
+@use "../../mixins" as m;
+
+.course-visualize-instructor {
+  @include m.data-visualization;
+
+  .visualizations {
+    .course-visualize-instructor-session-type-graph,
+    .course-visualize-instructor-term-graph {
+      height: 80vh;
+      width: 80vw;
+
+      @include m.for-laptop-and-up {
+        height: 40vh;
+        width: 40vw;
+      }
+    }
+  }
+}

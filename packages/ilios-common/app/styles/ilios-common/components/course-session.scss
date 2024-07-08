@@ -1,8 +1,0 @@
-@use "../mixins" as m;
-
-.course-session {
-  @include m.main-section;
-  border-top: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}

@@ -1,0 +1,5 @@
+@use "../../mixins" as m;
+
+.course-visualize-instructors {
+  @include m.data-visualization;
+}

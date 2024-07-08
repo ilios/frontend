@@ -1,0 +1,23 @@
+@use "../../colors" as c;
+@use "../../mixins" as m;
+
+.course-publicationcheck {
+  @include m.main-section;
+
+  .course-publicationcheck-details {
+    @include m.detail-container(c.$orange);
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .course-publicationcheck-content {
+      @include m.detail-container-content;
+    }
+
+    .fa-link-slash {
+      color: c.$black;
+      @include m.font-size("small");
+    }
+  }
+}

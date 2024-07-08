@@ -1,0 +1,5 @@
+@use "../../mixins" as m;
+
+.course-visualize-session-types {
+  @include m.data-visualization;
+}
