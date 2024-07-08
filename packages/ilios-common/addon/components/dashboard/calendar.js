@@ -5,8 +5,6 @@ import { action } from '@ember/object';
 import { DateTime } from 'luxon';
 import { map } from 'rsvp';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 
 export default class DashboardCalendarComponent extends Component {
@@ -21,10 +19,14 @@ export default class DashboardCalendarComponent extends Component {
 
   @tracked userContext;
 
-  @use cohortProxies = new AsyncProcess(() => [
-    this.getCohortProxies.bind(this),
-    this.bestSelectedSchool,
-  ]);
+  @cached
+  get cohortProxiesData() {
+    return new TrackedAsyncData(this.getCohortProxies(this.bestSelectedSchool));
+  }
+
+  get cohortProxies() {
+    return this.cohortProxiesData.isResolved ? this.cohortProxiesData.value : [];
+  }
 
   get showUserContextFilters() {
     return this.currentUser.performsNonLearnerFunction;
