@@ -508,6 +508,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.expect(1);
     await setupAuthentication({ school: this.school }, true);
     await page.visit({ show: 'calendar' });
+    await percySnapshot(assert);
     assert.ok(page.calendar.controls.userContextFilter.isPresent);
   });
 
@@ -517,6 +518,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.visit({ show: 'calendar' });
     assert.ok(page.calendar.controls.userContextFilter.isPresent);
     await page.calendar.controls.mySchedule.toggle.secondLabel.click();
+    await percySnapshot(assert);
     assert.notOk(page.calendar.controls.userContextFilter.isPresent);
   });
 
