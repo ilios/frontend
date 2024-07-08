@@ -3,6 +3,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/dashboard/user-context-filter';
 
 module('Integration | Component | dashboard/user-context-filter', function (hooks) {
@@ -26,6 +27,8 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
     assert.strictEqual(component.admin.title, 'Show only my admin activities');
     assert.notOk(component.admin.isChecked);
     assert.ok(component.admin.isActive);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('selecting learning filter', async function (assert) {
