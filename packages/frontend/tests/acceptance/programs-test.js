@@ -1,7 +1,6 @@
 import { click, fillIn, find, currentURL, currentRouteName, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/programs';
 import percySnapshot from '@percy/ember';
@@ -85,6 +84,35 @@ module('Acceptance | Programs', function (hooks) {
       await page.visit();
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(1) a');
       assert.strictEqual(currentURL(), '/programs/1');
+    });
+  });
+
+  module('User in multiple schools', function (hooks) {
+    hooks.beforeEach(async function () {
+      this.school1 = this.server.create('school');
+      this.school2 = this.server.create('school');
+      this.program1 = this.server.create('program', { school: this.school1 });
+      this.program2 = this.server.create('program', { school: this.school2 });
+      this.user = await setupAuthentication();
+    });
+
+    test('remember non-default school filter choice', async function (assert) {
+      await page.visit();
+
+      assert.strictEqual(currentURL(), '/programs');
+      assert.strictEqual(page.root.schoolFilter.schools.length, 2);
+
+      assert.strictEqual(page.root.schoolFilter.selectedSchool, '1');
+
+      await page.root.schoolFilter.select(2);
+      assert.strictEqual(page.root.schoolFilter.selectedSchool, '2');
+      assert.strictEqual(currentURL(), '/programs?school=2');
+
+      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(1) a');
+      assert.strictEqual(currentURL(), '/programs/2');
+      await click('.backtolink a');
+      assert.strictEqual(page.root.schoolFilter.selectedSchool, '2');
+      assert.strictEqual(currentURL(), '/programs?school=2');
     });
   });
 

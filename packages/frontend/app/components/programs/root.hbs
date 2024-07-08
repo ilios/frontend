@@ -4,7 +4,7 @@
       <FaIcon @icon="building-columns" @fixedWidth={{true}} />
       {{#if (gt @schools.length 1)}}
         <select
-          {{on "change" (pick "target.value" (set this.selectedSchoolId))}}
+          {{on "change" (pick "target.value" @setSchoolId)}}
           aria-label={{t "general.schools"}}
           data-test-school-selector
         >
