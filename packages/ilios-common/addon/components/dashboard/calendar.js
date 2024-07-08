@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { map } from 'rsvp';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
@@ -20,7 +19,6 @@ export default class DashboardCalendarComponent extends Component {
   @service dataLoader;
   @service localeDays;
 
-  @tracked ourEvents = [];
   @tracked userContext;
 
   @use cohortProxies = new AsyncProcess(() => [
@@ -94,16 +92,31 @@ export default class DashboardCalendarComponent extends Component {
     return server + '/ics/' + this.icsFeedKey;
   }
 
-  loadEvents = restartableTask(async (event, [school, fromTimeStamp, toTimeStamp]) => {
+  @cached
+  get eventsData() {
+    return new TrackedAsyncData(
+      this.loadEvents(this.bestSelectedSchool, this.fromTimeStamp, this.toTimeStamp),
+    );
+  }
+
+  get events() {
+    return this.eventsData.isResolved ? this.eventsData.value : [];
+  }
+
+  get isLoadingEvents() {
+    return this.eventsData.isPending;
+  }
+
+  async loadEvents(school, fromTimeStamp, toTimeStamp) {
     if (!school || !fromTimeStamp || !toTimeStamp) {
-      return;
+      return [];
     }
     if (this.args.mySchedule) {
-      this.ourEvents = await this.userEvents.getEvents(fromTimeStamp, toTimeStamp);
+      return this.userEvents.getEvents(fromTimeStamp, toTimeStamp);
     } else {
-      this.ourEvents = await this.schoolEvents.getEvents(school.id, fromTimeStamp, toTimeStamp);
+      return this.schoolEvents.getEvents(school.id, fromTimeStamp, toTimeStamp);
     }
-  });
+  }
 
   async getCohortProxies(school) {
     if (!school) {
@@ -156,7 +169,7 @@ export default class DashboardCalendarComponent extends Component {
       return this[name];
     });
 
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       return allFilteredEvents.every((arr) => {
         return arr.includes(event);
       });
@@ -177,30 +190,30 @@ export default class DashboardCalendarComponent extends Component {
 
   get eventsWithSelectedSessionTypes() {
     if (!this.args.selectedSessionTypeIds?.length) {
-      return this.ourEvents;
+      return this.events;
     }
     const selectedIds = this.args.selectedSessionTypeIds.map(Number);
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       return selectedIds.includes(event.sessionTypeId);
     });
   }
 
   get eventsWithSelectedCourseLevels() {
     if (!this.args.selectedCourseLevels?.length) {
-      return this.ourEvents;
+      return this.events;
     }
     const levels = this.args.selectedCourseLevels.map(Number);
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       return levels.includes(event.courseLevel);
     });
   }
 
   get eventsWithSelectedCohorts() {
     if (!this.args.selectedCohortIds?.length) {
-      return this.ourEvents;
+      return this.events;
     }
     const selectedIds = this.args.selectedCohortIds.map(Number);
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       const matchingCohorts = event.cohorts.filter(({ id }) => selectedIds.includes(id));
       return matchingCohorts.length > 0;
     });
@@ -208,20 +221,20 @@ export default class DashboardCalendarComponent extends Component {
 
   get eventsWithSelectedCourses() {
     if (!this.args.selectedCourseIds?.length) {
-      return this.ourEvents;
+      return this.events;
     }
     const selectedIds = this.args.selectedCourseIds.map(Number);
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       return selectedIds.includes(event.course);
     });
   }
 
   get eventsWithSelectedTerms() {
     if (!this.args.selectedTermIds?.length) {
-      return this.ourEvents;
+      return this.events;
     }
     const selectedIds = this.args.selectedTermIds.map(Number);
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       const allTerms = mapBy([].concat(event.sessionTerms || [], event.courseTerms || []), 'id');
       const matchingTerms = allTerms.filter((id) => selectedIds.includes(id));
       return matchingTerms.length > 0;
@@ -230,10 +243,10 @@ export default class DashboardCalendarComponent extends Component {
 
   get eventsWithSelectedUserContext() {
     if (!this.userContext) {
-      return this.ourEvents;
+      return this.events;
     }
 
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       if ('administrator' === this.userContext) {
         // TODO: Replace this with Set.intersect() once that becomes
         //   available in all browsers, or polyfill it. [ST 2024/06/20].

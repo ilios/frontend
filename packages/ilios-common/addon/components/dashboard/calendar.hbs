@@ -96,12 +96,9 @@
         @clearFilters={{@clearFilters}}
       />
     {{/if}}
-    <section class="fullwidth ilios-calendar-container"
-      {{did-insert (perform this.loadEvents) this.bestSelectedSchool this.fromTimeStamp this.toTimeStamp @mySchedule}}
-      {{did-update (perform this.loadEvents) this.bestSelectedSchool this.fromTimeStamp this.toTimeStamp @mySchedule}}
-    >
+    <section class="fullwidth ilios-calendar-container">
       <IliosCalendar
-        @isLoadingEvents={{this.loadEvents.isRunning}}
+        @isLoadingEvents={{this.isLoadingEvents}}
         @calendarEvents={{this.filteredEvents}}
         @selectedDate={{@selectedDate}}
         @selectedView={{@selectedView}}
