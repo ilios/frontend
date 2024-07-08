@@ -301,22 +301,6 @@ export default class User extends Model {
   }
 
   /**
-   * Checks if this user is instructing any offerings or ILMs.
-   */
-  get isInstructor() {
-    if (this._instructedOfferingsData.isResolved && this._instructedOfferingsData.value.length) {
-      return true;
-    }
-    if (
-      this._instructorIlmSessionsData.isResolved &&
-      this._instructorIlmSessionsData.value.length
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
    * Checks if a user is linked to any non-student things
    */
   get performsNonLearnerFunction() {
