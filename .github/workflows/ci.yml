@@ -245,7 +245,6 @@ jobs:
   percy:
     name: Test and Capture Screenshots
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     needs: [test, build, firefox-test, browserstack-test, test-with-embroider, build-with-embroider]
     timeout-minutes: 20
     strategy:
