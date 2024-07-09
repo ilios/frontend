@@ -80,10 +80,11 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
   }
 
   save = dropTask(async () => {
-    const domainsToRemove = this.schoolCompetencies.filter((competency) => {
+    const competencies = this.schoolCompetenciesData.value;
+    const domainsToRemove = competencies.filter((competency) => {
       return !competency.belongsTo('parent').id() && !this.competencies.includes(competency);
     });
-    const competenciesToRemove = this.schoolCompetencies.filter((competency) => {
+    const competenciesToRemove = competencies.filter((competency) => {
       return competency.belongsTo('parent').id() && !this.competencies.includes(competency);
     });
 
@@ -104,6 +105,5 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     // cleanup
     this.cleanup();
     this.args.setSchoolManageCompetencies(false);
-    this.schoolCompetencies = await this.args.school.competencies;
   });
 }
