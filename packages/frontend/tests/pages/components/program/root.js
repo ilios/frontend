@@ -1,4 +1,4 @@
-import { create } from 'ember-cli-page-object';
+import { clickable, create } from 'ember-cli-page-object';
 import leadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
 import overview from './overview';
 import header from './header';
@@ -6,6 +6,7 @@ import leadershipExpanded from 'ilios-common/page-objects/components/leadership-
 
 const definition = {
   scope: '[data-test-program-details]',
+  goBack: clickable('[data-test-back-link]'),
   header,
   overview,
   leadershipCollapsed,

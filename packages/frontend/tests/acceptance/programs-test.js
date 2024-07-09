@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/programs';
+import detailPage from 'frontend/tests/pages/program';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Programs', function (hooks) {
@@ -82,7 +83,7 @@ module('Acceptance | Programs', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(1) a');
+      await page.root.list.items[0].open();
       assert.strictEqual(currentURL(), '/programs/1');
     });
   });
@@ -108,9 +109,11 @@ module('Acceptance | Programs', function (hooks) {
       assert.strictEqual(page.root.schoolFilter.selectedSchool, '2');
       assert.strictEqual(currentURL(), '/programs?school=2');
 
-      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(1) a');
+      await page.root.list.items[0].open();
       assert.strictEqual(currentURL(), '/programs/2');
-      await click('.backtolink a');
+
+      await detailPage.root.goBack();
+
       assert.strictEqual(page.root.schoolFilter.selectedSchool, '2');
       assert.strictEqual(currentURL(), '/programs?school=2');
     });
