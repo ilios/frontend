@@ -4,6 +4,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/dashboard-calendar';
+import resetStorages from 'ember-local-storage/test-support/reset-storage';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Dashboard Calendar', function (hooks) {
@@ -79,6 +80,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   hooks.afterEach(() => {
     unfreezeDate();
+    if (window.localStorage) {
+      window.localStorage.clear();
+    }
+    resetStorages();
   });
 
   test('load month calendar', async function (assert) {
@@ -571,6 +576,85 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.strictEqual(page.calendar.calendar.weekly.events[0].text, '06:00 AM event 2');
     await page.calendar.controls.userContextFilter.admin.toggle();
     assert.strictEqual(page.calendar.calendar.weekly.events.length, 3);
+  });
+
+  test('user context filter selections persist across page reloads', async function (assert) {
+    assert.expect(27);
+    this.user = await setupAuthentication({ school: this.school }, true);
+    const day = DateTime.fromObject({
+      month: 4,
+      day: 4,
+      year: 2004,
+      hour: 4,
+      minute: 0,
+      second: 7,
+    });
+    freezeDateAt(day.toJSDate());
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.toJSDate(),
+      endDate: day.plus({ hour: 1 }).toJSDate(),
+      offering: 1,
+      userContexts: ['learner'],
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.plus({ hour: 1 }).toJSDate(),
+      endDate: day.plus({ hour: 2 }).toJSDate(),
+      offering: 2,
+      userContexts: ['instructor'],
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.plus({ hour: 2 }).toJSDate(),
+      endDate: day.plus({ hour: 3 }).toJSDate(),
+      offering: 3,
+      userContexts: ['course director'],
+    });
+    await page.visit({ show: 'calendar' });
+    assert.ok(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.calendar.controls.userContextFilter.learning.toggle();
+    assert.ok(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.visit({ show: 'calendar' });
+    assert.ok(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.calendar.controls.userContextFilter.instructing.toggle();
+    assert.notOk(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.visit({ show: 'calendar' });
+    assert.notOk(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.calendar.controls.userContextFilter.admin.toggle();
+    assert.notOk(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.visit({ show: 'calendar' });
+    assert.notOk(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.calendar.controls.userContextFilter.admin.toggle();
+    assert.ok(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.visit({ show: 'calendar' });
+    assert.ok(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
   });
 
   test('test session type filter', async function (assert) {

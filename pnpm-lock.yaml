@@ -450,6 +450,9 @@ importers:
       ember-intl:
         specifier: ^7.0.4
         version: 7.0.4(webpack@5.93.0)
+      ember-local-storage:
+        specifier: ^2.0.7
+        version: 2.0.7(@babel/core@7.24.9)
       ember-math-helpers:
         specifier: ^4.0.0
         version: 4.0.0(ember-source@5.9.0(@babel/core@7.24.9)(@glimmer/component@1.1.2(@babel/core@7.24.9))(rsvp@4.8.5)(webpack@5.93.0))
@@ -577,9 +580,6 @@ importers:
       ember-load-initializers:
         specifier: ^2.1.2
         version: 2.1.2(@babel/core@7.24.9)
-      ember-local-storage:
-        specifier: ^2.0.7
-        version: 2.0.7(@babel/core@7.24.9)
       ember-page-title:
         specifier: ^8.2.3
         version: 8.2.3(ember-source@5.9.0(@babel/core@7.24.9)(@glimmer/component@1.1.2(@babel/core@7.24.9))(rsvp@4.8.5)(webpack@5.93.0))
