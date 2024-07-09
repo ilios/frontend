@@ -241,3 +241,29 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=ilios_frontend_27a24e39-b0ec-405a-91a6-b6392ffcdd30
+
+  percy:
+    name: Test and Capture Screenshots
+    runs-on: ubuntu-latest
+    needs: [test, build, firefox-test, browserstack-test, test-with-embroider, build-with-embroider]
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - test-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - name: Run Percy Tests
+        run: pnpm --filter ${{ matrix.workspace }} exec percy exec -- ember test
+        env:
+          PERCY_TOKEN: web_1899a9764a4891f3a19b87e52aa1ae038359e28ba550daa6bad00d0e0a230a33
