@@ -10,12 +10,12 @@ import { TrackedAsyncData } from 'ember-async-data';
 @validatable
 export default class SchoolSessionTypeFormComponent extends Component {
   @service store;
-  @tracked assessmentValue;
-  @tracked @NotBlank() @IsHexColor() calendarColorValue;
-  @tracked isActiveValue;
-  @tracked selectedAamcMethodIdValue;
-  @tracked selectedAssessmentOptionIdValue;
-  @tracked @NotBlank() @Length(1, 100) titleValue;
+  @tracked assessment = this.args.assessment ?? false;
+  @tracked @NotBlank() @IsHexColor() calendarColor = this.args.calendarColor || null;
+  @tracked isActive = this.args.isActive ?? true;
+  @tracked selectedAamcMethodId = this.args.selectedAamcMethodId || null;
+  @tracked selectedAssessmentOptionId = this.args.selectedAssessmentOptionId || null;
+  @tracked @NotBlank() @Length(1, 100) title = this.args.title || '';
 
   @cached
   get assessmentOptionsData() {
@@ -37,30 +37,6 @@ export default class SchoolSessionTypeFormComponent extends Component {
 
   get isLoaded() {
     return this.assessmentOptionsData.isResolved && this.aamcMethodData.isResolved;
-  }
-
-  get assessment() {
-    return this.assessmentValue ?? this.args.assessment;
-  }
-
-  get calendarColor() {
-    return this.calendarColorValue ?? this.args.calendarColor;
-  }
-
-  get isActive() {
-    return this.isActiveValue ?? this.args.isActive;
-  }
-
-  get title() {
-    return this.titleValue ?? this.args.title;
-  }
-
-  get selectedAamcMethodId() {
-    return this.selectedAamcMethodIdValue ?? this.args.selectedAamcMethodId;
-  }
-
-  get selectedAssessmentOptionId() {
-    return this.selectedAssessmentOptionIdValue ?? this.args.selectedAssessmentOptionId;
   }
 
   get filteredAamcMethods() {
@@ -96,8 +72,8 @@ export default class SchoolSessionTypeFormComponent extends Component {
 
   @action
   updateAssessment(assessment) {
-    this.selectedAamcMethodIdValue = null;
-    this.assessmentValue = assessment;
+    this.selectedAamcMethodId = null;
+    this.assessment = assessment;
   }
 
   saveSessionType = dropTask(async () => {

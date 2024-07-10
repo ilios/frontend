@@ -15,10 +15,10 @@
               id="title-{{templateId}}"
               type="text"
               value={{this.title}}
-              {{on "input" (pick "target.value" (set this.titleValue))}}
+              {{on "input" (pick "target.value" (set this.title))}}
               {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))}}
             >
-            <ValidationError @errors={{get-errors-for this.titleValue}} />
+            <ValidationError @errors={{get-errors-for this.title}} />
           {{else}}
             <span class="value">
               {{this.title}}
@@ -30,7 +30,7 @@
             {{t "general.aamcMethod"}}
           </label>
           {{#if @canEditAamcMethod}}
-            <select id="aamc-method-{{templateId}}" {{on "change" (pick "target.value" (set this.selectedAamcMethodIdValue))}}>
+            <select id="aamc-method-{{templateId}}" {{on "change" (pick "target.value" (set this.selectedAamcMethodId))}}>
               <option selected={{not this.selectedAamcMethodId}}></option>
               {{#each (sort-by "description" this.filteredAamcMethods) as |aamcMethod| }}
                 <option
@@ -62,10 +62,10 @@
               id="color-{{templateId}}"
               type="color"
               value={{this.calendarColor}}
-              {{on "input" (pick "target.value" (set this.calendarColorValue))}}
+              {{on "input" (pick "target.value" (set this.calendarColor))}}
               {{on "keyup" (queue (fn this.addErrorDisplayFor "calendarColor") (perform this.saveOrCancel))}}
             >
-            <ValidationError @errors={{get-errors-for this.calendarColorValue}} />
+            <ValidationError @errors={{get-errors-for this.calendarColor}} />
           {{else}}
             <span class="value">
               {{! template-lint-disable no-inline-styles style-concatenation no-triple-curlies}}
@@ -100,7 +100,7 @@
               {{t "general.assessmentOption"}}:
             </label>
             {{#if @canEditAssessmentOption}}
-              <select id="assessment-option-{{templateId}}" {{on "change" (pick "target.value" (set this.selectedAssessmentOptionIdValue))}}>
+              <select id="assessment-option-{{templateId}}" {{on "change" (pick "target.value" (set this.selectedAssessmentOptionId))}}>
                 {{#each (sort-by "name" this.assessmentOptions) as |o|}}
                   <option
                     value={{o.id}}
@@ -122,7 +122,7 @@
             {{t "general.active"}}:
           </label>
           {{#if @canEditActive}}
-            <ToggleYesno @yes={{this.isActive}} @toggle={{set this.isActiveValue}} />
+            <ToggleYesno @yes={{this.isActive}} @toggle={{set this.isActive}} />
           {{else}}
             <span class="value {{if this.isActive "yes" "no"}}">
               {{#if this.isActive}}
