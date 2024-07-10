@@ -35,27 +35,24 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
     return new TrackedAsyncData(this.loadSchool(this.args.school.id));
   }
 
-  get isLoaded() {
-    return this.schoolData.isResolved;
+  @cached
+  get vocabularyData() {
+    return new TrackedAsyncData(this.args.school.vocabularies);
   }
 
-  get vocabularies() {
-    return this.schoolData.value
-      .hasMany('vocabularies')
-      .ids()
-      .map((id) => {
-        return this.store.peekRecord('vocabulary', id);
-      });
+  get isLoaded() {
+    return this.schoolData.isResolved && this.vocabularyData.isResolved;
   }
 
   get schoolVocabularies() {
-    return this.vocabularies.map((vocabulary) => {
+    return this.vocabularyData.value.map((vocabulary) => {
       const terms = vocabulary
         .hasMany('terms')
         .ids()
         .map((id) => {
-          return this.store.peekRecord('term', id);
-        });
+          return id ? this.store.peekRecord('term', id) : null;
+        })
+        .filter(Boolean);
 
       return {
         vocabulary,
