@@ -8,7 +8,6 @@ import { findById, uniqueValues } from 'ilios-common/utils/array-helpers';
 export default class LocaleChooserComponent extends Component {
   @service intl;
   @tracked isOpen = false;
-  @tracked menuElement;
 
   get locale() {
     const locale = this.intl.get('primaryLocale');
@@ -47,7 +46,7 @@ export default class LocaleChooserComponent extends Component {
         if (target.nextElementSibling) {
           target.nextElementSibling.focus();
         } else {
-          this.menuElement.querySelector('button:nth-of-type(1)').focus();
+          target.parentElement.firstElementChild.focus();
         }
         break;
       case 'ArrowUp':
@@ -55,7 +54,7 @@ export default class LocaleChooserComponent extends Component {
         if (target.previousElementSibling) {
           target.previousElementSibling.focus();
         } else {
-          this.menuElement.querySelector('button:last-of-type').focus();
+          target.parentElement.lastElementChild.focus();
         }
         break;
       case 'Escape':
@@ -67,9 +66,11 @@ export default class LocaleChooserComponent extends Component {
     }
   }
   @action
-  clearFocus() {
-    const buttons = this.menuElement.querySelectorAll('button');
-    buttons.forEach((el) => el.blur());
+  clearFocus(event) {
+    const buttons = event.target.parentElement.children;
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].blur();
+    }
   }
   @action
   toggleMenu({ key }) {
