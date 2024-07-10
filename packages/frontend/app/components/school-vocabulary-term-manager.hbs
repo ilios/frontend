@@ -75,6 +75,7 @@
                 @icon="trash"
                 class="clickable remove enabled"
                 {{on "click" (perform this.deleteTerm)}}
+                data-test-delete
               />
             {{else}}
               <FaIcon @icon="trash" class="disabled" />

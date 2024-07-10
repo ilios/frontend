@@ -11,6 +11,7 @@ const definition = {
   hasError: isPresent('[data-test-title] .validation-error-message'),
   errorMessage: text('[data-test-title] .validation-error-message'),
   description: text('[data-test-description]'),
+  delete: clickable('[data-test-delete]'),
   breadcrumbs: {
     scope: '[data-test-breadcrumbs]',
     all: text('[data-test-all]'),

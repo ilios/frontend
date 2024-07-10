@@ -13,6 +13,7 @@ const definition = {
     scope: '[data-test-breadcrumbs]',
     all: text('[data-test-all]'),
     vocabulary: text('[data-test-vocabulary]'),
+    returnToList: clickable('[data-test-all]'),
   },
   terms: {
     scope: '[data-test-terms]',
