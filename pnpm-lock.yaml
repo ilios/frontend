@@ -331,8 +331,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.3.2)(stylelint@16.6.1)
       stylelint-scss:
-        specifier: ^6.2.1
-        version: 6.3.2(stylelint@16.6.1)
+        specifier: ^6.4.0
+        version: 6.4.0(stylelint@16.6.1)
       terser-webpack-plugin:
         specifier: ^5.3.9
         version: 5.3.10(webpack@5.92.1)
@@ -635,8 +635,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.3.2)(stylelint@16.6.1)
       stylelint-scss:
-        specifier: ^6.2.1
-        version: 6.3.2(stylelint@16.6.1)
+        specifier: ^6.4.0
+        version: 6.4.0(stylelint@16.6.1)
       tracked-built-ins:
         specifier: ^3.1.1
         version: 3.3.0
@@ -860,8 +860,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.3.2)(stylelint@16.6.1)
       stylelint-scss:
-        specifier: ^6.2.1
-        version: 6.3.2(stylelint@16.6.1)
+        specifier: ^6.4.0
+        version: 6.4.0(stylelint@16.6.1)
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(lodash@4.17.21)(underscore@1.13.6)
@@ -1085,8 +1085,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.3.2)(stylelint@16.6.1)
       stylelint-scss:
-        specifier: ^6.2.1
-        version: 6.3.2(stylelint@16.6.1)
+        specifier: ^6.4.0
+        version: 6.4.0(stylelint@16.6.1)
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(lodash@4.17.21)(underscore@1.13.6)
@@ -1307,8 +1307,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(prettier@3.3.2)(stylelint@16.6.1)
       stylelint-scss:
-        specifier: ^6.2.1
-        version: 6.3.2(stylelint@16.6.1)
+        specifier: ^6.4.0
+        version: 6.4.0(stylelint@16.6.1)
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(lodash@4.17.21)(underscore@1.13.6)
@@ -7051,6 +7051,9 @@ packages:
   known-css-properties@0.31.0:
     resolution: {integrity: sha512-sBPIUGTNF0czz0mwGGUoKKJC8Q7On1GPbCSFPfyEsfHb2DyBG0Y4QtV+EVWpINSaiGKZblDNuF5AezxSgOhesQ==}
 
+  known-css-properties@0.34.0:
+    resolution: {integrity: sha512-tBECoUqNFbyAY4RrbqsBQqDFpGXAEbdD5QKr8kACx3+rnArmuuR22nKQWKazvp07N9yjTyDZaw/20UIH8tL9DQ==}
+
   language-subtag-registry@0.3.23:
     resolution: {integrity: sha512-0K65Lea881pHotoGEa5gDlMxt3pctLi2RplBb7Ezh4rRdLEOtgi7n4EwK9lamnUCkKBqaeKRVebTq6BAxSkpXQ==}
 
@@ -8969,8 +8972,8 @@ packages:
       prettier: '>=3.0.0'
       stylelint: '>=16.0.0'
 
-  stylelint-scss@6.3.2:
-    resolution: {integrity: sha512-pNk9mXOVKkQtd+SROPC9io8ISSgX+tOVPhFdBE+LaKQnJMLdWPbGKAGYv4Wmf/RrnOjkutunNTN9kKMhkdE5qA==}
+  stylelint-scss@6.4.0:
+    resolution: {integrity: sha512-1BKRzh2TW38hZm/IWdvBVjlJRERB2zTiwm1xaOeDtUEmEKfxYMNr9THBQQtBV8wGxal/sN+TRsF7v9A5sqGI1A==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       stylelint: ^16.0.2
@@ -18927,6 +18930,8 @@ snapshots:
 
   known-css-properties@0.31.0: {}
 
+  known-css-properties@0.34.0: {}
+
   language-subtag-registry@0.3.23: {}
 
   language-tags@1.0.9:
@@ -20960,7 +20965,7 @@ snapshots:
       postcss-scss: 4.0.9(postcss@8.4.39)
       stylelint: 16.6.1
       stylelint-config-recommended: 14.0.1(stylelint@16.6.1)
-      stylelint-scss: 6.3.2(stylelint@16.6.1)
+      stylelint-scss: 6.4.0(stylelint@16.6.1)
     optionalDependencies:
       postcss: 8.4.39
 
@@ -20979,9 +20984,9 @@ snapshots:
       prettier-linter-helpers: 1.0.0
       stylelint: 16.6.1
 
-  stylelint-scss@6.3.2(stylelint@16.6.1):
+  stylelint-scss@6.4.0(stylelint@16.6.1):
     dependencies:
-      known-css-properties: 0.31.0
+      known-css-properties: 0.34.0
       postcss-media-query-parser: 0.2.3
       postcss-resolve-nested-selector: 0.1.1
       postcss-selector-parser: 6.1.0
