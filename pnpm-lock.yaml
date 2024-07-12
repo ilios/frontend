@@ -448,8 +448,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-intl:
-        specifier: ^7.0.3
-        version: 7.0.3(webpack@5.92.1)
+        specifier: ^7.0.4
+        version: 7.0.4(webpack@5.92.1)
       ember-math-helpers:
         specifier: ^4.0.0
         version: 4.0.0(ember-source@5.8.0(@babel/core@7.24.7)(@glimmer/component@1.1.2(@babel/core@7.24.7))(rsvp@4.8.5)(webpack@5.92.1))
@@ -5363,8 +5363,8 @@ packages:
     resolution: {integrity: sha512-+oRstEa52mm0jAFzhr51/xtEWpCEykB3SEBr7vUg8YnXUZJ5hKNBppP938q8Zzr9XfJEbzrtDSGjhKwJCJv6FQ==}
     engines: {node: 10.* || 12.* || >= 14}
 
-  ember-intl@7.0.3:
-    resolution: {integrity: sha512-RKSTdZJiMbv56QhrQU00+d8BQCTTY68h+MKiT/Ywg0HYPO75z69h/ss6oEJFg5D1Veu4PoIs4z9kFERobxNOBQ==}
+  ember-intl@7.0.4:
+    resolution: {integrity: sha512-EKIEV24BiUTx05+zi1Y37+qaOwVO/bFMZtsHPzndMDJcj6wjC1e3aMm5nvs4+jldh1TVwnIMVs9ivEoUNeijHQ==}
     engines: {node: 18.* || >= 20}
     peerDependencies:
       typescript: ^5.0.0
@@ -16688,7 +16688,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-intl@7.0.3(webpack@5.92.1):
+  ember-intl@7.0.4(webpack@5.92.1):
     dependencies:
       '@babel/core': 7.24.7
       '@formatjs/icu-messageformat-parser': 2.7.8
