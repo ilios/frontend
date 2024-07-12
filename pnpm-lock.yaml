@@ -310,8 +310,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       sass:
-        specifier: ^1.77.5
-        version: 1.77.6
+        specifier: ^1.77.8
+        version: 1.77.8
       scroll-into-view:
         specifier: ^1.16.2
         version: 1.16.2
@@ -620,8 +620,8 @@ importers:
         specifier: ^3.2.5
         version: 3.3.2
       sass:
-        specifier: ^1.77.5
-        version: 1.77.6
+        specifier: ^1.77.8
+        version: 1.77.8
       stylelint:
         specifier: ^16.3.1
         version: 16.6.1
@@ -845,8 +845,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       sass:
-        specifier: ^1.77.5
-        version: 1.77.6
+        specifier: ^1.77.8
+        version: 1.77.8
       stylelint:
         specifier: ^16.3.1
         version: 16.6.1
@@ -1070,8 +1070,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       sass:
-        specifier: ^1.77.5
-        version: 1.77.6
+        specifier: ^1.77.8
+        version: 1.77.8
       stylelint:
         specifier: ^16.3.1
         version: 16.6.1
@@ -8535,8 +8535,8 @@ packages:
     engines: {node: 10.* || >= 12.*}
     hasBin: true
 
-  sass@1.77.6:
-    resolution: {integrity: sha512-ByXE1oLD79GVq9Ht1PeHWCPMPB8XHpBuz1r85oByKHjZY6qV6rWnQovQzXJXuQ/XyE1Oj3iPk3lo28uzaRA2/Q==}
+  sass@1.77.8:
+    resolution: {integrity: sha512-4UHg6prsrycW20fqLGPShtEvo/WyHRVRHwOP4DzkUrObWoWI05QBSfzU71TVB7PFaL104TwNaHpjlWXAZbQiNQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -20452,7 +20452,7 @@ snapshots:
       minimist: 1.2.8
       walker: 1.0.8
 
-  sass@1.77.6:
+  sass@1.77.8:
     dependencies:
       chokidar: 3.6.0
       immutable: 4.3.6
