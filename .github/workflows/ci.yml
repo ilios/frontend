@@ -40,6 +40,7 @@ jobs:
     name: ${{matrix.workspace}} Test (${{ matrix.node-version }})
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    needs: [lint]
 
     strategy:
       fail-fast: false
@@ -92,19 +93,17 @@ jobs:
         run: pnpm run --filter ${{matrix.workspace}} build
 
   browserstack-test:
-    name: Browserstack ${{matrix.workspace}} ${{ matrix.launcher }}
+    name: Browser Stack Test
     runs-on: ubuntu-latest
     timeout-minutes: 120
     needs: [test]
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 1
       matrix:
         workspace:
           - frontend
           - test-app
-          - lti-course-manager
-          - lti-dashboard
         launcher:
           - BS_OSX_Safari
           - BS_IOS_SAFARI
@@ -119,7 +118,7 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install
-      - name: test:browserstack ${{ matrix.launcher }}
+      - name: test:browserstack ${{matrix.workspace}} ${{ matrix.launcher }}
         env:
           BROWSERSTACK_USERNAME: iliosgithub_1UGowwsqE
           # This is in plaintext on purpose. It has no privileged access to anything (this is a free
@@ -127,7 +126,7 @@ jobs:
           BROWSERSTACK_ACCESS_KEY: yJjw6sE6izkpUw9oasGT
           # The following is necessary when using browserstack under matrix builds on Github Actions
           # The Job ID + Run ID isn't unique across matrix runs and will fail when run simultaneously
-          BROWSERSTACK_LOCAL_ID_SUFFIX: ${{ matrix.launcher }}
+          BROWSERSTACK_LOCAL_ID_SUFFIX: ${{matrix.workspace}}-${{ matrix.launcher }}
         run: |
           pnpm --filter ${{matrix.workspace}} exec ember browserstack:connect
           pnpm --filter ${{matrix.workspace}} exec ember test --test-port=7774 --host=127.0.0.1 --config-file=testem.browserstack.js --launch=${{ matrix.launcher }}
