@@ -1,4 +1,3 @@
-const FailureOnlyPerBrowserReporter = require('testem-failure-only-reporter/grouped-by-browser');
 const defaultArgs = ['-t', '1800', '--browserstack.video', 'false', '--u', '<url>'];
 
 const BrowserStackLaunchers = {
@@ -61,10 +60,9 @@ const BrowserStackLaunchers = {
 module.exports = {
   test_page: 'tests/index.html?hidepassed&hideskipped&timeout=60000',
   timeout: 1800,
-  reporter: FailureOnlyPerBrowserReporter,
   browser_start_timeout: 2000,
-  browser_disconnect_timeout: 120,
-  parallel: 4,
+  browser_disconnect_timeout: 240,
+  parallel: 1,
   disable_watching: true,
   launchers: BrowserStackLaunchers,
   launch_in_dev: [],
