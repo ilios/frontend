@@ -21,7 +21,6 @@ export default class DashboardCalendarComponent extends Component {
   @storageFor('dashboard') dashboardStorage;
 
   get userContext() {
-    console.log(this.dashboardStorage.get('userContext'));
     return this.dashboardStorage?.get('userContext');
   }
 
