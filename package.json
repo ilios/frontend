@@ -14,10 +14,10 @@
     "start:lti-course-manager": "pnpm --filter lti-course-manager exec ember serve",
     "start:lti-dashboard": "pnpm --filter lti-dashboard exec ember serve",
     "start:test-app": "pnpm --filter test-app exec ember serve",
-    "test:frontend": "pnpm run --filter frontend test",
-    "test:lti-course-manager": "pnpm run --filter lti-course-manager test",
-    "test:lti-dashboard": "pnpm run --filter lti-dashboard test",
-    "test:test-app": "pnpm run --filter test-app test",
+    "test:frontend": "pnpm --filter frontend exec ember exam --parallel=8 --load-balance",
+    "test:lti-course-manager": "pnpm --filter lti-course-manager exec ember exam --parallel=8 --load-balance",
+    "test:lti-dashboard": "pnpm --filter lti-dashboard exec ember exam --parallel=8 --load-balance",
+    "test:test-app": "pnpm --filter test-app exec ember exam --parallel=8 --load-balance",
     "prepare": "husky"
   },
   "engines": {
