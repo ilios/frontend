@@ -82,7 +82,6 @@
     "@ember-data/tracking": "5.3.8",
     "@popperjs/core": ">= 2.1.0",
     "class-validator": ">= 0.14.0",
-    "ember-local-storage": "^2.0.7",
     "ember-source": ">= 4.0.0",
     "flatpickr": ">= 4.0.0",
     "froala-editor": ">= 4.2.1",
