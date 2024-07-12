@@ -22,6 +22,7 @@ module.exports = function (environment) {
     'ember-local-storage': {
       namespace: true,
       keyDelimiter: '/',
+      includeEmberDataSupport: false,
     },
     i18n: {
       defaultLocale: 'en',

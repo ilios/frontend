@@ -50,6 +50,7 @@ module.exports = function (environment) {
     'ember-local-storage': {
       namespace: true,
       keyDelimiter: '/',
+      includeEmberDataSupport: false,
     },
     fontawesome: {
       enableExperimentalBuildTimeTransform: false,
