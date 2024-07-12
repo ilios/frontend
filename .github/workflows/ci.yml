@@ -107,7 +107,6 @@ jobs:
           - lti-dashboard
         launcher:
           - BS_OSX_Safari
-          - BS_MS_Edge
           - BS_IOS_SAFARI
           - BS_CHROME_ANDROID
     steps:

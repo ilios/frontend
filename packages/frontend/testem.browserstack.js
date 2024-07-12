@@ -17,11 +17,6 @@ const BrowserStackLaunchers = {
     ],
     protocol: 'browser',
   },
-  BS_MS_Edge: {
-    exe: 'node_modules/.bin/browserstack-launch',
-    args: ['--os', 'Windows', '--osv', '11', '--b', 'edge', '--bv', '115', ...defaultArgs],
-    protocol: 'browser',
-  },
   BS_IOS_SAFARI: {
     exe: 'node_modules/.bin/browserstack-launch',
     args: [
