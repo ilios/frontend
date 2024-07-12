@@ -1,8 +1,13 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import Controller from 'ilios-common/controllers/session/index';
 
 module('Unit | Controller | session/index', function (hooks) {
   setupTest(hooks);
+
+  hooks.beforeEach(function () {
+    this.owner.register('controller:session/index', Controller);
+  });
 
   // Replace this with your real tests.
   test('it exists', function (assert) {

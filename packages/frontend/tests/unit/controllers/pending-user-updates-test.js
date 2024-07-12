@@ -1,8 +1,13 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import Controller from 'frontend/controllers/pending-user-updates';
 
 module('Unit | Controller | pending user updates', function (hooks) {
   setupTest(hooks);
+
+  hooks.beforeEach(function () {
+    this.owner.register('controller:pending-user-updates', Controller);
+  });
 
   // Replace this with your real tests.
   test('it exists', function (assert) {
