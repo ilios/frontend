@@ -15,15 +15,15 @@ module('Integration | Component | assign-students/root', function (hooks) {
     const school1 = this.server.create('school');
     const school2 = this.server.create('school');
     const program = this.server.create('program', { school: school1 });
-    const programYear1 = this.server.create('programYear', {
+    const programYear1 = this.server.create('program-year', {
       program,
       startYear: thisYear,
     });
-    const programYear2 = this.server.create('programYear', {
+    const programYear2 = this.server.create('program-year', {
       program,
       startYear: thisYear + 1,
     });
-    const programYear3 = this.server.create('programYear', {
+    const programYear3 = this.server.create('program-year', {
       program,
       startYear: thisYear + 2,
     });
@@ -67,7 +67,7 @@ module('Integration | Component | assign-students/root', function (hooks) {
     this.user5 = await store.findRecord('user', user5.id);
     // ensure that the store is pre-populated with programs, program-years, and cohorts
     await store.findAll('program');
-    await store.findAll('programYear');
+    await store.findAll('program-year');
     await store.findAll('cohort');
   });
 

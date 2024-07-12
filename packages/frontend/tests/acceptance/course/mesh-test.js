@@ -9,7 +9,7 @@ module('Acceptance | Course - Mesh Terms', function (hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
-    this.server.create('academicYear');
+    this.server.create('academic-year');
     this.server.createList('meshTree', 3);
     this.server.createList('meshConcept', 3);
 
@@ -17,14 +17,14 @@ module('Acceptance | Course - Mesh Terms', function (hooks) {
       scopeNote: '1234567890'.repeat(30),
     });
 
-    this.server.create('meshDescriptor', {
+    this.server.create('mesh-descriptor', {
       conceptIds: [1, 2, 3, 4],
       treeIds: [1, 2, 3],
     });
-    this.server.create('meshDescriptor', {
+    this.server.create('mesh-descriptor', {
       deleted: true,
     });
-    this.server.createList('meshDescriptor', 4);
+    this.server.createList('mesh-descriptor', 4);
 
     this.course = this.server.create('course', {
       year: 2014,

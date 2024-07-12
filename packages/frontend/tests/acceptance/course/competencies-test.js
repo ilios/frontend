@@ -11,7 +11,7 @@ module('Acceptance | Course - Competencies', function (hooks) {
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
     const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program,
     });
     const cohort = this.server.create('cohort', {
@@ -26,11 +26,11 @@ module('Acceptance | Course - Competencies', function (hooks) {
       programYears: [programYear],
     });
 
-    const programYearObjective = this.server.create('programYearObjective', {
+    const programYearObjective = this.server.create('program-year-objective', {
       competency: competency1,
       programYear,
     });
-    this.server.create('programYearObjective', {
+    this.server.create('program-year-objective', {
       competency: competency2,
       programYear,
     });
@@ -40,11 +40,11 @@ module('Acceptance | Course - Competencies', function (hooks) {
       school: this.school,
       cohorts: [cohort],
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       programYearObjectives: [programYearObjective],
       course: this.course,
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       programYearObjectives: [programYearObjective],
       course: this.course,
     });

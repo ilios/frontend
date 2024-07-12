@@ -10,10 +10,10 @@ module('Integration | Component | course/manage-objective-descriptors', function
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    const descriptors = this.server.createList('meshDescriptor', 4);
+    const descriptors = this.server.createList('mesh-descriptor', 4);
     const descriptorModel = await this.owner
       .lookup('service:store')
-      .findRecord('meshDescriptor', descriptors[0].id);
+      .findRecord('mesh-descriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     await render(hbs`<Course::ManageObjectiveDescriptors
       @selected={{this.selected}}
@@ -40,10 +40,10 @@ module('Integration | Component | course/manage-objective-descriptors', function
 
   test('add works', async function (assert) {
     assert.expect(16);
-    const descriptors = this.server.createList('meshDescriptor', 2);
+    const descriptors = this.server.createList('mesh-descriptor', 2);
     const descriptorModel = await this.owner
       .lookup('service:store')
-      .findRecord('meshDescriptor', descriptors[0].id);
+      .findRecord('mesh-descriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     this.set('add', (descriptor) => {
       this.set('selected', [descriptorModel, descriptor]);
@@ -80,10 +80,10 @@ module('Integration | Component | course/manage-objective-descriptors', function
 
   test('remove works', async function (assert) {
     assert.expect(15);
-    const descriptors = this.server.createList('meshDescriptor', 2);
+    const descriptors = this.server.createList('mesh-descriptor', 2);
     const descriptorModel = await this.owner
       .lookup('service:store')
-      .findRecord('meshDescriptor', descriptors[0].id);
+      .findRecord('mesh-descriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     this.set('remove', (descriptor) => {
       assert.strictEqual(descriptor.id, descriptorModel.id);

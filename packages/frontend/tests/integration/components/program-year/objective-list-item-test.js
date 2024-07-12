@@ -13,8 +13,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
-    const programYearObjective = this.server.create('programYearObjective', { programYear });
+    const programYear = this.server.create('program-year', { program });
+    const programYearObjective = this.server.create('program-year-objective', { programYear });
     this.model = await this.owner
       .lookup('service:store')
       .findRecord('program-year-objective', programYearObjective.id);

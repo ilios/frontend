@@ -9,7 +9,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
-    this.server.create('academicYear', { id: 2013 });
+    this.server.create('academic-year', { id: 2013 });
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
@@ -19,19 +19,19 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
       school: this.school,
     });
 
-    const meshDescriptors = this.server.createList('meshDescriptor', 6);
-    this.server.create('courseObjective', {
+    const meshDescriptors = this.server.createList('mesh-descriptor', 6);
+    this.server.create('course-objective', {
       meshDescriptors: [meshDescriptors.shift()],
       course: this.course,
     });
-    this.server.create('courseObjective', { meshDescriptors, course: this.course });
-    this.server.create('courseObjective', { course: this.course });
+    this.server.create('course-objective', { meshDescriptors, course: this.course });
+    this.server.create('course-objective', { course: this.course });
 
     // create some other objectives not in this course
     //this.server.createList('objective', 2);
 
     //create some extra descriptors that shouldn't be found in search
-    this.server.createList('meshDescriptor', 10, {
+    this.server.createList('mesh-descriptor', 10, {
       name: 'nope',
       annotation: 'nope',
     });

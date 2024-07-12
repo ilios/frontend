@@ -67,7 +67,7 @@ module('Integration | Component | program-year/visualize-objectives', function (
     });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .findRecord('programYear', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('model', programYearModel);
     await render(hbs`<ProgramYear::VisualizeObjectives @model={{this.model}}/>`);
     assert.strictEqual(component.title.text, 'program 0 Class of 2022');

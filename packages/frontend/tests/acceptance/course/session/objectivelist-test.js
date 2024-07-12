@@ -11,7 +11,7 @@ module('Acceptance | Session - Objective List', function (hooks) {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
 
-    this.server.create('academicYear', { id: 2013 });
+    this.server.create('academic-year', { id: 2013 });
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
@@ -28,22 +28,22 @@ module('Acceptance | Session - Objective List', function (hooks) {
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
     });
-    const courseObjectives = this.server.createList('courseObjective', 2);
-    const meshDescriptors = this.server.createList('meshDescriptor', 3);
+    const courseObjectives = this.server.createList('course-objective', 2);
+    const meshDescriptors = this.server.createList('mesh-descriptor', 3);
     const terms = this.server.createList('term', 2, { vocabulary });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjectives.shift()],
       meshDescriptors: [meshDescriptors.shift()],
       terms: [terms.shift()],
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session,
       courseObjectives,
       meshDescriptors,
       terms: terms,
     });
-    this.server.createList('sessionObjective', 11, { session });
+    this.server.createList('session-objective', 11, { session });
     await page.visit({
       courseId: 1,
       sessionId: 1,

@@ -12,15 +12,15 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
 
   test('it renders and is accessible', async function (assert) {
     assert.expect(14);
-    const programYear = this.server.create('programYear');
-    const programYearObjective = this.server.create('programYearObjective', { programYear });
+    const programYear = this.server.create('program-year');
+    const programYearObjective = this.server.create('program-year-objective', { programYear });
     const course1 = this.server.create('course');
     const course2 = this.server.create('course');
-    this.server.createList('courseObjective', 3, {
+    this.server.createList('course-objective', 3, {
       course: course1,
       programYearObjectives: [programYearObjective],
     });
-    this.server.createList('courseObjective', 3, {
+    this.server.createList('course-objective', 3, {
       course: course2,
       programYearObjectives: [programYearObjective],
     });

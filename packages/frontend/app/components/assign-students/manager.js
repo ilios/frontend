@@ -20,7 +20,7 @@ export default class AssignStudentsManagerComponent extends Component {
   get data() {
     return {
       programs: this.store.peekAll('program'),
-      programYears: this.store.peekAll('programYear'),
+      programYears: this.store.peekAll('program-year'),
       cohorts: this.store.peekAll('cohort'),
     };
   }

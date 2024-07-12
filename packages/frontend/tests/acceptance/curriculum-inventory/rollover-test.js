@@ -20,7 +20,7 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    const report = this.server.create('curriculumInventoryReport', {
+    const report = this.server.create('curriculum-inventory-report', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
@@ -28,7 +28,7 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .findRecord('curriculumInventoryReport', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     await page.visit({ reportId: reportModel.id });
     assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.rollover');
     assert.notOk(page.details.overview.rolloverLink.isVisible);
@@ -42,7 +42,7 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    const report = this.server.create('curriculumInventoryReport', {
+    const report = this.server.create('curriculum-inventory-report', {
       year: thisYear,
       name: 'foo bar',
       description: 'lorem ipsum',
@@ -50,7 +50,7 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .findRecord('curriculumInventoryReport', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
 
     this.server.post(
       `/api/curriculuminventoryreports/:id/rollover`,

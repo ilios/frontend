@@ -18,7 +18,7 @@ export default class Term extends Model {
   @hasMany('term', { inverse: 'parent', async: true })
   children;
 
-  @hasMany('programYear', { async: true, inverse: 'terms' })
+  @hasMany('program-year', { async: true, inverse: 'terms' })
   programYears;
 
   @hasMany('session', { async: true, inverse: 'terms' })
@@ -27,7 +27,7 @@ export default class Term extends Model {
   @hasMany('course', { async: true, inverse: 'terms' })
   courses;
 
-  @hasMany('aamcResourceType', { async: true, inverse: null })
+  @hasMany('aamc-resource-type', { async: true, inverse: null })
   aamcResourceTypes;
 
   @attr('boolean')

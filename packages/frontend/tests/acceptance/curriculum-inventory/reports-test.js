@@ -17,7 +17,7 @@ module('Acceptance | curriculum inventory reports', function (hooks) {
   });
 
   test('report title is correctly linked to report details page', async function (assert) {
-    this.server.create('curriculumInventoryReport', {
+    this.server.create('curriculum-inventory-report', {
       program: this.program,
     });
     await visit(url);

@@ -12,15 +12,15 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
   test('get top level sequence blocks', async function (assert) {
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
-    const block1 = store.createRecord('curriculumInventorySequenceBlock', {
+    const block1 = store.createRecord('curriculum-inventory-sequence-block', {
       id: 1,
       report: model,
     });
-    const block2 = store.createRecord('curriculumInventorySequenceBlock', {
+    const block2 = store.createRecord('curriculum-inventory-sequence-block', {
       id: 2,
       report: model,
     });
-    const block3 = store.createRecord('curriculumInventorySequenceBlock', {
+    const block3 = store.createRecord('curriculum-inventory-sequence-block', {
       id: 3,
       report: model,
       parent: block2,
@@ -36,7 +36,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     assert.notOk(model.belongsTo('export')?.id());
-    store.createRecord('curriculumInventoryExport', { id: 1, report: model });
+    store.createRecord('curriculum-inventory-export', { id: 1, report: model });
     assert.ok(model.belongsTo('export')?.id());
   });
 
@@ -47,15 +47,15 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     const course2 = store.createRecord('course');
     const course3 = store.createRecord('course');
 
-    const block1 = store.createRecord('curriculumInventorySequenceBlock', {
+    const block1 = store.createRecord('curriculum-inventory-sequence-block', {
       course: course1,
       report: model,
     });
-    const block2 = store.createRecord('curriculumInventorySequenceBlock', {
+    const block2 = store.createRecord('curriculum-inventory-sequence-block', {
       course: course2,
       report: model,
     });
-    const block3 = store.createRecord('curriculumInventorySequenceBlock', {
+    const block3 = store.createRecord('curriculum-inventory-sequence-block', {
       report: model,
     });
     (await model.sequenceBlocks).push(block1, block2, block3);
@@ -75,7 +75,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     (await model.sequenceBlocks).push(
-      store.createRecord('curriculumInventorySequenceBlock', {
+      store.createRecord('curriculum-inventory-sequence-block', {
         report: model,
       }),
     );
@@ -88,7 +88,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');
     (await model.sequenceBlocks).push(
-      store.createRecord('curriculumInventorySequenceBlock', {
+      store.createRecord('curriculum-inventory-sequence-block', {
         report: model,
         course,
       }),

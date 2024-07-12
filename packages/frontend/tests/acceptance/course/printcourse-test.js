@@ -10,7 +10,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     this.school = this.server.create('school');
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', { program });
-    this.server.create('academicYear');
+    this.server.create('academic-year');
     this.server.create('cohort', { programYear });
     this.learningMaterialUserRole = this.server.create('learning-material-user-role');
     this.learningMaterialStatus = this.server.create('learning-material-status');
@@ -35,7 +35,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
       firstName: 'Emmet',
       id: 1,
     });
-    this.server.create('learningMaterial', {
+    this.server.create('learning-material', {
       title: 'Save the Clock Tower',
       originalAuthor: 'Jennifer Johnson',
       filename: 'Clock Tower Flyer',
@@ -52,7 +52,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
       courseId: 1,
       required: false,
     });
-    this.server.create('meshDescriptor', {
+    this.server.create('mesh-descriptor', {
       courseIds: [1],
       name: 'Flux Capacitor',
     });
@@ -163,7 +163,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
       publishedAsTbd: false,
     });
 
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       sessionId: 1,
       hours: 1.5,
       dueDate: new Date(1995, 11, 17, 3, 24, 0),
@@ -192,7 +192,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
       published: true,
       publishedAsTbd: false,
     });
-    const courseObjective = this.server.create('courseObjective', {
+    const courseObjective = this.server.create('course-objective', {
       course: this.course,
       title: 'Course Objective 1',
     });
@@ -200,19 +200,19 @@ module('Acceptance | Course - Print Course', function (hooks) {
       school: this.school,
     });
     const term = this.server.create('term', { vocabulary });
-    const sessionObjective = this.server.create('sessionObjective', {
+    const sessionObjective = this.server.create('session-objective', {
       session,
       title: 'Session Objective 1',
       courseObjectives: [courseObjective],
       terms: [term],
     });
 
-    this.server.create('meshDescriptor', {
+    this.server.create('mesh-descriptor', {
       sessionObjectives: [sessionObjective],
       name: 'MeSH Descriptor 1',
     });
 
-    this.server.create('meshDescriptor', {
+    this.server.create('mesh-descriptor', {
       sessionObjectives: [sessionObjective],
       name: 'MeSH Descriptor 2',
     });
@@ -241,7 +241,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
       school: this.school,
       title: 'Competency 1',
     });
-    const programYearObjective = this.server.create('programYearObjective', {
+    const programYearObjective = this.server.create('program-year-objective', {
       competency,
       title: 'Program Year Objective 1',
     });
@@ -249,19 +249,19 @@ module('Acceptance | Course - Print Course', function (hooks) {
       school: this.school,
     });
     const term = this.server.create('term', { vocabulary });
-    const courseObjective = this.server.create('courseObjective', {
+    const courseObjective = this.server.create('course-objective', {
       course: this.course,
       title: 'Course Objective 1',
       programYearObjectives: [programYearObjective],
       terms: [term],
     });
 
-    this.server.create('meshDescriptor', {
+    this.server.create('mesh-descriptor', {
       courseObjectives: [courseObjective],
       name: 'MeSH Descriptor 1',
     });
 
-    this.server.create('meshDescriptor', {
+    this.server.create('mesh-descriptor', {
       courseObjectives: [courseObjective],
       name: 'MeSH Descriptor 2',
     });
@@ -290,7 +290,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
       published: true,
       publishedAsTbd: false,
     });
-    const learningMaterial = this.server.create('learningMaterial', {
+    const learningMaterial = this.server.create('learning-material', {
       title: 'Foo',
       originalAuthor: 'Bar',
       owningUser: this.user,
@@ -299,7 +299,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
       copyrightPermission: true,
       citation: 'lorem ipsum',
     });
-    this.server.create('sessionLearningMaterial', {
+    this.server.create('session-learning-material', {
       learningMaterial,
       session,
       required: false,

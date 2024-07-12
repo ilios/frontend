@@ -27,14 +27,14 @@ module('Acceptance | Instructor Group', function (hooks) {
       course: courses[1],
       sessionType,
     });
-    const instructorGroup1 = this.server.create('instructorGroup', {
+    const instructorGroup1 = this.server.create('instructor-group', {
       school: this.school,
       users: [users[0], users[1]],
     });
-    const instructorGroup2 = this.server.create('instructorGroup', {
+    const instructorGroup2 = this.server.create('instructor-group', {
       school: this.school,
     });
-    this.server.create('instructorGroup', {
+    this.server.create('instructor-group', {
       school: this.school,
     });
     this.server.create('offering', {

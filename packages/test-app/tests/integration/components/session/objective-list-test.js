@@ -17,13 +17,13 @@ module('Integration | Component | session/objective-list', function (hooks) {
     const vocabulary = this.server.create('vocabulary', { school });
     const term1 = this.server.create('term', { vocabulary });
     const term2 = this.server.create('term', { vocabulary });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session,
       title: 'Objective A',
       position: 0,
       terms: [term1],
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session,
       title: 'Objective B',
       position: 0,
@@ -84,7 +84,7 @@ module('Integration | Component | session/objective-list', function (hooks) {
   test('no "sort objectives" button in list with one item', async function (assert) {
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
-    this.server.create('sessionObjective', { session });
+    this.server.create('session-objective', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 

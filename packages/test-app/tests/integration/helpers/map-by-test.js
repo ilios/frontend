@@ -107,7 +107,7 @@ module('Integration | Helper | map-by', function (hooks) {
 
   test('it accepts a fulfilled ember data promise as a value', async function (assert) {
     let store = this.owner.lookup('service:store');
-    let learnerGroup = store.createRecord('learnerGroup');
+    let learnerGroup = store.createRecord('learner-group');
 
     let users = await learnerGroup.users;
     users.push(

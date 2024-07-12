@@ -11,16 +11,16 @@ module('Integration | Component | course/objective-list-item-parents', function 
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const programYearObjective1 = this.server.create('programYearObjective', {
+    const programYearObjective1 = this.server.create('program-year-objective', {
       title: '<p>Country &amp; Western</p>',
     });
-    const programYearObjective2 = this.server.create('programYearObjective');
+    const programYearObjective2 = this.server.create('program-year-objective');
     this.programYearObjective1 = await this.owner
       .lookup('service:store')
-      .findRecord('programYearObjective', programYearObjective1.id);
+      .findRecord('program-year-objective', programYearObjective1.id);
     this.programYearObjective2 = await this.owner
       .lookup('service:store')
-      .findRecord('programYearObjective', programYearObjective2.id);
+      .findRecord('program-year-objective', programYearObjective2.id);
   });
 
   test('it renders and is accessible when managing', async function (assert) {

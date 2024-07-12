@@ -23,7 +23,7 @@ module('Integration | Component | course/visualize-vocabulary', function (hooks)
       course,
       terms: [term2],
     });
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       session: session1,
       hours: 2.5,
     });

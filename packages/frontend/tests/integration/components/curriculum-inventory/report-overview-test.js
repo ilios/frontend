@@ -21,7 +21,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       title: 'Doctor of Rocket Surgery',
       shortTitle: 'DRS',
     });
-    this.report = this.server.create('curriculumInventoryReport', {
+    this.report = this.server.create('curriculum-inventory-report', {
       academicLevels,
       year: currentYear.toString(),
       program: this.program,
@@ -335,7 +335,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
 
   test('academic year unchangeable if course has been linked', async function (assert) {
     const course = this.server.create('course');
-    this.server.create('curriculumInventorySequenceBlock', {
+    this.server.create('curriculum-inventory-sequence-block', {
       course,
       report: this.report,
     });

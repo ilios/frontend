@@ -16,7 +16,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     const vocabulary = this.server.create('vocabulary', { school: this.school });
     const term1 = this.server.create('term', { vocabulary });
     const term2 = this.server.create('term', { vocabulary });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program,
     });
     this.server.create('cohort', {
@@ -45,22 +45,22 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
       programYears: [programYear],
     });
     this.server.createList('competency', 3, { school: this.school });
-    const meshDescriptors = this.server.createList('meshDescriptor', 4);
-    const programYearObjective = this.server.create('programYearObjective', {
+    const meshDescriptors = this.server.createList('mesh-descriptor', 4);
+    const programYearObjective = this.server.create('program-year-objective', {
       programYear,
       competency: competency1,
       meshDescriptors: [meshDescriptors[0], meshDescriptors[1]],
       terms: [term1],
     });
-    this.server.create('programYearObjective', {
+    this.server.create('program-year-objective', {
       programYear,
       competency: competency4,
       active: false,
       terms: [term2],
     });
-    this.server.create('programYearObjective', { programYear });
+    this.server.create('program-year-objective', { programYear });
     const course = this.server.create('course');
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective],
     });

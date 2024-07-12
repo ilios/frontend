@@ -11,16 +11,16 @@ module('Integration | Component | session/objective-list-item-parents', function
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const courseObjective1 = this.server.create('courseObjective', {
+    const courseObjective1 = this.server.create('course-objective', {
       title: '<p>Country &amp; Western</p>',
     });
-    const courseObjective2 = this.server.create('courseObjective');
+    const courseObjective2 = this.server.create('course-objective');
     this.courseObjective1 = await this.owner
       .lookup('service:store')
-      .findRecord('courseObjective', courseObjective1.id);
+      .findRecord('course-objective', courseObjective1.id);
     this.courseObjective2 = await this.owner
       .lookup('service:store')
-      .findRecord('courseObjective', courseObjective2.id);
+      .findRecord('course-objective', courseObjective2.id);
   });
 
   test('it renders and is accessible when managing', async function (assert) {
@@ -152,27 +152,27 @@ module('Integration | Component | session/objective-list-item-parents', function
   });
 
   test('parent objectives are correctly sorted', async function (assert) {
-    const courseObjective1 = this.server.create('courseObjective', {
+    const courseObjective1 = this.server.create('course-objective', {
       title: 'Aardvark',
       position: 3,
     });
-    const courseObjective2 = this.server.create('courseObjective', {
+    const courseObjective2 = this.server.create('course-objective', {
       title: 'Zeppelin',
       position: 2,
     });
-    const courseObjective3 = this.server.create('courseObjective', {
+    const courseObjective3 = this.server.create('course-objective', {
       title: 'Oscar',
       position: 1,
     });
     const model1 = await this.owner
       .lookup('service:store')
-      .findRecord('courseObjective', courseObjective1.id);
+      .findRecord('course-objective', courseObjective1.id);
     const model2 = await this.owner
       .lookup('service:store')
-      .findRecord('courseObjective', courseObjective2.id);
+      .findRecord('course-objective', courseObjective2.id);
     const model3 = await this.owner
       .lookup('service:store')
-      .findRecord('courseObjective', courseObjective3.id);
+      .findRecord('course-objective', courseObjective3.id);
     this.set('parents', [model1, model2, model3]);
     await render(hbs`<Session::ObjectiveListItemParents
       @parents={{this.parents}}

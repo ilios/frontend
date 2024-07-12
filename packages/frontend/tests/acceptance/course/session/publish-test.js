@@ -18,7 +18,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     const school = this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] });
     this.course = this.server.create('course', { school });
-    this.server.create('sessionType');
+    this.server.create('session-type');
     this.publishedSession = this.server.create('session', {
       published: true,
       course: this.course,
@@ -34,7 +34,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     this.ilmSession = this.server.create('session', {
       course: this.course,
     });
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       session: this.ilmSession,
       dueDate: DateTime.now().toJSDate(),
     });

@@ -236,7 +236,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const session = this.server.create('session', {
       course,
     });
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       session,
       instructors: [user],
     });
@@ -320,7 +320,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       administrators: [user],
       studentAdvisors: [user],
     });
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       session,
       instructors: [user],
     });
@@ -430,7 +430,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
       administrators: [user],
       studentAdvisors: [user],
     });
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       session,
       instructors: [user],
     });

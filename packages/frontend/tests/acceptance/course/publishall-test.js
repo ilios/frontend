@@ -14,7 +14,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
   });
 
   test('published sessions do not appear in the cannot publish list #1658', async function (assert) {
-    const meshDescriptor = this.server.create('meshDescriptor');
+    const meshDescriptor = this.server.create('mesh-descriptor');
     const term = this.server.create('term');
 
     const course = this.server.create('course', {
@@ -30,7 +30,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       meshDescriptors: [meshDescriptor],
       terms: [term],
     });
-    this.server.create('sessionObjective', { session: session1 });
+    this.server.create('session-objective', { session: session1 });
     this.server.create('offering', { sessionId: 1 });
     const session2 = this.server.create('session', {
       course,
@@ -39,10 +39,10 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       meshDescriptors: [meshDescriptor],
       terms: [term],
     });
-    this.server.create('sessionObjective', { session: session2 });
+    this.server.create('session-objective', { session: session2 });
 
     this.server.create('offering', { session: session2 });
-    this.server.create('ilmSession', { session: session2 });
+    this.server.create('ilm-session', { session: session2 });
     const session3 = this.server.create('session', {
       course,
       published: true,
@@ -50,7 +50,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       meshDescriptors: [meshDescriptor],
       terms: [term],
     });
-    this.server.create('sessionObjective', { session: session3 });
+    this.server.create('session-objective', { session: session3 });
 
     this.server.create('offering', { session: session3 });
 
@@ -99,7 +99,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
   });
 
   test('After publishing user is returned to the courses route #4099', async function (assert) {
-    const meshDescriptors = this.server.createList('meshDescriptor', 1);
+    const meshDescriptors = this.server.createList('mesh-descriptor', 1);
     const terms = this.server.createList('term', 1);
 
     const course = this.server.create('course', {
@@ -115,8 +115,8 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       meshDescriptors,
       terms,
     });
-    this.server.create('sessionObjective', { session });
-    this.server.create('sessionType', {
+    this.server.create('session-objective', { session });
+    this.server.create('session-type', {
       sessions: [session],
     });
     this.server.create('offering', { session });
@@ -157,7 +157,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       published: false,
       publishedAsTbd: false,
     });
-    this.server.create('sessionType', {
+    this.server.create('session-type', {
       sessions: [session],
     });
     await page.visit({

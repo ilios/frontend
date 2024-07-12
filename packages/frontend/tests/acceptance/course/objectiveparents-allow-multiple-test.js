@@ -24,7 +24,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
       school: this.school,
       programYears: [programYear],
     });
-    const programYearObjectives = this.server.createList('programYearObjective', 3, {
+    const programYearObjectives = this.server.createList('program-year-objective', 3, {
       programYear,
       competency,
     });
@@ -34,7 +34,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
       cohorts: [cohort],
     });
 
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       programYearObjectives: [programYearObjectives[0], programYearObjectives[1]],
       course: this.course,
     });

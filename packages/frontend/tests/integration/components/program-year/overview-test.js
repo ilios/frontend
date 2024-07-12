@@ -13,10 +13,10 @@ module('Integration | Component | program-year/overview', function (hooks) {
 
   test('it renders', async function (assert) {
     const program = this.server.create('program');
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .findRecord('programYear', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('program', programYearModel);
     await render(hbs`<ProgramYear::Overview
       @programYear={{this.programYear}}
@@ -29,10 +29,10 @@ module('Integration | Component | program-year/overview', function (hooks) {
 
   test('visualizations button present', async function (assert) {
     const program = this.server.create('program');
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const programYearModel = await this.owner
       .lookup('service:store')
-      .findRecord('programYear', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('program', programYearModel);
     enableFeature('programYearVisualizations');
     await render(hbs`<ProgramYear::Overview

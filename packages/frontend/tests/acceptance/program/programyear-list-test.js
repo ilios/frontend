@@ -20,22 +20,22 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     const thisYear = new Date().getFullYear();
     const cohorts = this.server.createList('cohort', 4);
-    this.server.create('programYear', {
+    this.server.create('program-year', {
       program: this.program,
       startYear: thisYear,
       cohort: cohorts[0],
     });
-    this.server.create('programYear', {
+    this.server.create('program-year', {
       program: this.program,
       startYear: thisYear - 2,
       cohort: cohorts[1],
     });
-    this.server.create('programYear', {
+    this.server.create('program-year', {
       program: this.program,
       startYear: thisYear - 1,
       cohort: cohorts[2],
     });
-    this.server.create('programYear', {
+    this.server.create('program-year', {
       program: this.program,
       startYear: thisYear - 3,
       cohort: cohorts[3],
@@ -56,7 +56,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('check competencies', async function (assert) {
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program: this.program,
     });
     this.server.createList('competency', 5, {
@@ -69,8 +69,8 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('check objectives', async function (assert) {
-    const programYear = this.server.create('programYear', { program: this.program });
-    this.server.createList('programYearObjective', 5, { programYear });
+    const programYear = this.server.create('program-year', { program: this.program });
+    this.server.createList('program-year-objective', 5, { programYear });
     this.server.create('cohort', { programYear });
     await page.visit({ programId: this.program.id });
     assert.strictEqual(page.programYears.items[0].objectives.text, '5');
@@ -78,7 +78,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('check directors', async function (assert) {
-    const programYear = this.server.create('programYear', { program: this.program });
+    const programYear = this.server.create('program-year', { program: this.program });
     this.server.createList('user', 5, {
       programYears: [programYear],
     });
@@ -92,7 +92,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
     });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program: this.program,
     });
     this.server.createList('term', 5, {
@@ -106,7 +106,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('check warnings', async function (assert) {
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program: this.program,
     });
     this.server.create('cohort', { programYear });
@@ -118,7 +118,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('check link', async function (assert) {
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program: this.program,
     });
     this.server.create('cohort', { programYear });
@@ -129,7 +129,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
 
   test('can delete a program-year', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program: this.program,
     });
     this.server.create('cohort', { programYear });
@@ -174,7 +174,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     const vocabulary = this.server.create('vocabulary', { school: this.school });
     const terms = this.server.createList('term', 3, { vocabulary });
     const currentYear = DateTime.now().year;
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program: this.program,
       startYear: currentYear,
       directors,
@@ -182,9 +182,9 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
       terms,
     });
     this.server.create('cohort', { programYear });
-    this.server.createList('programYearObjective', 2, { programYear });
-    const ancestor = this.server.create('programYearObjective');
-    this.server.create('programYearObjective', { programYear, ancestor });
+    this.server.createList('program-year-objective', 2, { programYear });
+    const ancestor = this.server.create('program-year-objective');
+    this.server.create('program-year-objective', { programYear, ancestor });
     await page.visit({ programId: this.program.id });
     assert.strictEqual(page.programYears.items.length, 1);
     assert.strictEqual(parseInt(page.programYears.items[0].link.text, 10), thisYear);
@@ -212,14 +212,14 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     assert.expect(5);
     this.user.update({ administeredSchools: [this.school] });
     const cohorts = this.server.createList('cohort', 2);
-    this.server.create('programYear', {
+    this.server.create('program-year', {
       program: this.program,
       startYear: 2014,
       cohort: cohorts[0],
       locked: true,
       directorIds: [this.user.id],
     });
-    this.server.create('programYear', {
+    this.server.create('program-year', {
       program: this.program,
       startYear: 2015,
       cohort: cohorts[1],

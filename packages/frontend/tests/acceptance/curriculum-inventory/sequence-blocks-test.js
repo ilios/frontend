@@ -46,7 +46,7 @@ module('Acceptance | curriculum inventory sequence blocks', function (hooks) {
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .findRecord('curriculumInventoryReport', this.report.id);
+      .findRecord('curriculum-inventory-report', this.report.id);
     await page.visit({ reportId: reportModel.id });
     assert.strictEqual(page.blocks.list.items.length, 2);
     await page.blocks.list.items[0].remove();

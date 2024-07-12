@@ -13,7 +13,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    this.programYear = this.server.create('programYear', { program });
+    this.programYear = this.server.create('program-year', { program });
     this.cohort = this.server.create('cohort', { programYear: this.programYear });
 
     const user = this.server.create('user', { school });

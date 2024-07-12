@@ -13,23 +13,23 @@ module('Integration | Component | course/objectives', function (hooks) {
   test('it renders and is accessible with a single cohort', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });
     const competencies = this.server.createList('competency', 2);
     const course = this.server.create('course', { cohorts: [cohort] });
-    const pyObjectives = this.server.createList('programYearObjective', 3, {
+    const pyObjectives = this.server.createList('program-year-objective', 3, {
       programYear,
       competency: competencies[0],
     });
-    this.server.createList('programYearObjective', 2, {
+    this.server.createList('program-year-objective', 2, {
       programYear,
       competency: competencies[1],
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [pyObjectives[0]],
     });
-    this.server.create('courseObjective', { course });
+    this.server.create('course-objective', { course });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
@@ -67,19 +67,19 @@ module('Integration | Component | course/objectives', function (hooks) {
   test('it loads data for a single cohort', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });
     const competencies = this.server.createList('competency', 2);
     const course = this.server.create('course', { cohorts: [cohort] });
-    const pyObjectives = this.server.createList('programYearObjective', 3, {
+    const pyObjectives = this.server.createList('program-year-objective', 3, {
       programYear,
       competency: competencies[0],
     });
-    this.server.createList('programYearObjective', 2, {
+    this.server.createList('program-year-objective', 2, {
       programYear,
       competency: competencies[1],
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [pyObjectives[0]],
     });
@@ -133,30 +133,30 @@ module('Integration | Component | course/objectives', function (hooks) {
   test('it loads data for multiple cohorts', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear1 = this.server.create('programYear', { program });
+    const programYear1 = this.server.create('program-year', { program });
     const cohort1 = this.server.create('cohort', { programYear: programYear1 });
-    const programYear2 = this.server.create('programYear', { program });
+    const programYear2 = this.server.create('program-year', { program });
     const cohort2 = this.server.create('cohort', { programYear: programYear2 });
     const competencies = this.server.createList('competency', 2);
     const course = this.server.create('course', {
       cohorts: [cohort1, cohort2],
     });
-    const pyObjectives1 = this.server.createList('programYearObjective', 2, {
+    const pyObjectives1 = this.server.createList('program-year-objective', 2, {
       competency: competencies[0],
       programYear: programYear1,
     });
-    this.server.createList('programYearObjective', 2, {
+    this.server.createList('program-year-objective', 2, {
       competency: competencies[1],
       programYear: programYear2,
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [pyObjectives1[0]],
     });
-    this.server.createList('programYearObjective', 2, {
+    this.server.createList('program-year-objective', 2, {
       competency: competencies[0],
     });
-    this.server.createList('programYearObjective', 4, {
+    this.server.createList('program-year-objective', 4, {
       competency: competencies[1],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -210,7 +210,7 @@ module('Integration | Component | course/objectives', function (hooks) {
 
   test('deleting objective', async function (assert) {
     const course = this.server.create('course');
-    this.server.create('courseObjective', { course });
+    this.server.create('course-objective', { course });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);

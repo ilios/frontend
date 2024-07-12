@@ -10,8 +10,8 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.server.create('academicYear', { id: 2027 });
-    this.server.create('academicYear', { id: 2006 });
+    this.server.create('academic-year', { id: 2027 });
+    this.server.create('academic-year', { id: 2006 });
     const [school1, school2] = this.server.createList('school', 2);
 
     const course1 = this.server.create('course', {

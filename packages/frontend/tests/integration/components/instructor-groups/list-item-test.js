@@ -19,7 +19,7 @@ module('Integration | Component | instructor-groups/list-item', function (hooks)
     };
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
     this.school = this.server.create('school');
-    this.instructorGroup = this.server.create('instructorGroup', {
+    this.instructorGroup = this.server.create('instructor-group', {
       school: this.school,
       users: this.server.createList('user', 3),
     });

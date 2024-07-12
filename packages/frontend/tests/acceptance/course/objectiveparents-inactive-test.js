@@ -13,7 +13,7 @@ module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
 
   test('inactive program year objectives are hidden unless they are selected', async function (assert) {
     const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', {
       programYear,
     });

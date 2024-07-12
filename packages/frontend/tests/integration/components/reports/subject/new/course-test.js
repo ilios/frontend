@@ -10,8 +10,8 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.server.create('academicYear', { id: 2022 });
-    this.server.create('academicYear', { id: 2015 });
+    this.server.create('academic-year', { id: 2022 });
+    this.server.create('academic-year', { id: 2015 });
     const [school1, school2] = this.server.createList('school', 2);
     this.server.createList('course', 2, { school: school1, year: 2015 });
     this.server.createList('course', 3, { school: school2, year: 2022 });

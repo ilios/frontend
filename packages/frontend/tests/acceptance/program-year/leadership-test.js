@@ -17,7 +17,7 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
     const program = this.server.create('program', {
       school: this.school,
     });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program,
       directors: [users[2], users[3]],
     });

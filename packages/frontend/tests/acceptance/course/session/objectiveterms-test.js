@@ -9,9 +9,9 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     const school = this.server.create('school');
-    this.server.create('academicYear', { id: 2013 });
+    this.server.create('academic-year', { id: 2013 });
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     this.server.create('cohort', { programYear });
     const vocabulary = this.server.create('vocabulary', {
       school,
@@ -21,7 +21,7 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
     this.server.createList('term', 3, { vocabulary, active: true });
     const course = this.server.create('course', { school });
     const session = this.server.create('session', { course });
-    this.server.create('sessionObjective', { session, terms: [term] });
+    this.server.create('session-objective', { session, terms: [term] });
     this.school = school;
   });
 

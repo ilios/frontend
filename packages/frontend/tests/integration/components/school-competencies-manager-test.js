@@ -10,7 +10,7 @@ module('Integration | Component | school competencies manager', function (hooks)
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    const programYearObjectives = this.server.createList('programYearObjective', 3);
+    const programYearObjectives = this.server.createList('program-year-objective', 3);
     const competency1 = this.server.create('competency', {
       title: 'competency1',
       programYearObjectives,

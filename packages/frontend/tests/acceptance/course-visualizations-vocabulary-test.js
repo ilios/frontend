@@ -20,7 +20,7 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
     const term3 = this.server.create('term', {
       vocabulary: this.vocabulary,
     });
-    const sessionType = this.server.create('sessionType');
+    const sessionType = this.server.create('session-type');
     const session1 = this.server.create('session', {
       sessionType,
       terms: [term1],
@@ -33,7 +33,7 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
       sessionType,
       terms: [term3],
     });
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       session: session3,
       hours: 2,
     });

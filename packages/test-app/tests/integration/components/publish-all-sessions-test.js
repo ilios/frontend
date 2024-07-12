@@ -10,13 +10,13 @@ module('Integration | Component | publish all sessions', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const programYearObjective = this.server.create('programYearObjective');
+    const programYearObjective = this.server.create('program-year-objective');
     const term = this.server.create('term');
-    const meshDescriptor = this.server.create('meshDescriptor');
-    const linkedCourseObjective = this.server.create('courseObjective', {
+    const meshDescriptor = this.server.create('mesh-descriptor');
+    const linkedCourseObjective = this.server.create('course-objective', {
       programYearObjectives: [programYearObjective],
     });
-    const unlinkedCourseObjective = this.server.create('courseObjective');
+    const unlinkedCourseObjective = this.server.create('course-objective');
     const unpublishableSession = this.server.create('session', {
       title: 'session 1',
       published: false,
@@ -38,11 +38,11 @@ module('Integration | Component | publish all sessions', function (hooks) {
       title: 'session 4',
       published: true,
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: completeSession,
       courseObjectives: [linkedCourseObjective],
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: fullyPublishedByIncompleteSession,
     });
     this.server.create('offering', { session: publishableSession });
@@ -50,7 +50,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
     this.server.create('offering', {
       session: fullyPublishedByIncompleteSession,
     });
-    this.server.create('sessionObjective', { session: completeSession });
+    this.server.create('session-objective', { session: completeSession });
     const course = this.server.create('course', {
       courseObjectives: [linkedCourseObjective, unlinkedCourseObjective],
       sessions: [

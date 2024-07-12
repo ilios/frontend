@@ -11,9 +11,9 @@ module('Integration | Component | school competencies list', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    const pcrs1 = this.server.create('aamcPcrs');
-    const pcrs2 = this.server.create('aamcPcrs');
-    const pcrs3 = this.server.create('aamcPcrs');
+    const pcrs1 = this.server.create('aamc-pcrs');
+    const pcrs2 = this.server.create('aamc-pcrs');
+    const pcrs3 = this.server.create('aamc-pcrs');
     const domain = this.server.create('competency', { title: 'domain 0' });
     this.server.create('competency', {
       title: 'competency 0',

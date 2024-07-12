@@ -9,10 +9,10 @@ module('Unit | Model | CurriculumInventorySequenceBlock ', function (hooks) {
       .lookup('service:store')
       .createRecord('curriculum-inventory-sequence-block');
     const store = this.owner.lookup('service:store');
-    const parentBlock = store.createRecord('curriculumInventorySequenceBlock', {
+    const parentBlock = store.createRecord('curriculum-inventory-sequence-block', {
       children: [model],
     });
-    const grandParent = store.createRecord('curriculumInventorySequenceBlock', {
+    const grandParent = store.createRecord('curriculum-inventory-sequence-block', {
       children: [parentBlock],
     });
     parentBlock.set('parent', grandParent);

@@ -19,14 +19,14 @@ module('Acceptance | Session - Offerings', function (hooks) {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
     const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });
     const course = this.server.create('course', {
       cohorts: [cohort],
       school: this.school,
       directors: [this.user],
     });
-    this.server.create('sessionType', {
+    this.server.create('session-type', {
       school: this.school,
     });
     const users = this.server.createList('user', 8);
@@ -661,18 +661,18 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
   test('edit offerings twice #2850', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    this.server.create('learnerGroup', {
+    this.server.create('learner-group', {
       cohortId: 1,
     });
-    this.server.create('learnerGroup', {
+    this.server.create('learner-group', {
       cohortId: 1,
       parentId: 3,
     });
-    this.server.create('learnerGroup', {
+    this.server.create('learner-group', {
       cohortId: 1,
       parentId: 4,
     });
-    this.server.create('learnerGroup', {
+    this.server.create('learner-group', {
       cohortId: 1,
       parentId: 5,
     });

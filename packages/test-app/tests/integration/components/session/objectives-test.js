@@ -12,11 +12,11 @@ module('Integration | Component | session/objectives', function (hooks) {
 
   test('it renders and is accessible', async function (assert) {
     const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjective = this.server.create('course-objective', { course });
     const session = this.server.create('session', { course });
-    this.server.create('sessionObjective', { session });
-    this.server.create('sessionObjective', { session });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', { session });
+    this.server.create('session-objective', { session });
+    this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective],
     });
@@ -64,7 +64,7 @@ module('Integration | Component | session/objectives', function (hooks) {
   test('deleting objective', async function (assert) {
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
-    this.server.create('sessionObjective', { session });
+    this.server.create('session-objective', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);

@@ -33,7 +33,7 @@ export default class SequenceBlockListComponent extends Component {
     // therefore, we must reload them here in order to get those updated sort order values.
     // [ST 2021/03/16]
     if (this.args.parent) {
-      await this.store.findRecord('curriculum_inventory_sequence_block', this.args.parent.id, {
+      await this.store.findRecord('curriculum-inventory-sequence-block', this.args.parent.id, {
         include: 'children',
         reload: true,
       });

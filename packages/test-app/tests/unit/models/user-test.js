@@ -207,7 +207,7 @@ module('Unit | Model | User', function (hooks) {
     const offering2 = store.createRecord('offering', {
       session: session1,
     });
-    store.createRecord('learnerGroup', {
+    store.createRecord('learner-group', {
       offerings: [offering1, offering2],
       users: [model],
     });
@@ -218,7 +218,7 @@ module('Unit | Model | User', function (hooks) {
     const offering3 = store.createRecord('offering', {
       session: session2,
     });
-    store.createRecord('learnerGroup', {
+    store.createRecord('learner-group', {
       offerings: [offering3],
       users: [model],
     });
@@ -245,7 +245,7 @@ module('Unit | Model | User', function (hooks) {
     const offering2 = store.createRecord('offering', {
       session: session1,
     });
-    store.createRecord('instructorGroup', {
+    store.createRecord('instructor-group', {
       offerings: [offering1, offering2],
       users: [model],
     });
@@ -256,7 +256,7 @@ module('Unit | Model | User', function (hooks) {
     const offering3 = store.createRecord('offering', {
       session: session2,
     });
-    store.createRecord('instructorGroup', {
+    store.createRecord('instructor-group', {
       offerings: [offering3],
       users: [model],
     });
@@ -346,13 +346,13 @@ module('Unit | Model | User', function (hooks) {
     const session2 = store.createRecord('session', {
       course: course1,
     });
-    const ilm1 = store.createRecord('ilmSession', {
+    const ilm1 = store.createRecord('ilm-session', {
       session: session1,
     });
-    const ilm2 = store.createRecord('ilmSession', {
+    const ilm2 = store.createRecord('ilm-session', {
       session: session2,
     });
-    store.createRecord('learnerGroup', {
+    store.createRecord('learner-group', {
       ilmSessions: [ilm1, ilm2],
       users: [model],
     });
@@ -360,10 +360,10 @@ module('Unit | Model | User', function (hooks) {
     const session3 = store.createRecord('session', {
       course: course2,
     });
-    const ilm3 = store.createRecord('ilmSession', {
+    const ilm3 = store.createRecord('ilm-session', {
       session: session3,
     });
-    store.createRecord('learnerGroup', {
+    store.createRecord('learner-group', {
       ilmSessions: [ilm3],
       users: [model],
     });
@@ -387,15 +387,15 @@ module('Unit | Model | User', function (hooks) {
     const session2 = store.createRecord('session', {
       course: course1,
     });
-    const ilm1 = store.createRecord('ilmSession', {
+    const ilm1 = store.createRecord('ilm-session', {
       id: 1,
       session: session1,
     });
-    const ilm2 = store.createRecord('ilmSession', {
+    const ilm2 = store.createRecord('ilm-session', {
       id: 2,
       session: session2,
     });
-    store.createRecord('instructorGroup', {
+    store.createRecord('instructor-group', {
       ilmSessions: [ilm1, ilm2],
       users: [model],
     });
@@ -403,11 +403,11 @@ module('Unit | Model | User', function (hooks) {
     const session3 = store.createRecord('session', {
       course: course2,
     });
-    const ilm3 = store.createRecord('ilmSession', {
+    const ilm3 = store.createRecord('ilm-session', {
       id: 3,
       session: session3,
     });
-    store.createRecord('instructorGroup', {
+    store.createRecord('instructor-group', {
       ilmSessions: [ilm3],
       users: [model],
     });
@@ -428,7 +428,7 @@ module('Unit | Model | User', function (hooks) {
     const session1 = store.createRecord('session', {
       course: course1,
     });
-    store.createRecord('ilmSession', {
+    store.createRecord('ilm-session', {
       session: session1,
       learners: [model],
     });
@@ -436,7 +436,7 @@ module('Unit | Model | User', function (hooks) {
     const session2 = store.createRecord('session', {
       course: course2,
     });
-    store.createRecord('ilmSession', {
+    store.createRecord('ilm-session', {
       session: session2,
       learners: [model],
     });
@@ -532,7 +532,7 @@ module('Unit | Model | User', function (hooks) {
   test('performsNonLearnerFunction - instructedIlmSessions', async function (assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
-    store.createRecord('ilmSession', { instructors: [model] });
+    store.createRecord('ilm-session', { instructors: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
@@ -611,7 +611,7 @@ module('Unit | Model | User', function (hooks) {
     const session1 = store.createRecord('session', {
       course: course1,
     });
-    store.createRecord('ilmSession', {
+    store.createRecord('ilm-session', {
       session: session1,
       instructors: [model],
     });
@@ -619,7 +619,7 @@ module('Unit | Model | User', function (hooks) {
     const session2 = store.createRecord('session', {
       course: course2,
     });
-    store.createRecord('ilmSession', {
+    store.createRecord('ilm-session', {
       session: session2,
       instructors: [model],
     });
@@ -635,15 +635,15 @@ module('Unit | Model | User', function (hooks) {
   test('find lowest group at top of tree', async function (assert) {
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learnerGroup', {
+    const learnerGroup = store.createRecord('learner-group', {
       id: 1,
       users: [model],
     });
-    const learnerGroup2 = store.createRecord('learnerGroup', {
+    const learnerGroup2 = store.createRecord('learner-group', {
       id: 2,
       parent: learnerGroup,
     });
-    const learnerGroup3 = store.createRecord('learnerGroup', {
+    const learnerGroup3 = store.createRecord('learner-group', {
       id: 3,
       parent: learnerGroup2,
     });
@@ -659,16 +659,16 @@ module('Unit | Model | User', function (hooks) {
   test('find lowest group in middle of tree', async function (assert) {
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learnerGroup', {
+    const learnerGroup = store.createRecord('learner-group', {
       id: 1,
       users: [model],
     });
-    const learnerGroup2 = store.createRecord('learnerGroup', {
+    const learnerGroup2 = store.createRecord('learner-group', {
       id: 2,
       parent: learnerGroup,
       users: [model],
     });
-    const learnerGroup3 = store.createRecord('learnerGroup', {
+    const learnerGroup3 = store.createRecord('learner-group', {
       id: 3,
       parent: learnerGroup2,
     });
@@ -684,16 +684,16 @@ module('Unit | Model | User', function (hooks) {
   test('find lowest group in bottom of tree', async function (assert) {
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learnerGroup', {
+    const learnerGroup = store.createRecord('learner-group', {
       id: 1,
       users: [model],
     });
-    const learnerGroup2 = store.createRecord('learnerGroup', {
+    const learnerGroup2 = store.createRecord('learner-group', {
       id: 2,
       parent: learnerGroup,
       users: [model],
     });
-    const learnerGroup3 = store.createRecord('learnerGroup', {
+    const learnerGroup3 = store.createRecord('learner-group', {
       id: 3,
       parent: learnerGroup2,
       users: [model],
@@ -710,12 +710,12 @@ module('Unit | Model | User', function (hooks) {
   test('return null when there is no group in the tree', async function (assert) {
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learnerGroup');
-    const learnerGroup2 = store.createRecord('learnerGroup', {
+    const learnerGroup = store.createRecord('learner-group');
+    const learnerGroup2 = store.createRecord('learner-group', {
       id: 2,
       parent: learnerGroup,
     });
-    const learnerGroup3 = store.createRecord('learnerGroup', {
+    const learnerGroup3 = store.createRecord('learner-group', {
       id: 3,
       parent: learnerGroup2,
     });
@@ -769,7 +769,7 @@ module('Unit | Model | User', function (hooks) {
 
     const course3 = store.createRecord('course');
     const session3 = store.createRecord('session', { course: course3 });
-    store.createRecord('ilmSession', {
+    store.createRecord('ilm-session', {
       session: session3,
       instructors: [model],
     });
@@ -779,7 +779,7 @@ module('Unit | Model | User', function (hooks) {
     });
     const course4 = store.createRecord('course');
     const session4 = store.createRecord('session', { course: course4 });
-    store.createRecord('ilmSession', {
+    store.createRecord('ilm-session', {
       session: session4,
       instructorGroups: [instructorGroup2],
     });
@@ -811,7 +811,7 @@ module('Unit | Model | User', function (hooks) {
     });
 
     const session3 = store.createRecord('session');
-    store.createRecord('ilmSession', {
+    store.createRecord('ilm-session', {
       session: session3,
       instructors: [model],
     });
@@ -820,7 +820,7 @@ module('Unit | Model | User', function (hooks) {
       users: [model],
     });
     const session4 = store.createRecord('session');
-    store.createRecord('ilmSession', {
+    store.createRecord('ilm-session', {
       session: session4,
       instructorGroups: [instructorGroup2],
     });

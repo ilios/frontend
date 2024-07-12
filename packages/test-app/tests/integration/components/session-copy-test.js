@@ -110,9 +110,9 @@ module('Integration | Component | session copy', function (hooks) {
       learningMaterials: [sessionLearningMaterial],
     });
 
-    const courseObjective = this.server.create('courseObjective');
+    const courseObjective = this.server.create('course-objective');
     const objectiveTerm = this.server.create('term');
-    const sessionObjective = this.server.create('sessionObjective', {
+    const sessionObjective = this.server.create('session-objective', {
       session,
       title: 'session objective title',
       courseObjectives: [courseObjective],

@@ -144,21 +144,21 @@ module('Acceptance | Session - Offering Management', function (hooks) {
   test('Learner Group parents are shown in tooltip if applicable', async function (assert) {
     const course = this.server.create('course', { school: this.school });
     const session = this.server.create('session', { course });
-    const learnerGroup = this.server.create('learnerGroup', {
+    const learnerGroup = this.server.create('learner-group', {
       title: 'Top Group',
     });
-    const learnerGroup2 = this.server.create('learnerGroup', {
+    const learnerGroup2 = this.server.create('learner-group', {
       title: 'Other Top Group',
     });
-    const subLearnerGroup = this.server.create('learnerGroup', {
+    const subLearnerGroup = this.server.create('learner-group', {
       parent: learnerGroup,
       title: 'Sub-Group',
     });
-    const subSubLearnerGroup = this.server.create('learnerGroup', {
+    const subSubLearnerGroup = this.server.create('learner-group', {
       parent: subLearnerGroup,
       title: 'Sub-sub Group',
     });
-    const subLearnerGroup2 = this.server.create('learnerGroup', {
+    const subLearnerGroup2 = this.server.create('learner-group', {
       parent: learnerGroup,
       title: 'Sub-Group 2',
     });
@@ -232,16 +232,16 @@ module('Acceptance | Session - Offering Management', function (hooks) {
   test('Offerings are sorted by first learner group name', async function (assert) {
     const course = this.server.create('course', { school: this.school });
     const session = this.server.create('session', { course });
-    const learnerGroup = this.server.create('learnerGroup', {
+    const learnerGroup = this.server.create('learner-group', {
       title: 'Alpha',
     });
-    const learnerGroup2 = this.server.create('learnerGroup', {
+    const learnerGroup2 = this.server.create('learner-group', {
       title: 'Beta',
     });
-    const learnerGroup3 = this.server.create('learnerGroup', {
+    const learnerGroup3 = this.server.create('learner-group', {
       title: 'Gamma',
     });
-    const learnerGroup4 = this.server.create('learnerGroup', {
+    const learnerGroup4 = this.server.create('learner-group', {
       title: 'Delta',
     });
     this.server.create('offering', {

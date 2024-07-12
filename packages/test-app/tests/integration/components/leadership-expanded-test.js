@@ -330,13 +330,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         lastName: 'person',
       });
       const program = this.server.create('program');
-      const programYear = this.server.create('programYear', {
+      const programYear = this.server.create('program-year', {
         directors: [user1, user2],
         program,
       });
       const programYearModel = await this.owner
         .lookup('service:store')
-        .findRecord('programYear', programYear.id);
+        .findRecord('program-year', programYear.id);
       this.set('programYear', programYearModel);
       await render(hbs`<LeadershipExpanded
       @model={{this.programYear}}
@@ -355,12 +355,12 @@ module('Integration | Component | leadership expanded', function (hooks) {
     test('clicking the header collapses', async function (assert) {
       assert.expect(1);
       const program = this.server.create('program');
-      const programYear = this.server.create('programYear', {
+      const programYear = this.server.create('program-year', {
         program,
       });
       const programYearModel = await this.owner
         .lookup('service:store')
-        .findRecord('programYear', programYear.id);
+        .findRecord('program-year', programYear.id);
       this.set('programYear', programYearModel);
       this.set('click', () => {
         assert.ok(true, 'Action was fired');
@@ -379,12 +379,12 @@ module('Integration | Component | leadership expanded', function (hooks) {
     test('clicking manage fires action', async function (assert) {
       assert.expect(1);
       const program = this.server.create('program');
-      const programYear = this.server.create('programYear', {
+      const programYear = this.server.create('program-year', {
         program,
       });
       const programYearModel = await this.owner
         .lookup('service:store')
-        .findRecord('programYear', programYear.id);
+        .findRecord('program-year', programYear.id);
       this.set('programYear', programYearModel);
       this.set('click', () => {
         assert.ok(true, 'Action was fired');

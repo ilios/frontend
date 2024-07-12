@@ -37,7 +37,7 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
   save = dropTask(
     async (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
       this.args.setSchoolNewSessionType(null);
-      const sessionType = this.store.createRecord('sessionType');
+      const sessionType = this.store.createRecord('session-type');
       const aamcMethods = aamcMethod ? [aamcMethod] : [];
       sessionType.setProperties({
         school: this.args.school,

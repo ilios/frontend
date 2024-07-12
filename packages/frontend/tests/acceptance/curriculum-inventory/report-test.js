@@ -15,11 +15,11 @@ module('Acceptance | curriculum inventory report', function (hooks) {
   test('create new sequence block Issue #2108', async function (assert) {
     this.user.update({ directedSchools: [this.school] });
     const program = this.server.create('program', { school: this.school });
-    const report = this.server.create('curriculumInventoryReport', { program });
+    const report = this.server.create('curriculum-inventory-report', { program });
     this.server.create('curriculumInventorySequence', { report });
     const reportModel = await this.owner
       .lookup('service:store')
-      .findRecord('curriculumInventoryReport', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     await page.visit({ reportId: reportModel.id });
     assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.index');
     assert.notOk(page.blocks.newBlock.form.isVisible);
@@ -32,7 +32,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    const report = this.server.create('curriculumInventoryReport', {
+    const report = this.server.create('curriculum-inventory-report', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
@@ -40,7 +40,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .findRecord('curriculumInventoryReport', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     await page.visit({ reportId: reportModel.id });
     assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.index');
     assert.notOk(page.details.overview.rolloverLink.isVisible);
@@ -52,7 +52,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    const report = this.server.create('curriculumInventoryReport', {
+    const report = this.server.create('curriculum-inventory-report', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
@@ -60,7 +60,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .findRecord('curriculumInventoryReport', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     await page.visit({ reportId: reportModel.id });
     assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.index');
     assert.ok(page.details.overview.rolloverLink.isVisible);
@@ -72,18 +72,18 @@ module('Acceptance | curriculum inventory report', function (hooks) {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    const report = this.server.create('curriculumInventoryReport', {
+    const report = this.server.create('curriculum-inventory-report', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
       program,
     });
-    this.server.create('curriculumInventorySequenceBlock', {
+    this.server.create('curriculum-inventory-sequence-block', {
       report,
     });
     const reportModel = await this.owner
       .lookup('service:store')
-      .findRecord('curriculumInventoryReport', report.id);
+      .findRecord('curriculum-inventory-report', report.id);
     await page.visit({ reportId: reportModel.id });
     assert.ok(page.details.overview.rolloverLink.isVisible);
     assert.strictEqual(page.blocks.list.items.length, 1);

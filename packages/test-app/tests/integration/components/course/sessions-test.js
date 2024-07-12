@@ -44,7 +44,7 @@ module('Integration | Component | course/sessions', function (hooks) {
   test('expand/collapse all session not visible if no session with offerings in list', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const sessionType = this.server.create('sessionType', { school });
+    const sessionType = this.server.create('session-type', { school });
     this.server.createList('session', 2, { course, sessionType });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
@@ -64,7 +64,7 @@ module('Integration | Component | course/sessions', function (hooks) {
   test('expand/collapse all session is visible if at least one session in list has offerings', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const sessionType = this.server.create('sessionType', { school });
+    const sessionType = this.server.create('session-type', { school });
     const sessions = this.server.createList('session', 2, { course, sessionType });
     this.server.create('offering', {
       session: sessions[0],

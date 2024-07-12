@@ -14,7 +14,7 @@ module('Integration | Component | program-year/competencies', function (hooks) {
     const program = this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     this.server.create('cohort', { programYear });
     const domain = this.server.create('competency', { school });
     this.server.createList('competency', 2, {

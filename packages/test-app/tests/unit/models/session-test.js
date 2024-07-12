@@ -21,7 +21,7 @@ module('Unit | Model | Session', function (hooks) {
     const store = this.owner.lookup('service:store');
     model.set('title', 'nothing');
     assert.strictEqual(model.get('requiredPublicationIssues').length, 1);
-    const ilmSession = store.createRecord('ilmSession');
+    const ilmSession = store.createRecord('ilm-session');
     model.set('ilmSession', ilmSession);
     assert.strictEqual(model.get('requiredPublicationIssues').length, 1);
   });
@@ -41,7 +41,7 @@ module('Unit | Model | Session', function (hooks) {
     (await model.sessionObjectives).push(store.createRecord('session-objective'));
     assert.strictEqual(model.optionalPublicationIssues.length, 1);
     assert.deepEqual(model.optionalPublicationIssues, ['meshDescriptors']);
-    (await model.meshDescriptors).push(store.createRecord('meshDescriptor'));
+    (await model.meshDescriptors).push(store.createRecord('mesh-descriptor'));
     assert.strictEqual(model.optionalPublicationIssues.length, 0);
   });
 
@@ -211,7 +211,7 @@ module('Unit | Model | Session', function (hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('session');
     assert.notOk(model.get('isIndependentLearning'));
-    await store.createRecord('ilmSession', { id: 1, session: model });
+    await store.createRecord('ilm-session', { id: 1, session: model });
     assert.ok(await waitForResource(model, 'isIndependentLearning'));
   });
 
@@ -349,7 +349,7 @@ module('Unit | Model | Session', function (hooks) {
   test('firstOfferingDate - ILM', async function (assert) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
-    const ilm = store.createRecord('ilmSession', {
+    const ilm = store.createRecord('ilm-session', {
       dueDate: DateTime.fromObject({ year: 2015, month: 1, day: 1 }).toJSDate(),
     });
     subject.set('ilmSession', ilm);
@@ -421,7 +421,7 @@ module('Unit | Model | Session', function (hooks) {
       }).toJSDate(),
     });
     (await subject.offerings).push(allDayOffering, halfAnHourOffering);
-    const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
+    const ilmSession = store.createRecord('ilm-session', { hours: 2.1 });
     subject.set('ilmSession', ilmSession);
 
     const max = await waitForResource(subject, 'maxDuration');
@@ -464,7 +464,7 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
-    const ilmSession = store.createRecord('ilmSession', { hours: 2 });
+    const ilmSession = store.createRecord('ilm-session', { hours: 2 });
     subject.set('ilmSession', ilmSession);
 
     const max = await waitForResource(subject, 'maxDuration');
@@ -500,7 +500,7 @@ module('Unit | Model | Session', function (hooks) {
       }).toJSDate(),
     });
     (await subject.offerings).push(allDayOffering, halfAnHourOffering);
-    const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
+    const ilmSession = store.createRecord('ilm-session', { hours: 2.1 });
     subject.set('ilmSession', ilmSession);
 
     const total = await waitForResource(subject, 'totalSumDuration');
@@ -543,7 +543,7 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
-    const ilmSession = store.createRecord('ilmSession', { hours: 2 });
+    const ilmSession = store.createRecord('ilm-session', { hours: 2 });
     subject.set('ilmSession', ilmSession);
 
     const total = await waitForResource(subject, 'totalSumDuration');
@@ -555,7 +555,7 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
 
     const offering = store.createRecord('offering');
-    const instructorGroup = store.createRecord('instructorGroup', {
+    const instructorGroup = store.createRecord('instructor-group', {
       offerings: [offering],
     });
     const user1 = store.createRecord('user', {
@@ -576,8 +576,8 @@ module('Unit | Model | Session', function (hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
-    const ilmSession = store.createRecord('ilmSession', { id: 24 });
-    const instructorGroup = store.createRecord('instructorGroup', {
+    const ilmSession = store.createRecord('ilm-session', { id: 24 });
+    const instructorGroup = store.createRecord('instructor-group', {
       ilmSessions: [ilmSession],
     });
     const user1 = store.createRecord('user', {
@@ -660,16 +660,16 @@ module('Unit | Model | Session', function (hooks) {
     const instructor7 = store.createRecord('user');
     const instructor8 = store.createRecord('user');
     const instructor9 = store.createRecord('user');
-    const instructorGroup1 = store.createRecord('instructorGroup', {
+    const instructorGroup1 = store.createRecord('instructor-group', {
       users: [instructor1, instructor2],
     });
-    const instructorGroup2 = store.createRecord('instructorGroup', {
+    const instructorGroup2 = store.createRecord('instructor-group', {
       users: [instructor3],
     });
-    const instructorGroup3 = store.createRecord('instructorGroup', {
+    const instructorGroup3 = store.createRecord('instructor-group', {
       users: [instructor4, instructor5],
     });
-    const ilmSession = store.createRecord('ilmSession', {
+    const ilmSession = store.createRecord('ilm-session', {
       instructorGroups: [instructorGroup1],
       instructors: [instructor6, instructor1],
     });
@@ -728,7 +728,7 @@ module('Unit | Model | Session', function (hooks) {
       }).toJSDate(),
     });
     (await subject.offerings).push(allDayOffering, halfAnHourOffering);
-    const ilmSession = store.createRecord('ilmSession', { hours: 2.1 });
+    const ilmSession = store.createRecord('ilm-session', { hours: 2.1 });
     subject.set('ilmSession', ilmSession);
 
     const total = await subject.getTotalSumDuration();
@@ -771,7 +771,7 @@ module('Unit | Model | Session', function (hooks) {
     const store = this.owner.lookup('service:store');
     const subject = store.createRecord('session');
 
-    const ilmSession = store.createRecord('ilmSession', { hours: 2 });
+    const ilmSession = store.createRecord('ilm-session', { hours: 2 });
     subject.set('ilmSession', ilmSession);
 
     const total = await subject.getTotalSumDuration();
@@ -783,10 +783,10 @@ module('Unit | Model | Session', function (hooks) {
     const instructor1 = store.createRecord('user', { id: 1 });
     const instructor2 = store.createRecord('user', { id: 2 });
     const instructor3 = store.createRecord('user', { id: 3 });
-    const instructorGroup1 = store.createRecord('instructorGroup', {
+    const instructorGroup1 = store.createRecord('instructor-group', {
       users: [instructor1],
     });
-    const ilmSession = store.createRecord('ilmSession', {
+    const ilmSession = store.createRecord('ilm-session', {
       hours: 1.5,
       instructorGroups: [instructorGroup1],
       instructors: [instructor2],
@@ -846,7 +846,7 @@ module('Unit | Model | Session', function (hooks) {
     const instructor1 = store.createRecord('user', { id: 1 });
     const instructor2 = store.createRecord('user', { id: 2 });
     const instructor3 = store.createRecord('user', { id: 3 });
-    const instructorGroup1 = store.createRecord('instructorGroup', {
+    const instructorGroup1 = store.createRecord('instructor-group', {
       users: [instructor1],
     });
     const offering1 = store.createRecord('offering', {
@@ -903,10 +903,10 @@ module('Unit | Model | Session', function (hooks) {
     const instructor1 = store.createRecord('user', { id: 1 });
     const instructor2 = store.createRecord('user', { id: 2 });
     const instructor3 = store.createRecord('user', { id: 3 });
-    const instructorGroup1 = store.createRecord('instructorGroup', {
+    const instructorGroup1 = store.createRecord('instructor-group', {
       users: [instructor1],
     });
-    const ilmSession = store.createRecord('ilmSession', {
+    const ilmSession = store.createRecord('ilm-session', {
       hours: 1.5,
       instructorGroups: [instructorGroup1],
       instructors: [instructor2],
@@ -936,8 +936,8 @@ module('Unit | Model | Session', function (hooks) {
     const session = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
     assert.strictEqual(session.objectiveCount, 0);
-    const sessionObjective1 = store.createRecord('sessionObjective', { id: 1, session });
-    const sessionObjective2 = store.createRecord('sessionObjective', { id: 2, session });
+    const sessionObjective1 = store.createRecord('session-objective', { id: 1, session });
+    const sessionObjective2 = store.createRecord('session-objective', { id: 2, session });
     (await session.sessionObjectives).push(sessionObjective1, sessionObjective2);
     assert.strictEqual(session.objectiveCount, 2);
   });

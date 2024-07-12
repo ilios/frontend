@@ -10,8 +10,8 @@ module('Integration | Component | objective sort manager', function (hooks) {
 
   test('it renders for session', async function (assert) {
     const session = this.server.create('session');
-    this.server.create('sessionObjective', { session, position: 1 });
-    this.server.create('sessionObjective', { session, position: 0 });
+    this.server.create('session-objective', { session, position: 1 });
+    this.server.create('session-objective', { session, position: 0 });
     const subject = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('subject', subject);
     await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{(noop)}} />
@@ -25,8 +25,8 @@ module('Integration | Component | objective sort manager', function (hooks) {
 
   test('it renders for course', async function (assert) {
     const course = this.server.create('course');
-    this.server.create('courseObjective', { course, position: 1 });
-    this.server.create('courseObjective', { course, position: 0 });
+    this.server.create('course-objective', { course, position: 1 });
+    this.server.create('course-objective', { course, position: 0 });
     const subject = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', subject);
     await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{(noop)}} />
@@ -39,12 +39,12 @@ module('Integration | Component | objective sort manager', function (hooks) {
   });
 
   test('it renders for program-year', async function (assert) {
-    const programYear = this.server.create('programYear');
-    this.server.create('programYearObjective', { programYear, position: 1 });
-    this.server.create('programYearObjective', { programYear, position: 0 });
+    const programYear = this.server.create('program-year');
+    this.server.create('program-year-objective', { programYear, position: 1 });
+    this.server.create('program-year-objective', { programYear, position: 0 });
     const subject = await this.owner
       .lookup('service:store')
-      .findRecord('programYear', programYear.id);
+      .findRecord('program-year', programYear.id);
     this.set('subject', subject);
     await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{(noop)}} />
 `);

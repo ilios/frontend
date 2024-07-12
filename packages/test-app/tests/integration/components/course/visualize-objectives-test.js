@@ -59,7 +59,7 @@ module('Integration | Component | course/visualize-objectives', function (hooks)
   test('chart', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
-    const courseObjectives = this.server.createList('courseObjective', 3, {
+    const courseObjectives = this.server.createList('course-objective', 3, {
       course,
     });
     const session1 = this.server.create('session', {
@@ -74,15 +74,15 @@ module('Integration | Component | course/visualize-objectives', function (hooks)
       title: 'Empty Session',
       course,
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: session1,
       courseObjectives: [courseObjectives[0]],
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: session2,
       courseObjectives: [courseObjectives[1]],
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: session3,
       courseObjectives: [courseObjectives[2]],
     });

@@ -18,9 +18,9 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
   test('it renders', async function (assert) {
     const date = DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 });
     const session = this.server.create('session');
-    this.server.create('sessionType', { sessions: [session] });
+    this.server.create('session-type', { sessions: [session] });
     this.server.createList('term', 2, { sessions: [session] });
-    this.server.createList('sessionObjective', 3, { session });
+    this.server.createList('session-objective', 3, { session });
     const offering1 = this.server.create('offering', {
       session,
       startDate: date.toJSDate(),
@@ -29,8 +29,8 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
       session,
       startDate: date.plus({ hour: 1 }).toJSDate(),
     });
-    this.server.create('learnerGroup', { offerings: [offering1] });
-    this.server.createList('learnerGroup', 3, { offerings: [offering2] });
+    this.server.create('learner-group', { offerings: [offering1] });
+    this.server.createList('learner-group', 3, { offerings: [offering2] });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     await render(hbs`<SessionsGridRow

@@ -53,7 +53,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     const session = this.server.create('session', {
       course,
     });
-    const ilmSession = this.server.create('ilmSession', {
+    const ilmSession = this.server.create('ilm-session', {
       session,
       learners: [learners[0], learners[1], learners[2]],
       learnerGroups: [secondLevelLearnerGroup1, secondLevelLearnerGroup2, topLevelLearnerGroup3],
@@ -82,7 +82,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.learner3 = await store.findRecord('user', learners[2].id);
     this.learner4 = await store.findRecord('user', learners[3].id);
     this.session = await store.findRecord('session', session.id);
-    this.ilmSession = await store.findRecord('ilmSession', ilmSession.id);
+    this.ilmSession = await store.findRecord('ilm-session', ilmSession.id);
   });
 
   test('it renders', async function (assert) {

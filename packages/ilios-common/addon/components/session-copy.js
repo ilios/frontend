@@ -24,7 +24,7 @@ export default class SessionCopyComponent extends Component {
     const course = await session.course;
     const school = await course.school;
     const { years, schoolCourses } = await hash({
-      years: this.store.findAll('academicYear'),
+      years: this.store.findAll('academic-year'),
       schoolCourses: this.store.query('course', {
         filters: {
           school: school.id,
@@ -121,7 +121,7 @@ export default class SessionCopyComponent extends Component {
       const learningMaterialToCopy = learningMaterialsToCopy.slice()[i];
       const lm = await learningMaterialToCopy.learningMaterial;
       const learningMaterial = this.store.createRecord(
-        'sessionLearningMaterial',
+        'session-learning-material',
         learningMaterialToCopy.getProperties('notes', 'required', 'publicNotes', 'position'),
       );
       learningMaterial.set('learningMaterial', lm);
