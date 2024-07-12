@@ -17,11 +17,6 @@ const BrowserStackLaunchers = {
     ],
     protocol: 'browser',
   },
-  BS_MS_Edge: {
-    exe: 'node_modules/.bin/browserstack-launch',
-    args: ['--os', 'Windows', '--osv', '11', '--b', 'edge', '--bv', '115', ...defaultArgs],
-    protocol: 'browser',
-  },
   BS_IOS_SAFARI: {
     exe: 'node_modules/.bin/browserstack-launch',
     args: [
@@ -64,7 +59,7 @@ module.exports = {
   reporter: FailureOnlyPerBrowserReporter,
   browser_start_timeout: 2000,
   browser_disconnect_timeout: 120,
-  parallel: 4,
+  parallel: 1,
   disable_watching: true,
   launchers: BrowserStackLaunchers,
   launch_in_dev: [],
