@@ -155,7 +155,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
   test('remove group from selected list', async function (assert) {
     assert.expect(1);
     this.set('remove', (learnerGroup) => {
-      assert.ok(this.secondLevelLearnerGroup1, learnerGroup);
+      assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', [this.secondLevelLearnerGroup1]);
     this.set('cohorts', [this.cohort1]);
@@ -172,7 +172,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
   test('remove group in picker', async function (assert) {
     assert.expect(2);
     this.set('remove', (learnerGroup) => {
-      assert.ok(this.secondLevelLearnerGroup1, learnerGroup);
+      assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', [this.secondLevelLearnerGroup1]);
     this.set('cohorts', [this.cohort1]);
@@ -190,7 +190,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
   test('add available group', async function (assert) {
     assert.expect(2);
     this.set('add', (learnerGroup) => {
-      assert.ok(this.secondLevelLearnerGroup1, learnerGroup);
+      assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', []);
     this.set('cohorts', [this.cohort1]);
