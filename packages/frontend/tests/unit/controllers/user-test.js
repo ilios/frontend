@@ -1,8 +1,13 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import Controller from 'frontend/controllers/user';
 
 module('Unit | Controller | user', function (hooks) {
   setupTest(hooks);
+
+  hooks.beforeEach(function () {
+    this.owner.register('controller:user', Controller);
+  });
 
   // Replace this with your real tests.
   test('it exists', function (assert) {
