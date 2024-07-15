@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { authenticateSession, invalidateSession } from 'ember-simple-auth/test-support';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 

@@ -4,7 +4,7 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { component } from 'ilios-common/page-objects/components/dashboard/materials';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 

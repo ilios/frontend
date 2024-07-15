@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/course/manage-objective-parents';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 
 module('Integration | Component | course/manage-objective-parents', function (hooks) {
   setupRenderingTest(hooks);

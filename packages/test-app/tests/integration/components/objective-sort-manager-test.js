@@ -2,7 +2,7 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, findAll } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 
 module('Integration | Component | objective sort manager', function (hooks) {
   setupRenderingTest(hooks);

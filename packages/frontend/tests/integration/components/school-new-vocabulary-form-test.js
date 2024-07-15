@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'frontend/tests/pages/components/school-new-vocabulary-form';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'frontend/tests/test-support/mirage';
 
 module('Integration | Component | school-new-vocabulary-form', function (hooks) {
   setupRenderingTest(hooks);

@@ -5,7 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/single-event-learningmaterial-list-item';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 import Service from '@ember/service';
 
 module('Integration | Component | single-event-learningmaterial-list-item', function (hooks) {

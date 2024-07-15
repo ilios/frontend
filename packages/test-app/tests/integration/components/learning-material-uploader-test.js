@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { uploadHandler } from 'ember-file-upload';
 import { selectFiles } from 'ember-file-upload/test-support';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 import Service from '@ember/service';
 import { Response } from 'miragejs';
 

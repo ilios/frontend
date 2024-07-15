@@ -6,7 +6,7 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, find, findAll, fillIn, blur as emberBlur } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 import queryString from 'query-string';
 
 module('Integration | Component | course/rollover', function (hooks) {

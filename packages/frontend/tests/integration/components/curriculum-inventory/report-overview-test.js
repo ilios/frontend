@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-overview';
 
 module('Integration | Component | curriculum-inventory/report-overview', function (hooks) {

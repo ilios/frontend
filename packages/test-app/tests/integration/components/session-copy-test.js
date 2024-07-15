@@ -4,7 +4,7 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, find, fillIn } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { findById } from 'ilios-common/utils/array-helpers';
 
 module('Integration | Component | session copy', function (hooks) {
