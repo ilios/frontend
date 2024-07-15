@@ -3,7 +3,6 @@
 const Funnel = require('broccoli-funnel');
 const MergeTrees = require('broccoli-merge-trees');
 const path = require('path');
-const WriteFile = require('broccoli-file-creator');
 const SetTransform = require('./lib/set-transform');
 const HasErrorForTransform = require('./lib/has-error-for-transform');
 const GetErrorsForTransform = require('./lib/get-errors-for-transform');
@@ -50,12 +49,7 @@ module.exports = {
     const trees = [appTree];
     if (['test', 'development'].includes(this._env)) {
       const mirageDir = path.join(__dirname, 'addon-mirage-support');
-      const mirageTree = new Funnel(mirageDir, { destDir: 'mirage' });
-      trees.push(mirageTree);
-    } else {
-      //add a noop export for production builds
-      const noopTree = WriteFile('routes.js', 'export default function(){};');
-      const mirageTree = new Funnel(noopTree, { destDir: 'mirage' });
+      const mirageTree = new Funnel(mirageDir, { destDir: 'tests/test-support/mirage' });
       trees.push(mirageTree);
     }
     return MergeTrees(trees);

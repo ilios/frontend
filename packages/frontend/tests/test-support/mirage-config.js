@@ -1,14 +1,26 @@
-import commonRoutes from './routes';
+import commonRoutes from './mirage/routes';
+import commonModels from './mirage/models';
+import commonFactories from './mirage/factories';
+import applicationSerializer from './mirage/serializers/application';
 import ENV from 'frontend/config/environment';
 import { createServer, Response } from 'miragejs';
 import { DateTime } from 'luxon';
+import { pluralize, singularize } from '@ember-data/request-utils/string';
 
 const { apiVersion } = ENV;
 
 export default function (config) {
   let finalConfig = {
     ...config,
-    models: { ...config.models },
+    models: commonModels,
+    factories: commonFactories,
+    serializers: {
+      application: applicationSerializer,
+    },
+    inflector: {
+      pluralize,
+      singularize,
+    },
     routes() {
       this.timing = 100;
       this.namespace = '/';
