@@ -5,6 +5,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program';
 import percySnapshot from '@percy/ember';
+import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 module('Acceptance | Program - ProgramYear List', function (hooks) {
   setupApplicationTest(hooks);
@@ -42,7 +43,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
       archived: true,
     });
     await page.visit({ programId: this.program.id });
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'default'));
     assert.strictEqual(page.programYears.items.length, 3);
     assert.strictEqual(page.programYears.items[0].link.text, `${thisYear - 2}`);
     assert.strictEqual(page.programYears.items[0].title, 'cohort 1');
@@ -51,7 +52,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     assert.strictEqual(page.programYears.items[2].link.text, `${thisYear}`);
     assert.strictEqual(page.programYears.items[2].title, 'cohort 0');
     await page.programYears.expandCollapse.toggle();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'show programYears'));
     assert.strictEqual(page.programYears.newProgramYear.years.options.length, 6);
   });
 

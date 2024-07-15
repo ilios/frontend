@@ -6,6 +6,7 @@ import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/sessions';
 import sessionPage from 'ilios-common/page-objects/session';
 import percySnapshot from '@percy/ember';
+import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 module('Acceptance | Course - Session List', function (hooks) {
   setupApplicationTest(hooks);
@@ -231,11 +232,11 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.strictEqual(expandedSessions.length, 0);
     assert.notOk(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
     await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'not expanded'));
     assert.strictEqual(expandedSessions.length, 4);
     assert.ok(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
     await page.courseSessions.sessionsGridHeader.expandCollapse.toggle.click();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'expanded'));
     assert.strictEqual(expandedSessions.length, 0);
     assert.notOk(page.courseSessions.sessionsGridHeader.expandCollapse.allAreExpanded);
   });

@@ -5,6 +5,7 @@ import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/users';
 import percySnapshot from '@percy/ember';
 import userPage from 'frontend/tests/pages/user';
+import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 module('Acceptance | Users', function (hooks) {
   setupApplicationTest(hooks);
@@ -50,9 +51,9 @@ module('Acceptance | Users', function (hooks) {
     assert.expect(3);
     this.server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
     await page.visit();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'default'));
     await page.root.search.set('Test Name');
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'search results'));
     assert.strictEqual(page.root.userList.users[0].userNameInfo.fullName, 'Test M. Name');
     assert.strictEqual(currentURL(), '/users?filter=Test%20Name', 'no query params for search');
     await page.root.userList.users[0].viewUserDetails();

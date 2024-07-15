@@ -4,6 +4,7 @@ import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/user';
 import percySnapshot from '@percy/ember';
+import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 module('Acceptance | User', function (hooks) {
   setupApplicationTest(hooks);
@@ -47,10 +48,10 @@ module('Acceptance | User', function (hooks) {
     const name = '.user-display-name';
 
     await visit('/users/100');
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'default'));
     await fillIn(userSearch, 'son');
     await triggerEvent(userSearch, 'keyup');
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'search results dropdown'));
     assert.dom(secondResultUsername).hasText('1 guy M. Mc1son', 'user name is correct');
     assert.dom(secondResultEmail).hasText('user@example.edu', 'user email is correct');
 
@@ -79,7 +80,7 @@ module('Acceptance | User', function (hooks) {
       school: this.school,
     });
     await page.visit({ userId: user1.id });
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'user1'));
     assert.strictEqual(page.roles.student.value, 'Yes');
     assert.strictEqual(page.roles.student.label, 'Student:');
     assert.strictEqual(page.roles.formerStudent.value, 'Yes');
@@ -89,13 +90,13 @@ module('Acceptance | User', function (hooks) {
     assert.strictEqual(page.roles.excludeFromSync.value, 'Yes');
     assert.strictEqual(page.roles.excludeFromSync.label, 'Exclude From Sync:');
     await page.roles.manage();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'user1 manage roles'));
     assert.ok(page.roles.formerStudent.selected);
     assert.ok(page.roles.enabled.selected);
     assert.ok(page.roles.excludeFromSync.selected);
 
     await page.visit({ userId: user2.id });
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'user2'));
     assert.strictEqual(page.roles.student.value, 'No');
     assert.strictEqual(page.roles.student.label, 'Student:');
     assert.strictEqual(page.roles.formerStudent.value, 'No');
@@ -105,7 +106,7 @@ module('Acceptance | User', function (hooks) {
     assert.strictEqual(page.roles.excludeFromSync.value, 'No');
     assert.strictEqual(page.roles.excludeFromSync.label, 'Exclude From Sync:');
     await page.roles.manage();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'user2 manage roles'));
     assert.notOk(page.roles.formerStudent.selected);
     assert.notOk(page.roles.enabled.selected);
     assert.notOk(page.roles.excludeFromSync.selected);

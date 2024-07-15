@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 import page from 'frontend/tests/pages/courses';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import percySnapshot from '@percy/ember';
+import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 module('Acceptance | Courses', function (hooks) {
   setupApplicationTest(hooks);
@@ -86,7 +87,7 @@ module('Acceptance | Courses', function (hooks) {
       archived: true,
     });
     await page.visit();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'default'));
     assert.strictEqual(page.root.list.courses.length, 5);
     assert.strictEqual(page.root.list.courses[0].title, regexCourse.title);
     assert.strictEqual(page.root.list.courses[1].title, lastCourse.title);
@@ -116,7 +117,7 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(page.root.headerTitle, 'Courses (2)');
 
     await page.root.filterByTitle('course');
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'filterByTitle'));
     assert.strictEqual(page.root.list.courses.length, 4);
     assert.strictEqual(page.root.list.courses[0].title, lastCourse.title);
     assert.strictEqual(page.root.list.courses[1].title, regularCourse.title);
