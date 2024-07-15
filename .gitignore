@@ -13,3 +13,4 @@ coverage/
 npm-debug.log*
 yarn-error.log
 
+packages/**/test-execution-*.json

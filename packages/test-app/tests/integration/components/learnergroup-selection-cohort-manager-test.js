@@ -74,7 +74,7 @@ module('Integration | Component | learnergroup-selection-cohort-manager', functi
     assert.expect(2);
     this.set('filter', '');
     this.set('remove', (learnerGroup) => {
-      assert.ok(this.secondLevelLearnerGroup1, learnerGroup);
+      assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', [this.secondLevelLearnerGroup1]);
     this.set('cohort', this.cohort);
@@ -94,7 +94,7 @@ module('Integration | Component | learnergroup-selection-cohort-manager', functi
     assert.expect(2);
     this.set('filter', '');
     this.set('add', (learnerGroup) => {
-      assert.ok(this.secondLevelLearnerGroup1, learnerGroup);
+      assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', []);
     this.set('cohorts', this.cohort);
