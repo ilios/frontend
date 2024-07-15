@@ -6,7 +6,7 @@ import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/sessions';
 import sessionPage from 'ilios-common/page-objects/session';
 import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | Course - Session List', function (hooks) {
   setupApplicationTest(hooks);

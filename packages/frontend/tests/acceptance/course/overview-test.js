@@ -5,7 +5,7 @@ import { setupAuthentication } from 'ilios-common';
 import { t } from 'ember-intl/test-support';
 import page from 'ilios-common/page-objects/course';
 import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);

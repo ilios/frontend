@@ -5,7 +5,7 @@ import { setupApplicationTest } from 'frontend/tests/helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import page from 'ilios-common/page-objects/dashboard-materials';
 import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | Dashboard Materials', function (hooks) {
   setupApplicationTest(hooks);

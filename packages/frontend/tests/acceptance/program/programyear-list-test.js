@@ -5,7 +5,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program';
 import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | Program - ProgramYear List', function (hooks) {
   setupApplicationTest(hooks);

@@ -4,7 +4,7 @@ import { triggerEvent, waitFor } from '@ember/test-helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from '../../pages/learner-group';
 import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   setupApplicationTest(hooks);

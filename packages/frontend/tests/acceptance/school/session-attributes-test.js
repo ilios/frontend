@@ -3,7 +3,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/school';
 import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | School - Session Attributes', function (hooks) {
   setupApplicationTest(hooks);

@@ -5,7 +5,7 @@ import page from 'frontend/tests/pages/reports';
 import subjectReportPage from 'frontend/tests/pages/reports-subject';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import percySnapshot from '@percy/ember';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | Reports - Subject Reports', function (hooks) {
   setupApplicationTest(hooks);
