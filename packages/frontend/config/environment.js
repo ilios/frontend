@@ -86,11 +86,6 @@ module.exports = function (environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = !!process.env.LOG_VIEW_LOOKUPS;
     ENV.redirectAfterShibLogin = false;
 
-    //Remove mirage in developemnt, we only use it in testing
-    ENV['ember-cli-mirage'] = {
-      enabled: false,
-    };
-
     ENV.featureFlags['programYearVisualizations'] = true;
 
     //put ember concurrency tasks into debug mode to make errors much easier to spot
