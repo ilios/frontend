@@ -2,13 +2,10 @@
   <div
     class="school-session-type-form"
     data-test-school-session-type-form
-    {{did-insert (perform this.load)}}
     ...attributes
   >
-    {{#if this.load.isRunning}}
-      <LoadingSpinner />
-    {{else}}
-      <div class="form">
+    {{#if this.isLoaded}}
+    <div class="form">
         <div class="item" data-test-title>
           <label for="title-{{templateId}}">
             {{t "general.title"}}:
@@ -161,6 +158,8 @@
           {{/if}}
         </div>
       </div>
+    {{else}}
+      <LoadingSpinner />
     {{/if}}
   </div>
 {{/let}}

@@ -1,27 +1,27 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { all } from 'rsvp';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;
   @tracked competenciesToAdd = [];
   @tracked competenciesToRemove = [];
-  @tracked schoolCompetencies;
 
-  load = restartableTask(async () => {
-    this.cleanup();
-    this.schoolCompetencies = await this.args.school.competencies;
-  });
+  @cached
+  get schoolCompetenciesData() {
+    return new TrackedAsyncData(this.args.school.competencies);
+  }
 
   get competencies() {
-    if (!this.schoolCompetencies) {
+    if (!this.schoolCompetenciesData.isResolved) {
       return [];
     }
-    const arr = [...this.schoolCompetencies.slice(), ...this.competenciesToAdd];
+    const arr = [...this.schoolCompetenciesData.value, ...this.competenciesToAdd];
     return uniqueValues(
       arr.filter((competency) => !this.competenciesToRemove.includes(competency)),
     );
@@ -80,10 +80,11 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
   }
 
   save = dropTask(async () => {
-    const domainsToRemove = this.schoolCompetencies.filter((competency) => {
+    const competencies = this.schoolCompetenciesData.value;
+    const domainsToRemove = competencies.filter((competency) => {
       return !competency.belongsTo('parent').id() && !this.competencies.includes(competency);
     });
-    const competenciesToRemove = this.schoolCompetencies.filter((competency) => {
+    const competenciesToRemove = competencies.filter((competency) => {
       return competency.belongsTo('parent').id() && !this.competencies.includes(competency);
     });
 
@@ -104,6 +105,5 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     // cleanup
     this.cleanup();
     this.args.setSchoolManageCompetencies(false);
-    this.schoolCompetencies = await this.args.school.competencies;
   });
 }

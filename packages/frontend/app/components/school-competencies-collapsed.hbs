@@ -1,8 +1,6 @@
 <section
   class="school-competencies-collapsed"
   data-test-school-competencies-collapsed
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @school.competencies}}
   ...attributes
 >
   <div>
@@ -19,34 +17,30 @@
       <FaIcon @icon="caret-right" />
     </button>
   </div>
-  {{#if this.load.isRunning}}
-    <LoadingSpinner @tagName="h3" />
-  {{else}}
-    <div class="content">
-      <table class="condensed">
-        <thead>
-          <tr>
-            <th class="text-left">
-              {{t "general.competencyDomain"}}
-            </th>
-            <th class="text-left">
-              {{t "general.summary"}}
-            </th>
+  <div class="content">
+    <table class="condensed">
+      <thead>
+        <tr>
+          <th class="text-left">
+            {{t "general.competencyDomain"}}
+          </th>
+          <th class="text-left">
+            {{t "general.summary"}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (sort-by "title" this.domains) as |domain|}}
+          <tr data-test-domain>
+            <td data-test-domain-title>
+              {{domain.title}}
+            </td>
+            <td class="summary-highlight" data-test-domain-summary>
+              {{t "general.subCompetencyCount" count=domain.childCount}}
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {{#each (sort-by "title" this.domains) as |domain|}}
-            <tr data-test-domain>
-              <td data-test-domain-title>
-                {{domain.title}}
-              </td>
-              <td class="summary-highlight" data-test-domain-summary>
-                {{t "general.subCompetencyCount" count=domain.childCount}}
-              </td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  {{/if}}
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </section>

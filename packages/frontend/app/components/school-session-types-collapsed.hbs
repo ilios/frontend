@@ -1,7 +1,5 @@
 <section
   class="school-session-types-collapsed"
-  {{did-insert (perform this.load) @school}}
-  {{did-update (perform this.load) @school}}
   data-test-school-session-types-collapsed
   ...attributes
 >
@@ -36,10 +34,8 @@
             {{t "general.assessmentMethods"}}
           </td>
           <td class="summary-highlight" data-test-assessment-count>
-            {{#if this.load.lastSuccessful}}
+            {{#if this.isLoaded}}
               {{this.assessmentMethods.length}}
-            {{else}}
-             <LoadingSpinner />
             {{/if}}
           </td>
         </tr>
@@ -48,10 +44,8 @@
             {{t "general.instructionalMethods"}}
           </td>
           <td class="summary-highlight" data-test-instructional-count>
-            {{#if this.load.lastSuccessful}}
+            {{#if this.isLoaded}}
               {{this.instructionalMethods.length}}
-            {{else}}
-             <LoadingSpinner />
             {{/if}}
           </td>
         </tr>

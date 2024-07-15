@@ -15,8 +15,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
   @NotBlank()
   @Length(1, 200)
   @Custom('validateTitleCallback', 'validateTitleMessageCallback')
-  title;
-  @tracked isActive = false;
+  titleValue;
   @tracked newTerm;
 
   @cached
@@ -42,19 +41,17 @@ export default class SchoolVocabularyManagerComponent extends Component {
     );
   }
 
-  @action
-  load() {
-    this.title = this.args.vocabulary.title;
-    this.isActive = this.args.vocabulary.active;
+  get title() {
+    return this.titleValue || this.args.vocabulary.title;
   }
 
   changeTitle = dropTask(async () => {
-    this.addErrorDisplayFor('title');
+    this.addErrorDisplayFor('titleValue');
     const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.removeErrorDisplayFor('titleValue');
     this.args.vocabulary.title = this.title;
     await this.args.vocabulary.save();
   });
@@ -62,7 +59,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
   @action
   revertTitleChanges() {
     this.removeErrorDisplayFor('title');
-    this.title = this.args.vocabulary.title;
+    this.titleValue = this.args.vocabulary.title;
   }
 
   @action
@@ -82,7 +79,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
       return vocab !== this.args.vocabulary;
     });
     const siblingTitles = mapBy(siblings, 'title');
-    return !siblingTitles.includes(this.title);
+    return !siblingTitles.includes(this.titleValue);
   }
 
   validateTitleMessageCallback() {

@@ -11,11 +11,12 @@ import EmailValidator from 'validator/es/lib/isEmail';
 export default class SchoolEmailsEditorComponent extends Component {
   @service intl;
 
-  @tracked @Length(0, 100) @IsEmail() administratorEmail;
+  @tracked @Length(0, 100) @IsEmail() administratorEmail =
+    this.args.school.iliosAdministratorEmail || '';
   @tracked
   @Length(0, 300)
   @Custom('validateChangeAlertRecipientsCallBack', 'validateChangeAlertRecipientsMessageCallBack')
-  changeAlertRecipients;
+  changeAlertRecipients = this.args.school.changeAlertRecipients || '';
 
   get changeAlertRecipientsFormatted() {
     return this.changeAlertRecipients
@@ -24,12 +25,6 @@ export default class SchoolEmailsEditorComponent extends Component {
       .map((email) => email.trim())
       .filter((email) => !isBlank(email))
       .join(', ');
-  }
-
-  @action
-  load() {
-    this.administratorEmail = this.args.school.iliosAdministratorEmail;
-    this.changeAlertRecipients = this.args.school.changeAlertRecipients;
   }
 
   @action

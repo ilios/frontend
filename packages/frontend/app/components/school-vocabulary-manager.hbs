@@ -2,7 +2,6 @@
   <div
     class="school-vocabulary-manager"
     data-test-school-vocabulary-manager
-    {{did-insert this.load}}
     attributes...
   >
     <div class="breadcrumbs" data-test-breadcrumbs>
@@ -36,12 +35,12 @@
           <input
             id="title-{{templateId}}"
             type="text"
-            value={{this.title}}
+            value={{this.titleValue}}
             disabled={{isSaving}}
-            {{on "input" (pick "target.value" (set this.title))}}
-            {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+            {{on "input" (pick "target.value" (set this.titleValue))}}
+            {{on "keyup" (fn this.addErrorDisplayFor "titleValue")}}
           >
-          <ValidationError @errors={{get-errors-for this.title}} />
+          <ValidationError @errors={{get-errors-for this.titleValue}} />
         </EditableField>
       {{else}}
         {{this.title}}

@@ -1,12 +1,21 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
+import { cached, tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SchoolCompetenciesCollapsedComponent extends Component {
   @tracked competenciesRelationship;
 
+  @cached
+  get schoolCompetenciesData() {
+    return new TrackedAsyncData(this.args.school.competencies);
+  }
+
   get competencies() {
-    return this.competenciesRelationship ? this.competenciesRelationship.slice() : [];
+    if (this.schoolCompetenciesData.isResolved) {
+      return this.schoolCompetenciesData.value;
+    }
+
+    return [];
   }
 
   get domains() {
@@ -20,8 +29,4 @@ export default class SchoolCompetenciesCollapsedComponent extends Component {
       return competency.belongsTo('parent').id();
     });
   }
-
-  load = restartableTask(async () => {
-    this.competenciesRelationship = await this.args.school.competencies;
-  });
 }
