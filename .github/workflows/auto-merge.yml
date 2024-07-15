@@ -27,7 +27,7 @@ jobs:
           - ember-cli-dependency-checker
           - ember-cli-dependency-lint
           - ember-cli-deprecation-workflow
-          - ember-cli-mirage
+          - ember-mirage
           - ember-cli-page-object
           - ember-noscript
           - ember-qunit-nice-errors
