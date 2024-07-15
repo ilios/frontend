@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
-import { validatable, Custom, IsEmail, Length } from 'ilios-common/decorators/validation';
+import { validatable, Custom, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isBlank, typeOf } from '@ember/utils';
@@ -11,7 +11,7 @@ import EmailValidator from 'validator/es/lib/isEmail';
 export default class SchoolEmailsEditorComponent extends Component {
   @service intl;
 
-  @tracked @Length(0, 100) @IsEmail() administratorEmail =
+  @tracked @Length(1, 100) @NotBlank() @IsEmail() administratorEmail =
     this.args.school.iliosAdministratorEmail || '';
   @tracked
   @Length(0, 300)

@@ -49,7 +49,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     assert.notOk(component.changeAlertRecipients.hasError);
   });
 
-  test('save with empty data', async function (assert) {
+  test('save with empty change alerts recipients', async function (assert) {
     assert.expect(8);
     const school = this.server.create('school', {
       iliosAdministratorEmail: 'admin@school.edu',
@@ -58,7 +58,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('save', (administratorEmail, changeAlertRecipients) => {
-      assert.strictEqual(administratorEmail, '');
+      assert.strictEqual(administratorEmail, 'admin@school.edu');
       assert.strictEqual(changeAlertRecipients, '');
     });
     await render(
@@ -71,14 +71,37 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     );
     assert.notOk(component.administratorEmail.hasError);
     assert.notOk(component.changeAlertRecipients.hasError);
-    await component.administratorEmail.set('');
     await component.changeAlertRecipients.set('');
     await component.save();
     assert.notOk(component.administratorEmail.hasError);
     assert.notOk(component.changeAlertRecipients.hasError);
   });
 
-  test('validation fails', async function (assert) {
+  test('validation fails if given admin email is empty', async function (assert) {
+    assert.expect(6);
+    const school = this.server.create('school', {
+      iliosAdministratorEmail: 'admin@school.edu',
+      changeAlertRecipients: 'email1@school.edu, email2@school.edu',
+    });
+    const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
+    this.set('school', schoolModel);
+    await render(
+      hbs`<School::EmailsEditor @school={{this.school}} @save={{(noop)}} @cancel={{(noop)}} />`,
+    );
+    assert.strictEqual(component.administratorEmail.value, 'admin@school.edu');
+    assert.strictEqual(
+      component.changeAlertRecipients.value,
+      'email1@school.edu, email2@school.edu',
+    );
+    assert.notOk(component.administratorEmail.hasError);
+    assert.notOk(component.changeAlertRecipients.hasError);
+    await component.administratorEmail.set('');
+    await component.save();
+    assert.ok(component.administratorEmail.hasError);
+    assert.notOk(component.changeAlertRecipients.hasError);
+  });
+
+  test('validation fails if input contains invalid emails', async function (assert) {
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
