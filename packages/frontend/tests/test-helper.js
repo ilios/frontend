@@ -9,6 +9,7 @@ import { setAdapter } from 'ember-cli-page-object/adapters';
 import { setRunOptions } from 'ember-a11y-testing/test-support';
 import 'qunit-theme-ember/qunit.css';
 import './helpers/flash-message';
+import './helpers/percy-snapshot-name';
 
 setRunOptions({
   preload: false,
