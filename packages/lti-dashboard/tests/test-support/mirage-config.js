@@ -3,7 +3,7 @@ import commonModels from './mirage/models';
 import commonFactories from './mirage/factories';
 import applicationSerializer from './mirage/serializers/application';
 import { createServer } from 'miragejs';
-import { pluralize, singularize } from '@ember-data/request-utils/string';
+import { pluralize, singularize } from 'ember-inflector';
 
 export default function (config) {
   let finalConfig = {

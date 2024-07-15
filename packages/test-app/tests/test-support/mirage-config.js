@@ -4,7 +4,7 @@ import commonFactories from './mirage/factories';
 import applicationSerializer from './mirage/serializers/application';
 import ENV from 'test-app/config/environment';
 import { createServer } from 'miragejs';
-import { pluralize, singularize } from '@ember-data/request-utils/string';
+import { pluralize, singularize } from 'ember-inflector';
 
 const { apiVersion } = ENV;
 

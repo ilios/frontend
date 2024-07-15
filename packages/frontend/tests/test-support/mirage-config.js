@@ -5,7 +5,7 @@ import applicationSerializer from './mirage/serializers/application';
 import ENV from 'frontend/config/environment';
 import { createServer, Response } from 'miragejs';
 import { DateTime } from 'luxon';
-import { pluralize, singularize } from '@ember-data/request-utils/string';
+import { pluralize, singularize } from 'ember-inflector';
 
 const { apiVersion } = ENV;
 
