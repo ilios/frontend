@@ -16,11 +16,11 @@ module('Acceptance | Session - Publish All', function (hooks) {
       school,
     });
     this.course = this.server.create('course', { school });
-    this.sessionTypes = this.server.createList('sessionType', 2, {
+    this.sessionTypes = this.server.createList('session-type', 2, {
       school,
     });
     this.term = this.server.create('term', { vocabulary });
-    this.meshDescriptor = this.server.create('meshDescriptor');
+    this.meshDescriptor = this.server.create('mesh-descriptor');
   });
 
   test('publish publishable sessions', async function (assert) {
@@ -29,7 +29,7 @@ module('Acceptance | Session - Publish All', function (hooks) {
       terms: [this.term],
       meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
-      sessionObjectives: [this.server.create('sessionObjective')],
+      sessionObjectives: [this.server.create('session-objective')],
       offerings: this.server.createList('offering', 2),
     });
     this.server.create('session', {
@@ -37,7 +37,7 @@ module('Acceptance | Session - Publish All', function (hooks) {
       terms: [this.term],
       meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
-      sessionObjectives: [this.server.create('sessionObjective')],
+      sessionObjectives: [this.server.create('session-objective')],
       offerings: this.server.createList('offering', 2),
     });
 

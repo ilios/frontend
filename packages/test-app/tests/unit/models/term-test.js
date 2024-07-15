@@ -95,7 +95,7 @@ module('Unit | Model | term', function (hooks) {
 
   test('associations', async function (assert) {
     assert.expect(9);
-    const programYear = this.store.createRecord('programYear');
+    const programYear = this.store.createRecord('program-year');
     const course = this.store.createRecord('course');
     const session = this.store.createRecord('session');
     const programYearObjective = this.store.createRecord('program-year-objective');

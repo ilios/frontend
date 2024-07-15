@@ -19,20 +19,20 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
       );
     }
     const program = this.server.create('program', { school });
-    const report = this.server.create('curriculumInventoryReport', {
+    const report = this.server.create('curriculum-inventory-report', {
       academicLevels,
       year: '2016',
       program,
     });
-    const grandParentBlock = this.server.create('curriculumInventorySequenceBlock', {
+    const grandParentBlock = this.server.create('curriculum-inventory-sequence-block', {
       title: 'Okely Dokely',
       report,
     });
-    const parentBlock = this.server.create('curriculumInventorySequenceBlock', {
+    const parentBlock = this.server.create('curriculum-inventory-sequence-block', {
       title: 'Foo',
       parent: grandParentBlock,
     });
-    const block = this.server.create('curriculumInventorySequenceBlock', {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
       title: 'bar',
       description: 'lorem ipsum',
       report,

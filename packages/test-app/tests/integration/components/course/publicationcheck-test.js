@@ -10,13 +10,13 @@ module('Integration | Component | course/publicationcheck', function (hooks) {
   setupMirage(hooks);
 
   test('it shows unlink icon', async function (assert) {
-    const programYearObjective = this.server.create('programYearObjective');
+    const programYearObjective = this.server.create('program-year-objective');
     const course = this.server.create('course');
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective],
     });
-    this.server.create('courseObjective', { course });
+    this.server.create('course-objective', { course });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('model', courseModel);
     await render(hbs`<Course::Publicationcheck @course={{this.model}} />
@@ -25,13 +25,13 @@ module('Integration | Component | course/publicationcheck', function (hooks) {
   });
 
   test('it does not shows unlink icon', async function (assert) {
-    const programYearObjective = this.server.create('programYearObjective');
+    const programYearObjective = this.server.create('program-year-objective');
     const course = this.server.create('course');
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective],
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective],
     });

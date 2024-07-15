@@ -23,15 +23,15 @@ module('Integration | Component | instructor selection manager', function (hooks
     const instructor3 = this.server.create('user', {
       displayName: 'Aardvark',
     });
-    const group1 = this.server.create('instructorGroup', {
+    const group1 = this.server.create('instructor-group', {
       users: [instructor1],
       title: 'Beta',
     });
-    const group2 = this.server.create('instructorGroup', {
+    const group2 = this.server.create('instructor-group', {
       users: [instructor2, instructor3],
       title: 'Alpha',
     });
-    const group3 = this.server.create('instructorGroup', { title: 'Gamma' });
+    const group3 = this.server.create('instructor-group', { title: 'Gamma' });
     this.instructor1 = await this.owner.lookup('service:store').findRecord('user', instructor1.id);
     this.instructor2 = await this.owner.lookup('service:store').findRecord('user', instructor2.id);
     this.instructor3 = await this.owner.lookup('service:store').findRecord('user', instructor3.id);

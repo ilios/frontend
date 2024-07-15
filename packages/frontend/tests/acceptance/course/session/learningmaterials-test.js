@@ -15,17 +15,17 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
     this.user2 = this.server.create('user', { displayName: 'Clem Chowder' });
-    this.server.create('academicYear');
+    this.server.create('academic-year');
     this.server.create('learningMaterialStatus', {
       learningMaterialIds: [1],
     });
     this.server.createList('learningMaterialStatus', 5);
     this.server.createList('learningMaterialUserRole', 3);
-    this.server.createList('meshDescriptor', 6);
+    this.server.createList('mesh-descriptor', 6);
   });
   module('Single Linked Materials', function (hooks2) {
     hooks2.beforeEach(function () {
-      this.server.create('learningMaterial', {
+      this.server.create('learning-material', {
         originalAuthor: 'Jennifer Johnson',
         owningUserId: this.user.id,
         statusId: 1,
@@ -35,7 +35,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         absoluteFileUri: 'http://somethingsomething.com/something.pdf',
         uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toJSDate(),
       });
-      this.server.create('learningMaterial', {
+      this.server.create('learning-material', {
         originalAuthor: 'Jennifer Johnson',
         owningUserId: this.user2.id,
         statusId: 1,
@@ -46,7 +46,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         absoluteFileUri: 'http://example.com/file',
         uploadDate: DateTime.fromObject({ year: 2011, month: 3, day: 14, hour: 8 }).toJSDate(),
       });
-      this.server.create('learningMaterial', {
+      this.server.create('learning-material', {
         originalAuthor: 'Hunter Pence',
         link: 'www.example.com',
         statusId: 1,
@@ -54,7 +54,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         userRoleId: 1,
         uploadDate: today.toJSDate(),
       });
-      this.server.create('learningMaterial', {
+      this.server.create('learning-material', {
         originalAuthor: 'Willie Mays',
         citation: 'a citation',
         statusId: 1,
@@ -62,7 +62,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         owningUserId: this.user.id,
         uploadDate: DateTime.fromObject({ year: 2016, month: 12, day: 12, hour: 8 }).toJSDate(),
       });
-      this.server.create('learningMaterial', {
+      this.server.create('learning-material', {
         title: 'Letter to Doc Brown',
         originalAuthor: 'Marty McFly',
         owningUserId: this.user.id,
@@ -80,26 +80,26 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       const session = this.server.create('session', {
         course,
       });
-      this.server.create('sessionLearningMaterial', {
+      this.server.create('session-learning-material', {
         learningMaterialId: 1,
         session,
         required: false,
         meshDescriptorIds: [2, 3],
         position: 0,
       });
-      this.server.create('sessionLearningMaterial', {
+      this.server.create('session-learning-material', {
         learningMaterialId: 2,
         session,
         required: false,
         position: 1,
       });
-      this.server.create('sessionLearningMaterial', {
+      this.server.create('session-learning-material', {
         learningMaterialId: 3,
         session,
         publicNotes: false,
         position: 2,
       });
-      this.server.create('sessionLearningMaterial', {
+      this.server.create('session-learning-material', {
         learningMaterialId: 4,
         session,
         position: 3,
@@ -830,7 +830,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       const session = this.server.create('session', {
         course,
       });
-      const learningMaterial = this.server.create('learningMaterial', {
+      const learningMaterial = this.server.create('learning-material', {
         originalAuthor: 'Jennifer Johnson',
         owningUserId: this.user.id,
         statusId: 1,
@@ -840,7 +840,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         absoluteFileUri: 'http://somethingsomething.com/something.pdf',
         uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toJSDate(),
       });
-      this.server.create('sessionLearningMaterial', {
+      this.server.create('session-learning-material', {
         learningMaterial,
         session,
         required: false,

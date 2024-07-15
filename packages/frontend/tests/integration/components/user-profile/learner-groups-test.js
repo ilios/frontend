@@ -24,11 +24,11 @@ module('Integration | Component | user-profile/learner-groups', function (hooks)
       title: 'Program2',
       school: sod,
     });
-    const programYear1 = this.server.create('programYear', {
+    const programYear1 = this.server.create('program-year', {
       program: program1,
       archived: false,
     });
-    const programYear2 = this.server.create('programYear', {
+    const programYear2 = this.server.create('program-year', {
       program: program2,
       archived: false,
     });
@@ -40,11 +40,11 @@ module('Integration | Component | user-profile/learner-groups', function (hooks)
       title: 'Cohort2',
       programYear: programYear2,
     });
-    const learnerGroup1 = this.server.create('learnerGroup', {
+    const learnerGroup1 = this.server.create('learner-group', {
       title: 'LearnerGroup1',
       cohort: cohort1,
     });
-    const learnerGroup2 = this.server.create('learnerGroup', {
+    const learnerGroup2 = this.server.create('learner-group', {
       title: 'LearnerGroup2',
       cohort: cohort2,
     });

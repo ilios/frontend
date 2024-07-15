@@ -25,7 +25,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
     this.cohort = this.server.create('cohort', { programYear });
-    this.learnerGroup = this.server.create('learnerGroup', {
+    this.learnerGroup = this.server.create('learner-group', {
       cohort: this.cohort,
     });
   });
@@ -126,7 +126,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('can not delete group with sub-group linked to offering', async function (assert) {
-    const subGroup = this.server.create('learnerGroup', {
+    const subGroup = this.server.create('learner-group', {
       parent: this.learnerGroup,
     });
     this.server.create('offering', {
@@ -142,7 +142,7 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('can not delete group linked to ILM', async function (assert) {
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       learnerGroups: [this.learnerGroup],
     });
     const learnerGroupModel = await this.owner
@@ -155,10 +155,10 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
   });
 
   test('can not delete group with sub-group linked to ILM', async function (assert) {
-    const subGroup = this.server.create('learnerGroup', {
+    const subGroup = this.server.create('learner-group', {
       parent: this.learnerGroup,
     });
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       learnerGroups: [subGroup],
     });
     const learnerGroupModel = await this.owner

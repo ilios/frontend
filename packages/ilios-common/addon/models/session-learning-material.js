@@ -25,6 +25,6 @@ export default class SessionLearningMaterial extends Model {
   @belongsTo('learning-material', { async: true, inverse: 'sessionLearningMaterials' })
   learningMaterial;
 
-  @hasMany('mesh-descriptors', { async: true, inverse: 'sessionLearningMaterials' })
+  @hasMany('mesh-descriptor', { async: true, inverse: 'sessionLearningMaterials' })
   meshDescriptors;
 }

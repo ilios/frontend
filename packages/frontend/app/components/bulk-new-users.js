@@ -66,7 +66,7 @@ export default class BulkNewUsersComponent extends Component {
     return {
       schools: this.store.peekAll('school'),
       programs: this.store.peekAll('program'),
-      programYears: this.store.peekAll('programYear'),
+      programYears: this.store.peekAll('program-year'),
       cohorts: this.store.peekAll('cohort'),
     };
   }

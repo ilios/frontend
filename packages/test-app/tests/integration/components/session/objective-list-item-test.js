@@ -14,7 +14,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
     const session = this.server.create('session', { course });
-    const sessionObjective = this.server.create('sessionObjective', {
+    const sessionObjective = this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -42,7 +42,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
 
   test('can change title', async function (assert) {
     const session = this.server.create('session');
-    const sessionObjective = this.server.create('sessionObjective', {
+    const sessionObjective = this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -71,7 +71,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
     const session = this.server.create('session', { course });
-    const sessionObjective = this.server.create('sessionObjective', {
+    const sessionObjective = this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -94,7 +94,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
 
   test('can manage descriptors', async function (assert) {
     const session = this.server.create('session');
-    const sessionObjective = this.server.create('sessionObjective', {
+    const sessionObjective = this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -119,7 +119,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
     const session = this.server.create('session', { course });
-    const sessionObjective = this.server.create('sessionObjective', {
+    const sessionObjective = this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -143,7 +143,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
 
   test('can trigger removal', async function (assert) {
     const session = this.server.create('session');
-    const sessionObjective = this.server.create('sessionObjective', {
+    const sessionObjective = this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');

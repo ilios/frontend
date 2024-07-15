@@ -10,9 +10,9 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     const school = this.server.create('school');
-    this.server.create('academicYear', { id: 2013 });
+    this.server.create('academic-year', { id: 2013 });
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     this.server.create('cohort', { programYear });
     const vocabulary = this.server.create('vocabulary', { school, active: true });
     const term = this.server.create('term', { vocabulary, active: true });

@@ -12,7 +12,7 @@ module('Integration | Component | school/session-type-visualize-vocabulary', fun
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const sessionType = this.server.create('sessionType', { school });
+    const sessionType = this.server.create('session-type', { school });
     const vocabulary = this.server.create('vocabulary', { school });
     const terms = this.server.createList('term', 5, { vocabulary });
     this.server.create('session', { course, sessionType, terms: [terms[0], terms[1]] });
@@ -26,7 +26,7 @@ module('Integration | Component | school/session-type-visualize-vocabulary', fun
       .findRecord('vocabulary', vocabulary.id);
     this.sessionType = await this.owner
       .lookup('service:store')
-      .findRecord('sessionType', sessionType.id);
+      .findRecord('session-type', sessionType.id);
   });
 
   test('it renders', async function (assert) {

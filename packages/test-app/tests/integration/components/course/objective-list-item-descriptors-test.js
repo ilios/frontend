@@ -11,13 +11,13 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
+    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
     this.meshDescriptor1 = await this.owner
       .lookup('service:store')
-      .findRecord('meshDescriptor', meshDescriptors[0].id);
+      .findRecord('mesh-descriptor', meshDescriptors[0].id);
     this.meshDescriptor2 = await this.owner
       .lookup('service:store')
-      .findRecord('meshDescriptor', meshDescriptors[1].id);
+      .findRecord('mesh-descriptor', meshDescriptors[1].id);
   });
 
   test('it renders and is accessible when managing', async function (assert) {

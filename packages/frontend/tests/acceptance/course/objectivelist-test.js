@@ -9,7 +9,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
-    this.server.create('academicYear', { id: 2013 });
+    this.server.create('academic-year', { id: 2013 });
   });
 
   test('list objectives', async function (assert) {
@@ -18,27 +18,27 @@ module('Acceptance | Course - Objective List', function (hooks) {
     const competencies = this.server.createList('competency', 2, {
       school: this.school,
     });
-    const meshDescriptors = this.server.createList('meshDescriptor', 3);
+    const meshDescriptors = this.server.createList('mesh-descriptor', 3);
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
     });
-    const programYearObjectiveWithCompetency = this.server.create('programYearObjective', {
+    const programYearObjectiveWithCompetency = this.server.create('program-year-objective', {
       competency: competencies[0],
     });
-    const programYearObjectiveWithoutCompetency = this.server.create('programYearObjective');
+    const programYearObjectiveWithoutCompetency = this.server.create('program-year-objective');
     const term1 = this.server.create('term', { vocabulary });
     const term2 = this.server.create('term', { vocabulary });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjectiveWithCompetency],
       meshDescriptors: [meshDescriptors[0]],
       terms: [term1],
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjectiveWithoutCompetency],
       meshDescriptors: [meshDescriptors[0], meshDescriptors[1]],

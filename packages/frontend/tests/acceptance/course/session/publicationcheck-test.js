@@ -14,11 +14,11 @@ module('Acceptance | Session - Publication Check', function (hooks) {
       school,
     });
     this.course = this.server.create('course', { school });
-    this.sessionTypes = this.server.createList('sessionType', 2, {
+    this.sessionTypes = this.server.createList('session-type', 2, {
       school,
     });
     this.term = this.server.create('term', { vocabulary });
-    this.meshDescriptor = this.server.create('meshDescriptor');
+    this.meshDescriptor = this.server.create('mesh-descriptor');
   });
 
   test('full session count', async function (assert) {
@@ -29,7 +29,7 @@ module('Acceptance | Session - Publication Check', function (hooks) {
       meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
     });
-    this.server.create('sessionObjective', { session });
+    this.server.create('session-objective', { session });
     this.server.create('offering', { session });
     await page.visit({ courseId: this.course.id, sessionId: session.id });
     await percySnapshot(assert);
@@ -55,7 +55,7 @@ module('Acceptance | Session - Publication Check', function (hooks) {
 
   test('unlink icon transitions properly', async function (assert) {
     const session = this.server.create('session', { course: this.course });
-    this.server.create('sessionObjective', { session });
+    this.server.create('session-objective', { session });
     await page.visit({ courseId: this.course.id, sessionId: session.id });
     await page.unlink.click();
     assert.ok(currentURL().startsWith('/courses/1/sessions/1'));

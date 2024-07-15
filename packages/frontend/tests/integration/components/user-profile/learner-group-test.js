@@ -13,14 +13,14 @@ module('Integration | Component | user-profile/learner-group', function (hooks) 
     const program = this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program,
       archived: false,
     });
     const cohort = this.server.create('cohort', {
       programYear,
     });
-    const learnerGroup = this.server.create('learnerGroup', {
+    const learnerGroup = this.server.create('learner-group', {
       cohort,
     });
     const model = await this.owner

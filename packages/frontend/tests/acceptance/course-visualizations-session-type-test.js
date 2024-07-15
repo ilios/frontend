@@ -14,7 +14,7 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
 
   test('it renders', async function (assert) {
     assert.expect(16);
-    const sessionType = this.server.create('sessionType');
+    const sessionType = this.server.create('session-type');
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');
     const term1 = this.server.create('term', {
@@ -35,7 +35,7 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
       terms: [term2, term3],
     });
     const session3 = this.server.create('session', sessionType);
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       session: session3,
       hours: 2,
     });

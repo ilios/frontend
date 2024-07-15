@@ -13,7 +13,7 @@ module('Acceptance | assign students', function (hooks) {
     this.school = this.server.create('school');
     this.school2 = this.server.create('school');
     const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program,
       startYear: DateTime.now().year,
     });

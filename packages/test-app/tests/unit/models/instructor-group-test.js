@@ -25,8 +25,8 @@ module('Unit | Model | InstructorGroup', function (hooks) {
       store.createRecord('offering', { session: session3 }),
     );
     (await model.ilmSessions).push(
-      store.createRecord('ilmSession', { session: session3 }),
-      store.createRecord('ilmSession', { session: session4 }),
+      store.createRecord('ilm-session', { session: session3 }),
+      store.createRecord('ilm-session', { session: session4 }),
     );
     const courses = await waitForResource(model, 'courses');
     assert.strictEqual(courses.length, 3);
@@ -51,8 +51,8 @@ module('Unit | Model | InstructorGroup', function (hooks) {
       store.createRecord('offering', { session: session3 }),
     );
     (await model.ilmSessions).push(
-      store.createRecord('ilmSession', { session: session3 }),
-      store.createRecord('ilmSession', { session: session4 }),
+      store.createRecord('ilm-session', { session: session3 }),
+      store.createRecord('ilm-session', { session: session4 }),
     );
     const sessions = await waitForResource(model, 'sessions');
     assert.strictEqual(sessions.length, 4);

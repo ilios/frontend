@@ -34,7 +34,7 @@ module('Unit | Model | Course', function (hooks) {
     });
     (await model.courseObjectives).push(courseObjective);
     assert.strictEqual(model.get('optionalPublicationIssues').length, 1);
-    (await model.meshDescriptors).push(store.createRecord('meshDescriptor'));
+    (await model.meshDescriptors).push(store.createRecord('mesh-descriptor'));
     assert.strictEqual(model.get('optionalPublicationIssues').length, 0);
   });
 
@@ -202,13 +202,13 @@ module('Unit | Model | Course', function (hooks) {
     const program1 = store.createRecord('program', { school: school2 });
     const program2 = store.createRecord('program', { school: school2 });
     const program3 = store.createRecord('program', { school: school3 });
-    const programYear1 = store.createRecord('programYear', {
+    const programYear1 = store.createRecord('program-year', {
       program: program1,
     });
-    const programYear2 = store.createRecord('programYear', {
+    const programYear2 = store.createRecord('program-year', {
       program: program2,
     });
-    const programYear3 = store.createRecord('programYear', {
+    const programYear3 = store.createRecord('program-year', {
       program: program3,
     });
     const cohort1 = store.createRecord('cohort', { programYear: programYear1 });
@@ -248,7 +248,7 @@ module('Unit | Model | Course', function (hooks) {
       school: school2,
     });
     const program = store.createRecord('program', { school: school1 });
-    const programYear = store.createRecord('programYear', { program });
+    const programYear = store.createRecord('program-year', { program });
     const cohort = store.createRecord('cohort', { programYear });
     (await course.cohorts).push(cohort);
     course.set('school', school2);

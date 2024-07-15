@@ -10,11 +10,11 @@ module('Acceptance | Session - Overview', function (hooks) {
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
     this.school = this.server.create('school');
-    this.server.create('academicYear');
+    this.server.create('academic-year');
     this.course = this.server.create('course', {
       school: this.school,
     });
-    this.sessionTypes = this.server.createList('sessionType', 2, {
+    this.sessionTypes = this.server.createList('session-type', 2, {
       school: this.school,
     });
   });
@@ -42,7 +42,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       school: this.school,
       administeredSchools: [this.school],
     });
-    const ilmSession = this.server.create('ilmSession');
+    const ilmSession = this.server.create('ilm-session');
     this.server.create('session', {
       course: this.course,
       ilmSession,
@@ -108,7 +108,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       school: this.school,
       administeredSchools: [this.school],
     });
-    const ilmSession = this.server.create('ilmSession', {
+    const ilmSession = this.server.create('ilm-session', {
       hours: 3,
     });
     this.server.create('session', {
@@ -130,7 +130,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       school: this.school,
       administeredSchools: [this.school],
     });
-    const ilmSession = this.server.create('ilmSession', {
+    const ilmSession = this.server.create('ilm-session', {
       hours: 3,
       dueDate: new Date(2021, 4, 18, 17, 0, 0),
     });
@@ -708,7 +708,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       school: this.school,
       administeredSchools: [this.school],
     });
-    const ilmSession = this.server.create('ilmSession');
+    const ilmSession = this.server.create('ilm-session');
     this.server.create('session', {
       course: this.course,
       ilmSession,
@@ -727,7 +727,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       school: this.school,
       administeredSchools: [this.school],
     });
-    const ilmSession = this.server.create('ilmSession');
+    const ilmSession = this.server.create('ilm-session');
     const session = this.server.create('session', {
       course: this.course,
       ilmSession,
@@ -781,7 +781,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       administeredSchools: [this.school],
     });
     const session = this.server.create('session', { course: this.course });
-    this.server.create('sessionObjective', { session });
+    this.server.create('session-objective', { session });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.ok(page.details.collapsedObjectives.isPresent);

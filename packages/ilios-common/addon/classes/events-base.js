@@ -14,7 +14,7 @@ export default class EventsBase extends Service {
     if (event.offering) {
       intermediary = await this.store.findRecord('offering', event.offering);
     } else {
-      intermediary = await this.store.findRecord('ilmSession', event.ilmSession);
+      intermediary = await this.store.findRecord('ilm-session', event.ilmSession);
     }
     return await intermediary.get('session');
   }

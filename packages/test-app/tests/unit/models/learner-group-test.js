@@ -50,8 +50,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       store.createRecord('offering', { session: session3 }),
     );
     (await model.ilmSessions).push(
-      store.createRecord('ilmSession', { session: session3 }),
-      store.createRecord('ilmSession', { session: session4 }),
+      store.createRecord('ilm-session', { session: session3 }),
+      store.createRecord('ilm-session', { session: session4 }),
     );
     const sessions = await waitForResource(model, 'sessions');
     assert.strictEqual(sessions.length, 4);

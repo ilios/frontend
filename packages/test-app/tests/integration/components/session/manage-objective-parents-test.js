@@ -12,7 +12,7 @@ module('Integration | Component | session/manage-objective-parents', function (h
 
   test('it renders and is accessible', async function (assert) {
     const course = this.server.create('course');
-    this.server.create('courseObjective', { course });
+    this.server.create('course-objective', { course });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('courseObjectives', await courseModel.courseObjectives);
     this.set('courseTitle', course.title);
@@ -35,17 +35,17 @@ module('Integration | Component | session/manage-objective-parents', function (h
 
   test('parent objectives are sorted correctly', async function (assert) {
     const course = this.server.create('course');
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       title: 'Aardvark',
       position: 3,
       course,
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       title: 'Zeppelin',
       position: 2,
       course,
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       title: 'Oscar',
       position: 1,
       course,

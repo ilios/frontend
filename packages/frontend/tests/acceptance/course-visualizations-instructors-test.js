@@ -23,8 +23,8 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
     const term3 = this.server.create('term', {
       vocabulary: vocabulary2,
     });
-    const sessionType1 = this.server.create('sessionType');
-    const sessionType2 = this.server.create('sessionType');
+    const sessionType1 = this.server.create('session-type');
+    const sessionType2 = this.server.create('session-type');
     const session1 = this.server.create('session', {
       sessionType: sessionType1,
       terms: [term1],
@@ -34,10 +34,10 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
       terms: [term2, term3],
     });
     const session3 = this.server.create('session');
-    const instructorGroup1 = this.server.create('instructorGroup', {
+    const instructorGroup1 = this.server.create('instructor-group', {
       users: [instructor1],
     });
-    const instructorGroup2 = this.server.create('instructorGroup', {
+    const instructorGroup2 = this.server.create('instructor-group', {
       users: [instructor2],
     });
     this.server.create('offering', {

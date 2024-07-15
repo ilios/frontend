@@ -11,10 +11,10 @@ module('Integration | Component | school-competencies-list-item', function (hook
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const pcrs1 = this.server.create('aamcPcrs', {
+    const pcrs1 = this.server.create('aamc-pcrs', {
       description: 'Zylinder',
     });
-    const pcrs2 = this.server.create('aamcPcrs', {
+    const pcrs2 = this.server.create('aamc-pcrs', {
       description: 'Alfons',
     });
     const domain = this.server.create('competency', {
@@ -23,8 +23,8 @@ module('Integration | Component | school-competencies-list-item', function (hook
     const competency = this.server.create('competency', {
       parent: domain,
     });
-    this.pcrsModel1 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs1.id);
-    this.pcrsModel2 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs2.id);
+    this.pcrsModel1 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs1.id);
+    this.pcrsModel2 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs2.id);
     this.competencyModel = await this.owner
       .lookup('service:store')
       .findRecord('competency', competency.id);

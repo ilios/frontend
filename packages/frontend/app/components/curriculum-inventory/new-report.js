@@ -54,7 +54,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     const endDate = this.academicYearCrossesCalendarYearBoundaries
       ? new Date(year + 1, 5, 30)
       : new Date(year, 11, 31);
-    const report = this.store.createRecord('curriculumInventoryReport', {
+    const report = this.store.createRecord('curriculum-inventory-report', {
       name: this.name,
       program: this.args.currentProgram,
       year: year,

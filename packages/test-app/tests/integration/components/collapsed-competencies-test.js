@@ -15,34 +15,34 @@ module('Integration | Component | collapsed competencies', function (hooks) {
     const competencyA = this.server.create('competency', { school: schoolA });
     const competencyB = this.server.create('competency', { school: schoolB });
     const competencyC = this.server.create('competency', { school: schoolB });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       competencies: [
         ...this.server.createList('competency', 2, { school: schoolB }),
         ...this.server.createList('competency', 3, { school: schoolA }),
       ],
     });
-    const pyObjectiveA = this.server.create('programYearObjective', {
+    const pyObjectiveA = this.server.create('program-year-objective', {
       programYear,
       competency: competencyA,
     });
-    const pyObjectiveB = this.server.create('programYearObjective', {
+    const pyObjectiveB = this.server.create('program-year-objective', {
       programYear,
       competency: competencyB,
     });
-    const pyObjectiveC = this.server.create('programYearObjective', {
+    const pyObjectiveC = this.server.create('program-year-objective', {
       programYear,
       competency: competencyC,
     });
     const course = this.server.create('course');
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [pyObjectiveA, pyObjectiveC],
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [pyObjectiveB],
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course,
       programYearObjectives: [pyObjectiveC],
     });

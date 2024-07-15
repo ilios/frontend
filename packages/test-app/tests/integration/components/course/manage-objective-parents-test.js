@@ -11,7 +11,7 @@ module('Integration | Component | course/manage-objective-parents', function (ho
   setupMirage(hooks);
 
   test('it renders and is accessible with a single cohort', async function (assert) {
-    const programYearObjective = this.server.create('programYearObjective');
+    const programYearObjective = this.server.create('program-year-objective');
     const cohortObjectives = [
       {
         title: 'cohort 0',
@@ -56,7 +56,7 @@ module('Integration | Component | course/manage-objective-parents', function (ho
   });
 
   test('it renders and is accessible with multiple cohorts', async function (assert) {
-    const programYearObjective = this.server.create('programYearObjective');
+    const programYearObjective = this.server.create('program-year-objective');
     const cohortObjectives = [
       {
         title: 'cohort 0',
@@ -118,11 +118,11 @@ module('Integration | Component | course/manage-objective-parents', function (ho
   });
 
   test('inactive parents are hidden unless they are selected', async function (assert) {
-    const activeProgramYearObjective = this.server.create('programYearObjective');
-    const inactiveProgramYearObjective = this.server.create('programYearObjective', {
+    const activeProgramYearObjective = this.server.create('program-year-objective');
+    const inactiveProgramYearObjective = this.server.create('program-year-objective', {
       active: false,
     });
-    const inactiveSelectedProgramYearObjective = this.server.create('programYearObjective', {
+    const inactiveSelectedProgramYearObjective = this.server.create('program-year-objective', {
       active: false,
     });
 

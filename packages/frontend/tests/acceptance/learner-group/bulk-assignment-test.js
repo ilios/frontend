@@ -27,12 +27,12 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
       title: 'group 1',
       cohort,
     });
-    this.server.create('learnerGroup', {
+    this.server.create('learner-group', {
       title: 'group 1 child 0',
       cohort,
       parent: group1,
     });
-    this.server.create('learnerGroup', {
+    this.server.create('learner-group', {
       title: 'group 1 child 1',
       cohort,
       parent: group1,

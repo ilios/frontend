@@ -127,7 +127,7 @@ module('Integration | Component | new user', function (hooks) {
       title: 'Student',
     });
     const program = this.server.create('program', { school: this.schools[0] });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program,
       startYear: new Date().getFullYear(),
     });
@@ -135,7 +135,7 @@ module('Integration | Component | new user', function (hooks) {
 
     //load all created data into the store
     await this.owner.lookup('service:store').findAll('program');
-    await this.owner.lookup('service:store').findAll('programYear');
+    await this.owner.lookup('service:store').findAll('program-year');
     await this.owner.lookup('service:store').findAll('cohort');
     this.set('transitionToUser', (userId) => {
       assert.strictEqual(Number(userId), 2);
@@ -183,21 +183,21 @@ module('Integration | Component | new user', function (hooks) {
 
   test('change school', async function (assert) {
     const program1 = this.server.create('program', { school: this.schools[0] });
-    const programYear1 = this.server.create('programYear', {
+    const programYear1 = this.server.create('program-year', {
       program: program1,
       startYear: new Date().getFullYear(),
     });
     this.server.create('cohort', { programYear: programYear1 });
 
     const program2 = this.server.create('program', { school: this.schools[1] });
-    const programYear2 = this.server.create('programYear', {
+    const programYear2 = this.server.create('program-year', {
       program: program2,
       startYear: new Date().getFullYear() - 1,
       duration: 4,
     });
     this.server.create('cohort', { programYear: programYear2 });
     // this program is too old and will not show as option in the dropdown
-    const programYear3 = this.server.create('programYear', {
+    const programYear3 = this.server.create('program-year', {
       program: program2,
       startYear: new Date().getFullYear() - 5,
     });
@@ -205,7 +205,7 @@ module('Integration | Component | new user', function (hooks) {
 
     //load all created data into the store
     await this.owner.lookup('service:store').findAll('program');
-    await this.owner.lookup('service:store').findAll('programYear');
+    await this.owner.lookup('service:store').findAll('program-year');
     await this.owner.lookup('service:store').findAll('cohort');
 
     await render(hbs`<NewUser @close={{(noop)}}  />`);

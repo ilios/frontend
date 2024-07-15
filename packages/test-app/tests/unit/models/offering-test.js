@@ -187,10 +187,10 @@ module('Unit | Model | Offering', function (hooks) {
     const instructor2 = store.createRecord('user');
     const instructor3 = store.createRecord('user');
     const instructor4 = store.createRecord('user');
-    const instructorGroup1 = store.createRecord('instructorGroup', {
+    const instructorGroup1 = store.createRecord('instructor-group', {
       users: [instructor1, instructor2],
     });
-    const instructorGroup2 = store.createRecord('instructorGroup', {
+    const instructorGroup2 = store.createRecord('instructor-group', {
       users: [instructor3],
     });
     const model = store.createRecord('offering', {

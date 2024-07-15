@@ -13,7 +13,7 @@ module('Acceptance | Course - Terms', function (hooks) {
       school: this.school,
       active: true,
     });
-    this.server.create('academicYear', { id: 2013 });
+    this.server.create('academic-year', { id: 2013 });
 
     this.server.create('term', {
       vocabularyId: 1,

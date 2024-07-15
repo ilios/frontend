@@ -16,7 +16,7 @@ export default class CurriculumInventoryReportDetailsComponent extends Component
   }
 
   finalize = dropTask(async () => {
-    const newExport = this.store.createRecord('curriculumInventoryExport', {
+    const newExport = this.store.createRecord('curriculum-inventory-export', {
       report: this.args.report,
     });
     this.showFinalizeConfirmation = false;

@@ -14,7 +14,7 @@ module('Acceptance | Program - Publication Check', function (hooks) {
       startYear: 2013,
       school,
     });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     this.server.create('cohort', { programYear });
     this.fullProgram = program;
     this.emptyProgram = this.server.create('program', {

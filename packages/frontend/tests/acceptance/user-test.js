@@ -27,7 +27,7 @@ module('Acceptance | User', function (hooks) {
     this.cohort1 = this.server.create('cohort', { title: 'Medicine', programYearId: 1 });
     this.cohort2 = this.server.create('cohort', { programYearId: 2 });
     this.cohort3 = this.server.create('cohort', { programYearId: 3 });
-    this.server.createList('learnerGroup', 5, { title: 'Group 1', cohortId: 1 });
+    this.server.createList('learner-group', 5, { title: 'Group 1', cohortId: 1 });
     await setupAuthentication(userObject);
   });
 

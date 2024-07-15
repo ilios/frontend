@@ -19,7 +19,7 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
     const term1 = this.server.create('term', { vocabulary: vocabulary1 });
     const term2 = this.server.create('term', { vocabulary: vocabulary1 });
     const term3 = this.server.create('term', { vocabulary: vocabulary2 });
-    const courseObjective = this.server.create('courseObjective', {
+    const courseObjective = this.server.create('course-objective', {
       course: this.course,
       terms: [term1, term2, term3],
     });
@@ -88,7 +88,7 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
 
   test('manage new', async function (assert) {
     assert.expect(1);
-    const courseObjective = this.server.create('courseObjective', {
+    const courseObjective = this.server.create('course-objective', {
       course: this.course,
     });
     const subject = await this.owner

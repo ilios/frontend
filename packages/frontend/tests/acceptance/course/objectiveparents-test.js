@@ -10,7 +10,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
     const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });
     const competency1 = this.server.create('competency', {
       school: this.school,
@@ -20,15 +20,15 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       school: this.school,
       programYears: [programYear],
     });
-    const parent = this.server.create('programYearObjective', {
+    const parent = this.server.create('program-year-objective', {
       programYear,
       competency: competency1,
     });
-    this.server.create('programYearObjective', {
+    this.server.create('program-year-objective', {
       programYear,
       competency: competency2,
     });
-    this.server.create('programYearObjective', {
+    this.server.create('program-year-objective', {
       programYear,
       competency: competency2,
     });
@@ -37,11 +37,11 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       school: this.school,
       cohorts: [cohort],
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course: this.course,
       programYearObjectives: [parent],
     });
-    this.server.create('courseObjective', { course: this.course });
+    this.server.create('course-objective', { course: this.course });
   });
 
   test('list parent objectives by competency', async function (assert) {

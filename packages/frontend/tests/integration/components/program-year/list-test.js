@@ -28,17 +28,17 @@ module('Integration | Component | program-year/list', function (hooks) {
     const school = this.server.create('school');
     const programYears = [1, 2, 3].map((i) => {
       const cohort = this.server.create('cohort');
-      const meshDescriptors = this.server.createList('meshDescriptor', 3);
+      const meshDescriptors = this.server.createList('mesh-descriptor', 3);
       const vocabulary = this.server.create('vocabulary', { school });
       const terms = this.server.createList('term', 4, { vocabulary });
       const competencies = this.server.createList('competency', 2);
       const directors = this.server.createList('user', 2);
-      const programYearAncestor = this.server.create('programYearObjective');
-      const programYearObjectives = this.server.createList('programYearObjective', 2, {
+      const programYearAncestor = this.server.create('program-year-objective');
+      const programYearObjectives = this.server.createList('program-year-objective', 2, {
         meshDescriptors,
         terms,
       });
-      const programYearObjectiveWithAncestor = this.server.create('programYearObjective', {
+      const programYearObjectiveWithAncestor = this.server.create('program-year-objective', {
         ancestor: programYearAncestor,
       });
       return this.server.create('program-year', {
@@ -95,7 +95,7 @@ module('Integration | Component | program-year/list', function (hooks) {
     await component.expandCollapse.toggle();
     await component.newProgramYear.years.select(thisYear);
     await component.newProgramYear.done.click();
-    const programYears = await this.owner.lookup('service:store').findAll('programYear');
+    const programYears = await this.owner.lookup('service:store').findAll('program-year');
     const sortedProgramYears = sortBy(programYears.slice(), 'id');
     const newProgramYear = sortedProgramYears.slice().reverse()[0];
     const originalProgramYear = sortedProgramYears[sortedProgramYears.length - 2];

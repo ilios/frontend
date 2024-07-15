@@ -506,7 +506,7 @@ module('Integration | Component | course/rollover', function (hooks) {
       school,
     });
     const startYear = new Date().getFullYear();
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program,
       published: true,
       archived: false,

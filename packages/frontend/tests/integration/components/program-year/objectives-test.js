@@ -13,14 +13,14 @@ module('Integration | Component | program-year/objectives', function (hooks) {
   test('it renders and is accessible', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const domains = this.server.createList('competency', 2, { school });
 
     const competencies = this.server.createList('competency', 2, { school, parent: domains[0] });
     this.server.createList('competency', 2, { school, parent: domains[1] });
 
-    this.server.create('programYearObjective', { programYear, competency: competencies[0] });
-    this.server.create('programYearObjective', { programYear });
+    this.server.create('program-year-objective', { programYear, competency: competencies[0] });
+    this.server.create('program-year-objective', { programYear });
 
     const programYearModel = await this.owner
       .lookup('service:store')
@@ -64,7 +64,7 @@ module('Integration | Component | program-year/objectives', function (hooks) {
   test('it loads data for program year domains', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const domain1 = this.server.create('competency', {
       school,
       programYears: [programYear],

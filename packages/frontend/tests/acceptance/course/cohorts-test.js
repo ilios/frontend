@@ -14,7 +14,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
       administeredSchools: [school],
     });
     const currentYear = new Date().getFullYear();
-    this.server.create('academicYear', { id: currentYear });
+    this.server.create('academic-year', { id: currentYear });
     const program = this.server.create('program', { school, duration: 4 });
     const cohort1 = this.server.create('cohort');
     const cohort2 = this.server.create('cohort');
@@ -22,12 +22,12 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     const cohort4 = this.server.create('cohort');
 
     // first two should get through the filter
-    const programYear1 = this.server.create('programYear', {
+    const programYear1 = this.server.create('program-year', {
       program,
       cohort: cohort1,
       startYear: currentYear - program.duration,
     });
-    const programYear2 = this.server.create('programYear', {
+    const programYear2 = this.server.create('program-year', {
       program,
       cohort: cohort2,
       startYear: currentYear - program.duration - 4,
@@ -37,26 +37,26 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     // (startYear + duration) <= (currentYear + duration)
     // &&
     // (startYear + duration) >= (currentYear + duration)
-    const programYear3 = this.server.create('programYear', {
+    const programYear3 = this.server.create('program-year', {
       program,
       cohort: cohort3,
       startYear: currentYear - program.duration - 5,
     });
-    const programYear4 = this.server.create('programYear', {
+    const programYear4 = this.server.create('program-year', {
       program,
       cohort: cohort4,
       startYear: currentYear - program.duration + 5,
     });
-    const programYearObjective1 = this.server.create('programYearObjective', {
+    const programYearObjective1 = this.server.create('program-year-objective', {
       programYear: programYear1,
     });
-    const programYearObjective2 = this.server.create('programYearObjective', {
+    const programYearObjective2 = this.server.create('program-year-objective', {
       programYear: programYear2,
     });
-    const programYearObjective3 = this.server.create('programYearObjective', {
+    const programYearObjective3 = this.server.create('program-year-objective', {
       programYear: programYear3,
     });
-    const programYearObjective4 = this.server.create('programYearObjective', {
+    const programYearObjective4 = this.server.create('program-year-objective', {
       programYear: programYear4,
     });
 
@@ -66,7 +66,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
       cohorts: [programYear1.cohort], //instead of just cohort1 otherwise the relationship gets munged
     });
 
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course: this.course,
       programYearObjectives: [
         programYearObjective1,

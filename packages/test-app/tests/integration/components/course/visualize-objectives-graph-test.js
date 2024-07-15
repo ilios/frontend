@@ -12,27 +12,27 @@ module('Integration | Component | course/visualize-objectives-graph', function (
   hooks.beforeEach(async function () {
     const course = this.server.create('course');
     const competencies = this.server.createList('competency', 3);
-    const programYearObjective1 = this.server.create('programYearObjective', {
+    const programYearObjective1 = this.server.create('program-year-objective', {
       competency: competencies[0],
     });
-    const programYearObjective2 = this.server.create('programYearObjective', {
+    const programYearObjective2 = this.server.create('program-year-objective', {
       competency: competencies[1],
     });
-    const programYearObjective3 = this.server.create('programYearObjective', {
+    const programYearObjective3 = this.server.create('program-year-objective', {
       competency: competencies[2],
     });
-    const programYearObjective4 = this.server.create('programYearObjective', {
+    const programYearObjective4 = this.server.create('program-year-objective', {
       competency: competencies[1],
     });
-    const courseObjective1 = this.server.create('courseObjective', {
+    const courseObjective1 = this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective1, programYearObjective2, programYearObjective4],
     });
-    const courseObjective2 = this.server.create('courseObjective', {
+    const courseObjective2 = this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective2],
     });
-    const courseObjective3 = this.server.create('courseObjective', {
+    const courseObjective3 = this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective3],
     });
@@ -48,15 +48,15 @@ module('Integration | Component | course/visualize-objectives-graph', function (
       title: 'Empty Session',
       course,
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: session1,
       courseObjectives: [courseObjective1],
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: session2,
       courseObjectives: [courseObjective2],
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: session3,
       courseObjectives: [courseObjective3],
     });
@@ -240,13 +240,13 @@ module('Integration | Component | course/visualize-objectives-graph', function (
       title: 'Empty Session',
       course,
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: session1,
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: session2,
     });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session: session3,
     });
     this.server.create('offering', {
@@ -282,8 +282,8 @@ module('Integration | Component | course/visualize-objectives-graph', function (
   // See https://github.com/ilios/ilios/issues/5305
   test('a course without mapped course objectives shows 0 percent for each objective in the data table', async function (assert) {
     const course = this.server.create('course');
-    this.server.create('courseObjective', { course });
-    this.server.create('courseObjective', { course });
+    this.server.create('course-objective', { course });
+    this.server.create('course-objective', { course });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(

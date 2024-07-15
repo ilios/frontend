@@ -10,15 +10,15 @@ module('Integration | Component | reports/subject/new/academic-year', function (
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.server.create('academicYear', {
+    this.server.create('academic-year', {
       id: 2015,
       title: 2015,
     });
-    this.server.create('academicYear', {
+    this.server.create('academic-year', {
       id: 2031,
       title: 2031,
     });
-    this.server.create('academicYear', {
+    this.server.create('academic-year', {
       id: 2060,
       title: 2060,
     });

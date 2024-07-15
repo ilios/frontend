@@ -13,7 +13,7 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
     this.server.create('program', {
       school: this.school,
     });
-    this.server.create('programYear', {
+    this.server.create('program-year', {
       programId: 1,
     });
     this.server.create('cohort', {

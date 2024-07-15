@@ -13,17 +13,17 @@ module('Integration | Component | program-year/objective-list', function (hooks)
   test('it renders and is accessible', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const vocabulary = this.server.create('vocabulary', { school });
     const term1 = this.server.create('term', { vocabulary });
     const term2 = this.server.create('term', { vocabulary });
-    this.server.create('programYearObjective', {
+    this.server.create('program-year-objective', {
       programYear,
       title: 'Objective A',
       position: 0,
       terms: [term1],
     });
-    this.server.create('programYearObjective', {
+    this.server.create('program-year-objective', {
       programYear,
       title: 'Objective B',
       position: 0,
@@ -68,7 +68,7 @@ module('Integration | Component | program-year/objective-list', function (hooks)
   test('empty list', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -87,8 +87,8 @@ module('Integration | Component | program-year/objective-list', function (hooks)
   test('no "sort objectives" button in list with one item', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
-    this.server.create('programYearObjective', { programYear, position: 0 });
+    const programYear = this.server.create('program-year', { program });
+    this.server.create('program-year-objective', { programYear, position: 0 });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -114,11 +114,11 @@ module('Integration | Component | program-year/objective-list', function (hooks)
     const competency1 = this.server.create('competency', { school, parent: domain1 });
     const domain2 = this.server.create('competency', { school });
     this.server.createList('competency', 2, { school, parent: domain2 });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program,
       competencies: [competency1, domain2],
     });
-    this.server.create('programYearObjective', { programYear });
+    this.server.create('program-year-objective', { programYear });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);

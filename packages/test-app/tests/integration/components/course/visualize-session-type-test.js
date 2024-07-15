@@ -13,7 +13,7 @@ module('Integration | Component | course/visualize-session-type', function (hook
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
     const session = this.server.create('session', { course });
-    const sessionType = this.server.create('sessionType', { school, sessions: [session] });
+    const sessionType = this.server.create('session-type', { school, sessions: [session] });
     this.sessionTypeModel = await this.owner
       .lookup('service:store')
       .findRecord('session-type', sessionType.id);

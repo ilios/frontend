@@ -17,7 +17,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       this.program = this.server.create('program', {
         school: this.school,
       });
-      const programYear = this.server.create('programYear', {
+      const programYear = this.server.create('program-year', {
         program: this.program,
       });
       this.server.create('cohort', {
@@ -27,15 +27,15 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         school: this.school,
         cohortIds: [1],
       });
-      this.server.create('sessionType');
-      this.server.createList('learnerGroup', 5, {
+      this.server.create('session-type');
+      this.server.createList('learner-group', 5, {
         cohortId: 1,
       });
-      this.server.createList('learnerGroup', 2, {
+      this.server.createList('learner-group', 2, {
         cohortId: 1,
         parentId: 4,
       });
-      this.server.create('learnerGroup', {
+      this.server.create('learner-group', {
         cohortId: 1,
         parentId: 5,
       });
@@ -53,7 +53,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('initial selected learner groups', async function (assert) {
       assert.expect(10);
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [1, 2, 4],
         learnerIds: [2, 3],
@@ -89,7 +89,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('manager display', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [1, 2, 4],
         learnerIds: [2, 3],
@@ -212,7 +212,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('learner group manager display with no selected groups or learners', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [],
         learnerIds: [],
@@ -300,7 +300,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('filter learner groups by top group should include all subgroups', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [1, 2, 4],
       });
@@ -351,7 +351,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('filter learner groups by subgroup should include top group', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [1, 2, 4],
       });
@@ -402,7 +402,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('add learner group', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [1, 2, 4],
       });
@@ -531,7 +531,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('add learner sub group', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [1, 2, 4],
       });
@@ -646,7 +646,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('add learner group with children', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [1, 2],
       });
@@ -778,7 +778,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('add learner group with children and remove one child', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [1, 2],
       });
@@ -927,7 +927,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('undo learner group change', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [1, 2, 4],
       });
@@ -1006,7 +1006,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('add learner', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerIds: [2, 3],
       });
@@ -1057,7 +1057,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('remove learner', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerIds: [2, 3],
       });
@@ -1091,7 +1091,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
     test('undo learner change', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      this.server.create('ilmSession', {
+      this.server.create('ilm-session', {
         sessionId: 1,
         learnerIds: [2, 3],
       });
@@ -1126,11 +1126,11 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
   test('initial state with save works as expected #1773', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    this.server.create('sessionType');
+    this.server.create('session-type');
     this.server.create('program', {
       school: this.school,
     });
-    this.server.create('programYear', {
+    this.server.create('program-year', {
       programId: 1,
     });
     this.server.create('cohort', {
@@ -1140,13 +1140,13 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       school: this.school,
       cohortIds: [1],
     });
-    this.server.createList('learnerGroup', 2, {
+    this.server.createList('learner-group', 2, {
       cohortId: 1,
     });
     this.server.create('session', {
       courseId: 1,
     });
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       sessionId: 1,
     });
     await page.visit({ courseId: 1, sessionId: 1 });

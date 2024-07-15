@@ -9,7 +9,7 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication();
-    this.server.create('academicYear', { id: 2013 });
+    this.server.create('academic-year', { id: 2013 });
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
@@ -18,16 +18,16 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
       school: this.school,
     });
     const session = this.server.create('session', { course });
-    const meshDescriptors = this.server.createList('meshDescriptor', 6);
-    this.server.create('sessionObjective', {
+    const meshDescriptors = this.server.createList('mesh-descriptor', 6);
+    this.server.create('session-objective', {
       session,
       meshDescriptors: [meshDescriptors.shift()],
     });
-    this.server.create('sessionObjective', { session, meshDescriptors });
-    this.server.create('sessionObjective', { session });
+    this.server.create('session-objective', { session, meshDescriptors });
+    this.server.create('session-objective', { session });
 
     //create some extra descriptors that shouldn't be found in search
-    this.server.createList('meshDescriptor', 10, {
+    this.server.createList('mesh-descriptor', 10, {
       name: 'nope',
       annotation: 'nope',
     });

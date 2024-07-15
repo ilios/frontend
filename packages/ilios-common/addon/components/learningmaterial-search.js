@@ -25,7 +25,7 @@ export default class LearningMaterialSearchComponent extends Component {
     }
     this.searchReturned = false;
     this.query = query;
-    const results = await this.store.query('learningMaterial', {
+    const results = await this.store.query('learning-material', {
       q: query,
       limit: this.searchResultsPerPage + 1,
       'order_by[title]': 'ASC',
@@ -53,7 +53,7 @@ export default class LearningMaterialSearchComponent extends Component {
   }
 
   searchMore = dropTask(async () => {
-    const results = await this.store.query('learningMaterial', {
+    const results = await this.store.query('learning-material', {
       q: this.query,
       limit: this.searchResultsPerPage + 1,
       offset: this.searchPage * this.searchResultsPerPage,

@@ -16,7 +16,7 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
     });
     this.ilmSession = await this.owner
       .lookup('service:store')
-      .findRecord('ilmSession', ilmSession.id);
+      .findRecord('ilm-session', ilmSession.id);
   });
 
   test('it renders and is accessible', async function (assert) {

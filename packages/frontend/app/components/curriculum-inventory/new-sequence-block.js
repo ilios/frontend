@@ -277,7 +277,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     if (!isValid) {
       return false;
     }
-    const block = this.store.createRecord('curriculumInventorySequenceBlock', {
+    const block = this.store.createRecord('curriculum-inventory-sequence-block', {
       title: this.title,
       description: this.description,
       parent: this.args.parent,

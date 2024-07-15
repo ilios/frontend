@@ -13,15 +13,15 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       year: 2013,
       school: this.school,
     });
-    const courseObjectives = this.server.createList('courseObjective', 3, {
+    const courseObjectives = this.server.createList('course-objective', 3, {
       course,
     });
     const session = this.server.create('session', { course });
-    this.server.create('sessionObjective', {
+    this.server.create('session-objective', {
       session,
       courseObjectives: courseObjectives.slice(0, 2),
     });
-    this.server.create('sessionObjective', { session });
+    this.server.create('session-objective', { session });
   });
 
   test('list parent objectives', async function (assert) {

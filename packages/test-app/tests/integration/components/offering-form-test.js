@@ -658,11 +658,11 @@ module('Integration | Component | offering form', function (hooks) {
   test('learner groups sort order', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('programYear', { program });
+    const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });
-    this.server.create('learnerGroup', { cohort, title: 'Learner Group 1' });
-    this.server.create('learnerGroup', { cohort, title: 'Learner Group 10' });
-    this.server.create('learnerGroup', { cohort, title: 'Learner Group 2' });
+    this.server.create('learner-group', { cohort, title: 'Learner Group 1' });
+    this.server.create('learner-group', { cohort, title: 'Learner Group 10' });
+    this.server.create('learner-group', { cohort, title: 'Learner Group 2' });
 
     const cohortModel = await this.owner.lookup('service:store').findRecord('cohort', cohort.id);
     this.set('cohorts', [cohortModel]);

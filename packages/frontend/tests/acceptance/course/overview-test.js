@@ -12,13 +12,13 @@ module('Acceptance | Course - Overview', function (hooks) {
     this.intl = this.owner.lookup('service:intl');
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
-    this.server.createList('courseClerkshipType', 2);
+    this.server.createList('course-clerkship-type', 2);
   });
 
   module('check fields', function (hooks2) {
     hooks2.beforeEach(function () {
       this.user.update({ administeredSchools: [this.school] });
-      this.clerkshipType = this.server.create('courseClerkshipType');
+      this.clerkshipType = this.server.create('course-clerkship-type');
       this.course = this.server.create('course', {
         year: 2013,
         school: this.school,
@@ -40,7 +40,7 @@ module('Acceptance | Course - Overview', function (hooks) {
         .findRecord('course', this.course.id);
       const clerkshipTypeModel = await this.owner
         .lookup('service:store')
-        .findRecord('courseClerkshipType', this.clerkshipType.id);
+        .findRecord('course-clerkship-type', this.clerkshipType.id);
       await page.visit({ courseId: courseModel.id });
       await percySnapshot(assert);
       assert.strictEqual(
@@ -77,7 +77,7 @@ module('Acceptance | Course - Overview', function (hooks) {
         .findRecord('course', this.course.id);
       const clerkshipTypeModel = await this.owner
         .lookup('service:store')
-        .findRecord('courseClerkshipType', this.clerkshipType.id);
+        .findRecord('course-clerkship-type', this.clerkshipType.id);
       await page.visit({ courseId: courseModel.id, details: true });
       await percySnapshot(assert);
       assert.strictEqual(
@@ -150,7 +150,7 @@ module('Acceptance | Course - Overview', function (hooks) {
 
   test('remove clerkship type', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const clerkshipType = this.server.create('courseClerkshipType');
+    const clerkshipType = this.server.create('course-clerkship-type');
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,

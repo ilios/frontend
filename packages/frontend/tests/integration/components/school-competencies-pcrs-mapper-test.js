@@ -11,31 +11,31 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const pcrs1 = this.server.create('aamcPcrs', {
+    const pcrs1 = this.server.create('aamc-pcrs', {
       id: 'aamc-pcrs-comp-c0201',
       description: 'Foo',
     });
-    const pcrs2 = this.server.create('aamcPcrs', {
+    const pcrs2 = this.server.create('aamc-pcrs', {
       id: 'aamc-pcrs-comp-c0555',
       description: 'Bar',
     });
-    const pcrs3 = this.server.create('aamcPcrs', {
+    const pcrs3 = this.server.create('aamc-pcrs', {
       id: 'aamc-pcrs-comp-c0125',
       description: 'Baz',
     });
-    const pcrs4 = this.server.create('aamcPcrs', {
+    const pcrs4 = this.server.create('aamc-pcrs', {
       id: 'aamc-pcrs-comp-c0033',
       description: 'Fiz',
     });
-    const pcrs5 = this.server.create('aamcPcrs', {
+    const pcrs5 = this.server.create('aamc-pcrs', {
       id: 'aamc-pcrs-comp-c1522',
       description: 'Far',
     });
-    this.pcrs1 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs1.id);
-    this.pcrs2 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs2.id);
-    this.pcrs3 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs3.id);
-    this.pcrs4 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs4.id);
-    this.pcrs5 = await this.owner.lookup('service:store').findRecord('aamcPcrs', pcrs5.id);
+    this.pcrs1 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs1.id);
+    this.pcrs2 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs2.id);
+    this.pcrs3 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs3.id);
+    this.pcrs4 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs4.id);
+    this.pcrs5 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs5.id);
     this.allPcrses = [this.pcrs1, this.pcrs2, this.pcrs3, this.pcrs4, this.pcrs5];
   });
 

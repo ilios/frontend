@@ -14,9 +14,9 @@ module('Acceptance | course visualizations - session-types', function (hooks) {
 
   test('it renders', async function (assert) {
     assert.expect(14);
-    const sessionType1 = this.server.create('sessionType');
-    const sessionType2 = this.server.create('sessionType');
-    const sessionType3 = this.server.create('sessionType');
+    const sessionType1 = this.server.create('session-type');
+    const sessionType2 = this.server.create('session-type');
+    const sessionType3 = this.server.create('session-type');
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');
     const term1 = this.server.create('term', {
@@ -39,7 +39,7 @@ module('Acceptance | course visualizations - session-types', function (hooks) {
     const session3 = this.server.create('session', {
       sessionType: sessionType3,
     });
-    this.server.create('ilmSession', {
+    this.server.create('ilm-session', {
       session: session3,
       hours: 2,
     });

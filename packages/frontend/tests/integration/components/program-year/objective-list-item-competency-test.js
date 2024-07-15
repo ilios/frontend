@@ -27,7 +27,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
   });
 
   test('it renders and is accessible empty and un-editable', async function (assert) {
-    const objective = this.server.create('programYearObjective');
+    const objective = this.server.create('program-year-objective');
     const objectiveModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year-objective', objective.id);
@@ -49,7 +49,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
   test('it renders and is accessible un-editable', async function (assert) {
     const domain = this.server.create('competency');
     const competency = this.server.create('competency', { parent: domain });
-    const objective = this.server.create('programYearObjective', { competency });
+    const objective = this.server.create('program-year-objective', { competency });
     const objectiveModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year-objective', objective.id);
@@ -70,7 +70,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
 
   test('it renders and is accessible un-editable with no domain', async function (assert) {
     const competency = this.server.create('competency');
-    const objective = this.server.create('programYearObjective', { competency });
+    const objective = this.server.create('program-year-objective', { competency });
     const objectiveModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year-objective', objective.id);
@@ -92,7 +92,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
   test('it renders and is accessible editable', async function (assert) {
     const domain = this.server.create('competency');
     const competency = this.server.create('competency', { parent: domain });
-    const objective = this.server.create('programYearObjective', {
+    const objective = this.server.create('program-year-objective', {
       competency,
     });
     const objectiveModel = await this.owner
@@ -115,7 +115,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
 
   test('it renders and is accessible editable with no domain', async function (assert) {
     const competency = this.server.create('competency');
-    const objective = this.server.create('programYearObjective', {
+    const objective = this.server.create('program-year-objective', {
       competency,
     });
     const objectiveModel = await this.owner
@@ -140,7 +140,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     assert.expect(1);
     const domain = this.server.create('competency');
     const competency = this.server.create('competency', { parent: domain });
-    const objective = this.server.create('programYearObjective', {
+    const objective = this.server.create('program-year-objective', {
       competency,
     });
     const objectiveModel = await this.owner
@@ -166,7 +166,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     assert.expect(1);
     const domain = this.server.create('competency');
     const competency = this.server.create('competency', { parent: domain });
-    const objective = this.server.create('programYearObjective', {
+    const objective = this.server.create('program-year-objective', {
       competency,
     });
     const objectiveModel = await this.owner
@@ -192,7 +192,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     assert.expect(1);
     const domain = this.server.create('competency');
     const competency = this.server.create('competency', { parent: domain });
-    const objective = this.server.create('programYearObjective', {
+    const objective = this.server.create('program-year-objective', {
       competency,
     });
     const objectiveModel = await this.owner

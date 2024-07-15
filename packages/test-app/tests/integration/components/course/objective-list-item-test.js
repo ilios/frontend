@@ -13,10 +13,10 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   test('it renders and is accessible', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjective = this.server.create('course-objective', { course });
     const store = this.owner.lookup('service:store');
     const courseModel = await store.findRecord('course', course.id);
-    const courseObjectiveModel = await store.findRecord('courseObjective', courseObjective.id);
+    const courseObjectiveModel = await store.findRecord('course-objective', courseObjective.id);
     this.set('course', courseModel);
     this.set('courseObjective', courseObjectiveModel);
     await render(
@@ -40,10 +40,10 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   test('can change title', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjective = this.server.create('course-objective', { course });
     const store = this.owner.lookup('service:store');
     const courseModel = await store.findRecord('course', course.id);
-    const courseObjectiveModel = await store.findRecord('courseObjective', courseObjective.id);
+    const courseObjectiveModel = await store.findRecord('course-objective', courseObjective.id);
     this.set('course', courseModel);
     this.set('courseObjective', courseObjectiveModel);
     await render(
@@ -66,10 +66,10 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   test('can manage parents', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjective = this.server.create('course-objective', { course });
     const store = this.owner.lookup('service:store');
     const courseModel = await store.findRecord('course', course.id);
-    const courseObjectiveModel = await store.findRecord('courseObjective', courseObjective.id);
+    const courseObjectiveModel = await store.findRecord('course-objective', courseObjective.id);
     this.set('course', courseModel);
     this.set('courseObjective', courseObjectiveModel);
     await render(
@@ -88,10 +88,10 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   test('can manage descriptors', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjective = this.server.create('course-objective', { course });
     const store = this.owner.lookup('service:store');
     const courseModel = await store.findRecord('course', course.id);
-    const courseObjectiveModel = await store.findRecord('courseObjective', courseObjective.id);
+    const courseObjectiveModel = await store.findRecord('course-objective', courseObjective.id);
     this.set('course', courseModel);
     this.set('courseObjective', courseObjectiveModel);
     await render(
@@ -110,10 +110,10 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   test('can manage terms', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjective = this.server.create('course-objective', { course });
     const store = this.owner.lookup('service:store');
     const courseModel = await store.findRecord('course', course.id);
-    const courseObjectiveModel = await store.findRecord('courseObjective', courseObjective.id);
+    const courseObjectiveModel = await store.findRecord('course-objective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     this.set('course', courseModel);
     await render(
@@ -133,10 +133,10 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   test('can trigger removal', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjective = this.server.create('course-objective', { course });
     const store = this.owner.lookup('service:store');
     const courseModel = await store.findRecord('course', course.id);
-    const courseObjectiveModel = await store.findRecord('courseObjective', courseObjective.id);
+    const courseObjectiveModel = await store.findRecord('course-objective', courseObjective.id);
     this.set('course', courseModel);
     this.set('courseObjective', courseObjectiveModel);
     await render(

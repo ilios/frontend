@@ -113,12 +113,12 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
         this.server.create('offering', { session: sessions[0] }),
         this.server.create('offering', { session: sessions[1] }),
       ],
-      ilmSessions: [this.server.create('ilmSession', { session: sessions[3] })],
+      ilmSessions: [this.server.create('ilm-session', { session: sessions[3] })],
     });
     this.server.create('instructor-group', {
       school,
       offerings: [],
-      ilmSessions: [this.server.create('ilmSession', { session: sessions[2] })],
+      ilmSessions: [this.server.create('ilm-session', { session: sessions[2] })],
     });
     this.server.create('instructor-group', {
       school,

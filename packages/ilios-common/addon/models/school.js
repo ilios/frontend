@@ -12,7 +12,7 @@ export default class School extends Model {
   iliosAdministratorEmail;
   @attr('string')
   changeAlertRecipients;
-  @hasMany('competencies', { async: true, inverse: 'school' })
+  @hasMany('competency', { async: true, inverse: 'school' })
   competencies;
   @hasMany('course', { async: true, inverse: 'school' })
   courses;

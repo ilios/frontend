@@ -26,11 +26,11 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const program = this.server.create('program', {
       school: this.school,
     });
-    const programYear1 = this.server.create('programYear', {
+    const programYear1 = this.server.create('program-year', {
       program,
       startYear: 2015,
     });
-    const programYear2 = this.server.create('programYear', {
+    const programYear2 = this.server.create('program-year', {
       program,
       startYear: 2016,
     });
@@ -73,7 +73,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       course: course2,
       sessionType: sessionType2,
     });
-    this.server.create('academicYear', {
+    this.server.create('academic-year', {
       id: 2015,
     });
     this.server.create('offering', {

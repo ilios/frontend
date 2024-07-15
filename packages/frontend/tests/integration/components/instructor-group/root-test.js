@@ -24,14 +24,14 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     const session2 = this.server.create('session', { course: course2 });
     const offering1 = this.server.create('offering', { session: session1 });
     const offering2 = this.server.create('offering', { session: session2 });
-    const instructorGroup = this.server.create('instructorGroup', {
+    const instructorGroup = this.server.create('instructor-group', {
       users: [user1, user2],
       offerings: [offering1, offering2],
       school,
     });
     this.instructorGroup = await this.owner
       .lookup('service:store')
-      .findRecord('instructorGroup', instructorGroup.id);
+      .findRecord('instructor-group', instructorGroup.id);
   });
 
   test('it renders', async function (assert) {

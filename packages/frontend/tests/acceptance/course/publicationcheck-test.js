@@ -15,7 +15,7 @@ module('Acceptance | Course - Publication Check', function (hooks) {
     const program = this.server.create('program', {
       school,
     });
-    const programYear = this.server.create('programYear', {
+    const programYear = this.server.create('program-year', {
       program,
     });
     const cohort = this.server.create('cohort', {
@@ -24,7 +24,7 @@ module('Acceptance | Course - Publication Check', function (hooks) {
     const term = this.server.create('term', {
       vocabulary,
     });
-    const meshDescriptor = this.server.create('meshDescriptor');
+    const meshDescriptor = this.server.create('mesh-descriptor');
     this.fullCourse = this.server.create('course', {
       year: 2013,
       school,
@@ -32,7 +32,7 @@ module('Acceptance | Course - Publication Check', function (hooks) {
       terms: [term],
       meshDescriptors: [meshDescriptor],
     });
-    this.server.create('courseObjective', { course: this.fullCourse });
+    this.server.create('course-objective', { course: this.fullCourse });
     this.emptyCourse = this.server.create('course', {
       year: 2013,
       school,

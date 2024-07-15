@@ -24,19 +24,19 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
       programYears,
     });
 
-    const programYearObjective1 = this.server.create('programYearObjective', {
+    const programYearObjective1 = this.server.create('program-year-objective', {
       programYear: programYears[0],
       competency: competencies[0],
     });
-    this.server.create('programYearObjective', {
+    this.server.create('program-year-objective', {
       programYear: programYears[0],
       competency: competencies[1],
     });
-    this.server.create('programYearObjective', {
+    this.server.create('program-year-objective', {
       programYear: programYears[1],
       competency: competencies[0],
     });
-    const programYearObjective4 = this.server.create('programYearObjective', {
+    const programYearObjective4 = this.server.create('program-year-objective', {
       programYear: programYears[1],
       competency: competencies[1],
     });
@@ -46,11 +46,11 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
       school: this.school,
       cohorts: [cohort1, cohort2],
     });
-    this.server.create('courseObjective', {
+    this.server.create('course-objective', {
       course: this.course,
       programYearObjectives: [programYearObjective1, programYearObjective4],
     });
-    this.server.create('courseObjective', { course: this.course });
+    this.server.create('course-objective', { course: this.course });
   });
 
   test('list parent objectives by competency', async function (assert) {

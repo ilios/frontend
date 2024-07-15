@@ -20,7 +20,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     this.today = DateTime.fromObject({ hour: 8 });
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    this.sessionType = this.server.create('sessionType', {
+    this.sessionType = this.server.create('session-type', {
       school: this.school,
     });
 
@@ -29,11 +29,11 @@ module('Acceptance | Course - Session List', function (hooks) {
     const instructor1 = this.server.create('user');
     const instructor2 = this.server.create('user');
     const instructor3 = this.server.create('user');
-    const learnerGroup1 = this.server.create('learnerGroup', {
+    const learnerGroup1 = this.server.create('learner-group', {
       users: [learner1, learner2],
     });
-    const learnerGroup2 = this.server.create('learnerGroup');
-    const instructorGroup = this.server.create('instructorGroup', {
+    const learnerGroup2 = this.server.create('learner-group');
+    const instructorGroup = this.server.create('instructor-group', {
       users: [instructor1, instructor2, instructor3],
     });
     this.course = this.server.create('course', {
@@ -288,7 +288,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('new session', async function (assert) {
-    this.server.create('sessionType', { school: this.school });
+    this.server.create('session-type', { school: this.school });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.courseSessions.header.title, 'Sessions (4)');
     const { sessions } = page.courseSessions.sessionsGrid;

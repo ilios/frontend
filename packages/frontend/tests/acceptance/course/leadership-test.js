@@ -12,7 +12,7 @@ module('Acceptance | Course - Leadership', function (hooks) {
       school: this.school,
       administeredSchools: [this.school],
     });
-    this.server.create('academicYear', { id: 2013 });
+    this.server.create('academic-year', { id: 2013 });
 
     const users = this.server.createList('user', 6);
     this.course = this.server.create('course', {
