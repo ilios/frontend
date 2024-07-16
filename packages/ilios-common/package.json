@@ -21,7 +21,7 @@
     "lint:js:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@babel/core": "^7.24.4",
+    "@babel/core": "^7.24.7",
     "@ember/render-modifiers": "^2.0.0",
     "@ember/string": "^3.1.1",
     "@embroider/macros": "^1.16.3",
@@ -34,7 +34,7 @@
     "broccoli-merge-trees": "^4.0.0",
     "class-validator": ">= 0.14.0",
     "ember-async-data": "^1.0.1",
-    "ember-auto-import": "^2.7.2",
+    "ember-auto-import": "^2.7.3",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-flash": "^5.1.0",
     "ember-cli-htmlbars": "^6.3.0",
@@ -94,8 +94,8 @@
     "validator": ">= 13.12.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.24.1",
-    "@babel/plugin-proposal-decorators": "^7.24.1",
+    "@babel/eslint-parser": "^7.24.7",
+    "@babel/plugin-proposal-decorators": "^7.24.7",
     "@ember-data/adapter": "5.3.8",
     "@ember-data/json-api": "5.3.8",
     "@ember-data/legacy-compat": "^5.3.8",
@@ -112,7 +112,7 @@
     "@ilios/ember-template-lint-plugin": "^3.0.0",
     "@warp-drive/build-config": "0.0.0-beta.6",
     "broccoli-asset-rev": "^3.0.0",
-    "ember-cli": "~5.8.1",
+    "ember-cli": "~5.9.0",
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-dependency-checker": "^3.3.2",
     "ember-cli-inject-live-reload": "^2.1.0",
@@ -122,7 +122,7 @@
     "ember-load-initializers": "^2.1.2",
     "ember-page-title": "^8.2.3",
     "ember-resolver": "^11.0.1",
-    "ember-source": "~5.8.0",
+    "ember-source": "~5.9.0",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",

@@ -24,9 +24,9 @@
     "lint:deps": "ember dependency-lint"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.4",
-    "@babel/eslint-parser": "^7.24.1",
-    "@babel/plugin-proposal-decorators": "^7.24.1",
+    "@babel/core": "^7.24.7",
+    "@babel/eslint-parser": "^7.24.7",
+    "@babel/plugin-proposal-decorators": "^7.24.7",
     "@ember-data/adapter": "5.3.8",
     "@ember-data/json-api": "5.3.8",
     "@ember-data/legacy-compat": "^5.3.8",
@@ -61,7 +61,7 @@
     "ember-a11y-testing": "^6.1.1",
     "ember-async-data": "^1.0.3",
     "ember-auto-import": "^2.4.3",
-    "ember-cli": "~5.8.1",
+    "ember-cli": "~5.9.0",
     "ember-cli-app-version": "^6.0.1",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-browserstack": "^3.0.0",
@@ -100,7 +100,7 @@
     "ember-qunit": "^8.0.2",
     "ember-resolver": "^11.0.1",
     "ember-responsive": "^5.0.0",
-    "ember-source": "~5.8.0",
+    "ember-source": "~5.9.0",
     "ember-template-lint": "^6.0.0",
     "ember-web-app": "^5.0.0",
     "eslint": "^8.57.0",
@@ -118,9 +118,9 @@
     "mockdate": "^3.0.5",
     "pad": "^3.2.0",
     "papaparse": "^5.4.1",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.1",
     "query-string": "^9.0.0",
-    "qunit": "^2.20.1",
+    "qunit": "^2.21.0",
     "qunit-dom": "^2.0.0",
     "qunit-theme-ember": "^1.0.0",
     "sass": "^1.77.8",
@@ -157,6 +157,6 @@
   },
   "private": true,
   "dependencies": {
-    "ember-auto-import": "^2.7.2"
+    "ember-auto-import": "^2.7.3"
   }
 }
