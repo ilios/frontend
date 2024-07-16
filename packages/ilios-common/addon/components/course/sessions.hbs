@@ -44,6 +44,8 @@
       {{t "general.savedSuccessfully"}}
     </div>
   {{/if}}
+
+  {{#if this.sessionsCount}}
   <div class="filter">
     <input
       aria-label={{t "general.sessionTitleFilterPlaceholder"}}
@@ -80,4 +82,5 @@
       <SessionsGridLoading @count={{this.sessionsCount}} />
     {{/if}}
   </section>
+  {{/if}}
 </section>
