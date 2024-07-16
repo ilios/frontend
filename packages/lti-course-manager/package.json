@@ -48,6 +48,7 @@
     "@warp-drive/build-config": "0.0.0-beta.6",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
+    "broccoli-merge-trees": "^4.2.0",
     "browserslist": "^4.23.2",
     "caniuse-db": "^1.0.30001642",
     "ember-auto-import": "^2.7.3",
