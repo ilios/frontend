@@ -8,7 +8,6 @@
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "https://github.com/ilios/lti-course-manager",
   "scripts": {
     "build": "ember build --environment=production",
     "lint:css": "stylelint \"**/*.scss\"",
